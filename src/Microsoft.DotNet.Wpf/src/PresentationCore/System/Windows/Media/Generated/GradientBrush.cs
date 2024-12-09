@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -55,28 +55,28 @@ namespace System.Windows.Media
 
         private static void ColorInterpolationModePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            GradientBrush target = ((GradientBrush) d);
+            GradientBrush target = ((GradientBrush)d);
 
 
             target.PropertyChanged(ColorInterpolationModeProperty);
         }
         private static void MappingModePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            GradientBrush target = ((GradientBrush) d);
+            GradientBrush target = ((GradientBrush)d);
 
 
             target.PropertyChanged(MappingModeProperty);
         }
         private static void SpreadMethodPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            GradientBrush target = ((GradientBrush) d);
+            GradientBrush target = ((GradientBrush)d);
 
 
             target.PropertyChanged(SpreadMethodProperty);
         }
         private static void GradientStopsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            GradientBrush target = ((GradientBrush) d);
+            GradientBrush target = ((GradientBrush)d);
 
 
             target.PropertyChanged(GradientStopsProperty);
@@ -92,7 +92,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (ColorInterpolationMode) GetValue(ColorInterpolationModeProperty);
+                return (ColorInterpolationMode)GetValue(ColorInterpolationModeProperty);
             }
             set
             {
@@ -107,7 +107,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (BrushMappingMode) GetValue(MappingModeProperty);
+                return (BrushMappingMode)GetValue(MappingModeProperty);
             }
             set
             {
@@ -122,7 +122,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (GradientSpreadMethod) GetValue(SpreadMethodProperty);
+                return (GradientSpreadMethod)GetValue(SpreadMethodProperty);
             }
             set
             {
@@ -137,7 +137,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (GradientStopCollection) GetValue(GradientStopsProperty);
+                return (GradientStopCollection)GetValue(GradientStopsProperty);
             }
             set
             {

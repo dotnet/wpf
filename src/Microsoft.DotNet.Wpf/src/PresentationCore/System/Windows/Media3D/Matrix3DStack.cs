@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Windows.Media.Media3D
         //  Constructors
         //
         //------------------------------------------------------
-        
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -52,10 +52,10 @@ namespace System.Windows.Media.Media3D
             {
                 matrix.Append(Top);
             }
-            
+
             _stack.Add(matrix);
         }
-        
+
         //------------------------------------------------------
         //
         //  Public Properties
@@ -85,7 +85,7 @@ namespace System.Windows.Media.Media3D
                 return _stack[_stack.Count - 1];
             }
         }
-        
+
         //------------------------------------------------------
         //
         //  Public Events
@@ -97,9 +97,9 @@ namespace System.Windows.Media.Media3D
         //  Private Fields
         //
         //------------------------------------------------------
-        
+
         #region Private Fields
-        
+
         private readonly List<Matrix3D> _stack = new List<Matrix3D>();
 
         #endregion Private Fields

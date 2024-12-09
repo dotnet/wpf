@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -51,7 +51,7 @@ namespace System.Security.RightsManagement
             /////////////////
             // Get ApplicationSpecific Data Dictionary
             /////////////////
-            _applicationSpecificDataDictionary = new ReadOnlyDictionary <string, string>
+            _applicationSpecificDataDictionary = new ReadOnlyDictionary<string, string>
                     (ClientSession.ExtractApplicationSpecificDataFromLicense(_serializedUseLicense));
         }
 
@@ -92,7 +92,7 @@ namespace System.Security.RightsManagement
         /// <summary>
         /// This function allows an application to examine or exercise the rights on a locally stored license.
         /// </summary>
-        public CryptoProvider Bind (SecureEnvironment secureEnvironment)
+        public CryptoProvider Bind(SecureEnvironment secureEnvironment)
         {
 
             ArgumentNullException.ThrowIfNull(secureEnvironment);
@@ -112,7 +112,7 @@ namespace System.Security.RightsManagement
         /// Use License embedding policy of the consuming applications. If it is set to 1, applications
         /// are expected not to embed the Use License into the document.
         /// </summary>
-        public IDictionary<string,string> ApplicationData
+        public IDictionary<string, string> ApplicationData
         {
             get
             {
@@ -136,7 +136,7 @@ namespace System.Security.RightsManagement
             // Note that because of the GetType() checking above, the casting must be valid.
             UseLicense obj = (UseLicense)x;
             return (string.Equals(_serializedUseLicense, obj._serializedUseLicense, StringComparison.Ordinal));
-}
+        }
 
         /// <summary>
         /// Compute hash code.
@@ -151,6 +151,6 @@ namespace System.Security.RightsManagement
         private string _serializedUseLicense;
         private Guid _contentId;
         private ContentUser _owner = null;
-        private IDictionary <string, string> _applicationSpecificDataDictionary = null;
+        private IDictionary<string, string> _applicationSpecificDataDictionary = null;
     }
 }

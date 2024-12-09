@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -148,7 +148,7 @@ namespace System.Windows.Documents
 
             return true;
         }
-        
+
         /// <summary>
         /// Checks if scoping element is empty formatting.
         /// It must be removed if not situated inside of empty block.
@@ -227,7 +227,7 @@ namespace System.Windows.Documents
         {
             // Check for corner case when we have siple text run with all properties set as requested.
             // This case is iportant optimization for Backspace-Type scenario, when Springload formatting applies for nothing for 50 properties
-            if (start.CompareTo(end) >= 0 || 
+            if (start.CompareTo(end) >= 0 ||
                 propertyValueAction == PropertyValueAction.SetValue &&
                 start.Parent is Run &&
                 start.Parent == end.Parent && TextSchema.ValuesAreEqual(start.Parent.GetValue(formattingProperty), value))
@@ -275,7 +275,7 @@ namespace System.Windows.Documents
             Inline firstInline, secondInline;
             bool merged = false;
             while (
-                position.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementEnd && 
+                position.GetPointerContext(LogicalDirection.Backward) == TextPointerContext.ElementEnd &&
                 position.GetPointerContext(LogicalDirection.Forward) == TextPointerContext.ElementStart &&
                 (firstInline = position.GetAdjacentElement(LogicalDirection.Backward) as Inline) != null &&
                 (secondInline = position.GetAdjacentElement(LogicalDirection.Forward) as Inline) != null)
@@ -332,7 +332,7 @@ namespace System.Windows.Documents
                 {
                     // Parent of this inline can be deleted. Let's delete it.  
 
-                    Span parentSpan = (Span)inline.Parent;                  
+                    Span parentSpan = (Span)inline.Parent;
 
                     if (parentSpan.Parent == null)
                     {
@@ -374,15 +374,15 @@ namespace System.Windows.Documents
                         DependencyProperty property = nonInheritableProperties[i];
 
                         bool hasModifiers;
-                        
+
                         // Check if the property value is default and not animated/coerced/data-bound.                         
-                        bool isParentValueDefault = (  
-                               parentSpan.GetValueSource(property, null, out hasModifiers) == BaseValueSourceInternal.Default 
+                        bool isParentValueDefault = (
+                               parentSpan.GetValueSource(property, null, out hasModifiers) == BaseValueSourceInternal.Default
                             && !hasModifiers
                             );
 
-                        bool isInlineValueDefault = (                        
-                               inline.GetValueSource(property, null, out hasModifiers) == BaseValueSourceInternal.Default 
+                        bool isInlineValueDefault = (
+                               inline.GetValueSource(property, null, out hasModifiers) == BaseValueSourceInternal.Default
                             && !hasModifiers
                             );
 
@@ -501,7 +501,7 @@ namespace System.Windows.Documents
                     {
                         span = new Span();
                     }
-                    span.SetValue(nonFormattingCharacterProperties[i], value); 
+                    span.SetValue(nonFormattingCharacterProperties[i], value);
                 }
             }
             return span;
@@ -689,7 +689,7 @@ namespace System.Windows.Documents
                 position = SplitElement(position);
             }
 
-            Invariant.Assert(TextSchema.IsValidChild(/*position*/position, /*childType*/typeof(LineBreak)), 
+            Invariant.Assert(TextSchema.IsValidChild(/*position*/position, /*childType*/typeof(LineBreak)),
                 "position must be in valid scope now to insert a LineBreak element");
 
             LineBreak lineBreak = new LineBreak();
@@ -813,7 +813,7 @@ namespace System.Windows.Documents
                         object currentValue = block.GetValue(property);
 
                         // Set FlowDirection property on List
-                        SetPropertyValue(block, property, currentValue:currentValue, newValue:value);
+                        SetPropertyValue(block, property, currentValue: currentValue, newValue: value);
 
                         // Only swap Left and Right margins of the list when FlowDirection changes. This ensures indentation is mirrored correctly.
                         if (!Object.Equals(currentValue, value))
@@ -1036,7 +1036,7 @@ namespace System.Windows.Documents
                         break;
                     }
                 }
-                
+
                 if (TextPointerBase.IsAtPotentialParagraphPosition(pointer))
                 {
                     pointer = TextRangeEditTables.EnsureInsertionPosition(pointer);
@@ -1057,7 +1057,7 @@ namespace System.Windows.Documents
             FlowDirection parentFlowDirection, FlowDirection flowDirection, PropertyValueAction propertyValueAction)
         {
             // Negative value for particular axis means "leave it unchanged"
-            double topMargin = newThickness.Top < 0 
+            double topMargin = newThickness.Top < 0
                 ? currentThickness.Top
                 : GetNewDoubleValue(null, currentThickness.Top, newThickness.Top, propertyValueAction);
 
@@ -1181,7 +1181,7 @@ namespace System.Windows.Documents
         {
             TextAlignment textAlignment;
             switch (horizontalAlignment)
-            {                
+            {
                 case HorizontalAlignment.Left:
                     textAlignment = TextAlignment.Left;
                     break;
@@ -1231,9 +1231,9 @@ namespace System.Windows.Documents
                 {
                     // Swap left and right values
                     object newValue = new Thickness(
-                        /*left*/((Thickness)value).Right, 
+                        /*left*/((Thickness)value).Right,
                         /*top:*/((Thickness)value).Top,
-                        /*right:*/((Thickness)value).Left, 
+                        /*right:*/((Thickness)value).Left,
                         /*bottom:*/((Thickness)value).Bottom);
 
                     SetPropertyValue(block, Block.MarginProperty, value, newValue);
@@ -1519,7 +1519,7 @@ namespace System.Windows.Documents
                     first.Reposition(null, null);
                     return;
                 }
-                else if (second is Paragraph && Paragraph.HasNoTextContent((Paragraph) second))
+                else if (second is Paragraph && Paragraph.HasNoTextContent((Paragraph)second))
                 {
                     second.RepositionWithContent(null);
                     return;
@@ -1533,7 +1533,7 @@ namespace System.Windows.Documents
                     second.Reposition(null, null);
                     return;
                 }
-                else if (second is Paragraph && Paragraph.HasNoTextContent((Paragraph) first))
+                else if (second is Paragraph && Paragraph.HasNoTextContent((Paragraph)first))
                 {
                     first.RepositionWithContent(null);
                     return;
@@ -1748,8 +1748,8 @@ namespace System.Windows.Documents
             if (preserveStructuralFormatting)
             {
                 Run run = splitPosition.Parent as Run;
-                if (run != null && run != limitingAncestor && 
-                    ((run.Parent != null && HasLocalInheritableStructuralPropertyValue(run)) || 
+                if (run != null && run != limitingAncestor &&
+                    ((run.Parent != null && HasLocalInheritableStructuralPropertyValue(run)) ||
                     (run.Parent == null && HasLocalStructuralPropertyValue(run))))
                 {
                     // This Run has a structural property set on it (eg, FlowDirection) which cannot simply be split
@@ -1763,8 +1763,8 @@ namespace System.Windows.Documents
 
             // Splitting loop: cutting a parent element until we reach the non-inline,
             // never crossing ancestor boundary.
-            while (splitPosition.Parent != null && TextSchema.IsMergeableInline(splitPosition.Parent.GetType()) && splitPosition.Parent != limitingAncestor && 
-                (!preserveStructuralFormatting || 
+            while (splitPosition.Parent != null && TextSchema.IsMergeableInline(splitPosition.Parent.GetType()) && splitPosition.Parent != limitingAncestor &&
+                (!preserveStructuralFormatting ||
                    ((((Inline)splitPosition.Parent).Parent != null && !HasLocalInheritableStructuralPropertyValue((Inline)splitPosition.Parent)) ||
                    (((Inline)splitPosition.Parent).Parent == null && !HasLocalStructuralPropertyValue((Inline)splitPosition.Parent)))))
             {
@@ -2330,7 +2330,7 @@ namespace System.Windows.Documents
                 }
                 return DefaultRange;
             }
-            
+
             /// <summary>
             /// Range for properties whcih do not have explicit specification of the acceptable value ranges.
             /// </summary>
@@ -2370,7 +2370,7 @@ namespace System.Windows.Documents
                     return retValue;
                 }
 
-                internal DependencyProperty Property { get { return _property; } } 
+                internal DependencyProperty Property { get { return _property; } }
 
                 private DependencyProperty _property;
                 private double _lowerBound;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -51,7 +51,7 @@ namespace MS.Internal.IO.Packaging
             CheckDisposed();
 
             PackagingUtilities.VerifyStreamReadArgs(this, buffer, offset, count);
-            
+
             return _tempStream.Read(buffer, offset, count);
         }
 
@@ -75,12 +75,14 @@ namespace MS.Internal.IO.Packaging
                     }
                 case SeekOrigin.Current:
                     {
-                        checked { temp = _tempStream.Position + offset; }
+                        checked
+                        { temp = _tempStream.Position + offset; }
                         break;
                     }
                 case SeekOrigin.End:
                     {
-                        checked { temp = _tempStream.Length + offset; }
+                        checked
+                        { temp = _tempStream.Length + offset; }
                         break;
                     }
                 default:
@@ -211,7 +213,7 @@ namespace MS.Internal.IO.Packaging
         {
             get
             {
-                return (!_disposed &&  _baseStream.CanSeek);
+                return (!_disposed && _baseStream.CanSeek);
             }
         }
 
@@ -299,7 +301,7 @@ namespace MS.Internal.IO.Packaging
                         _tempStream = null;
 
                         // never close base stream - we don't own it
-//                        _baseStream.Close();
+                        //                        _baseStream.Close();
                         _baseStream = null;
 
                         _disposed = true;
@@ -328,9 +330,9 @@ namespace MS.Internal.IO.Packaging
         //  Private Variables
         //
         //------------------------------------------------------
-        private bool    _disposed;          // disposed?
-        private bool    _dirty;             // do we need to recompress?
-        protected Stream  _baseStream;      // stream we ultimately decompress from and to in the container
+        private bool _disposed;          // disposed?
+        private bool _dirty;             // do we need to recompress?
+        protected Stream _baseStream;      // stream we ultimately decompress from and to in the container
         protected Stream _tempStream;       // temporary storage for the uncompressed stream
         IDeflateTransform _transformer;   // does the actual compress/decompress for us
         #endregion

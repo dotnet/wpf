@@ -1,17 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using MS.Internal.Interop;
-using MS.Utility;
-using MS.Win32;
 using System.Runtime.InteropServices;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.Tracing;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
+using MS.Internal;
+using MS.Internal.Interop;
+using MS.Utility;
+using MS.Win32;
 
 namespace System.Windows.Input.StylusWisp
 {
@@ -69,7 +69,7 @@ namespace System.Windows.Input.StylusWisp
             _currentStylusDevice = null; // no active stylus device any more.
             // NOTE: __penContextsMap will be cleaned up by HwndSource Dispose() so we don't worry about that.
         }
-                
+
         /////////////////////////////////////////////////////////////////////
         internal void ProcessSystemEvent(PenContext penContext,
                                                   int tabletDeviceId,
@@ -154,7 +154,7 @@ namespace System.Windows.Input.StylusWisp
             StylusDeviceBase stylusDevice = inputReport?.StylusDevice?.StylusDeviceImpl;
 
 
-            
+
             // Due to changes both in WISP and in the underlying PenIMC code, it is possible that
             // the stylus device here could be null.  If this is the case, the lookups will fail
             // with an exception.
@@ -176,7 +176,7 @@ namespace System.Windows.Input.StylusWisp
             RawStylusInputReport lastMoveReport = null;
             RawStylusInputReport coalescedMove = null;
 
-            
+
             // Multiple threads may access the coalescing information at the same time.
             // We lock here to prevent that.  This is a rare scenario, so the coarse 
             // grained lock is fine here.
@@ -214,9 +214,10 @@ namespace System.Windows.Input.StylusWisp
                                 coalescedMove.TabletDeviceId,
                                 coalescedMove.StylusDeviceId,
                                 mergedData
-                                );
-
-                        coalescedMove.StylusDevice = stylusDevice.StylusDevice;
+                                )
+                        {
+                            StylusDevice = stylusDevice.StylusDevice
+                        };
 
                         _coalescedMoves[stylusDevice] = coalescedMove;
                     }
@@ -355,8 +356,10 @@ namespace System.Windows.Input.StylusWisp
                 }
 
                 // build InputReportEventArgs
-                InputReportEventArgs input = new InputReportEventArgs(null, rawStylusInputReport);
-                input.RoutedEvent = InputManager.PreviewInputReportEvent;
+                InputReportEventArgs input = new InputReportEventArgs(null, rawStylusInputReport)
+                {
+                    RoutedEvent = InputManager.PreviewInputReportEvent
+                };
 
                 // Set flag to prevent reentrancy due to wisptis mouse event getting triggered
                 // while processing this stylus event.
@@ -439,8 +442,10 @@ namespace System.Windows.Input.StylusWisp
                     !_deferredMouseMove.InputSource.CompositionTarget.IsDisposed)
                 {
                     // Process mouse move now since nothing else from stylus came through...
-                    InputReportEventArgs mouseArgs = new InputReportEventArgs(_inputManager.PrimaryMouseDevice, _deferredMouseMove);
-                    mouseArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                    InputReportEventArgs mouseArgs = new InputReportEventArgs(_inputManager.PrimaryMouseDevice, _deferredMouseMove)
+                    {
+                        RoutedEvent = InputManager.PreviewInputReportEvent
+                    };
                     _deferredMouseMove = null; // Clear this out before sending.
                     // This will cause _lastMoveFromStylus to be set to false.
                     _inputManager.ProcessInput(mouseArgs);
@@ -565,8 +570,10 @@ namespace System.Windows.Input.StylusWisp
                                                                                 0,
                                                                                 IntPtr.Zero);
 
-                                            InputReportEventArgs args = new InputReportEventArgs(CurrentStylusDevice.StylusDevice, cancelCaptureInputReport);
-                                            args.RoutedEvent = InputManager.PreviewInputReportEvent;
+                                            InputReportEventArgs args = new InputReportEventArgs(CurrentStylusDevice.StylusDevice, cancelCaptureInputReport)
+                                            {
+                                                RoutedEvent = InputManager.PreviewInputReportEvent
+                                            };
                                             e.Cancel();
                                             _inputManager.ProcessInput(args);
                                         }
@@ -611,8 +618,10 @@ namespace System.Windows.Input.StylusWisp
                                                                                     mouseInputReport.Wheel,
                                                                                     mouseInputReport.ExtraInformation);
 
-                                                InputReportEventArgs args = new InputReportEventArgs(activateStylusDevice.StylusDevice, activateInputReport);
-                                                args.RoutedEvent = InputManager.PreviewInputReportEvent;
+                                                InputReportEventArgs args = new InputReportEventArgs(activateStylusDevice.StylusDevice, activateInputReport)
+                                                {
+                                                    RoutedEvent = InputManager.PreviewInputReportEvent
+                                                };
                                                 _inputManager.ProcessInput(args);
                                             }
 
@@ -1195,7 +1204,7 @@ namespace System.Windows.Input.StylusWisp
                             // (like button clicks).  (DevDiv2 520639)
                             if ((report.Actions & RawStylusActions.Up) != 0 && stylusDevice != null)
                             {
-                                
+
                                 // A StylusUp to a deactivated window for a pure stylus device (pen, etc)
                                 // could leave the StylusDevice in a bad state since we will never promote
                                 // from raw and run the code to reset (Preview to Main promotion).  As such
@@ -1216,7 +1225,7 @@ namespace System.Windows.Input.StylusWisp
                     }
                     else
                     {
-                        
+
                         // Previously, lifting a StylusDevice that was not the CurrentMousePromotionStylusDevice
                         // during a multi-touch down drag/drop would ignore the Up for that device.  This was
                         // resulting in an invalid active devices count in StylusTouchDevice, causing subsequent
@@ -1289,8 +1298,10 @@ namespace System.Windows.Input.StylusWisp
                                                         0,
                                                         IntPtr.Zero);
 
-                    InputReportEventArgs actionsArgs = new InputReportEventArgs(stylusDevice.StylusDevice, newMouseInputReport);
-                    actionsArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                    InputReportEventArgs actionsArgs = new InputReportEventArgs(stylusDevice.StylusDevice, newMouseInputReport)
+                    {
+                        RoutedEvent = InputManager.PreviewInputReportEvent
+                    };
                     _inputManager.ProcessInput(actionsArgs);
                 }
             }
@@ -1518,7 +1529,7 @@ namespace System.Windows.Input.StylusWisp
                         (routedEvent == Stylus.StylusMoveEvent ||
                          routedEvent == Stylus.StylusDownEvent ||
                          routedEvent == Stylus.StylusUpEvent));
-}
+            }
             return false;
         }
 
@@ -1757,8 +1768,10 @@ namespace System.Windows.Input.StylusWisp
                                                                             InputMode.Foreground, stylusArgs.Timestamp, mouseInputSource,
                                                                             actions, (int)pt.X, (int)pt.Y, 0, IntPtr.Zero);
 
-                                InputReportEventArgs inputReportArgs = new InputReportEventArgs(stylusDevice.StylusDevice, mouseInputReport);
-                                inputReportArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                                InputReportEventArgs inputReportArgs = new InputReportEventArgs(stylusDevice.StylusDevice, mouseInputReport)
+                                {
+                                    RoutedEvent = InputManager.PreviewInputReportEvent
+                                };
                                 _inputManager.ProcessInput(inputReportArgs);
                             }
                         }
@@ -1881,7 +1894,7 @@ namespace System.Windows.Input.StylusWisp
 
                     // Take the presentation source which is associated to the directly over element.
                     source = PresentationSource.CriticalFromVisual(directlyOverVisual);
-}
+                }
 
                 PenContexts penContexts = GetPenContextsFromHwnd(source);
 
@@ -2027,7 +2040,8 @@ namespace System.Windows.Input.StylusWisp
                     }
 
                     // Exit if we found a stylusdevice.
-                    if (foundInRangeStylusDevice) break;
+                    if (foundInRangeStylusDevice)
+                        break;
                 }
             }
 
@@ -2072,7 +2086,7 @@ namespace System.Windows.Input.StylusWisp
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, oldCapture.GetType())); 
+                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, oldCapture.GetType()));
                     }
                 }
                 if (_stylusCapture != null)
@@ -2101,7 +2115,7 @@ namespace System.Windows.Input.StylusWisp
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, _stylusCapture.GetType())); 
+                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, _stylusCapture.GetType()));
                     }
                 }
 
@@ -2160,7 +2174,7 @@ namespace System.Windows.Input.StylusWisp
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, oldOver.GetType())); 
+                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, oldOver.GetType()));
                     }
                 }
                 if (_stylusOver != null)
@@ -2189,7 +2203,7 @@ namespace System.Windows.Input.StylusWisp
                     }
                     else
                     {
-                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, _stylusOver.GetType())); 
+                        throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, _stylusOver.GetType()));
                     }
                 }
 
@@ -2429,7 +2443,7 @@ namespace System.Windows.Input.StylusWisp
             }
             else
             {
-                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, _stylusCapture.GetType())); 
+                throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, _stylusCapture.GetType()));
             }
 
             //
@@ -2570,8 +2584,10 @@ namespace System.Windows.Input.StylusWisp
                                          stylusDevice.Id,
                                          rawStylusInputReport.Data);
 
-            InputReportEventArgs input = new InputReportEventArgs(stylusDevice, inputReport);
-            input.RoutedEvent = InputManager.PreviewInputReportEvent;
+            InputReportEventArgs input = new InputReportEventArgs(stylusDevice, inputReport)
+            {
+                RoutedEvent = InputManager.PreviewInputReportEvent
+            };
             _inputManager.ProcessInput(input);
         }
 
@@ -2618,7 +2634,7 @@ namespace System.Windows.Input.StylusWisp
                     break;
             }
         }
-              
+
         internal void InvokeStylusPluginCollection(RawStylusInputReport inputReport)
         {
             if (inputReport.StylusDevice != null)
@@ -2794,10 +2810,14 @@ namespace System.Windows.Input.StylusWisp
                                                         gesture,
                                                         0, // Gesture X location (only used for flicks)
                                                         0, // Gesture Y location (only used for flicks)
-                                                        0); // ButtonState (only used for flicks)
-            inputReport.StylusDevice = stylusDevice;
-            InputReportEventArgs input = new InputReportEventArgs(stylusDevice, inputReport);
-            input.RoutedEvent = InputManager.PreviewInputReportEvent;
+                                                        0)
+            {
+                StylusDevice = stylusDevice
+            }; // ButtonState (only used for flicks)
+            InputReportEventArgs input = new InputReportEventArgs(stylusDevice, inputReport)
+            {
+                RoutedEvent = InputManager.PreviewInputReportEvent
+            };
             // Process this directly instead of doing a push. We want this event to get
             // to the user before the StylusUp and MouseUp event.
             InputManagerProcessInputEventArgs(input);
@@ -2847,8 +2867,10 @@ namespace System.Windows.Input.StylusWisp
                     mouseInputReport._isSynchronize = true;
                 }
 
-                InputReportEventArgs inputReportArgs = new InputReportEventArgs(stylusDevice.StylusDevice, mouseInputReport);
-                inputReportArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                InputReportEventArgs inputReportArgs = new InputReportEventArgs(stylusDevice.StylusDevice, mouseInputReport)
+                {
+                    RoutedEvent = InputManager.PreviewInputReportEvent
+                };
 
                 // Process this directly instead of doing a push. We want this event to get
                 // to the user before the StylusUp and MouseUp event.
@@ -2890,8 +2912,10 @@ namespace System.Windows.Input.StylusWisp
                             button.CachedButtonState = currentButtonState;
 
                             // do work to push Button event
-                            StylusButtonEventArgs args = new StylusButtonEventArgs(stylusDevice, report.Timestamp, button);
-                            args.InputReport = report;
+                            StylusButtonEventArgs args = new StylusButtonEventArgs(stylusDevice, report.Timestamp, button)
+                            {
+                                InputReport = report
+                            };
                             if (currentButtonState == StylusButtonState.Down)
                             {
                                 args.RoutedEvent = Stylus.PreviewStylusButtonDownEvent;
@@ -3171,7 +3195,7 @@ namespace System.Windows.Input.StylusWisp
         {
             bool shutdownWorkThread = Dispatcher.HasShutdownStarted;
 
-            
+
             // WispTabletDevice needs to schedule work on the PenThread during disposal.
             // If the dispatcher is shutting down, we have to ensure that we dispose tablets
             // prior to any context shutting down the needed PenThread.
@@ -3375,7 +3399,7 @@ namespace System.Windows.Input.StylusWisp
                         // real notification (not a call via reflection, as decribed
                         // in the previous method), and (b) the device count hasn't
                         // decreased by 1 (or we can't tell).
-                        
+
                         // Sometimes the index sent from windows is incorrect even if
                         // the device count properly checks out.  In these scenarios,
                         // we fail to remove the device as the index will be out of 
@@ -3479,7 +3503,7 @@ namespace System.Windows.Input.StylusWisp
                 // if there's no PenThread yet, return "unknown"
                 return -1;
             }
-}
+        }
 
 
         /////////////////////////////////////////////////////////////////////

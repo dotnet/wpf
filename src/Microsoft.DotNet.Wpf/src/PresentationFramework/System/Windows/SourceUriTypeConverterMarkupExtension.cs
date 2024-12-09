@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,12 +16,12 @@ namespace System.Windows.Baml2006
     internal class SourceUriTypeConverterMarkupExtension : TypeConverterMarkupExtension
     {
         private Assembly _assemblyInfo;
-        
+
         public SourceUriTypeConverterMarkupExtension(TypeConverter converter, object value, Assembly assemblyInfo) : base(converter, value)
         {
             _assemblyInfo = assemblyInfo;
         }
-        
+
         /// <summary>
         /// Get the value from the base implementation which calls the appropriate type converter,
         /// if it is a Uri process it and try to append the Assembly version from _assemblyInfo.
@@ -30,9 +30,9 @@ namespace System.Windows.Baml2006
         /// </summary>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            object convertedValue =  base.ProvideValue(serviceProvider);
+            object convertedValue = base.ProvideValue(serviceProvider);
             Uri convertedUri = convertedValue as Uri;
-            
+
             if (convertedUri != null)
             {
                 Uri appendedVersionUri = BaseUriHelper.AppendAssemblyVersion(convertedUri, _assemblyInfo);
@@ -41,7 +41,7 @@ namespace System.Windows.Baml2006
                     return new ResourceDictionary.ResourceDictionarySourceUriWrapper(convertedUri, appendedVersionUri);
                 }
             }
-            
+
             return convertedValue;
         }
     }

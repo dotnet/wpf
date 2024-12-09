@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description:
 //  Handles serialization to/from X509 Certificate part (X509v3 = ASN.1 DER format)
 
-using System.Security.Cryptography.X509Certificates;
-using System.IO.Packaging;
 using System.IO;                                        // for Stream
+using System.IO.Packaging;
+using System.Security.Cryptography.X509Certificates;
 using MS.Internal.IO.Packaging.Extensions;
 
 namespace MS.Internal.IO.Packaging
@@ -134,7 +134,7 @@ namespace MS.Internal.IO.Packaging
             ArgumentNullException.ThrowIfNull(partName);
 
             partName = PackUriHelper.ValidatePartUri(partName);
-            
+
             // create if not found
             if (container.PartExists(partName))
             {
@@ -157,8 +157,8 @@ namespace MS.Internal.IO.Packaging
         //  Private Fields
         //
         //------------------------------------------------------
-        private PackagePart             _part;          // part that houses the certificate
-        private X509Certificate2       _certificate;   // certificate itself
+        private PackagePart _part;          // part that houses the certificate
+        private X509Certificate2 _certificate;   // certificate itself
 
         // certificate part constants
         private static readonly ContentType _certificatePartContentType =
@@ -166,7 +166,7 @@ namespace MS.Internal.IO.Packaging
         private static readonly string _certificatePartNamePrefix = "/package/services/digital-signature/certificate/";
         private static readonly string _certificatePartNameExtension = ".cer";
         private static readonly string _certificatePartRelationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/certificate";
-        private static long             _maximumCertificateStreamLength = 0x40000;   // 4MB
+        private static long _maximumCertificateStreamLength = 0x40000;   // 4MB
         #endregion Private Members
     }
 }

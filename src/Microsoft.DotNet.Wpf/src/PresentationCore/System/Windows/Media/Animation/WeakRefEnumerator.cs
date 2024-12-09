@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -133,7 +133,7 @@ namespace System.Windows.Media.Animation
             {
                 WeakReference currentRef = _list[_readIndex];
                 _current = (T)currentRef.Target;
-                if ( (object)_current != null)
+                if ((object)_current != null)
                 {
                     // Found a live object. First compress the list, which
                     // is necessary if we've previously seen GC'ed objects.
@@ -173,12 +173,12 @@ namespace System.Windows.Media.Animation
         #region Data
 
         private List<WeakReference> _list;
-        private T                   _current;
-        private int                 _readIndex;
-        private int                 _writeIndex;
+        private T _current;
+        private int _readIndex;
+        private int _writeIndex;
 
 #if DEBUG
-        private bool                _valid;
+        private bool _valid;
 #endif // DEBUG
 
         #endregion // Data

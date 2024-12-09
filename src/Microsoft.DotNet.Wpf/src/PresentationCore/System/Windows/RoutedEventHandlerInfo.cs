@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Windows
     public struct RoutedEventHandlerInfo
     {
         #region Construction
-        
+
         /// <summary>
         ///     Construtor for RoutedEventHandlerInfo
         /// </summary>
@@ -39,7 +39,7 @@ namespace System.Windows
             _handler = handler;
             _handledEventsToo = handledEventsToo;
         }
-        
+
         #endregion Construction      
 
         #region Operations
@@ -49,7 +49,7 @@ namespace System.Windows
         /// </summary>
         public Delegate Handler
         {
-            get {return _handler;}
+            get { return _handler; }
         }
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace System.Windows
         /// </summary>
         public bool InvokeHandledEventsToo
         {
-            get {return _handledEventsToo;}
+            get { return _handledEventsToo; }
         }
-        
+
         // Invokes handler instance as per specified 
         // invocation preferences
         internal void InvokeHandler(object target, RoutedEventArgs routedEventArgs)
@@ -112,7 +112,7 @@ namespace System.Windows
         /// <summary>
         ///     Equals operator overload
         /// </summary>
-        public static bool operator== (RoutedEventHandlerInfo handlerInfo1, RoutedEventHandlerInfo handlerInfo2)
+        public static bool operator ==(RoutedEventHandlerInfo handlerInfo1, RoutedEventHandlerInfo handlerInfo2)
         {
             return handlerInfo1.Equals(handlerInfo2);
         }
@@ -120,7 +120,7 @@ namespace System.Windows
         /// <summary>
         ///     NotEquals operator overload
         /// </summary>
-        public static bool operator!= (RoutedEventHandlerInfo handlerInfo1, RoutedEventHandlerInfo handlerInfo2)
+        public static bool operator !=(RoutedEventHandlerInfo handlerInfo1, RoutedEventHandlerInfo handlerInfo2)
         {
             return !handlerInfo1.Equals(handlerInfo2);
         }
@@ -136,7 +136,7 @@ namespace System.Windows
             _handledEventsToo = false;
         }
         */
-        
+
         #endregion Operations
 
         #region Data

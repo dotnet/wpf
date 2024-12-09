@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,8 +8,8 @@
 
 using System.ComponentModel;
 using System.Windows.Automation.Peers;
-using System.Windows.Media;
 using System.Windows.Markup;
+using System.Windows.Media;
 using MS.Internal.Telemetry.PresentationFramework;
 
 namespace System.Windows.Controls
@@ -100,7 +100,7 @@ namespace System.Windows.Controls
         private static Style CreateDefaultStyles()
         {
             Style style = new Style(typeof(MediaElement), null);
-            style.Setters.Add (new Setter(FlowDirectionProperty, FlowDirection.LeftToRight));
+            style.Setters.Add(new Setter(FlowDirectionProperty, FlowDirection.LeftToRight));
             style.Seal();
             return style;
         }
@@ -295,7 +295,7 @@ namespace System.Windows.Controls
         /// <seealso cref="MediaElement.StretchProperty" />
         public Stretch Stretch
         {
-            get { return (Stretch) GetValue(StretchProperty); }
+            get { return (Stretch)GetValue(StretchProperty); }
             set { SetValue(StretchProperty, value); }
         }
 
@@ -308,7 +308,7 @@ namespace System.Windows.Controls
         /// <seealso cref="Viewbox.StretchDirectionProperty" />
         public StretchDirection StretchDirection
         {
-            get { return (StretchDirection) GetValue(StretchDirectionProperty); }
+            get { return (StretchDirection)GetValue(StretchDirectionProperty); }
             set { SetValue(StretchDirectionProperty, value); }
         }
 
@@ -319,7 +319,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (double) GetValue(VolumeProperty);
+                return (double)GetValue(VolumeProperty);
             }
             set
             {
@@ -334,7 +334,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (double) GetValue(BalanceProperty);
+                return (double)GetValue(BalanceProperty);
             }
             set
             {
@@ -349,7 +349,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (bool) GetValue(IsMutedProperty);
+                return (bool)GetValue(IsMutedProperty);
             }
             set
             {
@@ -364,7 +364,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (bool) GetValue(ScrubbingEnabledProperty);
+                return (bool)GetValue(ScrubbingEnabledProperty);
             }
             set
             {
@@ -584,7 +584,7 @@ namespace System.Windows.Controls
         /// </summary>
         public event RoutedEventHandler MediaOpened
         {
-            add { AddHandler(MediaOpenedEvent, value);  }
+            add { AddHandler(MediaOpenedEvent, value); }
             remove { RemoveHandler(MediaOpenedEvent, value); }
         }
 
@@ -798,7 +798,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            MediaElement target = ((MediaElement) d);
+            MediaElement target = ((MediaElement)d);
 
             if (target != null)
             {
@@ -813,7 +813,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            MediaElement target = ((MediaElement) d);
+            MediaElement target = ((MediaElement)d);
 
             if (target != null)
             {
@@ -828,7 +828,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            MediaElement target = ((MediaElement) d);
+            MediaElement target = ((MediaElement)d);
 
             if (target != null)
             {
@@ -843,7 +843,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            MediaElement target = ((MediaElement) d);
+            MediaElement target = ((MediaElement)d);
 
             if (target != null)
             {
@@ -948,7 +948,7 @@ namespace System.Windows.Controls
         internal
         void
         OnScriptCommand(
-            object  sender,
+            object sender,
             MediaScriptCommandEventArgs args
             )
         {

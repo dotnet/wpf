@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,12 +23,12 @@ namespace System.Windows
 
         internal override void FireNotifications(UIElement uie, ContentElement ce, UIElement3D uie3D, bool oldValue)
         {
-            DependencyPropertyChangedEventArgs args = 
+            DependencyPropertyChangedEventArgs args =
                     new DependencyPropertyChangedEventArgs(
-                        UIElement.IsStylusCaptureWithinProperty, 
-                        BooleanBoxes.Box(oldValue), 
+                        UIElement.IsStylusCaptureWithinProperty,
+                        BooleanBoxes.Box(oldValue),
                         BooleanBoxes.Box(!oldValue));
-            
+
             if (uie != null)
             {
                 uie.RaiseIsStylusCaptureWithinChanged(args);

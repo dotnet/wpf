@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,8 @@
 //
 
 
-using System.Windows;                       // for ExceptionStringTable
 using System.Runtime.InteropServices;
-
+using System.Windows;                       // for ExceptionStringTable
 using MS.Internal.Interop;                  // for CHUNK_BREAKTYPE, etc.
 
 // Not using the whole of System.Runtime.InteropServices.ComTypes so as to avoid collisions.
@@ -34,8 +33,8 @@ namespace MS.Internal.IO.Packaging
             {
                 return _propType;
             }
-// The following code is not being compiled, but should not be removed; since some container-filter
-// plug-in (e.g. metadata) may use it in future.
+            // The following code is not being compiled, but should not be removed; since some container-filter
+            // plug-in (e.g. metadata) may use it in future.
 #if false
             set
             {
@@ -172,7 +171,7 @@ namespace MS.Internal.IO.Packaging
             _property = new ManagedPropSpec(propId);
         }
 
-// If the following is not used once metadata filtering is implemented, remove completely from the code.
+        // If the following is not used once metadata filtering is implemented, remove completely from the code.
 #if false
         /// <summary>
         /// Helper constructor
@@ -236,7 +235,7 @@ namespace MS.Internal.IO.Packaging
             // all chunks we return are expected to have idChunkSource equal to idChunk.
             // (See http://msdn.microsoft.com/library/default.asp?url=/library/en-us/indexsrv/html/ixufilt_8ib8.asp)
             _idChunkSource = _index;
-}
+        }
         #endregion Constructors
 
         #region Properties
@@ -264,8 +263,8 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-// The following code is not being compiled, but should not be removed; since some container-filter
-// plug-in (e.g. metadata) may use it in future.
+        // The following code is not being compiled, but should not be removed; since some container-filter
+        // plug-in (e.g. metadata) may use it in future.
 #if false
         ///<summary>Always null, since no named property is supported by the Indexing Services in Longhorn.</summary>
         internal string PropertyName
@@ -288,7 +287,7 @@ namespace MS.Internal.IO.Packaging
             {
                 // Argument errors can only be due to internal inconsistencies,
                 // since no input data makes its way here.
-                Invariant.Assert(value >= CHUNK_BREAKTYPE.CHUNK_NO_BREAK 
+                Invariant.Assert(value >= CHUNK_BREAKTYPE.CHUNK_NO_BREAK
                     && value <= CHUNK_BREAKTYPE.CHUNK_EOC);
 
                 _breakType = value;

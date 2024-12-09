@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using System.ComponentModel;
 using System.Windows.Markup;
 using System.Windows.Media.Media3D.Converters;
+using MS.Internal;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media.Media3D
@@ -44,7 +44,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='rect1'>The first Rect3D to compare</param>
         /// <param name='rect2'>The second Rect3D to compare</param>
-        public static bool operator == (Rect3D rect1, Rect3D rect2)
+        public static bool operator ==(Rect3D rect1, Rect3D rect2)
         {
             return rect1.X == rect2.X &&
                    rect1.Y == rect2.Y &&
@@ -65,7 +65,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='rect1'>The first Rect3D to compare</param>
         /// <param name='rect2'>The second Rect3D to compare</param>
-        public static bool operator != (Rect3D rect1, Rect3D rect2)
+        public static bool operator !=(Rect3D rect1, Rect3D rect2)
         {
             return !(rect1 == rect2);
         }
@@ -81,7 +81,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='rect1'>The first Rect3D to compare</param>
         /// <param name='rect2'>The second Rect3D to compare</param>
-        public static bool Equals (Rect3D rect1, Rect3D rect2)
+        public static bool Equals(Rect3D rect1, Rect3D rect2)
         {
             if (rect1.IsEmpty)
             {
@@ -117,7 +117,7 @@ namespace System.Windows.Media.Media3D
             }
 
             Rect3D value = (Rect3D)o;
-            return Rect3D.Equals(this,value);
+            return Rect3D.Equals(this, value);
         }
 
         /// <summary>

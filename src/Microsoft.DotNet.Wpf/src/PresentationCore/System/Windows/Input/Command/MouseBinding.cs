@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,8 +8,8 @@
 // 
 //* MouseBinding class serves the purpose of Input Bindings for Mouse Device.
 
-using System.Windows.Markup;
 using System.ComponentModel;
+using System.Windows.Markup;
 
 namespace System.Windows.Input
 {
@@ -38,7 +38,7 @@ namespace System.Windows.Input
         public MouseBinding() : base()
         {
         }
-                
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -64,7 +64,7 @@ namespace System.Windows.Input
         }
 
         #endregion Constructors
-        
+
         //------------------------------------------------------
         //
         //  Properties
@@ -89,22 +89,22 @@ namespace System.Windows.Input
                 MouseGesture mouseGesture = value as MouseGesture;
                 if (mouseGesture != null)
                 {
-                     base.Gesture  = mouseGesture;
-                     SynchronizePropertiesFromGesture(mouseGesture);
-                     if (oldMouseGesture != mouseGesture)
-                     {
-                         if (oldMouseGesture != null)
-                         {
-                             oldMouseGesture.PropertyChanged -= new PropertyChangedEventHandler(OnMouseGesturePropertyChanged);
-                         }
-                         mouseGesture.PropertyChanged += new PropertyChangedEventHandler(OnMouseGesturePropertyChanged);
-                     }
+                    base.Gesture = mouseGesture;
+                    SynchronizePropertiesFromGesture(mouseGesture);
+                    if (oldMouseGesture != mouseGesture)
+                    {
+                        if (oldMouseGesture != null)
+                        {
+                            oldMouseGesture.PropertyChanged -= new PropertyChangedEventHandler(OnMouseGesturePropertyChanged);
+                        }
+                        mouseGesture.PropertyChanged += new PropertyChangedEventHandler(OnMouseGesturePropertyChanged);
+                    }
                 }
                 else
                 {
                     throw new ArgumentException(SR.Format(SR.InputBinding_ExpectedInputGesture, typeof(MouseGesture)));
                 }
-             }
+            }
         }
 
         /// <summary>
@@ -248,4 +248,4 @@ namespace System.Windows.Input
         private bool _settingGesture = false;
         #endregion
     }
- }
+}

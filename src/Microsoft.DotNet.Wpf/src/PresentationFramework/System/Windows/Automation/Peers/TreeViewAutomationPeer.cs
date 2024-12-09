@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,9 +11,9 @@ namespace System.Windows.Automation.Peers
     public class TreeViewAutomationPeer : ItemsControlAutomationPeer, ISelectionProvider
     {
         ///
-        public TreeViewAutomationPeer(TreeView owner): base(owner)
-        {}
-    
+        public TreeViewAutomationPeer(TreeView owner) : base(owner)
+        { }
+
         ///
         override protected AutomationControlType GetAutomationControlTypeCore()
         {
@@ -33,13 +33,13 @@ namespace System.Windows.Automation.Peers
             {
                 return this;
             }
-            else if(patternInterface == PatternInterface.Scroll)
+            else if (patternInterface == PatternInterface.Scroll)
             {
                 ItemsControl owner = (ItemsControl)Owner;
-                if(owner.ScrollHost != null)
+                if (owner.ScrollHost != null)
                 {
                     AutomationPeer scrollPeer = UIElementAutomationPeer.CreatePeerForElement(owner.ScrollHost);
-                    if(scrollPeer != null && scrollPeer is IScrollProvider)
+                    if (scrollPeer != null && scrollPeer is IScrollProvider)
                     {
                         scrollPeer.EventsSource = this;
                         return (IScrollProvider)scrollPeer;
@@ -81,7 +81,7 @@ namespace System.Windows.Automation.Peers
                             if (peer != null)
                             {
                                 AutomationPeer wrapperPeer = peer.GetWrapperPeer();
-                                if(wrapperPeer != null)
+                                if (wrapperPeer != null)
                                 {
                                     wrapperPeer.EventsSource = peer;
                                 }
@@ -91,7 +91,7 @@ namespace System.Windows.Automation.Peers
                             if (ItemPeers[items[i]] == null)
                             {
                                 children.Add(peer);
-                               ItemPeers[items[i]] = peer;
+                                ItemPeers[items[i]] = peer;
                             }
                         }
                     }
@@ -156,12 +156,12 @@ namespace System.Windows.Automation.Peers
             if (selectedContainer != null)
             {
                 AutomationPeer peer = UIElementAutomationPeer.FromElement(selectedContainer);
-                
+
                 // With virtualization in effect TreeViewDataItemAP would be exposed to client not the Peer directly associated with UI
                 // and Selection must return the relevant peer(TreeViewDataItemAP) stored in EventSource.
-                if(peer.EventsSource != null)
+                if (peer.EventsSource != null)
                     peer = peer.EventsSource;
-                    
+
                 if (peer != null)
                 {
                     selection = new IRawElementProviderSimple[] { ProviderFromPeer(peer) };

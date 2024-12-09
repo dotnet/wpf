@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,12 +9,11 @@
 
 using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Documents;
+using System.Windows.Media;
 using MS.Internal.Documents;
-using MS.Internal.Text;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -44,7 +43,7 @@ namespace MS.Internal.PtsHost
                 SubpageHandle = IntPtr.Zero;
             }
 
-            if(_pageContext != null)
+            if (_pageContext != null)
             {
                 _pageContext.RemoveFloatingParaClient(this);
             }
@@ -69,7 +68,7 @@ namespace MS.Internal.PtsHost
 
             MbpInfo mbp = MbpInfo.FromElement(Paragraph.Element, Paragraph.StructuralCache.TextFormatterHost.PixelsPerDip);
 
-            if(ThisFlowDirection != PageFlowDirection)
+            if (ThisFlowDirection != PageFlowDirection)
             {
                 mbp.MirrorBP();
             }
@@ -95,7 +94,7 @@ namespace MS.Internal.PtsHost
 
                 // (1) simple subpage (contains only one track)
                 // Exceptions don't need to pop, as the top level arrange context will be nulled out if thrown.
-                Paragraph.StructuralCache.CurrentArrangeContext.PushNewPageData(_pageContextOfThisPage, subpageDetails.u.simple.trackdescr.fsrc, 
+                Paragraph.StructuralCache.CurrentArrangeContext.PushNewPageData(_pageContextOfThisPage, subpageDetails.u.simple.trackdescr.fsrc,
                                                                                 Paragraph.StructuralCache.CurrentArrangeContext.FinitePage);
 
                 PtsHelper.ArrangeTrack(PtsContext, ref subpageDetails.u.simple.trackdescr, subpageDetails.u.simple.fswdir);
@@ -138,12 +137,13 @@ namespace MS.Internal.PtsHost
             PTS.FSSUBPAGEDETAILS subpageDetails;
             PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle, out subpageDetails));
 
-            PTS.FSRECT viewportSubpage = new PTS.FSRECT();
-
-            viewportSubpage.u = viewport.u - ContentRect.u;
-            viewportSubpage.v = viewport.v - ContentRect.v;
-            viewportSubpage.du = viewport.du;
-            viewportSubpage.dv = viewport.dv;
+            PTS.FSRECT viewportSubpage = new PTS.FSRECT
+            {
+                u = viewport.u - ContentRect.u,
+                v = viewport.v - ContentRect.v,
+                du = viewport.du,
+                dv = viewport.dv
+            };
 
             // Subpage content may be simple or complex -
             // depending of set of features used in the content of the subpage.
@@ -214,9 +214,9 @@ namespace MS.Internal.PtsHost
             IInputElement ie = null;
 
 
-            if(_pageContextOfThisPage.FloatingElementList != null)
+            if (_pageContextOfThisPage.FloatingElementList != null)
             {
-                for(int index = 0; index < _pageContextOfThisPage.FloatingElementList.Count && ie == null; index++)
+                for (int index = 0; index < _pageContextOfThisPage.FloatingElementList.Count && ie == null; index++)
                 {
                     BaseParaClient floatingElement = _pageContextOfThisPage.FloatingElementList[index];
 
@@ -224,15 +224,15 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(ie == null)
+            if (ie == null)
             {
                 // Query subpage details
                 PTS.FSSUBPAGEDETAILS subpageDetails;
                 PTS.Validate(PTS.FsQuerySubpageDetails(PtsContext.Context, _paraHandle, out subpageDetails));
 
-                if(Rect.Contains(pt))
+                if (Rect.Contains(pt))
                 {
-                    if(ContentRect.Contains(pt))
+                    if (ContentRect.Contains(pt))
                     {
                         pt = new PTS.FSPOINT(pt.u - ContentRect.u, pt.v - ContentRect.v);
 
@@ -263,7 +263,7 @@ namespace MS.Internal.PtsHost
                         }
                     }
 
-                    if(ie == null)
+                    if (ie == null)
                     {
                         ie = Paragraph.Element as IInputElement;
                     }
@@ -351,7 +351,7 @@ namespace MS.Internal.PtsHost
             // Obtain all mbp info
             MbpInfo mbp = MbpInfo.FromElement(Paragraph.Element, Paragraph.StructuralCache.TextFormatterHost.PixelsPerDip);
 
-            if(ThisFlowDirection != PageFlowDirection)
+            if (ThisFlowDirection != PageFlowDirection)
             {
                 mbp.MirrorBP();
             }
@@ -363,7 +363,7 @@ namespace MS.Internal.PtsHost
             ContainerVisual pageContentVisual;
             ContainerVisual floatingElementsVisual;
 
-            if(_visual.Children.Count != 2)
+            if (_visual.Children.Count != 2)
             {
                 _visual.Children.Clear();
                 _visual.Children.Add(new ContainerVisual());
@@ -569,9 +569,9 @@ namespace MS.Internal.PtsHost
                 PTS.FSTRACKDETAILS trackDetails;
                 PTS.Validate(PTS.FsQueryTrackDetails(PtsContext.Context, subpageDetails.u.simple.trackdescr.pfstrack, out trackDetails));
 
-                if (trackDetails.cParas == 0) 
+                if (trackDetails.cParas == 0)
                 {
-                    return new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));  
+                    return new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
                 }
 
                 // Get list of paragraphs
@@ -595,7 +595,7 @@ namespace MS.Internal.PtsHost
             {
                 // (2) complex page (contains columns)
                 // cBasicColumns == 0, means that subpage content is empty
-                if (subpageDetails.u.complex.cBasicColumns == 0) 
+                if (subpageDetails.u.complex.cBasicColumns == 0)
                 {
                     return new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
                 }
@@ -609,7 +609,7 @@ namespace MS.Internal.PtsHost
                 PTS.FSTRACKDETAILS trackDetails;
                 PTS.Validate(PTS.FsQueryTrackDetails(PtsContext.Context, arrayColumnDesc[0].pfstrack, out trackDetails));
 
-                if (trackDetails.cParas == 0) 
+                if (trackDetails.cParas == 0)
                 {
                     return new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
                 }
@@ -689,7 +689,7 @@ namespace MS.Internal.PtsHost
                     PTS.FSTRACKDETAILS trackDetails;
                     PTS.Validate(PTS.FsQueryTrackDetails(PtsContext.Context, arrayColumnDesc[0].pfstrack, out trackDetails));
                     if (trackDetails.cParas > 0)
-                    {                            
+                    {
                         ColumnResult columnResult = new ColumnResult(this, ref arrayColumnDesc[0], contentOffset);
                         columnResults.Add(columnResult);
                         if (columnResult.HasTextContent)
@@ -790,6 +790,6 @@ namespace MS.Internal.PtsHost
         private PTS.FSRECT _paddingRect;
 
         // Page context this para client provides.
-        private PageContext _pageContextOfThisPage = new PageContext(); 
+        private PageContext _pageContextOfThisPage = new PageContext();
     }
 }

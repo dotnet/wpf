@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -115,12 +115,12 @@ namespace MS.Internal
             CharacterAttribute charAttribute = Classification.CharAttributeOf((int)Classification.GetUnicodeClass(unicodeScalar));
 
             byte itemClass = charAttribute.ItemClass;
-            isCombining = (itemClass == (byte)ItemClass.SimpleMarkClass 
+            isCombining = (itemClass == (byte)ItemClass.SimpleMarkClass
                         || itemClass == (byte)ItemClass.ComplexMarkClass
                         || Classification.IsIVS(unicodeScalar));
 
             isStrong = (itemClass == (byte)ItemClass.StrongClass);
-            
+
             int script = charAttribute.Script;
             needsCaretInfo = ScriptCaretInfo[script];
 
@@ -173,17 +173,17 @@ namespace MS.Internal
         internal unsafe struct CombiningMarksClassificationData
         {
             internal IntPtr CombiningCharsIndexes; // Two dimentional array of base char classes,
-            internal int    CombiningCharsIndexesTableLength;
-            internal int    CombiningCharsIndexesTableSegmentLength;
-            
+            internal int CombiningCharsIndexesTableLength;
+            internal int CombiningCharsIndexesTableSegmentLength;
+
             internal IntPtr CombiningMarkIndexes; // Combining mark classes array, with length = length
-            internal int    CombiningMarkIndexesTableLength;
-            
+            internal int CombiningMarkIndexesTableLength;
+
             internal IntPtr CombinationChars; // Two dimentional array of combined characters
-            internal int    CombinationCharsBaseCount;
-            internal int    CombinationCharsMarkCount;
+            internal int CombinationCharsBaseCount;
+            internal int CombinationCharsMarkCount;
         }
-        
+
         /// <summary>
         /// This structure has a cloned one in the unmanaged side. doing any change in  that
         /// structure should have same change in the unmanaged side too.
@@ -197,11 +197,11 @@ namespace MS.Internal
             internal CombiningMarksClassificationData CombiningMarksClassification;
         };
 
-        [DllImport(DllImport.PresentationNative, EntryPoint="MILGetClassificationTables")]
+        [DllImport(DllImport.PresentationNative, EntryPoint = "MILGetClassificationTables")]
         internal static extern void MILGetClassificationTables(out RawClassificationTables ct);
         static Classification()
         {
-            unsafe 
+            unsafe
             {
                 RawClassificationTables ct = new RawClassificationTables();
                 MILGetClassificationTables(out ct);
@@ -218,13 +218,13 @@ namespace MS.Internal
         /// </summary>
         static public short GetUnicodeClassUTF16(char codepoint)
         {
-            unsafe 
+            unsafe
             {
-                short **plane0 = UnicodeClassTable[0];
+                short** plane0 = UnicodeClassTable[0];
                 Invariant.Assert((long)plane0 >= (long)UnicodeClass.Max);
 
                 short* pcc = plane0[codepoint >> 8];
-                return ((long) pcc < (long) UnicodeClass.Max ?
+                return ((long)pcc < (long)UnicodeClass.Max ?
                     (short)pcc : pcc[codepoint & 0xFF]);
             }
         }
@@ -238,12 +238,12 @@ namespace MS.Internal
             unsafe
             {
                 Invariant.Assert(unicodeScalar >= 0 && unicodeScalar <= 0x10FFFF);
-                short **ppcc = UnicodeClassTable[((unicodeScalar >> 16) & 0xFF) % 17];
+                short** ppcc = UnicodeClassTable[((unicodeScalar >> 16) & 0xFF) % 17];
 
                 if ((long)ppcc < (long)UnicodeClass.Max)
                     return (short)ppcc;
 
-                short *pcc = ppcc[(unicodeScalar & 0xFFFF) >> 8];
+                short* pcc = ppcc[(unicodeScalar & 0xFFFF) >> 8];
 
                 if ((long)pcc < (long)UnicodeClass.Max)
                     return (short)pcc;
@@ -270,7 +270,7 @@ namespace MS.Internal
         /// </summary>
         static internal int UnicodeScalar(
             CharacterBufferRange unicodeString,
-            out int              sizeofChar
+            out int sizeofChar
             )
         {
             Invariant.Assert(unicodeString.CharacterBuffer != null && unicodeString.Length > 0);
@@ -278,9 +278,9 @@ namespace MS.Internal
             int ch = unicodeString[0];
             sizeofChar = 1;
 
-            if (    unicodeString.Length >= 2
-                &&  (ch & 0xFC00) == 0xD800
-                &&  (unicodeString[1] & 0xFC00) == 0xDC00
+            if (unicodeString.Length >= 2
+                && (ch & 0xFC00) == 0xD800
+                && (unicodeString[1] & 0xFC00) == 0xDC00
                 )
             {
                 ch = (((ch & 0x03FF) << 10) | (unicodeString[1] & 0x3FF)) + 0x10000;
@@ -314,8 +314,8 @@ namespace MS.Internal
             unsafe
             {
                 byte itemClass = Classification.CharAttributeTable[GetUnicodeClass(unicodeScalar)].ItemClass;
-                
-                return itemClass == (byte) ItemClass.JoinerClass;
+
+                return itemClass == (byte)ItemClass.JoinerClass;
             }
         }
 
@@ -336,11 +336,11 @@ namespace MS.Internal
         /// </summary>
         /// <returns>character index of first character matching the attribute.</returns>
         static public int AdvanceUntilUTF16(
-            CharacterBuffer     charBuffer,
-            int                 offsetToFirstChar,
-            int                 stringLength,
-            ushort              mask,
-            out ushort          charFlags
+            CharacterBuffer charBuffer,
+            int offsetToFirstChar,
+            int stringLength,
+            ushort mask,
+            out ushort charFlags
             )
         {
             int i = offsetToFirstChar;
@@ -353,7 +353,7 @@ namespace MS.Internal
                 {
                     ushort flags = (ushort)Classification.CharAttributeTable[(int)GetUnicodeClassUTF16(charBuffer[i])].Flags;
 
-                    if((flags & mask) != 0)
+                    if ((flags & mask) != 0)
                         break;
 
                     charFlags |= flags;
@@ -368,31 +368,31 @@ namespace MS.Internal
         /// </summary>
         /// <returns>character index of first character that is not the specified ItemClass</returns>
         static public int AdvanceWhile(
-            CharacterBufferRange unicodeString, 
-            ItemClass            itemClass 
+            CharacterBufferRange unicodeString,
+            ItemClass itemClass
             )
-        {            
-            int i     = 0;
+        {
+            int i = 0;
             int limit = unicodeString.Length;
-            int sizeofChar = 0; 
-            
+            int sizeofChar = 0;
+
             while (i < limit)
             {
                 int ch = Classification.UnicodeScalar(
-                    new CharacterBufferRange(unicodeString, i, limit - i), 
+                    new CharacterBufferRange(unicodeString, i, limit - i),
                     out sizeofChar
-                    ); 
-            
+                    );
+
                 unsafe
                 {
-                    byte currentClass = (byte) Classification.CharAttributeTable[(int)GetUnicodeClass(ch)].ItemClass;
-                    if (currentClass != (byte) itemClass)
+                    byte currentClass = (byte)Classification.CharAttributeTable[(int)GetUnicodeClass(ch)].ItemClass;
+                    if (currentClass != (byte)itemClass)
                         break;
                 }
-                
+
                 i += sizeofChar;
             }
-            
+
             return i;
         }
 
@@ -404,8 +404,8 @@ namespace MS.Internal
         {
             unsafe
             {
-                Invariant.Assert(charClass >= 0 && charClass < (int) UnicodeClass.Max);
-                return CharAttributeTable[charClass]; 
+                Invariant.Assert(charClass >= 0 && charClass < (int)UnicodeClass.Max);
+                return CharAttributeTable[charClass];
             }
         }
 

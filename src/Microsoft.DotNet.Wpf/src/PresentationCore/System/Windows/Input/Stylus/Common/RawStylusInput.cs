@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,8 +20,8 @@ namespace System.Windows.Input.StylusPlugIns
         /// <param name="tabletToElementTransform">[TBS]</param>
         /// <param name="targetPlugInCollection">[TBS]</param>
         internal RawStylusInput(
-            RawStylusInputReport    report,
-            GeneralTransform        tabletToElementTransform,
+            RawStylusInputReport report,
+            GeneralTransform tabletToElementTransform,
             StylusPlugInCollection targetPlugInCollection)
         {
             ArgumentNullException.ThrowIfNull(report);
@@ -33,15 +33,15 @@ namespace System.Windows.Input.StylusPlugIns
 
             // We should always see this GeneralTransform is frozen since we access this from multiple threads.
             System.Diagnostics.Debug.Assert(tabletToElementTransform.IsFrozen);
-            _report                 = report;
-            _tabletToElementTransform  = tabletToElementTransform;
+            _report = report;
+            _tabletToElementTransform = tabletToElementTransform;
             _targetPlugInCollection = targetPlugInCollection;
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public int StylusDeviceId { get { return _report.StylusDeviceId; } }    
+        public int StylusDeviceId { get { return _report.StylusDeviceId; } }
 
         /// <summary>
         /// 
@@ -51,7 +51,7 @@ namespace System.Windows.Input.StylusPlugIns
         /// <summary>
         /// 
         /// </summary>
-        public int Timestamp { get { return _report.Timestamp; } }    
+        public int Timestamp { get { return _report.Timestamp; } }
 
         /// <summary>
         /// Returns a copy of the StylusPoints
@@ -69,13 +69,13 @@ namespace System.Windows.Input.StylusPlugIns
             if (_stylusPoints == null)
             {
                 GeneralTransformGroup group = new GeneralTransformGroup();
-                if ( StylusDeviceId == 0)
+                if (StylusDeviceId == 0)
                 {
                     // Only do this for the Mouse
                     group.Children.Add(new MatrixTransform(_report.InputSource.CompositionTarget.TransformFromDevice));
                 }
                 group.Children.Add(_tabletToElementTransform);
-                if(transform != null)
+                if (transform != null)
                 {
                     group.Children.Add(transform);
                 }
@@ -98,7 +98,7 @@ namespace System.Windows.Input.StylusPlugIns
         {
             ArgumentNullException.ThrowIfNull(stylusPoints);
 
-            if (!StylusPointDescription.AreCompatible(  stylusPoints.Description,
+            if (!StylusPointDescription.AreCompatible(stylusPoints.Description,
                                                         _report.StylusPointDescription))
             {
                 throw new ArgumentException(SR.IncompatibleStylusPointDescriptions, "stylusPoints");
@@ -133,7 +133,7 @@ namespace System.Windows.Input.StylusPlugIns
         /// </summary>
         internal bool StylusPointsModified
         {
-            get 
+            get
             {
                 return _stylusPoints != null;
             }
@@ -144,7 +144,7 @@ namespace System.Windows.Input.StylusPlugIns
         /// </summary>
         internal StylusPlugInCollection Target
         {
-            get 
+            get
             {
                 return _targetPlugInCollection;
             }
@@ -155,7 +155,7 @@ namespace System.Windows.Input.StylusPlugIns
         /// </summary>
         internal RawStylusInputReport Report
         {
-            get 
+            get
             {
                 return _report;
             }
@@ -166,7 +166,7 @@ namespace System.Windows.Input.StylusPlugIns
         /// </summary>
         internal GeneralTransform ElementTransform
         {
-            get 
+            get
             {
                 return _tabletToElementTransform;
             }
@@ -177,7 +177,7 @@ namespace System.Windows.Input.StylusPlugIns
         /// </summary>
         internal RawStylusInputCustomDataList CustomDataList
         {
-            get 
+            get
             {
                 if (_customData == null)
                 {
@@ -192,7 +192,7 @@ namespace System.Windows.Input.StylusPlugIns
         /// </summary>
         internal StylusPlugIn CurrentNotifyPlugIn
         {
-            get 
+            get
             {
                 return _currentNotifyPlugIn;
             }
@@ -204,11 +204,11 @@ namespace System.Windows.Input.StylusPlugIns
 
         /////////////////////////////////////////////////////////////////////
 
-        RawStylusInputReport    _report;
-        GeneralTransform        _tabletToElementTransform;
-        StylusPlugInCollection  _targetPlugInCollection;
-        StylusPointCollection   _stylusPoints;
-        StylusPlugIn            _currentNotifyPlugIn;
-        RawStylusInputCustomDataList    _customData;
-}
+        RawStylusInputReport _report;
+        GeneralTransform _tabletToElementTransform;
+        StylusPlugInCollection _targetPlugInCollection;
+        StylusPointCollection _stylusPoints;
+        StylusPlugIn _currentNotifyPlugIn;
+        RawStylusInputCustomDataList _customData;
+    }
 }

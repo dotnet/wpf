@@ -90,9 +90,9 @@ namespace MS.Internal
                 return null;
             }
 
-            return _str.Substring(_currentTokenIndex,_currentTokenLength);
+            return _str.Substring(_currentTokenIndex, _currentTokenLength);
         }
-        
+
         /// <summary>
         /// Throws an exception if there is any non-whitespace left un-parsed.
         /// </summary>
@@ -169,7 +169,7 @@ namespace MS.Internal
 
             char currentChar = _str[_charIndex];
 
-            Debug.Assert(!Char.IsWhiteSpace(currentChar),"Token started on Whitespace");
+            Debug.Assert(!Char.IsWhiteSpace(currentChar), "Token started on Whitespace");
 
             // setup the quoteCount
             int quoteCount = 0;
@@ -227,7 +227,7 @@ namespace MS.Internal
             // before the ending quote
             if (quoteCount > 0)
             {
-                throw new System.InvalidOperationException(SR.Format(SR.TokenizerHelperMissingEndQuote, _str));                
+                throw new System.InvalidOperationException(SR.Format(SR.TokenizerHelperMissingEndQuote, _str));
             }
 
             ScanToNextToken(separator); // move so at the start of the nextToken for next call
@@ -258,7 +258,7 @@ namespace MS.Internal
                 if (!(currentChar == separator) &&
                     !Char.IsWhiteSpace(currentChar))
                 {
-                    throw new System.InvalidOperationException(SR.Format(SR.TokenizerHelperExtraDataEncountered, _charIndex, _str));                    
+                    throw new System.InvalidOperationException(SR.Format(SR.TokenizerHelperExtraDataEncountered, _charIndex, _str));
                 }
 
                 // loop until hit a character that isn't

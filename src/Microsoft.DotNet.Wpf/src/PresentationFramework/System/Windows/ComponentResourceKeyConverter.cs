@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,7 +33,7 @@ namespace System.Windows.Markup
 
             return base.CanConvertFrom(context, sourceType);
         }
-    
+
         /// <summary>
         ///     TypeConverter method override.
         /// </summary>
@@ -46,14 +46,14 @@ namespace System.Windows.Markup
         /// <returns>
         ///     true if conversion is possible
         /// </returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // Validate Input Arguments
             ArgumentNullException.ThrowIfNull(destinationType);
 
             return base.CanConvertTo(context, destinationType);
         }
-        
+
         /// <summary>
         ///     TypeConverter method implementation.
         /// </summary>
@@ -73,7 +73,7 @@ namespace System.Windows.Markup
         {
             return base.ConvertFrom(context, culture, value);
         }
-        
+
         /// <summary>
         ///     TypeConverter method implementation.
         /// </summary>
@@ -98,7 +98,7 @@ namespace System.Windows.Markup
             ComponentResourceKey key = value as ComponentResourceKey;
             if (key == null)
             {
-                throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "ComponentResourceKey")); 
+                throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "ComponentResourceKey"));
             }
             ArgumentNullException.ThrowIfNull(destinationType);
             return base.CanConvertTo(context, destinationType);

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,9 +8,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using MS.Win32;
 using MS.Internal;
 using MS.Internal.Interop;
+using MS.Win32;
 
 // Disable pragma warnings to enable PREsharp pragmas
 #pragma warning disable 1634, 1691
@@ -76,7 +76,7 @@ namespace System.Windows
             System.ComponentModel.PropertyChangedEventHandler handler = StaticPropertyChanged;
             if (handler != null)
             {
-                for (int i=0; i<propertyNames.Length; ++i)
+                for (int i = 0; i < propertyNames.Length; ++i)
                 {
                     handler(null, new System.ComponentModel.PropertyChangedEventArgs(propertyNames[i]));
                 }
@@ -92,11 +92,11 @@ namespace System.Windows
             return true;
         }
 
-// Disable Warning 6503 Property get methods should not throw exceptions.
-// By design properties below throw Win32Exception if there is an error when calling the native method
+        // Disable Warning 6503 Property get methods should not throw exceptions.
+        // By design properties below throw Win32Exception if there is an error when calling the native method
 #pragma warning disable 6503
 
-// Win32Exception will get the last Win32 error code in case of errors, so we don't have to.
+        // Win32Exception will get the last Win32 error code in case of errors, so we don't have to.
 #pragma warning disable 6523
 
         #region Accessibility Parameters
@@ -176,9 +176,10 @@ namespace System.Windows
                     {
                         _cacheValid[(int)CacheSlot.HighContrast] = true;
 
-                        NativeMethods.HIGHCONTRAST_I highContrast = new NativeMethods.HIGHCONTRAST_I();
-
-                        highContrast.cbSize = Marshal.SizeOf(typeof(NativeMethods.HIGHCONTRAST_I));
+                        NativeMethods.HIGHCONTRAST_I highContrast = new NativeMethods.HIGHCONTRAST_I
+                        {
+                            cbSize = Marshal.SizeOf(typeof(NativeMethods.HIGHCONTRAST_I))
+                        };
                         if (UnsafeNativeMethods.SystemParametersInfo(NativeMethods.SPI_GETHIGHCONTRAST, highContrast.cbSize, ref highContrast, 0))
                         {
                             _highContrast = (highContrast.dwFlags & NativeMethods.HCF_HIGHCONTRASTON) == NativeMethods.HCF_HIGHCONTRASTON;
@@ -2462,7 +2463,7 @@ namespace System.Windows
             {
                 lock (_cacheValid)
                 {
-                    while(!_cacheValid[(int)CacheSlot.FixedFrameHorizontalBorderHeight])
+                    while (!_cacheValid[(int)CacheSlot.FixedFrameHorizontalBorderHeight])
                     {
                         _cacheValid[(int)CacheSlot.FixedFrameHorizontalBorderHeight] = true;
                         _fixedFrameHorizontalBorderHeight = SystemParameters.ConvertPixel(UnsafeNativeMethods.GetSystemMetrics(SM.CXFIXEDFRAME));
@@ -2522,7 +2523,7 @@ namespace System.Windows
             {
                 lock (_cacheValid)
                 {
-                    while(!_cacheValid[(int)CacheSlot.FocusVerticalBorderWidth])
+                    while (!_cacheValid[(int)CacheSlot.FocusVerticalBorderWidth])
                     {
                         _cacheValid[(int)CacheSlot.FocusVerticalBorderWidth] = true;
                         _focusVerticalBorderWidth = SystemParameters.ConvertPixel(UnsafeNativeMethods.GetSystemMetrics(SM.CYFOCUSBORDER));
@@ -3100,7 +3101,7 @@ namespace System.Windows
 
                 lock (_cacheValid)
                 {
-                    while(!_cacheValid[(int)CacheSlot.PrimaryScreenHeight])
+                    while (!_cacheValid[(int)CacheSlot.PrimaryScreenHeight])
                     {
                         _cacheValid[(int)CacheSlot.PrimaryScreenHeight] = true;
                         _primaryScreenHeight = SystemParameters.ConvertPixel(UnsafeNativeMethods.GetSystemMetrics(SM.CYSCREEN));

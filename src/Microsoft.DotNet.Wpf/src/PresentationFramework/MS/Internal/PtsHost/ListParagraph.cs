@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -40,14 +40,14 @@ namespace MS.Internal.PtsHost
         /// OUT: opaque to PTS paragraph client
         /// </param>
         internal override void CreateParaclient(
-            out IntPtr paraClientHandle)         
+            out IntPtr paraClientHandle)
         {
 #pragma warning disable 6518
             // Disable PRESharp warning 6518. ListParaClient is an UnmamangedHandle, that adds itself
             // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and 
             // calls DestroyParaclient to get rid of it. DestroyParaclient will call Dispose() on the object
             // and remove it from HandleMapper.
-            ListParaClient paraClient =  new ListParaClient(this);
+            ListParaClient paraClient = new ListParaClient(this);
             paraClientHandle = paraClient.Handle;
 #pragma warning restore 6518
         }

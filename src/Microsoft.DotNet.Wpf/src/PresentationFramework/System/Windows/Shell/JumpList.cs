@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -301,10 +301,12 @@ namespace System.Windows.Shell
         /// Applications can request that specific items are included here by calling JumpList.AddToRecentCategory.
         /// Because of duplication, applications generally should not have both ShowRecentCategory and ShowFrequentCategory set at the same time.
         /// </remarks>
-        public bool ShowFrequentCategory {
+        public bool ShowFrequentCategory
+        {
             get;
 
-            set; }
+            set;
+        }
 
         /// <summary>
         /// Whether to show the special "Recent" category.
@@ -314,7 +316,8 @@ namespace System.Windows.Shell
         /// Applications can request that specific items are included here by calling JumpList.AddToRecentCategory
         /// Because of duplication, applications generally should not have both ShowRecentCategory and ShowFrequentCategory set at the same time.
         /// </remarks>
-        public bool ShowRecentCategory {
+        public bool ShowRecentCategory
+        {
             get;
 
             set;
@@ -513,7 +516,7 @@ namespace System.Windows.Shell
                     if (jumpItem == null)
                     {
                         // App added a null jump item?  Just go through the normal failure mechanisms.
-                        rejectedList.Add(new _RejectedJumpItemPair{ JumpItem = jumpItem, Reason = JumpItemRejectionReason.InvalidItem });
+                        rejectedList.Add(new _RejectedJumpItemPair { JumpItem = jumpItem, Reason = JumpItemRejectionReason.InvalidItem });
                         continue;
                     }
 

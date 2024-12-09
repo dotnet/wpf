@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -62,8 +62,8 @@ namespace System.Windows.Markup
 
         private void InitializeWithReferencedAssemblies(HybridDictionary assemblyPathTable)
         {
-            _compatTable = new Dictionary<string,string>();
-            _compatTableReverse = new Dictionary<string,string>();
+            _compatTable = new Dictionary<string, string>();
+            _compatTableReverse = new Dictionary<string, string>();
             _cacheTable = new HybridDictionary();
             _assemblyPathTable = assemblyPathTable;
 
@@ -88,14 +88,14 @@ namespace System.Windows.Markup
             List<Assembly> interestingAssemblies = new List<Assembly>();
 
             // Load all the assemblies into a list.
-            foreach(string assemblyName in _assemblyPathTable.Keys.OfType<string>().OrderBy(s => s, StringComparer.Ordinal))
+            foreach (string assemblyName in _assemblyPathTable.Keys.OfType<string>().OrderBy(s => s, StringComparer.Ordinal))
             {
                 bool hasCacheInfo = true;
                 Assembly assy;
 
                 if (_assemblyHasCacheInfo[assemblyName] != null)
                 {
-                   hasCacheInfo = (bool)_assemblyHasCacheInfo[assemblyName];
+                    hasCacheInfo = (bool)_assemblyHasCacheInfo[assemblyName];
                 }
                 if (!hasCacheInfo)
                 {
@@ -153,8 +153,8 @@ namespace System.Windows.Markup
         // you find, other wise go load the cache.
         internal List<ClrNamespaceAssemblyPair> GetMappingArray(string xmlns)
         {
-            List<ClrNamespaceAssemblyPair> clrNsMapping =null;
-            lock(this)
+            List<ClrNamespaceAssemblyPair> clrNsMapping = null;
+            lock (this)
             {
                 clrNsMapping = _cacheTable[xmlns] as List<ClrNamespaceAssemblyPair>;
                 if (clrNsMapping == null)
@@ -193,7 +193,7 @@ namespace System.Windows.Markup
             return clrNsMapping;
         }
 
-        internal void SetUriToAssemblyNameMapping(string namespaceUri, string [] asmNameList)
+        internal void SetUriToAssemblyNameMapping(string namespaceUri, string[] asmNameList)
         {
             _uriToAssemblyNameTable[namespaceUri] = asmNameList;
         }
@@ -217,12 +217,12 @@ namespace System.Windows.Markup
         {
             IList<CustomAttributeData> allAttributes = CustomAttributeData.GetCustomAttributes(asm);
             List<CustomAttributeData> foundAttributes = new List<CustomAttributeData>();
-            for(int i=0; i<allAttributes.Count; i++)
+            for (int i = 0; i < allAttributes.Count; i++)
             {
                 // get the Constructor info
                 CustomAttributeData data = allAttributes[i];
                 ConstructorInfo cinfo = data.Constructor;
-                if(string.Equals(cinfo.ReflectedType.FullName, fullClrName, StringComparison.Ordinal))
+                if (string.Equals(cinfo.ReflectedType.FullName, fullClrName, StringComparison.Ordinal))
                 {
                     foundAttributes.Add(allAttributes[i]);
                 }
@@ -238,7 +238,7 @@ namespace System.Windows.Markup
             xmlns = null;
             clrns = null;
             IList<CustomAttributeTypedArgument> constructorArguments = data.ConstructorArguments;
-            for (int i = 0; i<constructorArguments.Count; i++)
+            for (int i = 0; i < constructorArguments.Count; i++)
             {
                 CustomAttributeTypedArgument tca = constructorArguments[i];
                 if (i == 0)
@@ -258,7 +258,7 @@ namespace System.Windows.Markup
             oldXmlns = null;
             newXmlns = null;
             IList<CustomAttributeTypedArgument> constructorArguments = data.ConstructorArguments;
-            for (int i=0; i<constructorArguments.Count; i++)
+            for (int i = 0; i < constructorArguments.Count; i++)
             {
                 CustomAttributeTypedArgument tca = constructorArguments[i];
                 if (i == 0)
@@ -279,7 +279,7 @@ namespace System.Windows.Markup
 
         private void GetNamespacesFromDefinitionAttr(Attribute attr, out string xmlns, out string clrns)
         {
-            XmlnsDefinitionAttribute xmlnsAttr  = (XmlnsDefinitionAttribute)attr;
+            XmlnsDefinitionAttribute xmlnsAttr = (XmlnsDefinitionAttribute)attr;
             xmlns = xmlnsAttr.XmlNamespace;
             clrns = xmlnsAttr.ClrNamespace;
         }
@@ -300,19 +300,19 @@ namespace System.Windows.Markup
         {
             List<ClrNamespaceAssemblyPair> pairList;
             // For each assembly, enmerate all the XmlnsDefinition attributes.
-            for(int asmIdx=0; asmIdx<asmList.Length; asmIdx++)
+            for (int asmIdx = 0; asmIdx < asmList.Length; asmIdx++)
             {
                 string assemblyName = asmList[asmIdx].FullName;
                 CustomAttributeData[] attributes = GetAttributes(asmList[asmIdx],
                                                 "System.Windows.Markup.XmlnsDefinitionAttribute");
-                for(int attrIdx=0; attrIdx<attributes.Length; attrIdx++)
+                for (int attrIdx = 0; attrIdx < attributes.Length; attrIdx++)
                 {
                     string xmlns = null;
                     string clrns = null;
 
                     GetNamespacesFromDefinitionAttr(attributes[attrIdx], out xmlns, out clrns);
 
-                    if (string.IsNullOrEmpty(xmlns) || string.IsNullOrEmpty(clrns) )
+                    if (string.IsNullOrEmpty(xmlns) || string.IsNullOrEmpty(clrns))
                     {
                         throw new ArgumentException(SR.Format(SR.ParserAttributeArgsLow, "XmlnsDefinitionAttribute"));
                     }
@@ -334,24 +334,24 @@ namespace System.Windows.Markup
         // appear with various XmlNs namespaces one at a time as we read the BAML
         private List<ClrNamespaceAssemblyPair> GetClrnsToAssemblyNameMappingList(
                                                     Assembly[] asmList,
-                                                    string xmlnsRequested )
+                                                    string xmlnsRequested)
         {
             List<ClrNamespaceAssemblyPair> pairList = new List<ClrNamespaceAssemblyPair>();
 
             // For each assembly, enmerate all the XmlnsDefinition attributes.
-            for(int asmIdx=0; asmIdx<asmList.Length; asmIdx++)
+            for (int asmIdx = 0; asmIdx < asmList.Length; asmIdx++)
             {
                 string assemblyName = asmList[asmIdx].FullName;
                 Attribute[] attributes = GetAttributes(asmList[asmIdx],
                                                 typeof(XmlnsDefinitionAttribute));
-                for(int attrIdx=0; attrIdx<attributes.Length; attrIdx++)
+                for (int attrIdx = 0; attrIdx < attributes.Length; attrIdx++)
                 {
                     string xmlns = null;
                     string clrns = null;
 
                     GetNamespacesFromDefinitionAttr(attributes[attrIdx], out xmlns, out clrns);
 
-                    if (string.IsNullOrEmpty(xmlns) || string.IsNullOrEmpty(clrns) )
+                    if (string.IsNullOrEmpty(xmlns) || string.IsNullOrEmpty(clrns))
                     {
                         throw new ArgumentException(SR.Format(SR.ParserAttributeArgsLow, "XmlnsDefinitionAttribute"));
                     }
@@ -369,7 +369,7 @@ namespace System.Windows.Markup
         private void ProcessXmlnsCompatibleWithAttributes(Assembly[] asmList)
         {
             // For each assembly, enmerate all the XmlnsCompatibleWith attributes.
-            for(int asmIdx=0; asmIdx<asmList.Length; asmIdx++)
+            for (int asmIdx = 0; asmIdx < asmList.Length; asmIdx++)
             {
 #if PBTCOMPILER
                 CustomAttributeData[] attributes = GetAttributes(asmList[asmIdx],
@@ -379,7 +379,7 @@ namespace System.Windows.Markup
                                                 typeof(XmlnsCompatibleWithAttribute));
 #endif
 
-                for(int attrIdx=0; attrIdx<attributes.Length; attrIdx++)
+                for (int attrIdx = 0; attrIdx < attributes.Length; attrIdx++)
                 {
                     string oldXmlns = null;
                     string newXmlns = null;
@@ -422,7 +422,7 @@ namespace System.Windows.Markup
     internal struct ClrNamespaceAssemblyPair
     {
         // constructor
-        internal ClrNamespaceAssemblyPair(string clrNamespace,string assemblyName)
+        internal ClrNamespaceAssemblyPair(string clrNamespace, string assemblyName)
         {
             _clrNamespace = clrNamespace;
             _assemblyName = assemblyName;

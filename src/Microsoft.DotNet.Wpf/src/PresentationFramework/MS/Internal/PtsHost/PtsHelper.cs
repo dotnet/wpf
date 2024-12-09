@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,12 +8,11 @@
 //
 
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Documents;
-using MS.Internal.Text;
+using System.Windows.Media;
 using MS.Internal.Documents;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -57,7 +56,7 @@ namespace MS.Internal.PtsHost
         {
             VisualCollection visualChildren = visual.Children;
 
-            for(int index = 0; index < visualChildren.Count; index++)
+            for (int index = 0; index < visualChildren.Count; index++)
             {
                 ((ContainerVisual)visualChildren[index]).Clip = new RectangleGeometry(rect);
             }
@@ -71,22 +70,22 @@ namespace MS.Internal.PtsHost
             VisualCollection visualChildren = visual.Children;
             int visualIndex = 0;
 
-            if(floatingElementList == null || floatingElementList.Count == 0)
+            if (floatingElementList == null || floatingElementList.Count == 0)
             {
                 visualChildren.Clear();
             }
             else
             {
-                for(int index = 0; index < floatingElementList.Count; index++)
+                for (int index = 0; index < floatingElementList.Count; index++)
                 {
                     Visual paraVisual = floatingElementList[index].Visual;
 
-                    while(visualIndex < visualChildren.Count && visualChildren[visualIndex] != paraVisual)
+                    while (visualIndex < visualChildren.Count && visualChildren[visualIndex] != paraVisual)
                     {
                         visualChildren.RemoveAt(visualIndex);
                     }
 
-                    if(visualIndex == visualChildren.Count)
+                    if (visualIndex == visualChildren.Count)
                     {
                         visualChildren.Add(paraVisual);
                     }
@@ -95,7 +94,7 @@ namespace MS.Internal.PtsHost
                 }
 
 
-                if(visualChildren.Count > floatingElementList.Count)
+                if (visualChildren.Count > floatingElementList.Count)
                 {
                     visualChildren.RemoveRange(floatingElementList.Count, visualChildren.Count - floatingElementList.Count);
                 }
@@ -146,7 +145,7 @@ namespace MS.Internal.PtsHost
         internal static void ArrangeParaList(
             PtsContext ptsContext,
             PTS.FSRECT rcTrackContent,
-            PTS.FSPARADESCRIPTION [] arrayParaDesc,
+            PTS.FSPARADESCRIPTION[] arrayParaDesc,
             uint fswdirTrack)
         {
             // For each paragraph, do following:
@@ -160,11 +159,11 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(paraClient);
 
                 // Convert to appropriate page coordinates.
-                if(index == 0)
+                if (index == 0)
                 {
                     uint fswdirPage = PTS.FlowDirectionToFswdir(paraClient.PageFlowDirection);
 
-                    if(fswdirTrack != fswdirPage)
+                    if (fswdirTrack != fswdirPage)
                     {
                         PTS.FSRECT pageRect = paraClient.Paragraph.StructuralCache.CurrentArrangeContext.PageContext.PageRect;
                         PTS.Validate(PTS.FsTransformRectangle(fswdirTrack, ref pageRect, ref rcTrackContent, fswdirPage, out rcTrackContent));
@@ -208,7 +207,8 @@ namespace MS.Internal.PtsHost
             }
 
             // If there is no change, visual information is valid
-            if (fskupd == PTS.FSKUPDATE.fskupdNoChange) { return; }
+            if (fskupd == PTS.FSKUPDATE.fskupdNoChange)
+            { return; }
             ErrorHandler.Assert(fskupd != PTS.FSKUPDATE.fskupdShifted, ErrorHandler.UpdateShiftedNotValid);
 
             bool emptyTrack = (trackDesc.pfstrack == IntPtr.Zero);
@@ -245,7 +245,7 @@ namespace MS.Internal.PtsHost
             PtsContext ptsContext,
             VisualCollection visualCollection,
             PTS.FSKUPDATE fskupdInherited,
-            PTS.FSPARADESCRIPTION [] arrayParaDesc)
+            PTS.FSPARADESCRIPTION[] arrayParaDesc)
         {
             // For each paragraph, do following:
             // (1) Retrieve ParaClient object
@@ -266,12 +266,12 @@ namespace MS.Internal.PtsHost
                 {
                     // Disconnect visual from its old parent, if necessary.
                     Visual currentParent = VisualTreeHelper.GetParent(paraClient.Visual) as Visual;
-                    if(currentParent != null)
+                    if (currentParent != null)
                     {
                         ContainerVisual parent = currentParent as ContainerVisual;
                         Invariant.Assert(parent != null, "parent should always derives from ContainerVisual");
-                        parent.Children.Remove(paraClient.Visual);                         
-                    }                                          
+                        parent.Children.Remove(paraClient.Visual);
+                    }
 
                     // New paragraph - insert new visual node
                     visualCollection.Insert(index, paraClient.Visual);
@@ -287,7 +287,7 @@ namespace MS.Internal.PtsHost
                         Invariant.Assert(index < visualCollection.Count);
                     }
 
-                    if(fskupd == PTS.FSKUPDATE.fskupdChangeInside || fskupd == PTS.FSKUPDATE.fskupdShifted)
+                    if (fskupd == PTS.FSKUPDATE.fskupdChangeInside || fskupd == PTS.FSKUPDATE.fskupdShifted)
                     {
                         paraClient.ValidateVisual(fskupd);
                     }
@@ -338,7 +338,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal static void UpdateViewportParaList(
             PtsContext ptsContext,
-            PTS.FSPARADESCRIPTION [] arrayParaDesc,
+            PTS.FSPARADESCRIPTION[] arrayParaDesc,
             ref PTS.FSRECT viewport)
         {
             for (int index = 0; index < arrayParaDesc.Length; index++)
@@ -371,7 +371,8 @@ namespace MS.Internal.PtsHost
             ref PTS.FSTRACKDESCRIPTION trackDesc)
         {
             // There is possibility to get empty track. (example: large figures)
-            if (trackDesc.pfstrack == IntPtr.Zero) { return null; }
+            if (trackDesc.pfstrack == IntPtr.Zero)
+            { return null; }
 
             IInputElement ie = null;
 
@@ -402,7 +403,7 @@ namespace MS.Internal.PtsHost
             PtsContext ptsContext,
             PTS.FSPOINT pt,
             ref PTS.FSRECT rcTrack,                     // track's rectangle
-            PTS.FSPARADESCRIPTION [] arrayParaDesc)
+            PTS.FSPARADESCRIPTION[] arrayParaDesc)
         {
             IInputElement ie = null;
 
@@ -411,7 +412,7 @@ namespace MS.Internal.PtsHost
                 BaseParaClient paraClient = ptsContext.HandleToObject(arrayParaDesc[index].pfsparaclient) as BaseParaClient;
                 PTS.ValidateHandle(paraClient);
 
-                if(paraClient.Rect.Contains(pt))
+                if (paraClient.Rect.Contains(pt))
                 {
                     ie = paraClient.InputHitTest(pt);
                 }
@@ -514,7 +515,7 @@ namespace MS.Internal.PtsHost
         {
             List<Rect> offsetRectangles = new List<Rect>(rectangleList.Count);
 
-            for(int index = 0; index < rectangleList.Count; index++)
+            for (int index = 0; index < rectangleList.Count; index++)
             {
                 Rect rect = rectangleList[index];
 
@@ -544,9 +545,9 @@ namespace MS.Internal.PtsHost
             PtsContext ptsContext,
             IntPtr page,
             ref PTS.FSPAGEDETAILS pageDetails,
-            out PTS.FSSECTIONDESCRIPTION [] arraySectionDesc)
+            out PTS.FSSECTIONDESCRIPTION[] arraySectionDesc)
         {
-            arraySectionDesc = new PTS.FSSECTIONDESCRIPTION [pageDetails.u.complex.cSections];
+            arraySectionDesc = new PTS.FSSECTIONDESCRIPTION[pageDetails.u.complex.cSections];
             int sectionCount;
             fixed (PTS.FSSECTIONDESCRIPTION* rgSectionDesc = arraySectionDesc)
             {
@@ -563,9 +564,9 @@ namespace MS.Internal.PtsHost
             PtsContext ptsContext,
             IntPtr subpage,
             ref PTS.FSSUBPAGEDETAILS subpageDetails,
-            out PTS.FSTRACKDESCRIPTION [] arrayTrackDesc)
+            out PTS.FSTRACKDESCRIPTION[] arrayTrackDesc)
         {
-            arrayTrackDesc = new PTS.FSTRACKDESCRIPTION [subpageDetails.u.complex.cBasicColumns];
+            arrayTrackDesc = new PTS.FSTRACKDESCRIPTION[subpageDetails.u.complex.cBasicColumns];
             int trackCount;
             fixed (PTS.FSTRACKDESCRIPTION* rgTrackDesc = arrayTrackDesc)
             {
@@ -582,7 +583,7 @@ namespace MS.Internal.PtsHost
             PtsContext ptsContext,
             IntPtr section,
             ref PTS.FSSECTIONDETAILS sectionDetails,
-            out PTS.FSTRACKDESCRIPTION [] arrayTrackDesc)
+            out PTS.FSTRACKDESCRIPTION[] arrayTrackDesc)
         {
             // Need to impl. Extended multi-column layout.
             Debug.Assert(sectionDetails.u.withpagenotes.cSegmentDefinedColumnSpanAreas == 0);
@@ -606,9 +607,9 @@ namespace MS.Internal.PtsHost
             PtsContext ptsContext,
             IntPtr track,
             ref PTS.FSTRACKDETAILS trackDetails,
-            out PTS.FSPARADESCRIPTION [] arrayParaDesc)
+            out PTS.FSPARADESCRIPTION[] arrayParaDesc)
         {
-            arrayParaDesc = new PTS.FSPARADESCRIPTION [trackDetails.cParas];
+            arrayParaDesc = new PTS.FSPARADESCRIPTION[trackDetails.cParas];
             int paraCount;
             fixed (PTS.FSPARADESCRIPTION* rgParaDesc = arrayParaDesc)
             {
@@ -625,9 +626,9 @@ namespace MS.Internal.PtsHost
             PtsContext ptsContext,
             IntPtr subtrack,
             ref PTS.FSSUBTRACKDETAILS subtrackDetails,
-            out PTS.FSPARADESCRIPTION [] arrayParaDesc)
+            out PTS.FSPARADESCRIPTION[] arrayParaDesc)
         {
-            arrayParaDesc = new PTS.FSPARADESCRIPTION [subtrackDetails.cParas];
+            arrayParaDesc = new PTS.FSPARADESCRIPTION[subtrackDetails.cParas];
             int paraCount;
             fixed (PTS.FSPARADESCRIPTION* rgParaDesc = arrayParaDesc)
             {
@@ -644,9 +645,9 @@ namespace MS.Internal.PtsHost
             PtsContext ptsContext,
             IntPtr para,
             ref PTS.FSTEXTDETAILSFULL textDetails,
-            out PTS.FSLINEDESCRIPTIONSINGLE [] arrayLineDesc)
+            out PTS.FSLINEDESCRIPTIONSINGLE[] arrayLineDesc)
         {
-            arrayLineDesc = new PTS.FSLINEDESCRIPTIONSINGLE [textDetails.cLines];
+            arrayLineDesc = new PTS.FSLINEDESCRIPTIONSINGLE[textDetails.cLines];
             int lineCount;
             fixed (PTS.FSLINEDESCRIPTIONSINGLE* rgLineDesc = arrayLineDesc)
             {
@@ -663,9 +664,9 @@ namespace MS.Internal.PtsHost
             PtsContext ptsContext,
             IntPtr para,
             ref PTS.FSTEXTDETAILSFULL textDetails,
-            out PTS.FSLINEDESCRIPTIONCOMPOSITE [] arrayLineDesc)
+            out PTS.FSLINEDESCRIPTIONCOMPOSITE[] arrayLineDesc)
         {
-            arrayLineDesc = new PTS.FSLINEDESCRIPTIONCOMPOSITE [textDetails.cLines];
+            arrayLineDesc = new PTS.FSLINEDESCRIPTIONCOMPOSITE[textDetails.cLines];
             int lineCount;
             fixed (PTS.FSLINEDESCRIPTIONCOMPOSITE* rgLineDesc = arrayLineDesc)
             {
@@ -681,9 +682,9 @@ namespace MS.Internal.PtsHost
         internal static unsafe void LineElementListFromCompositeLine(
             PtsContext ptsContext,
             ref PTS.FSLINEDESCRIPTIONCOMPOSITE lineDesc,
-            out PTS.FSLINEELEMENT [] arrayLineElement)
+            out PTS.FSLINEELEMENT[] arrayLineElement)
         {
-            arrayLineElement = new PTS.FSLINEELEMENT [lineDesc.cElements];
+            arrayLineElement = new PTS.FSLINEELEMENT[lineDesc.cElements];
             int lineElementCount;
             fixed (PTS.FSLINEELEMENT* rgLineElement = arrayLineElement)
             {
@@ -700,9 +701,9 @@ namespace MS.Internal.PtsHost
             PtsContext ptsContext,
             IntPtr para,
             int cAttachedObject,
-            out PTS.FSATTACHEDOBJECTDESCRIPTION [] arrayAttachedObjectDesc)
+            out PTS.FSATTACHEDOBJECTDESCRIPTION[] arrayAttachedObjectDesc)
         {
-            arrayAttachedObjectDesc = new PTS.FSATTACHEDOBJECTDESCRIPTION [cAttachedObject];
+            arrayAttachedObjectDesc = new PTS.FSATTACHEDOBJECTDESCRIPTION[cAttachedObject];
             int attachedObjectCount;
             fixed (PTS.FSATTACHEDOBJECTDESCRIPTION* rgAttachedObjectDesc = arrayAttachedObjectDesc)
             {
@@ -760,12 +761,12 @@ namespace MS.Internal.PtsHost
 
             DependencyObject o = structuralCache.Section.Element;
 
-            if(o is FlowDocument)
+            if (o is FlowDocument)
             {
                 ColumnPropertiesGroup columnProperties = new ColumnPropertiesGroup(o);
 
-                if(!columnProperties.IsColumnWidthFlexible)
-                {                   
+                if (!columnProperties.IsColumnWidthFlexible)
+                {
                     double lineHeight = DynamicPropertyReader.GetLineHeightValue(o);
                     double pageFontSize = (double)structuralCache.PropertyOwner.GetValue(Block.FontSizeProperty);
                     FontFamily pageFontFamily = (FontFamily)structuralCache.PropertyOwner.GetValue(Block.FontFamilyProperty);
@@ -777,7 +778,7 @@ namespace MS.Internal.PtsHost
                     double gap;
 
                     GetColumnMetrics(columnProperties, pageMarginWidth,
-                                     pageFontSize, pageFontFamily, true, ccol, 
+                                     pageFontSize, pageFontFamily, true, ccol,
                                      ref lineHeight, out columnWidth, out freeSpace, out gap);
 
                     pageMarginAdjustment = freeSpace;
@@ -794,11 +795,11 @@ namespace MS.Internal.PtsHost
         // ColumnWidth as 20*FontSize
         // ------------------------------------------------------------------
         internal static int CalculateColumnCount(
-            ColumnPropertiesGroup columnProperties, 
-            double lineHeight, 
-            double pageWidth, 
-            double pageFontSize, 
-            FontFamily pageFontFamily, 
+            ColumnPropertiesGroup columnProperties,
+            double lineHeight,
+            double pageWidth,
+            double pageFontSize,
+            FontFamily pageFontFamily,
             bool enableColumns)
         {
             int columns = 1;
@@ -830,14 +831,14 @@ namespace MS.Internal.PtsHost
                     columns = (int)((pageWidth + gap) / (column + gap));
                 }
             }
-            return Math.Max(1, Math.Min(PTS.Restrictions.tscColumnRestriction-1, columns)); // at least 1 column is required
+            return Math.Max(1, Math.Min(PTS.Restrictions.tscColumnRestriction - 1, columns)); // at least 1 column is required
         }
 
         // ------------------------------------------------------------------
         // GetColumnMetrics
         // ------------------------------------------------------------------
-        internal static void GetColumnMetrics(ColumnPropertiesGroup columnProperties, 
-                                              double pageWidth, 
+        internal static void GetColumnMetrics(ColumnPropertiesGroup columnProperties,
+                                              double pageWidth,
                                               double pageFontSize,
                                               FontFamily pageFontFamily,
                                               bool enableColumns,
@@ -852,9 +853,9 @@ namespace MS.Internal.PtsHost
             {
                 Invariant.Assert(cColumns == 1);
                 columnWidth = pageWidth;
-                gapSpace   = 0;
+                gapSpace = 0;
                 lineHeight = 0;
-                freeSpace  = 0;
+                freeSpace = 0;
             }
             else
             {
@@ -889,7 +890,7 @@ namespace MS.Internal.PtsHost
             ColumnPropertiesGroup columnProperties,
             double lineHeight,
             double pageWidth,
-            double pageFontSize, 
+            double pageFontSize,
             FontFamily pageFontFamily,
             int cColumns,
             PTS.FSCOLUMNINFO* pfscolinfo,
@@ -904,7 +905,7 @@ namespace MS.Internal.PtsHost
             double rule = columnProperties.ColumnRuleWidth;
 
             GetColumnMetrics(columnProperties, pageWidth,
-                                  pageFontSize, pageFontFamily, enableColumns, cColumns, 
+                                  pageFontSize, pageFontFamily, enableColumns, cColumns,
                                   ref lineHeight, out columnWidth, out freeSpace, out gap);
 
             // Set columns information

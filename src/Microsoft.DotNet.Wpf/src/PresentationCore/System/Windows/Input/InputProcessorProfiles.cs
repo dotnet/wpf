@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,11 +9,11 @@
 //
 //
 
+using System.Collections;
+using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Threading;
 using MS.Win32;
-using System.Globalization;
-using System.Collections;
 
 namespace System.Windows.Input
 {
@@ -52,9 +52,9 @@ namespace System.Windows.Input
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
- 
+
         /// <summary>
         /// Initialize an interface and notify sink.
         /// </summary>
@@ -82,7 +82,7 @@ namespace System.Windows.Input
         {
             Debug.Assert(_ipp != null, "Uninitialize called without initializing");
 
-            UnadviseNotifySink();            
+            UnadviseNotifySink();
             Marshal.ReleaseComObject(_ipp);
             _ipp = null;
         }
@@ -113,7 +113,7 @@ namespace System.Windows.Input
                         IntPtr[] hklList = null;
 
                         int count = (int)SafeNativeMethods.GetKeyboardLayoutList(0, null);
-                        if (count > 1) 
+                        if (count > 1)
                         {
                             hklList = new IntPtr[count];
 
@@ -124,7 +124,7 @@ namespace System.Windows.Input
                             {
                                 if (value == (short)hklList[i])
                                 {
-                                    SafeNativeMethods.ActivateKeyboardLayout(new HandleRef(this,hklList[i]), 0);
+                                    SafeNativeMethods.ActivateKeyboardLayout(new HandleRef(this, hklList[i]), 0);
                                     break;
                                 }
                             }
@@ -140,29 +140,29 @@ namespace System.Windows.Input
         /// </summary>
         internal ArrayList InputLanguageList
         {
-             get
-             {
-                 int nCount;
-                 IntPtr langids;
+            get
+            {
+                int nCount;
+                IntPtr langids;
 
-                 // ITfInputProcessorProfiles::GetLanguageList returns the pointer that was allocated by
-                 // CoTaskMemAlloc().
-                 _ipp.GetLanguageList(out langids, out nCount);
+                // ITfInputProcessorProfiles::GetLanguageList returns the pointer that was allocated by
+                // CoTaskMemAlloc().
+                _ipp.GetLanguageList(out langids, out nCount);
 
-                 ArrayList arrayLang = new ArrayList();
+                ArrayList arrayLang = new ArrayList();
 
-                 for (int i = 0; i < nCount; i++)
-                 {
-                     // Unmarshal each langid from short array.
-                     short langid = Marshal.PtrToStructure<short>((IntPtr)((Int64)langids + sizeof(short) * i));
-                     arrayLang.Add(new CultureInfo(langid));
-                 }
+                for (int i = 0; i < nCount; i++)
+                {
+                    // Unmarshal each langid from short array.
+                    short langid = Marshal.PtrToStructure<short>((IntPtr)((Int64)langids + sizeof(short) * i));
+                    arrayLang.Add(new CultureInfo(langid));
+                }
 
-                 // Call CoTaskMemFree().
-                 Marshal.FreeCoTaskMem(langids);
+                // Call CoTaskMemFree().
+                Marshal.FreeCoTaskMem(langids);
 
-                 return arrayLang;
-             }
+                return arrayLang;
+            }
         }
 
 
@@ -171,7 +171,7 @@ namespace System.Windows.Input
         //  Private Methods
         //
         //------------------------------------------------------
-        
+
         /// <summary>
         /// This advices the input language notify sink to
         /// ITfInputProcessorProfile.
@@ -207,7 +207,7 @@ namespace System.Windows.Input
         //  Private Fields
         //
         //------------------------------------------------------
-                
+
         // The reference to ITfInputProcessorProfile.
         private UnsafeNativeMethods.ITfInputProcessorProfiles _ipp;
 

@@ -1,16 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Class that implements BamlTreeMap.
 
-using System.IO;
-using System.Xml;
 using System.Collections;
+using System.IO;
+using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Markup.Localizer;
-using System.Windows;
-
+using System.Xml;
 using MS.Utility;
 
 
@@ -122,7 +121,8 @@ namespace MS.Internal.Globalization
                 BamlTreeNode currentNode = _tree[i];
 
                 // a node may be marked as unidentifiable if it or its parent has a duplicate uid.
-                if (currentNode.Unidentifiable) continue; // skip unidentifiable nodes
+                if (currentNode.Unidentifiable)
+                    continue; // skip unidentifiable nodes
 
                 if (currentNode.NodeType == BamlNodeType.StartElement)
                 {
@@ -559,9 +559,11 @@ namespace MS.Internal.Globalization
             get
             {
                 // if the value has no localizability attribute set, we default to all inherit.
-                LocalizabilityAttribute attribute = new LocalizabilityAttribute(LocalizationCategory.Inherit);
-                attribute.Modifiability = Modifiability.Inherit;
-                attribute.Readability = Readability.Inherit;
+                LocalizabilityAttribute attribute = new LocalizabilityAttribute(LocalizationCategory.Inherit)
+                {
+                    Modifiability = Modifiability.Inherit,
+                    Readability = Readability.Inherit
+                };
                 return attribute;
             }
         }
@@ -583,8 +585,10 @@ namespace MS.Internal.Globalization
                 }
             }
 
-            ElementComments comment = new ElementComments();
-            comment.ElementId = node.Uid;
+            ElementComments comment = new ElementComments
+            {
+                ElementId = node.Uid
+            };
 
             if (_commentsDocument != null)
             {

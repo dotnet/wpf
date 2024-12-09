@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using System.Windows.Media.Effects;
 using System.Windows.Media.Composition;
+using System.Windows.Media.Effects;
+using MS.Internal;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
@@ -65,14 +65,14 @@ namespace System.Windows.Media
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            DrawingGroup target = ((DrawingGroup) d);
+            DrawingGroup target = ((DrawingGroup)d);
 
 
             // If this is both non-null and mutable, we need to unhook the Changed event.
@@ -81,7 +81,7 @@ namespace System.Windows.Media
 
             if ((e.OldValueSource != BaseValueSourceInternal.Default) || e.IsOldValueModified)
             {
-                oldCollection = (DrawingCollection) e.OldValue;
+                oldCollection = (DrawingCollection)e.OldValue;
                 if ((oldCollection != null) && !oldCollection.IsFrozen)
                 {
                     oldCollection.ItemRemoved -= target.ChildrenItemRemoved;
@@ -92,7 +92,7 @@ namespace System.Windows.Media
             // If this is both non-null and mutable, we need to hook the Changed event.
             if ((e.NewValueSource != BaseValueSourceInternal.Default) || e.IsNewValueModified)
             {
-                newCollection = (DrawingCollection) e.NewValue;
+                newCollection = (DrawingCollection)e.NewValue;
                 if ((newCollection != null) && !newCollection.IsFrozen)
                 {
                     newCollection.ItemInserted += target.ChildrenItemInserted;
@@ -152,18 +152,18 @@ namespace System.Windows.Media
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            DrawingGroup target = ((DrawingGroup) d);
+            DrawingGroup target = ((DrawingGroup)d);
 
 
-            Geometry oldV = (Geometry) e.OldValue;
-            Geometry newV = (Geometry) e.NewValue;
+            Geometry oldV = (Geometry)e.OldValue;
+            Geometry newV = (Geometry)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -178,8 +178,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -188,7 +188,7 @@ namespace System.Windows.Media
         }
         private static void OpacityPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DrawingGroup target = ((DrawingGroup) d);
+            DrawingGroup target = ((DrawingGroup)d);
 
 
             target.PropertyChanged(OpacityProperty);
@@ -203,18 +203,18 @@ namespace System.Windows.Media
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            DrawingGroup target = ((DrawingGroup) d);
+            DrawingGroup target = ((DrawingGroup)d);
 
 
-            Brush oldV = (Brush) e.OldValue;
-            Brush newV = (Brush) e.NewValue;
+            Brush oldV = (Brush)e.OldValue;
+            Brush newV = (Brush)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -229,8 +229,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -247,18 +247,18 @@ namespace System.Windows.Media
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            DrawingGroup target = ((DrawingGroup) d);
+            DrawingGroup target = ((DrawingGroup)d);
 
 
-            Transform oldV = (Transform) e.OldValue;
-            Transform newV = (Transform) e.NewValue;
+            Transform oldV = (Transform)e.OldValue;
+            Transform newV = (Transform)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -273,8 +273,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -291,18 +291,18 @@ namespace System.Windows.Media
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            DrawingGroup target = ((DrawingGroup) d);
+            DrawingGroup target = ((DrawingGroup)d);
 
 
-            GuidelineSet oldV = (GuidelineSet) e.OldValue;
-            GuidelineSet newV = (GuidelineSet) e.NewValue;
+            GuidelineSet oldV = (GuidelineSet)e.OldValue;
+            GuidelineSet newV = (GuidelineSet)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -317,8 +317,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -327,35 +327,35 @@ namespace System.Windows.Media
         }
         private static void EdgeModePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DrawingGroup target = ((DrawingGroup) d);
+            DrawingGroup target = ((DrawingGroup)d);
 
 
             target.PropertyChanged(RenderOptions.EdgeModeProperty);
         }
         private static void BitmapEffectPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DrawingGroup target = ((DrawingGroup) d);
+            DrawingGroup target = ((DrawingGroup)d);
 
 
             target.PropertyChanged(BitmapEffectProperty);
         }
         private static void BitmapEffectInputPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DrawingGroup target = ((DrawingGroup) d);
+            DrawingGroup target = ((DrawingGroup)d);
 
 
             target.PropertyChanged(BitmapEffectInputProperty);
         }
         private static void BitmapScalingModePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DrawingGroup target = ((DrawingGroup) d);
+            DrawingGroup target = ((DrawingGroup)d);
 
 
             target.PropertyChanged(RenderOptions.BitmapScalingModeProperty);
         }
         private static void ClearTypeHintPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DrawingGroup target = ((DrawingGroup) d);
+            DrawingGroup target = ((DrawingGroup)d);
 
 
             target.PropertyChanged(RenderOptions.ClearTypeHintProperty);
@@ -371,7 +371,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (DrawingCollection) GetValue(ChildrenProperty);
+                return (DrawingCollection)GetValue(ChildrenProperty);
             }
             set
             {
@@ -386,7 +386,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Geometry) GetValue(ClipGeometryProperty);
+                return (Geometry)GetValue(ClipGeometryProperty);
             }
             set
             {
@@ -401,7 +401,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(OpacityProperty);
+                return (double)GetValue(OpacityProperty);
             }
             set
             {
@@ -416,7 +416,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Brush) GetValue(OpacityMaskProperty);
+                return (Brush)GetValue(OpacityMaskProperty);
             }
             set
             {
@@ -431,7 +431,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Transform) GetValue(TransformProperty);
+                return (Transform)GetValue(TransformProperty);
             }
             set
             {
@@ -446,7 +446,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (GuidelineSet) GetValue(GuidelineSetProperty);
+                return (GuidelineSet)GetValue(GuidelineSetProperty);
             }
             set
             {
@@ -461,7 +461,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (BitmapEffect) GetValue(BitmapEffectProperty);
+                return (BitmapEffect)GetValue(BitmapEffectProperty);
             }
             set
             {
@@ -476,7 +476,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (BitmapEffectInput) GetValue(BitmapEffectInputProperty);
+                return (BitmapEffectInput)GetValue(BitmapEffectInputProperty);
             }
             set
             {
@@ -581,9 +581,10 @@ namespace System.Windows.Media
 
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < ChildrenCount; i++)
+                    for (int i = 0; i < ChildrenCount; i++)
                     {
-                        DUCE.ResourceHandle resource = ((DUCE.IResource)vChildren.Internal_GetItem(i)).GetHandle(channel);;
+                        DUCE.ResourceHandle resource = ((DUCE.IResource)vChildren.Internal_GetItem(i)).GetHandle(channel);
+                        ;
                         channel.AppendCommandData(
                             (byte*)&resource,
                             sizeof(DUCE.ResourceHandle)
@@ -596,63 +597,71 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_DRAWINGGROUP))
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_DRAWINGGROUP))
+            {
+                Geometry vClipGeometry = ClipGeometry;
+                if (vClipGeometry != null)
+                    ((DUCE.IResource)vClipGeometry).AddRefOnChannel(channel);
+                Brush vOpacityMask = OpacityMask;
+                if (vOpacityMask != null)
+                    ((DUCE.IResource)vOpacityMask).AddRefOnChannel(channel);
+                Transform vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                GuidelineSet vGuidelineSet = GuidelineSet;
+                if (vGuidelineSet != null)
+                    ((DUCE.IResource)vGuidelineSet).AddRefOnChannel(channel);
+
+                DrawingCollection vChildren = Children;
+
+                if (vChildren != null)
                 {
-                    Geometry vClipGeometry = ClipGeometry;
-                    if (vClipGeometry != null) ((DUCE.IResource)vClipGeometry).AddRefOnChannel(channel);
-                    Brush vOpacityMask = OpacityMask;
-                    if (vOpacityMask != null) ((DUCE.IResource)vOpacityMask).AddRefOnChannel(channel);
-                    Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
-                    GuidelineSet vGuidelineSet = GuidelineSet;
-                    if (vGuidelineSet != null) ((DUCE.IResource)vGuidelineSet).AddRefOnChannel(channel);
-
-                    DrawingCollection vChildren = Children;
-
-                    if (vChildren != null)
+                    int count = vChildren.Count;
+                    for (int i = 0; i < count; i++)
                     {
-                        int count = vChildren.Count;
-                        for (int i = 0; i < count; i++)
-                        {
-                            ((DUCE.IResource) vChildren.Internal_GetItem(i)).AddRefOnChannel(channel);
-                        }
+                        ((DUCE.IResource)vChildren.Internal_GetItem(i)).AddRefOnChannel(channel);
                     }
-                    AddRefOnChannelAnimations(channel);
-
-
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
                 }
+                AddRefOnChannelAnimations(channel);
 
-                return _duceResource.GetHandle(channel);
-}
+
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
+
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                Geometry vClipGeometry = ClipGeometry;
+                if (vClipGeometry != null)
+                    ((DUCE.IResource)vClipGeometry).ReleaseOnChannel(channel);
+                Brush vOpacityMask = OpacityMask;
+                if (vOpacityMask != null)
+                    ((DUCE.IResource)vOpacityMask).ReleaseOnChannel(channel);
+                Transform vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                GuidelineSet vGuidelineSet = GuidelineSet;
+                if (vGuidelineSet != null)
+                    ((DUCE.IResource)vGuidelineSet).ReleaseOnChannel(channel);
+
+                DrawingCollection vChildren = Children;
+
+                if (vChildren != null)
                 {
-                    Geometry vClipGeometry = ClipGeometry;
-                    if (vClipGeometry != null) ((DUCE.IResource)vClipGeometry).ReleaseOnChannel(channel);
-                    Brush vOpacityMask = OpacityMask;
-                    if (vOpacityMask != null) ((DUCE.IResource)vOpacityMask).ReleaseOnChannel(channel);
-                    Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
-                    GuidelineSet vGuidelineSet = GuidelineSet;
-                    if (vGuidelineSet != null) ((DUCE.IResource)vGuidelineSet).ReleaseOnChannel(channel);
-
-                    DrawingCollection vChildren = Children;
-
-                    if (vChildren != null)
+                    int count = vChildren.Count;
+                    for (int i = 0; i < count; i++)
                     {
-                        int count = vChildren.Count;
-                        for (int i = 0; i < count; i++)
-                        {
-                            ((DUCE.IResource) vChildren.Internal_GetItem(i)).ReleaseOnChannel(channel);
-                        }
+                        ((DUCE.IResource)vChildren.Internal_GetItem(i)).ReleaseOnChannel(channel);
                     }
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+                }
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.

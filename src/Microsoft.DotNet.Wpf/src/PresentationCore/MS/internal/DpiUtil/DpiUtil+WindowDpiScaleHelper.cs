@@ -1,11 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Win32;
 using System.Runtime.InteropServices;
-
+using MS.Win32;
 using MONITOR_DPI_TYPE = MS.Win32.NativeMethods.MONITOR_DPI_TYPE;
 
 namespace MS.Internal
@@ -94,7 +93,7 @@ namespace MS.Internal
 
                 uint dpiX, dpiY;
                 int hr = (int)UnsafeNativeMethods.GetDpiForMonitor(new HandleRef(IntPtr.Zero, hMon), MONITOR_DPI_TYPE.MDT_EFFECTIVE_DPI, out dpiX, out dpiY);
-                
+
                 // Throw if FAILED(hr)
                 Marshal.ThrowExceptionForHR(hr);
 

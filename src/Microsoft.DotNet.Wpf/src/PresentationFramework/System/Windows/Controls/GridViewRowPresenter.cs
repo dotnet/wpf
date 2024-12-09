@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -128,7 +128,8 @@ namespace System.Windows.Controls
         protected override Size MeasureOverride(Size constraint)
         {
             GridViewColumnCollection columns = Columns;
-            if (columns == null) { return new Size(); }
+            if (columns == null)
+            { return new Size(); }
 
             UIElementCollection children = InternalChildren;
             double maxHeight = 0.0;           // Max height of children.
@@ -139,7 +140,8 @@ namespace System.Windows.Controls
             foreach (GridViewColumn column in columns)
             {
                 UIElement child = children[column.ActualIndex];
-                if (child == null) { continue; }
+                if (child == null)
+                { continue; }
 
                 double childConstraintWidth = Math.Max(0.0, constraint.Width - accumulatedWidth);
 
@@ -205,7 +207,8 @@ namespace System.Windows.Controls
         protected override Size ArrangeOverride(Size arrangeSize)
         {
             GridViewColumnCollection columns = Columns;
-            if (columns == null) { return arrangeSize; }
+            if (columns == null)
+            { return arrangeSize; }
 
             UIElementCollection children = InternalChildren;
 
@@ -215,7 +218,8 @@ namespace System.Windows.Controls
             foreach (GridViewColumn column in columns)
             {
                 UIElement child = children[column.ActualIndex];
-                if (child == null) { continue; }
+                if (child == null)
+                { continue; }
 
                 // has a given value or 'auto'
                 double childArrangeWidth = Math.Min(remainingWidth, ((column.State == ColumnMeasureState.SpecificWidth) ? column.Width : column.DesiredWidth));
@@ -529,7 +533,7 @@ namespace System.Windows.Controls
             bool desiredWidthChanged = false; // whether the shared minimum width has been changed since last layout
 
             GridViewColumnCollection columns = Columns;
-            if(columns != null)
+            if (columns != null)
             {
                 foreach (GridViewColumn column in columns)
                 {
@@ -561,7 +565,7 @@ namespace System.Windows.Controls
                     }
                 }
             }
-            
+
             if (desiredWidthChanged)
             {
                 InvalidateMeasure();
@@ -581,18 +585,21 @@ namespace System.Windows.Controls
 
             if ((binding = column.DisplayMemberBinding) != null)
             {
-                cell = new TextBlock();
-
-                // Needed this. Otherwise can't size to content at startup time.
-                // The reason is cell.Text is empty after the first round of measure.
-                cell.DataContext = Content;
+                cell = new TextBlock
+                {
+                    // Needed this. Otherwise can't size to content at startup time.
+                    // The reason is cell.Text is empty after the first round of measure.
+                    DataContext = Content
+                };
 
                 cell.SetBinding(TextBlock.TextProperty, binding);
             }
             else
             {
-                ContentPresenter cp = new ContentPresenter();
-                cp.Content = Content;
+                ContentPresenter cp = new ContentPresenter
+                {
+                    Content = Content
+                };
 
                 DataTemplate dt;
                 DataTemplateSelector dts;

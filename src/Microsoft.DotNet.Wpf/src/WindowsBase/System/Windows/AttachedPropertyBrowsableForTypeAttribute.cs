@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,15 +11,15 @@ namespace System.Windows
     ///     matches (logical or).  The type may also be an interface.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true)]
-    public sealed class AttachedPropertyBrowsableForTypeAttribute : AttachedPropertyBrowsableAttribute 
+    public sealed class AttachedPropertyBrowsableForTypeAttribute : AttachedPropertyBrowsableAttribute
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
-        
-        
+
+
         /// <summary>
         ///     Creates a new AttachedPropertyBrowsableForTypeAttribute.  Provide the type
         ///     you want the attached property to be browsable for.  Multiple
@@ -31,7 +31,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(targetType);
             _targetType = targetType;
         }
-        
+
 
         //------------------------------------------------------
         //
@@ -50,7 +50,7 @@ namespace System.Windows
                 return _targetType;
             }
         }
-    
+
 
         /// <summary>
         ///     For AllowMultiple attributes, TypeId must be unique for
@@ -76,17 +76,18 @@ namespace System.Windows
         ///     Overrides Object.Equals to implement correct equality semantics for this
         ///     attribute.
         /// </summary>
-        public override bool Equals(object obj) 
+        public override bool Equals(object obj)
         {
             AttachedPropertyBrowsableForTypeAttribute other = obj as AttachedPropertyBrowsableForTypeAttribute;
-            if (other == null) return false;
+            if (other == null)
+                return false;
             return _targetType == other._targetType;
         }
 
         /// <summary>
         ///     Overrides Object.GetHashCode to implement correct hashing semantics.
         /// </summary>
-        public override int GetHashCode() 
+        public override int GetHashCode()
         {
             return _targetType.GetHashCode();
         }
@@ -98,7 +99,7 @@ namespace System.Windows
         //
         //------------------------------------------------------
 
-    
+
         /// <summary>
         ///     Returns true if the dependency object passed to the method is a type, 
         ///     subtype or implememts the interface of any of the the types contained 
@@ -118,13 +119,13 @@ namespace System.Windows
             // _dTargetType so that a bad property that throws won't consistently
             // slow the system down with ArgumentExceptions.
 
-            if (!_dTargetTypeChecked) 
+            if (!_dTargetTypeChecked)
             {
                 try
                 {
                     _dTargetType = DependencyObjectType.FromSystemType(_targetType);
                 }
-                catch(ArgumentException)
+                catch (ArgumentException)
                 {
                 }
 
@@ -132,7 +133,7 @@ namespace System.Windows
             }
 
 
-            if (_dTargetType != null && _dTargetType.IsInstanceOfType(d)) 
+            if (_dTargetType != null && _dTargetType.IsInstanceOfType(d))
             {
                 return true;
             }
@@ -153,7 +154,7 @@ namespace System.Windows
                 return true;
             }
         }
-    
+
         //------------------------------------------------------
         //
         //  Private Fields

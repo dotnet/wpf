@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,9 +10,9 @@
 *
 \***************************************************************************/
 using System.ComponentModel;
-using System.Windows.Markup;
-using System.Windows.Data;
 using System.Globalization;
+using System.Windows.Data;
+using System.Windows.Markup;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -22,7 +22,7 @@ namespace System.Windows
     ///     TargetType property setting class.
     /// </summary>
     [XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")]
-    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")] 
+    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")]
     public class Setter : SetterBase, ISupportInitialize
     {
         /// <summary>
@@ -36,25 +36,25 @@ namespace System.Windows
         /// <summary>
         ///     Property Setter construction - given property and value
         /// </summary>
-        public Setter( DependencyProperty property, object value )
+        public Setter(DependencyProperty property, object value)
         {
-            Initialize( property, value, null );
+            Initialize(property, value, null);
         }
 
         /// <summary>
         ///     Property Setter construction - given property, value, and string identifier for child node.
         /// </summary>
-        public Setter( DependencyProperty property, object value, string targetName )
+        public Setter(DependencyProperty property, object value, string targetName)
         {
-            Initialize( property, value, targetName );
+            Initialize(property, value, targetName);
         }
 
         /// <summary>
         ///     Method that does all the initialization work for the constructors.
         /// </summary>
-        private void Initialize( DependencyProperty property, object value, string target )
+        private void Initialize(DependencyProperty property, object value, string target)
         {
-            if( value == DependencyProperty.UnsetValue )
+            if (value == DependencyProperty.UnsetValue)
             {
                 throw new ArgumentException(SR.SetterValueCannotBeUnset);
             }
@@ -68,7 +68,7 @@ namespace System.Windows
             _target = target;
         }
 
-        private void CheckValidProperty( DependencyProperty property)
+        private void CheckValidProperty(DependencyProperty property)
         {
             ArgumentNullException.ThrowIfNull(property);
             if (property.ReadOnly)
@@ -77,7 +77,7 @@ namespace System.Windows
                 //  Rather than silently do nothing, throw error.
                 throw new ArgumentException(SR.Format(SR.ReadOnlyPropertyNotAllowed, property.Name, GetType().Name));
             }
-            if( property == FrameworkElement.NameProperty)
+            if (property == FrameworkElement.NameProperty)
             {
                 throw new InvalidOperationException(SR.Format(SR.CannotHavePropertyInStyle, FrameworkElement.NameProperty.Name));
             }
@@ -100,7 +100,7 @@ namespace System.Windows
                 throw new ArgumentException(SR.Format(SR.NullPropertyIllegal, "Setter.Property"));
             }
 
-            if( String.IsNullOrEmpty(TargetName))
+            if (String.IsNullOrEmpty(TargetName))
             {
                 // Setter on container is not allowed to affect the StyleProperty.
                 if (dp == FrameworkElement.StyleProperty)
@@ -117,7 +117,7 @@ namespace System.Windows
                 // The only markup extensions supported by styles is resources and bindings.
                 if (value is MarkupExtension)
                 {
-                    if ( !(value is DynamicResourceExtension) && !(value is System.Windows.Data.BindingBase) )
+                    if (!(value is DynamicResourceExtension) && !(value is System.Windows.Data.BindingBase))
                     {
                         throw new ArgumentException(SR.Format(SR.SetterValueOfMarkupExtensionNotSupported,
                                                            value.GetType().Name));
@@ -177,7 +177,7 @@ namespace System.Windows
 
             set
             {
-                if( value == DependencyProperty.UnsetValue )
+                if (value == DependencyProperty.UnsetValue)
                 {
                     throw new ArgumentException(SR.SetterValueCannotBeUnset);
                 }
@@ -185,7 +185,7 @@ namespace System.Windows
                 CheckSealed();
 
                 // No Expression support
-                if( value is Expression )
+                if (value is Expression)
                 {
                     throw new ArgumentException(SR.StyleValueOfExpressionNotSupported);
                 }
@@ -318,9 +318,9 @@ namespace System.Windows
 
         #endregion
 
-        private DependencyProperty    _property = null;
-        private object                _value    = DependencyProperty.UnsetValue;
-        private string                _target   = null;
+        private DependencyProperty _property = null;
+        private object _value = DependencyProperty.UnsetValue;
+        private string _target = null;
         private object _unresolvedProperty = null;
         private object _unresolvedValue = null;
         private ITypeDescriptorContext _serviceProvider = null;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -54,7 +54,7 @@ namespace MS.Internal.FontCache
             bool isSingleSupportedFile = Util.IsSupportedFontExtension(Util.GetUriExtension(_uri), out isComposite);
             if (isSingleSupportedFile || !Util.IsEnumerableFontUriScheme(_uri))
             {
-                _fontSources = new List<Text.TextInterface.IFontSource>(1);                
+                _fontSources = new List<Text.TextInterface.IFontSource>(1);
                 _fontSources.Add(new FontSource(_uri, false, isComposite));
             }
             else
@@ -144,13 +144,13 @@ namespace MS.Internal.FontCache
 
                                 files = fontPaths;
                             }
-}
+                        }
                         else
                         {
                             if (_tryGetCompositeFontsOnly)
                             {
                                 files = Directory.GetFiles(_uri.LocalPath, "*" + Util.CompositeFontExtension);
-                                isOnlyCompositeFontFiles = true;                               
+                                isOnlyCompositeFontFiles = true;
                             }
                             else
                             {
@@ -160,7 +160,7 @@ namespace MS.Internal.FontCache
                     }
                     else
                     {
-                        files = new string[1] {_uri.LocalPath};
+                        files = new string[1] { _uri.LocalPath };
                     }
 
                     fontSources = new List<Text.TextInterface.IFontSource>(files.Count);
@@ -175,7 +175,7 @@ namespace MS.Internal.FontCache
                     {
                         bool isComposite;
                         foreach (string file in files)
-                        {                            
+                        {
                             if (Util.IsSupportedFontExtension(Path.GetExtension(file), out isComposite))
                                 fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), _isWindowsFonts, isComposite));
                         }
@@ -216,7 +216,7 @@ namespace MS.Internal.FontCache
             }
         }
 
-        
+
         #region IEnumerable<FontSource> Members
 
         IEnumerator<Text.TextInterface.IFontSource> System.Collections.Generic.IEnumerable<Text.TextInterface.IFontSource>.GetEnumerator()
@@ -236,21 +236,21 @@ namespace MS.Internal.FontCache
         }
 
         #endregion
-    
 
-        private Uri                         _uri;
 
-        private bool                        _isWindowsFonts;
+        private Uri _uri;
+
+        private bool _isWindowsFonts;
 
         // _isFileSystemFolder flag makes sense only when _uri.IsFile is set to true.
-        private bool                                           _isFileSystemFolder;
+        private bool _isFileSystemFolder;
         private volatile IList<Text.TextInterface.IFontSource> _fontSources;
 
         // Flag to indicate that only composite fonts in the provided URI location should be retrieved.        
-        private bool                               _tryGetCompositeFontsOnly;
+        private bool _tryGetCompositeFontsOnly;
 
         private const string InstalledWindowsFontsRegistryKey = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Fonts";
         private const string InstalledWindowsFontsRegistryKeyFullPath = @"HKEY_LOCAL_MACHINE\" + InstalledWindowsFontsRegistryKey;
-}
+    }
 }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -55,7 +55,7 @@ namespace System.Windows.Media.Media3D
 
         private static void CenterXPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RotateTransform3D target = ((RotateTransform3D) d);
+            RotateTransform3D target = ((RotateTransform3D)d);
 
             target._cachedCenterXValue = (double)e.NewValue;
 
@@ -64,7 +64,7 @@ namespace System.Windows.Media.Media3D
         }
         private static void CenterYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RotateTransform3D target = ((RotateTransform3D) d);
+            RotateTransform3D target = ((RotateTransform3D)d);
 
             target._cachedCenterYValue = (double)e.NewValue;
 
@@ -73,7 +73,7 @@ namespace System.Windows.Media.Media3D
         }
         private static void CenterZPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RotateTransform3D target = ((RotateTransform3D) d);
+            RotateTransform3D target = ((RotateTransform3D)d);
 
             target._cachedCenterZValue = (double)e.NewValue;
 
@@ -90,20 +90,20 @@ namespace System.Windows.Media.Media3D
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            RotateTransform3D target = ((RotateTransform3D) d);
+            RotateTransform3D target = ((RotateTransform3D)d);
 
 
             target._cachedRotationValue = (Rotation3D)e.NewValue;
 
-            Rotation3D oldV = (Rotation3D) e.OldValue;
-            Rotation3D newV = (Rotation3D) e.NewValue;
+            Rotation3D oldV = (Rotation3D)e.OldValue;
+            Rotation3D newV = (Rotation3D)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -118,8 +118,8 @@ namespace System.Windows.Media.Media3D
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -277,31 +277,33 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_ROTATETRANSFORM3D))
-                {
-                    Rotation3D vRotation = Rotation;
-                    if (vRotation != null) ((DUCE.IResource)vRotation).AddRefOnChannel(channel);
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_ROTATETRANSFORM3D))
+            {
+                Rotation3D vRotation = Rotation;
+                if (vRotation != null)
+                    ((DUCE.IResource)vRotation).AddRefOnChannel(channel);
 
-                    AddRefOnChannelAnimations(channel);
+                AddRefOnChannelAnimations(channel);
 
 
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                }
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
 
-                return _duceResource.GetHandle(channel);
-}
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
-                {
-                    Rotation3D vRotation = Rotation;
-                    if (vRotation != null) ((DUCE.IResource)vRotation).ReleaseOnChannel(channel);
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                Rotation3D vRotation = Rotation;
+                if (vRotation != null)
+                    ((DUCE.IResource)vRotation).ReleaseOnChannel(channel);
 
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.

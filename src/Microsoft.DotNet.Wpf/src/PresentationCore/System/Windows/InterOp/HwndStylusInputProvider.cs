@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,9 +7,9 @@ using System.Windows.Input;
 using System.Windows.Input.StylusWisp;
 using System.Windows.Media;
 using System.Windows.Threading;
-using MS.Win32;
 using MS.Internal.Interop;
 using MS.Utility;
+using MS.Win32;
 
 namespace System.Windows.Interop
 {
@@ -18,12 +18,12 @@ namespace System.Windows.Interop
     internal sealed class HwndStylusInputProvider : DispatcherObject, IStylusInputProvider
     {
         private const uint TABLET_PRESSANDHOLD_DISABLED = 0x00000001;
-        private const uint TABLET_TAPFEEDBACK_DISABLED  = 0x00000008;
-        private const uint TABLET_TOUCHUI_FORCEON       = 0x00000100;
-        private const uint TABLET_TOUCHUI_FORCEOFF      = 0x00000200;
-        private const uint TABLET_FLICKS_DISABLED       = 0x00010000;
+        private const uint TABLET_TAPFEEDBACK_DISABLED = 0x00000008;
+        private const uint TABLET_TOUCHUI_FORCEON = 0x00000100;
+        private const uint TABLET_TOUCHUI_FORCEOFF = 0x00000200;
+        private const uint TABLET_FLICKS_DISABLED = 0x00010000;
 
-        private const int MultiTouchEnabledFlag         = 0x01000000;
+        private const int MultiTouchEnabledFlag = 0x01000000;
 
         /////////////////////////////////////////////////////////////////////
         internal HwndStylusInputProvider(HwndSource source)
@@ -50,7 +50,7 @@ namespace System.Windows.Interop
 
         public void Dispose()
         {
-            if(_site is not null)
+            if (_site is not null)
             {
                 _site.Dispose();
                 _site = null;
@@ -64,11 +64,11 @@ namespace System.Windows.Interop
         /////////////////////////////////////////////////////////////////////
         bool IInputProvider.ProvidesInputForRootVisual(Visual v) => _source.RootVisual == v;
 
-        void IInputProvider.NotifyDeactivate() {}
+        void IInputProvider.NotifyDeactivate() { }
 
         IntPtr IStylusInputProvider.FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            IntPtr result = IntPtr.Zero ;
+            IntPtr result = IntPtr.Zero;
 
             // It is possible to be re-entered during disposal.  Just return.
             if (_source is null)
@@ -76,7 +76,7 @@ namespace System.Windows.Interop
                 return result;
             }
 
-            switch(msg)
+            switch (msg)
             {
                 case WindowMessage.WM_ENABLE:
                     _stylusLogic.OnWindowEnableChanged(hwnd, (int)NativeMethods.IntPtrToInt32(wParam) == 0);
@@ -138,7 +138,7 @@ namespace System.Windows.Interop
 
                     // We always handle any scroll actions if we are enabled.  We do this when we see the SystemGesture Flick come through.
                     // Note: Scrolling happens on window flicked on even if it is not the active window.
-                    if(_stylusLogic != null && _stylusLogic.Enabled && (WispLogic.GetFlickAction(flickData) == StylusLogic.FlickAction.Scroll))
+                    if (_stylusLogic != null && _stylusLogic.Enabled && (WispLogic.GetFlickAction(flickData) == StylusLogic.FlickAction.Scroll))
                     {
                         result = new IntPtr(0x0001); // tell UIHub the flick has already been handled.
                     }
@@ -160,8 +160,8 @@ namespace System.Windows.Interop
 
         /////////////////////////////////////////////////////////////////////
 
-        private WispLogic         _stylusLogic;
-        private HwndSource        _source;
+        private WispLogic _stylusLogic;
+        private HwndSource _source;
         private InputProviderSite _site;
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@
 //              Windows will send it when user is logging out/shutting down. 
 //              ( See http://msdn.microsoft.com/library/default.asp?url=/library/en-us/sysinfo/base/wm_queryendsession.asp ). 
 //
-//              By default if this event is not cancelled � Avalon will then call Application.Shutdown.
+//              By default if this event is not cancelled – Avalon will then call Application.Shutdown.
 //
 
 using System.ComponentModel;

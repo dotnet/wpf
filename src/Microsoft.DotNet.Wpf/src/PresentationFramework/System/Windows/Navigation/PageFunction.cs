@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,7 +53,7 @@ namespace System.Windows.Navigation
                 _fRemoveFromJournal = value;
             }
         }
-        
+
         #endregion Public Properties
 
         #region Protected Methods
@@ -193,7 +193,7 @@ namespace System.Windows.Navigation
         #region Private Fields
         private Guid _pageFunctionId;
         private Guid _parentPageFunctionId;
-        
+
         private bool _fRemoveFromJournal = true; // new default, to make PFs behave more like functions
 
         private bool _resume;

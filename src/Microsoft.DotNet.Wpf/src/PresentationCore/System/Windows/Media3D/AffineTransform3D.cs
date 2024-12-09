@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,14 +26,14 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         // Prevent 3rd parties from extending this abstract base class.
-        internal AffineTransform3D() {}
+        internal AffineTransform3D() { }
 
         //------------------------------------------------------
         //
         //  Public Methods
         //
         //------------------------------------------------------
-        
+
         //------------------------------------------------------
         //
         //  Public Properties
@@ -43,7 +43,7 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         ///     Determines if this is an affine transformation.
         /// </summary>
-        public override bool IsAffine 
+        public override bool IsAffine
         {
             get
             {

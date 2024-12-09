@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //
 // 
 // Description:
-//          This event is fired when the application starts  - once that application�s Run() 
+//          This event is fired when the application starts  - once that application’s Run() 
 //          method has been called. 
 //
 //          The developer will typically hook this event if they want to take action at startup time 
@@ -68,9 +68,9 @@ namespace System.Windows
 
             return retValue;
         }
-        
 
-        private String[]    _args;
-        private bool        _performDefaultAction;
+
+        private String[] _args;
+        private bool _performDefaultAction;
     }
 }

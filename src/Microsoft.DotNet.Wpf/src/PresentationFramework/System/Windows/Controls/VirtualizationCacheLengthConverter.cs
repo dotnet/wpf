@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,11 +6,11 @@
 // Description: Virtualization cache length converter implementation
 //
 
-using MS.Internal;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Reflection;
+using MS.Internal;
 
 namespace System.Windows.Controls
 {
@@ -64,8 +64,8 @@ namespace System.Windows.Controls
         public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
-            if (    destinationType == typeof(InstanceDescriptor)
-                ||  destinationType == typeof(string))
+            if (destinationType == typeof(InstanceDescriptor)
+                || destinationType == typeof(string))
             {
                 return true;
             }
@@ -213,7 +213,7 @@ namespace System.Windows.Controls
             throw new FormatException(SR.Format(SR.InvalidStringVirtualizationCacheLength, s));
         }
 
-    #endregion
+        #endregion
     }
 }
 

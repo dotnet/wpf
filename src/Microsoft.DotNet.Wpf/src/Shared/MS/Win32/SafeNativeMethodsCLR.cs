@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,12 +15,12 @@ namespace MS.Win32
             return SafeNativeMethodsPrivate.GetMessagePos();
         }
 
-        public static  IntPtr GetKeyboardLayout(int dwLayout)
+        public static IntPtr GetKeyboardLayout(int dwLayout)
         {
             return SafeNativeMethodsPrivate.GetKeyboardLayout(dwLayout);
         }
 
-        public static  IntPtr ActivateKeyboardLayout(HandleRef hkl, int uFlags)
+        public static IntPtr ActivateKeyboardLayout(HandleRef hkl, int uFlags)
         {
             return SafeNativeMethodsPrivate.ActivateKeyboardLayout(hkl, uFlags);
         }
@@ -29,7 +29,7 @@ namespace MS.Win32
         public static int GetKeyboardLayoutList(int size, [Out, MarshalAs(UnmanagedType.LPArray)] IntPtr[] hkls)
         {
             int result = NativeMethodsSetLastError.GetKeyboardLayoutList(size, hkls);
-            if(result == 0)
+            if (result == 0)
             {
                 int win32Err = Marshal.GetLastWin32Error();
                 if (win32Err != 0)
@@ -43,7 +43,7 @@ namespace MS.Win32
 #endif
 
 
-        internal static void GetMonitorInfo(HandleRef hmonitor, [In, Out]NativeMethods.MONITORINFOEX info)
+        internal static void GetMonitorInfo(HandleRef hmonitor, [In, Out] NativeMethods.MONITORINFOEX info)
         {
             if (SafeNativeMethodsPrivate.IntGetMonitorInfo(hmonitor, info) == false)
             {
@@ -52,21 +52,21 @@ namespace MS.Win32
         }
 
 
-        public static  IntPtr MonitorFromPoint(NativeMethods.POINT pt, int flags)
+        public static IntPtr MonitorFromPoint(NativeMethods.POINT pt, int flags)
         {
-            return SafeNativeMethodsPrivate.MonitorFromPoint(pt,flags);
+            return SafeNativeMethodsPrivate.MonitorFromPoint(pt, flags);
         }
 
 
-        public static  IntPtr MonitorFromRect(ref NativeMethods.RECT rect, int flags)
+        public static IntPtr MonitorFromRect(ref NativeMethods.RECT rect, int flags)
         {
-            return  SafeNativeMethodsPrivate.MonitorFromRect(ref rect,flags);
+            return SafeNativeMethodsPrivate.MonitorFromRect(ref rect, flags);
         }
 
 
-        public static  IntPtr MonitorFromWindow(HandleRef handle, int flags)
-       {
-        return SafeNativeMethodsPrivate.MonitorFromWindow(handle, flags);
+        public static IntPtr MonitorFromWindow(HandleRef handle, int flags)
+        {
+            return SafeNativeMethodsPrivate.MonitorFromWindow(handle, flags);
         }
 
 #if BASE_NATIVEMETHODS
@@ -74,7 +74,7 @@ namespace MS.Win32
         public static NativeMethods.CursorHandle LoadCursor(HandleRef hInst, IntPtr iconId)
         {
             NativeMethods.CursorHandle cursorHandle = SafeNativeMethodsPrivate.LoadCursor(hInst, iconId);
-            if(cursorHandle == null || cursorHandle.IsInvalid)
+            if (cursorHandle == null || cursorHandle.IsInvalid)
             {
                 throw new Win32Exception();
             }
@@ -107,7 +107,7 @@ namespace MS.Win32
 
         internal static void GetClientRect(HandleRef hWnd, [In, Out] ref NativeMethods.RECT rect)
         {
-            if(!SafeNativeMethodsPrivate.IntGetClientRect(hWnd, ref rect))
+            if (!SafeNativeMethodsPrivate.IntGetClientRect(hWnd, ref rect))
             {
                 throw new Win32Exception();
             }
@@ -125,7 +125,7 @@ namespace MS.Win32
 
         internal static void GetWindowRect(HandleRef hWnd, [In, Out] ref NativeMethods.RECT rect)
         {
-            if(!SafeNativeMethodsPrivate.IntGetWindowRect(hWnd, ref rect))
+            if (!SafeNativeMethodsPrivate.IntGetWindowRect(hWnd, ref rect))
             {
                 throw new Win32Exception();
             }
@@ -163,7 +163,7 @@ namespace MS.Win32
         {
             bool retVal = SafeNativeMethodsPrivate.TrackMouseEvent(tme);
             int win32Err = Marshal.GetLastWin32Error(); // Dance around FxCop
-            if(!retVal && win32Err != 0)
+            if (!retVal && win32Err != 0)
             {
                 throw new System.ComponentModel.Win32Exception(win32Err);
             }
@@ -175,7 +175,7 @@ namespace MS.Win32
         // returns the timer ID, then we'll need to add one.
         public static void SetTimer(HandleRef hWnd, int nIDEvent, int uElapse)
         {
-            if(SafeNativeMethodsPrivate.SetTimer(hWnd, nIDEvent, uElapse, null) == IntPtr.Zero)
+            if (SafeNativeMethodsPrivate.SetTimer(hWnd, nIDEvent, uElapse, null) == IntPtr.Zero)
             {
                 throw new Win32Exception();
             }
@@ -185,7 +185,7 @@ namespace MS.Win32
         // that returns the timer ID.
         public static bool TrySetTimer(HandleRef hWnd, int nIDEvent, int uElapse)
         {
-            if(SafeNativeMethodsPrivate.TrySetTimer(hWnd, nIDEvent, uElapse, null) == IntPtr.Zero)
+            if (SafeNativeMethodsPrivate.TrySetTimer(hWnd, nIDEvent, uElapse, null) == IntPtr.Zero)
             {
                 return false;
             }
@@ -196,7 +196,7 @@ namespace MS.Win32
 
         public static bool KillTimer(HandleRef hwnd, int idEvent)
         {
-            return (SafeNativeMethodsPrivate.KillTimer(hwnd,idEvent));
+            return (SafeNativeMethodsPrivate.KillTimer(hwnd, idEvent));
         }
 
 
@@ -216,7 +216,7 @@ namespace MS.Win32
 
         public static bool IsWindowUnicode(HandleRef hWnd)
         {
-        return (SafeNativeMethodsPrivate.IsWindowUnicode(hWnd));
+            return (SafeNativeMethodsPrivate.IsWindowUnicode(hWnd));
         }
 
 
@@ -236,7 +236,7 @@ namespace MS.Win32
 
         public static void ScreenToClient(HandleRef hWnd, ref NativeMethods.POINT pt)
         {
-            if(SafeNativeMethodsPrivate.IntScreenToClient(hWnd, ref pt) == 0)
+            if (SafeNativeMethodsPrivate.IntScreenToClient(hWnd, ref pt) == 0)
             {
                 throw new Win32Exception();
             }
@@ -270,7 +270,7 @@ namespace MS.Win32
         public static IntPtr GetCapture()
         {
             return SafeNativeMethodsPrivate.GetCapture();
-}
+        }
 #if BASE_NATIVEMETHODS
         public static IntPtr SetCapture(HandleRef hwnd)
         {
@@ -279,7 +279,7 @@ namespace MS.Win32
 
         internal static int MapVirtualKey(int nVirtKey, int nMapType)
         {
-            return SafeNativeMethodsPrivate.MapVirtualKey(nVirtKey,nMapType);
+            return SafeNativeMethodsPrivate.MapVirtualKey(nVirtKey, nMapType);
         }
 #endif
 
@@ -313,9 +313,9 @@ namespace MS.Win32
             try
             {
                 if (SafeNativeMethodsPrivate.WTSQuerySessionInformation(
-                    NativeMethods.WTS_CURRENT_SERVER_HANDLE, 
-                    sessionId, 
-                    NativeMethods.WTS_INFO_CLASS.WTSConnectState, 
+                    NativeMethods.WTS_CURRENT_SERVER_HANDLE,
+                    sessionId,
+                    NativeMethods.WTS_INFO_CLASS.WTSConnectState,
                     out buffer, out bytesReturned) && (bytesReturned >= sizeof(int)))
                 {
                     var data = Marshal.ReadInt32(buffer);
@@ -370,7 +370,7 @@ namespace MS.Win32
             var ptrProcessDpiAwareness = IntPtr.Zero;
             var hr = (int)SafeNativeMethodsPrivate.GetProcessDpiAwareness(hProcess, out ptrProcessDpiAwareness);
 
-            if(hr != NativeMethods.S_OK)
+            if (hr != NativeMethods.S_OK)
             {
                 Marshal.ThrowExceptionForHR(hr);
             }
@@ -533,12 +533,12 @@ namespace MS.Win32
             int dwExStyle,
             int dpi)
         {
-            return 
+            return
                 SafeNativeMethodsPrivate.AdjustWindowRectExForDpi(
-                    ref lpRect, 
-                    dwStyle, 
-                    bMenu, 
-                    dwExStyle, 
+                    ref lpRect,
+                    dwStyle,
+                    bMenu,
+                    dwExStyle,
                     dpi);
         }
 
@@ -558,7 +558,7 @@ namespace MS.Win32
         /// Minimum supported client: Windows 8.1
         /// </remarks>
         internal static bool LogicalToPhysicalPointForPerMonitorDPI(
-            HandleRef hWnd, 
+            HandleRef hWnd,
             ref NativeMethods.POINT lpPoint)
         {
             return SafeNativeMethodsPrivate.LogicalToPhysicalPointForPerMonitorDPI(hWnd, ref lpPoint);
@@ -579,7 +579,7 @@ namespace MS.Win32
         /// Minimum supported client: Windows 8.1
         /// </remarks>
         internal static bool PhysicalToLogicalPointForPerMonitorDPI(
-            HandleRef hWnd, 
+            HandleRef hWnd,
             ref NativeMethods.POINT lpPoint)
         {
             return SafeNativeMethodsPrivate.PhysicalToLogicalPointForPerMonitorDPI(hWnd, ref lpPoint);
@@ -588,8 +588,8 @@ namespace MS.Win32
         private partial class SafeNativeMethodsPrivate
         {
             [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = CharSet.Auto)]
-            [return:MarshalAs(UnmanagedType.Bool)]
-            public static extern bool ProcessIdToSessionId([In]int dwProcessId, [Out]out int pSessionId);
+            [return: MarshalAs(UnmanagedType.Bool)]
+            public static extern bool ProcessIdToSessionId([In] int dwProcessId, [Out] out int pSessionId);
 
             [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
             public static extern int GetCurrentThreadId();
@@ -615,44 +615,44 @@ namespace MS.Win32
             [DllImport(ExternDll.User32, EntryPoint = "AdjustWindowRectEx", ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
             public static extern bool IntAdjustWindowRectEx(ref NativeMethods.RECT lpRect, int dwStyle, bool bMenu, int dwExStyle);
 
-            [DllImport(ExternDll.User32, ExactSpelling=true)]
+            [DllImport(ExternDll.User32, ExactSpelling = true)]
             public static extern IntPtr MonitorFromRect(ref NativeMethods.RECT rect, int flags);
 
             [DllImport(ExternDll.User32, ExactSpelling = true)]
             public static extern IntPtr MonitorFromPoint(NativeMethods.POINT pt, int flags);
 
-            [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=CharSet.Auto)]
+            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
             public static extern IntPtr ActivateKeyboardLayout(HandleRef hkl, int uFlags);
 
-            [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=CharSet.Auto)]
+            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
             public static extern IntPtr GetKeyboardLayout(int dwLayout);
 
-            [DllImport(ExternDll.User32, SetLastError = true, ExactSpelling=true, CharSet=System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, SetLastError = true, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
             public static extern IntPtr SetTimer(HandleRef hWnd, int nIDEvent, int uElapse, NativeMethods.TimerProc lpTimerFunc);
 
-            [DllImport(ExternDll.User32, EntryPoint="SetTimer", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, EntryPoint = "SetTimer", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
             public static extern IntPtr TrySetTimer(HandleRef hWnd, int nIDEvent, int uElapse, NativeMethods.TimerProc lpTimerFunc);
 
-            [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
             public static extern bool KillTimer(HandleRef hwnd, int idEvent);
 
-            [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
             public static extern bool IsWindowUnicode(HandleRef hWnd);
 
-            [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=CharSet.Auto)]
+            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
             public static extern int GetDoubleClickTime();
 
             [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
             public static extern bool IsWindowEnabled(HandleRef hWnd);
 
-            [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
             public static extern IntPtr GetCursor();
 
             [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
             public static extern int ShowCursor(bool show);
 
             [DllImport(ExternDll.User32, EntryPoint = "GetMonitorInfo", CharSet = CharSet.Auto, SetLastError = true)]
-            public static extern bool IntGetMonitorInfo(HandleRef hmonitor, [In, Out]NativeMethods.MONITORINFOEX info);
+            public static extern bool IntGetMonitorInfo(HandleRef hmonitor, [In, Out] NativeMethods.MONITORINFOEX info);
 
             [DllImport(ExternDll.User32, SetLastError = true, ExactSpelling = true)]
             public static extern IntPtr MonitorFromWindow(HandleRef handle, int flags);
@@ -670,21 +670,21 @@ namespace MS.Win32
             [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
             public static extern IntPtr SetCursor(SafeHandle hcursor);
 
-            [DllImport(ExternDll.User32, ExactSpelling=true, SetLastError=true)]
+            [DllImport(ExternDll.User32, ExactSpelling = true, SetLastError = true)]
             public static extern bool TrackMouseEvent(NativeMethods.TRACKMOUSEEVENT tme);
 
-            [DllImport(ExternDll.User32, CharSet=System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
+            [DllImport(ExternDll.User32, CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
             public static extern NativeMethods.CursorHandle LoadCursor(HandleRef hInst, IntPtr iconId);
 
 #endif
 
 #if BASE_NATIVEMETHODS || CORE_NATIVEMETHODS || FRAMEWORK_NATIVEMETHODS
-            [DllImport(ExternDll.Kernel32, ExactSpelling=true, CharSet=System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
             public static extern int GetTickCount();
 
 #endif
 
-            [DllImport(ExternDll.User32, EntryPoint="ScreenToClient", SetLastError=true, ExactSpelling=true, CharSet=CharSet.Auto)]
+            [DllImport(ExternDll.User32, EntryPoint = "ScreenToClient", SetLastError = true, ExactSpelling = true, CharSet = CharSet.Auto)]
             public static extern int IntScreenToClient(HandleRef hWnd, ref NativeMethods.POINT pt);
 
 #if BASE_NATIVEMETHODS
@@ -694,13 +694,13 @@ namespace MS.Win32
             [DllImport(ExternDll.WtsApi32, SetLastError = true, EntryPoint = "WTSQuerySessionInformation", CharSet = CharSet.Auto)]
             [return: MarshalAs(UnmanagedType.Bool)]
             public static extern bool WTSQuerySessionInformation(
-                [In]IntPtr hServer, 
-                [In] int SessionId, 
-                [In]NativeMethods.WTS_INFO_CLASS WTSInfoClass, 
-                [Out]out IntPtr ppBuffer, [Out]out int BytesReturned);
+                [In] IntPtr hServer,
+                [In] int SessionId,
+                [In] NativeMethods.WTS_INFO_CLASS WTSInfoClass,
+                [Out] out IntPtr ppBuffer, [Out] out int BytesReturned);
 
             [DllImport(ExternDll.WtsApi32, EntryPoint = "WTSFreeMemory", CharSet = CharSet.Auto)]
-            public static extern bool WTSFreeMemory([In]IntPtr pMemory);
+            public static extern bool WTSFreeMemory([In] IntPtr pMemory);
 
             /// <summary>
             /// Retrieves the dots per inch (dpi) awareness of the specified process
@@ -767,9 +767,9 @@ namespace MS.Win32
             [DllImport(ExternDll.User32, CallingConvention = CallingConvention.Winapi, SetLastError = true)]
             [return: MarshalAs(UnmanagedType.Bool)]
             internal static extern bool AdjustWindowRectExForDpi(
-                [In] [Out] ref NativeMethods.RECT lpRect,
+                [In][Out] ref NativeMethods.RECT lpRect,
                 [In] int dwStyle,
-                [In] [MarshalAs(UnmanagedType.Bool)] bool bMenu,
+                [In][MarshalAs(UnmanagedType.Bool)] bool bMenu,
                 [In] int dwExStyle,
                 [In] int dpi);
 

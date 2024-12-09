@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,7 +25,7 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         /// <param name="length">number of characters</param>
         public TextEndOfParagraph(int length) : base(length)
-        {}
+        { }
 
 
         /// <summary>
@@ -34,14 +34,14 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="length">number of characters</param>
         /// <param name="textRunProperties">linebreak text run properties</param>
         public TextEndOfParagraph(
-            int                 length, 
-            TextRunProperties   textRunProperties
+            int length,
+            TextRunProperties textRunProperties
             )
             : base(
-                length, 
+                length,
                 textRunProperties
                 )
-        {}
+        { }
 
         #endregion
     }

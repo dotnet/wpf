@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -178,16 +178,17 @@ namespace MS.Internal.Documents
             Guid guidID = Guid.NewGuid();
 
             // Create a new SignatureDefinition
-            XpsSignatureDefinition xpsSignatureDefinition = new XpsSignatureDefinition();
+            XpsSignatureDefinition xpsSignatureDefinition = new XpsSignatureDefinition
+            {
+                // Use the digSig to setup the SignatureDefinition.
+                RequestedSigner = digitalSignature.SubjectName,
+                Intent = digitalSignature.Reason,
+                SigningLocale = digitalSignature.Location,
+                SignBy = digitalSignature.SignedOn,
 
-            // Use the digSig to setup the SignatureDefinition.
-            xpsSignatureDefinition.RequestedSigner = digitalSignature.SubjectName;
-            xpsSignatureDefinition.Intent = digitalSignature.Reason;
-            xpsSignatureDefinition.SigningLocale = digitalSignature.Location;
-            xpsSignatureDefinition.SignBy = digitalSignature.SignedOn;            
-
-            // Use our new guid to setup the ID
-            xpsSignatureDefinition.SpotId = guidID;
+                // Use our new guid to setup the ID
+                SpotId = guidID
+            };
 
             // Add the signature definition to the document
             FixedDocument.AddSignatureDefinition(xpsSignatureDefinition);
@@ -488,9 +489,10 @@ namespace MS.Internal.Documents
         /// passed in as a parameter</returns>
         private static DigitalSignature ConvertXpsDigitalSignature(XpsDigitalSignature xpsDigitalSignature)
         {
-            DigitalSignature digitalSignature = new DigitalSignature();
-
-            digitalSignature.XpsDigitalSignature = xpsDigitalSignature;
+            DigitalSignature digitalSignature = new DigitalSignature
+            {
+                XpsDigitalSignature = xpsDigitalSignature
+            };
 
             X509Certificate2 x509Certificate2 =
                 xpsDigitalSignature.SignerCertificate as X509Certificate2;
@@ -538,15 +540,17 @@ namespace MS.Internal.Documents
         private static DigitalSignature ConvertXpsSignatureDefinition(XpsSignatureDefinition signatureDefinition)
         {
             //Create new DigSig.  This is a request and will have the status NotSigned.
-            DigitalSignature digitalSignature = new DigitalSignature();
-            digitalSignature.SignatureState = SignatureStatus.NotSigned;
+            DigitalSignature digitalSignature = new DigitalSignature
+            {
+                SignatureState = SignatureStatus.NotSigned,
 
-            //set fields using the definition.
-            digitalSignature.SubjectName = signatureDefinition.RequestedSigner;
-            digitalSignature.Reason = signatureDefinition.Intent;
-            digitalSignature.SignedOn = signatureDefinition.SignBy;
-            digitalSignature.Location = signatureDefinition.SigningLocale;
-            digitalSignature.GuidID = signatureDefinition.SpotId;
+                //set fields using the definition.
+                SubjectName = signatureDefinition.RequestedSigner,
+                Reason = signatureDefinition.Intent,
+                SignedOn = signatureDefinition.SignBy,
+                Location = signatureDefinition.SigningLocale,
+                GuidID = signatureDefinition.SpotId
+            };
 
             return digitalSignature;
         }

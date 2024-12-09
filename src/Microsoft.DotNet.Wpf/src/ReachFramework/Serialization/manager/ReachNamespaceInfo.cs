@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,59 +16,59 @@ namespace System.Windows.Xps.Serialization
     {
         #region Constructor
 
-        internal 
+        internal
         SerializableObjectNamespaceInfo(
-            Type type, 
-            string prefix, 
+            Type type,
+            string prefix,
             string xmlNamespace
             ) :
         this(type.Namespace, prefix, xmlNamespace)
         {
         }
-    
+
         internal
         SerializableObjectNamespaceInfo(
-            string clrNamespace, 
-            string prefix, 
+            string clrNamespace,
+            string prefix,
             string xmlNamespace
             )
         {
             this._xmlNamespace = xmlNamespace;
             this._clrNamespace = clrNamespace;
-            this._prefix       = prefix;
+            this._prefix = prefix;
         }
 
         #endregion Constructor
-    
+
         #region Internal Properties
 
-        internal 
-        string 
+        internal
+        string
         Prefix
         {
-            get 
+            get
             {
-                return _prefix; 
+                return _prefix;
             }
         }
-    
-        internal 
-        string 
+
+        internal
+        string
         XmlNamespace
         {
-            get 
+            get
             {
-                 return _xmlNamespace; 
+                return _xmlNamespace;
             }
         }
-    
-        internal 
-        string 
+
+        internal
+        string
         ClrNamespace
         {
-            get 
-            { 
-                return _clrNamespace; 
+            get
+            {
+                return _clrNamespace;
             }
         }
 
@@ -87,7 +87,7 @@ namespace System.Windows.Xps.Serialization
     {
         #region Constructor
 
-        internal 
+        internal
         MetroSerializationNamespaceTable(
             MetroSerializationNamespaceTable parent
             )
@@ -96,18 +96,18 @@ namespace System.Windows.Xps.Serialization
         }
 
         #endregion Constructor
-    
+
         #region Internal Properties
 
-        internal 
-        SerializableObjectNamespaceInfo 
+        internal
+        SerializableObjectNamespaceInfo
         this[Type type]
         {
             get
             {
                 return (SerializableObjectNamespaceInfo)_innerDictionary[type];
             }
-            
+
             set
             {
                 _innerDictionary[type] = value;
@@ -115,29 +115,29 @@ namespace System.Windows.Xps.Serialization
         }
 
         #endregion Internal Properties
-        
+
         #region Internal Methods
-    
+
         internal
-        bool 
+        bool
         Contains(
             Type type
-            ) 
+            )
         {
             return _innerDictionary.Contains(type);
         }
-        
-        internal 
-        void 
+
+        internal
+        void
         Add(
-            Type type, 
-            SerializableObjectNamespaceInfo namespaceInfo) 
+            Type type,
+            SerializableObjectNamespaceInfo namespaceInfo)
         {
             _innerDictionary.Add(type, namespaceInfo);
         }
-    
-        internal 
-        void 
+
+        internal
+        void
         Initialize(
             MetroSerializationNamespaceTable parent
             )
@@ -151,7 +151,7 @@ namespace System.Windows.Xps.Serialization
 
         #region Private Data
 
-        private IDictionary _innerDictionary;        
+        private IDictionary _innerDictionary;
 
         #endregion Private Data
     };

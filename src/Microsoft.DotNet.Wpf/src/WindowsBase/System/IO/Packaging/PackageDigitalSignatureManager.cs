@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,11 +8,11 @@
 // Allow use of presharp warning numbers [6506] unknown to the compiler
 #pragma warning disable 1634, 1691
 
-using System.Security.Cryptography.Xml;                 // for SignedXml
-using System.Security.Cryptography.X509Certificates;    // for X509Certificate
-using MS.Internal.IO.Packaging;                         // for internal helpers
 using System.Collections.ObjectModel;                   // for ReadOnlyCollection<>
+using System.Security.Cryptography.X509Certificates;    // for X509Certificate
+using System.Security.Cryptography.Xml;                 // for SignedXml
 using MS.Internal;                                      // for ContentType
+using MS.Internal.IO.Packaging;                         // for internal helpers
 using MS.Internal.IO.Packaging.Extensions;
 
 namespace System.IO.Packaging
@@ -57,14 +57,14 @@ namespace System.IO.Packaging
         /// <summary>
         /// Signature being processed
         /// </summary>
-        public PackageDigitalSignature Signature 
+        public PackageDigitalSignature Signature
         {
             get
             {
                 return _signature;
             }
         }
-        
+
         /// <summary>
         /// Result of Verification
         /// </summary>
@@ -75,7 +75,7 @@ namespace System.IO.Packaging
                 return _result;
             }
         }
-        
+
         //------------------------------------------------------
         //
         //  Internal Members
@@ -99,10 +99,10 @@ namespace System.IO.Packaging
         //  Private Members
         //
         //------------------------------------------------------
-        private PackageDigitalSignature                 _signature;
-        private VerifyResult                            _result;
+        private PackageDigitalSignature _signature;
+        private VerifyResult _result;
     }
-    
+
     /// <summary>
     /// PackageDigitalSignatureManager
     /// </summary>
@@ -164,7 +164,7 @@ namespace System.IO.Packaging
         /// <remarks>Dictionary of transform Uri's indexed by ContentType.  
         /// Contains a single transform to be applied 
         /// before hashing any Part encountered with that ContentType</remarks>
-        public Dictionary<String, String> TransformMapping 
+        public Dictionary<String, String> TransformMapping
         {
             get
             {
@@ -363,7 +363,7 @@ namespace System.IO.Packaging
             // create unique signature name
             return Sign(parts, certificate, null);
         }
-        
+
         /// <summary>
         /// Sign - certificate provided by caller
         /// </summary>
@@ -377,8 +377,8 @@ namespace System.IO.Packaging
             // use default signature Id
             return Sign(parts, certificate, relationshipSelectors, XTable.Get(XTable.ID.OpcSignatureAttrValue));
         }
-        
-                /// <summary>
+
+        /// <summary>
         /// Sign - certificate provided by caller
         /// </summary>
         /// <param name="parts">list of parts to sign - may be empty or null</param>
@@ -438,7 +438,7 @@ namespace System.IO.Packaging
         /// syntax.  If the object had an ID of "myObject" the Uri on the Reference would
         /// be "#myObject".  For unsigned objects, no reference is required.</remarks>
         public PackageDigitalSignature Sign(
-            IEnumerable<Uri> parts, 
+            IEnumerable<Uri> parts,
             X509Certificate certificate,
             IEnumerable<PackageRelationshipSelector> relationshipSelectors,
             String signatureId,
@@ -508,7 +508,7 @@ namespace System.IO.Packaging
                 // existing before this sign method was called. So we want to leave those 
                 // untouched and clean up what we added in this method prior to the 
                 // exception. If the count is zero, we will also delete the origin part.
-                InternalRemoveSignature(newSignaturePartName, _signatures.Count);      
+                InternalRemoveSignature(newSignaturePartName, _signatures.Count);
                 _container.Flush();    // actually persist the revert
                 throw;
             }
@@ -674,7 +674,7 @@ namespace System.IO.Packaging
                     if (temp != VerifyResult.Success)
                     {
                         result = temp;  // note failure
-                        
+
                         if (InvalidSignatureEvent != null)
                             InvalidSignatureEvent(this, new SignatureVerificationEventArgs(_signatures[i], temp));
 
@@ -934,7 +934,7 @@ namespace System.IO.Packaging
                     }
                 }
             }
-}
+        }
 
         /// <summary>
         /// Verifies arguments to Sign() method - sub-function to reduce complexity in Sign() logic
@@ -1098,7 +1098,7 @@ namespace System.IO.Packaging
             // don't resolve if external
             if (r.TargetMode != TargetMode.Internal)
                 throw new FileFormatException(SR.PackageSignatureCorruption);
-            
+
             Uri certificatePartName = PackUriHelper.ResolvePartUri(r.SourceUri, r.TargetUri);
             if (CertificatePartReferenceCount(certificatePartName) == 1)    // we are part of the calculation so one is the magic number
                 _container.DeletePart(certificatePartName);                 // will not throw if part not found
@@ -1114,11 +1114,11 @@ namespace System.IO.Packaging
         /// <returns></returns>
         private bool DeleteRelationshipOfTypePackageToOriginVisitor(PackageRelationship r, Object context)
         {
-            Debug.Assert(Uri.Compare(r.SourceUri, 
-                                     MS.Internal.IO.Packaging.PackUriHelper.PackageRootUri, 
-                                     UriComponents.SerializationInfoString, 
-                                     UriFormat.UriEscaped, 
-                                     StringComparison.Ordinal) == 0, 
+            Debug.Assert(Uri.Compare(r.SourceUri,
+                                     MS.Internal.IO.Packaging.PackUriHelper.PackageRootUri,
+                                     UriComponents.SerializationInfoString,
+                                     UriFormat.UriEscaped,
+                                     StringComparison.Ordinal) == 0,
                 "Logic Error: This visitor should only be called with relationships from the Package itself");
 
             // don't resolve if external
@@ -1160,7 +1160,7 @@ namespace System.IO.Packaging
             try
             {
                 // remove all relationships of the type "package-to-signature-origin"
-                SafeVisitRelationships(_container.GetRelationshipsByType(_originRelationshipType), 
+                SafeVisitRelationships(_container.GetRelationshipsByType(_originRelationshipType),
                     DeleteRelationshipOfTypePackageToOriginVisitor);
 
                 _container.DeletePart(_originPartName);
@@ -1353,24 +1353,24 @@ namespace System.IO.Packaging
         //  Private Fields
         //
         //------------------------------------------------------
-        private CertificateEmbeddingOption      _certificateEmbeddingOption;
-        private Package                         _container;
-        private IntPtr                          _parentWindow;
+        private CertificateEmbeddingOption _certificateEmbeddingOption;
+        private Package _container;
+        private IntPtr _parentWindow;
         private static Uri _defaultOriginPartName = PackUriHelper.CreatePartUri(new Uri("/package/services/digital-signature/origin.psdsor", UriKind.Relative));
-        private Uri                             _originPartName = _defaultOriginPartName;
-        private PackagePart                     _originPart;
-        private String                          _hashAlgorithmString = DefaultHashAlgorithm;
-        private String                          _signatureTimeFormat = XmlSignatureProperties.DefaultDateTimeFormat;
-        private List<PackageDigitalSignature>   _signatures;
-        private Dictionary<String, String>      _transformDictionary;
-        private bool                            _originSearchConducted;             // don't look more than once for Origin part
-        private bool                            _originPartExists;                  // was the part found?
+        private Uri _originPartName = _defaultOriginPartName;
+        private PackagePart _originPart;
+        private String _hashAlgorithmString = DefaultHashAlgorithm;
+        private String _signatureTimeFormat = XmlSignatureProperties.DefaultDateTimeFormat;
+        private List<PackageDigitalSignature> _signatures;
+        private Dictionary<String, String> _transformDictionary;
+        private bool _originSearchConducted;             // don't look more than once for Origin part
+        private bool _originPartExists;                  // was the part found?
         private ReadOnlyCollection<PackageDigitalSignature> _signatureList;         // lazy-init cached return value for Signatures property
 
         private static readonly ContentType _originPartContentType = new ContentType("application/vnd.openxmlformats-package.digital-signature-origin");
 
         private static readonly String _guidStorageFormatString = @"N";     // N - simple format without adornments
-        private static readonly String _defaultHashAlgorithm =  "http://www.w3.org/2001/04/xmlenc#sha256";
+        private static readonly String _defaultHashAlgorithm = "http://www.w3.org/2001/04/xmlenc#sha256";
         private static readonly String _originRelationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/origin";
         private static readonly String _originToSignatureRelationshipType = "http://schemas.openxmlformats.org/package/2006/relationships/digital-signature/signature";
         private static readonly String _defaultSignaturePartNamePrefix = "/package/services/digital-signature/xml-signature/";

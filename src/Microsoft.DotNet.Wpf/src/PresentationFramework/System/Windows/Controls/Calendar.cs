@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -76,7 +76,7 @@ namespace System.Windows.Controls
         /// </summary>
         static Calendar()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(Calendar), new FrameworkPropertyMetadata(typeof(Calendar)));            
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(Calendar), new FrameworkPropertyMetadata(typeof(Calendar)));
             KeyboardNavigation.TabNavigationProperty.OverrideMetadata(typeof(Calendar), new FrameworkPropertyMetadata(KeyboardNavigationMode.Once));
             KeyboardNavigation.DirectionalNavigationProperty.OverrideMetadata(typeof(Calendar), new FrameworkPropertyMetadata(KeyboardNavigationMode.Contained));
             LanguageProperty.OverrideMetadata(typeof(Calendar), new FrameworkPropertyMetadata(new PropertyChangedCallback(OnLanguageChanged)));
@@ -439,7 +439,7 @@ namespace System.Windows.Controls
             "FirstDayOfWeek",
             typeof(DayOfWeek),
             typeof(Calendar),
-            new FrameworkPropertyMetadata(DateTimeHelper.GetCurrentDateFormat().FirstDayOfWeek, 
+            new FrameworkPropertyMetadata(DateTimeHelper.GetCurrentDateFormat().FirstDayOfWeek,
                                             OnFirstDayOfWeekChanged),
             new ValidateValueCallback(IsValidFirstDayOfWeek));
 
@@ -500,7 +500,7 @@ namespace System.Windows.Controls
         private static void OnLanguageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Calendar c = d as Calendar;
-            if (DependencyPropertyHelper.GetValueSource(d, Calendar.FirstDayOfWeekProperty).BaseValueSource ==  BaseValueSource.Default)
+            if (DependencyPropertyHelper.GetValueSource(d, Calendar.FirstDayOfWeekProperty).BaseValueSource == BaseValueSource.Default)
             {
                 c.SetCurrentValueInternal(FirstDayOfWeekProperty, DateTimeHelper.GetDateFormat(DateTimeHelper.GetCulture(c)).FirstDayOfWeek);
                 c.UpdateCellItems();
@@ -921,24 +921,24 @@ namespace System.Windows.Controls
                 switch (this.DisplayMode)
                 {
                     case CalendarMode.Month:
-                    {
-                        Debug.Assert(false);
-                        break;
-                    }
+                        {
+                            Debug.Assert(false);
+                            break;
+                        }
 
                     case CalendarMode.Year:
-                    {
-                        newDate = DateTimeHelper.SetYearMonth(this.DisplayDate, d);
-                        newMode = CalendarMode.Month;
-                        break;
-                    }
+                        {
+                            newDate = DateTimeHelper.SetYearMonth(this.DisplayDate, d);
+                            newMode = CalendarMode.Month;
+                            break;
+                        }
 
                     case CalendarMode.Decade:
-                    {
-                        newDate = DateTimeHelper.SetYear(this.DisplayDate, d.Year);
-                        newMode = CalendarMode.Year;
-                        break;
-                    }
+                        {
+                            newDate = DateTimeHelper.SetYear(this.DisplayDate, d.Year);
+                            newMode = CalendarMode.Year;
+                            break;
+                        }
 
                     default:
                         Debug.Assert(false);
@@ -963,26 +963,26 @@ namespace System.Windows.Controls
             switch (displayMode)
             {
                 case CalendarMode.Month:
-                {
-                    result = DateTimeHelper.AddMonths(date, offset);
-                    break;
-                }
+                    {
+                        result = DateTimeHelper.AddMonths(date, offset);
+                        break;
+                    }
 
                 case CalendarMode.Year:
-                {
-                    result = DateTimeHelper.AddYears(date, offset);
-                    break;
-                }
+                    {
+                        result = DateTimeHelper.AddYears(date, offset);
+                        break;
+                    }
 
                 case CalendarMode.Decade:
-                {
-                    result = DateTimeHelper.AddYears(this.DisplayDate, offset * YEARS_PER_DECADE);
-                    break;
-                }
+                    {
+                        result = DateTimeHelper.AddYears(this.DisplayDate, offset * YEARS_PER_DECADE);
+                        break;
+                    }
 
                 default:
-                Debug.Assert(false);
-                break;
+                    Debug.Assert(false);
+                    break;
             }
 
             return result;
@@ -996,26 +996,26 @@ namespace System.Windows.Controls
                 switch (this.DisplayMode)
                 {
                     case CalendarMode.Month:
-                    {
-                        this.SetCurrentValueInternal(DisplayDateProperty, DateTimeHelper.DiscardDayTime(d));
-                        this.CurrentDate = d;
-                        UpdateCellItems();
+                        {
+                            this.SetCurrentValueInternal(DisplayDateProperty, DateTimeHelper.DiscardDayTime(d));
+                            this.CurrentDate = d;
+                            UpdateCellItems();
 
-                        break;
-                    }
+                            break;
+                        }
 
                     case CalendarMode.Year:
                     case CalendarMode.Decade:
-                    {
-                        this.SetCurrentValueInternal(DisplayDateProperty, d);
-                        UpdateCellItems();
+                        {
+                            this.SetCurrentValueInternal(DisplayDateProperty, d);
+                            UpdateCellItems();
 
-                        break;
-                    }
+                            break;
+                        }
 
                     default:
-                    Debug.Assert(false);
-                    break;
+                        Debug.Assert(false);
+                        break;
                 }
 
                 FocusDate(d);
@@ -1068,22 +1068,22 @@ namespace System.Windows.Controls
                 switch (this.DisplayMode)
                 {
                     case CalendarMode.Month:
-                    {
-                        monthControl.UpdateMonthMode();
-                        break;
-                    }
+                        {
+                            monthControl.UpdateMonthMode();
+                            break;
+                        }
 
                     case CalendarMode.Year:
-                    {
-                        monthControl.UpdateYearMode();
-                        break;
-                    }
+                        {
+                            monthControl.UpdateYearMode();
+                            break;
+                        }
 
                     case CalendarMode.Decade:
-                    {
-                        monthControl.UpdateDecadeMode();
-                        break;
-                    }
+                        {
+                            monthControl.UpdateDecadeMode();
+                            break;
+                        }
 
                     default:
                         Debug.Assert(false);
@@ -1218,7 +1218,7 @@ namespace System.Windows.Controls
             }
         }
 
-        
+
         /// <summary>
         ///     Called when this element gets focus.
         /// </summary>
@@ -1239,7 +1239,7 @@ namespace System.Windows.Controls
                 {
                     c.FocusDate(c.DisplayDate);
                 }
-                
+
                 e.Handled = true;
             }
         }
@@ -1264,58 +1264,58 @@ namespace System.Windows.Controls
             switch (e.Key)
             {
                 case Key.Up:
-                {
-                    ProcessUpKey(ctrl, shift);
-                    return true;
-                }
+                    {
+                        ProcessUpKey(ctrl, shift);
+                        return true;
+                    }
 
                 case Key.Down:
-                {
-                    ProcessDownKey(ctrl, shift);
-                    return true;
-                }
+                    {
+                        ProcessDownKey(ctrl, shift);
+                        return true;
+                    }
 
                 case Key.Left:
-                {
-                    ProcessLeftKey(shift);
-                    return true;
-                }
+                    {
+                        ProcessLeftKey(shift);
+                        return true;
+                    }
 
                 case Key.Right:
-                {
-                    ProcessRightKey(shift);
-                    return true;
-                }
+                    {
+                        ProcessRightKey(shift);
+                        return true;
+                    }
 
                 case Key.PageDown:
-                {
-                    ProcessPageDownKey(shift);
-                    return true;
-                }
+                    {
+                        ProcessPageDownKey(shift);
+                        return true;
+                    }
 
                 case Key.PageUp:
-                {
-                    ProcessPageUpKey(shift);
-                    return true;
-                }
+                    {
+                        ProcessPageUpKey(shift);
+                        return true;
+                    }
 
                 case Key.Home:
-                {
-                    ProcessHomeKey(shift);
-                    return true;
-                }
+                    {
+                        ProcessHomeKey(shift);
+                        return true;
+                    }
 
                 case Key.End:
-                {
-                    ProcessEndKey(shift);
-                    return true;
-                }
+                    {
+                        ProcessEndKey(shift);
+                        return true;
+                    }
 
                 case Key.Enter:
                 case Key.Space:
-                {
-                    return ProcessEnterKey();
-                }
+                    {
+                        return ProcessEnterKey();
+                    }
             }
 
             return false;
@@ -1326,47 +1326,47 @@ namespace System.Windows.Controls
             switch (this.DisplayMode)
             {
                 case CalendarMode.Month:
-                {
-                    if (!ctrl || shift)
                     {
-                        DateTime? selectedDate = this._blackoutDates.GetNonBlackoutDate(DateTimeHelper.AddDays(this.CurrentDate, COLS), 1);
-                        ProcessSelection(shift, selectedDate);
-                    }
+                        if (!ctrl || shift)
+                        {
+                            DateTime? selectedDate = this._blackoutDates.GetNonBlackoutDate(DateTimeHelper.AddDays(this.CurrentDate, COLS), 1);
+                            ProcessSelection(shift, selectedDate);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
 
                 case CalendarMode.Year:
-                {
-                    if (ctrl)
                     {
-                        this.SetCurrentValueInternal(DisplayModeProperty, CalendarMode.Month);
-                        FocusDate(this.DisplayDate);
-                    }
-                    else
-                    {
-                        DateTime? selectedMonth = DateTimeHelper.AddMonths(this.DisplayDate, YEAR_COLS);
-                        OnSelectedMonthChanged(selectedMonth);
-                    }
+                        if (ctrl)
+                        {
+                            this.SetCurrentValueInternal(DisplayModeProperty, CalendarMode.Month);
+                            FocusDate(this.DisplayDate);
+                        }
+                        else
+                        {
+                            DateTime? selectedMonth = DateTimeHelper.AddMonths(this.DisplayDate, YEAR_COLS);
+                            OnSelectedMonthChanged(selectedMonth);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
 
                 case CalendarMode.Decade:
-                {
-                    if (ctrl)
                     {
-                        this.SetCurrentValueInternal(DisplayModeProperty, CalendarMode.Year);
-                        FocusDate(this.DisplayDate);
-                    }
-                    else
-                    {
-                        DateTime? selectedYear = DateTimeHelper.AddYears(this.DisplayDate, YEAR_COLS);
-                        OnSelectedYearChanged(selectedYear);
-                    }
+                        if (ctrl)
+                        {
+                            this.SetCurrentValueInternal(DisplayModeProperty, CalendarMode.Year);
+                            FocusDate(this.DisplayDate);
+                        }
+                        else
+                        {
+                            DateTime? selectedYear = DateTimeHelper.AddYears(this.DisplayDate, YEAR_COLS);
+                            OnSelectedYearChanged(selectedYear);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 
@@ -1375,38 +1375,38 @@ namespace System.Windows.Controls
             switch (this.DisplayMode)
             {
                 case CalendarMode.Month:
-                {
-                    DateTime? selectedDate = new DateTime(this.DisplayDateInternal.Year, this.DisplayDateInternal.Month, 1);
-
-                    if (DateTimeHelper.CompareYearMonth(DateTime.MaxValue, selectedDate.Value) > 0)
                     {
-                        // since DisplayDate is not equal to DateTime.MaxValue we are sure selectedDate is not null
-                        selectedDate = DateTimeHelper.AddMonths(selectedDate.Value, 1).Value;
-                        selectedDate = DateTimeHelper.AddDays(selectedDate.Value, -1).Value;
-                    }
-                    else
-                    {
-                        selectedDate = DateTime.MaxValue;
-                    }
+                        DateTime? selectedDate = new DateTime(this.DisplayDateInternal.Year, this.DisplayDateInternal.Month, 1);
 
-                    ProcessSelection(shift, selectedDate);
+                        if (DateTimeHelper.CompareYearMonth(DateTime.MaxValue, selectedDate.Value) > 0)
+                        {
+                            // since DisplayDate is not equal to DateTime.MaxValue we are sure selectedDate is not null
+                            selectedDate = DateTimeHelper.AddMonths(selectedDate.Value, 1).Value;
+                            selectedDate = DateTimeHelper.AddDays(selectedDate.Value, -1).Value;
+                        }
+                        else
+                        {
+                            selectedDate = DateTime.MaxValue;
+                        }
 
-                    break;
-                }
+                        ProcessSelection(shift, selectedDate);
+
+                        break;
+                    }
 
                 case CalendarMode.Year:
-                {
-                    DateTime selectedMonth = new DateTime(this.DisplayDate.Year, 12, 1);
-                    OnSelectedMonthChanged(selectedMonth);
-                    break;
-                }
+                    {
+                        DateTime selectedMonth = new DateTime(this.DisplayDate.Year, 12, 1);
+                        OnSelectedMonthChanged(selectedMonth);
+                        break;
+                    }
 
                 case CalendarMode.Decade:
-                {
-                    DateTime? selectedYear = new DateTime(DateTimeHelper.EndOfDecade(this.DisplayDate), 1, 1);
-                    OnSelectedYearChanged(selectedYear);
-                    break;
-                }
+                    {
+                        DateTime? selectedYear = new DateTime(DateTimeHelper.EndOfDecade(this.DisplayDate), 1, 1);
+                        OnSelectedYearChanged(selectedYear);
+                        break;
+                    }
             }
         }
 
@@ -1415,18 +1415,18 @@ namespace System.Windows.Controls
             switch (this.DisplayMode)
             {
                 case CalendarMode.Year:
-                {
-                    this.SetCurrentValueInternal(DisplayModeProperty, CalendarMode.Month);
-                    FocusDate(this.DisplayDate);
-                    return true;
-                }
+                    {
+                        this.SetCurrentValueInternal(DisplayModeProperty, CalendarMode.Month);
+                        FocusDate(this.DisplayDate);
+                        return true;
+                    }
 
                 case CalendarMode.Decade:
-                {
-                    this.SetCurrentValueInternal(DisplayModeProperty, CalendarMode.Year);
-                    FocusDate(this.DisplayDate);
-                    return true;
-                }
+                    {
+                        this.SetCurrentValueInternal(DisplayModeProperty, CalendarMode.Year);
+                        FocusDate(this.DisplayDate);
+                        return true;
+                    }
             }
 
             return false;
@@ -1437,26 +1437,26 @@ namespace System.Windows.Controls
             switch (this.DisplayMode)
             {
                 case CalendarMode.Month:
-                {
-                    // Not all types of calendars start with Day1. If Non-Gregorian is supported check this:
-                    DateTime? selectedDate = new DateTime(this.DisplayDateInternal.Year, this.DisplayDateInternal.Month, 1);
-                    ProcessSelection(shift, selectedDate);
-                    break;
-                }
+                    {
+                        // Not all types of calendars start with Day1. If Non-Gregorian is supported check this:
+                        DateTime? selectedDate = new DateTime(this.DisplayDateInternal.Year, this.DisplayDateInternal.Month, 1);
+                        ProcessSelection(shift, selectedDate);
+                        break;
+                    }
 
                 case CalendarMode.Year:
-                {
-                    DateTime selectedMonth = new DateTime(this.DisplayDate.Year, 1, 1);
-                    OnSelectedMonthChanged(selectedMonth);
-                    break;
-                }
+                    {
+                        DateTime selectedMonth = new DateTime(this.DisplayDate.Year, 1, 1);
+                        OnSelectedMonthChanged(selectedMonth);
+                        break;
+                    }
 
                 case CalendarMode.Decade:
-                {
-                    DateTime? selectedYear = new DateTime(DateTimeHelper.DecadeOfDate(this.DisplayDate), 1, 1);
-                    OnSelectedYearChanged(selectedYear);
-                    break;
-                }
+                    {
+                        DateTime? selectedYear = new DateTime(DateTimeHelper.DecadeOfDate(this.DisplayDate), 1, 1);
+                        OnSelectedYearChanged(selectedYear);
+                        break;
+                    }
             }
         }
 
@@ -1466,25 +1466,25 @@ namespace System.Windows.Controls
             switch (this.DisplayMode)
             {
                 case CalendarMode.Month:
-                {
-                    DateTime? selectedDate = this._blackoutDates.GetNonBlackoutDate(DateTimeHelper.AddDays(this.CurrentDate, moveAmmount), moveAmmount);
-                    ProcessSelection(shift, selectedDate);
-                    break;
-                }
+                    {
+                        DateTime? selectedDate = this._blackoutDates.GetNonBlackoutDate(DateTimeHelper.AddDays(this.CurrentDate, moveAmmount), moveAmmount);
+                        ProcessSelection(shift, selectedDate);
+                        break;
+                    }
 
                 case CalendarMode.Year:
-                {
-                    DateTime? selectedMonth = DateTimeHelper.AddMonths(this.DisplayDate, moveAmmount);
-                    OnSelectedMonthChanged(selectedMonth);
-                    break;
-                }
+                    {
+                        DateTime? selectedMonth = DateTimeHelper.AddMonths(this.DisplayDate, moveAmmount);
+                        OnSelectedMonthChanged(selectedMonth);
+                        break;
+                    }
 
                 case CalendarMode.Decade:
-                {
-                    DateTime? selectedYear = DateTimeHelper.AddYears(this.DisplayDate, moveAmmount);
-                    OnSelectedYearChanged(selectedYear);
-                    break;
-                }
+                    {
+                        DateTime? selectedYear = DateTimeHelper.AddYears(this.DisplayDate, moveAmmount);
+                        OnSelectedYearChanged(selectedYear);
+                        break;
+                    }
             }
         }
 
@@ -1493,25 +1493,25 @@ namespace System.Windows.Controls
             switch (this.DisplayMode)
             {
                 case CalendarMode.Month:
-                {
-                    DateTime? selectedDate = this._blackoutDates.GetNonBlackoutDate(DateTimeHelper.AddMonths(this.CurrentDate, 1), 1);
-                    ProcessSelection(shift, selectedDate);
-                    break;
-                }
+                    {
+                        DateTime? selectedDate = this._blackoutDates.GetNonBlackoutDate(DateTimeHelper.AddMonths(this.CurrentDate, 1), 1);
+                        ProcessSelection(shift, selectedDate);
+                        break;
+                    }
 
                 case CalendarMode.Year:
-                {
-                    DateTime? selectedMonth = DateTimeHelper.AddYears(this.DisplayDate, 1);
-                    OnSelectedMonthChanged(selectedMonth);
-                    break;
-                }
+                    {
+                        DateTime? selectedMonth = DateTimeHelper.AddYears(this.DisplayDate, 1);
+                        OnSelectedMonthChanged(selectedMonth);
+                        break;
+                    }
 
                 case CalendarMode.Decade:
-                {
-                    DateTime? selectedYear = DateTimeHelper.AddYears(this.DisplayDate, 10 );
-                    OnSelectedYearChanged(selectedYear);
-                    break;
-                }
+                    {
+                        DateTime? selectedYear = DateTimeHelper.AddYears(this.DisplayDate, 10);
+                        OnSelectedYearChanged(selectedYear);
+                        break;
+                    }
             }
         }
 
@@ -1520,25 +1520,25 @@ namespace System.Windows.Controls
             switch (this.DisplayMode)
             {
                 case CalendarMode.Month:
-                {
-                    DateTime? selectedDate = this._blackoutDates.GetNonBlackoutDate(DateTimeHelper.AddMonths(this.CurrentDate, -1), -1);
-                    ProcessSelection(shift, selectedDate);
-                    break;
-                }
+                    {
+                        DateTime? selectedDate = this._blackoutDates.GetNonBlackoutDate(DateTimeHelper.AddMonths(this.CurrentDate, -1), -1);
+                        ProcessSelection(shift, selectedDate);
+                        break;
+                    }
 
                 case CalendarMode.Year:
-                {
-                    DateTime? selectedMonth = DateTimeHelper.AddYears(this.DisplayDate, -1);
-                    OnSelectedMonthChanged(selectedMonth);
-                    break;
-                }
+                    {
+                        DateTime? selectedMonth = DateTimeHelper.AddYears(this.DisplayDate, -1);
+                        OnSelectedMonthChanged(selectedMonth);
+                        break;
+                    }
 
                 case CalendarMode.Decade:
-                {
-                    DateTime? selectedYear = DateTimeHelper.AddYears(this.DisplayDate, -10);
-                    OnSelectedYearChanged(selectedYear);
-                    break;
-                }
+                    {
+                        DateTime? selectedYear = DateTimeHelper.AddYears(this.DisplayDate, -10);
+                        OnSelectedYearChanged(selectedYear);
+                        break;
+                    }
             }
         }
 
@@ -1548,25 +1548,25 @@ namespace System.Windows.Controls
             switch (this.DisplayMode)
             {
                 case CalendarMode.Month:
-                {
-                    DateTime? selectedDate = this._blackoutDates.GetNonBlackoutDate(DateTimeHelper.AddDays(this.CurrentDate, moveAmmount), moveAmmount);
-                    ProcessSelection(shift, selectedDate);
-                    break;
-                }
+                    {
+                        DateTime? selectedDate = this._blackoutDates.GetNonBlackoutDate(DateTimeHelper.AddDays(this.CurrentDate, moveAmmount), moveAmmount);
+                        ProcessSelection(shift, selectedDate);
+                        break;
+                    }
 
                 case CalendarMode.Year:
-                {
-                    DateTime? selectedMonth = DateTimeHelper.AddMonths(this.DisplayDate, moveAmmount);
-                    OnSelectedMonthChanged(selectedMonth);
-                    break;
-                }
+                    {
+                        DateTime? selectedMonth = DateTimeHelper.AddMonths(this.DisplayDate, moveAmmount);
+                        OnSelectedMonthChanged(selectedMonth);
+                        break;
+                    }
 
                 case CalendarMode.Decade:
-                {
-                    DateTime? selectedYear = DateTimeHelper.AddYears(this.DisplayDate, moveAmmount);
-                    OnSelectedYearChanged(selectedYear);
-                    break;
-                }
+                    {
+                        DateTime? selectedYear = DateTimeHelper.AddYears(this.DisplayDate, moveAmmount);
+                        OnSelectedYearChanged(selectedYear);
+                        break;
+                    }
             }
         }
 
@@ -1654,47 +1654,47 @@ namespace System.Windows.Controls
             switch (this.DisplayMode)
             {
                 case CalendarMode.Month:
-                {
-                    if (ctrl)
                     {
-                        this.SetCurrentValueInternal(DisplayModeProperty, CalendarMode.Year);
-                        FocusDate(this.DisplayDate);
-                    }
-                    else
-                    {
-                        DateTime? selectedDate = this._blackoutDates.GetNonBlackoutDate(DateTimeHelper.AddDays(this.CurrentDate, -COLS), -1);
-                        ProcessSelection(shift, selectedDate);
-                    }
+                        if (ctrl)
+                        {
+                            this.SetCurrentValueInternal(DisplayModeProperty, CalendarMode.Year);
+                            FocusDate(this.DisplayDate);
+                        }
+                        else
+                        {
+                            DateTime? selectedDate = this._blackoutDates.GetNonBlackoutDate(DateTimeHelper.AddDays(this.CurrentDate, -COLS), -1);
+                            ProcessSelection(shift, selectedDate);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
 
                 case CalendarMode.Year:
-                {
-                    if (ctrl)
                     {
-                        this.SetCurrentValueInternal(DisplayModeProperty, CalendarMode.Decade);
-                        FocusDate(this.DisplayDate);
-                    }
-                    else
-                    {
-                        DateTime? selectedMonth = DateTimeHelper.AddMonths(this.DisplayDate, -YEAR_COLS);
-                        OnSelectedMonthChanged(selectedMonth);
-                    }
+                        if (ctrl)
+                        {
+                            this.SetCurrentValueInternal(DisplayModeProperty, CalendarMode.Decade);
+                            FocusDate(this.DisplayDate);
+                        }
+                        else
+                        {
+                            DateTime? selectedMonth = DateTimeHelper.AddMonths(this.DisplayDate, -YEAR_COLS);
+                            OnSelectedMonthChanged(selectedMonth);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
 
                 case CalendarMode.Decade:
-                {
-                    if (!ctrl)
                     {
-                        DateTime? selectedYear = DateTimeHelper.AddYears(this.DisplayDate, -YEAR_COLS);
-                        OnSelectedYearChanged(selectedYear);
-                    }
+                        if (!ctrl)
+                        {
+                            DateTime? selectedYear = DateTimeHelper.AddYears(this.DisplayDate, -YEAR_COLS);
+                            OnSelectedYearChanged(selectedYear);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
             }
         }
 

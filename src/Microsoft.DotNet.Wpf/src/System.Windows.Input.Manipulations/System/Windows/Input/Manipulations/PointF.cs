@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -102,7 +102,7 @@ namespace System.Windows.Input.Manipulations
         /// <summary>
         /// The x coordinate
         /// </summary>
-        public float X 
+        public float X
         {
             get { return x; }
             // unused set { x = value; }
@@ -111,7 +111,7 @@ namespace System.Windows.Input.Manipulations
         /// <summary>
         /// the y coordinate
         /// </summary>
-        public float Y 
+        public float Y
         {
             get { return y; }
             // unused set { y = value; }

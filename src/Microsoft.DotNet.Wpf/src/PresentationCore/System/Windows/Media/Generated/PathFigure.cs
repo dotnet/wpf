@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using System.Windows.Media.Animation;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using System.Windows.Media.Animation;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
@@ -67,7 +67,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(StartPointProperty);
+                return (Point)GetValue(StartPointProperty);
             }
             set
             {
@@ -82,7 +82,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(IsFilledProperty);
+                return (bool)GetValue(IsFilledProperty);
             }
             set
             {
@@ -97,7 +97,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PathSegmentCollection) GetValue(SegmentsProperty);
+                return (PathSegmentCollection)GetValue(SegmentsProperty);
             }
             set
             {
@@ -112,7 +112,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(IsClosedProperty);
+                return (bool)GetValue(IsClosedProperty);
             }
             set
             {

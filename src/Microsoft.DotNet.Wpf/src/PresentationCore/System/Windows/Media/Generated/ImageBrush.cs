@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -63,18 +63,18 @@ namespace System.Windows.Media
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            ImageBrush target = ((ImageBrush) d);
+            ImageBrush target = ((ImageBrush)d);
 
 
-            ImageSource oldV = (ImageSource) e.OldValue;
-            ImageSource newV = (ImageSource) e.NewValue;
+            ImageSource oldV = (ImageSource)e.OldValue;
+            ImageSource newV = (ImageSource)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -89,8 +89,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -108,7 +108,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (ImageSource) GetValue(ImageSourceProperty);
+                return (ImageSource)GetValue(ImageSourceProperty);
             }
             set
             {
@@ -234,39 +234,45 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_IMAGEBRUSH))
-                {
-                    Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
-                    Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
-                    ImageSource vImageSource = ImageSource;
-                    if (vImageSource != null) ((DUCE.IResource)vImageSource).AddRefOnChannel(channel);
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_IMAGEBRUSH))
+            {
+                Transform vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                Transform vRelativeTransform = RelativeTransform;
+                if (vRelativeTransform != null)
+                    ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
+                ImageSource vImageSource = ImageSource;
+                if (vImageSource != null)
+                    ((DUCE.IResource)vImageSource).AddRefOnChannel(channel);
 
-                    AddRefOnChannelAnimations(channel);
+                AddRefOnChannelAnimations(channel);
 
 
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                }
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
 
-                return _duceResource.GetHandle(channel);
-}
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
-                {
-                    Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
-                    Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
-                    ImageSource vImageSource = ImageSource;
-                    if (vImageSource != null) ((DUCE.IResource)vImageSource).ReleaseOnChannel(channel);
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                Transform vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                Transform vRelativeTransform = RelativeTransform;
+                if (vRelativeTransform != null)
+                    ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
+                ImageSource vImageSource = ImageSource;
+                if (vImageSource != null)
+                    ((DUCE.IResource)vImageSource).ReleaseOnChannel(channel);
 
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.

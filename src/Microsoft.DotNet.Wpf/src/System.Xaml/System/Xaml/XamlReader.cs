@@ -9,7 +9,7 @@ namespace System.Xaml
         "CA1063:ImplementIDisposableCorrectly",
         Justification = @"This API has already shipped and in order to ensure compat for the
         initial .NET Core 3 release, this won't be fixed. It could be addressed at a later time.")]
-    public abstract class XamlReader: IDisposable
+    public abstract class XamlReader : IDisposable
     {
         public abstract bool Read();
         public abstract XamlNodeType NodeType { get; }
@@ -24,22 +24,22 @@ namespace System.Xaml
 
         public virtual void Skip()
         {
-            switch(NodeType)
+            switch (NodeType)
             {
-            case XamlNodeType.NamespaceDeclaration:
-            case XamlNodeType.Value:
-            case XamlNodeType.EndObject:
-            case XamlNodeType.EndMember:
-            case XamlNodeType.None:
-                break;
+                case XamlNodeType.NamespaceDeclaration:
+                case XamlNodeType.Value:
+                case XamlNodeType.EndObject:
+                case XamlNodeType.EndMember:
+                case XamlNodeType.None:
+                    break;
 
-            case XamlNodeType.StartObject:
-                SkipFromTo(XamlNodeType.StartObject, XamlNodeType.EndObject);
-                break;
+                case XamlNodeType.StartObject:
+                    SkipFromTo(XamlNodeType.StartObject, XamlNodeType.EndObject);
+                    break;
 
-            case XamlNodeType.StartMember:
-                SkipFromTo(XamlNodeType.StartMember, XamlNodeType.EndMember);
-                break;
+                case XamlNodeType.StartMember:
+                    SkipFromTo(XamlNodeType.StartMember, XamlNodeType.EndMember);
+                    break;
             }
             Read();
         }
@@ -47,7 +47,7 @@ namespace System.Xaml
         #region IDisposable
 
         // See Framework Design Guidelines, pp. 248-260.
-        
+
         void IDisposable.Dispose()
         {
             Dispose(true);
@@ -78,7 +78,7 @@ namespace System.Xaml
         private void SkipFromTo(XamlNodeType startNodeType, XamlNodeType endNodeType)
         {
 #if DEBUG
-            if(NodeType != startNodeType)
+            if (NodeType != startNodeType)
             {
                 throw new XamlInternalException("SkipFromTo() called incorrectly");
             }

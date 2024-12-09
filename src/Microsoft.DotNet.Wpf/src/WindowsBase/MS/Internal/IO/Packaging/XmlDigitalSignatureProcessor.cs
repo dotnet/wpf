@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,14 +10,13 @@
 
 
 using System.Collections;
-using System.Security.Cryptography;
-using System.Security.Cryptography.Xml;
-using System.Security.Cryptography.X509Certificates;
-using System.Xml;
 using System.IO;
-using System.Windows;
 using System.IO.Packaging;
-
+using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using System.Security.Cryptography.Xml;
+using System.Windows;
+using System.Xml;
 using MS.Internal.IO.Packaging.Extensions;
 
 namespace MS.Internal.IO.Packaging
@@ -50,13 +49,13 @@ namespace MS.Internal.IO.Packaging
         /// Factory method that creates a new PackageDigitalSignature
         /// </summary>
         internal static PackageDigitalSignature Sign(
-            PackageDigitalSignatureManager              manager,
-            PackagePart                                 signaturePart,
-            IEnumerable<Uri>                            parts,
-            IEnumerable<System.IO.Packaging.PackageRelationshipSelector>    relationshipSelectors,
-            X509Certificate2                            signer,
-            String                                      signatureId,
-            bool                                        embedCertificate,
+            PackageDigitalSignatureManager manager,
+            PackagePart signaturePart,
+            IEnumerable<Uri> parts,
+            IEnumerable<System.IO.Packaging.PackageRelationshipSelector> relationshipSelectors,
+            X509Certificate2 signer,
+            String signatureId,
+            bool embedCertificate,
             IEnumerable<System.Security.Cryptography.Xml.DataObject> signatureObjects,
             IEnumerable<System.Security.Cryptography.Xml.Reference> objectReferences)
         {
@@ -552,7 +551,7 @@ namespace MS.Internal.IO.Packaging
             }
             else
                 return null;
-}
+        }
 
         // As per the OPC spec, only two tranforms are valid. Also, both of these happen to be
         // XML canonicalization transforms.
@@ -593,8 +592,10 @@ namespace MS.Internal.IO.Packaging
                 _signedXml = new CustomSignedXml();
 
                 // Load the XML
-                XmlDocument xmlDocument = new XmlDocument();
-                xmlDocument.PreserveWhitespace = true;
+                XmlDocument xmlDocument = new XmlDocument
+                {
+                    PreserveWhitespace = true
+                };
                 using (Stream s = SignaturePart.GetSeekableStream())
                 {
                     using (XmlTextReader xmlReader = new XmlTextReader(s))
@@ -702,11 +703,11 @@ namespace MS.Internal.IO.Packaging
         /// <param name="objectReferences">references</param>
         /// <param name="signatureObjects">objects to sign</param>
         private PackageDigitalSignature Sign(
-            IEnumerable<Uri>                            parts,
-            IEnumerable<System.IO.Packaging.PackageRelationshipSelector>    relationshipSelectors,
-            X509Certificate2                            signer,
-            String                                      signatureId,
-            bool                                        embedCertificate,
+            IEnumerable<Uri> parts,
+            IEnumerable<System.IO.Packaging.PackageRelationshipSelector> relationshipSelectors,
+            X509Certificate2 signer,
+            String signatureId,
+            bool embedCertificate,
             IEnumerable<System.Security.Cryptography.Xml.DataObject> signatureObjects,
             IEnumerable<System.Security.Cryptography.Xml.Reference> objectReferences)
         {
@@ -740,8 +741,10 @@ namespace MS.Internal.IO.Packaging
 
             try
             {
-                _signedXml = new CustomSignedXml();
-                _signedXml.SigningKey = key;
+                _signedXml = new CustomSignedXml
+                {
+                    SigningKey = key
+                };
                 _signedXml.Signature.Id = signatureId;
 
                 if (BaseCompatibilityPreferences.MatchPackageSignatureMethodToPackagePartDigestMethod)
@@ -774,9 +777,11 @@ namespace MS.Internal.IO.Packaging
                 }
 
                 // add reference from SignedInfo to Package object tag
-                Reference objectReference = new Reference(XTable.Get(XTable.ID.OpcLinkAttrValue));
-                objectReference.Type = XTable.Get(XTable.ID.W3CSignatureNamespaceRoot) + "Object";
-                objectReference.DigestMethod = _hashAlgorithmName;
+                Reference objectReference = new Reference(XTable.Get(XTable.ID.OpcLinkAttrValue))
+                {
+                    Type = XTable.Get(XTable.ID.W3CSignatureNamespaceRoot) + "Object",
+                    DigestMethod = _hashAlgorithmName
+                };
                 _signedXml.AddReference(objectReference);
 
                 // add any custom object tags
@@ -860,9 +865,9 @@ namespace MS.Internal.IO.Packaging
             // Get[Algorithm]PrivateKey methods would always have returned the private key if the PrivateKey property would
             // But Get[Algorithm]PrivateKey methods never throw but returns null in case of error during cryptographic operations
             // But we want exception to be thrown when an error occurs during a cryptographic operation so that we can revert the changes
-            #pragma warning disable SYSLIB0028
+#pragma warning disable SYSLIB0028
             return cert.PrivateKey;
-            #pragma warning restore SYSLIB0028
+#pragma warning restore SYSLIB0028
         }
 
         /// <summary>
@@ -882,7 +887,7 @@ namespace MS.Internal.IO.Packaging
             {
                 foreach (System.IO.Packaging.PackageRelationship r in relationshipSelector.Select(_manager.Package))
                 {
-                    if(!partRelationships.ContainsKey(r.Id))
+                    if (!partRelationships.ContainsKey(r.Id))
                         partRelationships.Add(r.Id, r);
                 }
             }
@@ -1059,8 +1064,10 @@ namespace MS.Internal.IO.Packaging
         {
             // KeyInfo section
             KeyInfo keyInfo = new KeyInfo();
-            KeyInfoName keyInfoName = new KeyInfoName();
-            keyInfoName.Value = signer.Subject;
+            KeyInfoName keyInfoName = new KeyInfoName
+            {
+                Value = signer.Subject
+            };
             keyInfo.AddClause(keyInfoName);               // human readable Principal name
 
             // Include the public key information (if we are familiar with the algorithm type)
@@ -1090,9 +1097,11 @@ namespace MS.Internal.IO.Packaging
             xDoc.DocumentElement.AppendChild(XmlSignatureManifest.GenerateManifest(_manager, xDoc, hashAlgorithm, parts, relationshipSelectors));
             xDoc.DocumentElement.AppendChild(XmlSignatureProperties.AssembleSignatureProperties(xDoc, DateTime.Now, _manager.TimeFormat, signatureId));
 
-            DataObject dataObject = new DataObject();
-            dataObject.Data = xDoc.DocumentElement.ChildNodes;
-            dataObject.Id = XTable.Get(XTable.ID.OpcAttrValue);
+            DataObject dataObject = new DataObject
+            {
+                Data = xDoc.DocumentElement.ChildNodes,
+                Id = XTable.Get(XTable.ID.OpcAttrValue)
+            };
 
             return dataObject;
         }
@@ -1179,7 +1188,7 @@ namespace MS.Internal.IO.Packaging
 
                     currentTransformChain = currentReference.TransformChain;
 
-                    for(int j=0; j<currentTransformChain.Count; j++)
+                    for (int j = 0; j < currentTransformChain.Count; j++)
                     {
                         //As per the OPC spec, only two transforms are supported for the reference tags
                         if (!IsValidXmlCanonicalizationTransform(currentTransformChain[j].Algorithm))
@@ -1202,19 +1211,19 @@ namespace MS.Internal.IO.Packaging
         //
         //------------------------------------------------------
         private PackagePart _signaturePart;
-        private X509Certificate2                    _certificate;       // non-null if it's embedded
-        private bool                                _lookForEmbeddedCert;
-        private PackageDigitalSignatureManager      _manager;
-        private PackageDigitalSignature             _signature;         // parsed from part or newly created
-        private SignedXml                           _signedXml;         // our format friend
-        private String                              _hashAlgorithmName;     // first hash algorithm obtained - considered to be the setting for the entire signature
+        private X509Certificate2 _certificate;       // non-null if it's embedded
+        private bool _lookForEmbeddedCert;
+        private PackageDigitalSignatureManager _manager;
+        private PackageDigitalSignature _signature;         // parsed from part or newly created
+        private SignedXml _signedXml;         // our format friend
+        private String _hashAlgorithmName;     // first hash algorithm obtained - considered to be the setting for the entire signature
 
         // OPC Object tag parsing - once parsed, all fields in this section are considered viable
-        private bool                            _dataObjectParsed;          // true if package-specific data Object tag has been parsed
-        private DateTime                        _signingTime;               // cached value
-        private String                          _signingTimeFormat;         // format string
-        private List<Uri>                       _partManifest;              // signed parts (suitable for return to public API)
-        private List<PartManifestEntry>         _partEntryManifest;         // signed parts (with extra info)
+        private bool _dataObjectParsed;          // true if package-specific data Object tag has been parsed
+        private DateTime _signingTime;               // cached value
+        private String _signingTimeFormat;         // format string
+        private List<Uri> _partManifest;              // signed parts (suitable for return to public API)
+        private List<PartManifestEntry> _partEntryManifest;         // signed parts (with extra info)
         private List<System.IO.Packaging.PackageRelationshipSelector> _relationshipManifest;    // signed relationship selectors
 
         private static readonly ContentType _xmlSignaturePartType

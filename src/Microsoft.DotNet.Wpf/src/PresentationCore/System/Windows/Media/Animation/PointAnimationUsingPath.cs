@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,7 +12,7 @@ namespace System.Windows.Media.Animation
     {
         #region Data
 
-		private bool _isValid;
+        private bool _isValid;
 
         /// <summary>
         /// If IsCumulative is set to true, this value represents the value that
@@ -31,7 +31,7 @@ namespace System.Windows.Media.Animation
         /// <remarks>
         /// There is no default PathGeometry so the user must specify one.
         /// </remarks>
-        public PointAnimationUsingPath() 
+        public PointAnimationUsingPath()
             : base()
         {
         }
@@ -70,7 +70,7 @@ namespace System.Windows.Media.Animation
 
         #region Freezable
 
-		/// <summary>
+        /// <summary>
         /// Creates a copy of this PointAnimationUsingPath.
         /// </summary>
         /// <returns>The copy.</returns>
@@ -79,7 +79,7 @@ namespace System.Windows.Media.Animation
             return (PointAnimationUsingPath)base.Clone();
         }
 
-		/// <summary>
+        /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.CreateInstanceCore">Freezable.CreateInstanceCore</see>.
         /// </summary>
         /// <returns>The new Freezable.</returns>
@@ -135,7 +135,7 @@ namespace System.Windows.Media.Animation
             Debug.Assert(animationClock.CurrentState != ClockState.Stopped);
 
             PathGeometry pathGeometry = PathGeometry;
-            
+
             if (pathGeometry == null)
             {
                 return defaultDestinationValue;
@@ -153,13 +153,13 @@ namespace System.Windows.Media.Animation
 
             double currentRepeat = (double)(animationClock.CurrentIteration - 1);
 
-            if (   IsCumulative
+            if (IsCumulative
                 && currentRepeat > 0)
             {
                 pathPoint = pathPoint + (_accumulatingVector * currentRepeat);
             }
 
-            if (IsAdditive) 
+            if (IsAdditive)
             {
                 return defaultOriginValue + (Vector)pathPoint;
             }
@@ -172,8 +172,8 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// IsAdditive
         /// </summary>
-        public bool IsAdditive         
-        { 
+        public bool IsAdditive
+        {
             get
             {
                 return (bool)GetValue(IsAdditiveProperty);
@@ -187,8 +187,8 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// IsCumulative
         /// </summary>
-        public bool IsCumulative      
-        { 
+        public bool IsCumulative
+        {
             get
             {
                 return (bool)GetValue(IsCumulativeProperty);

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,7 +9,7 @@ using System.Windows.Markup;
 
 namespace System.Windows.Xps.Serialization
 {
-    internal class XpsTokenContext : 
+    internal class XpsTokenContext :
                    System.ComponentModel.ITypeDescriptorContext
     {
         /// <summary>
@@ -17,18 +17,18 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         XpsTokenContext(
-            PackageSerializationManager   serializationManager,
-            SerializablePropertyContext   propertyContext
+            PackageSerializationManager serializationManager,
+            SerializablePropertyContext propertyContext
             )
         {
             //
             // Make necessary checks and throw necessary exceptions
             //
             this.serializationManager = serializationManager;
-            this.targetObject         = propertyContext.TargetObject;
-            this.objectValue          = propertyContext.Value;
-            this.propertyInfo         = propertyContext.PropertyInfo;
-            this.dependencyProperty   = (propertyContext is SerializableDependencyPropertyContext) ?
+            this.targetObject = propertyContext.TargetObject;
+            this.objectValue = propertyContext.Value;
+            this.propertyInfo = propertyContext.PropertyInfo;
+            this.dependencyProperty = (propertyContext is SerializableDependencyPropertyContext) ?
                                         (DependencyProperty)((SerializableDependencyPropertyContext)propertyContext).DependencyProperty :
                                         null;
         }
@@ -38,26 +38,26 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         XpsTokenContext(
-            PackageSerializationManager   serializationManager,
-            Object                        targetObject,
-            Object                        objectValue
+            PackageSerializationManager serializationManager,
+            Object targetObject,
+            Object objectValue
             )
         {
             //
             // Make necessary checks and throw necessary exceptions
             //
             this.serializationManager = serializationManager;
-            this.targetObject         = targetObject;
-            this.objectValue          = objectValue;
-            this.propertyInfo         = null;
-            this.dependencyProperty   = null;
+            this.targetObject = targetObject;
+            this.objectValue = objectValue;
+            this.propertyInfo = null;
+            this.dependencyProperty = null;
         }
 
         /// <summary>
         ///
         /// </summary>
-        public 
-        void 
+        public
+        void
         OnComponentChanged()
         {
         }
@@ -66,7 +66,7 @@ namespace System.Windows.Xps.Serialization
         //
         // </summary>
         public
-        bool 
+        bool
         OnComponentChanging()
         {
             return false;
@@ -76,15 +76,15 @@ namespace System.Windows.Xps.Serialization
         // <summary>
         //
         // </summary>
-        public 
-        object 
+        public
+        object
         GetService(
             Type serviceType
             )
         {
             Object serviceObject = null;
 
-            if (serviceType == typeof(XpsSerializationManager) || 
+            if (serviceType == typeof(XpsSerializationManager) ||
                 serviceType == typeof(XpsSerializationManagerAsync) ||
                 serviceType == typeof(ServiceProviders))
             {
@@ -97,11 +97,11 @@ namespace System.Windows.Xps.Serialization
         // <summary>
         //
         // </summary>
-        public 
-        System.ComponentModel.IContainer 
+        public
+        System.ComponentModel.IContainer
         Container
         {
-            get 
+            get
             {
                 return null;
             }
@@ -110,13 +110,13 @@ namespace System.Windows.Xps.Serialization
         // <summary>
         //
         // </summary>
-        public 
-        object 
-        Instance 
+        public
+        object
+        Instance
         {
-            get 
-            { 
-                return objectValue; 
+            get
+            {
+                return objectValue;
             }
         }
 
@@ -124,40 +124,27 @@ namespace System.Windows.Xps.Serialization
         // <summary>
         //
         // </summary>
-        public 
-        PropertyInfo 
+        public
+        PropertyInfo
         PropertyInfo
         {
-            get 
-            { 
-                return propertyInfo; 
+            get
+            {
+                return propertyInfo;
             }
         }
 
-        
+
         // <summary>
         //
         // </summary>
         public
-        DependencyProperty 
+        DependencyProperty
         DependencyProperty
         {
-          get 
-          { 
-              return dependencyProperty; 
-          }
-        }
-
-        // <summary>
-        //
-        // </summary>
-        public 
-        object 
-        TargetObject
-        {
-            get 
-            { 
-                return targetObject; 
+            get
+            {
+                return dependencyProperty;
             }
         }
 
@@ -165,8 +152,21 @@ namespace System.Windows.Xps.Serialization
         //
         // </summary>
         public
-        PropertyDescriptor 
-        PropertyDescriptor 
+        object
+        TargetObject
+        {
+            get
+            {
+                return targetObject;
+            }
+        }
+
+        // <summary>
+        //
+        // </summary>
+        public
+        PropertyDescriptor
+        PropertyDescriptor
         {
             get
             {
@@ -175,19 +175,19 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        PackageSerializationManager   serializationManager;
+        PackageSerializationManager serializationManager;
 
         private
-        Object                        targetObject;
+        Object targetObject;
 
         private
-        Object                        objectValue;
+        Object objectValue;
 
 
         private
-        PropertyInfo                  propertyInfo;
+        PropertyInfo propertyInfo;
 
         private
-        DependencyProperty            dependencyProperty;
+        DependencyProperty dependencyProperty;
     };
 }

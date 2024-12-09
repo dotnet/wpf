@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -263,10 +263,10 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        string              _propertyName;
-        PropertyPath        _propertyPath;
-        IValueConverter     _converter;
-        StringComparison    _stringComparison = StringComparison.Ordinal;
+        string _propertyName;
+        PropertyPath _propertyPath;
+        IValueConverter _converter;
+        StringComparison _stringComparison = StringComparison.Ordinal;
         static readonly IComparer _compareNameAscending = new NameComparer(ListSortDirection.Ascending);
         static readonly IComparer _compareNameDescending = new NameComparer(ListSortDirection.Descending);
 

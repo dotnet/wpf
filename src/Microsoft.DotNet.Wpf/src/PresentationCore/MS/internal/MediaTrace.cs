@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,7 +25,7 @@ namespace MS.Internal
         public static MediaTrace HwndTarget = new MediaTrace("HwndTarget");
         public static MediaTrace QueueItems = new MediaTrace("MILQueueItems");
         public static MediaTrace Statistics = new MediaTrace("Statistics");
-        
+
         public class ChangeQueue
         {
             public static MediaTrace ApplyChange = new MediaTrace("Change queue: Apply Change");
@@ -63,7 +63,7 @@ namespace MS.Internal
             System.Diagnostics.Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
 #endif            
         }
-    
+
         public MediaTrace(string switchName)
         {
             _switch = new BooleanSwitch(switchName, "[PresentationCore]");
@@ -92,10 +92,10 @@ namespace MS.Internal
 
                 Indent();
 
-                for (int i=0; i < st.FrameCount && i < Depth; i++)
+                for (int i = 0; i < st.FrameCount && i < Depth; i++)
                 {
                     System.Diagnostics.StackFrame sf = st.GetFrame(i);
-                    Trace(sf.GetMethod()+"+"+sf.GetILOffset().ToString(System.Globalization.CultureInfo.InvariantCulture));
+                    Trace(sf.GetMethod() + "+" + sf.GetILOffset().ToString(System.Globalization.CultureInfo.InvariantCulture));
                 }
 
                 Unindent();
@@ -131,12 +131,12 @@ namespace MS.Internal
             System.Diagnostics.Trace.Unindent();
             GC.SuppressFinalize(this);
         }
-        
+
         public void Enable()
         {
             _switch.Enabled = true;
         }
-    
+
         public void Disable()
         {
             _switch.Enabled = false;
@@ -149,7 +149,7 @@ namespace MS.Internal
 
 
         private System.Diagnostics.BooleanSwitch _switch;
-    } 
+    }
 
 #endif
 }

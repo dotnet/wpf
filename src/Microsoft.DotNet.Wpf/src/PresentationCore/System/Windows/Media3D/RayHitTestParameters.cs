@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -36,13 +36,13 @@ namespace System.Windows.Media.Media3D
         }
 
         #endregion Constructors
-    
+
         //------------------------------------------------------
         //
         //  Public Methods
         //
         //------------------------------------------------------
-        
+
         //------------------------------------------------------
         //
         //  Public Properties
@@ -86,7 +86,7 @@ namespace System.Windows.Media.Media3D
         internal void ReportResult(
             MeshGeometry3D meshHit,
             Point3D pointHit,
-            double distanceToRayOrigin, 
+            double distanceToRayOrigin,
             int vertexIndex1,
             int vertexIndex2,
             int vertexIndex3,
@@ -103,27 +103,27 @@ namespace System.Windows.Media.Media3D
                 vertexIndex3,
                 barycentric));
         }
-        
-        internal HitTestResultBehavior RaiseCallback(HitTestResultCallback resultCallback, 
+
+        internal HitTestResultBehavior RaiseCallback(HitTestResultCallback resultCallback,
                                                      HitTestFilterCallback filterCallback,
                                                      HitTestResultBehavior lastResult)
         {
             return RaiseCallback(resultCallback, filterCallback, lastResult, 0.0 /* distance adjustment */);
         }
 
-        internal HitTestResultBehavior RaiseCallback(HitTestResultCallback resultCallback, 
-                                                     HitTestFilterCallback filterCallback, 
-                                                     HitTestResultBehavior lastResult, 
+        internal HitTestResultBehavior RaiseCallback(HitTestResultCallback resultCallback,
+                                                     HitTestFilterCallback filterCallback,
+                                                     HitTestResultBehavior lastResult,
                                                      double distanceAdjustment)
         {
             results.Sort(RayHitTestResult.CompareByDistanceToRayOrigin);
 
-            for(int i = 0, count = results.Count; i < count; i++)
+            for (int i = 0, count = results.Count; i < count; i++)
             {
                 RayHitTestResult result = results[i];
 
                 result.SetDistanceToRayOrigin(result.DistanceToRayOrigin + distanceAdjustment);
-                
+
                 Viewport2DVisual3D viewport2DVisual3D = result.VisualHit as Viewport2DVisual3D;
                 if (viewport2DVisual3D != null)
                 {
@@ -141,19 +141,19 @@ namespace System.Windows.Media.Media3D
                             Point pointOnChild;
                             if (gt != null && gt.TryTransform(visualPoint, out pointOnChild))
                             {
-                                HitTestResultBehavior behavior2D = viewport2DVisual3DChild.HitTestPoint(filterCallback, 
-                                                                                                        resultCallback, 
+                                HitTestResultBehavior behavior2D = viewport2DVisual3DChild.HitTestPoint(filterCallback,
+                                                                                                        resultCallback,
                                                                                                         new PointHitTestParameters(pointOnChild));
 
                                 if (behavior2D == HitTestResultBehavior.Stop)
                                 {
                                     return HitTestResultBehavior.Stop;
-                                }                            
+                                }
                             }
                         }
                     }
                 }
-                
+
                 HitTestResultBehavior behavior = resultCallback(results[i]);
 
                 if (behavior == HitTestResultBehavior.Stop)
@@ -164,7 +164,7 @@ namespace System.Windows.Media.Media3D
 
             return lastResult;
         }
-                
+
         // Gets the hit testing line/ray specified as an origin and direction in
         // the current local space.
         internal void GetLocalLine(out Point3D origin, out Vector3D direction)
@@ -173,9 +173,9 @@ namespace System.Windows.Media.Media3D
             direction = _direction;
 
             bool isRay = true;
-            
+
             if (HasWorldTransformMatrix)
-            {   
+            {
                 LineUtil.Transform(WorldTransformMatrix, ref origin, ref direction, out isRay);
             }
 

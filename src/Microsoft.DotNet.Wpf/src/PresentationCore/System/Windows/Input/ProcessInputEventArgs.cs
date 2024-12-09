@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,8 +22,8 @@ namespace System.Windows.Input
     public class ProcessInputEventArgs : NotifyInputEventArgs
     {
         // Only we can make these.  Note that we cache and resuse instances.
-        internal ProcessInputEventArgs() {}
-        
+        internal ProcessInputEventArgs() { }
+
         internal override void Reset(StagingAreaInputItem input, InputManager inputManager)
         {
             _allowAccessToStagingArea = true;
@@ -43,14 +43,14 @@ namespace System.Windows.Input
         /// <returns>
         ///     The staging area input item that wraps the specified input.
         /// </returns>
-        public StagingAreaInputItem PushInput(InputEventArgs input, 
+        public StagingAreaInputItem PushInput(InputEventArgs input,
                                               StagingAreaInputItem promote) // Note: this should be a bool, and always use the InputItem available on these args.
         {
-            if(!_allowAccessToStagingArea)
+            if (!_allowAccessToStagingArea)
             {
                 throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
-            
+
             return this.UnsecureInputManager.PushInput(input, promote);
         }
 
@@ -66,11 +66,11 @@ namespace System.Windows.Input
         /// </returns>      
         public StagingAreaInputItem PushInput(StagingAreaInputItem input)
         {
-            if(!_allowAccessToStagingArea)
+            if (!_allowAccessToStagingArea)
             {
                 throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
-            
+
             return this.UnsecureInputManager.PushInput(input);
         }
 
@@ -83,12 +83,12 @@ namespace System.Windows.Input
         /// </returns>    
         public StagingAreaInputItem PopInput()
         {
-            
-            if(!_allowAccessToStagingArea)
+
+            if (!_allowAccessToStagingArea)
             {
                 throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
-            
+
             return this.UnsecureInputManager.PopInput();
         }
 
@@ -102,16 +102,16 @@ namespace System.Windows.Input
         public StagingAreaInputItem PeekInput()
         {
 
-            if(!_allowAccessToStagingArea)
+            if (!_allowAccessToStagingArea)
             {
                 throw new InvalidOperationException(SR.NotAllowedToAccessStagingArea);
             }
-            
+
             return this.UnsecureInputManager.PeekInput();
         }
 
         private bool _allowAccessToStagingArea;
-}
+    }
 
     /// <summary>
     ///     Delegate type for handles of events that use

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,7 +31,7 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         ///     Default Constructor.
         /// </summary>
-        public MeshGeometry3D() {}
+        public MeshGeometry3D() { }
 
         #endregion Constructors
 
@@ -62,7 +62,7 @@ namespace System.Windows.Media.Media3D
                 return _cachedBounds;
             }
         }
-        
+
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -76,9 +76,9 @@ namespace System.Windows.Media.Media3D
         //  Protected Methods
         //
         //------------------------------------------------------
-        
+
         #region Protected Methods
-        
+
         /// <summary>
         ///     Overriden to clear our bounds cache.
         /// </summary>
@@ -91,16 +91,16 @@ namespace System.Windows.Media.Media3D
                 // because the later is not invoked in the event that the Point3DCollection is swapped
                 // out from underneath us.  (In that case, the resource invalidation takes a different
                 // code path.)
-            
+
                 if (dp == MeshGeometry3D.PositionsProperty)
                 {
                     SetCachedBoundsDirty();
                 }
             }
-            
+
             base.OnPropertyChanged(e);
         }
-        
+
         #endregion Protected Methods
 
         //------------------------------------------------------
@@ -110,23 +110,23 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Internal Methods
-      
+
         internal Rect GetTextureCoordinateBounds()
         {
             PointCollection tx = TextureCoordinates;
- 
+
             int count = (tx == null) ? 0 : tx.Count;
 
             if (count > 0)
             {
                 Point ptMin = tx[0];
                 Point ptMax = tx[0];
-    
+
                 for (int i = 1; i < count; i++)
                 {
                     Point txPt = tx.Internal_GetItem(i);
                     double txx = txPt.X;
-                    
+
                     if (ptMin.X > txx)
                     {
                         ptMin.X = txx;
@@ -147,7 +147,7 @@ namespace System.Windows.Media.Media3D
                         ptMax.Y = txy;
                     }
                 }
-    
+
                 return new Rect(ptMin, ptMax);
             }
             else
@@ -163,7 +163,7 @@ namespace System.Windows.Media.Media3D
             RayHitTestParameters rayParams,
             FaceType hitTestableFaces)
         {
-            Debug.Assert(hitTestableFaces != FaceType.None, 
+            Debug.Assert(hitTestableFaces != FaceType.None,
                 "Caller should make sure we're trying to hit something");
 
             Point3DCollection positions = Positions;
@@ -192,7 +192,7 @@ namespace System.Windows.Media.Media3D
                 facesToHit = FaceType.Front | FaceType.Back;
             }
 
-            
+
             //
             // This code duplication is unfortunate but necessary. Breaking it down into methods 
             // further significantly impacts performance. About 5% improvement could be made
@@ -201,22 +201,22 @@ namespace System.Windows.Media.Media3D
             // If futher perf investigation is done with this code, be sure to test NGEN assemblies only
             // as JIT produces different, faster code than NGEN.
             //
-            
+
             if (indices == null || indices.Count == 0)
             {
-                FrugalStructList<Point3D> ps = positions._collection; 
+                FrugalStructList<Point3D> ps = positions._collection;
                 int count = ps.Count - (ps.Count % 3);
-                
+
                 for (int i = count - 1; i >= 2; i -= 3)
                 {
                     int i0 = i - 2;
                     int i1 = i - 1;
                     int i2 = i;
-                    
+
                     Point3D v0 = ps[i0];
                     Point3D v1 = ps[i1];
                     Point3D v2 = ps[i2];
-                
+
                     double hitTime;
                     Point barycentric;
 
@@ -234,13 +234,13 @@ namespace System.Windows.Media.Media3D
                             out hitTime
                             )
                         )
-                    {        
+                    {
                         if (rayParams.IsRay)
-                        {                          
+                        {
                             ValidateRayHit(
-                                rayParams, 
-                                ref origin, 
-                                ref direction, 
+                                rayParams,
+                                ref origin,
+                                ref direction,
                                 hitTime,
                                 i0,
                                 i1,
@@ -251,8 +251,8 @@ namespace System.Windows.Media.Media3D
                         else
                         {
                             ValidateLineHit(
-                                rayParams, 
-                                hitTestableFaces, 
+                                rayParams,
+                                hitTestableFaces,
                                 i0,
                                 i1,
                                 i2,
@@ -264,21 +264,21 @@ namespace System.Windows.Media.Media3D
                         }
                     }
                 }
-}
+            }
             else // indexed mesh
             {
                 FrugalStructList<Point3D> ps = positions._collection;
                 FrugalStructList<int> idcs = indices._collection;
-                
+
                 int count = idcs.Count;
                 int limit = ps.Count;
-                                          
+
                 for (int i = 2; i < count; i += 3)
                 {
                     int i0 = idcs[i - 2];
                     int i1 = idcs[i - 1];
                     int i2 = idcs[i];
-                
+
                     // Quit if we encounter an index out of range.
                     // This is okay because the triangles we ignore are not rendered.
                     //  (see: CMilMeshGeometry3DDuce::Realize)
@@ -288,14 +288,14 @@ namespace System.Windows.Media.Media3D
                     {
                         break;
                     }
-                
+
                     Point3D v0 = ps[i0];
                     Point3D v1 = ps[i1];
                     Point3D v2 = ps[i2];
-                
+
                     double hitTime;
                     Point barycentric;
-                    
+
                     if (LineUtil.ComputeLineTriangleIntersection(
                             facesToHit,
                             ref origin,
@@ -307,13 +307,13 @@ namespace System.Windows.Media.Media3D
                             out hitTime
                             )
                         )
-                    {        
+                    {
                         if (rayParams.IsRay)
-                        {   
+                        {
                             ValidateRayHit(
-                                rayParams, 
-                                ref origin, 
-                                ref direction, 
+                                rayParams,
+                                ref origin,
+                                ref direction,
                                 hitTime,
                                 i0,
                                 i1,
@@ -324,8 +324,8 @@ namespace System.Windows.Media.Media3D
                         else
                         {
                             ValidateLineHit(
-                                rayParams, 
-                                hitTestableFaces, 
+                                rayParams,
+                                hitTestableFaces,
                                 i0,
                                 i1,
                                 i2,
@@ -347,7 +347,7 @@ namespace System.Windows.Media.Media3D
         //  Private Methods
         //
         //------------------------------------------------------
-        
+
         #region Private Methods
 
         //
@@ -357,9 +357,9 @@ namespace System.Windows.Media.Media3D
         // Shares some code with ValidateLineHit
         //
         private void ValidateRayHit(
-            RayHitTestParameters rayParams, 
-            ref Point3D origin, 
-            ref Vector3D direction, 
+            RayHitTestParameters rayParams,
+            ref Point3D origin,
+            ref Vector3D direction,
             double hitTime,
             int i0,
             int i1,
@@ -372,10 +372,10 @@ namespace System.Windows.Media.Media3D
                 Matrix3D worldTransformMatrix = rayParams.HasWorldTransformMatrix ? rayParams.WorldTransformMatrix : Matrix3D.Identity;
 
                 Point3D pointHit = origin + hitTime * direction;
-                
+
                 Point3D worldPointHit = pointHit;
                 worldTransformMatrix.MultiplyPoint(ref worldPointHit);
-                
+
                 // If we have a HitTestProjectionMatrix than this hit test originated
                 // at a Viewport3DVisual.
                 if (rayParams.HasHitTestProjectionMatrix)
@@ -392,7 +392,7 @@ namespace System.Windows.Media.Media3D
                     // NOTE: HitTestProjectionMatrix is not just the camera matrices.
                     //       It has an additional translation to move the ray to the
                     //       origin.  This extra translation does not effect this test.
-                    
+
                     Matrix3D m = rayParams.HitTestProjectionMatrix;
 
                     // We directly substitute 1 for p.W below:
@@ -416,7 +416,7 @@ namespace System.Windows.Media.Media3D
                 {
                     rayParams.ModelTransformMatrix.MultiplyPoint(ref pointHit);
                 }
-                
+
                 rayParams.ReportResult(this, pointHit, dist, i0, i1, i2, barycentric);
             }
         }
@@ -427,7 +427,7 @@ namespace System.Windows.Media.Media3D
         // Shares some code with ValidateRayHit
         //
         private void ValidateLineHit(
-            RayHitTestParameters rayParams, 
+            RayHitTestParameters rayParams,
             FaceType facesToHit,
             int i0,
             int i1,
@@ -439,7 +439,7 @@ namespace System.Windows.Media.Media3D
             )
         {
             Matrix3D worldTransformMatrix = rayParams.HasWorldTransformMatrix ? rayParams.WorldTransformMatrix : Matrix3D.Identity;
-                    
+
             // OK, we have an intersection with the LINE but that could be wrong on three
             // accounts:
             //   1. We could have hit the line on the wrong side of the ray's origin.
@@ -448,13 +448,13 @@ namespace System.Windows.Media.Media3D
             //   3. We could have hit a back-facing triangle
             // We will transform the hit point back into world space to check these
             // things & compute the correct distance from the origin to the hit point.
-            
+
             // Hit point in model space
             Point3D pointHit = M3DUtil.Interpolate(ref v0, ref v1, ref v2, ref barycentric);
-            
+
             Point3D worldPointHit = pointHit;
             worldTransformMatrix.MultiplyPoint(ref worldPointHit);
-            
+
             // Vector from origin to hit point
             Vector3D hitVector = worldPointHit - rayParams.Origin;
             Vector3D originalDirection = rayParams.Direction;
@@ -478,7 +478,7 @@ namespace System.Windows.Media.Media3D
                     // NOTE: HitTestProjectionMatrix is not just the camera matrices.
                     //       It has an additional translation to move the ray to the
                     //       origin.  This extra translation does not effect this test.
-                    
+
                     Matrix3D m = rayParams.HitTestProjectionMatrix;
 
                     // We directly substitute 1 for p.W below:
@@ -506,7 +506,7 @@ namespace System.Windows.Media.Media3D
                 double cullSign = -Vector3D.DotProduct(normal, hitVector);
                 double det = worldTransformMatrix.Determinant;
                 bool frontFace = (cullSign > 0) == (det >= 0);
-            
+
                 if (((facesToHit & FaceType.Front) == FaceType.Front && frontFace) || ((facesToHit & FaceType.Back) == FaceType.Back && !frontFace))
                 {
                     double dist = hitVector.Length;
@@ -514,13 +514,13 @@ namespace System.Windows.Media.Media3D
                     {
                         rayParams.ModelTransformMatrix.MultiplyPoint(ref pointHit);
                     }
-                    
+
                     rayParams.ReportResult(this, pointHit, dist, i0, i1, i2, barycentric);
                 }
-            }          
+            }
         }
 
-        
+
         // Updates the _cachedBounds member to the current bounds of the mesh.
         // This method must be called before accessing _cachedBounds if
         // _cachedBounds.IsEmpty is true.  Otherwise the _cachedBounds are
@@ -529,7 +529,7 @@ namespace System.Windows.Media.Media3D
         {
             Debug.Assert(_cachedBounds.IsEmpty,
                 "PERF: Caller should verify that bounds are dirty before recomputing.");
-            
+
             _cachedBounds = M3DUtil.ComputeAxisAlignedBoundingBox(Positions);
         }
 
@@ -539,8 +539,8 @@ namespace System.Windows.Media.Media3D
         {
             _cachedBounds = Rect3D.Empty;
         }
-       
-        
+
+
         #endregion Private Methods
 
         //------------------------------------------------------
@@ -548,7 +548,7 @@ namespace System.Windows.Media.Media3D
         //  DEBUG
         //
         //------------------------------------------------------
-        
+
         #region DEBUG
 
         // Always call this method before accessing _cachedBounds.  On 
@@ -580,15 +580,15 @@ namespace System.Windows.Media.Media3D
                 }
             }
         }
-        
+
         #endregion DEBUG
-        
+
         //------------------------------------------------------
         //
         //  Private Fields
         //
         //------------------------------------------------------
-        
+
         #region Private Fields
 
         // If the _cachedBounds are empty it means that the cache is invalid.  The user must

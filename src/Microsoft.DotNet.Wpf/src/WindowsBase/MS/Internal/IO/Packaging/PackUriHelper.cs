@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -47,7 +47,7 @@ namespace MS.Internal.IO.Packaging
 
         internal static bool IsPackUri(Uri uri)
         {
-            return uri != null && 
+            return uri != null &&
                 string.Compare(uri.Scheme, System.IO.Packaging.PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0;
         }
 
@@ -84,7 +84,7 @@ namespace MS.Internal.IO.Packaging
                 return new ValidatedPartUri(partUriString);
             }
         }
- 
+
         //Returns the part name in its escaped string form.
         internal static string GetStringForPartUri(Uri partUri)
         {
@@ -110,7 +110,7 @@ namespace MS.Internal.IO.Packaging
         //------------------------------------------------------
 
         #region Private Constructor
-        
+
         static PackUriHelper()
         {
             // indicate that we want "basic" parsing
@@ -161,7 +161,7 @@ namespace MS.Internal.IO.Packaging
             argumentException = GetExceptionIfPartNameEndsWithSlash(partName);
             if (argumentException != null)
                 return argumentException;
-            
+
             argumentException = GetExceptionIfFragmentPresent(partName);
             if (argumentException != null)
                 return argumentException;
@@ -190,7 +190,7 @@ namespace MS.Internal.IO.Packaging
             partUriString = partName;
             return null;
         }
-        
+
         private static ArgumentException GetExceptionIfAbsoluteUri(Uri uri)
         {
             if (uri.IsAbsoluteUri)
@@ -251,20 +251,20 @@ namespace MS.Internal.IO.Packaging
             }
             else
             {
-                safeUnescapedUri = 
-                    new Uri(partUri.GetComponents(UriComponents.Path |                                                   
+                safeUnescapedUri =
+                    new Uri(partUri.GetComponents(UriComponents.Path |
                                                   UriComponents.KeepDelimiter, UriFormat.SafeUnescaped), UriKind.Relative);
             }
-                        
+
             // Step 2: Get the canonically escaped Path with only ascii characters
             //Get the escaped string for the part name as part names should have only ascii characters
             String partName = safeUnescapedUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
-                     
+
             //The part name can be empty in cases where we were passed a pack URI that has no part component
             if (IsPartNameEmpty(partName))
                 return String.Empty;
             else
-                return partName;              
+                return partName;
         }
 
         //Verifies whether the part name is empty. PartName can be empty in two cases :
@@ -281,7 +281,7 @@ namespace MS.Internal.IO.Packaging
                 return true;
             else
                 return false;
-}
+        }
 
         #endregion Private Methods
 
@@ -327,16 +327,16 @@ namespace MS.Internal.IO.Packaging
 
             internal ValidatedPartUri(string partUriString)
                 : this(partUriString, false /*isNormalized*/, true /*computeIsRelationship*/, false /*dummy value as we will compute it later*/)
-            {               
+            {
             }
-                       
+
             //Use this constructor when you already know if a given string is a relationship
             //or no. One place this is used is while creating a normalized uri for a part Uri
             //This will optimize the code and we will not have to parse the Uri to find out
             //if it is a relationship part uri
             internal ValidatedPartUri(string partUriString, bool isRelationshipUri)
                 : this(partUriString, false /*isNormalized*/, false /*computeIsRelationship*/, isRelationshipUri)
-            {                
+            {
             }
 
             #endregion Internal Constructors
@@ -353,7 +353,7 @@ namespace MS.Internal.IO.Packaging
             {
                 return Compare(otherPartUri);
             }
-            
+
             #endregion IComparable Methods
 
             #region IEqualityComparer Methods
@@ -362,7 +362,7 @@ namespace MS.Internal.IO.Packaging
             {
                 return Compare(otherPartUri) == 0;
             }
-             
+
             #endregion IEqualityComparer Methods
 
             #region Internal Properties
@@ -426,7 +426,7 @@ namespace MS.Internal.IO.Packaging
             }
 
             #endregion Internal Properties
-            
+
             //------------------------------------------------------
             //
             //  Private Methods
@@ -475,7 +475,7 @@ namespace MS.Internal.IO.Packaging
                 // if uri is /_rels/.rels then we return true
                 if (System.IO.Packaging.PackUriHelper.ComparePartUri(_containerRelationshipNormalizedPartUri, this) == 0)
                     return true;
-                
+
                 // Look for pattern that matches: "XXX/_rels/YYY.rels" where XXX is zero or more part name characters and
                 // YYY is any legal part name characters.
                 // We can assume that the string is a valid URI because it would have been rejected by the Uri parsing
@@ -511,7 +511,7 @@ namespace MS.Internal.IO.Packaging
                     if ((segments[segments.Length - 1]).EndsWith(_relsrelsUpperCaseExtension, StringComparison.Ordinal))
                     {
                         // look for "_rels" segment in the third last segment
-                        if(String.CompareOrdinal(segments[segments.Length - 3], _relationshipPartUpperCaseSegmentName) == 0)
+                        if (String.CompareOrdinal(segments[segments.Length - 3], _relationshipPartUpperCaseSegmentName) == 0)
                             throw new ArgumentException(SR.NotAValidRelationshipPartUri);
                     }
                 }
@@ -538,9 +538,9 @@ namespace MS.Internal.IO.Packaging
                 if (IsNormalized)
                     return this;
                 else
-                    return new ValidatedPartUri(_normalizedPartUriString, 
-                                                true /*isNormalized*/, 
-                                                false /*computeIsRelationship*/, 
+                    return new ValidatedPartUri(_normalizedPartUriString,
+                                                true /*isNormalized*/,
+                                                false /*computeIsRelationship*/,
                                                 IsRelationshipPartUri);
             }
 
@@ -563,26 +563,26 @@ namespace MS.Internal.IO.Packaging
             private ValidatedPartUri _normalizedPartUri;
             private string _partUriString;
             private string _normalizedPartUriString;
-            private bool   _isNormalized;
-            private bool   _isRelationshipPartUri;
+            private bool _isNormalized;
+            private bool _isRelationshipPartUri;
 
             //String Uppercase variants
 
-            private static readonly string _relationshipPartUpperCaseExtension   = ".RELS";
+            private static readonly string _relationshipPartUpperCaseExtension = ".RELS";
             private static readonly string _relationshipPartUpperCaseSegmentName = "_RELS";
             private static readonly string _relsrelsUpperCaseExtension = String.Concat(_relationshipPartUpperCaseExtension, _relationshipPartUpperCaseExtension);
 
             //need to use the private constructor to initialize this particular partUri as we need this in the 
             //IsRelationshipPartUri, that is called from the constructor.
-            private static readonly Uri   _containerRelationshipNormalizedPartUri = new ValidatedPartUri("/_RELS/.RELS", 
-                                                                                                         true /*isnormalized*/, 
+            private static readonly Uri _containerRelationshipNormalizedPartUri = new ValidatedPartUri("/_RELS/.RELS",
+                                                                                                         true /*isnormalized*/,
                                                                                                          false /*computeIsRelationship*/,
                                                                                                          true /*IsRelationship*/);
 
             private static ReadOnlySpan<char> ForwardSlashSeparator => ['/'];
 
             #endregion Private Methods
-            
+
             //------------------------------------------------------
         }
 

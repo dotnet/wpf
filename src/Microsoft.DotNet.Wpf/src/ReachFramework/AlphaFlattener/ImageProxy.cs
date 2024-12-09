@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -43,22 +43,22 @@ namespace Microsoft.Internal.AlphaFlattener
         /// Maximum size to use when magnify image if scale is less than MinimumBlendRatio, to avoid
         /// huge image
         /// </summary>
-        private const int    MaximumOpacityMaskViewport = 1024;
-        
-        protected int          _pixelWidth;
-        protected int          _pixelHeight;
+        private const int MaximumOpacityMaskViewport = 1024;
+
+        protected int _pixelWidth;
+        protected int _pixelHeight;
         protected BitmapSource _image;
 
-        protected Byte[]       _pixels;
+        protected Byte[] _pixels;
 
         public ImageProxy(BitmapSource image)
         {
             Debug.Assert(image != null);
 
-            _pixelWidth  = image.PixelWidth;
+            _pixelWidth = image.PixelWidth;
             _pixelHeight = image.PixelHeight;
-            _image       = image;
-        //  _pixels      = null;
+            _image = image;
+            //  _pixels      = null;
         }
 
         public BitmapSource Image
@@ -109,7 +109,7 @@ namespace Microsoft.Internal.AlphaFlattener
             _pixelHeight = _image.PixelHeight;
             _pixels = null;
         }
-        
+
         private void Decode()
         {
             if (_pixels == null)
@@ -146,7 +146,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             return pixels;
         }
-        
+
         /// <param name="opacity"></param>
         /// <param name="opacityMask"></param>
         /// <param name="rect">Image destination rectangle</param>
@@ -178,17 +178,17 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
 
                 // Fix for 1689025: 
-                
-                double scaleX = _pixelWidth  / rect.Width;
+
+                double scaleX = _pixelWidth / rect.Width;
                 double scaleY = _pixelHeight / rect.Height;
 
                 // If current image is too small, magnify it to match opacity mask's size,
                 // otherwise we lose the detail in opacity mask.
                 if ((scaleX < MinimumBlendRatio || scaleY < MinimumBlendRatio) &&
-                    (rect.Width  <= MaximumOpacityMaskViewport) &&
+                    (rect.Width <= MaximumOpacityMaskViewport) &&
                     (rect.Height <= MaximumOpacityMaskViewport)) // Avoiding generate huge bitmap
                 {
-                    Scale(rect.Width  / _pixelWidth, 
+                    Scale(rect.Width / _pixelWidth,
                           rect.Height / _pixelHeight);
                     scaleX = 1.0;
                     scaleY = 1.0;
@@ -207,7 +207,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (op <= 0)
             {
-                _image  = null;
+                _image = null;
                 _pixels = null;
                 return;
             }
@@ -215,18 +215,18 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 return;
             }
-            
+
             Decode();
 
             Byte[] map = new Byte[256];
-            
-            for (int i = 0; i < 256; i ++)
+
+            for (int i = 0; i < 256; i++)
             {
                 map[i] = (Byte)(i * op / 255);
             }
 
             int count = _pixelWidth * _pixelHeight * 4;
-            
+
             for (int i = 0; i < count; i++)
             {
                 _pixels[i] = map[_pixels[i]];
@@ -334,7 +334,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         foreach (Color c in palColor)
                         {
-                            if (! Utility.IsOpaque(c.ScA))
+                            if (!Utility.IsOpaque(c.ScA))
                             {
                                 return 2;
                             }
@@ -346,7 +346,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             return 0;
         }
-        
+
         public bool IsOpaque()
         {
             if (_image == null)
@@ -400,7 +400,7 @@ namespace Microsoft.Internal.AlphaFlattener
             int count = _pixelWidth * _pixelHeight * 4;
 
             // _pixels is in PBGRA format, check all channels
-            
+
             for (int i = 0; i < count; i++)
             {
                 if (_pixels[i] != 0)
@@ -509,7 +509,7 @@ namespace Microsoft.Internal.AlphaFlattener
                             pixels,
                             width * 4
                             );
-                        
+
                         clipBounds = bounds;
                     }
                 }

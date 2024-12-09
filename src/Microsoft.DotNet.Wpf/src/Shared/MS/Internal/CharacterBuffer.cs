@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,8 +17,8 @@
 //---------------------------------------------------------------------------
 
 using System.Collections;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 
 namespace MS.Internal
 {
@@ -53,9 +53,9 @@ namespace MS.Internal
         /// <param name="length">number of character appending</param>
         /// <returns>string builder</returns>
         public abstract void AppendToStringBuilder(
-            StringBuilder   stringBuilder,
-            int             characterOffset,
-            int             length
+            StringBuilder stringBuilder,
+            int characterOffset,
+            int length
             );
 
         #region IList<char> Members
@@ -162,7 +162,7 @@ namespace MS.Internal
     /// </summary>
     internal sealed class CharArrayCharacterBuffer : CharacterBuffer
     {
-        private char[]      _characterArray;
+        private char[] _characterArray;
 
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace MS.Internal
         /// </summary>
         /// <param name="characterArray">character array</param>
         public CharArrayCharacterBuffer(
-            char[]  characterArray
+            char[] characterArray
             )
         {
             ArgumentNullException.ThrowIfNull(characterArray);
@@ -221,7 +221,7 @@ namespace MS.Internal
             gcHandle = GCHandle.Alloc(_characterArray, GCHandleType.Pinned);
             return new IntPtr(((char*)gcHandle.AddrOfPinnedObject().ToPointer()) + offset);
         }
-        
+
         /// <summary>
         /// This is a matching call for PinAndGetCharacterPointer to unpin the memory.
         /// </summary>
@@ -237,15 +237,15 @@ namespace MS.Internal
         /// <param name="characterOffset">index to first character in the buffer to append</param>
         /// <param name="characterLength">number of character appending</param>
         public override void AppendToStringBuilder(
-            StringBuilder   stringBuilder,
-            int             characterOffset,
-            int             characterLength
+            StringBuilder stringBuilder,
+            int characterOffset,
+            int characterLength
             )
         {
             Debug.Assert(characterOffset >= 0 && characterOffset < _characterArray.Length, "Invalid character index");
 
-            if (    characterLength < 0 
-                ||  characterOffset + characterLength > _characterArray.Length)
+            if (characterLength < 0
+                || characterOffset + characterLength > _characterArray.Length)
             {
                 characterLength = _characterArray.Length - characterOffset;
             }
@@ -261,7 +261,7 @@ namespace MS.Internal
     /// </summary>
     internal sealed class StringCharacterBuffer : CharacterBuffer
     {
-        private string      _string;
+        private string _string;
 
 
         /// <summary>
@@ -269,7 +269,7 @@ namespace MS.Internal
         /// </summary>
         /// <param name="characterString">character string</param>
         public StringCharacterBuffer(
-            string  characterString
+            string characterString
             )
         {
             ArgumentNullException.ThrowIfNull(characterString);
@@ -337,15 +337,15 @@ namespace MS.Internal
         /// <param name="characterOffset">index to first character in the buffer to append</param>
         /// <param name="characterLength">number of character appending</param>
         public override void AppendToStringBuilder(
-            StringBuilder   stringBuilder,
-            int             characterOffset,
-            int             characterLength
+            StringBuilder stringBuilder,
+            int characterOffset,
+            int characterLength
             )
         {
             Debug.Assert(characterOffset >= 0 && characterOffset < _string.Length, "Invalid character index");
 
-            if (    characterLength < 0 
-                ||  characterOffset + characterLength > _string.Length)
+            if (characterLength < 0
+                || characterOffset + characterLength > _string.Length)
             {
                 characterLength = _string.Length - characterOffset;
             }
@@ -361,9 +361,9 @@ namespace MS.Internal
     /// </summary>
     internal sealed unsafe class UnsafeStringCharacterBuffer : CharacterBuffer
     {
-        private char*   _unsafeString;
+        private char* _unsafeString;
 
-        private int     _length;
+        private int _length;
 
 
         /// <summary>
@@ -372,8 +372,8 @@ namespace MS.Internal
         /// <param name="characterString">unsafe pointer to character string</param>
         /// <param name="length">number of valid characters referenced by the unsafe pointer</param>
         public UnsafeStringCharacterBuffer(
-            char*   characterString,
-            int     length
+            char* characterString,
+            int length
             )
         {
             if (characterString == null)
@@ -393,7 +393,8 @@ namespace MS.Internal
         /// </summary>
         public override char this[int characterOffset]
         {
-            get {
+            get
+            {
                 ArgumentOutOfRangeException.ThrowIfNegative(characterOffset);
                 ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(characterOffset, _length);
 
@@ -444,10 +445,10 @@ namespace MS.Internal
         /// <param name="stringBuilder">string builder to add content to</param>
         /// <param name="characterOffset">index to first character in the buffer to append</param>
         /// <param name="characterLength">number of character appending</param>
-        public override  void AppendToStringBuilder(
-            StringBuilder   stringBuilder,
-            int             characterOffset,
-            int             characterLength
+        public override void AppendToStringBuilder(
+            StringBuilder stringBuilder,
+            int characterOffset,
+            int characterLength
             )
         {
 

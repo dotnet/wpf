@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,11 +19,11 @@ namespace System.Windows.Documents
         ///  Backward - Causes the TextPointer to be positioned 
         ///  before the newly inserted content
         /// </summary>
-        Backward            = 0,
+        Backward = 0,
         /// <summary>
         ///  Forward - Causes the TextPointer 
         ///  to be positioned after the newly inserted content.
         /// </summary>
-        Forward             = 1
+        Forward = 1
     }
 }

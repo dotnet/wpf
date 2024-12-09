@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.IO;
+using System.Windows.Markup;
+using System.Windows.Navigation;
 using MS.Internal;
 using MS.Internal.Documents;
 using MS.Internal.Utility;
-using System.Windows.Navigation;
-using System.Windows.Markup;
-using System.IO;
 
 //
 // Description:
@@ -66,7 +66,7 @@ namespace System.Windows.Documents
         public FixedDocument GetDocument(bool forceReload)
         {
             DocumentsTrace.FixedDocumentSequence.IDF.Trace($"DocumentReference.GetDocument ({(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}, {forceReload})");
-             VerifyAccess();
+            VerifyAccess();
 
             FixedDocument idp = null;
             if (_doc != null)
@@ -77,7 +77,7 @@ namespace System.Windows.Documents
             {
                 if (!forceReload)
                 {
-                     idp = CurrentlyLoadedDoc;
+                    idp = CurrentlyLoadedDoc;
                 }
 
                 if (idp == null)
@@ -132,7 +132,7 @@ namespace System.Windows.Documents
                         typeof(Uri),
                         typeof(DocumentReference),
                         new FrameworkPropertyMetadata(
-                                (Uri) null,
+                                (Uri)null,
                                 new PropertyChangedCallback(OnSourceChanged)));
 
 
@@ -143,8 +143,8 @@ namespace System.Windows.Documents
 
             if (!object.Equals(e.OldValue, e.NewValue))
             {
-                Uri oldSource = (Uri) e.OldValue;
-                Uri newSource = (Uri) e.NewValue;
+                Uri oldSource = (Uri)e.OldValue;
+                Uri newSource = (Uri)e.NewValue;
                 DocumentsTrace.FixedDocumentSequence.IDF.Trace($"====Replace old doc {(oldSource == null ? "null" : oldSource.ToString())} with new {(newSource == null ? "null" : newSource.ToString())}");
                 // drop loaded document if source changed
                 docRef._doc = null;
@@ -160,7 +160,7 @@ namespace System.Windows.Documents
         /// </summary>
         public Uri Source
         {
-            get { return (Uri) GetValue(SourceProperty); }
+            get { return (Uri)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
         }
         #endregion Public Properties
@@ -241,7 +241,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Private Methods
-        private void  _Init()
+        private void _Init()
         {
             this.InheritanceBehavior = InheritanceBehavior.SkipToAppNow;
         }
@@ -274,9 +274,10 @@ namespace System.Windows.Documents
                     throw new ApplicationException(SR.DocumentReferenceNotFound);
                 }
 
-                ParserContext pc = new ParserContext();
-
-                pc.BaseUri = uriToLoad;
+                ParserContext pc = new ParserContext
+                {
+                    BaseUri = uriToLoad
+                };
 
                 if (BindUriHelper.IsXamlMimeType(mimeType))
                 {
@@ -294,7 +295,7 @@ namespace System.Windows.Documents
                 idp.DocumentReference = this;
             }
 
-           return idp;
+            return idp;
         }
         #endregion Private Methods
 

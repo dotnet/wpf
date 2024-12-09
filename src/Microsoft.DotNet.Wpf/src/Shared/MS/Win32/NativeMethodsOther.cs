@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 
 namespace MS.Win32
@@ -18,55 +18,55 @@ namespace MS.Win32
             return unchecked(((int)0x80070000) | errorCode);
         }
 
-        public const int    FEATURE_OBJECT_CACHING = 0 ;
-        public const int    FEATURE_ZONE_ELEVATION = 1;
-        public const int    FEATURE_MIME_HANDLING = 2;
-        public const int    FEATURE_MIME_SNIFFING = 3;
-        public const int    FEATURE_WINDOW_RESTRICTIONS = 4;
-        public const int    FEATURE_WEBOC_POPUPMANAGEMENT = 5;
-        public const int    FEATURE_BEHAVIORS = 6;
-        public const int    FEATURE_DISABLE_MK_PROTOCOL = 7;
-        public const int    FEATURE_LOCALMACHINE_LOCKDOWN = 8;
-        public const int    FEATURE_SECURITYBAND = 9;
-        public const int    FEATURE_RESTRICT_ACTIVEXINSTALL = 10;
-        public const int    FEATURE_VALIDATE_NAVIGATE_URL = 11;
-        public const int    FEATURE_RESTRICT_FILEDOWNLOAD = 12;
-        public const int    FEATURE_ADDON_MANAGEMENT = 13;
-        public const int    FEATURE_PROTOCOL_LOCKDOWN = 14;
-        public const int    FEATURE_HTTP_USERNAME_PASSWORD_DISABLE = 15;
-        public const int    FEATURE_SAFE_BINDTOOBJECT = 16;
-        public const int    FEATURE_UNC_SAVEDFILECHECK = 17;
-        public const int    FEATURE_GET_URL_DOM_FILEPATH_UNENCODED = 18;
+        public const int FEATURE_OBJECT_CACHING = 0;
+        public const int FEATURE_ZONE_ELEVATION = 1;
+        public const int FEATURE_MIME_HANDLING = 2;
+        public const int FEATURE_MIME_SNIFFING = 3;
+        public const int FEATURE_WINDOW_RESTRICTIONS = 4;
+        public const int FEATURE_WEBOC_POPUPMANAGEMENT = 5;
+        public const int FEATURE_BEHAVIORS = 6;
+        public const int FEATURE_DISABLE_MK_PROTOCOL = 7;
+        public const int FEATURE_LOCALMACHINE_LOCKDOWN = 8;
+        public const int FEATURE_SECURITYBAND = 9;
+        public const int FEATURE_RESTRICT_ACTIVEXINSTALL = 10;
+        public const int FEATURE_VALIDATE_NAVIGATE_URL = 11;
+        public const int FEATURE_RESTRICT_FILEDOWNLOAD = 12;
+        public const int FEATURE_ADDON_MANAGEMENT = 13;
+        public const int FEATURE_PROTOCOL_LOCKDOWN = 14;
+        public const int FEATURE_HTTP_USERNAME_PASSWORD_DISABLE = 15;
+        public const int FEATURE_SAFE_BINDTOOBJECT = 16;
+        public const int FEATURE_UNC_SAVEDFILECHECK = 17;
+        public const int FEATURE_GET_URL_DOM_FILEPATH_UNENCODED = 18;
 
         // IE7 and higher
-        public const int    FEATURE_TABBED_BROWSING = 19;
-        public const int    FEATURE_SSLUX = 20;
-        public const int    FEATURE_DISABLE_NAVIGATION_SOUNDS = 21;
-        public const int    FEATURE_DISABLE_LEGACY_COMPRESSION = 22;
-        public const int    FEATURE_FORCE_ADDR_AND_STATUS = 23;
-        public const int    FEATURE_XMLHTTP = 24;
-        public const int    FEATURE_DISABLE_TELNET_PROTOCOL = 25;
-        public const int    FEATURE_FEEDS = 26;
-        public const int    FEATURE_BLOCK_INPUT_PROMPTS = 27;
+        public const int FEATURE_TABBED_BROWSING = 19;
+        public const int FEATURE_SSLUX = 20;
+        public const int FEATURE_DISABLE_NAVIGATION_SOUNDS = 21;
+        public const int FEATURE_DISABLE_LEGACY_COMPRESSION = 22;
+        public const int FEATURE_FORCE_ADDR_AND_STATUS = 23;
+        public const int FEATURE_XMLHTTP = 24;
+        public const int FEATURE_DISABLE_TELNET_PROTOCOL = 25;
+        public const int FEATURE_FEEDS = 26;
+        public const int FEATURE_BLOCK_INPUT_PROMPTS = 27;
 
-        public const int    GET_FEATURE_FROM_PROCESS = 0x00000002;
-        public const int    SET_FEATURE_ON_PROCESS   = 0x00000002;
+        public const int GET_FEATURE_FROM_PROCESS = 0x00000002;
+        public const int SET_FEATURE_ON_PROCESS = 0x00000002;
 
-        public const int    URLZONE_LOCAL_MACHINE    = 0;
-        public const int    URLZONE_INTRANET         = URLZONE_LOCAL_MACHINE + 1;
-        public const int    URLZONE_TRUSTED          = URLZONE_INTRANET + 1;
-        public const int    URLZONE_INTERNET         = URLZONE_TRUSTED + 1;
-        public const int    URLZONE_UNTRUSTED        = URLZONE_INTERNET + 1;
+        public const int URLZONE_LOCAL_MACHINE = 0;
+        public const int URLZONE_INTRANET = URLZONE_LOCAL_MACHINE + 1;
+        public const int URLZONE_TRUSTED = URLZONE_INTRANET + 1;
+        public const int URLZONE_INTERNET = URLZONE_TRUSTED + 1;
+        public const int URLZONE_UNTRUSTED = URLZONE_INTERNET + 1;
 
-        public const byte   URLPOLICY_ALLOW          = 0x00;
-        public const byte   URLPOLICY_QUERY          = 0x01;
-        public const byte   URLPOLICY_DISALLOW       = 0x03;
+        public const byte URLPOLICY_ALLOW = 0x00;
+        public const byte URLPOLICY_QUERY = 0x01;
+        public const byte URLPOLICY_DISALLOW = 0x03;
 
-        public const int    URLACTION_FEATURE_ZONE_ELEVATION = 0x00002101;
-        public const int    PUAF_NOUI                = 0x00000001;
-        public const int    MUTZ_NOSAVEDFILECHECK    = 0x00000001;
+        public const int URLACTION_FEATURE_ZONE_ELEVATION = 0x00002101;
+        public const int PUAF_NOUI = 0x00000001;
+        public const int MUTZ_NOSAVEDFILECHECK = 0x00000001;
 
-        [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode )]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         internal sealed class OSVERSIONINFOEX
         {
             public int osVersionInfoSize = SizeOf();
@@ -74,14 +74,14 @@ namespace MS.Win32
             public int minorVersion = 0;
             public int buildNumber = 0;
             public int platformId = 0;
-            [MarshalAs(UnmanagedType.ByValTStr, SizeConst=128)]
+            [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 128)]
             public string csdVersion = null;
             public short servicePackMajor = 0;
             public short servicePackMinor = 0;
             public short suiteMask = 0;
             public byte productType = 0;
             public byte reserved = 0;
-            
+
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(OSVERSIONINFOEX));
@@ -90,17 +90,18 @@ namespace MS.Win32
         [ComImport, Guid("79eac9ee-baf9-11ce-8c82-00aa004ba90b"), System.Runtime.InteropServices.InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface IInternetSecurityMgrSite
         {
-            void GetWindow( /* [out] */ ref IntPtr phwnd) ;
-            void EnableModeless( /* [in] */ bool fEnable) ;
+            void GetWindow( /* [out] */ ref IntPtr phwnd);
+            void EnableModeless( /* [in] */ bool fEnable);
         }
 
         [StructLayout(LayoutKind.Sequential)]
-        internal class OLECMD {
+        internal class OLECMD
+        {
             [MarshalAs(UnmanagedType.U4)]
-            public   int cmdID = 0;
+            public int cmdID = 0;
             [MarshalAs(UnmanagedType.U4)]
-            public   int cmdf = 0;
-}
+            public int cmdf = 0;
+        }
 
         // Helper GUID type for nullability requirement in IOleCommandTarget.Exec.
         [StructLayout(LayoutKind.Sequential)]
@@ -115,7 +116,7 @@ namespace MS.Win32
         }
 
         [ComVisible(true), ComImport(), Guid("B722BCCB-4E68-101B-A2BC-00AA00404770")]
-        [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]        
+        [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface IOleCommandTarget
         {
             [return: MarshalAs(UnmanagedType.I4)]
@@ -141,18 +142,19 @@ namespace MS.Win32
         }
 
         [ComVisible(true), StructLayout(LayoutKind.Sequential)]
-        internal class DOCHOSTUIINFO {
+        internal class DOCHOSTUIINFO
+        {
             [MarshalAs(UnmanagedType.U4)]
-            internal   int cbSize = SizeOf();
+            internal int cbSize = SizeOf();
             [MarshalAs(UnmanagedType.I4)]
-            internal   int dwFlags;
+            internal int dwFlags;
             [MarshalAs(UnmanagedType.I4)]
-            internal   int dwDoubleClick;
+            internal int dwDoubleClick;
             [MarshalAs(UnmanagedType.I4)]
-            internal   int dwReserved1 = 0;
+            internal int dwReserved1 = 0;
             [MarshalAs(UnmanagedType.I4)]
-            internal   int dwReserved2 = 0;
-            
+            internal int dwReserved2 = 0;
+
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(DOCHOSTUIINFO));
@@ -160,7 +162,8 @@ namespace MS.Win32
         }
 
 
-        public enum DOCHOSTUIFLAG {
+        public enum DOCHOSTUIFLAG
+        {
             DIALOG = 0x1,
             DISABLE_HELP_MENU = 0x2,
             NO3DBORDER = 0x4,
@@ -174,24 +177,25 @@ namespace MS.Win32
             NO3DOUTERBORDER = 0x00200000,
             ENABLE_FORMS_AUTOCOMPLETE = 0x00004000,
             ENABLE_INPLACE_NAVIGATION = 0x00010000,
-            IME_ENABLE_RECONVERSION   = 0x00020000,
+            IME_ENABLE_RECONVERSION = 0x00020000,
             THEME = 0x00040000,
             NOTHEME = 0x80000,
             DISABLE_COOKIE = 0x400,
-            NOPICS                    = 0x100000,
-            DISABLE_EDIT_NS_FIXUP     = 0x400000,
-            LOCAL_MACHINE_ACCESS_CHECK= 0x800000,
+            NOPICS = 0x100000,
+            DISABLE_EDIT_NS_FIXUP = 0x400000,
+            LOCAL_MACHINE_ACCESS_CHECK = 0x800000,
             DISABLE_UNTRUSTEDPROTOCOL = 0x1000000,
-            HOST_NAVIGATES            = 0x2000000,
+            HOST_NAVIGATES = 0x2000000,
             ENABLE_REDIRECT_NOTIFICATION = 0x4000000
         }
 
-        public enum DOCHOSTUIDBLCLICK {
+        public enum DOCHOSTUIDBLCLICK
+        {
             DEFAULT = 0x0,
             SHOWPROPERTIES = 0x1,
             SHOWCODE = 0x2
         }
-        
+
         [DllImport(ExternDll.Gdi32, ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr SetEnhMetaFileBits(uint cbBuffer, byte[] buffer);
 
@@ -230,11 +234,11 @@ namespace MS.Win32
             private BitmapHandle() : this(true)
             {
             }
-            
+
             private BitmapHandle(bool ownsHandle) : base(ownsHandle, NativeMethods.CommonHandles.GDI)
             {
             }
-            
+
             protected override bool ReleaseHandle()
             {
                 return UnsafeNativeMethods.DeleteObject(handle);
@@ -245,7 +249,7 @@ namespace MS.Win32
                 return new HandleRef(obj, handle);
             }
 
-            internal static BitmapHandle CreateFromHandle(IntPtr hbitmap, bool ownsHandle=true)
+            internal static BitmapHandle CreateFromHandle(IntPtr hbitmap, bool ownsHandle = true)
             {
                 return new BitmapHandle(ownsHandle)
                 {
@@ -287,7 +291,7 @@ namespace MS.Win32
 
             protected override bool ReleaseHandle()
             {
-                return UnsafeNativeMethods.DestroyCursor( handle );
+                return UnsafeNativeMethods.DestroyCursor(handle);
             }
 
             internal static CursorHandle GetInvalidCursor()
@@ -419,7 +423,7 @@ namespace MS.Win32
             public int bottom;
 
             public RefRECT()
-            {}
+            { }
 
             public RefRECT(int left, int top, int right, int bottom)
             {
@@ -518,7 +522,7 @@ namespace MS.Win32
         [StructLayout(LayoutKind.Sequential)]
         internal class SECURITY_ATTRIBUTES
         {
-            public SECURITY_ATTRIBUTES ()
+            public SECURITY_ATTRIBUTES()
             {
                 lpSecurityDescriptor = new SafeLocalMemHandle();
             }
@@ -534,37 +538,37 @@ namespace MS.Win32
                 if (lpSecurityDescriptor != null)
                 {
                     lpSecurityDescriptor.Dispose();
-                    
+
                     // we do not set the handle to null because .Net marshaling will throw an exception if we pinvoke with a structure containing a null SafeHandle field
                     lpSecurityDescriptor = new SafeLocalMemHandle();
                 }
             }
-            
+
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(SECURITY_ATTRIBUTES));
             }
         }
 
-		internal sealed class SafeLocalMemHandle : SafeHandleZeroOrMinusOneIsInvalid
-		{
-		    public SafeLocalMemHandle() : base(true)
-		    {
-		    }
+        internal sealed class SafeLocalMemHandle : SafeHandleZeroOrMinusOneIsInvalid
+        {
+            public SafeLocalMemHandle() : base(true)
+            {
+            }
 
-		    public SafeLocalMemHandle(IntPtr existingHandle, bool ownsHandle) : base(ownsHandle)
-		    {
-		        base.SetHandle(existingHandle);
-		    }
+            public SafeLocalMemHandle(IntPtr existingHandle, bool ownsHandle) : base(ownsHandle)
+            {
+                base.SetHandle(existingHandle);
+            }
 
-		    protected override bool ReleaseHandle()
-		    {
-		        return (LocalFree(base.handle) == IntPtr.Zero);
-		    }
+            protected override bool ReleaseHandle()
+            {
+                return (LocalFree(base.handle) == IntPtr.Zero);
+            }
 
             [DllImport("kernel32.dll")]
-		    private static extern IntPtr LocalFree(IntPtr hMem);
-		}
+            private static extern IntPtr LocalFree(IntPtr hMem);
+        }
 
 
         internal const uint DELETE = 0x00010000, READ_CONTROL = 0x00020000, WRITE_DAC = 0x00040000, WRITE_OWNER = 0x00080000, SYNCHRONIZE = 0x00100000, STANDARD_RIGHTS_REQUIRED = 0x000F0000, STANDARD_RIGHTS_READ = READ_CONTROL, STANDARD_RIGHTS_WRITE = READ_CONTROL, STANDARD_RIGHTS_EXECUTE = READ_CONTROL, STANDARD_RIGHTS_ALL = 0x001F0000, SPECIFIC_RIGHTS_ALL = 0x0000FFFF, ACCESS_SYSTEM_SECURITY = 0x01000000, MAXIMUM_ALLOWED = 0x02000000, GENERIC_READ = 0x80000000, GENERIC_WRITE = 0x40000000, GENERIC_EXECUTE = 0x20000000, GENERIC_ALL = 0x10000000;
@@ -600,7 +604,7 @@ namespace MS.Win32
         internal const int FILE_ATTRIBUTE_TEMPORARY = 0x00000100;
         internal const int FILE_FLAG_DELETE_ON_CLOSE = 0x04000000;
 
-        internal const int CREATE_ALWAYS   = 2;
+        internal const int CREATE_ALWAYS = 2;
 
         internal const int PROCESS_ALL_ACCESS = (int)(STANDARD_RIGHTS_REQUIRED | SYNCHRONIZE | 0xFFF);
 
@@ -1068,8 +1072,8 @@ namespace MS.Win32
         public const int GCW_ATOM = -32;
         public const int GCL_HICONSM = -34;
 
-        public const int MONITOR_DEFAULTTONULL       = 0x00000000;
-        public const int MONITOR_DEFAULTTOPRIMARY    = 0x00000001;
+        public const int MONITOR_DEFAULTTONULL = 0x00000000;
+        public const int MONITOR_DEFAULTTOPRIMARY = 0x00000001;
         public const int MONITOR_DEFAULTTONEAREST = 0x00000002;
 
 
@@ -1078,7 +1082,7 @@ namespace MS.Win32
         {
             public int cbSize = SizeOf();
             public int iMinAnimate = 0;
-            
+
             private static int SizeOf()
             {
                 return Marshal.SizeOf(typeof(ANIMATIONINFO));
@@ -1173,14 +1177,16 @@ namespace MS.Win32
             /// <returns></returns>
             public static HWND Cast(IntPtr h)
             {
-                HWND hTemp = new HWND();
-                hTemp.h = h;
+                HWND hTemp = new HWND
+                {
+                    h = h
+                };
                 return hTemp;
             }
 
             public HandleRef MakeHandleRef(object wrapper)
             {
-                return new HandleRef(wrapper,h);
+                return new HandleRef(wrapper, h);
             }
 
             /// <summary>
@@ -1253,12 +1259,14 @@ namespace MS.Win32
             /// <returns></returns>
             public static HDC Cast(IntPtr h)
             {
-                HDC hTemp = new HDC();
-                hTemp.h = h;
+                HDC hTemp = new HDC
+                {
+                    h = h
+                };
                 return hTemp;
             }
 
-            public HandleRef MakeHandleRef( object wrapper)
+            public HandleRef MakeHandleRef(object wrapper)
             {
                 return new HandleRef(wrapper, h);
             }
@@ -1270,8 +1278,10 @@ namespace MS.Win32
             {
                 get
                 {
-                    HDC hTemp = new HDC();
-                    hTemp.h = IntPtr.Zero;
+                    HDC hTemp = new HDC
+                    {
+                        h = IntPtr.Zero
+                    };
                     return hTemp;
                 }
             }
@@ -1309,7 +1319,7 @@ namespace MS.Win32
             public UInt32 cbOutput;
             public UInt32 opcode;
             public Int32 cbSize;
-            
+
             public void* buffer;
         }
 
@@ -1412,23 +1422,24 @@ namespace MS.Win32
         public const int GMMP_USE_HIGH_RESOLUTION_POINTS = 2;
 
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)] // For GetMouseMovePointsEx
-        public struct MOUSEMOVEPOINT {
-            public int    x ;                       //Specifies the x-coordinate of the mouse
-            public int    y ;                       //Specifies the x-coordinate of the mouse
-            public int    time ;                    //Specifies the time stamp of the mouse coordinate
+        public struct MOUSEMOVEPOINT
+        {
+            public int x;                       //Specifies the x-coordinate of the mouse
+            public int y;                       //Specifies the x-coordinate of the mouse
+            public int time;                    //Specifies the time stamp of the mouse coordinate
             public IntPtr dwExtraInfo;              //Specifies extra information associated with this coordinate.
         }
 
-        public const int ERROR_FILE_NOT_FOUND               = 2;
-        public const int ERROR_PATH_NOT_FOUND               = 3;
-        public const int ERROR_ACCESS_DENIED                = 5;
-        public const int ERROR_INVALID_DRIVE                = 15;
-        public const int ERROR_SHARING_VIOLATION            = 32;
-        public const int ERROR_FILE_EXISTS                  = 80;
-        public const int ERROR_INVALID_PARAMETER            = 87;
-        public const int ERROR_FILENAME_EXCED_RANGE         = 206;
-        public const int ERROR_NO_MORE_ITEMS                = 259;
-        public const int ERROR_OPERATION_ABORTED            = 995;
+        public const int ERROR_FILE_NOT_FOUND = 2;
+        public const int ERROR_PATH_NOT_FOUND = 3;
+        public const int ERROR_ACCESS_DENIED = 5;
+        public const int ERROR_INVALID_DRIVE = 15;
+        public const int ERROR_SHARING_VIOLATION = 32;
+        public const int ERROR_FILE_EXISTS = 80;
+        public const int ERROR_INVALID_PARAMETER = 87;
+        public const int ERROR_FILENAME_EXCED_RANGE = 206;
+        public const int ERROR_NO_MORE_ITEMS = 259;
+        public const int ERROR_OPERATION_ABORTED = 995;
 
 #endif // BASE_NATIVEMETHODS
 
@@ -1485,7 +1496,7 @@ namespace MS.Win32
         // Copied from winineti.h
 
         // Note: CachePath should be an array of size 260.
-        [StructLayout(LayoutKind.Sequential, CharSet=CharSet.Unicode)]
+        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
         internal struct InternetCacheConfigInfo
         {
             internal UInt32 dwStructSize;
@@ -1502,23 +1513,24 @@ namespace MS.Win32
         }
 #endif
 
-        public const int WTS_CONSOLE_CONNECT    = 0x1;
+        public const int WTS_CONSOLE_CONNECT = 0x1;
         public const int WTS_CONSOLE_DISCONNECT = 0x2;
-        public const int WTS_REMOTE_CONNECT     = 0x3;
-        public const int WTS_REMOTE_DISCONNECT  = 0x4;
-        public const int WTS_SESSION_LOCK       = 0x7;
-        public const int WTS_SESSION_UNLOCK     = 0x8;
-        
+        public const int WTS_REMOTE_CONNECT = 0x3;
+        public const int WTS_REMOTE_DISCONNECT = 0x4;
+        public const int WTS_SESSION_LOCK = 0x7;
+        public const int WTS_SESSION_UNLOCK = 0x8;
+
         public const uint NOTIFY_FOR_THIS_SESSION = 0;
 
-        public const int PBT_APMSUSPEND         = 0x0004;
-        public const int PBT_APMRESUMECRITICAL  = 0x0006;
-        public const int PBT_APMRESUMESUSPEND   = 0x0007;
+        public const int PBT_APMSUSPEND = 0x0004;
+        public const int PBT_APMRESUMECRITICAL = 0x0006;
+        public const int PBT_APMRESUMESUSPEND = 0x0007;
         public const int PBT_APMRESUMEAUTOMATIC = 0x0012;
         public const int PBT_POWERSETTINGCHANGE = 0x8013;
 
         [StructLayout(LayoutKind.Sequential, Pack = 4)]
-        public struct POWERBROADCAST_SETTING {
+        public struct POWERBROADCAST_SETTING
+        {
             public Guid PowerSetting;
             public int DataLength;
             public byte Data;
@@ -1542,7 +1554,7 @@ namespace MS.Win32
 
         public enum COLORTYPE : uint
         {
-            COLOR_GRAY       =   1,
+            COLOR_GRAY = 1,
             COLOR_RGB,
             COLOR_XYZ,
             COLOR_Yxy,
@@ -1560,18 +1572,18 @@ namespace MS.Win32
         };
 
         public enum ColorSpace : uint
-        {   
-            SPACE_XYZ       = 0x58595A20,  // = 'XYZ '
-            SPACE_Lab       = 0x4C616220,  // = 'Lab '
-            SPACE_Luv       = 0x4C757620,  // = 'Luv '
-            SPACE_YCbCr     = 0x59436272,  // = 'YCbr'
-            SPACE_Yxy       = 0x59787920,  // = 'Yxy '
-            SPACE_RGB       = 0x52474220,  // = 'RGB '
-            SPACE_GRAY      = 0x47524159,  // = 'GRAY'
-            SPACE_HSV       = 0x48535620,  // = 'HSV '
-            SPACE_HLS       = 0x484C5320,  // = 'HLS '
-            SPACE_CMYK      = 0x434D594B,  // = 'CMYK'
-            SPACE_CMY       = 0x434D5920,  // = 'CMY '
+        {
+            SPACE_XYZ = 0x58595A20,  // = 'XYZ '
+            SPACE_Lab = 0x4C616220,  // = 'Lab '
+            SPACE_Luv = 0x4C757620,  // = 'Luv '
+            SPACE_YCbCr = 0x59436272,  // = 'YCbr'
+            SPACE_Yxy = 0x59787920,  // = 'Yxy '
+            SPACE_RGB = 0x52474220,  // = 'RGB '
+            SPACE_GRAY = 0x47524159,  // = 'GRAY'
+            SPACE_HSV = 0x48535620,  // = 'HSV '
+            SPACE_HLS = 0x484C5320,  // = 'HLS '
+            SPACE_CMYK = 0x434D594B,  // = 'CMYK'
+            SPACE_CMY = 0x434D5920,  // = 'CMY '
             SPACE_2_CHANNEL = 0x32434C52,  // = '2CLR'
             SPACE_3_CHANNEL = 0x33434C52,  // = '3CLR'
             SPACE_4_CHANNEL = 0x34434C52,  // = '4CLR'
@@ -1590,7 +1602,7 @@ namespace MS.Win32
             SPACE_D_CHANNEL = 0x44434C52,  // = 'DCLR'
             SPACE_E_CHANNEL = 0x45434C52,  // = 'ECLR'
             SPACE_F_CHANNEL = 0x46434C52,  // = 'FCLR'
-            SPACE_sRGB      = 0x73524742   // = 'sRGB'
+            SPACE_sRGB = 0x73524742   // = 'sRGB'
         };
 
         //

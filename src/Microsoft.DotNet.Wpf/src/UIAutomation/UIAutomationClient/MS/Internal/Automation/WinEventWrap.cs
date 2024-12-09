@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 
 using System;
 using System.Collections;
-using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 using MS.Win32;
 
 namespace MS.Internal.Automation
@@ -27,14 +27,14 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // ctor that takes an array of events
-        internal WinEventWrap(int [] eventIds) 
-        { 
+        internal WinEventWrap(int[] eventIds)
+        {
             Debug.Assert(eventIds != null && eventIds.Length > 0, "eventIds is invalid");
-            _eventIds = (int [])eventIds.Clone();
+            _eventIds = (int[])eventIds.Clone();
             _hHooks = new IntPtr[_eventIds.Length];
             Init();
         }
@@ -52,7 +52,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal virtual void WinEventProc(int eventId, IntPtr hwnd, int idObject, int idChild, uint eventTime)
@@ -63,9 +63,9 @@ namespace MS.Internal.Automation
         internal void Clear()
         {
             StopListening();
-            lock(this)
+            lock (this)
             {
-                _clientCallbacks.Clear ();
+                _clientCallbacks.Clear();
             }
             if (_gchThis.IsAllocated)
             {
@@ -130,7 +130,7 @@ namespace MS.Internal.Automation
             // no handlers for them to call).
             _fBusy = true;
 
-            for (int i=0;i<_hHooks.Length;i++)
+            for (int i = 0; i < _hHooks.Length; i++)
             {
                 if (_hHooks[i] != IntPtr.Zero)
                 {
@@ -174,7 +174,7 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         // queue winevents so that the get processed in the order we receive them. If we just
@@ -184,7 +184,7 @@ namespace MS.Internal.Automation
         // we process it when we're done with the current event.
         private void WinEventReentrancyFilter(int winEventHook, int eventId, IntPtr hwnd, int idObject, int idChild, int eventThread, uint eventTime)
         {
-            if ( _fBusy )
+            if (_fBusy)
             {
                 _qEvents.Enqueue(new WinEvent(eventId, hwnd, idObject, idChild, eventTime));
             }
@@ -195,9 +195,9 @@ namespace MS.Internal.Automation
                 {
                     PreWinEventProc(eventId, hwnd, idObject, idChild, eventTime); // deliver this event
                 }
-                catch( Exception e )
+                catch (Exception e)
                 {
-                    if( Misc.IsCriticalException( e ) )
+                    if (Misc.IsCriticalException(e))
                         throw;
 
                     // ignore exceptions for now since we've no way to let clients add exception handlers
@@ -210,9 +210,9 @@ namespace MS.Internal.Automation
                     {
                         PreWinEventProc(e._eventId, e._hwnd, e._idObject, e._idChild, e._eventTime);
                     }
-                    catch( Exception ex )
+                    catch (Exception ex)
                     {
-                        if( Misc.IsCriticalException( ex ) )
+                        if (Misc.IsCriticalException(ex))
                             throw;
 
                         // ignore exceptions for now since we've no way to let clients add exception handlers
@@ -236,7 +236,7 @@ namespace MS.Internal.Automation
             }
 
             // 0 is used as a marker value elsewhere, so bump up to 1
-            if(eventTime == 0)
+            if (eventTime == 0)
             {
                 eventTime = 1;
             }
@@ -263,7 +263,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private class WinEvent
@@ -282,10 +282,10 @@ namespace MS.Internal.Automation
             public int _idChild;
             public uint _eventTime;
         }
- 
+
         private Queue _qEvents;                // Queue of events waiting to be processed
-        private int [] _eventIds;              // the WinEvent(s) this instance is handling
-        private IntPtr [] _hHooks;             // the returned handles(s) from SetWinEventHook
+        private int[] _eventIds;              // the WinEvent(s) this instance is handling
+        private IntPtr[] _hHooks;             // the returned handles(s) from SetWinEventHook
         private bool _fBusy;                   // Flag indicating if we're busy processing
         private int _fFlags;                   // SetWinEventHook flags
         private GCHandle _gchThis;             // GCHandle to keep GCs from moving this callback

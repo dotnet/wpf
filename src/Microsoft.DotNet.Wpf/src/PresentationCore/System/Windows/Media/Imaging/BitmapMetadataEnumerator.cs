@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -56,7 +56,7 @@ namespace System.Windows.Media.Imaging
             }
 
             _fStarted = true;
-            
+
             IntPtr ppStr = IntPtr.Zero;
             Int32 celtFetched = 0;
 
@@ -92,12 +92,12 @@ namespace System.Windows.Media.Imaging
                 {
                     Marshal.FreeCoTaskMem(ppStr);
                     ppStr = IntPtr.Zero;
-                }           
+                }
             }
 
             return true;
         }
-        
+
         /// <summary>
         /// Sets the enumerator to its initial position, which is before the first element
         /// in the collection.
@@ -115,7 +115,7 @@ namespace System.Windows.Media.Imaging
         #endregion // IEnumerator interface
 
         #region Properties
-        
+
         /// <summary>
         /// The current timeline referenced by this enumerator.
         /// </summary>
@@ -128,12 +128,12 @@ namespace System.Windows.Media.Imaging
                     if (!_fStarted)
                     {
 #pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
-                    throw new InvalidOperationException(SR.Enumerator_NotStarted);
+                        throw new InvalidOperationException(SR.Enumerator_NotStarted);
                     }
                     else
                     {
 #pragma warning suppress 56503 // Suppress presharp warning: Follows a pattern similar to Nullable.
-                    throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
+                        throw new InvalidOperationException(SR.Enumerator_ReachedEnd);
                     }
                 }
 

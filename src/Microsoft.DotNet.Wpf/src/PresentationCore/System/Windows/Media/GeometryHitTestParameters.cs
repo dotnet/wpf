@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -47,11 +47,11 @@ namespace System.Windows.Media
             {
                 _hitGeometryInternal = _hitGeometryInternal.Clone();
             }
-            
+
             // Convert _hitGeometryInternal.Transform to an equivilent MatrixTransform
             // so that we can aggregate in PushMatrix/PopMatrix without building a
             // TransformCollection.
-            Transform origTransform = _hitGeometryInternal.Transform;            
+            Transform origTransform = _hitGeometryInternal.Transform;
             MatrixTransform newTransform = new MatrixTransform();
 
             _hitGeometryInternal.Transform = newTransform;
@@ -68,12 +68,12 @@ namespace System.Windows.Media
             {
                 newTransform.Matrix = origTransform.Value;
             }
-            
+
             // Initialize the current transformed bounds of this Geometry
             _bounds = _hitGeometryInternal.Bounds;
             _matrixStack = new MatrixStack();
         }
-    
+
         /// <summary>
         /// The geometry to hit test against.  This will be a frozen copy of the
         /// hit geometry transformed into the local space of the Visual being hit
@@ -85,12 +85,12 @@ namespace System.Windows.Media
             {
                 if (_hitGeometryCache == null)
                 {
-                    _hitGeometryCache = (Geometry) _hitGeometryInternal.GetAsFrozen();
+                    _hitGeometryCache = (Geometry)_hitGeometryInternal.GetAsFrozen();
                 }
 
                 Debug.Assert(_hitGeometryInternal.Transform.Value == _hitGeometryCache.Transform.Value,
                     "HitGeometry has a different transform than HitGeometryInternal. Did we forget to invalidate the cache?");
-                
+
                 return _hitGeometryCache;
             }
         }
@@ -113,7 +113,7 @@ namespace System.Windows.Media
 
         internal Rect Bounds
         {
-            get 
+            get
             {
                 return _bounds;
             }
@@ -121,18 +121,18 @@ namespace System.Windows.Media
 
         internal void PushMatrix(ref Matrix newMatrix)
         {
-            MatrixTransform matrixTransform = (MatrixTransform) _hitGeometryInternal.Transform;
+            MatrixTransform matrixTransform = (MatrixTransform)_hitGeometryInternal.Transform;
 
             // Grab the old composedMatrix from our MatrixTransform and save
             // it on our MatrixStack.
             Matrix composedMatrix = matrixTransform.Value;
             _matrixStack.Push(ref composedMatrix, false);
-            
+
             // Compose the new matrix into our MatrixTransform
             MatrixUtil.MultiplyMatrix(ref composedMatrix, ref newMatrix);
-            
+
             matrixTransform.Matrix = composedMatrix;
-            
+
             // Update active bounds based on new tranform.
             _bounds = Rect.Transform(_origBounds, composedMatrix);
 
@@ -144,11 +144,11 @@ namespace System.Windows.Media
             Matrix matrix = _matrixStack.Peek();
 
             // Restore saved transform.
-            ((MatrixTransform) (_hitGeometryInternal.Transform)).Matrix = matrix;
-            
+            ((MatrixTransform)(_hitGeometryInternal.Transform)).Matrix = matrix;
+
             // Update active bounds based on new X-form.
             _bounds = Rect.Transform(_origBounds, matrix);
-            
+
             _matrixStack.Pop();
 
             ClearHitGeometryCache();
@@ -159,15 +159,15 @@ namespace System.Windows.Media
         internal void EmergencyRestoreOriginalTransform()
         {
             // Replace the current transform with the first matrix pushed onto the stack.
-            Matrix matrix = ((MatrixTransform) (_hitGeometryInternal.Transform)).Matrix;
-            
+            Matrix matrix = ((MatrixTransform)(_hitGeometryInternal.Transform)).Matrix;
+
             while (!_matrixStack.IsEmpty)
             {
                 matrix = _matrixStack.Peek();
                 _matrixStack.Pop();
             }
 
-            ((MatrixTransform) (_hitGeometryInternal.Transform)).Matrix = matrix;
+            ((MatrixTransform)(_hitGeometryInternal.Transform)).Matrix = matrix;
 
             ClearHitGeometryCache();
         }

@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal; // Invariant.Assert
 using System.ComponentModel;
+using MS.Internal; // Invariant.Assert
 
 // 
 // Description: Helpers for TOM parameter validation.
@@ -29,7 +29,7 @@ namespace System.Windows.Documents
         {
             VerifyPosition(tree, position, "position");
         }
-        
+
         // Verifies a TextPointer is non-null and is associated with a given TextContainer.
         //
         // Throws an appropriate exception if a test fails.
@@ -79,8 +79,8 @@ namespace System.Windows.Documents
         internal static void VerifyElementEdge(ElementEdge edge, string param)
         {
             if (edge != ElementEdge.BeforeStart &&
-                edge != ElementEdge.AfterStart  &&
-                edge != ElementEdge.BeforeEnd   &&
+                edge != ElementEdge.AfterStart &&
+                edge != ElementEdge.BeforeEnd &&
                 edge != ElementEdge.AfterEnd)
             {
                 throw new InvalidEnumArgumentException(param, (int)edge, typeof(ElementEdge));

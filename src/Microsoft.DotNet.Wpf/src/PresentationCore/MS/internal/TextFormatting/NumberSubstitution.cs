@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -85,7 +85,7 @@ namespace MS.Internal.TextFormatting
                     }
                 }
             }
-            
+
             return resolvedMethod;
         }
 
@@ -600,9 +600,12 @@ namespace MS.Internal.TextFormatting
         {
             switch (ch)
             {
-                case 0x066B: return (int)',';   // Arabic decimal point -> Western comma
-                case 0x066C: return 0x060C;     // Arabic thousands separator -> Arabic comma
-                case 0x0BE6: return (int)'0';   // Tamil zero -> Western zero
+                case 0x066B:
+                    return (int)',';   // Arabic decimal point -> Western comma
+                case 0x066C:
+                    return 0x060C;     // Arabic thousands separator -> Arabic comma
+                case 0x0BE6:
+                    return (int)'0';   // Tamil zero -> Western zero
             }
 
             return 0;   // no fallback character
@@ -650,7 +653,7 @@ namespace MS.Internal.TextFormatting
         {
             // The code points we're interested in are in the range 0x25 - 0x39.
             const int first = 0x25; // percent
-            const int last  = 0x39; // '9'
+            const int last = 0x39; // '9'
 
             // Make sure we're in range. This is necessary because (mask >> N)
             // where N is some large number does not yield zero, but rather is

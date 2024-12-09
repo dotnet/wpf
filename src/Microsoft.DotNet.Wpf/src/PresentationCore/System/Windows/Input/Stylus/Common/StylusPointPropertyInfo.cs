@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,17 +14,17 @@ namespace System.Windows.Input
         /// <summary>
         /// Instance data
         /// </summary>
-        private int                     _min;
-        private int                     _max;
-        private float                   _resolution;
+        private int _min;
+        private int _max;
+        private float _resolution;
         private StylusPointPropertyUnit _unit;
 
         /// <summary>
         /// For a given StylusPointProperty, instantiates a StylusPointPropertyInfo with default values
         /// </summary>
         /// <param name="stylusPointProperty"></param>
-        public StylusPointPropertyInfo(StylusPointProperty stylusPointProperty) 
-            : base (stylusPointProperty) //base checks for null
+        public StylusPointPropertyInfo(StylusPointProperty stylusPointProperty)
+            : base(stylusPointProperty) //base checks for null
         {
             StylusPointPropertyInfo info =
                 StylusPointPropertyInfoDefaults.GetStylusPointPropertyInfoDefault(stylusPointProperty);
@@ -32,7 +32,7 @@ namespace System.Windows.Input
             _max = info.Maximum;
             _resolution = info.Resolution;
             _unit = info.Unit;
-}
+        }
 
         /// <summary>
         /// StylusPointProperty
@@ -112,7 +112,7 @@ namespace System.Windows.Input
                 throw new ArgumentNullException("stylusPointPropertyInfo");
             }
 
-            Debug.Assert((  stylusPointPropertyInfo1.Id != StylusPointPropertyIds.X &&
+            Debug.Assert((stylusPointPropertyInfo1.Id != StylusPointPropertyIds.X &&
                             stylusPointPropertyInfo1.Id != StylusPointPropertyIds.Y &&
                             stylusPointPropertyInfo2.Id != StylusPointPropertyIds.X &&
                             stylusPointPropertyInfo2.Id != StylusPointPropertyIds.Y),

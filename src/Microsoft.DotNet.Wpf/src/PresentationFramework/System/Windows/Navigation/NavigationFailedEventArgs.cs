@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -48,7 +48,7 @@ namespace System.Windows.Navigation
             {
                 return _uri;
             }
-        }       
+        }
 
         /// <summary>
         /// Exposes extra data object which was optionally passed as a parameter to Navigate.
@@ -99,9 +99,9 @@ namespace System.Windows.Navigation
         /// </summary>
         public Exception Exception
         {
-            get 
-            { 
-                return _exception; 
+            get
+            {
+                return _exception;
             }
         }
 

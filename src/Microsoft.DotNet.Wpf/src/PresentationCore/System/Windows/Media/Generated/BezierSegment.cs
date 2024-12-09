@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -63,7 +63,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(Point1Property);
+                return (Point)GetValue(Point1Property);
             }
             set
             {
@@ -78,7 +78,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(Point2Property);
+                return (Point)GetValue(Point2Property);
             }
             set
             {
@@ -93,7 +93,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(Point3Property);
+                return (Point)GetValue(Point3Property);
             }
             set
             {

@@ -1,17 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Documents;
-using System.Windows.Controls.Primitives;
-using System.Windows.Media;
-using System.Windows.Threading;
 using System.Collections.ObjectModel;
+using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
+using System.Windows.Media;
+using System.Windows.Media.TextFormatting;
+using System.Windows.Threading;
 using MS.Internal;
-using MS.Internal.Text;
 using MS.Internal.Documents;
 using MS.Internal.PtsHost;
-using System.Windows.Media.TextFormatting;
+using MS.Internal.Text;
 
 //
 // Description: Content presenter for the TextBox.
@@ -1133,8 +1133,10 @@ namespace System.Windows.Controls
                 // Start up a timer.  Until the timer fires, we'll disable
                 // all background layout.  This leaves the TextBox responsive
                 // to user input.
-                _throttleBackgroundTimer = new DispatcherTimer(DispatcherPriority.Background);
-                _throttleBackgroundTimer.Interval = new TimeSpan(0, 0, _throttleBackgroundSeconds);
+                _throttleBackgroundTimer = new DispatcherTimer(DispatcherPriority.Background)
+                {
+                    Interval = new TimeSpan(0, 0, _throttleBackgroundSeconds)
+                };
                 _throttleBackgroundTimer.Tick += new EventHandler(OnThrottleBackgroundTimeout);
             }
             else
@@ -1459,7 +1461,7 @@ namespace System.Windows.Controls
         private void OnHighlightChanged(object sender, HighlightChangedEventArgs args)
         {
             // TextBoxView supports SpellerHighlight
-            
+
             // Also support TextSelection owners for the TextSelectionHighlightLayer so we can use
             // this layer to drive text selections in TextBoxLine.
             if (args.OwnerType != typeof(SpellerHighlightLayer)
@@ -1512,7 +1514,7 @@ namespace System.Windows.Controls
                 // highlights may actually change the layout of the text as
                 // characters are interpreted in different contexts.  
                 //
-                
+
                 // The above comment does not apply to TextSelection highlights as
                 // we take these possible changes into account.
                 InvalidateMeasure();
@@ -2596,7 +2598,7 @@ namespace System.Windows.Controls
 
                             var curLine = _lineMetrics[lineIndex];
 
-                            
+
                             // If we see we are working with a speller or selection highlight
                             // DirtyTextRange, then once we know the metrics have not changed
                             // and we are beyond the end of the dirty region we can short 

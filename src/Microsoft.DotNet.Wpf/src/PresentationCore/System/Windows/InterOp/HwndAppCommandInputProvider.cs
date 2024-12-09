@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,35 +12,35 @@ namespace System.Windows.Interop
 {
     internal sealed class HwndAppCommandInputProvider : DispatcherObject, IInputProvider, IDisposable
     {
-        internal HwndAppCommandInputProvider( HwndSource source )
+        internal HwndAppCommandInputProvider(HwndSource source)
         {
             _site = InputManager.Current.RegisterInputProvider(this);
             _source = source;
         }
 
-        public void Dispose( )
+        public void Dispose()
         {
             _site?.Dispose();
             _site = null;
             _source = null;
         }
 
-        bool IInputProvider.ProvidesInputForRootVisual( Visual v )
+        bool IInputProvider.ProvidesInputForRootVisual(Visual v)
         {
             Debug.Assert(null != _source);
             return _source.RootVisual == v;
         }
 
-        void IInputProvider.NotifyDeactivate() {}
+        void IInputProvider.NotifyDeactivate() { }
 
-        internal IntPtr FilterMessage( IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, ref bool handled )
+        internal IntPtr FilterMessage(IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
             // It is possible to be re-entered during disposal.  Just return.
-            if(_source is null)
+            if (_source is null)
             {
                 return IntPtr.Zero;
             }
-            
+
             if (msg == WindowMessage.WM_APPCOMMAND)
             {
                 // WM_APPCOMMAND message notifies a window that the user generated an application command event,
@@ -56,8 +56,8 @@ namespace System.Windows.Interop
 
                 handled = _site.ReportInput(report);
             }
-            
-            return handled ? new IntPtr(1) : IntPtr.Zero ;
+
+            return handled ? new IntPtr(1) : IntPtr.Zero;
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace System.Windows.Interop
         /// </summary>
         /// <param name="lParam"></param>
         /// <returns></returns>
-        private static int GetAppCommand( IntPtr lParam )
+        private static int GetAppCommand(IntPtr lParam)
         {
             return ((short)(NativeMethods.SignedHIWORD(NativeMethods.IntPtrToInt32(lParam)) & ~NativeMethods.FAPPCOMMAND_MASK));
         }
@@ -84,7 +84,7 @@ namespace System.Windows.Interop
             // Implementation of the GET_DEVICE_LPARAM macro defined in Winuser.h
             // Returns either FAPPCOMMAND_KEY (the user pressed a key), FAPPCOMMAND_MOUSE
             // (the user clicked a mouse button) or FAPPCOMMAND_OEM (unknown device)
-            ushort  deviceId = (ushort)(NativeMethods.SignedHIWORD(NativeMethods.IntPtrToInt32(lParam)) & NativeMethods.FAPPCOMMAND_MASK);
+            ushort deviceId = (ushort)(NativeMethods.SignedHIWORD(NativeMethods.IntPtrToInt32(lParam)) & NativeMethods.FAPPCOMMAND_MASK);
 
             switch (deviceId)
             {
@@ -93,14 +93,14 @@ namespace System.Windows.Interop
                     break;
 
                 case NativeMethods.FAPPCOMMAND_KEY:
-                    inputType =  InputType.Keyboard;
+                    inputType = InputType.Keyboard;
                     break;
 
                 case NativeMethods.FAPPCOMMAND_OEM:
                 default:
                     // Unknown device id or FAPPCOMMAND_OEM.
                     // In either cases we set it to the generic human interface device.
-                    inputType=InputType.Hid;
+                    inputType = InputType.Hid;
                     break;
             }
 

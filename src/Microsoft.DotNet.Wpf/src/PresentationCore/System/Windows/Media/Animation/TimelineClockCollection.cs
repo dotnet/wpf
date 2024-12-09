@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,7 +27,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-//                 _owner.VerifyAccess();
+                //                 _owner.VerifyAccess();
                 ClockGroup clockGroup = _owner as ClockGroup;
                 if (clockGroup != null)
                 {
@@ -96,7 +96,7 @@ namespace System.Windows.Media.Animation
 
             foreach (Clock t in this)
             {
-                #pragma warning suppress 6506 // the enumerator will not contain nulls
+#pragma warning suppress 6506 // the enumerator will not contain nulls
                 if (t.Equals(item))
                     return true;
             }
@@ -117,7 +117,7 @@ namespace System.Windows.Media.Animation
         /// </param>
         public void CopyTo(Clock[] array, int index)
         {
-//             _owner.VerifyAccess();
+            //             _owner.VerifyAccess();
 
             ClockGroup clockGroup = _owner as ClockGroup;
 
@@ -151,7 +151,7 @@ namespace System.Windows.Media.Animation
         /// </returns>
         IEnumerator<Clock> IEnumerable<Clock>.GetEnumerator()
         {
-//             _owner.VerifyAccess();
+            //             _owner.VerifyAccess();
 
             List<Clock> list = null;
             ClockGroup clockGroup = _owner as ClockGroup;
@@ -224,7 +224,7 @@ namespace System.Windows.Media.Animation
                 // Exact same object.
                 return true;
             }
-            else if (   Object.ReferenceEquals(objA, null)
+            else if (Object.ReferenceEquals(objA, null)
                      || Object.ReferenceEquals(objB, null))
             {
                 // One is null, the other isn't.
@@ -277,7 +277,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-//                 _owner.VerifyAccess();
+                //                 _owner.VerifyAccess();
 
                 List<Clock> list = null;
                 ClockGroup clockGroup = _owner as ClockGroup;
@@ -346,7 +346,7 @@ namespace System.Windows.Media.Animation
             /// The current element in the collection.
             /// </value>
             Clock IEnumerator<Clock>.Current
-             {
+            {
                 get
                 {
                     throw new InvalidOperationException(SR.Timing_EnumeratorOutOfRange);
@@ -385,7 +385,7 @@ namespace System.Windows.Media.Animation
                 // are still valid, but the collection is empty so we should
                 // just return false.
 
-//                 _owner.VerifyAccess();
+                //                 _owner.VerifyAccess();
 
                 ClockGroup clockGroup = _owner as ClockGroup;
 
@@ -403,7 +403,7 @@ namespace System.Windows.Media.Animation
 
             #region Data
 
-            private Clock   _owner;
+            private Clock _owner;
 
             #endregion // Data
 
@@ -438,7 +438,7 @@ namespace System.Windows.Media.Animation
 
         #region Data
 
-        private Clock       _owner;
+        private Clock _owner;
 
         #endregion // Data
 

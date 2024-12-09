@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.ObjectModel;
-using MS.Internal.Security.RightsManagement;
 using MS.Internal;
+using MS.Internal.Security.RightsManagement;
 
 // Disable message about unknown message numbers so as to allow the suppression
 // of PreSharp warnings (whose numbers are unknown to the compiler).
@@ -23,16 +23,16 @@ namespace System.Security.RightsManagement
         /// </summary>
         public UnsignedPublishLicense()
         {
-        
+
             _grantCollection = new Collection<ContentGrant>();
             _contentId = Guid.NewGuid();
         }
-        
+
         /// <summary>
         /// This constructor accepts XrML Publish License template as a parameter. It parses the XrRML document 
         /// and initializes class based on that.
         /// </summary>
-        public UnsignedPublishLicense(string publishLicenseTemplate) :this ()
+        public UnsignedPublishLicense(string publishLicenseTemplate) : this()
         {
 
             ArgumentNullException.ThrowIfNull(publishLicenseTemplate);
@@ -43,7 +43,7 @@ namespace System.Security.RightsManagement
                                         null,  // referralInfoName,
                                         null,  //  referralInfoUrl,
                                         null,  // owner,
-                                        publishLicenseTemplate, 
+                                        publishLicenseTemplate,
                                         SafeRightsManagementHandle.InvalidHandle,     // boundLicenseHandle,
                                         _contentId,  //  contentId,
                                         null,    //  grantCollection
@@ -72,14 +72,14 @@ namespace System.Security.RightsManagement
 
             if (_owner != null)
             {
-                contentOwner = _owner; 
+                contentOwner = _owner;
             }
             else
             {
                 contentOwner = secureEnvironment.User;
             }
 
-            using(IssuanceLicense issuanceLicense = new IssuanceLicense(
+            using (IssuanceLicense issuanceLicense = new IssuanceLicense(
                                         DateTime.MinValue,  // validFrom, - default 
                                         DateTime.MaxValue,  // validUntil, - default 
                                         _referralInfoName,
@@ -109,15 +109,15 @@ namespace System.Security.RightsManagement
         /// </summary>
         public ContentUser Owner
         {
-            get 
-            { 
-            
-                return _owner; 
+            get
+            {
+
+                return _owner;
             }
-            set 
-            { 
-            
-                _owner = value; 
+            set
+            {
+
+                _owner = value;
             }
         }
 
@@ -127,15 +127,15 @@ namespace System.Security.RightsManagement
         /// </summary>
         public string ReferralInfoName
         {
-            get 
-            { 
-            
-                return _referralInfoName; 
+            get
+            {
+
+                return _referralInfoName;
             }
-            set 
-            { 
-                
-                _referralInfoName = value; 
+            set
+            {
+
+                _referralInfoName = value;
             }
         }
 
@@ -145,46 +145,46 @@ namespace System.Security.RightsManagement
         /// </summary>
         public Uri ReferralInfoUri
         {
-            get 
-            { 
-            
-                return _referralInfoUri; 
+            get
+            {
+
+                return _referralInfoUri;
             }
-            set 
-            { 
-            
-                _referralInfoUri = value; 
+            set
+            {
+
+                _referralInfoUri = value;
             }
         }
-        
+
 
         /// <summary>
         /// The ContentId is created by the publisher and can be used to match content to UseLicense and PublishLicenses.
         /// </summary>
         public Guid ContentId
         {
-            get 
-            { 
-            
-                return _contentId; 
+            get
+            {
+
+                return _contentId;
             }
-            set 
-            { 
+            set
+            {
 
                 // Guid is a value type, so it can never be null; therefore, there is no nreed to check this
                 _contentId = value;
             }
-        }        
+        }
 
         /// <summary>
         /// This collection is used to assign rights to users in an Unsigned Publish License.
         /// </summary>
         public ICollection<ContentGrant> Grants
         {
-            get 
-            { 
-            
-                return _grantCollection; 
+            get
+            {
+
+                return _grantCollection;
             }
         }
 
@@ -192,30 +192,30 @@ namespace System.Security.RightsManagement
         /// This collection is used to assign Name Description pairs of strings to the 
         /// unsigned publish License templates based on the Local Id as a Key of the dictionary.
         /// </summary>
-        public IDictionary <int, LocalizedNameDescriptionPair> LocalizedNameDescriptionDictionary
+        public IDictionary<int, LocalizedNameDescriptionPair> LocalizedNameDescriptionDictionary
         {
-            get 
-            { 
+            get
+            {
 
                 if (_localizedNameDescriptionDictionary == null)
                 {
-                    _localizedNameDescriptionDictionary  = new Dictionary <int, LocalizedNameDescriptionPair>(10);
+                    _localizedNameDescriptionDictionary = new Dictionary<int, LocalizedNameDescriptionPair>(10);
                 }
-                
-                return _localizedNameDescriptionDictionary; 
+
+                return _localizedNameDescriptionDictionary;
             }
         }
-    
+
 
         /// <summary>
         /// This method produces serialized Publish License XRML template.
         /// </summary>
         override public string ToString()
         {
-        
-            using(IssuanceLicense issuanceLicense = new IssuanceLicense(
-                                        DateTime.MinValue, 
-                                        DateTime.MaxValue, 
+
+            using (IssuanceLicense issuanceLicense = new IssuanceLicense(
+                                        DateTime.MinValue,
+                                        DateTime.MaxValue,
                                         _referralInfoName,
                                         _referralInfoUri,
                                         _owner,
@@ -237,18 +237,18 @@ namespace System.Security.RightsManagement
         /// It decrypts and parses parses the XrRML document and initializes class based on that.
         /// </summary>
         internal UnsignedPublishLicense(SafeRightsManagementHandle boundLicenseHandle, string publishLicenseTemplate)
-                                                                                                                                         :this ()
+                                                                                                                                         : this()
         {
             Invariant.Assert(!boundLicenseHandle.IsInvalid);
             Invariant.Assert(publishLicenseTemplate != null);
-            
-            using(IssuanceLicense issuanceLicense = new IssuanceLicense(
+
+            using (IssuanceLicense issuanceLicense = new IssuanceLicense(
                                         DateTime.MinValue,  // validFrom, - default 
                                         DateTime.MaxValue,  // validUntil, - default 
                                         null,  // referralInfoName,
                                         null,  //  referralInfoUrl,
                                         null,  // owner,
-                                        publishLicenseTemplate, 
+                                        publishLicenseTemplate,
                                         boundLicenseHandle,     // boundLicenseHandle,
                                         _contentId,  //  contentId,
                                         null,    //  grantCollection
@@ -268,11 +268,11 @@ namespace System.Security.RightsManagement
         /// </summary>
         internal int RightValidityIntervalDays
         {
-            get 
+            get
             {
-                return _rightValidityIntervalDays; 
+                return _rightValidityIntervalDays;
             }
-            set 
+            set
             {
                 // Invariant.Assert(value>=0);
                 _rightValidityIntervalDays = value;
@@ -283,17 +283,17 @@ namespace System.Security.RightsManagement
         /// This collection is used to assign Name Description pairs of strings to the 
         /// unsigned publish License templates based on the Local Id as a Key of the dictionary.
         /// </summary>
-        internal IDictionary <string, string> ApplicationSpecificDataDictionary
+        internal IDictionary<string, string> ApplicationSpecificDataDictionary
         {
-            get 
-            { 
+            get
+            {
 
                 if (_applicationSpecificDataDictionary == null)
                 {
-                    _applicationSpecificDataDictionary = new Dictionary <string , string>(5);
+                    _applicationSpecificDataDictionary = new Dictionary<string, string>(5);
                 }
-                
-                return _applicationSpecificDataDictionary; 
+
+                return _applicationSpecificDataDictionary;
             }
         }
 
@@ -318,17 +318,17 @@ namespace System.Security.RightsManagement
             }
             set
             {
-                _revocationPoint  = value;
+                _revocationPoint = value;
             }
         }
-        
+
         private Guid _contentId;
         private ContentUser _owner;
         private ICollection<ContentGrant> _grantCollection;
         private string _referralInfoName;
         private Uri _referralInfoUri;
-        private IDictionary <int, LocalizedNameDescriptionPair> _localizedNameDescriptionDictionary = null;
-        private IDictionary <string, string> _applicationSpecificDataDictionary = null;
+        private IDictionary<int, LocalizedNameDescriptionPair> _localizedNameDescriptionDictionary = null;
+        private IDictionary<string, string> _applicationSpecificDataDictionary = null;
         private int _rightValidityIntervalDays; // default 0 value is treated by the RM SDK as a non-defined missing value
         private RevocationPoint _revocationPoint;
     }

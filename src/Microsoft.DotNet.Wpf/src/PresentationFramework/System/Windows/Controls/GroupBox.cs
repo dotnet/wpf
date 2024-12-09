@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace System.Windows.Controls
     public class GroupBox : HeaderedContentControl
     {
         #region Constructors
-        
+
         static GroupBox()
         {
             FocusableProperty.OverrideMetadata(typeof(GroupBox), new FrameworkPropertyMetadata(false));
@@ -32,11 +32,11 @@ namespace System.Windows.Controls
         #endregion
 
         #region Override methods
-        
+
         /// <summary>
         /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>)
         /// </summary>
-        protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer() 
+        protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer()
         {
             return new System.Windows.Automation.Peers.GroupBoxAutomationPeer(this);
         }

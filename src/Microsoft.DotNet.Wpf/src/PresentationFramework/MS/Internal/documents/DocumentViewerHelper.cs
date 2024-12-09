@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,15 +6,15 @@
 // Description: Defines various helper methods used by document viewews.
 //
 
+using System.Globalization;             // CultureInfo
 using System.Windows;                   // Visibility
 using System.Windows.Controls;          // Border
 using System.Windows.Controls.Primitives;   // PlacementMode
-using System.Windows.Input;             // KeyboardNavigation
 using System.Windows.Documents;         // ITextRange
-using System.Windows.Media;             // VisualTreeHelper
-using System.Globalization;             // CultureInfo
-using System.Windows.Markup;            // XmlLanguage
+using System.Windows.Input;             // KeyboardNavigation
 using System.Windows.Interop;           // HwndSource
+using System.Windows.Markup;            // XmlLanguage
+using System.Windows.Media;             // VisualTreeHelper
 
 namespace MS.Internal.Documents
 {

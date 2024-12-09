@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows.Input
     // When the keyboard focus is on the element, Cicero input goes into this by default.
     // This DefaultTextStore will be used unless an Element (such as TextBox) set
     // the focus on the document manager for its own TextStore.
-    internal class DefaultTextStore :  UnsafeNativeMethods.ITfContextOwner,
+    internal class DefaultTextStore : UnsafeNativeMethods.ITfContextOwner,
                                        UnsafeNativeMethods.ITfContextOwnerCompositionSink,
                                        UnsafeNativeMethods.ITfTransitoryExtensionSink
     {
@@ -145,7 +145,7 @@ namespace System.Windows.Input
 
                         // relese composition.
                         _composition = null;
-                        }
+                    }
                     else
                     {
                         // Finalize the composition.
@@ -167,7 +167,7 @@ namespace System.Windows.Input
                 string comp = StringFromITfRange(rangeComposition, ecReadOnly);
                 if (comp.Length > 0)
                 {
-                if (_composition == null)
+                    if (_composition == null)
                     {
                         // Start the new composition.
                         _composition = new DefaultTextStoreTextComposition(InputManager.Current, Keyboard.FocusedElement, "", TextCompositionAutoComplete.Off);
@@ -204,7 +204,7 @@ namespace System.Windows.Input
         //  Protected Methods
         //
         //------------------------------------------------------
- 
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -219,7 +219,7 @@ namespace System.Windows.Input
                 // DefaultTextStore is per Dispatcher and the cached referrence is stored in InputMethod class.
                 DefaultTextStore defaulttextstore = InputMethod.Current.DefaultTextStore;
 
-                if(defaulttextstore == null)
+                if (defaulttextstore == null)
                 {
                     defaulttextstore = new DefaultTextStore(Dispatcher.CurrentDispatcher);
                     InputMethod.Current.DefaultTextStore = defaulttextstore;
@@ -246,13 +246,13 @@ namespace System.Windows.Input
 
         // EditCookie for ITfContext.
         internal int EditCookie
-        { 
+        {
             // get { return _editCookie; }
             set { _editCookie = value; }
         }
 
         internal int TransitoryExtensionSinkCookie
-        { 
+        {
             get { return _transitoryExtensionSinkCookie; }
             set { _transitoryExtensionSinkCookie = value; }
         }
@@ -261,7 +261,7 @@ namespace System.Windows.Input
         // Get Transitory's DocumentMgr from GUID_COMPARTMENT_TRANSITORYEXTENSION_DOCUMENTMANAGER.
         //
         internal UnsafeNativeMethods.ITfDocumentMgr TransitoryDocumentManager
-        { 
+        {
             get
             {
 

@@ -1,32 +1,29 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
-using MS.Win32;
 using MS.Internal;
-using System.Runtime.Versioning;
-using System.Windows.Input;
-
+using MS.Win32;
+using NativeMethodsSetLastError = MS.Internal.WinFormsIntegration.NativeMethodsSetLastError;
 using SD = System.Drawing;
-using SWF = System.Windows.Forms;
-
 using SW = System.Windows;
 using SWC = System.Windows.Controls;
-using SWMI = System.Windows.Media.Imaging;
+using SWF = System.Windows.Forms;
 using SWI = System.Windows.Input;
+using SWMI = System.Windows.Media.Imaging;
 using SWT = System.Windows.Threading;
-
-using NativeMethodsSetLastError = MS.Internal.WinFormsIntegration.NativeMethodsSetLastError;
 
 namespace System.Windows.Forms.Integration
 {
@@ -106,8 +103,10 @@ namespace System.Windows.Forms.Integration
             Size constraints = Convert.ToSystemWindowsSize(proposedSize, scale);
 
             // At this point, an unbounded value is represented by Int32.MaxValue: WPF wants double.PositiveInfinity.
-            if (constraints.Width == Int32.MaxValue) { constraints.Width = Double.PositiveInfinity; }
-            if (constraints.Height == Int32.MaxValue) { constraints.Height = Double.PositiveInfinity; }
+            if (constraints.Width == Int32.MaxValue)
+            { constraints.Width = Double.PositiveInfinity; }
+            if (constraints.Height == Int32.MaxValue)
+            { constraints.Height = Double.PositiveInfinity; }
 
             // Request that control recompute desired size with new constraints.
             _decorator.Measure(constraints);
@@ -219,7 +218,7 @@ namespace System.Windows.Forms.Integration
         {
             get
             {
-                if( IsHandleCreated )
+                if (IsHandleCreated)
                 {
                     // observe that the EH.Child may be null and still it has an HwndSource.
                     IntPtr focusHandle = UnsafeNativeMethods.GetFocus();
@@ -462,14 +461,16 @@ namespace System.Windows.Forms.Integration
             SWI.ModifierKeys modifiers = Convert.ToSystemWindowsInputModifierKeys(keyData);
 
             // Let the AvalonAdapter know that ElementHost is currently processing a TabKey
-            if (_hostContainerInternal != null) {
+            if (_hostContainerInternal != null)
+            {
                 _hostContainerInternal.ProcessingTabKeyFromElementHost = (keyData & SWF.Keys.Tab) == SWF.Keys.Tab;
             }
 
             bool result = (_hwndSource as IKeyboardInputSink).TranslateAccelerator(ref msg2, modifiers);
 
             // _hostContainerInternal can be disposed if the control is closed using keyboard.
-            if (_hostContainerInternal != null && _hostContainerInternal.ProcessingTabKeyFromElementHost) {
+            if (_hostContainerInternal != null && _hostContainerInternal.ProcessingTabKeyFromElementHost)
+            {
                 _hostContainerInternal.ProcessingTabKeyFromElementHost = false;
             }
 
@@ -562,7 +563,7 @@ namespace System.Windows.Forms.Integration
             // We are about to call into WPF, and possibly from a callstack unrelated to WPF at all.
             // WPF needs to install its synchronization context, exception handlers, etc. So just
             // do it the normal way through Invoke.
-            SWT.Dispatcher.CurrentDispatcher.Invoke(()=>
+            SWT.Dispatcher.CurrentDispatcher.Invoke(() =>
             {
                 if (_hwndSource != null)
                 {
@@ -570,15 +571,19 @@ namespace System.Windows.Forms.Integration
                 }
                 SWF.CreateParams cp = this.CreateParams;
 
-                HwndSourceParameters HWSParam = new HwndSourceParameters(this.Text, cp.Width, cp.Height);
-                HWSParam.WindowClassStyle = cp.ClassStyle;
-                HWSParam.WindowStyle = cp.Style;
-                HWSParam.ExtendedWindowStyle = cp.ExStyle;
-                HWSParam.ParentWindow = Handle;
-                HWSParam.HwndSourceHook = HwndSourceHook;
+                HwndSourceParameters HWSParam = new HwndSourceParameters(this.Text, cp.Width, cp.Height)
+                {
+                    WindowClassStyle = cp.ClassStyle,
+                    WindowStyle = cp.Style,
+                    ExtendedWindowStyle = cp.ExStyle,
+                    ParentWindow = Handle,
+                    HwndSourceHook = HwndSourceHook
+                };
 
-                _hwndSource = new HwndSource(HWSParam);
-                _hwndSource.RootVisual = _decorator;
+                _hwndSource = new HwndSource(HWSParam)
+                {
+                    RootVisual = _decorator
+                };
                 //For keyboarding: Set the IKeyboardInputSite so that keyboard interop works...
                 (_hwndSource as IKeyboardInputSink).KeyboardInputSite = (HostContainerInternal as IKeyboardInputSite);
             });
@@ -1568,7 +1573,7 @@ namespace System.Windows.Forms.Integration
         /// </returns>
         public bool OnNoMoreTabStops(SWI.TraversalRequest request, ref bool shouldCycle)
         {
-            if(ProcessingTabKeyFromElementHost)
+            if (ProcessingTabKeyFromElementHost)
             {
                 shouldCycle = false;
                 return false;
@@ -1706,7 +1711,7 @@ namespace System.Windows.Forms.Integration
         }
 
         // Set by ElementHost to let this AvalonAdapter it is currently processing a Tab Key.
-        internal bool ProcessingTabKeyFromElementHost{ get; set; }
+        internal bool ProcessingTabKeyFromElementHost { get; set; }
     }
     #endregion AvalonAdapter
 }

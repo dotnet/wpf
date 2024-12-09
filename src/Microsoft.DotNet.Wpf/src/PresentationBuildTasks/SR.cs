@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,7 +13,7 @@ namespace MS.Utility
         // (Generated SR.common.cs always defines ResourceManager as private. GenerateCommonSRSource
         // target should be updated to accept a parameter for ResourceManager property access 
         // modifier.)
-        public static ResourceManager SharedResourceManager 
+        public static ResourceManager SharedResourceManager
         {
             get
             {

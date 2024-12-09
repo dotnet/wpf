@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -128,7 +128,7 @@ namespace System.Windows.Ink
             }
             set
             {
-                Matrix m = (Matrix) value;
+                Matrix m = (Matrix)value;
                 if (m.OffsetX != 0 || m.OffsetY != 0)
                 {
                     throw new ArgumentException(SR.InvalidSttValue, "value");
@@ -381,7 +381,7 @@ namespace System.Windows.Ink
                 StylusShape s;
                 if (this.StylusTip == StylusTip.Rectangle)
                 {
-                    s =  new RectangleStylusShape(this.Width, this.Height);
+                    s = new RectangleStylusShape(this.Width, this.Height);
                 }
                 else
                 {
@@ -507,7 +507,7 @@ namespace System.Windows.Ink
             DrawingAttributes that = o as DrawingAttributes;
             if (that == null)
             {
-                return false; 
+                return false;
             }
 
             return (this._extendedProperties == that._extendedProperties);
@@ -523,7 +523,7 @@ namespace System.Windows.Ink
             {
                 return true;
             }
-                // otherwise, if one of the ptrs are null, but not the other then return false
+            // otherwise, if one of the ptrs are null, but not the other then return false
             else if ((object)first == null || (object)second == null)
             {
                 return false;
@@ -554,7 +554,7 @@ namespace System.Windows.Ink
             // are shared, including event delegates, so we need to set those to null
             //
             DrawingAttributes clone = (DrawingAttributes)this.MemberwiseClone();
-            
+
             //
             // null the delegates in the cloned DrawingAttributes
             //
@@ -597,14 +597,14 @@ namespace System.Windows.Ink
             }
             finally
             {
-                if ( this.AttributeChanged != null )
+                if (this.AttributeChanged != null)
                 {
                     this.AttributeChanged(this, e);
                 }
             }
         }
 
-         /// <summary>
+        /// <summary>
         /// Event fired whenever a DrawingAttribute is modified
         /// </summary>
         public event PropertyDataChangedEventHandler PropertyDataChanged;
@@ -637,7 +637,7 @@ namespace System.Windows.Ink
         /// <param name="e">The EventArgs specifying the name of the changed property.</param>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if ( _propertyChanged != null )
+            if (_propertyChanged != null)
             {
                 _propertyChanged(this, e);
             }
@@ -725,7 +725,7 @@ namespace System.Windows.Ink
                 KnownIds.StylusWidth == id ||
                 KnownIds.DrawingFlags == id ||
                 KnownIds.StylusHeight == id ||
-                KnownIds.CurveFittingError == id )
+                KnownIds.CurveFittingError == id)
             {
                 return true;
             }
@@ -795,11 +795,11 @@ namespace System.Windows.Ink
                 if (defaultValueIfDrawingAttribute != null)
                 {
                     ExtendedProperty newProperty =
-                        new ExtendedProperty(   args.OldProperty.Id,
+                        new ExtendedProperty(args.OldProperty.Id,
                                                 defaultValueIfDrawingAttribute);
                     //this is a da guid
                     PropertyDataChangedEventArgs dargs =
-                        new PropertyDataChangedEventArgs(  args.OldProperty.Id,
+                        new PropertyDataChangedEventArgs(args.OldProperty.Id,
                                                                 newProperty.Value,      //the property
                                                                 args.OldProperty.Value);//previous value
 
@@ -808,12 +808,12 @@ namespace System.Windows.Ink
                 else
                 {
                     PropertyDataChangedEventArgs dargs =
-                        new PropertyDataChangedEventArgs(  args.OldProperty.Id,
+                        new PropertyDataChangedEventArgs(args.OldProperty.Id,
                                                                 null,      //the property
                                                                 args.OldProperty.Value);//previous value
 
                     this.OnPropertyDataChanged(dargs);
-}
+                }
             }
             else if (args.OldProperty == null)
             {
@@ -826,7 +826,7 @@ namespace System.Windows.Ink
                     {
                         //this is a da guid
                         PropertyDataChangedEventArgs dargs =
-                            new PropertyDataChangedEventArgs(  args.NewProperty.Id,
+                            new PropertyDataChangedEventArgs(args.NewProperty.Id,
                                                                     args.NewProperty.Value,   //the property
                                                                     defaultValueIfDrawingAttribute);     //previous value
 
@@ -840,7 +840,7 @@ namespace System.Windows.Ink
                                                          args.NewProperty.Value,   //the property
                                                          null);     //previous value
                     this.OnPropertyDataChanged(dargs);
-}
+                }
             }
             else
             {
@@ -856,7 +856,7 @@ namespace System.Windows.Ink
                     {
                         //this is a da guid
                         PropertyDataChangedEventArgs dargs =
-                            new PropertyDataChangedEventArgs(  args.NewProperty.Id,
+                            new PropertyDataChangedEventArgs(args.NewProperty.Id,
                                                                     args.NewProperty.Value,       //the da
                                                                     args.OldProperty.Value);//old value
 
@@ -868,7 +868,7 @@ namespace System.Windows.Ink
                     if (!args.NewProperty.Value.Equals(args.OldProperty.Value))
                     {
                         PropertyDataChangedEventArgs dargs =
-                            new PropertyDataChangedEventArgs(  args.NewProperty.Id,
+                            new PropertyDataChangedEventArgs(args.NewProperty.Id,
                                                                     args.NewProperty.Value,
                                                                     args.OldProperty.Value);//old value
 
@@ -955,43 +955,43 @@ namespace System.Windows.Ink
         /// <param name="e"></param>
         private void PrivateNotifyPropertyChanged(PropertyDataChangedEventArgs e)
         {
-            if ( e.PropertyGuid == KnownIds.Color)
+            if (e.PropertyGuid == KnownIds.Color)
             {
                 OnPropertyChanged("Color");
             }
-            else if ( e.PropertyGuid == KnownIds.StylusTip)
+            else if (e.PropertyGuid == KnownIds.StylusTip)
             {
                 OnPropertyChanged("StylusTip");
             }
-            else if ( e.PropertyGuid == KnownIds.StylusTipTransform)
+            else if (e.PropertyGuid == KnownIds.StylusTipTransform)
             {
                 OnPropertyChanged("StylusTipTransform");
             }
-            else if ( e.PropertyGuid == KnownIds.StylusHeight)
+            else if (e.PropertyGuid == KnownIds.StylusHeight)
             {
                 OnPropertyChanged("Height");
             }
-            else if ( e.PropertyGuid == KnownIds.StylusWidth)
+            else if (e.PropertyGuid == KnownIds.StylusWidth)
             {
                 OnPropertyChanged("Width");
             }
-            else if ( e.PropertyGuid == KnownIds.IsHighlighter)
+            else if (e.PropertyGuid == KnownIds.IsHighlighter)
             {
                 OnPropertyChanged("IsHighlighter");
             }
-            else if ( e.PropertyGuid == KnownIds.DrawingFlags )
+            else if (e.PropertyGuid == KnownIds.DrawingFlags)
             {
-                DrawingFlags changedBits = ( ( (DrawingFlags)e.PreviousValue ) ^ ( (DrawingFlags)e.NewValue ) );
+                DrawingFlags changedBits = (((DrawingFlags)e.PreviousValue) ^ ((DrawingFlags)e.NewValue));
 
                 // NOTICE-2006/01/20-WAYNEZEN,
                 // If someone changes FitToCurve and IgnorePressure simultaneously via AddPropertyData/RemovePropertyData,
                 // we will fire both OnPropertyChangeds in advance the order of the values.
-                if ( (changedBits & DrawingFlags.FitToCurve) != 0 )
+                if ((changedBits & DrawingFlags.FitToCurve) != 0)
                 {
                     OnPropertyChanged("FitToCurve");
                 }
 
-                if ( (changedBits & DrawingFlags.IgnorePressure) != 0 )
+                if ((changedBits & DrawingFlags.IgnorePressure) != 0)
                 {
                     OnPropertyChanged("IgnorePressure");
                 }
@@ -1007,11 +1007,11 @@ namespace System.Windows.Ink
         #region Private Fields
 
         // The private PropertyChanged event
-        private PropertyChangedEventHandler             _propertyChanged;
+        private PropertyChangedEventHandler _propertyChanged;
 
-        private ExtendedPropertyCollection              _extendedProperties;
-        private uint                                    _v1RasterOperation = DrawingAttributeSerializer.RasterOperationDefaultV1;
-        private bool                                    _heightChangedForCompatabity = false;
+        private ExtendedPropertyCollection _extendedProperties;
+        private uint _v1RasterOperation = DrawingAttributeSerializer.RasterOperationDefaultV1;
+        private bool _heightChangedForCompatabity = false;
 
         /// <summary>
         /// Statics
@@ -1033,14 +1033,14 @@ namespace System.Windows.Ink
         /// Minimum acceptable stylus tip width
         /// </summary>
         /// <remarks>corresponds to 0.001 in V1  (0.001 / (2540/96))</remarks>
-        public static readonly double MinWidth =  0.00003779527559055120;
+        public static readonly double MinWidth = 0.00003779527559055120;
 
         /// <summary>
         /// Maximum acceptable stylus tip height.
         /// </summary>
         /// <remarks>corresponds to 4294967 in V1 (4294967 / (2540/96))</remarks>
         public static readonly double MaxHeight = 162329.4614173230;
-                          
+
 
         /// <summary>
         /// Maximum acceptable stylus tip width.

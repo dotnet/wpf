@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,8 +16,8 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     public sealed class TextLineBreak : IDisposable
     {
-        private TextModifierScope  _currentScope;
-        private IntPtr             _breakRecord;
+        private TextModifierScope _currentScope;
+        private IntPtr _breakRecord;
 
         #region Constructors
 
@@ -25,8 +25,8 @@ namespace System.Windows.Media.TextFormatting
         /// Internallly construct the line break
         /// </summary>
         internal TextLineBreak(
-            TextModifierScope  currentScope,
-            IntPtr             breakRecord
+            TextModifierScope currentScope,
+            IntPtr breakRecord
             )
         {
             _currentScope = currentScope;
@@ -108,7 +108,7 @@ namespace System.Windows.Media.TextFormatting
             get { return _currentScope; }
         }
 
-        
+
         /// <summary>
         /// Unmanaged pointer to LS break records structure
         /// </summary>

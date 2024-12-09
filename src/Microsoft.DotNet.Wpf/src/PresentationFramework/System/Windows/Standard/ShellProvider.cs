@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -450,11 +450,11 @@ namespace Standard
     {
         uint GetCount();
         PKEY GetAt(uint iProp);
-        
+
         void GetValue([In] ref PKEY pkey, [In, Out] PROPVARIANT pv);
-        
+
         void SetValue([In] ref PKEY pkey, PROPVARIANT pv);
-        
+
         void Commit();
     }
 
@@ -949,7 +949,7 @@ namespace Standard
 
         #endregion
 
-        [PreserveSig] new  HRESULT SetProgressValue(IntPtr hwnd, ulong ullCompleted, ulong ullTotal);
+        [PreserveSig] new HRESULT SetProgressValue(IntPtr hwnd, ulong ullCompleted, ulong ullTotal);
         [PreserveSig] new HRESULT SetProgressState(IntPtr hwnd, TBPF tbpFlags);
         [PreserveSig] new HRESULT RegisterTab(IntPtr hwndTab, IntPtr hwndMDI);
         [PreserveSig] new HRESULT UnregisterTab(IntPtr hwndTab);

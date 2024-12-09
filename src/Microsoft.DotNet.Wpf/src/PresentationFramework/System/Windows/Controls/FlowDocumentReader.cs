@@ -1,22 +1,22 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.Collections;                   // IEnumerator
 using System.Windows.Automation.Peers;      // AutomationPeer
-using System.Windows.Data;                  // BindingOperations
 using System.Windows.Controls.Primitives;   // PlacementMode
+using System.Windows.Data;                  // BindingOperations
 using System.Windows.Documents;             // FlowDocument
 using System.Windows.Input;                 // KeyEventArgs
-using System.Windows.Media;                 // ScaleTransform, VisualTreeHelper
 using System.Windows.Markup;                // IAddChild
+using System.Windows.Media;                 // ScaleTransform, VisualTreeHelper
 using MS.Internal;                          // Invariant, DoubleUtil
+using MS.Internal.AppModel;                 // IJournalState
 using MS.Internal.Commands;                 // CommandHelpers
 using MS.Internal.Controls;                 // EmptyEnumerator
 using MS.Internal.Documents;                // FindToolBar
 using MS.Internal.KnownBoxes;               // BooleanBoxes
-using MS.Internal.AppModel;                 // IJournalState
 
 namespace System.Windows.Controls
 {
@@ -206,7 +206,7 @@ namespace System.Windows.Controls
                 if (_contentHost != null)
                 {
                     viewer = _contentHost.Child as IFlowDocumentViewer;
-                    if(viewer != null)
+                    if (viewer != null)
                     {
                         result = viewer.TextSelection as TextSelection;
                     }
@@ -795,7 +795,8 @@ namespace System.Windows.Controls
         /// <param name="e">Event arguments</param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (e.Handled) { return; }
+            if (e.Handled)
+            { return; }
 
             switch (e.Key)
             {
@@ -885,7 +886,7 @@ namespace System.Windows.Controls
             bool shouldInvalidateIntermediateElements = false;
             return InvalidateAutomationAncestorsCoreHelper(branchNodeStack, out continuePastCoreTree, shouldInvalidateIntermediateElements);
         }
-        
+
         #endregion Internal Methods
 
         //-------------------------------------------------------------------
@@ -1122,9 +1123,11 @@ namespace System.Windows.Controls
         /// </summary>
         private void CreateTwoWayBinding(FrameworkElement fe, DependencyProperty dp, string propertyPath)
         {
-            Binding binding = new Binding(propertyPath);
-            binding.Mode = BindingMode.TwoWay;
-            binding.Source = this;
+            Binding binding = new Binding(propertyPath)
+            {
+                Mode = BindingMode.TwoWay,
+                Source = this
+            };
             fe.SetBinding(dp, binding);
         }
 
@@ -1305,7 +1308,7 @@ namespace System.Windows.Controls
             Invariant.Assert(enable == (FindToolBar == null));
 
             // Command event for toggle button is only fired in OnClick - Therefore we just need to change the state
-            if(_findButton != null && _findButton.IsChecked.HasValue && _findButton.IsChecked.Value != enable)
+            if (_findButton != null && _findButton.IsChecked.HasValue && _findButton.IsChecked.Value != enable)
             {
                 _findButton.IsChecked = enable;
             }
@@ -1927,7 +1930,7 @@ namespace System.Windows.Controls
         private const string _findButtonTemplateName = "FindButton"; // Name for the Find Button
 
         private const string KeySwitchViewingMode = "Ctrl+M";
-        private const string Switch_ViewingMode =  "_Switch ViewingMode";
+        private const string Switch_ViewingMode = "_Switch ViewingMode";
 
         #endregion Private Fields
 

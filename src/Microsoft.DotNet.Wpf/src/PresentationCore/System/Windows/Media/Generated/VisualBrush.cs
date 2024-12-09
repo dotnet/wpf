@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,8 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal.KnownBoxes;
 using System.Windows.Media.Composition;
+using MS.Internal.KnownBoxes;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
@@ -56,10 +56,10 @@ namespace System.Windows.Media
 
         private static void VisualPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            VisualBrush target = ((VisualBrush) d);
+            VisualBrush target = ((VisualBrush)d);
 
 
-            Visual oldV = (Visual) e.OldValue;
+            Visual oldV = (Visual)e.OldValue;
 
             //
             // If the Visual required layout but it is changed before we do Layout
@@ -85,7 +85,7 @@ namespace System.Windows.Media
                 target._pendingLayout = false;
             }
 
-            Visual newV = (Visual) e.NewValue;
+            Visual newV = (Visual)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -100,8 +100,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -110,7 +110,7 @@ namespace System.Windows.Media
         }
         private static void AutoLayoutContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            VisualBrush target = ((VisualBrush) d);
+            VisualBrush target = ((VisualBrush)d);
 
 
             target.PropertyChanged(AutoLayoutContentProperty);
@@ -126,7 +126,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Visual) GetValue(VisualProperty);
+                return (Visual)GetValue(VisualProperty);
             }
             set
             {
@@ -143,7 +143,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(AutoLayoutContentProperty);
+                return (bool)GetValue(AutoLayoutContentProperty);
             }
             set
             {
@@ -221,7 +221,7 @@ namespace System.Windows.Media
                 }
 
                 // Obtain handles for properties that implement DUCE.IResource
-                DUCE.ResourceHandle  hVisual = vVisual != null ? ((DUCE.IResource)vVisual).GetHandle(channel) : DUCE.ResourceHandle.Null;
+                DUCE.ResourceHandle hVisual = vVisual != null ? ((DUCE.IResource)vVisual).GetHandle(channel) : DUCE.ResourceHandle.Null;
 
                 // Obtain handles for animated properties
                 DUCE.ResourceHandle hOpacityAnimations = GetAnimationResourceHandle(OpacityProperty, channel);
@@ -271,37 +271,43 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_VISUALBRUSH))
-                {
-                    Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
-                    Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
-                    Visual vVisual = Visual;
-                    if (vVisual != null) vVisual.AddRefOnChannelForCyclicBrush(this, channel);
-                    AddRefOnChannelAnimations(channel);
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_VISUALBRUSH))
+            {
+                Transform vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                Transform vRelativeTransform = RelativeTransform;
+                if (vRelativeTransform != null)
+                    ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
+                Visual vVisual = Visual;
+                if (vVisual != null)
+                    vVisual.AddRefOnChannelForCyclicBrush(this, channel);
+                AddRefOnChannelAnimations(channel);
 
 
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                }
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
 
-                return _duceResource.GetHandle(channel);
-}
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
-                {
-                    Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
-                    Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
-                    Visual vVisual = Visual;
-                    if (vVisual != null) vVisual.ReleaseOnChannelForCyclicBrush(this, channel);
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                Transform vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                Transform vRelativeTransform = RelativeTransform;
+                if (vRelativeTransform != null)
+                    ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
+                Visual vVisual = Visual;
+                if (vVisual != null)
+                    vVisual.ReleaseOnChannelForCyclicBrush(this, channel);
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -55,28 +55,28 @@ namespace System.Windows.Media
 
         private static void CenterPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RadialGradientBrush target = ((RadialGradientBrush) d);
+            RadialGradientBrush target = ((RadialGradientBrush)d);
 
 
             target.PropertyChanged(CenterProperty);
         }
         private static void RadiusXPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RadialGradientBrush target = ((RadialGradientBrush) d);
+            RadialGradientBrush target = ((RadialGradientBrush)d);
 
 
             target.PropertyChanged(RadiusXProperty);
         }
         private static void RadiusYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RadialGradientBrush target = ((RadialGradientBrush) d);
+            RadialGradientBrush target = ((RadialGradientBrush)d);
 
 
             target.PropertyChanged(RadiusYProperty);
         }
         private static void GradientOriginPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RadialGradientBrush target = ((RadialGradientBrush) d);
+            RadialGradientBrush target = ((RadialGradientBrush)d);
 
 
             target.PropertyChanged(GradientOriginProperty);
@@ -92,7 +92,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(CenterProperty);
+                return (Point)GetValue(CenterProperty);
             }
             set
             {
@@ -107,7 +107,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(RadiusXProperty);
+                return (double)GetValue(RadiusXProperty);
             }
             set
             {
@@ -122,7 +122,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(RadiusYProperty);
+                return (double)GetValue(RadiusYProperty);
             }
             set
             {
@@ -137,7 +137,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(GradientOriginProperty);
+                return (Point)GetValue(GradientOriginProperty);
             }
             set
             {
@@ -183,35 +183,39 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_RADIALGRADIENTBRUSH))
-                {
-                    Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
-                    Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_RADIALGRADIENTBRUSH))
+            {
+                Transform vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+                Transform vRelativeTransform = RelativeTransform;
+                if (vRelativeTransform != null)
+                    ((DUCE.IResource)vRelativeTransform).AddRefOnChannel(channel);
 
-                    AddRefOnChannelAnimations(channel);
+                AddRefOnChannelAnimations(channel);
 
 
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                }
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
 
-                return _duceResource.GetHandle(channel);
-}
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
-                {
-                    Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
-                    Transform vRelativeTransform = RelativeTransform;
-                    if (vRelativeTransform != null) ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                Transform vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+                Transform vRelativeTransform = RelativeTransform;
+                if (vRelativeTransform != null)
+                    ((DUCE.IResource)vRelativeTransform).ReleaseOnChannel(channel);
 
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -297,10 +301,10 @@ namespace System.Windows.Media
 
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
 
-        internal static Point s_Center = new Point(0.5,0.5);
+        internal static Point s_Center = new Point(0.5, 0.5);
         internal const double c_RadiusX = 0.5;
         internal const double c_RadiusY = 0.5;
-        internal static Point s_GradientOrigin = new Point(0.5,0.5);
+        internal static Point s_GradientOrigin = new Point(0.5, 0.5);
 
         #endregion Internal Fields
 
@@ -329,7 +333,7 @@ namespace System.Windows.Media
                   RegisterProperty("Center",
                                    typeof(Point),
                                    typeofThis,
-                                   new Point(0.5,0.5),
+                                   new Point(0.5, 0.5),
                                    new PropertyChangedCallback(CenterPropertyChanged),
                                    null,
                                    /* isIndependentlyAnimated  = */ true,
@@ -356,7 +360,7 @@ namespace System.Windows.Media
                   RegisterProperty("GradientOrigin",
                                    typeof(Point),
                                    typeofThis,
-                                   new Point(0.5,0.5),
+                                   new Point(0.5, 0.5),
                                    new PropertyChangedCallback(GradientOriginPropertyChanged),
                                    null,
                                    /* isIndependentlyAnimated  = */ true,

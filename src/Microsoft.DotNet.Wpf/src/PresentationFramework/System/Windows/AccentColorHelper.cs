@@ -1,4 +1,4 @@
-using System.Windows.Media;
+﻿using System.Windows.Media;
 using MS.Internal.WindowsRuntime.Windows.UI.ViewManagement;
 
 

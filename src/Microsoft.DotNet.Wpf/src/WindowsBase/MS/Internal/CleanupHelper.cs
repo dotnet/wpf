@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,22 +12,26 @@ namespace MS.Internal
 {
     internal class CleanupHelper : DispatcherObject
     {
-        internal CleanupHelper(Func<bool,bool> callback,    // cleanup method
-                               int pollingInterval=400,     // initial polling interval
-                               int promotionInterval=10000, // promote to higher priority
-                               int maxInterval=5000)        // max polling interval
+        internal CleanupHelper(Func<bool, bool> callback,    // cleanup method
+                               int pollingInterval = 400,     // initial polling interval
+                               int promotionInterval = 10000, // promote to higher priority
+                               int maxInterval = 5000)        // max polling interval
         {
             _cleanupCallback = callback;
             _basePollingInterval = TimeSpan.FromMilliseconds(pollingInterval);
             _maxPollingInterval = TimeSpan.FromMilliseconds(maxInterval);
 
             _cleanupTimerPriority = DispatcherPriority.ContextIdle;
-            _defaultCleanupTimer = new DispatcherTimer(_cleanupTimerPriority);
-            _defaultCleanupTimer.Interval = _basePollingInterval;
+            _defaultCleanupTimer = new DispatcherTimer(_cleanupTimerPriority)
+            {
+                Interval = _basePollingInterval
+            };
             _defaultCleanupTimer.Tick += OnCleanupTick;
 
-            _starvationTimer = new DispatcherTimer(DispatcherPriority.Normal);
-            _starvationTimer.Interval = TimeSpan.FromMilliseconds(promotionInterval);
+            _starvationTimer = new DispatcherTimer(DispatcherPriority.Normal)
+            {
+                Interval = TimeSpan.FromMilliseconds(promotionInterval)
+            };
             _starvationTimer.Tick += OnStarvationTick;
 
             _cleanupTimer = _defaultCleanupTimer;
@@ -48,7 +52,7 @@ namespace MS.Internal
             }
         }
 
-        internal bool DoCleanup(bool forceCleanup=false)
+        internal bool DoCleanup(bool forceCleanup = false)
         {
             _cleanupTimer.Stop();
             _starvationTimer.Stop();
@@ -117,12 +121,12 @@ namespace MS.Internal
         DispatcherTimer _defaultCleanupTimer;
         DispatcherPriority _cleanupTimerPriority;
 
-        int             _cleanupRequests;
-        bool            _waitingForGC;
+        int _cleanupRequests;
+        bool _waitingForGC;
 
-        Func<bool,bool> _cleanupCallback;
-        TimeSpan        _basePollingInterval;
-        TimeSpan        _maxPollingInterval;
+        Func<bool, bool> _cleanupCallback;
+        TimeSpan _basePollingInterval;
+        TimeSpan _maxPollingInterval;
 
         // When an instance of this class is GC'd and finalized, it
         // tells the CleanupHelper that a GC has occurred.

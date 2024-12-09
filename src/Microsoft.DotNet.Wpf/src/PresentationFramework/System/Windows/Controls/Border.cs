@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,10 +8,10 @@
 //
 
 
+using System.Windows.Media;
 using MS.Internal;
 using MS.Internal.PresentationFramework;
 using MS.Internal.Telemetry.PresentationFramework;
-using System.Windows.Media;
 
 namespace System.Windows.Controls
 {
@@ -67,7 +67,7 @@ namespace System.Windows.Controls
         /// </summary>
         public Thickness BorderThickness
         {
-            get { return (Thickness) GetValue(BorderThicknessProperty); }
+            get { return (Thickness)GetValue(BorderThicknessProperty); }
             set { SetValue(BorderThicknessProperty, value); }
         }
 
@@ -77,7 +77,7 @@ namespace System.Windows.Controls
         /// </summary>
         public Thickness Padding
         {
-            get { return (Thickness) GetValue(PaddingProperty); }
+            get { return (Thickness)GetValue(PaddingProperty); }
             set { SetValue(PaddingProperty, value); }
         }
 
@@ -88,7 +88,7 @@ namespace System.Windows.Controls
         /// </summary>
         public CornerRadius CornerRadius
         {
-            get { return (CornerRadius) GetValue(CornerRadiusProperty); }
+            get { return (CornerRadius)GetValue(CornerRadiusProperty); }
             set { SetValue(CornerRadiusProperty, value); }
         }
 
@@ -97,7 +97,7 @@ namespace System.Windows.Controls
         /// </summary>
         public Brush BorderBrush
         {
-            get { return (Brush) GetValue(BorderBrushProperty); }
+            get { return (Brush)GetValue(BorderBrushProperty); }
             set { SetValue(BorderBrushProperty, value); }
         }
 
@@ -106,10 +106,10 @@ namespace System.Windows.Controls
         /// </summary>
         public Brush Background
         {
-            get { return (Brush) GetValue(BackgroundProperty); }
-            set { SetValue(BackgroundProperty, value); }        
+            get { return (Brush)GetValue(BackgroundProperty); }
+            set { SetValue(BackgroundProperty, value); }
         }
-        
+
         /// <summary>
         /// DependencyProperty for <see cref="BorderThickness" /> property.
         /// </summary>
@@ -117,7 +117,7 @@ namespace System.Windows.Controls
         public static readonly DependencyProperty BorderThicknessProperty
             = DependencyProperty.Register("BorderThickness", typeof(Thickness), typeof(Border),
                                           new FrameworkPropertyMetadata(
-                                                new Thickness(), 
+                                                new Thickness(),
                                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender,
                                                 new PropertyChangedCallback(OnClearPenCache)),
                                           new ValidateValueCallback(IsThicknessValid));
@@ -179,7 +179,7 @@ namespace System.Windows.Controls
         /// DependencyProperty for <see cref="Background" /> property.
         /// </summary>
         [CommonDependencyProperty]
-        public static readonly DependencyProperty BackgroundProperty = 
+        public static readonly DependencyProperty BackgroundProperty =
                 Panel.BackgroundProperty.AddOwner(typeof(Border),
                         new FrameworkPropertyMetadata(
                                 (Brush)null,
@@ -232,7 +232,7 @@ namespace System.Windows.Controls
 
 
                 child.Measure(childConstraint);
-                Size childSize = child.DesiredSize;           
+                Size childSize = child.DesiredSize;
 
                 // Now use the returned size to drive our size, by adding back the margins, etc.
                 mySize.Width = childSize.Width + combined.Width;
@@ -265,7 +265,7 @@ namespace System.Windows.Controls
             }
             Rect boundRect = new Rect(finalSize);
             Rect innerRect = HelperDeflateRect(boundRect, borders);
-            
+
             //  arrange child
             UIElement child = Child;
             if (child != null)
@@ -284,15 +284,15 @@ namespace System.Windows.Controls
             //  1. there are non-uniform rounded corners
             _useComplexRenderCodePath = !uniformCorners;
 
-            if (    !_useComplexRenderCodePath
-                &&  borderBrush != null )
+            if (!_useComplexRenderCodePath
+                && borderBrush != null)
             {
                 SolidColorBrush originIndependentBrush = borderBrush as SolidColorBrush;
 
                 bool uniformBorders = borders.IsUniform;
 
-                _useComplexRenderCodePath = 
-                //  2. the border brush is origin dependent (the only origin independent brush is a solid color brush)
+                _useComplexRenderCodePath =
+                        //  2. the border brush is origin dependent (the only origin independent brush is a solid color brush)
                         (originIndependentBrush == null)
                 //  3. the border brush is semi-transtarent solid color brush AND border thickness is not uniform
                 //     (for uniform semi-transparent border Border.OnRender draws rectangle outline - so it works fine)
@@ -348,7 +348,7 @@ namespace System.Windows.Controls
                     BorderGeometryCache = null;
                 }
             }
-            else 
+            else
             {
                 BackgroundGeometryCache = null;
                 BorderGeometryCache = null;
@@ -361,7 +361,7 @@ namespace System.Windows.Controls
         /// In addition to the child, Border renders a background + border.  The background is drawn inside the border.
         /// </summary>
         protected override void OnRender(DrawingContext dc)
-        {           
+        {
             bool useLayoutRounding = this.UseLayoutRounding;
             DpiScale dpi = GetDpi();
 
@@ -369,15 +369,15 @@ namespace System.Windows.Controls
             {
                 Brush brush;
                 StreamGeometry borderGeometry = BorderGeometryCache;
-                if (    borderGeometry != null
-                    &&  (brush = BorderBrush) != null   )
+                if (borderGeometry != null
+                    && (brush = BorderBrush) != null)
                 {
                     dc.DrawGeometry(brush, null, borderGeometry);
                 }
 
                 StreamGeometry backgroundGeometry = BackgroundGeometryCache;
-                if (    backgroundGeometry != null
-                    &&  (brush = Background) != null    )
+                if (backgroundGeometry != null
+                    && (brush = Background) != null)
                 {
                     dc.DrawGeometry(brush, null, backgroundGeometry);
                 }
@@ -403,8 +403,10 @@ namespace System.Windows.Controls
                     Pen pen = LeftPenCache;
                     if (pen == null)
                     {
-                        pen = new Pen();
-                        pen.Brush = borderBrush;
+                        pen = new Pen
+                        {
+                            Brush = borderBrush
+                        };
 
                         if (useLayoutRounding)
                         {
@@ -466,8 +468,10 @@ namespace System.Windows.Controls
                             pen = RightPenCache;
                             if (pen == null)
                             {
-                                pen = new Pen();
-                                pen.Brush = borderBrush;
+                                pen = new Pen
+                                {
+                                    Brush = borderBrush
+                                };
 
                                 if (useLayoutRounding)
                                 {
@@ -498,8 +502,10 @@ namespace System.Windows.Controls
                             pen = TopPenCache;
                             if (pen == null)
                             {
-                                pen = new Pen();
-                                pen.Brush = borderBrush;
+                                pen = new Pen
+                                {
+                                    Brush = borderBrush
+                                };
                                 if (useLayoutRounding)
                                 {
                                     pen.Thickness = UIElement.RoundLayoutValue(border.Top, dpi.DpiScaleY);
@@ -529,8 +535,10 @@ namespace System.Windows.Controls
                             pen = BottomPenCache;
                             if (pen == null)
                             {
-                                pen = new Pen();
-                                pen.Brush = borderBrush;
+                                pen = new Pen
+                                {
+                                    Brush = borderBrush
+                                };
                                 if (useLayoutRounding)
                                 {
                                     pen.Thickness = UIElement.RoundLayoutValue(border.Bottom, dpi.DpiScaleY);
@@ -567,8 +575,8 @@ namespace System.Windows.Controls
                     {
                         ptTL = new Point(UIElement.RoundLayoutValue(border.Left, dpi.DpiScaleX),
                                          UIElement.RoundLayoutValue(border.Top, dpi.DpiScaleY));
-                        
-                        if(FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness)
+
+                        if (FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness)
                         {
                             ptBR = new Point(UIElement.RoundLayoutValue(RenderSize.Width - border.Right, dpi.DpiScaleX),
                                          UIElement.RoundLayoutValue(RenderSize.Height - border.Bottom, dpi.DpiScaleY));
@@ -577,11 +585,11 @@ namespace System.Windows.Controls
                         {
                             ptBR = new Point(RenderSize.Width - UIElement.RoundLayoutValue(border.Right, dpi.DpiScaleX),
                                          RenderSize.Height - UIElement.RoundLayoutValue(border.Bottom, dpi.DpiScaleY));
-                        }                        
+                        }
                     }
                     else
                     {
-                        ptTL = new Point(border.Left, border.Top); 
+                        ptTL = new Point(border.Left, border.Top);
                         ptBR = new Point(RenderSize.Width - border.Right, RenderSize.Height - border.Bottom);
                     }
 
@@ -930,10 +938,10 @@ namespace System.Windows.Controls
         {
             internal Radii(CornerRadius radii, Thickness borders, bool outer)
             {
-                double left     = 0.5 * borders.Left;
-                double top      = 0.5 * borders.Top;
-                double right    = 0.5 * borders.Right;
-                double bottom   = 0.5 * borders.Bottom;
+                double left = 0.5 * borders.Left;
+                double top = 0.5 * borders.Top;
+                double right = 0.5 * borders.Right;
+                double bottom = 0.5 * borders.Bottom;
 
                 if (outer)
                 {
@@ -976,14 +984,14 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    LeftTop     = Math.Max(0.0, radii.TopLeft - left);
-                    TopLeft     = Math.Max(0.0, radii.TopLeft - top);
-                    TopRight    = Math.Max(0.0, radii.TopRight - top);
-                    RightTop    = Math.Max(0.0, radii.TopRight - right);
+                    LeftTop = Math.Max(0.0, radii.TopLeft - left);
+                    TopLeft = Math.Max(0.0, radii.TopLeft - top);
+                    TopRight = Math.Max(0.0, radii.TopRight - top);
+                    RightTop = Math.Max(0.0, radii.TopRight - right);
                     RightBottom = Math.Max(0.0, radii.BottomRight - right);
                     BottomRight = Math.Max(0.0, radii.BottomRight - bottom);
-                    BottomLeft  = Math.Max(0.0, radii.BottomLeft - bottom);
-                    LeftBottom  = Math.Max(0.0, radii.BottomLeft - left);
+                    BottomLeft = Math.Max(0.0, radii.BottomLeft - bottom);
+                    LeftBottom = Math.Max(0.0, radii.BottomLeft - left);
                 }
             }
 

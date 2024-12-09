@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,22 +15,22 @@ namespace System.Windows
     ///     somewhere in the parenting hierarchy.
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-    public sealed class AttachedPropertyBrowsableForChildrenAttribute : AttachedPropertyBrowsableAttribute 
+    public sealed class AttachedPropertyBrowsableForChildrenAttribute : AttachedPropertyBrowsableAttribute
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
-        
-        
+
+
         /// <summary>
         ///     Creates a new AttachedPropertyBrowsableForChildrenAttribute.
         /// </summary>
         public AttachedPropertyBrowsableForChildrenAttribute()
         {
         }
-        
+
 
         //------------------------------------------------------
         //
@@ -54,7 +54,7 @@ namespace System.Windows
                 _includeDescendants = value;
             }
         }
-    
+
 
         //------------------------------------------------------
         //
@@ -66,17 +66,18 @@ namespace System.Windows
         ///     Overrides Object.Equals to implement correct equality semantics for this
         ///     attribute.
         /// </summary>
-        public override bool Equals(object obj) 
+        public override bool Equals(object obj)
         {
             AttachedPropertyBrowsableForChildrenAttribute other = obj as AttachedPropertyBrowsableForChildrenAttribute;
-            if (other == null) return false;
+            if (other == null)
+                return false;
             return _includeDescendants == other._includeDescendants;
         }
 
         /// <summary>
         ///     Overrides Object.GetHashCode to implement correct hashing semantics.
         /// </summary>
-        public override int GetHashCode() 
+        public override int GetHashCode()
         {
             return _includeDescendants.GetHashCode();
         }
@@ -88,7 +89,7 @@ namespace System.Windows
         //
         //------------------------------------------------------
 
-    
+
         /// <summary>
         ///     Returns true if the object provided is the immediate logical 
         ///     child (if IncludeDescendants is false) or any logical child 
@@ -106,7 +107,7 @@ namespace System.Windows
             {
                 walk = FrameworkElement.GetFrameworkParent(walk);
 
-                if (walk != null && ownerType.IsInstanceOfType(walk)) 
+                if (walk != null && ownerType.IsInstanceOfType(walk))
                 {
                     return true;
                 }
@@ -115,7 +116,7 @@ namespace System.Windows
 
             return false;
         }
-    
+
         //------------------------------------------------------
         //
         //  Private Fields

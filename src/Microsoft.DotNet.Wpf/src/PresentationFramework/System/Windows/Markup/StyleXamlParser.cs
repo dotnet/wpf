@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -46,7 +46,7 @@ namespace System.Windows.Markup
     internal class StyleXamlParser : XamlParser
     {
 
-#region Constructors
+        #region Constructors
 
 #if !PBTCOMPILER
         /// <summary>
@@ -74,20 +74,20 @@ namespace System.Windows.Markup
         /// the token reader uses with ourself.  Then restore it when we're done parsing.
         /// </remarks>
         internal StyleXamlParser(
-            XamlReaderHelper      tokenReader,
-            ParserContext   parserContext)
+            XamlReaderHelper tokenReader,
+            ParserContext parserContext)
         {
-            TokenReader       = tokenReader;
-            ParserContext     = parserContext;
+            TokenReader = tokenReader;
+            ParserContext = parserContext;
 
             _previousXamlParser = TokenReader.ControllingXamlParser;
             TokenReader.ControllingXamlParser = this;
             _startingDepth = TokenReader.XmlReader.Depth;
         }
 
-#endregion Constructors
+        #endregion Constructors
 
-#region Overrides
+        #region Overrides
 
 
         /// <summary>
@@ -99,10 +99,10 @@ namespace System.Windows.Markup
         /// </remarks>
         internal override void ProcessXamlNode(
                XamlNode xamlNode,
-           ref bool     cleanup,
-           ref bool     done)
+           ref bool cleanup,
+           ref bool done)
         {
-            switch(xamlNode.TokenType)
+            switch (xamlNode.TokenType)
             {
                 // Ignore some types of xaml nodes, since they are not
                 // relevent to style parsing.
@@ -224,15 +224,15 @@ namespace System.Windows.Markup
         public override void WriteUnknownTagEnd(XamlUnknownTagEndNode xamlUnknownTagEndNode)
         {
 #if PBTCOMPILER
-                NamespaceMapEntry[] namespaceMaps = XamlTypeMapper.GetNamespaceMapEntries(xamlUnknownTagEndNode.XmlNamespace);
-                bool localTag = namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly;
+            NamespaceMapEntry[] namespaceMaps = XamlTypeMapper.GetNamespaceMapEntries(xamlUnknownTagEndNode.XmlNamespace);
+            bool localTag = namespaceMaps != null && namespaceMaps.Length == 1 && namespaceMaps[0].LocalAssembly;
 
-                if (!localTag || !IsLocalPass1)
-                {
+            if (!localTag || !IsLocalPass1)
+            {
 #endif
-                   base.WriteUnknownTagEnd(xamlUnknownTagEndNode);
+                base.WriteUnknownTagEnd(xamlUnknownTagEndNode);
 #if PBTCOMPILER
-                }
+            }
 #endif
         }
 
@@ -690,7 +690,7 @@ namespace System.Windows.Markup
                 {
                     base.WriteElementStart(xamlElementStartNode);
                 }
-                
+
                 tagWritten = true;
             }
 #endif
@@ -721,50 +721,50 @@ namespace System.Windows.Markup
             // of that serializer and handing off control.
             if (xamlElementStartNode.SerializerType != null && depth > 0)
             {
-                 XamlSerializer serializer;
-                 if (xamlElementStartNode.SerializerType == typeof(XamlStyleSerializer))
-                 {
+                XamlSerializer serializer;
+                if (xamlElementStartNode.SerializerType == typeof(XamlStyleSerializer))
+                {
 #if PBTCOMPILER
                     // reset the event scope so that any other event setters encountered in this
                     // style after the nested Style is done parsing will be added to a new scope
-                     _isSameScope = false;
+                    _isSameScope = false;
 #endif
-                     serializer = new XamlStyleSerializer(ParserHooks);
-                 }
-                 else if (xamlElementStartNode.SerializerType == typeof(XamlTemplateSerializer))
-                 {
+                    serializer = new XamlStyleSerializer(ParserHooks);
+                }
+                else if (xamlElementStartNode.SerializerType == typeof(XamlTemplateSerializer))
+                {
 #if PBTCOMPILER
                     // reset the event scope so that any other event setters encountered in this
                     // style after the nested Template is done parsing will be added to a new scope
-                     _isSameScope = false;
+                    _isSameScope = false;
 #endif
-                     serializer = new XamlTemplateSerializer(ParserHooks);
-                 }
-                 else
-                 {
-                     serializer = XamlTypeMapper.CreateInstance(xamlElementStartNode.SerializerType) as XamlSerializer;
-                 }
-                 if (serializer == null)
-                 {
-                     ThrowException(nameof(SR.ParserNoSerializer),
-                                   xamlElementStartNode.TypeFullName,
-                                   xamlElementStartNode.LineNumber,
-                                   xamlElementStartNode.LinePosition);
-                 }
-                 else
-                 {
+                    serializer = new XamlTemplateSerializer(ParserHooks);
+                }
+                else
+                {
+                    serializer = XamlTypeMapper.CreateInstance(xamlElementStartNode.SerializerType) as XamlSerializer;
+                }
+                if (serializer == null)
+                {
+                    ThrowException(nameof(SR.ParserNoSerializer),
+                                  xamlElementStartNode.TypeFullName,
+                                  xamlElementStartNode.LineNumber,
+                                  xamlElementStartNode.LinePosition);
+                }
+                else
+                {
 
-                     // If we're compiling (or otherwise producing baml), convert to baml.
-                     // When we don't have a TreeBuilder, we're producing baml.
+                    // If we're compiling (or otherwise producing baml), convert to baml.
+                    // When we don't have a TreeBuilder, we're producing baml.
 
 #if !PBTCOMPILER
                      
                      if( TreeBuilder == null )
                      {
 #endif
-                         serializer.ConvertXamlToBaml(TokenReader,
-                                           BamlRecordWriter == null ? ParserContext : BamlRecordWriter.ParserContext, 
-                                           xamlElementStartNode, BamlRecordWriter);
+                    serializer.ConvertXamlToBaml(TokenReader,
+                                      BamlRecordWriter == null ? ParserContext : BamlRecordWriter.ParserContext,
+                                      xamlElementStartNode, BamlRecordWriter);
 #if !PBTCOMPILER
                      }
                      else
@@ -775,12 +775,12 @@ namespace System.Windows.Markup
                      }
 #endif
 
-                 }
+                }
             }
             else
             {
                 _styleModeStack.Push(mode);
-                
+
                 if (!_inEventSetter)
                 {
 #if PBTCOMPILER
@@ -812,7 +812,7 @@ namespace System.Windows.Markup
         {
             StyleMode mode = _styleModeStack.Mode;
             bool tagWritten = false;
-            
+
             if (mode == StyleMode.TriggerBase &&
                 xamlElementEndNode.Depth == _inSetterDepth)
             {
@@ -826,10 +826,10 @@ namespace System.Windows.Markup
             }
 
 #if PBTCOMPILER
-           if (_styleModeStack.Depth != 1 &&
-               mode == StyleMode.TargetTypeProperty &&
-               InDeferLoadedSection &&
-               !_defNameFound)
+            if (_styleModeStack.Depth != 1 &&
+                mode == StyleMode.TargetTypeProperty &&
+                InDeferLoadedSection &&
+                !_defNameFound)
             {
                 // We have to treat TargetType="{x:Type SomeType}" as a key in a
                 // resource dictionary, if one is present.  This means generating
@@ -844,13 +844,13 @@ namespace System.Windows.Markup
                 {
                     base.WriteElementEnd(xamlElementEndNode);
                 }
-                
+
                 tagWritten = true;
             }
 #endif
 
             _styleModeStack.Pop();
-            
+
             if (!_inEventSetter)
             {
                 if (!tagWritten)
@@ -941,7 +941,7 @@ namespace System.Windows.Markup
         public override void WritePropertyComplexStart(XamlPropertyComplexStartNode xamlNode)
         {
             StyleMode mode = _styleModeStack.Mode;
-            
+
             if (_styleModeStack.Depth == 1)
             {
                 if (xamlNode.PropName == XamlStyleSerializer.TargetTypePropertyName)
@@ -1023,7 +1023,7 @@ namespace System.Windows.Markup
         {
             StyleMode mode = _styleModeStack.Mode;
             int depth = _styleModeStack.Depth;
-            
+
             if (depth == 1)
             {
                 if (xamlNode.PropName == XamlStyleSerializer.VisualTriggersPropertyName)
@@ -1182,7 +1182,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                for (int i = 0; i< xamlTextNode.Text.Length; i++)
+                for (int i = 0; i < xamlTextNode.Text.Length; i++)
                 {
                     if (!XamlReaderHelper.IsWhiteSpace(xamlTextNode.Text[i]))
                     {
@@ -1290,7 +1290,7 @@ namespace System.Windows.Markup
         {
             StyleMode mode = _styleModeStack.Mode;
 
-            Debug.Assert (mode != StyleMode.Base || xamlPropertyNode.PropName != XamlStyleSerializer.TargetTypePropertyName,
+            Debug.Assert(mode != StyleMode.Base || xamlPropertyNode.PropName != XamlStyleSerializer.TargetTypePropertyName,
                           "TargetType should be handled by WritePropertyWithType");
 
             if (mode == StyleMode.TargetTypeProperty &&
@@ -1426,7 +1426,7 @@ namespace System.Windows.Markup
                 {
                     if (BamlRecordWriter != null && xamlPropertyNode.ValueElementType == null)
                     {
-                        ThrowException(nameof(SR.ParserNoType), 
+                        ThrowException(nameof(SR.ParserNoType),
                                        xamlPropertyNode.ValueTypeFullName,
                                        xamlPropertyNode.LineNumber,
                                        xamlPropertyNode.LinePosition);
@@ -1438,7 +1438,7 @@ namespace System.Windows.Markup
                     // body of the Style.
                     base.WriteDefAttributeKeyType(
                         new XamlDefAttributeKeyTypeNode(xamlPropertyNode.LineNumber,
-                                 xamlPropertyNode.LinePosition,xamlPropertyNode.Depth,
+                                 xamlPropertyNode.LinePosition, xamlPropertyNode.Depth,
                                  xamlPropertyNode.ValueTypeFullName,
                                  xamlPropertyNode.ValueTypeAssemblyName,
                                  xamlPropertyNode.ValueElementType));
@@ -1470,7 +1470,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Called when the parse was cancelled by the designer or the user.
         /// </summary>
-        internal override void  ParseCancelled()
+        internal override void ParseCancelled()
         {
             // Override so we don't close the writer stream, since we're a sub-parser
         }
@@ -1491,9 +1491,9 @@ namespace System.Windows.Markup
             get { return false; }
         }
 
-#endregion Overrides
+        #endregion Overrides
 
-#region Methods
+        #region Methods
 
         /// <summary>
         /// Helper function if we are going to a Reader/Writer stream closes the writer
@@ -1514,9 +1514,9 @@ namespace System.Windows.Markup
 #endif
         }
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
 #if !PBTCOMPILER
         /// <summary>
@@ -1545,7 +1545,7 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Properties
+        #endregion Properties
 
         #region Data
 
@@ -1555,43 +1555,43 @@ namespace System.Windows.Markup
 #endif
         // The XamlParser that the TokenReader was using when this instance of
         // the StyleXamlParser was created.  This must be restored on exit
-        XamlParser      _previousXamlParser;
+        XamlParser _previousXamlParser;
 
         // Depth in the Xaml file when parsing of this style block started.
         // This is used to determine when to stop parsing
-        int             _startingDepth;
+        int _startingDepth;
 
-        StyleModeStack  _styleModeStack = new StyleModeStack();
+        StyleModeStack _styleModeStack = new StyleModeStack();
 
         // Depth in the element tree where a <Setter .../> element has begun.
-        int             _inSetterDepth = -1;
+        int _inSetterDepth = -1;
 
         // Depth in the element tree where a Trigger or MultiTrigger
         // section has begun.  Set to -1 to indicate it is not within such a section.
-        int             _inPropertyTriggerDepth = -1;
+        int _inPropertyTriggerDepth = -1;
 
         // Depth of nested complex property ina TriggerBase section.  This is
         // used to determine when text content is valid inside a visual trigger.
-        int             _visualTriggerComplexPropertyDepth = -1;
+        int _visualTriggerComplexPropertyDepth = -1;
 
         // The string name for TypeExtension within the TargetType property on style.  This may be null.
-        string          _styleTargetTypeString;
+        string _styleTargetTypeString;
 
         // The actual Type of the TargetType property on style.  This may be null.
-        Type            _styleTargetTypeType;
+        Type _styleTargetTypeType;
 
         // True if we are parsing the properties of an <EventSetter ... > tag
-        bool            _inEventSetter;
+        bool _inEventSetter;
 
         // True if a <Setter .../> or <EventSetter .../> was encountered
-        bool            _setterElementEncountered;
+        bool _setterElementEncountered;
 
         // True if a <Style.Setter> complex property tag was encountered
-        bool            _setterPropertyEncountered;
+        bool _setterPropertyEncountered;
 
         // The PropertyInfo for the "Foo" Property attribute in <Setter Property="Foo" ... />
         // or <Trigger Property="Foo" .../>
-        MemberInfo      _setterOrTriggerPropertyInfo;
+        MemberInfo _setterOrTriggerPropertyInfo;
 
         // The Property node for Value attribute in <Setter Value="Bar" ... /> or
         // <Trigger Value="Bar" .../>
@@ -1599,20 +1599,20 @@ namespace System.Windows.Markup
 
 #if PBTCOMPILER
         // The event in the EventSetter tag
-        string          _event;
+        string _event;
 
         // True if x:Key property was found on the style tag
-        bool            _defNameFound;
+        bool _defNameFound;
 
         // The handler name in the EventSetter tag
-        string          _handler;
+        string _handler;
 
 #if HANDLEDEVENTSTOO
         // The handledEventsToo flag in the EventSetter tag
         bool            _handledEventsToo;
 #endif
         // True if event is in the same setters collecton.
-        bool            _isSameScope;
+        bool _isSameScope;
 #endif
 
         #endregion Data

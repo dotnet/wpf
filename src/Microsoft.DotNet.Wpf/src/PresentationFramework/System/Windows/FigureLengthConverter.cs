@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,7 @@ namespace System.Windows
     /// FigureLengthConverter - Converter class for converting 
     /// instances of other types to and from FigureLength instances.
     /// </summary> 
-    public class FigureLengthConverter: TypeConverter
+    public class FigureLengthConverter : TypeConverter
     {
         //-------------------------------------------------------------------
         //
@@ -42,7 +42,7 @@ namespace System.Windows
         /// <c>false</c> otherwise.
         /// </returns>
         public override bool CanConvertFrom(
-            ITypeDescriptorContext typeDescriptorContext, 
+            ITypeDescriptorContext typeDescriptorContext,
             Type sourceType)
         {
             // We can only handle strings, integral and floating types
@@ -60,7 +60,7 @@ namespace System.Windows
                 case TypeCode.UInt32:
                 case TypeCode.UInt64:
                     return true;
-                default: 
+                default:
                     return false;
             }
         }
@@ -76,11 +76,11 @@ namespace System.Windows
         /// <c>false</c> otherwise.
         /// </returns>
         public override bool CanConvertTo(
-            ITypeDescriptorContext typeDescriptorContext, 
-            Type destinationType) 
+            ITypeDescriptorContext typeDescriptorContext,
+            Type destinationType)
         {
-            return (    destinationType == typeof(InstanceDescriptor) 
-                    ||  destinationType == typeof(string)   );
+            return (destinationType == typeof(InstanceDescriptor)
+                    || destinationType == typeof(string));
         }
 
         /// <summary>
@@ -100,8 +100,8 @@ namespace System.Windows
         /// and is not a valid type which can be converted to a FigureLength.
         /// </exception>
         public override object ConvertFrom(
-            ITypeDescriptorContext typeDescriptorContext, 
-            CultureInfo cultureInfo, 
+            ITypeDescriptorContext typeDescriptorContext,
+            CultureInfo cultureInfo,
             object source)
         {
             if (source != null)
@@ -136,21 +136,21 @@ namespace System.Windows
         /// or if the destinationType isn't one of the valid destination types.
         /// </exception>
         public override object ConvertTo(
-            ITypeDescriptorContext typeDescriptorContext, 
+            ITypeDescriptorContext typeDescriptorContext,
             CultureInfo cultureInfo,
             object value,
             Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (    value != null
-                &&  value is FigureLength )
+            if (value != null
+                && value is FigureLength)
             {
                 FigureLength fl = (FigureLength)value;
 
-                if (destinationType == typeof(string)) 
-                { 
-                    return (ToString(fl, cultureInfo)); 
+                if (destinationType == typeof(string))
+                {
+                    return (ToString(fl, cultureInfo));
                 }
 
                 if (destinationType == typeof(InstanceDescriptor))

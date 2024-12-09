@@ -1,17 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.IO;
 using System.Diagnostics;
+using System.IO;
+using System.Runtime.Versioning;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Runtime.Versioning;
-
+using MS.Win32;
 using SD = System.Drawing;
 using SW = System.Windows;
 using SWM = System.Windows.Media;
-using MS.Win32;
 
 namespace System.Windows.Forms.Integration
 {
@@ -41,20 +40,24 @@ namespace System.Windows.Forms.Integration
         // This method normalizes zeros to Int32.MaxValue.
         public static SD.Size ConvertZeroToUnbounded(SD.Size size)
         {
-            if (size.Width == 0) { size.Width = int.MaxValue; }
-            if (size.Height == 0) { size.Height = int.MaxValue; }
+            if (size.Width == 0)
+            { size.Width = int.MaxValue; }
+            if (size.Height == 0)
+            { size.Height = int.MaxValue; }
             return size;
         }
 
         // Dock will request preferred size with one dimension set to 1.
         public static SD.Size ConvertZeroOrOneToUnbounded(SD.Size size)
         {
-            if (size.Width == 0 || size.Width == 1) { size.Width = int.MaxValue; }
-            if (size.Height == 0 || size.Height == 1) { size.Height = int.MaxValue; }
+            if (size.Width == 0 || size.Width == 1)
+            { size.Width = int.MaxValue; }
+            if (size.Height == 0 || size.Height == 1)
+            { size.Height = int.MaxValue; }
             return size;
         }
 
-        public static SD.Size ConvertUnboundedToZero(SD.Size size) 
+        public static SD.Size ConvertUnboundedToZero(SD.Size size)
         {
             if (size.Width == int.MaxValue)
             {
@@ -66,7 +69,7 @@ namespace System.Windows.Forms.Integration
             }
             return size;
         }
-        
+
         public static SD.Size UnionSizes(SD.Size size1, SD.Size size2)
         {
             return new SD.Size(
@@ -210,7 +213,8 @@ namespace System.Windows.Forms.Integration
             while (current != null)
             {
                 FrameworkElement currentElement = current as FrameworkElement;
-                if (currentElement != null) { ancestor = currentElement; }
+                if (currentElement != null)
+                { ancestor = currentElement; }
 
                 current = VisualTreeHelper.GetParent(current);
             }
@@ -223,7 +227,8 @@ namespace System.Windows.Forms.Integration
         internal static SD.Bitmap GetBitmapForTransparentWindowsFormsHost(WindowsFormsHost host)
         {
             WinFormsAdapter adapter = WindowsFormsHostPropertyMap.GetAdapter(host);
-            if (adapter == null) { return null; }
+            if (adapter == null)
+            { return null; }
 
             //We need to find our highest-level ancestor that's a FrameworkElement:
             //if it's not a FrameworkElement, we don't know how big it is, and can't
@@ -240,19 +245,19 @@ namespace System.Windows.Forms.Integration
                 {
                     //Image is upside down.  Need the lower right corner of host and the 
                     //lower right corner of the parent.
-                    hostPoint = HostUtils.TransformToParentPoint(host, frameworkElementAncestor, 
+                    hostPoint = HostUtils.TransformToParentPoint(host, frameworkElementAncestor,
                         new Point(host.ActualWidth, host.ActualHeight));
 
-                    parentPoint = HostUtils.TransformToParentPoint(frameworkElementAncestor, frameworkElementAncestor, 
+                    parentPoint = HostUtils.TransformToParentPoint(frameworkElementAncestor, frameworkElementAncestor,
                         new Point(frameworkElementAncestor.ActualWidth, frameworkElementAncestor.ActualHeight));
                 }
                 else
                 {
                     //Need upper left corner of host and the upper left corner of the parent.
-                    hostPoint = HostUtils.TransformToParentPoint(host, frameworkElementAncestor, 
+                    hostPoint = HostUtils.TransformToParentPoint(host, frameworkElementAncestor,
                         new Point(0, 0));
 
-                    parentPoint = HostUtils.TransformToParentPoint(frameworkElementAncestor, frameworkElementAncestor, 
+                    parentPoint = HostUtils.TransformToParentPoint(frameworkElementAncestor, frameworkElementAncestor,
                         new Point(0, 0));
                 }
                 hostPoint.Offset(-parentPoint.X, -parentPoint.Y);
@@ -308,7 +313,8 @@ namespace System.Windows.Forms.Integration
 
         internal static RenderTargetBitmap GetRenderTargetBitmapForVisual(int width, int height, Visual visualToRender)
         {
-            if (width < 1 || height < 1) { return null; }
+            if (width < 1 || height < 1)
+            { return null; }
             RenderTargetBitmap bmp = new RenderTargetBitmap(
                     width,
                     height,
@@ -326,7 +332,8 @@ namespace System.Windows.Forms.Integration
         internal static SD.Bitmap GetBitmapForOpaqueWindowsFormsHost(WindowsFormsHost host, Brush brush)
         {
             WinFormsAdapter adapter = WindowsFormsHostPropertyMap.GetAdapter(host);
-            if (adapter == null) { return null; }
+            if (adapter == null)
+            { return null; }
 
             DrawingVisual drawingVisual = new DrawingVisual();
             DrawingContext drawingContext = drawingVisual.RenderOpen();
@@ -422,7 +429,7 @@ namespace System.Windows.Forms.Integration
             {
                 FrameworkElement currentElement = currentObject as FrameworkElement;
                 if (currentElement != null && (
-                    currentElement.Cursor != null || 
+                    currentElement.Cursor != null ||
                         (currentElement.ForceCursor && forceCursorMapped)
                     )
                 )

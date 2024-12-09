@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace System.Windows
     /// A collection of text decoration instances
     /// </summary>
     [TypeConverter(typeof(TextDecorationCollectionConverter))]
-    [Localizability(LocalizationCategory.None, Readability=Readability.Unreadable)]
+    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
     public sealed partial class TextDecorationCollection : Animatable, IList
     {
         /// <summary>
@@ -38,13 +38,13 @@ namespace System.Windows
         /// </remarks>        
         internal bool ValueEquals(TextDecorationCollection textDecorations)
         {
-            if (textDecorations == null) 
+            if (textDecorations == null)
                 return false;   // o is either null or not TextDecorations object
 
-            if (this == textDecorations) 
+            if (this == textDecorations)
                 return true;    // Reference equality.
 
-            if ( this.Count != textDecorations.Count)
+            if (this.Count != textDecorations.Count)
                 return false;   // Two counts are different.
 
             // To be considered equal, TextDecorations should be same in the exact order.
@@ -54,10 +54,10 @@ namespace System.Windows
             {
                 if (!this[i].ValueEquals(textDecorations[i]))
                     return false;
-            }            
-            return true;                     
+            }
+            return true;
         }
-     
+
         /// <summary>
         /// Add a collection of text decorations into the current collection
         /// </summary>
@@ -70,9 +70,9 @@ namespace System.Windows
             foreach (TextDecoration textDecoration in textDecorations)
             {
                 Add(textDecoration);
-            }                
+            }
         }
-        
+
         /// <summary>
         /// Remove a collection of text decorations from the current collection and return 
         /// the resultant (new) collection. The current collection remains unchanged. If the collection
@@ -96,17 +96,17 @@ namespace System.Windows
 
             foreach (TextDecoration textDecoration in textDecorations)
             {
-                for (int i = result.Count -1; i >= 0; --i)
+                for (int i = result.Count - 1; i >= 0; --i)
                 {
                     if (result[i].ValueEquals(textDecoration))
                     {
                         result.RemoveAt(i);
-                        removed = true; 
+                        removed = true;
                     }
                 }
             }
 
-            return removed; 
+            return removed;
         }
     }
 }

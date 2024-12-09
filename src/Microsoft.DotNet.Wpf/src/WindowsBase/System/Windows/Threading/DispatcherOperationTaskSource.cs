@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,47 +23,47 @@ namespace System.Windows.Threading
         // DispatcherOperation as the Task's AsyncState.
         public override void Initialize(DispatcherOperation operation)
         {
-            if(_taskCompletionSource != null)
+            if (_taskCompletionSource != null)
             {
                 throw new InvalidOperationException();
             }
-            
+
             _taskCompletionSource = new TaskCompletionSource<TResult>(new DispatcherOperationTaskMapping(operation));
         }
 
         public override Task GetTask()
         {
-            if(_taskCompletionSource == null)
+            if (_taskCompletionSource == null)
             {
                 throw new InvalidOperationException();
             }
 
             return _taskCompletionSource.Task;
         }
-        
+
         public override void SetCanceled()
         {
-            if(_taskCompletionSource == null)
+            if (_taskCompletionSource == null)
             {
                 throw new InvalidOperationException();
             }
 
             _taskCompletionSource.SetCanceled();
         }
-        
+
         public override void SetResult(object result)
         {
-            if(_taskCompletionSource == null)
+            if (_taskCompletionSource == null)
             {
                 throw new InvalidOperationException();
             }
 
             _taskCompletionSource.SetResult((TResult)result);
         }
-        
+
         public override void SetException(Exception exception)
         {
-            if(_taskCompletionSource == null)
+            if (_taskCompletionSource == null)
             {
                 throw new InvalidOperationException();
             }

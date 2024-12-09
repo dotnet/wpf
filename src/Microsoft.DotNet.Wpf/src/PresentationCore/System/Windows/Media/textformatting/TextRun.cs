@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -73,21 +73,21 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Reference to character buffer
         /// </summary>
-        public abstract CharacterBufferReference CharacterBufferReference 
+        public abstract CharacterBufferReference CharacterBufferReference
         { get; }
 
-        
+
         /// <summary>
         /// Character length
         /// </summary>
-        public abstract int Length 
+        public abstract int Length
         { get; }
 
 
         /// <summary>
         /// A set of properties shared by every characters in the run
         /// </summary>
-        public abstract TextRunProperties Properties 
+        public abstract TextRunProperties Properties
         { get; }
     }
 }

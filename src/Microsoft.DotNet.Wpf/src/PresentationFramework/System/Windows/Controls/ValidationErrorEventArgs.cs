@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,7 +35,7 @@ namespace System.Windows.Controls
         internal ValidationErrorEventArgs(ValidationError validationError, ValidationErrorEventAction action)
         {
             Invariant.Assert(validationError != null);
-            
+
             RoutedEvent = Validation.ErrorEvent;
             _validationError = validationError;
             _action = action;
@@ -48,7 +48,7 @@ namespace System.Windows.Controls
         /// </summary>
         public ValidationError Error
         {
-            get 
+            get
             {
                 return _validationError;
             }
@@ -60,13 +60,13 @@ namespace System.Windows.Controls
         /// </summary>
         public ValidationErrorEventAction Action
         {
-            get 
+            get
             {
                 return _action;
             }
         }
 
-        
+
         /// <summary>
         ///     The mechanism used to call the type-specific handler on the
         ///     target.
@@ -79,8 +79,8 @@ namespace System.Windows.Controls
         /// </param>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            EventHandler<ValidationErrorEventArgs> handler = (EventHandler<ValidationErrorEventArgs>) genericHandler;
-            
+            EventHandler<ValidationErrorEventArgs> handler = (EventHandler<ValidationErrorEventArgs>)genericHandler;
+
             handler(genericTarget, this);
         }
 

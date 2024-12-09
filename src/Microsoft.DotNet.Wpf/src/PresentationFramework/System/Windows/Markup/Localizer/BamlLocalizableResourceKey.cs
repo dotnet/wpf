@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,10 +27,10 @@ namespace System.Windows.Markup.Localizer
             ArgumentNullException.ThrowIfNull(className);
             ArgumentNullException.ThrowIfNull(propertyName);
 
-            _uid          = uid;
-            _className    = className;
+            _uid = uid;
+            _className = className;
             _propertyName = propertyName;
-            _assemblyName = assemblyName;            
+            _assemblyName = assemblyName;
         }
 
         /// <summary>
@@ -45,8 +45,8 @@ namespace System.Windows.Markup.Localizer
             string uid,
             string className,
             string propertyName
-            ) : this (uid, className, propertyName, null)
-        {            
+            ) : this(uid, className, propertyName, null)
+        {
         }
 
         //-------------------------------
@@ -101,10 +101,10 @@ namespace System.Windows.Markup.Localizer
             {
                 return false;
             }
-        
+
             return _uid == other._uid
                 && _className == other._className
-                && _propertyName == other._propertyName; 
+                && _propertyName == other._propertyName;
         }
 
         /// <summary>
@@ -123,11 +123,11 @@ namespace System.Windows.Markup.Localizer
         /// <returns>Hash code</returns>
         public override int GetHashCode()
         {
-            return _uid.GetHashCode() 
-                ^  _className.GetHashCode()
-                ^  _propertyName.GetHashCode();
+            return _uid.GetHashCode()
+                ^ _className.GetHashCode()
+                ^ _propertyName.GetHashCode();
         }
-        
+
         //-------------------------------
         // Private members
         //-------------------------------

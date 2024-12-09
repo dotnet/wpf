@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,7 +28,7 @@ namespace System.Windows.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>Condition that describes the Raw view of the UIAutomation tree</summary>
@@ -36,14 +36,14 @@ namespace System.Windows.Automation
 
         /// <summary>Condition that describes the Control view of the UIAutomation tree</summary>
         public static readonly Condition ControlViewCondition = new NotCondition(
-                                            new PropertyCondition( AutomationElement.IsControlElementProperty, false) );
+                                            new PropertyCondition(AutomationElement.IsControlElementProperty, false));
         // 
 
 
         /// <summary>Condition that describes the Content view of the UIAutomation tree</summary>
-        public static readonly Condition ContentViewCondition = new NotCondition( new OrCondition(
-                                            new PropertyCondition( AutomationElement.IsControlElementProperty, false),
-                                            new PropertyCondition( AutomationElement.IsContentElementProperty, false)));
+        public static readonly Condition ContentViewCondition = new NotCondition(new OrCondition(
+                                            new PropertyCondition(AutomationElement.IsControlElementProperty, false),
+                                            new PropertyCondition(AutomationElement.IsContentElementProperty, false)));
 
         #endregion Public Constants and Readonly Fields
 
@@ -54,7 +54,7 @@ namespace System.Windows.Automation
         //
         //------------------------------------------------------
 
- 
+
         #region Public Methods
 
         #region Element Comparisons
@@ -90,7 +90,7 @@ namespace System.Windows.Automation
         /// </summary>
         /// <param name="property">property to get string for</param>
         /// <returns>Sting containing human-readable name of specified property</returns>
-        public static string PropertyName( AutomationProperty property )
+        public static string PropertyName(AutomationProperty property)
         {
             ArgumentNullException.ThrowIfNull(property);
             // Suppress PRESHARP Parameter to this public method must be validated; element is checked above.
@@ -104,7 +104,7 @@ namespace System.Windows.Automation
         /// </summary>
         /// <param name="pattern">pattern to get string for</param>
         /// <returns>Sting containing human-readable name of specified pattern</returns>
-        public static string PatternName( AutomationPattern pattern )
+        public static string PatternName(AutomationPattern pattern)
         {
             ArgumentNullException.ThrowIfNull(pattern);
             // Suppress PRESHARP Parameter to this public method must be validated; element is checked above.
@@ -131,9 +131,9 @@ namespace System.Windows.Automation
         {
             ArgumentNullException.ThrowIfNull(element);
             ArgumentNullException.ThrowIfNull(eventHandler);
-            Misc.ValidateArgument( eventId != AutomationElement.AutomationFocusChangedEvent, nameof(SR.EventIdMustNotBeAutomationFocusChanged) );
-            Misc.ValidateArgument( eventId != AutomationElement.StructureChangedEvent, nameof(SR.EventIdMustNotBeStructureChanged) );
-            Misc.ValidateArgument( eventId != AutomationElement.AutomationPropertyChangedEvent, nameof(SR.EventIdMustNotBeAutomationPropertyChanged) );
+            Misc.ValidateArgument(eventId != AutomationElement.AutomationFocusChangedEvent, nameof(SR.EventIdMustNotBeAutomationFocusChanged));
+            Misc.ValidateArgument(eventId != AutomationElement.StructureChangedEvent, nameof(SR.EventIdMustNotBeStructureChanged));
+            Misc.ValidateArgument(eventId != AutomationElement.AutomationPropertyChangedEvent, nameof(SR.EventIdMustNotBeAutomationPropertyChanged));
 
             if (eventId == WindowPattern.WindowClosedEvent)
             {
@@ -144,10 +144,10 @@ namespace System.Windows.Automation
 
                 bool paramsValidated = false;
 
-                if ( Misc.Compare( element, AutomationElement.RootElement ) )
+                if (Misc.Compare(element, AutomationElement.RootElement))
                 {
                     // For root element need to have Descendants scope set (Note: Subtree includes Descendants)
-                    if ( ( scope & TreeScope.Descendants ) == TreeScope.Descendants )
+                    if ((scope & TreeScope.Descendants) == TreeScope.Descendants)
                     {
                         paramsValidated = true;
                     }
@@ -155,20 +155,20 @@ namespace System.Windows.Automation
                 else
                 {
                     // otherwise non-root elements must have the entire tree (Anscestors, Element and Descendants)...
-                    if ( ( scope & ( TreeScope.Ancestors | TreeScope.Element | TreeScope.Descendants ) ) == ( TreeScope.Ancestors | TreeScope.Element | TreeScope.Descendants ) )
+                    if ((scope & (TreeScope.Ancestors | TreeScope.Element | TreeScope.Descendants)) == (TreeScope.Ancestors | TreeScope.Element | TreeScope.Descendants))
                     {
                         paramsValidated = true;
                     }
-                    else if ( ( scope & TreeScope.Element ) == TreeScope.Element )
+                    else if ((scope & TreeScope.Element) == TreeScope.Element)
                     {
                         // ...OR Element where the element implements WindowPattern
                         // PRESHARP will flag this as warning 56506/6506:Parameter 'element' to this public method must be validated: A null-dereference can occur here.
                         // False positive, element is checked, see above
 #pragma warning suppress 6506
                         object val = element.GetCurrentPropertyValue(AutomationElement.NativeWindowHandleProperty);
-                        if ( val != null && val is int && (int)val != 0 )
+                        if (val != null && val is int && (int)val != 0)
                         {
-                            if ( HwndProxyElementProvider.IsWindowPatternWindow( NativeMethods.HWND.Cast( new IntPtr( (int)val ) ) ) )
+                            if (HwndProxyElementProvider.IsWindowPatternWindow(NativeMethods.HWND.Cast(new IntPtr((int)val))))
                             {
                                 paramsValidated = true;
                             }
@@ -176,9 +176,9 @@ namespace System.Windows.Automation
                     }
                 }
 
-                if ( !paramsValidated )
+                if (!paramsValidated)
                 {
-                    throw new ArgumentException( SR.ParamsNotApplicableToWindowClosedEvent );
+                    throw new ArgumentException(SR.ParamsNotApplicableToWindowClosedEvent);
                 }
             }
 
@@ -202,12 +202,12 @@ namespace System.Windows.Automation
         {
             ArgumentNullException.ThrowIfNull(element);
             ArgumentNullException.ThrowIfNull(eventHandler);
-            Misc.ValidateArgument( eventId != AutomationElement.AutomationFocusChangedEvent, nameof(SR.EventIdMustNotBeAutomationFocusChanged) );
-            Misc.ValidateArgument( eventId != AutomationElement.StructureChangedEvent, nameof(SR.EventIdMustNotBeStructureChanged) );
-            Misc.ValidateArgument( eventId != AutomationElement.AutomationPropertyChangedEvent, nameof(SR.EventIdMustNotBeAutomationPropertyChanged) );
+            Misc.ValidateArgument(eventId != AutomationElement.AutomationFocusChangedEvent, nameof(SR.EventIdMustNotBeAutomationFocusChanged));
+            Misc.ValidateArgument(eventId != AutomationElement.StructureChangedEvent, nameof(SR.EventIdMustNotBeStructureChanged));
+            Misc.ValidateArgument(eventId != AutomationElement.AutomationPropertyChangedEvent, nameof(SR.EventIdMustNotBeAutomationPropertyChanged));
 
             // Remove the client-side listener for for this event
-            ClientEventManager.RemoveListener( eventId, element, eventHandler );
+            ClientEventManager.RemoveListener(eventId, element, eventHandler);
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace System.Windows.Automation
             AutomationElement element,            // reference element for listening to the event
             TreeScope scope,                   // scope to listen to
             AutomationPropertyChangedEventHandler eventHandler,    // callback object
-            params AutomationProperty [] properties           // listen for changes to these properties
+            params AutomationProperty[] properties           // listen for changes to these properties
             )
         {
             ArgumentNullException.ThrowIfNull(element);
@@ -229,7 +229,7 @@ namespace System.Windows.Automation
             ArgumentNullException.ThrowIfNull(properties);
             if (properties.Length == 0)
             {
-                throw new ArgumentException( SR.AtLeastOnePropertyMustBeSpecified );
+                throw new ArgumentException(SR.AtLeastOnePropertyMustBeSpecified);
             }
 
             // Check that no properties are interpreted properties
@@ -304,8 +304,8 @@ namespace System.Windows.Automation
             ArgumentNullException.ThrowIfNull(eventHandler);
 
             // Add a client-side listener for for this event request
-            EventListener l = new EventListener(AutomationElement.AutomationFocusChangedEvent, 
-                                                TreeScope.Subtree | TreeScope.Ancestors, 
+            EventListener l = new EventListener(AutomationElement.AutomationFocusChangedEvent,
+                                                TreeScope.Subtree | TreeScope.Ancestors,
                                                 null,
                                                 CacheRequest.CurrentUiaCacheRequest);
             ClientEventManager.AddFocusListener(eventHandler, l);

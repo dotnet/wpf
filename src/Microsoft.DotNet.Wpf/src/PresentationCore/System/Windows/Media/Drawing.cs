@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows.Media
     public abstract partial class Drawing : Animatable, IDrawingContent, DUCE.IResource
     {
         #region Constructors
-        
+
         /// <summary>
         /// Constructor for Drawing
         /// </summary>
@@ -29,11 +29,11 @@ namespace System.Windows.Media
         internal Drawing()
         {
         }
-        
+
         #endregion Constructors
 
         #region Public Properties
-            
+
         /// <summary>
         /// Bounds - the axis-aligned bounds of this Drawing.
         /// </summary>
@@ -41,17 +41,17 @@ namespace System.Windows.Media
         /// Rect - the axis-aligned bounds of this Drawing.
         /// </returns>
         public Rect Bounds
-        {            
+        {
             get
-            {                
+            {
                 ReadPreamble();
 
                 return GetBounds();
             }
-        }        
+        }
 
         #endregion Public Properties
-        
+
         #region Internal Methods       
 
         /// <summary>
@@ -69,11 +69,11 @@ namespace System.Windows.Media
         /// Bounding box occupied by the content
         /// </returns>
         Rect IDrawingContent.GetContentBounds(BoundsDrawingContextWalker ctx)
-        {     
-            Debug.Assert(ctx != null);        
-            
+        {
+            Debug.Assert(ctx != null);
+
             WalkCurrentValue(ctx);
-            
+
             return ctx.Bounds;
         }
 
@@ -108,7 +108,7 @@ namespace System.Windows.Media
         /// </returns>                     
         IntersectionDetail IDrawingContent.HitTestGeometry(PathGeometry geometry)
         {
-            return DrawingServices.HitTestGeometry(this, geometry);           
+            return DrawingServices.HitTestGeometry(this, geometry);
         }
 
         /// <summary>
@@ -119,7 +119,7 @@ namespace System.Windows.Media
         /// <param name="adding"> 'true' to add the handler, 'false' to remove it </param>                                
         void IDrawingContent.PropagateChangedHandler(EventHandler handler, bool adding)
         {
-            if (!IsFrozen) 
+            if (!IsFrozen)
             {
                 if (adding)
                 {
@@ -130,7 +130,7 @@ namespace System.Windows.Media
                     ((Drawing)this).Changed -= handler;
                 }
             }
-        }            
+        }
 
         /// <summary>
         /// GetBounds to calculate the bounds of this drawing.
@@ -140,8 +140,8 @@ namespace System.Windows.Media
             BoundsDrawingContextWalker ctx = new BoundsDrawingContextWalker();
 
             WalkCurrentValue(ctx);
-        
+
             return ctx.Bounds;
-        }   
-}
+        }
+    }
 }

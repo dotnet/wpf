@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.InteropServices;
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Win32.PresentationCore;
-using System.Windows.Threading;
-using System.Runtime.InteropServices;
 
 namespace System.Windows.Media.Imaging
 {
@@ -310,7 +310,7 @@ namespace System.Windows.Media.Imaging
                 ImagePaletteColor[] paletteColorArray = new ImagePaletteColor[numColors];
                 unsafe
                 {
-                    fixed(void* paletteColorArrayPinned = paletteColorArray)
+                    fixed (void* paletteColorArrayPinned = paletteColorArray)
                     {
                         HRESULT.Check(UnsafeNativeMethods.WICPalette.GetColors(
                                     _palette,

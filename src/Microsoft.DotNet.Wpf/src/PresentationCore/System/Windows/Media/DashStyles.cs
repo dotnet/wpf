@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,11 +18,11 @@ namespace System.Windows.Media
     public static class DashStyles
     {
         #region Public Static Properties
-        
+
         /// <summary>
         /// Solid - A solid DashArray (no dashes).
         /// </summary>
-        public static DashStyle Solid 
+        public static DashStyle Solid
         {
             get
             {
@@ -46,7 +46,7 @@ namespace System.Windows.Media
             {
                 if (_dash == null)
                 {
-                    DashStyle style = new DashStyle(new double[] {2, 2}, 1);
+                    DashStyle style = new DashStyle(new double[] { 2, 2 }, 1);
                     style.Freeze();
                     _dash = style;
                 }
@@ -64,7 +64,7 @@ namespace System.Windows.Media
             {
                 if (_dot == null)
                 {
-                    DashStyle style = new DashStyle(new double[] {0, 2}, 0);
+                    DashStyle style = new DashStyle(new double[] { 0, 2 }, 0);
                     style.Freeze();
                     _dot = style;
                 }
@@ -82,7 +82,7 @@ namespace System.Windows.Media
             {
                 if (_dashDot == null)
                 {
-                    DashStyle style = new DashStyle(new double[] {2, 2, 0, 2}, 1);
+                    DashStyle style = new DashStyle(new double[] { 2, 2, 0, 2 }, 1);
                     style.Freeze();
                     _dashDot = style;
                 }
@@ -100,7 +100,7 @@ namespace System.Windows.Media
             {
                 if (_dashDotDot == null)
                 {
-                    DashStyle style = new DashStyle(new double[] {2, 2, 0, 2, 0, 2}, 1);
+                    DashStyle style = new DashStyle(new double[] { 2, 2, 0, 2, 0, 2 }, 1);
                     style.Freeze();
                     _dashDotDot = style;
                 }
@@ -112,9 +112,9 @@ namespace System.Windows.Media
         #endregion Public Static Properties
 
         #region Private Static Fields
-        
+
         private static DashStyle _solid;
-        private static DashStyle _dash; 
+        private static DashStyle _dash;
         private static DashStyle _dot;
         private static DashStyle _dashDot;
         private static DashStyle _dashDotDot;

@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using System.Runtime.InteropServices;
-using MS.Utility;
 using MS.Internal.Interop;
+using MS.Utility;
 using MS.Win32;
 
 namespace System.Windows.Interop
@@ -29,7 +29,7 @@ namespace System.Windows.Interop
 
         public void OnRootChanged(Visual oldRoot, Visual newRoot)
         {
-            if(_active && newRoot != null)
+            if (_active && newRoot != null)
             {
                 Keyboard.Focus(null); // internally we will set the focus to the root.
             }
@@ -42,7 +42,7 @@ namespace System.Windows.Interop
 
         void IInputProvider.NotifyDeactivate()
         {
-            _active        = false;
+            _active = false;
             _partialActive = false;
         }
 
@@ -50,12 +50,12 @@ namespace System.Windows.Interop
         {
             bool result = false;
 
-            Debug.Assert( null != _source );
+            Debug.Assert(null != _source);
 
             try
             {
                 // Acquiring focus into this window should clear any pending focus restoration.
-                if(!checkOnly)
+                if (!checkOnly)
                 {
                     _acquiringFocusOurselves = true;
                     _restoreFocusWindow = IntPtr.Zero;
@@ -79,7 +79,7 @@ namespace System.Windows.Interop
                     // for the main window.
                     //
                     // In either case, the window must be enabled.
-                    if(SafeNativeMethods.IsWindowEnabled(thisWindow))
+                    if (SafeNativeMethods.IsWindowEnabled(thisWindow))
                     {
 
                         // In fully-trusted AppDomains, the only hard requirement
@@ -110,7 +110,7 @@ namespace System.Windows.Interop
                 {
                     // This is the normal case.  We want to keep WPF keyboard
                     // focus and Win32 keyboard focus in sync.
-                    if(!checkOnly)
+                    if (!checkOnly)
                     {
                         // Due to IsInExclusiveMenuMode, it is possible that an
                         // HWND keeps Win32 focus even though WPF has moved
@@ -140,7 +140,7 @@ namespace System.Windows.Interop
                     result = (focus == _source.CriticalHandle);
                 }
             }
-            catch(System.ComponentModel.Win32Exception)
+            catch (System.ComponentModel.Win32Exception)
             {
                 System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: AcquireFocus failed!");
             }
@@ -154,10 +154,10 @@ namespace System.Windows.Interop
 
         internal IntPtr FilterMessage(IntPtr hwnd, WindowMessage message, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            IntPtr result = IntPtr.Zero ;
+            IntPtr result = IntPtr.Zero;
 
             // It is possible to be re-entered during disposal.  Just return.
-            if(_source is null)
+            if (_source is null)
             {
                 return result;
             }
@@ -167,12 +167,12 @@ namespace System.Windows.Interop
             {
                 _msgTime = SafeNativeMethods.GetMessageTime();
             }
-            catch(System.ComponentModel.Win32Exception)
+            catch (System.ComponentModel.Win32Exception)
             {
                 System.Diagnostics.Debug.WriteLine("HwndKeyboardInputProvider: GetMessageTime failed!");
             }
 
-            switch(message)
+            switch (message)
             {
                 // WM_KEYDOWN is sent when a nonsystem key is pressed.
                 // A nonsystem key is a key that is pressed when the ALT key
@@ -180,58 +180,58 @@ namespace System.Windows.Interop
                 // WM_SYSKEYDOWN is sent when a system key is pressed.
                 case WindowMessage.WM_SYSKEYDOWN:
                 case WindowMessage.WM_KEYDOWN:
-                {
-                    // If we have a IKeyboardInputSite, then we should have already
-                    // called ProcessKeyDown (from TranslateAccelerator)
-                    // But there are several paths (our message pump / app's message
-                    // pump) where we do (or don't) call through IKeyboardInputSink.
-                    // So the best way is to just check here if we already did it.
-                    if(_source.IsRepeatedKeyboardMessage(hwnd, (int)message, wParam, lParam))
                     {
-                        break;
-                    }
+                        // If we have a IKeyboardInputSite, then we should have already
+                        // called ProcessKeyDown (from TranslateAccelerator)
+                        // But there are several paths (our message pump / app's message
+                        // pump) where we do (or don't) call through IKeyboardInputSink.
+                        // So the best way is to just check here if we already did it.
+                        if (_source.IsRepeatedKeyboardMessage(hwnd, (int)message, wParam, lParam))
+                        {
+                            break;
+                        }
 
-                    // We will use the current time before generating KeyDown events so we can filter
-                    // the later posted WM_CHAR.
-                    int currentTime = 0;
-                    try
-                    {
-                        currentTime = SafeNativeMethods.GetTickCount();
-                    }
-                    catch(System.ComponentModel.Win32Exception)
-                    {
-                        System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetTickCount failed!");
-                    }
+                        // We will use the current time before generating KeyDown events so we can filter
+                        // the later posted WM_CHAR.
+                        int currentTime = 0;
+                        try
+                        {
+                            currentTime = SafeNativeMethods.GetTickCount();
+                        }
+                        catch (System.ComponentModel.Win32Exception)
+                        {
+                            System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetTickCount failed!");
+                        }
 
-                    // MITIGATION: HANDLED_KEYDOWN_STILL_GENERATES_CHARS
-                    // In case a nested message pump is used before we return
-                    // from processing this message, we disable processing the
-                    // next WM_CHAR message because if the code pumps messages
-                    // it should really mark the message as handled.
-                    HwndSource._eatCharMessages = true;
-                    DispatcherOperation restoreCharMessages = Dispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(HwndSource.RestoreCharMessages), null);
-
-                    // Force the Dispatcher to post a new message to service any
-                    // pending operations, so that the operation we just posted
-                    // is guaranteed to get dispatched after any pending WM_CHAR
-                    // messages are dispatched.
-                    Dispatcher.CriticalRequestProcessing(true);
-
-                    MSG msg = new MSG(hwnd, (int)message, wParam, lParam, _msgTime, 0, 0);
-                    ProcessKeyAction(ref msg, ref handled);
-
-                    if(!handled)
-                    {
                         // MITIGATION: HANDLED_KEYDOWN_STILL_GENERATES_CHARS
-                        // We did not handle the WM_KEYDOWN, so it is OK to process WM_CHAR messages.
-                        // We can also abort the pending restore operation since we don't need it.
-                        HwndSource._eatCharMessages = false;
-                        restoreCharMessages.Abort();
-                    }
+                        // In case a nested message pump is used before we return
+                        // from processing this message, we disable processing the
+                        // next WM_CHAR message because if the code pumps messages
+                        // it should really mark the message as handled.
+                        HwndSource._eatCharMessages = true;
+                        DispatcherOperation restoreCharMessages = Dispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(HwndSource.RestoreCharMessages), null);
 
-                    // System.Console.WriteLine("KEYDOWN(message={0}, wParam={1})={2}", message, wParam, handled);
-                }
-                break;
+                        // Force the Dispatcher to post a new message to service any
+                        // pending operations, so that the operation we just posted
+                        // is guaranteed to get dispatched after any pending WM_CHAR
+                        // messages are dispatched.
+                        Dispatcher.CriticalRequestProcessing(true);
+
+                        MSG msg = new MSG(hwnd, (int)message, wParam, lParam, _msgTime, 0, 0);
+                        ProcessKeyAction(ref msg, ref handled);
+
+                        if (!handled)
+                        {
+                            // MITIGATION: HANDLED_KEYDOWN_STILL_GENERATES_CHARS
+                            // We did not handle the WM_KEYDOWN, so it is OK to process WM_CHAR messages.
+                            // We can also abort the pending restore operation since we don't need it.
+                            HwndSource._eatCharMessages = false;
+                            restoreCharMessages.Abort();
+                        }
+
+                        // System.Console.WriteLine("KEYDOWN(message={0}, wParam={1})={2}", message, wParam, handled);
+                    }
+                    break;
 
                 // WM_KEYUP is sent when a nonsystem key is released.
                 // A nonsystem key is a key that is pressed when the ALT key
@@ -239,17 +239,17 @@ namespace System.Windows.Interop
                 // WM_SYSKEYUP is sent when a system key is released.
                 case WindowMessage.WM_SYSKEYUP:
                 case WindowMessage.WM_KEYUP:
-                {
-                    if(_source.IsRepeatedKeyboardMessage(hwnd, (int)message, wParam, lParam))
                     {
-                        break;
-                    }
+                        if (_source.IsRepeatedKeyboardMessage(hwnd, (int)message, wParam, lParam))
+                        {
+                            break;
+                        }
 
-                    MSG msg = new MSG(hwnd, (int)message, wParam, lParam, _msgTime, 0, 0);
-                    ProcessKeyAction(ref msg, ref handled);
-                    // System.Console.WriteLine("KEYUP  (message={0}, wParam={1})={2}", message, wParam, handled);
-                }
-                break;
+                        MSG msg = new MSG(hwnd, (int)message, wParam, lParam, _msgTime, 0, 0);
+                        ProcessKeyAction(ref msg, ref handled);
+                        // System.Console.WriteLine("KEYUP  (message={0}, wParam={1})={2}", message, wParam, handled);
+                    }
+                    break;
 
                 // WM_UNICHAR (UTF-32) support needs to be implemented
                 // case WindowMessage.WM_UNICHAR:
@@ -257,130 +257,130 @@ namespace System.Windows.Interop
                 case WindowMessage.WM_DEADCHAR:
                 case WindowMessage.WM_SYSCHAR:
                 case WindowMessage.WM_SYSDEADCHAR:
-                {
-                    if(_source.IsRepeatedKeyboardMessage(hwnd, (int)message, wParam, lParam))
                     {
-                        break;
-                    }
+                        if (_source.IsRepeatedKeyboardMessage(hwnd, (int)message, wParam, lParam))
+                        {
+                            break;
+                        }
 
-                    // MITIGATION: HANDLED_KEYDOWN_STILL_GENERATES_CHARS
-                    if(HwndSource._eatCharMessages)
-                    {
-                        break;
-                    }
+                        // MITIGATION: HANDLED_KEYDOWN_STILL_GENERATES_CHARS
+                        if (HwndSource._eatCharMessages)
+                        {
+                            break;
+                        }
 
-                    ProcessTextInputAction(hwnd, message, wParam, lParam, ref handled);
-                    // System.Console.WriteLine("CHAR(message={0}, wParam={1})={2}", message, wParam, handled);
-                }
-                break;
+                        ProcessTextInputAction(hwnd, message, wParam, lParam, ref handled);
+                        // System.Console.WriteLine("CHAR(message={0}, wParam={1})={2}", message, wParam, handled);
+                    }
+                    break;
 
                 case WindowMessage.WM_EXITMENULOOP:
                 case WindowMessage.WM_EXITSIZEMOVE:
-                {
-                    // MITIGATION: KEYBOARD_STATE_OUT_OF_SYNC
-                    //
-                    // Avalon relies on keeping it's copy of the keyboard
-                    // state.  This is for a number of reasons, including that
-                    // we need to be able to give this state to worker threads.
-                    //
-                    // There are a number of cases where Win32 eats the
-                    // keyboard messages, and this can cause our keyboard
-                    // state to become stale.  Obviously this can happen when
-                    // another app is in the foreground, but we handle that
-                    // by re-synching our keyboard state when we get focus.
-                    //
-                    // Other times are when Win32 enters a nested loop.  While
-                    // any one could enter a nested loop at any time for any
-                    // reason, Win32 is nice enough to let us know when it is
-                    // finished with the two common loops: menus and sizing.
-                    // We re-sync our keyboard device in response to these.
-                    //
-                    if(_active)
                     {
-                        _partialActive = true;
+                        // MITIGATION: KEYBOARD_STATE_OUT_OF_SYNC
+                        //
+                        // Avalon relies on keeping it's copy of the keyboard
+                        // state.  This is for a number of reasons, including that
+                        // we need to be able to give this state to worker threads.
+                        //
+                        // There are a number of cases where Win32 eats the
+                        // keyboard messages, and this can cause our keyboard
+                        // state to become stale.  Obviously this can happen when
+                        // another app is in the foreground, but we handle that
+                        // by re-synching our keyboard state when we get focus.
+                        //
+                        // Other times are when Win32 enters a nested loop.  While
+                        // any one could enter a nested loop at any time for any
+                        // reason, Win32 is nice enough to let us know when it is
+                        // finished with the two common loops: menus and sizing.
+                        // We re-sync our keyboard device in response to these.
+                        //
+                        if (_active)
+                        {
+                            _partialActive = true;
 
-                        ReportInput(hwnd,
-                                    InputMode.Foreground,
-                                    _msgTime,
-                                    RawKeyboardActions.Activate,
-                                    0,
-                                    false,
-                                    false,
-                                    0);
+                            ReportInput(hwnd,
+                                        InputMode.Foreground,
+                                        _msgTime,
+                                        RawKeyboardActions.Activate,
+                                        0,
+                                        false,
+                                        false,
+                                        0);
+                        }
                     }
-                }
-                break;
+                    break;
 
                 // WM_SETFOCUS is sent immediately after focus is granted.
                 // This is our clue that the keyboard is active.
                 case WindowMessage.WM_SETFOCUS:
-                {
-                    OnSetFocus(hwnd);
+                    {
+                        OnSetFocus(hwnd);
 
-                    handled = true;
-                }
-                break;
+                        handled = true;
+                    }
+                    break;
 
                 // WM_KILLFOCUS is sent immediately before focus is removed.
                 // This is our clue that the keyboard is inactive.
                 case WindowMessage.WM_KILLFOCUS:
-                {
-                    if(_active && wParam != _source.CriticalHandle )
                     {
-                        // Console.WriteLine("WM_KILLFOCUS");
-
-                        if(_source.RestoreFocusMode == RestoreFocusMode.Auto)
+                        if (_active && wParam != _source.CriticalHandle)
                         {
-                            // when the window that's acquiring focus (wParam) is
-                            // a descendant of our window, remember the immediate
-                            // child so that we can restore focus to it.
-                            _restoreFocusWindow = GetImmediateChildFor((IntPtr)wParam, _source.CriticalHandle);
+                            // Console.WriteLine("WM_KILLFOCUS");
 
-                            _restoreFocus = null;
-
-                            // If we aren't restoring focus to a child window,
-                            // then restore focus to the element that currently
-                            // has WPF keyboard focus if it is directly in this
-                            // HwndSource.
-                            if (_restoreFocusWindow == IntPtr.Zero)
+                            if (_source.RestoreFocusMode == RestoreFocusMode.Auto)
                             {
-                                DependencyObject focusedDO = Keyboard.FocusedElement as DependencyObject;
-                                if (focusedDO != null)
+                                // when the window that's acquiring focus (wParam) is
+                                // a descendant of our window, remember the immediate
+                                // child so that we can restore focus to it.
+                                _restoreFocusWindow = GetImmediateChildFor((IntPtr)wParam, _source.CriticalHandle);
+
+                                _restoreFocus = null;
+
+                                // If we aren't restoring focus to a child window,
+                                // then restore focus to the element that currently
+                                // has WPF keyboard focus if it is directly in this
+                                // HwndSource.
+                                if (_restoreFocusWindow == IntPtr.Zero)
                                 {
-                                    HwndSource hwndSource = PresentationSource.CriticalFromVisual(focusedDO) as HwndSource;
-                                    if (hwndSource == _source)
+                                    DependencyObject focusedDO = Keyboard.FocusedElement as DependencyObject;
+                                    if (focusedDO != null)
                                     {
-                                        _restoreFocus = focusedDO as IInputElement;
+                                        HwndSource hwndSource = PresentationSource.CriticalFromVisual(focusedDO) as HwndSource;
+                                        if (hwndSource == _source)
+                                        {
+                                            _restoreFocus = focusedDO as IInputElement;
+                                        }
                                     }
                                 }
-}
+                            }
+
+                            PossiblyDeactivate((IntPtr)wParam);
                         }
 
-                        PossiblyDeactivate((IntPtr)wParam);
-}
-
-                    handled = true;
-                }
-                break;
+                        handled = true;
+                    }
+                    break;
 
                 // WM_UPDATEUISTATE is sent when the user presses ALT, expecting
                 // the app to display accelerator keys.  We don't always hear the
                 // keystroke - another message loop may handle it.  So report it
                 // here.
                 case WindowMessage.WM_UPDATEUISTATE:
-                {
-                    RawUIStateInputReport report =
-                        new RawUIStateInputReport(_source,
-                                                   InputMode.Foreground,
-                                                   _msgTime,
-                                                   (RawUIStateActions)NativeMethods.SignedLOWORD((int)wParam),
-                                                   (RawUIStateTargets)NativeMethods.SignedHIWORD((int)wParam));
+                    {
+                        RawUIStateInputReport report =
+                            new RawUIStateInputReport(_source,
+                                                       InputMode.Foreground,
+                                                       _msgTime,
+                                                       (RawUIStateActions)NativeMethods.SignedLOWORD((int)wParam),
+                                                       (RawUIStateTargets)NativeMethods.SignedHIWORD((int)wParam));
 
-                    _site.ReportInput(report);
+                        _site.ReportInput(report);
 
-                    handled = true;
-                }
-                break;
+                        handled = true;
+                    }
+                    break;
             }
 
             if (handled && EventTrace.IsEnabled(EventTrace.Keyword.KeywordInput | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info))
@@ -556,7 +556,7 @@ namespace System.Windows.Interop
                     isControlChar = true;
                 }
             }
-            catch(System.ComponentModel.Win32Exception)
+            catch (System.ComponentModel.Win32Exception)
             {
                 System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetKeyState failed!");
             }
@@ -574,23 +574,23 @@ namespace System.Windows.Interop
 
         internal static int GetVirtualKey(IntPtr wParam, IntPtr lParam)
         {
-            int virtualKey = NativeMethods.IntPtrToInt32( wParam);
+            int virtualKey = NativeMethods.IntPtrToInt32(wParam);
             int scanCode = 0;
             int keyData = NativeMethods.IntPtrToInt32(lParam);
 
             // Find the left/right instance SHIFT keys.
-            if(virtualKey == NativeMethods.VK_SHIFT)
+            if (virtualKey == NativeMethods.VK_SHIFT)
             {
                 scanCode = (keyData & 0xFF0000) >> 16;
                 try
                 {
                     virtualKey = SafeNativeMethods.MapVirtualKey(scanCode, 3);
-                    if(virtualKey == 0)
+                    if (virtualKey == 0)
                     {
                         virtualKey = NativeMethods.VK_LSHIFT;
                     }
                 }
-                catch(System.ComponentModel.Win32Exception)
+                catch (System.ComponentModel.Win32Exception)
                 {
                     System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: MapVirtualKey failed!");
 
@@ -599,11 +599,11 @@ namespace System.Windows.Interop
             }
 
             // Find the left/right instance ALT keys.
-            if(virtualKey == NativeMethods.VK_MENU)
+            if (virtualKey == NativeMethods.VK_MENU)
             {
                 bool right = ((keyData & 0x1000000) >> 24) != 0;
 
-                if(right)
+                if (right)
                 {
                     virtualKey = NativeMethods.VK_RMENU;
                 }
@@ -614,11 +614,11 @@ namespace System.Windows.Interop
             }
 
             // Find the left/right instance CONTROL keys.
-            if(virtualKey == NativeMethods.VK_CONTROL)
+            if (virtualKey == NativeMethods.VK_CONTROL)
             {
                 bool right = ((keyData & 0x1000000) >> 24) != 0;
 
-                if(right)
+                if (right)
                 {
                     virtualKey = NativeMethods.VK_RCONTROL;
                 }
@@ -636,14 +636,14 @@ namespace System.Windows.Interop
             int keyData = NativeMethods.IntPtrToInt32(lParam);
 
             int scanCode = (keyData & 0xFF0000) >> 16;
-            if(scanCode == 0)
+            if (scanCode == 0)
             {
                 try
                 {
                     int virtualKey = GetVirtualKey(wParam, lParam);
                     scanCode = SafeNativeMethods.MapVirtualKey(virtualKey, 0);
                 }
-                catch(System.ComponentModel.Win32Exception)
+                catch (System.ComponentModel.Win32Exception)
                 {
                     System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: MapVirtualKey failed!");
                 }
@@ -666,19 +666,19 @@ namespace System.Windows.Interop
             ModifierKeys modifierKeys = ModifierKeys.None;
 
             short keyState = UnsafeNativeMethods.GetKeyState(NativeMethods.VK_SHIFT);
-            if((keyState & 0x8000) == 0x8000)
+            if ((keyState & 0x8000) == 0x8000)
             {
                 modifierKeys |= ModifierKeys.Shift;
             }
 
             keyState = UnsafeNativeMethods.GetKeyState(NativeMethods.VK_CONTROL);
-            if((keyState & 0x8000) == 0x8000)
+            if ((keyState & 0x8000) == 0x8000)
             {
                 modifierKeys |= ModifierKeys.Control;
             }
 
             keyState = UnsafeNativeMethods.GetKeyState(NativeMethods.VK_MENU);
-            if((keyState & 0x8000) == 0x8000)
+            if ((keyState & 0x8000) == 0x8000)
             {
                 modifierKeys |= ModifierKeys.Alt;
             }
@@ -688,16 +688,16 @@ namespace System.Windows.Interop
 
         private RawKeyboardActions GetKeyUpKeyDown(WindowMessage msg)
         {
-            if(  msg == WindowMessage.WM_KEYDOWN || msg == WindowMessage.WM_SYSKEYDOWN )
+            if (msg == WindowMessage.WM_KEYDOWN || msg == WindowMessage.WM_SYSKEYDOWN)
                 return RawKeyboardActions.KeyDown;
-            if(  msg == WindowMessage.WM_KEYUP || msg == WindowMessage.WM_SYSKEYUP )
+            if (msg == WindowMessage.WM_KEYUP || msg == WindowMessage.WM_SYSKEYUP)
                 return RawKeyboardActions.KeyUp;
             throw new ArgumentException(SR.OnlyAcceptsKeyMessages);
         }
 
         private void PossiblyDeactivate(IntPtr hwndFocus)
         {
-            Debug.Assert( null != _source );
+            Debug.Assert(null != _source);
 
             // We are now longer active ourselves, but it is possible that the
             // window the keyboard is going to intereact with is in the same
@@ -713,7 +713,7 @@ namespace System.Windows.Interop
             _active = false;
 
             // Only deactivate the keyboard input stream if needed.
-            if(deactivate)
+            if (deactivate)
             {
                 ReportInput(_source.CriticalHandle,
                             InputMode.Foreground,
@@ -730,14 +730,14 @@ namespace System.Windows.Interop
         {
             bool isOurWindow = false;
 
-            Debug.Assert( null != _source );
+            Debug.Assert(null != _source);
 
-            if(hwnd != IntPtr.Zero)
+            if (hwnd != IntPtr.Zero)
             {
                 HwndSource hwndSource = HwndSource.CriticalFromHwnd(hwnd);
-                if(hwndSource != null)
+                if (hwndSource != null)
                 {
-                    if(hwndSource.Dispatcher == _source.Dispatcher)
+                    if (hwndSource.Dispatcher == _source.Dispatcher)
                     {
                         // The window has the same dispatcher, must be ours.
                         isOurWindow = true;
@@ -773,8 +773,8 @@ namespace System.Windows.Interop
                 // We only care to restore focus to child windows. Notice that WS_POPUP
                 // windows also have parents but we do not want to track those here.
 
-                int windowStyle = UnsafeNativeMethods.GetWindowLong(new HandleRef(this,hwnd), NativeMethods.GWL_STYLE);
-                if((windowStyle & NativeMethods.WS_CHILD) == 0)
+                int windowStyle = UnsafeNativeMethods.GetWindowLong(new HandleRef(this, hwnd), NativeMethods.GWL_STYLE);
+                if ((windowStyle & NativeMethods.WS_CHILD) == 0)
                 {
                     break;
                 }
@@ -802,12 +802,12 @@ namespace System.Windows.Interop
             bool isSystemKey,
             int virtualKey)
         {
-            Debug.Assert( null != _source );
+            Debug.Assert(null != _source);
 
             // The first event should also activate the keyboard device.
-            if((actions & RawKeyboardActions.Deactivate) == 0)
+            if ((actions & RawKeyboardActions.Deactivate) == 0)
             {
-                if(!_active || _partialActive)
+                if (!_active || _partialActive)
                 {
                     try
                     {
@@ -818,7 +818,7 @@ namespace System.Windows.Interop
                         _active = true;
                         _partialActive = false;
                     }
-                    catch(System.ComponentModel.Win32Exception)
+                    catch (System.ComponentModel.Win32Exception)
                     {
                         System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetKeyboardState failed!");
 
@@ -833,7 +833,7 @@ namespace System.Windows.Interop
             {
                 extraInformation = UnsafeNativeMethods.GetMessageExtraInfo();
             }
-            catch(System.ComponentModel.Win32Exception)
+            catch (System.ComponentModel.Win32Exception)
             {
                 System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: GetMessageExtraInfo failed!");
             }
@@ -854,7 +854,7 @@ namespace System.Windows.Interop
             return handled;
         }
 
-        private int  _msgTime;
+        private int _msgTime;
         private HwndSource _source;
         private InputProviderSite _site;
         private IInputElement _restoreFocus;

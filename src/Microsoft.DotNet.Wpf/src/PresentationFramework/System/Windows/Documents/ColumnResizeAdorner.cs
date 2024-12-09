@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace System.Windows.Documents.Internal
         //------------------------------------------------------
 
         #region Constructors
-        
+
         /// <summary>
         /// C'tor for adorner
         /// </summary>
@@ -47,7 +47,7 @@ namespace System.Windows.Documents.Internal
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
@@ -61,10 +61,10 @@ namespace System.Windows.Documents.Internal
         /// </returns>
         public override GeneralTransform GetDesiredTransform(GeneralTransform transform)
         {
-            GeneralTransformGroup group;            
+            GeneralTransformGroup group;
             TranslateTransform translation;
 
-            group = new GeneralTransformGroup();            
+            group = new GeneralTransformGroup();
             translation = new TranslateTransform(_x, _top);
 
             group.Children.Add(translation);
@@ -84,7 +84,7 @@ namespace System.Windows.Documents.Internal
         //  Protected Methods
         //
         //------------------------------------------------------
- 
+
         #region Protected Methods
 
 
@@ -92,7 +92,7 @@ namespace System.Windows.Documents.Internal
         {
             // Render as a 2 pixel wide rect, one pixel in each bordering char bounding box.
 
-            drawingContext.DrawLine(_pen, new Point(0, 0), 
+            drawingContext.DrawLine(_pen, new Point(0, 0),
                                           new Point(0, _height));
         }
 
@@ -113,7 +113,7 @@ namespace System.Windows.Documents.Internal
         /// </param>
         internal void Update(double newX)
         {
-            if(_x != newX)
+            if (_x != newX)
             {
                 _x = newX;
                 AdornerLayer adornerLayer;

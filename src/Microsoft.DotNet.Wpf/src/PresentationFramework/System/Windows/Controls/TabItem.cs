@@ -1,17 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
-using MS.Internal.KnownBoxes;
 using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
-using System.Windows.Input;
-using System.Windows.Data;
-
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Input;
+using MS.Internal;
+using MS.Internal.KnownBoxes;
 
 // Disable CS3001: Warning as Error: not CLS-compliant
 #pragma warning disable 3001
@@ -81,7 +80,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public bool IsSelected
         {
-            get { return (bool) GetValue(IsSelectedProperty); }
+            get { return (bool)GetValue(IsSelectedProperty); }
             set { SetValue(IsSelectedProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -111,8 +110,10 @@ namespace System.Windows.Controls
             // Because TabItem use negative margins some TabItems overlap which would changes the directional navigation if we don't reduce the bounding box
             if (isSelected)
             {
-                Binding binding = new Binding("Margin");
-                binding.Source = tabItem;
+                Binding binding = new Binding("Margin")
+                {
+                    Source = tabItem
+                };
                 BindingOperations.SetBinding(tabItem, KeyboardNavigation.DirectionalNavigationMarginProperty, binding);
             }
             else
@@ -537,8 +538,8 @@ namespace System.Windows.Controls
         [Flags]
         private enum BoolField
         {
-            SetFocusOnContent      = 0x10, // This flag determine if we want to set focus on active TabItem content
-            SettingFocus           = 0x20, // This flag indicates that the TabItem is in the process of setting focus
+            SetFocusOnContent = 0x10, // This flag determine if we want to set focus on active TabItem content
+            SettingFocus = 0x20, // This flag indicates that the TabItem is in the process of setting focus
 
             // By default ListBoxItem is selectable
             DefaultValue = 0,

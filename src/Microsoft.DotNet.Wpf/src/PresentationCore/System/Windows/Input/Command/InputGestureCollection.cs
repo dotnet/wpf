@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,18 +17,18 @@ namespace System.Windows.Input
     ///     Will be changed to generic List implementation once the 
     ///     parser supports generic collections.
     /// </summary>
-    public sealed class InputGestureCollection : IList 
+    public sealed class InputGestureCollection : IList
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
-#region Constructors
+        #region Constructors
         /// <summary>
         /// Constructor
         /// </summary>
-        public InputGestureCollection() 
+        public InputGestureCollection()
         {
         }
 
@@ -36,14 +36,14 @@ namespace System.Windows.Input
         /// InputGestureCollection
         /// </summary>
         /// <param name="inputGestures">InputGesture array</param>
-        public InputGestureCollection( IList inputGestures )
+        public InputGestureCollection(IList inputGestures)
         {
             if (inputGestures != null && inputGestures.Count > 0)
             {
                 this.AddRange(inputGestures as ICollection);
             }
-}
-#endregion Constructors
+        }
+        #endregion Constructors
 
         //------------------------------------------------------
         //
@@ -51,31 +51,31 @@ namespace System.Windows.Input
         //
         //------------------------------------------------------
 
-#region Public Methods
+        #region Public Methods
 
-#region Implementation of IList 
+        #region Implementation of IList 
 
-#region Implementation of ICollection
+        #region Implementation of ICollection
         /// <summary>
         /// CopyTo - to copy the entire collection into an array
         /// </summary>
         /// <param name="array"></param>
         /// <param name="index"></param>
-        void ICollection.CopyTo(System.Array array, int index) 
+        void ICollection.CopyTo(System.Array array, int index)
         {
             if (_innerGestureList != null)
                 ((ICollection)_innerGestureList).CopyTo(array, index);
         }
-     
-#endregion Implementation of ICollection
+
+        #endregion Implementation of ICollection
         /// <summary>
         /// IList.Contains
         /// </summary>
         /// <param name="key">key</param>
         /// <returns>true - if found, false - otherwise</returns>
-        bool IList.Contains(object key) 
+        bool IList.Contains(object key)
         {
-            return this.Contains(key as InputGesture) ;
+            return this.Contains(key as InputGesture);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace System.Windows.Input
         int IList.IndexOf(object value)
         {
             InputGesture inputGesture = value as InputGesture;
-            return ((inputGesture != null) ? this.IndexOf(inputGesture) : -1) ;
+            return ((inputGesture != null) ? this.IndexOf(inputGesture) : -1);
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace System.Windows.Input
         void IList.Insert(int index, object value)
         {
             if (IsReadOnly)
-                 throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);    
+                throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
 
             this.Insert(index, value as InputGesture);
         }
@@ -106,11 +106,11 @@ namespace System.Windows.Input
         /// Add
         /// </summary>
         /// <param name="inputGesture"></param>
-        int IList.Add(object inputGesture) 
+        int IList.Add(object inputGesture)
         {
             if (IsReadOnly)
                 throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
-            
+
             return this.Add(inputGesture as InputGesture);
         }
 
@@ -118,11 +118,11 @@ namespace System.Windows.Input
         /// Remove
         /// </summary>
         /// <param name="inputGesture"></param>
-        void IList.Remove(object inputGesture) 
+        void IList.Remove(object inputGesture)
         {
             if (IsReadOnly)
                 throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
-            
+
             this.Remove(inputGesture as InputGesture);
         }
 
@@ -132,10 +132,10 @@ namespace System.Windows.Input
         object IList.this[int index]
         {
             get
-            { 
-                return this[index]; 
+            {
+                return this[index];
             }
-            set 
+            set
             {
                 InputGesture inputGesture = value as InputGesture;
                 if (inputGesture == null)
@@ -144,109 +144,109 @@ namespace System.Windows.Input
                 this[index] = inputGesture;
             }
         }
-#endregion Implementation of IList 
+        #endregion Implementation of IList 
 
-#region Implementation of Enumerable
-         /// <summary>
-         /// IEnumerable.GetEnumerator - For Enumeration purposes
-         /// </summary>
-         /// <returns></returns>
-         public IEnumerator GetEnumerator()
-         {
-             if (_innerGestureList != null)
-                 return _innerGestureList.GetEnumerator();
+        #region Implementation of Enumerable
+        /// <summary>
+        /// IEnumerable.GetEnumerator - For Enumeration purposes
+        /// </summary>
+        /// <returns></returns>
+        public IEnumerator GetEnumerator()
+        {
+            if (_innerGestureList != null)
+                return _innerGestureList.GetEnumerator();
 
-             List<InputGesture> list = new List<InputGesture>(0);
-             return list.GetEnumerator();
-         }
-#endregion Implementation of IEnumberable
-         /// <summary>
-         /// Indexing operator
-         /// </summary>
-         public InputGesture this[int index]
-         {
-             get
-             {
-                 return (_innerGestureList != null ? _innerGestureList[index] : null);
-             }
-             set
-             {
-                 if (IsReadOnly)
-                     throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
+            List<InputGesture> list = new List<InputGesture>(0);
+            return list.GetEnumerator();
+        }
+        #endregion Implementation of IEnumberable
+        /// <summary>
+        /// Indexing operator
+        /// </summary>
+        public InputGesture this[int index]
+        {
+            get
+            {
+                return (_innerGestureList != null ? _innerGestureList[index] : null);
+            }
+            set
+            {
+                if (IsReadOnly)
+                    throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
 
-                 EnsureList();
+                EnsureList();
 
-                 if (_innerGestureList != null)
-                 {
-                     _innerGestureList[index] = value;
-                 }
-             }
-         }                
+                if (_innerGestureList != null)
+                {
+                    _innerGestureList[index] = value;
+                }
+            }
+        }
 
-         /// <summary>
-         /// ICollection.IsSynchronized 
-         /// </summary>
-         public bool IsSynchronized
-         {
-             get
-             {
-                 if (_innerGestureList != null)
-                     return ((IList)_innerGestureList).IsSynchronized;
+        /// <summary>
+        /// ICollection.IsSynchronized 
+        /// </summary>
+        public bool IsSynchronized
+        {
+            get
+            {
+                if (_innerGestureList != null)
+                    return ((IList)_innerGestureList).IsSynchronized;
 
-                 return false;
-             }
-         }
+                return false;
+            }
+        }
 
-         /// <summary>
-         /// ICollection.SyncRoot
-         /// </summary>
-         public object SyncRoot
-         {
-             get
-             {
-                 return _innerGestureList != null ? ((IList)_innerGestureList).SyncRoot : this;
-             }
-         }
+        /// <summary>
+        /// ICollection.SyncRoot
+        /// </summary>
+        public object SyncRoot
+        {
+            get
+            {
+                return _innerGestureList != null ? ((IList)_innerGestureList).SyncRoot : this;
+            }
+        }
 
-         /// <summary>
-         /// IndexOf
-         /// </summary>
-         /// <param name="value"></param>
-         /// <returns></returns>
-         public int IndexOf(InputGesture value)
-         {
-             return (_innerGestureList != null) ? _innerGestureList.IndexOf(value) : -1;
-         }
+        /// <summary>
+        /// IndexOf
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public int IndexOf(InputGesture value)
+        {
+            return (_innerGestureList != null) ? _innerGestureList.IndexOf(value) : -1;
+        }
 
-         /// <summary>
-         /// RemoveAt - Removes the item at given index
-         /// </summary>
-         /// <param name="index">index at which item needs to be removed</param>
-         public void RemoveAt(int index)
-         {
-             if (IsReadOnly)
-                 throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
+        /// <summary>
+        /// RemoveAt - Removes the item at given index
+        /// </summary>
+        /// <param name="index">index at which item needs to be removed</param>
+        public void RemoveAt(int index)
+        {
+            if (IsReadOnly)
+                throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
 
-             if (_innerGestureList != null)
+            if (_innerGestureList != null)
                 _innerGestureList.RemoveAt(index);
-         }
+        }
 
-         /// <summary>
-         /// IsFixedSize - Fixed Capacity if ReadOnly, else false.
-         /// </summary>
-         public bool IsFixedSize
-         {
-             get
-             {
-                 return IsReadOnly; 
-             }
+        /// <summary>
+        /// IsFixedSize - Fixed Capacity if ReadOnly, else false.
+        /// </summary>
+        public bool IsFixedSize
+        {
+            get
+            {
+                return IsReadOnly;
+            }
         }
 
         /// <summary>
         /// Add
         /// </summary>
         /// <param name="inputGesture"></param>
-        public int Add(InputGesture inputGesture) 
+        public int Add(InputGesture inputGesture)
         {
             if (IsReadOnly)
             {
@@ -266,7 +266,7 @@ namespace System.Windows.Input
         /// capacity or the new size, whichever is larger.
         /// </summary>
         /// <param name="collection">collection to append</param>
-        public void AddRange(ICollection collection) 
+        public void AddRange(ICollection collection)
         {
             if (IsReadOnly)
             {
@@ -275,13 +275,13 @@ namespace System.Windows.Input
 
             ArgumentNullException.ThrowIfNull(collection);
 
-            if ( collection.Count > 0) 
+            if (collection.Count > 0)
             {
                 if (_innerGestureList == null)
                     _innerGestureList = new System.Collections.Generic.List<InputGesture>(collection.Count);
 
                 IEnumerator collectionEnum = collection.GetEnumerator();
-                while(collectionEnum.MoveNext()) 
+                while (collectionEnum.MoveNext())
                 {
                     InputGesture inputGesture = collectionEnum.Current as InputGesture;
                     if (inputGesture != null)
@@ -291,7 +291,7 @@ namespace System.Windows.Input
                     else
                     {
                         throw new NotSupportedException(SR.CollectionOnlyAcceptsInputGestures);
-		    }
+                    }
                 }
             }
         }
@@ -304,7 +304,7 @@ namespace System.Windows.Input
         public void Insert(int index, InputGesture inputGesture)
         {
             if (IsReadOnly)
-                 throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);    
+                throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
 
             if (inputGesture == null)
                 throw new NotSupportedException(SR.CollectionOnlyAcceptsInputGestures);
@@ -318,21 +318,21 @@ namespace System.Windows.Input
         /// </summary>
         public bool IsReadOnly
         {
-            get 
+            get
             {
                 return (_isReadOnly);
             }
         }
-        
+
         /// <summary>
         /// Remove
         /// </summary>
         /// <param name="inputGesture"></param>
-        public void Remove(InputGesture inputGesture) 
+        public void Remove(InputGesture inputGesture)
         {
             if (IsReadOnly)
             {
-                 throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
+                throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
             }
 
             ArgumentNullException.ThrowIfNull(inputGesture);
@@ -346,11 +346,11 @@ namespace System.Windows.Input
         /// <summary>
         /// Count
         /// </summary>
-        public int Count 
+        public int Count
         {
-            get 
+            get
             {
-                return (_innerGestureList != null ? _innerGestureList.Count : 0 );
+                return (_innerGestureList != null ? _innerGestureList.Count : 0);
             }
         }
 
@@ -361,13 +361,13 @@ namespace System.Windows.Input
         {
             if (IsReadOnly)
             {
-                 throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
+                throw new NotSupportedException(SR.ReadOnlyInputGesturesCollection);
             }
-         
-	    if (_innerGestureList != null)
+
+            if (_innerGestureList != null)
             {
-               _innerGestureList.Clear();
-               _innerGestureList = null;
+                _innerGestureList.Clear();
+                _innerGestureList = null;
             }
         }
 
@@ -376,11 +376,11 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="key">key</param>
         /// <returns>true - if found, false - otherwise</returns>
-        public bool Contains(InputGesture key) 
+        public bool Contains(InputGesture key)
         {
             if (_innerGestureList != null && key != null)
             {
-               return _innerGestureList.Contains(key) ;
+                return _innerGestureList.Contains(key);
             }
             return false;
         }
@@ -390,7 +390,7 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="inputGestures">Array of InputGesture</param>
         /// <param name="index">start index of items to copy</param>
-        public void CopyTo(InputGesture[] inputGestures, int index) 
+        public void CopyTo(InputGesture[] inputGestures, int index)
         {
             if (_innerGestureList != null)
                 _innerGestureList.CopyTo(inputGestures, index);
@@ -409,7 +409,7 @@ namespace System.Windows.Input
             if (_innerGestureList == null)
                 _innerGestureList = new List<InputGesture>(1);
         }
-#endregion Public
+        #endregion Public
 
         //------------------------------------------------------
         //
@@ -445,9 +445,9 @@ namespace System.Windows.Input
         //  Private Fields
         //
         //------------------------------------------------------
-#region Private Fields
+        #region Private Fields
         private System.Collections.Generic.List<InputGesture> _innerGestureList;
-        private bool           _isReadOnly = false;
-#endregion Private Fields
+        private bool _isReadOnly = false;
+        #endregion Private Fields
     }
 }

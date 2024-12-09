@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Windows.Media.TextFormatting
         /// Construct a CultureSpecificCharacterBufferRange class
         /// </summary>
         public CultureSpecificCharacterBufferRange(CultureInfo culture, CharacterBufferRange characterBufferRange)
-        {        
+        {
             _culture = culture;
             _characterBufferRange = characterBufferRange;
         }
@@ -31,7 +31,7 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Culture of the containing range of characters 
         /// </summary>
-        public CultureInfo CultureInfo 
+        public CultureInfo CultureInfo
         {
             get { return _culture; }
         }
@@ -45,4 +45,4 @@ namespace System.Windows.Media.TextFormatting
         }
     }
 }
-  
+

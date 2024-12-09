@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,8 +6,8 @@
 // Description: An interface representing the presentation of an ITextContainer.
 //
 
-using System.ComponentModel;            // AsyncCompletedEventArgs
 using System.Collections.ObjectModel;   // ReadOnlyCollection
+using System.ComponentModel;            // AsyncCompletedEventArgs
 using System.Windows.Media;             // GlyphRun
 
 namespace System.Windows.Documents
@@ -421,7 +421,7 @@ namespace System.Windows.Documents
         /// <param name="count">Number of pages to advance. Negative means move backwards.</param>
         /// <param name="userState">Unique identifier for the asynchronous task.</param>
         void BringPageIntoViewAsync(ITextPointer position, Point suggestedOffset, int count, object userState);
-        
+
         /// <summary>
         /// Cancels all asynchronous calls made with the given userState. 
         /// If userState is NULL, all asynchronous calls are cancelled.

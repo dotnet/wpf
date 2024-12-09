@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,10 +17,10 @@ namespace MS.Internal.Markup
 namespace System.Windows.Markup
 #endif
 {
-    internal class BamlBinaryWriter: BinaryWriter
+    internal class BamlBinaryWriter : BinaryWriter
     {
         public BamlBinaryWriter(Stream stream, Encoding code)
-            :base(stream, code)
+            : base(stream, code)
         {
         }
 
@@ -32,10 +32,10 @@ namespace System.Windows.Markup
         public static int SizeOf7bitEncodedSize(int size)
         {
             const int _7bits = 0x7F;
-            const int _14bits = ( _7bits << 7) | _7bits;
+            const int _14bits = (_7bits << 7) | _7bits;
             const int _21bits = (_14bits << 7) | _7bits;
             const int _28bits = (_21bits << 7) | _7bits;
-            
+
             if (0 == (size & ~_7bits))
                 return 1;
             if (0 == (size & ~_14bits))

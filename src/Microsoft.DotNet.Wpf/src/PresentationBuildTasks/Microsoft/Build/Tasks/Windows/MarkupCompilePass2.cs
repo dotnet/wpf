@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,18 +10,15 @@
 //---------------------------------------------------------------------------
 
 using System;
-using System.IO;
 using System.Collections;
-using System.Text;
-
 using System.Globalization;
-
+using System.IO;
+using System.Text;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-
-using MS.Utility;
 using MS.Internal;
 using MS.Internal.Tasks;
+using MS.Utility;
 
 // Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
 // We first need to disable warnings about unknown message numbers and unknown pragmas.
@@ -35,7 +32,7 @@ namespace Microsoft.Build.Tasks.Windows
     /// <summary>
     /// Class of MarkupCompilePass2 Task
     /// </summary>
-    public sealed class MarkupCompilePass2  : Task
+    public sealed class MarkupCompilePass2 : Task
     {
         //------------------------------------------------------
         //
@@ -48,7 +45,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// <summary>
         /// Constructor
         /// </summary>
-        public MarkupCompilePass2( ) : base(SR.SharedResourceManager)
+        public MarkupCompilePass2() : base(SR.SharedResourceManager)
         {
             // set the source directory
             _sourceDir = Directory.GetCurrentDirectory() + Path.DirectorySeparatorChar;
@@ -171,10 +168,10 @@ namespace Microsoft.Build.Tasks.Windows
                 //
 
                 string stateFileName = OutputPath + AssemblyName +
-                                      (TaskFileService.IsRealBuild? SharedStrings.StateFile : SharedStrings.IntellisenseStateFile);
+                                      (TaskFileService.IsRealBuild ? SharedStrings.StateFile : SharedStrings.IntellisenseStateFile);
 
                 string localTypeCacheFileName = OutputPath + AssemblyName +
-                                      (TaskFileService.IsRealBuild? SharedStrings.LocalTypeCacheFile : SharedStrings.IntellisenseLocalTypeCacheFile);
+                                      (TaskFileService.IsRealBuild ? SharedStrings.LocalTypeCacheFile : SharedStrings.IntellisenseLocalTypeCacheFile);
 
                 if (TaskFileService.Exists(stateFileName))
                 {
@@ -244,7 +241,7 @@ namespace Microsoft.Build.Tasks.Windows
                 string filePath = value;
 
                 // Get the relative path based on sourceDir
-                _outputPath= TaskHelper.CreateFullFilePath(filePath, SourceDir);
+                _outputPath = TaskHelper.CreateFullFilePath(filePath, SourceDir);
 
                 // Make sure OutputDir always ends with Path.DirectorySeparatorChar
                 if (!_outputPath.EndsWith(string.Empty + Path.DirectorySeparatorChar, StringComparison.Ordinal))
@@ -365,13 +362,13 @@ namespace Microsoft.Build.Tasks.Windows
         /// Generated Baml files for the passed markup xaml files
         ///</summary>
         [Output]
-        public ITaskItem [] GeneratedBaml
+        public ITaskItem[] GeneratedBaml
         {
             get
             {
-               if (_generatedBaml == null)
-                   _generatedBaml = Array.Empty<TaskItem>();
-               return _generatedBaml;
+                if (_generatedBaml == null)
+                    _generatedBaml = Array.Empty<TaskItem>();
+                return _generatedBaml;
             }
 
             set
@@ -487,7 +484,7 @@ namespace Microsoft.Build.Tasks.Windows
             bool hasLocalFiles = false;
 
             _compilerLocalRefCache = new CompilerLocalReference(
-                         OutputPath + AssemblyName + (TaskFileService.IsRealBuild? SharedStrings.LocalTypeCacheFile : SharedStrings.IntellisenseLocalTypeCacheFile),
+                         OutputPath + AssemblyName + (TaskFileService.IsRealBuild ? SharedStrings.LocalTypeCacheFile : SharedStrings.IntellisenseLocalTypeCacheFile),
                         _taskFileService);
 
             if (_compilerLocalRefCache.CacheFileExists())
@@ -697,9 +694,9 @@ namespace Microsoft.Build.Tasks.Windows
                 if (appDomain != null)
                 {
                     // AppDomains are not supported on .NET Core.  'AppDomain.Unload' will always throw `CannotUnloadAppDomainException`.  
-                    #pragma warning disable SYSLIB0024
+#pragma warning disable SYSLIB0024
                     AppDomain.Unload(appDomain);
-                    #pragma warning restore SYSLIB0024
+#pragma warning restore SYSLIB0024
                     compilerWrapper = null;
                 }
             }
@@ -709,13 +706,13 @@ namespace Microsoft.Build.Tasks.Windows
         // <summary>
         // Generate the required Output Items.
         // </summary>
-        private void GenerateOutputItems( )
+        private void GenerateOutputItems()
         {
             // For the rest target types,
             // Create the output lists for Baml files.
             ArrayList bamlFileList = new ArrayList();
-            string    newSourceDir = SourceDir;  // Just for calling GetResolvedFilePath
-            string    relativeFile;
+            string newSourceDir = SourceDir;  // Just for calling GetResolvedFilePath
+            string relativeFile;
 
             if (_localApplicationFile != null)
             {
@@ -790,11 +787,13 @@ namespace Microsoft.Build.Tasks.Windows
                 // Generate a TaskItem for it.
                 //
 
-                bamlItem = new TaskItem();
-                bamlItem.ItemSpec = bamlFile;
+                bamlItem = new TaskItem
+                {
+                    ItemSpec = bamlFile
+                };
 
                 // Transfer the metadata value from source item to the generated baml item.
-                bamlItem.SetMetadata(SharedStrings.Localizable, localizable ?  "True" : "False");
+                bamlItem.SetMetadata(SharedStrings.Localizable, localizable ? "True" : "False");
                 bamlItem.SetMetadata(SharedStrings.Link, linkAlias);
                 bamlItem.SetMetadata(SharedStrings.LogicalName, logicalName);
             }
@@ -812,9 +811,9 @@ namespace Microsoft.Build.Tasks.Windows
 
             switch (outputType)
             {
-                case SharedStrings.Exe :
+                case SharedStrings.Exe:
                 case SharedStrings.WinExe:
-                case SharedStrings.Library :
+                case SharedStrings.Library:
                     isSupported = true;
                     break;
                 default:
@@ -862,32 +861,32 @@ namespace Microsoft.Build.Tasks.Windows
 
         #region Private Fields
 
-        private ITaskItem []               _references;
-        private string                     _outputType;
-        private string                     _assemblyName;
-        private string[]                   _assembliesGeneratedDuringBuild;
-        private string[]                   _knownReferencePaths;
-        private string                     _rootNamespace = String.Empty;
-        private bool                       _xamlDebuggingInformation = false;
+        private ITaskItem[] _references;
+        private string _outputType;
+        private string _assemblyName;
+        private string[] _assembliesGeneratedDuringBuild;
+        private string[] _knownReferencePaths;
+        private string _rootNamespace = String.Empty;
+        private bool _xamlDebuggingInformation = false;
 
-        private bool                       _alwaysCompileMarkupFilesInSeparateDomain = true;
+        private bool _alwaysCompileMarkupFilesInSeparateDomain = true;
 
         private LocalizationDirectivesToLocFile _localizationDirectives = MS.Internal.LocalizationDirectivesToLocFile.None;
 
-        private string                     _sourceDir;
-        private string                     _outputPath;
-        private string                     _language;
+        private string _sourceDir;
+        private string _outputPath;
+        private string _language;
 
-        private ITaskItem []               _generatedBaml;
+        private ITaskItem[] _generatedBaml;
 
-        private int                        _nErrors;
+        private int _nErrors;
 
-        private CompilerLocalReference     _compilerLocalRefCache;
-        private LocalReferenceFile         _localApplicationFile = null;
-        private LocalReferenceFile[]       _localMarkupPages = null;
-        private string                     _internalTypeHelperFile = String.Empty;
+        private CompilerLocalReference _compilerLocalRefCache;
+        private LocalReferenceFile _localApplicationFile = null;
+        private LocalReferenceFile[] _localMarkupPages = null;
+        private string _internalTypeHelperFile = String.Empty;
 
-        private ITaskFileService           _taskFileService;
+        private ITaskFileService _taskFileService;
 
 
         private const string UnknownErrorID = "MC2000";

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,11 +7,11 @@
 //     the requisite infrastructure for collections of DependencyObjects,
 //     Freezables, and Animatables and which is itself an Animatable and a Freezable.
 
-using MS.Internal;
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Media.Animation;
+using MS.Internal;
 
 // These types are aliased to match the unamanaged names used in interop
 
@@ -22,8 +22,8 @@ namespace System.Windows
     ///     the requisite infrastructure for collections of DependencyObjects,
     ///     Freezables, and Animatables and which is itself an Animatable and a Freezable.
     /// </summary>
-    public class FreezableCollection<T>: Animatable, IList, IList<T>, INotifyCollectionChanged, INotifyPropertyChanged
-        where T: DependencyObject
+    public class FreezableCollection<T> : Animatable, IList, IList<T>, INotifyCollectionChanged, INotifyPropertyChanged
+        where T : DependencyObject
     {
         #region Constructors
 
@@ -256,7 +256,7 @@ namespace System.Windows
         /// </summary>
         public void RemoveAt(int index)
         {
-            T oldValue = _collection[ index ];
+            T oldValue = _collection[index];
 
             RemoveAtWithoutFiringPublicEvents(index);
 
@@ -280,7 +280,7 @@ namespace System.Windows
 
             WritePreamble();
 
-            T oldValue = _collection[ index ];
+            T oldValue = _collection[index];
 
             OnFreezablePropertyChanged(oldValue, null);
 
@@ -315,14 +315,14 @@ namespace System.Windows
 
                 WritePreamble();
 
-                T oldValue = _collection[ index ];
+                T oldValue = _collection[index];
                 bool isChanging = !Object.ReferenceEquals(oldValue, value);
 
                 if (isChanging)
                 {
                     OnFreezablePropertyChanged(oldValue, value);
 
-                    _collection[ index ] = value;
+                    _collection[index] = value;
                 }
 
                 ++_version;
@@ -617,10 +617,10 @@ namespace System.Windows
         {
             base.OnInheritanceContextChangedCore(args);
 
-            for (int i=0; i<this.Count; i++)
+            for (int i = 0; i < this.Count; i++)
             {
                 DependencyObject inheritanceChild = _collection[i];
-                if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
                 {
                     inheritanceChild.OnInheritanceContextChanged(args);
                 }
@@ -640,7 +640,7 @@ namespace System.Windows
                 throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "T"));
             }
 
-            return (T) value;
+            return (T)value;
         }
 
         // Extracts the count for the given IEnumerable<T> by sniffing for the
@@ -684,7 +684,7 @@ namespace System.Windows
 
             // AddWithoutFiringPublicEvents returns the wrong answer,
             // which we adjust for here.  Fix this.
-            OnCollectionChanged(NotifyCollectionChangedAction.Add, 0, null, index-1, value);
+            OnCollectionChanged(NotifyCollectionChangedAction.Add, 0, null, index - 1, value);
 
             return index;
         }
@@ -805,21 +805,21 @@ namespace System.Windows
                 {
                     switch (cloneType)
                     {
-                    case CloneCommonType.Clone:
-                        newValue = itemAsFreezable.Clone() as T;
-                        break;
-                    case CloneCommonType.CloneCurrentValue:
-                        newValue = itemAsFreezable.CloneCurrentValue() as T;
-                        break;
-                    case CloneCommonType.GetAsFrozen:
-                        newValue = itemAsFreezable.GetAsFrozen() as T;
-                        break;
-                    case CloneCommonType.GetCurrentValueAsFrozen:
-                        newValue = itemAsFreezable.GetCurrentValueAsFrozen() as T;
-                        break;
-                    default:
-                        Invariant.Assert(false, "Invalid CloneCommonType encountered.");
-                        break;
+                        case CloneCommonType.Clone:
+                            newValue = itemAsFreezable.Clone() as T;
+                            break;
+                        case CloneCommonType.CloneCurrentValue:
+                            newValue = itemAsFreezable.CloneCurrentValue() as T;
+                            break;
+                        case CloneCommonType.GetAsFrozen:
+                            newValue = itemAsFreezable.GetAsFrozen() as T;
+                            break;
+                        case CloneCommonType.GetCurrentValueAsFrozen:
+                            newValue = itemAsFreezable.GetCurrentValueAsFrozen() as T;
+                            break;
+                        default:
+                            Invariant.Assert(false, "Invalid CloneCommonType encountered.");
+                            break;
                     }
 
                     if (newValue == null)
@@ -840,7 +840,7 @@ namespace System.Windows
         {
             base.CloneCore(source);
 
-            FreezableCollection<T> sourceFreezableCollection = (FreezableCollection<T>) source;
+            FreezableCollection<T> sourceFreezableCollection = (FreezableCollection<T>)source;
 
             CloneCommon(sourceFreezableCollection, CloneCommonType.Clone);
         }
@@ -852,7 +852,7 @@ namespace System.Windows
         {
             base.CloneCurrentValueCore(source);
 
-            FreezableCollection<T> sourceFreezableCollection = (FreezableCollection<T>) source;
+            FreezableCollection<T> sourceFreezableCollection = (FreezableCollection<T>)source;
 
             CloneCommon(sourceFreezableCollection, CloneCommonType.CloneCurrentValue);
         }
@@ -863,7 +863,7 @@ namespace System.Windows
         {
             base.GetAsFrozenCore(source);
 
-            FreezableCollection<T> sourceFreezableCollection = (FreezableCollection<T>) source;
+            FreezableCollection<T> sourceFreezableCollection = (FreezableCollection<T>)source;
 
             CloneCommon(sourceFreezableCollection, CloneCommonType.GetAsFrozen);
         }
@@ -874,7 +874,7 @@ namespace System.Windows
         {
             base.GetCurrentValueAsFrozenCore(source);
 
-            FreezableCollection<T> sourceFreezableCollection = (FreezableCollection<T>) source;
+            FreezableCollection<T> sourceFreezableCollection = (FreezableCollection<T>)source;
 
             CloneCommon(sourceFreezableCollection, CloneCommonType.GetCurrentValueAsFrozen);
         }
@@ -1096,12 +1096,12 @@ namespace System.Windows
         {
             public void Enter()
             {
-                ++ _busyCount;
+                ++_busyCount;
             }
 
             public void Dispose()
             {
-                -- _busyCount;
+                --_busyCount;
                 GC.SuppressFinalize(this);
             }
 

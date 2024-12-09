@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,15 +30,15 @@ namespace System.Windows.Xps.Serialization
         /// </param>
         public
         ReachPageContentSerializer(
-            PackageSerializationManager   manager
-            ):
+            PackageSerializationManager manager
+            ) :
         base(manager)
         {
-            
+
         }
 
         #endregion Constructor
-        
+
         #region Internal Methods
 
         /// <summary>
@@ -52,20 +52,20 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
-            if(serializableObjectContext.IsComplexValue)
+            if (serializableObjectContext.IsComplexValue)
             {
                 //SerializeObjectCore(serializableObjectContext);
 
                 FixedPage fixedPage = Toolbox.GetPageRoot(serializableObjectContext.TargetObject);
 
-                if(fixedPage != null)
+                if (fixedPage != null)
                 {
                     ReachSerializer serializer = SerializationManager.GetSerializer(fixedPage);
 
-                    if(serializer!=null)
+                    if (serializer != null)
                     {
                         //Get FixedPage Print Ticket and cache it inside of the SerializationManager
                         //so we can get it inside of 
@@ -75,12 +75,12 @@ namespace System.Windows.Xps.Serialization
                         ((IXpsSerializationManager)SerializationManager).OnXPSSerializationPrintTicketRequired(e);
 
                         PrintTicket printTicket = null;
-                        if( e.Modified )
+                        if (e.Modified)
                         {
-                            printTicket =  e.PrintTicket;
+                            printTicket = e.PrintTicket;
                         }
                         Toolbox.Layout(fixedPage, printTicket);
-                        
+
                         ((IXpsSerializationManager)SerializationManager).FixedPagePrintTicket = printTicket;
 
                         serializer.SerializeObject(fixedPage);

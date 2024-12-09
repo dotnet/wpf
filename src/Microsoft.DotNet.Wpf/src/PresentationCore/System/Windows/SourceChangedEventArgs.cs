@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace System.Windows
         /// </param>
         public SourceChangedEventArgs(PresentationSource oldSource,
                                       PresentationSource newSource)
-        :this(oldSource, newSource, null, null)
+        : this(oldSource, newSource, null, null)
         {
         }
 
@@ -66,7 +66,7 @@ namespace System.Windows
         /// </summary>
         public IInputElement Element
         {
-            get {return _element;}
+            get { return _element; }
         }
 
         /// <summary>
@@ -75,7 +75,7 @@ namespace System.Windows
         /// </summary>
         public IInputElement OldParent
         {
-            get {return _oldParent;}
+            get { return _oldParent; }
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace System.Windows
         /// </param>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            SourceChangedEventHandler handler = (SourceChangedEventHandler) genericHandler;
+            SourceChangedEventHandler handler = (SourceChangedEventHandler)genericHandler;
             handler(genericTarget, this);
         }
 

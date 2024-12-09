@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,14 +9,14 @@
 
 namespace System.Windows.Documents
 {
-    internal abstract class FixedSOMContainer :FixedSOMSemanticBox, IComparable
+    internal abstract class FixedSOMContainer : FixedSOMSemanticBox, IComparable
     {
         //--------------------------------------------------------------------
         //
         // Constructors
         //
         //---------------------------------------------------------------------
-        
+
         #region Constructors
         protected FixedSOMContainer()
         {
@@ -30,7 +30,7 @@ namespace System.Windows.Documents
 
             FixedSOMPageElement compared = comparedObj as FixedSOMPageElement;
             FixedSOMPageElement This = this as FixedSOMPageElement;
-            
+
             Debug.Assert(compared != null);
             Debug.Assert(This != null);
             if (compared == null)
@@ -45,66 +45,66 @@ namespace System.Windows.Documents
 
             switch (compareHor)
             {
-            case SpatialComparison.Before:
-                if (compareVer != SpatialComparison.After)
-                {
-                    result = -1;
-                }
-                break;
-
-            case SpatialComparison.After:
-                if (compareVer != SpatialComparison.Before)
-                {
-                    result = 1;
-                }
-                break;
-
-            case SpatialComparison.OverlapBefore:
-                if (compareVer == SpatialComparison.Before)
-                {
-                    result =  -1;
-                }
-                else if (compareVer == SpatialComparison.After)
-                {
-                    result = 1;
-                }
-                break;
-
-            case SpatialComparison.OverlapAfter:
-                if (compareVer == SpatialComparison.After)
-                {
-                    result = 1;
-                }
-                else if (compareVer == SpatialComparison.Before)
-                {
-                    result = -1;
-                }
-                break;
-
-            case SpatialComparison.Equal:
-                switch (compareVer)
-                {
-                case SpatialComparison.After:
-                case SpatialComparison.OverlapAfter:
-                    result = 1;
-                    break;
                 case SpatialComparison.Before:
+                    if (compareVer != SpatialComparison.After)
+                    {
+                        result = -1;
+                    }
+                    break;
+
+                case SpatialComparison.After:
+                    if (compareVer != SpatialComparison.Before)
+                    {
+                        result = 1;
+                    }
+                    break;
+
                 case SpatialComparison.OverlapBefore:
-                    result = -1;
+                    if (compareVer == SpatialComparison.Before)
+                    {
+                        result = -1;
+                    }
+                    else if (compareVer == SpatialComparison.After)
+                    {
+                        result = 1;
+                    }
                     break;
+
+                case SpatialComparison.OverlapAfter:
+                    if (compareVer == SpatialComparison.After)
+                    {
+                        result = 1;
+                    }
+                    else if (compareVer == SpatialComparison.Before)
+                    {
+                        result = -1;
+                    }
+                    break;
+
                 case SpatialComparison.Equal:
-                    result = 0;
+                    switch (compareVer)
+                    {
+                        case SpatialComparison.After:
+                        case SpatialComparison.OverlapAfter:
+                            result = 1;
+                            break;
+                        case SpatialComparison.Before:
+                        case SpatialComparison.OverlapBefore:
+                            result = -1;
+                            break;
+                        case SpatialComparison.Equal:
+                            result = 0;
+                            break;
+                        default:
+                            Debug.Assert(false);
+                            break;
+                    }
                     break;
+
                 default:
+                    //Shouldn't happen
                     Debug.Assert(false);
                     break;
-                }
-                break;
-
-            default:
-                //Shouldn't happen
-                Debug.Assert(false);
-                break;
             }
 
             if (result == Int32.MinValue)
@@ -129,7 +129,7 @@ namespace System.Windows.Documents
                     }
                     else if (This.FixedSOMPage.MarkupOrder.IndexOf(otherObjLastNode) - This.FixedSOMPage.MarkupOrder.IndexOf(thisObjFirstNode) == 1)
                     {
-                        result =  1;
+                        result = 1;
                     }
                     else
                     {
@@ -139,22 +139,22 @@ namespace System.Windows.Documents
                     }
                 }
             }
-                
+
             return result;
         }
         #region Protected Methods
 
         protected void AddSorted(FixedSOMSemanticBox box)
         {
-            int i=_semanticBoxes.Count-1;
-            for (; i>=0; i--)
+            int i = _semanticBoxes.Count - 1;
+            for (; i >= 0; i--)
             {
                 if (box.CompareTo(_semanticBoxes[i]) == 1)
                 {
                     break;
                 }
             }
-            _semanticBoxes.Insert(i+1, box);
+            _semanticBoxes.Insert(i + 1, box);
 
             _UpdateBoundingRect(box.BoundingRect);
         }
@@ -252,6 +252,6 @@ namespace System.Windows.Documents
         protected List<FixedSOMSemanticBox> _semanticBoxes;
         protected List<FixedNode> _fixedNodes;
         #endregion Protected Fields
-        
+
     }
 }

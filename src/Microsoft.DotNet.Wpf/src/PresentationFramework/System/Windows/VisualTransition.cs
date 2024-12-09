@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,38 +24,38 @@ namespace System.Windows
         /// <summary>
         /// Name of the state to transition from.
         /// </summary>
-        public string From 
-        { 
-            get; 
-            set; 
+        public string From
+        {
+            get;
+            set;
         }
 
         /// <summary>
         /// Name of the state to transition to.
         /// </summary>
-        public string To 
-        { 
-            get; 
-            set; 
+        public string To
+        {
+            get;
+            set;
         }
 
         /// <summary>
         /// Storyboard providing fine grained control of the transition.
         /// </summary>
-        public Storyboard Storyboard 
-        { 
-            get; 
-            set; 
+        public Storyboard Storyboard
+        {
+            get;
+            set;
         }
 
         /// <summary>
         /// Duration of the transition.
         /// </summary>
         [TypeConverter(typeof(System.Windows.DurationConverter))]
-        public Duration GeneratedDuration 
-        { 
-            get { return _generatedDuration; } 
-            set { _generatedDuration = value; } 
+        public Duration GeneratedDuration
+        {
+            get { return _generatedDuration; }
+            set { _generatedDuration = value; }
         }
 
         /// <summary>

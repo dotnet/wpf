@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace MS.Internal.FontFace
     /// </summary>
     internal sealed class PhysicalFontFamily : IFontFamily
     {
-        private Text.TextInterface.FontFamily    _family;
+        private Text.TextInterface.FontFamily _family;
         private IDictionary<XmlLanguage, string> _familyNames;
 
         // _family.FamilyNames is of type LocalizedStrings which does not support editing (Adding, Replacing, and Clearing)
@@ -66,9 +66,9 @@ namespace MS.Internal.FontFace
         /// Get typeface metrics of the specified typeface
         /// </summary>
         ITypefaceMetrics IFontFamily.GetTypefaceMetrics(
-            FontStyle       style,
-            FontWeight      weight,
-            FontStretch     stretch
+            FontStyle style,
+            FontWeight weight,
+            FontStretch stretch
             )
         {
             return GetGlyphTypeface(style, weight, stretch);
@@ -88,7 +88,7 @@ namespace MS.Internal.FontFace
         /// Indexer that indexes the underlying family name table via CultureInfo
         /// </summary>
         /// <value></value>
-        IDictionary<XmlLanguage,string> IFontFamily.Names
+        IDictionary<XmlLanguage, string> IFontFamily.Names
         {
             get
             {
@@ -109,14 +109,14 @@ namespace MS.Internal.FontFace
         /// <param name="stretch">font stretch</param>
         /// <returns>matching font face</returns>
         internal GlyphTypeface GetGlyphTypeface(
-            FontStyle       style,
-            FontWeight      weight,
-            FontStretch     stretch
+            FontStyle style,
+            FontWeight weight,
+            FontStretch stretch
             )
         {
             Text.TextInterface.Font bestMatch = _family.GetFirstMatchingFont((Text.TextInterface.FontWeight)weight.ToOpenTypeWeight(),
                                                                              (Text.TextInterface.FontStretch)stretch.ToOpenTypeStretch(),
-                                                                             (Text.TextInterface.FontStyle)   style.GetStyleForInternalConstruction());
+                                                                             (Text.TextInterface.FontStyle)style.GetStyleForInternalConstruction());
             Debug.Assert(bestMatch != null);
             return new GlyphTypeface(bestMatch);
         }
@@ -134,13 +134,13 @@ namespace MS.Internal.FontFace
         /// <param name="nextValid">offset to the character mapping to a valid glyph</param>
         /// <returns>matching typeface</returns>
         internal GlyphTypeface MapGlyphTypeface(
-            FontStyle               style,
-            FontWeight              weight,
-            FontStretch             stretch,
-            CharacterBufferRange    charString,
-            CultureInfo             digitCulture,
-            ref int                 advance,
-            ref int                 nextValid
+            FontStyle style,
+            FontWeight weight,
+            FontStretch stretch,
+            CharacterBufferRange charString,
+            CultureInfo digitCulture,
+            ref int advance,
+            ref int nextValid
             )
         {
             int smallestInvalid = charString.Length;
@@ -227,7 +227,7 @@ namespace MS.Internal.FontFace
             }
 
             private Text.TextInterface.Font _face;
-            private MatchingStyle           _style;
+            private MatchingStyle _style;
         }
 
         /// <summary>
@@ -258,9 +258,9 @@ namespace MS.Internal.FontFace
         /// </remarks>
         private int MapCharacters(
             MS.Internal.Text.TextInterface.Font font,
-            CharacterBufferRange                unicodeString,
-            CultureInfo                         digitCulture,
-            ref int                             nextValid
+            CharacterBufferRange unicodeString,
+            CultureInfo digitCulture,
+            ref int nextValid
             )
         {
             DigitMap digitMap = new DigitMap(digitCulture);
@@ -363,7 +363,7 @@ namespace MS.Internal.FontFace
                     if (Classification.IsJoiner(ch)
                        || (baseChar != NOBASE && Classification.IsCombining(ch) && Classification.GetScript(ch) == Classification.GetScript(baseChar))
                        )
-                       continue;
+                        continue;
 
                     // If we have a glyph it's valid.
                     if (font.HasCharacter(checked((uint)ch)))
@@ -443,13 +443,13 @@ namespace MS.Internal.FontFace
         /// Get family name correspondent to the first n-characters of the specified character string
         /// </summary>
         bool IFontFamily.GetMapTargetFamilyNameAndScale(
-            CharacterBufferRange    unicodeString,
-            CultureInfo             culture,
-            CultureInfo             digitCulture,
-            double                  defaultSizeInEm,
-            out int                 cchAdvance,
-            out string              targetFamilyName,
-            out double              scaleInEm
+            CharacterBufferRange unicodeString,
+            CultureInfo culture,
+            CultureInfo digitCulture,
+            double defaultSizeInEm,
+            out int cchAdvance,
+            out string targetFamilyName,
+            out double scaleInEm
             )
         {
             cchAdvance = unicodeString.Length;

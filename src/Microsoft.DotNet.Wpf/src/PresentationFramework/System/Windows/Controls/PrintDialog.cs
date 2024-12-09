@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,12 +10,12 @@
 */
 
 using System.Printing;
-using System.Windows.Media;
-using System.Windows.Xps;
-using MS.Internal.Printing;
-using System.Windows.Xps.Serialization;
 using System.Windows.Documents;
 using System.Windows.Documents.Serialization;  // WritingCompletedEventArgs
+using System.Windows.Media;
+using System.Windows.Xps;
+using System.Windows.Xps.Serialization;
+using MS.Internal.Printing;
 
 namespace System.Windows.Controls
 {
@@ -39,7 +39,7 @@ namespace System.Windows.Controls
             _printQueue = null;
             _printTicket = null;
 
-            _isPrintableAreaWidthUpdated  = false;
+            _isPrintableAreaWidthUpdated = false;
             _isPrintableAreaHeightUpdated = false;
 
             _pageRangeSelection = PageRangeSelection.AllPages;
@@ -144,7 +144,7 @@ namespace System.Windows.Controls
         }
 
         // the following two properties return non CLS-compliant type UInt32 (bug 1788246)
-        #pragma warning disable 3003
+#pragma warning disable 3003
 
         /// <summary>
         /// Gets or sets the minimum page number allowed in the page ranges.
@@ -186,7 +186,7 @@ namespace System.Windows.Controls
             }
         }
 
-        #pragma warning restore 3003
+#pragma warning restore 3003
 
         /// <summary>
         /// Gets or sets the printer selection.
@@ -241,10 +241,10 @@ namespace System.Windows.Controls
         {
             get
             {
-                if( ((_isPrintableAreaWidthUpdated == false) && (_isPrintableAreaHeightUpdated == false)) ||
-                    ((_isPrintableAreaWidthUpdated == true)  && (_isPrintableAreaHeightUpdated == false)))
+                if (((_isPrintableAreaWidthUpdated == false) && (_isPrintableAreaHeightUpdated == false)) ||
+                    ((_isPrintableAreaWidthUpdated == true) && (_isPrintableAreaHeightUpdated == false)))
                 {
-                    _isPrintableAreaWidthUpdated  = true;
+                    _isPrintableAreaWidthUpdated = true;
                     _isPrintableAreaHeightUpdated = false;
 
                     UpdatePrintableAreaSize();
@@ -263,10 +263,10 @@ namespace System.Windows.Controls
         {
             get
             {
-                if( ((_isPrintableAreaWidthUpdated == false) && (_isPrintableAreaHeightUpdated == false)) ||
-                    ((_isPrintableAreaWidthUpdated == false)  && (_isPrintableAreaHeightUpdated == true)))
+                if (((_isPrintableAreaWidthUpdated == false) && (_isPrintableAreaHeightUpdated == false)) ||
+                    ((_isPrintableAreaWidthUpdated == false) && (_isPrintableAreaHeightUpdated == true)))
                 {
-                    _isPrintableAreaWidthUpdated  = false;
+                    _isPrintableAreaWidthUpdated = false;
                     _isPrintableAreaHeightUpdated = true;
 
                     UpdatePrintableAreaSize();
@@ -288,14 +288,15 @@ namespace System.Windows.Controls
         ShowDialog()
         {
 
-            Win32PrintDialog dlg = new Win32PrintDialog();
-
-            //
-            // Setup the old values if any exist.
-            //
-            dlg.PrintTicket = _printTicket;
-            dlg.PrintQueue = _printQueue;
-            dlg.MinPage = Math.Max(1, Math.Min(_minPage, _maxPage));
+            Win32PrintDialog dlg = new Win32PrintDialog
+            {
+                //
+                // Setup the old values if any exist.
+                //
+                PrintTicket = _printTicket,
+                PrintQueue = _printQueue,
+                MinPage = Math.Max(1, Math.Min(_minPage, _maxPage))
+            };
             dlg.MaxPage = Math.Max(dlg.MinPage, Math.Max(_minPage, _maxPage));
             dlg.PageRangeEnabled = _userPageRangeEnabled;
             dlg.SelectedPagesEnabled = _selectedPagesEnabled;
@@ -345,10 +346,10 @@ namespace System.Windows.Controls
 
             writer.Write(visual, _printTicket);
 
-            _printableAreaWidth             = 0;
-            _printableAreaHeight            = 0;
-            _isPrintableAreaWidthUpdated    = false;
-            _isPrintableAreaHeightUpdated   = false;
+            _printableAreaWidth = 0;
+            _printableAreaHeight = 0;
+            _isPrintableAreaWidthUpdated = false;
+            _isPrintableAreaHeightUpdated = false;
         }
 
 
@@ -364,8 +365,8 @@ namespace System.Windows.Controls
         public
         void
         PrintDocument(
-            DocumentPaginator  documentPaginator,
-            String             description
+            DocumentPaginator documentPaginator,
+            String description
             )
         {
             ArgumentNullException.ThrowIfNull(documentPaginator);
@@ -455,7 +456,7 @@ namespace System.Windows.Controls
         UpdatePrintableAreaSize(
             )
         {
-            PrintQueue  printQueue  = null;
+            PrintQueue printQueue = null;
             PrintTicket printTicket = null;
 
             PickCorrectPrintingEnvironment(ref printQueue, ref printTicket);
@@ -471,7 +472,7 @@ namespace System.Windows.Controls
                 (printCap.OrientedPageMediaWidth != null) &&
                 (printCap.OrientedPageMediaHeight != null))
             {
-                _printableAreaWidth  = (double)printCap.OrientedPageMediaWidth;
+                _printableAreaWidth = (double)printCap.OrientedPageMediaWidth;
                 _printableAreaHeight = (double)printCap.OrientedPageMediaHeight;
             }
             else
@@ -487,7 +488,7 @@ namespace System.Windows.Controls
                     (printTicket.PageMediaSize.Width != null) &&
                     (printTicket.PageMediaSize.Height != null))
                 {
-                    _printableAreaWidth  = (double)printTicket.PageMediaSize.Width;
+                    _printableAreaWidth = (double)printTicket.PageMediaSize.Width;
                     _printableAreaHeight = (double)printTicket.PageMediaSize.Height;
                 }
 
@@ -502,7 +503,7 @@ namespace System.Windows.Controls
                         (orientation == PageOrientation.ReverseLandscape))
                     {
                         double t = _printableAreaWidth;
-                        _printableAreaWidth  = _printableAreaHeight;
+                        _printableAreaWidth = _printableAreaHeight;
                         _printableAreaHeight = t;
                     }
                 }
@@ -512,16 +513,16 @@ namespace System.Windows.Controls
         private
         XpsDocumentWriter
         CreateWriter(
-            String  description
+            String description
             )
         {
-            PrintQueue        printQueue  = null;
-            PrintTicket       printTicket = null;
-            XpsDocumentWriter writer      = null;
+            PrintQueue printQueue = null;
+            PrintTicket printTicket = null;
+            XpsDocumentWriter writer = null;
 
             PickCorrectPrintingEnvironment(ref printQueue, ref printTicket);
 
-            if(printQueue != null)
+            if (printQueue != null)
             {
                 printQueue.CurrentJobSettings.Description = description;
             }
@@ -539,7 +540,7 @@ namespace System.Windows.Controls
         private
         void
         PickCorrectPrintingEnvironment(
-            ref PrintQueue  printQueue,
+            ref PrintQueue printQueue,
             ref PrintTicket printTicket
             )
         {
@@ -575,43 +576,43 @@ namespace System.Windows.Controls
         #region Private data
 
         private
-        PrintTicket                 _printTicket;
+        PrintTicket _printTicket;
 
         private
-        PrintQueue                  _printQueue;
+        PrintQueue _printQueue;
 
         private
-        PageRangeSelection          _pageRangeSelection;
+        PageRangeSelection _pageRangeSelection;
 
         private
-        PageRange                   _pageRange;
+        PageRange _pageRange;
 
         private
-        bool                        _userPageRangeEnabled;
+        bool _userPageRangeEnabled;
 
         private
-        bool                        _selectedPagesEnabled;
+        bool _selectedPagesEnabled;
 
         private
-        bool                        _currentPageEnabled;        
+        bool _currentPageEnabled;
 
         private
-        UInt32                      _minPage;
+        UInt32 _minPage;
 
         private
-        UInt32                      _maxPage;
+        UInt32 _maxPage;
 
         private
-        double                      _printableAreaWidth;
+        double _printableAreaWidth;
 
         private
-        double                      _printableAreaHeight;
+        double _printableAreaHeight;
 
         private
-        bool                        _isPrintableAreaWidthUpdated;
+        bool _isPrintableAreaWidthUpdated;
 
         private
-        bool                        _isPrintableAreaHeightUpdated;
+        bool _isPrintableAreaHeightUpdated;
 
         #endregion Private data
 

@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.ComponentModel;
 using System.Collections;
-using System.Collections.Specialized;
 using System.Collections.ObjectModel;
-using System.Windows.Media;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.IO;
+using System.Windows.Media;
 using MS.Internal.Ink.InkSerializedFormat;
 
 // Primary root namespace for TabletPC/Ink/Handwriting/Recognition in .NET
@@ -39,9 +39,9 @@ namespace System.Windows.Ink
             List<Stroke> items = (List<Stroke>)this.Items;
 
             //unfortunately we have to check for dupes with this ctor
-            foreach ( Stroke stroke in strokes )
+            foreach (Stroke stroke in strokes)
             {
-                if ( items.Contains(stroke) )
+                if (items.Contains(stroke))
                 {
                     //clear and throw
                     items.Clear();
@@ -56,7 +56,7 @@ namespace System.Windows.Ink
         public StrokeCollection(Stream stream)
         {
             ArgumentNullException.ThrowIfNull(stream);
-            if ( !stream.CanRead )
+            if (!stream.CanRead)
             {
                 throw new ArgumentException(SR.Image_StreamRead, "stream");
             }
@@ -80,7 +80,7 @@ namespace System.Windows.Ink
         public virtual void Save(Stream stream, bool compress)
         {
             ArgumentNullException.ThrowIfNull(stream);
-            if ( !stream.CanWrite )
+            if (!stream.CanWrite)
             {
                 throw new ArgumentException(SR.Image_StreamWrite, "stream");
             }
@@ -99,8 +99,10 @@ namespace System.Windows.Ink
         /// </summary>
         internal void SaveIsf(Stream stream, bool compress)
         {
-            StrokeCollectionSerializer serializer = new StrokeCollectionSerializer(this);
-            serializer.CurrentCompressionMode = compress ? CompressionMode.Compressed : CompressionMode.NoCompression;
+            StrokeCollectionSerializer serializer = new StrokeCollectionSerializer(this)
+            {
+                CurrentCompressionMode = compress ? CompressionMode.Compressed : CompressionMode.NoCompression
+            };
             serializer.EncodeISF(stream);
         }
 
@@ -111,10 +113,10 @@ namespace System.Windows.Ink
         {
             Debug.Assert(stream != null);
             Debug.Assert(stream.CanRead);
-            if ( stream.CanSeek )
+            if (stream.CanSeek)
             {
-                int bytesToRead = (int)( stream.Length - stream.Position );
-                if ( bytesToRead < 1 )
+                int bytesToRead = (int)(stream.Length - stream.Position);
+                if (bytesToRead < 1)
                 {
                     return null; //nothing to read
                 }
@@ -131,7 +133,7 @@ namespace System.Windows.Ink
                 int bufferSize = 4096;
                 byte[] buffer = new byte[bufferSize];
                 int count = bufferSize;
-                while ( count == bufferSize )
+                while (count == bufferSize)
                 {
                     count = stream.Read(buffer, 0, 4096);
                     ms.Write(buffer, 0, count);
@@ -150,7 +152,7 @@ namespace System.Windows.Ink
         {
             DrawingAttributes.ValidateStylusTipTransform(propertyDataId, propertyData);
             object oldValue = null;
-            if ( ContainsPropertyData(propertyDataId) )
+            if (ContainsPropertyData(propertyDataId))
             {
                 oldValue = GetPropertyData(propertyDataId);
                 this.ExtendedProperties[propertyDataId] = propertyData;
@@ -181,7 +183,7 @@ namespace System.Windows.Ink
         /// <param name="propertyDataId"></param>
         public object GetPropertyData(Guid propertyDataId)
         {
-            if ( propertyDataId == Guid.Empty )
+            if (propertyDataId == Guid.Empty)
             {
                 throw new ArgumentException(SR.InvalidGuid, "propertyDataId");
             }
@@ -220,18 +222,18 @@ namespace System.Windows.Ink
         public void Transform(Matrix transformMatrix, bool applyToStylusTip)
         {
             // Ensure that the transformMatrix is invertible.
-            if ( false == transformMatrix.HasInverse )
+            if (false == transformMatrix.HasInverse)
                 throw new ArgumentException(SR.MatrixNotInvertible, "transformMatrix");
 
             // if transformMatrix is identity or the StrokeCollection is empty
             //      then no change will occur anyway
-            if ( transformMatrix.IsIdentity || Count == 0 )
+            if (transformMatrix.IsIdentity || Count == 0)
             {
                 return;
             }
 
             // Apply the transform to each strokes
-            foreach ( Stroke stroke in this )
+            foreach (Stroke stroke in this)
             {
                 // samgeo - Presharp issue
                 // Presharp gives a warning when get methods might deref a null.  It's complaining
@@ -250,7 +252,7 @@ namespace System.Windows.Ink
         public virtual StrokeCollection Clone()
         {
             StrokeCollection clone = new StrokeCollection();
-            foreach ( Stroke s in this )
+            foreach (Stroke s in this)
             {
                 // samgeo - Presharp issue
                 // Presharp gives a warning when get methods might deref a null.  It's complaining
@@ -265,7 +267,7 @@ namespace System.Windows.Ink
             //
             // clone epc if we have them
             //
-            if ( _extendedProperties != null )
+            if (_extendedProperties != null)
             {
                 clone._extendedProperties = _extendedProperties.Clone();
             }
@@ -278,12 +280,12 @@ namespace System.Windows.Ink
         /// </summary>
         protected override sealed void ClearItems()
         {
-            if ( this.Count > 0 )
+            if (this.Count > 0)
             {
                 StrokeCollection removed = new StrokeCollection();
-                for ( int x = 0; x < this.Count; x++ )
+                for (int x = 0; x < this.Count; x++)
                 {
-                    ( (List<Stroke>)removed.Items ).Add(this[x]);
+                    ((List<Stroke>)removed.Items).Add(this[x]);
                 }
 
                 base.ClearItems();
@@ -301,7 +303,7 @@ namespace System.Windows.Ink
             base.RemoveItem(index);
 
             StrokeCollection removed = new StrokeCollection();
-            ( (List<Stroke>)removed.Items ).Add(removedStroke);
+            ((List<Stroke>)removed.Items).Add(removedStroke);
             RaiseStrokesChanged(null /*added*/, removed, index);
         }
 
@@ -311,7 +313,7 @@ namespace System.Windows.Ink
         protected override sealed void InsertItem(int index, Stroke stroke)
         {
             ArgumentNullException.ThrowIfNull(stroke);
-            if ( this.IndexOf(stroke) != -1 )
+            if (this.IndexOf(stroke) != -1)
             {
                 throw new ArgumentException(SR.StrokeIsDuplicated, "stroke");
             }
@@ -319,7 +321,7 @@ namespace System.Windows.Ink
             base.InsertItem(index, stroke);
 
             StrokeCollection addedStrokes = new StrokeCollection();
-            ( (List<Stroke>)addedStrokes.Items ).Add(stroke);
+            ((List<Stroke>)addedStrokes.Items).Add(stroke);
             RaiseStrokesChanged(addedStrokes, null /*removed*/, index);
         }
 
@@ -329,7 +331,7 @@ namespace System.Windows.Ink
         protected override sealed void SetItem(int index, Stroke stroke)
         {
             ArgumentNullException.ThrowIfNull(stroke);
-            if ( IndexOf(stroke) != -1 )
+            if (IndexOf(stroke) != -1)
             {
                 throw new ArgumentException(SR.StrokeIsDuplicated, "stroke");
             }
@@ -338,10 +340,10 @@ namespace System.Windows.Ink
             base.SetItem(index, stroke);
 
             StrokeCollection removed = new StrokeCollection();
-            ( (List<Stroke>)removed.Items ).Add(removedStroke);
+            ((List<Stroke>)removed.Items).Add(removedStroke);
 
             StrokeCollection added = new StrokeCollection();
-            ( (List<Stroke>)added.Items ).Add(stroke);
+            ((List<Stroke>)added.Items).Add(stroke);
             RaiseStrokesChanged(added, removed, index);
         }
 
@@ -375,7 +377,7 @@ namespace System.Windows.Ink
         public void Remove(StrokeCollection strokes)
         {
             ArgumentNullException.ThrowIfNull(strokes);
-            if ( strokes.Count == 0 )
+            if (strokes.Count == 0)
             {
                 // NOTICE-2004/06/08-WAYNEZEN:
                 // We don't throw if an empty collection is going to be removed. And there is no event either.
@@ -384,7 +386,7 @@ namespace System.Windows.Ink
             }
 
             int[] indexes = this.GetStrokeIndexes(strokes);
-            if ( indexes == null )
+            if (indexes == null)
             {
                 // At least one stroke doesn't exist in our collection. We throw.
                 ArgumentException ae = new ArgumentException(SR.InvalidRemovedStroke, "strokes");
@@ -396,12 +398,12 @@ namespace System.Windows.Ink
                 throw ae;
             }
 
-            for ( int x = indexes.Length - 1; x >= 0; x-- )
+            for (int x = indexes.Length - 1; x >= 0; x--)
             {
                 //bypass this.RemoveAt, which calls changed events
                 //and call our protected List<Stroke> directly
                 //remove from the back so the indexes are correct
-                ( (List<Stroke>)this.Items ).RemoveAt(indexes[x]);
+                ((List<Stroke>)this.Items).RemoveAt(indexes[x]);
             }
 
             RaiseStrokesChanged(null /*added*/, strokes, indexes[0]);
@@ -416,7 +418,7 @@ namespace System.Windows.Ink
         public void Add(StrokeCollection strokes)
         {
             ArgumentNullException.ThrowIfNull(strokes);
-            if ( strokes.Count == 0 )
+            if (strokes.Count == 0)
             {
                 // NOTICE-2004/06/08-WAYNEZEN:
                 // We don't throw if an empty collection is going to be added. And there is no event either.
@@ -426,10 +428,10 @@ namespace System.Windows.Ink
             int index = this.Count;
 
             //validate that none of the strokes exist in the collection
-            for ( int x = 0; x < strokes.Count; x++ )
+            for (int x = 0; x < strokes.Count; x++)
             {
                 Stroke stroke = strokes[x];
-                if ( this.IndexOf(stroke) != -1 )
+                if (this.IndexOf(stroke) != -1)
                 {
                     throw new ArgumentException(SR.StrokeIsDuplicated, "strokes");
                 }
@@ -438,7 +440,7 @@ namespace System.Windows.Ink
             //add the strokes
             //bypass this.AddRange, which calls changed events
             //and call our protected List<Stroke> directly
-            ( (List<Stroke>)this.Items ).AddRange(strokes);
+            ((List<Stroke>)this.Items).AddRange(strokes);
 
             RaiseStrokesChanged(strokes, null /*removed*/, index);
         }
@@ -450,7 +452,7 @@ namespace System.Windows.Ink
         /// <param name="strokesToReplaceWith"></param>
         public void Replace(Stroke strokeToReplace, StrokeCollection strokesToReplaceWith)
         {
-            if ( strokeToReplace == null )
+            if (strokeToReplace == null)
             {
                 throw new ArgumentNullException(SR.EmptyScToReplace);
             }
@@ -467,17 +469,17 @@ namespace System.Windows.Ink
         /// <param name="strokesToReplaceWith"></param>
         public void Replace(StrokeCollection strokesToReplace, StrokeCollection strokesToReplaceWith)
         {
-            if ( strokesToReplace == null )
+            if (strokesToReplace == null)
             {
                 throw new ArgumentNullException(SR.EmptyScToReplace);
             }
-            if ( strokesToReplaceWith == null )
+            if (strokesToReplaceWith == null)
             {
                 throw new ArgumentNullException(SR.EmptyScToReplaceWith);
             }
 
             int replaceCount = strokesToReplace.Count;
-            if ( replaceCount == 0 )
+            if (replaceCount == 0)
             {
                 ArgumentException ae = new ArgumentException(SR.EmptyScToReplace, "strokesToReplace");
                 //
@@ -489,7 +491,7 @@ namespace System.Windows.Ink
             }
 
             int[] indexes = this.GetStrokeIndexes(strokesToReplace);
-            if ( indexes == null )
+            if (indexes == null)
             {
                 // At least one stroke doesn't exist in our collection. We throw.
                 ArgumentException ae = new ArgumentException(SR.InvalidRemovedStroke, "strokesToReplace");
@@ -503,10 +505,10 @@ namespace System.Windows.Ink
 
 
             //validate that none of the relplaceWith strokes exist in the collection
-            for ( int x = 0; x < strokesToReplaceWith.Count; x++ )
+            for (int x = 0; x < strokesToReplaceWith.Count; x++)
             {
                 Stroke stroke = strokesToReplaceWith[x];
-                if ( this.IndexOf(stroke) != -1 )
+                if (this.IndexOf(stroke) != -1)
                 {
                     throw new ArgumentException(SR.StrokeIsDuplicated, "strokesToReplaceWith");
                 }
@@ -514,18 +516,18 @@ namespace System.Windows.Ink
 
             //bypass this.RemoveAt / InsertRange, which calls changed events
             //and call our protected List<Stroke> directly
-            for ( int x = indexes.Length - 1; x >= 0; x-- )
+            for (int x = indexes.Length - 1; x >= 0; x--)
             {
                 //bypass this.RemoveAt, which calls changed events
                 //and call our protected List<Stroke> directly
                 //remove from the back so the indexes are correct
-                ( (List<Stroke>)this.Items ).RemoveAt(indexes[x]);
+                ((List<Stroke>)this.Items).RemoveAt(indexes[x]);
             }
 
-            if ( strokesToReplaceWith.Count > 0 )
+            if (strokesToReplaceWith.Count > 0)
             {
                 //insert at the 
-                ( (List<Stroke>)this.Items ).InsertRange(indexes[0], strokesToReplaceWith);
+                ((List<Stroke>)this.Items).InsertRange(indexes[0], strokesToReplaceWith);
             }
 
 
@@ -538,7 +540,7 @@ namespace System.Windows.Ink
         internal void AddWithoutEvent(Stroke stroke)
         {
             Debug.Assert(stroke != null && IndexOf(stroke) == -1);
-            ( (List<Stroke>)this.Items ).Add(stroke);
+            ((List<Stroke>)this.Items).Add(stroke);
         }
 
 
@@ -550,7 +552,7 @@ namespace System.Windows.Ink
                 //
                 // internal getter is used by the serialization code
                 //
-                if ( _extendedProperties == null )
+                if (_extendedProperties == null)
                 {
                     _extendedProperties = new ExtendedPropertyCollection();
                 }
@@ -562,7 +564,7 @@ namespace System.Windows.Ink
                 //
                 // private setter used by copy
                 //
-                if ( value != null )
+                if (value != null)
                 {
                     _extendedProperties = value;
                 }
@@ -619,7 +621,7 @@ namespace System.Windows.Ink
         /// should call this method.</remarks>
         protected virtual void OnStrokesChanged(StrokeCollectionChangedEventArgs e)
         {
-            if ( null == e )
+            if (null == e)
             {
                 throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
@@ -629,31 +631,31 @@ namespace System.Windows.Ink
             //they are the first in the delegate chain, they can be optimized
             //to not have to handle out of order events caused by 3rd party code
             //getting called first
-            if ( this.StrokesChangedInternal != null)
+            if (this.StrokesChangedInternal != null)
             {
                 this.StrokesChangedInternal(this, e);
             }
-            if ( this.StrokesChanged != null )
+            if (this.StrokesChanged != null)
             {
                 this.StrokesChanged(this, e);
             }
-            if ( _collectionChanged != null )
+            if (_collectionChanged != null)
             {
                 //raise CollectionChanged.  We support the following 
                 //NotifyCollectionChangedActions
                 NotifyCollectionChangedEventArgs args = null;
-                if ( this.Count == 0 )
+                if (this.Count == 0)
                 {
                     //Reset
                     Debug.Assert(e.Removed.Count > 0);
                     args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
                 }
-                else if ( e.Added.Count == 0 )
+                else if (e.Added.Count == 0)
                 {
                     //Remove
                     args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, e.Removed, e.Index);
                 }
-                else if ( e.Removed.Count == 0 )
+                else if (e.Removed.Count == 0)
                 {
                     //Add
                     args = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, e.Added, e.Index);
@@ -676,12 +678,12 @@ namespace System.Windows.Ink
         /// to ensure that event listeners are notified</remarks>
         protected virtual void OnPropertyDataChanged(PropertyDataChangedEventArgs e)
         {
-            if ( null == e )
+            if (null == e)
             {
                 throw new ArgumentNullException("e", SR.EventArgIsNull);
             }
 
-            if ( this.PropertyDataChanged != null )
+            if (this.PropertyDataChanged != null)
             {
                 this.PropertyDataChanged(this, e);
             }
@@ -695,7 +697,7 @@ namespace System.Windows.Ink
         /// instance, but every other INotifyPropertyChanged implementation follows this pattern.</remarks>
         protected virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            if ( _propertyChanged != null )
+            if (_propertyChanged != null)
             {
                 _propertyChanged(this, e);
             }
@@ -713,18 +715,18 @@ namespace System.Windows.Ink
         private int OptimisticIndexOf(int startingIndex, Stroke stroke)
         {
             Debug.Assert(startingIndex >= 0);
-            for ( int x = startingIndex; x < this.Count; x++ )
+            for (int x = startingIndex; x < this.Count; x++)
             {
-                if ( this[x] == stroke )
+                if (this[x] == stroke)
                 {
                     return x;
                 }
             }
 
             //we didn't find anything on the first pass, now search the beginning
-            for ( int x = 0; x < startingIndex; x++ )
+            for (int x = 0; x < startingIndex; x++)
             {
-                if ( this[x] == stroke )
+                if (this[x] == stroke)
                 {
                     return x;
                 }
@@ -744,7 +746,7 @@ namespace System.Windows.Ink
             //to keep from walking the StrokeCollection twice for each stroke, we will maintain an index of
             //strokes to remove as we go
             int[] indexes = new int[strokes.Count];
-            for ( int x = 0; x < indexes.Length; x++ )
+            for (int x = 0; x < indexes.Length; x++)
             {
                 indexes[x] = Int32.MaxValue;
             }
@@ -752,10 +754,10 @@ namespace System.Windows.Ink
             int currentIndex = 0;
             int highestIndex = -1;
             int usedIndexCount = 0;
-            for ( int x = 0; x < strokes.Count; x++ )
+            for (int x = 0; x < strokes.Count; x++)
             {
                 currentIndex = this.OptimisticIndexOf(currentIndex, strokes[x]);
-                if ( currentIndex == -1 )
+                if (currentIndex == -1)
                 {
                     //stroke doe3sn't exist, bail out.
                     return null;
@@ -765,7 +767,7 @@ namespace System.Windows.Ink
                 // optimize for the most common case... replace is passes strokes
                 // in contiguous order.  Only do the sort if we need to
                 //
-                if ( currentIndex > highestIndex )
+                if (currentIndex > highestIndex)
                 {
                     //write current to the next available slot
                     indexes[usedIndexCount++] = currentIndex;
@@ -774,14 +776,14 @@ namespace System.Windows.Ink
                 }
 
                 //keep in sorted order (smallest to largest) with a simple insertion sort
-                for ( int y = 0; y < indexes.Length; y++ )
+                for (int y = 0; y < indexes.Length; y++)
                 {
-                    if ( currentIndex < indexes[y] )
+                    if (currentIndex < indexes[y])
                     {
-                        if ( indexes[y] != Int32.MaxValue )
+                        if (indexes[y] != Int32.MaxValue)
                         {
                             //shift from the end
-                            for ( int i = indexes.Length - 1; i > y; i-- )
+                            for (int i = indexes.Length - 1; i > y; i--)
                             {
                                 indexes[i] = indexes[i - 1];
                             }
@@ -789,7 +791,7 @@ namespace System.Windows.Ink
                         indexes[y] = currentIndex;
                         usedIndexCount++;
 
-                        if ( currentIndex > highestIndex )
+                        if (currentIndex > highestIndex)
                         {
                             highestIndex = currentIndex;
                         }
@@ -849,9 +851,9 @@ namespace System.Windows.Ink
         {
             internal ReadOnlyStrokeCollection(StrokeCollection strokeCollection)
             {
-                if ( strokeCollection != null )
+                if (strokeCollection != null)
                 {
-                    ( (List<Stroke>)this.Items ).AddRange(strokeCollection);
+                    ((List<Stroke>)this.Items).AddRange(strokeCollection);
                 }
             }
 

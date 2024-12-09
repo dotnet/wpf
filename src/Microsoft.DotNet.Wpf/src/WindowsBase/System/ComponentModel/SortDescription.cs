@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -71,7 +71,7 @@ namespace System.ComponentModel
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "SortDescription"));
 
                 if (value < ListSortDirection.Ascending || value > ListSortDirection.Descending)
-                    throw new InvalidEnumArgumentException("value", (int) value, typeof(ListSortDirection));
+                    throw new InvalidEnumArgumentException("value", (int)value, typeof(ListSortDirection));
 
                 _direction = value;
             }
@@ -102,14 +102,14 @@ namespace System.ComponentModel
         }
 
         /// <summary> Equality operator for SortDescription. </summary>
-        public static bool operator==(SortDescription sd1, SortDescription sd2)
+        public static bool operator ==(SortDescription sd1, SortDescription sd2)
         {
-            return  sd1.PropertyName == sd2.PropertyName &&
+            return sd1.PropertyName == sd2.PropertyName &&
                     sd1.Direction == sd2.Direction;
         }
 
         /// <summary> Inequality operator for SortDescription. </summary>
-        public static bool operator!=(SortDescription sd1, SortDescription sd2)
+        public static bool operator !=(SortDescription sd1, SortDescription sd2)
         {
             return !(sd1 == sd2);
         }
@@ -150,9 +150,9 @@ namespace System.ComponentModel
 
         #region Private Fields
 
-        private string              _propertyName;
-        private ListSortDirection   _direction;
-        bool                        _sealed;
+        private string _propertyName;
+        private ListSortDirection _direction;
+        bool _sealed;
 
         #endregion Private Fields
     }

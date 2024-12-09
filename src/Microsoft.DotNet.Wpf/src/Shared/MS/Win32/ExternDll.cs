@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,7 +28,7 @@ namespace MS.Win32
         public const string Oleacc = "oleacc.dll";
         public const string Oleaut32 = "oleaut32.dll";
         public const string Olepro32 = "olepro32.dll";
-        public const string Penimc ="PenIMC_cor3.dll";
+        public const string Penimc = "PenIMC_cor3.dll";
         public const string PresentationCore = "PresentationCore.dll";
         public const string PresentationFramework = "PresentationFramework.dll";
         public const string PresentationHostDll = "PresentationHost_cor3.dll";

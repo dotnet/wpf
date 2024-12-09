@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -301,7 +301,7 @@ namespace System.Windows.Input
             // If Manipulation didn't activate or becomes disabled, then stop ticking.
             // If we've exceeded the timeout without any manipulators updating, then stop ticking
             // to save energy. If a manipulator updates, we'll start ticking again.
-            if (!IsManipulationActive || 
+            if (!IsManipulationActive ||
                 (ManipulationLogic.GetCurrentTimestamp() - LastUpdatedTimestamp) > ThrottleTimeout)
             {
                 _wasTicking = _ticking; // ReportFrame could have stopped the ticking, hence take the latest value.

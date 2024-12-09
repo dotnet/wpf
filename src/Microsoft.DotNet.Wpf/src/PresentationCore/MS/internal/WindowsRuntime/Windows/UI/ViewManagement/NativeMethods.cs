@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,7 +26,7 @@ namespace MS.Internal.WindowsRuntime
 
             [DllImport(DllImport.ApiSetWinRT, CallingConvention = CallingConvention.StdCall)]
             internal static extern unsafe int RoGetActivationFactory(IntPtr runtimeClassId, ref Guid iid, [MarshalAs(UnmanagedType.Interface)] out object factory);
-        
+
             [DllImport(DllImport.ApiSetWinRT, CallingConvention = CallingConvention.StdCall)]
             internal static extern unsafe int RoActivateInstance(IntPtr runtimeClassId, [MarshalAs(UnmanagedType.Interface)] out object instance);
 

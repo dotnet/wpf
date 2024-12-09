@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,8 +13,8 @@
 
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Media;
 using System.Windows.Markup;
+using System.Windows.Media;
 using MS.Internal.Controls;
 
 
@@ -50,14 +50,14 @@ namespace System.Windows.Controls
         ///<param name="value">
         /// The object to add as a child; it must be a UIElement.
         ///</param>
-        void IAddChild.AddChild (Object value)
+        void IAddChild.AddChild(Object value)
         {
             // keeping consistent with other elements:  adding null is a no-op.
             if (value == null)
                 return;
 
             if (!(value is UIElement))
-                throw new ArgumentException (SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
 
             if (this.Child != null)
                 throw new ArgumentException(SR.Format(SR.CanOnlyHaveOneChild, this.GetType(), value.GetType()));
@@ -73,7 +73,7 @@ namespace System.Windows.Controls
         ///<param name="text">
         /// Text to add as a child.
         ///</param>
-        void IAddChild.AddText (string text)
+        void IAddChild.AddText(string text)
         {
             XamlSerializerUtil.ThrowIfNonWhiteSpaceInAddText(text, this);
         }
@@ -113,7 +113,7 @@ namespace System.Windows.Controls
                     //need to remove old element from logical tree
                     RemoveLogicalChild(old);
                     _child = value;
-                    
+
                     AddVisualChild(_child);
                     AddLogicalChild(value);
 
@@ -143,7 +143,7 @@ namespace System.Windows.Controls
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
             return _child;
-        }        
+        }
 
         /// <summary>
         /// Returns enumerator to logical children.
@@ -184,7 +184,7 @@ namespace System.Windows.Controls
                 throw new InvalidOperationException(SR.AdornedElementPlaceholderMustBeInTemplate);
 
             if (AdornedElement == null)
-                return new Size(0,0);
+                return new Size(0, 0);
 
             Size desiredSize = AdornedElement.RenderSize;
             UIElement child = Child;

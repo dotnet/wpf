@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace MS.Internal.Utility
     internal class TraceLog
     {
         // create an unbounded trace log
-        internal TraceLog() : this(Int32.MaxValue) {}
+        internal TraceLog() : this(Int32.MaxValue) { }
 
         // create a trace log that remembers the last 'size' actions
         internal TraceLog(int size)
@@ -48,7 +48,7 @@ namespace MS.Internal.Utility
         // write the log to the console
         internal void WriteLog()
         {
-            for (int k=0; k<_log.Count; ++k)
+            for (int k = 0; k < _log.Count; ++k)
                 Console.WriteLine(_log[k]);
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,7 +17,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         IDictionary baseDictionary;
         private bool _disposed;         // keep track of if we are disposed
 
-        internal StreamWithDictionary( Stream wrappedStream, IDictionary wrappedDictionary )
+        internal StreamWithDictionary(Stream wrappedStream, IDictionary wrappedDictionary)
         {
             baseStream = wrappedStream;
             baseDictionary = wrappedDictionary;
@@ -25,10 +25,10 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
         /*************************************************************************/
         // Stream members
-        public override bool CanRead { get{ return !_disposed && baseStream.CanRead; }}
+        public override bool CanRead { get { return !_disposed && baseStream.CanRead; } }
         public override bool CanSeek { get { return !_disposed && baseStream.CanSeek; } }
         public override bool CanWrite { get { return !_disposed && baseStream.CanWrite; } }
-        public override long Length  
+        public override long Length
         {
             get
             {
@@ -43,7 +43,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 CheckDisposed();
                 return baseStream.Position;
-            } 
+            }
             set
             {
                 CheckDisposed();
@@ -51,31 +51,31 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             }
         }
 
-        public override void Flush() 
+        public override void Flush()
         {
             CheckDisposed();
-            baseStream.Flush(); 
+            baseStream.Flush();
         }
 
-        public override long Seek( long offset, SeekOrigin origin )
+        public override long Seek(long offset, SeekOrigin origin)
         {
             CheckDisposed();
             return baseStream.Seek(offset, origin);
         }
 
-        public override void SetLength( long newLength ) 
+        public override void SetLength(long newLength)
         {
             CheckDisposed();
             baseStream.SetLength(newLength);
         }
 
-        public override int Read( byte[] buffer, int offset, int count )
+        public override int Read(byte[] buffer, int offset, int count)
         {
             CheckDisposed();
             return baseStream.Read(buffer, offset, count);
         }
 
-        public override void Write( byte[] buffer, int offset, int count )
+        public override void Write(byte[] buffer, int offset, int count)
         {
             CheckDisposed();
             baseStream.Write(buffer, offset, count);
@@ -108,13 +108,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
         /*************************************************************************/
         // IDictionary members
-        bool IDictionary.Contains( object key )
+        bool IDictionary.Contains(object key)
         {
             CheckDisposed();
             return baseDictionary.Contains(key);
         }
 
-        void IDictionary.Add( object key, object val )
+        void IDictionary.Add(object key, object val)
         {
             CheckDisposed();
             baseDictionary.Add(key, val);
@@ -133,13 +133,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             return ((IDictionary)baseDictionary).GetEnumerator();
         }
 
-        void IDictionary.Remove( object key )
+        void IDictionary.Remove(object key)
         {
             CheckDisposed();
             baseDictionary.Remove(key);
         }
 
-        object IDictionary.this[ object index ]
+        object IDictionary.this[object index]
         {
             get
             {
@@ -192,7 +192,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /*************************************************************************/
         // ICollection methods
 
-        void ICollection.CopyTo( Array array, int index )
+        void ICollection.CopyTo(Array array, int index)
         {
             CheckDisposed();
             ((ICollection)baseDictionary).CopyTo(array, index);

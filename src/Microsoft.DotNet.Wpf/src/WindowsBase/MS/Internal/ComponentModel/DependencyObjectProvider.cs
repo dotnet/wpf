@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,8 @@ namespace MS.Internal.ComponentModel
     ///     [TypeDescriptionProvider(typeof(DependencyObjectProvider))]
     ///     public class DependencyObject {}
     /// </summary>
-    internal sealed class DependencyObjectProvider : TypeDescriptionProvider {
+    internal sealed class DependencyObjectProvider : TypeDescriptionProvider
+    {
         //------------------------------------------------------
         //
         //  Constructors
@@ -31,27 +32,27 @@ namespace MS.Internal.ComponentModel
         ///     The ctor for this class needs to be public because it is created
         ///     by TypeDescriptor using reflection.
         /// </summary>
-        public DependencyObjectProvider() : base(TypeDescriptor.GetProvider(typeof(DependencyObject))) 
+        public DependencyObjectProvider() : base(TypeDescriptor.GetProvider(typeof(DependencyObject)))
         {
             // We keep a lot of caches around.  When TypeDescriptor gets a refresh
             // we clear our caches.  We only need to do this if the refresh
             // contains type information, because we only keep static per-type
             // caches.
 
-            TypeDescriptor.Refreshed += delegate(RefreshEventArgs args)
+            TypeDescriptor.Refreshed += delegate (RefreshEventArgs args)
             {
-                if (args.TypeChanged != null && typeof(DependencyObject).IsAssignableFrom(args.TypeChanged)) 
+                if (args.TypeChanged != null && typeof(DependencyObject).IsAssignableFrom(args.TypeChanged))
                 {
                     ClearCache();
                     DependencyObjectPropertyDescriptor.ClearCache();
                     DPCustomTypeDescriptor.ClearCache();
                     DependencyPropertyDescriptor.ClearCache();
-}
+                }
             };
         }
 
         #endregion Constructors
-        
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -64,7 +65,7 @@ namespace MS.Internal.ComponentModel
         ///     Returns a custom type descriptor suitable for querying about the
         ///     given object type and instance.
         /// </summary>
-        public override ICustomTypeDescriptor GetTypeDescriptor(Type objectType, object instance) 
+        public override ICustomTypeDescriptor GetTypeDescriptor(Type objectType, object instance)
         {
             return new DPCustomTypeDescriptor(base.GetTypeDescriptor(objectType, instance),
                 objectType, instance);
@@ -74,7 +75,7 @@ namespace MS.Internal.ComponentModel
         ///     Returns a custom type descriptor suitable for querying about "extended"
         ///     properties.  Extended properties are are attached properties in our world.
         /// </summary>
-        public override ICustomTypeDescriptor GetExtendedTypeDescriptor(object instance) 
+        public override ICustomTypeDescriptor GetExtendedTypeDescriptor(object instance)
         {
             ICustomTypeDescriptor descriptor = base.GetExtendedTypeDescriptor(instance);
 
@@ -82,7 +83,7 @@ namespace MS.Internal.ComponentModel
             // If it did, we don't need our own descriptor because we don't support
             // attached properties on type instances.
 
-            if (instance != null && !(instance is Type)) 
+            if (instance != null && !(instance is Type))
             {
                 descriptor = new APCustomTypeDescriptor(descriptor, instance);
             }
@@ -94,7 +95,7 @@ namespace MS.Internal.ComponentModel
         ///     Returns a caching layer type descriptor will use to store
         ///     computed metadata.
         /// </summary>
-        public override IDictionary GetCache(object instance) 
+        public override IDictionary GetCache(object instance)
         {
             DependencyObject d = instance as DependencyObject;
 
@@ -102,7 +103,7 @@ namespace MS.Internal.ComponentModel
             // to dependency object types.  However, in case it
             // does, simply invoke the base and get out.
 
-            if (d == null) 
+            if (d == null)
             {
                 return base.GetCache(instance);
             }
@@ -115,7 +116,7 @@ namespace MS.Internal.ComponentModel
             // will return null.
 
             IDictionary cache = _cacheSlot.GetValue(d);
-            if (cache == null && !d.IsSealed) 
+            if (cache == null && !d.IsSealed)
             {
                 cache = new Hashtable();
                 _cacheSlot.SetValue(d, cache);
@@ -154,17 +155,17 @@ namespace MS.Internal.ComponentModel
         /// </summary>
         private static void ClearCache()
         {
-            lock (_propertyMap) 
+            lock (_propertyMap)
             {
                 _propertyMap.Clear();
             }
 
-            lock(_propertyKindMap)
+            lock (_propertyKindMap)
             {
                 _propertyKindMap.Clear();
             }
 
-            lock(_attachInfoMap)
+            lock (_attachInfoMap)
             {
                 _attachInfoMap.Clear();
             }
@@ -180,11 +181,11 @@ namespace MS.Internal.ComponentModel
             // Have we already seen this DP?
             AttachInfo info = (AttachInfo)_attachInfoMap[dp];
 
-            if (info == null) 
+            if (info == null)
             {
                 info = new AttachInfo(dp);
-    
-                lock(_attachInfoMap)
+
+                lock (_attachInfoMap)
                 {
                     _attachInfoMap[dp] = info;
                 }
@@ -203,7 +204,7 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Internal Methods
-        
+
         /// <summary>
         ///     This method returns an attached property descriptor for the given DP and target type.
         /// </summary>
@@ -212,9 +213,9 @@ namespace MS.Internal.ComponentModel
             DependencyObjectPropertyDescriptor dpProp;
             PropertyKey key = new PropertyKey(targetType, dp);
 
-            lock(_propertyMap) 
+            lock (_propertyMap)
             {
-                if (!_propertyMap.TryGetValue(key, out dpProp)) 
+                if (!_propertyMap.TryGetValue(key, out dpProp))
                 {
                     dpProp = new DependencyObjectPropertyDescriptor(dp, targetType);
                     _propertyMap[key] = dpProp;
@@ -234,9 +235,9 @@ namespace MS.Internal.ComponentModel
             DependencyPropertyKind kind;
             PropertyKey key = new PropertyKey(targetType, dp);
 
-            lock(_propertyKindMap)
+            lock (_propertyKindMap)
             {
-                if (!_propertyKindMap.TryGetValue(key, out kind)) 
+                if (!_propertyKindMap.TryGetValue(key, out kind))
                 {
                     kind = new DependencyPropertyKind(dp, targetType);
                     _propertyKindMap[key] = kind;
@@ -255,7 +256,7 @@ namespace MS.Internal.ComponentModel
         //------------------------------------------------------
 
         #region Private Fields
-        
+
         private static readonly UncommonField<IDictionary> _cacheSlot = new UncommonField<IDictionary>(null);
 
         // Synchronized by "_propertyMap"

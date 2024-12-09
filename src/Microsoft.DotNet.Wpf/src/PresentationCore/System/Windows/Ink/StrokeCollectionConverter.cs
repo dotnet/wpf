@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System.IO;
-using System.Windows.Ink;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
+using System.IO;
 using System.Reflection;
+using System.Windows.Ink;
 
 namespace System.Windows
 {
@@ -129,7 +129,7 @@ namespace System.Windows
                         return Convert.ToBase64String(ms.ToArray());
                     }
                 }
-                    //if someone wants to convert to an InstanceDescriptor
+                //if someone wants to convert to an InstanceDescriptor
                 else if (destinationType == typeof(InstanceDescriptor))
                 {
                     //get a ref to the StrokeCollection objects constructor that takes a byte[]

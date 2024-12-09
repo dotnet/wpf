@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,9 +6,9 @@
 //  Contents:  XAML writer
 //
 
+using System.Collections;
 using System.ComponentModel;
 using System.Reflection;
-using System.Collections;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
@@ -32,8 +32,10 @@ namespace System.Windows.Markup.Primitives
         public static MarkupObject GetMarkupObjectFor(object instance)
         {
             ArgumentNullException.ThrowIfNull(instance);
-            XamlDesignerSerializationManager manager = new XamlDesignerSerializationManager(null);
-            manager.XamlWriterMode = XamlWriterMode.Expression;
+            XamlDesignerSerializationManager manager = new XamlDesignerSerializationManager(null)
+            {
+                XamlWriterMode = XamlWriterMode.Expression
+            };
             return new ElementMarkupObject(instance, manager);
         }
 
@@ -138,15 +140,15 @@ namespace System.Windows.Markup.Primitives
             // Check the type to make sure that it is not a nested type, that it is public, and that it is not generic
             if (type.IsNestedPublic)
             {
-                throw new InvalidOperationException( SR.Format( SR.MarkupWriter_CannotSerializeNestedPublictype, type.ToString() ));
+                throw new InvalidOperationException(SR.Format(SR.MarkupWriter_CannotSerializeNestedPublictype, type.ToString()));
             }
-            if (!type.IsPublic )
+            if (!type.IsPublic)
             {
-                throw new InvalidOperationException( SR.Format( SR.MarkupWriter_CannotSerializeNonPublictype, type.ToString() ));
+                throw new InvalidOperationException(SR.Format(SR.MarkupWriter_CannotSerializeNonPublictype, type.ToString()));
             }
             if (type.IsGenericType)
             {
-                throw new InvalidOperationException( SR.Format( SR.MarkupWriter_CannotSerializeGenerictype, type.ToString() ));
+                throw new InvalidOperationException(SR.Format(SR.MarkupWriter_CannotSerializeGenerictype, type.ToString()));
             }
         }
 
@@ -249,7 +251,7 @@ namespace System.Windows.Markup.Primitives
 
                 public Entry(TKey key, TValue value)
                 {
-                    Debug.Assert( (object)key != null);
+                    Debug.Assert((object)key != null);
                     Key = key;
                     Value = value;
                     Predecessors = null;
@@ -340,13 +342,13 @@ namespace System.Windows.Markup.Primitives
                 // initialize
                 _firstIndex = Entry.UNSEEN;
                 _lastIndex = Entry.UNSEEN;
-                for (int i=0; i<_entries.Count; ++i)
+                for (int i = 0; i < _entries.Count; ++i)
                 {
                     _entries[i].Link = Entry.UNSEEN;
                 }
 
                 // start a DFS at each entry
-                for (int i=0; i<_entries.Count; ++i)
+                for (int i = 0; i < _entries.Count; ++i)
                 {
                     DepthFirstSearch(i);
                 }
@@ -651,7 +653,7 @@ namespace System.Windows.Markup.Primitives
                 // have no net effect.
                 _writer.WriteString(string.Empty);
 
-                if( scope.IsTopOfSpacePreservationScope && _xmlTextWriter != null )
+                if (scope.IsTopOfSpacePreservationScope && _xmlTextWriter != null)
                 {
                     // If we are entering a xml:space="preserve" scope and using
                     //  a XmlTextWriter, we need to turn off its formatting options.
@@ -846,9 +848,9 @@ namespace System.Windows.Markup.Primitives
             // Write the end of the element
             _writer.WriteEndElement();
 
-            if( scope.IsTopOfSpacePreservationScope &&
+            if (scope.IsTopOfSpacePreservationScope &&
                 _xmlTextWriter != null &&
-                _xmlTextWriter.Formatting != previousFormatting )
+                _xmlTextWriter.Formatting != previousFormatting)
             {
                 // Exiting a xml:space="preserve" scope.  Restore formatting options
                 //  if we are using a XmlTextWriter.
@@ -905,7 +907,7 @@ namespace System.Windows.Markup.Primitives
 
                         if (property.Value != null &&
                             !(property.Value is MarkupExtension) &&
-                            property.PropertyType.IsAssignableFrom(typeof(string)) )
+                            property.PropertyType.IsAssignableFrom(typeof(string)))
                         {
                             isContentProperty = true;
                         }
@@ -922,7 +924,7 @@ namespace System.Windows.Markup.Primitives
             return isContentProperty;
         }
 
-        private bool IsDeferredProperty (MarkupProperty property, Dictionary<string, string> writtenAttributes,
+        private bool IsDeferredProperty(MarkupProperty property, Dictionary<string, string> writtenAttributes,
                                                ref PartiallyOrderedList<string, MarkupProperty> deferredProperties)
         {
             bool defer = false;
@@ -1117,7 +1119,8 @@ namespace System.Windows.Markup.Primitives
         private bool IsInTypes(Type type, List<Type> types)
         {
             foreach (Type t in types)
-                if (t == type) return true;
+                if (t == type)
+                    return true;
             return false;
         }
 
@@ -1181,14 +1184,16 @@ namespace System.Windows.Markup.Primitives
                         result = IsNormalizationNeutralString(text, !previousTrimSurroundingWhitespace,
                             !currentTrimSurroundingWhitespace);
                         text = null;
-                        if (!result) return false;
+                        if (!result)
+                            return false;
                     }
                     if (nestedContentProperty != null)
                     {
                         result = HasOnlyNormalizationNeutralStrings(nestedContentProperty,
                             !previousTrimSurroundingWhitespace, !currentTrimSurroundingWhitespace);
                         nestedContentProperty = null;
-                        if (!result) return false;
+                        if (!result)
+                            return false;
                     }
 
                     if (subItem.ObjectType == typeof(string))
@@ -1257,8 +1262,8 @@ namespace System.Windows.Markup.Primitives
                         lastCharSpace = false;
                         break;
 
-                    // Chinese/Japanese and Thai rules relate to LF handling and any LF character
-                    // will be treated as non-neutral so they don't need special handling.
+                        // Chinese/Japanese and Thai rules relate to LF handling and any LF character
+                        // will be treated as non-neutral so they don't need special handling.
                 }
             }
 
@@ -1336,18 +1341,18 @@ namespace System.Windows.Markup.Primitives
             {
                 get
                 {
-                    if( _containingScope == null )
+                    if (_containingScope == null)
                     {
                         // Topmost element is top of a scope by definition.
                         return true;
                     }
-                    else if( _xmlnsSpacePreserve == null )
+                    else if (_xmlnsSpacePreserve == null)
                     {
                         // Most common case - this scope inherits the parent's
                         //  scope, so it's not a top level preservation scope.
                         return false;
                     }
-                    else if( ((bool)_xmlnsSpacePreserve) != _containingScope.XmlnsSpacePreserve )
+                    else if (((bool)_xmlnsSpacePreserve) != _containingScope.XmlnsSpacePreserve)
                     {
                         // Our specified preservation setting does not match containing scope's
                         //  preservation setting - we're top of our specific preservations cope.
@@ -1356,7 +1361,7 @@ namespace System.Windows.Markup.Primitives
 
                     // We have a specified preservation setting that matches the
                     //  containing scope's preservation setting.
-                    Debug.Assert( ((bool)_xmlnsSpacePreserve) == _containingScope.XmlnsSpacePreserve ,
+                    Debug.Assert(((bool)_xmlnsSpacePreserve) == _containingScope.XmlnsSpacePreserve,
                         "At this point the space preservation settings should be equal - did somebody break the logic above us?");
                     return false;
                 }
@@ -1471,7 +1476,7 @@ namespace System.Windows.Markup.Primitives
 
             public IContainer Container
             {
-                get { return null;  }
+                get { return null; }
             }
 
             public object Instance
@@ -1490,7 +1495,7 @@ namespace System.Windows.Markup.Primitives
 
             public PropertyDescriptor PropertyDescriptor
             {
-                get { return null;  }
+                get { return null; }
             }
 
             public object GetService(Type serviceType)
@@ -1573,15 +1578,15 @@ namespace System.Windows.Markup.Primitives
 
                                 // if multiple namespaces for the type exits then give shorter prefix
                                 // definitions precedence.
-                                if(namespaceToUri.TryGetValue(definition.ClrNamespace, out previousBestNamespace))
+                                if (namespaceToUri.TryGetValue(definition.ClrNamespace, out previousBestNamespace))
                                 {
-                                    if(DefaultPrefixes.TryGetValue(previousBestNamespace, out previousBestPrefix))
+                                    if (DefaultPrefixes.TryGetValue(previousBestNamespace, out previousBestPrefix))
                                     {
                                         DefaultPrefixes.TryGetValue(definition.XmlNamespace, out newPrefix);
                                     }
                                 }
-                                if ( (null == previousBestNamespace) || (null == previousBestPrefix) ||
-                                    (null != newPrefix && previousBestPrefix.Length > newPrefix.Length) )
+                                if ((null == previousBestNamespace) || (null == previousBestPrefix) ||
+                                    (null != newPrefix && previousBestPrefix.Length > newPrefix.Length))
                                 {
                                     namespaceToUri[definition.ClrNamespace] = definition.XmlNamespace;
                                 }

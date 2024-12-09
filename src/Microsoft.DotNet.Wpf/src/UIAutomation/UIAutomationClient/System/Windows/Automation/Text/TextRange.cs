@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -74,7 +74,7 @@ namespace System.Windows.Automation.Text
             return new TextPatternRange(hTextRange, pattern);
         }
 
-        internal static TextPatternRange [] Wrap(SafeTextRangeHandle [] hTextRanges, TextPattern pattern)
+        internal static TextPatternRange[] Wrap(SafeTextRangeHandle[] hTextRanges, TextPattern pattern)
         {
             if (hTextRanges == null)
                 return null;
@@ -98,7 +98,7 @@ namespace System.Windows.Automation.Text
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
@@ -179,7 +179,7 @@ namespace System.Windows.Automation.Text
 
             // Check that attribute value is of expected type...
             AutomationAttributeInfo ai;
-            if(!Schema.GetAttributeInfo(attribute, out ai))
+            if (!Schema.GetAttributeInfo(attribute, out ai))
             {
                 throw new ArgumentException(SR.UnsupportedAttribute);
             }
@@ -235,7 +235,7 @@ namespace System.Windows.Automation.Text
             ArgumentNullException.ThrowIfNull(attribute);
 
             AutomationAttributeInfo ai;
-            if(!Schema.GetAttributeInfo(attribute, out ai))
+            if (!Schema.GetAttributeInfo(attribute, out ai))
             {
                 throw new ArgumentException(SR.UnsupportedAttribute);
             }
@@ -391,7 +391,7 @@ namespace System.Windows.Automation.Text
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
 
         /// <summary>
@@ -417,8 +417,8 @@ namespace System.Windows.Automation.Text
         /// Retrieves the text provider associated with this range.
         /// </summary>
         /// <returns>The text provider.</returns>
-        public TextPattern TextPattern 
-        { 
+        public TextPattern TextPattern
+        {
             get
             {
                 return _pattern;
@@ -426,13 +426,13 @@ namespace System.Windows.Automation.Text
         }
 
         #endregion Public Properties
-        
+
         //------------------------------------------------------
         //
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         // check an endpoint argument to see if it is valid.
@@ -458,12 +458,12 @@ namespace System.Windows.Automation.Text
             {
                 Misc.ThrowInvalidArgument(name);
             }
-}
+        }
 
         // check an unit argument to see if it is valid.
         void ValidateUnitArgument(TextUnit unit, string name)
         {
-            if (unit<TextUnit.Character || unit>TextUnit.Document)
+            if (unit < TextUnit.Character || unit > TextUnit.Document)
             {
                 Misc.ThrowInvalidArgument(name);
             }
@@ -476,7 +476,7 @@ namespace System.Windows.Automation.Text
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         SafeTextRangeHandle _hTextRange;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@ namespace MS.Internal
     ///<summary>
     /// The CompilationUnit class
     ///</summary> 
-    internal class CompilationUnit 
+    internal class CompilationUnit
     {
-#region Constructors
+        #region Constructors
 
         ///<summary>constructor</summary> 
         public CompilationUnit(string assemblyName, string language, string defaultNamespace, FileUnit[] fileList)
@@ -22,9 +22,9 @@ namespace MS.Internal
             _defaultNamespace = defaultNamespace;
         }
 
-#endregion Constructors
+        #endregion Constructors
 
-#region Properties
+        #region Properties
 
         internal bool Pass2
         {
@@ -37,7 +37,7 @@ namespace MS.Internal
         {
             get { return _assemblyName; }
         }
-        
+
         ///<summary>Name of the CLR language the package is compiled into</summary> 
         public string Language
         {
@@ -50,7 +50,7 @@ namespace MS.Internal
             get { return _sourcePath; }
             set { _sourcePath = value; }
         }
-        
+
         ///<summary>Default CLR Namespace of the project</summary> 
         public string DefaultNamespace
         {
@@ -70,22 +70,22 @@ namespace MS.Internal
             get { return _fileList; }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Private Data
+        #region Private Data
 
-        private bool                    _pass2 = false;
-        private string                  _assemblyName = string.Empty;
-        private string                  _language = string.Empty;
-        private string                  _sourcePath = string.Empty;
-        private string                  _defaultNamespace = string.Empty;
-        private FileUnit                _applicationFile = FileUnit.Empty;
-        private FileUnit[]              _fileList = null;
+        private bool _pass2 = false;
+        private string _assemblyName = string.Empty;
+        private string _language = string.Empty;
+        private string _sourcePath = string.Empty;
+        private string _defaultNamespace = string.Empty;
+        private FileUnit _applicationFile = FileUnit.Empty;
+        private FileUnit[] _fileList = null;
 
-#endregion Private Data
+        #endregion Private Data
     }
 
-#region ErrorEvent
+    #region ErrorEvent
 
     /// <summary>
     /// Delegate for the Error event. 
@@ -97,7 +97,7 @@ namespace MS.Internal
     /// </summary>
     internal class MarkupErrorEventArgs : EventArgs
     {
-#region Constructors
+        #region Constructors
 
         /// <summary>
         /// constructor
@@ -110,9 +110,9 @@ namespace MS.Internal
             _fileName = fileName;
         }
 
-#endregion Constructors
+        #endregion Constructors
 
-#region Properties
+        #region Properties
 
         /// <summary>
         /// The Error Message
@@ -121,7 +121,7 @@ namespace MS.Internal
         {
             get { return _e; }
         }
-        
+
         /// <summary>
         /// The line number at which the compile Error occurred
         /// </summary>
@@ -129,7 +129,7 @@ namespace MS.Internal
         {
             get { return _lineNum; }
         }
-        
+
         /// <summary>
         /// The character position in the line at which the compile Error occurred
         /// </summary>
@@ -146,23 +146,23 @@ namespace MS.Internal
             get { return _fileName; }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Private Data
+        #region Private Data
 
         private int _lineNum;
         private int _linePos;
         private Exception _e;
         private string _fileName;
 
-#endregion Private Data
+        #endregion Private Data
 
     }
 
-#endregion ErrorEvent
+    #endregion ErrorEvent
 
 
-#region SourceFileResolveEvent
+    #region SourceFileResolveEvent
 
     /// <summary>
     /// Delegate for the SourceFileResolve Event. 
@@ -172,9 +172,9 @@ namespace MS.Internal
     /// <summary>
     /// Event args for the Error event
     /// </summary>
-    internal class SourceFileResolveEventArgs: EventArgs
+    internal class SourceFileResolveEventArgs : EventArgs
     {
-#region Constructors
+        #region Constructors
 
         /// <summary>
         /// constructor
@@ -184,9 +184,9 @@ namespace MS.Internal
             _sourceFileInfo = new SourceFileInfo(file);
         }
 
-#endregion Constructors
+        #endregion Constructors
 
-#region Properties
+        #region Properties
 
         //
         // FileInfo 
@@ -196,20 +196,20 @@ namespace MS.Internal
             get { return _sourceFileInfo; }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Private Data
+        #region Private Data
 
         private SourceFileInfo _sourceFileInfo;
 
-#endregion Private Data
+        #endregion Private Data
 
     }
 
-#endregion SourceFileResolveEvent
+    #endregion SourceFileResolveEvent
 
 
-#region ReferenceAssembly
+    #region ReferenceAssembly
 
     // <summary>
     // Reference Assembly
@@ -218,7 +218,7 @@ namespace MS.Internal
     // </summary>
     internal class ReferenceAssembly : MarshalByRefObject
     {
-    #region Constructor
+        #region Constructor
         // <summary>
         // Constructor
         // </summary>
@@ -238,9 +238,9 @@ namespace MS.Internal
             AssemblyName = assemblyname;
         }
 
-    #endregion Constructor
+        #endregion Constructor
 
-    #region Internal Properties
+        #region Internal Properties
 
         // <summary>
         // The path for the assembly.
@@ -260,19 +260,19 @@ namespace MS.Internal
         internal string AssemblyName
         {
             get { return _assemblyName; }
-            set { _assemblyName = value;}
-        }        
+            set { _assemblyName = value; }
+        }
 
-    #endregion Internal Properties
+        #endregion Internal Properties
 
-    #region private fields
+        #region private fields
 
         private string _path;
         private string _assemblyName;
 
-    #endregion private fields
+        #endregion private fields
 
     }
-#endregion ReferenceAssembly
+    #endregion ReferenceAssembly
 
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,10 +6,10 @@
 // Description: a high-level tool for editing text based FrameworkElements.
 //
 
-using MS.Internal;
-using System.Xml;
 using System.IO;
 using System.Windows.Markup; // Parser
+using System.Xml;
+using MS.Internal;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -788,7 +788,7 @@ namespace System.Windows.Documents
             if (!TextSchema.IsCharacterProperty(formattingProperty) &&
                 !TextSchema.IsParagraphProperty(formattingProperty))
             {
-                #pragma warning suppress 6506 // formattingProperty is obviously not null
+#pragma warning suppress 6506 // formattingProperty is obviously not null
                 throw new ArgumentException(SR.Format(SR.TextEditorPropertyIsNotApplicableForTextFormatting, formattingProperty.Name));
             }
 
@@ -857,7 +857,7 @@ namespace System.Windows.Documents
             if (!TextSchema.IsCharacterProperty(formattingProperty) &&
                 !TextSchema.IsParagraphProperty(formattingProperty))
             {
-                #pragma warning suppress 6506 // formattingProperty is obviously not null
+#pragma warning suppress 6506 // formattingProperty is obviously not null
                 throw new ArgumentException(SR.Format(SR.TextEditorPropertyIsNotApplicableForTextFormatting, formattingProperty.Name));
             }
 
@@ -1260,9 +1260,9 @@ namespace System.Windows.Documents
         /// The TextPointer returned always has its IsFrozen property set true.
         /// </remarks>
         public TextPointer Start
-        { 
+        {
             get
-            { 
+            {
                 return (TextPointer)((ITextRange)this).Start;
             }
         }
@@ -1592,10 +1592,11 @@ namespace System.Windows.Documents
                     if (Paragraph.HasNoTextContent(paragraph))
                     {
                         // Use BlockUIContainer as a replacement of the current paragraph
-                        BlockUIContainer blockUIContainer = new BlockUIContainer(embeddedElement);
-
-                        // Translate embedded element's horizontal alignment property to the BlockUIContainer's text alignment
-                        blockUIContainer.TextAlignment = TextRangeEdit.GetTextAlignmentFromHorizontalAlignment(embeddedElement.HorizontalAlignment);
+                        BlockUIContainer blockUIContainer = new BlockUIContainer(embeddedElement)
+                        {
+                            // Translate embedded element's horizontal alignment property to the BlockUIContainer's text alignment
+                            TextAlignment = TextRangeEdit.GetTextAlignmentFromHorizontalAlignment(embeddedElement.HorizontalAlignment)
+                        };
 
                         // Replace paragraph with BlockUIContainer
                         paragraph.SiblingBlocks.InsertAfter(paragraph, blockUIContainer);
@@ -1802,9 +1803,9 @@ namespace System.Windows.Documents
         //------------------------------------------------------
 
         #region Internal Properties
-        
+
         internal int ChangeBlockLevel
-        { 
+        {
             get
             {
                 return _changeBlockLevel;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,8 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using System.IO;
 using System.ComponentModel;
+using System.IO;
 using System.Net.Cache;
 // These types are aliased to match the unamanaged names used in interop
 
@@ -57,7 +57,7 @@ namespace System.Windows.Media.Imaging
 
         private static void UriCachePolicyPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BitmapImage target = ((BitmapImage) d);
+            BitmapImage target = ((BitmapImage)d);
 
 
             target.UriCachePolicyPropertyChangedHook(e);
@@ -66,7 +66,7 @@ namespace System.Windows.Media.Imaging
         }
         private static void UriSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BitmapImage target = ((BitmapImage) d);
+            BitmapImage target = ((BitmapImage)d);
 
 
             target.UriSourcePropertyChangedHook(e);
@@ -75,7 +75,7 @@ namespace System.Windows.Media.Imaging
         }
         private static void StreamSourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BitmapImage target = ((BitmapImage) d);
+            BitmapImage target = ((BitmapImage)d);
 
 
             target.StreamSourcePropertyChangedHook(e);
@@ -84,7 +84,7 @@ namespace System.Windows.Media.Imaging
         }
         private static void DecodePixelWidthPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BitmapImage target = ((BitmapImage) d);
+            BitmapImage target = ((BitmapImage)d);
 
 
             target.DecodePixelWidthPropertyChangedHook(e);
@@ -93,7 +93,7 @@ namespace System.Windows.Media.Imaging
         }
         private static void DecodePixelHeightPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BitmapImage target = ((BitmapImage) d);
+            BitmapImage target = ((BitmapImage)d);
 
 
             target.DecodePixelHeightPropertyChangedHook(e);
@@ -102,7 +102,7 @@ namespace System.Windows.Media.Imaging
         }
         private static void RotationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BitmapImage target = ((BitmapImage) d);
+            BitmapImage target = ((BitmapImage)d);
 
 
             target.RotationPropertyChangedHook(e);
@@ -111,7 +111,7 @@ namespace System.Windows.Media.Imaging
         }
         private static void SourceRectPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BitmapImage target = ((BitmapImage) d);
+            BitmapImage target = ((BitmapImage)d);
 
 
             target.SourceRectPropertyChangedHook(e);
@@ -120,7 +120,7 @@ namespace System.Windows.Media.Imaging
         }
         private static void CreateOptionsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BitmapImage target = ((BitmapImage) d);
+            BitmapImage target = ((BitmapImage)d);
 
 
             target.CreateOptionsPropertyChangedHook(e);
@@ -129,7 +129,7 @@ namespace System.Windows.Media.Imaging
         }
         private static void CacheOptionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            BitmapImage target = ((BitmapImage) d);
+            BitmapImage target = ((BitmapImage)d);
 
 
             target.CacheOptionPropertyChangedHook(e);
@@ -148,7 +148,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (RequestCachePolicy) GetValue(UriCachePolicyProperty);
+                return (RequestCachePolicy)GetValue(UriCachePolicyProperty);
             }
             set
             {
@@ -163,7 +163,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (Uri) GetValue(UriSourceProperty);
+                return (Uri)GetValue(UriSourceProperty);
             }
             set
             {
@@ -175,11 +175,11 @@ namespace System.Windows.Media.Imaging
         ///     StreamSource - Stream.  Default value is null.
         /// </summary>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-                         public Stream StreamSource
+        public Stream StreamSource
         {
             get
             {
-                return (Stream) GetValue(StreamSourceProperty);
+                return (Stream)GetValue(StreamSourceProperty);
             }
             set
             {
@@ -194,7 +194,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (int) GetValue(DecodePixelWidthProperty);
+                return (int)GetValue(DecodePixelWidthProperty);
             }
             set
             {
@@ -209,7 +209,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (int) GetValue(DecodePixelHeightProperty);
+                return (int)GetValue(DecodePixelHeightProperty);
             }
             set
             {
@@ -224,7 +224,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (Rotation) GetValue(RotationProperty);
+                return (Rotation)GetValue(RotationProperty);
             }
             set
             {
@@ -239,7 +239,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (Int32Rect) GetValue(SourceRectProperty);
+                return (Int32Rect)GetValue(SourceRectProperty);
             }
             set
             {
@@ -254,7 +254,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (BitmapCreateOptions) GetValue(CreateOptionsProperty);
+                return (BitmapCreateOptions)GetValue(CreateOptionsProperty);
             }
             set
             {
@@ -269,7 +269,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (BitmapCacheOption) GetValue(CacheOptionProperty);
+                return (BitmapCacheOption)GetValue(CacheOptionProperty);
             }
             set
             {
@@ -300,7 +300,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            BitmapImage sourceBitmapImage = (BitmapImage) source;
+            BitmapImage sourceBitmapImage = (BitmapImage)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceBitmapImage);
@@ -317,7 +317,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            BitmapImage sourceBitmapImage = (BitmapImage) source;
+            BitmapImage sourceBitmapImage = (BitmapImage)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceBitmapImage);
@@ -334,7 +334,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            BitmapImage sourceBitmapImage = (BitmapImage) source;
+            BitmapImage sourceBitmapImage = (BitmapImage)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceBitmapImage);
@@ -351,7 +351,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            BitmapImage sourceBitmapImage = (BitmapImage) source;
+            BitmapImage sourceBitmapImage = (BitmapImage)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceBitmapImage);

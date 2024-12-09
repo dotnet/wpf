@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,7 +16,7 @@ namespace MS.Internal.ComponentModel
     ///     matching to find a match for any parameters that are
     ///     compatible.
     /// </summary>
-    internal class AttachedPropertyMethodSelector : Binder 
+    internal class AttachedPropertyMethodSelector : Binder
     {
         /// <summary>
         ///     The only method we implement.  Our goal here is to find a method that best matches the arguments passed.
@@ -27,9 +27,9 @@ namespace MS.Internal.ComponentModel
         public override MethodBase SelectMethod(BindingFlags bindingAttr, MethodBase[] match, Type[] types, ParameterModifier[] modifiers)
         {
             // Short circuit for cases where someone didn't pass in a types array.
-            if (types == null) 
+            if (types == null)
             {
-                if (match.Length > 1) 
+                if (match.Length > 1)
                 {
                     throw new AmbiguousMatchException();
                 }
@@ -39,11 +39,11 @@ namespace MS.Internal.ComponentModel
                 }
             }
 
-            for(int idx = 0; idx < match.Length; idx++)
+            for (int idx = 0; idx < match.Length; idx++)
             {
                 MethodBase candidate = match[idx];
                 ParameterInfo[] parameters = candidate.GetParameters();
-                if (ParametersMatch(parameters, types)) 
+                if (ParametersMatch(parameters, types))
                 {
                     return candidate;
                 }
@@ -56,9 +56,9 @@ namespace MS.Internal.ComponentModel
         ///     This method checks that the parameters passed in are
         ///     compatible with the provided parameter types.
         /// </summary>
-        private static bool ParametersMatch(ParameterInfo[] parameters, Type[] types) 
+        private static bool ParametersMatch(ParameterInfo[] parameters, Type[] types)
         {
-            if (parameters.Length != types.Length) 
+            if (parameters.Length != types.Length)
             {
                 return false;
             }
@@ -68,26 +68,26 @@ namespace MS.Internal.ComponentModel
             // the second pass do we do an IsAssignableFrom.
 
             bool compat = true;
-            for(int idx = 0; idx < parameters.Length; idx++)
+            for (int idx = 0; idx < parameters.Length; idx++)
             {
                 ParameterInfo p = parameters[idx];
                 Type t = types[idx];
 
-                if (p.ParameterType != t) 
+                if (p.ParameterType != t)
                 {
                     compat = false;
                     break;
                 }
             }
 
-            if (compat) 
+            if (compat)
             {
                 return true;
             }
 
             // Second pass uses IsAssignableFrom to check for compatible types.
             compat = true;
-            for(int idx = 0; idx < parameters.Length; idx++)
+            for (int idx = 0; idx < parameters.Length; idx++)
             {
                 ParameterInfo p = parameters[idx];
                 Type t = types[idx];
@@ -114,7 +114,7 @@ namespace MS.Internal.ComponentModel
         /// <summary>
         ///     We do not implement this.
         /// </summary>
-        public override FieldInfo BindToField(BindingFlags bindingAttr, FieldInfo[] match, object value, CultureInfo culture) 
+        public override FieldInfo BindToField(BindingFlags bindingAttr, FieldInfo[] match, object value, CultureInfo culture)
         {
             // We are only a method binder.
             throw new NotImplementedException();
@@ -129,7 +129,7 @@ namespace MS.Internal.ComponentModel
             // We are only a method binder.
             throw new NotImplementedException();
         }
-        
+
         /// <summary>
         ///     We do not implement this.
         /// </summary>
@@ -138,7 +138,7 @@ namespace MS.Internal.ComponentModel
             // We are only a method binder.
             throw new NotImplementedException();
         }
-         
+
         /// <summary>
         ///     We do not implement this.
         /// </summary>

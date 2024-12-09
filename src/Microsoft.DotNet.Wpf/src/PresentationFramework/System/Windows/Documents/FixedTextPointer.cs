@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -391,8 +391,9 @@ namespace System.Windows.Documents
         /// </summary>
         int ITextPointer.MoveByOffset(int offset)
         {
-            if (_isFrozen) throw new InvalidOperationException(SR.TextPositionIsFrozen);
-    
+            if (_isFrozen)
+                throw new InvalidOperationException(SR.TextPositionIsFrozen);
+
             if (!_flowPosition.Move(offset))
             {
                 throw new ArgumentException(SR.BadDistance, "offset");
@@ -632,7 +633,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                #pragma warning suppress 56503
+#pragma warning suppress 56503
                 throw new NotImplementedException();
             }
         }
@@ -696,14 +697,14 @@ namespace System.Windows.Documents
         //------------------------------------------------------
         #region Private Fields
         private LogicalDirection _gravity;
-        private FlowPosition     _flowPosition;              // FlowPosition in the content flow
+        private FlowPosition _flowPosition;              // FlowPosition in the content flow
 
         // True if Freeze has been called, in which case
         // this TextPointer is immutable and may not be repositioned.
         private bool _isFrozen;
 
 #if DEBUG
-        private uint    _debugId = (_debugIdCounter++);
+        private uint _debugId = (_debugIdCounter++);
         private static uint _debugIdCounter = 0;
 #endif
         #endregion Private Fields

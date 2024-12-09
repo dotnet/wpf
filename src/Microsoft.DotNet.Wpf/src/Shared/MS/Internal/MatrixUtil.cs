@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,8 +16,8 @@ namespace MS.Internal
     {
         TRANSFORM_IS_IDENTITY = 0,
         TRANSFORM_IS_TRANSLATION = 1,
-        TRANSFORM_IS_SCALING     = 2,
-        TRANSFORM_IS_UNKNOWN     = 4
+        TRANSFORM_IS_SCALING = 2,
+        TRANSFORM_IS_UNKNOWN = 4
     }
 
     internal static class MatrixUtil
@@ -216,12 +216,12 @@ namespace MS.Internal
                         matrix1._offsetX * matrix2._m12 + matrix1._offsetY * matrix2._m22 + matrix2._offsetY);
                     return;
 #if DEBUG
-            default:
-                Debug.Fail("Matrix multiply hit an invalid case: " + combinedType);
-                break;
+                default:
+                    Debug.Fail("Matrix multiply hit an invalid case: " + combinedType);
+                    break;
 #endif
             }
-        }        
+        }
 
         /// <summary>
         /// Applies an offset to the specified matrix in place.
@@ -233,8 +233,10 @@ namespace MS.Internal
         {
             if (matrix._type == MatrixTypes.TRANSFORM_IS_IDENTITY)
             {
-                matrix = new Matrix(1, 0, 0, 1, offsetX, offsetY);
-                matrix._type = MatrixTypes.TRANSFORM_IS_TRANSLATION;
+                matrix = new Matrix(1, 0, 0, 1, offsetX, offsetY)
+                {
+                    _type = MatrixTypes.TRANSFORM_IS_TRANSLATION
+                };
             }
             else
             {

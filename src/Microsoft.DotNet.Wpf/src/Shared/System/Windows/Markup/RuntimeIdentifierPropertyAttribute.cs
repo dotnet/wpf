@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,7 +31,7 @@ namespace System.Windows.Markup
     /// </summary>
     [AttributeUsage(AttributeTargets.Class)]
     [SRCS.TypeForwardedFrom("WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
-    public sealed class RuntimeNamePropertyAttribute: Attribute
+    public sealed class RuntimeNamePropertyAttribute : Attribute
     {
         /// <summary/>
         public RuntimeNamePropertyAttribute(string? name)
@@ -67,12 +67,12 @@ namespace System.Windows.Markup
         {
             string name = candidateName as string;
 
-            if( name != null )
+            if (name != null)
             {
                 // Non-null string, ask the XAML validation code for blessing.
                 return IsValidIdentifierName(name);
             }
-            else if( candidateName == null )
+            else if (candidateName == null)
             {
                 // Null string is allowed
                 return true;

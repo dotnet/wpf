@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -39,7 +39,7 @@ namespace MS.Internal.Ink
         internal const int BitsPerShort = 16;    // number of bits in one short - 2 bytes
         internal const int BitsPerInt = 32;    // number of bits in one integer - 4 bytes
         internal const int BitsPerLong = 64;    // number of bits in one long - 8 bytes
-        
+
 
         // since casting from floats have mantisaa components,
         //      casts from float to int are not constrained by

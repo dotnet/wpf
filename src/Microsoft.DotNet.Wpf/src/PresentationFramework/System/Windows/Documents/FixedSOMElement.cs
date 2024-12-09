@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Windows.Controls;
 
 /*++
     Description:
@@ -39,7 +39,7 @@ namespace System.Windows.Documents
                 _mat = Transform.Identity.Value;
             }
         }
-        
+
         protected FixedSOMElement(FixedNode fixedNode, GeneralTransform transform)
         {
             _fixedNode = fixedNode;
@@ -54,7 +54,7 @@ namespace System.Windows.Documents
                 _mat = Transform.Identity.Value;
             }
         }
-        
+
         #endregion Constructors
 
 
@@ -78,7 +78,7 @@ namespace System.Windows.Documents
                     Rect alignmentBox = glyphRun.ComputeAlignmentBox();
                     alignmentBox.Offset(glyphs.OriginX, glyphs.OriginY);
                     GeneralTransform transform = glyphs.TransformToAncestor(page);
-                    
+
                     if (startIndex < 0)
                     {
                         startIndex = 0;
@@ -188,7 +188,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Protected Fields
-        protected FixedNode _fixedNode ;
+        protected FixedNode _fixedNode;
         protected int _startIndex;
         protected int _endIndex;
         protected Matrix _mat;

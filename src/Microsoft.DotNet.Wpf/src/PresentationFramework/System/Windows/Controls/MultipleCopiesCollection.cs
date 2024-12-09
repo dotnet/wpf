@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -43,12 +43,12 @@ namespace System.Windows.Controls
         ///     its own collection changed event.
         /// </summary>
         internal void MirrorCollectionChange(NotifyCollectionChangedEventArgs e)
-        {            
+        {
             switch (e.Action)
             {
                 case NotifyCollectionChangedAction.Add:
                     Debug.Assert(
-                        e.NewItems.Count == 1, 
+                        e.NewItems.Count == 1,
                         "We're mirroring the Columns collection which is an ObservableCollection and only supports adding one item at a time");
                     Insert(e.NewStartingIndex);
                     break;
@@ -77,7 +77,7 @@ namespace System.Windows.Controls
                 case NotifyCollectionChangedAction.Reset:
                     Reset();
                     break;
-            }            
+            }
         }
 
         /// <summary>
@@ -122,9 +122,9 @@ namespace System.Windows.Controls
         /// </summary>
         internal object CopiedItem
         {
-            get 
-            { 
-                return _item; 
+            get
+            {
+                return _item;
             }
 
             set
@@ -157,9 +157,9 @@ namespace System.Windows.Controls
         /// </summary>
         private int RepeatCount
         {
-            get 
-            { 
-                return _count; 
+            get
+            {
+                return _count;
             }
 
             set
@@ -172,7 +172,7 @@ namespace System.Windows.Controls
                 }
             }
         }
-       
+
         private void Insert(int index)
         {
             RepeatCount++;
@@ -197,9 +197,9 @@ namespace System.Windows.Controls
         private void RemoveAt(int index)
         {
             Debug.Assert((index >= 0) && (index < RepeatCount), "Index out of range");
-      
+
             RepeatCount--;
-            OnCollectionChanged(NotifyCollectionChangedAction.Remove, CopiedItem, index);  
+            OnCollectionChanged(NotifyCollectionChangedAction.Remove, CopiedItem, index);
         }
 
         private void RemoveRange(int index, int count)

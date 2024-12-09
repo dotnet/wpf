@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,18 +10,17 @@
 
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Threading;
-using System.Windows.Input;
 using System.Windows.Automation.Peers;
+using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Navigation;
-using System.Windows.Markup;
-
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.AppModel;
-using MS.Internal.Utility;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
+using MS.Internal.Utility;
 
 
 namespace System.Windows.Navigation
@@ -128,7 +127,7 @@ namespace System.Windows.Controls
         private static object CoerceContent(DependencyObject d, object value)
         {
             // whenever content changes, defer the change until the Navigate comes in
-            Frame f = (Frame) d;
+            Frame f = (Frame)d;
 
             if (f._navigationService.Content == value)
             {
@@ -160,7 +159,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return  BaseUri;
+                return BaseUri;
             }
             set
             {
@@ -229,7 +228,7 @@ namespace System.Windows.Controls
                         typeof(Uri),
                         typeof(Frame),
                         new FrameworkPropertyMetadata(
-                                (Uri) null,
+                                (Uri)null,
                                 // The Journal flag tells the parser not to re-assign the property
                                 // when doing journal navigation. See ParserContext.SkipJournaledProperties.
                                 FrameworkPropertyMetadataOptions.Journal,
@@ -261,7 +260,7 @@ namespace System.Windows.Controls
             Frame frame = (Frame)d;
 
             // Don't navigate if the Source value change is from NavService as a result of a navigation happening.
-            if (! frame._sourceUpdatedFromNavService)
+            if (!frame._sourceUpdatedFromNavService)
             {
                 // We used to unhook first visual child here.
                 // Since we enabled styling for Frame. We're relying on Content property and ContentPresenter in Frame's style
@@ -297,7 +296,7 @@ namespace System.Windows.Controls
         [Bindable(true), CustomCategory("Navigation")]
         public Uri Source
         {
-            get { return (Uri) GetValue(SourceProperty); }
+            get { return (Uri)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
         }
 
@@ -362,7 +361,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool SandboxExternalContent
         {
-            get { return (bool) GetValue(SandboxExternalContentProperty); }
+            get { return (bool)GetValue(SandboxExternalContentProperty); }
             set
             {
                 bool fSandBox = (bool)value;
@@ -603,7 +602,7 @@ namespace System.Windows.Controls
                 _contentRenderedCallback.Abort();
             }
             _contentRenderedCallback = Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                                   (DispatcherOperationCallback) delegate (object arg)
+                                   (DispatcherOperationCallback)delegate (object arg)
                                    {
                                        Frame thisRef = (Frame)arg;
                                        thisRef._contentRenderedCallback = null;
@@ -693,7 +692,7 @@ namespace System.Windows.Controls
         /// </returns>
         internal override object AdjustEventSource(RoutedEventArgs e)
         {
-            e.Source=this;
+            e.Source = this;
             return this;
         }
 
@@ -725,7 +724,7 @@ namespace System.Windows.Controls
             // When uri of NavigationService is valid and can be used to
             // relaod, we do not serialize content
             Invariant.Assert(_navigationService != null, "_navigationService should never be null here");
-            return ( !_navigationService.CanReloadFromUri && Content != null);
+            return (!_navigationService.CanReloadFromUri && Content != null);
         }
 
         #endregion Overding ContentControl implementation
@@ -736,7 +735,7 @@ namespace System.Windows.Controls
         private static void OnParentNavigationServiceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Debug.Assert(d as Frame != null && ((Frame)d).NavigationService != null);
-            ((Frame) d).NavigationService.OnParentNavigationServiceChanged();
+            ((Frame)d).NavigationService.OnParentNavigationServiceChanged();
         }
 
         /// <summary>
@@ -935,7 +934,7 @@ namespace System.Windows.Controls
         /// <exception cref="InvalidOperationException"> There is no back journal entry to go to. </exception>
         public void GoBack()
         {
-            if(_ownJournalScope == null)
+            if (_ownJournalScope == null)
                 throw new InvalidOperationException(SR.InvalidOperation_NoJournal);
             _ownJournalScope.GoBack();
         }
@@ -1217,17 +1216,18 @@ namespace System.Windows.Controls
                 return null;
             }
 
-            FramePersistState state = new FramePersistState();
+            FramePersistState state = new FramePersistState
+            {
+                // Save a JournalEntry for the current content.
+                JournalEntry = _navigationService.MakeJournalEntry(JournalReason.NewContentNavigation),
+                // The current Content may be null or may not want to be journaled (=> JournalEntry=null).
+                // But we still need to save and then restore the NS GUID - there may be other JEs keyed
+                // by this GUID value.
+                // i. There is a somewhat similar case in ApplicationProxyInternal._GetSaveHistoryBytesDelegate().
+                NavSvcGuid = _navigationService.GuidId,
 
-            // Save a JournalEntry for the current content.
-            state.JournalEntry = _navigationService.MakeJournalEntry(JournalReason.NewContentNavigation);
-            // The current Content may be null or may not want to be journaled (=> JournalEntry=null).
-            // But we still need to save and then restore the NS GUID - there may be other JEs keyed
-            // by this GUID value.
-            // i. There is a somewhat similar case in ApplicationProxyInternal._GetSaveHistoryBytesDelegate().
-            state.NavSvcGuid = _navigationService.GuidId;
-
-            state.JournalOwnership = _journalOwnership;
+                JournalOwnership = _journalOwnership
+            };
             if (_ownJournalScope != null)
             {
                 Debug.Assert(_journalOwnership == JournalOwnership.OwnsJournal);
@@ -1250,13 +1250,13 @@ namespace System.Windows.Controls
             // state.JournalOwnership. So, at this point JournalOwnership is not necessarily Automatic
             // (the default).
             JournalOwnership = state.JournalOwnership;
-            if(_journalOwnership == JournalOwnership.OwnsJournal)
+            if (_journalOwnership == JournalOwnership.OwnsJournal)
             {
                 Invariant.Assert(state.Journal != null);
                 _ownJournalScope.Journal = state.Journal;
             }
 
-            if(state.JournalEntry != null)
+            if (state.JournalEntry != null)
             {
                 state.JournalEntry.Navigate(this, NavigationMode.Back);
             }
@@ -1398,15 +1398,15 @@ namespace System.Windows.Controls
         //------------------------------------------------------
         #region Private Fields
 
-        private bool                _postContentRenderedFromLoadedHandler = false;
+        private bool _postContentRenderedFromLoadedHandler = false;
         private DispatcherOperation _contentRenderedCallback;
-        private NavigationService    _navigationService;
-        private bool               _sourceUpdatedFromNavService;
+        private NavigationService _navigationService;
+        private bool _sourceUpdatedFromNavService;
 
         /// <remarks> All changes should be made via the JournalOwnership property setter. </remarks>
         private JournalOwnership _journalOwnership = JournalOwnership.Automatic;
-        private JournalNavigationScope  _ownJournalScope;
-        private List<CommandBinding>    _commandBindings;
+        private JournalNavigationScope _ownJournalScope;
+        private List<CommandBinding> _commandBindings;
 
         #endregion Private Fields
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,17 +26,17 @@ namespace System.Windows.Documents
         #region Constructors
         internal PageContentCollection(FixedDocument logicalParent)
         {
-            _logicalParent  = logicalParent;
-            _internalList   = new List<PageContent>();
+            _logicalParent = logicalParent;
+            _internalList = new List<PageContent>();
         }
         #endregion Constructors
-        
+
         //--------------------------------------------------------------------
         //
         // Public Methods
         //
         //---------------------------------------------------------------------
-        
+
         #region Public Methods
         /// <summary>
         /// Append a new PageContent to end of this collection
@@ -70,7 +70,7 @@ namespace System.Windows.Documents
         /// </summary>
         public IEnumerator<PageContent> GetEnumerator()
         {
-            return InternalList.GetEnumerator();          
+            return InternalList.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -106,7 +106,7 @@ namespace System.Windows.Documents
         {
             get { return InternalList.Count; }
         }
-        
+
         #endregion Public Properties
 
         //--------------------------------------------------------------------
@@ -147,7 +147,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Private Properties
-        
+
         // Aggregated IList
         private IList<PageContent> InternalList
         {
@@ -175,7 +175,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Private Fields
-        private FixedDocument  _logicalParent;
+        private FixedDocument _logicalParent;
         private List<PageContent> _internalList;
         #endregion Private Fields
     }

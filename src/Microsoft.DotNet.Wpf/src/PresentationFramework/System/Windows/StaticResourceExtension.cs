@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -241,7 +241,7 @@ namespace System.Windows
             ambientList = ambientValues as List<AmbientPropertyValue>;
             Debug.Assert(ambientList != null, "IAmbientProvider.GetAllAmbientValues no longer returns List<>, please copy the list");
 
-            for(int i=0; i<ambientList.Count; i++)
+            for (int i = 0; i < ambientList.Count; i++)
             {
                 AmbientPropertyValue ambientValue = ambientList[i];
 
@@ -273,7 +273,7 @@ namespace System.Windows
 
             if (dictionaryWithKey != null)
             {
-                value = dictionaryWithKey.Lookup(ResourceKey, allowDeferredReference, mustReturnDeferredResourceReference, canCacheAsThemeResource:false);
+                value = dictionaryWithKey.Lookup(ResourceKey, allowDeferredReference, mustReturnDeferredResourceReference, canCacheAsThemeResource: false);
             }
             if (mustReturnDeferredResourceReference && value == DependencyProperty.UnsetValue)
             {
@@ -321,7 +321,7 @@ namespace System.Windows
 
             if (dictionaryWithKey != null)
             {
-                object value = dictionaryWithKey.Lookup(ResourceKey, allowDeferredReference, mustReturnDeferredResourceReference, canCacheAsThemeResource:false);
+                object value = dictionaryWithKey.Lookup(ResourceKey, allowDeferredReference, mustReturnDeferredResourceReference, canCacheAsThemeResource: false);
                 return value;
             }
 

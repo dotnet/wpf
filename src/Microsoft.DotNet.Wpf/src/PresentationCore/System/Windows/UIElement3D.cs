@@ -1,19 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //
 //
 
-using MS.Internal;
-using MS.Internal.Interop;
-using MS.Internal.KnownBoxes;
-using MS.Internal.PresentationCore;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using MS.Internal;
+using MS.Internal.Interop;
+using MS.Internal.KnownBoxes;
+using MS.Internal.PresentationCore;
 
 namespace System.Windows
 {
@@ -566,7 +566,7 @@ namespace System.Windows
         {
             if (Keyboard.Focus(this) == this)
             {
-                
+
                 // In order to show the touch keyboard we need to prompt the WinRT InputPane API.
                 // We only do this when the keyboard focus has changed as the keyboard focus dictates
                 // our current input targets for the touch and physical keyboards.
@@ -1241,7 +1241,7 @@ namespace System.Windows
         // add a synchronized input pre-opportunity handler from parent if parent is listening.
         internal void AddSynchronizedInputPostOpportunityHandler(EventRoute route, RoutedEventArgs args)
         {
-             if (InputManager.IsSynchronizedInput)
+            if (InputManager.IsSynchronizedInput)
             {
                 if (SynchronizedInputHelper.IsListening(this, args))
                 {

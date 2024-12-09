@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -124,7 +124,7 @@ namespace System.Windows.Documents
         private static int GetCleanParentIndex(DependencyObject parent, object collection, out int firstFreeIndex)
         {
             int index = -1;
-         
+
             firstFreeIndex = -1;
 
             for (int i = 0; i < _cleanParentList.Length; i++)
@@ -200,7 +200,7 @@ namespace System.Windows.Documents
         #region Private Fields
 
         // Static list of clean parent/collection pairs.
-        private static readonly WeakReference []_cleanParentList = new WeakReference[10];
+        private static readonly WeakReference[] _cleanParentList = new WeakReference[10];
 
         #endregion Private Fields
     }

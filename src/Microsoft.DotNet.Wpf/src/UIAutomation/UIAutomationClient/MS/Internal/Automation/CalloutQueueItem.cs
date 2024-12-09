@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Class to create a queue on its own thread.
 
-using System.Windows.Automation;
 using System;
+using System.Windows.Automation;
 
 namespace MS.Internal.Automation
 {
@@ -19,7 +19,7 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         internal CalloutQueueItem(Delegate clientCallback, UiaCoreApi.UiaCacheResponse cacheResponse, AutomationEventArgs e, UiaCoreApi.UiaCacheRequest cacheRequest)
@@ -28,7 +28,7 @@ namespace MS.Internal.Automation
             _cacheResponse = cacheResponse;
             _e = e;
             _cacheRequest = cacheRequest;
-        } 
+        }
 
         #endregion Constructors
 
@@ -38,7 +38,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal override void Process()
@@ -55,7 +55,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         internal Delegate _clientCallback;                // the client's callback delegate

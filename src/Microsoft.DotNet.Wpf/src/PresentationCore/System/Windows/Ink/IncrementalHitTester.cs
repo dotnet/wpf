@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Windows;
-using System.Windows.Input;
 using System.Windows.Ink;
-using MS.Internal.Ink;
+using System.Windows.Input;
 using MS.Internal;
+using MS.Internal.Ink;
 
 namespace System.Windows.Ink
 {
@@ -93,7 +93,7 @@ namespace System.Windows.Ink
                 _strokes.StrokesChangedInternal -= new StrokeCollectionChangedEventHandler(OnStrokesChanged);
                 _strokes = null;
                 int count = _strokeInfos.Count;
-                for ( int i = 0; i < count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     _strokeInfos[i].Detach();
                 }
@@ -178,7 +178,7 @@ namespace System.Windows.Ink
             {
                 StrokeCollection localRemoved = new StrokeCollection(removed);
                 //we have to assume that removed strokes can be in any order in _strokes
-                for (int i = 0; i < _strokeInfos.Count && localRemoved.Count > 0; )
+                for (int i = 0; i < _strokeInfos.Count && localRemoved.Count > 0;)
                 {
                     bool found = false;
                     for (int j = 0; j < localRemoved.Count; j++)
@@ -252,7 +252,7 @@ namespace System.Windows.Ink
             for (int x = 0; x < _strokeInfos.Count; x++)
             {
                 StrokeInfo strokeInfo = _strokeInfos[x];
-            
+
                 if (strokeInfo != null)
                 {
                     strokeInfo.Detach();
@@ -321,7 +321,7 @@ namespace System.Windows.Ink
         /// <param name="points">new points to add to the lasso</param>
         protected override void AddPointsCore(IEnumerable<Point> points)
         {
-            System.Diagnostics.Debug.Assert((points != null) && (IEnumerablePointHelper.GetCount(points)!= 0));
+            System.Diagnostics.Debug.Assert((points != null) && (IEnumerablePointHelper.GetCount(points) != 0));
 
             // Add the new points to the lasso
             int lastPointIndex = (0 != _lasso.PointCount) ? (_lasso.PointCount - 1) : 0;
@@ -448,7 +448,7 @@ namespace System.Windows.Ink
             // hit status and there're the event subscribers.
             if ((null != strokesHit) || (null != strokesUnhit))
             {
-                OnSelectionChanged(new LassoSelectionChangedEventArgs (strokesHit, strokesUnhit));
+                OnSelectionChanged(new LassoSelectionChangedEventArgs(strokesHit, strokesUnhit));
             }
         }
 
@@ -456,7 +456,7 @@ namespace System.Windows.Ink
         /// SelectionChanged event raiser
         /// </summary>
         /// <param name="eventArgs"></param>
-        protected void OnSelectionChanged(LassoSelectionChangedEventArgs  eventArgs)
+        protected void OnSelectionChanged(LassoSelectionChangedEventArgs eventArgs)
         {
             System.Diagnostics.Debug.Assert(eventArgs != null);
             if (SelectionChanged != null)
@@ -469,8 +469,8 @@ namespace System.Windows.Ink
         #endregion
         #region Fields
 
-        private Lasso   _lasso;
-        private int     _percentIntersect;
+        private Lasso _lasso;
+        private int _percentIntersect;
 
         #endregion
     }
@@ -482,7 +482,7 @@ namespace System.Windows.Ink
     /// <summary>
     /// IncrementalHitTester implementation for hit-testing with a shape, PointErasing .
     /// </summary>
-    public class IncrementalStrokeHitTester  : IncrementalHitTester
+    public class IncrementalStrokeHitTester : IncrementalHitTester
     {
         /// <summary>
         ///
@@ -610,7 +610,7 @@ namespace System.Windows.Ink
     /// <summary>
     /// Event arguments for LassoSelectionChanged event
     /// </summary>
-    public class LassoSelectionChangedEventArgs  : EventArgs
+    public class LassoSelectionChangedEventArgs : EventArgs
     {
         internal LassoSelectionChangedEventArgs(StrokeCollection selectedStrokes, StrokeCollection deselectedStrokes)
         {
@@ -633,7 +633,7 @@ namespace System.Windows.Ink
                 }
                 else
                 {
-                    return  new StrokeCollection();
+                    return new StrokeCollection();
                 }
             }
         }
@@ -689,9 +689,9 @@ namespace System.Windows.Ink
             return _stroke.Erase(_hitFragments);
         }
 
-        private Stroke                  _stroke;
-        private StrokeIntersection[]    _hitFragments;
-}
+        private Stroke _stroke;
+        private StrokeIntersection[] _hitFragments;
+    }
 
     #endregion
 }
@@ -802,7 +802,7 @@ namespace MS.Internal.Ink
             {
                 if (!_totalWeightCached)
                 {
-                    _totalWeight= 0;
+                    _totalWeight = 0;
                     for (int i = 0; i < StylusPoints.Count; i++)
                     {
                         _totalWeight += this.GetPointWeight(i);
@@ -825,7 +825,7 @@ namespace MS.Internal.Ink
             double weight = 0f;
             if (index == 0)
             {
-                weight += Math.Sqrt(da.Width*da.Width + da.Height*da.Height) / 2.0f;
+                weight += Math.Sqrt(da.Width * da.Width + da.Height * da.Height) / 2.0f;
             }
             else
             {
@@ -835,7 +835,7 @@ namespace MS.Internal.Ink
 
             if (index == stylusPoints.Count - 1)
             {
-                weight += Math.Sqrt(da.Width*da.Width + da.Height*da.Height) / 2.0f;
+                weight += Math.Sqrt(da.Width * da.Width + da.Height * da.Height) / 2.0f;
             }
             else
             {
@@ -886,7 +886,7 @@ namespace MS.Internal.Ink
         private void OnStrokeDrawingAttributesChanged(object sender, PropertyDataChangedEventArgs args)
         {
             // Only enforce rehittesting of the whole stroke when the DrawingAttribute change may affect hittesting
-            if(DrawingAttributes.IsGeometricalDaGuid(args.PropertyGuid))
+            if (DrawingAttributes.IsGeometricalDaGuid(args.PropertyGuid))
             {
                 Invalidate();
             }
@@ -921,14 +921,14 @@ namespace MS.Internal.Ink
 
         #region Fields
 
-        private Stroke                      _stroke;
-        private Rect                        _bounds;
-        private double                      _hitWeight = 0f;
-        private bool                        _isHit = false;
-        private bool                        _isDirty = true;
-        private StylusPointCollection       _stylusPoints;   // Cache the stroke rendering points
-        private double                      _totalWeight = 0f;
-        private bool                        _totalWeightCached = false;
+        private Stroke _stroke;
+        private Rect _bounds;
+        private double _hitWeight = 0f;
+        private bool _isHit = false;
+        private bool _isDirty = true;
+        private StylusPointCollection _stylusPoints;   // Cache the stroke rendering points
+        private double _totalWeight = 0f;
+        private bool _totalWeightCached = false;
         #endregion
     }
 

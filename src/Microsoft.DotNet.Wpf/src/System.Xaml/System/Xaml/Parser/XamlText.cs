@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,7 +38,7 @@ namespace MS.Internal.Xaml.Parser
 
         public bool IsEmpty
         {
-            get { return _sb.Length==0; }
+            get { return _sb.Length == 0; }
         }
 
         public string Text
@@ -72,7 +72,7 @@ namespace MS.Internal.Xaml.Parser
             get { return _isWhiteSpaceOnly; }
         }
 
-        public void Paste(string text, bool trimLeadingWhitespace, bool convertCRLFtoLF=true)
+        public void Paste(string text, bool trimLeadingWhitespace, bool convertCRLFtoLF = true)
         {
             bool newTextIsWhitespace = IsWhitespace(text);
 
@@ -130,7 +130,7 @@ namespace MS.Internal.Xaml.Parser
                     else
                     {
                         // Notice if it ends in WS
-                        if (IsWhitespaceChar(_sb[_sb.Length-1]))
+                        if (IsWhitespaceChar(_sb[_sb.Length - 1]))
                         {
                             existingTextHasTrailingWhitespace = true;
                         }
@@ -177,7 +177,7 @@ namespace MS.Internal.Xaml.Parser
 
         static bool IsWhitespace(string text)
         {
-            for (int i=0; i<text.Length; i++)
+            for (int i = 0; i < text.Length; i++)
             {
                 if (!IsWhitespaceChar(text[i]))
                     return false;
@@ -196,7 +196,7 @@ namespace MS.Internal.Xaml.Parser
         static string CollapseWhitespace(string text)
         {
             StringBuilder sb = new StringBuilder(text.Length);
-            int firstIdx=0;
+            int firstIdx = 0;
             while (firstIdx < text.Length)
             {
                 // If it is not whitespace copy it to the destination.
@@ -294,7 +294,7 @@ namespace MS.Internal.Xaml.Parser
 
         static int ComputeUnicodeScalarValue(int takeOneIdx, int takeTwoIdx, string text)
         {
-            int unicodeScalarValue=0;
+            int unicodeScalarValue = 0;
             bool isSurrogate = false;
 
             Char highChar = text[takeTwoIdx];

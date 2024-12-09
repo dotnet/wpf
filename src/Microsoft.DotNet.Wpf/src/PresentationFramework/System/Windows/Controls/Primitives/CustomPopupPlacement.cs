@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -58,7 +58,7 @@ namespace System.Windows.Controls.Primitives
         /// <param name="placement1">The first value.</param>
         /// <param name="placement2">The second value.</param>
         /// <returns></returns>
-        public static bool operator==(CustomPopupPlacement placement1, CustomPopupPlacement placement2)
+        public static bool operator ==(CustomPopupPlacement placement1, CustomPopupPlacement placement2)
         {
             return placement1.Equals(placement2);
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,7 +38,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace System.Windows.Automation
         /// </summary>
         /// <param name="property">The property to check</param>
         /// <param name="value">The value to check the property for</param>
-        public PropertyCondition( AutomationProperty property, object value )
+        public PropertyCondition(AutomationProperty property, object value)
         {
             Init(property, value, PropertyConditionFlags.None);
         }
@@ -57,7 +57,7 @@ namespace System.Windows.Automation
         /// <param name="property">The property to check</param>
         /// <param name="value">The value to check the property for</param>
         /// <param name="flags">Flags that affect the comparison</param>
-        public PropertyCondition( AutomationProperty property, object value, PropertyConditionFlags flags )
+        public PropertyCondition(AutomationProperty property, object value, PropertyConditionFlags flags)
         {
             Init(property, value, flags);
         }
@@ -71,7 +71,7 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
 
         /// <summary>
@@ -115,10 +115,10 @@ namespace System.Windows.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
-        void Init(AutomationProperty property, object val, PropertyConditionFlags flags )
+        void Init(AutomationProperty property, object val, PropertyConditionFlags flags)
         {
             ArgumentNullException.ThrowIfNull(property);
 
@@ -174,7 +174,7 @@ namespace System.Windows.Automation
             else if (val is AutomationHeadingLevel)
             {
                 AutomationHeadingLevel automationHeadingLevel = (AutomationHeadingLevel)(val);
-                switch(automationHeadingLevel)
+                switch (automationHeadingLevel)
                 {
                     case AutomationHeadingLevel.None:
                         val = HeadingLevel.None;
@@ -225,7 +225,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationProperty _property;

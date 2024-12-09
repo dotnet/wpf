@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -212,7 +212,8 @@ namespace MS.Internal.Controls
         internal void OnUIDeactivate(ActiveXHost site)
         {
 #if DEBUG
-            if (_siteUIActive != null) {
+            if (_siteUIActive != null)
+            {
                 //TODO: Debug.Assert(_siteUIActive == site, "deactivating when not active...");
                 Debug.Assert(this.ActiveXHost == site, "deactivating when not active...");
             }

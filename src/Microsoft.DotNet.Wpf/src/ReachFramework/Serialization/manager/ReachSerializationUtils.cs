@@ -1,18 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
-using System.Xml;
+using System.Globalization;
 using System.IO;
 using System.IO.Packaging;
-using System.Windows.Xps.Packaging;
+using System.Printing;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Globalization;
-using System.Printing;
-
+using System.Windows.Xps.Packaging;
+using System.Xml;
 using MS.Utility;
 
 namespace System.Windows.Xps.Serialization
@@ -273,18 +272,18 @@ namespace System.Windows.Xps.Serialization
 
         public
         ReachHierarchySimulator(
-            PackageSerializationManager   manager,
-            Object                        serializedObject
+            PackageSerializationManager manager,
+            Object serializedObject
             )
         {
             ArgumentNullException.ThrowIfNull(manager);
             ArgumentNullException.ThrowIfNull(serializedObject);
 
-            this._serializationManager      = manager;
-            this._serializedObject          = serializedObject;
+            this._serializationManager = manager;
+            this._serializedObject = serializedObject;
             this._documentSequenceXmlWriter = null;
-            this._documentXmlWriter         = null;
-            this._pageXmlWriter             = null;
+            this._documentXmlWriter = null;
+            this._pageXmlWriter = null;
         }
 
         #endregion Constructor
@@ -301,7 +300,7 @@ namespace System.Windows.Xps.Serialization
             // In case we have a FixedPage or a Visual as a root, we have to simulate
             // a containing FixedDocument-FixedPage ... etc.
             //
-            if((_serializedObject.GetType() == typeof(System.Windows.Documents.FixedDocument)) ||
+            if ((_serializedObject.GetType() == typeof(System.Windows.Documents.FixedDocument)) ||
                (typeof(System.Windows.Documents.DocumentPaginator).IsAssignableFrom(_serializedObject.GetType())
                 && (_serializedObject.GetType() != typeof(System.Windows.Documents.FixedDocumentSequence))))
             {
@@ -310,13 +309,13 @@ namespace System.Windows.Xps.Serialization
                 //
                 _documentSequenceXmlWriter = SimulateBeginFixedDocumentSequence();
             }
-            else if(_serializedObject.GetType() == typeof(System.Windows.Documents.FixedPage))
+            else if (_serializedObject.GetType() == typeof(System.Windows.Documents.FixedPage))
             {
                 //
                 // Build the necessary wrapper for a FixedPage
                 //
                 _documentSequenceXmlWriter = SimulateBeginFixedDocumentSequence();
-                _documentXmlWriter         = SimulateBeginFixedDocument();
+                _documentXmlWriter = SimulateBeginFixedDocument();
                 XpsSerializationPrintTicketRequiredEventArgs e =
                     new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedPagePrintTicket,
                                                              0);
@@ -324,9 +323,9 @@ namespace System.Windows.Xps.Serialization
                 XpsOMSerializationManager xpsOMSerializationManager = _serializationManager as XpsOMSerializationManager;
 
                 PrintTicket printTicket = null;
-                if( e.Modified )
+                if (e.Modified)
                 {
-                    printTicket =  e.PrintTicket;
+                    printTicket = e.PrintTicket;
                 }
                 Toolbox.Layout(_serializedObject as FixedPage, printTicket);
 
@@ -335,13 +334,13 @@ namespace System.Windows.Xps.Serialization
 
 
             }
-            else if(typeof(System.Windows.Media.Visual).IsAssignableFrom(_serializedObject.GetType()))
+            else if (typeof(System.Windows.Media.Visual).IsAssignableFrom(_serializedObject.GetType()))
             {
                 _documentSequenceXmlWriter = SimulateBeginFixedDocumentSequence();
-                _documentXmlWriter         = SimulateBeginFixedDocument();
-                if(!mode)
+                _documentXmlWriter = SimulateBeginFixedDocument();
+                if (!mode)
                 {
-                    _pageXmlWriter             = SimulateBeginFixedPage();
+                    _pageXmlWriter = SimulateBeginFixedPage();
                 }
             }
         }
@@ -353,20 +352,20 @@ namespace System.Windows.Xps.Serialization
             bool mode
             )
         {
-            if((_serializedObject.GetType() == typeof(System.Windows.Documents.FixedDocument)) ||
+            if ((_serializedObject.GetType() == typeof(System.Windows.Documents.FixedDocument)) ||
                (typeof(System.Windows.Documents.DocumentPaginator).IsAssignableFrom(_serializedObject.GetType())
                 && (_serializedObject.GetType() != typeof(System.Windows.Documents.FixedDocumentSequence))))
             {
                 SimulateEndFixedDocumentSequence(_documentSequenceXmlWriter);
             }
-            else if(_serializedObject.GetType() == typeof(System.Windows.Documents.FixedPage))
+            else if (_serializedObject.GetType() == typeof(System.Windows.Documents.FixedPage))
             {
                 SimulateEndFixedDocument(_documentXmlWriter);
                 SimulateEndFixedDocumentSequence(_documentSequenceXmlWriter);
             }
-            else if(typeof(System.Windows.Media.Visual).IsAssignableFrom(_serializedObject.GetType()))
+            else if (typeof(System.Windows.Media.Visual).IsAssignableFrom(_serializedObject.GetType()))
             {
-                if(!mode)
+                if (!mode)
                 {
                     SimulateEndFixedPage(_pageXmlWriter);
                 }
@@ -383,7 +382,7 @@ namespace System.Windows.Xps.Serialization
         {
             XmlWriter xmlWriter = null;
 
-            if( _serializationManager is XpsSerializationManager)
+            if (_serializationManager is XpsSerializationManager)
             {
                 (_serializationManager as XpsSerializationManager).RegisterDocumentSequenceStart();
             }
@@ -399,7 +398,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Write the start element and the namespace
             //
-            if(xmlnsForType == null)
+            if (xmlnsForType == null)
             {
                 xmlWriter.WriteStartElement(XpsS0Markup.FixedDocumentSequence);
             }
@@ -443,9 +442,9 @@ namespace System.Windows.Xps.Serialization
                                                          0,
                                                          0,
                                                          null);
-            if( _serializationManager is XpsSerializationManager)
+            if (_serializationManager is XpsSerializationManager)
             {
-               (_serializationManager as XpsSerializationManager).RegisterDocumentSequenceEnd();
+                (_serializationManager as XpsSerializationManager).RegisterDocumentSequenceEnd();
             }
             (_serializationManager as IXpsSerializationManager)?.OnXPSSerializationProgressChanged(progressEvent);
         }
@@ -457,10 +456,10 @@ namespace System.Windows.Xps.Serialization
         SimulateBeginFixedDocument(
             )
         {
-            XmlWriter   xmlWriter = null;
-            if( _serializationManager is XpsSerializationManager)
+            XmlWriter xmlWriter = null;
+            if (_serializationManager is XpsSerializationManager)
             {
-               (_serializationManager as XpsSerializationManager).RegisterDocumentStart();
+                (_serializationManager as XpsSerializationManager).RegisterDocumentStart();
             }
             //
             // Build the Image Table
@@ -484,13 +483,13 @@ namespace System.Windows.Xps.Serialization
             //
             // Write the start element and the namespace
             //
-            if(xmlnsForType == null)
+            if (xmlnsForType == null)
             {
                 xmlWriter.WriteStartElement("FixedDocument");
             }
             else
             {
-                xmlWriter.WriteStartElement("FixedDocument",xmlnsForType);
+                xmlWriter.WriteStartElement("FixedDocument", xmlnsForType);
             }
 
             XpsSerializationPrintTicketRequiredEventArgs e =
@@ -535,9 +534,9 @@ namespace System.Windows.Xps.Serialization
                                                          0,
                                                          0,
                                                          null);
-            if( _serializationManager is XpsSerializationManager)
+            if (_serializationManager is XpsSerializationManager)
             {
-               (_serializationManager as XpsSerializationManager).RegisterDocumentEnd();
+                (_serializationManager as XpsSerializationManager).RegisterDocumentEnd();
             }
             (_serializationManager as IXpsSerializationManager)?.OnXPSSerializationProgressChanged(progressEvent);
         }
@@ -547,7 +546,7 @@ namespace System.Windows.Xps.Serialization
         SimulateBeginFixedPage(
             )
         {
-            XmlWriter   xmlWriter = null;
+            XmlWriter xmlWriter = null;
             (_serializationManager as IXpsSerializationManager)?.RegisterPageStart();
             //
             // Build the current Page Image Table
@@ -569,14 +568,14 @@ namespace System.Windows.Xps.Serialization
             Visual visual = _serializedObject as Visual;
             if (visual != null)
             {
-                _treeWalker = new ReachTreeWalker(xmlWriter,_serializationManager);
+                _treeWalker = new ReachTreeWalker(xmlWriter, _serializationManager);
                 _treeWalker.SerializeLinksInVisual(visual);
             }
 
             //
             // Write the start element and the namespace
             //
-            if(xmlnsForType == null)
+            if (xmlnsForType == null)
             {
                 xmlWriter.WriteStartElement(XpsS0Markup.FixedPage);
             }
@@ -616,7 +615,7 @@ namespace System.Windows.Xps.Serialization
         internal
         void
         SimulateEndFixedPage(
-            XmlWriter  xmlWriter
+            XmlWriter xmlWriter
             )
         {
 
@@ -655,7 +654,7 @@ namespace System.Windows.Xps.Serialization
         #endregion Internal Methods
 
         #region Private Methods
-        
+
         protected
         void
         SimulatePrintTicketRaisingEvent(
@@ -667,9 +666,9 @@ namespace System.Windows.Xps.Serialization
             //
             // Serialize the data for the PrintTicket
             //
-            if(e.Modified)
+            if (e.Modified)
             {
-                if(e.PrintTicket != null)
+                if (e.PrintTicket != null)
                 {
                     PrintTicketSerializer serializer = new PrintTicketSerializer(_serializationManager);
                     serializer.SerializeObject(e.PrintTicket);
@@ -678,14 +677,14 @@ namespace System.Windows.Xps.Serialization
 
         }
 
-              
+
         Size
         SimulateFixedPageSize(
             Visual visual,
             PrintTicket printTicket
             )
         {
-            Size sz = new Size(0,0);
+            Size sz = new Size(0, 0);
 
             //Try to cast the visual down to a UIElement so we can get the PreviousArrangeSize
             //
@@ -709,26 +708,26 @@ namespace System.Windows.Xps.Serialization
         #region Protected Data
 
         protected
-        PackageSerializationManager   _serializationManager;
+        PackageSerializationManager _serializationManager;
 
         #endregion Protected Data
 
         #region Private Data
 
         private
-        Object                        _serializedObject;
+        Object _serializedObject;
 
         private
-        XmlWriter                     _documentSequenceXmlWriter;
+        XmlWriter _documentSequenceXmlWriter;
 
         private
-        XmlWriter                     _documentXmlWriter;
+        XmlWriter _documentXmlWriter;
 
         private
-        XmlWriter                     _pageXmlWriter;
+        XmlWriter _pageXmlWriter;
 
         private
-        ReachTreeWalker             _treeWalker;
+        ReachTreeWalker _treeWalker;
 
         #endregion Private Data
     };
@@ -944,7 +943,7 @@ namespace System.Windows.Xps.Serialization
 
         private bool IsFragment(Uri uri)
         {
-            return uri.OriginalString.StartsWith(FRAGMENTMARKER,StringComparison.Ordinal);
+            return uri.OriginalString.StartsWith(FRAGMENTMARKER, StringComparison.Ordinal);
         }
 
         private void SerializeHyperlink(PathGeometry geometry, String id, Uri navigateUri)
@@ -1089,7 +1088,7 @@ namespace System.Windows.Xps.Serialization
         #endregion Private Properties
 
         #region Private Fields
-        private IList<String>  _linkTargetList;
+        private IList<String> _linkTargetList;
         private XmlWriter _linkXmlWriter;
         private StringWriter _linkStream;
         private XmlWriter _serializerXmlWriter;
@@ -1231,7 +1230,7 @@ namespace System.Windows.Xps.Serialization
 
         internal static FixedPage GetPageRoot(object page)
         {
-            FixedPage fixedPage = ((PageContent) page).GetPageRoot(false) as FixedPage;
+            FixedPage fixedPage = ((PageContent)page).GetPageRoot(false) as FixedPage;
 
             return fixedPage;
         }

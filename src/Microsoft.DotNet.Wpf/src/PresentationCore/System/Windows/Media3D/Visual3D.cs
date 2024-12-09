@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Diagnostics;
+using System.Windows.Media.Composition;
 using MS.Internal;
 using MS.Internal.Media;
 using MS.Internal.Media3D;
-using System.Windows.Diagnostics;
-using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
@@ -146,11 +146,12 @@ namespace System.Windows.Media.Media3D
                     /* propertyType = */ typeof(Transform3D),
                     /* ownerType = */ typeof(Visual3D),
                     new PropertyMetadata(Transform3D.Identity, TransformPropertyChanged),
-                    (ValidateValueCallback) delegate { return MediaContext.CurrentMediaContext.WriteAccessEnabled; });
+                    (ValidateValueCallback)delegate
+                    { return MediaContext.CurrentMediaContext.WriteAccessEnabled; });
 
         private static void TransformPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Visual3D owner = ((Visual3D) d);
+            Visual3D owner = ((Visual3D)d);
 
             if (!e.IsASubPropertyChange)
             {
@@ -158,7 +159,7 @@ namespace System.Windows.Media.Media3D
                 {
                     owner.DisconnectAttachedResource(
                         VisualProxyFlags.IsTransformDirty,
-                        ((DUCE.IResource) e.OldValue));
+                        ((DUCE.IResource)e.OldValue));
                 }
 
                 owner.SetFlagsOnAllChannels(true, VisualProxyFlags.IsTransformDirty);
@@ -166,10 +167,10 @@ namespace System.Windows.Media.Media3D
 
             // Stop over-invalidating _bboxSubgraph
             //
-            // We currently maintain a cache of both a ModelVisual3D’s content
+            // We currently maintain a cache of both a ModelVisual3Dâ€™s content
             // and subgraph bounds.  A better solution that would be both a 2D
             // and 3D win would be to stop invalidating _bboxSubgraph when a
-            // visual’s transform changes.
+            // visualâ€™s transform changes.
             owner.RenderChanged(/* sender = */ owner, EventArgs.Empty);
         }
 
@@ -180,7 +181,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Transform3D) GetValue(TransformProperty);
+                return (Transform3D)GetValue(TransformProperty);
             }
 
             set
@@ -290,7 +291,7 @@ namespace System.Windows.Media.Media3D
 
             VisualDiagnostics.OnVisualChildChanged(this, child, false);
 
-            child.SetParent(/* newParent = */ (Visual3D) null);  // CS0121: Call is ambigious without casting null to Visual3D.
+            child.SetParent(/* newParent = */ (Visual3D)null);  // CS0121: Call is ambigious without casting null to Visual3D.
 
             // remove the inheritance context
             RemoveSelfAsInheritanceContext(child, null);
@@ -328,7 +329,7 @@ namespace System.Windows.Media.Media3D
             // Fire notifications
             child.FireOnVisualParentChanged(this);
 
-            OnVisualChildrenChanged(/* visualAdded = */ null , child);
+            OnVisualChildrenChanged(/* visualAdded = */ null, child);
         }
 
         /// <summary>
@@ -457,7 +458,7 @@ namespace System.Windows.Media.Media3D
             {
                 Debug.Assert(VisualTreeHelper.GetParent(this) != null, "If oldParent is null, current parent should != null.");
 
-                if(CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
+                if (CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
                 {
                     Visual.SetTreeBits(
                         VisualTreeHelper.GetParent(this),
@@ -515,7 +516,7 @@ namespace System.Windows.Media.Media3D
             remove
             {
                 // check that we are Disabling a node that was previously Enabled
-                if(CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
+                if (CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
                 {
                     Visual.ClearTreeBits(
                                         this,
@@ -531,7 +532,7 @@ namespace System.Windows.Media.Media3D
                 {
                     newHandler -= value;
 
-                    if(newHandler == null)
+                    if (newHandler == null)
                     {
                         AncestorChangedEventField.ClearValue(this);
                     }
@@ -560,7 +561,7 @@ namespace System.Windows.Media.Media3D
                 Visual3D eAsVisual3D = e as Visual3D;
 
                 // If the flag is not set, then we are Done.
-                if(!eAsVisual3D.CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
+                if (!eAsVisual3D.CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
                 {
                     return;
                 }
@@ -568,7 +569,7 @@ namespace System.Windows.Media.Media3D
                 // If there is a handler on this node, then fire it.
                 Visual.AncestorChangedEventHandler handler = AncestorChangedEventField.GetValue(eAsVisual3D);
 
-                if(handler != null)
+                if (handler != null)
                 {
                     handler(eAsVisual3D, args);
                 }
@@ -676,8 +677,10 @@ namespace System.Windows.Media.Media3D
                 {
                     behavior = filterCallback(this);
 
-                    if (HTFBInterpreter.SkipSubgraph(behavior)) return HitTestResultBehavior.Continue;
-                    if (HTFBInterpreter.Stop(behavior)) return HitTestResultBehavior.Stop;
+                    if (HTFBInterpreter.SkipSubgraph(behavior))
+                        return HitTestResultBehavior.Continue;
+                    if (HTFBInterpreter.Stop(behavior))
+                        return HitTestResultBehavior.Stop;
                 }
 
                 //
@@ -688,7 +691,8 @@ namespace System.Windows.Media.Media3D
                 {
                     HitTestResultBehavior result = HitTestChildren(filterCallback, rayParams);
 
-                    if (result == HitTestResultBehavior.Stop) return HitTestResultBehavior.Stop;
+                    if (result == HitTestResultBehavior.Stop)
+                        return HitTestResultBehavior.Stop;
                 }
 
                 //
@@ -802,7 +806,8 @@ namespace System.Windows.Media.Media3D
                 Rect contentBounds = Rect.Empty;
 
                 Viewport3DVisual viewport3DVisual = (Viewport3DVisual)VisualTreeHelper.GetContainingVisual2D(this);
-                if (viewport3DVisual != null) {
+                if (viewport3DVisual != null)
+                {
                     GeneralTransform3DTo2D transform = TransformToAncestor(viewport3DVisual);
                     contentBounds = transform.TransformBounds(VisualContentBounds);
                 }
@@ -987,7 +992,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected virtual Visual3D GetVisual3DChild(int index)
         {
-           throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+            throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
         }
 
         /// <summary>
@@ -1083,7 +1088,7 @@ namespace System.Windows.Media.Media3D
                                     _bboxContent, "Cached content bounds is incorrect!");
         }
 
-// [Conditional] does not work on methods that return values
+        // [Conditional] does not work on methods that return values
 #if DEBUG
         internal Rect3D Debug_CalculateSubgraphBounds()
         {
@@ -1129,7 +1134,7 @@ namespace System.Windows.Media.Media3D
             }
 
             bboxSubgraph = M3DUtil.ComputeTransformedAxisAlignedBoundingBox(ref _bboxSubgraph, Transform);
-       }
+        }
 
         internal void RenderRecursive(RenderContext ctx)
         {
@@ -1298,7 +1303,7 @@ namespace System.Windows.Media.Media3D
             VisualTreeUtils.AsNonNullVisual(descendant, out visual, out visual3D);
 
             // x86 branch prediction skips the branch on first encounter.  We favor 3D.
-            if(visual != null)
+            if (visual != null)
             {
                 return visual.IsDescendantOf(this);
             }
@@ -2046,8 +2051,8 @@ namespace System.Windows.Media.Media3D
                 // implementations.
                 Debug.Assert(!e.CheckFlagsOr(VisualFlags.ShouldPostRender),
                     "Visual3Ds should never be the root of a tree.");
-                 Debug.Assert(!e.CheckFlagsOr(VisualFlags.NodeIsCyclicBrushRoot),
-                    "Visual3Ds should never be the root of an ICyclicBrush.");
+                Debug.Assert(!e.CheckFlagsOr(VisualFlags.NodeIsCyclicBrushRoot),
+                   "Visual3Ds should never be the root of an ICyclicBrush.");
 
                 e.SetFlags(true, flags);
                 e.SetFlagsOnAllChannels(true, proxyFlags);
@@ -2061,7 +2066,7 @@ namespace System.Windows.Media.Media3D
                     Debug.Assert((viewport == null) == (e.InternalVisualParent == null),
                         "Viewport3DVisual is the only supported 2D parent of a 3D visual.");
 
-                    if(viewport != null)
+                    if (viewport != null)
                     {
                         // We must notify the 2D visual that its contents have changed.
                         // This will cause the 2D visual to set it's content dirty flag

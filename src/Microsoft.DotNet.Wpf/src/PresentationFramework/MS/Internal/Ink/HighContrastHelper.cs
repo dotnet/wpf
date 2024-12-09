@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -62,7 +62,7 @@ namespace MS.Internal.Ink
             __highContrastCallbackList = new List<WeakReference>();
             __increaseCount = 0;
         }
-        
+
         #endregion Constructors
 
 
@@ -80,7 +80,7 @@ namespace MS.Internal.Ink
         /// <param name="highContrastCallback"></param>
         internal static void RegisterHighContrastCallback(HighContrastCallback highContrastCallback)
         {
-            lock ( __lock )
+            lock (__lock)
             {
                 int count = __highContrastCallbackList.Count;
                 int i = 0;
@@ -88,12 +88,12 @@ namespace MS.Internal.Ink
 
                 // Every 100 items, We go through the list to remove the references
                 // which have been collected by GC.
-                if ( __increaseCount > CleanTolerance )
+                if (__increaseCount > CleanTolerance)
                 {
-                    while ( i < count )
+                    while (i < count)
                     {
                         WeakReference weakRef = __highContrastCallbackList[j];
-                        if ( weakRef.IsAlive )
+                        if (weakRef.IsAlive)
                         {
                             j++;
                         }
@@ -137,7 +137,7 @@ namespace MS.Internal.Ink
         /// </summary>
         private static void UpdateHighContrast()
         {
-            lock ( __lock )
+            lock (__lock)
             {
                 int count = __highContrastCallbackList.Count;
                 int i = 0;
@@ -146,14 +146,14 @@ namespace MS.Internal.Ink
                 // Now go through the list,
                 // And we will notify the alive callbacks 
                 // or remove the references which have been collected by GC.
-                while ( i < count )
+                while (i < count)
                 {
                     WeakReference weakRef = __highContrastCallbackList[j];
-                    if ( weakRef.IsAlive )
+                    if (weakRef.IsAlive)
                     {
                         HighContrastCallback highContrastCallback = weakRef.Target as HighContrastCallback;
 
-                        if ( highContrastCallback.Dispatcher != null )
+                        if (highContrastCallback.Dispatcher != null)
                         {
                             highContrastCallback.Dispatcher.BeginInvoke(DispatcherPriority.Background,
                                 new UpdateHighContrastCallback(OnUpdateHighContrast),
@@ -176,7 +176,7 @@ namespace MS.Internal.Ink
 
                 // Reset the count
                 __increaseCount = 0;
-}
+            }
         }
 
         private delegate void UpdateHighContrastCallback(HighContrastCallback highContrastCallback);
@@ -191,7 +191,7 @@ namespace MS.Internal.Ink
             bool isHighContrast = SystemParameters.HighContrast;
             Color windowTextColor = SystemColors.WindowTextColor;
 
-            if ( isHighContrast )
+            if (isHighContrast)
             {
                 highContrastCallback.TurnHighContrastOn(windowTextColor);
             }
@@ -211,10 +211,10 @@ namespace MS.Internal.Ink
 
         #region Private Fields
 
-        private static readonly object          __lock = new object();
-        private static List<WeakReference>      __highContrastCallbackList;
-        private static int                      __increaseCount;
-        private const int                       CleanTolerance = 100;
+        private static readonly object __lock = new object();
+        private static List<WeakReference> __highContrastCallbackList;
+        private static int __increaseCount;
+        private const int CleanTolerance = 100;
 
         #endregion Private Fields
     }

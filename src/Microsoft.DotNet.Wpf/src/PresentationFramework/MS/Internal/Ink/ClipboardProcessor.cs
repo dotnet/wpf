@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,8 +15,8 @@ using System.Security;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Ink;
-using System.Windows.Media;
 using System.Windows.Markup;
+using System.Windows.Media;
 using System.Xml;
 
 namespace MS.Internal.Ink
@@ -25,9 +25,9 @@ namespace MS.Internal.Ink
     [System.Flags]
     internal enum InkCanvasClipboardDataFormats
     {
-        None            = 0x00,     // None
-        XAML            = 0x01,     // XAML
-        ISF             = 0x02,     // ISF
+        None = 0x00,     // None
+        XAML = 0x01,     // XAML
+        ISF = 0x02,     // ISF
     }
 
 
@@ -45,7 +45,7 @@ namespace MS.Internal.Ink
         // Constructors
         //
         //-------------------------------------------------------------------------------
-        
+
         #region Constructors
 
         internal ClipboardProcessor(InkCanvas inkCanvas)
@@ -57,7 +57,7 @@ namespace MS.Internal.Ink
             // Create our default preferred list - Only InkCanvasClipboardFormat.Isf is supported.
             _preferredClipboardData = new Dictionary<InkCanvasClipboardFormat, ClipboardData>();
             _preferredClipboardData.Add(InkCanvasClipboardFormat.InkSerializedFormat, new ISFClipboardData());
-}
+        }
 
         #endregion Constructors
 
@@ -76,11 +76,11 @@ namespace MS.Internal.Ink
         /// <returns>The matched clipboard format. Return -1 if there is no recognized format in the data object</returns>
         internal bool CheckDataFormats(IDataObject dataObject)
         {
-            Debug.Assert(dataObject != null && _preferredClipboardData!= null);
+            Debug.Assert(dataObject != null && _preferredClipboardData != null);
 
-            foreach ( KeyValuePair<InkCanvasClipboardFormat, ClipboardData> pair in _preferredClipboardData )
+            foreach (KeyValuePair<InkCanvasClipboardFormat, ClipboardData> pair in _preferredClipboardData)
             {
-                if ( pair.Value.CanPaste(dataObject) )
+                if (pair.Value.CanPaste(dataObject))
                 {
                     return true;
                 }
@@ -137,7 +137,7 @@ namespace MS.Internal.Ink
             Rect bounds = inkCanvasSelection.SelectionBounds;
 
             // Now copy the selection in the below orders.
-            if ( strokes.Count != 0 || elements.Count != 0 )
+            if (strokes.Count != 0 || elements.Count != 0)
             {
                 // 
                 // The selection should be translated to the origin (0, 0) related to its bounds.
@@ -147,7 +147,7 @@ namespace MS.Internal.Ink
                 transform.OffsetY = -bounds.Top;
 
                 // Add ISF data first.
-                if ( strokes.Count != 0 )
+                if (strokes.Count != 0)
                 {
                     // Transform the strokes first.
                     inkCanvasSelection.TransformStrokes(strokes, transform);
@@ -158,7 +158,7 @@ namespace MS.Internal.Ink
                 }
 
                 // Then add XAML data.
-                if ( CopySelectionInXAML(dataObject, strokes, elements, transform, bounds.Size) )
+                if (CopySelectionInXAML(dataObject, strokes, elements, transform, bounds.Size))
                 {
                     // We have to create an InkCanvas as a container and add all the selection to it.
                     copiedDataFormat |= InkCanvasClipboardDataFormats.XAML;
@@ -166,7 +166,7 @@ namespace MS.Internal.Ink
             }
             else
             {
-                Debug.Assert(false , "CopySelectData: InkCanvas should have a selection!");
+                Debug.Assert(false, "CopySelectData: InkCanvas should have a selection!");
             }
 
             return copiedDataFormat;
@@ -180,59 +180,59 @@ namespace MS.Internal.Ink
         /// <param name="newElements">The elements array which are converted from the data in the IDataObject</param>
         internal bool PasteData(IDataObject dataObject, ref StrokeCollection newStrokes, ref List<UIElement> newElements)
         {
-            Debug.Assert(dataObject != null && _preferredClipboardData!= null);
+            Debug.Assert(dataObject != null && _preferredClipboardData != null);
 
             // We honor the order in our preferred list.
-            foreach ( KeyValuePair<InkCanvasClipboardFormat, ClipboardData> pair in _preferredClipboardData )
+            foreach (KeyValuePair<InkCanvasClipboardFormat, ClipboardData> pair in _preferredClipboardData)
             {
                 InkCanvasClipboardFormat format = pair.Key;
                 ClipboardData data = pair.Value;
-                
-                if ( data.CanPaste(dataObject) )
+
+                if (data.CanPaste(dataObject))
                 {
-                    switch ( format )
+                    switch (format)
                     {
                         case InkCanvasClipboardFormat.Xaml:
-                        {
-                            XamlClipboardData xamlData = (XamlClipboardData)data;
-                            xamlData.PasteFromDataObject(dataObject);
-                            
-                            List<UIElement> elements = xamlData.Elements;
-
-                            if (elements != null && elements.Count != 0)
                             {
-                                // If the Xaml data has been set in an InkCanvas, the top element will be a container InkCanvas.
-                                // In this case, the new elements will be the children of the container.
-                                // Otherwise, the new elements will be whatever data from the data object.
-                                if (elements.Count == 1 && elements[0] is InkCanvas inkCanvas)
-                                {
-                                    TearDownInkCanvasContainer(inkCanvas, ref newStrokes, ref newElements);
-                                }
-                                else
-                                {
-                                    // The new elements are the data in the data object.
-                                    newElements = elements;
-                                }
-}
-                            break;
-                        }
-                        case InkCanvasClipboardFormat.InkSerializedFormat:
-                        {
-                            // Retrieve the stroke data.
-                            ISFClipboardData isfData = (ISFClipboardData)data;
-                            isfData.PasteFromDataObject(dataObject);
+                                XamlClipboardData xamlData = (XamlClipboardData)data;
+                                xamlData.PasteFromDataObject(dataObject);
 
-                            newStrokes = isfData.Strokes;
-                            break;
-                        }
+                                List<UIElement> elements = xamlData.Elements;
+
+                                if (elements != null && elements.Count != 0)
+                                {
+                                    // If the Xaml data has been set in an InkCanvas, the top element will be a container InkCanvas.
+                                    // In this case, the new elements will be the children of the container.
+                                    // Otherwise, the new elements will be whatever data from the data object.
+                                    if (elements.Count == 1 && elements[0] is InkCanvas inkCanvas)
+                                    {
+                                        TearDownInkCanvasContainer(inkCanvas, ref newStrokes, ref newElements);
+                                    }
+                                    else
+                                    {
+                                        // The new elements are the data in the data object.
+                                        newElements = elements;
+                                    }
+                                }
+                                break;
+                            }
+                        case InkCanvasClipboardFormat.InkSerializedFormat:
+                            {
+                                // Retrieve the stroke data.
+                                ISFClipboardData isfData = (ISFClipboardData)data;
+                                isfData.PasteFromDataObject(dataObject);
+
+                                newStrokes = isfData.Strokes;
+                                break;
+                            }
                         case InkCanvasClipboardFormat.Text:
-                        {
-                            // Convert the text data in the data object to a text box element.
-                            TextClipboardData textData = (TextClipboardData)data;
-                            textData.PasteFromDataObject(dataObject);
-                            newElements = textData.Elements;
-                            break;
-                        }
+                            {
+                                // Convert the text data in the data object to a text box element.
+                                TextClipboardData textData = (TextClipboardData)data;
+                                textData.PasteFromDataObject(dataObject);
+                                newElements = textData.Elements;
+                                break;
+                            }
                     }
 
                     // Once we've done pasting, just return now.
@@ -252,7 +252,7 @@ namespace MS.Internal.Ink
             {
                 Debug.Assert(_preferredClipboardData != null);
 
-                foreach ( KeyValuePair<InkCanvasClipboardFormat, ClipboardData> pair in _preferredClipboardData )
+                foreach (KeyValuePair<InkCanvasClipboardFormat, ClipboardData> pair in _preferredClipboardData)
                 {
                     yield return pair.Key;
                 }
@@ -262,14 +262,14 @@ namespace MS.Internal.Ink
                 Debug.Assert(value != null);
 
                 Dictionary<InkCanvasClipboardFormat, ClipboardData> preferredData = new Dictionary<InkCanvasClipboardFormat, ClipboardData>();
-                
-                foreach ( InkCanvasClipboardFormat format in value )
+
+                foreach (InkCanvasClipboardFormat format in value)
                 {
                     // If we find the duplicate format in our preferred list, we should just skip it.
-                    if ( !preferredData.ContainsKey(format) )
+                    if (!preferredData.ContainsKey(format))
                     {
                         ClipboardData clipboardData = null;
-                        switch ( format )
+                        switch (format)
                         {
                             case InkCanvasClipboardFormat.InkSerializedFormat:
                                 clipboardData = new ISFClipboardData();
@@ -287,10 +287,10 @@ namespace MS.Internal.Ink
                         preferredData.Add(format, clipboardData);
                     }
                 }
-            
+
                 _preferredClipboardData = preferredData;
             }
-        }        
+        }
 
 
         //-------------------------------------------------------------------------------
@@ -314,65 +314,65 @@ namespace MS.Internal.Ink
         /// <returns>True if the copy is succeeded</returns>
         private bool CopySelectionInXAML(IDataObject dataObject, StrokeCollection strokes, List<UIElement> elements, Matrix transform, Size size)
         {
-                InkCanvas inkCanvas = new InkCanvas();
+            InkCanvas inkCanvas = new InkCanvas();
 
-                // We already transform the Strokes in CopySelectedData.
-                if (strokes.Count != 0)
+            // We already transform the Strokes in CopySelectedData.
+            if (strokes.Count != 0)
+            {
+                inkCanvas.Strokes = strokes;
+            }
+
+            int elementCount = elements.Count;
+            if (elementCount != 0)
+            {
+                InkCanvasSelection inkCanvasSelection = InkCanvas.InkCanvasSelection;
+
+                for (int i = 0; i < elementCount; i++)
                 {
-                    inkCanvas.Strokes = strokes;
-                }
+                    // NOTICE-2005/05/05-WAYNEZEN,
+                    // An element can't be added to two visual trees.
+                    // So, we cannot add the elements to the new container since they have been added to the current InkCanvas.
+                    // Here we have to do is according to the suggestion from Avalon team -
+                    //      1. Presist the elements to Xaml 
+                    //      2. Load the xaml to create the new instances of the elements.
+                    //      3. Add the new instances to the new container.
+                    string xml = XamlWriter.Save(elements[i]);
 
-                int elementCount = elements.Count;
-                if (elementCount != 0)
+                    UIElement newElement = XamlReader.Load(new XmlTextReader(new StringReader(xml))) as UIElement;
+                    ((IAddChild)inkCanvas).AddChild(newElement);
+
+                    // Now we tranform the element.
+                    inkCanvasSelection.UpdateElementBounds(elements[i], newElement, transform);
+                }
+            }
+
+            if (inkCanvas != null)
+            {
+                inkCanvas.Width = size.Width;
+                inkCanvas.Height = size.Height;
+
+                ClipboardData data = new XamlClipboardData(new UIElement[] { inkCanvas });
+
+                try
                 {
-                    InkCanvasSelection inkCanvasSelection = InkCanvas.InkCanvasSelection;
-
-                    for (int i = 0; i < elementCount; i++)
-                    {
-                        // NOTICE-2005/05/05-WAYNEZEN,
-                        // An element can't be added to two visual trees.
-                        // So, we cannot add the elements to the new container since they have been added to the current InkCanvas.
-                        // Here we have to do is according to the suggestion from Avalon team -
-                        //      1. Presist the elements to Xaml 
-                        //      2. Load the xaml to create the new instances of the elements.
-                        //      3. Add the new instances to the new container.
-                        string xml = XamlWriter.Save(elements[i]);
-
-                        UIElement newElement = XamlReader.Load(new XmlTextReader(new StringReader(xml))) as UIElement;
-                        ((IAddChild)inkCanvas).AddChild(newElement);
-
-                        // Now we tranform the element.
-                        inkCanvasSelection.UpdateElementBounds(elements[i], newElement, transform);
-                    }
+                    data.CopyToDataObject(dataObject);
                 }
-
-                if (inkCanvas != null)
+                catch (SecurityException)
                 {
-                    inkCanvas.Width = size.Width;
-                    inkCanvas.Height = size.Height;
-
-                    ClipboardData data = new XamlClipboardData(new UIElement[] { inkCanvas });
-
-                    try
-                    {
-                        data.CopyToDataObject(dataObject);
-                    }
-                    catch (SecurityException)
-                    {
-                        // If we hit a SecurityException under the PartialTrust, we should just fail the copy
-                        // operation.
-                        inkCanvas = null;
-                    }
+                    // If we hit a SecurityException under the PartialTrust, we should just fail the copy
+                    // operation.
+                    inkCanvas = null;
                 }
+            }
 
-                return inkCanvas != null;
+            return inkCanvas != null;
         }
 
         private void TearDownInkCanvasContainer(InkCanvas rootInkCanvas, ref StrokeCollection newStrokes, ref List<UIElement> newElements)
         {
             newStrokes = rootInkCanvas.Strokes;
 
-            if ( rootInkCanvas.Children.Count != 0 )
+            if (rootInkCanvas.Children.Count != 0)
             {
                 List<UIElement> children = new List<UIElement>(rootInkCanvas.Children.Count);
                 foreach (UIElement uiElement in rootInkCanvas.Children)
@@ -381,7 +381,7 @@ namespace MS.Internal.Ink
                 }
 
                 // Remove the children for the container
-                foreach ( UIElement child in children )
+                foreach (UIElement child in children)
                 {
                     rootInkCanvas.Children.Remove(child);
                 }
@@ -389,7 +389,7 @@ namespace MS.Internal.Ink
                 // The new elements will be the children.
                 newElements = children;
             }
-}
+        }
 
         #endregion Private Methods
 
@@ -417,7 +417,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if ( s_InkCanvasDType == null )
+                if (s_InkCanvasDType == null)
                 {
                     s_InkCanvasDType = DependencyObjectType.FromSystemTypeInternal(typeof(InkCanvas));
                 }
@@ -437,8 +437,8 @@ namespace MS.Internal.Ink
 
         #region Private Fields
 
-        private InkCanvas                       _inkCanvas;
-        private static DependencyObjectType     s_InkCanvasDType;
+        private InkCanvas _inkCanvas;
+        private static DependencyObjectType s_InkCanvasDType;
 
         private Dictionary<InkCanvasClipboardFormat, ClipboardData> _preferredClipboardData;
 

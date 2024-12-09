@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,9 +7,9 @@
 //              Spec at WrapPanel.xml
 //
 
+using System.ComponentModel;
 using MS.Internal;
 using MS.Internal.Telemetry.PresentationFramework;
-using System.ComponentModel;
 
 namespace System.Windows.Controls
 {
@@ -39,7 +39,7 @@ namespace System.Windows.Controls
         /// </summary>
         public WrapPanel() : base()
         {
-            _orientation = (Orientation) OrientationProperty.GetDefaultValue(DependencyObjectType);
+            _orientation = (Orientation)OrientationProperty.GetDefaultValue(DependencyObjectType);
         }
 
         #endregion
@@ -60,7 +60,7 @@ namespace System.Windows.Controls
         //  Public Properties + Dependency Properties's
         //
         //-------------------------------------------------------------------
-      
+
         #region Public Properties
 
         private static bool IsWidthHeightValid(object value)
@@ -74,11 +74,11 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty ItemWidthProperty =
                 DependencyProperty.Register(
-                        "ItemWidth", 
-                        typeof(double), 
+                        "ItemWidth",
+                        typeof(double),
                         typeof(WrapPanel),
                         new FrameworkPropertyMetadata(
-                                Double.NaN, 
+                                Double.NaN,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure),
                         new ValidateValueCallback(IsWidthHeightValid));
 
@@ -93,7 +93,7 @@ namespace System.Windows.Controls
         [TypeConverter(typeof(LengthConverter))]
         public double ItemWidth
         {
-            get { return (double) GetValue(ItemWidthProperty); }
+            get { return (double)GetValue(ItemWidthProperty); }
             set { SetValue(ItemWidthProperty, value); }
         }
 
@@ -103,11 +103,11 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty ItemHeightProperty =
                 DependencyProperty.Register(
-                        "ItemHeight", 
-                        typeof(double), 
+                        "ItemHeight",
+                        typeof(double),
                         typeof(WrapPanel),
                         new FrameworkPropertyMetadata(
-                                Double.NaN, 
+                                Double.NaN,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure),
                         new ValidateValueCallback(IsWidthHeightValid));
 
@@ -123,7 +123,7 @@ namespace System.Windows.Controls
         [TypeConverter(typeof(LengthConverter))]
         public double ItemHeight
         {
-            get { return (double) GetValue(ItemHeightProperty); }
+            get { return (double)GetValue(ItemHeightProperty); }
             set { SetValue(ItemHeightProperty, value); }
         }
 
@@ -157,7 +157,7 @@ namespace System.Windows.Controls
         private static void OnOrientationChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             WrapPanel p = (WrapPanel)d;
-            p._orientation = (Orientation) e.NewValue;
+            p._orientation = (Orientation)e.NewValue;
         }
 
         private Orientation _orientation;
@@ -174,7 +174,7 @@ namespace System.Windows.Controls
 
         private struct UVSize
         {
-            internal UVSize (Orientation orientation, double width, double height)
+            internal UVSize(Orientation orientation, double width, double height)
             {
                 U = V = 0d;
                 _orientation = orientation;
@@ -182,12 +182,12 @@ namespace System.Windows.Controls
                 Height = height;
             }
 
-            internal UVSize (Orientation orientation)
+            internal UVSize(Orientation orientation)
             {
                 U = V = 0d;
                 _orientation = orientation;
             }
-            
+
             internal double U;
             internal double V;
             private Orientation _orientation;
@@ -195,12 +195,12 @@ namespace System.Windows.Controls
             internal double Width
             {
                 get { return (_orientation == Orientation.Horizontal ? U : V); }
-                set { if(_orientation == Orientation.Horizontal) U = value; else V = value; }
+                set { if (_orientation == Orientation.Horizontal) U = value; else V = value; }
             }
             internal double Height
             {
                 get { return (_orientation == Orientation.Horizontal ? V : U); }
-                set { if(_orientation == Orientation.Horizontal) V = value; else U = value; }
+                set { if (_orientation == Orientation.Horizontal) V = value; else U = value; }
             }
         }
 
@@ -217,17 +217,18 @@ namespace System.Windows.Controls
             double itemHeight = ItemHeight;
             bool itemWidthSet = !double.IsNaN(itemWidth);
             bool itemHeightSet = !double.IsNaN(itemHeight);
-            
+
             Size childConstraint = new Size(
-                (itemWidthSet ?  itemWidth  : constraint.Width),
+                (itemWidthSet ? itemWidth : constraint.Width),
                 (itemHeightSet ? itemHeight : constraint.Height));
 
             UIElementCollection children = InternalChildren;
 
-            for(int i=0, count = children.Count; i<count; i++)
+            for (int i = 0, count = children.Count; i < count; i++)
             {
                 UIElement child = children[i] as UIElement;
-                if(child == null) continue;
+                if (child == null)
+                    continue;
 
                 //Flow passes its own constrint to children
                 child.Measure(childConstraint);
@@ -235,7 +236,7 @@ namespace System.Windows.Controls
                 //this is the size of the child in UV space
                 UVSize sz = new UVSize(
                     Orientation,
-                    (itemWidthSet ?  itemWidth  : child.DesiredSize.Width),
+                    (itemWidthSet ? itemWidth : child.DesiredSize.Width),
                     (itemHeightSet ? itemHeight : child.DesiredSize.Height));
 
                 if (DoubleUtil.GreaterThan(curLineSize.U + sz.U, uvConstraint.U)) //need to switch to another line
@@ -244,7 +245,7 @@ namespace System.Windows.Controls
                     panelSize.V += curLineSize.V;
                     curLineSize = sz;
 
-                    if(DoubleUtil.GreaterThan(sz.U, uvConstraint.U)) //the element is wider then the constrint - give it a separate line                    
+                    if (DoubleUtil.GreaterThan(sz.U, uvConstraint.U)) //the element is wider then the constrint - give it a separate line                    
                     {
                         panelSize.U = Math.Max(sz.U, panelSize.U);
                         panelSize.V += sz.V;
@@ -284,14 +285,15 @@ namespace System.Windows.Controls
 
             UIElementCollection children = InternalChildren;
 
-            for(int i=0, count = children.Count; i<count; i++)
+            for (int i = 0, count = children.Count; i < count; i++)
             {
                 UIElement child = children[i] as UIElement;
-                if(child == null) continue;
-                
+                if (child == null)
+                    continue;
+
                 UVSize sz = new UVSize(
                     Orientation,
-                    (itemWidthSet ?  itemWidth  : child.DesiredSize.Width),
+                    (itemWidthSet ? itemWidth : child.DesiredSize.Width),
                     (itemHeightSet ? itemHeight : child.DesiredSize.Height));
 
                 if (DoubleUtil.GreaterThan(curLineSize.U + sz.U, uvFinalSize.U)) //need to switch to another line
@@ -301,7 +303,7 @@ namespace System.Windows.Controls
                     accumulatedV += curLineSize.V;
                     curLineSize = sz;
 
-                    if(DoubleUtil.GreaterThan(sz.U, uvFinalSize.U)) //the element is wider then the constraint - give it a separate line                    
+                    if (DoubleUtil.GreaterThan(sz.U, uvFinalSize.U)) //the element is wider then the constraint - give it a separate line                    
                     {
                         //switch to next line which only contain one element
                         arrangeLine(accumulatedV, sz.V, i, ++i, useItemU, itemU);
@@ -309,7 +311,7 @@ namespace System.Windows.Controls
                         accumulatedV += sz.V;
                         curLineSize = new UVSize(Orientation);
                     }
-                    firstInLine= i;
+                    firstInLine = i;
                 }
                 else //continue to accumulate a line
                 {
@@ -319,7 +321,7 @@ namespace System.Windows.Controls
             }
 
             //arrange the last line, if any
-            if(firstInLine < children.Count)
+            if (firstInLine < children.Count)
             {
                 arrangeLine(accumulatedV, curLineSize.V, firstInLine, children.Count, useItemU, itemU);
             }
@@ -328,24 +330,24 @@ namespace System.Windows.Controls
         }
 
         private void arrangeLine(double v, double lineV, int start, int end, bool useItemU, double itemU)
-        {   
+        {
             double u = 0;
             bool isHorizontal = (Orientation == Orientation.Horizontal);
-            
+
             UIElementCollection children = InternalChildren;
-            for(int i = start; i < end; i++)
+            for (int i = start; i < end; i++)
             {
                 UIElement child = children[i] as UIElement;
-                if(child != null)
+                if (child != null)
                 {
                     UVSize childSize = new UVSize(Orientation, child.DesiredSize.Width, child.DesiredSize.Height);
                     double layoutSlotU = (useItemU ? itemU : childSize.U);
                     child.Arrange(new Rect(
-                        (isHorizontal ? u : v), 
-                        (isHorizontal ? v : u), 
-                        (isHorizontal ? layoutSlotU : lineV), 
+                        (isHorizontal ? u : v),
+                        (isHorizontal ? v : u),
+                        (isHorizontal ? layoutSlotU : lineV),
                         (isHorizontal ? lineV : layoutSlotU)));
-                    u += layoutSlotU;                
+                    u += layoutSlotU;
                 }
             }
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -46,7 +46,7 @@ namespace System.Windows.Media
                 _items = newItems;
             }
         }
-        
+
         /// <summary>
         /// Push new matrix on the stack.
         /// </summary>
@@ -76,7 +76,7 @@ namespace System.Windows.Media
             }
 
             _size++;
-            
+
             // For memory optimization purposes we track the max usage of the stack here.
             // See the optimze method for more details about this.
             _highWaterMark = Math.Max(_highWaterMark, _size);
@@ -97,7 +97,7 @@ namespace System.Windows.Media
         public void Push(Transform transform, bool combine)
         {
             EnsureCapacity();
-            
+
             if (combine && (_size > 0))
             {
                 // Combine means that we push the product of the top matrix and transform
@@ -117,7 +117,7 @@ namespace System.Windows.Media
 
             // For memory optimization purposes we track the max usage of the stack here.
             // See the optimze method for more details about this.
-            _highWaterMark = Math.Max(_highWaterMark, _size);            
+            _highWaterMark = Math.Max(_highWaterMark, _size);
         }
 
         /// <summary>
@@ -131,7 +131,7 @@ namespace System.Windows.Media
             if (combine && (_size > 0))
             {
                 // In combine mode copy the top element, but only if the stack is not empty.
-                _items[_size] = _items[_size-1];
+                _items[_size] = _items[_size - 1];
             }
             else
             {
@@ -149,7 +149,7 @@ namespace System.Windows.Media
             // See the optimze method for more details about this.
             _highWaterMark = Math.Max(_highWaterMark, _size);
         }
-        
+
 
         /// <summary>
         /// Pops the top stack element from the stack.
@@ -158,7 +158,7 @@ namespace System.Windows.Media
         {
             Debug.Assert(!IsEmpty);
 #if DEBUG
-            _items[_size-1] = new Matrix();
+            _items[_size - 1] = new Matrix();
 #endif
             _size--;
         }
@@ -169,8 +169,8 @@ namespace System.Windows.Media
         public Matrix Peek()
         {
             Debug.Assert(!IsEmpty);
-            return _items[_size-1];
-        }   
+            return _items[_size - 1];
+        }
 
         ///<value>
         /// This is true iff the stack is empty.  
@@ -186,7 +186,7 @@ namespace System.Windows.Media
         {
             Debug.Assert(_size == 0); // The stack must be empty before this is called.
             Debug.Assert(_highWaterMark <= _items.Length);
-            
+
             // After s_trimCount calls to this method we check the past usage of the stack.
             if (_observeCount == s_trimCount)
             {
@@ -211,7 +211,7 @@ namespace System.Windows.Media
                 _observeCount++;
             }
         }
-}
+    }
 }
 
 

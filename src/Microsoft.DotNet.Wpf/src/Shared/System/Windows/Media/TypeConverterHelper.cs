@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
-using System.Windows.Markup;
 using System.Runtime.InteropServices;
+using System.Windows.Markup;
 using System.Windows.Navigation;
 
 namespace System.Windows.Media
@@ -16,7 +16,7 @@ namespace System.Windows.Media
     /// UriHolder
     /// Holds Original and Base Uris
     /// </summary>
-    [StructLayout(LayoutKind.Sequential, Pack=1)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     internal struct UriHolder
     {
 
@@ -107,5 +107,5 @@ namespace System.Windows.Media
         }
     }
 
-#endregion
+    #endregion
 }

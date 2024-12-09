@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,9 +24,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 {
     ///<summary>Class for a version pair which consists of major and minor numbers</summary>
 #if !PBTCOMPILER
-    internal    class VersionPair : IComparable
+    internal class VersionPair : IComparable
 #else
-    internal  class VersionPair
+    internal class VersionPair
 #endif
     {
         //------------------------------------------------------
@@ -125,12 +125,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             bool result = false;
 
             // If both v1 & v2 are null they are same
-            if ((Object) v1 == null && (Object) v2 == null)
+            if ((Object)v1 == null && (Object)v2 == null)
             {
                 result = true;
             }
             // Do comparison only if both v1 and v2 are not null
-            else if ((Object) v1 != null && (Object) v2 != null)
+            else if ((Object)v1 != null && (Object)v2 != null)
             {
                 if (v1.Major == v2.Major && v1.Minor == v2.Minor)
                 {
@@ -162,11 +162,11 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             bool result = false;
 
-            if ((Object) v1 == null && (Object) v2 != null)
+            if ((Object)v1 == null && (Object)v2 != null)
             {
                 result = true;
             }
-            else if ((Object) v1 != null && (object) v2 != null)
+            else if ((Object)v1 != null && (object)v2 != null)
             {
                 // == is previously define so it can be used
                 if (v1.Major < v2.Major || ((v1.Major == v2.Major) && (v1.Minor < v2.Minor)))
@@ -187,12 +187,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             bool result = false;
 
-            if ((Object) v1 != null && (Object) v2 == null)
+            if ((Object)v1 != null && (Object)v2 == null)
             {
                 result = true;
             }
             // Comare only if neither v1 nor v2 are not null
-            else if ((Object) v1 != null && (object) v2 != null)
+            else if ((Object)v1 != null && (object)v2 != null)
             {
                 // < and == are previously define so it can be used
                 if (!(v1 < v2) && v1 != v2)
@@ -200,7 +200,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     return true;
                 }
             }
-                
+
             return result;
         }
 
@@ -252,7 +252,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 return false;
             }
 
-            VersionPair v = (VersionPair) obj;
+            VersionPair v = (VersionPair)obj;
 
             //PRESHARP:Parameter to this public method must be validated:  A null-dereference can occur here. 
             //    Parameter 'v' to this public method must be validated:  A null-dereference can occur here. 
@@ -295,7 +295,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 throw new ArgumentException(SR.ExpectedVersionPairObject);
             }
 
-            VersionPair v = (VersionPair) obj;
+            VersionPair v = (VersionPair)obj;
 
             //PRESHARP:Parameter to this public method must be validated:  A null-dereference can occur here. 
             //    Parameter 'v' to this public method must be validated:  A null-dereference can occur here. 

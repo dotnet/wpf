@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -58,8 +58,8 @@ namespace System.Windows.Automation
     public struct ClientSideProviderDescription
 #endif
     {
-        private string                _className;
-        private string                _imageName;
+        private string _className;
+        private string _imageName;
         private ClientSideProviderMatchIndicator _flags;
         private ClientSideProviderFactoryCallback _proxyFactoryCallback;
 
@@ -74,7 +74,7 @@ namespace System.Windows.Automation
             // Null and Empty string mean different things here.
 #pragma warning suppress 6507
             if (className != null)
-                _className = className.ToLower( System.Globalization.CultureInfo.InvariantCulture );
+                _className = className.ToLower(System.Globalization.CultureInfo.InvariantCulture);
             else
                 _className = null;
             _flags = 0;
@@ -82,7 +82,7 @@ namespace System.Windows.Automation
             _proxyFactoryCallback = clientSideProviderFactoryCallback;
         }
 
-        
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -97,16 +97,16 @@ namespace System.Windows.Automation
             // Null and Empty string mean different things here
 #pragma warning suppress 6507
             if (className != null)
-                _className = className.ToLower( System.Globalization.CultureInfo.InvariantCulture );
+                _className = className.ToLower(System.Globalization.CultureInfo.InvariantCulture);
             else
                 _className = null;
-                
+
             _flags = flags;
 
             // Null and Empty string mean different things here
 #pragma warning suppress 6507
             if (imageName != null)
-                _imageName = imageName.ToLower( System.Globalization.CultureInfo.InvariantCulture );
+                _imageName = imageName.ToLower(System.Globalization.CultureInfo.InvariantCulture);
             else
                 _imageName = null;
 
@@ -136,7 +136,7 @@ namespace System.Windows.Automation
                 return _flags;
             }
         }
-        
+
         /// <summary>
         /// Name of the executable for the process where this window resides.  For example Winword.exe.
         /// </summary>

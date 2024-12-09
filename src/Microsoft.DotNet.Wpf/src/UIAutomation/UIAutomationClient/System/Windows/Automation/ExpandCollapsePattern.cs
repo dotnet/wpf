@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,7 +12,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class ExpandCollapsePattern: BasePattern
 #else
-    public class ExpandCollapsePattern: BasePattern
+    public class ExpandCollapsePattern : BasePattern
 #endif
     {
         //------------------------------------------------------
@@ -20,7 +20,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         private ExpandCollapsePattern(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -38,7 +38,7 @@ namespace System.Windows.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>Scroll pattern</summary>
@@ -55,7 +55,7 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
@@ -82,7 +82,7 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
         /// <summary>
         /// This member allows access to previously requested
@@ -142,7 +142,7 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -158,7 +158,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private SafePatternHandle _hPattern;
@@ -190,7 +190,7 @@ namespace System.Windows.Automation
 
             #region Constructors
 
-            internal ExpandCollapsePatternInformation( AutomationElement el, bool useCache )
+            internal ExpandCollapsePatternInformation(AutomationElement el, bool useCache)
             {
                 _el = el;
                 _useCache = useCache;
@@ -204,7 +204,7 @@ namespace System.Windows.Automation
             //  Public Properties
             //
             //------------------------------------------------------
- 
+
             #region Public Properties
 
             ///<summary>indicates an element's current Collapsed or Expanded state</summary>

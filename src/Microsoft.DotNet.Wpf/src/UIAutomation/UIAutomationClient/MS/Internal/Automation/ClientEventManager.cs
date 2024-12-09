@@ -1,15 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Manages the listeners for one accessibility aid or test application.
 
+using System;
 using System.Collections;
 using System.Diagnostics;
 using System.Windows.Automation;
 using MS.Win32;
-
-using System;
 
 // PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
@@ -93,19 +92,19 @@ namespace MS.Internal.Automation
                 }
 
                 // Start listening for menu event in order to raise MenuOpened/Closed events.
-                if ( _winEventTrackers [(int)Tracker.MenuOpenedOrClosed] == null && (l.EventId == AutomationElement.MenuOpenedEvent || l.EventId == AutomationElement.MenuClosedEvent) )
+                if (_winEventTrackers[(int)Tracker.MenuOpenedOrClosed] == null && (l.EventId == AutomationElement.MenuOpenedEvent || l.EventId == AutomationElement.MenuClosedEvent))
                 {
-                    AddWinEventListener( Tracker.MenuOpenedOrClosed, new MenuTracker( new MenuHandler( OnMenuEvent ) ) );
+                    AddWinEventListener(Tracker.MenuOpenedOrClosed, new MenuTracker(new MenuHandler(OnMenuEvent)));
                 }
 
                 // Begin watching for hwnd open/close/show/hide so can advise of what events are being listened for.
                 // Only advise UI contexts of events being added if the event might be raised by a provider.
                 // TopLevelWindow event is raised by UI Automation framework so no need to track new UI.
                 // Are there other events like this where Advise can be skipped?
-                if (_winEventTrackers[(int)Tracker.WindowShowOrOpen] == null )
+                if (_winEventTrackers[(int)Tracker.WindowShowOrOpen] == null)
                 {
-                    AddWinEventListener( Tracker.WindowShowOrOpen, new WindowShowOrOpenTracker( new WindowShowOrOpenHandler( OnWindowShowOrOpen ) ) );
-                    AddWinEventListener( Tracker.WindowHideOrClose, new WindowHideOrCloseTracker( new WindowHideOrCloseHandler( OnWindowHideOrClose ) ) );
+                    AddWinEventListener(Tracker.WindowShowOrOpen, new WindowShowOrOpenTracker(new WindowShowOrOpenHandler(OnWindowShowOrOpen)));
+                    AddWinEventListener(Tracker.WindowHideOrClose, new WindowHideOrCloseTracker(new WindowHideOrCloseHandler(OnWindowHideOrClose)));
                 }
 
                 // If listening for WindowInteractionStateProperty then may need to start listening on the
@@ -128,7 +127,7 @@ namespace MS.Internal.Automation
 
                 // Only advise UI contexts of events being added if the event might be raised by
                 // a provider.  TopLevelWindow event is raised by UI Automation framework.
-                if (ShouldAdviseProviders( l.EventId ))
+                if (ShouldAdviseProviders(l.EventId))
                 {
                     // .. then let the server know about this listener
                     ec.EventHandle = UiaCoreApi.UiaAddEvent(rawEl.RawNode, l.EventId.Id, ec.CallbackDelegate, l.TreeScope, PropertyArrayToIntArray(l.Properties), l.CacheRequest);
@@ -150,11 +149,11 @@ namespace MS.Internal.Automation
 
 
         // RemoveListener - Removes a listener from this client and notifies the UIAutomation server-side
-        internal static void RemoveListener( AutomationEvent eventId, AutomationElement el, Delegate eventCallback )
+        internal static void RemoveListener(AutomationEvent eventId, AutomationElement el, Delegate eventCallback)
         {
-            lock( _classLock )
+            lock (_classLock)
             {
-                if( _listeners != null )
+                if (_listeners != null)
                 {
                     bool boundingRectListeners = false; // if not removing BoundingRect listeners no need to do check below
                     bool menuListeners = false; // if not removing MenuOpenedOrClosed listeners no need to do check below
@@ -164,20 +163,20 @@ namespace MS.Internal.Automation
                     for (int i = _listeners.Count - 1; i >= 0; i--)
                     {
                         EventListenerClientSide ec = (EventListenerClientSide)_listeners[i];
-                        if( ec.IsListeningFor( eventId, el, eventCallback ) )
+                        if (ec.IsListeningFor(eventId, el, eventCallback))
                         {
                             EventListener l = ec.EventListener;
 
                             // Only advise UI contexts of events being removed if the event might be raised by
                             // a provider.  TopLevelWindow event is raised by UI Automation framework.
-                            if ( ShouldAdviseProviders(eventId) )
+                            if (ShouldAdviseProviders(eventId))
                             {
                                 // Notify the server-side that this event is no longer interesting
                                 try
                                 {
                                     ec.EventHandle.Dispose(); // Calls UiaCoreApi.UiaRemoveEvent
                                 }
-// PRESHARP: Warning - Catch statements should not have empty bodies
+                                // PRESHARP: Warning - Catch statements should not have empty bodies
 #pragma warning disable 6502
                                 catch (ElementNotAvailableException)
                                 {
@@ -197,7 +196,7 @@ namespace MS.Internal.Automation
                                 boundingRectListeners = true;
                             }
 
-                            if( eventId == AutomationElement.MenuOpenedEvent || eventId == AutomationElement.MenuClosedEvent )
+                            if (eventId == AutomationElement.MenuOpenedEvent || eventId == AutomationElement.MenuClosedEvent)
                             {
                                 menuListeners = true;
                             }
@@ -213,7 +212,7 @@ namespace MS.Internal.Automation
                             }
 
                             // delete this one
-                            _listeners.RemoveAt( i );
+                            _listeners.RemoveAt(i);
                         }
                     }
 
@@ -244,7 +243,7 @@ namespace MS.Internal.Automation
                         // as long as OnWindowShowOrOpen is static can just use new here and get same object instance
                         // (if there's no WindowShowOrOpen listener, this method just returns)
                         RemoveWinEventListener(Tracker.WindowShowOrOpen, new WindowShowOrOpenHandler(OnWindowShowOrOpen));
-                        RemoveWinEventListener( Tracker.WindowHideOrClose, new WindowHideOrCloseHandler( OnWindowHideOrClose ) );
+                        RemoveWinEventListener(Tracker.WindowHideOrClose, new WindowHideOrCloseHandler(OnWindowHideOrClose));
 
                         _listeners = null;
                     }
@@ -309,7 +308,7 @@ namespace MS.Internal.Automation
                     EventListener l = ec.EventListener;
                     // Only advise UI contexts of events being removed if the event might be raised by
                     // a provider.  TopLevelWindow event is raised by UI Automation framework.
-                    if ( ShouldAdviseProviders(l.EventId) )
+                    if (ShouldAdviseProviders(l.EventId))
                     {
                         ec.EventHandle.Dispose(); // Calls RemoveEvent
                     }
@@ -359,8 +358,8 @@ namespace MS.Internal.Automation
             if (!_isBkgrdThreadRunning)
             {
                 _isBkgrdThreadRunning = true;
-               _callbackQueue = new QueueProcessor();
-               _callbackQueue.StartOnThread();
+                _callbackQueue = new QueueProcessor();
+                _callbackQueue.StartOnThread();
             }
         }
 
@@ -395,7 +394,7 @@ namespace MS.Internal.Automation
         private static void StopWinEventTracking()
         {
             int i;
-            for (i=0; i<(int)Tracker.NumEventTrackers; i++)
+            for (i = 0; i < (int)Tracker.NumEventTrackers; i++)
             {
                 WinEventWrap eventWrapper = _winEventTrackers[i];
                 if (eventWrapper != null)
@@ -412,7 +411,7 @@ namespace MS.Internal.Automation
             // This version of RaiseEventInThisClientOnly can be called with a local (proxied) or remote (native)AutomationElement
             lock (_classLock)
             {
-                if ( _listeners == null )
+                if (_listeners == null)
                     return;
 
                 AutomationElement el = rawEl;
@@ -422,7 +421,7 @@ namespace MS.Internal.Automation
                     if (listener.EventListener.EventId == eventId)
                     {
                         // Did this event happen on an element this listener is interested in?
-                        if (rawEl == null || listener.WithinScope( rawEl ))
+                        if (rawEl == null || listener.WithinScope(rawEl))
                         {
                             UiaCoreApi.UiaCacheRequest cacheRequest = listener.EventListener.CacheRequest;
                             CBQ.PostWorkItem(new ClientSideQueueItem(listener.ClientCallback, el, cacheRequest, e));
@@ -433,21 +432,21 @@ namespace MS.Internal.Automation
         }
 
         // Raise events for the element that has RuntimeId == rid (special case for events where the element is no longer available)
-        internal static void RaiseEventInThisClientOnly( AutomationEvent eventId, int [] rid, AutomationEventArgs e)
+        internal static void RaiseEventInThisClientOnly(AutomationEvent eventId, int[] rid, AutomationEventArgs e)
         {
             // This version of RaiseEventInThisClientOnly can be called with a local (proxied) or remote (native)AutomationElement
-            lock ( _classLock )
+            lock (_classLock)
             {
-                if ( _listeners == null )
+                if (_listeners == null)
                     return;
 
-                foreach ( EventListenerClientSide listener in _listeners )
+                foreach (EventListenerClientSide listener in _listeners)
                 {
                     // Is this event a type this listener is interested in?
-                    if ( listener.EventListener.EventId == eventId )
+                    if (listener.EventListener.EventId == eventId)
                     {
                         // Did this event happen on an element this listener is interested in?
-                        if ( listener.WithinScope( rid ) )
+                        if (listener.WithinScope(rid))
                         {
                             CBQ.PostWorkItem(new ClientSideQueueItem(listener.ClientCallback, null, null, e));
                         }
@@ -473,24 +472,24 @@ namespace MS.Internal.Automation
         // root and scope is all elements
         private static void AddRootListener(Tracker idx, Delegate eventCallback, EventListener l)
         {
-            lock ( _classLock )
+            lock (_classLock)
             {
                 // Add this listener to client-side store of listeners and give the server
                 // a chance to enable accessibility for this event
-                AddListener( AutomationElement.RootElement, eventCallback, l );
+                AddListener(AutomationElement.RootElement, eventCallback, l);
 
                 // Track WinEvents
                 WinEventWrap eventWrapper = _winEventTrackers[(int)idx];
 
-                if ( eventWrapper == null )
+                if (eventWrapper == null)
                 {
                     // First time create a WinEvent tracker and start listening
-                    AddWinEventListener( idx, GetNewRootTracker( idx ) );
+                    AddWinEventListener(idx, GetNewRootTracker(idx));
                 }
                 else
                 {
                     // Subsequent times just add the callback to the existing WinEvent
-                    eventWrapper.AddCallback( eventCallback );
+                    eventWrapper.AddCallback(eventCallback);
                 }
             }
         }
@@ -534,7 +533,7 @@ namespace MS.Internal.Automation
         }
 
         // HasProperty - helper to check for a property in an AutomationProperty array
-        private static bool HasProperty(AutomationProperty p, AutomationProperty [] properties)
+        private static bool HasProperty(AutomationProperty p, AutomationProperty[] properties)
         {
             if (properties == null)
                 return false;
@@ -550,12 +549,12 @@ namespace MS.Internal.Automation
         }
 
         // OnWindowHideOrClose - Called by the WindowHideOrCloseTracker class when UI is hidden or destroyed
-        private static void OnWindowHideOrClose( IntPtr hwnd, AutomationElement rawEl, int [] runtimeId )
+        private static void OnWindowHideOrClose(IntPtr hwnd, AutomationElement rawEl, int[] runtimeId)
         {
             bool doWindowClosedEvent = false;
             bool doStructureChangedEvent = false;
 
-            lock ( _classLock )
+            lock (_classLock)
             {
                 if (_listeners != null)
                 {
@@ -565,9 +564,9 @@ namespace MS.Internal.Automation
                         EventListenerClientSide ec = (EventListenerClientSide)_listeners[i];
 
                         EventListener l = ec.EventListener;
-                        if ( l.EventId == WindowPattern.WindowClosedEvent )
+                        if (l.EventId == WindowPattern.WindowClosedEvent)
                             doWindowClosedEvent = true;
-                        if ( l.EventId == AutomationElement.StructureChangedEvent )
+                        if (l.EventId == AutomationElement.StructureChangedEvent)
                             doStructureChangedEvent = true;
 
                         // Only advise UI contexts if the provider still exists
@@ -592,33 +591,33 @@ namespace MS.Internal.Automation
             // Piggy-back on the listener for Windows hiding or closing to raise WindowClosed and StructureChanged events.
             // When the hwnd behind rawEl is being destroyed, it can't be determined that rawEl once had the
             // WindowPattern interface.  Therefore raise an event for any window close.
-            if ( doWindowClosedEvent )
+            if (doWindowClosedEvent)
             {
                 // When the hwnd is just hidden, rawEl will not be null, so can test if this would support WindowPattern
                 // and throw this event away if the window doesn't support that CP
-                if ( rawEl != null && !HwndProxyElementProvider.IsWindowPatternWindow( NativeMethods.HWND.Cast( hwnd ) ) )
+                if (rawEl != null && !HwndProxyElementProvider.IsWindowPatternWindow(NativeMethods.HWND.Cast(hwnd)))
                     return;
 
                 // Go ahead and raise a client-side only WindowClosedEvent (if anyone is listening)
-                WindowClosedEventArgs e = new WindowClosedEventArgs( runtimeId );
+                WindowClosedEventArgs e = new WindowClosedEventArgs(runtimeId);
                 RaiseEventInThisClientOnly(WindowPattern.WindowClosedEvent, runtimeId, e);
             }
-            if ( doStructureChangedEvent )
+            if (doStructureChangedEvent)
             {
                 // Raise an event for structure changed.  This element has essentially gone away so there isn't an
                 // opportunity to do filtering here.  So, just like WindowClosed, this event will be very noisy.
-                StructureChangedEventArgs e = new StructureChangedEventArgs( StructureChangeType.ChildRemoved, runtimeId );
+                StructureChangedEventArgs e = new StructureChangedEventArgs(StructureChangeType.ChildRemoved, runtimeId);
                 RaiseEventInThisClientOnly(AutomationElement.StructureChangedEvent, runtimeId, e);
             }
         }
 
         // OnWindowShowOrOpen - Called by the WindowShowOrOpenTracker class when UI is shown or created
-        private static void OnWindowShowOrOpen( IntPtr hwnd, AutomationElement rawEl )
+        private static void OnWindowShowOrOpen(IntPtr hwnd, AutomationElement rawEl)
         {
             bool doWindowOpenedEvent = false;
             bool doStructureChangedEvent = false;
 
-            lock ( _classLock )
+            lock (_classLock)
             {
                 if (_listeners != null)
                 {
@@ -628,17 +627,17 @@ namespace MS.Internal.Automation
                         EventListenerClientSide ec = (EventListenerClientSide)_listeners[i];
 
                         EventListener l = ec.EventListener;
-                        if ( l.EventId == WindowPattern.WindowOpenedEvent )
+                        if (l.EventId == WindowPattern.WindowOpenedEvent)
                             doWindowOpenedEvent = true;
-                        if ( l.EventId == AutomationElement.StructureChangedEvent )
+                        if (l.EventId == AutomationElement.StructureChangedEvent)
                             doStructureChangedEvent = true;
 
                         // Only advise UI contexts if the provider might raise that event.
-                        if (!ShouldAdviseProviders( l.EventId ))
+                        if (!ShouldAdviseProviders(l.EventId))
                             continue;
 
                         // Only advise UI contexts if the element is w/in scope of the reference element
-                        if (!ec.WithinScope( rawEl ))
+                        if (!ec.WithinScope(rawEl))
                             continue;
 
                         // Notify the server side
@@ -648,39 +647,39 @@ namespace MS.Internal.Automation
             }
 
             // Piggy-back on the listener for Windows hiding or closing to raise WindowClosed and StructureChanged events.
-            if ( doWindowOpenedEvent )
+            if (doWindowOpenedEvent)
             {
-                if ( HwndProxyElementProvider.IsWindowPatternWindow( NativeMethods.HWND.Cast( hwnd ) ) )
+                if (HwndProxyElementProvider.IsWindowPatternWindow(NativeMethods.HWND.Cast(hwnd)))
                 {
                     // Go ahead and raise a client-side only WindowOpenedEvent (if anyone is listening)
-                    AutomationEventArgs e = new AutomationEventArgs( WindowPattern.WindowOpenedEvent );
-                    RaiseEventInThisClientOnly( WindowPattern.WindowOpenedEvent, rawEl, e);
+                    AutomationEventArgs e = new AutomationEventArgs(WindowPattern.WindowOpenedEvent);
+                    RaiseEventInThisClientOnly(WindowPattern.WindowOpenedEvent, rawEl, e);
                 }
             }
-            if ( doStructureChangedEvent )
+            if (doStructureChangedEvent)
             {
                 // Filter on the control elements.  Otherwise, this is extremely noisy.  Consider not filtering if there is feedback.
                 //ControlType ct = (ControlType)rawEl.GetPropertyValue( AutomationElement.ControlTypeProperty );
                 //if ( ct != null )
                 {
                     // Last,raise an event for structure changed
-                    StructureChangedEventArgs e = new StructureChangedEventArgs( StructureChangeType.ChildAdded, rawEl.GetRuntimeId() );
+                    StructureChangedEventArgs e = new StructureChangedEventArgs(StructureChangeType.ChildAdded, rawEl.GetRuntimeId());
                     RaiseEventInThisClientOnly(AutomationElement.StructureChangedEvent, rawEl, e);
                 }
             }
         }
 
         // OnMenuEvent - Called by MenuTracker class
-        private static void OnMenuEvent( AutomationElement rawEl, bool menuHasOpened )
+        private static void OnMenuEvent(AutomationElement rawEl, bool menuHasOpened)
         {
             AutomationEvent eventId = menuHasOpened ? AutomationElement.MenuOpenedEvent : AutomationElement.MenuClosedEvent;
-            AutomationEventArgs e = new AutomationEventArgs( eventId );
+            AutomationEventArgs e = new AutomationEventArgs(eventId);
 
             RaiseEventInThisClientOnly(eventId, rawEl, e);
         }
 
 
-        private static bool ShouldAdviseProviders( AutomationEvent eventId )
+        private static bool ShouldAdviseProviders(AutomationEvent eventId)
         {
             foreach (AutomationEvent ev in _doNotShouldAdviseProviders)
             {
@@ -724,7 +723,7 @@ namespace MS.Internal.Automation
             WindowPattern.WindowOpenedEvent, WindowPattern.WindowClosedEvent
         };
 
-        private static WinEventWrap [] _winEventTrackers = new WinEventWrap[(int)Tracker.NumEventTrackers];
+        private static WinEventWrap[] _winEventTrackers = new WinEventWrap[(int)Tracker.NumEventTrackers];
 
         private static QueueProcessor _callbackQueue;      // callbacks are queued on this class to avoid deadlocks
         private static bool _isBkgrdThreadRunning = false; // is there a background thread for queueing and recieving WinEvents?

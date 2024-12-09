@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows.Input
         /// <param name="report">
         ///     The input report being processed.
         /// </param>
-        public InputReportEventArgs(InputDevice inputDevice, 
+        public InputReportEventArgs(InputDevice inputDevice,
                                     InputReport report) : base(inputDevice, ((report != null) ? report.Timestamp : -1))
         {
             ArgumentNullException.ThrowIfNull(report);
@@ -32,7 +32,7 @@ namespace System.Windows.Input
         /// </summary>
         public InputReport Report
         {
-            get {return _report;}
+            get { return _report; }
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace System.Windows.Input
         /// </param>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            InputReportEventHandler handler = (InputReportEventHandler) genericHandler;
+            InputReportEventHandler handler = (InputReportEventHandler)genericHandler;
             handler(genericTarget, this);
         }
 

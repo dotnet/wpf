@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,40 +13,38 @@
 #pragma warning disable 1634, 1691
 
 using System;
-using System.Xml;
-using System.IO;
-using System.Text;
-using System.Reflection;
-using System.Globalization;
-using System.ComponentModel;
-
 using System.CodeDom;
 using System.CodeDom.Compiler;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
-
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Reflection;
+using System.Text;
+using System.Xml;
+using Microsoft.Build.Tasks.Windows;
+using Microsoft.Build.Utilities;
 using MS.Internal.Markup;
 using MS.Internal.Tasks;
 using MS.Utility;   // for SR
-using Microsoft.Build.Utilities;
-using Microsoft.Build.Tasks.Windows;
 
 namespace MS.Internal
 {
     internal sealed class MarkupCompiler
     {
-#region ExternalAPI
+        #region ExternalAPI
 
-#region Public Properties
+        #region Public Properties
 
         ///<summary>String that specifies the directory to place the generated files into</summary>
         public string TargetPath
         {
             get { return _targetPath; }
-            set { _targetPath = value;}
+            set { _targetPath = value; }
         }
 
         /// <summary>
@@ -68,7 +66,7 @@ namespace MS.Internal
         }
 
         ///<summary>Array of loose files associated with this assembly</summary>
-        public string [] ContentList
+        public string[] ContentList
         {
             get { return _contentList; }
             set { _contentList = value; }
@@ -180,9 +178,9 @@ namespace MS.Internal
             get { return XamlTypeMapper.HasInternals; }
         }
 
-#endregion Public Properties
+        #endregion Public Properties
 
-#region Public Events
+        #region Public Events
 
         /// <summary>
         /// The Error event is fired when an error is encountered while compiling a xaml file.
@@ -196,9 +194,9 @@ namespace MS.Internal
         /// </summary>
         public event SourceFileResolveEventHandler SourceFileResolve;
 
-#endregion Public Events
+        #endregion Public Events
 
-#region Public Methods
+        #region Public Methods
 
         ///<summary>Complies list of file items comprising an Application.</summary>
         public void Compile(CompilationUnit cu)
@@ -304,13 +302,13 @@ namespace MS.Internal
             }
         }
 
-#endregion Public Methods
+        #endregion Public Methods
 
-#endregion ExternalAPI
+        #endregion ExternalAPI
 
-#region Implementation
+        #region Implementation
 
-#region Properties
+        #region Properties
 
         private CompilerInfo CompilerInfo
         {
@@ -401,7 +399,7 @@ namespace MS.Internal
 
         internal ReferenceAssembly LocalAssemblyFile
         {
-            get { return _localAssemblyFile;  }
+            get { return _localAssemblyFile; }
             set { _localAssemblyFile = value; }
         }
 
@@ -434,9 +432,9 @@ namespace MS.Internal
             get { return _language; }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region CompileUnit
+        #region CompileUnit
 
         private void InitCompilerState()
         {
@@ -489,7 +487,7 @@ namespace MS.Internal
             }
             // All exceptions including NullRef & SEH need to be caught by the markupcompiler
             // since it is an app and not a component.
-            #pragma warning suppress 6500
+#pragma warning suppress 6500
             catch (Exception e)
             {
                 OnError(e);
@@ -510,17 +508,22 @@ namespace MS.Internal
                 _ccRoot = null;
                 _hasLocalEvent = false;
                 _codeContexts = new Stack();
-                _parserContext = new ParserContext();
-                _parserContext.XamlTypeMapper = _typeMapper;
+                _parserContext = new ParserContext
+                {
+                    XamlTypeMapper = _typeMapper
+                };
                 _hasEmittedEventSetterDeclaration = false;
 
                 bamlStream = new MemoryStream();
-                BamlRecordWriter bamlWriter = new BamlRecordWriter(bamlStream, _parserContext, true);
-                bamlWriter.DebugBamlStream = XamlDebuggingInformation;
+                BamlRecordWriter bamlWriter = new BamlRecordWriter(bamlStream, _parserContext, true)
+                {
+                    DebugBamlStream = XamlDebuggingInformation
+                };
 
-                xamlParser = new ParserExtension(this, _parserContext, bamlWriter, SourceFileInfo.Stream, pass2);
-
-                xamlParser.ParserHooks = ParserHooks;
+                xamlParser = new ParserExtension(this, _parserContext, bamlWriter, SourceFileInfo.Stream, pass2)
+                {
+                    ParserHooks = ParserHooks
+                };
 
                 try
                 {
@@ -630,10 +633,12 @@ namespace MS.Internal
                         ? s_hashSHA256Guid
                         : s_hashSHA1Guid;
 
-                    CodeChecksumPragma csPragma = new CodeChecksumPragma();
-                    csPragma.FileName = ParentFolderPrefix + SourceFileInfo.RelativeSourceFilePath + XAML;
-                    csPragma.ChecksumAlgorithmId = hashGuid;
-                    csPragma.ChecksumData = TaskFileService.GetChecksum(SourceFileInfo.OriginalFilePath, hashGuid);
+                    CodeChecksumPragma csPragma = new CodeChecksumPragma
+                    {
+                        FileName = ParentFolderPrefix + SourceFileInfo.RelativeSourceFilePath + XAML,
+                        ChecksumAlgorithmId = hashGuid,
+                        ChecksumData = TaskFileService.GetChecksum(SourceFileInfo.OriginalFilePath, hashGuid)
+                    };
                     ccu.StartDirectives.Add(csPragma);
 
                     if (cnsImports != _ccRoot.CodeNS)
@@ -693,14 +698,15 @@ namespace MS.Internal
                 // If SourceFileResolve event handler is not registered,  generate
                 // the default SourceFileInfo for this file.
                 //
-                sourceFileInfo = new SourceFileInfo(file);
-
-                sourceFileInfo.SourcePath = _compilationUnitSourcePath;
+                sourceFileInfo = new SourceFileInfo(file)
+                {
+                    SourcePath = _compilationUnitSourcePath
+                };
 
                 if (sourceFileInfo.IsXamlFile)
                 {
                     int fileExtIndex = file.Path.LastIndexOf(DOTCHAR);
-                    
+
                     sourceFileInfo.RelativeSourceFilePath = file.Path.Substring(0, fileExtIndex);
                 }
             }
@@ -708,9 +714,9 @@ namespace MS.Internal
             return sourceFileInfo;
         }
 
-#endregion CompileUnit
+        #endregion CompileUnit
 
-#region ErrorHandling
+        #region ErrorHandling
 
         static void ThrowCompilerException(string id)
         {
@@ -752,7 +758,7 @@ namespace MS.Internal
         {
             // Don't treat an AssemblyVersion parsing error as a XamlParseException.
             // Throw it back to the task execution.
-            if(e is AssemblyVersionParseException)
+            if (e is AssemblyVersionParseException)
             {
                 System.Runtime.ExceptionServices.ExceptionDispatchInfo.Capture(e).Throw();
             }
@@ -769,9 +775,9 @@ namespace MS.Internal
             }
         }
 
-#endregion ErrorHandling
+        #endregion ErrorHandling
 
-#region Definition Namespace processing
+        #region Definition Namespace processing
 
         internal void ProcessDefinitionNamespace(XamlDefTagNode xamlDefTagNode)
         {
@@ -787,104 +793,106 @@ namespace MS.Internal
                 switch (currNodeType)
                 {
                     case XmlNodeType.Element:
-                    {
-                        if (isProcessingCodeTag)
                         {
-                            ThrowCompilerException(nameof(SR.DefnTagsCannotBeNested), DefinitionNSPrefix, LocalName, xmlReader.LocalName);
-                        }
+                            if (isProcessingCodeTag)
+                            {
+                                ThrowCompilerException(nameof(SR.DefnTagsCannotBeNested), DefinitionNSPrefix, LocalName, xmlReader.LocalName);
+                            }
 
-                        switch (LocalName)
-                        {
-                            case CODETAG:
-                                isProcessingCodeTag = true;
-                                if (!IsCodeNeeded)
-                                {
-                                    ThrowCompilerException(nameof(SR.MissingClassDefinitionForCodeTag),
-                                                           _ccRoot.ElementName,
-                                                           DefinitionNSPrefix,
-                                                           SourceFileInfo.RelativeSourceFilePath + XAML);
-                                }
-
-                                bool moreAttributes = xmlReader.MoveToFirstAttribute();
-                                while (moreAttributes)
-                                {
-                                    string attributeNamespaceUri = xmlReader.LookupNamespace(xmlReader.Prefix);
-                                    if (!attributeNamespaceUri.Equals(XamlReaderHelper.DefinitionNamespaceURI) ||
-                                        !xmlReader.LocalName.Equals(XamlReaderHelper.DefinitionUid))
+                            switch (LocalName)
+                            {
+                                case CODETAG:
+                                    isProcessingCodeTag = true;
+                                    if (!IsCodeNeeded)
                                     {
-                                        ThrowCompilerException(nameof(SR.AttributeNotAllowedOnCodeTag),
-                                                               xmlReader.Name,
+                                        ThrowCompilerException(nameof(SR.MissingClassDefinitionForCodeTag),
+                                                               _ccRoot.ElementName,
                                                                DefinitionNSPrefix,
-                                                               CODETAG);
+                                                               SourceFileInfo.RelativeSourceFilePath + XAML);
                                     }
 
-                                    moreAttributes = xmlReader.MoveToNextAttribute();
-                                }
+                                    bool moreAttributes = xmlReader.MoveToFirstAttribute();
+                                    while (moreAttributes)
+                                    {
+                                        string attributeNamespaceUri = xmlReader.LookupNamespace(xmlReader.Prefix);
+                                        if (!attributeNamespaceUri.Equals(XamlReaderHelper.DefinitionNamespaceURI) ||
+                                            !xmlReader.LocalName.Equals(XamlReaderHelper.DefinitionUid))
+                                        {
+                                            ThrowCompilerException(nameof(SR.AttributeNotAllowedOnCodeTag),
+                                                                   xmlReader.Name,
+                                                                   DefinitionNSPrefix,
+                                                                   CODETAG);
+                                        }
 
-                                break;
+                                        moreAttributes = xmlReader.MoveToNextAttribute();
+                                    }
 
-                            default:
-                                ThrowCompilerException(nameof(SR.UnknownDefinitionTag), DefinitionNSPrefix, LocalName);
-                                break;
+                                    break;
+
+                                default:
+                                    ThrowCompilerException(nameof(SR.UnknownDefinitionTag), DefinitionNSPrefix, LocalName);
+                                    break;
+                            }
+
+                            // if an empty element do a Reader to
+                            // get to the next node and then exit
+                            if (isEmptyElement)
+                            {
+                                xmlReader.Read();
+                                exitLoop = true;
+                            }
+
+                            break;
                         }
 
-                        // if an empty element do a Reader to
-                        // get to the next node and then exit
-                        if (isEmptyElement)
+                    case XmlNodeType.EndElement:
                         {
                             xmlReader.Read();
                             exitLoop = true;
+                            break;
                         }
-
-                        break;
-                    }
-
-                    case XmlNodeType.EndElement:
-                    {
-                        xmlReader.Read();
-                        exitLoop = true;
-                        break;
-                    }
 
                     case XmlNodeType.CDATA:
                     case XmlNodeType.Text:
-                    {
-                        IXmlLineInfo xmlLineInfo = xmlReader as IXmlLineInfo;
-                        int lineNumber = 0;
-
-                        if (null != xmlLineInfo)
                         {
-                            lineNumber = xmlLineInfo.LineNumber;
-                        }
+                            IXmlLineInfo xmlLineInfo = xmlReader as IXmlLineInfo;
+                            int lineNumber = 0;
 
-                        if (LocalName.Equals(CODETAG))
-                        {
-                            AddCodeSnippet(xmlReader.Value, lineNumber);
-                        }
-                        else
-                        {
-                            ThrowCompilerException(nameof(SR.IllegalCDataTextScoping), DefinitionNSPrefix, LocalName, (currNodeType == XmlNodeType.CDATA ? "a CDATA section" : "text content"));
-                        }
+                            if (null != xmlLineInfo)
+                            {
+                                lineNumber = xmlLineInfo.LineNumber;
+                            }
 
-                        break;
-                    }
+                            if (LocalName.Equals(CODETAG))
+                            {
+                                AddCodeSnippet(xmlReader.Value, lineNumber);
+                            }
+                            else
+                            {
+                                ThrowCompilerException(nameof(SR.IllegalCDataTextScoping), DefinitionNSPrefix, LocalName, (currNodeType == XmlNodeType.CDATA ? "a CDATA section" : "text content"));
+                            }
+
+                            break;
+                        }
                 }
             }
             while (!exitLoop && xmlReader.Read());
         }
 
-#endregion Definition Namespace processing
+        #endregion Definition Namespace processing
 
-#region Baml Hookup Functions
+        #region Baml Hookup Functions
 
         private CodeMemberMethod EnsureStyleConnector()
         {
             if (_ccRoot.StyleConnectorFn == null)
             {
-                _ccRoot.StyleConnectorFn = new CodeMemberMethod();
-                _ccRoot.StyleConnectorFn.Name = CONNECT;
-                _ccRoot.StyleConnectorFn.Attributes = MemberAttributes.Public | MemberAttributes.Final;
-                _ccRoot.StyleConnectorFn.PrivateImplementationType = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IStyleConnector]);
+                _ccRoot.StyleConnectorFn = new CodeMemberMethod
+                {
+                    Name = CONNECT,
+                    Attributes = MemberAttributes.Public | MemberAttributes.Final,
+                    PrivateImplementationType = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IStyleConnector])
+                };
 
                 // void IStyleConnector.Connect(int connectionId, object target) {
                 //
@@ -942,10 +950,12 @@ namespace MS.Internal
                 {
                     // if (connectionId == 1)
                     //
-                    ccsConnector = new CodeConditionStatement();
-                    ccsConnector.Condition = new CodeBinaryOperatorExpression(new CodeArgumentReferenceExpression(CONNECTIONID),
+                    ccsConnector = new CodeConditionStatement
+                    {
+                        Condition = new CodeBinaryOperatorExpression(new CodeArgumentReferenceExpression(CONNECTIONID),
                                                                               CodeBinaryOperatorType.ValueEquality,
-                                                                              new CodePrimitiveExpression(connectionId));
+                                                                              new CodePrimitiveExpression(connectionId))
+                    };
                 }
             }
             else if (!SwitchStatementSupported())
@@ -975,7 +985,7 @@ namespace MS.Internal
 
                 // eventSetter = new EventSetter();
                 //
-                CodeExpression[] esParams = {};
+                CodeExpression[] esParams = { };
                 CodeVariableReferenceExpression cvreES = new CodeVariableReferenceExpression(EVENTSETTER);
                 CodeAssignStatement casES = new CodeAssignStatement(cvreES,
                                                                     new CodeObjectCreateExpression(KnownTypes.Types[(int)KnownElements.EventSetter],
@@ -1043,7 +1053,7 @@ namespace MS.Internal
 
                 // Create the markup event information
 
-                MarkupEventInfo mei = new MarkupEventInfo( xamlClrEventNode.Value,          // Event handler string
+                MarkupEventInfo mei = new MarkupEventInfo(xamlClrEventNode.Value,          // Event handler string
                                                            xamlClrEventNode.EventName,      // Event name string
                                                            xamlClrEventNode.EventMember,    // MemberInfo
                                                            xamlClrEventNode.LineNumber);    // LineNumber
@@ -1056,20 +1066,20 @@ namespace MS.Internal
 
                 // Create the type cast expression "(Foo)target"
 
-                cceTarget = new CodeCastExpression( eventTarget, careTarget);
+                cceTarget = new CodeCastExpression(eventTarget, careTarget);
 
 
                 // Create the whole code statement (either in += form or in AddHandler form)
 
-                CodeStatement csAddCLREvent = AddCLREvent( eventTarget, null, cceTarget, mei );
+                CodeStatement csAddCLREvent = AddCLREvent(eventTarget, null, cceTarget, mei);
 
                 if (SwitchStatementSupported())
                 {
-                    _ccRoot.StyleConnectorFn.Statements.Add( csAddCLREvent );
+                    _ccRoot.StyleConnectorFn.Statements.Add(csAddCLREvent);
                 }
                 else
                 {
-                    ccsConnector.TrueStatements.Add( csAddCLREvent );
+                    ccsConnector.TrueStatements.Add(csAddCLREvent);
 
                     // Only add if statement at start of new scope
                     if (!xamlClrEventNode.IsSameScope)
@@ -1113,10 +1123,12 @@ namespace MS.Internal
             //
             if (_ccRoot.HookupFn == null)
             {
-                _ccRoot.HookupFn = new CodeMemberMethod();
-                _ccRoot.HookupFn.Name = CONNECT;
-                _ccRoot.HookupFn.Attributes = MemberAttributes.Public | MemberAttributes.Final;
-                _ccRoot.HookupFn.PrivateImplementationType = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IComponentConnector]);
+                _ccRoot.HookupFn = new CodeMemberMethod
+                {
+                    Name = CONNECT,
+                    Attributes = MemberAttributes.Public | MemberAttributes.Final,
+                    PrivateImplementationType = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IComponentConnector])
+                };
 
                 // void IComponentConnector.Connect(int connectionId, object target) {
                 //
@@ -1172,10 +1184,12 @@ namespace MS.Internal
             {
                 // if (connectionId == 1)
                 //
-                ccsConnector = new CodeConditionStatement();
-                ccsConnector.Condition = new CodeBinaryOperatorExpression(new CodeArgumentReferenceExpression(CONNECTIONID),
+                ccsConnector = new CodeConditionStatement
+                {
+                    Condition = new CodeBinaryOperatorExpression(new CodeArgumentReferenceExpression(CONNECTIONID),
                                                                           CodeBinaryOperatorType.ValueEquality,
-                                                                          new CodePrimitiveExpression(connectionId));
+                                                                          new CodePrimitiveExpression(connectionId))
+                };
             }
 
 
@@ -1295,9 +1309,9 @@ namespace MS.Internal
             }
         }
 
-#endregion Baml Hookup Functions
+        #endregion Baml Hookup Functions
 
-#region Helpers
+        #region Helpers
 
         private void InitializeReflectionHelper()
         {
@@ -1508,7 +1522,7 @@ namespace MS.Internal
 
         private bool IsValidClassName(string className)
         {
-            if (className.Length == 0 ||!NameValidationHelper.IsValidIdentifierName(className))
+            if (className.Length == 0 || !NameValidationHelper.IsValidIdentifierName(className))
             {
                 return false;
             }
@@ -1597,7 +1611,7 @@ namespace MS.Internal
 
                     // Return the parent folder of the target file with a trailing DirectorySeparatorChar.  
                     // Return a relative path if possible.  Else, return an absolute path.
-                    #if NETFX 
+#if NETFX
                     string path = PathInternal.GetRelativePath(TargetPath + pathOfRelativeSourceFilePath, SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase);
 #else
                     string path = Path.GetRelativePath(TargetPath + pathOfRelativeSourceFilePath, SourceFileInfo.SourcePath);
@@ -1620,7 +1634,7 @@ namespace MS.Internal
                     }
 
                     return parentFolderPrefix;
-                } 
+                }
             }
         }
 
@@ -1772,9 +1786,9 @@ namespace MS.Internal
             }
         }
 
-#endregion Helpers
+        #endregion Helpers
 
-#region Property
+        #region Property
 
         private CodeExpression GetPropertyValueExpression(ITypeDescriptorContext ctx, Type typeToConvertTo, Object value, string attributeValue)
         {
@@ -1880,9 +1894,9 @@ namespace MS.Internal
             return ce;
         }
 
-#endregion Property
+        #endregion Property
 
-#region Event
+        #region Event
 
         // The given MemberInfo could either be an EventInfo for a Clr event or a
         // MethodInfo for a static Add{EventName}Handler helper for an attached event
@@ -1930,7 +1944,7 @@ namespace MS.Internal
             // Fetch the EventHandlerType from either the EventInfo or the MethodInfo
             // for the Add{Propertyname}Handler method's MethodInfo
             Type eventHandlerType = GetEventHandlerType(miEvent);
-            string [] typeArgsList = cc != null ? cc.GenericTypeArgs : null;
+            string[] typeArgsList = cc != null ? cc.GenericTypeArgs : null;
 
             cdce.DelegateType = GenerateConstructedTypeReference(eventHandlerType, typeArgsList, eventTarget, eventTargetName, eventName);
             cdce.MethodName = eventHandler.Trim() + (subClassed ? HELPER : string.Empty);
@@ -1945,16 +1959,16 @@ namespace MS.Internal
                 cDelExp = coce;
             }
 
-            		
-//            The bug that this chunk of code works around was fixed but
-//            exposes a different bug. To work around the second bug, we
-//            remove the workaround for the first one.  
-//            Note that the initial bug was not fixed for VB, so the code block above remains.
-//            else if (Language == CompilerLanguage.JScript)
-//            {
-//                CodeCastExpression cce = new CodeCastExpression(mei.ei.EventHandlerType, cdce);
-//                cDelExp = cce;
-//            }
+
+            //            The bug that this chunk of code works around was fixed but
+            //            exposes a different bug. To work around the second bug, we
+            //            remove the workaround for the first one.  
+            //            Note that the initial bug was not fixed for VB, so the code block above remains.
+            //            else if (Language == CompilerLanguage.JScript)
+            //            {
+            //                CodeCastExpression cce = new CodeCastExpression(mei.ei.EventHandlerType, cdce);
+            //                cDelExp = cce;
+            //            }
 
             return cDelExp;
         }
@@ -1963,7 +1977,7 @@ namespace MS.Internal
         private CodeStatement AddCLREvent(CodeContext cc, CodeExpression ce, MarkupEventInfo mei)
         {
             // Infer the event target's (aka the listener) type from the current code context
-            return AddCLREvent( cc.ElementType, cc, ce, mei );
+            return AddCLREvent(cc.ElementType, cc, ce, mei);
         }
 
         private CodeStatement AddCLREvent(Type eventTarget, CodeContext cc, CodeExpression ce, MarkupEventInfo mei)
@@ -2090,9 +2104,9 @@ namespace MS.Internal
             internal int lineNumber;
         }
 
-#endregion Event
+        #endregion Event
 
-#region Language
+        #region Language
 
         private CodeDomProvider EnsureCodeProvider()
         {
@@ -2155,9 +2169,9 @@ namespace MS.Internal
             }
         }
 
-#endregion Language
+        #endregion Language
 
-#region CorePageGen
+        #region CorePageGen
 
         internal CodeMemberField AddNameField(string name, int lineNumber, int linePosition)
         {
@@ -2210,10 +2224,12 @@ namespace MS.Internal
                 return null;
             }
 
-            CodeMemberField field = new CodeMemberField();
-            field.Name = name;
-            field.Attributes = MemberAttributes.Assembly;
-            field.Type = cc.ElementTypeReference;
+            CodeMemberField field = new CodeMemberField
+            {
+                Name = name,
+                Attributes = MemberAttributes.Assembly,
+                Type = cc.ElementTypeReference
+            };
             field.CustomAttributes.Add(
                 new CodeAttributeDeclaration(
                          new CodeTypeReference("System.Diagnostics.CodeAnalysis.SuppressMessageAttribute"),
@@ -2291,7 +2307,7 @@ namespace MS.Internal
             }
         }
 
-        private static CodeTypeReference GenerateConstructedTypeReference(Type t, string [] typeArgsList, string genericName)
+        private static CodeTypeReference GenerateConstructedTypeReference(Type t, string[] typeArgsList, string genericName)
         {
             CodeTypeReference ctrConstructedType = null;
 
@@ -2336,7 +2352,7 @@ namespace MS.Internal
             return ctrConstructedType;
         }
 
-        private static CodeTypeReference GenerateConstructedTypeReference(Type t, string [] typeArgsList, Type refType, string refTypeFullName, string eventName)
+        private static CodeTypeReference GenerateConstructedTypeReference(Type t, string[] typeArgsList, Type refType, string refTypeFullName, string eventName)
         {
             CodeTypeReference ctrConstructedType = null;
 
@@ -2448,8 +2464,10 @@ namespace MS.Internal
             // public class MyClass : BaseClass {
             //
             CodeTypeReference ctrBaseClass = null;
-            CodeTypeDeclaration ctdClass = new CodeTypeDeclaration();
-            ctdClass.Name = className;
+            CodeTypeDeclaration ctdClass = new CodeTypeDeclaration
+            {
+                Name = className
+            };
             if (baseClass != null)
             {
                 // At this point, we should only have fully open generic types if there is a typeargs list.
@@ -2529,13 +2547,17 @@ namespace MS.Internal
             // {
             Debug.Assert(_ccRoot == null);
             Debug.Assert(_codeContexts == null || _codeContexts.Count == 0, "mismatched CodeContexts");
-            CodeNamespace cns = new CodeNamespace();
-            cns.Name = ns;
+            CodeNamespace cns = new CodeNamespace
+            {
+                Name = ns
+            };
             cns.Types.Clear();
 
             CodeTypeDeclaration ctdClass = GenerateClass(className, ref modifier, baseClass, baseClassFullName);
-            CodeContext cc = new CodeContextRoot(ctdClass, cns, baseClass, _typeArgsList, baseClassFullName);
-            cc.ElementTypeReference = new CodeTypeReference(GetFullClassName(ns, className));
+            CodeContext cc = new CodeContextRoot(ctdClass, cns, baseClass, _typeArgsList, baseClassFullName)
+            {
+                ElementTypeReference = new CodeTypeReference(GetFullClassName(ns, className))
+            };
 
             return cc;
         }
@@ -2554,10 +2576,12 @@ namespace MS.Internal
             //     return Delegate.CreateDelegate(delegateType, this, handler);
             // }
             //
-            CodeMemberMethod cmmCD = new CodeMemberMethod();
-            cmmCD.Name = CREATEDELEGATEHELPER;
-            cmmCD.ReturnType = new CodeTypeReference(typeof(Delegate));
-            cmmCD.Attributes = MemberAttributes.Assembly | MemberAttributes.Final;
+            CodeMemberMethod cmmCD = new CodeMemberMethod
+            {
+                Name = CREATEDELEGATEHELPER,
+                ReturnType = new CodeTypeReference(typeof(Delegate)),
+                Attributes = MemberAttributes.Assembly | MemberAttributes.Final
+            };
             AddDebuggerNonUserCodeAttribute(cmmCD);
             AddGeneratedCodeAttribute(cmmCD);
             AddSuppressMessageAttribute(cmmCD, "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode");
@@ -2568,8 +2592,10 @@ namespace MS.Internal
             cmmCD.Parameters.Add(param2);
 
             CodeMethodReferenceExpression cmreCD = new CodeMethodReferenceExpression(new CodeTypeReferenceExpression(typeof(Delegate)), "CreateDelegate");
-            CodeMethodInvokeExpression cmieCD = new CodeMethodInvokeExpression();
-            cmieCD.Method = cmreCD;
+            CodeMethodInvokeExpression cmieCD = new CodeMethodInvokeExpression
+            {
+                Method = cmreCD
+            };
             cmieCD.Parameters.Add(new CodeArgumentReferenceExpression(DELEGATETYPE));
             cmieCD.Parameters.Add(new CodeThisReferenceExpression());
             cmieCD.Parameters.Add(new CodeArgumentReferenceExpression(HANDLERARG));
@@ -2599,8 +2625,10 @@ namespace MS.Internal
             //         return;
             //     }
             //
-            CodeConditionStatement ccsCL = new CodeConditionStatement();
-            ccsCL.Condition = new CodeFieldReferenceExpression(null, CONTENT_LOADED);
+            CodeConditionStatement ccsCL = new CodeConditionStatement
+            {
+                Condition = new CodeFieldReferenceExpression(null, CONTENT_LOADED)
+            };
             ccsCL.TrueStatements.Add(new CodeMethodReturnStatement());
             if (!isApp)
             {
@@ -2654,13 +2682,13 @@ namespace MS.Internal
             // that as part of the URI here.  This results in an error in Version.Parse during InitializeComponent's call tree.  Instead, do as we would have 
             // when the developer sets a wildcard version string via AssemblyVersionAttribute and use an empty string.
             string version = hasWildcard || String.IsNullOrEmpty(AssemblyVersion)
-                ? String.Empty 
+                ? String.Empty
                 : COMPONENT_DELIMITER + VER + AssemblyVersion;
 
-            string token = String.IsNullOrEmpty(AssemblyPublicKeyToken) 
-                ? String.Empty 
+            string token = String.IsNullOrEmpty(AssemblyPublicKeyToken)
+                ? String.Empty
                 : COMPONENT_DELIMITER + AssemblyPublicKeyToken;
-            
+
             uriPart = FORWARDSLASH + AssemblyName + version + token + COMPONENT_DELIMITER + COMPONENT + FORWARDSLASH + resourceID;
 
             //
@@ -2680,9 +2708,10 @@ namespace MS.Internal
             //  System.Windows.Application.LoadComponent(this, resourceLocator);
             //
             CodeMethodReferenceExpression cmreLoadContent = new CodeMethodReferenceExpression(new CodeTypeReferenceExpression(KnownTypes.Types[(int)KnownElements.Application]), LOADCOMPONENT);
-            CodeMethodInvokeExpression cmieLoadContent = new CodeMethodInvokeExpression();
-
-            cmieLoadContent.Method = cmreLoadContent;
+            CodeMethodInvokeExpression cmieLoadContent = new CodeMethodInvokeExpression
+            {
+                Method = cmreLoadContent
+            };
 
             CodeVariableReferenceExpression cvreMemStm = new CodeVariableReferenceExpression(resVarname);
 
@@ -2695,10 +2724,12 @@ namespace MS.Internal
 
             // private bool _contentLoaded;
             //
-            CodeMemberField cmfCL = new CodeMemberField();
-            cmfCL.Name = CONTENT_LOADED;
-            cmfCL.Attributes = MemberAttributes.Private;
-            cmfCL.Type = new CodeTypeReference(typeof(bool));
+            CodeMemberField cmfCL = new CodeMemberField
+            {
+                Name = CONTENT_LOADED,
+                Attributes = MemberAttributes.Private,
+                Type = new CodeTypeReference(typeof(bool))
+            };
             _ccRoot.CodeClass.Members.Add(cmfCL);
 
             if (!isApp)
@@ -2722,15 +2753,19 @@ namespace MS.Internal
             // namespace XamlGeneratedNamespace
             // {
             //
-            CodeNamespace cns = new CodeNamespace();
-            cns.Name = XamlTypeMapper.GeneratedNamespace;
+            CodeNamespace cns = new CodeNamespace
+            {
+                Name = XamlTypeMapper.GeneratedNamespace
+            };
 
             //     [EditorBrowsable(EditorBrowsableState.Never)]
             //     public sealed class GeneratedInternalTypeHelper : InternalTypeHelper
             //     {
             //
-            CodeTypeDeclaration ctdClass = new CodeTypeDeclaration();
-            ctdClass.Name = XamlTypeMapper.GeneratedInternalTypeHelperClassName;
+            CodeTypeDeclaration ctdClass = new CodeTypeDeclaration
+            {
+                Name = XamlTypeMapper.GeneratedInternalTypeHelperClassName
+            };
             ctdClass.BaseTypes.Add(new CodeTypeReference("System.Windows.Markup.InternalTypeHelper"));
             ctdClass.TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed;
             AddDebuggerNonUserCodeAttribute(ctdClass);
@@ -2750,10 +2785,12 @@ namespace MS.Internal
             //                                             culture);
             //         }
             //
-            CodeMemberMethod cmmCI = new CodeMemberMethod();
-            cmmCI.Name = "CreateInstance";
-            cmmCI.Attributes = MemberAttributes.Family | MemberAttributes.Override;
-            cmmCI.ReturnType = new CodeTypeReference(typeof(Object));
+            CodeMemberMethod cmmCI = new CodeMemberMethod
+            {
+                Name = "CreateInstance",
+                Attributes = MemberAttributes.Family | MemberAttributes.Override,
+                ReturnType = new CodeTypeReference(typeof(Object))
+            };
 
             CodeParameterDeclarationExpression param1 = new CodeParameterDeclarationExpression(typeof(Type), TYPE);
             CodeParameterDeclarationExpression param4 = new CodeParameterDeclarationExpression(typeof(CultureInfo), CULTURE);
@@ -2761,8 +2798,10 @@ namespace MS.Internal
             cmmCI.Parameters.Add(param4);
 
             CodeMethodReferenceExpression cmreCI = new CodeMethodReferenceExpression(new CodeTypeReferenceExpression(typeof(Activator)), "CreateInstance");
-            CodeMethodInvokeExpression cmieCI = new CodeMethodInvokeExpression();
-            cmieCI.Method = cmreCI;
+            CodeMethodInvokeExpression cmieCI = new CodeMethodInvokeExpression
+            {
+                Method = cmreCI
+            };
             cmieCI.Parameters.Add(new CodeArgumentReferenceExpression(TYPE));
             CodeFieldReferenceExpression cfre1 = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(BindingFlags)), "Public");
             CodeFieldReferenceExpression cfre2 = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(BindingFlags)), "NonPublic");
@@ -2785,10 +2824,12 @@ namespace MS.Internal
             //             return propertyInfo.GetValue(target, BindingFlags.Default, null, null, culture);
             //         }
             //
-            CodeMemberMethod cmmGPV = new CodeMemberMethod();
-            cmmGPV.Name = "GetPropertyValue";
-            cmmGPV.Attributes = MemberAttributes.Family | MemberAttributes.Override;
-            cmmGPV.ReturnType = new CodeTypeReference(typeof(Object));
+            CodeMemberMethod cmmGPV = new CodeMemberMethod
+            {
+                Name = "GetPropertyValue",
+                Attributes = MemberAttributes.Family | MemberAttributes.Override,
+                ReturnType = new CodeTypeReference(typeof(Object))
+            };
 
             param1 = new CodeParameterDeclarationExpression(typeof(PropertyInfo), PROPINFO);
             CodeParameterDeclarationExpression param2 = new CodeParameterDeclarationExpression(typeof(object), TARGET);
@@ -2797,8 +2838,10 @@ namespace MS.Internal
             cmmGPV.Parameters.Add(param4);
 
             CodeMethodReferenceExpression cmreGPV = new CodeMethodReferenceExpression(new CodeArgumentReferenceExpression(PROPINFO), "GetValue");
-            CodeMethodInvokeExpression cmieGPV = new CodeMethodInvokeExpression();
-            cmieGPV.Method = cmreGPV;
+            CodeMethodInvokeExpression cmieGPV = new CodeMethodInvokeExpression
+            {
+                Method = cmreGPV
+            };
             cmieGPV.Parameters.Add(new CodeArgumentReferenceExpression(TARGET));
             cmieGPV.Parameters.Add(new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(BindingFlags)), DEFAULT));
             cmieGPV.Parameters.Add(new CodePrimitiveExpression(null));
@@ -2814,9 +2857,11 @@ namespace MS.Internal
             //             propertyInfo.SetValue(target, value, BindingFlags.Default, null, null, culture);
             //         }
             //
-            CodeMemberMethod cmmSPV = new CodeMemberMethod();
-            cmmSPV.Name = "SetPropertyValue";
-            cmmSPV.Attributes = MemberAttributes.Family | MemberAttributes.Override;
+            CodeMemberMethod cmmSPV = new CodeMemberMethod
+            {
+                Name = "SetPropertyValue",
+                Attributes = MemberAttributes.Family | MemberAttributes.Override
+            };
 
             CodeParameterDeclarationExpression param3 = new CodeParameterDeclarationExpression(typeof(object), VALUE);
             cmmSPV.Parameters.Add(param1);
@@ -2825,8 +2870,10 @@ namespace MS.Internal
             cmmSPV.Parameters.Add(param4);
 
             CodeMethodReferenceExpression cmreSPV = new CodeMethodReferenceExpression(new CodeArgumentReferenceExpression(PROPINFO), "SetValue");
-            CodeMethodInvokeExpression cmieSPV = new CodeMethodInvokeExpression();
-            cmieSPV.Method = cmreSPV;
+            CodeMethodInvokeExpression cmieSPV = new CodeMethodInvokeExpression
+            {
+                Method = cmreSPV
+            };
             cmieSPV.Parameters.Add(new CodeArgumentReferenceExpression(TARGET));
             cmieSPV.Parameters.Add(new CodeArgumentReferenceExpression(VALUE));
             cmieSPV.Parameters.Add(new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(BindingFlags)), DEFAULT));
@@ -2849,10 +2896,12 @@ namespace MS.Internal
             //                                                            new object[] { delegateType, handler });
             //         }
             //
-            CodeMemberMethod cmmCD = new CodeMemberMethod();
-            cmmCD.Name = "CreateDelegate";
-            cmmCD.Attributes = MemberAttributes.Family | MemberAttributes.Override;
-            cmmCD.ReturnType = new CodeTypeReference(typeof(Delegate));
+            CodeMemberMethod cmmCD = new CodeMemberMethod
+            {
+                Name = "CreateDelegate",
+                Attributes = MemberAttributes.Family | MemberAttributes.Override,
+                ReturnType = new CodeTypeReference(typeof(Delegate))
+            };
 
             param1 = new CodeParameterDeclarationExpression(typeof(Type), DELEGATETYPE);
             param3 = new CodeParameterDeclarationExpression(typeof(string), HANDLERARG);
@@ -2862,12 +2911,16 @@ namespace MS.Internal
 
             CodeArgumentReferenceExpression careTarget = new CodeArgumentReferenceExpression(TARGET);
             CodeMethodReferenceExpression cmreGetType = new CodeMethodReferenceExpression(careTarget, "GetType");
-            CodeMethodInvokeExpression cmieGetType = new CodeMethodInvokeExpression();
-            cmieGetType.Method = cmreGetType;
+            CodeMethodInvokeExpression cmieGetType = new CodeMethodInvokeExpression
+            {
+                Method = cmreGetType
+            };
 
             CodeMethodReferenceExpression cmreCD = new CodeMethodReferenceExpression(cmieGetType, "InvokeMember");
-            CodeMethodInvokeExpression cmieCD = new CodeMethodInvokeExpression();
-            cmieCD.Method = cmreCD;
+            CodeMethodInvokeExpression cmieCD = new CodeMethodInvokeExpression
+            {
+                Method = cmreCD
+            };
             cmieCD.Parameters.Add(new CodePrimitiveExpression(CREATEDELEGATEHELPER));
 
             CodeFieldReferenceExpression cfre5 = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(BindingFlags)), "InvokeMethod");
@@ -2896,9 +2949,11 @@ namespace MS.Internal
             //             eventInfo.AddEventHandler(target, handler);
             //         }
             //
-            CodeMemberMethod cmmAEH = new CodeMemberMethod();
-            cmmAEH.Name = "AddEventHandler";
-            cmmAEH.Attributes = MemberAttributes.Family | MemberAttributes.Override;
+            CodeMemberMethod cmmAEH = new CodeMemberMethod
+            {
+                Name = "AddEventHandler",
+                Attributes = MemberAttributes.Family | MemberAttributes.Override
+            };
 
             param1 = new CodeParameterDeclarationExpression(typeof(EventInfo), EVENTINFO);
             param3 = new CodeParameterDeclarationExpression(typeof(Delegate), HANDLERARG);
@@ -2907,8 +2962,10 @@ namespace MS.Internal
             cmmAEH.Parameters.Add(param3);
 
             CodeMethodReferenceExpression cmreAEH = new CodeMethodReferenceExpression(new CodeArgumentReferenceExpression(EVENTINFO), "AddEventHandler");
-            CodeMethodInvokeExpression cmieAEH = new CodeMethodInvokeExpression();
-            cmieAEH.Method = cmreAEH;
+            CodeMethodInvokeExpression cmieAEH = new CodeMethodInvokeExpression
+            {
+                Method = cmreAEH
+            };
             cmieAEH.Parameters.Add(new CodeArgumentReferenceExpression(TARGET));
             cmieAEH.Parameters.Add(new CodeArgumentReferenceExpression(HANDLERARG));
 
@@ -2980,7 +3037,7 @@ namespace MS.Internal
                 }
                 else if (_typeArgsList != null)
                 {
-                    string rootClassName = elementType != null ? elementType.Name : baseClassFullName.Substring(baseClassFullName.LastIndexOf(DOT, StringComparison.Ordinal)+1);
+                    string rootClassName = elementType != null ? elementType.Name : baseClassFullName.Substring(baseClassFullName.LastIndexOf(DOT, StringComparison.Ordinal) + 1);
                     ThrowCompilerException(nameof(SR.MissingClassDefinitionForTypeArgs), rootClassName, DefinitionNSPrefix);
                 }
 
@@ -3098,9 +3155,9 @@ namespace MS.Internal
             _usingNS.Add(clrNS);
         }
 
-#endregion CorePageGen
+        #endregion CorePageGen
 
-#region App Entry Point
+        #region App Entry Point
 
         // This code block is shared by regular Application and HostInBrowser Application
         private CodeVariableReferenceExpression GenerateAppInstance(CodeMemberMethod cmmMain)
@@ -3112,7 +3169,7 @@ namespace MS.Internal
             //
             CodeObjectCreateExpression coce;
             CodeVariableReferenceExpression cvre = new CodeVariableReferenceExpression(APPVAR);
-            CodeExpression[] ctorParams = {};
+            CodeExpression[] ctorParams = { };
 
             coce = new CodeObjectCreateExpression(appClassName, ctorParams);
 
@@ -3166,8 +3223,10 @@ namespace MS.Internal
                 // public static void Main () {
                 //
 
-                cmmMain = new CodeEntryPointMethod();
-                cmmMain.Attributes = MemberAttributes.Public | MemberAttributes.Static;
+                cmmMain = new CodeEntryPointMethod
+                {
+                    Attributes = MemberAttributes.Public | MemberAttributes.Static
+                };
                 cmmMain.CustomAttributes.Add(new CodeAttributeDeclaration(typeof(STAThreadAttribute).FullName));
                 AddDebuggerNonUserCodeAttribute(cmmMain);
                 AddGeneratedCodeAttribute(cmmMain);
@@ -3204,8 +3263,10 @@ namespace MS.Internal
                     {
                         //   app.InitializeComponent();
                         //
-                        CodeMethodInvokeExpression cmieIT = new CodeMethodInvokeExpression();
-                        cmieIT.Method = new CodeMethodReferenceExpression(cvreApp, INITIALIZE_COMPONENT);
+                        CodeMethodInvokeExpression cmieIT = new CodeMethodInvokeExpression
+                        {
+                            Method = new CodeMethodReferenceExpression(cvreApp, INITIALIZE_COMPONENT)
+                        };
                         cmmMain.Statements.Add(new CodeExpressionStatement(cmieIT));
                     }
 
@@ -3214,8 +3275,10 @@ namespace MS.Internal
                         //   app.Run();
                         //
                         CodeMethodReferenceExpression cmreRun = new CodeMethodReferenceExpression(cvreApp, "Run");
-                        CodeMethodInvokeExpression cmieRun = new CodeMethodInvokeExpression();
-                        cmieRun.Method = cmreRun;
+                        CodeMethodInvokeExpression cmieRun = new CodeMethodInvokeExpression
+                        {
+                            Method = cmreRun
+                        };
 
                         CodeStatement csRun = new CodeExpressionStatement(cmieRun);
                         cmmMain.Statements.Add(csRun);
@@ -3265,9 +3328,9 @@ namespace MS.Internal
             }
         }
 
-#endregion App Entry Point
+        #endregion App Entry Point
 
-#region Splash Screen Code Generation
+        #region Splash Screen Code Generation
 
         private CodeVariableReferenceExpression GenerateSplashScreenInstance(CodeMemberMethod cmmMain)
         {
@@ -3324,13 +3387,13 @@ namespace MS.Internal
             return resourceId;
         }
 
-#endregion
+        #endregion
 
-#region CodeContext
+        #region CodeContext
 
         private class CodeContext
         {
-            internal CodeContext(Type elementType, string [] typeArgsList, string localElementFullName)
+            internal CodeContext(Type elementType, string[] typeArgsList, string localElementFullName)
             {
                 _elementType = elementType;
                 _typeArgsList = typeArgsList;
@@ -3347,7 +3410,7 @@ namespace MS.Internal
                 get { return _elementType != null ? _elementType.Name : _localElementFullName.Substring(_localElementFullName.LastIndexOf(DOT, StringComparison.Ordinal) + 1); }
             }
 
-            internal string [] GenericTypeArgs
+            internal string[] GenericTypeArgs
             {
                 get { return _typeArgsList; }
             }
@@ -3380,7 +3443,7 @@ namespace MS.Internal
 
             private bool _isAllowedNameScope = true;
             private Type _elementType = null;
-            private string [] _typeArgsList = null;
+            private string[] _typeArgsList = null;
             private string _localElementFullName = string.Empty;
             protected CodeTypeReference _ctrElemTypeRef = null;
         }
@@ -3390,8 +3453,8 @@ namespace MS.Internal
             internal CodeContextRoot(CodeTypeDeclaration codeClass,
                                      CodeNamespace codeNS,
                                      Type elementType,
-                                     string [] typeArgsList,
-                                     string localElementFullName) : base (elementType, typeArgsList, localElementFullName)
+                                     string[] typeArgsList,
+                                     string localElementFullName) : base(elementType, typeArgsList, localElementFullName)
             {
                 _codeNS = codeNS;
                 _codeClass = codeClass;
@@ -3421,9 +3484,11 @@ namespace MS.Internal
                 {
                     if (_initializeComponentFn == null)
                     {
-                        _initializeComponentFn = new CodeMemberMethod();
-                        _initializeComponentFn.Name = INITIALIZE_COMPONENT;
-                        _initializeComponentFn.Attributes = MemberAttributes.Public | MemberAttributes.Final;
+                        _initializeComponentFn = new CodeMemberMethod
+                        {
+                            Name = INITIALIZE_COMPONENT,
+                            Attributes = MemberAttributes.Public | MemberAttributes.Final
+                        };
                         AddDebuggerNonUserCodeAttribute(_initializeComponentFn);
                         AddGeneratedCodeAttribute(_initializeComponentFn);
                         MarkupCompiler.GenerateXmlComments(_initializeComponentFn, INITIALIZE_COMPONENT);
@@ -3461,126 +3526,126 @@ namespace MS.Internal
             private string _subClass = string.Empty;
         }
 
-#endregion CodeContext
+        #endregion CodeContext
 
-#endregion Implementation
+        #endregion Implementation
 
-#region Private Data
+        #region Private Data
 
-        private string                  _targetPath = string.Empty; // Current Dir is default
-        private string[]                _contentList = null;
-        private ArrayList               _referenceAssemblyList = null;
-        private string                  _localXamlApplication = null;
-        private string[]                _localXamlPages = null;
-        private string []               _typeArgsList = null;
-        private ArrayList               _pendingLocalFiles = null;
-        private bool                    _hostInBrowser = false;
-        private bool                    _xamlDebuggingInformation = false;
-        private string                  _splashImage = null;
+        private string _targetPath = string.Empty; // Current Dir is default
+        private string[] _contentList = null;
+        private ArrayList _referenceAssemblyList = null;
+        private string _localXamlApplication = null;
+        private string[] _localXamlPages = null;
+        private string[] _typeArgsList = null;
+        private ArrayList _pendingLocalFiles = null;
+        private bool _hostInBrowser = false;
+        private bool _xamlDebuggingInformation = false;
+        private string _splashImage = null;
 
-        private bool                    _isLangCSharp = false;
-        private bool                    _isLangVB = false;
-        private string                  _language = string.Empty;
-        private string                  _languageSourceExtension = string.Empty;
-        private static string           _definitionNSPrefix = DEFINITION_PREFIX;
-        private CompilerInfo            _ci = null;
-        private CodeDomProvider         _codeProvider = null;
-        private XamlTypeMapper          _typeMapper = null;
+        private bool _isLangCSharp = false;
+        private bool _isLangVB = false;
+        private string _language = string.Empty;
+        private string _languageSourceExtension = string.Empty;
+        private static string _definitionNSPrefix = DEFINITION_PREFIX;
+        private CompilerInfo _ci = null;
+        private CodeDomProvider _codeProvider = null;
+        private XamlTypeMapper _typeMapper = null;
 
-        private bool                    _isCompilingEntryPointClass = false;
-        private bool                    _isBamlNeeded = false;
-        private bool                    _isCodeNeeded = false;
-        private bool                    _hasLocalEvent = false;
-        private bool                    _hasGeneratedInternalTypeHelper = false;
-        private string                  _assemblyName = string.Empty;
-        private string                  _assemblyVersion = string.Empty;
-        private string                  _assemblyPublicKeyToken = string.Empty;
-        private string                  _applicationFile = string.Empty;
-        private string                  _defaultNamespace = string.Empty;
-        private ParserHooks             _parserHooks;
+        private bool _isCompilingEntryPointClass = false;
+        private bool _isBamlNeeded = false;
+        private bool _isCodeNeeded = false;
+        private bool _hasLocalEvent = false;
+        private bool _hasGeneratedInternalTypeHelper = false;
+        private string _assemblyName = string.Empty;
+        private string _assemblyVersion = string.Empty;
+        private string _assemblyPublicKeyToken = string.Empty;
+        private string _applicationFile = string.Empty;
+        private string _defaultNamespace = string.Empty;
+        private ParserHooks _parserHooks;
 
-        private SourceFileInfo          _sourceFileInfo = null;
-        private string                  _compilationUnitSourcePath = string.Empty;
-        private ArrayList               _usingNS = null;
-        private Assembly                _localAssembly = null;
-        private ReferenceAssembly       _localAssemblyFile = null;
-        private ParserContext           _parserContext = null;
-        private CodeContextRoot         _ccRoot = null;
-        private Stack                   _codeContexts = null;
-        private ITaskFileService        _taskFileService = null;
-        private TaskLoggingHelper       _taskLogger = null;
-        private bool                    _hasEmittedEventSetterDeclaration;
+        private SourceFileInfo _sourceFileInfo = null;
+        private string _compilationUnitSourcePath = string.Empty;
+        private ArrayList _usingNS = null;
+        private Assembly _localAssembly = null;
+        private ReferenceAssembly _localAssemblyFile = null;
+        private ParserContext _parserContext = null;
+        private CodeContextRoot _ccRoot = null;
+        private Stack _codeContexts = null;
+        private ITaskFileService _taskFileService = null;
+        private TaskLoggingHelper _taskLogger = null;
+        private bool _hasEmittedEventSetterDeclaration;
 
         // Per language sccess Modfiers
-        private string                  _private = string.Empty;
-        private string                  _public = string.Empty;
-        private string                  _protected = string.Empty;
-        private string                  _internal = string.Empty;
-        private string                  _protectedInternal = string.Empty;
-        private string                  _privateClass = string.Empty;
-        private string                  _publicClass = string.Empty;
+        private string _private = string.Empty;
+        private string _public = string.Empty;
+        private string _protected = string.Empty;
+        private string _internal = string.Empty;
+        private string _protectedInternal = string.Empty;
+        private string _privateClass = string.Empty;
+        private string _publicClass = string.Empty;
 
         // Prefixes & Tags
-        private const string            INDENT12 = "            ";
-        private const string            ANONYMOUS_ENTRYCLASS_PREFIX = "Generated";
-        private const string            DEFINITION_PREFIX = "x";
-        private const char              COMMA = ',';
-        private const char              GENERIC_DELIMITER = '`';
-        internal const char             DOTCHAR = '.';
-        internal const string           DOT = ".";
-        internal const string           CODETAG = "Code";
+        private const string INDENT12 = "            ";
+        private const string ANONYMOUS_ENTRYCLASS_PREFIX = "Generated";
+        private const string DEFINITION_PREFIX = "x";
+        private const char COMMA = ',';
+        private const char GENERIC_DELIMITER = '`';
+        internal const char DOTCHAR = '.';
+        internal const string DOT = ".";
+        internal const string CODETAG = "Code";
 
         // Language support
-        private const string            XAML = ".xaml";
-        private const string            BAML = ".baml";
-        private const string            VB = "vb";
-        private const string            CSHARP = "c#";
-        private const string            JSHARP = "vj#";
-        private const string            JSCRIPT = "js";
+        private const string XAML = ".xaml";
+        private const string BAML = ".baml";
+        private const string VB = "vb";
+        private const string CSHARP = "c#";
+        private const string JSHARP = "vj#";
+        private const string JSCRIPT = "js";
 
         // Generated identifiers
-        private const string            CREATEDELEGATEHELPER = "_CreateDelegate";
-        private const string            CONTENT_LOADED = "_contentLoaded";
-        private const string            CONNECT = "Connect";
-        private const string            CONNECTIONID = "connectionId";
-        private const string            TARGET = "target";
-        private const string            EVENTSETTER = "eventSetter";
-        private const string            EVENT = "Event";
-        private const string            ADDHANDLER = "AddHandler";
-        private const string            HELPER = "Helper";
-        private const string            HANDLERARG = "handler";
-        private const string            TYPE = "type";
-        private const string            CULTURE = "culture";
-        private const string            DEFAULT = "Default";
-        private const string            VALUE = "value";
-        private const string            DELEGATETYPE = "delegateType";
-        private const string            PROPINFO = "propertyInfo";
-        private const string            EVENTINFO = "eventInfo";
-        private const string            APPVAR = "app";
-        private const string            SPLASHVAR = "splashScreen";
-        private const string            SPLASHCLASSNAME = "SplashScreen";
-        private const string            ARGS = "args";
-        private const string            INITIALIZE_COMPONENT = "InitializeComponent";
-        private const string            SWITCH_STATEMENT = $"{INDENT12}switch ({CONNECTIONID})\r\n{INDENT12}{{";
-        private const string            BREAK_STATEMENT = $"{INDENT12}break;";
-        private const string            CASE_STATEMENT = $"{INDENT12}case ";
-        private const string            ENDCURLY = "}";
-        private const string            COLON = ":";
-        private const string            RESOURCE_LOCATER = "resourceLocater";
-        private const string            LOADCOMPONENT = "LoadComponent";
-        private const string            SETTERS = "Setters";
-        private const string            SummaryStartTag = @"<summary>";
-        private const string            SummaryEndTag = @"</summary>";
-        internal const string           ADD = "Add";
-        internal const string           HANDLER = "Handler";
+        private const string CREATEDELEGATEHELPER = "_CreateDelegate";
+        private const string CONTENT_LOADED = "_contentLoaded";
+        private const string CONNECT = "Connect";
+        private const string CONNECTIONID = "connectionId";
+        private const string TARGET = "target";
+        private const string EVENTSETTER = "eventSetter";
+        private const string EVENT = "Event";
+        private const string ADDHANDLER = "AddHandler";
+        private const string HELPER = "Helper";
+        private const string HANDLERARG = "handler";
+        private const string TYPE = "type";
+        private const string CULTURE = "culture";
+        private const string DEFAULT = "Default";
+        private const string VALUE = "value";
+        private const string DELEGATETYPE = "delegateType";
+        private const string PROPINFO = "propertyInfo";
+        private const string EVENTINFO = "eventInfo";
+        private const string APPVAR = "app";
+        private const string SPLASHVAR = "splashScreen";
+        private const string SPLASHCLASSNAME = "SplashScreen";
+        private const string ARGS = "args";
+        private const string INITIALIZE_COMPONENT = "InitializeComponent";
+        private const string SWITCH_STATEMENT = $"{INDENT12}switch ({CONNECTIONID})\r\n{INDENT12}{{";
+        private const string BREAK_STATEMENT = $"{INDENT12}break;";
+        private const string CASE_STATEMENT = $"{INDENT12}case ";
+        private const string ENDCURLY = "}";
+        private const string COLON = ":";
+        private const string RESOURCE_LOCATER = "resourceLocater";
+        private const string LOADCOMPONENT = "LoadComponent";
+        private const string SETTERS = "Setters";
+        private const string SummaryStartTag = @"<summary>";
+        private const string SummaryEndTag = @"</summary>";
+        internal const string ADD = "Add";
+        internal const string HANDLER = "Handler";
 
         // Delimiters & Uri processing
-        private const string            VER = "V";
-        private const string            COMPONENT = "component";
-        private const char              COMPONENT_DELIMITER = ';';
-        private const string            FORWARDSLASH = "/";
-        private const string            URISCHEME_PACK = "pack";
-        private const string            PARENTFOLDER = @"..\";
+        private const string VER = "V";
+        private const string COMPONENT = "component";
+        private const char COMPONENT_DELIMITER = ';';
+        private const string FORWARDSLASH = "/";
+        private const string URISCHEME_PACK = "pack";
+        private const string PARENTFOLDER = @"..\";
 
         // For generating pragma checksum data
         private static readonly Guid s_hashSHA256Guid = new Guid(0x8829d00f, 0x11b8, 0x4213, 0x87, 0x8b, 0x77, 0x0e, 0x85, 0x97, 0xac, 0x16);
@@ -3589,7 +3654,7 @@ namespace MS.Internal
         private static string s_generatedCode_ToolName;
         private static string s_generatedCode_ToolVersion;
 
-#endregion Private Data
+        #endregion Private Data
     }
 }
 

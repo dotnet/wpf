@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         internal WinEventQueueItem(WinEventWrap winEventWrap, int state)
@@ -31,7 +31,7 @@ namespace MS.Internal.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         internal const int StartListening = 1;
@@ -45,7 +45,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal override void Process()
@@ -68,7 +68,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private WinEventWrap _winEventWrap;

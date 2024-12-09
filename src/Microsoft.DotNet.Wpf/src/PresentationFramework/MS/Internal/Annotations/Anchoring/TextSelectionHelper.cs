@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -304,7 +304,7 @@ namespace MS.Internal.Annotations.Anchoring
             }
             if (textView != null && textView.IsValid && TextDocumentView.Contains(pointer, textView.TextSegments))
             {
-                Rect rect = textView.GetRectangleFromTextPosition(pointer);               
+                Rect rect = textView.GetRectangleFromTextPosition(pointer);
                 if (extension && rect != Rect.Empty)
                 {
                     rect.X += rect.Height / 2.0;

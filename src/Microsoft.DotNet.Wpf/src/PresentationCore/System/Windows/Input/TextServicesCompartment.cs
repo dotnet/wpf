@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -39,38 +39,38 @@ namespace System.Windows.Input
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
         #endregion Public Methods        
- 
+
         //------------------------------------------------------
         //
         //  Public Operators
         //
         //------------------------------------------------------
- 
- 
+
+
         //------------------------------------------------------
         //
         //  Public Properties
         //
         //------------------------------------------------------
- 
- 
+
+
         //------------------------------------------------------
         //
         //  Public Events
         //
         //------------------------------------------------------
- 
-  
+
+
         //------------------------------------------------------
         //
         //  Protected Methods
         //
         //------------------------------------------------------
- 
- 
+
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -130,13 +130,13 @@ namespace System.Windows.Input
         }
 
         #endregion Internal methods
-        
+
         //------------------------------------------------------
         //
         //  Internal Properties
         //
         //------------------------------------------------------
-        
+
         #region Internal Properties
 
         /// <summary>
@@ -152,7 +152,7 @@ namespace System.Windows.Input
 
                 if ((int)obj != 0)
                     return true;
- 
+
                 return false;
             }
             set
@@ -213,19 +213,19 @@ namespace System.Windows.Input
         }
 
         #endregion Internal Properties
- 
+
         //------------------------------------------------------
         //
         //  Private Methods
         //
         //------------------------------------------------------
-        
+
         //------------------------------------------------------
         //
         //  Private Fields
         //
         //------------------------------------------------------
-                
+
         #region Private Fields
 
         private readonly UnsafeNativeMethods.ITfCompartmentMgr _compartmentmgr;

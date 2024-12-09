@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,7 +9,7 @@
 using System.ComponentModel;
 using System.Windows.Markup; // ContentProperty
 
-namespace System.Windows.Documents 
+namespace System.Windows.Documents
 {
     /// <summary>
     /// Section element. It is an element which can contain a sequence of Block elements.
@@ -28,7 +28,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// Initializes a new instance of a Section class.
         /// </summary>
-        public Section() 
+        public Section()
             : base()
         {
         }
@@ -72,11 +72,11 @@ namespace System.Windows.Documents
         [DefaultValue(true)]
         public bool HasTrailingParagraphBreakOnPaste
         {
-            get 
+            get
             {
                 return !_ignoreTrailingParagraphBreakOnPaste;
             }
-            set 
+            set
             {
                 _ignoreTrailingParagraphBreakOnPaste = !value;
             }
@@ -111,7 +111,7 @@ namespace System.Windows.Documents
         /// be serialized.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public bool ShouldSerializeBlocks(XamlDesignerSerializationManager manager) 
+        public bool ShouldSerializeBlocks(XamlDesignerSerializationManager manager)
         {
             return manager != null && manager.XmlWriter == null;
         }

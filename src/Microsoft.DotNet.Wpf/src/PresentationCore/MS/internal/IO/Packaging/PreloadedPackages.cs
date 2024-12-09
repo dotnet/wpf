@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace MS.Internal.IO.Packaging
     ///  class and we won't be using even half of the dictionary functionalities.
     ///  If this class becomes a public class which is strongly discouraged, this class
     ///  needs to implement IDictionary.</remarks>
-    internal static class PreloadedPackages 
+    internal static class PreloadedPackages
     {
         //------------------------------------------------------
         //
@@ -212,7 +212,7 @@ namespace MS.Internal.IO.Packaging
             //
             //------------------------------------------------------
             private readonly Package _package;
-            private readonly bool    _threadSafe;
+            private readonly bool _threadSafe;
         }
 
 
@@ -229,7 +229,7 @@ namespace MS.Internal.IO.Packaging
         // Hashtable. HybridDictionary already has functionality of switching between
         //  ListDictionary and Hashtable depending on the size of the collection
         static private HybridDictionary _packagePairs;
-        static private readonly Object  _globalLock;
+        static private readonly Object _globalLock;
 
         #endregion Private Fields
     }

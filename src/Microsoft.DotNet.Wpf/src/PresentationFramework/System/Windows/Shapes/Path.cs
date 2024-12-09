@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace System.Windows.Shapes
     /// and will be presented by the parent canvas.
     /// Since a Path is really a path which closes its path
     /// </summary>
-    public sealed class Path : Shape 
+    public sealed class Path : Shape
     {
         #region Constructors
 
@@ -38,9 +38,9 @@ namespace System.Windows.Shapes
         /// </summary>
         [CommonDependencyProperty]
         public static readonly DependencyProperty DataProperty = DependencyProperty.Register(
-            "Data", 
-            typeof(Geometry), 
-            typeof(Path), 
+            "Data",
+            typeof(Geometry),
+            typeof(Path),
             new FrameworkPropertyMetadata(
                 null,
                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
@@ -63,7 +63,7 @@ namespace System.Windows.Shapes
         #endregion
 
         #region Protected Methods and Properties
-        
+
         /// <summary>
         /// Get the path that defines this shape
         /// </summary>
@@ -81,7 +81,7 @@ namespace System.Windows.Shapes
                 return data;
             }
         }
-        
+
         //
         //  This property
         //  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject
@@ -93,5 +93,5 @@ namespace System.Windows.Shapes
         }
 
         #endregion
-   }
+    }
 }

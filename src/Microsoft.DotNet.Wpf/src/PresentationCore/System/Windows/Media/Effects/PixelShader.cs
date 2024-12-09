@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.IO;
-using MS.Internal;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Windows.Navigation;
+using MS.Internal;
 
 namespace System.Windows.Media.Effects
 {
@@ -67,16 +67,17 @@ namespace System.Windows.Media.Effects
 
             // We do not support async loading of shaders here. If that is desired the user needs to use the SetStreamSource
             // API.
-            
+
             Uri newUri = (Uri)e.NewValue;
             Stream stream = null;
 
-            try {                    
+            try
+            {
                 if (newUri != null)
                 {
                     if (!newUri.IsAbsoluteUri)
                     {
-                         newUri = BaseUriHelper.GetResolvedUri(BaseUriHelper.BaseUri, newUri);
+                        newUri = BaseUriHelper.GetResolvedUri(BaseUriHelper.BaseUri, newUri);
                     }
 
                     Debug.Assert(newUri.IsAbsoluteUri);
@@ -85,7 +86,7 @@ namespace System.Windows.Media.Effects
 
                     //
                     // Only allow file and pack URIs.
-                    if (!newUri.IsFile && 
+                    if (!newUri.IsFile &&
                         !MS.Internal.IO.Packaging.PackUriHelper.IsPackUri(newUri))
                     {
                         throw new ArgumentException(SR.Effect_SourceUriMustBeFileOrPack);
@@ -94,7 +95,7 @@ namespace System.Windows.Media.Effects
                     stream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(newUri);
                 }
 
-                LoadPixelShaderFromStreamIntoMemory(stream);            
+                LoadPixelShaderFromStreamIntoMemory(stream);
             }
             finally
             {
@@ -109,7 +110,7 @@ namespace System.Windows.Media.Effects
         /// Reads the byte code for the pixel shader into a local byte array. If the stream is null, the byte array
         /// will be empty (length 0). The compositor will use an identity shader.
         /// </summary>
-        private void LoadPixelShaderFromStreamIntoMemory(Stream source) 
+        private void LoadPixelShaderFromStreamIntoMemory(Stream source)
         {
             _shaderBytecode = null;
 
@@ -126,7 +127,7 @@ namespace System.Windows.Media.Effects
                 {
                     throw new InvalidOperationException(SR.Effect_ShaderBytecodeSize);
                 }
-                
+
                 BinaryReader br = new BinaryReader(source);
                 _shaderBytecode = new byte[len];
                 int lengthRead = br.Read(_shaderBytecode, 0, (int)len);
@@ -145,7 +146,7 @@ namespace System.Windows.Media.Effects
                     ShaderMajorVersion = ShaderMinorVersion = 0;
                 }
 
-                Debug.Assert(len == lengthRead); 
+                Debug.Assert(len == lengthRead);
             }
 
             // We received new stream data. Need to register for a async update to update the composition
@@ -188,13 +189,13 @@ namespace System.Windows.Media.Effects
                             sizeof(DUCE.MILCMD_PIXELSHADER),
                             (int)data.PixelShaderBytecodeSize);   // extra data
 
-                            if (data.PixelShaderBytecodeSize > 0)
+                        if (data.PixelShaderBytecodeSize > 0)
+                        {
+                            fixed (byte* pPixelShaderBytecode = _shaderBytecode)
                             {
-                                fixed (byte *pPixelShaderBytecode = _shaderBytecode)
-                                {
-                                    channel.AppendCommandData(pPixelShaderBytecode, (int)data.PixelShaderBytecodeSize);
-                                }
+                                channel.AppendCommandData(pPixelShaderBytecode, (int)data.PixelShaderBytecodeSize);
                             }
+                        }
                     }
                 }
 

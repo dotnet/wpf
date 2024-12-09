@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -68,15 +68,15 @@ namespace MS.Internal.Media3D
     [Flags]
     internal enum FaceType
     {
-        None     = 0,
-        Front    = 1 << 0,
-        Back     = 1 << 1,      
+        None = 0,
+        Front = 1 << 0,
+        Back = 1 << 1,
     };
 
     internal static class LineUtil
     {
         // Coordinates of elements above the diagonal.
-        readonly static int[,] s_pairs = new int[,]{ {0,1}, {0,2}, {0,3}, {1,2}, {1,3}, {2,3} };
+        readonly static int[,] s_pairs = new int[,] { { 0, 1 }, { 0, 2 }, { 0, 3 }, { 1, 2 }, { 1, 3 }, { 2, 3 } };
         const int s_pairsCount = 6;
 
         public static void Transform(Matrix3D modelMatrix,
@@ -84,16 +84,16 @@ namespace MS.Internal.Media3D
         {
             if (modelMatrix.InvertCore())
             {
-                Point4D o = new Point4D(origin.X,origin.Y,origin.Z,1);
-                Point4D d = new Point4D(direction.X,direction.Y,direction.Z,0);
-                
+                Point4D o = new Point4D(origin.X, origin.Y, origin.Z, 1);
+                Point4D d = new Point4D(direction.X, direction.Y, direction.Z, 0);
+
                 modelMatrix.MultiplyPoint(ref o);
                 modelMatrix.MultiplyPoint(ref d);
 
                 if (o.W == 1 && d.W == 0)
                 {
                     // Affine transformation
-                    
+
                     origin = new Point3D(o.X, o.Y, o.Z);
                     direction = new Vector3D(d.X, d.Y, d.Z);
 
@@ -102,11 +102,11 @@ namespace MS.Internal.Media3D
                 else
                 {
                     // Non-affine transformation (likely projection)
-                    
+
                     // Form 4x2 matrix with two points on line in two columns.
-                    double[,] linepoints = new double[,]{{o.X,d.X},{o.Y,d.Y},{o.Z,d.Z},{o.W,d.W}};
-                    
-                    ColumnsToAffinePointVector(linepoints,0,1,out origin, out direction);
+                    double[,] linepoints = new double[,] { { o.X, d.X }, { o.Y, d.Y }, { o.Z, d.Z }, { o.W, d.W } };
+
+                    ColumnsToAffinePointVector(linepoints, 0, 1, out origin, out direction);
 
                     isRay = false;
                 }
@@ -123,10 +123,10 @@ namespace MS.Internal.Media3D
         private static void TransformSingular(ref Matrix3D modelMatrix,
                                               ref Point3D origin, ref Vector3D direction)
         {
-            double [,] matrix = TransformedLineMatrix(ref modelMatrix, ref origin, ref direction);
+            double[,] matrix = TransformedLineMatrix(ref modelMatrix, ref origin, ref direction);
             matrix = Square(matrix);
-                
-            double[,] eigen = new double[,]{ {1,0,0,0}, {0,1,0,0}, {0,0,1,0}, {0,0,0,1} };
+
+            double[,] eigen = new double[,] { { 1, 0, 0, 0 }, { 0, 1, 0, 0 }, { 0, 0, 1, 0 }, { 0, 0, 0, 1 } };
 
             // We'll just do 5 iterations with each pair because according to my results & Golub &
             // Van Loan this process converges quickly.
@@ -134,14 +134,14 @@ namespace MS.Internal.Media3D
             for (int iter = 0; iter < iterations; ++iter)
             {
                 int pair = iter % s_pairsCount;
-                JacobiRotation jrot = new JacobiRotation(s_pairs[pair,0],s_pairs[pair,1],matrix);
+                JacobiRotation jrot = new JacobiRotation(s_pairs[pair, 0], s_pairs[pair, 1], matrix);
                 matrix = jrot.LeftRightMultiply(matrix);
                 eigen = jrot.RightMultiply(eigen);
             }
 
             // That was it as far as finding eigenvectors
 
-            int evec1,evec2;
+            int evec1, evec2;
             FindSmallestTwoDiagonal(matrix, out evec1, out evec2);
 
             // The eigenvectors corresponding to the two smallest eigenvalues are columns evec1 &
@@ -164,7 +164,7 @@ namespace MS.Internal.Media3D
             // able to handle results that come back with inf or nan by "doing nothing."
 
             // Step 1.
-            if (matrix[3,col1]*matrix[3,col1] < matrix[3,col2]*matrix[3,col2])
+            if (matrix[3, col1] * matrix[3, col1] < matrix[3, col2] * matrix[3, col2])
             {
                 int temp = col1;
                 col1 = col2;
@@ -172,18 +172,18 @@ namespace MS.Internal.Media3D
             }
 
             // Step 2.
-            double s = 1/matrix[3,col1];
-            origin = new Point3D(s*matrix[0,col1],
-                                 s*matrix[1,col1],
-                                 s*matrix[2,col1]);
-                
+            double s = 1 / matrix[3, col1];
+            origin = new Point3D(s * matrix[0, col1],
+                                 s * matrix[1, col1],
+                                 s * matrix[2, col1]);
+
             // Step 3.
-            s = -matrix[3,col2];
-            direction = new Vector3D(matrix[0,col2]+s*origin.X,
-                                     matrix[1,col2]+s*origin.Y,
-                                     matrix[2,col2]+s*origin.Z);
+            s = -matrix[3, col2];
+            direction = new Vector3D(matrix[0, col2] + s * origin.X,
+                                     matrix[1, col2] + s * origin.Y,
+                                     matrix[2, col2] + s * origin.Z);
         }
-        
+
 
         // Returns the indices of the smallest two diagonal elements of matrix
         private static void FindSmallestTwoDiagonal(double[,] matrix, out int evec1, out int evec2)
@@ -191,13 +191,13 @@ namespace MS.Internal.Media3D
             evec1 = 0;
             evec2 = 1;
             // And corresponding squared eigenvalues.
-            double eval1 = matrix[0,0]*matrix[0,0];
-            double eval2 = matrix[1,1]*matrix[1,1];
-            
+            double eval1 = matrix[0, 0] * matrix[0, 0];
+            double eval2 = matrix[1, 1] * matrix[1, 1];
+
             for (int i = 2; i < 4; ++i)
             {
                 // Replace second smallest if necessary.
-                double val = matrix[i,i]*matrix[i,i];
+                double val = matrix[i, i] * matrix[i, i];
                 if (val < eval1)
                 {
                     if (eval1 < eval2)
@@ -218,60 +218,60 @@ namespace MS.Internal.Media3D
                 }
             }
         }
-        
+
         // Returns the "line matrix" corresponding to the line (origin,direction) transformed by the
         // inverse *transform* of modelMatrix.  (To transform a line by the inverse transform
         // requires multiplying by the non-inverted matrix.)
         private static double[,] TransformedLineMatrix(ref Matrix3D modelMatrix,
                                                        ref Point3D origin, ref Vector3D direction)
         {
-                double x1 = origin.X;
-                double y1 = origin.Y;
-                double z1 = origin.Z;
-                // w1 = 1
-                double x2 = direction.X;
-                double y2 = direction.Y;
-                double z2 = direction.Z;
-                // w2 = 0
+            double x1 = origin.X;
+            double y1 = origin.Y;
+            double z1 = origin.Z;
+            // w1 = 1
+            double x2 = direction.X;
+            double y2 = direction.Y;
+            double z2 = direction.Z;
+            // w2 = 0
 
-                // To prove to yourself that this matrix is correct just multiply by the two
-                // (homogeneous) points on the line.  Any other homogeneous point on the line is a
-                // linear combination of them.
+            // To prove to yourself that this matrix is correct just multiply by the two
+            // (homogeneous) points on the line.  Any other homogeneous point on the line is a
+            // linear combination of them.
 
-                double a = y2*z1-y1*z2;
-                double b = x1*z2-x2*z1;
-                double c = x2*y1-x1*y2;
+            double a = y2 * z1 - y1 * z2;
+            double b = x1 * z2 - x2 * z1;
+            double c = x2 * y1 - x1 * y2;
 
-                Matrix3D m = modelMatrix *
-                             new Matrix3D(a,  y2,  z2,   0,
-                                          b, -x2,   0,  z2,
-                                          c,   0, -x2, -y2,
-                                          0,   c,  -b,   a);
-                double[,] matrix = new double[4,4];
-                matrix[0,0] = m.M11;
-                matrix[0,1] = m.M12;
-                matrix[0,2] = m.M13;
-                matrix[0,3] = m.M14;
-                matrix[1,0] = m.M21;
-                matrix[1,1] = m.M22;
-                matrix[1,2] = m.M23;
-                matrix[1,3] = m.M24;
-                matrix[2,0] = m.M31;
-                matrix[2,1] = m.M32;
-                matrix[2,2] = m.M33;
-                matrix[2,3] = m.M34;
-                matrix[3,0] = m.OffsetX;
-                matrix[3,1] = m.OffsetY;
-                matrix[3,2] = m.OffsetZ;
-                matrix[3,3] = m.M44;
-                return matrix;
+            Matrix3D m = modelMatrix *
+                         new Matrix3D(a, y2, z2, 0,
+                                      b, -x2, 0, z2,
+                                      c, 0, -x2, -y2,
+                                      0, c, -b, a);
+            double[,] matrix = new double[4, 4];
+            matrix[0, 0] = m.M11;
+            matrix[0, 1] = m.M12;
+            matrix[0, 2] = m.M13;
+            matrix[0, 3] = m.M14;
+            matrix[1, 0] = m.M21;
+            matrix[1, 1] = m.M22;
+            matrix[1, 2] = m.M23;
+            matrix[1, 3] = m.M24;
+            matrix[2, 0] = m.M31;
+            matrix[2, 1] = m.M32;
+            matrix[2, 2] = m.M33;
+            matrix[2, 3] = m.M34;
+            matrix[3, 0] = m.OffsetX;
+            matrix[3, 1] = m.OffsetY;
+            matrix[3, 2] = m.OffsetZ;
+            matrix[3, 3] = m.M44;
+            return matrix;
         }
 
         // Scales M so that its largest element is 1 and then returns M MT
         // (MT=transpose(M))
-        private static double [,] Square(double[,] m)
+        private static double[,] Square(double[,] m)
         {
-            double[,] o = new double[4,4];
+            double[,] o = new double[4, 4];
 
             // Scale the matrix so that its largest element is 1.
             double maxvalue = 0;
@@ -279,7 +279,7 @@ namespace MS.Internal.Media3D
             {
                 for (int j = 0; j < 4; ++j)
                 {
-                    maxvalue = Math.Max(maxvalue,m[i,j]*m[i,j]);
+                    maxvalue = Math.Max(maxvalue, m[i, j] * m[i, j]);
                 }
             }
             maxvalue = Math.Sqrt(maxvalue);
@@ -287,7 +287,7 @@ namespace MS.Internal.Media3D
             {
                 for (int j = 0; j < 4; ++j)
                 {
-                    m[i,j] /= maxvalue;
+                    m[i, j] /= maxvalue;
                 }
             }
 
@@ -299,9 +299,9 @@ namespace MS.Internal.Media3D
                     double d = 0;
                     for (int k = 0; k < 4; ++k)
                     {
-                        d += m[i,k]*m[j,k];
+                        d += m[i, k] * m[j, k];
                     }
-                    o[i,j] = d;
+                    o[i, j] = d;
                 }
             }
             return o;
@@ -327,14 +327,14 @@ namespace MS.Internal.Media3D
 
                 _p = p;
                 _q = q;
-                
-                double tau = (a[q,q] - a[p,p])/(2*a[p,q]);
+
+                double tau = (a[q, q] - a[p, p]) / (2 * a[p, q]);
                 if (tau < Double.MaxValue && tau > -Double.MaxValue)
                 {
-                    double root = Math.Sqrt(1+tau*tau);
+                    double root = Math.Sqrt(1 + tau * tau);
                     // Choose the smaller of -tau +/- root
                     double t = -tau < 0 ? -tau + root : -tau - root;
-                    _c = 1/Math.Sqrt(1+t*t);
+                    _c = 1 / Math.Sqrt(1 + t * t);
                     _s = t * _c;
                 }
                 else
@@ -345,23 +345,23 @@ namespace MS.Internal.Media3D
             }
 
             // These functions overwrite & return their argument.
-            
+
             // returns JT a J
-            public double[,] LeftRightMultiply(double [,] a)
+            public double[,] LeftRightMultiply(double[,] a)
             {
                 return RightMultiply(LeftMultiplyTranspose(a));
             }
 
             // returns a J
-            public double[,] RightMultiply(double [,] a)
+            public double[,] RightMultiply(double[,] a)
             {
                 for (int j = 0; j < 4; ++j)
                 {
-                    double tau1 = a[j,_p];
-                    double tau2 = a[j,_q];
-                    
-                    a[j,_p] = _c * tau1 - _s * tau2;
-                    a[j,_q] = _s * tau1 + _c * tau2;
+                    double tau1 = a[j, _p];
+                    double tau2 = a[j, _q];
+
+                    a[j, _p] = _c * tau1 - _s * tau2;
+                    a[j, _q] = _s * tau1 + _c * tau2;
                 }
 
                 return a;
@@ -369,15 +369,15 @@ namespace MS.Internal.Media3D
 
 
             // returns JT a
-            public double[,] LeftMultiplyTranspose(double [,] a)
+            public double[,] LeftMultiplyTranspose(double[,] a)
             {
                 for (int j = 0; j < 4; ++j)
                 {
-                    double tau1 = a[_p,j];
-                    double tau2 = a[_q,j];
-                    
-                    a[_p,j] = _c * tau1 - _s * tau2;
-                    a[_q,j] = _s * tau1 + _c * tau2;
+                    double tau1 = a[_p, j];
+                    double tau2 = a[_q, j];
+
+                    a[_p, j] = _c * tau1 - _s * tau2;
+                    a[_q, j] = _s * tau1 + _c * tau2;
                 }
 
                 return a;
@@ -417,10 +417,10 @@ namespace MS.Internal.Media3D
 
             Vector3D r;
             Vector3D.CrossProduct(ref direction, ref e2, out r);
-            
+
             double a = Vector3D.DotProduct(ref e1, ref r);
-        
-            Vector3D s; 
+
+            Vector3D s;
             if (a > 0 && (type & FaceType.Front) != 0)
             {
                 Point3D.Subtract(ref origin, ref v0, out s);
@@ -436,9 +436,9 @@ namespace MS.Internal.Media3D
                 dist = 0;
                 return false;
             }
-        
+
             double u = Vector3D.DotProduct(ref s, ref r);
-            if ((u < 0) || (a < u)) 
+            if ((u < 0) || (a < u))
             {
                 hitCoord = new Point();
                 dist = 0;
@@ -447,22 +447,22 @@ namespace MS.Internal.Media3D
 
             Vector3D q;
             Vector3D.CrossProduct(ref s, ref e1, out q);
-        
+
             double v = Vector3D.DotProduct(ref direction, ref q);
-            if ((v < 0) || (a < (u + v))) 
+            if ((v < 0) || (a < (u + v)))
             {
                 hitCoord = new Point();
                 dist = 0;
                 return false;
             }
-        
+
             double t = Vector3D.DotProduct(ref e2, ref q);
             double f = 1 / a;
-            
+
             t = t * f;
             u = u * f;
             v = v * f;
-  
+
             hitCoord = new Point(u, v);
             dist = t;
 
@@ -488,20 +488,20 @@ namespace MS.Internal.Media3D
             {
                 return false;
             }
-        
+
             bool inside = true;
             bool[] middle = new bool[3];        // True if ray origin in middle for coord i.
             double[] plane = new double[3];     // Candidate BBox Planes
             int i;                              // General Loop Counter
-        
+
             // Find all candidate planes; select the plane nearest to the ray origin
             // for each coordinate.
-        
+
             double[] rgfMin = new double[] { box.X, box.Y, box.Z };
             double[] rgfMax = new double[] { box.X + box.SizeX, box.Y + box.SizeY, box.Z + box.SizeZ };
             double[] rgfRayPos = new double[] { origin.X, origin.Y, origin.Z };
             double[] rgfRayDir = new double[] { direction.X, direction.Y, direction.Z };
-        
+
             for (i = 0; i < 3; ++i)
             {
                 if (rgfRayPos[i] < rgfMin[i])
@@ -521,7 +521,7 @@ namespace MS.Internal.Media3D
                     middle[i] = true;
                 }
             }
-        
+
             // If the ray origin is inside the box, then it must intersect the volume
             // of the bounding box.
             if (inside)
@@ -542,7 +542,7 @@ namespace MS.Internal.Media3D
                 // would miss valid ts in the furthest plane search
                 rayt = 0;
             }
-            
+
             int maxPlane = 0;
             for (i = 0; i < 3; ++i)
             {
@@ -555,7 +555,7 @@ namespace MS.Internal.Media3D
                         if (t > rayt)
                         {
                             rayt = t;
-                            maxPlane = i; 
+                            maxPlane = i;
                         }
                     }
                     else
@@ -571,7 +571,7 @@ namespace MS.Internal.Media3D
                         // the half-spaces formed by the planes -- which incidentally point away from
                         // the origin.)
                         if (t * t > rayt * rayt)
-                        {   
+                        {
                             rayt = t;
                             maxPlane = i;
                         }
@@ -586,10 +586,10 @@ namespace MS.Internal.Media3D
             {
                 return false;
             }
-        
+
             // The intersection candidate point is within acceptible range; test each
             // coordinate here to ensure that it actually hits the box.
-        
+
             for (i = 0; i < 3; ++i)
             {
                 if (i != maxPlane)

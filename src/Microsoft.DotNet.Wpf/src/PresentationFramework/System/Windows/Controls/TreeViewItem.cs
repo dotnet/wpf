@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -74,7 +74,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool IsExpanded
         {
-            get { return (bool) GetValue(IsExpandedProperty); }
+            get { return (bool)GetValue(IsExpandedProperty); }
             set { SetValue(IsExpandedProperty, value); }
         }
 
@@ -85,8 +85,8 @@ namespace System.Windows.Controls
 
         private static void OnIsExpandedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TreeViewItem item = (TreeViewItem) d;
-            bool isExpanded = (bool) e.NewValue;
+            TreeViewItem item = (TreeViewItem)d;
+            bool isExpanded = (bool)e.NewValue;
 
             TreeView tv = item.ParentTreeView;
             if (tv != null)
@@ -146,14 +146,14 @@ namespace System.Windows.Controls
         /// </summary>
         public bool IsSelected
         {
-            get { return (bool) GetValue(IsSelectedProperty); }
+            get { return (bool)GetValue(IsSelectedProperty); }
             set { SetValue(IsSelectedProperty, value); }
         }
 
         private static void OnIsSelectedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             TreeViewItem item = (TreeViewItem)d;
-            bool isSelected = (bool) e.NewValue;
+            bool isSelected = (bool)e.NewValue;
 
             item.Select(isSelected);
 
@@ -836,11 +836,11 @@ namespace System.Windows.Controls
                     if (parent != null)
                     {
                         int count = VisualTreeHelper.GetChildrenCount(parent);
-                        for (index=0; index < count-1; ++index)
+                        for (index = 0; index < count - 1; ++index)
                         {
                             if (VisualTreeHelper.GetChild(parent, index) == toggleButton)
                             {
-                                header = VisualTreeHelper.GetChild(parent, index+1) as FrameworkElement;
+                                header = VisualTreeHelper.GetChild(parent, index + 1) as FrameworkElement;
                                 if (header != null)
                                     return header;
                                 break;

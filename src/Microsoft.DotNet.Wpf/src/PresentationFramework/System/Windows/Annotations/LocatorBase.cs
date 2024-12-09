@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -56,7 +56,7 @@ namespace System.Windows.Annotations
         /// </summary>
         /// <returns>a deep clone of this ContentLocatorBase; never returns null</returns>
         public abstract object Clone();
-       
+
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -90,12 +90,12 @@ namespace System.Windows.Annotations
         /// </summary>
         event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged
         {
-            add{ _propertyChanged += value; }
-            remove{ _propertyChanged -= value; }
+            add { _propertyChanged += value; }
+            remove { _propertyChanged -= value; }
         }
 
         #endregion Public Events
-        
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -156,7 +156,7 @@ namespace System.Windows.Annotations
 
         /// <summary>
         /// </summary>
-        private bool   _owned;
+        private bool _owned;
 
         /// <summary>
         /// 

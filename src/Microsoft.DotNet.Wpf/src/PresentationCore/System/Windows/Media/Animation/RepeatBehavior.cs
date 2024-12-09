@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -39,7 +39,7 @@ namespace System.Windows.Media.Animation
         /// <param name="count">The number of iterations specified by this RepeatBehavior.</param>
         public RepeatBehavior(double count)
         {
-            if (   Double.IsInfinity(count)
+            if (Double.IsInfinity(count)
                 || double.IsNaN(count)
                 || count < 0.0)
             {
@@ -78,8 +78,10 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                RepeatBehavior forever = new RepeatBehavior();
-                forever._type = RepeatBehaviorType.Forever;
+                RepeatBehavior forever = new RepeatBehavior
+                {
+                    _type = RepeatBehaviorType.Forever
+                };
 
                 return forever;
             }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -112,29 +112,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingByteKeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingByteKeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -237,29 +237,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingColorKeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingColorKeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -362,29 +362,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingDecimalKeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingDecimalKeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -487,29 +487,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingDoubleKeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingDoubleKeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -612,29 +612,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingInt16KeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingInt16KeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -737,29 +737,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingInt32KeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingInt32KeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -862,29 +862,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingInt64KeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingInt64KeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -987,29 +987,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingPointKeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingPointKeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -1112,29 +1112,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingPoint3DKeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingPoint3DKeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -1237,29 +1237,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingQuaternionKeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingQuaternionKeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -1362,29 +1362,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingRotation3DKeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingRotation3DKeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -1487,29 +1487,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingRectKeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingRectKeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -1612,29 +1612,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingSingleKeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingSingleKeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -1737,29 +1737,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingSizeKeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingSizeKeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -1862,29 +1862,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingVectorKeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingVectorKeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }
@@ -1987,29 +1987,29 @@ namespace System.Windows.Media.Animation
 
         #region Public Properties
 
-            /// <summary>
-            /// EasingFunctionProperty
-            /// </summary>                                 
-            public static readonly DependencyProperty EasingFunctionProperty =
-                DependencyProperty.Register(
-                    "EasingFunction",
-                    typeof(IEasingFunction),
-                    typeof(EasingVector3DKeyFrame));
+        /// <summary>
+        /// EasingFunctionProperty
+        /// </summary>                                 
+        public static readonly DependencyProperty EasingFunctionProperty =
+            DependencyProperty.Register(
+                "EasingFunction",
+                typeof(IEasingFunction),
+                typeof(EasingVector3DKeyFrame));
 
-            /// <summary>
-            /// EasingFunction
-            /// </summary>
-            public IEasingFunction EasingFunction                
+        /// <summary>
+        /// EasingFunction
+        /// </summary>
+        public IEasingFunction EasingFunction
+        {
+            get
             {
-                get
-                {
-                    return (IEasingFunction)GetValue(EasingFunctionProperty);
-                }
-                set
-                {
-                    SetValueInternal(EasingFunctionProperty, value);
-                }
+                return (IEasingFunction)GetValue(EasingFunctionProperty);
             }
+            set
+            {
+                SetValueInternal(EasingFunctionProperty, value);
+            }
+        }
 
         #endregion
     }

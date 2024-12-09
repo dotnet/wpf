@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -459,8 +459,10 @@ namespace Microsoft.Windows.Themes
         // Creates a rectangle figure
         private static PathFigure GenerateRectFigure(Rect rect)
         {
-            PathFigure figure = new PathFigure();
-            figure.StartPoint = rect.TopLeft;
+            PathFigure figure = new PathFigure
+            {
+                StartPoint = rect.TopLeft
+            };
             figure.Segments.Add(new LineSegment(rect.TopRight, true));
             figure.Segments.Add(new LineSegment(rect.BottomRight, true));
             figure.Segments.Add(new LineSegment(rect.BottomLeft, true));
@@ -579,10 +581,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonRadioButtonGlyphFill == null)
                         {
-                            LinearGradientBrush temp = new LinearGradientBrush();
-
-                            temp.StartPoint = new Point();
-                            temp.EndPoint = new Point(1, 1);
+                            LinearGradientBrush temp = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x60, 0xCF, 0x5D), 0));
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0xAC, 0xEF, 0xAA), 0.302469134));
@@ -672,9 +675,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonDisabledBorderPen == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1;
-                            temp.Brush = CommonDisabledBorder;
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1,
+                                Brush = CommonDisabledBorder
+                            };
                             temp.Freeze();
                             _commonDisabledBorderPen = temp;
                         }
@@ -694,13 +699,16 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonCheckBoxHoverHighlightPen == null)
                         {
-                            Pen temp = new Pen();
+                            Pen temp = new Pen
+                            {
+                                Thickness = 2
+                            };
 
-                            temp.Thickness = 2;
-
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(1, 1);
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0xFF, 0xF0, 0xCF), 0));
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0xF8, 0xB3, 0x30), 1));
@@ -725,13 +733,16 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonRadioButtonHoverHighlightPen == null)
                         {
-                            Pen temp = new Pen();
+                            Pen temp = new Pen
+                            {
+                                Thickness = 2
+                            };
 
-                            temp.Thickness = 2;
-
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(1, 1);
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0xFE, 0xDF, 0x9C), 0));
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0xF9, 0xBB, 0x43), 1));
@@ -778,9 +789,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonCheckBoxInnerFill == null)
                         {
-                            LinearGradientBrush temp = new LinearGradientBrush();
-                            temp.StartPoint = new Point(0, 0);
-                            temp.EndPoint = new Point(1, 1);
+                            LinearGradientBrush temp = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0xCB, 0xCF, 0xD5), 0.3));
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0xF6, 0xF6, 0xF6), 1));
@@ -806,9 +819,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonIndeterminateDisabledFill == null)
                         {
-                            LinearGradientBrush temp = new LinearGradientBrush();
-                            temp.StartPoint = new Point(0, 0);
-                            temp.EndPoint = new Point(1, 1);
+                            LinearGradientBrush temp = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x2F, 0xA8, 0xD5), 0));
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x25, 0x59, 0x8C), 1));
@@ -855,9 +870,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonIndeterminatePressedFill == null)
                         {
-                            LinearGradientBrush temp = new LinearGradientBrush();
-                            temp.StartPoint = new Point(0, 0);
-                            temp.EndPoint = new Point(1, 1);
+                            LinearGradientBrush temp = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x17, 0x74, 0x7A), 0));
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x21, 0x8B, 0xC3), 1));

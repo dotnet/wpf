@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -36,12 +36,12 @@ namespace MS.Internal
         // Returns the contents of the specified file based on whats in-memory else what's
         // on disk if not in-memory.
         string GetFileContents([In, MarshalAs(UnmanagedType.LPWStr)] string wszFilename);
- 
+
         // <summary>
         // Returns the live punkDocData object for the file if it is registered in the RDT,
         // else returns NULL.
         // </summary>
-        [return:MarshalAs(UnmanagedType.IUnknown)]
+        [return: MarshalAs(UnmanagedType.IUnknown)]
         object GetFileDocData([In, MarshalAs(UnmanagedType.LPWStr)] string wszFilename);
 
 
@@ -67,7 +67,7 @@ namespace MS.Internal
         // IsRealBuildOperation -- returns TRUE if this is a real Build operation else
         // if this is a design-time only generation for intellisense purposes it returns
         // FALSE.
-        [return:MarshalAs(UnmanagedType.Bool)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         bool IsRealBuildOperation();
 
 
@@ -76,7 +76,7 @@ namespace MS.Internal
 
 
         // Exists -- determines whether or not a file exists in the RDT or on disk
-        [return:MarshalAs(UnmanagedType.Bool)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         bool Exists([In, MarshalAs(UnmanagedType.LPWStr)] string wszFilename, [In, MarshalAs(UnmanagedType.Bool)] bool fOnlyCheckOnDisk);
     }
 }

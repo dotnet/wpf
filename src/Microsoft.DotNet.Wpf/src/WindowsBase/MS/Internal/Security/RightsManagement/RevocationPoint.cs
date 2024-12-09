@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,7 +26,7 @@ namespace MS.Internal.Security.RightsManagement
         {
             get
             {
-                return _id; 
+                return _id;
             }
             set
             {
@@ -38,7 +38,7 @@ namespace MS.Internal.Security.RightsManagement
         {
             get
             {
-                return _idType; 
+                return _idType;
             }
             set
             {
@@ -50,49 +50,49 @@ namespace MS.Internal.Security.RightsManagement
         {
             get
             {
-                return _url; 
+                return _url;
             }
             set
             {
                 _url = value;
             }
-        }        
+        }
 
         internal SystemTime Frequency
         {
             get
             {
-                return _frequency; 
+                return _frequency;
             }
             set
             {
                 _frequency = value;
             }
-        }        
+        }
 
         internal string Name
         {
             get
             {
-                return _name; 
+                return _name;
             }
             set
             {
                 _name = value;
             }
-        }        
+        }
 
         internal string PublicKey
         {
             get
             {
-                return _publicKey; 
+                return _publicKey;
             }
             set
             {
                 _publicKey = value;
             }
-        }        
+        }
 
         //------------------------------------------------------
         //
@@ -100,10 +100,10 @@ namespace MS.Internal.Security.RightsManagement
         //
         //------------------------------------------------------        
         private string _id;
-        private string _idType; 
-        private Uri _url; 
+        private string _idType;
+        private Uri _url;
         private SystemTime _frequency;
         private string _name;
-        private string _publicKey;                
+        private string _publicKey;
     }
 }

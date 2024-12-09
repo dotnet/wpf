@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,9 +19,9 @@ namespace MS.Internal
         //  Internal Methods
         //
         //------------------------------------------------------
-        
+
         #region Internal Methods
-        
+
         /// <summary>
         ///     Notifies the element that you have added a child.  The Element
         ///     will update the parent pointer, fire the correct events, etc.

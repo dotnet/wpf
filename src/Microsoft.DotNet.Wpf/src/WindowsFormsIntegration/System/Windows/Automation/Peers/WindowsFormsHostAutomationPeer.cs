@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,9 +12,9 @@ namespace System.Windows.Automation.Peers
     public sealed class WindowsFormsHostAutomationPeer : FrameworkElementAutomationPeer
     {
         ///
-        public WindowsFormsHostAutomationPeer(WindowsFormsHost owner): base(owner)
-        {}
-    
+        public WindowsFormsHostAutomationPeer(WindowsFormsHost owner) : base(owner)
+        { }
+
         ///
         override protected string GetClassNameCore()
         {
@@ -28,16 +28,16 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        override protected internal bool IsHwndHost { get { return true; }}
+        override protected internal bool IsHwndHost { get { return true; } }
 
         override protected HostedWindowWrapper GetHostRawElementProviderCore()
         {
             HostedWindowWrapper host = null;
-            
+
             WindowsFormsHost wfh = (WindowsFormsHost)Owner;
             IntPtr hwnd = wfh.Handle;
 
-            if(hwnd != IntPtr.Zero)
+            if (hwnd != IntPtr.Zero)
             {
                 host = new HostedWindowWrapper(hwnd);
             }
@@ -46,7 +46,7 @@ namespace System.Windows.Automation.Peers
         }
 
         internal IRawElementProviderSimple GetProvider()
-         {
+        {
             return ProviderFromPeer(this);
         }
 

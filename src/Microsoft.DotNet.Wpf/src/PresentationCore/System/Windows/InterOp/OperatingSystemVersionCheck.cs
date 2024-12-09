@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,7 +29,7 @@ namespace System.Windows.Interop
                     major = 6;
                     minor = 2;
                     break;
-                
+
                 case OperatingSystemVersion.Windows7:
                     major = 6;
                     minor = 1;
@@ -48,7 +48,7 @@ namespace System.Windows.Interop
             }
 
             OperatingSystem os = Environment.OSVersion;
-            return (os.Platform == platform) && 
+            return (os.Platform == platform) &&
                 (((os.Version.Major == major) && (os.Version.Minor >= minor)) || (os.Version.Major > major));
         }
     }

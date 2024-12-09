@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,77 +53,77 @@ namespace System.Windows.Media
 
         private static void ViewportUnitsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TileBrush target = ((TileBrush) d);
+            TileBrush target = ((TileBrush)d);
 
 
             target.PropertyChanged(ViewportUnitsProperty);
         }
         private static void ViewboxUnitsPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TileBrush target = ((TileBrush) d);
+            TileBrush target = ((TileBrush)d);
 
 
             target.PropertyChanged(ViewboxUnitsProperty);
         }
         private static void ViewportPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TileBrush target = ((TileBrush) d);
+            TileBrush target = ((TileBrush)d);
 
 
             target.PropertyChanged(ViewportProperty);
         }
         private static void ViewboxPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TileBrush target = ((TileBrush) d);
+            TileBrush target = ((TileBrush)d);
 
 
             target.PropertyChanged(ViewboxProperty);
         }
         private static void StretchPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TileBrush target = ((TileBrush) d);
+            TileBrush target = ((TileBrush)d);
 
 
             target.PropertyChanged(StretchProperty);
         }
         private static void TileModePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TileBrush target = ((TileBrush) d);
+            TileBrush target = ((TileBrush)d);
 
 
             target.PropertyChanged(TileModeProperty);
         }
         private static void AlignmentXPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TileBrush target = ((TileBrush) d);
+            TileBrush target = ((TileBrush)d);
 
 
             target.PropertyChanged(AlignmentXProperty);
         }
         private static void AlignmentYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TileBrush target = ((TileBrush) d);
+            TileBrush target = ((TileBrush)d);
 
 
             target.PropertyChanged(AlignmentYProperty);
         }
         private static void CachingHintPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TileBrush target = ((TileBrush) d);
+            TileBrush target = ((TileBrush)d);
 
 
             target.PropertyChanged(RenderOptions.CachingHintProperty);
         }
         private static void CacheInvalidationThresholdMinimumPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TileBrush target = ((TileBrush) d);
+            TileBrush target = ((TileBrush)d);
 
 
             target.PropertyChanged(RenderOptions.CacheInvalidationThresholdMinimumProperty);
         }
         private static void CacheInvalidationThresholdMaximumPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TileBrush target = ((TileBrush) d);
+            TileBrush target = ((TileBrush)d);
 
 
             target.PropertyChanged(RenderOptions.CacheInvalidationThresholdMaximumProperty);
@@ -139,7 +139,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (BrushMappingMode) GetValue(ViewportUnitsProperty);
+                return (BrushMappingMode)GetValue(ViewportUnitsProperty);
             }
             set
             {
@@ -154,7 +154,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (BrushMappingMode) GetValue(ViewboxUnitsProperty);
+                return (BrushMappingMode)GetValue(ViewboxUnitsProperty);
             }
             set
             {
@@ -169,7 +169,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Rect) GetValue(ViewportProperty);
+                return (Rect)GetValue(ViewportProperty);
             }
             set
             {
@@ -184,7 +184,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Rect) GetValue(ViewboxProperty);
+                return (Rect)GetValue(ViewboxProperty);
             }
             set
             {
@@ -199,7 +199,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Stretch) GetValue(StretchProperty);
+                return (Stretch)GetValue(StretchProperty);
             }
             set
             {
@@ -214,7 +214,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (TileMode) GetValue(TileModeProperty);
+                return (TileMode)GetValue(TileModeProperty);
             }
             set
             {
@@ -229,7 +229,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (AlignmentX) GetValue(AlignmentXProperty);
+                return (AlignmentX)GetValue(AlignmentXProperty);
             }
             set
             {
@@ -244,7 +244,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (AlignmentY) GetValue(AlignmentYProperty);
+                return (AlignmentY)GetValue(AlignmentYProperty);
             }
             set
             {
@@ -357,8 +357,8 @@ namespace System.Windows.Media
 
         internal const BrushMappingMode c_ViewportUnits = BrushMappingMode.RelativeToBoundingBox;
         internal const BrushMappingMode c_ViewboxUnits = BrushMappingMode.RelativeToBoundingBox;
-        internal static Rect s_Viewport = new Rect(0,0,1,1);
-        internal static Rect s_Viewbox = new Rect(0,0,1,1);
+        internal static Rect s_Viewport = new Rect(0, 0, 1, 1);
+        internal static Rect s_Viewbox = new Rect(0, 0, 1, 1);
         internal const Stretch c_Stretch = Stretch.Fill;
         internal const TileMode c_TileMode = TileMode.None;
         internal const AlignmentX c_AlignmentX = AlignmentX.Center;
@@ -425,7 +425,7 @@ namespace System.Windows.Media
                   RegisterProperty("Viewport",
                                    typeof(Rect),
                                    typeofThis,
-                                   new Rect(0,0,1,1),
+                                   new Rect(0, 0, 1, 1),
                                    new PropertyChangedCallback(ViewportPropertyChanged),
                                    null,
                                    /* isIndependentlyAnimated  = */ true,
@@ -434,7 +434,7 @@ namespace System.Windows.Media
                   RegisterProperty("Viewbox",
                                    typeof(Rect),
                                    typeofThis,
-                                   new Rect(0,0,1,1),
+                                   new Rect(0, 0, 1, 1),
                                    new PropertyChangedCallback(ViewboxPropertyChanged),
                                    null,
                                    /* isIndependentlyAnimated  = */ true,

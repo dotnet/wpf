@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,10 +13,10 @@
 
 using System.Collections;
 using System.Collections.Specialized;
-using System.Windows.Markup;
 using System.ComponentModel;
-using MS.Internal;
 using System.Runtime.CompilerServices;
+using System.Windows.Markup;
+using MS.Internal;
 
 namespace System.Windows
 {
@@ -26,9 +26,9 @@ namespace System.Windows
     /// </summary>
     [TypeForwardedFrom("PresentationFramework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
     public class NameScope : INameScopeDictionary
-    {        
+    {
         #region INameScope
-        
+
         /// <summary>
         /// Register Name-Object Map 
         /// </summary>
@@ -63,15 +63,15 @@ namespace System.Windows
                 else if (scopedElement != nameContext)
                 {
                     throw new ArgumentException(SR.Format(SR.NameScopeDuplicateNamesNotAllowed, name));
-                }   
+                }
             }
 
             if (TraceNameScope.IsEnabled)
             {
-                TraceNameScope.TraceActivityItem( TraceNameScope.RegisterName,
-                                                  this, 
+                TraceNameScope.TraceActivityItem(TraceNameScope.RegisterName,
+                                                  this,
                                                   name,
-                                                  scopedElement );
+                                                  scopedElement);
             }
         }
 
@@ -97,8 +97,8 @@ namespace System.Windows
 
             if (TraceNameScope.IsEnabled)
             {
-                TraceNameScope.TraceActivityItem( TraceNameScope.UnregisterName,
-                                                  this, name );
+                TraceNameScope.TraceActivityItem(TraceNameScope.UnregisterName,
+                                                  this, name);
             }
         }
 
@@ -118,7 +118,7 @@ namespace System.Windows
         #endregion INameScope
 
         #region InternalMethods
-        
+
         internal static INameScope NameScopeFromObject(object obj)
         {
             INameScope nameScope = obj as INameScope;
@@ -142,10 +142,10 @@ namespace System.Windows
         /// NameScope property. This is an attached property. 
         /// This property allows the dynamic attachment of NameScopes
         /// </summary>
-        public static readonly DependencyProperty NameScopeProperty 
-                                                  = DependencyProperty.RegisterAttached( 
-                                                  "NameScope", 
-                                                  typeof(INameScope), 
+        public static readonly DependencyProperty NameScopeProperty
+                                                  = DependencyProperty.RegisterAttached(
+                                                  "NameScope",
+                                                  typeof(INameScope),
                                                   typeof(NameScope));
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace System.Windows
 
 
         #region Data
-        
+
         // This is a HybridDictionary of Name-Object maps
         private HybridDictionary _nameMap;
 
@@ -374,7 +374,7 @@ namespace System.Windows
         class Enumerator : IEnumerator<KeyValuePair<string, object>>
         {
             IDictionaryEnumerator _enumerator;
-            
+
             public Enumerator(HybridDictionary nameMap)
             {
                 _enumerator = null;

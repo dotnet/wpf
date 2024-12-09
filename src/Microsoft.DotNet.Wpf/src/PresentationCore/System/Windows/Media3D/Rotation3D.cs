@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,7 +28,7 @@ namespace System.Windows.Media.Media3D
         }
 
         // Prevent 3rd parties from extending this abstract base class
-        internal Rotation3D() {}
+        internal Rotation3D() { }
 
         #endregion Constructors
 
@@ -53,7 +53,7 @@ namespace System.Windows.Media.Media3D
         {
             get { return s_identity; }
         }
-        
+
         #endregion Public Properties
 
         //------------------------------------------------------
@@ -61,7 +61,7 @@ namespace System.Windows.Media.Media3D
         //  Public Events
         //
         //------------------------------------------------------
-        
+
         //------------------------------------------------------
         //
         //  Internal Properties
@@ -84,7 +84,7 @@ namespace System.Windows.Media.Media3D
         //  Private Fields
         //
         //------------------------------------------------------
-        
+
         #region Private Fields
 
         private static readonly Rotation3D s_identity;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -133,7 +133,7 @@ namespace System.Windows.Automation.Peers
                 List<IRawElementProviderSimple> array = new List<IRawElementProviderSimple>(_owner.HeaderRowPresenter.ActualColumnHeaders.Count);
                 ListViewAutomationPeer lvpeer = UIElementAutomationPeer.FromElement(_listview) as ListViewAutomationPeer;
 
-                if(lvpeer != null)
+                if (lvpeer != null)
                 {
                     foreach (UIElement e in _owner.HeaderRowPresenter.ActualColumnHeaders)
                     {
@@ -147,7 +147,7 @@ namespace System.Windows.Automation.Peers
                 return array.ToArray();
             }
 
-            return new IRawElementProviderSimple[0] ;
+            return new IRawElementProviderSimple[0];
         }
 
         /// <summary>
@@ -213,7 +213,7 @@ namespace System.Windows.Automation.Peers
                     //Must call Invoke here to force run the render process
                     _listview.Dispatcher.Invoke(
                         System.Windows.Threading.DispatcherPriority.Loaded,
-                        (System.Windows.Threading.DispatcherOperationCallback)delegate(object arg)
+                        (System.Windows.Threading.DispatcherOperationCallback)delegate (object arg)
                         {
                             return null;
                         },
@@ -225,7 +225,7 @@ namespace System.Windows.Automation.Peers
             if (lvi != null)
             {
                 AutomationPeer lvpeer = UIElementAutomationPeer.FromElement(_listview);
-                if(lvpeer != null)
+                if (lvpeer != null)
                 {
                     AutomationPeer peer = UIElementAutomationPeer.FromElement(lvi);
                     if (peer != null)

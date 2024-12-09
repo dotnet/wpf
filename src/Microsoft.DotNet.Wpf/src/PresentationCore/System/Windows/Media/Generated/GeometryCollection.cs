@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // This file was generated, please do not edit it directly.
 // Please see MilCodeGen.html for more information.
 
-using MS.Internal.Collections;
-using MS.Utility;
 using System.Collections;
 using System.Windows.Media.Animation;
+using MS.Internal.Collections;
+using MS.Utility;
 
 // These types are aliased to match the unamanaged names used in interop
 
@@ -204,7 +204,7 @@ namespace System.Windows.Media
         {
             WritePreamble();
 
-            Geometry oldValue = _collection[ index ];
+            Geometry oldValue = _collection[index];
 
             OnFreezablePropertyChanged(oldValue, null);
 
@@ -239,12 +239,12 @@ namespace System.Windows.Media
 
                 WritePreamble();
 
-                if (!Object.ReferenceEquals(_collection[ index ], value))
+                if (!Object.ReferenceEquals(_collection[index], value))
                 {
-                    Geometry oldValue = _collection[ index ];
+                    Geometry oldValue = _collection[index];
                     OnFreezablePropertyChanged(oldValue, value);
 
-                    _collection[ index ] = value;
+                    _collection[index] = value;
 
                     OnSet(oldValue, value);
                 }
@@ -483,10 +483,10 @@ namespace System.Windows.Media
         {
             base.OnInheritanceContextChangedCore(args);
 
-            for (int i=0; i<this.Count; i++)
+            for (int i = 0; i < this.Count; i++)
             {
                 DependencyObject inheritanceChild = _collection[i];
-                if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
                 {
                     inheritanceChild.OnInheritanceContextChanged(args);
                 }
@@ -506,7 +506,7 @@ namespace System.Windows.Media
                 throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "Geometry"));
             }
 
-            return (Geometry) value;
+            return (Geometry)value;
         }
 
         // IList.Add returns int and IList<T>.Add does not. This
@@ -602,7 +602,7 @@ namespace System.Windows.Media
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            GeometryCollection sourceGeometryCollection = (GeometryCollection) source;
+            GeometryCollection sourceGeometryCollection = (GeometryCollection)source;
 
             base.CloneCore(source);
 
@@ -612,18 +612,18 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Geometry newValue = (Geometry) sourceGeometryCollection._collection[i].Clone();
+                Geometry newValue = (Geometry)sourceGeometryCollection._collection[i].Clone();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+        }
         /// <summary>
         /// Implementation of Freezable.CloneCurrentValueCore()
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            GeometryCollection sourceGeometryCollection = (GeometryCollection) source;
+            GeometryCollection sourceGeometryCollection = (GeometryCollection)source;
 
             base.CloneCurrentValueCore(source);
 
@@ -633,18 +633,18 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Geometry newValue = (Geometry) sourceGeometryCollection._collection[i].CloneCurrentValue();
+                Geometry newValue = (Geometry)sourceGeometryCollection._collection[i].CloneCurrentValue();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+        }
         /// <summary>
         /// Implementation of Freezable.GetAsFrozenCore()
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            GeometryCollection sourceGeometryCollection = (GeometryCollection) source;
+            GeometryCollection sourceGeometryCollection = (GeometryCollection)source;
 
             base.GetAsFrozenCore(source);
 
@@ -654,18 +654,18 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Geometry newValue = (Geometry) sourceGeometryCollection._collection[i].GetAsFrozen();
+                Geometry newValue = (Geometry)sourceGeometryCollection._collection[i].GetAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+        }
         /// <summary>
         /// Implementation of Freezable.GetCurrentValueAsFrozenCore()
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            GeometryCollection sourceGeometryCollection = (GeometryCollection) source;
+            GeometryCollection sourceGeometryCollection = (GeometryCollection)source;
 
             base.GetCurrentValueAsFrozenCore(source);
 
@@ -675,12 +675,12 @@ namespace System.Windows.Media
 
             for (int i = 0; i < count; i++)
             {
-                Geometry newValue = (Geometry) sourceGeometryCollection._collection[i].GetCurrentValueAsFrozen();
+                Geometry newValue = (Geometry)sourceGeometryCollection._collection[i].GetCurrentValueAsFrozen();
                 OnFreezablePropertyChanged(/* oldValue = */ null, newValue);
                 _collection.Add(newValue);
                 OnInsert(newValue);
             }
-}
+        }
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.FreezeCore">Freezable.FreezeCore</see>.
         /// </summary>

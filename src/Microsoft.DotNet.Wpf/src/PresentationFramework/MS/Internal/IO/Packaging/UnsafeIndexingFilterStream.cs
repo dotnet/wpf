@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,8 +15,8 @@
 using System.IO;
 using System.Runtime.InteropServices;           // For Marshal
 using System.Windows;                           // for ExceptionStringTable
-using MS.Win32;                                 // For NativeMethods
 using MS.Internal.Interop;	                // for IStream
+using MS.Win32;                                 // For NativeMethods
 
 
 namespace MS.Internal.IO.Packaging
@@ -91,16 +91,16 @@ namespace MS.Internal.IO.Packaging
                 return 0;
 
             // Prepare location of return value and call the COM object.
-            int    bytesRead;
+            int bytesRead;
             IntPtr pBytesRead = new IntPtr(&bytesRead);
 
             // Prepare to restore position in case the read fails.
             long positionBeforeReadAttempt = this.Position;
 
-            try 
+            try
             {
                 // Pin the array wrt GC while using an address in it.
-                fixed (byte *bufferPointer = &buffer[offset])
+                fixed (byte* bufferPointer = &buffer[offset])
                 {
                     _oleStream.Read(new IntPtr(bufferPointer), count, pBytesRead);
                 }
@@ -134,7 +134,7 @@ namespace MS.Internal.IO.Packaging
             // The address of 'position' can be used without pinning the object, because it
             // is a value and is therefore allocated on the stack rather than the heap.
             IntPtr positionAddress = new IntPtr(&position);
-            
+
             // The enum values of SeekOrigin match the STREAM_SEEK_* values. This
             // convention is as good as carved in stone, so there's no need for a switch here.
             _oleStream.Seek(offset, (int)origin, positionAddress);
@@ -289,12 +289,12 @@ namespace MS.Internal.IO.Packaging
             finally
             {
                 // Calls to Dispose(bool) are expected to bubble up through the class hierarchy.
-                _oleStream = null;  
+                _oleStream = null;
                 _disposed = true;
                 base.Dispose(disposing);
             }
         }
-            
+
         //------------------------------------------------------
         //
         //   Private methods.
@@ -312,8 +312,8 @@ namespace MS.Internal.IO.Packaging
         //  Private Fields
         //
         //------------------------------------------------------
-        private IStream          _oleStream;   // Underlying COM component.
-        private bool             _disposed;
+        private IStream _oleStream;   // Underlying COM component.
+        private bool _disposed;
     }
 }
 

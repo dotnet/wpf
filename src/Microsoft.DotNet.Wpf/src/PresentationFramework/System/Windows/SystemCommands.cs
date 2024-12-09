@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Windows
             MaximizeWindowCommand = new RoutedCommand("MaximizeWindow", typeof(SystemCommands));
             MinimizeWindowCommand = new RoutedCommand("MinimizeWindow", typeof(SystemCommands));
             RestoreWindowCommand = new RoutedCommand("RestoreWindow", typeof(SystemCommands));
-            ShowSystemMenuCommand = new RoutedCommand("ShowSystemMenu", typeof(SystemCommands));                 
+            ShowSystemMenuCommand = new RoutedCommand("ShowSystemMenu", typeof(SystemCommands));
         }
 
         private static void _PostSystemCommand(Window window, SC command)

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,12 +38,12 @@ namespace Standard
     [Flags]
     internal enum HCF
     {
-        HIGHCONTRASTON  = 0x00000001,
-        AVAILABLE       = 0x00000002,
-        HOTKEYACTIVE    = 0x00000004,
-        CONFIRMHOTKEY   = 0x00000008,
-        HOTKEYSOUND     = 0x00000010,
-        INDICATOR       = 0x00000020,
+        HIGHCONTRASTON = 0x00000001,
+        AVAILABLE = 0x00000002,
+        HOTKEYACTIVE = 0x00000004,
+        CONFIRMHOTKEY = 0x00000008,
+        HOTKEYSOUND = 0x00000010,
+        INDICATOR = 0x00000020,
         HOTKEYAVAILABLE = 0x00000040,
     }
 
@@ -392,122 +392,122 @@ namespace Standard
     /// </summary>
     internal enum SPI
     {
-        GETBEEP               = 0x0001,
-        SETBEEP               = 0x0002,
-        GETMOUSE              = 0x0003,
-        SETMOUSE              = 0x0004,
-        GETBORDER             = 0x0005,
-        SETBORDER             = 0x0006,
-        GETKEYBOARDSPEED      = 0x000A,
-        SETKEYBOARDSPEED      = 0x000B,
-        LANGDRIVER            = 0x000C,
+        GETBEEP = 0x0001,
+        SETBEEP = 0x0002,
+        GETMOUSE = 0x0003,
+        SETMOUSE = 0x0004,
+        GETBORDER = 0x0005,
+        SETBORDER = 0x0006,
+        GETKEYBOARDSPEED = 0x000A,
+        SETKEYBOARDSPEED = 0x000B,
+        LANGDRIVER = 0x000C,
         ICONHORIZONTALSPACING = 0x000D,
-        GETSCREENSAVETIMEOUT  = 0x000E,
-        SETSCREENSAVETIMEOUT  = 0x000F,
-        GETSCREENSAVEACTIVE   = 0x0010,
-        SETSCREENSAVEACTIVE   = 0x0011,
-        GETGRIDGRANULARITY    = 0x0012,
-        SETGRIDGRANULARITY    = 0x0013,
-        SETDESKWALLPAPER      = 0x0014,
-        SETDESKPATTERN        = 0x0015,
-        GETKEYBOARDDELAY      = 0x0016,
-        SETKEYBOARDDELAY      = 0x0017,
-        ICONVERTICALSPACING   = 0x0018,
-        GETICONTITLEWRAP      = 0x0019,
-        SETICONTITLEWRAP      = 0x001A,
-        GETMENUDROPALIGNMENT  = 0x001B,
-        SETMENUDROPALIGNMENT  = 0x001C,
-        SETDOUBLECLKWIDTH     = 0x001D,
-        SETDOUBLECLKHEIGHT    = 0x001E,
-        GETICONTITLELOGFONT   = 0x001F,
-        SETDOUBLECLICKTIME    = 0x0020,
-        SETMOUSEBUTTONSWAP    = 0x0021,
-        SETICONTITLELOGFONT   = 0x0022,
-        GETFASTTASKSWITCH     = 0x0023,
-        SETFASTTASKSWITCH     = 0x0024,
+        GETSCREENSAVETIMEOUT = 0x000E,
+        SETSCREENSAVETIMEOUT = 0x000F,
+        GETSCREENSAVEACTIVE = 0x0010,
+        SETSCREENSAVEACTIVE = 0x0011,
+        GETGRIDGRANULARITY = 0x0012,
+        SETGRIDGRANULARITY = 0x0013,
+        SETDESKWALLPAPER = 0x0014,
+        SETDESKPATTERN = 0x0015,
+        GETKEYBOARDDELAY = 0x0016,
+        SETKEYBOARDDELAY = 0x0017,
+        ICONVERTICALSPACING = 0x0018,
+        GETICONTITLEWRAP = 0x0019,
+        SETICONTITLEWRAP = 0x001A,
+        GETMENUDROPALIGNMENT = 0x001B,
+        SETMENUDROPALIGNMENT = 0x001C,
+        SETDOUBLECLKWIDTH = 0x001D,
+        SETDOUBLECLKHEIGHT = 0x001E,
+        GETICONTITLELOGFONT = 0x001F,
+        SETDOUBLECLICKTIME = 0x0020,
+        SETMOUSEBUTTONSWAP = 0x0021,
+        SETICONTITLELOGFONT = 0x0022,
+        GETFASTTASKSWITCH = 0x0023,
+        SETFASTTASKSWITCH = 0x0024,
 
-        SETDRAGFULLWINDOWS    = 0x0025,
-        GETDRAGFULLWINDOWS    = 0x0026,
-        GETNONCLIENTMETRICS   = 0x0029,
-        SETNONCLIENTMETRICS   = 0x002A,
-        GETMINIMIZEDMETRICS   = 0x002B,
-        SETMINIMIZEDMETRICS   = 0x002C,
-        GETICONMETRICS        = 0x002D,
-        SETICONMETRICS        = 0x002E,
-        SETWORKAREA           = 0x002F,
-        GETWORKAREA           = 0x0030,
-        SETPENWINDOWS         = 0x0031,
-        GETHIGHCONTRAST       = 0x0042,
-        SETHIGHCONTRAST       = 0x0043,
-        GETKEYBOARDPREF       = 0x0044,
-        SETKEYBOARDPREF       = 0x0045,
-        GETSCREENREADER       = 0x0046,
-        SETSCREENREADER       = 0x0047,
-        GETANIMATION          = 0x0048,
-        SETANIMATION          = 0x0049,
-        GETFONTSMOOTHING      = 0x004A,
-        SETFONTSMOOTHING      = 0x004B,
-        SETDRAGWIDTH          = 0x004C,
-        SETDRAGHEIGHT         = 0x004D,
-        SETHANDHELD           = 0x004E,
-        GETLOWPOWERTIMEOUT    = 0x004F,
-        GETPOWEROFFTIMEOUT    = 0x0050,
-        SETLOWPOWERTIMEOUT    = 0x0051,
-        SETPOWEROFFTIMEOUT    = 0x0052,
-        GETLOWPOWERACTIVE     = 0x0053,
-        GETPOWEROFFACTIVE     = 0x0054,
-        SETLOWPOWERACTIVE     = 0x0055,
-        SETPOWEROFFACTIVE     = 0x0056,
-        SETCURSORS            = 0x0057,
-        SETICONS              = 0x0058,
-        GETDEFAULTINPUTLANG   = 0x0059,
-        SETDEFAULTINPUTLANG   = 0x005A,
-        SETLANGTOGGLE         = 0x005B,
-        GETWINDOWSEXTENSION   = 0x005C,
-        SETMOUSETRAILS        = 0x005D,
-        GETMOUSETRAILS        = 0x005E,
+        SETDRAGFULLWINDOWS = 0x0025,
+        GETDRAGFULLWINDOWS = 0x0026,
+        GETNONCLIENTMETRICS = 0x0029,
+        SETNONCLIENTMETRICS = 0x002A,
+        GETMINIMIZEDMETRICS = 0x002B,
+        SETMINIMIZEDMETRICS = 0x002C,
+        GETICONMETRICS = 0x002D,
+        SETICONMETRICS = 0x002E,
+        SETWORKAREA = 0x002F,
+        GETWORKAREA = 0x0030,
+        SETPENWINDOWS = 0x0031,
+        GETHIGHCONTRAST = 0x0042,
+        SETHIGHCONTRAST = 0x0043,
+        GETKEYBOARDPREF = 0x0044,
+        SETKEYBOARDPREF = 0x0045,
+        GETSCREENREADER = 0x0046,
+        SETSCREENREADER = 0x0047,
+        GETANIMATION = 0x0048,
+        SETANIMATION = 0x0049,
+        GETFONTSMOOTHING = 0x004A,
+        SETFONTSMOOTHING = 0x004B,
+        SETDRAGWIDTH = 0x004C,
+        SETDRAGHEIGHT = 0x004D,
+        SETHANDHELD = 0x004E,
+        GETLOWPOWERTIMEOUT = 0x004F,
+        GETPOWEROFFTIMEOUT = 0x0050,
+        SETLOWPOWERTIMEOUT = 0x0051,
+        SETPOWEROFFTIMEOUT = 0x0052,
+        GETLOWPOWERACTIVE = 0x0053,
+        GETPOWEROFFACTIVE = 0x0054,
+        SETLOWPOWERACTIVE = 0x0055,
+        SETPOWEROFFACTIVE = 0x0056,
+        SETCURSORS = 0x0057,
+        SETICONS = 0x0058,
+        GETDEFAULTINPUTLANG = 0x0059,
+        SETDEFAULTINPUTLANG = 0x005A,
+        SETLANGTOGGLE = 0x005B,
+        GETWINDOWSEXTENSION = 0x005C,
+        SETMOUSETRAILS = 0x005D,
+        GETMOUSETRAILS = 0x005E,
         SETSCREENSAVERRUNNING = 0x0061,
-        SCREENSAVERRUNNING    = SETSCREENSAVERRUNNING,
-        GETFILTERKEYS        = 0x0032,
-        SETFILTERKEYS        = 0x0033,
-        GETTOGGLEKEYS        = 0x0034,
-        SETTOGGLEKEYS        = 0x0035,
-        GETMOUSEKEYS         = 0x0036,
-        SETMOUSEKEYS         = 0x0037,
-        GETSHOWSOUNDS        = 0x0038,
-        SETSHOWSOUNDS        = 0x0039,
-        GETSTICKYKEYS        = 0x003A,
-        SETSTICKYKEYS        = 0x003B,
-        GETACCESSTIMEOUT     = 0x003C,
-        SETACCESSTIMEOUT     = 0x003D,
+        SCREENSAVERRUNNING = SETSCREENSAVERRUNNING,
+        GETFILTERKEYS = 0x0032,
+        SETFILTERKEYS = 0x0033,
+        GETTOGGLEKEYS = 0x0034,
+        SETTOGGLEKEYS = 0x0035,
+        GETMOUSEKEYS = 0x0036,
+        SETMOUSEKEYS = 0x0037,
+        GETSHOWSOUNDS = 0x0038,
+        SETSHOWSOUNDS = 0x0039,
+        GETSTICKYKEYS = 0x003A,
+        SETSTICKYKEYS = 0x003B,
+        GETACCESSTIMEOUT = 0x003C,
+        SETACCESSTIMEOUT = 0x003D,
 
-        GETSERIALKEYS        = 0x003E,
-        SETSERIALKEYS        = 0x003F,
-        GETSOUNDSENTRY       = 0x0040,
-        SETSOUNDSENTRY       = 0x0041,
-        GETSNAPTODEFBUTTON   = 0x005F,
-        SETSNAPTODEFBUTTON   = 0x0060,
-        GETMOUSEHOVERWIDTH   = 0x0062,
-        SETMOUSEHOVERWIDTH   = 0x0063,
-        GETMOUSEHOVERHEIGHT  = 0x0064,
-        SETMOUSEHOVERHEIGHT  = 0x0065,
-        GETMOUSEHOVERTIME    = 0x0066,
-        SETMOUSEHOVERTIME    = 0x0067,
-        GETWHEELSCROLLLINES  = 0x0068,
-        SETWHEELSCROLLLINES  = 0x0069,
-        GETMENUSHOWDELAY     = 0x006A,
-        SETMENUSHOWDELAY     = 0x006B,
+        GETSERIALKEYS = 0x003E,
+        SETSERIALKEYS = 0x003F,
+        GETSOUNDSENTRY = 0x0040,
+        SETSOUNDSENTRY = 0x0041,
+        GETSNAPTODEFBUTTON = 0x005F,
+        SETSNAPTODEFBUTTON = 0x0060,
+        GETMOUSEHOVERWIDTH = 0x0062,
+        SETMOUSEHOVERWIDTH = 0x0063,
+        GETMOUSEHOVERHEIGHT = 0x0064,
+        SETMOUSEHOVERHEIGHT = 0x0065,
+        GETMOUSEHOVERTIME = 0x0066,
+        SETMOUSEHOVERTIME = 0x0067,
+        GETWHEELSCROLLLINES = 0x0068,
+        SETWHEELSCROLLLINES = 0x0069,
+        GETMENUSHOWDELAY = 0x006A,
+        SETMENUSHOWDELAY = 0x006B,
 
         GETWHEELSCROLLCHARS = 0x006C,
         SETWHEELSCROLLCHARS = 0x006D,
 
-        GETSHOWIMEUI        = 0x006E,
-        SETSHOWIMEUI        = 0x006F,
+        GETSHOWIMEUI = 0x006E,
+        SETSHOWIMEUI = 0x006F,
 
-        GETMOUSESPEED       = 0x0070,
-        SETMOUSESPEED       = 0x0071,
+        GETMOUSESPEED = 0x0070,
+        SETMOUSESPEED = 0x0071,
         GETSCREENSAVERRUNNING = 0x0072,
-        GETDESKWALLPAPER    = 0x0073,
+        GETDESKWALLPAPER = 0x0073,
 
         GETAUDIODESCRIPTION = 0x0074,
         SETAUDIODESCRIPTION = 0x0075,
@@ -515,115 +515,115 @@ namespace Standard
         GETSCREENSAVESECURE = 0x0076,
         SETSCREENSAVESECURE = 0x0077,
 
-        GETHUNGAPPTIMEOUT         = 0x0078,
-        SETHUNGAPPTIMEOUT         = 0x0079,
-        GETWAITTOKILLTIMEOUT      = 0x007A,
-        SETWAITTOKILLTIMEOUT      = 0x007B,
+        GETHUNGAPPTIMEOUT = 0x0078,
+        SETHUNGAPPTIMEOUT = 0x0079,
+        GETWAITTOKILLTIMEOUT = 0x007A,
+        SETWAITTOKILLTIMEOUT = 0x007B,
         GETWAITTOKILLSERVICETIMEOUT = 0x007C,
         SETWAITTOKILLSERVICETIMEOUT = 0x007D,
-        GETMOUSEDOCKTHRESHOLD     = 0x007E,
-        SETMOUSEDOCKTHRESHOLD     = 0x007F,
-        GETPENDOCKTHRESHOLD       = 0x0080,
-        SETPENDOCKTHRESHOLD       = 0x0081,
-        GETWINARRANGING           = 0x0082,
-        SETWINARRANGING           = 0x0083,
-        GETMOUSEDRAGOUTTHRESHOLD  = 0x0084,
-        SETMOUSEDRAGOUTTHRESHOLD  = 0x0085,
-        GETPENDRAGOUTTHRESHOLD    = 0x0086,
-        SETPENDRAGOUTTHRESHOLD    = 0x0087,
+        GETMOUSEDOCKTHRESHOLD = 0x007E,
+        SETMOUSEDOCKTHRESHOLD = 0x007F,
+        GETPENDOCKTHRESHOLD = 0x0080,
+        SETPENDOCKTHRESHOLD = 0x0081,
+        GETWINARRANGING = 0x0082,
+        SETWINARRANGING = 0x0083,
+        GETMOUSEDRAGOUTTHRESHOLD = 0x0084,
+        SETMOUSEDRAGOUTTHRESHOLD = 0x0085,
+        GETPENDRAGOUTTHRESHOLD = 0x0086,
+        SETPENDRAGOUTTHRESHOLD = 0x0087,
         GETMOUSESIDEMOVETHRESHOLD = 0x0088,
         SETMOUSESIDEMOVETHRESHOLD = 0x0089,
-        GETPENSIDEMOVETHRESHOLD   = 0x008A,
-        SETPENSIDEMOVETHRESHOLD   = 0x008B,
-        GETDRAGFROMMAXIMIZE       = 0x008C,
-        SETDRAGFROMMAXIMIZE       = 0x008D,
-        GETSNAPSIZING             = 0x008E,
-        SETSNAPSIZING             = 0x008F,
-        GETDOCKMOVING             = 0x0090,
-        SETDOCKMOVING             = 0x0091,
+        GETPENSIDEMOVETHRESHOLD = 0x008A,
+        SETPENSIDEMOVETHRESHOLD = 0x008B,
+        GETDRAGFROMMAXIMIZE = 0x008C,
+        SETDRAGFROMMAXIMIZE = 0x008D,
+        GETSNAPSIZING = 0x008E,
+        SETSNAPSIZING = 0x008F,
+        GETDOCKMOVING = 0x0090,
+        SETDOCKMOVING = 0x0091,
 
-        GETACTIVEWINDOWTRACKING       = 0x1000,
-        SETACTIVEWINDOWTRACKING       = 0x1001,
-        GETMENUANIMATION              = 0x1002,
-        SETMENUANIMATION              = 0x1003,
-        GETCOMBOBOXANIMATION          = 0x1004,
-        SETCOMBOBOXANIMATION          = 0x1005,
-        GETLISTBOXSMOOTHSCROLLING     = 0x1006,
-        SETLISTBOXSMOOTHSCROLLING     = 0x1007,
-        GETGRADIENTCAPTIONS           = 0x1008,
-        SETGRADIENTCAPTIONS           = 0x1009,
-        GETKEYBOARDCUES               = 0x100A,
-        SETKEYBOARDCUES               = 0x100B,
-        GETMENUUNDERLINES             = GETKEYBOARDCUES,
-        SETMENUUNDERLINES             = SETKEYBOARDCUES,
-        GETACTIVEWNDTRKZORDER         = 0x100C,
-        SETACTIVEWNDTRKZORDER         = 0x100D,
-        GETHOTTRACKING                = 0x100E,
-        SETHOTTRACKING                = 0x100F,
-        GETMENUFADE                   = 0x1012,
-        SETMENUFADE                   = 0x1013,
-        GETSELECTIONFADE              = 0x1014,
-        SETSELECTIONFADE              = 0x1015,
-        GETTOOLTIPANIMATION           = 0x1016,
-        SETTOOLTIPANIMATION           = 0x1017,
-        GETTOOLTIPFADE                = 0x1018,
-        SETTOOLTIPFADE                = 0x1019,
-        GETCURSORSHADOW               = 0x101A,
-        SETCURSORSHADOW               = 0x101B,
-        GETMOUSESONAR                 = 0x101C,
-        SETMOUSESONAR                 = 0x101D,
-        GETMOUSECLICKLOCK             = 0x101E,
-        SETMOUSECLICKLOCK             = 0x101F,
-        GETMOUSEVANISH                = 0x1020,
-        SETMOUSEVANISH                = 0x1021,
-        GETFLATMENU                   = 0x1022,
-        SETFLATMENU                   = 0x1023,
-        GETDROPSHADOW                 = 0x1024,
-        SETDROPSHADOW                 = 0x1025,
-        GETBLOCKSENDINPUTRESETS       = 0x1026,
-        SETBLOCKSENDINPUTRESETS       = 0x1027,
+        GETACTIVEWINDOWTRACKING = 0x1000,
+        SETACTIVEWINDOWTRACKING = 0x1001,
+        GETMENUANIMATION = 0x1002,
+        SETMENUANIMATION = 0x1003,
+        GETCOMBOBOXANIMATION = 0x1004,
+        SETCOMBOBOXANIMATION = 0x1005,
+        GETLISTBOXSMOOTHSCROLLING = 0x1006,
+        SETLISTBOXSMOOTHSCROLLING = 0x1007,
+        GETGRADIENTCAPTIONS = 0x1008,
+        SETGRADIENTCAPTIONS = 0x1009,
+        GETKEYBOARDCUES = 0x100A,
+        SETKEYBOARDCUES = 0x100B,
+        GETMENUUNDERLINES = GETKEYBOARDCUES,
+        SETMENUUNDERLINES = SETKEYBOARDCUES,
+        GETACTIVEWNDTRKZORDER = 0x100C,
+        SETACTIVEWNDTRKZORDER = 0x100D,
+        GETHOTTRACKING = 0x100E,
+        SETHOTTRACKING = 0x100F,
+        GETMENUFADE = 0x1012,
+        SETMENUFADE = 0x1013,
+        GETSELECTIONFADE = 0x1014,
+        SETSELECTIONFADE = 0x1015,
+        GETTOOLTIPANIMATION = 0x1016,
+        SETTOOLTIPANIMATION = 0x1017,
+        GETTOOLTIPFADE = 0x1018,
+        SETTOOLTIPFADE = 0x1019,
+        GETCURSORSHADOW = 0x101A,
+        SETCURSORSHADOW = 0x101B,
+        GETMOUSESONAR = 0x101C,
+        SETMOUSESONAR = 0x101D,
+        GETMOUSECLICKLOCK = 0x101E,
+        SETMOUSECLICKLOCK = 0x101F,
+        GETMOUSEVANISH = 0x1020,
+        SETMOUSEVANISH = 0x1021,
+        GETFLATMENU = 0x1022,
+        SETFLATMENU = 0x1023,
+        GETDROPSHADOW = 0x1024,
+        SETDROPSHADOW = 0x1025,
+        GETBLOCKSENDINPUTRESETS = 0x1026,
+        SETBLOCKSENDINPUTRESETS = 0x1027,
 
-        GETUIEFFECTS                  = 0x103E,
-        SETUIEFFECTS                  = 0x103F,
+        GETUIEFFECTS = 0x103E,
+        SETUIEFFECTS = 0x103F,
 
-        GETDISABLEOVERLAPPEDCONTENT   = 0x1040,
-        SETDISABLEOVERLAPPEDCONTENT   = 0x1041,
-        GETCLIENTAREAANIMATION        = 0x1042,
-        SETCLIENTAREAANIMATION        = 0x1043,
-        GETCLEARTYPE                  = 0x1048,
-        SETCLEARTYPE                  = 0x1049,
-        GETSPEECHRECOGNITION          = 0x104A,
-        SETSPEECHRECOGNITION          = 0x104B,
+        GETDISABLEOVERLAPPEDCONTENT = 0x1040,
+        SETDISABLEOVERLAPPEDCONTENT = 0x1041,
+        GETCLIENTAREAANIMATION = 0x1042,
+        SETCLIENTAREAANIMATION = 0x1043,
+        GETCLEARTYPE = 0x1048,
+        SETCLEARTYPE = 0x1049,
+        GETSPEECHRECOGNITION = 0x104A,
+        SETSPEECHRECOGNITION = 0x104B,
 
-        GETFOREGROUNDLOCKTIMEOUT      = 0x2000,
-        SETFOREGROUNDLOCKTIMEOUT      = 0x2001,
-        GETACTIVEWNDTRKTIMEOUT        = 0x2002,
-        SETACTIVEWNDTRKTIMEOUT        = 0x2003,
-        GETFOREGROUNDFLASHCOUNT       = 0x2004,
-        SETFOREGROUNDFLASHCOUNT       = 0x2005,
-        GETCARETWIDTH                 = 0x2006,
-        SETCARETWIDTH                 = 0x2007,
+        GETFOREGROUNDLOCKTIMEOUT = 0x2000,
+        SETFOREGROUNDLOCKTIMEOUT = 0x2001,
+        GETACTIVEWNDTRKTIMEOUT = 0x2002,
+        SETACTIVEWNDTRKTIMEOUT = 0x2003,
+        GETFOREGROUNDFLASHCOUNT = 0x2004,
+        SETFOREGROUNDFLASHCOUNT = 0x2005,
+        GETCARETWIDTH = 0x2006,
+        SETCARETWIDTH = 0x2007,
 
-        GETMOUSECLICKLOCKTIME         = 0x2008,
-        SETMOUSECLICKLOCKTIME         = 0x2009,
-        GETFONTSMOOTHINGTYPE          = 0x200A,
-        SETFONTSMOOTHINGTYPE          = 0x200B,
+        GETMOUSECLICKLOCKTIME = 0x2008,
+        SETMOUSECLICKLOCKTIME = 0x2009,
+        GETFONTSMOOTHINGTYPE = 0x200A,
+        SETFONTSMOOTHINGTYPE = 0x200B,
 
-        GETFONTSMOOTHINGCONTRAST         = 0x200C,
-        SETFONTSMOOTHINGCONTRAST         = 0x200D,
+        GETFONTSMOOTHINGCONTRAST = 0x200C,
+        SETFONTSMOOTHINGCONTRAST = 0x200D,
 
-        GETFOCUSBORDERWIDTH           = 0x200E,
-        SETFOCUSBORDERWIDTH           = 0x200F,
-        GETFOCUSBORDERHEIGHT          = 0x2010,
-        SETFOCUSBORDERHEIGHT          = 0x2011,
+        GETFOCUSBORDERWIDTH = 0x200E,
+        SETFOCUSBORDERWIDTH = 0x200F,
+        GETFOCUSBORDERHEIGHT = 0x2010,
+        SETFOCUSBORDERHEIGHT = 0x2011,
 
-        GETFONTSMOOTHINGORIENTATION         = 0x2012,
-        SETFONTSMOOTHINGORIENTATION         = 0x2013,
+        GETFONTSMOOTHINGORIENTATION = 0x2012,
+        SETFONTSMOOTHINGORIENTATION = 0x2013,
 
-        GETMINIMUMHITRADIUS           = 0x2014,
-        SETMINIMUMHITRADIUS           = 0x2015,
-        GETMESSAGEDURATION            = 0x2016,
-        SETMESSAGEDURATION            = 0x2017,
+        GETMINIMUMHITRADIUS = 0x2014,
+        SETMINIMUMHITRADIUS = 0x2015,
+        GETMESSAGEDURATION = 0x2016,
+        SETMESSAGEDURATION = 0x2017,
     }
 
     /// <summary>
@@ -641,38 +641,38 @@ namespace Standard
     [Flags]
     internal enum STATE_SYSTEM
     {
-        UNAVAILABLE      = 0x00000001, // Disabled
-        SELECTED         = 0x00000002,
-        FOCUSED          = 0x00000004,
-        PRESSED          = 0x00000008,
-        CHECKED          = 0x00000010,
-        MIXED            = 0x00000020,  // 3-state checkbox or toolbar button
-        INDETERMINATE    = MIXED,
-        READONLY         = 0x00000040,
-        HOTTRACKED       = 0x00000080,
-        DEFAULT          = 0x00000100,
-        EXPANDED         = 0x00000200,
-        COLLAPSED        = 0x00000400,
-        BUSY             = 0x00000800,
-        FLOATING         = 0x00001000,  // Children "owned" not "contained" by parent
-        MARQUEED         = 0x00002000,
-        ANIMATED         = 0x00004000,
-        INVISIBLE        = 0x00008000,
-        OFFSCREEN        = 0x00010000,
-        SIZEABLE         = 0x00020000,
-        MOVEABLE         = 0x00040000,
-        SELFVOICING      = 0x00080000,
-        FOCUSABLE        = 0x00100000,
-        SELECTABLE       = 0x00200000,
-        LINKED           = 0x00400000,
-        TRAVERSED        = 0x00800000,
-        MULTISELECTABLE  = 0x01000000,  // Supports multiple selection
-        EXTSELECTABLE    = 0x02000000,  // Supports extended selection
-        ALERT_LOW        = 0x04000000,  // This information is of low priority
-        ALERT_MEDIUM     = 0x08000000,  // This information is of medium priority
-        ALERT_HIGH       = 0x10000000,  // This information is of high priority
-        PROTECTED        = 0x20000000,  // access to this is restricted
-        VALID            = 0x3FFFFFFF,
+        UNAVAILABLE = 0x00000001, // Disabled
+        SELECTED = 0x00000002,
+        FOCUSED = 0x00000004,
+        PRESSED = 0x00000008,
+        CHECKED = 0x00000010,
+        MIXED = 0x00000020,  // 3-state checkbox or toolbar button
+        INDETERMINATE = MIXED,
+        READONLY = 0x00000040,
+        HOTTRACKED = 0x00000080,
+        DEFAULT = 0x00000100,
+        EXPANDED = 0x00000200,
+        COLLAPSED = 0x00000400,
+        BUSY = 0x00000800,
+        FLOATING = 0x00001000,  // Children "owned" not "contained" by parent
+        MARQUEED = 0x00002000,
+        ANIMATED = 0x00004000,
+        INVISIBLE = 0x00008000,
+        OFFSCREEN = 0x00010000,
+        SIZEABLE = 0x00020000,
+        MOVEABLE = 0x00040000,
+        SELFVOICING = 0x00080000,
+        FOCUSABLE = 0x00100000,
+        SELECTABLE = 0x00200000,
+        LINKED = 0x00400000,
+        TRAVERSED = 0x00800000,
+        MULTISELECTABLE = 0x01000000,  // Supports multiple selection
+        EXTSELECTABLE = 0x02000000,  // Supports extended selection
+        ALERT_LOW = 0x04000000,  // This information is of low priority
+        ALERT_MEDIUM = 0x08000000,  // This information is of medium priority
+        ALERT_HIGH = 0x10000000,  // This information is of high priority
+        PROTECTED = 0x20000000,  // access to this is restricted
+        VALID = 0x3FFFFFFF,
     }
 
     internal enum StockObject : int
@@ -1879,8 +1879,10 @@ namespace Standard
         {
             get
             {
-                var ncm = new NONCLIENTMETRICS();
-                ncm.cbSize = Marshal.SizeOf(typeof(NONCLIENTMETRICS));
+                var ncm = new NONCLIENTMETRICS
+                {
+                    cbSize = Marshal.SizeOf(typeof(NONCLIENTMETRICS))
+                };
                 return ncm;
             }
         }
@@ -1889,9 +1891,11 @@ namespace Standard
         {
             get
             {
-                var ncm = new NONCLIENTMETRICS();
-                // Account for the missing iPaddedBorderWidth
-                ncm.cbSize = Marshal.SizeOf(typeof(NONCLIENTMETRICS)) - sizeof(int);
+                var ncm = new NONCLIENTMETRICS
+                {
+                    // Account for the missing iPaddedBorderWidth
+                    cbSize = Marshal.SizeOf(typeof(NONCLIENTMETRICS)) - sizeof(int)
+                };
                 return ncm;
             }
         }
@@ -2219,7 +2223,7 @@ namespace Standard
         public uint uiDenominator;
     }
 
-    [StructLayout(LayoutKind.Sequential, Pack=1)]
+    [StructLayout(LayoutKind.Sequential, Pack = 1)]
     internal struct DWM_TIMING_INFO
     {
         public int cbSize;
@@ -2502,7 +2506,7 @@ namespace Standard
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWindow(IntPtr hwnd);
-        
+
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern int DwmGetWindowAttribute(IntPtr hWnd, DWMWA dwAttributeToGet, ref int pvAttributeValue, int cbAttribute);
 
@@ -2645,7 +2649,7 @@ namespace Standard
             return rc;
         }
 
-        [DllImport("uxtheme.dll", EntryPoint="GetCurrentThemeName", CharSet = CharSet.Unicode)]
+        [DllImport("uxtheme.dll", EntryPoint = "GetCurrentThemeName", CharSet = CharSet.Unicode)]
         private static extern HRESULT _GetCurrentThemeName(
             StringBuilder pszThemeFileName,
             int dwMaxNameChars,
@@ -3173,7 +3177,7 @@ namespace Standard
 
         //#define DWM_SIT_DISPLAYFRAME    0x00000001  // Display a window frame around the provided bitmap
 
-        [DllImport("dwmapi.dll", EntryPoint="DwmGetCompositionTimingInfo")]
+        [DllImport("dwmapi.dll", EntryPoint = "DwmGetCompositionTimingInfo")]
         private static extern HRESULT _DwmGetCompositionTimingInfo(IntPtr hwnd, ref DWM_TIMING_INFO pTimingInfo);
 
         public static DWM_TIMING_INFO? DwmGetCompositionTimingInfo(IntPtr hwnd)

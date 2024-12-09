@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,7 +26,7 @@ namespace System.Windows.Markup
             //
             ThrowIfIAddChildInternal("not IAddChildInternal");
         }
-        
+
 
         internal static void ThrowIfIAddChildInternal(object o)
         {
@@ -34,7 +34,7 @@ namespace System.Windows.Markup
             // Dummy code to keep IAddChildInternal from being optimized out of
             // PresentationCore. PLEASE REMOVE WHEN IAddChildInternal DISAPPEARS.
             //
-            if ( o is IAddChildInternal)
+            if (o is IAddChildInternal)
             {
                 throw new InvalidOperationException();
             }

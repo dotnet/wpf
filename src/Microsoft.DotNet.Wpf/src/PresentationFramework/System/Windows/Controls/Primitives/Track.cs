@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,12 +6,12 @@
 // Description: Contains the Track class.
 //
 
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
-using System.Windows.Data;
-using System.Windows.Media;
-using System.Windows.Input;
 
 
 namespace System.Windows.Controls.Primitives
@@ -122,7 +122,7 @@ namespace System.Windows.Controls.Primitives
 
                 // Remove the old value from our z index list and add new value to end
                 int i = 0;
-                while (i < 3) 
+                while (i < 3)
                 {
                     // Array isn't full, break
                     if (_visualChildren[i] == null)
@@ -343,7 +343,7 @@ namespace System.Windows.Controls.Primitives
             get { return (bool)GetValue(IsDirectionReversedProperty); }
             set { SetValue(IsDirectionReversedProperty, value); }
         }
-     
+
         #endregion
 
         //-------------------------------------------------------------------
@@ -370,7 +370,7 @@ namespace System.Windows.Controls.Primitives
             }
             return _visualChildren[index];
         }
-        
+
         /// <summary>
         ///  Derived classes override this property to enable the Visual code to enumerate 
         ///  the Visual children. Derived classes need to return the number of children
@@ -382,7 +382,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>        
         protected override int VisualChildrenCount
         {
-            get 
+            get
             {
                 if (_visualChildren == null || _visualChildren[0] == null)
                 {
@@ -401,8 +401,8 @@ namespace System.Windows.Controls.Primitives
                 }
             }
         }
-        
-       /// <summary>
+
+        /// <summary>
         /// The desired size of a Track is the width (if vertically oriented) or height (if horizontally
         /// oriented) of the Thumb.  
         ///
@@ -506,7 +506,7 @@ namespace System.Windows.Controls.Primitives
 
                 offset.Y = isDirectionReversed ? decreaseButtonLength + thumbLength : 0.0;
                 pieceSize.Height = increaseButtonLength;
-                
+
                 if (IncreaseRepeatButton != null)
                     IncreaseRepeatButton.Arrange(new Rect(offset, pieceSize));
 
@@ -527,7 +527,7 @@ namespace System.Windows.Controls.Primitives
                 ThumbCenterOffset = offset.Y + (thumbLength * 0.5);
             }
             else
-            {   
+            {
                 // Horizontal Normal   :    |Dec Button |Thumb| Inc Button| 
                 // Horizontal Reversed :    |Inc Button |Thumb| Dec Button|
 
@@ -551,7 +551,7 @@ namespace System.Windows.Controls.Primitives
 
                 offset.X = isDirectionReversed ? increaseButtonLength : decreaseButtonLength;
                 pieceSize.Width = thumbLength;
-                
+
                 if (Thumb != null)
                     Thumb.Arrange(new Rect(offset, pieceSize));
 
@@ -590,13 +590,13 @@ namespace System.Windows.Controls.Primitives
 
             decreaseButtonLength = remainingTrackLength * offset / range;
             CoerceLength(ref decreaseButtonLength, remainingTrackLength);
-           
+
             increaseButtonLength = remainingTrackLength - decreaseButtonLength;
             CoerceLength(ref increaseButtonLength, remainingTrackLength);
 
             Debug.Assert(decreaseButtonLength >= 0.0 && decreaseButtonLength <= remainingTrackLength, "decreaseButtonLength is outside bounds");
             Debug.Assert(increaseButtonLength >= 0.0 && increaseButtonLength <= remainingTrackLength, "increaseButtonLength is outside bounds");
-            
+
             Density = range / remainingTrackLength;
         }
 
@@ -623,7 +623,7 @@ namespace System.Windows.Controls.Primitives
                 // Try to use the apps resource if it exists, fall back to SystemParameters if it doesn't
                 object buttonHeightResource = TryFindResource(SystemParameters.VerticalScrollBarButtonHeightKey);
                 double buttonHeight = buttonHeightResource is double ? (double)buttonHeightResource : SystemParameters.VerticalScrollBarButtonHeight;
-                thumbMinLength = Math.Floor(buttonHeight * 0.5); 
+                thumbMinLength = Math.Floor(buttonHeight * 0.5);
             }
             else
             {
@@ -634,9 +634,9 @@ namespace System.Windows.Controls.Primitives
                 thumbMinLength = Math.Floor(buttonWidth * 0.5);
             }
 
-            thumbLength =  trackLength * viewportSize / extent;
+            thumbLength = trackLength * viewportSize / extent;
             CoerceLength(ref thumbLength, trackLength);
-         
+
             thumbLength = Math.Max(thumbMinLength, thumbLength);
 
 
@@ -683,9 +683,11 @@ namespace System.Windows.Controls.Primitives
         {
             if (!HasNonDefaultValue(target))
             {
-                Binding binding = new Binding();
-                binding.RelativeSource = RelativeSource.TemplatedParent;
-                binding.Path = new PropertyPath(source);
+                Binding binding = new Binding
+                {
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Path = new PropertyPath(source)
+                };
                 SetBinding(target, binding);
             }
         }
@@ -695,9 +697,11 @@ namespace System.Windows.Controls.Primitives
         {
             if (element != null && !element.HasNonDefaultValue(target))
             {
-                Binding binding = new Binding();
-                binding.Source = this.TemplatedParent;
-                binding.Path = new PropertyPath(source);
+                Binding binding = new Binding
+                {
+                    Source = this.TemplatedParent,
+                    Path = new PropertyPath(source)
+                };
                 element.SetBinding(target, binding);
             }
         }
@@ -820,7 +824,7 @@ namespace System.Windows.Controls.Primitives
             get { return _density; }
             set { _density = value; }
         }
-        
+
         //
         //  This property
         //  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,7 +10,7 @@ namespace System.Windows.Media
     internal class VisualDrawingContext : RenderDataDrawingContext
     {
         #region Constructors
-        
+
         /// <summary>
         /// Creates a drawing context for a DrawingVisual.
         /// The Visual must not be null.
@@ -37,7 +37,7 @@ namespace System.Windows.Media
         protected override void CloseCore(RenderData renderData)
         {
             Debug.Assert(null != _ownerVisual);
-                
+
             _ownerVisual.RenderClose(renderData);
 
 #if DEBUG
@@ -49,7 +49,7 @@ namespace System.Windows.Media
 
         #region Private Fields
 
-        private Visual _ownerVisual; 
+        private Visual _ownerVisual;
 
         #endregion Private Fields
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,7 +35,7 @@ namespace System.Windows.Xps.Packaging
         /// <param name="metroPart"></param>
         internal
         PartEditor(
-            PackagePart     metroPart
+            PackagePart metroPart
             )
         {
             ArgumentNullException.ThrowIfNull(metroPart);
@@ -77,7 +77,7 @@ namespace System.Windows.Xps.Packaging
                     {
                         _partDataStream = _metroPart.GetStream(FileMode.OpenOrCreate);
                     }
-}
+                }
 
                 return _partDataStream;
             }
@@ -122,7 +122,7 @@ namespace System.Windows.Xps.Packaging
                 _partDataStream.Flush();
             }
         }
-        
+
         #endregion Internal methods
 
         #region Private data
@@ -157,7 +157,7 @@ namespace System.Windows.Xps.Packaging
         /// <param name="metroPart"></param>
         internal
         XmlPartEditor(
-            PackagePart     metroPart
+            PackagePart metroPart
             )
             : base(metroPart)
         {
@@ -201,7 +201,7 @@ namespace System.Windows.Xps.Packaging
                 return _xmlWriter;
             }
         }
-        
+
         internal XmlTextReader XmlReader
         {
             get
@@ -233,10 +233,10 @@ namespace System.Windows.Xps.Packaging
             }
 
             Stream stream = MetroPart.GetStream(FileMode.Open);
-  
+
             _xmlReader = new XmlTextReader(stream);
         }
-        
+
         /// <summary>
         /// Setup for writing
         /// </summary>
@@ -259,8 +259,8 @@ namespace System.Windows.Xps.Packaging
         internal
         void
         PrepareXmlWriter(
-            string      startTag,
-            string      namespaceUri
+            string startTag,
+            string namespaceUri
             )
         {
             if (null == _xmlWriter)
@@ -324,10 +324,10 @@ namespace System.Windows.Xps.Packaging
 
         #region Private data
 
-        private bool          _doesWriteStartEndTags;
+        private bool _doesWriteStartEndTags;
         private XmlTextWriter _xmlWriter;
         private XmlTextReader _xmlReader;
-        private bool          _isStartElementWritten;
+        private bool _isStartElementWritten;
 
         #endregion Private data
     }

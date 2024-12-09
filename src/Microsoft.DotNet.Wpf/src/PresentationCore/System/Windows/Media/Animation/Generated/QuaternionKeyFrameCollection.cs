@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,7 +35,7 @@ namespace System.Windows.Media.Animation
         public QuaternionKeyFrameCollection()
             : base()
         {
-            _keyFrames = new List< QuaternionKeyFrame>(2);
+            _keyFrames = new List<QuaternionKeyFrame>(2);
         }
 
         #endregion
@@ -51,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    QuaternionKeyFrameCollection emptyCollection = new QuaternionKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< QuaternionKeyFrame>(0);
+                    QuaternionKeyFrameCollection emptyCollection = new QuaternionKeyFrameCollection
+                    {
+                        _keyFrames = new List<QuaternionKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;
@@ -90,12 +91,12 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection) sourceFreezable;
+            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection)sourceFreezable;
             base.CloneCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
 
-            _keyFrames = new List< QuaternionKeyFrame>(count);
+            _keyFrames = new List<QuaternionKeyFrame>(count);
 
             for (int i = 0; i < count; i++)
             {
@@ -111,12 +112,12 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection) sourceFreezable;
+            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection)sourceFreezable;
             base.CloneCurrentValueCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
 
-            _keyFrames = new List< QuaternionKeyFrame>(count);
+            _keyFrames = new List<QuaternionKeyFrame>(count);
 
             for (int i = 0; i < count; i++)
             {
@@ -132,12 +133,12 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetAsFrozenCore(Freezable sourceFreezable)
         {
-            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection) sourceFreezable;
+            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection)sourceFreezable;
             base.GetAsFrozenCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
 
-            _keyFrames = new List< QuaternionKeyFrame>(count);
+            _keyFrames = new List<QuaternionKeyFrame>(count);
 
             for (int i = 0; i < count; i++)
             {
@@ -153,12 +154,12 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
         {
-            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection) sourceFreezable;
+            QuaternionKeyFrameCollection sourceCollection = (QuaternionKeyFrameCollection)sourceFreezable;
             base.GetCurrentValueAsFrozenCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
 
-            _keyFrames = new List< QuaternionKeyFrame>(count);
+            _keyFrames = new List<QuaternionKeyFrame>(count);
 
             for (int i = 0; i < count; i++)
             {
@@ -299,7 +300,7 @@ namespace System.Windows.Media.Animation
             WritePreamble();
 
             if (_keyFrames.Count > 0)
-            {            
+            {
                 for (int i = 0; i < _keyFrames.Count; i++)
                 {
                     OnFreezablePropertyChanged(_keyFrames[i], null);

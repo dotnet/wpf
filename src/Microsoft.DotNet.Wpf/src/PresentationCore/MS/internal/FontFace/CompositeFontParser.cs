@@ -1,18 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Contents:  The XML Composite font parsing
 
+using System.Collections;
+using System.ComponentModel;
+using System.Globalization;
 using System.IO;
 using System.Windows;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Markup;
+using System.Windows.Media;
 using System.Xml;
-using System.Globalization;
-using System.Collections;
-using System.ComponentModel;
 using MS.Internal.TextFormatting;
 
 namespace MS.Internal.FontFace
@@ -139,10 +139,10 @@ namespace MS.Internal.FontFace
         }
 
         private const NumberStyles UnsignedDecimalPointStyle =
-            NumberStyles.AllowTrailingWhite | 
-            NumberStyles.AllowLeadingWhite  | 
+            NumberStyles.AllowTrailingWhite |
+            NumberStyles.AllowLeadingWhite |
             NumberStyles.AllowDecimalPoint;
- 
+
         private const NumberStyles SignedDecimalPointStyle = UnsignedDecimalPointStyle | NumberStyles.AllowLeadingSign;
 
         /// <summary>
@@ -190,7 +190,7 @@ namespace MS.Internal.FontFace
             {
                 FailNotWellFormed(x);
             }
-            catch (Exception x) when(string.Equals(x.GetType().FullName, "System.Security.XmlSyntaxException", StringComparison.OrdinalIgnoreCase))
+            catch (Exception x) when (string.Equals(x.GetType().FullName, "System.Security.XmlSyntaxException", StringComparison.OrdinalIgnoreCase))
             {
                 FailNotWellFormed(x);
             }
@@ -221,19 +221,20 @@ namespace MS.Internal.FontFace
         /// </summary>
         private XmlReader CreateXmlReader(Stream fileStream)
         {
-            XmlReaderSettings settings = new XmlReaderSettings();
-
-            settings.CloseInput = true;
-            settings.IgnoreComments = true;
-            settings.IgnoreWhitespace = false;
-            settings.ProhibitDtd = true;
+            XmlReaderSettings settings = new XmlReaderSettings
+            {
+                CloseInput = true,
+                IgnoreComments = true,
+                IgnoreWhitespace = false,
+                ProhibitDtd = true
+            };
 
             XmlReader baseReader = XmlReader.Create(fileStream, settings);
 
             return new XmlCompatibilityReader(baseReader, new IsXmlNamespaceSupportedCallback(IsXmlNamespaceSupported));
         }
 
-        
+
         /// <summary>
         /// Determines whether a given XML namespace is "known" (i.e., should always be processed)
         /// or "unknown" (i.e., should be skipped if declared ignorable).
@@ -246,19 +247,19 @@ namespace MS.Internal.FontFace
         /// for which a Mapping PI exists.
         /// </returns>
         /// <remarks>
-        /// System.String is the only object in a mapped namespace that we can instantiate. However, 
-        /// we don't want to ignore any mapped namespaces for compatibility reasons. In general, it's 
+        /// System.String is the only object in a mapped namespace that we can instantiate. However,
+        /// we don't want to ignore any mapped namespaces for compatibility reasons. In general, it's
         /// better for us to reject valid XAML than to accept invalid XAML. We therefore don't want
         /// to ignore an element which the XAML parser would not ignore -- the ignored element might
-        /// be invalid. If mapped elements other than System.String are needed in future versions, a 
-        /// composite font author can achieve backwards compatibility by conditionalizing mapped 
+        /// be invalid. If mapped elements other than System.String are needed in future versions, a
+        /// composite font author can achieve backwards compatibility by conditionalizing mapped
         /// elements using c:AlternateContent markup.
         /// </remarks>
         private bool IsXmlNamespaceSupported(string xmlNamespace, out string newXmlNamespace)
         {
             newXmlNamespace = null;
-            return xmlNamespace == CompositeFontNamespace || 
-                xmlNamespace == XamlNamespace || 
+            return xmlNamespace == CompositeFontNamespace ||
+                xmlNamespace == XamlNamespace ||
                 IsMappedNamespace(xmlNamespace);
         }
 
@@ -303,7 +304,7 @@ namespace MS.Internal.FontFace
 
         #region ProcessingInstructions
 
-       private bool IsMappedNamespace(string xmlNamespace)
+        private bool IsMappedNamespace(string xmlNamespace)
         {
             return _namespaceMap.ContainsKey(xmlNamespace);
         }
@@ -317,7 +318,7 @@ namespace MS.Internal.FontFace
 
         /// <summary>
         /// Find the OS specific font family from a collection in the CompositeFont
-        /// 
+        ///
         /// We must compare the OS in the font family against the current version.  The CompositeFont file
         /// is in descending OS order.
         /// </summary>
@@ -381,7 +382,7 @@ namespace MS.Internal.FontFace
                     {
                         FailUnknownAttribute();
                     }
-} while (_reader.MoveToNextAttribute());
+                } while (_reader.MoveToNextAttribute());
 
                 _reader.MoveToElement();
             }
@@ -498,14 +499,14 @@ namespace MS.Internal.FontFace
                 {
                     if (!IsIgnorableAttribute())
                         FailUnknownAttribute();
-} while (_reader.MoveToNextAttribute());
+                } while (_reader.MoveToNextAttribute());
 
                 _reader.MoveToElement();
             }
         }
 
         /// <summary>
-        /// Parses the FamilyName element (actually String), including its attributes 
+        /// Parses the FamilyName element (actually String), including its attributes
         /// and children, and advances to the next sibling element.
         /// </summary>
         private void ParseFamilyNameElement()
@@ -525,7 +526,7 @@ namespace MS.Internal.FontFace
                     {
                         FailUnknownAttribute();
                     }
-} while (_reader.MoveToNextAttribute());
+                } while (_reader.MoveToNextAttribute());
 
                 _reader.MoveToElement();
             }
@@ -693,7 +694,7 @@ namespace MS.Internal.FontFace
                     {
                         FailUnknownAttribute();
                     }
-} while (_reader.MoveToNextAttribute());
+                } while (_reader.MoveToNextAttribute());
 
                 _reader.MoveToElement();
             }
@@ -787,7 +788,7 @@ namespace MS.Internal.FontFace
                     {
                         FailUnknownAttribute();
                     }
-} while (_reader.MoveToNextAttribute());
+                } while (_reader.MoveToNextAttribute());
 
                 _reader.MoveToElement();
             }
@@ -799,7 +800,7 @@ namespace MS.Internal.FontFace
         }
 
         /// <summary>
-        /// Advances past the current element and its children, throwing and exception 
+        /// Advances past the current element and its children, throwing and exception
         /// if there are any child elements in the composite font namespace.
         /// </summary>
         private void ParseEmptyElement()
@@ -828,8 +829,8 @@ namespace MS.Internal.FontFace
         }
 
         /// <summary>
-        /// Determines whether the reader is positioned on an composite font attribute, 
-        /// which we define to me either (a) it has no namespace at all, or (b) it's in 
+        /// Determines whether the reader is positioned on an composite font attribute,
+        /// which we define to me either (a) it has no namespace at all, or (b) it's in
         /// the composite font namespace.
         /// </summary>
         private bool IsCompositeFontAttribute()
@@ -915,7 +916,7 @@ namespace MS.Internal.FontFace
                 _reader.LocalName,
                 _reader.NamespaceURI));
         }
-        
+
         /// <summary>
         /// Fail because a required attribute is not present.
         /// </summary>
@@ -948,7 +949,7 @@ namespace MS.Internal.FontFace
         private XmlReader _reader;
 
         // XML namespaces for which Mapping processing instructions have been read. For each entry,
-        // the key is the XML namespace, and the value is either SystemClrNamespace (if the the 
+        // the key is the XML namespace, and the value is either SystemClrNamespace (if the the
         // Mapping PI specifies "System" and "MSCORLIB") or String.Empty (any other Mapping).
         private Hashtable _namespaceMap;
 
@@ -1006,7 +1007,7 @@ namespace MS.Internal.TextFormatting
 {
     /// <summary>
     /// Partial class splitted from the original one in LineServices.cs.
-    /// We do this to avoid bringing in TextFormatting namespace when 
+    /// We do this to avoid bringing in TextFormatting namespace when
     /// building FontCacheServices.exe
     /// </summary>
     internal static partial class Constants

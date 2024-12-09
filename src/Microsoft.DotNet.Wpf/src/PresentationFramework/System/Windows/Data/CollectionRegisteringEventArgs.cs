@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@ namespace System.Windows.Data
 {
     public class CollectionRegisteringEventArgs : EventArgs
     {
-        internal CollectionRegisteringEventArgs(IEnumerable collection, object parent=null)
+        internal CollectionRegisteringEventArgs(IEnumerable collection, object parent = null)
         {
             _collection = collection;
             _parent = parent;

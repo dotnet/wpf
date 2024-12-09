@@ -1,15 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Runtime.Versioning;
-
-using SWC = System.Windows.Controls;
 using SD = System.Drawing;
 using SW = System.Windows;
-using SWM = System.Windows.Media;
+using SWC = System.Windows.Controls;
 using SWF = System.Windows.Forms;
 using SWI = System.Windows.Input;
+using SWM = System.Windows.Media;
 
 namespace System.Windows.Forms.Integration
 {
@@ -142,8 +141,10 @@ namespace System.Windows.Forms.Integration
                     if (childTextBlock != null)
                     {
                         TextDecorationCollection decorations = new TextDecorationCollection();
-                        if (wfFont.Underline) { decorations.Add(TextDecorations.Underline); };
-                        if (wfFont.Strikeout) { decorations.Add(TextDecorations.Strikethrough); }
+                        if (wfFont.Underline)
+                        { decorations.Add(TextDecorations.Underline); };
+                        if (wfFont.Strikeout)
+                        { decorations.Add(TextDecorations.Strikethrough); }
                         childTextBlock.TextDecorations = decorations;
                     }
                 }

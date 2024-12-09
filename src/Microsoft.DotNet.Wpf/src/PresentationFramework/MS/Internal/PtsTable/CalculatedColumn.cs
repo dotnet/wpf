@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -180,8 +180,8 @@ namespace MS.Internal.PtsTable
         [System.Flags]
         private enum Flags
         {
-            ValidWidth      =   0x1,    //  resulting width unchanged
-            ValidAutofit    =   0x2,    //  auto width unchanged
+            ValidWidth = 0x1,    //  resulting width unchanged
+            ValidAutofit = 0x2,    //  auto width unchanged
         }
 
         #endregion Private Structures Classes

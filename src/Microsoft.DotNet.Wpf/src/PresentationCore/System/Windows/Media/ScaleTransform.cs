@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -54,7 +54,7 @@ namespace System.Windows.Media
             get
             {
                 ReadPreamble();
-                
+
                 Matrix m = new Matrix();
 
                 m.ScaleAt(ScaleX, ScaleY, CenterX, CenterY);
@@ -62,18 +62,18 @@ namespace System.Windows.Media
                 return m;
             }
         }
-        
+
         ///<summary>
         /// Returns true if transformation matches the identity transform.
         ///</summary>
         internal override bool IsIdentity
         {
-            get 
+            get
             {
                 return ScaleX == 1 && ScaleY == 1 && CanFreeze;
             }
         }
-        
+
         internal override void TransformRect(ref Rect rect)
         {
             if (rect.IsEmpty)
@@ -87,7 +87,7 @@ namespace System.Windows.Media
             double centerY = CenterY;
 
             bool translateCenter = centerX != 0 || centerY != 0;
-            
+
             if (translateCenter)
             {
                 rect.X -= centerX;

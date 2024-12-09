@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,32 +35,32 @@ namespace MS.Internal.Markup
     internal static partial class Parsers
     {
 #if !PBTCOMPILER
-        internal static object DeserializeStreamGeometry( BinaryReader reader )
+        internal static object DeserializeStreamGeometry(BinaryReader reader)
         {
             StreamGeometry geometry = new StreamGeometry();
-            
+
             using (StreamGeometryContext context = geometry.Open())
             {
-                ParserStreamGeometryContext.Deserialize( reader, context, geometry ); 
+                ParserStreamGeometryContext.Deserialize(reader, context, geometry);
             }
             geometry.Freeze();
 
-            return geometry; 
+            return geometry;
         }
 #endif
 
-        internal static void PathMinilanguageToBinary( BinaryWriter bw, string stringValue ) 
+        internal static void PathMinilanguageToBinary(BinaryWriter bw, string stringValue)
         {
-            ParserStreamGeometryContext context = new ParserStreamGeometryContext( bw ); 
-#if PRESENTATION_CORE 
-            FillRule fillRule = FillRule.EvenOdd ; 
-#else            
-            bool fillRule = false  ; 
+            ParserStreamGeometryContext context = new ParserStreamGeometryContext(bw);
+#if PRESENTATION_CORE
+            FillRule fillRule = FillRule.EvenOdd;
+#else
+            bool fillRule = false;
 #endif
-            ParseStringToStreamGeometryContext(context, stringValue, TypeConverterHelper.InvariantEnglishUS, ref fillRule);             
-            context.SetFillRule( fillRule );                                  
-            
-            context.MarkEOF(); 
+            ParseStringToStreamGeometryContext(context, stringValue, TypeConverterHelper.InvariantEnglishUS, ref fillRule);
+            context.SetFillRule(fillRule);
+
+            context.MarkEOF();
         }
 
         /// <summary>
@@ -75,13 +75,13 @@ namespace MS.Internal.Markup
             string pathString,
             IFormatProvider formatProvider)
         {
-            FillRule fillRule = FillRule.EvenOdd ;             
+            FillRule fillRule = FillRule.EvenOdd;
             StreamGeometry geometry = new StreamGeometry();
-            StreamGeometryContext context = geometry.Open(); 
+            StreamGeometryContext context = geometry.Open();
 
-            ParseStringToStreamGeometryContext( context, pathString, formatProvider , ref fillRule ) ; 
+            ParseStringToStreamGeometryContext(context, pathString, formatProvider, ref fillRule);
 
-            geometry.FillRule = fillRule ;                                          
+            geometry.FillRule = fillRule;
             geometry.Freeze();
 
             return geometry;
@@ -92,18 +92,18 @@ namespace MS.Internal.Markup
         // supplied streamgeometrycontext
         // 
 
-        private static void ParseStringToStreamGeometryContext ( 
-            StreamGeometryContext context, 
+        private static void ParseStringToStreamGeometryContext(
+            StreamGeometryContext context,
             string pathString,
-            IFormatProvider formatProvider, 
-#if PRESENTATION_CORE            
-            ref FillRule fillRule 
-#else            
-            ref bool fillRule 
-#endif      
+            IFormatProvider formatProvider,
+#if PRESENTATION_CORE
+            ref FillRule fillRule
+#else
+            ref bool fillRule
+#endif
             )
         {
-            using ( context )
+            using (context)
             {
                 // Check to ensure that there's something to parse
                 if (pathString != null)
@@ -138,11 +138,11 @@ namespace MS.Internal.Markup
                             {
                                 throw new FormatException(SR.Parsers_IllegalToken);
                             }
-                            
+
 #if PRESENTATION_CORE
                             fillRule = pathString[curIndex] == '0' ? FillRule.EvenOdd : FillRule.Nonzero;
 #else
-                            fillRule = pathString[curIndex] != '0' ; 
+                            fillRule = pathString[curIndex] != '0';
 
 #endif
 
@@ -152,42 +152,42 @@ namespace MS.Internal.Markup
                     }
 
                     AbbreviatedGeometryParser parser = new AbbreviatedGeometryParser();
-            
+
                     parser.ParseToGeometryContext(context, pathString, curIndex);
                 }
             }
         }
     }
-    
-     /// <summary>
+
+    /// <summary>
     /// Parser for XAML abbreviated geometry.
     /// SVG path spec is closely followed http://www.w3.org/TR/SVG11/paths.html
     /// 3/23/2006, new parser for performance (fyuan)
     /// </summary>
     sealed internal class AbbreviatedGeometryParser
     {
-        const bool      AllowSign    = true;
-        const bool      AllowComma   = true;
-        const bool      IsFilled     = true;
-        const bool      IsClosed     = true;
-        const bool      IsStroked    = true;
-        const bool      IsSmoothJoin = true;
-        
+        const bool AllowSign = true;
+        const bool AllowComma = true;
+        const bool IsFilled = true;
+        const bool IsClosed = true;
+        const bool IsStroked = true;
+        const bool IsSmoothJoin = true;
+
         IFormatProvider _formatProvider;
-        
-        string          _pathString;        // Input string to be parsed
-        int             _pathLength;
-        int             _curIndex;          // Location to read next character from 
-        bool            _figureStarted;     // StartFigure is effective
-        
-        Point           _lastStart;         // Last figure starting point
-        Point           _lastPoint;         // Last point
-        Point           _secondLastPoint;   // The point before last point
-        
-        char            _token;             // Non whitespace character returned by ReadToken
-        
+
+        string _pathString;        // Input string to be parsed
+        int _pathLength;
+        int _curIndex;          // Location to read next character from 
+        bool _figureStarted;     // StartFigure is effective
+
+        Point _lastStart;         // Last figure starting point
+        Point _lastPoint;         // Last point
+        Point _secondLastPoint;   // The point before last point
+
+        char _token;             // Non whitespace character returned by ReadToken
+
         StreamGeometryContext _context;
-        
+
         /// <summary>
         /// Throw unexpected token exception
         /// </summary>
@@ -200,48 +200,48 @@ namespace MS.Internal.Markup
         {
             return _curIndex < _pathLength;
         }
-        
+
         // Skip white space, one comma if allowed
         private bool SkipWhiteSpace(bool allowComma)
         {
             bool commaMet = false;
-            
+
             while (More())
             {
                 char ch = _pathString[_curIndex];
-                
+
                 switch (ch)
                 {
-                case ' ' :
-                case '\n':
-                case '\r':
-                case '\t': // SVG whitespace
-                    break;
-            
-                case ',':
-                    if (allowComma)
-                    {
-                        commaMet   = true;
-                        allowComma = false; // one comma only
-                    }
-                    else
-                    {
-                        ThrowBadToken();
-                    }
-                    break;
-                    
-                default:
-                    // Avoid calling IsWhiteSpace for ch in (' ' .. 'z']
-                    if (((ch >' ') && (ch <= 'z')) || ! Char.IsWhiteSpace(ch))
-                    {
-                        return commaMet;
-                    }                        
-                    break;
+                    case ' ':
+                    case '\n':
+                    case '\r':
+                    case '\t': // SVG whitespace
+                        break;
+
+                    case ',':
+                        if (allowComma)
+                        {
+                            commaMet = true;
+                            allowComma = false; // one comma only
+                        }
+                        else
+                        {
+                            ThrowBadToken();
+                        }
+                        break;
+
+                    default:
+                        // Avoid calling IsWhiteSpace for ch in (' ' .. 'z']
+                        if (((ch > ' ') && (ch <= 'z')) || !Char.IsWhiteSpace(ch))
+                        {
+                            return commaMet;
+                        }
+                        break;
                 }
-                
-                _curIndex ++;
+
+                _curIndex++;
             }
-            
+
             return commaMet;
         }
 
@@ -256,7 +256,7 @@ namespace MS.Internal.Markup
             // Check for end of string
             if (More())
             {
-                _token = _pathString[_curIndex ++];
+                _token = _pathString[_curIndex++];
 
                 return true;
             }
@@ -265,11 +265,11 @@ namespace MS.Internal.Markup
                 return false;
             }
         }
-        
+
         private bool IsNumber(bool allowComma)
         {
             bool commaMet = SkipWhiteSpace(allowComma);
-            
+
             if (More())
             {
                 _token = _pathString[_curIndex];
@@ -280,17 +280,17 @@ namespace MS.Internal.Markup
                     || (_token == 'N')) // NaN
                 {
                     return true;
-                }                    
+                }
             }
 
             if (commaMet) // Only allowed between numbers
             {
                 ThrowBadToken();
             }
-            
+
             return false;
         }
-        
+
         void SkipDigits(bool signAllowed)
         {
             // Allow for a sign
@@ -298,38 +298,38 @@ namespace MS.Internal.Markup
             {
                 _curIndex++;
             }
-        
+
             while (More() && (_pathString[_curIndex] >= '0') && (_pathString[_curIndex] <= '9'))
             {
-                _curIndex ++;
+                _curIndex++;
             }
         }
-        
-//       
-//         /// <summary>
-//         /// See if the current token matches the string s. If so, advance and
-//         /// return true. Else, return false.
-//         /// </summary>
-//         bool TryAdvance(string s)
-//         {
-//             Debug.Assert(s.Length != 0);
-// 
-//             bool match = false;
-//             if (More() && _pathString[_currentIndex] == s[0])
-//             {
-//                 //
-//                 // Don't bother reading subsequent characters, as the CLR parser will
-//                 // do this for us later.
-//                 //
-//                 _currentIndex = Math.Min(_currentIndex + s.Length, _pathLength);
-// 
-//                 match = true;
-//             }
-// 
-//             return match;
-//         }
-// 
-      
+
+        //       
+        //         /// <summary>
+        //         /// See if the current token matches the string s. If so, advance and
+        //         /// return true. Else, return false.
+        //         /// </summary>
+        //         bool TryAdvance(string s)
+        //         {
+        //             Debug.Assert(s.Length != 0);
+        // 
+        //             bool match = false;
+        //             if (More() && _pathString[_currentIndex] == s[0])
+        //             {
+        //                 //
+        //                 // Don't bother reading subsequent characters, as the CLR parser will
+        //                 // do this for us later.
+        //                 //
+        //                 _currentIndex = Math.Min(_currentIndex + s.Length, _pathLength);
+        // 
+        //                 match = true;
+        //             }
+        // 
+        //             return match;
+        //         }
+        // 
+
         /// <summary>
         /// Read a floating point number
         /// </summary>
@@ -339,11 +339,11 @@ namespace MS.Internal.Markup
             if (!IsNumber(allowComma))
             {
                 ThrowBadToken();
-            }                
-            
+            }
+
             bool simple = true;
             int start = _curIndex;
-            
+
             //
             // Allow for a sign
             // 
@@ -352,7 +352,7 @@ namespace MS.Internal.Markup
             //
             if (More() && ((_pathString[_curIndex] == '-') || _pathString[_curIndex] == '+'))
             {
-                _curIndex ++;
+                _curIndex++;
             }
 
             // Check for Infinity (or -Infinity).
@@ -362,7 +362,7 @@ namespace MS.Internal.Markup
                 // Don't bother reading the characters, as the CLR parser will
                 // do this for us later.
                 //
-                _curIndex = Math.Min(_curIndex+8, _pathLength); // "Infinity" has 8 characters
+                _curIndex = Math.Min(_curIndex + 8, _pathLength); // "Infinity" has 8 characters
                 simple = false;
             }
             // Check for NaN
@@ -372,26 +372,26 @@ namespace MS.Internal.Markup
                 // Don't bother reading the characters, as the CLR parser will
                 // do this for us later.
                 //
-                _curIndex = Math.Min(_curIndex+3, _pathLength); // "NaN" has 3 characters
+                _curIndex = Math.Min(_curIndex + 3, _pathLength); // "NaN" has 3 characters
                 simple = false;
             }
             else
             {
-                SkipDigits(! AllowSign);
+                SkipDigits(!AllowSign);
 
                 // Optional period, followed by more digits
                 if (More() && (_pathString[_curIndex] == '.'))
                 {
                     simple = false;
-                    _curIndex ++;
-                    SkipDigits(! AllowSign);
+                    _curIndex++;
+                    SkipDigits(!AllowSign);
                 }
 
                 // Exponent
                 if (More() && ((_pathString[_curIndex] == 'E') || (_pathString[_curIndex] == 'e')))
                 {
                     simple = false;
-                    _curIndex ++;
+                    _curIndex++;
                     SkipDigits(AllowSign);
                 }
             }
@@ -399,25 +399,25 @@ namespace MS.Internal.Markup
             if (simple && (_curIndex <= (start + 8))) // 32-bit integer
             {
                 int sign = 1;
-                
+
                 if (_pathString[start] == '+')
                 {
-                    start ++;
+                    start++;
                 }
                 else if (_pathString[start] == '-')
                 {
-                    start ++;
+                    start++;
                     sign = -1;
-                }                                        
-                
+                }
+
                 int value = 0;
-                
+
                 while (start < _curIndex)
                 {
                     value = value * 10 + (_pathString[start] - '0');
-                    start ++;
+                    start++;
                 }
-                
+
                 return value * sign;
             }
             else
@@ -436,7 +436,7 @@ namespace MS.Internal.Markup
                 }
             }
         }
-        
+
         /// <summary>
         /// Read a bool: 1 or 0
         /// </summary>
@@ -447,7 +447,7 @@ namespace MS.Internal.Markup
 
             if (More())
             {
-                _token = _pathString[_curIndex ++];
+                _token = _pathString[_curIndex++];
 
                 if (_token == '0')
                 {
@@ -460,10 +460,10 @@ namespace MS.Internal.Markup
             }
 
             ThrowBadToken();
-            
+
             return false;
         }
-        
+
         /// <summary>
         /// Read a relative point
         /// </summary>
@@ -477,11 +477,11 @@ namespace MS.Internal.Markup
             {
                 x += _lastPoint.X;
                 y += _lastPoint.Y;
-            }                
+            }
 
             return new Point(x, y);
         }
-    
+
         /// <summary>
         /// Reflect _secondLastPoint over _lastPoint to get a new point for smooth curve
         /// </summary>
@@ -491,16 +491,16 @@ namespace MS.Internal.Markup
             return new Point(2 * _lastPoint.X - _secondLastPoint.X,
                              2 * _lastPoint.Y - _secondLastPoint.Y);
         }
-        
+
         private void EnsureFigure()
         {
             if (!_figureStarted)
             {
-                _context.BeginFigure(_lastStart, IsFilled, ! IsClosed);
+                _context.BeginFigure(_lastStart, IsFilled, !IsClosed);
                 _figureStarted = true;
             }
         }
-        
+
         /// <summary>
         /// Parse a PathFigureCollection string
         /// </summary>
@@ -510,24 +510,24 @@ namespace MS.Internal.Markup
             int startIndex)
         {
             // We really should throw an ArgumentNullException here for context and pathString.
-            
+
             // From original code
             // This is only used in call to Double.Parse
             _formatProvider = System.Globalization.CultureInfo.InvariantCulture;
-            
-            _context         = context;
-            _pathString      = pathString;
-            _pathLength      = pathString.Length;
-            _curIndex        = startIndex;
-            
+
+            _context = context;
+            _pathString = pathString;
+            _pathLength = pathString.Length;
+            _curIndex = startIndex;
+
             _secondLastPoint = new Point(0, 0);
-            _lastPoint       = new Point(0, 0);
-            _lastStart       = new Point(0, 0);
-            
+            _lastPoint = new Point(0, 0);
+            _lastStart = new Point(0, 0);
+
             _figureStarted = false;
-            
-            bool  first = true;
-            
+
+            bool first = true;
+
             char last_cmd = ' ';
 
             while (ReadToken()) // Empty path is allowed in XAML
@@ -540,174 +540,195 @@ namespace MS.Internal.Markup
                     {
                         ThrowBadToken();
                     }
-            
+
                     first = false;
-                }                    
-                
+                }
+
                 switch (cmd)
                 {
-                case 'm': case 'M':
-                    // XAML allows multiple points after M/m
-                    _lastPoint = ReadPoint(cmd, ! AllowComma);
-                    
-                    context.BeginFigure(_lastPoint, IsFilled, ! IsClosed);
-                    _figureStarted = true;
-                    _lastStart = _lastPoint;
-                    last_cmd = 'M';
-                    
-                    while (IsNumber(AllowComma))
-                    {
-                        _lastPoint = ReadPoint(cmd, ! AllowComma);
-                        
-                        context.LineTo(_lastPoint, IsStroked, ! IsSmoothJoin);
+                    case 'm':
+                    case 'M':
+                        // XAML allows multiple points after M/m
+                        _lastPoint = ReadPoint(cmd, !AllowComma);
+
+                        context.BeginFigure(_lastPoint, IsFilled, !IsClosed);
+                        _figureStarted = true;
+                        _lastStart = _lastPoint;
+                        last_cmd = 'M';
+
+                        while (IsNumber(AllowComma))
+                        {
+                            _lastPoint = ReadPoint(cmd, !AllowComma);
+
+                            context.LineTo(_lastPoint, IsStroked, !IsSmoothJoin);
+                            last_cmd = 'L';
+                        }
+                        break;
+
+                    case 'l':
+                    case 'L':
+                    case 'h':
+                    case 'H':
+                    case 'v':
+                    case 'V':
+                        EnsureFigure();
+
+                        do
+                        {
+                            switch (cmd)
+                            {
+                                case 'l':
+                                    _lastPoint = ReadPoint(cmd, !AllowComma);
+                                    break;
+                                case 'L':
+                                    _lastPoint = ReadPoint(cmd, !AllowComma);
+                                    break;
+                                case 'h':
+                                    _lastPoint.X += ReadNumber(!AllowComma);
+                                    break;
+                                case 'H':
+                                    _lastPoint.X = ReadNumber(!AllowComma);
+                                    break;
+                                case 'v':
+                                    _lastPoint.Y += ReadNumber(!AllowComma);
+                                    break;
+                                case 'V':
+                                    _lastPoint.Y = ReadNumber(!AllowComma);
+                                    break;
+                            }
+
+                            context.LineTo(_lastPoint, IsStroked, !IsSmoothJoin);
+                        }
+                        while (IsNumber(AllowComma));
+
                         last_cmd = 'L';
-                    }
-                    break;
+                        break;
 
-                case 'l': case 'L':
-                case 'h': case 'H':
-                case 'v': case 'V':
-                    EnsureFigure();
+                    case 'c':
+                    case 'C': // cubic Bezier
+                    case 's':
+                    case 'S': // smooth cublic Bezier
+                        EnsureFigure();
 
-                    do
-                    {
-                        switch (cmd)
+                        do
                         {
-                        case 'l': _lastPoint    = ReadPoint(cmd, ! AllowComma); break;
-                        case 'L': _lastPoint    = ReadPoint(cmd, ! AllowComma); break;
-                        case 'h': _lastPoint.X += ReadNumber(! AllowComma); break;
-                        case 'H': _lastPoint.X  = ReadNumber(! AllowComma); break; 
-                        case 'v': _lastPoint.Y += ReadNumber(! AllowComma); break;
-                        case 'V': _lastPoint.Y  = ReadNumber(! AllowComma); break;
-                        }
+                            Point p;
 
-                        context.LineTo(_lastPoint, IsStroked, ! IsSmoothJoin); 
-                    }
-                    while (IsNumber(AllowComma));
-
-                    last_cmd = 'L';
-                    break;
-
-                case 'c': case 'C': // cubic Bezier
-                case 's': case 'S': // smooth cublic Bezier
-                    EnsureFigure();
-                    
-                    do
-                    {
-                        Point p;
-                        
-                        if ((cmd == 's') || (cmd == 'S'))
-                        {
-                            if (last_cmd == 'C')
+                            if ((cmd == 's') || (cmd == 'S'))
                             {
-                                p = Reflect();
+                                if (last_cmd == 'C')
+                                {
+                                    p = Reflect();
+                                }
+                                else
+                                {
+                                    p = _lastPoint;
+                                }
+
+                                _secondLastPoint = ReadPoint(cmd, !AllowComma);
                             }
                             else
                             {
-                                p = _lastPoint;
+                                p = ReadPoint(cmd, !AllowComma);
+
+                                _secondLastPoint = ReadPoint(cmd, AllowComma);
                             }
 
-                            _secondLastPoint = ReadPoint(cmd, ! AllowComma);
-                        }
-                        else
-                        {
-                            p = ReadPoint(cmd, ! AllowComma);
-
-                            _secondLastPoint = ReadPoint(cmd, AllowComma);
-                        }
-                            
-                        _lastPoint = ReadPoint(cmd, AllowComma);
-
-                        context.BezierTo(p, _secondLastPoint, _lastPoint, IsStroked, ! IsSmoothJoin);
-                        
-                        last_cmd = 'C';
-                    }
-                    while (IsNumber(AllowComma));
-                    
-                    break;
-                    
-                case 'q': case 'Q': // quadratic Bezier
-                case 't': case 'T': // smooth quadratic Bezier
-                    EnsureFigure();
-                    
-                    do
-                    {
-                        if ((cmd == 't') || (cmd == 'T'))
-                        {
-                            if (last_cmd == 'Q')
-                            {
-                                _secondLastPoint = Reflect();
-                            }
-                            else
-                            {
-                                _secondLastPoint = _lastPoint;
-                            }
-
-                            _lastPoint = ReadPoint(cmd, ! AllowComma);
-                        }
-                        else
-                        {
-                            _secondLastPoint = ReadPoint(cmd, ! AllowComma);
                             _lastPoint = ReadPoint(cmd, AllowComma);
+
+                            context.BezierTo(p, _secondLastPoint, _lastPoint, IsStroked, !IsSmoothJoin);
+
+                            last_cmd = 'C';
                         }
+                        while (IsNumber(AllowComma));
 
-                        context.QuadraticBezierTo(_secondLastPoint, _lastPoint, IsStroked, ! IsSmoothJoin);
-                        
-                        last_cmd = 'Q';
-                    }
-                    while (IsNumber(AllowComma));
-                    
-                    break;
-                    
-                case 'a': case 'A':
-                    EnsureFigure();
-                    
-                    do
-                    {
-                        // A 3,4 5, 0, 0, 6,7
-                        double w        = ReadNumber(! AllowComma);
-                        double h        = ReadNumber(AllowComma);
-                        double rotation = ReadNumber(AllowComma);
-                        bool large      = ReadBool();
-                        bool sweep      = ReadBool();
-                        
-                        _lastPoint = ReadPoint(cmd, AllowComma);
+                        break;
 
-                        context.ArcTo(
-                            _lastPoint,
-                            new Size(w, h),
-                            rotation,
-                            large,
+                    case 'q':
+                    case 'Q': // quadratic Bezier
+                    case 't':
+                    case 'T': // smooth quadratic Bezier
+                        EnsureFigure();
+
+                        do
+                        {
+                            if ((cmd == 't') || (cmd == 'T'))
+                            {
+                                if (last_cmd == 'Q')
+                                {
+                                    _secondLastPoint = Reflect();
+                                }
+                                else
+                                {
+                                    _secondLastPoint = _lastPoint;
+                                }
+
+                                _lastPoint = ReadPoint(cmd, !AllowComma);
+                            }
+                            else
+                            {
+                                _secondLastPoint = ReadPoint(cmd, !AllowComma);
+                                _lastPoint = ReadPoint(cmd, AllowComma);
+                            }
+
+                            context.QuadraticBezierTo(_secondLastPoint, _lastPoint, IsStroked, !IsSmoothJoin);
+
+                            last_cmd = 'Q';
+                        }
+                        while (IsNumber(AllowComma));
+
+                        break;
+
+                    case 'a':
+                    case 'A':
+                        EnsureFigure();
+
+                        do
+                        {
+                            // A 3,4 5, 0, 0, 6,7
+                            double w = ReadNumber(!AllowComma);
+                            double h = ReadNumber(AllowComma);
+                            double rotation = ReadNumber(AllowComma);
+                            bool large = ReadBool();
+                            bool sweep = ReadBool();
+
+                            _lastPoint = ReadPoint(cmd, AllowComma);
+
+                            context.ArcTo(
+                                _lastPoint,
+                                new Size(w, h),
+                                rotation,
+                                large,
 #if PBTCOMPILER
                             sweep,
 #else
-                            sweep ? SweepDirection.Clockwise : SweepDirection.Counterclockwise,
+                                sweep ? SweepDirection.Clockwise : SweepDirection.Counterclockwise,
 #endif
-                            IsStroked,
-                            ! IsSmoothJoin
-                            );
-                    }
-                    while (IsNumber(AllowComma));
-                    
-                    last_cmd = 'A';
-                    break;
-                    
-                case 'z':
-                case 'Z':
-                    EnsureFigure();
-                    context.SetClosedState(IsClosed);
-                    
-                    _figureStarted = false;
-                    last_cmd = 'Z';
-                    
-                    _lastPoint = _lastStart; // Set reference point to be first point of current figure
-                    break;
-                    
-                default:
-                    ThrowBadToken();
-                    break;
+                                IsStroked,
+                                !IsSmoothJoin
+                                );
+                        }
+                        while (IsNumber(AllowComma));
+
+                        last_cmd = 'A';
+                        break;
+
+                    case 'z':
+                    case 'Z':
+                        EnsureFigure();
+                        context.SetClosedState(IsClosed);
+
+                        _figureStarted = false;
+                        last_cmd = 'Z';
+
+                        _lastPoint = _lastStart; // Set reference point to be first point of current figure
+                        break;
+
+                    default:
+                        ThrowBadToken();
+                        break;
                 }
             }
         }
     }
-}    
+}

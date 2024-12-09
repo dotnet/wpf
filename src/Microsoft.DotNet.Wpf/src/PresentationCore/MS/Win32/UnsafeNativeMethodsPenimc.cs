@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -79,7 +79,7 @@ namespace MS.Win32.Penimc
 
         #region PenIMC
 
-        [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
+        [DllImport(ExternDll.Penimc, CharSet = CharSet.Auto)]
         internal static extern IntPtr RegisterDllForSxSCOM();
 
         #endregion
@@ -118,7 +118,7 @@ namespace MS.Win32.Penimc
         {
             if (_pimcActCtxCookie != IntPtr.Zero)
             {
-                if(DeactivateActCtx(0, _pimcActCtxCookie))
+                if (DeactivateActCtx(0, _pimcActCtxCookie))
                 {
                     _pimcActCtxCookie = IntPtr.Zero;
                 }
@@ -308,7 +308,7 @@ namespace MS.Win32.Penimc
 
             tablet.GetCursorButtonCount(keyType, out key);
 
-            if(key == 0)
+            if (key == 0)
             {
                 throw new InvalidOperationException();
             }
@@ -488,16 +488,16 @@ namespace MS.Win32.Penimc
         /// <param name="cbPacket">Byte count of packet data returned.</param>
         /// <param name="pPackets">Array of ints containing the packet data.</param>
         /// <returns>true if succeeded, false if failed or shutting down.</returns>
-        [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
+        [DllImport(ExternDll.Penimc, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetPenEvent(
-            IntPtr      commHandle,
-            IntPtr      handleReset,
-            out int     evt,
-            out int     stylusPointerId,
-            out int     cPackets,
-            out int     cbPacket,
-            out IntPtr  pPackets);
+            IntPtr commHandle,
+            IntPtr handleReset,
+            out int evt,
+            out int stylusPointerId,
+            out int cPackets,
+            out int cbPacket,
+            out IntPtr pPackets);
 
         /// <summary>
         /// Managed wrapper for GetPenEventMultiple
@@ -512,18 +512,18 @@ namespace MS.Win32.Penimc
         /// <param name="cbPacket">Byte count of packet data returned.</param>
         /// <param name="pPackets">Array of ints containing the packet data.</param>
         /// <returns>true if succeeded, false if failed or shutting down.</returns>
-        [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
+        [DllImport(ExternDll.Penimc, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetPenEventMultiple(
-            int         cCommHandles,
-            IntPtr[]    commHandles,
-            IntPtr      handleReset,
-            out int     iHandle,
-            out int     evt,
-            out int     stylusPointerId,
-            out int     cPackets,
-            out int     cbPacket,
-            out IntPtr  pPackets);
+            int cCommHandles,
+            IntPtr[] commHandles,
+            IntPtr handleReset,
+            out int iHandle,
+            out int evt,
+            out int stylusPointerId,
+            out int cPackets,
+            out int cbPacket,
+            out IntPtr pPackets);
 
         /// <summary>
         /// Managed wrapper for GetLastSystemEventData
@@ -537,24 +537,24 @@ namespace MS.Win32.Penimc
         /// <param name="cursorMode">Mode of the cursor.</param>
         /// <param name="buttonState">State of stylus buttons (flick returns custom data in this).</param>
         /// <returns>true if succeeded, false if failed.</returns>
-        [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
+        [DllImport(ExternDll.Penimc, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetLastSystemEventData(
-            IntPtr      commHandle,
-            out int     evt,
-            out int     modifier,
-            out int     key,
-            out int     x,
-            out int     y,
-            out int     cursorMode,
-            out int     buttonState);
+            IntPtr commHandle,
+            out int evt,
+            out int modifier,
+            out int key,
+            out int x,
+            out int y,
+            out int cursorMode,
+            out int buttonState);
 
         /// <summary>
         /// Managed wrapper for CreateResetEvent
         /// </summary>
         /// <param name="handle">Win32 event handle created.</param>
         /// <returns>true if succeeded, false if failed.</returns>
-        [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
+        [DllImport(ExternDll.Penimc, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool CreateResetEvent(out IntPtr handle);
 
@@ -563,7 +563,7 @@ namespace MS.Win32.Penimc
         /// </summary>
         /// <param name="handle">Win32 event handle to destroy.</param>
         /// <returns>true if succeeded, false if failed.</returns>
-        [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
+        [DllImport(ExternDll.Penimc, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool DestroyResetEvent(IntPtr handle);
 
@@ -572,7 +572,7 @@ namespace MS.Win32.Penimc
         /// </summary>
         /// <param name="handle">Win32 event handle to set.</param>
         /// <returns>true if succeeded, false if failed.</returns>
-        [DllImport(ExternDll.Penimc, CharSet=CharSet.Auto)]
+        [DllImport(ExternDll.Penimc, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool RaiseResetEvent(IntPtr handle);
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,7 +26,7 @@ namespace System.Windows.Input
                                     MouseButton button) : base(mouse, timestamp)
         {
             MouseButtonUtilities.Validate(button);
-            
+
             _button = button;
             _count = 1;
         }
@@ -52,7 +52,7 @@ namespace System.Windows.Input
                                     StylusDevice stylusDevice) : base(mouse, timestamp, stylusDevice)
         {
             MouseButtonUtilities.Validate(button);
-            
+
             _button = button;
             _count = 1;
         }
@@ -62,7 +62,7 @@ namespace System.Windows.Input
         /// </summary>
         public MouseButton ChangedButton
         {
-            get {return _button;}
+            get { return _button; }
         }
 
         /// <summary>
@@ -73,25 +73,25 @@ namespace System.Windows.Input
             get
             {
                 MouseButtonState state = MouseButtonState.Released;
-                
-                switch(_button)
+
+                switch (_button)
                 {
                     case MouseButton.Left:
                         state = this.MouseDevice.LeftButton;
                         break;
-                        
+
                     case MouseButton.Right:
                         state = this.MouseDevice.RightButton;
                         break;
-                        
+
                     case MouseButton.Middle:
                         state = this.MouseDevice.MiddleButton;
                         break;
-                        
+
                     case MouseButton.XButton1:
                         state = this.MouseDevice.XButton1;
                         break;
-                        
+
                     case MouseButton.XButton2:
                         state = this.MouseDevice.XButton2;
                         break;
@@ -106,8 +106,8 @@ namespace System.Windows.Input
         /// </summary>
         public int ClickCount
         {
-            get {return _count;}
-            internal set { _count = value;}
+            get { return _count; }
+            internal set { _count = value; }
         }
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace System.Windows.Input
         /// </param>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            MouseButtonEventHandler handler = (MouseButtonEventHandler) genericHandler;
+            MouseButtonEventHandler handler = (MouseButtonEventHandler)genericHandler;
             handler(genericTarget, this);
         }
 

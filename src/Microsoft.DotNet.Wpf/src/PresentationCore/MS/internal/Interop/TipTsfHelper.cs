@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -62,7 +62,7 @@ namespace MS.Internal.Interop
             }
 
             s_KbOperation = null;
-            
+
             // Don't call any KB operations under disabled processing as a COM wait could
             // cause re-entrancy and an InvalidOperationException.
             if (Dispatcher.CurrentDispatcher._disableProcessingCount > 0)

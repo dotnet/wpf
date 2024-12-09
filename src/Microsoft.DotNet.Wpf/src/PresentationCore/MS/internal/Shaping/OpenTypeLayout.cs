@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,7 +10,7 @@ namespace MS.Internal.Shaping
 {
     internal struct LayoutOffset
     {
-        public LayoutOffset(int dx, int dy) { this.dx=dx; this.dy=dy; }
+        public LayoutOffset(int dx, int dy) { this.dx = dx; this.dy = dy; }
         public int dx;
         public int dy;
     }
@@ -18,7 +18,7 @@ namespace MS.Internal.Shaping
     /// <summary>
     /// Tags used in OpenTypeLayout
     /// </summary>
-    internal enum OpenTypeTags :uint
+    internal enum OpenTypeTags : uint
     {
         Null = 0x00000000,
 
@@ -76,40 +76,40 @@ namespace MS.Internal.Shaping
     [Flags]
     internal enum TagInfoFlags : uint
     {
-        Substitution    = 0x01, // does glyph substitution
-        Positioning     = 0x02, // does glyph positioning
-        Both            = 0x03, // does both substitution and positioning
-        None            = 0x00  // neither of them
+        Substitution = 0x01, // does glyph substitution
+        Positioning = 0x02, // does glyph positioning
+        Both = 0x03, // does both substitution and positioning
+        None = 0x00  // neither of them
     }
 
-/* Used by commented code below
-    /// <summary>
-    /// OpenType feature information. Returned from GetFeatureList method
-    /// </summary>
-    internal struct TagInfo
-    {
-        public uint          Tag;
-        public TagInfoFlags  TagFlags;
-
-        public static bool IsNewTag(TagInfo[] Tags, uint Tag)
+    /* Used by commented code below
+        /// <summary>
+        /// OpenType feature information. Returned from GetFeatureList method
+        /// </summary>
+        internal struct TagInfo
         {
-            for(int i=0; i<Tags.Length; i++)
-            {
-                if (Tags[i].Tag==Tag) return false;
-            }
-            return true;
-        }
+            public uint          Tag;
+            public TagInfoFlags  TagFlags;
 
-        public static int GetTagIndex(TagInfo[] Tags, uint Tag)
-        {
-            for(ushort i=0; i<Tags.Length; i++)
+            public static bool IsNewTag(TagInfo[] Tags, uint Tag)
             {
-                if (Tags[i].Tag==Tag) return i;
+                for(int i=0; i<Tags.Length; i++)
+                {
+                    if (Tags[i].Tag==Tag) return false;
+                }
+                return true;
             }
-            return ushort.MaxValue;
+
+            public static int GetTagIndex(TagInfo[] Tags, uint Tag)
+            {
+                for(ushort i=0; i<Tags.Length; i++)
+                {
+                    if (Tags[i].Tag==Tag) return i;
+                }
+                return ushort.MaxValue;
+            }
         }
-    }
-*/
+    */
 
     /// <summary>
     /// Table pointer wrapper. Checking table boundaries
@@ -129,49 +129,53 @@ namespace MS.Internal.Shaping
             }
         }
 
-        public const int InvalidOffset  = int.MaxValue;
-        public const int NullOffset     = 0;
+        public const int InvalidOffset = int.MaxValue;
+        public const int NullOffset = 0;
 
         public bool IsPresent
         {
-              get
-           {
-                 return (m_data!=null);
-           }
+            get
+            {
+                return (m_data != null);
+            }
         }
 
         public ushort GetUShort(int offset)
         {
-            Invariant.Assert(m_data!= null);
+            Invariant.Assert(m_data != null);
 
-            if ((offset + 1) >= m_length) throw new FileFormatException();
-            return (ushort)((m_data[offset]<<8) + m_data[offset+1]);
+            if ((offset + 1) >= m_length)
+                throw new FileFormatException();
+            return (ushort)((m_data[offset] << 8) + m_data[offset + 1]);
         }
         public short GetShort(int offset)
         {
             Invariant.Assert(m_data != null);
 
-            if ((offset + 1) >= m_length) throw new FileFormatException();
-            return (short)((m_data[offset]<<8) + m_data[offset+1]);
+            if ((offset + 1) >= m_length)
+                throw new FileFormatException();
+            return (short)((m_data[offset] << 8) + m_data[offset + 1]);
         }
         public uint GetUInt(int offset)
         {
             Invariant.Assert(m_data != null);
 
-            if ((offset + 3) >= m_length) throw new FileFormatException();
-            return (uint)((m_data[offset]<<24) + (m_data[offset+1]<<16) + (m_data[offset+2]<<8) + m_data[offset+3]);
+            if ((offset + 3) >= m_length)
+                throw new FileFormatException();
+            return (uint)((m_data[offset] << 24) + (m_data[offset + 1] << 16) + (m_data[offset + 2] << 8) + m_data[offset + 3]);
         }
         public ushort GetOffset(int offset)
         {
             Invariant.Assert(m_data != null);
 
-            if ((offset+1)>=m_length) throw new FileFormatException();
-            return (ushort)((m_data[offset]<<8) + m_data[offset+1]);
+            if ((offset + 1) >= m_length)
+                throw new FileFormatException();
+            return (ushort)((m_data[offset] << 8) + m_data[offset + 1]);
         }
 
         private byte[] m_data;
 
-        private uint  m_length;
+        private uint m_length;
     }
 
     /// <summary>
@@ -223,30 +227,30 @@ namespace MS.Internal.Shaping
         public TextFlowDirection Direction;
 
         //if DesignEmHeight==0, result requested in design units
-        public ushort      DesignEmHeight; // font design units per Em
+        public ushort DesignEmHeight; // font design units per Em
 
-        public ushort      PixelsEmWidth;   // Em width in pixels
-        public ushort      PixelsEmHeight;  // Em height in pixels
+        public ushort PixelsEmWidth;   // Em width in pixels
+        public ushort PixelsEmHeight;  // Em height in pixels
 
         public LayoutMetrics(TextFlowDirection Direction,
                              ushort DesignEmHeight,
                              ushort PixelsEmWidth,
                              ushort PixelsEmHeight)
         {
-            this.Direction=Direction;
-            this.DesignEmHeight=DesignEmHeight;
-            this.PixelsEmWidth=PixelsEmWidth;
-            this.PixelsEmHeight=PixelsEmHeight;
+            this.Direction = Direction;
+            this.DesignEmHeight = DesignEmHeight;
+            this.PixelsEmWidth = PixelsEmWidth;
+            this.PixelsEmHeight = PixelsEmHeight;
         }
     }
 
     internal class Feature
     {
         public Feature(
-            ushort  startIndex,
-            ushort  length,
-            uint    tag,
-            uint    parameter //0 if disabled
+            ushort startIndex,
+            ushort length,
+            uint tag,
+            uint parameter //0 if disabled
             )
         {
             _startIndex = startIndex;
@@ -279,10 +283,10 @@ namespace MS.Internal.Shaping
             set { _length = value; }
         }
 
-        private ushort  _startIndex;   // first to be applied
-        private ushort  _length;       // length to be applied
-        private uint    _tag;          // OpenType feature tag
-        private uint    _parameter;    // feature parameter
+        private ushort _startIndex;   // first to be applied
+        private ushort _length;       // length to be applied
+        private uint _tag;          // OpenType feature tag
+        private uint _parameter;    // feature parameter
     }
 
     /// <summary>
@@ -296,8 +300,8 @@ namespace MS.Internal.Shaping
         /// <param name="ScriptTag">Script to find</param>
         /// <returns>TagInfo, if script not present flags == None</returns>
         internal static TagInfoFlags FindScript(
-            IOpenTypeFont       Font,     // In: Font access interface
-            uint                ScriptTag // In
+            IOpenTypeFont Font,     // In: Font access interface
+            uint ScriptTag // In
             )
         {
             TagInfoFlags flags = TagInfoFlags.None;
@@ -308,7 +312,7 @@ namespace MS.Internal.Shaping
                 if (gsubTable.IsPresent)
                 {
                     GSUBHeader gsubHeader = new GSUBHeader(0);
-                    if (!gsubHeader.GetScriptList(gsubTable).FindScript(gsubTable,ScriptTag).IsNull)
+                    if (!gsubHeader.GetScriptList(gsubTable).FindScript(gsubTable, ScriptTag).IsNull)
                     {
                         flags |= TagInfoFlags.Substitution;
                     }
@@ -325,7 +329,7 @@ namespace MS.Internal.Shaping
                 if (gposTable.IsPresent)
                 {
                     GPOSHeader gposHeader = new GPOSHeader(0);
-                    if (!gposHeader.GetScriptList(gposTable).FindScript(gposTable,ScriptTag).IsNull)
+                    if (!gposHeader.GetScriptList(gposTable).FindScript(gposTable, ScriptTag).IsNull)
                     {
                         flags |= TagInfoFlags.Positioning;
                     }
@@ -347,9 +351,9 @@ namespace MS.Internal.Shaping
         /// <param name="LangSysTag">LangGys to search for</param>
         /// <returns>TagInfoFlags, if script not present == None</returns>
         internal static TagInfoFlags FindLangSys(
-            IOpenTypeFont       Font,
-            uint                ScriptTag,
-            uint                LangSysTag
+            IOpenTypeFont Font,
+            uint ScriptTag,
+            uint LangSysTag
             )
         {
             TagInfoFlags flags = TagInfoFlags.None;
@@ -360,8 +364,8 @@ namespace MS.Internal.Shaping
                 if (gsubTable.IsPresent)
                 {
                     GSUBHeader gsubHeader = new GSUBHeader(0);
-                    ScriptTable gsubScript = gsubHeader.GetScriptList(gsubTable).FindScript(gsubTable,ScriptTag);
-                    if (!gsubScript.IsNull && !gsubScript.FindLangSys(gsubTable,LangSysTag).IsNull)
+                    ScriptTable gsubScript = gsubHeader.GetScriptList(gsubTable).FindScript(gsubTable, ScriptTag);
+                    if (!gsubScript.IsNull && !gsubScript.FindLangSys(gsubTable, LangSysTag).IsNull)
                     {
                         flags |= TagInfoFlags.Substitution;
                     }
@@ -378,8 +382,8 @@ namespace MS.Internal.Shaping
                 if (gposTable.IsPresent)
                 {
                     GPOSHeader gposHeader = new GPOSHeader(0);
-                    ScriptTable gposScript = gposHeader.GetScriptList(gposTable).FindScript(gposTable,ScriptTag);
-                    if (!gposScript.IsNull && !gposScript.FindLangSys(gposTable,LangSysTag).IsNull)
+                    ScriptTable gposScript = gposHeader.GetScriptList(gposTable).FindScript(gposTable, ScriptTag);
+                    if (!gposScript.IsNull && !gposScript.FindLangSys(gposTable, LangSysTag).IsNull)
                     {
                         flags |= TagInfoFlags.Positioning;
                     }
@@ -393,462 +397,462 @@ namespace MS.Internal.Shaping
             return flags;
         }
 
-/* This is unused code, but will be used later so it is just commented out for now.
+        /* This is unused code, but will be used later so it is just commented out for now.
 
-        /// <summary>
-        /// Enumerates scripts in a font
-        /// </summary>
-        internal static OpenTypeLayoutResult GetScriptList (
-            IOpenTypeFont       Font,     // In: Font access interface
-            out TagInfo[]       Scripts   // Out: Array of scripts supported
-            )
-        {
-            ushort i;
-            ushort GposNewTags;
-
-            Scripts=null; // Assignment required, because of out attribute.
-                          // This value should be owerwritten later.
-
-            try
-            {
-                FontTable GsubTable = Font.GetFontTable(OpenTypeTags.GSUB);
-                FontTable GposTable = Font.GetFontTable(OpenTypeTags.GPOS);
-
-                GSUBHeader GsubHeader = new GSUBHeader(0);
-                GPOSHeader GposHeader = new GPOSHeader(0);
-
-                ScriptList GsubScriptList;
-                ScriptList GposScriptList;
-                ushort GsubScriptCount;
-                ushort GposScriptCount;
-
-                if (GsubTable.IsNotPresent && GposTable.IsNotPresent)
+                /// <summary>
+                /// Enumerates scripts in a font
+                /// </summary>
+                internal static OpenTypeLayoutResult GetScriptList (
+                    IOpenTypeFont       Font,     // In: Font access interface
+                    out TagInfo[]       Scripts   // Out: Array of scripts supported
+                    )
                 {
-                    Scripts = Array.Empty<TagInfo>();
+                    ushort i;
+                    ushort GposNewTags;
+
+                    Scripts=null; // Assignment required, because of out attribute.
+                                  // This value should be owerwritten later.
+
+                    try
+                    {
+                        FontTable GsubTable = Font.GetFontTable(OpenTypeTags.GSUB);
+                        FontTable GposTable = Font.GetFontTable(OpenTypeTags.GPOS);
+
+                        GSUBHeader GsubHeader = new GSUBHeader(0);
+                        GPOSHeader GposHeader = new GPOSHeader(0);
+
+                        ScriptList GsubScriptList;
+                        ScriptList GposScriptList;
+                        ushort GsubScriptCount;
+                        ushort GposScriptCount;
+
+                        if (GsubTable.IsNotPresent && GposTable.IsNotPresent)
+                        {
+                            Scripts = Array.Empty<TagInfo>();
+                            return OpenTypeLayoutResult.Success;
+                        }
+
+                        if (GsubTable.IsPresent)
+                        {
+                            GsubScriptList  = GsubHeader.GetScriptList(GsubTable);
+                            GsubScriptCount = GsubScriptList.GetScriptCount(GsubTable);
+                        }
+                        else
+                        {
+                            GsubScriptList = new ScriptList(FontTable.InvalidOffset);
+                            GsubScriptCount = 0;
+                        }
+
+                        if (GposTable.IsPresent)
+                        {
+                            GposScriptList  = GposHeader.GetScriptList(GposTable);
+                            GposScriptCount = GposScriptList.GetScriptCount(GposTable);
+                        }
+                        else
+                        {
+                            GposScriptList = new ScriptList(FontTable.InvalidOffset);
+                            GposScriptCount = 0;
+                        }
+
+                        //This is true in most cases that there is no new tags in GPOS.
+                        //So, we allocate this array then check GPOS for new tags
+                        Scripts = new TagInfo[GsubScriptCount];
+
+                        for(i=0; i<GsubScriptCount; i++)
+                        {
+                            Scripts[i].Tag      = GsubScriptList.GetScriptTag(GsubTable,i);
+                            Scripts[i].TagFlags = TagInfoFlags.Substitution;
+                        }
+
+                        //Check GPOS for tags that is not in GSUB
+                        GposNewTags=0;
+
+                        for(i=0;i<GposScriptCount;i++)
+                        {
+                            uint GposTag = GsubScriptList.GetScriptTag(GposTable,i);
+                            if (TagInfo.IsNewTag(Scripts,GposTag)) GposNewTags++;
+                        }
+
+                        //append new tags to ScriptTags if any exists
+                        if (GposNewTags>0)
+                        {
+                            int CurrentScriptIndex=GposScriptCount;
+
+                            //Allocate new array to fit all tags
+                            TagInfo[] tmp = Scripts;
+                            Scripts = new TagInfo[GsubScriptCount+GposNewTags];
+                            Array.Copy(tmp,0,Scripts,0,tmp.Length);
+
+                            for(i=0;i<GposScriptCount;i++)
+                            {
+                                uint GposTag = GsubScriptList.GetScriptTag(GposTable,i);
+                                if (TagInfo.IsNewTag(Scripts,GposTag))
+                                {
+                                    Scripts[CurrentScriptIndex].Tag=GposTag;
+                                    Scripts[CurrentScriptIndex].TagFlags
+                                        = TagInfoFlags.Positioning;
+                                    ++CurrentScriptIndex;
+                                }
+                                else
+                                {
+                                    int ScriptIndex = TagInfo.GetTagIndex(Scripts,GposTag);
+                                    Scripts[ScriptIndex].TagFlags |= TagInfoFlags.Positioning;
+                                }
+                            }
+
+                            Debug.Assert(CurrentScriptIndex==Scripts.Length);
+                        }
+                    }
+                    catch (FileFormatException)
+                    {
+                        return OpenTypeLayoutResult.BadFontTable;
+                    }
+
                     return OpenTypeLayoutResult.Success;
                 }
 
-                if (GsubTable.IsPresent)
+
+                ///<summary>
+                /// Enumerates language systems for script
+                /// </summary>
+                internal static OpenTypeLayoutResult  GetLangSysList (
+                    IOpenTypeFont   Font,       // In: Font access interface
+                    uint            ScriptTag,  // In: Script tag
+                    out TagInfo[]   LangSystems // Out: Array of LangSystems for Script
+                    )
                 {
-                    GsubScriptList  = GsubHeader.GetScriptList(GsubTable);
-                    GsubScriptCount = GsubScriptList.GetScriptCount(GsubTable);
-                }
-                else
-                {
-                    GsubScriptList = new ScriptList(FontTable.InvalidOffset);
-                    GsubScriptCount = 0;
-                }
+                    ushort i;
+                    ushort GposNewTags;
 
-                if (GposTable.IsPresent)
-                {
-                    GposScriptList  = GposHeader.GetScriptList(GposTable);
-                    GposScriptCount = GposScriptList.GetScriptCount(GposTable);
-                }
-                else
-                {
-                    GposScriptList = new ScriptList(FontTable.InvalidOffset);
-                    GposScriptCount = 0;
-                }
+                    LangSystems=null; // Assignment required, because of out attribute.
+                                      // This value should be owerwritten later.
 
-                //This is true in most cases that there is no new tags in GPOS.
-                //So, we allocate this array then check GPOS for new tags
-                Scripts = new TagInfo[GsubScriptCount];
-
-                for(i=0; i<GsubScriptCount; i++)
-                {
-                    Scripts[i].Tag      = GsubScriptList.GetScriptTag(GsubTable,i);
-                    Scripts[i].TagFlags = TagInfoFlags.Substitution;
-                }
-
-                //Check GPOS for tags that is not in GSUB
-                GposNewTags=0;
-
-                for(i=0;i<GposScriptCount;i++)
-                {
-                    uint GposTag = GsubScriptList.GetScriptTag(GposTable,i);
-                    if (TagInfo.IsNewTag(Scripts,GposTag)) GposNewTags++;
-                }
-
-                //append new tags to ScriptTags if any exists
-                if (GposNewTags>0)
-                {
-                    int CurrentScriptIndex=GposScriptCount;
-
-                    //Allocate new array to fit all tags
-                    TagInfo[] tmp = Scripts;
-                    Scripts = new TagInfo[GsubScriptCount+GposNewTags];
-                    Array.Copy(tmp,0,Scripts,0,tmp.Length);
-
-                    for(i=0;i<GposScriptCount;i++)
+                    try
                     {
-                        uint GposTag = GsubScriptList.GetScriptTag(GposTable,i);
-                        if (TagInfo.IsNewTag(Scripts,GposTag))
+                        FontTable GsubTable = Font.GetFontTable(OpenTypeTags.GSUB);
+                        FontTable GposTable = Font.GetFontTable(OpenTypeTags.GPOS);
+
+                        GSUBHeader GsubHeader = new GSUBHeader(0);
+                        GPOSHeader GposHeader = new GPOSHeader(0);
+
+                        ScriptList GsubScriptList;
+                        ScriptList GposScriptList;
+                        ScriptTable GsubScript;
+                        ScriptTable GposScript;
+                        ushort GsubLangSysCount;
+                        ushort GposLangSysCount;
+
+                        if (GsubTable.IsNotPresent && GposTable.IsNotPresent)
                         {
-                            Scripts[CurrentScriptIndex].Tag=GposTag;
-                            Scripts[CurrentScriptIndex].TagFlags
-                                = TagInfoFlags.Positioning;
-                            ++CurrentScriptIndex;
+                            return OpenTypeLayoutResult.ScriptNotFound;
+                        }
+
+                        if (GsubTable.IsPresent)
+                        {
+                            GsubScriptList = GsubHeader.GetScriptList(GsubTable);
+                            GsubScript = GsubScriptList.FindScript(GsubTable,ScriptTag);
                         }
                         else
                         {
-                            int ScriptIndex = TagInfo.GetTagIndex(Scripts,GposTag);
-                            Scripts[ScriptIndex].TagFlags |= TagInfoFlags.Positioning;
+                            GsubScript = new ScriptTable(FontTable.InvalidOffset);
                         }
-                    }
 
-                    Debug.Assert(CurrentScriptIndex==Scripts.Length);
-                }
-            }
-            catch (FileFormatException)
-            {
-                return OpenTypeLayoutResult.BadFontTable;
-            }
-
-            return OpenTypeLayoutResult.Success;
-        }
-
-
-        ///<summary>
-        /// Enumerates language systems for script
-        /// </summary>
-        internal static OpenTypeLayoutResult  GetLangSysList (
-            IOpenTypeFont   Font,       // In: Font access interface
-            uint            ScriptTag,  // In: Script tag
-            out TagInfo[]   LangSystems // Out: Array of LangSystems for Script
-            )
-        {
-            ushort i;
-            ushort GposNewTags;
-
-            LangSystems=null; // Assignment required, because of out attribute.
-                              // This value should be owerwritten later.
-
-            try
-            {
-                FontTable GsubTable = Font.GetFontTable(OpenTypeTags.GSUB);
-                FontTable GposTable = Font.GetFontTable(OpenTypeTags.GPOS);
-
-                GSUBHeader GsubHeader = new GSUBHeader(0);
-                GPOSHeader GposHeader = new GPOSHeader(0);
-
-                ScriptList GsubScriptList;
-                ScriptList GposScriptList;
-                ScriptTable GsubScript;
-                ScriptTable GposScript;
-                ushort GsubLangSysCount;
-                ushort GposLangSysCount;
-
-                if (GsubTable.IsNotPresent && GposTable.IsNotPresent)
-                {
-                    return OpenTypeLayoutResult.ScriptNotFound;
-                }
-
-                if (GsubTable.IsPresent)
-                {
-                    GsubScriptList = GsubHeader.GetScriptList(GsubTable);
-                    GsubScript = GsubScriptList.FindScript(GsubTable,ScriptTag);
-                }
-                else
-                {
-                    GsubScript = new ScriptTable(FontTable.InvalidOffset);
-                }
-
-                if (GposTable.IsPresent)
-                {
-                    GposScriptList  = GposHeader.GetScriptList(GposTable);
-                    GposScript = GposScriptList.FindScript(GposTable,ScriptTag);
-                }
-                else
-                {
-                    GposScript = new ScriptTable(FontTable.InvalidOffset);
-                }
-
-                if (GsubScript.IsNull && GposScript.IsNull)
-                {
-                    return OpenTypeLayoutResult.ScriptNotFound;
-                }
-
-                if (!GsubScript.IsNull)
-                {
-                    GsubLangSysCount = GsubScript.GetLangSysCount(GsubTable);
-                }
-                else
-                {
-                    GsubLangSysCount = 0;
-                }
-
-                if (!GposScript.IsNull)
-                {
-                    GposLangSysCount = GposScript.GetLangSysCount(GposTable);
-                }
-                else
-                {
-                    GposLangSysCount = 0;
-                }
-
-                //This is true in most cases that there is no new tags in GPOS.
-                //So, we allocate this array then check GPOS for new tags
-                ushort CurrentLangSysIndex;
-
-                if (GsubScript.IsDefaultLangSysExists(GsubTable))
-                {
-                    LangSystems = new TagInfo[GsubLangSysCount+1];
-                    LangSystems[0].Tag      = (uint)OpenTypeTags.dflt;
-                    LangSystems[0].TagFlags = TagInfoFlags.Substitution;
-                    CurrentLangSysIndex = 1;
-                }
-                else
-                {
-                    LangSystems = new TagInfo[GsubLangSysCount];
-                    CurrentLangSysIndex = 0;
-                }
-
-                for(i=0; i<GsubLangSysCount; i++)
-                {
-                    LangSystems[CurrentLangSysIndex].Tag = GsubScript.GetLangSysTag(GsubTable,i);
-                    LangSystems[CurrentLangSysIndex].TagFlags = TagInfoFlags.Substitution;
-                    ++CurrentLangSysIndex;
-                }
-
-                //Check GPOS for tags that is not in GSUB
-                GposNewTags=0;
-
-                if (!GposScript.IsNull)
-                {
-                    if (GposScript.IsDefaultLangSysExists(GposTable) &&
-                        TagInfo.IsNewTag(LangSystems,(uint)OpenTypeTags.dflt))
-                    {
-                        ++GposNewTags;
-                    }
-
-                    for(i=0;i<GposLangSysCount;i++)
-                    {
-                        uint GposTag = GsubScript.GetLangSysTag(GposTable,i);
-                        if (TagInfo.IsNewTag(LangSystems,GposTag))
+                        if (GposTable.IsPresent)
                         {
-                            ++GposNewTags;
+                            GposScriptList  = GposHeader.GetScriptList(GposTable);
+                            GposScript = GposScriptList.FindScript(GposTable,ScriptTag);
                         }
-                    }
-                }
-
-                Debug.Assert(CurrentLangSysIndex==LangSystems.Length);
-
-                //append new tags to ScriptTags if any exists
-                if (GposNewTags>0)
-                {
-                    //Allocate new array to fit all tags
-                    TagInfo[] tmp = LangSystems;
-                    LangSystems = new TagInfo[GsubLangSysCount+GposNewTags];
-                    Array.Copy(tmp,0,LangSystems,0,tmp.Length);
-
-                    if (GposScript.IsDefaultLangSysExists(GposTable))
-                    {
-                        if (TagInfo.IsNewTag(LangSystems,(uint)OpenTypeTags.dflt))
+                        else
                         {
-                            LangSystems[CurrentLangSysIndex].Tag = (uint)OpenTypeTags.dflt;
-                            LangSystems[CurrentLangSysIndex].TagFlags = TagInfoFlags.Positioning;
+                            GposScript = new ScriptTable(FontTable.InvalidOffset);
+                        }
+
+                        if (GsubScript.IsNull && GposScript.IsNull)
+                        {
+                            return OpenTypeLayoutResult.ScriptNotFound;
+                        }
+
+                        if (!GsubScript.IsNull)
+                        {
+                            GsubLangSysCount = GsubScript.GetLangSysCount(GsubTable);
+                        }
+                        else
+                        {
+                            GsubLangSysCount = 0;
+                        }
+
+                        if (!GposScript.IsNull)
+                        {
+                            GposLangSysCount = GposScript.GetLangSysCount(GposTable);
+                        }
+                        else
+                        {
+                            GposLangSysCount = 0;
+                        }
+
+                        //This is true in most cases that there is no new tags in GPOS.
+                        //So, we allocate this array then check GPOS for new tags
+                        ushort CurrentLangSysIndex;
+
+                        if (GsubScript.IsDefaultLangSysExists(GsubTable))
+                        {
+                            LangSystems = new TagInfo[GsubLangSysCount+1];
+                            LangSystems[0].Tag      = (uint)OpenTypeTags.dflt;
+                            LangSystems[0].TagFlags = TagInfoFlags.Substitution;
+                            CurrentLangSysIndex = 1;
+                        }
+                        else
+                        {
+                            LangSystems = new TagInfo[GsubLangSysCount];
+                            CurrentLangSysIndex = 0;
+                        }
+
+                        for(i=0; i<GsubLangSysCount; i++)
+                        {
+                            LangSystems[CurrentLangSysIndex].Tag = GsubScript.GetLangSysTag(GsubTable,i);
+                            LangSystems[CurrentLangSysIndex].TagFlags = TagInfoFlags.Substitution;
                             ++CurrentLangSysIndex;
                         }
+
+                        //Check GPOS for tags that is not in GSUB
+                        GposNewTags=0;
+
+                        if (!GposScript.IsNull)
+                        {
+                            if (GposScript.IsDefaultLangSysExists(GposTable) &&
+                                TagInfo.IsNewTag(LangSystems,(uint)OpenTypeTags.dflt))
+                            {
+                                ++GposNewTags;
+                            }
+
+                            for(i=0;i<GposLangSysCount;i++)
+                            {
+                                uint GposTag = GsubScript.GetLangSysTag(GposTable,i);
+                                if (TagInfo.IsNewTag(LangSystems,GposTag))
+                                {
+                                    ++GposNewTags;
+                                }
+                            }
+                        }
+
+                        Debug.Assert(CurrentLangSysIndex==LangSystems.Length);
+
+                        //append new tags to ScriptTags if any exists
+                        if (GposNewTags>0)
+                        {
+                            //Allocate new array to fit all tags
+                            TagInfo[] tmp = LangSystems;
+                            LangSystems = new TagInfo[GsubLangSysCount+GposNewTags];
+                            Array.Copy(tmp,0,LangSystems,0,tmp.Length);
+
+                            if (GposScript.IsDefaultLangSysExists(GposTable))
+                            {
+                                if (TagInfo.IsNewTag(LangSystems,(uint)OpenTypeTags.dflt))
+                                {
+                                    LangSystems[CurrentLangSysIndex].Tag = (uint)OpenTypeTags.dflt;
+                                    LangSystems[CurrentLangSysIndex].TagFlags = TagInfoFlags.Positioning;
+                                    ++CurrentLangSysIndex;
+                                }
+                                else
+                                {
+                                    int LangSysIndex = TagInfo.GetTagIndex(LangSystems,(uint)OpenTypeTags.dflt);
+                                    LangSystems[LangSysIndex].TagFlags |= TagInfoFlags.Positioning;
+                                }
+                            }
+
+                            for(i=0;i<GposLangSysCount;i++)
+                            {
+                                uint GposTag = GposScript.GetLangSysTag(GposTable,i);
+
+                                if (TagInfo.IsNewTag(LangSystems,GposTag))
+                                {
+                                    LangSystems[CurrentLangSysIndex].Tag = GposTag;
+                                    LangSystems[CurrentLangSysIndex].TagFlags = TagInfoFlags.Positioning;
+                                    ++CurrentLangSysIndex;
+                                }
+                                else
+                                {
+                                    int LangSysIndex = TagInfo.GetTagIndex(LangSystems,GposTag);
+                                    LangSystems[LangSysIndex].TagFlags |= TagInfoFlags.Positioning;
+                                }
+                            }
+
+                            Debug.Assert(CurrentLangSysIndex==LangSystems.Length);
+                        }
+                    }
+                    catch (FileFormatException)
+                    {
+                        return OpenTypeLayoutResult.BadFontTable;
+                    }
+
+                    return OpenTypeLayoutResult.Success;
+                }
+
+
+                /// <summary>
+                /// Enumerates features in a language system
+                /// </summary>
+                internal static OpenTypeLayoutResult  GetFeatureList (
+                    IOpenTypeFont   Font,           // In: Font access interface
+                    uint            ScriptTag,      // In: Script tag
+                    uint            LangSysTag,     // In: LangSys tag
+                    out TagInfo[]   Features        // Out: Array of features
+                    )
+                {
+                    ushort i;
+                    ushort GposNewTags;
+
+                    Features=null; // Assignment required, because of out attribute.
+                                   // This value should be owerwritten later.
+
+                    try
+                    {
+                        FontTable GsubTable = Font.GetFontTable(OpenTypeTags.GSUB);
+                        FontTable GposTable = Font.GetFontTable(OpenTypeTags.GPOS);
+
+                        GSUBHeader GsubHeader = new GSUBHeader(0);
+                        GPOSHeader GposHeader = new GPOSHeader(0);
+
+                        ScriptList GsubScriptList;
+                        ScriptList GposScriptList;
+                        ScriptTable GsubScript;
+                        ScriptTable GposScript;
+                        LangSysTable GsubLangSys;
+                        LangSysTable GposLangSys;
+                        ushort GsubFeatureCount;
+                        ushort GposFeatureCount;
+                        FeatureList GsubFeatureList;
+                        FeatureList GposFeatureList;
+
+
+                        if (GsubTable.IsNotPresent && GposTable.IsNotPresent)
+                        {
+                            return OpenTypeLayoutResult.ScriptNotFound;
+                        }
+
+                        if (GsubTable.IsPresent)
+                        {
+                            GsubScriptList  = GsubHeader.GetScriptList(GsubTable);
+                            GsubScript      = GsubScriptList.FindScript(GsubTable,ScriptTag);
+                            GsubLangSys     = GsubScript.FindLangSys(GsubTable,LangSysTag);
+                            GsubFeatureList = GsubHeader.GetFeatureList(GsubTable);
+                        }
                         else
                         {
-                            int LangSysIndex = TagInfo.GetTagIndex(LangSystems,(uint)OpenTypeTags.dflt);
-                            LangSystems[LangSysIndex].TagFlags |= TagInfoFlags.Positioning;
+                            GsubScript = new ScriptTable(FontTable.InvalidOffset);
+                            GsubLangSys = new LangSysTable(FontTable.InvalidOffset);
+                            GsubFeatureList = new FeatureList(FontTable.InvalidOffset);
                         }
-                    }
 
-                    for(i=0;i<GposLangSysCount;i++)
-                    {
-                        uint GposTag = GposScript.GetLangSysTag(GposTable,i);
-
-                        if (TagInfo.IsNewTag(LangSystems,GposTag))
+                        if (GposTable.IsPresent)
                         {
-                            LangSystems[CurrentLangSysIndex].Tag = GposTag;
-                            LangSystems[CurrentLangSysIndex].TagFlags = TagInfoFlags.Positioning;
-                            ++CurrentLangSysIndex;
+                            GposScriptList  = GposHeader.GetScriptList(GposTable);
+                            GposScript      = GposScriptList.FindScript(GposTable,ScriptTag);
+                            GposLangSys     = GposScript.FindLangSys(GposTable,LangSysTag);
+                            GposFeatureList = GposHeader.GetFeatureList(GposTable);
                         }
                         else
                         {
-                            int LangSysIndex = TagInfo.GetTagIndex(LangSystems,GposTag);
-                            LangSystems[LangSysIndex].TagFlags |= TagInfoFlags.Positioning;
+                            GposScript = new ScriptTable(FontTable.InvalidOffset);
+                            GposLangSys = new LangSysTable(FontTable.InvalidOffset);
+                            GposFeatureList = new FeatureList(FontTable.InvalidOffset);
                         }
-                    }
 
-                    Debug.Assert(CurrentLangSysIndex==LangSystems.Length);
-                }
-            }
-            catch (FileFormatException)
-            {
-                return OpenTypeLayoutResult.BadFontTable;
-            }
-
-            return OpenTypeLayoutResult.Success;
-        }
-
-
-        /// <summary>
-        /// Enumerates features in a language system
-        /// </summary>
-        internal static OpenTypeLayoutResult  GetFeatureList (
-            IOpenTypeFont   Font,           // In: Font access interface
-            uint            ScriptTag,      // In: Script tag
-            uint            LangSysTag,     // In: LangSys tag
-            out TagInfo[]   Features        // Out: Array of features
-            )
-        {
-            ushort i;
-            ushort GposNewTags;
-
-            Features=null; // Assignment required, because of out attribute.
-                           // This value should be owerwritten later.
-
-            try
-            {
-                FontTable GsubTable = Font.GetFontTable(OpenTypeTags.GSUB);
-                FontTable GposTable = Font.GetFontTable(OpenTypeTags.GPOS);
-
-                GSUBHeader GsubHeader = new GSUBHeader(0);
-                GPOSHeader GposHeader = new GPOSHeader(0);
-
-                ScriptList GsubScriptList;
-                ScriptList GposScriptList;
-                ScriptTable GsubScript;
-                ScriptTable GposScript;
-                LangSysTable GsubLangSys;
-                LangSysTable GposLangSys;
-                ushort GsubFeatureCount;
-                ushort GposFeatureCount;
-                FeatureList GsubFeatureList;
-                FeatureList GposFeatureList;
-
-
-                if (GsubTable.IsNotPresent && GposTable.IsNotPresent)
-                {
-                    return OpenTypeLayoutResult.ScriptNotFound;
-                }
-
-                if (GsubTable.IsPresent)
-                {
-                    GsubScriptList  = GsubHeader.GetScriptList(GsubTable);
-                    GsubScript      = GsubScriptList.FindScript(GsubTable,ScriptTag);
-                    GsubLangSys     = GsubScript.FindLangSys(GsubTable,LangSysTag);
-                    GsubFeatureList = GsubHeader.GetFeatureList(GsubTable);
-                }
-                else
-                {
-                    GsubScript = new ScriptTable(FontTable.InvalidOffset);
-                    GsubLangSys = new LangSysTable(FontTable.InvalidOffset);
-                    GsubFeatureList = new FeatureList(FontTable.InvalidOffset);
-                }
-
-                if (GposTable.IsPresent)
-                {
-                    GposScriptList  = GposHeader.GetScriptList(GposTable);
-                    GposScript      = GposScriptList.FindScript(GposTable,ScriptTag);
-                    GposLangSys     = GposScript.FindLangSys(GposTable,LangSysTag);
-                    GposFeatureList = GposHeader.GetFeatureList(GposTable);
-                }
-                else
-                {
-                    GposScript = new ScriptTable(FontTable.InvalidOffset);
-                    GposLangSys = new LangSysTable(FontTable.InvalidOffset);
-                    GposFeatureList = new FeatureList(FontTable.InvalidOffset);
-                }
-
-                if (GsubScript.IsNull && GposScript.IsNull)
-                {
-                    return OpenTypeLayoutResult.ScriptNotFound;
-                }
-
-                if (GsubLangSys.IsNull && GposLangSys.IsNull)
-                {
-                    return OpenTypeLayoutResult.LangSysNotFound;
-                }
-
-                if (!GsubLangSys.IsNull)
-                {
-                    GsubFeatureCount = GsubLangSys.FeatureCount(GsubTable);
-                }
-                else
-                {
-                    GsubFeatureCount = 0;
-                }
-
-                if (!GposLangSys.IsNull)
-                {
-                    GposFeatureCount = GposLangSys.FeatureCount(GposTable);
-                }
-                else
-                {
-                    GposFeatureCount = 0;
-                }
-
-                Features = new TagInfo[GsubFeatureCount];
-                int CurrentFeatureIndex = 0;
-
-                for(i=0; i<GsubFeatureCount; i++)
-                {
-                    ushort FeatureIndex = GsubLangSys.GetFeatureIndex(GsubTable,i);
-                    Features[CurrentFeatureIndex].Tag = GsubFeatureList.FeatureTag(GsubTable,FeatureIndex);
-                    Features[CurrentFeatureIndex].TagFlags = TagInfoFlags.Substitution;
-                    ++CurrentFeatureIndex;
-                }
-
-                Debug.Assert(CurrentFeatureIndex==Features.Length);
-
-                //Check GPOS for tags that is not in GSUB
-                GposNewTags=0;
-                if (!GposLangSys.IsNull)
-                {
-                    for(i=0;i<GposFeatureCount;i++)
-                    {
-                        ushort FeatureIndex = GposLangSys.GetFeatureIndex(GposTable,i);
-                        uint GposTag = GposFeatureList.FeatureTag(GposTable,FeatureIndex);
-                        if (TagInfo.IsNewTag(Features,GposTag))
+                        if (GsubScript.IsNull && GposScript.IsNull)
                         {
-                            ++GposNewTags;
+                            return OpenTypeLayoutResult.ScriptNotFound;
                         }
-                    }
-                }
 
-                //append new tags to ScriptTags if any exists
-                if (GposNewTags>0)
-                {
-                    //Allocate new array to fit all tags
-                    TagInfo[] tmp = Features;
-                    Features = new TagInfo[GsubFeatureCount+GposNewTags];
-                    Array.Copy(tmp,0,Features,0,tmp.Length);
-
-                    for(i=0;i<GposFeatureCount;i++)
-                    {
-                        ushort FeatureIndex = GposLangSys.GetFeatureIndex(GposTable,i);
-                        uint GposTag = GposFeatureList.FeatureTag(GposTable,FeatureIndex);
-
-                        if (TagInfo.IsNewTag(Features,GposTag))
+                        if (GsubLangSys.IsNull && GposLangSys.IsNull)
                         {
-                            Features[CurrentFeatureIndex].Tag = GposTag;
-                            Features[CurrentFeatureIndex].TagFlags = TagInfoFlags.Positioning;
+                            return OpenTypeLayoutResult.LangSysNotFound;
+                        }
+
+                        if (!GsubLangSys.IsNull)
+                        {
+                            GsubFeatureCount = GsubLangSys.FeatureCount(GsubTable);
+                        }
+                        else
+                        {
+                            GsubFeatureCount = 0;
+                        }
+
+                        if (!GposLangSys.IsNull)
+                        {
+                            GposFeatureCount = GposLangSys.FeatureCount(GposTable);
+                        }
+                        else
+                        {
+                            GposFeatureCount = 0;
+                        }
+
+                        Features = new TagInfo[GsubFeatureCount];
+                        int CurrentFeatureIndex = 0;
+
+                        for(i=0; i<GsubFeatureCount; i++)
+                        {
+                            ushort FeatureIndex = GsubLangSys.GetFeatureIndex(GsubTable,i);
+                            Features[CurrentFeatureIndex].Tag = GsubFeatureList.FeatureTag(GsubTable,FeatureIndex);
+                            Features[CurrentFeatureIndex].TagFlags = TagInfoFlags.Substitution;
                             ++CurrentFeatureIndex;
                         }
-                        else
+
+                        Debug.Assert(CurrentFeatureIndex==Features.Length);
+
+                        //Check GPOS for tags that is not in GSUB
+                        GposNewTags=0;
+                        if (!GposLangSys.IsNull)
                         {
-                            int Index = TagInfo.GetTagIndex(Features,GposTag);
-                            Features[Index].TagFlags |= TagInfoFlags.Positioning;
+                            for(i=0;i<GposFeatureCount;i++)
+                            {
+                                ushort FeatureIndex = GposLangSys.GetFeatureIndex(GposTable,i);
+                                uint GposTag = GposFeatureList.FeatureTag(GposTable,FeatureIndex);
+                                if (TagInfo.IsNewTag(Features,GposTag))
+                                {
+                                    ++GposNewTags;
+                                }
+                            }
                         }
+
+                        //append new tags to ScriptTags if any exists
+                        if (GposNewTags>0)
+                        {
+                            //Allocate new array to fit all tags
+                            TagInfo[] tmp = Features;
+                            Features = new TagInfo[GsubFeatureCount+GposNewTags];
+                            Array.Copy(tmp,0,Features,0,tmp.Length);
+
+                            for(i=0;i<GposFeatureCount;i++)
+                            {
+                                ushort FeatureIndex = GposLangSys.GetFeatureIndex(GposTable,i);
+                                uint GposTag = GposFeatureList.FeatureTag(GposTable,FeatureIndex);
+
+                                if (TagInfo.IsNewTag(Features,GposTag))
+                                {
+                                    Features[CurrentFeatureIndex].Tag = GposTag;
+                                    Features[CurrentFeatureIndex].TagFlags = TagInfoFlags.Positioning;
+                                    ++CurrentFeatureIndex;
+                                }
+                                else
+                                {
+                                    int Index = TagInfo.GetTagIndex(Features,GposTag);
+                                    Features[Index].TagFlags |= TagInfoFlags.Positioning;
+                                }
+                            }
+
+                            Debug.Assert(CurrentFeatureIndex==Features.Length);
+                        }
+
+
+                    }
+                    catch (FileFormatException)
+                    {
+                        return OpenTypeLayoutResult.BadFontTable;
                     }
 
-                    Debug.Assert(CurrentFeatureIndex==Features.Length);
+                    return OpenTypeLayoutResult.Success;
                 }
-
-
-            }
-            catch (FileFormatException)
-            {
-                return OpenTypeLayoutResult.BadFontTable;
-            }
-
-            return OpenTypeLayoutResult.Success;
-        }
-*/
+        */
 
         /// <summary>
         /// Substitutes glyphs according to features defined in the font.
@@ -865,31 +869,34 @@ namespace MS.Internal.Shaping
         /// <param name="Glyphs">In/out: List of GlyphInfo structs</param>
         /// <returns>Substitution result</returns>
         internal static OpenTypeLayoutResult SubstituteGlyphs(
-            IOpenTypeFont           Font,           // In: Font access interface
+            IOpenTypeFont Font,           // In: Font access interface
             OpenTypeLayoutWorkspace workspace,      // In: Workspace for layout engine
-            uint                    ScriptTag,      // In: Script tag
-            uint                    LangSysTag,     // In: LangSys tag
-            Feature[]               FeatureSet,     // In: List of features to apply
-            int                     featureCount,   // In: Actual number of features in FeatureSet
-            int                     featureSetOffset,
-            int                     CharCount,      // In: Characters count (i.e. Charmap.Length);
-            UshortList              Charmap,        // In/out: Char to glyph mapping
-            GlyphInfoList           Glyphs          // In/out: List of GlyphInfo structs
+            uint ScriptTag,      // In: Script tag
+            uint LangSysTag,     // In: LangSys tag
+            Feature[] FeatureSet,     // In: List of features to apply
+            int featureCount,   // In: Actual number of features in FeatureSet
+            int featureSetOffset,
+            int CharCount,      // In: Characters count (i.e. Charmap.Length);
+            UshortList Charmap,        // In/out: Char to glyph mapping
+            GlyphInfoList Glyphs          // In/out: List of GlyphInfo structs
             )
         {
             try
             {
                 FontTable GsubTable = Font.GetFontTable(OpenTypeTags.GSUB);
-                if (!GsubTable.IsPresent) {return OpenTypeLayoutResult.ScriptNotFound;}
+                if (!GsubTable.IsPresent)
+                { return OpenTypeLayoutResult.ScriptNotFound; }
 
                 GSUBHeader GsubHeader = new GSUBHeader(0);
                 ScriptList ScriptList = GsubHeader.GetScriptList(GsubTable);
 
-                ScriptTable Script    = ScriptList.FindScript(GsubTable,ScriptTag);
-                if (Script.IsNull) {return OpenTypeLayoutResult.ScriptNotFound;}
+                ScriptTable Script = ScriptList.FindScript(GsubTable, ScriptTag);
+                if (Script.IsNull)
+                { return OpenTypeLayoutResult.ScriptNotFound; }
 
-                LangSysTable LangSys = Script.FindLangSys(GsubTable,LangSysTag);
-                if (LangSys.IsNull) {return OpenTypeLayoutResult.LangSysNotFound;}
+                LangSysTable LangSys = Script.FindLangSys(GsubTable, LangSysTag);
+                if (LangSys.IsNull)
+                { return OpenTypeLayoutResult.LangSysNotFound; }
 
                 FeatureList FeatureList = GsubHeader.GetFeatureList(GsubTable);
                 LookupList LookupList = GsubHeader.GetLookupList(GsubTable);
@@ -939,34 +946,37 @@ namespace MS.Internal.Shaping
         /// <param name="Offsets">In/out: Glyph offsets</param>
         /// <returns>Substitution result</returns>
         internal static OpenTypeLayoutResult PositionGlyphs(
-            IOpenTypeFont           Font,
+            IOpenTypeFont Font,
             OpenTypeLayoutWorkspace workspace,
-            uint                    ScriptTag,
-            uint                    LangSysTag,
-            LayoutMetrics           Metrics,
-            Feature[]               FeatureSet,
-            int                     featureCount,
-            int                     featureSetOffset,
-            int                     CharCount,
-            UshortList              Charmap,
-            GlyphInfoList           Glyphs,
-            int*                    Advances,
-            LayoutOffset*           Offsets
+            uint ScriptTag,
+            uint LangSysTag,
+            LayoutMetrics Metrics,
+            Feature[] FeatureSet,
+            int featureCount,
+            int featureSetOffset,
+            int CharCount,
+            UshortList Charmap,
+            GlyphInfoList Glyphs,
+            int* Advances,
+            LayoutOffset* Offsets
         )
         {
             try
             {
                 FontTable GposTable = Font.GetFontTable(OpenTypeTags.GPOS);
-                if (!GposTable.IsPresent) {return  OpenTypeLayoutResult.ScriptNotFound;}
+                if (!GposTable.IsPresent)
+                { return OpenTypeLayoutResult.ScriptNotFound; }
 
                 GPOSHeader GposHeader = new GPOSHeader(0);
                 ScriptList ScriptList = GposHeader.GetScriptList(GposTable);
 
-                ScriptTable Script    = ScriptList.FindScript(GposTable,ScriptTag);
-                if (Script.IsNull) {return OpenTypeLayoutResult.ScriptNotFound;}
+                ScriptTable Script = ScriptList.FindScript(GposTable, ScriptTag);
+                if (Script.IsNull)
+                { return OpenTypeLayoutResult.ScriptNotFound; }
 
-                LangSysTable LangSys = Script.FindLangSys(GposTable,LangSysTag);
-                if (LangSys.IsNull) {return OpenTypeLayoutResult.LangSysNotFound;}
+                LangSysTable LangSys = Script.FindLangSys(GposTable, LangSysTag);
+                if (LangSys.IsNull)
+                { return OpenTypeLayoutResult.LangSysNotFound; }
 
                 FeatureList FeatureList = GposHeader.GetFeatureList(GposTable);
                 LookupList LookupList = GposHeader.GetLookupList(GposTable);
@@ -1002,29 +1012,29 @@ namespace MS.Internal.Shaping
         ///<summary>
         ///
         ///</summary>
-        internal static OpenTypeLayoutResult CreateLayoutCache (
-            IOpenTypeFont       font,           // In: Font access interface
-            int                 maxCacheSize    // In: Maximum cache size allowed
+        internal static OpenTypeLayoutResult CreateLayoutCache(
+            IOpenTypeFont font,           // In: Font access interface
+            int maxCacheSize    // In: Maximum cache size allowed
         )
         {
             OpenTypeLayoutCache.CreateCache(font, maxCacheSize);
-            
+
             return OpenTypeLayoutResult.Success;
         }
-        
+
         ///<summary>
         /// Internal method to test layout tables if they are uitable for fast path.
         /// Returns list of script-langauge pairs that are not optimizable.
         ///</summary>
-        internal static OpenTypeLayoutResult GetComplexLanguageList (
-            IOpenTypeFont       Font,           //In: Font access interface
-            uint[]              featureList,     //In: Feature to look in
-            uint[]              glyphBits,
-            ushort              minGlyphId,
-            ushort              maxGlyphId,
+        internal static OpenTypeLayoutResult GetComplexLanguageList(
+            IOpenTypeFont Font,           //In: Font access interface
+            uint[] featureList,     //In: Feature to look in
+            uint[] glyphBits,
+            ushort minGlyphId,
+            ushort maxGlyphId,
             out WritingSystem[] complexLanguages
-                                                          // Out: List of script/langauge pair
-                                                          //      that are not optimizable
+        // Out: List of script/langauge pair
+        //      that are not optimizable
         )
         {
             try
@@ -1076,13 +1086,13 @@ namespace MS.Internal.Shaping
                 // Count gpos unique Languages
                 // and pack them at the same time
                 // so we do not research them again.
-                int gposNewLanguages=0, i, j;
+                int gposNewLanguages = 0, i, j;
 
-                for(i = 0; i < gposComplexLanguagesCount ;i++)
+                for (i = 0; i < gposComplexLanguagesCount; i++)
                 {
                     bool foundInGsub = false;
 
-                    for(j = 0; j < gsubComplexLanguagesCount ;j++)
+                    for (j = 0; j < gsubComplexLanguagesCount; j++)
                     {
                         if (gsubComplexLanguages[j].scriptTag == gposComplexLanguages[i].scriptTag &&
                             gsubComplexLanguages[j].langSysTag == gposComplexLanguages[i].langSysTag
@@ -1107,18 +1117,18 @@ namespace MS.Internal.Shaping
                 //realloc array for merged results, merge both arrays
                 complexLanguages = new WritingSystem[gsubComplexLanguagesCount + gposNewLanguages];
 
-                for(i = 0; i < gsubComplexLanguagesCount; i++)
+                for (i = 0; i < gsubComplexLanguagesCount; i++)
                 {
                     complexLanguages[i] = gsubComplexLanguages[i];
                 }
 
-                for(i = 0; i < gposNewLanguages; i++)
+                for (i = 0; i < gposNewLanguages; i++)
                 {
                     complexLanguages[gsubComplexLanguagesCount + i] = gposComplexLanguages[i];
                 }
 
                 return OpenTypeLayoutResult.Success;
-}
+            }
             catch (FileFormatException)
             {
                 complexLanguages = null;
@@ -1165,9 +1175,9 @@ namespace MS.Internal.Shaping
         /// </summary>
         internal unsafe OpenTypeLayoutWorkspace()
         {
-            _bytesPerLookup     = 0;
-            _lookupUsageFlags   = null;
-            _cachePointers      = null;
+            _bytesPerLookup = 0;
+            _lookupUsageFlags = null;
+            _cachePointers = null;
         }
 
         /// <summary>
@@ -1183,10 +1193,10 @@ namespace MS.Internal.Shaping
         ///<param name="langSysTag">In: Language System tag</param>
         ///<returns>Success if workspace is initialized succesfully, specific error if failed</returns>
         internal OpenTypeLayoutResult Init(
-            IOpenTypeFont           font,
-            OpenTypeTags            tableTag,
-            uint                    scriptTag,
-            uint                    langSysTag
+            IOpenTypeFont font,
+            OpenTypeTags tableTag,
+            uint scriptTag,
+            uint langSysTag
             )
         {
             // Currently all buffers are per call,
@@ -1194,12 +1204,12 @@ namespace MS.Internal.Shaping
             return OpenTypeLayoutResult.Success;
         }
 
-#region Lookup flags 
+        #region Lookup flags 
 
         //lookup usage flags access
-        private const byte AggregatedFlagMask        = 0x01;
-        private const byte RequiredFeatureFlagMask   = 0x02;
-        private const int  FeatureFlagsStartBit      = 2;
+        private const byte AggregatedFlagMask = 0x01;
+        private const byte RequiredFeatureFlagMask = 0x02;
+        private const int FeatureFlagsStartBit = 2;
 
         public void InitLookupUsageFlags(int lookupCount, int featureCount)
         {
@@ -1207,7 +1217,7 @@ namespace MS.Internal.Shaping
 
             int requiredLookupUsageArraySize = lookupCount * _bytesPerLookup;
 
-            if ( _lookupUsageFlags == null ||
+            if (_lookupUsageFlags == null ||
                  _lookupUsageFlags.Length < requiredLookupUsageArraySize)
             {
                 _lookupUsageFlags = new byte[requiredLookupUsageArraySize];
@@ -1225,7 +1235,7 @@ namespace MS.Internal.Shaping
         {
             int flagIndex = featureIndex + FeatureFlagsStartBit;
             int flagByte = (lookupIndex * _bytesPerLookup) + (flagIndex >> 3);
-            byte flagMask = (byte)(1 << (flagIndex %    8));
+            byte flagMask = (byte)(1 << (flagIndex % 8));
 
             return ((_lookupUsageFlags[flagByte] & flagMask) != 0);
         }
@@ -1247,7 +1257,7 @@ namespace MS.Internal.Shaping
                 //This should be invalid font. Lookup associated with the feature is not in lookup array.
                 throw new FileFormatException();
             }
-            
+
             _lookupUsageFlags[flagByte] |= flagMask;
 
             // Also set agregated usage flag
@@ -1272,9 +1282,9 @@ namespace MS.Internal.Shaping
         // Buffer grows with number of features applied
         private int _bytesPerLookup;
         private byte[] _lookupUsageFlags;
-#endregion Lookup flags
+        #endregion Lookup flags
 
-#region Layout cache pointers
+        #region Layout cache pointers
 
         /// <summary>
         /// Allocate enough memory for array of cache pointers, parallel to glyph run.
@@ -1285,7 +1295,8 @@ namespace MS.Internal.Shaping
         ///<param name="glyphRunLength">In: Size of a glyph run</param>
         public unsafe void AllocateCachePointers(int glyphRunLength)
         {
-            if (_cachePointers != null && _cachePointers.Length >= glyphRunLength) return;
+            if (_cachePointers != null && _cachePointers.Length >= glyphRunLength)
+                return;
 
             _cachePointers = new ushort[glyphRunLength];
         }
@@ -1301,37 +1312,37 @@ namespace MS.Internal.Shaping
         ///<param name="firstGlyphChanged">In: Index of the first changed glyph</param>
         ///<param name="afterLastGlyphChanged">In: Index of the glyph after last changed</param>
         public unsafe void UpdateCachePointers(
-                                        int     oldLength,
-                                        int     newLength,
-                                        int     firstGlyphChanged,
-                                        int     afterLastGlyphChanged
+                                        int oldLength,
+                                        int newLength,
+                                        int firstGlyphChanged,
+                                        int afterLastGlyphChanged
                                        )
         {
             if (oldLength != newLength)
             {
                 int oldAfterLastGlyphChanged = afterLastGlyphChanged - (newLength - oldLength);
 
-                if (_cachePointers.Length < newLength) 
+                if (_cachePointers.Length < newLength)
                 {
                     ushort[] tmp = new ushort[newLength];
-                    
+
                     Array.Copy(_cachePointers, tmp, firstGlyphChanged);
                     Array.Copy(_cachePointers, oldAfterLastGlyphChanged, tmp, afterLastGlyphChanged, oldLength - oldAfterLastGlyphChanged);
-                    
+
                     _cachePointers = tmp;
                 }
                 else
                 {
-                        Array.Copy(_cachePointers, oldAfterLastGlyphChanged, _cachePointers, afterLastGlyphChanged, oldLength - oldAfterLastGlyphChanged);
+                    Array.Copy(_cachePointers, oldAfterLastGlyphChanged, _cachePointers, afterLastGlyphChanged, oldLength - oldAfterLastGlyphChanged);
                 }
             }
         }
-        
+
         public unsafe ushort[] CachePointers
         {
             get { return _cachePointers; }
         }
-        
+
         public byte[] TableCacheData
         {
             get { return _tableCache; }
@@ -1339,11 +1350,11 @@ namespace MS.Internal.Shaping
         }
 
         // Array of cache pointers, per glyph
-        private unsafe ushort[]  _cachePointers;
-        
-        // Pointer to the table cache
-        private byte[]      _tableCache;
+        private unsafe ushort[] _cachePointers;
 
-#endregion Layout cache pointers
+        // Pointer to the table cache
+        private byte[] _tableCache;
+
+        #endregion Layout cache pointers
     }
 }

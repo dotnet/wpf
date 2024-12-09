@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,7 +11,7 @@ using MS.Internal.Automation;
 namespace System.Windows.Automation.Peers
 {
     /// 
-    public class UIElement3DAutomationPeer: AutomationPeer
+    public class UIElement3DAutomationPeer : AutomationPeer
     {
         ///
         public UIElement3DAutomationPeer(UIElement3D owner)
@@ -55,14 +55,14 @@ namespace System.Windows.Automation.Peers
 
             return element.GetAutomationPeer();
         }
-       
+
         /// 
         override protected List<AutomationPeer> GetChildrenCore()
         {
             List<AutomationPeer> children = null;
 
             iterate(_owner,
-                    (IteratorCallback)delegate(AutomationPeer peer)
+                    (IteratorCallback)delegate (AutomationPeer peer)
                     {
                         if (children == null)
                             children = new List<AutomationPeer>();
@@ -75,29 +75,29 @@ namespace System.Windows.Automation.Peers
         }
 
         private delegate bool IteratorCallback(AutomationPeer peer);
-        
+
         //
         private static bool iterate(DependencyObject parent, IteratorCallback callback)
         {
             bool done = false;
 
-            if(parent != null)
+            if (parent != null)
             {
                 AutomationPeer peer = null;
                 int count = VisualTreeHelper.GetChildrenCount(parent);
                 for (int i = 0; i < count && !done; i++)
                 {
                     DependencyObject child = VisualTreeHelper.GetChild(parent, i);
-                    
-                    if(     child != null
-                        &&  child is UIElement 
-                        &&  (peer = UIElementAutomationPeer.CreatePeerForElement((UIElement)child)) != null  )
+
+                    if (child != null
+                        && child is UIElement
+                        && (peer = UIElementAutomationPeer.CreatePeerForElement((UIElement)child)) != null)
                     {
                         done = callback(peer);
                     }
-                    else if ( child != null
-                        &&    child is UIElement3D
-                        &&    (peer = CreatePeerForElement(((UIElement3D)child))) != null )
+                    else if (child != null
+                        && child is UIElement3D
+                        && (peer = CreatePeerForElement(((UIElement3D)child))) != null)
                     {
                         done = callback(peer);
                     }
@@ -107,7 +107,7 @@ namespace System.Windows.Automation.Peers
                     }
                 }
             }
-            
+
             return done;
         }
 
@@ -136,8 +136,8 @@ namespace System.Windows.Automation.Peers
         }
 
         ///
-        protected override string GetAutomationIdCore() 
-        { 
+        protected override string GetAutomationIdCore()
+        {
             return (AutomationProperties.GetAutomationId(_owner));
         }
 
@@ -172,24 +172,24 @@ namespace System.Windows.Automation.Peers
         private bool ComputeBoundingRectangle(out Rect rect)
         {
             rect = Rect.Empty;
-            
+
             PresentationSource presentationSource = PresentationSource.CriticalFromVisual(_owner);
 
             // If there's no source, the element is not visible, return empty rect
-            if(presentationSource == null)
+            if (presentationSource == null)
                 return false;
 
             HwndSource hwndSource = presentationSource as HwndSource;
 
             // If the source isn't an HwndSource, there's not much we can do, return empty rect
-            if(hwndSource == null)
+            if (hwndSource == null)
                 return false;
 
-            Rect rectElement    =  _owner.Visual2DContentBounds;            
+            Rect rectElement = _owner.Visual2DContentBounds;
             // we use VisualTreeHelper.GetContainingVisual2D to transform from the containing Viewport3DVisual
-            Rect rectRoot       = PointUtil.ElementToRoot(rectElement, VisualTreeHelper.GetContainingVisual2D(_owner), presentationSource);
-            Rect rectClient     = PointUtil.RootToClient(rectRoot, presentationSource);
-            rect    = PointUtil.ClientToScreen(rectClient, hwndSource);
+            Rect rectRoot = PointUtil.ElementToRoot(rectElement, VisualTreeHelper.GetContainingVisual2D(_owner), presentationSource);
+            Rect rectClient = PointUtil.RootToClient(rectRoot, presentationSource);
+            rect = PointUtil.ClientToScreen(rectClient, hwndSource);
 
             return true;
         }
@@ -201,25 +201,25 @@ namespace System.Windows.Automation.Peers
 
             switch (behavior)
             {
-                case IsOffscreenBehavior.Onscreen :
+                case IsOffscreenBehavior.Onscreen:
                     return false;
 
-                case IsOffscreenBehavior.Offscreen :
+                case IsOffscreenBehavior.Offscreen:
                     return true;
 
                 case IsOffscreenBehavior.FromClip:
                     {
                         bool isOffscreen = !_owner.IsVisible;
-                        
+
                         if (!isOffscreen)
                         {
                             UIElement containingUIElement = GetContainingUIElement(_owner);
                             if (containingUIElement != null)
                             {
                                 Rect boundingRect = UIElementAutomationPeer.CalculateVisibleBoundingRect(containingUIElement);
-                                
-                                isOffscreen = (DoubleUtil.AreClose(boundingRect, Rect.Empty) || 
-                                               DoubleUtil.AreClose(boundingRect.Height, 0) || 
+
+                                isOffscreen = (DoubleUtil.AreClose(boundingRect, Rect.Empty) ||
+                                               DoubleUtil.AreClose(boundingRect.Height, 0) ||
                                                DoubleUtil.AreClose(boundingRect.Width, 0));
                             }
                         }
@@ -227,7 +227,7 @@ namespace System.Windows.Automation.Peers
                         return isOffscreen;
                     }
 
-                default :
+                default:
                     return !_owner.IsVisible;
             }
         }
@@ -243,7 +243,8 @@ namespace System.Windows.Automation.Peers
             {
                 element = reference as UIElement;
 
-                if (element != null) break;
+                if (element != null)
+                    break;
 
                 reference = VisualTreeHelper.GetParent(reference);
             }
@@ -256,7 +257,7 @@ namespace System.Windows.Automation.Peers
         {
             return (AutomationOrientation.None);
         }
-        
+
         ///
         override protected string GetItemTypeCore()
         {
@@ -328,12 +329,12 @@ namespace System.Windows.Automation.Peers
 
         ///
         override protected AutomationPeer GetLabeledByCore()
-        {          
+        {
             UIElement element = AutomationProperties.GetLabeledBy(_owner);
             if (element != null)
                 return element.GetAutomationPeer();
 
-            return null;                        
+            return null;
         }
 
         ///
@@ -394,18 +395,18 @@ namespace System.Windows.Automation.Peers
         {
             Rect rectScreen;
             Point pt = new Point(double.NaN, double.NaN);
-    
+
             if (ComputeBoundingRectangle(out rectScreen))
             {
                 pt = new Point(rectScreen.Left + rectScreen.Width * 0.5, rectScreen.Top + rectScreen.Height * 0.5);
             }
-                        
+
             return pt;
         }
 
         ///
-        override protected void SetFocusCore() 
-        { 
+        override protected void SetFocusCore()
+        {
             if (!_owner.Focus())
                 throw new InvalidOperationException(SR.SetFocusFailed);
         }

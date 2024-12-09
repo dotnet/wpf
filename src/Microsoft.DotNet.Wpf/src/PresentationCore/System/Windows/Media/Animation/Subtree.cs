@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@ namespace System.Windows.Media.Animation
     [System.Flags]
     internal enum SubtreeFlag
     {
-        Reset                       = 1,
-        ProcessRoot                 = 2,
-        SkipSubtree                 = 4,
+        Reset = 1,
+        ProcessRoot = 2,
+        SkipSubtree = 4,
     }
 
     /// <summary>
@@ -153,9 +153,9 @@ namespace System.Windows.Media.Animation
 
         #region Data
 
-        private Clock       _rootClock;
-        private Clock       _currentClock;
-        private SubtreeFlag         _flags;
+        private Clock _rootClock;
+        private Clock _currentClock;
+        private SubtreeFlag _flags;
 
         #endregion // Data
     }
@@ -223,7 +223,7 @@ namespace System.Windows.Media.Animation
                     {
                         _currentClock = nextClock;
                         currentClockGroup = _currentClock as ClockGroup;
-} 
+                    }
                     while ((nextClock = _currentClock.FirstChild) != null);
                 }
 
@@ -256,8 +256,8 @@ namespace System.Windows.Media.Animation
 
         #region Data
 
-        private Clock       _rootClock;
-        private Clock       _currentClock;
+        private Clock _rootClock;
+        private Clock _currentClock;
         private SubtreeFlag _flags;
 
         #endregion // Data

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,7 +9,7 @@ namespace System.Windows.Controls.Primitives
     /// </summary>
     /// <seealso cref="ScrollBar.ScrollEvent" />
     /// <seealso cref="RoutedEventArgs" />
-    public class ScrollEventArgs: RoutedEventArgs
+    public class ScrollEventArgs : RoutedEventArgs
     {
         /// <summary>
         /// This is an instance constructor for the ScrollEventArgs class.  It
@@ -20,7 +20,7 @@ namespace System.Windows.Controls.Primitives
         {
             _scrollEventType = scrollEventType;
             _newValue = newValue;
-            RoutedEvent =ScrollBar.ScrollEvent;
+            RoutedEvent = ScrollBar.ScrollEvent;
         }
 
         /// <value>
@@ -39,7 +39,7 @@ namespace System.Windows.Controls.Primitives
             get { return _newValue; }
         }
 
-	
+
         /// <summary>
         /// This method is used to perform the proper type casting in order to
         /// call the type-safe ScrollEventHandler delegate for the ScrollEvent event.
@@ -51,7 +51,7 @@ namespace System.Windows.Controls.Primitives
         /// <seealso cref="ScrollEventHandler" />
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            ScrollEventHandler  handler = (ScrollEventHandler)genericHandler;
+            ScrollEventHandler handler = (ScrollEventHandler)genericHandler;
             handler(genericTarget, this);
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,13 +11,13 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Utility;
 using System.Collections;
 using System.Windows.Controls;
 using System.Windows.Diagnostics;
-using System.Windows.Media;
 using System.Windows.Markup;
+using System.Windows.Media;
+using MS.Internal;
+using MS.Utility;
 
 namespace System.Windows
 {
@@ -291,7 +291,7 @@ namespace System.Windows
             // to the dispatchers that the elements belong to.
             //
             this.VerifyAccess();
-            if(newParent != null)
+            if (newParent != null)
             {
                 newParent.VerifyAccess();
             }
@@ -360,7 +360,7 @@ namespace System.Windows
 
 
             // Synchronize ForceInherit properties
-            if(_parent != null)
+            if (_parent != null)
             {
                 UIElement.SynchronizeForceInheritProperties(null, this, null, _parent);
             }
@@ -380,7 +380,7 @@ namespace System.Windows
 
         // OnAncestorChangedInternal variant when we know what type (FE/FCE) the
         //  tree node is.
-            internal void OnAncestorChangedInternal(TreeChangeInfo parentTreeState)
+        internal void OnAncestorChangedInternal(TreeChangeInfo parentTreeState)
         {
             // Cache the IsSelfInheritanceParent flag
             bool wasSelfInheritanceParent = IsSelfInheritanceParent;
@@ -534,45 +534,45 @@ namespace System.Windows
         {
             get
             {
-                    if (null != EventHandlersStore)
-                    {
-                        if (EventHandlersStore.Contains(LoadedEvent) || EventHandlersStore.Contains(UnloadedEvent))
-                        {
-                            return true;
-                        }
-                    }
-                    if(null != Style && Style.HasLoadedChangeHandler)
+                if (null != EventHandlersStore)
+                {
+                    if (EventHandlersStore.Contains(LoadedEvent) || EventHandlersStore.Contains(UnloadedEvent))
                     {
                         return true;
                     }
-                    if(null != ThemeStyle && ThemeStyle.HasLoadedChangeHandler)
-                    {
-                        return true;
-                    }
-
-                    if(HasFefLoadedChangeHandler)
-                    {
-                        return true;
-                    }
-                    return false;
                 }
+                if (null != Style && Style.HasLoadedChangeHandler)
+                {
+                    return true;
+                }
+                if (null != ThemeStyle && ThemeStyle.HasLoadedChangeHandler)
+                {
+                    return true;
+                }
+
+                if (HasFefLoadedChangeHandler)
+                {
+                    return true;
+                }
+                return false;
+            }
         }
 
         internal bool HasFefLoadedChangeHandler
         {
             get
             {
-                if(null == TemplatedParent)
+                if (null == TemplatedParent)
                 {
                     return false;
                 }
                 FrameworkElementFactory fefRoot = BroadcastEventHelper.GetFEFTreeRoot(TemplatedParent);
-                if(null == fefRoot)
+                if (null == fefRoot)
                 {
                     return false;
                 }
                 FrameworkElementFactory fef = StyleHelper.FindFEF(fefRoot, TemplateChildIndex);
-                if(null == fef)
+                if (null == fef)
                 {
                     return false;
                 }
@@ -764,7 +764,7 @@ namespace System.Windows
             // c) the context does not introduce a cycle
             if ((property == VisualBrush.VisualProperty || property == BitmapCacheBrush.TargetProperty)
                 && FrameworkElement.GetFrameworkParent(this) == null
-                 //!FrameworkObject.IsEffectiveAncestor(this, context, property))
+                //!FrameworkObject.IsEffectiveAncestor(this, context, property))
                 && !FrameworkObject.IsEffectiveAncestor(this, context))
             {
                 //FrameworkObject.Log("+ {0}", FrameworkObject.LogIC(context, property, this));
@@ -1136,13 +1136,13 @@ namespace System.Windows
         // Says if there is a loaded event pending
         internal object[] LoadedPending
         {
-            get { return (object[]) GetValue(LoadedPendingProperty); }
+            get { return (object[])GetValue(LoadedPendingProperty); }
         }
 
         // Says if there is an unloaded event pending
         internal object[] UnloadedPending
         {
-            get { return (object[]) GetValue(UnloadedPendingProperty); }
+            get { return (object[])GetValue(UnloadedPendingProperty); }
         }
 
         // Indicates if this instance has multiple inheritance contexts

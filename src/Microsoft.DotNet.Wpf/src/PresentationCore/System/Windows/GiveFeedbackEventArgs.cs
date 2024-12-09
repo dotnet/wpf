@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace System.Windows
         //  Constructors
         //
         //------------------------------------------------------
-    
+
         #region Constructors
 
         /// <summary>
@@ -60,8 +60,8 @@ namespace System.Windows
         /// </summary>
         public DragDropEffects Effects
         {
-            get 
-            {   
+            get
+            {
                 return _effects;
             }
         }
@@ -71,12 +71,12 @@ namespace System.Windows
         /// </summary>
         public bool UseDefaultCursors
         {
-            get 
-            {   
+            get
+            {
                 return _useDefaultCursors;
             }
 
-            set 
+            set
             {
                 _useDefaultCursors = value;
             }

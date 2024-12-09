@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Text;
+using System.Collections;
 using System.Globalization;
+using System.Text;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using System.Collections;
 using MS.Internal.Generic;
 
 namespace MS.Internal.TextFormatting
@@ -45,27 +45,27 @@ namespace MS.Internal.TextFormatting
     /// </remarks>
     internal class TextStore
     {
-        private FormatSettings          _settings;                  // format settings
-        private int                     _lscpFirstValue;            // first lscp value
-        private int                     _cpFirst;                   // store first cp (both cp and lscp start out the same)
-        private int                     _lscchUpTo;                 // number of lscp resolved
-        private int                     _cchUpTo;                   // number of cp resolved
-        private int                     _cchEol;                    // number of chars for end-of-line mark
-        private int                     _accNominalWidthSoFar;      // accumulated nominal width so far
-        private int                     _accTextLengthSoFar;        // accumulated count of text characters so far
-        private NumberContext           _numberContext;             // cached number context for contextual digit substitution
-        private int                     _cpNumberContext;           // cp at which _numberContext is valid
+        private FormatSettings _settings;                  // format settings
+        private int _lscpFirstValue;            // first lscp value
+        private int _cpFirst;                   // store first cp (both cp and lscp start out the same)
+        private int _lscchUpTo;                 // number of lscp resolved
+        private int _cchUpTo;                   // number of cp resolved
+        private int _cchEol;                    // number of chars for end-of-line mark
+        private int _accNominalWidthSoFar;      // accumulated nominal width so far
+        private int _accTextLengthSoFar;        // accumulated count of text characters so far
+        private NumberContext _numberContext;             // cached number context for contextual digit substitution
+        private int _cpNumberContext;           // cp at which _numberContext is valid
 
-        private SpanVector              _plsrunVector;
-        private SpanPosition            _plsrunVectorLatestPosition;
-        private ArrayList               _lsrunList;                 // lsrun list
-        private BidiState               _bidiState;                 // (defer initialization until FetchRun)
-        private TextModifierScope       _modifierScope;             // top-most frame of the text modifier stack, or null
+        private SpanVector _plsrunVector;
+        private SpanPosition _plsrunVectorLatestPosition;
+        private ArrayList _lsrunList;                 // lsrun list
+        private BidiState _bidiState;                 // (defer initialization until FetchRun)
+        private TextModifierScope _modifierScope;             // top-most frame of the text modifier stack, or null
 
-        private int                     _formatWidth;               // formatting width LS sees
-        private SpanVector              _textObjectMetricsVector;   // inline object cache
+        private int _formatWidth;               // formatting width LS sees
+        private SpanVector _textObjectMetricsVector;   // inline object cache
 
-        internal static LSRun[]          ControlRuns;               // Control text runs e.g. Bidi reversal
+        internal static LSRun[] ControlRuns;               // Control text runs e.g. Bidi reversal
 
 
         /// <summary>
@@ -83,12 +83,12 @@ namespace MS.Internal.TextFormatting
             ControlRuns[1] = new LSRun(Plsrun.Reverse, esc.szObjectReplacement);
             ControlRuns[2] = new LSRun(Plsrun.FakeLineBreak, esc.szLineSeparator);
 
-            PwchNbsp              = esc.szNbsp;
-            PwchHidden            = esc.szHidden;
-            PwchParaSeparator     = esc.szParaSeparator;
-            PwchLineSeparator     = esc.szLineSeparator;
+            PwchNbsp = esc.szNbsp;
+            PwchHidden = esc.szHidden;
+            PwchParaSeparator = esc.szParaSeparator;
+            PwchLineSeparator = esc.szLineSeparator;
             PwchObjectReplacement = esc.szObjectReplacement;
-            PwchObjectTerminator  = esc.szObjectTerminator;
+            PwchObjectTerminator = esc.szObjectTerminator;
         }
 
 
@@ -100,10 +100,10 @@ namespace MS.Internal.TextFormatting
         /// <param name="lscpFirstValue">lscp first value</param>
         /// <param name="formatWidth">formatting width LS sees</param>
         public TextStore(
-            FormatSettings          settings,
-            int                     cpFirst,
-            int                     lscpFirstValue,
-            int                     formatWidth
+            FormatSettings settings,
+            int cpFirst,
+            int lscpFirstValue,
+            int formatWidth
             )
         {
             _settings = settings;
@@ -119,8 +119,8 @@ namespace MS.Internal.TextFormatting
             // Recreate the stack of text modifiers if there is one.
             TextLineBreak previousLineBreak = settings.PreviousLineBreak;
 
-            if (    previousLineBreak != null
-                &&  previousLineBreak.TextModifierScope != null)
+            if (previousLineBreak != null
+                && previousLineBreak.TextModifierScope != null)
             {
                 _modifierScope = previousLineBreak.TextModifierScope.CloneStack();
 
@@ -141,12 +141,12 @@ namespace MS.Internal.TextFormatting
         /// <param name="lsrunLength">distance from the specified lscp to the end of the LSRun</param>
         /// <returns>lsrun being fetched</returns>
         internal LSRun FetchLSRun(
-            int             lscpFetch,
-            TextFormattingMode  textFormattingMode,
-            bool            isSideways,
-            out Plsrun      plsrun,
-            out int         lsrunOffset,
-            out int         lsrunLength
+            int lscpFetch,
+            TextFormattingMode textFormattingMode,
+            bool isSideways,
+            out Plsrun plsrun,
+            out int lsrunOffset,
+            out int lsrunLength
             )
         {
             lscpFetch -= _lscpFirstValue;
@@ -162,7 +162,7 @@ namespace MS.Internal.TextFormatting
                 int cch = 0;
                 int cchText = 0;
 
-                SpanVector runInfoVector     = new SpanVector(null);
+                SpanVector runInfoVector = new SpanVector(null);
                 SpanVector textEffectsVector = new SpanVector(null);
                 byte[] bidiLevels = null;
                 int lastBidiLevel = GetLastLevel();
@@ -186,9 +186,9 @@ namespace MS.Internal.TextFormatting
                             break;
                         }
 
-                        if (  _bidiState == null
+                        if (_bidiState == null
                             &&
-                               (   IsDirectionalModifier(runInfo.TextRun as TextModifier)
+                               (IsDirectionalModifier(runInfo.TextRun as TextModifier)
                                 || IsEndOfDirectionalModifier(runInfo)
                                )
                             )
@@ -201,7 +201,7 @@ namespace MS.Internal.TextFormatting
 
                         int stringLength = runInfo.StringLength;
 
-                        if(runInfo.TextRun is ITextSymbols)
+                        if (runInfo.TextRun is ITextSymbols)
                         {
                             // Let stopMask specify which types of characters need to be isolated in special runs.
                             // Let bidiMask specify which types of characters require bidi analysis.
@@ -244,7 +244,7 @@ namespace MS.Internal.TextFormatting
                             // but if so we don't want to treat them as such.
                             charFlags &= (ushort)~(CharacterAttributeFlags.CharacterLineBreak | CharacterAttributeFlags.CharacterParaBreak);
 
-                            if(stringLength <= 0)
+                            if (stringLength <= 0)
                             {
                                 // There are special characters such as various linebreaks or format anchor
                                 // character in the middle of text stream. We isolate such characters into
@@ -256,7 +256,7 @@ namespace MS.Internal.TextFormatting
 
                                 Debug.Assert(stringLength > 0 && runInfo.Length > 0);
                             }
-                            else if(stringLength != runInfo.Length)
+                            else if (stringLength != runInfo.Length)
                             {
                                 // shorten the run length if the character string is being cut short
                                 runInfo.Length = stringLength;
@@ -282,7 +282,7 @@ namespace MS.Internal.TextFormatting
                         cch += stringLength;
 
                         cchFetched += runInfo.Length;
-} while(
+                    } while (
                             _accNominalWidthSoFar < _formatWidth
                         && !runInfo.IsEndOfLine
                         && !IsNewline(charFlagsSoFar)
@@ -292,7 +292,7 @@ namespace MS.Internal.TextFormatting
 
                     // if bidi is detected, resolve all fetched runs
 
-                    if (   lastBidiLevel > 0
+                    if (lastBidiLevel > 0
                         || bidiCharFlagsSoFar != 0
                         || _bidiState != null
                        )
@@ -310,17 +310,17 @@ namespace MS.Internal.TextFormatting
                     {
                         cchResolved = cch;
                     }
-} while(cchResolved <= 0);
+                } while (cchResolved <= 0);
 
                 Debug.Assert(
                         runInfoVector != null
-                    &&  (   bidiLevels == null
-                        ||  cchResolved <= bidiLevels.Length)
+                    && (bidiLevels == null
+                        || cchResolved <= bidiLevels.Length)
                     );
 
                 bool forceBreak = IsForceBreakRequired(runInfoVector, ref cchResolved);
 
-                if(bidiLevels == null)
+                if (bidiLevels == null)
                 {
                     // no bidi detected, all characters are left-to-right
                     CreateLSRunsUniformBidiLevel(
@@ -340,13 +340,13 @@ namespace MS.Internal.TextFormatting
                     int runInfoFirstCp = _cchUpTo;
                     int ichUniform = 0;
 
-                    while(ichUniform < cchResolved)
+                    while (ichUniform < cchResolved)
                     {
                         int cchUniform = 1;
                         int uniformBidiLevel = bidiLevels[ichUniform];
 
-                        while(  ichUniform + cchUniform < cchResolved
-                            &&  bidiLevels[ichUniform + cchUniform] == uniformBidiLevel)
+                        while (ichUniform + cchUniform < cchResolved
+                            && bidiLevels[ichUniform + cchUniform] == uniformBidiLevel)
                         {
                             cchUniform++;
                         }
@@ -394,7 +394,7 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Wrapper to TextRun fetching from the cache
         /// </summary>
-        internal TextRunInfo  FetchTextRun(int cpFetch)
+        internal TextRunInfo FetchTextRun(int cpFetch)
         {
             int runLength;
             TextRun textRun;
@@ -481,10 +481,10 @@ namespace MS.Internal.TextFormatting
         /// range, we store all the active TextEffect into a list.
         /// </remarks>
         private void SetTextEffectsVector(
-            SpanVector              textEffectsVector,
-            int                     ich,
-            TextRunInfo             runInfo,
-            TextEffectCollection    textEffects
+            SpanVector textEffectsVector,
+            int ich,
+            TextRunInfo runInfo,
+            TextEffectCollection textEffects
             )
         {
             // We already check for empty text effects at the call site.
@@ -507,7 +507,7 @@ namespace MS.Internal.TextFormatting
             Array.Sort(bounds); // sort the TextEffect bounds.
 
             int effectedRangeStart = Math.Max(cpFetched - offset, bounds[0].Position);
-            int effectedRangeEnd   = Math.Min(cpFetched - offset + runInfo.Length, bounds[bounds.Length - 1].Position);
+            int effectedRangeEnd = Math.Min(cpFetched - offset + runInfo.Length, bounds[bounds.Length - 1].Position);
 
             int currentEffectsCount = 0;
             int currentPosition = effectedRangeStart;
@@ -549,9 +549,9 @@ namespace MS.Internal.TextFormatting
 
                 if (currentEffectsCount == 0 && i < bounds.Length - 1)
                 {
-                   // There is no effect on the current position. Move it to the start of next TextEffect.
-                   Invariant.Assert(bounds[i + 1].IsStart);
-                   currentPosition = Math.Max(currentPosition, bounds[i + 1].Position);
+                    // There is no effect on the current position. Move it to the start of next TextEffect.
+                    Invariant.Assert(bounds[i + 1].IsStart);
+                    currentPosition = Math.Max(currentPosition, bounds[i + 1].Position);
                 }
             }
         }
@@ -586,7 +586,8 @@ namespace MS.Internal.TextFormatting
                 if (Position != other.Position)
                     return Position - other.Position;
 
-                if (IsStart == other.IsStart) return 0;
+                if (IsStart == other.IsStart)
+                    return 0;
 
                 // Starting edge is always in front.
                 return IsStart ? -1 : 1;
@@ -598,8 +599,8 @@ namespace MS.Internal.TextFormatting
         /// Create special run that matches the content of specified text run
         /// </summary>
         private TextRunInfo CreateSpecialRunFromTextContent(
-            TextRunInfo     runInfo,
-            int             cchFetched
+            TextRunInfo runInfo,
+            int cchFetched
             )
         {
             // -FORMAT ANCHOR-
@@ -733,10 +734,10 @@ namespace MS.Internal.TextFormatting
         /// Grab existing lsrun at specified LSCP
         /// </summary>
         private LSRun GrabLSRun(
-            int             lscpFetch,
-            out Plsrun      plsrun,
-            out int         lsrunOffset,
-            out int         lsrunLength
+            int lscpFetch,
+            out Plsrun plsrun,
+            out int lsrunOffset,
+            out int lsrunLength
             )
         {
             int offsetToFirstCp = lscpFetch - _cpFirst;
@@ -813,9 +814,9 @@ namespace MS.Internal.TextFormatting
         /// at the point where directional embedding level is changed.
         /// </remarks>
         private int BidiAnalyze(
-            SpanVector                  runInfoVector,
-            int                         stringLength,
-            out byte[]                  bidiLevels
+            SpanVector runInfoVector,
+            int stringLength,
+            out byte[] bidiLevels
             )
         {
             CharacterBuffer charBuffer = null;
@@ -850,7 +851,7 @@ namespace MS.Internal.TextFormatting
 
                 StringBuilder stringBuilder = new StringBuilder(stringLength);
 
-                while(ich < stringLength)
+                while (ich < stringLength)
                 {
                     runInfoSpanRider.At(ich);
                     cch = runInfoSpanRider.Length;
@@ -880,7 +881,7 @@ namespace MS.Internal.TextFormatting
                 offsetToFirstChar = 0;
             }
 
-            if(_bidiState == null)
+            if (_bidiState == null)
             {
                 // make sure the initial state is setup
                 _bidiState = new BidiState(_settings, _cpFirst);
@@ -891,11 +892,11 @@ namespace MS.Internal.TextFormatting
 
             int resolvedLength = 0;
 
-            for(int i = 0; i < runInfoVector.Count; i++)
+            for (int i = 0; i < runInfoVector.Count; i++)
             {
                 int cchResolved = 0;
 
-                TextRunInfo currentRunInfo = (TextRunInfo) runInfoVector[i].element;
+                TextRunInfo currentRunInfo = (TextRunInfo)runInfoVector[i].element;
                 TextModifier modifier = currentRunInfo.TextRun as TextModifier;
 
                 if (IsDirectionalModifier(modifier))
@@ -922,7 +923,7 @@ namespace MS.Internal.TextFormatting
                         // AN or EN to indicate that any EN in this range should be explicitly set to this override
                         // value.
                         //
-                        for(int k = 0; k < runInfoVector[i].length; k++)
+                        for (int k = 0; k < runInfoVector[i].length; k++)
                         {
                             directionClasses[ich + k] = europeanNumberOverride;
                         }
@@ -931,9 +932,9 @@ namespace MS.Internal.TextFormatting
                         if ((++i) >= runInfoVector.Count)
                             break; // end of all runs.
 
-                        currentRunInfo = (TextRunInfo) runInfoVector[i].element;
-                        if ( currentRunInfo.Plsrun == Plsrun.Hidden &&
-                              (  IsDirectionalModifier(currentRunInfo.TextRun as TextModifier)
+                        currentRunInfo = (TextRunInfo)runInfoVector[i].element;
+                        if (currentRunInfo.Plsrun == Plsrun.Hidden &&
+                              (IsDirectionalModifier(currentRunInfo.TextRun as TextModifier)
                               || IsEndOfDirectionalModifier(currentRunInfo)
                               )
                            )
@@ -985,8 +986,8 @@ namespace MS.Internal.TextFormatting
         /// separated from the content before the modifier scope.
         /// </returns>
         private byte AnalyzeDirectionalModifier(
-            BidiState       state,
-            FlowDirection   flowDirection
+            BidiState state,
+            FlowDirection flowDirection
             )
         {
             bool leftToRight = (flowDirection == FlowDirection.LeftToRight);
@@ -1024,7 +1025,7 @@ namespace MS.Internal.TextFormatting
             // Pop level stack
             if (state.Overflow > 0)
             {
-                state.Overflow --;
+                state.Overflow--;
                 return state.CurrentLevel;
             }
 
@@ -1043,7 +1044,7 @@ namespace MS.Internal.TextFormatting
 
         private bool IsEndOfDirectionalModifier(TextRunInfo runInfo)
         {
-            return (  runInfo.TextModifierScope != null
+            return (runInfo.TextModifierScope != null
                    && runInfo.TextModifierScope.TextModifier.HasDirectionalEmbedding
                    && runInfo.TextRun is TextEndOfSegment
                    );
@@ -1149,14 +1150,14 @@ namespace MS.Internal.TextFormatting
         [Flags]
         private enum NumberContext
         {
-            Unknown             = 0,
+            Unknown = 0,
 
-            Arabic              = 0x0001,
-            European            = 0x0002,
-            Mask                = 0x0003,
+            Arabic = 0x0001,
+            European = 0x0002,
+            Mask = 0x0003,
 
-            FromLetter          = 0x0004,
-            FromFlowDirection   = 0x0008
+            FromLetter = 0x0004,
+            FromFlowDirection = 0x0008
         }
 
         private NumberContext GetNumberContext(TextModifierScope scope)
@@ -1265,15 +1266,15 @@ namespace MS.Internal.TextFormatting
         /// Create lsruns within a range of uniform bidi level.
         /// </summary>
         private void CreateLSRunsUniformBidiLevel(
-            SpanVector              runInfoVector,
-            SpanVector              textEffectsVector,
-            int                     runInfoFirstCp,
-            int                     ichUniform,
-            int                     cchUniform,
-            int                     uniformBidiLevel,
-            TextFormattingMode          textFormattingMode,
-            bool                    isSideways,
-            ref int                 lastBidiLevel
+            SpanVector runInfoVector,
+            SpanVector textEffectsVector,
+            int runInfoFirstCp,
+            int ichUniform,
+            int cchUniform,
+            int uniformBidiLevel,
+            TextFormattingMode textFormattingMode,
+            bool isSideways,
+            ref int lastBidiLevel
             )
         {
             int ichRun = 0;
@@ -1284,7 +1285,7 @@ namespace MS.Internal.TextFormatting
             SpanRider runInfoSpanRider = new SpanRider(runInfoVector);
             SpanRider textEffectsSpanRider = new SpanRider(textEffectsVector);
 
-            while(ichRun < cchUniform)
+            while (ichRun < cchUniform)
             {
                 runInfoSpanRider.At(ichUniform + ichRun);
                 textEffectsSpanRider.At(ichUniform + ichRun);
@@ -1445,14 +1446,14 @@ namespace MS.Internal.TextFormatting
         /// <param name="lastBidiLevel">last bidi level</param>
         /// <returns>updated last bidi Level</returns>
         private int CreateReverseLSRuns(
-            int     currentBidiLevel,
-            int     lastBidiLevel
+            int currentBidiLevel,
+            int lastBidiLevel
             )
         {
             Plsrun plsrun;
             int levelDiff = currentBidiLevel - lastBidiLevel;
 
-            if(levelDiff > 0)
+            if (levelDiff > 0)
             {
                 // level up
                 plsrun = Plsrun.Reverse;
@@ -1464,7 +1465,7 @@ namespace MS.Internal.TextFormatting
                 levelDiff = -levelDiff;
             }
 
-            for(int i = 0; i < levelDiff; i++)
+            for (int i = 0; i < levelDiff; i++)
             {
                 _plsrunVectorLatestPosition = _plsrunVector.SetValue(_lscchUpTo, 1, plsrun, _plsrunVectorLatestPosition);
                 _lscchUpTo++;
@@ -1488,16 +1489,16 @@ namespace MS.Internal.TextFormatting
         /// <param name="lastBidiLevel">last bidi level</param>
         /// <param name="textRunLength">text run length</param>
         private void CreateLSRuns(
-            TextRunInfo       runInfo,
+            TextRunInfo runInfo,
             IList<TextEffect> textEffects,
-            CultureInfo       digitCulture,
-            int               offsetToFirstChar,
-            int               stringLength,
-            int               uniformBidiLevel,
-            TextFormattingMode    textFormattingMode,
-            bool              isSideways,
-            ref int           lastBidiLevel,
-            out int           textRunLength
+            CultureInfo digitCulture,
+            int offsetToFirstChar,
+            int stringLength,
+            int uniformBidiLevel,
+            TextFormattingMode textFormattingMode,
+            bool isSideways,
+            ref int lastBidiLevel,
+            out int textRunLength
             )
         {
             LSRun lsrun = null;
@@ -1507,124 +1508,124 @@ namespace MS.Internal.TextFormatting
             switch (runInfo.Plsrun)
             {
                 case Plsrun.Text:
-                {
-                    ushort charFlags = (ushort)runInfo.CharacterAttributeFlags;
-
-                    // LineBreak & ParaBreak are separated into individual TextRunInfo with Plsrun.LineBreak or Plsrun.ParaBreak.
-                    Invariant.Assert(!IsNewline(charFlags));
-
-                    if ((charFlags & (ushort)CharacterAttributeFlags.CharacterFormatAnchor) != 0)
                     {
-                        lsrun = new LSRun(
-                            runInfo,
-                            Plsrun.FormatAnchor,
-                            PwchNbsp,
-                            1,
-                            runInfo.OffsetToFirstCp,
-                            (byte) uniformBidiLevel
-                            );
+                        ushort charFlags = (ushort)runInfo.CharacterAttributeFlags;
 
-                        lsrunLength = textRunLength = lsrun.StringLength;
+                        // LineBreak & ParaBreak are separated into individual TextRunInfo with Plsrun.LineBreak or Plsrun.ParaBreak.
+                        Invariant.Assert(!IsNewline(charFlags));
+
+                        if ((charFlags & (ushort)CharacterAttributeFlags.CharacterFormatAnchor) != 0)
+                        {
+                            lsrun = new LSRun(
+                                runInfo,
+                                Plsrun.FormatAnchor,
+                                PwchNbsp,
+                                1,
+                                runInfo.OffsetToFirstCp,
+                                (byte)uniformBidiLevel
+                                );
+
+                            lsrunLength = textRunLength = lsrun.StringLength;
+                        }
+                        else
+                        {
+                            // Normal text, run length is character length
+
+                            textRunLength = lsrunLength = stringLength;
+                            Debug.Assert(runInfo.OffsetToFirstChar + offsetToFirstChar + lsrunLength <= runInfo.CharacterBuffer.Count);
+
+                            CreateTextLSRuns(
+                                runInfo,
+                                textEffects,
+                                digitCulture,
+                                offsetToFirstChar,
+                                stringLength,
+                                uniformBidiLevel,
+                                textFormattingMode,
+                                isSideways,
+                                ref lastBidiLevel
+                                );
+                        }
+
+                        break;
                     }
-                    else
-                    {
-                        // Normal text, run length is character length
-
-                        textRunLength = lsrunLength = stringLength;
-                        Debug.Assert(runInfo.OffsetToFirstChar + offsetToFirstChar + lsrunLength <= runInfo.CharacterBuffer.Count);
-
-                        CreateTextLSRuns(
-                            runInfo,
-                            textEffects,
-                            digitCulture,
-                            offsetToFirstChar,
-                            stringLength,
-                            uniformBidiLevel,
-                            textFormattingMode,
-                            isSideways,
-                            ref lastBidiLevel
-                            );
-                    }
-
-                    break;
-                }
 
                 case Plsrun.InlineObject:
-                {
-                    Debug.Assert(offsetToFirstChar == 0);
+                    {
+                        Debug.Assert(offsetToFirstChar == 0);
 
-                    double realToIdeal = TextFormatterImp.ToIdeal;
+                        double realToIdeal = TextFormatterImp.ToIdeal;
 
-                    lsrun = new LSRun(
-                        runInfo,
-                        textEffects,
-                        Plsrun.InlineObject,
-                        runInfo.OffsetToFirstCp,
-                        runInfo.Length,
-                        (int)Math.Round(realToIdeal * runInfo.TextRun.Properties.FontRenderingEmSize),
-                        0,          // character flags
-                        new CharacterBufferRange(runInfo.CharacterBuffer, 0, stringLength),
-                        null,       // no shapeable
-                        realToIdeal,
-                        (byte)uniformBidiLevel
-                        );
+                        lsrun = new LSRun(
+                            runInfo,
+                            textEffects,
+                            Plsrun.InlineObject,
+                            runInfo.OffsetToFirstCp,
+                            runInfo.Length,
+                            (int)Math.Round(realToIdeal * runInfo.TextRun.Properties.FontRenderingEmSize),
+                            0,          // character flags
+                            new CharacterBufferRange(runInfo.CharacterBuffer, 0, stringLength),
+                            null,       // no shapeable
+                            realToIdeal,
+                            (byte)uniformBidiLevel
+                            );
 
-                    lsrunLength = stringLength;
-                    textRunLength = runInfo.Length;
-                    break;
-                }
+                        lsrunLength = stringLength;
+                        textRunLength = runInfo.Length;
+                        break;
+                    }
 
                 case Plsrun.LineBreak:
-                {
-                    //
-                    // Line Separator's BIDI class is Neutral (WS). It would take the class of surrounding
-                    // characters so it might end up in a reverse run. However, LS would not process Line Separator
-                    // in reverse run. Here we always override the BIDI level of Line Separator to paragraph's
-                    // embedding level such that it is out of reverse run and LS would process it correctly.
-                    //
-                    uniformBidiLevel = (Pap.RightToLeft ? 1 : 0);
-                    lsrun = CreateLineBreakLSRun(
-                        runInfo,
-                        stringLength,
-                        out lsrunLength,
-                        out textRunLength
-                        );
-                    break;
-                }
+                    {
+                        //
+                        // Line Separator's BIDI class is Neutral (WS). It would take the class of surrounding
+                        // characters so it might end up in a reverse run. However, LS would not process Line Separator
+                        // in reverse run. Here we always override the BIDI level of Line Separator to paragraph's
+                        // embedding level such that it is out of reverse run and LS would process it correctly.
+                        //
+                        uniformBidiLevel = (Pap.RightToLeft ? 1 : 0);
+                        lsrun = CreateLineBreakLSRun(
+                            runInfo,
+                            stringLength,
+                            out lsrunLength,
+                            out textRunLength
+                            );
+                        break;
+                    }
 
                 case Plsrun.ParaBreak:
-                {
-                    //
-                    // Paragraph Separator ends the paragraph. Its bidi level must be the embedding level.
-                    //
-                    Debug.Assert(uniformBidiLevel == (Pap.RightToLeft ? 1 : 0));
-                    lsrun = CreateLineBreakLSRun(
-                        runInfo,
-                        stringLength,
-                        out lsrunLength,
-                        out textRunLength
-                        );
-                    break;
-                }
+                    {
+                        //
+                        // Paragraph Separator ends the paragraph. Its bidi level must be the embedding level.
+                        //
+                        Debug.Assert(uniformBidiLevel == (Pap.RightToLeft ? 1 : 0));
+                        lsrun = CreateLineBreakLSRun(
+                            runInfo,
+                            stringLength,
+                            out lsrunLength,
+                            out textRunLength
+                            );
+                        break;
+                    }
                 case Plsrun.Hidden:
-                {
-                    // hidden run yields the same cp as its lscp
-                    lsrunLength = runInfo.Length - offsetToFirstChar;
-                    textRunLength = lsrunLength;
-                    lsrun = new LSRun(
-                        runInfo,
-                        Plsrun.Hidden,
-                        PwchHidden,
-                        textRunLength,
-                        runInfo.OffsetToFirstCp,
-                        (byte) uniformBidiLevel
-                        );
+                    {
+                        // hidden run yields the same cp as its lscp
+                        lsrunLength = runInfo.Length - offsetToFirstChar;
+                        textRunLength = lsrunLength;
+                        lsrun = new LSRun(
+                            runInfo,
+                            Plsrun.Hidden,
+                            PwchHidden,
+                            textRunLength,
+                            runInfo.OffsetToFirstCp,
+                            (byte)uniformBidiLevel
+                            );
 
-                    break;
-                }
+                        break;
+                    }
             }
 
-            if(lsrun != null)
+            if (lsrun != null)
             {
                 Debug.Assert(lsrunLength > 0);
 
@@ -1646,15 +1647,15 @@ namespace MS.Internal.TextFormatting
         /// then create one LSRun for each of them.
         /// </summary>
         private void CreateTextLSRuns(
-            TextRunInfo       runInfo,
+            TextRunInfo runInfo,
             IList<TextEffect> textEffects,
-            CultureInfo       digitCulture,
-            int               offsetToFirstChar,
-            int               stringLength,
-            int               uniformBidiLevel,
-            TextFormattingMode    textFormattingMode,
-            bool              isSideways,
-            ref int           lastBidiLevel
+            CultureInfo digitCulture,
+            int offsetToFirstChar,
+            int stringLength,
+            int uniformBidiLevel,
+            TextFormattingMode textFormattingMode,
+            bool isSideways,
+            ref int lastBidiLevel
             )
         {
             IList<TextShapeableSymbols> shapeables = null;
@@ -1743,10 +1744,10 @@ namespace MS.Internal.TextFormatting
         /// Create LSRun for a linebreak run
         /// </summary>
         private LSRun CreateLineBreakLSRun(
-            TextRunInfo     runInfo,
-            int             stringLength,
-            out int         lsrunLength,
-            out int         textRunLength
+            TextRunInfo runInfo,
+            int stringLength,
+            out int lsrunLength,
+            out int textRunLength
             )
         {
             lsrunLength = stringLength;
@@ -1777,7 +1778,7 @@ namespace MS.Internal.TextFormatting
         /// <returns>plsrun of added lsrun</returns>
         private Plsrun AddLSRun(LSRun lsrun)
         {
-            if(lsrun.Type < Plsrun.FormatAnchor)
+            if (lsrun.Type < Plsrun.FormatAnchor)
             {
                 return lsrun.Type;
             }
@@ -1822,7 +1823,7 @@ namespace MS.Internal.TextFormatting
         {
             plsrun = ToIndex(plsrun);
 
-            return  (LSRun)(
+            return (LSRun)(
                 IsContent(plsrun) ?
                 _lsrunList[(int)(plsrun - Plsrun.FormatAnchor)] :
                 ControlRuns[(int)plsrun]
@@ -1899,7 +1900,7 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// Check if the run is a line break or paragraph break
         /// </summary>
-        internal static bool IsNewline (Plsrun plsrun)
+        internal static bool IsNewline(Plsrun plsrun)
         {
             return plsrun == Plsrun.LineBreak || plsrun == Plsrun.ParaBreak;
         }
@@ -1909,8 +1910,8 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         internal static bool IsNewline(ushort flags)
         {
-            return ( (flags & (ushort) CharacterAttributeFlags.CharacterLineBreak) != 0
-                  || (flags & (ushort) CharacterAttributeFlags.CharacterParaBreak) != 0 );
+            return ((flags & (ushort)CharacterAttributeFlags.CharacterLineBreak) != 0
+                  || (flags & (ushort)CharacterAttributeFlags.CharacterParaBreak) != 0);
         }
 
         #endregion
@@ -1920,11 +1921,11 @@ namespace MS.Internal.TextFormatting
         /// Repositioning text lsruns according to its BaselineAlignmentment property
         /// </summary>
         internal void AdjustRunsVerticalOffset(
-            int             dcpLimit,
-            int             height,
-            int             baselineOffset,
-            out int         cellHeight,
-            out int         cellAscent
+            int dcpLimit,
+            int height,
+            int baselineOffset,
+            out int cellHeight,
+            out int cellAscent
             )
         {
             // Following are all alignment point offsets from the baseline of the line.
@@ -1943,17 +1944,17 @@ namespace MS.Internal.TextFormatting
 
             int dcp = 0;
             int i = 0;
-            while(dcp < dcpLimit)
+            while (dcp < dcpLimit)
             {
                 Debug.Assert(i < _plsrunVector.Count);
 
                 Span span = _plsrunVector[i++];
                 LSRun lsrun = GetRun((Plsrun)span.element);
 
-                if(     lsrun.Type == Plsrun.Text
-                    ||  lsrun.Type == Plsrun.InlineObject)
+                if (lsrun.Type == Plsrun.Text
+                    || lsrun.Type == Plsrun.InlineObject)
                 {
-                    if(lsrun.RunProp.BaselineAlignment == BaselineAlignment.Baseline)
+                    if (lsrun.RunProp.BaselineAlignment == BaselineAlignment.Baseline)
                     {
                         textTop = Math.Max(textTop, lsrun.BaselineOffset);
                         textBottom = Math.Max(textBottom, lsrun.Descent);
@@ -1971,7 +1972,7 @@ namespace MS.Internal.TextFormatting
 
             // Finalize Bottom by ignoring all but Top, TextTop and Baseline lsruns
 
-            foreach(LSRun lsrun in lsruns)
+            foreach (LSRun lsrun in lsruns)
             {
                 switch (lsrun.RunProp.BaselineAlignment)
                 {
@@ -1999,7 +2000,7 @@ namespace MS.Internal.TextFormatting
             cellAscent = 0;
             int cellDescent = 0;
 
-            foreach(LSRun lsrun in lsruns)
+            foreach (LSRun lsrun in lsruns)
             {
                 int move = 0;
 
@@ -2027,7 +2028,7 @@ namespace MS.Internal.TextFormatting
 
                     case BaselineAlignment.Center:
                         // lsrun center to line center
-                        move = center - lsrun.Height/2 + lsrun.BaselineOffset;
+                        move = center - lsrun.Height / 2 + lsrun.BaselineOffset;
                         break;
 
                     case BaselineAlignment.Superscript:
@@ -2064,13 +2065,13 @@ namespace MS.Internal.TextFormatting
         /// from space to space i.e. a word in SE Asian language is not separated by spaces.
         /// </remarks>
         internal char[] CollectRawWord(
-            int                 lscpCurrent,
-            bool                isCurrentAtWordStart,
-            bool                isSideways,
-            out int             lscpChunk,
-            out int             lscchChunk,
-            out CultureInfo     textCulture,
-            out int             cchWordMax,
+            int lscpCurrent,
+            bool isCurrentAtWordStart,
+            bool isSideways,
+            out int lscpChunk,
+            out int lscchChunk,
+            out CultureInfo textCulture,
+            out int cchWordMax,
             out SpanVector<int> textVector
             )
         {
@@ -2125,7 +2126,7 @@ namespace MS.Internal.TextFormatting
 
                     lsrun = GetRun((Plsrun)rider.CurrentElement);
 
-                    if (   IsNewline(lsrun.Type)
+                    if (IsNewline(lsrun.Type)
                         || lsrun.Type == Plsrun.InlineObject)
                     {
                         // Stop expanding due to hard break
@@ -2161,7 +2162,7 @@ namespace MS.Internal.TextFormatting
                     // Reposition start of chunk to the beginning of the current run and continue expanding
                     Invariant.Assert(lscpLim < lscpChunk);
                     lscpChunk = lscpLim;
-} while (lscpChunk > _cpFirst && cchBefore <= MaxCchWordToHyphenate);
+                } while (lscpChunk > _cpFirst && cchBefore <= MaxCchWordToHyphenate);
 
                 _plsrunVectorLatestPosition = rider.SpanPosition;
             }
@@ -2198,7 +2199,7 @@ namespace MS.Internal.TextFormatting
 
                 lscpLim = lscp + lsrunLength;
 
-                if (   IsNewline(lsrun.Type)
+                if (IsNewline(lsrun.Type)
                     || lsrun.Type == Plsrun.InlineObject)
                 {
                     // Stop expanding due to hard break
@@ -2228,9 +2229,9 @@ namespace MS.Internal.TextFormatting
                     char ch;
                     int cchWord = cchLastWord;
 
-                    while (     cch < cchLim
-                            &&  cchText + cch < MaxCchWordToHyphenate
-                            &&  !IsSpace((ch = lsrun.CharacterBuffer[ichFirst + cch])))
+                    while (cch < cchLim
+                            && cchText + cch < MaxCchWordToHyphenate
+                            && !IsSpace((ch = lsrun.CharacterBuffer[ichFirst + cch])))
                     {
                         cch++;
 
@@ -2279,7 +2280,7 @@ namespace MS.Internal.TextFormatting
 
                 Invariant.Assert(lscpLim > lscp);
                 lscp = lscpLim;
-} while (cchText < MaxCchWordToHyphenate);
+            } while (cchText < MaxCchWordToHyphenate);
 
             if (stringBuilder == null)
                 return null;
@@ -2317,13 +2318,13 @@ namespace MS.Internal.TextFormatting
         /// appropriate for the cases where client measures inline objects at Infinite size.
         /// </remarks>
         internal TextEmbeddedObjectMetrics FormatTextObject(
-            TextEmbeddedObject  textObject,
-            int                 cpFirst,
-            int                 currentPosition,
-            int                 rightMargin
+            TextEmbeddedObject textObject,
+            int cpFirst,
+            int currentPosition,
+            int rightMargin
             )
         {
-            if(_textObjectMetricsVector == null)
+            if (_textObjectMetricsVector == null)
             {
                 _textObjectMetricsVector = new SpanVector(null);
             }
@@ -2333,11 +2334,11 @@ namespace MS.Internal.TextFormatting
 
             TextEmbeddedObjectMetrics metrics = (TextEmbeddedObjectMetrics)rider.CurrentElement;
 
-            if(metrics == null)
+            if (metrics == null)
             {
                 int widthLeft = _formatWidth - currentPosition;
 
-                if(widthLeft <= 0)
+                if (widthLeft <= 0)
                 {
                     // we're formatting this object outside the actual column width,
                     // we give the host the max width from the current position up
@@ -2381,9 +2382,9 @@ namespace MS.Internal.TextFormatting
 
         internal const char CharLineSeparator = '\x2028';
         internal const char CharParaSeparator = '\x2029';
-        internal const char CharLineFeed      = '\x000a';
-        internal const char CharCarriageReturn= '\x000d';
-        internal const char CharTab           = '\x0009';
+        internal const char CharLineFeed = '\x000a';
+        internal const char CharCarriageReturn = '\x000d';
+        internal const char CharTab = '\x0009';
 
         // Hardcoded strings in LS memory
         // They are kept as a pointer such that it would be fast to return
@@ -2401,11 +2402,11 @@ namespace MS.Internal.TextFormatting
         //
         internal enum ObjectId : ushort
         {
-            Reverse         = 0,
-            MaxNative       = 1,
-            InlineObject    = 1,
-            Max             = 2,
-            Text_chp        = 0xffff,
+            Reverse = 0,
+            MaxNative = 1,
+            InlineObject = 1,
+            Max = 2,
+            Text_chp = 0xffff,
         }
 
         // Maximum number of characters per line. If we exceed this number of characters
@@ -2502,7 +2503,7 @@ namespace MS.Internal.TextFormatting
         }
 
         public BidiState(FormatSettings settings, int cpFirst, TextModifierScope modifierScope)
-            : base (settings.Pap.RightToLeft)
+            : base(settings.Pap.RightToLeft)
         {
             _settings = settings;
             _cpFirst = cpFirst;
@@ -2512,7 +2513,7 @@ namespace MS.Internal.TextFormatting
 
 
             // find the top most scope that has the direction embedding
-            while ( modifierScope != null && !modifierScope.TextModifier.HasDirectionalEmbedding)
+            while (modifierScope != null && !modifierScope.TextModifier.HasDirectionalEmbedding)
             {
                 modifierScope = modifierScope.ParentScope;
             }
@@ -2566,7 +2567,7 @@ namespace MS.Internal.TextFormatting
         {
             get
             {
-                if (this.NumberClass == DirectionClass.ClassInvalid )
+                if (this.NumberClass == DirectionClass.ClassInvalid)
                 {
                     GetLastDirectionClasses();
                 }
@@ -2605,8 +2606,8 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         private void GetLastDirectionClasses()
         {
-            DirectionClass  strongClass = DirectionClass.ClassInvalid;
-            DirectionClass  numberClass = DirectionClass.ClassInvalid;
+            DirectionClass strongClass = DirectionClass.ClassInvalid;
+            DirectionClass numberClass = DirectionClass.ClassInvalid;
 
             // It is a flag to indicate whether to continue calling GetPrecedingText.
             // Because Bidi algorithm works within a paragraph only, we should terminate the
@@ -2663,12 +2664,12 @@ namespace MS.Internal.TextFormatting
             // levels on the stack. Thus, bit 0 is set if and only if the base bidi level is zero,
             // i.e., it's a left-to-right paragraph.
 
-            if(strongClass == DirectionClass.ClassInvalid)
+            if (strongClass == DirectionClass.ClassInvalid)
             {
                 this.StrongCharClass = ((CurrentLevel & 1) == 0) ? DirectionClass.Left : DirectionClass.ArabicLetter;
             }
 
-            if(numberClass == DirectionClass.ClassInvalid)
+            if (numberClass == DirectionClass.ClassInvalid)
             {
                 this.NumberClass = ((CurrentLevel & 1) == 0) ? DirectionClass.Left : DirectionClass.ArabicNumber;
             }
@@ -2680,9 +2681,9 @@ namespace MS.Internal.TextFormatting
         /// the scope chain onwards). We use a stack to reverse the scope chain first.
         /// </summary>
         private static void InitLevelStackFromModifierScope(
-            Bidi.BidiStack    stack,
+            Bidi.BidiStack stack,
             TextModifierScope scope,
-            ref ushort        overflowLevels
+            ref ushort overflowLevels
             )
         {
             Stack<TextModifier> directionalEmbeddingStack = new Stack<TextModifier>(32);
@@ -2702,14 +2703,14 @@ namespace MS.Internal.TextFormatting
                 if (overflowLevels > 0)
                 {
                     // Bidi level stack overflows. Just increment the bidi stack overflow number
-                    overflowLevels ++;
+                    overflowLevels++;
                 }
                 else if (!stack.Push(modifier.FlowDirection == FlowDirection.LeftToRight))
                 {
                     // Push stack not successful. Stack starts to overflow.
                     overflowLevels = 1;
                 }
-}
+            }
         }
 
         /// <summary>
@@ -2718,8 +2719,8 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         internal DirectionClass GetEuropeanNumberClassOverride(CultureInfo cultureInfo)
         {
-            if (   cultureInfo != null
-                 &&(   (cultureInfo.LCID & 0xFF) == 0x01 // Arabic culture
+            if (cultureInfo != null
+                 && ((cultureInfo.LCID & 0xFF) == 0x01 // Arabic culture
                     || (cultureInfo.LCID & 0xFF) == 0x29 // Farsi culture
                    )
                  && (CurrentLevel & 1) != 0 // RTL flow direction
@@ -2731,8 +2732,8 @@ namespace MS.Internal.TextFormatting
             return DirectionClass.EuropeanNumber;
         }
 
-        private FormatSettings  _settings;
-        private int             _cpFirst;
-        private int             _cpFirstScope; // The first Cp of the current scope. GetLastStrong() should not go beyond it.
+        private FormatSettings _settings;
+        private int _cpFirst;
+        private int _cpFirstScope; // The first Cp of the current scope. GetLastStrong() should not go beyond it.
     }
 }

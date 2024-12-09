@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,19 +16,19 @@ namespace System.Windows.Markup
         //
         // NOTE:  If you add a field here, be sure to update ClearData
         //
-        ReaderFlags  _contextFlags;
-        object       _contextData;
-        object       _contextKey;
-        string        _uid;
-        string        _name;
-        object       _contentProperty;
-        Type         _expectedType;
-        short        _expectedTypeId;
-        bool         _createUsingTypeConverter;
+        ReaderFlags _contextFlags;
+        object _contextData;
+        object _contextKey;
+        string _uid;
+        string _name;
+        object _contentProperty;
+        Type _expectedType;
+        short _expectedTypeId;
+        bool _createUsingTypeConverter;
         //
         // NOTE:  If you add a field here, be sure to update ClearData
         //
-        
+
 
 
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -70,8 +70,8 @@ namespace System.Windows.Ink
 
         #region Private Fields
 
-        private RecognitionConfidence   _confidence;
-        private ApplicationGesture      _gesture;
+        private RecognitionConfidence _confidence;
+        private ApplicationGesture _gesture;
 
         #endregion Private Fields
     }

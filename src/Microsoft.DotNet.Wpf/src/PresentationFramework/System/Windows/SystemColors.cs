@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2086,7 +2086,7 @@ namespace System.Windows
         {
             get
             {
-                if(_cacheAccentColorBrush == null)
+                if (_cacheAccentColorBrush == null)
                 {
                     _cacheAccentColorBrush = CreateInstance(SystemResourceKeyID.AccentColorBrush);
                 }
@@ -2102,7 +2102,7 @@ namespace System.Windows
         {
             get
             {
-                if(_cacheAccentColorLight1Brush == null)
+                if (_cacheAccentColorLight1Brush == null)
                 {
                     _cacheAccentColorLight1Brush = CreateInstance(SystemResourceKeyID.AccentColorLight1Brush);
                 }
@@ -2118,7 +2118,7 @@ namespace System.Windows
         {
             get
             {
-                if(_cacheAccentColorLight2Brush == null)
+                if (_cacheAccentColorLight2Brush == null)
                 {
                     _cacheAccentColorLight2Brush = CreateInstance(SystemResourceKeyID.AccentColorLight2Brush);
                 }
@@ -2134,7 +2134,7 @@ namespace System.Windows
         {
             get
             {
-                if(_cacheAccentColorLight3Brush == null)
+                if (_cacheAccentColorLight3Brush == null)
                 {
                     _cacheAccentColorLight3Brush = CreateInstance(SystemResourceKeyID.AccentColorLight3Brush);
                 }
@@ -2150,7 +2150,7 @@ namespace System.Windows
         {
             get
             {
-                if(_cacheAccentColorDark1Brush == null)
+                if (_cacheAccentColorDark1Brush == null)
                 {
                     _cacheAccentColorDark1Brush = CreateInstance(SystemResourceKeyID.AccentColorDark1Brush);
                 }
@@ -2166,7 +2166,7 @@ namespace System.Windows
         {
             get
             {
-                if(_cacheAccentColorDark2Brush == null)
+                if (_cacheAccentColorDark2Brush == null)
                 {
                     _cacheAccentColorDark2Brush = CreateInstance(SystemResourceKeyID.AccentColorDark2Brush);
                 }
@@ -2182,7 +2182,7 @@ namespace System.Windows
         {
             get
             {
-                if(_cacheAccentColorDark3Brush == null)
+                if (_cacheAccentColorDark3Brush == null)
                 {
                     _cacheAccentColorDark3Brush = CreateInstance(SystemResourceKeyID.AccentColorDark3Brush);
                 }
@@ -2203,14 +2203,14 @@ namespace System.Windows
         }
 
         // Shift count and bit mask for A, R, G, B components
-        private const int AlphaShift  = 24;
-        private const int RedShift    = 16;
-        private const int GreenShift  = 8;
-        private const int BlueShift   = 0;
+        private const int AlphaShift = 24;
+        private const int RedShift = 16;
+        private const int GreenShift = 8;
+        private const int BlueShift = 0;
 
-        private const int Win32RedShift    = 0;
-        private const int Win32GreenShift  = 8;
-        private const int Win32BlueShift   = 16;
+        private const int Win32RedShift = 0;
+        private const int Win32GreenShift = 8;
+        private const int Win32BlueShift = 16;
 
         private static int Encode(int alpha, int red, int green, int blue)
         {
@@ -2245,7 +2245,7 @@ namespace System.Windows
                     int sysColor = SafeNativeMethods.GetSysColor(SlotToFlag(slot));
 
                     argb = (uint)FromWin32Value(sysColor);
-                    color = Color.FromArgb((byte)((argb & 0xff000000) >>24), (byte)((argb & 0x00ff0000) >>16), (byte)((argb & 0x0000ff00) >>8), (byte)(argb & 0x000000ff));
+                    color = Color.FromArgb((byte)((argb & 0xff000000) >> 24), (byte)((argb & 0x00ff0000) >> 16), (byte)((argb & 0x0000ff00) >> 8), (byte)(argb & 0x000000ff));
 
                     _colorCache[(int)slot] = color;
                 }
@@ -2262,11 +2262,11 @@ namespace System.Windows
 
             lock (_colorCacheValid)
             {
-                while(!_colorCacheValid[(int)slot])
+                while (!_colorCacheValid[(int)slot])
                 {
                     _colorCacheValid[(int)slot] = true;
 
-                    switch(slot)
+                    switch (slot)
                     {
                         case CacheSlot.AccentColor:
                             color = AccentColorHelper.GetAccentColor(UISettingsRCW.UIColorType.Accent);
@@ -2330,9 +2330,9 @@ namespace System.Windows
         {
             SolidColorBrush brush;
 
-            lock(_brushCacheValid)
+            lock (_brushCacheValid)
             {
-                while(!_brushCacheValid[(int)slot])
+                while (!_brushCacheValid[(int)slot])
                 {
                     _brushCacheValid[(int)slot] = true;
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,10 +14,9 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media.TextFormatting;
-using MS.Internal.Text;
 using MS.Internal.Documents;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -139,7 +138,7 @@ namespace MS.Internal.PtsHost
             int nonTextLength = 0;
             CharacterBufferRange precedingText = CharacterBufferRange.Empty;
             CultureInfo culture = null;
-            
+
             if (dcp > 0)
             {
                 // Create TextPointer at dcp, and pointer at paragraph start to compare
@@ -157,16 +156,16 @@ namespace MS.Internal.PtsHost
 
                 // Return text in run. If it is at start of TextContainer this will return an empty string
                 string precedingTextString = position.GetTextInRun(LogicalDirection.Backward);
-                precedingText = new CharacterBufferRange(precedingTextString, 0, precedingTextString.Length);                
+                precedingText = new CharacterBufferRange(precedingTextString, 0, precedingTextString.Length);
 
 
                 StaticTextPointer pointer = position.CreateStaticPointer();
                 DependencyObject element = (pointer.Parent != null) ? pointer.Parent : _paraClient.Paragraph.Element;
-                culture = DynamicPropertyReader.GetCultureInfo(element);                
+                culture = DynamicPropertyReader.GetCultureInfo(element);
             }
 
             return new TextSpan<CultureSpecificCharacterBufferRange>(
-                nonTextLength + precedingText.Length, 
+                nonTextLength + precedingText.Length,
                 new CultureSpecificCharacterBufferRange(culture, precedingText)
                 );
         }
@@ -198,7 +197,7 @@ namespace MS.Internal.PtsHost
             {
                 TextRun run = textSpan.Value;
 
-                
+
                 if (run != null && ((dcpRun + run.Length) >= (dcp + textBreakpoint.Length)))
                 {
                     if (run is ParagraphBreakRun)

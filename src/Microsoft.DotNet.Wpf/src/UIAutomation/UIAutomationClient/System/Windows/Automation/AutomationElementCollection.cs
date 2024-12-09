@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class AutomationElementCollection: ICollection
 #else
-    public class AutomationElementCollection: ICollection
+    public class AutomationElementCollection : ICollection
 #endif
     {
         //------------------------------------------------------
@@ -23,7 +23,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         internal AutomationElementCollection(AutomationElement[] elements)
@@ -39,7 +39,7 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
 
         /// <summary>
@@ -49,7 +49,7 @@ namespace System.Windows.Automation
         {
             get
             {
-                return _elements[ index ];
+                return _elements[index];
             }
         }
 
@@ -62,15 +62,15 @@ namespace System.Windows.Automation
         //  Interface ICollection
         //
         //------------------------------------------------------
- 
+
         #region Interface ICollection
 
         /// <summary>
         /// Copies all the elements of the current collection to the specified one-dimensional Array.
         /// </summary>
-        public virtual void CopyTo( Array array, int index )
+        public virtual void CopyTo(Array array, int index)
         {
-            _elements.CopyTo( array, index );
+            _elements.CopyTo(array, index);
         }
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationElement[] _elements;

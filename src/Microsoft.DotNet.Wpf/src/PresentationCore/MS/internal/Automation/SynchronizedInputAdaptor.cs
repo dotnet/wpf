@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,7 +38,7 @@ namespace MS.Internal.Automation
             {
                 throw new ArgumentException(SR.Format(SR.Automation_InvalidSynchronizedInputType, inputType));
             }
-            
+
             UIElement e = _owner as UIElement;
             if (e != null)
             {
@@ -64,7 +64,7 @@ namespace MS.Internal.Automation
                     {
                         throw new InvalidOperationException(SR.Automation_RecursivePublicCall);
                     }
-}
+                }
             }
         }
 
@@ -91,8 +91,8 @@ namespace MS.Internal.Automation
                     e3D.CancelSynchronizedInput();
                 }
             }
-}
+        }
 
         private readonly DependencyObject _owner;
     }
-}  
+}

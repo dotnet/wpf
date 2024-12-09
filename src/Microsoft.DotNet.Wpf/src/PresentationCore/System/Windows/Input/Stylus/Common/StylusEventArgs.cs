@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -56,7 +56,7 @@ namespace System.Windows.Input
         /// <summary>
         ///     Calculates the position of the stylus relative to a particular element.
         /// </summary>
-        public Point GetPosition(IInputElement relativeTo) 
+        public Point GetPosition(IInputElement relativeTo)
         {
             return StylusDevice.GetPosition(relativeTo);
         }
@@ -65,8 +65,8 @@ namespace System.Windows.Input
         /// <summary>
         ///		Indicates the stylus is not touching the surface. 
         /// </summary>
-        public bool InAir 
-        { 
+        public bool InAir
+        {
             get
             {
                 return StylusDevice.InAir;
@@ -77,8 +77,8 @@ namespace System.Windows.Input
         /// <summary>
         ///		Indicates stylusDevice is in the inverted state.
         /// </summary>
-        public bool Inverted 
-        { 
+        public bool Inverted
+        {
             get
             {
                 return StylusDevice.Inverted;
@@ -104,7 +104,7 @@ namespace System.Windows.Input
         {
             return StylusDevice.GetStylusPoints(relativeTo, subsetToReformatTo);
         }
-        
+
         /////////////////////////////////////////////////////////////////////
         /// <summary>
         ///     The mechanism used to call the type-specific handler on the
@@ -118,20 +118,20 @@ namespace System.Windows.Input
         /// </param>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            StylusEventHandler handler = (StylusEventHandler) genericHandler;
+            StylusEventHandler handler = (StylusEventHandler)genericHandler;
             handler(genericTarget, this);
         }
 
         /////////////////////////////////////////////////////////////////////
-        
+
         internal RawStylusInputReport InputReport
         {
-            get { return _inputReport;  }
+            get { return _inputReport; }
             set { _inputReport = value; }
         }
 
         /////////////////////////////////////////////////////////////////////
 
-        RawStylusInputReport    _inputReport;
+        RawStylusInputReport _inputReport;
     }
 }

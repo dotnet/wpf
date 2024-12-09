@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,11 +8,11 @@
 //
 
 using System.Windows;                           // FrameworkElement             
-using System.Windows.Media;                     // Visual
 using System.Windows.Documents;                 // BlockUIContainer
+using System.Windows.Media;                     // Visual
 using MS.Internal.Documents;                    // ParagraphResult, UIElementIsland
-using MS.Internal.Text;                         // TextDpi
 using MS.Internal.PtsHost.UnsafeNativeMethods;  // PTS
+using MS.Internal.Text;                         // TextDpi
 
 namespace MS.Internal.PtsHost
 {
@@ -63,7 +63,7 @@ namespace MS.Internal.PtsHost
             _rect = floaterDetails.fsrcFloater;
 
             MbpInfo mbp = MbpInfo.FromElement(Paragraph.Element, Paragraph.StructuralCache.TextFormatterHost.PixelsPerDip);
-            if(ParentFlowDirection != PageFlowDirection)
+            if (ParentFlowDirection != PageFlowDirection)
             {
                 mbp.MirrorMargin();
 
@@ -117,7 +117,7 @@ namespace MS.Internal.PtsHost
                         ContainerVisual parent = currentParent as ContainerVisual;
                         Invariant.Assert(parent != null, "Parent should always derives from ContainerVisual.");
                         parent.Children.Remove(uiElementIsland);
-                    }                           
+                    }
 
                     _visual.Children.Clear();
                     _visual.Children.Add(uiElementIsland);
@@ -139,7 +139,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal Geometry GetTightBoundingGeometryFromTextPositions(ITextPointer startPosition, ITextPointer endPosition)
         {
-            if (startPosition.CompareTo(((BlockUIContainer)Paragraph.Element).ContentEnd) < 0 && 
+            if (startPosition.CompareTo(((BlockUIContainer)Paragraph.Element).ContentEnd) < 0 &&
                 endPosition.CompareTo(((BlockUIContainer)Paragraph.Element).ContentStart) > 0)
             {
                 return new RectangleGeometry(_rect.FromTextDpi());

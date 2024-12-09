@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,7 +16,7 @@ namespace System.Windows.Xps.Serialization.RCW
     /// iii.Decompile the DLL and copy out the RCW by hand.
     ///      ILDASM xpsobjectmodel.dll
     /// </summary>
-    
+
     [CoClass(typeof(XpsOMThumbnailGeneratorClass))]
     [Guid("15B873D5-1971-41E8-83A3-6578403064C7")]
     [ComImport]

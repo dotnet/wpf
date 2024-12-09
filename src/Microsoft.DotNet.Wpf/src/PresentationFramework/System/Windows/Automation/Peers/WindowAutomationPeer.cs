@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.ComponentModel;
 using MS.Win32;
 
 // Used to support the warnings disabled below
@@ -17,9 +17,9 @@ namespace System.Windows.Automation.Peers
     public class WindowAutomationPeer : FrameworkElementAutomationPeer
     {
         ///
-        public WindowAutomationPeer(Window owner): base(owner)
-        {}
-    
+        public WindowAutomationPeer(Window owner) : base(owner)
+        { }
+
         ///
         override protected string GetClassNameCore()
         {
@@ -31,11 +31,11 @@ namespace System.Windows.Automation.Peers
         {
             string name = base.GetNameCore();
 
-            if(name.Length == 0)
+            if (name.Length == 0)
             {
                 Window window = (Window)Owner;
 
-                if(!window.IsSourceWindowNull)
+                if (!window.IsSourceWindowNull)
                 {
                     try
                     {
@@ -67,21 +67,22 @@ namespace System.Windows.Automation.Peers
         override protected Rect GetBoundingRectangleCore()
         {
             Window window = (Window)Owner;
-            Rect bounds = new Rect(0,0,0,0);
-            
-            if(!window.IsSourceWindowNull)
+            Rect bounds = new Rect(0, 0, 0, 0);
+
+            if (!window.IsSourceWindowNull)
             {
-                NativeMethods.RECT rc = new NativeMethods.RECT(0,0,0,0);
+                NativeMethods.RECT rc = new NativeMethods.RECT(0, 0, 0, 0);
                 IntPtr windowHandle = window.CriticalHandle;
-                if(windowHandle != IntPtr.Zero) //it is Zero on a window that was just closed
+                if (windowHandle != IntPtr.Zero) //it is Zero on a window that was just closed
                 {
-                    try { SafeNativeMethods.GetWindowRect(new HandleRef(null, windowHandle), ref rc); }
-// Allow empty catch statements.
+                    try
+                    { SafeNativeMethods.GetWindowRect(new HandleRef(null, windowHandle), ref rc); }
+                    // Allow empty catch statements.
 #pragma warning disable 56502
-                    catch(Win32Exception) {}
-// Disallow empty catch statements.
+                    catch (Win32Exception) { }
+                    // Disallow empty catch statements.
 #pragma warning restore 56502
-                }        
+                }
                 bounds = new Rect(rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top);
             }
 

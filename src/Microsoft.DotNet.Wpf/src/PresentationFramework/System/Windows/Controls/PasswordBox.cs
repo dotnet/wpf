@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,15 +8,15 @@
 
 using System.ComponentModel;
 using System.Security;
-using System.Windows.Media;
-using System.Windows.Documents;
 using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Windows.Navigation;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
-using System.Windows.Controls.Primitives;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -79,7 +79,7 @@ namespace System.Windows.Controls
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(UpdateCaretElement)));
             TextBoxBase.SelectionTextBrushProperty.OverrideMetadata(typeof(PasswordBox),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(UpdateCaretElement)));
-            TextBoxBase.SelectionOpacityProperty.OverrideMetadata(typeof(PasswordBox), 
+            TextBoxBase.SelectionOpacityProperty.OverrideMetadata(typeof(PasswordBox),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(UpdateCaretElement)));
             TextBoxBase.CaretBrushProperty.OverrideMetadata(typeof(PasswordBox),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(UpdateCaretElement)));
@@ -185,7 +185,7 @@ namespace System.Windows.Controls
 
                 using (SecureString securePassword = new SecureString())
                 {
-                    #pragma warning suppress 6506 // value is set to String.Empty if it was null.
+#pragma warning suppress 6506 // value is set to String.Empty if it was null.
                     for (int i = 0; i < value.Length; i++)
                     {
                         securePassword.AppendChar(value[i]);
@@ -230,7 +230,7 @@ namespace System.Windows.Controls
         /// </summary>
         public char PasswordChar
         {
-            get { return (char) GetValue(PasswordCharProperty); }
+            get { return (char)GetValue(PasswordCharProperty); }
             set { SetValue(PasswordCharProperty, value); }
         }
 
@@ -261,14 +261,14 @@ namespace System.Windows.Controls
         [DefaultValue((int)0)]
         public int MaxLength
         {
-            get { return (int) GetValue(MaxLengthProperty); }
+            get { return (int)GetValue(MaxLengthProperty); }
             set { SetValue(MaxLengthProperty, value); }
         }
 
         /// <summary>
         /// <see cref="TextBoxBase.SelectionBrushProperty"/>
         /// </summary>
-        public static readonly DependencyProperty SelectionBrushProperty = 
+        public static readonly DependencyProperty SelectionBrushProperty =
             TextBoxBase.SelectionBrushProperty.AddOwner(typeof(PasswordBox));
 
         /// <summary>
@@ -407,7 +407,7 @@ namespace System.Windows.Controls
         //------------------------------------------------------
 
         #region Protected Methods
-     
+
         internal override void ChangeVisualState(bool useTransitions)
         {
             if (!IsEnabled)
@@ -463,7 +463,7 @@ namespace System.Windows.Controls
         {
             base.OnTemplateChanged(oldTemplate, newTemplate);
 
-            if (oldTemplate!=null && newTemplate!= null && oldTemplate.VisualTree != newTemplate.VisualTree)
+            if (oldTemplate != null && newTemplate != null && oldTemplate.VisualTree != newTemplate.VisualTree)
             {
                 DetachFromVisualTree();
             }
@@ -1226,7 +1226,7 @@ namespace System.Windows.Controls
                     caretElement.InvalidateVisual();
                 }
 
-                
+
                 // If the TextBox is rendering its own selection we need to invalidate arrange here
                 // in order to ensure the selection is updated.
                 var textBoxView = passwordBox?.RenderScope as TextBoxView;

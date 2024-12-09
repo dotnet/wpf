@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,10 +10,10 @@
 //
 //
 
-using MS.Win32;
 using System.Collections;
 using System.Text;
 using MS.Internal.PresentationCore;
+using MS.Win32;
 
 namespace System.Windows
 {
@@ -426,7 +426,7 @@ namespace System.Windows
                     int xamlFormatId = UnsafeNativeMethods.RegisterClipboardFormat(Xaml);
                     if (xamlFormatId != 0)
                     {
-                        _formatList.Add(new DataFormat(Xaml,xamlFormatId));
+                        _formatList.Add(new DataFormat(Xaml, xamlFormatId));
                     }
 
                     // This is the format to store trust boundary information. Essentially this is accompalished by storing 
@@ -445,7 +445,7 @@ namespace System.Windows
                         _formatList.Add(new DataFormat(System.Windows.Ink.StrokeCollection.InkSerializedFormat,
                                                         inkServicesFrameworkFormatId));
                     }
-}
+                }
             }
         }
 

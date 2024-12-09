@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -154,14 +154,20 @@ namespace System.Windows.Automation.Peers
         private int[] GetSupportedViews(bool single, bool facing, bool scroll)
         {
             int count = 0;
-            if (single) { count++; }
-            if (facing) { count++; }
-            if (scroll) { count++; }
+            if (single)
+            { count++; }
+            if (facing)
+            { count++; }
+            if (scroll)
+            { count++; }
             int[] views = count > 0 ? new int[count] : null;
             count = 0;
-            if (single) { views[count++] = ConvertModeToViewId(FlowDocumentReaderViewingMode.Page); }
-            if (facing) { views[count++] = ConvertModeToViewId(FlowDocumentReaderViewingMode.TwoPage); }
-            if (scroll) { views[count++] = ConvertModeToViewId(FlowDocumentReaderViewingMode.Scroll); }
+            if (single)
+            { views[count++] = ConvertModeToViewId(FlowDocumentReaderViewingMode.Page); }
+            if (facing)
+            { views[count++] = ConvertModeToViewId(FlowDocumentReaderViewingMode.TwoPage); }
+            if (scroll)
+            { views[count++] = ConvertModeToViewId(FlowDocumentReaderViewingMode.Scroll); }
             return views;
         }
 
@@ -243,7 +249,7 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         int IMultipleViewProvider.CurrentView
         {
-            get {  return ConvertModeToViewId(FlowDocumentReader.ViewingMode); }
+            get { return ConvertModeToViewId(FlowDocumentReader.ViewingMode); }
         }
 
         /// <summary>
@@ -252,8 +258,8 @@ namespace System.Windows.Automation.Peers
         int[] IMultipleViewProvider.GetSupportedViews()
         {
             return GetSupportedViews(
-                FlowDocumentReader.IsPageViewEnabled, 
-                FlowDocumentReader.IsTwoPageViewEnabled, 
+                FlowDocumentReader.IsPageViewEnabled,
+                FlowDocumentReader.IsTwoPageViewEnabled,
                 FlowDocumentReader.IsScrollViewEnabled);
         }
 

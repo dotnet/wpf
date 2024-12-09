@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Input.StylusWisp;
-using System.Windows.Media;
 using System.Windows.Input.StylusPlugIns;
+using System.Windows.Input.StylusWisp;
 using System.Windows.Interop;
+using System.Windows.Media;
 
 namespace System.Windows.Input
 {
@@ -14,7 +14,7 @@ namespace System.Windows.Input
         internal PenContexts(WispLogic stylusLogic, PresentationSource inputSource)
         {
             HwndSource hwndSource = inputSource as HwndSource;
-            if(hwndSource == null || IntPtr.Zero == (hwndSource).CriticalHandle)
+            if (hwndSource == null || IntPtr.Zero == (hwndSource).CriticalHandle)
             {
                 throw new InvalidOperationException(SR.Stylus_PenContextFailure);
             }
@@ -32,7 +32,7 @@ namespace System.Windows.Input
                 // create contexts
                 _contexts = _stylusLogic.WispTabletDevices.CreateContexts(_inputSource.CriticalHandle, this);
 
-                foreach(PenContext context in _contexts)
+                foreach (PenContext context in _contexts)
                 {
                     context.Enable();
                 }
@@ -43,7 +43,7 @@ namespace System.Windows.Input
         {
             if (_contexts != null)
             {
-                foreach(PenContext context in _contexts)
+                foreach (PenContext context in _contexts)
                 {
                     context.Disable(shutdownWorkerThread);
                 }
@@ -109,23 +109,23 @@ namespace System.Windows.Input
         /////////////////////////////////////////////////////////////////////
 
 
-        internal void OnSystemEvent(PenContext penContext, 
-                                           int tabletDeviceId, 
-                                           int stylusPointerId, 
-                                           int timestamp, 
-                                           SystemGesture id, 
+        internal void OnSystemEvent(PenContext penContext,
+                                           int tabletDeviceId,
+                                           int stylusPointerId,
+                                           int timestamp,
+                                           SystemGesture id,
                                            int gestureX,
                                            int gestureY,
                                            int buttonState)
         {
-            _stylusLogic.ProcessSystemEvent(penContext, 
+            _stylusLogic.ProcessSystemEvent(penContext,
                                              tabletDeviceId,
-                                             stylusPointerId, 
+                                             stylusPointerId,
                                              timestamp,
-                                             id, 
-                                             gestureX, 
+                                             id,
+                                             gestureX,
                                              gestureY,
-                                             buttonState, 
+                                             buttonState,
                                              _inputSource);
         }
 
@@ -134,7 +134,7 @@ namespace System.Windows.Input
         void ProcessInput(
             RawStylusActions actions,
             PenContext penContext,
-            int tabletDeviceId, 
+            int tabletDeviceId,
             int stylusPointerId,
             int[] data, int timestamp)
         {
@@ -144,7 +144,7 @@ namespace System.Windows.Input
                                         penContext,
                                         tabletDeviceId,
                                         stylusPointerId,
-                                        data, 
+                                        data,
                                         timestamp,
                                         _inputSource);
         }
@@ -158,7 +158,7 @@ namespace System.Windows.Input
                 for (int i = 0; i < _contexts.Length; i++)
                 {
                     PenContext context = _contexts[i];
-                    if (context.TabletDeviceId == tabletDeviceId) 
+                    if (context.TabletDeviceId == tabletDeviceId)
                         return context;
                 }
             }
@@ -174,7 +174,7 @@ namespace System.Windows.Input
                 for (int i = 0; i < _contexts.Length; i++)
                 {
                     PenContext context = _contexts[i];
-                    
+
                     // We consider it InRange if we have a queued up context event or 
                     // the timestamp - LastInRangeTime <= 500 (seen one in the last 500ms)
                     //  Here's some info on how this works...
@@ -211,7 +211,7 @@ namespace System.Windows.Input
                 Array.Copy(_contexts, 0, ctxs, 0, preCopyCount);
                 PenContext newContext = _stylusLogic.TabletDevices[(int)index].As<WispTabletDevice>().CreateContext(_inputSource.CriticalHandle, this);
                 ctxs[index] = newContext;
-                Array.Copy(_contexts, index, ctxs, index+1, postCopyCount);
+                Array.Copy(_contexts, index, ctxs, index + 1, postCopyCount);
                 _contexts = ctxs;
                 newContext.Enable();
             }
@@ -236,7 +236,7 @@ namespace System.Windows.Input
                 uint postCopyCount = (uint)_contexts.Length - index - 1;
 
                 Array.Copy(_contexts, 0, ctxs, 0, preCopyCount);
-                Array.Copy(_contexts, index+1, ctxs, index, postCopyCount);
+                Array.Copy(_contexts, index + 1, ctxs, index, postCopyCount);
 
                 removeCtx.Disable(false); // shut down this context.
 
@@ -246,23 +246,23 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        internal object SyncRoot 
+        internal object SyncRoot
         {
             get
             {
                 return __rtiLock;
             }
-        } 
+        }
 
 
         internal void AddStylusPlugInCollection(StylusPlugInCollection pic)
         {
             // must be called from inside of lock(__rtiLock)
-            
+
             // insert in ZOrder
-            _plugInCollectionList.Insert(FindZOrderIndex(pic), pic); 
+            _plugInCollectionList.Insert(FindZOrderIndex(pic), pic);
         }
-        
+
         internal void RemoveStylusPlugInCollection(StylusPlugInCollection pic)
         {
             // must be called from inside of lock(__rtiLock)
@@ -274,7 +274,7 @@ namespace System.Windows.Input
             //should be called inside of lock(__rtiLock)
             DependencyObject spicAddingVisual = spicAdding.Element as Visual;
             int i;
-            for (i=0; i < _plugInCollectionList.Count; i++)
+            for (i = 0; i < _plugInCollectionList.Count; i++)
             {
                 // first see if parent of node, if it is then we can just scan till we find the 
                 // first non parent and we're done
@@ -290,7 +290,7 @@ namespace System.Windows.Input
                         i++;
                     }
                     return i;
-                } 
+                }
                 else
                 {
                     // Look to see if spicAddingVisual is higher in ZOrder than i, if so then we're done
@@ -322,7 +322,7 @@ namespace System.Windows.Input
                     }
                 }
             }
-            
+
             return i; // this wasn't higher so return last index.
         }
 
@@ -332,12 +332,12 @@ namespace System.Windows.Input
 
             // lock to make sure only one event is processed at a time and no changes to state can
             // be made until we finish routing this event.
-            lock(__rtiLock)
+            lock (__rtiLock)
             {
                 //Debug.Assert(inputReport.Actions == RawStylusActions.Down || 
                 //             inputReport.Actions == RawStylusActions.Up ||
                 //             inputReport.Actions == RawStylusActions.Move);
-                
+
                 // Find new target plugin collection
                 if (directlyOver != null)
                 {
@@ -346,14 +346,14 @@ namespace System.Windows.Input
                     {
                         newPlugInCollection = FindPlugInCollection(uiElement);
                     }
-                }                
+                }
 
                 // Fire Leave event to old pluginCollection if we need to.
                 if (currentPlugInCollection != null && currentPlugInCollection != newPlugInCollection)
                 {
                     // NOTE: input report points for mouse are in avalon measured units and not device!
                     RawStylusInput tempRawStylusInput = new RawStylusInput(inputReport, currentPlugInCollection.ViewToElement, currentPlugInCollection);
-                    
+
                     currentPlugInCollection.FireEnterLeave(false, tempRawStylusInput, true);
 
                     // Indicate we've used a stylus plugin
@@ -369,7 +369,7 @@ namespace System.Windows.Input
                     {
                         newPlugInCollection.FireEnterLeave(true, rawStylusInput, true);
                     }
-                    
+
                     // We are on the pen thread, just call directly.
                     newPlugInCollection.FireRawStylusInput(rawStylusInput);
 
@@ -385,7 +385,7 @@ namespace System.Windows.Input
             }
             return newPlugInCollection;
         }
-        
+
         internal void InvokeStylusPluginCollection(RawStylusInputReport inputReport)
         {
             // Find PenContexts object for this inputReport.
@@ -393,14 +393,14 @@ namespace System.Windows.Input
 
             // lock to make sure only one event is processed at a time and no changes to state can
             // be made until we finish routing this event.
-            lock(__rtiLock)
+            lock (__rtiLock)
             {
                 switch (inputReport.Actions)
                 {
                     case RawStylusActions.Down:
                     case RawStylusActions.Move:
                     case RawStylusActions.Up:
-                         // Figure out current target plugincollection.
+                        // Figure out current target plugincollection.
                         pic = TargetPlugInCollection(inputReport);
                         break;
 
@@ -411,7 +411,7 @@ namespace System.Windows.Input
                 WispStylusDevice stylusDevice = inputReport.StylusDevice.As<WispStylusDevice>();
 
                 StylusPlugInCollection currentPic = stylusDevice.CurrentNonVerifiedTarget;
-                
+
                 // Fire Leave event if we need to.
                 if (currentPic != null && currentPic != pic)
                 {
@@ -420,9 +420,9 @@ namespace System.Windows.Input
                     transformTabletToView.Children.Add(new MatrixTransform(_stylusLogic.GetTabletToViewTransform(inputReport.InputSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
                     transformTabletToView.Children.Add(currentPic.ViewToElement); // Make it relative to the element.
                     transformTabletToView.Freeze(); // Must be frozen for multi-threaded access.
-                    
+
                     RawStylusInput tempRawStylusInput = new RawStylusInput(inputReport, transformTabletToView, currentPic);
-                    
+
                     currentPic.FireEnterLeave(false, tempRawStylusInput, false);
 
                     // Indicate we've used a stylus plugin
@@ -439,7 +439,7 @@ namespace System.Windows.Input
                     transformTabletToView.Children.Add(new MatrixTransform(_stylusLogic.GetTabletToViewTransform(inputReport.InputSource, stylusDevice.TabletDevice))); // this gives matrix in measured units (not device)
                     transformTabletToView.Children.Add(pic.ViewToElement); // Make it relative to the element.
                     transformTabletToView.Freeze();  // Must be frozen for multi-threaded access.
-                    
+
                     RawStylusInput rawStylusInput = new RawStylusInput(inputReport, transformTabletToView, pic);
                     inputReport.RawStylusInput = rawStylusInput;
 
@@ -448,7 +448,7 @@ namespace System.Windows.Input
                         stylusDevice.CurrentNonVerifiedTarget = pic;
                         pic.FireEnterLeave(true, rawStylusInput, false);
                     }
-                    
+
                     // We are on the pen thread, just call directly.
                     pic.FireRawStylusInput(rawStylusInput);
 
@@ -457,7 +457,7 @@ namespace System.Windows.Input
                 }
             } // lock(__rtiLock)
         }
-        
+
         internal StylusPlugInCollection TargetPlugInCollection(RawStylusInputReport inputReport)
         {
             // Caller must make call to this routine inside of lock(__rtiLock)!
@@ -479,7 +479,7 @@ namespace System.Windows.Input
             {
                 elementHasCapture = false;  // force true hittesting to be done!
             }
-            
+
             if (!elementHasCapture && inputReport.Data != null && inputReport.Data.Length >= pointLength)
             {
                 int[] data = inputReport.Data;
@@ -506,7 +506,7 @@ namespace System.Windows.Input
             foreach (StylusPlugInCollection plugInCollection in _plugInCollectionList)
             {
                 // If same element or element is child of the plugincollection element than say we hit it.
-                if (plugInCollection.Element == element || 
+                if (plugInCollection.Element == element ||
                      (plugInCollection.Element as Visual).IsAncestorOf(element as Visual))
                 {
                     return plugInCollection;
@@ -521,7 +521,7 @@ namespace System.Windows.Input
         StylusPlugInCollection HittestPlugInCollection(Point pt)
         {
             // Caller must make call to this routine inside of lock(__rtiLock)!
-            
+
             foreach (StylusPlugInCollection plugInCollection in _plugInCollectionList)
             {
                 if (plugInCollection.IsHit(pt))
@@ -539,15 +539,15 @@ namespace System.Windows.Input
 
         internal HwndSource _inputSource;
 
-        WispLogic                      _stylusLogic;
+        WispLogic _stylusLogic;
 
-        object                       __rtiLock = new object();
+        object __rtiLock = new object();
         List<StylusPlugInCollection> _plugInCollectionList = new List<StylusPlugInCollection>();
 
-        PenContext[]        _contexts;
-        
-        bool                _isWindowDisabled;
-        Point               _destroyedLocation = new Point(0,0);
+        PenContext[] _contexts;
+
+        bool _isWindowDisabled;
+        Point _destroyedLocation = new Point(0, 0);
     }
 }
 

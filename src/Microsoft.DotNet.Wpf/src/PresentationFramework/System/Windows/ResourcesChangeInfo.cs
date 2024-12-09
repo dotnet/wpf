@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -66,9 +66,9 @@ namespace System.Windows
         internal ResourcesChangeInfo(
             List<ResourceDictionary> oldDictionaries,
             List<ResourceDictionary> newDictionaries,
-            bool                     isStyleResourcesChange,
-            bool                     isTemplateResourcesChange,
-            DependencyObject         container)
+            bool isStyleResourcesChange,
+            bool isTemplateResourcesChange,
+            DependencyObject container)
         {
             _oldDictionaries = oldDictionaries;
             _newDictionaries = newDictionaries;
@@ -91,8 +91,10 @@ namespace System.Windows
         {
             get
             {
-                ResourcesChangeInfo info = new ResourcesChangeInfo();
-                info.IsThemeChange = true;
+                ResourcesChangeInfo info = new ResourcesChangeInfo
+                {
+                    IsThemeChange = true
+                };
                 return info;
             }
         }
@@ -105,8 +107,10 @@ namespace System.Windows
         {
             get
             {
-                ResourcesChangeInfo info = new ResourcesChangeInfo();
-                info.IsTreeChange = true;
+                ResourcesChangeInfo info = new ResourcesChangeInfo
+                {
+                    IsTreeChange = true
+                };
                 return info;
             }
         }
@@ -119,8 +123,10 @@ namespace System.Windows
         {
             get
             {
-                ResourcesChangeInfo info = new ResourcesChangeInfo();
-                info.IsSysColorsOrSettingsChange = true;
+                ResourcesChangeInfo info = new ResourcesChangeInfo
+                {
+                    IsSysColorsOrSettingsChange = true
+                };
                 return info;
             }
         }
@@ -134,28 +140,30 @@ namespace System.Windows
         {
             get
             {
-                ResourcesChangeInfo info = new ResourcesChangeInfo();
-                info.IsCatastrophicDictionaryChange = true;
+                ResourcesChangeInfo info = new ResourcesChangeInfo
+                {
+                    IsCatastrophicDictionaryChange = true
+                };
                 return info;
             }
         }
 
         // This flag is used to indicate that a theme change has occured
-        internal bool  IsThemeChange
+        internal bool IsThemeChange
         {
             get { return ReadPrivateFlag(PrivateFlags.IsThemeChange); }
             set { WritePrivateFlag(PrivateFlags.IsThemeChange, value); }
         }
 
         // This flag is used to indicate that a tree change has occured
-        internal bool  IsTreeChange
+        internal bool IsTreeChange
         {
             get { return ReadPrivateFlag(PrivateFlags.IsTreeChange); }
             set { WritePrivateFlag(PrivateFlags.IsTreeChange, value); }
         }
 
         // This flag is used to indicate that a style has changed
-        internal bool  IsStyleResourcesChange
+        internal bool IsStyleResourcesChange
         {
             get { return ReadPrivateFlag(PrivateFlags.IsStyleResourceChange); }
             set { WritePrivateFlag(PrivateFlags.IsStyleResourceChange, value); }
@@ -164,28 +172,28 @@ namespace System.Windows
         // This flag is used to indicate that this resource change was triggered from a Template change
         internal bool IsTemplateResourcesChange
         {
-            get {return ReadPrivateFlag(PrivateFlags.IsTemplateResourceChange); }
+            get { return ReadPrivateFlag(PrivateFlags.IsTemplateResourceChange); }
             set { WritePrivateFlag(PrivateFlags.IsTemplateResourceChange, value); }
         }
 
         // This flag is used to indicate that a system color or settings change has occured
         internal bool IsSysColorsOrSettingsChange
         {
-            get {return ReadPrivateFlag(PrivateFlags.IsSysColorsOrSettingsChange); }
+            get { return ReadPrivateFlag(PrivateFlags.IsSysColorsOrSettingsChange); }
             set { WritePrivateFlag(PrivateFlags.IsSysColorsOrSettingsChange, value); }
         }
 
         // This flag is used to indicate that a catastrophic dictionary change has occured
         internal bool IsCatastrophicDictionaryChange
         {
-            get {return ReadPrivateFlag(PrivateFlags.IsCatastrophicDictionaryChange); }
+            get { return ReadPrivateFlag(PrivateFlags.IsCatastrophicDictionaryChange); }
             set { WritePrivateFlag(PrivateFlags.IsCatastrophicDictionaryChange, value); }
         }
 
         // This flag is used to indicate that an implicit data template change has occured
         internal bool IsImplicitDataTemplateChange
         {
-            get {return ReadPrivateFlag(PrivateFlags.IsImplicitDataTemplateChange); }
+            get { return ReadPrivateFlag(PrivateFlags.IsImplicitDataTemplateChange); }
             set { WritePrivateFlag(PrivateFlags.IsImplicitDataTemplateChange, value); }
         }
 
@@ -235,7 +243,7 @@ namespace System.Windows
 
             if (_oldDictionaries != null)
             {
-                for (int i=0; i<_oldDictionaries.Count; i++)
+                for (int i = 0; i < _oldDictionaries.Count; i++)
                 {
                     if (_oldDictionaries[i].Contains(key))
                     {
@@ -246,7 +254,7 @@ namespace System.Windows
 
             if (_newDictionaries != null)
             {
-                for (int i=0; i<_newDictionaries.Count; i++)
+                for (int i = 0; i < _newDictionaries.Count; i++)
                 {
                     if (_newDictionaries[i].Contains(key))
                     {
@@ -318,13 +326,13 @@ namespace System.Windows
 
         private enum PrivateFlags : byte
         {
-            IsThemeChange                   = 0x01,
-            IsTreeChange                    = 0x02,
-            IsStyleResourceChange           = 0x04,
-            IsTemplateResourceChange        = 0x08,
-            IsSysColorsOrSettingsChange     = 0x10,
-            IsCatastrophicDictionaryChange  = 0x20,
-            IsImplicitDataTemplateChange    = 0x40,
+            IsThemeChange = 0x01,
+            IsTreeChange = 0x02,
+            IsStyleResourceChange = 0x04,
+            IsTemplateResourceChange = 0x08,
+            IsSysColorsOrSettingsChange = 0x10,
+            IsCatastrophicDictionaryChange = 0x20,
+            IsImplicitDataTemplateChange = 0x40,
         }
 
         #endregion PrivateDataStructures
@@ -333,9 +341,9 @@ namespace System.Windows
 
         private List<ResourceDictionary> _oldDictionaries;
         private List<ResourceDictionary> _newDictionaries;
-        private object                   _key;
-        private DependencyObject         _container;
-        private PrivateFlags             _flags;
+        private object _key;
+        private DependencyObject _container;
+        private PrivateFlags _flags;
 
         #endregion Data
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -83,7 +83,8 @@ namespace MS.Internal.Globalization
             // Localization comments consist of repeating "[PropertyName]([Value])"
             // e.g. $Content (abc) FontSize(def)
             //
-            if (input == null) return null;
+            if (input == null)
+                return null;
 
             List<PropertyComment> tokens = new List<PropertyComment>(8);
             StringBuilder tokenBuffer = new StringBuilder();
@@ -441,9 +442,11 @@ namespace MS.Internal.Globalization
 
             if (overridden)
             {
-                attribute = new LocalizabilityAttribute(category);
-                attribute.Modifiability = modifiability;
-                attribute.Readability = readability;
+                attribute = new LocalizabilityAttribute(category)
+                {
+                    Modifiability = modifiability,
+                    Readability = readability
+                };
             }
 
             return attribute;

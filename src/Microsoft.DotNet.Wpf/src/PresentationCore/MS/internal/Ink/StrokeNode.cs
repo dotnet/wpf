@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,7 +35,7 @@ namespace MS.Internal.Ink
         {
             System.Diagnostics.Debug.Assert(operations != null);
             System.Diagnostics.Debug.Assert((nodeData.IsEmpty == false) && (index >= 0));
-          
+
 
             _operations = operations;
             _index = index;
@@ -183,7 +183,7 @@ namespace MS.Internal.Ink
         /// <summary>
         /// GetPointsAtStartOfSegment
         /// </summary>
-        internal void GetPointsAtStartOfSegment(List<Point> abPoints, 
+        internal void GetPointsAtStartOfSegment(List<Point> abPoints,
                                                 List<Point> dcPoints
 #if DEBUG_RENDERING_FEEDBACK
                                                 , DrawingContext debugDC, double feedbackSize, bool showFeedback
@@ -308,7 +308,7 @@ namespace MS.Internal.Ink
         /// <summary>
         /// GetPointsAtEndOfSegment
         /// </summary>
-        internal void GetPointsAtEndOfSegment(  List<Point> abPoints, 
+        internal void GetPointsAtEndOfSegment(List<Point> abPoints,
                                                 List<Point> dcPoints
 #if DEBUG_RENDERING_FEEDBACK
                                                 , DrawingContext debugDC, double feedbackSize, bool showFeedback
@@ -412,9 +412,9 @@ namespace MS.Internal.Ink
         /// <summary>
         /// GetPointsAtMiddleSegment
         /// </summary>
-        internal void GetPointsAtMiddleSegment( StrokeNode previous, 
-                                                double angleBetweenNodes, 
-                                                List<Point> abPoints, 
+        internal void GetPointsAtMiddleSegment(StrokeNode previous,
+                                                double angleBetweenNodes,
+                                                List<Point> abPoints,
                                                 List<Point> dcPoints,
                                                 out bool missingIntersection
 #if DEBUG_RENDERING_FEEDBACK
@@ -698,7 +698,7 @@ namespace MS.Internal.Ink
                                     return; //we're done.
                                 }
                             }
-                            
+
                             // now take care of c-d.  
                             if (indexC == indexD)
                             {
@@ -735,7 +735,7 @@ namespace MS.Internal.Ink
                                     }
 #endif
                                 }
-                                else 
+                                else
                                 {
                                     //if we missed the intersection we'll need to close the stroke segment
                                     //this work is done in StrokeRenderer.
@@ -951,13 +951,13 @@ namespace MS.Internal.Ink
                 if (DoubleUtil.AreClose(fragment.BeginFIndex, StrokeFIndices.BeforeFirst))
                 {
                     // set it to be the index of the previous node, indicating intersection start from previous node
-                     fragment.BeginFIndex = (_index == 0 ? StrokeFIndices.BeforeFirst:_index - 1);
+                    fragment.BeginFIndex = (_index == 0 ? StrokeFIndices.BeforeFirst : _index - 1);
                 }
                 else
                 {
                     // Adjust findices which are on this segment of the spine (i.e. between 0 and 1)
                     System.Diagnostics.Debug.Assert(DoubleUtil.GreaterThanOrClose(fragment.BeginFIndex, 0f));
-                    
+
                     System.Diagnostics.Debug.Assert(DoubleUtil.LessThanOrClose(fragment.BeginFIndex, 1f));
 
                     // Adjust the value to consider index, say from 0.75 to 3.75 (for _index = 4)
@@ -968,7 +968,7 @@ namespace MS.Internal.Ink
                 if (DoubleUtil.AreClose(fragment.EndFIndex, StrokeFIndices.AfterLast))
                 {
                     // set it to be the index of the current node, indicating the intersection cover the end of the node
-                    fragment.EndFIndex = (_isLastNode ? StrokeFIndices.AfterLast:_index);
+                    fragment.EndFIndex = (_isLastNode ? StrokeFIndices.AfterLast : _index);
                 }
                 else
                 {
@@ -1024,7 +1024,7 @@ namespace MS.Internal.Ink
                 // ISSUE-2004/06/15- temporary workaround to avoid hit-testing with ellipses
                 return _operations.GetNonBezierContourSegments(_lastNode, _thisNode);
             }
-            return  _operations.GetContourSegments(_thisNode, ConnectingQuad);
+            return _operations.GetContourSegments(_thisNode, ConnectingQuad);
         }
 
         /// <summary>
@@ -1067,7 +1067,7 @@ namespace MS.Internal.Ink
             //
             // return the previous point plus the delta's
             //
-            return new Point(   _lastNode.Position.X + xDiff,
+            return new Point(_lastNode.Position.X + xDiff,
                                 _lastNode.Position.Y + yDiff);
         }
 
@@ -1076,20 +1076,20 @@ namespace MS.Internal.Ink
         #region Fields
 
         // Internal objects created for particular rendering
-        private StrokeNodeOperations    _operations;
+        private StrokeNodeOperations _operations;
 
         // Node's index on the stroke spine
-        private int             _index;
+        private int _index;
 
         // This and the previous node data that used by the StrokeNodeOperations object to build
         // and/or hit-test the contour of the node/segment
-        private StrokeNodeData  _thisNode;
-        private StrokeNodeData  _lastNode;
+        private StrokeNodeData _thisNode;
+        private StrokeNodeData _lastNode;
 
         // Calculating of the connecting quadrangle is not a cheap operations, therefore,
         // first, it's computed only by request, and second, once computed it's cached in the StrokeNode
-        private bool            _isQuadCached;
-        private Quad            _connectingQuad;
+        private bool _isQuadCached;
+        private Quad _connectingQuad;
 
         // Is the current stroke node the last node?
         private bool _isLastNode;

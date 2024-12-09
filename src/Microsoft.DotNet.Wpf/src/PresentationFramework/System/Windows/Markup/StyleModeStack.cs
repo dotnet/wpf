@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,12 +34,12 @@ namespace System.Windows.Markup
         {
             Push(StyleMode.Base);
         }
-        
+
         internal int Depth
         {
             get { return _stack.Count - 1; }
         }
-        
+
         internal StyleMode Mode
         {
             get
@@ -49,22 +49,22 @@ namespace System.Windows.Markup
             }
         }
 
-        internal void Push (StyleMode mode)
+        internal void Push(StyleMode mode)
         {
             _stack.Push(mode);
         }
 
-        internal void Push ()
+        internal void Push()
         {
             Push(Mode);
         }
-        
+
         internal StyleMode Pop()
         {
             Debug.Assert(Depth >= 0, $"StyleMode::Pop() with depth of {Depth}, should be >= 0");
             return _stack.Pop();
         }
-        
+
         private Stack<StyleMode> _stack = new Stack<StyleMode>(64);
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -55,7 +55,7 @@ namespace System.Windows.Media.Media3D
 
         private static void ScaleXPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ScaleTransform3D target = ((ScaleTransform3D) d);
+            ScaleTransform3D target = ((ScaleTransform3D)d);
 
             target._cachedScaleXValue = (double)e.NewValue;
 
@@ -64,7 +64,7 @@ namespace System.Windows.Media.Media3D
         }
         private static void ScaleYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ScaleTransform3D target = ((ScaleTransform3D) d);
+            ScaleTransform3D target = ((ScaleTransform3D)d);
 
             target._cachedScaleYValue = (double)e.NewValue;
 
@@ -73,7 +73,7 @@ namespace System.Windows.Media.Media3D
         }
         private static void ScaleZPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ScaleTransform3D target = ((ScaleTransform3D) d);
+            ScaleTransform3D target = ((ScaleTransform3D)d);
 
             target._cachedScaleZValue = (double)e.NewValue;
 
@@ -82,7 +82,7 @@ namespace System.Windows.Media.Media3D
         }
         private static void CenterXPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ScaleTransform3D target = ((ScaleTransform3D) d);
+            ScaleTransform3D target = ((ScaleTransform3D)d);
 
             target._cachedCenterXValue = (double)e.NewValue;
 
@@ -91,7 +91,7 @@ namespace System.Windows.Media.Media3D
         }
         private static void CenterYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ScaleTransform3D target = ((ScaleTransform3D) d);
+            ScaleTransform3D target = ((ScaleTransform3D)d);
 
             target._cachedCenterYValue = (double)e.NewValue;
 
@@ -100,7 +100,7 @@ namespace System.Windows.Media.Media3D
         }
         private static void CenterZPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ScaleTransform3D target = ((ScaleTransform3D) d);
+            ScaleTransform3D target = ((ScaleTransform3D)d);
 
             target._cachedCenterZValue = (double)e.NewValue;
 
@@ -301,25 +301,25 @@ namespace System.Windows.Media.Media3D
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_SCALETRANSFORM3D))
-                {
-                    AddRefOnChannelAnimations(channel);
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_SCALETRANSFORM3D))
+            {
+                AddRefOnChannelAnimations(channel);
 
 
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                }
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
 
-                return _duceResource.GetHandle(channel);
-}
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
-                {
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.

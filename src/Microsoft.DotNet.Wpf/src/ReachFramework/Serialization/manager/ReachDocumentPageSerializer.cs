@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
-using System.Xml;
 using System.Printing;
-using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Xps.Packaging;
+using System.Xml;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -100,7 +100,7 @@ namespace System.Windows.Xps.Serialization
 
             ReachTreeWalker treeWalker = new ReachTreeWalker(this);
             treeWalker.SerializeLinksInDocumentPage(dp);
-            
+
             XmlWriter.WriteStartElement(XpsS0Markup.FixedPage);
 
             String xmlnsForType = SerializationManager.GetXmlNSForType(typeof(FixedPage));
@@ -119,18 +119,18 @@ namespace System.Windows.Xps.Serialization
                 }
             }
 
-            XpsSerializationPrintTicketRequiredEventArgs e = 
+            XpsSerializationPrintTicketRequiredEventArgs e =
             new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedPagePrintTicket,
                                                              0);
 
             ((IXpsSerializationManager)SerializationManager).OnXPSSerializationPrintTicketRequired(e);
 
             PrintTicket printTicket = null;
-            if(e.Modified)
+            if (e.Modified)
             {
                 printTicket = e.PrintTicket;
             }
-            
+
             Size size = Toolbox.ValidateDocumentSize(dp.Size, printTicket);
 
             ((IXpsSerializationManager)SerializationManager).FixedPageSize = size;
@@ -144,7 +144,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Serialize the data for the PrintTicket
             //
-            if(printTicket != null)
+            if (printTicket != null)
             {
                 PrintTicketSerializer serializer = new PrintTicketSerializer(SerializationManager);
                 serializer.SerializeObject(printTicket);
@@ -170,14 +170,14 @@ namespace System.Windows.Xps.Serialization
 
             ((IXpsSerializationManager)SerializationManager).VisualSerializationService.ReleaseVisualTreeFlattener();
 
-            if( SerializationManager is IXpsSerializationManager)
+            if (SerializationManager is IXpsSerializationManager)
             {
-               (SerializationManager as IXpsSerializationManager).RegisterPageEnd();
+                (SerializationManager as IXpsSerializationManager).RegisterPageEnd();
             }
             //
             // Signal to any registered callers that the Page has been serialized
             //
-            XpsSerializationProgressChangedEventArgs progressEvent = 
+            XpsSerializationProgressChangedEventArgs progressEvent =
             new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedPageWritingProgress,
                                                          0,
                                                          0,

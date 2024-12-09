@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,10 +8,10 @@
 // Specs:       Data Styling.mht
 //
 
-using System.Windows.Media;
-using System.Windows.Controls.Primitives;
-using MS.Internal;
 using System.Windows.Automation;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using MS.Internal;
 
 namespace System.Windows.Controls
 {
@@ -86,7 +86,7 @@ namespace System.Windows.Controls
             }
         }
 
-        internal override void OnTemplateChangedInternal(FrameworkTemplate oldTemplate,FrameworkTemplate newTemplate)
+        internal override void OnTemplateChangedInternal(FrameworkTemplate oldTemplate, FrameworkTemplate newTemplate)
         {
             base.OnTemplateChangedInternal(oldTemplate, newTemplate);
 
@@ -352,7 +352,7 @@ namespace System.Windows.Controls
 
         void IContainItemStorage.ClearValue(DependencyProperty dp)
         {
-            Helper.ClearItemValueStorage(this, new int[] {dp.GlobalIndex});
+            Helper.ClearItemValueStorage(this, new int[] { dp.GlobalIndex });
         }
 
         void IContainItemStorage.Clear()

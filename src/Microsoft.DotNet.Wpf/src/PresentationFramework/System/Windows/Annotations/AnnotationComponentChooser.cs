@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,7 +35,7 @@ namespace System.Windows.Annotations
         #endregion Public Statics
 
         #region Constructors
-        
+
         /// <summary>
         /// Return a default AnnotationComponentChooser
         /// </summary>
@@ -44,7 +44,7 @@ namespace System.Windows.Annotations
         #endregion Constructors
 
         #region Public Methods
-        
+
         /// <summary>
         /// Choose an IAnnotationComponent for a given IAttachedAnnotation.  Implementation in AnnotationComponentChooser knows
         /// about all out-of-box IAnnotationComponents.  The default mapping will be stated here later.

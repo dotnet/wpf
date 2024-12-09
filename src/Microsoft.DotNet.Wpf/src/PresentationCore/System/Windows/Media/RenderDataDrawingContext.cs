@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,7 +31,7 @@ namespace System.Windows.Media
         #endregion Constructors
 
         #region Public Methods
-        
+
         internal RenderData GetRenderData()
         {
             return _renderData;
@@ -80,7 +80,7 @@ namespace System.Windows.Media
         /// This will only be called once (if ever) per instance.
         /// </summary>
         /// <param name="renderData"> The render data produced by this RenderDataDrawingContext.  </param>
-        protected virtual void CloseCore(RenderData renderData) {}
+        protected virtual void CloseCore(RenderData renderData) { }
 
         #endregion Protected Methods
 
@@ -124,7 +124,7 @@ namespace System.Windows.Media
                     Pop();
                 }
             }
-            
+
             _stackDepth = 0;
         }
 

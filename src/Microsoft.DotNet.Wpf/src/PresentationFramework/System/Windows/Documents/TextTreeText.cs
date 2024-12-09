@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -209,7 +209,7 @@ namespace System.Windows.Documents
         internal static void RemoveElementEdges(TextTreeRootTextBlock rootTextBlock, int offset, int symbolCount)
         {
             Invariant.Assert(symbolCount >= 2, "Element must span at least two symbols!"); // 2 element edges == 2 symbols.
-            
+
             if (symbolCount == 2)
             {
                 RemoveText(rootTextBlock, offset, 2);
@@ -343,7 +343,7 @@ namespace System.Windows.Documents
                     textEndOffset -= count;
                 }
             }
-            
+
             if (textOffset < textEndOffset)
             {
                 // Try adding just one block.
@@ -370,7 +370,7 @@ namespace System.Windows.Documents
                     }
                 }
 
-                for (i=0; i<newBlockCount-1; i++)
+                for (i = 0; i < newBlockCount - 1; i++)
                 {
                     newBlock = new TextTreeTextBlock(TextTreeTextBlock.MaxBlockSize);
                     textOffset += newBlock.InsertText(0, text, textOffset, textEndOffset);

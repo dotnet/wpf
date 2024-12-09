@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,7 @@ namespace System.Windows.Automation.Peers
         public TreeViewDataItemAutomationPeer(object item, ItemsControlAutomationPeer itemsControlAutomationPeer, TreeViewDataItemAutomationPeer parentDataItemAutomationPeer)
             : base(item, null)
         {
-            if(itemsControlAutomationPeer.Owner is TreeView || parentDataItemAutomationPeer == null)
+            if (itemsControlAutomationPeer.Owner is TreeView || parentDataItemAutomationPeer == null)
                 ItemsControlAutomationPeer = itemsControlAutomationPeer;
             _parentDataItemAutomationPeer = parentDataItemAutomationPeer;
         }
@@ -46,12 +46,12 @@ namespace System.Windows.Automation.Peers
                 TreeViewItemAutomationPeer treeViewItemAutomationPeer = GetWrapperPeer() as TreeViewItemAutomationPeer;
                 if (treeViewItemAutomationPeer != null)
                 {
-                    if(patternInterface == PatternInterface.SynchronizedInput)
+                    if (patternInterface == PatternInterface.SynchronizedInput)
                     {
-                        return treeViewItemAutomationPeer.GetPattern(patternInterface);        
+                        return treeViewItemAutomationPeer.GetPattern(patternInterface);
                     }
                     else
-                    { 
+                    {
                         return treeViewItemAutomationPeer;
                     }
                 }
@@ -69,7 +69,7 @@ namespace System.Windows.Automation.Peers
             {
                 treeViewItemWrapperPeer.AddDataPeerInfo(this);
             }
-            
+
             return wrapperPeer;
         }
 
@@ -98,12 +98,12 @@ namespace System.Windows.Automation.Peers
         // recreated as well. 
         override internal ItemsControlAutomationPeer GetItemsControlAutomationPeer()
         {
-                if(_parentDataItemAutomationPeer == null)
-                    return base.GetItemsControlAutomationPeer();
-                else
-                {
-                    return _parentDataItemAutomationPeer.GetWrapperPeer() as ItemsControlAutomationPeer;
-                }
+            if (_parentDataItemAutomationPeer == null)
+                return base.GetItemsControlAutomationPeer();
+            else
+            {
+                return _parentDataItemAutomationPeer.GetWrapperPeer() as ItemsControlAutomationPeer;
+            }
         }
 
         /// 
@@ -314,7 +314,7 @@ namespace System.Windows.Automation.Peers
                 }
             }
         }
-        
+
         // This is needed for scenarios where there is a deeply nested tree and client has hold of leaf DataItemPeer, now as it gets virtualized 
         // it’s parent’s WrapperPeer goes away but WeakRef collection won't as they will be reffered in this DataPeer corresponding to that parent.
         // And at later time when it gets realized the Wrapper will use the collection stored here.

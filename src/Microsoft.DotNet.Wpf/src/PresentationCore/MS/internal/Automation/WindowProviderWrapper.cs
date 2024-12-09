@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 //
 //
 
-using System.Windows.Threading;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -29,17 +29,17 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class WindowProviderWrapper: MarshalByRefObject, IWindowProvider
+    internal class WindowProviderWrapper : MarshalByRefObject, IWindowProvider
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        private WindowProviderWrapper( AutomationPeer peer, IWindowProvider iface)
+        private WindowProviderWrapper(AutomationPeer peer, IWindowProvider iface)
         {
             _peer = peer;
             _iface = iface;
@@ -53,69 +53,69 @@ namespace MS.Internal.Automation
         //  Interface IWindowProvider
         //
         //------------------------------------------------------
- 
+
         #region Interface IWindowProvider
 
-        public void SetVisualState( WindowVisualState state )
+        public void SetVisualState(WindowVisualState state)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( SetVisualState ), state );
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(SetVisualState), state);
         }
 
         public void Close()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Close ), null );
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(Close), null);
         }
 
-        public bool WaitForInputIdle( int milliseconds )
+        public bool WaitForInputIdle(int milliseconds)
         {
-            return (bool)ElementUtil.Invoke( _peer, new DispatcherOperationCallback( WaitForInputIdle ), milliseconds );
+            return (bool)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(WaitForInputIdle), milliseconds);
         }
 
-        public bool Maximizable 
+        public bool Maximizable
         {
             get
             {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetMaximizable ), null );
+                return (bool)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetMaximizable), null);
             }
         }
-        
+
         public bool Minimizable
         {
             get
             {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetMinimizable ), null );
+                return (bool)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetMinimizable), null);
             }
         }
-        
+
         public bool IsModal
         {
             get
             {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetIsModal ), null );
+                return (bool)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetIsModal), null);
             }
         }
-        
+
         public WindowVisualState VisualState
         {
             get
             {
-                return (WindowVisualState) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetVisualState ), null );
+                return (WindowVisualState)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetVisualState), null);
             }
         }
-        
+
         public WindowInteractionState InteractionState
         {
             get
             {
-                return (WindowInteractionState) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetInteractionState ), null );
+                return (WindowInteractionState)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetInteractionState), null);
             }
         }
-        
+
         public bool IsTopmost
         {
             get
             {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetIsTopmost ), null );
+                return (bool)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetIsTopmost), null);
             }
         }
 
@@ -127,12 +127,12 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static object Wrap( AutomationPeer peer, object iface)
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new WindowProviderWrapper( peer, (IWindowProvider) iface );
+            return new WindowProviderWrapper(peer, (IWindowProvider)iface);
         }
 
         #endregion Internal Methods
@@ -142,52 +142,52 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
-        private object SetVisualState( object arg )
+        private object SetVisualState(object arg)
         {
-            _iface.SetVisualState( (WindowVisualState) arg );
+            _iface.SetVisualState((WindowVisualState)arg);
             return null;
         }
 
-        private object WaitForInputIdle( object arg )
+        private object WaitForInputIdle(object arg)
         {
-            return _iface.WaitForInputIdle( (int) arg );
+            return _iface.WaitForInputIdle((int)arg);
         }
 
-        private object Close( object unused )
+        private object Close(object unused)
         {
             _iface.Close();
             return null;
         }
 
-        private object GetMaximizable( object unused )
+        private object GetMaximizable(object unused)
         {
             return _iface.Maximizable;
         }
-        
-        private object GetMinimizable( object unused )
+
+        private object GetMinimizable(object unused)
         {
             return _iface.Minimizable;
         }
-        
-        private object GetIsModal( object unused )
+
+        private object GetIsModal(object unused)
         {
             return _iface.IsModal;
         }
-        
-        private object GetVisualState( object unused )
+
+        private object GetVisualState(object unused)
         {
             return _iface.VisualState;
         }
-        
-        private object GetInteractionState( object unused )
+
+        private object GetInteractionState(object unused)
         {
             return _iface.InteractionState;
         }
-        
-        private object GetIsTopmost( object unused )
+
+        private object GetIsTopmost(object unused)
         {
             return _iface.IsTopmost;
         }
@@ -200,7 +200,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;

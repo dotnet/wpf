@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -55,21 +55,21 @@ namespace System.Windows.Media
 
         private static void RadiusXPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            EllipseGeometry target = ((EllipseGeometry) d);
+            EllipseGeometry target = ((EllipseGeometry)d);
 
 
             target.PropertyChanged(RadiusXProperty);
         }
         private static void RadiusYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            EllipseGeometry target = ((EllipseGeometry) d);
+            EllipseGeometry target = ((EllipseGeometry)d);
 
 
             target.PropertyChanged(RadiusYProperty);
         }
         private static void CenterPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            EllipseGeometry target = ((EllipseGeometry) d);
+            EllipseGeometry target = ((EllipseGeometry)d);
 
 
             target.PropertyChanged(CenterProperty);
@@ -85,7 +85,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(RadiusXProperty);
+                return (double)GetValue(RadiusXProperty);
             }
             set
             {
@@ -100,7 +100,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(RadiusYProperty);
+                return (double)GetValue(RadiusYProperty);
             }
             set
             {
@@ -115,7 +115,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Point) GetValue(CenterProperty);
+                return (Point)GetValue(CenterProperty);
             }
             set
             {
@@ -216,31 +216,33 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_ELLIPSEGEOMETRY))
-                {
-                    Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_ELLIPSEGEOMETRY))
+            {
+                Transform vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).AddRefOnChannel(channel);
 
-                    AddRefOnChannelAnimations(channel);
+                AddRefOnChannelAnimations(channel);
 
 
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                }
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
 
-                return _duceResource.GetHandle(channel);
-}
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
-                {
-                    Transform vTransform = Transform;
-                    if (vTransform != null) ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                Transform vTransform = Transform;
+                if (vTransform != null)
+                    ((DUCE.IResource)vTransform).ReleaseOnChannel(channel);
 
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.

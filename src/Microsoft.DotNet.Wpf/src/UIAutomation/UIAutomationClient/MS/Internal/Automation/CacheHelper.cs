@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -58,7 +58,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static AutomationElement BuildAutomationElementsFromResponse(
@@ -122,7 +122,7 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         // Parses the string as returned from ElementSearcher - see ElementSearcher.cs
@@ -135,13 +135,13 @@ namespace MS.Internal.Automation
         // propIndex is the current position in the array of property arrays
         // (an array of properties returned for each element that matches the
         // condition specified in the Searcher condition.)
-        private static AutomationElement ParseTreeDescription( string treeDescription,
+        private static AutomationElement ParseTreeDescription(string treeDescription,
                                                                object[,] properties,
                                                                ref int index,
                                                                ref int propIndex,
                                                                UiaCoreApi.UiaCacheRequest cacheRequest,
                                                                bool askedForChildren,
-                                                               bool askedForDescendants )
+                                                               bool askedForDescendants)
         {
             // Check that this is a 'begin node' tag (with or without properties)...
             if (string.IsNullOrEmpty(treeDescription))
@@ -179,7 +179,7 @@ namespace MS.Internal.Automation
 
             AutomationElement node = new AutomationElement(hnode, cachedValues, cachedValueIndex, cacheRequest);
 
-            if( askedForChildren || askedForDescendants )
+            if (askedForChildren || askedForDescendants)
             {
                 // If we did request children or descendants at this level, then set the
                 // cached first child to null - it may get overwritten with
@@ -198,7 +198,7 @@ namespace MS.Internal.Automation
             for (; ; )
             {
                 // Recursively parse the string...
-                AutomationElement child = ParseTreeDescription( treeDescription, properties,
+                AutomationElement child = ParseTreeDescription(treeDescription, properties,
                                                                 ref index, ref propIndex, cacheRequest,
                                                                 askedForDescendants, askedForDescendants);
 
@@ -238,7 +238,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         // Static class - no private fields

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class TablePattern: GridPattern
 #else
-    public class TablePattern: GridPattern
+    public class TablePattern : GridPattern
 #endif
     {
         //------------------------------------------------------
@@ -22,7 +22,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         private TablePattern(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -39,7 +39,7 @@ namespace System.Windows.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>Table pattern</summary>
@@ -62,7 +62,7 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
 
         /// <summary>
@@ -122,7 +122,7 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static new object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -138,7 +138,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         // No new fields needed here - we use those inherited from base class
@@ -183,7 +183,7 @@ namespace System.Windows.Automation
             //  Public Properties
             //
             //------------------------------------------------------
- 
+
             #region Public Properties
 
             /// <summary>Collection of all row headers for this table</summary>

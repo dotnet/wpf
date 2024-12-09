@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -48,7 +48,7 @@ namespace System.Windows.Resources
             _stream = stream;
             _contentType = contentType;
         }
-        
+
         #endregion Constructors
 
         //------------------------------------------------------
@@ -62,17 +62,17 @@ namespace System.Windows.Resources
         /// <summary>
         /// ContentType
         /// </summary>
-        public string ContentType 
-        { 
-            get { return _contentType;  }
+        public string ContentType
+        {
+            get { return _contentType; }
         }
- 
+
         /// <summary>
         /// Stream for the resource
         /// </summary>
         public Stream Stream
-        { 
-            get { return _stream;  }
+        {
+            get { return _stream; }
         }
 
         #endregion Public Properties
@@ -85,8 +85,8 @@ namespace System.Windows.Resources
 
         #region Private Fields
 
-        private string  _contentType;
-        private Stream  _stream;
+        private string _contentType;
+        private Stream _stream;
 
         #endregion Private Fields
     }
@@ -99,6 +99,6 @@ namespace System.Windows.Resources
         /// <summary>
         /// XamlContenType
         /// </summary>
-        public const string XamlContentType = "applicaton/xaml+xml" ;
+        public const string XamlContentType = "applicaton/xaml+xml";
     }
 }

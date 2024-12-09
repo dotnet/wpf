@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,8 +26,8 @@
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media.TextFormatting;
-using MS.Internal.Text;
 using MS.Internal.PtsHost.UnsafeNativeMethods;  // PTS
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -163,14 +163,16 @@ namespace MS.Internal.PtsHost
             }
             catch (Exception e)
             {
-                dur = dvr = cPolygons = cVertices = 0; fsfigprops = new PTS.FSFIGUREPROPS();
+                dur = dvr = cPolygons = cVertices = 0;
+                fsfigprops = new PTS.FSFIGUREPROPS();
                 durDistTextLeft = durDistTextRight = dvrDistTextTop = dvrDistTextBottom = 0;
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                dur = dvr = cPolygons = cVertices = 0; fsfigprops = new PTS.FSFIGUREPROPS();
+                dur = dvr = cPolygons = cVertices = 0;
+                fsfigprops = new PTS.FSFIGUREPROPS();
                 durDistTextLeft = durDistTextRight = dvrDistTextTop = dvrDistTextBottom = 0;
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
@@ -198,18 +200,20 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(para);
                 FigureParaClient paraClient = PtsContext.HandleToObject(pfsparaclientFigure) as FigureParaClient;
                 PTS.ValidateHandle(paraClient);
-                para.GetFigurePolygons(paraClient, fswdir, ncVertices, nfspt, rgcVertices, out ccVertices, 
+                para.GetFigurePolygons(paraClient, fswdir, ncVertices, nfspt, rgcVertices, out ccVertices,
                     rgfspt, out cfspt, out fWrapThrough);
             }
             catch (Exception e)
             {
-                ccVertices = cfspt = fWrapThrough = 0; rgfspt = null;
+                ccVertices = cfspt = fWrapThrough = 0;
+                rgfspt = null;
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
-            catch 
+            catch
             {
-                ccVertices = cfspt = fWrapThrough = 0; rgfspt = null;
+                ccVertices = cfspt = fWrapThrough = 0;
+                rgfspt = null;
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
@@ -240,19 +244,23 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(para);
                 FigureParaClient paraClient = PtsContext.HandleToObject(pfsparaclientFigure) as FigureParaClient;
                 PTS.ValidateHandle(paraClient);
-                para.CalcFigurePosition(paraClient, fswdir, ref fsrcPage, ref fsrcMargin, ref fsrcTrack, 
-                    ref fsrcFigurePreliminary, fMustPosition, fInTextLine, out fPushToNextTrack, out fsrcFlow, 
+                para.CalcFigurePosition(paraClient, fswdir, ref fsrcPage, ref fsrcMargin, ref fsrcTrack,
+                    ref fsrcFigurePreliminary, fMustPosition, fInTextLine, out fPushToNextTrack, out fsrcFlow,
                     out fsrcOverlap, out fsbbox, out fsrcSearch);
             }
             catch (Exception e)
             {
-                fPushToNextTrack = 0; fsrcFlow = fsrcOverlap = fsrcSearch = new PTS.FSRECT(); fsbbox = new PTS.FSBBOX();
+                fPushToNextTrack = 0;
+                fsrcFlow = fsrcOverlap = fsrcSearch = new PTS.FSRECT();
+                fsbbox = new PTS.FSBBOX();
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fPushToNextTrack = 0; fsrcFlow = fsrcOverlap = fsrcSearch = new PTS.FSRECT(); fsbbox = new PTS.FSBBOX();
+                fPushToNextTrack = 0;
+                fsrcFlow = fsrcOverlap = fsrcSearch = new PTS.FSRECT();
+                fsbbox = new PTS.FSBBOX();
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
@@ -302,18 +310,20 @@ namespace MS.Internal.PtsHost
             {
                 Section section = PtsContext.HandleToObject(nms) as Section;
                 PTS.ValidateHandle(section);
-                section.GetPageDimensions(out fswdir, out fHeaderFooterAtTopBottom, 
+                section.GetPageDimensions(out fswdir, out fHeaderFooterAtTopBottom,
                     out durPage, out dvrPage, ref fsrcMargin);
             }
             catch (Exception e)
             {
-                fswdir = 0; fHeaderFooterAtTopBottom = durPage = dvrPage = 0;
+                fswdir = 0;
+                fHeaderFooterAtTopBottom = durPage = dvrPage = 0;
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fswdir = 0; fHeaderFooterAtTopBottom = durPage = dvrPage = 0;
+                fswdir = 0;
+                fHeaderFooterAtTopBottom = durPage = dvrPage = 0;
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
@@ -334,13 +344,15 @@ namespace MS.Internal.PtsHost
             }
             catch (Exception e)
             {
-                fSuccess = 0; nmsNext = IntPtr.Zero;
+                fSuccess = 0;
+                nmsNext = IntPtr.Zero;
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fSuccess = 0; nmsNext = IntPtr.Zero;
+                fSuccess = 0;
+                nmsNext = IntPtr.Zero;
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
@@ -366,14 +378,16 @@ namespace MS.Internal.PtsHost
             }
             catch (Exception e)
             {
-                fNewPage = fApplyColumnBalancing = ccol = 0; fswdir = 0;
+                fNewPage = fApplyColumnBalancing = ccol = 0;
+                fswdir = 0;
                 cSegmentDefinedColumnSpanAreas = cHeightDefinedColumnSpanAreas = 0;
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fNewPage = fApplyColumnBalancing = ccol = 0; fswdir = 0;
+                fNewPage = fApplyColumnBalancing = ccol = 0;
+                fswdir = 0;
                 cSegmentDefinedColumnSpanAreas = cHeightDefinedColumnSpanAreas = 0;
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
@@ -401,14 +415,14 @@ namespace MS.Internal.PtsHost
             }
             catch (Exception e)
             {
-                fJustify = fCancelAtLastColumn = 0; 
+                fJustify = fCancelAtLastColumn = 0;
                 fskal = default(PTS.FSKALIGNPAGE);
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fJustify = fCancelAtLastColumn = 0; 
+                fJustify = fCancelAtLastColumn = 0;
                 fskal = default(PTS.FSKALIGNPAGE);
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
@@ -459,18 +473,22 @@ namespace MS.Internal.PtsHost
             {
                 Section section = PtsContext.HandleToObject(nms) as Section;
                 PTS.ValidateHandle(section);
-                section.GetHeaderSegment(pfsbrpagePrelim, fswdir, out fHeaderPresent, out fHardMargin, 
+                section.GetHeaderSegment(pfsbrpagePrelim, fswdir, out fHeaderPresent, out fHardMargin,
                     out dvrMaxHeight, out dvrFromEdge, out fswdirHeader, out nmsHeader);
             }
             catch (Exception e)
             {
-                fHeaderPresent = fHardMargin = dvrMaxHeight = dvrFromEdge = 0; fswdirHeader = 0; nmsHeader = IntPtr.Zero;
+                fHeaderPresent = fHardMargin = dvrMaxHeight = dvrFromEdge = 0;
+                fswdirHeader = 0;
+                nmsHeader = IntPtr.Zero;
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fHeaderPresent = fHardMargin = dvrMaxHeight = dvrFromEdge = 0; fswdirHeader = 0; nmsHeader = IntPtr.Zero;
+                fHeaderPresent = fHardMargin = dvrMaxHeight = dvrFromEdge = 0;
+                fswdirHeader = 0;
+                nmsHeader = IntPtr.Zero;
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
@@ -494,18 +512,22 @@ namespace MS.Internal.PtsHost
             {
                 Section section = PtsContext.HandleToObject(nms) as Section;
                 PTS.ValidateHandle(section);
-                section.GetFooterSegment(pfsbrpagePrelim, fswdir, out fFooterPresent, out fHardMargin, 
+                section.GetFooterSegment(pfsbrpagePrelim, fswdir, out fFooterPresent, out fHardMargin,
                     out dvrMaxHeight, out dvrFromEdge, out fswdirFooter, out nmsFooter);
             }
             catch (Exception e)
             {
-                fFooterPresent = fHardMargin = dvrMaxHeight = dvrFromEdge = 0; fswdirFooter = 0; nmsFooter = IntPtr.Zero;
+                fFooterPresent = fHardMargin = dvrMaxHeight = dvrFromEdge = 0;
+                fswdirFooter = 0;
+                nmsFooter = IntPtr.Zero;
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fFooterPresent = fHardMargin = dvrMaxHeight = dvrFromEdge = 0; fswdirFooter = 0; nmsFooter = IntPtr.Zero;
+                fFooterPresent = fHardMargin = dvrMaxHeight = dvrFromEdge = 0;
+                fswdirFooter = 0;
+                nmsFooter = IntPtr.Zero;
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
@@ -608,13 +630,15 @@ namespace MS.Internal.PtsHost
             }
             catch (Exception e)
             {
-                fSuccessful = 0; nmp = IntPtr.Zero;
+                fSuccessful = 0;
+                nmp = IntPtr.Zero;
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fSuccessful = 0; nmp = IntPtr.Zero;
+                fSuccessful = 0;
+                nmp = IntPtr.Zero;
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
@@ -638,13 +662,15 @@ namespace MS.Internal.PtsHost
             }
             catch (Exception e)
             {
-                fFound = 0; nmpNext = IntPtr.Zero;
+                fFound = 0;
+                nmpNext = IntPtr.Zero;
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fFound = 0; nmpNext = IntPtr.Zero;
+                fFound = 0;
+                nmpNext = IntPtr.Zero;
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
@@ -666,13 +692,15 @@ namespace MS.Internal.PtsHost
             }
             catch (Exception e)
             {
-                fFound = fChangeFirst = 0; nmpBeforeChange = IntPtr.Zero;
+                fFound = fChangeFirst = 0;
+                nmpBeforeChange = IntPtr.Zero;
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fFound = fChangeFirst = 0; nmpBeforeChange = IntPtr.Zero;
+                fFound = fChangeFirst = 0;
+                nmpBeforeChange = IntPtr.Zero;
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
@@ -859,13 +887,15 @@ namespace MS.Internal.PtsHost
             }
             catch (Exception e)
             {
-                fEndnotesPresent = 0; nmsEndnotes = IntPtr.Zero;
+                fEndnotesPresent = 0;
+                nmsEndnotes = IntPtr.Zero;
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fEndnotesPresent = 0; nmsEndnotes = IntPtr.Zero;
+                fEndnotesPresent = 0;
+                nmsEndnotes = IntPtr.Zero;
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
@@ -978,7 +1008,7 @@ namespace MS.Internal.PtsHost
             {
                 MarginCollapsingState mcs = PtsContext.HandleToObject(pmcsclientIn) as MarginCollapsingState;
                 PTS.ValidateHandle(mcs);
-                pmcsclientNew  = mcs.Clone().Handle;
+                pmcsclientNew = mcs.Clone().Handle;
             }
             catch (Exception e)
             {
@@ -1151,7 +1181,7 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(paraClient);
 
                 LineBreakRecord lineBreakRecord = null;
-                if(pfsbreakreclineclient != IntPtr.Zero)
+                if (pfsbreakreclineclient != IntPtr.Zero)
                 {
                     lineBreakRecord = PtsContext.HandleToObject(pfsbreakreclineclient) as LineBreakRecord;
                     PTS.ValidateHandle(lineBreakRecord);
@@ -1163,7 +1193,7 @@ namespace MS.Internal.PtsHost
                 para.CreateOptimalBreakSession(paraClient, fsdcpStart, durTrack, lineBreakRecord, out optimalBreakSession, out isParagraphJustified);
 
                 fParagraphJustified = PTS.FromBoolean(isParagraphJustified);
-                ppfsparabreakingsession = optimalBreakSession.Handle;                
+                ppfsparabreakingsession = optimalBreakSession.Handle;
             }
             catch (Exception e)
             {
@@ -1288,8 +1318,8 @@ namespace MS.Internal.PtsHost
             IntPtr pfsdropc,                    // IN:  pointer to drop cap
             IntPtr nmp,                         // IN:  para name
             uint fswdir,                        // IN:  current direction
-            int  ncVertices,                    // IN:  size of array of vertex counts (= number of polygons)
-            int  nfspt,                         // IN:  size of the array of all vertices
+            int ncVertices,                    // IN:  size of array of vertex counts (= number of polygons)
+            int nfspt,                         // IN:  size of the array of all vertices
             int* rgcVertices,                   // OUT: array of vertex counts (array containing number of vertices for each polygon)
             out int ccVertices,                 // OUT: actual number of vertex counts
             PTS.FSPOINT* rgfspt,                // OUT: array of all vertices
@@ -1322,7 +1352,7 @@ namespace MS.Internal.PtsHost
                 TextParagraph para = PtsContext.HandleToObject(nmp) as TextParagraph;
                 PTS.ValidateHandle(para);
                 Line line = PtsContext.HandleToObject(pfslineLast) as Line;
-                if(line != null)
+                if (line != null)
                 {
                     PTS.ValidateHandle(line);
                     para.FormatBottomText(iArea, fswdir, line, dvrLine, out pmcsclientOut);
@@ -1386,22 +1416,24 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(para);
                 TextParaClient paraClient = PtsContext.HandleToObject(pfsparaclient) as TextParaClient;
                 PTS.ValidateHandle(paraClient);
-                para.FormatLine(paraClient, iArea, dcp, pbrlineIn, fswdir, urStartLine, durLine, urStartTrack, durTrack, urPageLeftMargin, 
-                    PTS.ToBoolean(fAllowHyphenation), PTS.ToBoolean(fClearOnLeft), PTS.ToBoolean(fClearOnRight), PTS.ToBoolean(fTreatAsFirstInPara), PTS.ToBoolean(fTreatAsLastInPara), 
-                    PTS.ToBoolean(fSuppressTopSpace), out pfsline, out dcpLine, out ppbrlineOut, out fForcedBroken, out fsflres, 
-                    out dvrAscent, out dvrDescent, out urBBox, out durBBox,  out dcpDepend, 
+                para.FormatLine(paraClient, iArea, dcp, pbrlineIn, fswdir, urStartLine, durLine, urStartTrack, durTrack, urPageLeftMargin,
+                    PTS.ToBoolean(fAllowHyphenation), PTS.ToBoolean(fClearOnLeft), PTS.ToBoolean(fClearOnRight), PTS.ToBoolean(fTreatAsFirstInPara), PTS.ToBoolean(fTreatAsLastInPara),
+                    PTS.ToBoolean(fSuppressTopSpace), out pfsline, out dcpLine, out ppbrlineOut, out fForcedBroken, out fsflres,
+                    out dvrAscent, out dvrDescent, out urBBox, out durBBox, out dcpDepend,
                     out fReformatNeighborsAsLastLine);
             }
             catch (Exception e)
             {
-                pfsline = ppbrlineOut = IntPtr.Zero; dcpLine = fForcedBroken = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = fReformatNeighborsAsLastLine = 0; 
+                pfsline = ppbrlineOut = IntPtr.Zero;
+                dcpLine = fForcedBroken = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = fReformatNeighborsAsLastLine = 0;
                 fsflres = default(PTS.FSFLRES);
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                pfsline = ppbrlineOut = IntPtr.Zero; dcpLine = fForcedBroken = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = fReformatNeighborsAsLastLine = 0; 
+                pfsline = ppbrlineOut = IntPtr.Zero;
+                dcpLine = fForcedBroken = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = fReformatNeighborsAsLastLine = 0;
                 fsflres = default(PTS.FSFLRES);
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
@@ -1445,22 +1477,24 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(para);
                 TextParaClient paraClient = PtsContext.HandleToObject(pfsparaclient) as TextParaClient;
                 PTS.ValidateHandle(paraClient);
-                para.FormatLine(paraClient, iArea, dcp, pbrlineIn, fswdir, urStartLine, durLine, urStartTrack, durTrack, urPageLeftMargin, 
-                    true/*fAllowHyphenation*/, PTS.ToBoolean(fClearOnLeft), PTS.ToBoolean(fClearOnRight), PTS.ToBoolean(fTreatAsFirstInPara), PTS.ToBoolean(fTreatAsLastInPara), 
-                    PTS.ToBoolean(fSuppressTopSpace), out pfsline, out dcpLine, out ppbrlineOut, out fForcedBrokenIgnore, out fsflres, 
-                    out dvrAscent, out dvrDescent, out urBBox, out durBBox,  out dcpDepend, 
+                para.FormatLine(paraClient, iArea, dcp, pbrlineIn, fswdir, urStartLine, durLine, urStartTrack, durTrack, urPageLeftMargin,
+                    true/*fAllowHyphenation*/, PTS.ToBoolean(fClearOnLeft), PTS.ToBoolean(fClearOnRight), PTS.ToBoolean(fTreatAsFirstInPara), PTS.ToBoolean(fTreatAsLastInPara),
+                    PTS.ToBoolean(fSuppressTopSpace), out pfsline, out dcpLine, out ppbrlineOut, out fForcedBrokenIgnore, out fsflres,
+                    out dvrAscent, out dvrDescent, out urBBox, out durBBox, out dcpDepend,
                     out fReformatNeighborsAsLastLineIgnore);
             }
             catch (Exception e)
             {
-                pfsline = ppbrlineOut = IntPtr.Zero; dcpLine = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = 0; 
+                pfsline = ppbrlineOut = IntPtr.Zero;
+                dcpLine = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = 0;
                 fsflres = default(PTS.FSFLRES);
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                pfsline = ppbrlineOut = IntPtr.Zero; dcpLine = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = 0; 
+                pfsline = ppbrlineOut = IntPtr.Zero;
+                dcpLine = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = 0;
                 fsflres = default(PTS.FSFLRES);
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
@@ -1496,7 +1530,7 @@ namespace MS.Internal.PtsHost
 
                 TextLineBreak textLineBreak = null;
 
-                if(pbrlineIn != IntPtr.Zero)
+                if (pbrlineIn != IntPtr.Zero)
                 {
                     LineBreakRecord lineBreakRecord = PtsContext.HandleToObject(pbrlineIn) as LineBreakRecord;
                     PTS.ValidateHandle(lineBreakRecord);
@@ -1506,7 +1540,7 @@ namespace MS.Internal.PtsHost
 
                 IList<TextBreakpoint> textBreakpoints;
 
-                textBreakpoints = optimalBreakSession.TextParagraph.FormatLineVariants(optimalBreakSession.TextParaClient,                                                                                                            
+                textBreakpoints = optimalBreakSession.TextParagraph.FormatLineVariants(optimalBreakSession.TextParaClient,
                                                                                        optimalBreakSession.TextParagraphCache,
                                                                                        optimalBreakSession.OptimalTextSource,
                                                                                        dcp,
@@ -1524,7 +1558,7 @@ namespace MS.Internal.PtsHost
                                                                                        out iLineVariantBest
                                                                                        );
 
-                for(int breakIndex = 0; breakIndex < Math.Min(textBreakpoints.Count, nLineVariantsAlloc); breakIndex++)
+                for (int breakIndex = 0; breakIndex < Math.Min(textBreakpoints.Count, nLineVariantsAlloc); breakIndex++)
                 {
                     TextBreakpoint textBreakpoint = textBreakpoints[breakIndex];
 
@@ -1538,13 +1572,13 @@ namespace MS.Internal.PtsHost
 
                     TextLineBreak textLineBreakOut = textBreakpoint.GetTextLineBreak();
 
-                    if(textLineBreakOut != null)
+                    if (textLineBreakOut != null)
                     {
 #pragma warning disable 56518
-                // Disable PRESharp warning 6518. Line is an UnmamangedHandle, that adds itself
-                // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and
-                // calls DestroyLineBreakRecord to get rid of it. DestroyLineBreakRecord will call Dispose() on the object
-                // and remove it from HandleMapper.
+                        // Disable PRESharp warning 6518. Line is an UnmamangedHandle, that adds itself
+                        // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and
+                        // calls DestroyLineBreakRecord to get rid of it. DestroyLineBreakRecord will call Dispose() on the object
+                        // and remove it from HandleMapper.
                         LineBreakRecord lineBreakRecord = new LineBreakRecord(optimalBreakSession.PtsContext, textLineBreakOut);
 #pragma warning disable 56518
 
@@ -1553,7 +1587,7 @@ namespace MS.Internal.PtsHost
                     else
                     {
                         rgfslinevariant[breakIndex].pfsbreakreclineclient = IntPtr.Zero;
-                    }                      
+                    }
 
                     // Fill in line variants array.
 
@@ -1563,13 +1597,13 @@ namespace MS.Internal.PtsHost
                     optimalBreakSession.TextParagraph.CalcLineAscentDescent(dcp, ref dvrAscent, ref dvrDescent);
 
                     rgfslinevariant[breakIndex].pfslineclient = lineBreakpoint.Handle;
-                    rgfslinevariant[breakIndex].dcpLine      = textBreakpoint.Length;
+                    rgfslinevariant[breakIndex].dcpLine = textBreakpoint.Length;
 
                     rgfslinevariant[breakIndex].fForceBroken = PTS.FromBoolean(textBreakpoint.IsTruncated);
-                    rgfslinevariant[breakIndex].fslres       = optimalBreakSession.OptimalTextSource.GetFormatResultForBreakpoint(dcp, textBreakpoint);
-                    rgfslinevariant[breakIndex].dvrAscent    = dvrAscent;
-                    rgfslinevariant[breakIndex].dvrDescent   = dvrDescent;
-                    rgfslinevariant[breakIndex].fReformatNeighborsAsLastLine   = PTS.False;
+                    rgfslinevariant[breakIndex].fslres = optimalBreakSession.OptimalTextSource.GetFormatResultForBreakpoint(dcp, textBreakpoint);
+                    rgfslinevariant[breakIndex].dvrAscent = dvrAscent;
+                    rgfslinevariant[breakIndex].dvrDescent = dvrDescent;
+                    rgfslinevariant[breakIndex].fReformatNeighborsAsLastLine = PTS.False;
                     rgfslinevariant[breakIndex].ptsLinePenaltyInfo = textBreakpoint.GetTextPenaltyResource();
                 }
 
@@ -1629,22 +1663,24 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(para);
                 TextParaClient paraClient = PtsContext.HandleToObject(pfsparaclient) as TextParaClient;
                 PTS.ValidateHandle(paraClient);
-                para.ReconstructLineVariant(paraClient, iArea, dcpStart, pbrlineIn, dcpLine, fswdir, urStartLine, durLine, urStartTrack, durTrack, urPageLeftMargin, 
-                    PTS.ToBoolean(fAllowHyphenation), PTS.ToBoolean(fClearOnLeft), PTS.ToBoolean(fClearOnRight), PTS.ToBoolean(fTreatAsFirstInPara), PTS.ToBoolean(fTreatAsLastInPara), 
-                    PTS.ToBoolean(fSuppressTopSpace), out pfsline, out dcpLine, out ppbrlineOut, out fForcedBroken, out fsflres, 
-                    out dvrAscent, out dvrDescent, out urBBox, out durBBox,  out dcpDepend, 
+                para.ReconstructLineVariant(paraClient, iArea, dcpStart, pbrlineIn, dcpLine, fswdir, urStartLine, durLine, urStartTrack, durTrack, urPageLeftMargin,
+                    PTS.ToBoolean(fAllowHyphenation), PTS.ToBoolean(fClearOnLeft), PTS.ToBoolean(fClearOnRight), PTS.ToBoolean(fTreatAsFirstInPara), PTS.ToBoolean(fTreatAsLastInPara),
+                    PTS.ToBoolean(fSuppressTopSpace), out pfsline, out dcpLine, out ppbrlineOut, out fForcedBroken, out fsflres,
+                    out dvrAscent, out dvrDescent, out urBBox, out durBBox, out dcpDepend,
                     out fReformatNeighborsAsLastLine);
             }
             catch (Exception e)
             {
-                pfsline = ppbrlineOut = IntPtr.Zero; dcpLine = fForcedBroken = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = fReformatNeighborsAsLastLine = 0; 
+                pfsline = ppbrlineOut = IntPtr.Zero;
+                dcpLine = fForcedBroken = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = fReformatNeighborsAsLastLine = 0;
                 fsflres = default(PTS.FSFLRES);
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                pfsline = ppbrlineOut = IntPtr.Zero; dcpLine = fForcedBroken = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = fReformatNeighborsAsLastLine = 0; 
+                pfsline = ppbrlineOut = IntPtr.Zero;
+                dcpLine = fForcedBroken = dvrAscent = dvrDescent = urBBox = durBBox = dcpDepend = fReformatNeighborsAsLastLine = 0;
                 fsflres = default(PTS.FSFLRES);
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
@@ -1655,7 +1691,7 @@ namespace MS.Internal.PtsHost
             IntPtr pfsclient,                   // IN:  client opaque data
             IntPtr pfsline)                     // IN:  pointer to line created by client
         {
-            UnmanagedHandle unmanagedHandle = (UnmanagedHandle) PtsContext.HandleToObject(pfsline);
+            UnmanagedHandle unmanagedHandle = (UnmanagedHandle)PtsContext.HandleToObject(pfsline);
             unmanagedHandle.Dispose();
 
             return PTS.fserrNone;
@@ -1670,7 +1706,7 @@ namespace MS.Internal.PtsHost
             {
                 LineBreakRecord lineBreakRecord = PtsContext.HandleToObject(pbrlineIn) as LineBreakRecord;
                 PTS.ValidateHandle(lineBreakRecord);
-                pbrlineDup  = lineBreakRecord.Clone().Handle;
+                pbrlineDup = lineBreakRecord.Clone().Handle;
             }
             catch (Exception e)
             {
@@ -1730,7 +1766,7 @@ namespace MS.Internal.PtsHost
             try
             {
                 Line line = PtsContext.HandleToObject(pfsline) as Line;
-                if(line != null)
+                if (line != null)
                 {
                     PTS.ValidateHandle(line);
                     line.GetDvrSuppressibleBottomSpace(out dvrSuppressible);
@@ -1976,11 +2012,11 @@ namespace MS.Internal.PtsHost
 
                 List<AttachedObject> attachedObjects = para.GetAttachedObjects(dcpFirst, dcpLast);
 
-                for(int objectIndex = 0; objectIndex < attachedObjects.Count; objectIndex++)
+                for (int objectIndex = 0; objectIndex < attachedObjects.Count; objectIndex++)
                 {
-                    if(attachedObjects[objectIndex] is FigureObject)
+                    if (attachedObjects[objectIndex] is FigureObject)
                     {
-                        FigureObject figureObject = (FigureObject) attachedObjects[objectIndex];
+                        FigureObject figureObject = (FigureObject)attachedObjects[objectIndex];
 
                         rgnmpAttachedObject[objectIndex] = figureObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = figureObject.Dcp;
@@ -1988,7 +2024,7 @@ namespace MS.Internal.PtsHost
                     }
                     else
                     {
-                        FloaterObject floaterObject = (FloaterObject) attachedObjects[objectIndex];
+                        FloaterObject floaterObject = (FloaterObject)attachedObjects[objectIndex];
 
                         rgnmpAttachedObject[objectIndex] = floaterObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = floaterObject.Dcp;
@@ -2033,7 +2069,7 @@ namespace MS.Internal.PtsHost
 
                 LineBase lineBase = PtsContext.HandleToObject(pfsline) as LineBase;
 
-                if(lineBase == null)
+                if (lineBase == null)
                 {
                     LineBreakpoint lineBreakpoint = PtsContext.HandleToObject(pfsline) as LineBreakpoint;
                     PTS.ValidateHandle(lineBreakpoint);
@@ -2041,7 +2077,7 @@ namespace MS.Internal.PtsHost
                     lineBase = lineBreakpoint.OptimalBreakSession.OptimalTextSource;
                 }
 
-                if(lineBase.HasFigures || lineBase.HasFloaters)
+                if (lineBase.HasFigures || lineBase.HasFloaters)
                 {
                     int dcpLast = para.GetLastDcpAttachedObjectBeforeLine(dcpFirst);
 
@@ -2093,11 +2129,11 @@ namespace MS.Internal.PtsHost
 
                 List<AttachedObject> attachedObjects = para.GetAttachedObjects(dcpLast, dcpLim);
 
-                for(int objectIndex = 0; objectIndex < attachedObjects.Count; objectIndex++)
+                for (int objectIndex = 0; objectIndex < attachedObjects.Count; objectIndex++)
                 {
-                    if(attachedObjects[objectIndex] is FigureObject)
+                    if (attachedObjects[objectIndex] is FigureObject)
                     {
-                        FigureObject figureObject = (FigureObject) attachedObjects[objectIndex];
+                        FigureObject figureObject = (FigureObject)attachedObjects[objectIndex];
 
                         rgnmpAttachedObject[objectIndex] = figureObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = figureObject.Dcp;
@@ -2105,7 +2141,7 @@ namespace MS.Internal.PtsHost
                     }
                     else
                     {
-                        FloaterObject floaterObject = (FloaterObject) attachedObjects[objectIndex];
+                        FloaterObject floaterObject = (FloaterObject)attachedObjects[objectIndex];
 
                         rgnmpAttachedObject[objectIndex] = floaterObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = floaterObject.Dcp;
@@ -2170,7 +2206,7 @@ namespace MS.Internal.PtsHost
             try
             {
                 Line line = PtsContext.HandleToObject(pfsline) as Line;
-                if(line != null)
+                if (line != null)
                 {
                     PTS.ValidateHandle(line);
                     FigureParagraph paraFigure = PtsContext.HandleToObject(nmpFigure) as FigureParagraph;
@@ -2243,7 +2279,7 @@ namespace MS.Internal.PtsHost
             int durAvailable,                   // IN:  width of available space
             int dvrAvailable,                   // IN:  height of available space
             PTS.FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
-                                                // IN: suppress breaks at track start?
+            // IN: suppress breaks at track start?
             out PTS.FSFMTR fsfmtr,              // OUT: result of formatting
             out IntPtr pfsFloatContent,         // OUT: opaque for PTS pointer pointer to formatted content
             out IntPtr pbrkrecpara,             // OUT: pointer to the floater content break record
@@ -2261,19 +2297,25 @@ namespace MS.Internal.PtsHost
                 FloaterBaseParaClient paraClient = PtsContext.HandleToObject(pfsparaclient) as FloaterBaseParaClient;
                 PTS.ValidateHandle(paraClient);
                 para.FormatFloaterContentFinite(paraClient, pfsbrkFloaterContentIn, fBreakRecordFromPreviousPage,
-                    pftnrej, fEmptyOk, fSuppressTopSpace, fswdirTrack, fAtMaxWidth, durAvailable, dvrAvailable, 
-                    fsksuppresshardbreakbeforefirstparaIn, out fsfmtr, out pfsFloatContent, out pbrkrecpara, out durFloaterWidth, 
+                    pftnrej, fEmptyOk, fSuppressTopSpace, fswdirTrack, fAtMaxWidth, durAvailable, dvrAvailable,
+                    fsksuppresshardbreakbeforefirstparaIn, out fsfmtr, out pfsFloatContent, out pbrkrecpara, out durFloaterWidth,
                     out dvrFloaterHeight, out fsbbox, out cPolygons, out cVertices);
             }
             catch (Exception e)
             {
-                fsfmtr = new PTS.FSFMTR(); pfsFloatContent = pbrkrecpara = IntPtr.Zero; durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0; fsbbox = new PTS.FSBBOX();
+                fsfmtr = new PTS.FSFMTR();
+                pfsFloatContent = pbrkrecpara = IntPtr.Zero;
+                durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0;
+                fsbbox = new PTS.FSBBOX();
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fsfmtr = new PTS.FSFMTR(); pfsFloatContent = pbrkrecpara = IntPtr.Zero; durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0; fsbbox = new PTS.FSBBOX();
+                fsfmtr = new PTS.FSFMTR();
+                pfsFloatContent = pbrkrecpara = IntPtr.Zero;
+                durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0;
+                fsbbox = new PTS.FSBBOX();
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
@@ -2303,21 +2345,25 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(para);
                 FloaterBaseParaClient paraClient = PtsContext.HandleToObject(pfsparaclient) as FloaterBaseParaClient;
                 PTS.ValidateHandle(paraClient);
-                para.FormatFloaterContentBottomless(paraClient, fSuppressTopSpace, fswdirTrack, fAtMaxWidth, 
+                para.FormatFloaterContentBottomless(paraClient, fSuppressTopSpace, fswdirTrack, fAtMaxWidth,
                     durAvailable, dvrAvailable, out fsfmtrbl, out pfsFloatContent, out durFloaterWidth, out dvrFloaterHeight,
                     out fsbbox, out cPolygons, out cVertices);
             }
             catch (Exception e)
             {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfsFloatContent = IntPtr.Zero; durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0; fsbbox = new PTS.FSBBOX();
+                fsfmtrbl = default(PTS.FSFMTRBL);
+                pfsFloatContent = IntPtr.Zero;
+                durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0;
+                fsbbox = new PTS.FSBBOX();
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfsFloatContent = IntPtr.Zero; durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0; fsbbox = new PTS.FSBBOX();
+                fsfmtrbl = default(PTS.FSFMTRBL);
+                pfsFloatContent = IntPtr.Zero;
+                durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0;
+                fsbbox = new PTS.FSBBOX();
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
@@ -2346,21 +2392,23 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(para);
                 FloaterBaseParaClient paraClient = PtsContext.HandleToObject(pfsparaclient) as FloaterBaseParaClient;
                 PTS.ValidateHandle(paraClient);
-                para.UpdateBottomlessFloaterContent(paraClient, fSuppressTopSpace, fswdirTrack, fAtMaxWidth, 
+                para.UpdateBottomlessFloaterContent(paraClient, fSuppressTopSpace, fswdirTrack, fAtMaxWidth,
                     durAvailable, dvrAvailable, pfsFloaterContent, out fsfmtrbl, out durFloaterWidth, out dvrFloaterHeight,
                     out fsbbox, out cPolygons, out cVertices);
             }
             catch (Exception e)
             {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0; fsbbox = new PTS.FSBBOX();
+                fsfmtrbl = default(PTS.FSFMTRBL);
+                durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0;
+                fsbbox = new PTS.FSBBOX();
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0; fsbbox = new PTS.FSBBOX();
+                fsfmtrbl = default(PTS.FSFMTRBL);
+                durFloaterWidth = dvrFloaterHeight = cPolygons = cVertices = 0;
+                fsbbox = new PTS.FSBBOX();
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
@@ -2387,7 +2435,7 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(para);
                 FloaterBaseParaClient paraClient = PtsContext.HandleToObject(pfsparaclient) as FloaterBaseParaClient;
                 PTS.ValidateHandle(paraClient);
-                para.GetFloaterPolygons(paraClient, fswdirTrack, ncVertices, nfspt, rgcVertices, out ccVertices, 
+                para.GetFloaterPolygons(paraClient, fswdirTrack, ncVertices, nfspt, rgcVertices, out ccVertices,
                     rgfspt, out cfspt, out fWrapThrough);
             }
             catch (Exception e)
@@ -2403,7 +2451,7 @@ namespace MS.Internal.PtsHost
                 fserr = PTS.fserrCallbackException;
             }
             return fserr;
-}
+        }
 
         internal int ClearUpdateInfoInFloaterContent(
             IntPtr pfsFloaterContent)           // IN:  opaque for PTS pointer to floater content
@@ -2693,7 +2741,7 @@ namespace MS.Internal.PtsHost
             IntPtr pmcsclientIn,                // IN:  input margin collapsing state
             PTS.FSKCLEAR fskclearIn,            // IN:  clear property that must be satisfied
             PTS.FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
-                                                // IN: suppress breaks at track start?
+            // IN: suppress breaks at track start?
             int fBreakInside,                   // IN:  produce vertical break inside para; needed for recursive KWN logic;
                                                 //      can be set to true if during previous formatting fBreakInsidePossible output was returned as TRUE
             out PTS.FSFMTR fsfmtr,              // OUT: result of formatting the paragraph
@@ -2720,20 +2768,26 @@ namespace MS.Internal.PtsHost
                     mcs = PtsContext.HandleToObject(pmcsclientIn) as MarginCollapsingState;
                     PTS.ValidateHandle(mcs);
                 }
-                para.FormatParaFinite(paraClient, pfsobjbrk, fBreakRecordFromPreviousPage, iArea, pftnrej, pfsgeom, 
-                    fEmptyOk, fSuppressTopSpace, fswdir, ref fsrcToFill, mcs, fskclearIn, fsksuppresshardbreakbeforefirstparaIn, out fsfmtr, out pfspara, 
+                para.FormatParaFinite(paraClient, pfsobjbrk, fBreakRecordFromPreviousPage, iArea, pftnrej, pfsgeom,
+                    fEmptyOk, fSuppressTopSpace, fswdir, ref fsrcToFill, mcs, fskclearIn, fsksuppresshardbreakbeforefirstparaIn, out fsfmtr, out pfspara,
                     out pbrkrecpara, out dvrUsed, out fsbbox, out pmcsclientOut, out fskclearOut, out dvrTopSpace);
             }
             catch (Exception e)
             {
-                fsfmtr = new PTS.FSFMTR(); pfspara = pbrkrecpara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = 0; fsbbox = new PTS.FSBBOX(); 
+                fsfmtr = new PTS.FSFMTR();
+                pfspara = pbrkrecpara = pmcsclientOut = IntPtr.Zero;
+                dvrUsed = dvrTopSpace = 0;
+                fsbbox = new PTS.FSBBOX();
                 fskclearOut = default(PTS.FSKCLEAR);
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fsfmtr = new PTS.FSFMTR(); pfspara = pbrkrecpara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = 0; fsbbox = new PTS.FSBBOX(); 
+                fsfmtr = new PTS.FSFMTR();
+                pfspara = pbrkrecpara = pmcsclientOut = IntPtr.Zero;
+                dvrUsed = dvrTopSpace = 0;
+                fsbbox = new PTS.FSBBOX();
                 fskclearOut = default(PTS.FSKCLEAR);
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
@@ -2777,21 +2831,25 @@ namespace MS.Internal.PtsHost
                     mcs = PtsContext.HandleToObject(pmcsclientIn) as MarginCollapsingState;
                     PTS.ValidateHandle(mcs);
                 }
-                para.FormatParaBottomless(paraClient, iArea, pfsgeom, fSuppressTopSpace, fswdir, urTrack, durTrack, vrTrack, mcs, fskclearIn, fInterruptable, out fsfmtrbl, out pfspara, out dvrUsed, out fsbbox, 
+                para.FormatParaBottomless(paraClient, iArea, pfsgeom, fSuppressTopSpace, fswdir, urTrack, durTrack, vrTrack, mcs, fskclearIn, fInterruptable, out fsfmtrbl, out pfspara, out dvrUsed, out fsbbox,
                     out pmcsclientOut, out fskclearOut, out dvrTopSpace, out fPageBecomesUninterruptable);
             }
             catch (Exception e)
             {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfspara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0; fsbbox = new PTS.FSBBOX(); 
+                fsfmtrbl = default(PTS.FSFMTRBL);
+                pfspara = pmcsclientOut = IntPtr.Zero;
+                dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0;
+                fsbbox = new PTS.FSBBOX();
                 fskclearOut = default(PTS.FSKCLEAR);
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfspara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0; fsbbox = new PTS.FSBBOX(); 
+                fsfmtrbl = default(PTS.FSFMTRBL);
+                pfspara = pmcsclientOut = IntPtr.Zero;
+                dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0;
+                fsbbox = new PTS.FSBBOX();
                 fskclearOut = default(PTS.FSKCLEAR);
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
@@ -2834,22 +2892,26 @@ namespace MS.Internal.PtsHost
                     mcs = PtsContext.HandleToObject(pmcsclientIn) as MarginCollapsingState;
                     PTS.ValidateHandle(mcs);
                 }
-                para.UpdateBottomlessPara(pfspara, paraClient, iArea, pfsgeom, fSuppressTopSpace, fswdir, urTrack, durTrack, 
-                    vrTrack, mcs, fskclearIn, fInterruptable, out fsfmtrbl, out dvrUsed, out fsbbox, 
+                para.UpdateBottomlessPara(pfspara, paraClient, iArea, pfsgeom, fSuppressTopSpace, fswdir, urTrack, durTrack,
+                    vrTrack, mcs, fskclearIn, fInterruptable, out fsfmtrbl, out dvrUsed, out fsbbox,
                     out pmcsclientOut, out fskclearOut, out dvrTopSpace, out fPageBecomesUninterruptable);
             }
             catch (Exception e)
             {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfspara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0; fsbbox = new PTS.FSBBOX(); 
+                fsfmtrbl = default(PTS.FSFMTRBL);
+                pfspara = pmcsclientOut = IntPtr.Zero;
+                dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0;
+                fsbbox = new PTS.FSBBOX();
                 fskclearOut = default(PTS.FSKCLEAR);
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfspara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0; fsbbox = new PTS.FSBBOX(); 
+                fsfmtrbl = default(PTS.FSFMTRBL);
+                pfspara = pmcsclientOut = IntPtr.Zero;
+                dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0;
+                fsbbox = new PTS.FSBBOX();
                 fskclearOut = default(PTS.FSKCLEAR);
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
@@ -2930,7 +2992,7 @@ namespace MS.Internal.PtsHost
             out int dvrSumHeight,               // OUT: sum of all line heights
             out int dvrMinHeight)               // OUT: minimum line height
         {
-            return PTS.FsGetSubtrackColumnBalancingInfo(Context, pfspara, fswdir, 
+            return PTS.FsGetSubtrackColumnBalancingInfo(Context, pfspara, fswdir,
                 out nlines, out dvrSumHeight, out dvrMinHeight);
         }
 
@@ -3008,7 +3070,7 @@ namespace MS.Internal.PtsHost
             IntPtr pmcsclientIn,                // IN:  input margin collapsing state
             PTS.FSKCLEAR fskclearIn,            // IN:  clear property that must be satisfied
             PTS.FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
-                                                // IN: suppress breaks at track start?
+            // IN: suppress breaks at track start?
             int fBreakInside,                   // IN:  produce vertical break inside para; needed for recursive KWN logic;
                                                 //      can be set to true if during previous formatting fBreakInsidePossible output was returned as TRUE
             out PTS.FSFMTR fsfmtr,              // OUT: result of formatting the paragraph
@@ -3035,20 +3097,26 @@ namespace MS.Internal.PtsHost
                     mcs = PtsContext.HandleToObject(pmcsclientIn) as MarginCollapsingState;
                     PTS.ValidateHandle(mcs);
                 }
-                para.FormatParaFinite(paraClient, pfsobjbrk, fBreakRecordFromPreviousPage, pftnrej, 
-                    fEmptyOk, fSuppressTopSpace, fswdir, ref fsrcToFill, mcs, fskclearIn, fsksuppresshardbreakbeforefirstparaIn, out fsfmtr, out pfspara, 
+                para.FormatParaFinite(paraClient, pfsobjbrk, fBreakRecordFromPreviousPage, pftnrej,
+                    fEmptyOk, fSuppressTopSpace, fswdir, ref fsrcToFill, mcs, fskclearIn, fsksuppresshardbreakbeforefirstparaIn, out fsfmtr, out pfspara,
                     out pbrkrecpara, out dvrUsed, out fsbbox, out pmcsclientOut, out fskclearOut, out dvrTopSpace);
             }
             catch (Exception e)
             {
-                fsfmtr = new PTS.FSFMTR(); pfspara = pbrkrecpara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = 0; fsbbox = new PTS.FSBBOX(); 
+                fsfmtr = new PTS.FSFMTR();
+                pfspara = pbrkrecpara = pmcsclientOut = IntPtr.Zero;
+                dvrUsed = dvrTopSpace = 0;
+                fsbbox = new PTS.FSBBOX();
                 fskclearOut = default(PTS.FSKCLEAR);
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fsfmtr = new PTS.FSFMTR(); pfspara = pbrkrecpara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = 0; fsbbox = new PTS.FSBBOX(); 
+                fsfmtr = new PTS.FSFMTR();
+                pfspara = pbrkrecpara = pmcsclientOut = IntPtr.Zero;
+                dvrUsed = dvrTopSpace = 0;
+                fsbbox = new PTS.FSBBOX();
                 fskclearOut = default(PTS.FSKCLEAR);
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
@@ -3091,22 +3159,26 @@ namespace MS.Internal.PtsHost
                     mcs = PtsContext.HandleToObject(pmcsclientIn) as MarginCollapsingState;
                     PTS.ValidateHandle(mcs);
                 }
-                para.FormatParaBottomless(paraClient, fSuppressTopSpace, fswdir, urTrack, durTrack, vrTrack, mcs, 
-                    fskclearIn, fInterruptable, out fsfmtrbl, out pfspara, out dvrUsed, out fsbbox, 
+                para.FormatParaBottomless(paraClient, fSuppressTopSpace, fswdir, urTrack, durTrack, vrTrack, mcs,
+                    fskclearIn, fInterruptable, out fsfmtrbl, out pfspara, out dvrUsed, out fsbbox,
                     out pmcsclientOut, out fskclearOut, out dvrTopSpace, out fPageBecomesUninterruptable);
             }
             catch (Exception e)
             {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfspara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0; fsbbox = new PTS.FSBBOX(); 
+                fsfmtrbl = default(PTS.FSFMTRBL);
+                pfspara = pmcsclientOut = IntPtr.Zero;
+                dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0;
+                fsbbox = new PTS.FSBBOX();
                 fskclearOut = default(PTS.FSKCLEAR);
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfspara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0; fsbbox = new PTS.FSBBOX(); 
+                fsfmtrbl = default(PTS.FSFMTRBL);
+                pfspara = pmcsclientOut = IntPtr.Zero;
+                dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0;
+                fsbbox = new PTS.FSBBOX();
                 fskclearOut = default(PTS.FSKCLEAR);
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
@@ -3149,22 +3221,26 @@ namespace MS.Internal.PtsHost
                     mcs = PtsContext.HandleToObject(pmcsclientIn) as MarginCollapsingState;
                     PTS.ValidateHandle(mcs);
                 }
-                para.UpdateBottomlessPara(pfspara, paraClient, fSuppressTopSpace, fswdir, urTrack, durTrack, 
-                    vrTrack, mcs, fskclearIn, fInterruptable, out fsfmtrbl, out dvrUsed, out fsbbox, 
+                para.UpdateBottomlessPara(pfspara, paraClient, fSuppressTopSpace, fswdir, urTrack, durTrack,
+                    vrTrack, mcs, fskclearIn, fInterruptable, out fsfmtrbl, out dvrUsed, out fsbbox,
                     out pmcsclientOut, out fskclearOut, out dvrTopSpace, out fPageBecomesUninterruptable);
             }
             catch (Exception e)
             {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfspara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0; fsbbox = new PTS.FSBBOX(); 
+                fsfmtrbl = default(PTS.FSFMTRBL);
+                pfspara = pmcsclientOut = IntPtr.Zero;
+                dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0;
+                fsbbox = new PTS.FSBBOX();
                 fskclearOut = default(PTS.FSKCLEAR);
                 PtsContext.CallbackException = e;
                 fserr = PTS.fserrCallbackException;
             }
             catch
             {
-                fsfmtrbl = default(PTS.FSFMTRBL); 
-                pfspara = pmcsclientOut = IntPtr.Zero; dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0; fsbbox = new PTS.FSBBOX(); 
+                fsfmtrbl = default(PTS.FSFMTRBL);
+                pfspara = pmcsclientOut = IntPtr.Zero;
+                dvrUsed = dvrTopSpace = fPageBecomesUninterruptable = 0;
+                fsbbox = new PTS.FSBBOX();
                 fskclearOut = default(PTS.FSKCLEAR);
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
@@ -3300,7 +3376,7 @@ namespace MS.Internal.PtsHost
             }
             return (fserr);
         }
-        internal int AutofitTable(       
+        internal int AutofitTable(
             IntPtr pfsclient,                       // IN:  
             IntPtr pfsparaclientTable,              // IN:  
             IntPtr nmTable,                         // IN:  
@@ -3597,9 +3673,9 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(para);
 
                 para.UpdFChangeInHeaderFooter(
-                    out fHeaderChanged, 
-                    out fFooterChanged, 
-                    out fRepeatedHeaderChanged, 
+                    out fHeaderChanged,
+                    out fFooterChanged,
+                    out fRepeatedHeaderChanged,
                     out fRepeatedFooterChanged);
             }
             catch (Exception e)
@@ -3636,8 +3712,8 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(para);
 
                 para.UpdGetFirstChangeInTable(
-                    out fFound, 
-                    out fChangeFirst, 
+                    out fFound,
+                    out fChangeFirst,
                     out pnmRowBeforeChange);
             }
             catch (Exception e)
@@ -3685,7 +3761,7 @@ namespace MS.Internal.PtsHost
             }
             catch
             {
-               fskch = default(PTS.FSKCHANGE);
+                fskch = default(PTS.FSKCHANGE);
                 fNoFurtherChanges = 0;
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
@@ -3853,10 +3929,10 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(rowParagraph);
 
                 rowParagraph.CalcHorizontalBBoxOfRow(
-                    cCells, 
-                    rgnmCell, 
-                    rgpfscell, 
-                    out urBBox, 
+                    cCells,
+                    rgnmCell,
+                    rgpfscell,
+                    out urBBox,
                     out durBBox);
             }
             catch (Exception e)
@@ -3902,7 +3978,7 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(tableParaClient);
 
                 cellParagraph.FormatCellFinite(
-                              tableParaClient, pfsbrkcell, pfsFtnRejector, fEmptyOK, fswdirTable, dvrAvailable, 
+                              tableParaClient, pfsbrkcell, pfsFtnRejector, fEmptyOK, fswdirTable, dvrAvailable,
                               out pfmtr, out ppfscell, out pfsbrkcellOut, out dvrUsed);
             }
             catch (Exception e)
@@ -3925,7 +4001,7 @@ namespace MS.Internal.PtsHost
             }
             return (fserr);
         }
-        internal int FormatCellBottomless(   
+        internal int FormatCellBottomless(
             IntPtr pfsclient,                       // IN:  
             IntPtr pfsparaclientTable,              // IN:  table's para client
             IntPtr nmCell,                          // IN:  for vMerged cells, the first cell (master)
@@ -3944,10 +4020,10 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(tableParaClient);
 
                 cellParagraph.FormatCellBottomless(
-                    tableParaClient, 
-                    fswdirTable, 
-                    out fmtrbl, 
-                    out ppfscell, 
+                    tableParaClient,
+                    fswdirTable,
+                    out fmtrbl,
+                    out ppfscell,
                     out dvrUsed);
             }
             catch (Exception e)
@@ -3970,7 +4046,7 @@ namespace MS.Internal.PtsHost
         }
         // unless cell has vertical text or is special in some other ways,
         // this calls maps directly to a update subpage call :-)
-        internal int UpdateBottomlessCell( 
+        internal int UpdateBottomlessCell(
             IntPtr pfscell,                         // IN/OUT: cell object
             IntPtr pfsparaclientTable,              // IN:  table's para client
             IntPtr nmCell,                          // IN:  for vMerged cells, the first cell (master)
@@ -3991,10 +4067,10 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(tableParaClient);
 
                 cellParagraph.UpdateBottomlessCell(
-                    cellParaClient, 
-                    tableParaClient, 
-                    fswdirTable, 
-                    out fmtrbl, 
+                    cellParaClient,
+                    tableParaClient,
+                    fswdirTable,
+                    out fmtrbl,
                     out dvrUsed);
             }
             catch (Exception e)
@@ -4007,7 +4083,7 @@ namespace MS.Internal.PtsHost
             catch
             {
                 fmtrbl = default(PTS.FSFMTRBL);
-               dvrUsed = 0;
+                dvrUsed = 0;
                 PtsContext.CallbackException = new System.Exception("Caught a non CLS Exception");
                 fserr = PTS.fserrCallbackException;
             }
@@ -4052,11 +4128,11 @@ namespace MS.Internal.PtsHost
                 PTS.ValidateHandle(tableParaClient);
 
                 cellParagraph.SetCellHeight(
-                    cellParaClient, 
+                    cellParaClient,
                     tableParaClient,
-                    pfsbrkcell, 
-                    fBrokenHere, 
-                    fswdirTable, 
+                    pfsbrkcell,
+                    fBrokenHere,
+                    fswdirTable,
                     dvrActual);
             }
             catch (Exception e)

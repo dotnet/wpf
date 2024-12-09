@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -78,9 +78,11 @@ namespace System.Windows.Controls
                 lineWidth = (double)parameter;
             }
 
-            Grid grid = new Grid();
-            grid.Width = borderWidth;
-            grid.Height = borderHeight;
+            Grid grid = new Grid
+            {
+                Width = borderWidth,
+                Height = borderHeight
+            };
             ColumnDefinition colDef1 = new ColumnDefinition();
             ColumnDefinition colDef2 = new ColumnDefinition();
             ColumnDefinition colDef3 = new ColumnDefinition();

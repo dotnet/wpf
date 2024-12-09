@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -63,8 +63,8 @@ namespace System.Windows.Controls
         ///     The DependencyProperty representing the CellTemplate property.
         /// </summary>
         public static readonly DependencyProperty CellTemplateProperty = DependencyProperty.Register(
-                                                                            "CellTemplate", 
-                                                                            typeof(DataTemplate), 
+                                                                            "CellTemplate",
+                                                                            typeof(DataTemplate),
                                                                             typeof(DataGridTemplateColumn),
                                                                             new FrameworkPropertyMetadata(null, new PropertyChangedCallback(DataGridColumn.NotifyPropertyChangeForRefreshContent)));
 
@@ -81,8 +81,8 @@ namespace System.Windows.Controls
         ///     The DependencyProperty representing the CellTemplateSelector property.
         /// </summary>
         public static readonly DependencyProperty CellTemplateSelectorProperty = DependencyProperty.Register(
-                                                                                    "CellTemplateSelector", 
-                                                                                    typeof(DataTemplateSelector), 
+                                                                                    "CellTemplateSelector",
+                                                                                    typeof(DataTemplateSelector),
                                                                                     typeof(DataGridTemplateColumn),
                                                                                     new FrameworkPropertyMetadata(null, new PropertyChangedCallback(DataGridColumn.NotifyPropertyChangeForRefreshContent)));
 
@@ -100,8 +100,8 @@ namespace System.Windows.Controls
         ///     The DependencyProperty representing the CellEditingTemplate
         /// </summary>
         public static readonly DependencyProperty CellEditingTemplateProperty = DependencyProperty.Register(
-                                                                                    "CellEditingTemplate", 
-                                                                                    typeof(DataTemplate), 
+                                                                                    "CellEditingTemplate",
+                                                                                    typeof(DataTemplate),
                                                                                     typeof(DataGridTemplateColumn),
                                                                                     new FrameworkPropertyMetadata(null, new PropertyChangedCallback(DataGridColumn.NotifyPropertyChangeForRefreshContent)));
 
@@ -119,9 +119,9 @@ namespace System.Windows.Controls
         ///     The DependencyProperty representing the CellEditingTemplateSelector
         /// </summary>
         public static readonly DependencyProperty CellEditingTemplateSelectorProperty = DependencyProperty.Register(
-                                                                                            "CellEditingTemplateSelector", 
-                                                                                            typeof(DataTemplateSelector), 
-                                                                                            typeof(DataGridTemplateColumn), 
+                                                                                            "CellEditingTemplateSelector",
+                                                                                            typeof(DataTemplateSelector),
+                                                                                            typeof(DataGridTemplateColumn),
                                                                                             new FrameworkPropertyMetadata(null, new PropertyChangedCallback(DataGridColumn.NotifyPropertyChangeForRefreshContent)));
 
         /// <summary>

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace System.Windows
     /// Type converter to inform the serialization system how to construct a TemplateBindingExtension from
     /// an instance. It reports that Property should be used as the first parameter to the constructor.
     /// </summary>
-    public class TemplateBindingExtensionConverter : TypeConverter 
+    public class TemplateBindingExtensionConverter : TypeConverter
     {
         /// <summary>
         /// Returns true if converting to an InstanceDescriptor
@@ -48,7 +48,7 @@ namespace System.Windows
 
                 TemplateBindingExtension templateBinding = value as TemplateBindingExtension;
 
-                if(templateBinding == null)
+                if (templateBinding == null)
                     throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "TemplateBindingExtension"), "value");
 
                 return new InstanceDescriptor(typeof(TemplateBindingExtension).GetConstructor(new Type[] { typeof(DependencyProperty) }),

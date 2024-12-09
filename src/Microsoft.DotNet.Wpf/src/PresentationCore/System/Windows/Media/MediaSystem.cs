@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -358,6 +358,6 @@ namespace System.Windows.Media
         // 1 if app is requesting to disable D3D dirty rectangle work, 0 otherwise.
         // We use Interlocked.CompareExchange to change this, which supports int but not bool.
         private static int s_DisableDirtyRectangles = 0;
-     }
+    }
 }
 

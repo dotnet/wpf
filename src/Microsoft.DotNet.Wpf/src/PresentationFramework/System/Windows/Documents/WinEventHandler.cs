@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,9 +7,8 @@
 //
 
 using System.Runtime.InteropServices;
-using MS.Win32;
-
 using MS.Internal;
+using MS.Win32;
 
 namespace System.Windows.Documents
 {
@@ -84,7 +83,7 @@ namespace System.Windows.Documents
             {
                 _hHook = UnsafeNativeMethods.SetWinEventHook(_eventMin, _eventMax, IntPtr.Zero, _winEventProc,
                                                              0, 0, NativeMethods.WINEVENT_OUTOFCONTEXT);
-                if (_hHook == IntPtr.Zero )
+                if (_hHook == IntPtr.Zero)
                 {
                     Stop();
                 }
@@ -94,10 +93,10 @@ namespace System.Windows.Documents
         // uninstall WinEvent hook.
         internal void Stop()
         {
-            if (_hHook != IntPtr.Zero )
+            if (_hHook != IntPtr.Zero)
             {
                 UnsafeNativeMethods.UnhookWinEvent(_hHook);
-                _hHook = IntPtr.Zero ;
+                _hHook = IntPtr.Zero;
             }
 
             if (_shutdownListener != null)
@@ -119,7 +118,7 @@ namespace System.Windows.Documents
 
         private void WinEventDefaultProc(int winEventHook, int eventId, IntPtr hwnd, int idObject, int idChild, int eventThread, int eventTime)
         {
-            WinEventProc(eventId , hwnd);
+            WinEventProc(eventId, hwnd);
         }
 
         #endregion Private Methods

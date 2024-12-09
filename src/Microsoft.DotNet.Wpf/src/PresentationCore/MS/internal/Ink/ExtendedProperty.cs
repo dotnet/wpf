@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -54,9 +54,9 @@ namespace System.Windows.Ink
                     Type elementType1 = type1.GetElementType();
                     Type elementType2 = type2.GetElementType();
                     if (elementType1 == elementType2 &&
-                        elementType1.IsValueType && 
+                        elementType1.IsValueType &&
                         type1.GetArrayRank() == 1 &&
-                        elementType2.IsValueType && 
+                        elementType2.IsValueType &&
                         type2.GetArrayRank() == 1)
                     {
                         Array array1 = (Array)this.Value;

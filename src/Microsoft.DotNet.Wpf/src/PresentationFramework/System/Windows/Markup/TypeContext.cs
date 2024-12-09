@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,9 +19,9 @@ namespace System.Windows.Markup
     ///<summary>TypeConverterContext class used for parsing Attributes.</summary>
     internal class TypeConvertContext : ITypeDescriptorContext
     {
-#region Public
+        #region Public
 
-#region Methods
+        #region Methods
 
         ///<summary>
         /// OnComponentChange
@@ -85,14 +85,14 @@ namespace System.Windows.Markup
             // Check for the other provided services
 
             ProvideValueServiceProvider serviceProvider = _parserContext.ProvideValueProvider;
-            return serviceProvider.GetService( serviceType );
+            return serviceProvider.GetService(serviceType);
 #endif
 
         }
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         ///<summary>Container property</summary>
         ///<internalonly>
@@ -101,7 +101,7 @@ namespace System.Windows.Markup
         ///</internalonly>
         public IContainer Container
         {
-            get {return null;}
+            get { return null; }
         }
 
         ///<summary>Instance property</summary>
@@ -121,7 +121,7 @@ namespace System.Windows.Markup
         ///</internalonly>
         public PropertyDescriptor PropertyDescriptor
         {
-            get { return null;}
+            get { return null; }
         }
 
 #if !PBTCOMPILER
@@ -132,13 +132,13 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Properties
+        #endregion Properties
 
-#endregion Public
+        #endregion Public
 
-#region Internal
+        #region Internal
 
-#region Contructors
+        #region Contructors
 
 #if !PBTCOMPILER
         /// <summary>
@@ -167,24 +167,24 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Constructors
+        #endregion Constructors
 
-#endregion internal
+        #endregion internal
 
-#region Private
+        #region Private
 
-#region Data
+        #region Data
 
         ParserContext _parserContext;
 
         // _attribStringValue is never set when !PBTCOMPILER
-        #pragma warning disable 0649
+#pragma warning disable 0649
         string _attribStringValue;
-        #pragma warning restore 0649
+#pragma warning restore 0649
 
-#endregion Data
+        #endregion Data
 
-#endregion Private
+        #endregion Private
 
     }
 }

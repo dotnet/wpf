@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -138,7 +138,7 @@ namespace System.Windows.Documents
 
 
         #region Internal Properties
-        
+
         /// <summary>
         /// UIElementIsland representing embedded Element Layout island within content world.
         /// </summary>
@@ -156,7 +156,7 @@ namespace System.Windows.Documents
 
 
         #region Private Methods 
-        
+
         /// <summary>
         /// Ensures the _uiElementIsland variable is up to date
         /// </summary>
@@ -164,15 +164,15 @@ namespace System.Windows.Documents
         {
             UIElement childElement = this.Child;
 
-            if(_uiElementIsland == null || _uiElementIsland.Root != childElement)
+            if (_uiElementIsland == null || _uiElementIsland.Root != childElement)
             {
-                if(_uiElementIsland != null)
+                if (_uiElementIsland != null)
                 {
                     _uiElementIsland.Dispose();
                     _uiElementIsland = null;
                 }
 
-                if(childElement != null)
+                if (childElement != null)
                 {
                     _uiElementIsland = new UIElementIsland(childElement);
                 }

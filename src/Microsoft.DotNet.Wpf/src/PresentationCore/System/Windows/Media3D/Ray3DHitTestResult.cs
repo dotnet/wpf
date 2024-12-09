@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,7 +27,7 @@ namespace System.Windows.Media.Media3D
         #region Constructors
 
         // Prevent 3rd parties from extending this abstract base class.
-        internal RayHitTestResult(Visual3D visualHit, Model3D modelHit) : base (visualHit)
+        internal RayHitTestResult(Visual3D visualHit, Model3D modelHit) : base(visualHit)
         {
             _modelHit = modelHit;
         }
@@ -43,9 +43,9 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         ///     Re-expose Visual property strongly typed to Visual3D.
         /// </summary>
-        public new Visual3D VisualHit 
-        { 
-            get { return (Visual3D) base.VisualHit; }
+        public new Visual3D VisualHit
+        {
+            get { return (Visual3D)base.VisualHit; }
         }
 
         /// <summary>
@@ -93,7 +93,7 @@ namespace System.Windows.Media.Media3D
         {
             return Math.Sign(x.DistanceToRayOrigin - y.DistanceToRayOrigin);
         }
-        
+
         //------------------------------------------------------
         //
         //  Private Fields
@@ -101,7 +101,7 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Private Fields
-        
+
         private readonly Model3D _modelHit;
 
         #endregion Private Fields

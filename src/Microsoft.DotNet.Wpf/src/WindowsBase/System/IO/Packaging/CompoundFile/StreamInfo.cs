@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,14 +13,14 @@ namespace System.IO.Packaging
     /// </summary>
     internal class StreamInfoCore
     {
-        internal StreamInfoCore( 
-            string nameStream, 
-            string label ) : this( nameStream, label, null ) {;}
+        internal StreamInfoCore(
+            string nameStream,
+            string label) : this(nameStream, label, null) {; }
 
-        internal StreamInfoCore( 
-            string nameStream, 
-            string label, 
-            IStream s )
+        internal StreamInfoCore(
+            string nameStream,
+            string label,
+            IStream s)
         {
             streamName = nameStream;
             dataSpaceLabel = label;
@@ -31,7 +31,7 @@ namespace System.IO.Packaging
         /// <summary>
         /// The compound-file friendly version of streamName.
         /// </summary>
-        internal string      streamName;
+        internal string streamName;
 
         /// <summary>
         /// A cached reference to the stream object for accessing the data  This
@@ -52,7 +52,7 @@ namespace System.IO.Packaging
         /// </summary>
         internal object exposedStream;
     }
-    
+
     /// <summary>
     /// Class for manipulating streams in the container file
     /// </summary>
@@ -60,9 +60,9 @@ namespace System.IO.Packaging
     {
         /***********************************************************************/
         // Default values to use for shortcuts
-        const FileMode   defaultFileOpenMode   = FileMode.OpenOrCreate;
-        const FileMode   defaultFileCreateMode = FileMode.Create;
-        const string     defaultDataSpace      = null; // Programmatic change-able?
+        const FileMode defaultFileOpenMode = FileMode.OpenOrCreate;
+        const FileMode defaultFileCreateMode = FileMode.Create;
+        const string defaultDataSpace = null; // Programmatic change-able?
 
         /***********************************************************************/
         // Instance values
@@ -91,16 +91,16 @@ namespace System.IO.Packaging
         private FileAccess openFileAccess;
 
         private CompressionOption _compressionOption;
-        private EncryptionOption   _encryptionOption;
+        private EncryptionOption _encryptionOption;
         private bool _needToGetTransformInfo = true;
 
         /***********************************************************************/
         // Constructors
 
-        private void BuildStreamInfoRelativeToStorage( StorageInfo parent, string path )
+        private void BuildStreamInfoRelativeToStorage(StorageInfo parent, string path)
         {
             parentStorage = parent;
-            core = parentStorage.CoreForChildStream( path );
+            core = parentStorage.CoreForChildStream(path);
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace System.IO.Packaging
         /// </summary>
         /// <param name="root">The root storage</param>
         /// <param name="streamPath">Path to stream under root storage</param>
-        private StreamInfo( StorageRoot root, string streamPath ) : this((StorageInfo)root, streamPath)
+        private StreamInfo(StorageRoot root, string streamPath) : this((StorageInfo)root, streamPath)
         {
         }
 
@@ -117,11 +117,11 @@ namespace System.IO.Packaging
         /// </summary>
         /// <param name="parent">The parent storage</param>
         /// <param name="streamName">Path to stream under parent storage</param>
-        internal StreamInfo( StorageInfo parent, string streamName ) : this (parent, streamName, CompressionOption.NotCompressed, EncryptionOption.None)
+        internal StreamInfo(StorageInfo parent, string streamName) : this(parent, streamName, CompressionOption.NotCompressed, EncryptionOption.None)
         {
         }
 
- 
+
         /// <summary>
         /// Creates a new instance relative to the given parent
         /// </summary>
@@ -129,19 +129,19 @@ namespace System.IO.Packaging
         /// <param name="streamName">Path to stream under parent storage</param>
         /// <param name="compressionOption">CompressionOption</param>
         /// <param name="encryptionOption">EncryptionOption</param>
-        internal StreamInfo( StorageInfo parent, string streamName, CompressionOption compressionOption, 
-            EncryptionOption encryptionOption )
+        internal StreamInfo(StorageInfo parent, string streamName, CompressionOption compressionOption,
+            EncryptionOption encryptionOption)
         {
-             // Parameter validation
-            CU.CheckAgainstNull( parent, "parent" );
-            CU.CheckStringAgainstNullAndEmpty( streamName, "streamName" );
+            // Parameter validation
+            CU.CheckAgainstNull(parent, "parent");
+            CU.CheckStringAgainstNullAndEmpty(streamName, "streamName");
 
             // Parse path relative to given parent.
-            BuildStreamInfoRelativeToStorage( parent, 
+            BuildStreamInfoRelativeToStorage(parent,
                 streamName);
-            
-             _compressionOption = compressionOption;
-            _encryptionOption   = encryptionOption;
+
+            _compressionOption = compressionOption;
+            _encryptionOption = encryptionOption;
             _streamReference = new CompoundFileStreamReference(this.parentStorage.FullNameInternal, this.core.streamName);
         }
 
@@ -155,7 +155,7 @@ namespace System.IO.Packaging
         {
             get
             {
-                if( StreamInfoDisposed ) // Null name in core signifies the core object is disposed
+                if (StreamInfoDisposed) // Null name in core signifies the core object is disposed
                 {
                     // The .Net Design Guidelines instruct us not to throw exceptions in property getters.
                     return CompressionOption.NotCompressed;
@@ -174,7 +174,7 @@ namespace System.IO.Packaging
         {
             get
             {
-                if( StreamInfoDisposed ) // Null name in core signifies the core object is disposed
+                if (StreamInfoDisposed) // Null name in core signifies the core object is disposed
                 {
                     // The .Net Design Guidelines instruct us not to throw exceptions in property getters.
                     return EncryptionOption.None;
@@ -193,7 +193,7 @@ namespace System.IO.Packaging
         {
             get
             {
-                if( StreamInfoDisposed ) // Null name in core signifies the core object is disposed
+                if (StreamInfoDisposed) // Null name in core signifies the core object is disposed
                 {
                     // The .Net Design Guidelines instruct us not to throw exceptions in property getters.
                     return "";
@@ -212,7 +212,7 @@ namespace System.IO.Packaging
         /// <returns>Stream object to manipulate data</returns>
         public Stream GetStream()
         {
-            return GetStream( defaultFileOpenMode, parentStorage.Root.OpenAccess );
+            return GetStream(defaultFileOpenMode, parentStorage.Root.OpenAccess);
         }
 
         /// <summary>
@@ -220,9 +220,9 @@ namespace System.IO.Packaging
         /// </summary>
         /// <param name="mode">Open mode flags</param>
         /// <returns>Stream object to manipulate data</returns>
-        public Stream GetStream( FileMode mode )
+        public Stream GetStream(FileMode mode)
         {
-            return GetStream( mode, parentStorage.Root.OpenAccess );
+            return GetStream(mode, parentStorage.Root.OpenAccess);
         }
 
         /// <summary>
@@ -231,10 +231,10 @@ namespace System.IO.Packaging
         /// <param name="mode">Open mode flags</param>
         /// <param name="access">File access flags</param>
         /// <returns>Stream object to manipulate data</returns>
-        public Stream GetStream( FileMode mode, FileAccess access )
+        public Stream GetStream(FileMode mode, FileAccess access)
         {
             CheckDisposedStatus();
-        
+
             int grfMode = 0;
             IStream openedIStream = null;
 
@@ -251,7 +251,7 @@ namespace System.IO.Packaging
             }
 
             // Generate the access flags from the access parameter
-            SafeNativeCompoundFileMethods.UpdateModeFlagFromFileAccess( access, ref grfMode );
+            SafeNativeCompoundFileMethods.UpdateModeFlagFromFileAccess(access, ref grfMode);
 
             // Only SHARE_EXCLUSIVE for now, FileShare issue TBD
             grfMode |= SafeNativeCompoundFileConstants.STGM_SHARE_EXCLUSIVE;
@@ -259,7 +259,7 @@ namespace System.IO.Packaging
             CheckAccessMode(grfMode);
 
             // Act based on FileMode
-            switch(mode)
+            switch (mode)
             {
                 case FileMode.Append:
                     throw new ArgumentException(
@@ -268,94 +268,94 @@ namespace System.IO.Packaging
                     // Check to make sure root container is not read-only, and that
                     //  we're not pointlessly trying to create a read-only stream.
                     CreateTimeReadOnlyCheck(openFileAccess);
-                    
+
                     // Close down any existing streams floating out there
                     if (null != core.exposedStream)
                     {
                         ((Stream)(core.exposedStream)).Close();
                     }
                     core.exposedStream = null;
-                    
-                    if( null != core.safeIStream )
+
+                    if (null != core.safeIStream)
                     {
                         // Close out existing stream
-                        ((IDisposable) core.safeIStream).Dispose();
+                        ((IDisposable)core.safeIStream).Dispose();
                         core.safeIStream = null;
                     }
 
                     // Cleanup done, create new stream in its place
                     grfMode |= SafeNativeCompoundFileConstants.STGM_CREATE;
                     openedIStream = CreateStreamOnParentIStorage(
-                            core.streamName, 
-                        grfMode );
+                            core.streamName,
+                        grfMode);
                     break;
                 case FileMode.CreateNew:
                     throw new ArgumentException(
                         SR.FileModeUnsupported);
                 case FileMode.Open:
                     // If we've got a stream, return a CFStream built from its clone
-                    if( null != core.safeIStream )
+                    if (null != core.safeIStream)
                     {
                         return CFStreamOfClone(openFileAccess);
                     }
 
                     // Need to call Open API with NULL open flags
                     openedIStream = OpenStreamOnParentIStorage(
-                            core.streamName, 
-                        grfMode );
+                            core.streamName,
+                        grfMode);
                     break;
                 case FileMode.OpenOrCreate:
                     // If we've got a stream, return a CFStream built from its clone
-                    if( null != core.safeIStream )
+                    if (null != core.safeIStream)
                     {
                         return CFStreamOfClone(openFileAccess);
                     }
 
                     // Skip creation attempt for read-only container or specifying
                     //  read-only stream
-                    if( FileAccess.Read != parentStorage.Root.OpenAccess &&
-                        FileAccess.Read != openFileAccess )
+                    if (FileAccess.Read != parentStorage.Root.OpenAccess &&
+                        FileAccess.Read != openFileAccess)
                     {
                         // Try creating first.  If it already exists then do an open.  This
                         //  seems ugly but this method involves the fewest number of 
                         //  managed/unmanaged transitions.
 
-                        if( !parentStorage.Exists )
+                        if (!parentStorage.Exists)
                         {
                             parentStorage.Create();
                         }
-                        int nativeCallErrorCode = 
+                        int nativeCallErrorCode =
                             parentStorage.SafeIStorage.CreateStream(
-                                core.streamName, 
+                                core.streamName,
                             grfMode,
                             0,
                             0,
-                            out openedIStream );
+                            out openedIStream);
 
-                        if( SafeNativeCompoundFileConstants.S_OK != nativeCallErrorCode &&
-                            SafeNativeCompoundFileConstants.STG_E_FILEALREADYEXISTS != nativeCallErrorCode )
+                        if (SafeNativeCompoundFileConstants.S_OK != nativeCallErrorCode &&
+                            SafeNativeCompoundFileConstants.STG_E_FILEALREADYEXISTS != nativeCallErrorCode)
                         {
                             throw new IOException(
                                 SR.UnableToCreateStream,
-                                new COMException( 
+                                new COMException(
                                     SR.Format(SR.NamedAPIFailure, "IStorage.CreateStream"),
-                                    nativeCallErrorCode ));
+                                    nativeCallErrorCode));
                         }
-                        
+
                         // Parent storage has changed - invalidate all standing enuemrators
                         parentStorage.InvalidateEnumerators();
 
                         // else - proceed with open
                     }
 
-                    if( null == openedIStream )
+                    if (null == openedIStream)
                     {
                         // If we make it here, it means the create stream call failed
                         //  because of a STG_E_FILEALREADYEXISTS 
                         //  or container is read-only
                         openedIStream = OpenStreamOnParentIStorage(
-                                core.streamName, 
-                            grfMode );
+                                core.streamName,
+                            grfMode);
                     }
                     break;
                 case FileMode.Truncate:
@@ -368,8 +368,8 @@ namespace System.IO.Packaging
 
             core.safeIStream = openedIStream;
 
-            Stream returnStream = 
-                BuildStreamOnUnderlyingIStream( core.safeIStream, openFileAccess, this );
+            Stream returnStream =
+                BuildStreamOnUnderlyingIStream(core.safeIStream, openFileAccess, this);
 
             core.exposedStream = returnStream;
 
@@ -385,7 +385,7 @@ namespace System.IO.Packaging
         /// <returns>Stream object to manipulate data</returns>
         internal Stream Create()
         {
-            return Create( defaultFileCreateMode, parentStorage.Root.OpenAccess, defaultDataSpace );
+            return Create(defaultFileCreateMode, parentStorage.Root.OpenAccess, defaultDataSpace);
         }
 
         /// <summary>
@@ -393,9 +393,9 @@ namespace System.IO.Packaging
         /// </summary>
         /// <param name="mode">Desired create mode</param>
         /// <returns>Stream object to manipulate data</returns>
-        private Stream Create( FileMode mode )
+        private Stream Create(FileMode mode)
         {
-            return Create( mode, parentStorage.Root.OpenAccess, defaultDataSpace );
+            return Create(mode, parentStorage.Root.OpenAccess, defaultDataSpace);
         }
 
         /// <summary>
@@ -403,9 +403,9 @@ namespace System.IO.Packaging
         /// </summary>
         /// <param name="dataSpaceLabel">Data space label</param>
         /// <returns>Stream object to manipulate data</returns>
-        internal Stream Create( string dataSpaceLabel )
+        internal Stream Create(string dataSpaceLabel)
         {
-            return Create( defaultFileCreateMode, parentStorage.Root.OpenAccess, dataSpaceLabel );
+            return Create(defaultFileCreateMode, parentStorage.Root.OpenAccess, dataSpaceLabel);
         }
 
         /// <summary>
@@ -414,9 +414,9 @@ namespace System.IO.Packaging
         /// <param name="mode">Desired create mode flag</param>
         /// <param name="access">Access flags</param>
         /// <returns>Stream object to manipulate data</returns>
-        private Stream Create( FileMode mode, FileAccess access )
+        private Stream Create(FileMode mode, FileAccess access)
         {
-            return Create( mode, access, defaultDataSpace );
+            return Create(mode, access, defaultDataSpace);
         }
 
         /// <summary>
@@ -426,27 +426,27 @@ namespace System.IO.Packaging
         /// <param name="access">Access mode</param>
         /// <param name="dataSpace">Data space encoding</param>
         /// <returns>Stream object to manipulate data</returns>
-        internal Stream Create( FileMode mode, FileAccess access, string dataSpace )
+        internal Stream Create(FileMode mode, FileAccess access, string dataSpace)
         {
             CheckDisposedStatus();
-        
+
             int grfMode = 0;
             IStream createdSafeIStream = null;
             DataSpaceManager dataSpaceManager = null;
 
             // Check to make sure root container is not read-only, and that
             //  we're not pointlessly trying to create a read-only stream.
-            CreateTimeReadOnlyCheck( access );
+            CreateTimeReadOnlyCheck(access);
 
             // Check to see if the data space label is valid
-            if( null != dataSpace )
+            if (null != dataSpace)
             {
-                if( 0 == dataSpace.Length )
+                if (0 == dataSpace.Length)
                     throw new ArgumentException(
                         SR.DataSpaceLabelInvalidEmpty);
-            
+
                 dataSpaceManager = parentStorage.Root.GetDataSpaceManager();
-                if( !dataSpaceManager.DataSpaceIsDefined( dataSpace ) )
+                if (!dataSpaceManager.DataSpaceIsDefined(dataSpace))
                     throw new ArgumentException(
                         SR.DataSpaceLabelUndefined);
             }
@@ -463,15 +463,15 @@ namespace System.IO.Packaging
             }
 
             // Generate the access flags from the access parameter
-            SafeNativeCompoundFileMethods.UpdateModeFlagFromFileAccess( access, ref grfMode );
-            
+            SafeNativeCompoundFileMethods.UpdateModeFlagFromFileAccess(access, ref grfMode);
+
             // Only SHARE_EXCLUSIVE for now, FileShare issue TBD
             grfMode |= SafeNativeCompoundFileConstants.STGM_SHARE_EXCLUSIVE;
 
             CheckAccessMode(grfMode);
 
             // Act based on FileMode
-            switch(mode)
+            switch (mode)
             {
                 case FileMode.Create:
                     // Close down any existing streams floating out there
@@ -481,29 +481,29 @@ namespace System.IO.Packaging
                     }
                     core.exposedStream = null;
 
-                    if( null != core.safeIStream )
+                    if (null != core.safeIStream)
                     {
                         // Release reference
-                        ((IDisposable) core.safeIStream).Dispose();
+                        ((IDisposable)core.safeIStream).Dispose();
                         core.safeIStream = null;
                     }
 
                     // Cleanup done, create new stream in its place.
                     grfMode |= SafeNativeCompoundFileConstants.STGM_CREATE;
                     createdSafeIStream = CreateStreamOnParentIStorage(
-                            core.streamName, 
-                        grfMode );    
+                            core.streamName,
+                        grfMode);
                     break;
                 case FileMode.CreateNew:
                     // If we've created a CFStream, this fails because stream is already there.
-                    if( null != core.safeIStream )
+                    if (null != core.safeIStream)
                         throw new IOException(
                             SR.StreamAlreadyExist);
 
                     // Need to call Create API with NULL create flags
                     createdSafeIStream = CreateStreamOnParentIStorage(
-                            core.streamName, 
-                        grfMode );
+                            core.streamName,
+                        grfMode);
                     break;
                 case FileMode.Append:   // None of these are valid in a Create
                 case FileMode.Open:
@@ -518,15 +518,15 @@ namespace System.IO.Packaging
             // At this point we passed all previous checks and got the underlying IStream.
             //  Set our data space label to the given label, and the stream to the retrieved stream.
             core.dataSpaceLabel = dataSpace;
-            if( null != dataSpace )
+            if (null != dataSpace)
             {
-                dataSpaceManager.CreateDataSpaceMapping( 
-                    new CompoundFileStreamReference( parentStorage.FullNameInternal, core.streamName ), 
-                    core.dataSpaceLabel );
+                dataSpaceManager.CreateDataSpaceMapping(
+                    new CompoundFileStreamReference(parentStorage.FullNameInternal, core.streamName),
+                    core.dataSpaceLabel);
             }
 
-            Stream returnStream = 
-                BuildStreamOnUnderlyingIStream( core.safeIStream, openFileAccess, this );
+            Stream returnStream =
+                BuildStreamOnUnderlyingIStream(core.safeIStream, openFileAccess, this);
 
             _needToGetTransformInfo = false;    // We created stream with the given dataspace setting
                                                 //  so, there is no need to get the dataspace setting
@@ -535,23 +535,23 @@ namespace System.IO.Packaging
             return returnStream;
         }
 
-        Stream BuildStreamOnUnderlyingIStream( 
+        Stream BuildStreamOnUnderlyingIStream(
             IStream underlyingIStream,
-            FileAccess access, 
-            StreamInfo parent )
+            FileAccess access,
+            StreamInfo parent)
         {
-            Stream rawStream = new CFStream( underlyingIStream, access, parent );
+            Stream rawStream = new CFStream(underlyingIStream, access, parent);
 
-            if( null == core.dataSpaceLabel )
+            if (null == core.dataSpaceLabel)
             {
                 // The stream is not transformed in any data space, add buffering and return
-                return new BufferedStream( rawStream );
+                return new BufferedStream(rawStream);
             }
             else
             {
                 // Pass raw stream to data space manager to get real stream
-               return parentStorage.Root.GetDataSpaceManager().CreateDataSpaceStream(
-                    StreamReference, rawStream);
+                return parentStorage.Root.GetDataSpaceManager().CreateDataSpaceStream(
+                     StreamReference, rawStream);
             }
         }
 
@@ -560,31 +560,31 @@ namespace System.IO.Packaging
         ///  the root container is read-only, or if we're pointlessly trying
         ///  to create a read-only stream.
         /// </summary>
-        void CreateTimeReadOnlyCheck( FileAccess access )
+        void CreateTimeReadOnlyCheck(FileAccess access)
         {
             // Can't create a stream if the root container is read-only
-            if( FileAccess.Read == parentStorage.Root.OpenAccess )
+            if (FileAccess.Read == parentStorage.Root.OpenAccess)
                 throw new IOException(
                     SR.CanNotCreateInReadOnly);
 
             // Doesn't make sense to create a new stream just to make it read-only
-            if( access == FileAccess.Read )
+            if (access == FileAccess.Read)
                 throw new ArgumentException(
                     SR.CanNotCreateAsReadOnly);
         }
-        
+
         /// <summary>
         /// Shortcut macro - calls the IStorage::CreateStream method on the parent
         /// storage object.
         /// </summary>
         IStream CreateStreamOnParentIStorage(
-            string name, 
-            int mode )
+            string name,
+            int mode)
         {
             IStream createdStream = null;
             int nativeCallErrorCode = 0;
 
-            if( !parentStorage.Exists )
+            if (!parentStorage.Exists)
             {
                 parentStorage.Create();
             }
@@ -594,25 +594,25 @@ namespace System.IO.Packaging
                 mode,
                 0,
                 0,
-                out createdStream );
+                out createdStream);
 
-            if( SafeNativeCompoundFileConstants.STG_E_INVALIDFLAG == nativeCallErrorCode )
+            if (SafeNativeCompoundFileConstants.STG_E_INVALIDFLAG == nativeCallErrorCode)
             {
                 throw new ArgumentException(
                     SR.StorageFlagsUnsupported);
             }
-            else if ( SafeNativeCompoundFileConstants.S_OK != nativeCallErrorCode )
+            else if (SafeNativeCompoundFileConstants.S_OK != nativeCallErrorCode)
             {
                 throw new IOException(
                     SR.UnableToCreateStream,
-                    new COMException( 
+                    new COMException(
                         SR.Format(SR.NamedAPIFailure, "IStorage.CreateStream"),
-                        nativeCallErrorCode ));
+                        nativeCallErrorCode));
             }
 
             // Parent storage has changed - invalidate all standing enuemrators
             parentStorage.InvalidateEnumerators();
-        
+
             return createdStream;
         }
 
@@ -621,8 +621,8 @@ namespace System.IO.Packaging
         /// storage object.
         /// </summary>
         IStream OpenStreamOnParentIStorage(
-            string name, 
-            int mode )
+            string name,
+            int mode)
         {
             IStream openedStream = null;
             int nativeCallErrorCode = 0;
@@ -632,15 +632,15 @@ namespace System.IO.Packaging
                 0,
                 mode,
                 0,
-                out openedStream );
+                out openedStream);
 
-            if( SafeNativeCompoundFileConstants.S_OK != nativeCallErrorCode )
+            if (SafeNativeCompoundFileConstants.S_OK != nativeCallErrorCode)
             {
                 throw new IOException(
                     SR.UnableToOpenStream,
-                    new COMException( 
+                    new COMException(
                         SR.Format(SR.NamedAPIFailure, "IStorage.OpenStream"),
-                        nativeCallErrorCode ));
+                        nativeCallErrorCode));
             }
             return openedStream;
         }
@@ -651,16 +651,16 @@ namespace System.IO.Packaging
         internal void Delete()
         {
             CheckDisposedStatus();
-        
-            if( InternalExists() )
+
+            if (InternalExists())
             {
-                if( null != core.safeIStream )
+                if (null != core.safeIStream)
                 {
                     // Close out existing stream
-                    ((IDisposable) core.safeIStream).Dispose();
+                    ((IDisposable)core.safeIStream).Dispose();
                     core.safeIStream = null;
                 }
-                parentStorage.DestroyElement( core.streamName );
+                parentStorage.DestroyElement(core.streamName);
 
                 // Parent storage has changed - invalidate all standing enuemrators
                 parentStorage.InvalidateEnumerators();
@@ -683,11 +683,11 @@ namespace System.IO.Packaging
         internal bool InternalExists()
         {
             // If we have a stream, it's pretty obvious that we exist.
-            if( null != core.safeIStream ) 
+            if (null != core.safeIStream)
                 return true;
-                
+
             // If parent storage does not exist, we can't possibly exist either
-            if( !parentStorage.Exists )
+            if (!parentStorage.Exists)
                 return false;
 
             // At this point we know the parent storage exists, but we don't know
@@ -697,7 +697,7 @@ namespace System.IO.Packaging
                 0,
                 SafeNativeCompoundFileConstants.STGM_READ | SafeNativeCompoundFileConstants.STGM_SHARE_EXCLUSIVE,
                 0,
-                out core.safeIStream );
+                out core.safeIStream);
         }
 
         /// <summary>
@@ -708,7 +708,7 @@ namespace System.IO.Packaging
         /// </summary>
         void VerifyExists()
         {
-            if( !InternalExists() )
+            if (!InternalExists())
             {
                 throw new IOException(
                     SR.StreamNotExist);
@@ -716,16 +716,16 @@ namespace System.IO.Packaging
             return;
         }
 
-        private Stream CFStreamOfClone( FileAccess access )
+        private Stream CFStreamOfClone(FileAccess access)
         {
             long dummy = 0;
 
             IStream cloneStream = null;
-            core.safeIStream.Clone( out cloneStream );
-            cloneStream.Seek( 0, SafeNativeCompoundFileConstants.STREAM_SEEK_SET, out dummy );
+            core.safeIStream.Clone(out cloneStream);
+            cloneStream.Seek(0, SafeNativeCompoundFileConstants.STREAM_SEEK_SET, out dummy);
 
-            Stream returnStream = 
-                BuildStreamOnUnderlyingIStream( cloneStream, access, this );
+            Stream returnStream =
+                BuildStreamOnUnderlyingIStream(cloneStream, access, this);
 
             core.exposedStream = returnStream;
 
@@ -737,7 +737,7 @@ namespace System.IO.Packaging
         internal void CheckDisposedStatus()
         {
             // Check to see if we're still valid.
-            if( StreamInfoDisposed ) // Null name in core signifies the core object is disposed
+            if (StreamInfoDisposed) // Null name in core signifies the core object is disposed
                 throw new ObjectDisposedException(null, SR.StreamInfoDisposed);
         }
 
@@ -749,7 +749,7 @@ namespace System.IO.Packaging
                 // Check to see if we're still valid.
                 // Null name in core signifies the core object is disposed.
                 // Also check the parent storage.
-                return (( null == core.streamName ) || parentStorage.StorageDisposed);
+                return ((null == core.streamName) || parentStorage.StorageDisposed);
             }
         }
 
@@ -759,19 +759,19 @@ namespace System.IO.Packaging
         internal void CheckAccessMode(int grfMode)
         {
             // Do we have an IStream?
-            if( null != core.safeIStream )
+            if (null != core.safeIStream)
             {
                 // Have we exposed it publicly yet?
-                if( null == core.exposedStream )
+                if (null == core.exposedStream)
                 {
                     System.Runtime.InteropServices.ComTypes.STATSTG mySTATs;
-                    core.safeIStream.Stat( out mySTATs, SafeNativeCompoundFileConstants.STATFLAG_NONAME );
+                    core.safeIStream.Stat(out mySTATs, SafeNativeCompoundFileConstants.STATFLAG_NONAME);
 
                     // Do the modes match?
-                    if( grfMode != mySTATs.grfMode )
+                    if (grfMode != mySTATs.grfMode)
                     {
                         // Modes don't match, close out existing stream.
-                        ((IDisposable) core.safeIStream).Dispose();
+                        ((IDisposable)core.safeIStream).Dispose();
                         core.safeIStream = null;
                     }
                 }

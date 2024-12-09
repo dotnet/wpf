@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -106,7 +106,7 @@ namespace System.Windows.Input
             key = NormalizeKey(key);
 
             AccessKeyManager akm = AccessKeyManager.Current;
-            return (akm.ProcessKeyForScope(scope, key, isMultiple,false) == ProcessKeyResult.MoreMatches);
+            return (akm.ProcessKeyForScope(scope, key, isMultiple, false) == ProcessKeyResult.MoreMatches);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace System.Windows.Input
         }
 
         #endregion
-        
+
         #region Constructor
         private AccessKeyManager()
         {
@@ -167,13 +167,13 @@ namespace System.Windows.Input
         #endregion
 
         #region Properties
-        
+
         /// <summary>
         /// Access to the current context's AccessKeyManager class
         /// </summary>
         private static AccessKeyManager Current
         {
-            get 
+            get
             {
                 if (_accessKeyManager == null)
                     _accessKeyManager = new AccessKeyManager();
@@ -194,7 +194,8 @@ namespace System.Windows.Input
 
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
-            if (e.StagingItem.Input.Handled) return;
+            if (e.StagingItem.Input.Handled)
+                return;
 
             if (e.StagingItem.Input.RoutedEvent == Keyboard.KeyDownEvent)
             {
@@ -204,7 +205,7 @@ namespace System.Windows.Input
             {
                 OnText((TextCompositionEventArgs)e.StagingItem.Input);
             }
-}
+        }
 
         // Assumes key is already a single unicode character
         private ProcessKeyResult ProcessKeyForSender(object sender, string key, bool existsElsewhere, bool userInitiated)
@@ -264,7 +265,7 @@ namespace System.Windows.Input
 
                 if (invokeUIElement != null)
                 {
-                    AccessKeyEventArgs args = new AccessKeyEventArgs(key, !oneUIElement || existsElsewhere /* == isMultiple */,userInitiated);
+                    AccessKeyEventArgs args = new AccessKeyEventArgs(key, !oneUIElement || existsElsewhere /* == isMultiple */, userInitiated);
                     try
                     {
                         invokeUIElement.InvokeAccessKey(args);
@@ -292,7 +293,7 @@ namespace System.Windows.Input
 
             if ((text != null) && (text.Length > 0))
             {
-                if (ProcessKeyForSender(e.OriginalSource, text, false /* existsElsewhere */,e.UserInitiated) != ProcessKeyResult.NoMatch)
+                if (ProcessKeyForSender(e.OriginalSource, text, false /* existsElsewhere */, e.UserInitiated) != ProcessKeyResult.NoMatch)
                 {
                     e.Handled = true;
                 }
@@ -306,18 +307,18 @@ namespace System.Windows.Input
             string text = null;
             switch (e.RealKey)
             {
-                case Key.Enter :
-                     text = "\x000D";
-                     break;
+                case Key.Enter:
+                    text = "\x000D";
+                    break;
 
-                case Key.Escape :
-                     text = "\x001B";
-                     break;
+                case Key.Escape:
+                    text = "\x001B";
+                    break;
             }
 
             if (text != null)
             {
-                if (ProcessKeyForSender(e.OriginalSource, text, false /* existsElsewhere */,e.UserInitiated) != ProcessKeyResult.NoMatch)
+                if (ProcessKeyForSender(e.OriginalSource, text, false /* existsElsewhere */, e.UserInitiated) != ProcessKeyResult.NoMatch)
                 {
                     e.Handled = true;
                 }
@@ -338,7 +339,7 @@ namespace System.Windows.Input
 
             return GetTargetsForScope(senderInfo.Scope, key, sender, senderInfo);
         }
-        
+
         private List<IInputElement> GetTargetsForScope(object scope, string key, IInputElement sender, AccessKeyInformation senderInfo)
         {
             // null scope defaults to the active window
@@ -353,13 +354,13 @@ namespace System.Windows.Input
                 }
             }
 
-            if (CoreCompatibilityPreferences.GetIsAltKeyRequiredInAccessKeyDefaultScope() && 
+            if (CoreCompatibilityPreferences.GetIsAltKeyRequiredInAccessKeyDefaultScope() &&
                 (scope is PresentationSource) && (Keyboard.Modifiers & ModifierKeys.Alt) != ModifierKeys.Alt)
             {
                 // If AltKey is required and it isnt pressed then dont match against any targets
                 return null;
             }
-            
+
             //Scoping:
             //    1) When key is pressed, find matching AKs -> S
             //    3) find scope for keyevent.Source
@@ -373,12 +374,13 @@ namespace System.Windows.Input
                 possibleElements = CopyAndPurgeDead(_keyToElements[key] as ArrayList);
             }
 
-            if (possibleElements == null) return null;
+            if (possibleElements == null)
+                return null;
 
             List<IInputElement> finalTargets = new List<IInputElement>(1);
 
             // Go through all the possible elements, find the interesting candidates
-            for (int i = 0; i < possibleElements.Count;  i++)
+            for (int i = 0; i < possibleElements.Count; i++)
             {
                 IInputElement element = possibleElements[i];
                 if (element != sender)
@@ -387,7 +389,8 @@ namespace System.Windows.Input
                     {
                         AccessKeyInformation elementInfo = GetInfoForElement(element, key);
 
-                        if (elementInfo.target == null) continue;
+                        if (elementInfo.target == null)
+                            continue;
 
                         if (scope == elementInfo.Scope)
                         {
@@ -408,7 +411,7 @@ namespace System.Windows.Input
 
             return finalTargets;
         }
-        
+
         /// <summary>
         /// Returns scope for the given element.
         /// </summary>
@@ -454,7 +457,7 @@ namespace System.Windows.Input
                     source = PresentationSource.CriticalFromVisual(containingVisual);
                 }
             }
-            
+
             // NOTE: source can be null but IsTargetable(element) == true if the
             // element is in an orphaned tree but the tree has not yet been garbage collected.  
             return source;
@@ -478,13 +481,13 @@ namespace System.Windows.Input
             return null;
         }
 
-        
+
         private bool IsTargetable(IInputElement element)
         {
             DependencyObject uielement = InputElement.GetContainingUIElement((DependencyObject)element);
 
             // For an element to be a valid target it must be visible and enabled
-            if (uielement != null 
+            if (uielement != null
                 && IsVisible(uielement)
                 && IsEnabled(uielement))
             {
@@ -501,7 +504,7 @@ namespace System.Windows.Input
                 Visibility visibility;
                 UIElement uiElem = element as UIElement;
                 UIElement3D uiElem3D = element as UIElement3D;
-                
+
                 if (uiElem != null)
 
                 {
@@ -509,41 +512,41 @@ namespace System.Windows.Input
                 }
                 else
                 {
-                    visibility = uiElem3D.Visibility;                    
+                    visibility = uiElem3D.Visibility;
                 }
-                
+
                 if (visibility != Visibility.Visible)
                 {
                     return false;
                 }
-                
+
                 element = UIElementHelper.GetUIParent(element);
             }
-            
+
             return true;
         }
 
         // returns whether the given DO is enabled or not
         private static bool IsEnabled(DependencyObject element)
         {
-            return ((bool)element.GetValue(UIElement.IsEnabledProperty));                               
+            return ((bool)element.GetValue(UIElement.IsEnabledProperty));
         }
 
         private struct AccessKeyInformation
         {
             public object Scope
             {
-                get 
+                get
                 {
                     return _scope;
                 }
-                set 
+                set
                 {
                     _scope = value;
                 }
             }
 
-            
+
             public UIElement target;
 
             private static AccessKeyInformation _empty = new AccessKeyInformation();
@@ -560,7 +563,7 @@ namespace System.Windows.Input
 
         private static void PurgeDead(ArrayList elements, object elementToRemove)
         {
-            for (int i = 0; i < elements.Count; )
+            for (int i = 0; i < elements.Count;)
             {
                 WeakReference weakReference = (WeakReference)elements[i];
                 object element = weakReference.Target;
@@ -589,7 +592,7 @@ namespace System.Windows.Input
 
             List<IInputElement> copy = new List<IInputElement>(elements.Count);
 
-            for (int i = 0; i < elements.Count; )
+            for (int i = 0; i < elements.Count;)
             {
                 WeakReference weakReference = (WeakReference)elements[i];
                 object element = weakReference.Target;
@@ -612,7 +615,7 @@ namespace System.Windows.Input
         #endregion
 
         #region Private Properties
-        
+
         /////////////////////////////////////////////////////////////////////////////////
         // Overview: Algorithm to look up access key from the element for which it is a target.
         //           
@@ -670,7 +673,7 @@ namespace System.Windows.Input
                     // element (there is no interface or anything) we have to go through all registered 
                     // access keys and see if this access key element is still registered and what its
                     // "primary" character is.
-                
+
                     foreach (DictionaryEntry entry in Current._keyToElements)
                     {
                         ArrayList elements = (ArrayList)entry.Value;
@@ -865,10 +868,10 @@ namespace System.Windows.Input
         {
             get { return _userInitiated; }
         }
-        
+
 
         private string _key;
         private bool _isMultiple;
         private bool _userInitiated;
-}
+    }
 }

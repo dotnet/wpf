@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,8 +10,8 @@
 
 \***************************************************************************/
 
-using System.Windows.Media;
 using System.Windows;
+using System.Windows.Media;
 
 //****************
 //
@@ -32,20 +32,20 @@ namespace MS.Internal.Drt
 #error Attempting to use this class from an unknown assembly.
 #endif
 {
-    internal  static partial class SafeSecurityHelper
+    internal static partial class SafeSecurityHelper
     {
 
         /// <summary> 
         /// is this visual connected to presentation source ? 
         /// i.e. is it "renderable" ?
         ///</summary> 
-        internal static bool IsConnectedToPresentationSource( Visual visual ) 
+        internal static bool IsConnectedToPresentationSource(Visual visual)
         {
-            bool isConnected = false; 
+            bool isConnected = false;
 
-            isConnected = PresentationSource.CriticalFromVisual(visual ) != null;
+            isConnected = PresentationSource.CriticalFromVisual(visual) != null;
 
-            return isConnected ; 
+            return isConnected;
         }
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -219,7 +219,7 @@ namespace System.Windows.Input.StylusPlugIns
 
             // Mashal the Dispose call, which will shut down our Dynamic rendering thread, to the inking dispatcher.
             inkingDispatcher.Invoke(DispatcherPriority.Send,
-                (DispatcherOperationCallback)delegate(object unused)
+                (DispatcherOperationCallback)delegate (object unused)
                 {
                     Dispose();
                     return null;
@@ -233,7 +233,7 @@ namespace System.Windows.Input.StylusPlugIns
         /// <param name="disposing">true when freeing managed and unmanaged resources; false if freeing just unmanaged resources.</param>
         void Dispose(bool disposing)
         {
-            if(!_disposed)
+            if (!_disposed)
             {
                 _disposed = true;
 
@@ -244,7 +244,7 @@ namespace System.Windows.Input.StylusPlugIns
                     {
                         __inkingDispatcher.CriticalInvokeShutdown();
                     }
-                    catch(System.ComponentModel.Win32Exception e)
+                    catch (System.ComponentModel.Win32Exception e)
                     {
                         if (e.NativeErrorCode != 1400) // ERROR_INVALID_WINDOW_HANDLE
                         {
@@ -314,5 +314,5 @@ namespace System.Windows.Input.StylusPlugIns
                 Dispatcher.Run();
             }
         }
-}
+    }
 }

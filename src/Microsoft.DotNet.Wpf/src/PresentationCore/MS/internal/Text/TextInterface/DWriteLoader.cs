@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.ComponentModel;
@@ -29,7 +29,7 @@ namespace MS.Internal.Text.TextInterface
         internal static void UnloadDWrite()
         {
             ClearDWriteCreateFactoryFunctionPointer();
-        
+
             if (_dwrite != IntPtr.Zero)
             {
                 NativeLibrary.Free(_dwrite);

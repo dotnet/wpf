@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,15 +9,15 @@
 //
 
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using MS.Utility;
-using MS.Internal.Generic;
 using MS.Internal.FontCache;
 using MS.Internal.FontFace;
+using MS.Internal.Generic;
 using MS.Internal.TextFormatting;
-using System.Runtime.InteropServices;
+using MS.Utility;
 
 
 namespace MS.Internal.Shaping
@@ -29,26 +29,26 @@ namespace MS.Internal.Shaping
     /// </summary>
     internal class TypefaceMap
     {
-        private FontFamily[]                     _fontFamilies;
-        private FontStyle                        _canonicalStyle;
-        private FontWeight                       _canonicalWeight;
-        private FontStretch                      _canonicalStretch;
-        private bool                             _nullFont;
+        private FontFamily[] _fontFamilies;
+        private FontStyle _canonicalStyle;
+        private FontWeight _canonicalWeight;
+        private FontStretch _canonicalStretch;
+        private bool _nullFont;
 
-        private IList<ScaledShapeTypeface>       _cachedScaledTypefaces = new List<ScaledShapeTypeface>(InitialScaledGlyphableTypefaceCount);
-        private IDictionary<CultureInfo, IntMap> _intMaps               = new Dictionary<CultureInfo, IntMap>();
+        private IList<ScaledShapeTypeface> _cachedScaledTypefaces = new List<ScaledShapeTypeface>(InitialScaledGlyphableTypefaceCount);
+        private IDictionary<CultureInfo, IntMap> _intMaps = new Dictionary<CultureInfo, IntMap>();
 
         // Constants
         private const int InitialScaledGlyphableTypefaceCount = 2;
-        private const int MaxTypefaceMapDepths                = 32;
+        private const int MaxTypefaceMapDepths = 32;
 
         internal TypefaceMap(
-            FontFamily           fontFamily,
-            FontFamily           fallbackFontFamily,
-            FontStyle            canonicalStyle,
-            FontWeight           canonicalWeight,
-            FontStretch          canonicalStretch,
-            bool                 nullFont
+            FontFamily fontFamily,
+            FontFamily fallbackFontFamily,
+            FontStyle canonicalStyle,
+            FontWeight canonicalWeight,
+            FontStretch canonicalStretch,
+            bool nullFont
             )
         {
             Invariant.Assert(fontFamily != null);
@@ -57,28 +57,28 @@ namespace MS.Internal.Shaping
                  new FontFamily[] { fontFamily }
                : new FontFamily[] { fontFamily, fallbackFontFamily };
 
-             _canonicalStyle   = canonicalStyle;
-             _canonicalWeight  = canonicalWeight;
-             _canonicalStretch = canonicalStretch;
-             _nullFont         = nullFont;
+            _canonicalStyle = canonicalStyle;
+            _canonicalWeight = canonicalWeight;
+            _canonicalStretch = canonicalStretch;
+            _nullFont = nullFont;
         }
 
         /// <summary>
         /// Compute a list of shapeable text objects for the specified character string
         /// </summary>
         internal void GetShapeableText(
-            CharacterBufferReference    characterBufferReference,
-            int                         stringLength,
-            TextRunProperties           textRunProperties,
-            CultureInfo                 digitCulture,
-            bool                        isRightToLeftParagraph,
+            CharacterBufferReference characterBufferReference,
+            int stringLength,
+            TextRunProperties textRunProperties,
+            CultureInfo digitCulture,
+            bool isRightToLeftParagraph,
             IList<TextShapeableSymbols> shapeableList,
-            IShapeableTextCollector     collector,
-            TextFormattingMode          textFormattingMode
+            IShapeableTextCollector collector,
+            TextFormattingMode textFormattingMode
             )
         {
             SpanVector<int> cachedScaledTypefaceIndexSpans;
-            
+
             int ichItem = 0;
 
             CharacterBufferRange unicodeString = new CharacterBufferRange(
@@ -88,7 +88,7 @@ namespace MS.Internal.Shaping
 
             CultureInfo culture = textRunProperties.CultureInfo;
             IList<Span> spans;
-            
+
             GCHandle gcHandle;
             IntPtr ptext = characterBufferReference.CharacterBuffer.PinAndGetCharacterPointer(characterBufferReference.OffsetToFirstChar, out gcHandle);
 
@@ -106,7 +106,7 @@ namespace MS.Internal.Shaping
             // Itemize the text based on DWrite's text analysis for scripts and number substitution.
             unsafe
             {
-                checked 
+                checked
                 {
                     spans = MS.Internal.Text.TextInterface.TextAnalyzer.Itemize(
                         (char*)ptext.ToPointer(),
@@ -124,13 +124,13 @@ namespace MS.Internal.Shaping
                         UnsafeNativeMethods.CreateTextAnalysisSource
                         );
                 }
-}
+            }
             characterBufferReference.CharacterBuffer.UnpinCharacterPointer(gcHandle);
 
             SpanVector itemSpans = new SpanVector(null, new FrugalStructList<Span>((ICollection<Span>)spans));
 
-            cachedScaledTypefaceIndexSpans = new SpanVector<int>(-1);            
-            foreach(Span itemSpan in itemSpans)
+            cachedScaledTypefaceIndexSpans = new SpanVector<int>(-1);
+            foreach (Span itemSpan in itemSpans)
             {
                 MapItem(
                     new CharacterBufferRange(
@@ -144,13 +144,13 @@ namespace MS.Internal.Shaping
                     ichItem
                     );
 
-                #if DEBUG
+#if DEBUG
                 ValidateMapResult(
                     ichItem,
                     itemSpan.length,
                     ref cachedScaledTypefaceIndexSpans
                     );
-                #endif
+#endif
 
                 ichItem += itemSpan.length;
             }
@@ -165,7 +165,7 @@ namespace MS.Internal.Shaping
             SpanRider itemSpanRider = new SpanRider(itemSpans);
             SpanRider<int> typefaceIndexSpanRider = new SpanRider<int>(cachedScaledTypefaceIndexSpans);
 
-            while(ich < unicodeString.Length)
+            while (ich < unicodeString.Length)
             {
                 itemSpanRider.At(ich);
                 typefaceIndexSpanRider.At(ich);
@@ -199,10 +199,10 @@ namespace MS.Internal.Shaping
         }
 
 
-        #if DEBUG
+#if DEBUG
         private unsafe void ValidateMapResult(
-            int                 ichRange,
-            int                 cchRange,
+            int ichRange,
+            int cchRange,
             ref SpanVector<int> cachedScaledTypefaceIndexSpans
             )
         {
@@ -210,10 +210,10 @@ namespace MS.Internal.Shaping
 
             SpanRider<int> typefaceIndexSpanRider = new SpanRider<int>(cachedScaledTypefaceIndexSpans);
 
-            while(ich < cchRange)
+            while (ich < cchRange)
             {
                 typefaceIndexSpanRider.At(ichRange + ich);
-                if((int)typefaceIndexSpanRider.CurrentValue < 0)
+                if ((int)typefaceIndexSpanRider.CurrentValue < 0)
                 {
                     Debug.Assert(false, "Invalid font face spans");
                     return;
@@ -223,14 +223,14 @@ namespace MS.Internal.Shaping
                 ich += cch;
             }
         }
-        #endif
+#endif
 
         private void MapItem(
             CharacterBufferRange unicodeString,
-            CultureInfo          culture,
-            Span                 itemSpan,
-            ref SpanVector<int>  cachedScaledTypefaceIndexSpans,
-            int                  ichItem
+            CultureInfo culture,
+            Span itemSpan,
+            ref SpanVector<int> cachedScaledTypefaceIndexSpans,
+            int ichItem
             )
         {
             CultureInfo digitCulture = ((MS.Internal.Text.TextInterface.ItemProps)itemSpan.element).DigitCulture;
@@ -243,7 +243,7 @@ namespace MS.Internal.Shaping
                 ichItem
                 );
 
-            if(!isCached)
+            if (!isCached)
             {
                 // shapeable typeface to shape each character in the item has not been located,
                 // look thru information in font family searching for the right shapeable typeface.
@@ -303,11 +303,11 @@ namespace MS.Internal.Shaping
         /// character string from the map table
         /// </summary>
         private bool GetCachedScaledTypefaceMap(
-            CharacterBufferRange        unicodeString,
-            CultureInfo                 culture,
-            CultureInfo                 digitCulture,
-            ref SpanVector<int>         cachedScaledTypefaceIndexSpans,
-            int                         ichItem
+            CharacterBufferRange unicodeString,
+            CultureInfo culture,
+            CultureInfo digitCulture,
+            ref SpanVector<int> cachedScaledTypefaceIndexSpans,
+            int ichItem
             )
         {
             IntMap map;
@@ -361,12 +361,12 @@ namespace MS.Internal.Shaping
         /// Cache index to the list of scaled shapeable typeface
         /// </summary>
         private void CacheScaledTypefaceMap(
-            CharacterBufferRange        unicodeString,
-            CultureInfo                 culture,
-            CultureInfo                 digitCulture,
-            SpanVector                  scaledTypefaceSpans,
-            ref SpanVector<int>         cachedScaledTypefaceIndexSpans,
-            int                         ichItem
+            CharacterBufferRange unicodeString,
+            CultureInfo culture,
+            CultureInfo digitCulture,
+            SpanVector scaledTypefaceSpans,
+            ref SpanVector<int> cachedScaledTypefaceIndexSpans,
+            int ichItem
             )
         {
             IntMap map;
@@ -381,7 +381,7 @@ namespace MS.Internal.Shaping
             SpanRider typefaceSpanRider = new SpanRider(scaledTypefaceSpans);
 
             int ich = 0;
-            while(ich < unicodeString.Length)
+            while (ich < unicodeString.Length)
             {
                 typefaceSpanRider.At(ich);
 
@@ -407,7 +407,7 @@ namespace MS.Internal.Shaping
                     ];
 
                     // only cache typeface map index for base characters
-                    if(!Classification.IsCombining(ch) && !Classification.IsJoiner(ch))
+                    if (!Classification.IsCombining(ch) && !Classification.IsJoiner(ch))
                     {
                         // Dump values of local variables when the condition fails for better debuggability.
                         // We use "if" to avoid the expensive string.Format() in normal case.
@@ -440,13 +440,13 @@ namespace MS.Internal.Shaping
         private int IndexOfScaledTypeface(ScaledShapeTypeface scaledTypeface)
         {
             int i;
-            for(i = 0; i < _cachedScaledTypefaces.Count; i++)
+            for (i = 0; i < _cachedScaledTypefaces.Count; i++)
             {
-                if(scaledTypeface.Equals(_cachedScaledTypefaces[i]))
+                if (scaledTypeface.Equals(_cachedScaledTypefaces[i]))
                     break;
             }
 
-            if(i == _cachedScaledTypefaces.Count)
+            if (i == _cachedScaledTypefaces.Count)
             {
                 // encountering this face for the first time, add it to the list
                 i = _cachedScaledTypefaces.Count;
@@ -478,22 +478,22 @@ namespace MS.Internal.Shaping
         ///
         /// </remarks>
         private int MapByFontFamily(
-            CharacterBufferRange            unicodeString,
-            CultureInfo                     culture,
-            CultureInfo                     digitCulture,
-            IFontFamily                     fontFamily,
-            CanonicalFontFamilyReference    canonicalFamilyReference,
-            FontStyle                       canonicalStyle,
-            FontWeight                      canonicalWeight, 
-            FontStretch                     canonicalStretch,
-            ref PhysicalFontFamily          firstValidFamily,
-            ref int                         firstValidLength,
-            IDeviceFont                     deviceFont,
-            double                          scaleInEm,
-            int                             recursionDepth,
-            SpanVector                      scaledTypefaceSpans,
-            int                             firstCharIndex,
-            out int                         nextValid
+            CharacterBufferRange unicodeString,
+            CultureInfo culture,
+            CultureInfo digitCulture,
+            IFontFamily fontFamily,
+            CanonicalFontFamilyReference canonicalFamilyReference,
+            FontStyle canonicalStyle,
+            FontWeight canonicalWeight,
+            FontStretch canonicalStretch,
+            ref PhysicalFontFamily firstValidFamily,
+            ref int firstValidLength,
+            IDeviceFont deviceFont,
+            double scaleInEm,
+            int recursionDepth,
+            SpanVector scaledTypefaceSpans,
+            int firstCharIndex,
+            out int nextValid
             )
         {
             // This is the *one* place where we check for the font mapping depths of the font linking
@@ -526,7 +526,7 @@ namespace MS.Internal.Shaping
 
             bool terminated = false;
 
-            while (ich < unicodeString.Length  &&  !terminated)
+            while (ich < unicodeString.Length && !terminated)
             {
                 // Determine length of run with consistent mapping. Start by assuming we'll be able to
                 // use the whole string, then reduce to the length that can be mapped consistently.
@@ -544,8 +544,8 @@ namespace MS.Internal.Shaping
 
                     // Advance as long as 'useDeviceFont' remains unchanged.
                     int i = ich + 1;
-                    while (    (i < unicodeString.Length)
-                           &&  (useDeviceFont == deviceFont.ContainsCharacter(digitMap[unicodeString[i]])))
+                    while ((i < unicodeString.Length)
+                           && (useDeviceFont == deviceFont.ContainsCharacter(digitMap[unicodeString[i]])))
                     {
                         i++;
                     }
@@ -638,7 +638,7 @@ namespace MS.Internal.Shaping
                 cchValid = cchAdvance;
                 cchInvalid = cchNextValid;
 
-                if(cchValid < cchMap)
+                if (cchValid < cchMap)
                 {
                     terminated = true;
                 }
@@ -658,14 +658,14 @@ namespace MS.Internal.Shaping
         /// valid physical font family or to the default font we use for display null glyphs.
         /// </summary>
         private int MapUnresolvedCharacters(
-            CharacterBufferRange    unicodeString,
-            CultureInfo             culture,
-            CultureInfo             digitCulture,
-            PhysicalFontFamily      firstValidFamily,
-            ref int                 firstValidLength,
-            SpanVector              scaledTypefaceSpans,
-            int                     firstCharIndex,
-            out int                 nextValid
+            CharacterBufferRange unicodeString,
+            CultureInfo culture,
+            CultureInfo digitCulture,
+            PhysicalFontFamily firstValidFamily,
+            ref int firstValidLength,
+            SpanVector scaledTypefaceSpans,
+            int firstCharIndex,
+            out int nextValid
             )
         {
             // If we have a valid font family use it. We don't set nullFont to true in this case.
@@ -706,19 +706,19 @@ namespace MS.Internal.Shaping
         /// Map characters by font family name
         /// </summary>
         private int MapByFontFamilyName(
-            CharacterBufferRange        unicodeString,
-            CultureInfo                 culture,
-            CultureInfo                 digitCulture,
-            string                      familyName,
-            Uri                         baseUri,
-            ref PhysicalFontFamily      firstValidFamily,
-            ref int                     firstValidLength,
-            IDeviceFont                 deviceFont,
-            double                      scaleInEm,
-            int                         fontMappingDepth,
-            SpanVector                  scaledTypefaceSpans,
-            int                         firstCharIndex,
-            out int                     nextValid
+            CharacterBufferRange unicodeString,
+            CultureInfo culture,
+            CultureInfo digitCulture,
+            string familyName,
+            Uri baseUri,
+            ref PhysicalFontFamily firstValidFamily,
+            ref int firstValidLength,
+            IDeviceFont deviceFont,
+            double scaleInEm,
+            int fontMappingDepth,
+            SpanVector scaledTypefaceSpans,
+            int firstCharIndex,
+            out int nextValid
             )
         {
             if (familyName == null)
@@ -759,18 +759,18 @@ namespace MS.Internal.Shaping
         /// font families in the specified FontFamilyList.
         /// </summary>
         private int MapByFontFamilyList(
-            CharacterBufferRange    unicodeString,
-            CultureInfo             culture,
-            CultureInfo             digitCulture,
-            FontFamily[]            familyList,
-            ref PhysicalFontFamily  firstValidFamily,
-            ref int                 firstValidLength,
-            IDeviceFont             deviceFont,
-            double                  scaleInEm,
-            int                     recursionDepth,
-            SpanVector              scaledTypefaceSpans,
-            int                     firstCharIndex,
-            out int                 nextValid
+            CharacterBufferRange unicodeString,
+            CultureInfo culture,
+            CultureInfo digitCulture,
+            FontFamily[] familyList,
+            ref PhysicalFontFamily firstValidFamily,
+            ref int firstValidLength,
+            IDeviceFont deviceFont,
+            double scaleInEm,
+            int recursionDepth,
+            SpanVector scaledTypefaceSpans,
+            int firstCharIndex,
+            out int nextValid
             )
         {
             int advance = 0;
@@ -847,18 +847,18 @@ namespace MS.Internal.Shaping
         /// one character is mapped; it does not keep going until it cannot map any more text.
         /// </summary>
         private int MapOnceByFontFamilyList(
-            CharacterBufferRange                unicodeString,
-            CultureInfo                         culture,
-            CultureInfo                         digitCulture,
-            FontFamily[]                        familyList,
-            ref PhysicalFontFamily              firstValidFamily,
-            ref int                             firstValidLength,
-            IDeviceFont                         deviceFont,
-            double                              scaleInEm,
-            int                                 recursionDepth,
-            SpanVector                          scaledTypefaceSpans,
-            int                                 firstCharIndex,
-            out int                             nextValid
+            CharacterBufferRange unicodeString,
+            CultureInfo culture,
+            CultureInfo digitCulture,
+            FontFamily[] familyList,
+            ref PhysicalFontFamily firstValidFamily,
+            ref int firstValidLength,
+            IDeviceFont deviceFont,
+            double scaleInEm,
+            int recursionDepth,
+            SpanVector scaledTypefaceSpans,
+            int firstCharIndex,
+            out int nextValid
             )
         {
             Invariant.Assert(familyList != null);
@@ -900,7 +900,7 @@ namespace MS.Internal.Shaping
                 int familyNameIndex = 0;
 
                 // Inner loop to loop over all name tokens of a FontFamily.
-                for (;;)
+                for (; ; )
                 {
                     if (targetFamily != null)
                     {
@@ -911,7 +911,7 @@ namespace MS.Internal.Shaping
                             targetFamily,
                             canonicalFamilyReference,
                             canonicalStyle,
-                            canonicalWeight, 
+                            canonicalWeight,
                             canonicalStretch,
                             ref firstValidFamily,
                             ref firstValidLength,
@@ -971,22 +971,22 @@ namespace MS.Internal.Shaping
         /// Map characters by font face family
         /// </summary>
         private int MapByFontFaceFamily(
-            CharacterBufferRange    unicodeString,
-            CultureInfo             culture,
-            CultureInfo             digitCulture,
-            IFontFamily             fontFamily,
-            FontStyle               canonicalStyle,
-            FontWeight              canonicalWeight,
-            FontStretch             canonicalStretch,
-            ref PhysicalFontFamily  firstValidFamily,
-            ref int                 firstValidLength,
-            IDeviceFont             deviceFont,
-            bool                    nullFont,
-            double                  scaleInEm,
-            SpanVector              scaledTypefaceSpans,
-            int                     firstCharIndex,
-            bool                    ignoreMissing,
-            out int                 nextValid
+            CharacterBufferRange unicodeString,
+            CultureInfo culture,
+            CultureInfo digitCulture,
+            IFontFamily fontFamily,
+            FontStyle canonicalStyle,
+            FontWeight canonicalWeight,
+            FontStretch canonicalStretch,
+            ref PhysicalFontFamily firstValidFamily,
+            ref int firstValidLength,
+            IDeviceFont deviceFont,
+            bool nullFont,
+            double scaleInEm,
+            SpanVector scaledTypefaceSpans,
+            int firstCharIndex,
+            bool ignoreMissing,
+            out int nextValid
             )
         {
             Invariant.Assert(fontFamily != null);
@@ -999,11 +999,11 @@ namespace MS.Internal.Shaping
 
             GlyphTypeface glyphTypeface = null;
 
-            if(ignoreMissing)
+            if (ignoreMissing)
             {
                 glyphTypeface = fontFaceFamily.GetGlyphTypeface(canonicalStyle, canonicalWeight, canonicalStretch);
             }
-            else if(nullFont)
+            else if (nullFont)
             {
                 glyphTypeface = fontFaceFamily.GetGlyphTypeface(canonicalStyle, canonicalWeight, canonicalStretch);
 
@@ -1026,7 +1026,7 @@ namespace MS.Internal.Shaping
             Invariant.Assert(glyphTypeface != null);
 
             int cch = unicodeString.Length;
-            if(!ignoreMissing && advance > 0)
+            if (!ignoreMissing && advance > 0)
             {
                 cch = advance;
             }
@@ -1086,7 +1086,7 @@ namespace MS.Internal.Shaping
             private void CreatePlane(int i)
             {
                 Invariant.Assert(i < NumberOfPlanes);
-                if(_planes[i] == EmptyPlane)
+                if (_planes[i] == EmptyPlane)
                 {
                     Plane plane = new Plane();
                     _planes[i] = plane;
@@ -1102,19 +1102,19 @@ namespace MS.Internal.Shaping
             {
                 get
                 {
-                    return _planes[i>>16][i>>8 & 0xff][i & 0xff];
+                    return _planes[i >> 16][i >> 8 & 0xff][i & 0xff];
                 }
                 set
                 {
-                    CreatePlane(i>>16);
+                    CreatePlane(i >> 16);
 
-                    _planes[i>>16].CreatePage(i>>8 & 0xff, this);
+                    _planes[i >> 16].CreatePage(i >> 8 & 0xff, this);
 
-                    _planes[i>>16][i>>8 & 0xff][i & 0xff] = value;
+                    _planes[i >> 16][i >> 8 & 0xff][i & 0xff] = value;
                 }
             }
 
-            private Plane[]                 _planes;
+            private Plane[] _planes;
             private static Plane EmptyPlane = new Plane();
         };
 
@@ -1142,14 +1142,14 @@ namespace MS.Internal.Shaping
 
             internal void CreatePage(int i, IntMap intMap)
             {
-                if(this[i] == Plane.EmptyPage)
+                if (this[i] == Plane.EmptyPage)
                 {
                     Page page = new Page();
                     this[i] = page;
                 }
             }
 
-            private Page[]      _data;
+            private Page[] _data;
 
             private static Page EmptyPage = new Page();
         };

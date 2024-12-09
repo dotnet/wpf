@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -64,7 +64,7 @@ namespace System.Windows.Data
             ArgumentNullException.ThrowIfNull(target);
             ArgumentNullException.ThrowIfNull(dp);
             ArgumentNullException.ThrowIfNull(binding);
-//            target.VerifyAccess();
+            //            target.VerifyAccess();
 
             BindingExpressionBase bindExpr = binding.CreateBindingExpression(target, dp);
 
@@ -151,7 +151,7 @@ namespace System.Windows.Data
         {
             ArgumentNullException.ThrowIfNull(target);
             ArgumentNullException.ThrowIfNull(dp);
-//            target.VerifyAccess();
+            //            target.VerifyAccess();
 
             Expression expr = StyleHelper.GetExpression(target, dp);
             return expr as BindingExpressionBase;
@@ -224,7 +224,7 @@ namespace System.Windows.Data
         {
             ArgumentNullException.ThrowIfNull(target);
             ArgumentNullException.ThrowIfNull(dp);
-//            target.VerifyAccess();
+            //            target.VerifyAccess();
 
             if (IsDataBound(target, dp))
                 target.ClearValue(dp);
@@ -238,7 +238,7 @@ namespace System.Windows.Data
         public static void ClearAllBindings(DependencyObject target)
         {
             ArgumentNullException.ThrowIfNull(target);
-//            target.VerifyAccess();
+            //            target.VerifyAccess();
 
             LocalValueEnumerator lve = target.GetLocalValueEnumerator();
 
@@ -268,7 +268,7 @@ namespace System.Windows.Data
         {
             ArgumentNullException.ThrowIfNull(target);
             ArgumentNullException.ThrowIfNull(dp);
-//            target.VerifyAccess();
+            //            target.VerifyAccess();
 
             object o = StyleHelper.GetExpression(target, dp);
             return (o is BindingExpressionBase);
@@ -494,7 +494,7 @@ namespace System.Windows.Data
                 CollectionViewRegistering(null, new CollectionViewRegisteringEventArgs(view));
         }
 
-        #if LiveShapingInstrumentation
+#if LiveShapingInstrumentation
 
         public static void SetNodeSize(int nodeSize)
         {
@@ -541,7 +541,7 @@ namespace System.Windows.Data
             return lcv.GetAverageCopy();
         }
 
-        #endif // LiveShapingInstrumentation
+#endif // LiveShapingInstrumentation
 
         #region Exception logging
         // For use when testing whether an exception is thrown, even though the

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,20 +9,20 @@
 //              See spec at StickyNoteControlSpec.mht
 //
 
-using MS.Internal;
-using MS.Internal.Annotations;
-using MS.Internal.Annotations.Component;
-using MS.Internal.Controls.StickyNote;
 using System.Collections;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Annotations;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;   // IScrollInfo
 using System.Windows.Media;
 using System.Windows.Threading;
 using System.Xml;
+using MS.Internal;
+using MS.Internal.Annotations;
+using MS.Internal.Annotations.Component;
+using MS.Internal.Controls.StickyNote;
 using MS.Internal.Documents;
-using System.Windows.Controls.Primitives;   // IScrollInfo
 using MS.Utility;
 
 
@@ -1071,7 +1071,7 @@ namespace System.Windows.Controls
                 if (offsetTransform != null)
                     transformations.Children.Add(offsetTransform);
                 if (transform != null)
-                    transformations.Children.Add(transform);                
+                    transformations.Children.Add(transform);
                 return transformations;
             }
 

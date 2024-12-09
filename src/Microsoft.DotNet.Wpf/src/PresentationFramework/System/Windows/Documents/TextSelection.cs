@@ -1,16 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
 using System.Globalization;
+using System.IO;
+using System.Windows.Controls;
 using System.Windows.Controls.Primitives;  // TextBoxBase
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using System.IO;
+using MS.Internal;
 using MS.Win32;
-using System.Windows.Controls;
 
 //
 // Description: Holds and manipulates the text selection state for TextEditor.
@@ -336,7 +336,7 @@ namespace System.Windows.Documents
                     isBlinkEnabled = true;
                     isSelectionActive = true;
                 }
-                else if (uiScope.IsFocused && 
+                else if (uiScope.IsFocused &&
                          ((IsRootElement(FocusManager.GetFocusScope(uiScope)) && IsFocusWithinRoot()) || // either UiScope root window has keyboard focus
                           _textEditor.IsContextMenuOpen))// or UiScope has a context menu open
                 {
@@ -1794,7 +1794,7 @@ namespace System.Windows.Documents
         {
             ITextContainer textContainer = ((ITextSelection)this).Start.TextContainer;
 
-            
+
             // If we are using the adorner, then we should not instantiate highlight layers
             // for TextContainer or PasswordTextContainer.
             if (FrameworkAppContextSwitches.UseAdornerForTextboxSelectionRendering
@@ -1914,7 +1914,7 @@ namespace System.Windows.Documents
                 {
                     movingEdge = MovingEdge.StartInner;
                 }
-                else if (movingPosition.CompareTo(thisSelection.TextSegments[thisSelection.TextSegments.Count-1].Start) == 0)
+                else if (movingPosition.CompareTo(thisSelection.TextSegments[thisSelection.TextSegments.Count - 1].Start) == 0)
                 {
                     movingEdge = MovingEdge.EndInner;
                 }
@@ -2419,8 +2419,10 @@ namespace System.Windows.Documents
             if (_caretElement == null)
             {
                 // Create new caret
-                _caretElement = new CaretElement(_textEditor, isBlinkEnabled);
-                _caretElement.IsSelectionActive = isSelectionActive;
+                _caretElement = new CaretElement(_textEditor, isBlinkEnabled)
+                {
+                    IsSelectionActive = isSelectionActive
+                };
 
                 // Check the current input language to draw the BiDi caret in case of BiDi language
                 // like as Arabic or Hebrew input language.

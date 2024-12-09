@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,14 +17,14 @@ namespace System.Windows.Media
     /// <summary>
     /// The class definition for TextEffect
     /// </summary>
-    [Localizability(LocalizationCategory.None, Readability=Readability.Unreadable)]
+    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
     public partial class TextEffect : Animatable
     {
         //----------------------------------------
         // constructor
         //----------------------------------------
 
-        
+
         /// <summary>
         /// Constructor to TextEffect
         /// </summary>
@@ -34,20 +34,20 @@ namespace System.Windows.Media
         /// <param name="positionStart">starting character index of the text effect</param>
         /// <param name="positionCount">number of code points</param>
         public TextEffect(
-            Transform transform, 
+            Transform transform,
             Brush foreground,
             Geometry clip,
             int positionStart,
             int positionCount
-            )            
+            )
         {
             ArgumentOutOfRangeException.ThrowIfNegative(positionCount);
 
-            Transform       = transform;
-            Foreground      = foreground;
-            Clip            = clip;
-            PositionStart   = positionStart;
-            PositionCount   = positionCount;
+            Transform = transform;
+            Foreground = foreground;
+            Clip = clip;
+            PositionStart = positionStart;
+            PositionCount = positionCount;
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace System.Windows.Media
         /// </summary>
         public TextEffect()
         {
-        }        
+        }
 
         //-------------------------------
         // Private method
@@ -69,6 +69,6 @@ namespace System.Windows.Media
         {
             return (value >= 0);
         }
-    }       
+    }
 }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -47,7 +47,7 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if( _setters == null )
+                if (_setters == null)
                 {
                     _setters = new SetterBaseCollection();
                 }
@@ -61,7 +61,7 @@ namespace System.Windows
         ///<param name="value">
         /// The object to add as a child; it must be a Setter or subclass.
         ///</param>
-        void IAddChild.AddChild (Object value)
+        void IAddChild.AddChild(Object value)
         {
             // Verify Context Access
             VerifyAccess();
@@ -76,7 +76,7 @@ namespace System.Windows
         ///<param name="text">
         /// Text to add as a child.
         ///</param>
-        void IAddChild.AddText (string text)
+        void IAddChild.AddText(string text)
         {
             // Verify Context Access
             VerifyAccess();
@@ -145,7 +145,7 @@ namespace System.Windows
         {
             bool retVal = (TriggerConditions.Length > 0);
 
-            for( int i = 0; retVal && i < TriggerConditions.Length; i++ )
+            for (int i = 0; retVal && i < TriggerConditions.Length; i++)
             {
                 retVal = TriggerConditions[i].ConvertAndMatch(StyleHelper.GetDataTriggerValue(dataField, container, TriggerConditions[i].Binding));
             }

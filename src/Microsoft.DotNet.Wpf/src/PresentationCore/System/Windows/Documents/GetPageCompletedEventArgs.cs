@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,7 +11,7 @@
 
 using System.ComponentModel;        // AsyncCompletedEventArgs
 
-namespace System.Windows.Documents 
+namespace System.Windows.Documents
 {
     /// <summary>
     /// GetPageCompleted event handler.
@@ -47,7 +47,7 @@ namespace System.Windows.Documents
             get
             {
                 // Raise an exception if the operation failed or was cancelled.
-                this.RaiseExceptionIfNecessary(); 
+                this.RaiseExceptionIfNecessary();
                 return _page;
             }
         }
@@ -60,7 +60,7 @@ namespace System.Windows.Documents
             get
             {
                 // Raise an exception if the operation failed or was cancelled.
-                this.RaiseExceptionIfNecessary(); 
+                this.RaiseExceptionIfNecessary();
                 return _pageNumber;
             }
         }

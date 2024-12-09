@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,13 +8,12 @@
 //
 //
 
-using System.Globalization;
 using System.Collections;
+using System.Globalization;
 using System.Windows.Media;
 using MS.Internal.FontFace;
-using MS.Internal.Shaping;
-
 using MS.Internal.PresentationCore;
+using MS.Internal.Shaping;
 
 namespace MS.Internal.FontCache
 {
@@ -42,7 +41,7 @@ namespace MS.Internal.FontCache
 
         ushort _blankGlyphIndex;
 
-        
+
         //------------------------------------------------------
         //
         //  Constructors
@@ -56,9 +55,9 @@ namespace MS.Internal.FontCache
         {
             _fontTechnologyInitialized = false;
             _typographyAvailabilitiesInitialized = false;
-            _gsubInitialized            = false;
-            _gposInitialized            = false;
-            _gdefInitialized            = false;
+            _gsubInitialized = false;
+            _gposInitialized = false;
+            _gdefInitialized = false;
             _embeddingRightsInitialized = false;
             _gsubCache = null;
             _gposCache = null;
@@ -203,7 +202,7 @@ namespace MS.Internal.FontCache
                             // Otherwise, the font either has Os2EmbeddingFlags.RestrictedLicense set, or
                             // it has a reserved bit 0 set, which is invalid per specification.
                             // Either way, rights should remain FontEmbeddingRight.RestrictedLicense.
-                        }                        
+                        }
                     }
                     _embeddingRights = rights;
                     _embeddingRightsInitialized = true;
@@ -279,7 +278,7 @@ namespace MS.Internal.FontCache
         }
 
         // OpenType support
-        
+
         internal byte[] Gsub()
         {
             if (!_gsubInitialized)
@@ -289,7 +288,7 @@ namespace MS.Internal.FontCache
             }
             return _gsub;
         }
-        
+
         internal byte[] Gpos()
         {
             if (!_gposInitialized)
@@ -408,12 +407,12 @@ namespace MS.Internal.FontCache
 
                 unsafe
                 {
-                    fixed (uint *pCodepoints = &codepoints[0])
+                    fixed (uint* pCodepoints = &codepoints[0])
                     {
-                        fixed (ushort *pGlyphIndices = &glyphIndices[0])
+                        fixed (ushort* pGlyphIndices = &glyphIndices[0])
                         {
                             CharacterMap.TryGetValues(pCodepoints, checked((uint)codepoints.Length), pGlyphIndices);
-                        }               
+                        }
                     }
                 }
 
@@ -424,8 +423,10 @@ namespace MS.Internal.FontCache
                     {
                         glyphBits[glyphId >> 5] |= (uint)(1 << (glyphId % 32));
 
-                        if (glyphId > maxGlyphId) maxGlyphId = glyphId;
-                        if (glyphId < minGlyphId) minGlyphId = glyphId;
+                        if (glyphId > maxGlyphId)
+                            maxGlyphId = glyphId;
+                        if (glyphId < minGlyphId)
+                            minGlyphId = glyphId;
                     }
                 }
 
@@ -563,7 +564,7 @@ namespace MS.Internal.FontCache
             // for correctness, and not interesting in the rare failure case.
             BufferCache.ReleaseUInts(glyphBits);
         }
-      
+
 
         #region IntMap
 
@@ -574,14 +575,14 @@ namespace MS.Internal.FontCache
         /// </summary>
         internal sealed class IntMap : IDictionary<int, ushort>
         {
-            private Text.TextInterface.Font     _font;
-            private Dictionary<int, ushort>     _cmap;
+            private Text.TextInterface.Font _font;
+            private Dictionary<int, ushort> _cmap;
 
             internal IntMap(Text.TextInterface.Font font)
             {
-                _font     = font;
-                _cmap     = null;
-}
+                _font = font;
+                _cmap = null;
+            }
 
             private Dictionary<int, ushort> CMap
             {
@@ -638,7 +639,7 @@ namespace MS.Internal.FontCache
                 unsafe
                 {
                     uint uKey = checked((uint)key);
-                    uint *pKey = &uKey;
+                    uint* pKey = &uKey;
 
                     MS.Internal.Text.TextInterface.FontFace fontFace = _font.GetFontFace();
                     try
@@ -657,7 +658,7 @@ namespace MS.Internal.FontCache
                 return (value != 0);
             }
 
-            internal unsafe void TryGetValues(uint *pKeys, uint characterCount, ushort *pIndices)
+            internal unsafe void TryGetValues(uint* pKeys, uint characterCount, ushort* pIndices)
             {
                 MS.Internal.Text.TextInterface.FontFace fontFace = _font.GetFontFace();
                 try
@@ -843,7 +844,7 @@ namespace MS.Internal.FontCache
             _layout = layout;
             _gsubTable = new FontTable(_layout.Gsub());
             _gposTable = new FontTable(_layout.Gpos());
-}
+        }
 
         /// <summary>
         /// Returns font table data
@@ -918,7 +919,7 @@ namespace MS.Internal.FontCache
             int smaller = Math.Min(lastChar, firstChar);
             int larger = Math.Max(lastChar, firstChar);
             int arrayLength = larger - smaller + 1;
-            
+
             uint[] unicodeArray = new uint[arrayLength];
             for (int i = 0; i < arrayLength; i++)
             {
@@ -960,10 +961,12 @@ namespace MS.Internal.FontCache
         /// <returns> true if it is a major language </returns>
         internal static bool Contains(CultureInfo culture)
         {
-            if (culture == null) return false;
+            if (culture == null)
+                return false;
 
             // explicitly check for InvariantCulture. We don't need to check for its parent.
-            if (culture == CultureInfo.InvariantCulture) return true;
+            if (culture == CultureInfo.InvariantCulture)
+                return true;
 
             for (int i = 0; i < majorLanguages.Length; i++)
             {

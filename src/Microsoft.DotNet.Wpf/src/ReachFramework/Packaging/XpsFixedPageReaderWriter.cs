@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,15 +16,12 @@
 --*/
 using System.IO;
 using System.IO.Packaging;
-using System.Xml;
 using System.Printing;
-
 using System.Windows.Xps.Serialization;
-
+using System.Xml;
 using MS.Internal;
-using MS.Utility;
-
 using MS.Internal.IO.Packaging.Extensions;
+using MS.Utility;
 using PackageRelationship = System.IO.Packaging.PackageRelationship;
 using PackUriHelper = System.IO.Packaging.PackUriHelper;
 
@@ -36,7 +33,7 @@ namespace System.Windows.Xps.Packaging
     /// Interface for reading fixed page parts from the Xps package.
     /// </summary>
     /// <remarks>Interface will be internal until reading/de-serialization is implemented.</remarks>
-    public  interface IXpsFixedPageReader:
+    public interface IXpsFixedPageReader :
                       IStoryFragmentProvider
     {
         #region Public methods
@@ -54,7 +51,7 @@ namespace System.Windows.Xps.Packaging
         /// </returns>
         XpsResource
         GetResource(
-            Uri         resourceUri
+            Uri resourceUri
             );
 
         /// <summary>
@@ -70,7 +67,7 @@ namespace System.Windows.Xps.Packaging
         /// </returns>
         XpsFont
         GetFont(
-            Uri         uri
+            Uri uri
             );
 
         /// <summary>
@@ -86,7 +83,7 @@ namespace System.Windows.Xps.Packaging
         /// </returns>
         XpsColorContext
         GetColorContext(
-            Uri         uri
+            Uri uri
             );
 
         /// <summary>
@@ -102,7 +99,7 @@ namespace System.Windows.Xps.Packaging
         /// </returns>
         XpsResourceDictionary
         GetResourceDictionary(
-            Uri         uri
+            Uri uri
             );
 
         /// <summary>
@@ -118,7 +115,7 @@ namespace System.Windows.Xps.Packaging
         /// </returns>
         XpsImage
         GetImage(
-            Uri         uri
+            Uri uri
             );
 
         #endregion Public methods
@@ -154,37 +151,43 @@ namespace System.Windows.Xps.Packaging
         /// This method retrieves a collection of font resource parts
         /// </summary>
         ICollection<XpsFont>
-        Fonts{ get; }
+        Fonts
+        { get; }
 
         /// <summary>
         /// This method retrieves a collection of colorContext resource parts
         /// </summary>
         ICollection<XpsColorContext>
-        ColorContexts{ get; }
+        ColorContexts
+        { get; }
 
         /// <summary>
         /// This method retrieves a collection of ResourceDictionary resource parts
         /// </summary>
         ICollection<XpsResourceDictionary>
-        ResourceDictionaries{ get; }
+        ResourceDictionaries
+        { get; }
 
         /// <summary>
         /// This method retrieves a collection of image resource parts
         /// </summary>
         ICollection<XpsImage>
-        Images{ get; }
+        Images
+        { get; }
 
         /// <summary>
         /// thumbnail image associated with this page
         /// </summary>
         XpsThumbnail
-        Thumbnail{ get; }
+        Thumbnail
+        { get; }
 
         /// <summary>
         /// This method retrieves the associated story fragment
         /// </summary>
         XpsStructure
-        StoryFragment{ get; }
+        StoryFragment
+        { get; }
         #endregion Public properties
     }
 
@@ -195,7 +198,7 @@ namespace System.Windows.Xps.Packaging
     /// <summary>
     /// Interface for writing fixed page parts to the xps package.
     /// </summary>
-    public interface IXpsFixedPageWriter:
+    public interface IXpsFixedPageWriter :
                      IStoryFragmentProvider
     {
         #region Public methods
@@ -219,8 +222,8 @@ namespace System.Windows.Xps.Packaging
         /// <exception cref="ArgumentException">resourceName is an empty string.</exception>
         XpsResource
         AddResource(
-            Type        resourceType,
-            Uri         resourceUri
+            Type resourceType,
+            Uri resourceUri
             );
 
         /// <summary>
@@ -249,7 +252,7 @@ namespace System.Windows.Xps.Packaging
         /// <exception cref="ObjectDisposedException">FixedPageReader has already been disposed</exception>
         XpsFont
         AddFont(
-            bool        obfuscate
+            bool obfuscate
             );
 
         /// <summary>
@@ -270,8 +273,8 @@ namespace System.Windows.Xps.Packaging
         /// <exception cref="ObjectDisposedException">FixedPageReader has already been disposed</exception>
         XpsFont
         AddFont(
-            bool        obfuscate,
-            bool        addRestrictedRelationship
+            bool obfuscate,
+            bool addRestrictedRelationship
             );
         /// <summary>
         /// This method adds a colorContext resource part to the Xps package
@@ -312,7 +315,7 @@ namespace System.Windows.Xps.Packaging
         /// <exception cref="ArgumentException">imageType is an empty string.</exception>
         XpsImage
         AddImage(
-            string      mimeType
+            string mimeType
             );
 
         /// <summary>
@@ -327,7 +330,7 @@ namespace System.Windows.Xps.Packaging
         /// </returns>
         XpsImage
         AddImage(
-            XpsImageType      imageType
+            XpsImageType imageType
             );
 
         /// <summary>
@@ -339,10 +342,10 @@ namespace System.Windows.Xps.Packaging
         /// thrown.
         /// </summary>
         /// <returns>Returns a XpsThumbnail instance.</returns>
-       /// <exception cref="ObjectDisposedException">FixedPageReader has already been disposed</exception>
+        /// <exception cref="ObjectDisposedException">FixedPageReader has already been disposed</exception>
         XpsThumbnail
         AddThumbnail(
-            XpsImageType  imageType
+            XpsImageType imageType
             );
 
 
@@ -389,7 +392,7 @@ namespace System.Windows.Xps.Packaging
         /// </summary>
         int PageNumber { get; }
 
-         /// <summary>
+        /// <summary>
         /// Gets a reference to a stream where Link Target
         /// markup can be written.  Once the page is committed,
         /// this will be placed in the appropriate section of
@@ -438,11 +441,11 @@ namespace System.Windows.Xps.Packaging
         /// <exception cref="ArgumentNullException">part is null.</exception>
         internal
         XpsFixedPageReaderWriter(
-            XpsManager                   xpsManager,
+            XpsManager xpsManager,
             XpsFixedDocumentReaderWriter parent,
-            PackagePart                  part,
-            IList<String>                linkTargetStream,
-            int                          pageNumber
+            PackagePart part,
+            IList<String> linkTargetStream,
+            int pageNumber
             )
             : base(xpsManager)
         {
@@ -495,15 +498,15 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                if( _printTicket == null )
+                if (_printTicket == null)
                 {
-                    _printTicket = CurrentXpsManager.EnsurePrintTicket( Uri );
+                    _printTicket = CurrentXpsManager.EnsurePrintTicket(Uri);
                 }
                 return _printTicket;
             }
             set
             {
-                if(value != null)
+                if (value != null)
                 {
                     if (_isPrintTicketCommitted)
                     {
@@ -562,7 +565,7 @@ namespace System.Windows.Xps.Packaging
         /// <summary>
         /// 0 based page numbeer with in document
         /// </summary>
-       public int PageNumber
+        public int PageNumber
         {
             get
             {
@@ -723,8 +726,8 @@ namespace System.Windows.Xps.Packaging
         public
         void
         AddRelationship(
-            Uri         targetUri,
-            string      relationshipName
+            Uri targetUri,
+            string relationshipName
             )
         {
             //
@@ -773,8 +776,8 @@ namespace System.Windows.Xps.Packaging
         public
         XpsResource
         AddResource(
-            Type        resourceType,
-            Uri         resourceUri
+            Type resourceType,
+            Uri resourceUri
             )
         {
             if (null == _metroPart)
@@ -786,7 +789,7 @@ namespace System.Windows.Xps.Packaging
             // Create the part and writer
             //
             PackagePart metroPart = null;
-            if( resourceUri != null )
+            if (resourceUri != null)
             {
                 metroPart = this.CurrentXpsManager.GetPart(resourceUri);
                 if (metroPart == null)
@@ -796,27 +799,27 @@ namespace System.Windows.Xps.Packaging
             }
 
             XpsResource xpsResource;
-            if( resourceType == typeof( XpsImage ) )
+            if (resourceType == typeof(XpsImage))
             {
                 xpsResource = AddImage(metroPart);
             }
-            else if( resourceType == typeof( XpsFont ) )
+            else if (resourceType == typeof(XpsFont))
             {
                 xpsResource = AddFont(metroPart);
             }
-            else if( resourceType == typeof( XpsColorContext ) )
+            else if (resourceType == typeof(XpsColorContext))
             {
                 xpsResource = AddColorContext(metroPart);
             }
-            else if( resourceType == typeof( XpsResourceDictionary ) )
+            else if (resourceType == typeof(XpsResourceDictionary))
             {
                 xpsResource = AddResourceDictionary(metroPart);
-             }
+            }
             else
             {
                 if (metroPart == null)
                 {
-                    if( resourceUri == null )
+                    if (resourceUri == null)
                     {
                         metroPart = this.CurrentXpsManager.GenerateUniquePart(XpsS0Markup.ResourceContentType);
                     }
@@ -824,7 +827,7 @@ namespace System.Windows.Xps.Packaging
                 xpsResource = new XpsResource(CurrentXpsManager, this, metroPart);
                 _resourceCache[xpsResource.Uri] = xpsResource;
 
-                 //
+                //
                 // Add the relationship
                 //
                 string resourcePath = XpsManager.MakeRelativePath(this.Uri, metroPart.Uri);
@@ -836,7 +839,7 @@ namespace System.Windows.Xps.Packaging
                 _metroPart.CreateRelationship(new Uri(resourcePath, UriKind.Relative),
                                            TargetMode.Internal,
                                            XpsS0Markup.ResourceRelationshipName);
-}
+            }
 
             return xpsResource;
         }
@@ -893,30 +896,30 @@ namespace System.Windows.Xps.Packaging
         public
         XpsResource
         GetResource(
-            Uri         resourceUri
+            Uri resourceUri
             )
         {
             UpdateResourceCache();
             XpsResource xpsResource = null;
             if (_imageCache.ContainsKey(resourceUri))
             {
-                xpsResource =  (XpsResource)_imageCache[resourceUri];
+                xpsResource = (XpsResource)_imageCache[resourceUri];
             }
-            else if(_fontCache.ContainsKey(resourceUri))
+            else if (_fontCache.ContainsKey(resourceUri))
             {
-                xpsResource =  (XpsResource)_fontCache[resourceUri];
+                xpsResource = (XpsResource)_fontCache[resourceUri];
             }
-            else if(_colorContextCache.ContainsKey(resourceUri))
+            else if (_colorContextCache.ContainsKey(resourceUri))
             {
-                xpsResource =  (XpsResource)_colorContextCache[resourceUri];
+                xpsResource = (XpsResource)_colorContextCache[resourceUri];
             }
-            else if(_resourceDictionaryCache.ContainsKey(resourceUri))
+            else if (_resourceDictionaryCache.ContainsKey(resourceUri))
             {
-                xpsResource =  (XpsResource)_resourceDictionaryCache[resourceUri];
+                xpsResource = (XpsResource)_resourceDictionaryCache[resourceUri];
             }
-            else if(_resourceCache.ContainsKey(resourceUri) )
+            else if (_resourceCache.ContainsKey(resourceUri))
             {
-                xpsResource =  (XpsResource)_resourceCache[resourceUri];
+                xpsResource = (XpsResource)_resourceCache[resourceUri];
             }
 
 
@@ -956,7 +959,7 @@ namespace System.Windows.Xps.Packaging
         public
         XpsFont
         AddFont(
-            bool        obfuscate
+            bool obfuscate
             )
         {
             if (null == _metroPart)
@@ -969,7 +972,7 @@ namespace System.Windows.Xps.Packaging
             //
             // Create the part and writer
             //
-            if( obfuscate )
+            if (obfuscate)
             {
                 metroPart = this.CurrentXpsManager.GenerateObfuscatedFontPart();
             }
@@ -979,7 +982,7 @@ namespace System.Windows.Xps.Packaging
             }
 
             return AddFont(metroPart);
-}
+        }
 
 
         /// <summary>
@@ -1000,12 +1003,12 @@ namespace System.Windows.Xps.Packaging
         public
         XpsFont
         AddFont(
-            bool        obfuscate,
-            bool        addRestrictedRelationship
+            bool obfuscate,
+            bool addRestrictedRelationship
             )
         {
-            XpsFont xpsFont = AddFont( obfuscate );
-            if( addRestrictedRelationship )
+            XpsFont xpsFont = AddFont(obfuscate);
+            if (addRestrictedRelationship)
             {
                 _parentNode.AddRelationship(xpsFont.Uri, XpsS0Markup.RestrictedFontRelationshipType);
                 xpsFont.IsRestricted = true;
@@ -1075,7 +1078,7 @@ namespace System.Windows.Xps.Packaging
         /// thrown.
         /// </summary>
         /// <returns>Returns a XpsThumbnail instance.</returns>
-       /// <exception cref="ObjectDisposedException">FixedPageReader has already been disposed</exception>
+        /// <exception cref="ObjectDisposedException">FixedPageReader has already been disposed</exception>
         public
         XpsThumbnail
         AddThumbnail(
@@ -1086,9 +1089,9 @@ namespace System.Windows.Xps.Packaging
             {
                 throw new ObjectDisposedException("FixedPageReader");
             }
-            _thumbnail = CurrentXpsManager.AddThumbnail( imageType, this, Thumbnail );
-            _currentChildren.Add( _thumbnail );
-            _metroPart.CreateRelationship( _thumbnail.Uri,
+            _thumbnail = CurrentXpsManager.AddThumbnail(imageType, this, Thumbnail);
+            _currentChildren.Add(_thumbnail);
+            _metroPart.CreateRelationship(_thumbnail.Uri,
                                            TargetMode.Internal,
                                            XpsS0Markup.ThumbnailRelationshipName);
             return _thumbnail;
@@ -1108,14 +1111,14 @@ namespace System.Windows.Xps.Packaging
         public
         XpsFont
         GetFont(
-            Uri         uri
+            Uri uri
             )
         {
             UpdateResourceCache();
             XpsFont xpsFont = null;
             if (_fontCache.ContainsKey(uri))
             {
-                xpsFont =  _fontCache[uri];
+                xpsFont = _fontCache[uri];
             }
             return xpsFont;
         }
@@ -1134,14 +1137,14 @@ namespace System.Windows.Xps.Packaging
         public
         XpsColorContext
         GetColorContext(
-            Uri         uri
+            Uri uri
             )
         {
             UpdateResourceCache();
             XpsColorContext xpsColorContext = null;
             if (_colorContextCache.ContainsKey(uri))
             {
-                xpsColorContext =  _colorContextCache[uri];
+                xpsColorContext = _colorContextCache[uri];
             }
             return xpsColorContext;
         }
@@ -1160,14 +1163,14 @@ namespace System.Windows.Xps.Packaging
         public
         XpsResourceDictionary
         GetResourceDictionary(
-            Uri         uri
+            Uri uri
             )
         {
             UpdateResourceCache();
             XpsResourceDictionary xpsResourceDictionary = null;
             if (_resourceDictionaryCache.ContainsKey(uri))
             {
-                xpsResourceDictionary =  _resourceDictionaryCache[uri];
+                xpsResourceDictionary = _resourceDictionaryCache[uri];
             }
             return xpsResourceDictionary;
         }
@@ -1189,10 +1192,10 @@ namespace System.Windows.Xps.Packaging
         public
         XpsImage
         AddImage(
-            XpsImageType      imageType
+            XpsImageType imageType
             )
         {
-            return AddImage( XpsManager.ImageTypeToString(imageType) );
+            return AddImage(XpsManager.ImageTypeToString(imageType));
         }
 
         /// <summary>
@@ -1213,7 +1216,7 @@ namespace System.Windows.Xps.Packaging
         public
         XpsImage
         AddImage(
-            string  mimeType
+            string mimeType
             )
         {
             if (null == _metroPart)
@@ -1256,7 +1259,7 @@ namespace System.Windows.Xps.Packaging
             //
             PackagePart metroPart = this.CurrentXpsManager.GenerateUniquePart(mimeType);
             return AddImage(metroPart);
-}
+        }
 
 
         /// <summary>
@@ -1273,14 +1276,14 @@ namespace System.Windows.Xps.Packaging
         public
         XpsImage
         GetImage(
-            Uri         uri
+            Uri uri
             )
         {
             UpdateResourceCache();
             XpsImage xpsImage = null;
             if (_imageCache.ContainsKey(uri))
             {
-                xpsImage =  _imageCache[uri];
+                xpsImage = _imageCache[uri];
             }
 
             return xpsImage;
@@ -1299,7 +1302,7 @@ namespace System.Windows.Xps.Packaging
             )
         {
             CommitInternal();
-         }
+        }
 
         /// <summary>
         /// This method closes streams and frees memory for this
@@ -1353,9 +1356,9 @@ namespace System.Windows.Xps.Packaging
         internal
         void
         CollectSelfAndDependents(
-            Dictionary<Uri,Uri>                 dependentList,
-            List<PackageRelationshipSelector>   selectorList,
-             XpsDigSigPartAlteringRestrictions   restrictions
+            Dictionary<Uri, Uri> dependentList,
+            List<PackageRelationshipSelector> selectorList,
+             XpsDigSigPartAlteringRestrictions restrictions
             )
         {
             //
@@ -1370,8 +1373,8 @@ namespace System.Windows.Xps.Packaging
             //
             // Collect this pages dependants
             //
-            CollectDependents(dependentList );
-}
+            CollectDependents(dependentList);
+        }
 
         internal
         void
@@ -1404,35 +1407,35 @@ namespace System.Windows.Xps.Packaging
         internal
         void
         CollectDependents(
-            Dictionary<Uri,Uri> dependents
+            Dictionary<Uri, Uri> dependents
              )
         {
             UpdateResourceCache();
             //
             // Add all XpsImages
             //
-            foreach( Uri uri in _imageCache.Keys)
+            foreach (Uri uri in _imageCache.Keys)
             {
-                dependents[uri] =  uri;
+                dependents[uri] = uri;
             }
             //
             // Add all XpsFonts
             //
-            foreach( Uri uri in _fontCache.Keys)
+            foreach (Uri uri in _fontCache.Keys)
             {
                 dependents[uri] = uri;
             }
             //
             // Add all XpsColorContexts
             //
-            foreach( Uri uri in _colorContextCache.Keys)
+            foreach (Uri uri in _colorContextCache.Keys)
             {
                 dependents[uri] = uri;
             }
             //
             // Add all XpsResourceDictionarys
             //
-            foreach( Uri uri in _resourceDictionaryCache.Keys)
+            foreach (Uri uri in _resourceDictionaryCache.Keys)
             {
                 dependents[uri] = uri;
             }
@@ -1440,7 +1443,7 @@ namespace System.Windows.Xps.Packaging
             //
             // Add any generic resources
             //
-            foreach( Uri uri in _resourceCache.Keys)
+            foreach (Uri uri in _resourceCache.Keys)
             {
                 dependents[uri] = uri;
             }
@@ -1448,18 +1451,18 @@ namespace System.Windows.Xps.Packaging
             if (_storyFragment != null)
             {
                 dependents[_storyFragment.Uri] = _storyFragment.Uri;
-             }
+            }
 
 
             //
             // Add thumbnail
             //
             EnsureThumbnail();
-            if( _thumbnail != null )
+            if (_thumbnail != null)
             {
                 dependents[_thumbnail.Uri] = _thumbnail.Uri;
             }
-         }
+        }
 
         #endregion Public methods
 
@@ -1477,9 +1480,9 @@ namespace System.Windows.Xps.Packaging
             //
             // Flush the PrintTicket if needed
             //
-            if (!_isPrintTicketCommitted )
+            if (!_isPrintTicketCommitted)
             {
-                if(null != _printTicket)
+                if (null != _printTicket)
                 {
                     CurrentXpsManager.WritePrintTicket(this, _metroPart, _printTicket);
                 }
@@ -1499,11 +1502,11 @@ namespace System.Windows.Xps.Packaging
         void
         UpdateResourceCache()
         {
-            if( !_hasParsedResources )
+            if (!_hasParsedResources)
             {
                 ParseResources();
-                 _hasParsedResources = true;
-           }
+                _hasParsedResources = true;
+            }
         }
 
         /// <summary>
@@ -1518,49 +1521,49 @@ namespace System.Windows.Xps.Packaging
             // Collect Restricted Fonts
             //
             PackagePart parentPart = ((INode)_parentNode).GetPart();
-            Dictionary<Uri,PackageRelationship> restictedFontRels = new Dictionary<Uri,PackageRelationship>(MS.Internal.UriComparer.Default);
-            foreach(  PackageRelationship rel in parentPart.GetRelationshipsByType(XpsS0Markup.RestrictedFontRelationshipType) )
+            Dictionary<Uri, PackageRelationship> restictedFontRels = new Dictionary<Uri, PackageRelationship>(MS.Internal.UriComparer.Default);
+            foreach (PackageRelationship rel in parentPart.GetRelationshipsByType(XpsS0Markup.RestrictedFontRelationshipType))
             {
-               Uri absUri = PackUriHelper.ResolvePartUri(parentPart.Uri, rel.TargetUri);
-               restictedFontRels[absUri] = rel;
+                Uri absUri = PackUriHelper.ResolvePartUri(parentPart.Uri, rel.TargetUri);
+                restictedFontRels[absUri] = rel;
             }
-            foreach(  PackageRelationship rel in _metroPart.GetRelationships() )
+            foreach (PackageRelationship rel in _metroPart.GetRelationships())
             {
                 Uri absUri = PackUriHelper.ResolvePartUri(Uri, rel.TargetUri);
                 PackagePart part = CurrentXpsManager.GetPart(absUri);
                 //
                 // if its an image
                 //
-                if(
+                if (
                      XpsManager.SupportedImageType(part.ValidatedContentType())
                      && rel.RelationshipType == XpsS0Markup.ResourceRelationshipName
                    )
 
                 {
-                    XpsImage image = new XpsImage( CurrentXpsManager, this, part );
+                    XpsImage image = new XpsImage(CurrentXpsManager, this, part);
                     _imageCache[absUri] = image;
                 }
                 //
                 // If its a font
                 //
-                else if((part.ValidatedContentType().AreTypeAndSubTypeEqual(XpsS0Markup.FontContentType) ||
+                else if ((part.ValidatedContentType().AreTypeAndSubTypeEqual(XpsS0Markup.FontContentType) ||
                         part.ValidatedContentType().AreTypeAndSubTypeEqual(XpsS0Markup.FontObfuscatedContentType))
                         && rel.RelationshipType == XpsS0Markup.ResourceRelationshipName)
                 {
-                    XpsFont font = new XpsFont( CurrentXpsManager, this, part );
+                    XpsFont font = new XpsFont(CurrentXpsManager, this, part);
                     _fontCache[absUri] = font;
-                    if( restictedFontRels.ContainsKey(absUri ) )
+                    if (restictedFontRels.ContainsKey(absUri))
                     {
                         font.IsRestricted = true;
                     }
-}
+                }
                 //
                 // If its a colorcontext
                 //
                 else if (part.ValidatedContentType().AreTypeAndSubTypeEqual(XpsS0Markup.ColorContextContentType)
                         && rel.RelationshipType == XpsS0Markup.ResourceRelationshipName)
                 {
-                    XpsColorContext colorContext = new XpsColorContext( CurrentXpsManager, this, part );
+                    XpsColorContext colorContext = new XpsColorContext(CurrentXpsManager, this, part);
                     _colorContextCache[absUri] = colorContext;
                 }
                 //
@@ -1569,7 +1572,7 @@ namespace System.Windows.Xps.Packaging
                 else if (part.ValidatedContentType().AreTypeAndSubTypeEqual(XpsS0Markup.ResourceDictionaryContentType)
                         && rel.RelationshipType == XpsS0Markup.ResourceRelationshipName)
                 {
-                    XpsResourceDictionary resourceDictionary = new XpsResourceDictionary( CurrentXpsManager, this, part );
+                    XpsResourceDictionary resourceDictionary = new XpsResourceDictionary(CurrentXpsManager, this, part);
                     _resourceDictionaryCache[absUri] = resourceDictionary;
                 }
                 //
@@ -1582,12 +1585,12 @@ namespace System.Windows.Xps.Packaging
                     {
                         throw new InvalidDataException(SR.ReachPackaging_MoreThanOneStoryFragment);
                     }
-                    _storyFragment = new XpsStructure( CurrentXpsManager, this, part );
+                    _storyFragment = new XpsStructure(CurrentXpsManager, this, part);
                 }
                 //
                 // If its none of the above
                 else
-                if( rel.RelationshipType == XpsS0Markup.ResourceRelationshipName )
+                if (rel.RelationshipType == XpsS0Markup.ResourceRelationshipName)
                 {
                     XpsResource xpsResource = new XpsResource(CurrentXpsManager, this, part);
                     _resourceCache[absUri] = xpsResource;
@@ -1599,19 +1602,19 @@ namespace System.Windows.Xps.Packaging
         void
         EnsureThumbnail()
         {
-            if( _thumbnail == null )
+            if (_thumbnail == null)
             {
-                _thumbnail = CurrentXpsManager.EnsureThumbnail( this, _metroPart );
-                if( _thumbnail != null )
+                _thumbnail = CurrentXpsManager.EnsureThumbnail(this, _metroPart);
+                if (_thumbnail != null)
                 {
-                      _currentChildren.Add( _thumbnail );
+                    _currentChildren.Add(_thumbnail);
                 }
             }
         }
 
         private
         XpsImage
-        AddImage (
+        AddImage(
             PackagePart packagePart
             )
         {
@@ -1655,7 +1658,7 @@ namespace System.Windows.Xps.Packaging
         AddFont(
             PackagePart packagePart
             )
-       {
+        {
             PackagePart metroPart;
             if (packagePart == null)
             {
@@ -1693,12 +1696,12 @@ namespace System.Windows.Xps.Packaging
 
         private
         void
-        AddRelationshipTypes(List<PackageRelationshipSelector>   selectorList)
+        AddRelationshipTypes(List<PackageRelationshipSelector> selectorList)
         {
             //
             // Add Required Resource relationship type
             //
-            selectorList.Add( new PackageRelationshipSelector(
+            selectorList.Add(new PackageRelationshipSelector(
                                     Uri,
                                     PackageRelationshipSelectorType.Type,
                                     XpsS0Markup.ResourceRelationshipName
@@ -1707,7 +1710,7 @@ namespace System.Windows.Xps.Packaging
             //
             // Add Story Fragment relationship type
             //
-            selectorList.Add( new PackageRelationshipSelector(
+            selectorList.Add(new PackageRelationshipSelector(
                                     Uri,
                                     PackageRelationshipSelectorType.Type,
                                     XpsS0Markup.StoryFragmentsRelationshipName
@@ -1802,8 +1805,8 @@ namespace System.Windows.Xps.Packaging
         private
         PackagePart
         GeneratePartForResourceType(
-            Type     resourceType,
-            Uri         resourceUri
+            Type resourceType,
+            Uri resourceUri
             )
         {
             if (resourceUri == null)
@@ -1812,28 +1815,28 @@ namespace System.Windows.Xps.Packaging
             }
 
             ContentType contentType = null;
-            if( resourceType == typeof( XpsImage ) )
+            if (resourceType == typeof(XpsImage))
             {
                 contentType = LookupContentTypeForImageUri(resourceUri);
             }
-            else if( resourceType == typeof( XpsFont ) )
+            else if (resourceType == typeof(XpsFont))
             {
                 contentType = LookupContentTypeForFontUri(resourceUri);
             }
-            else if( resourceType == typeof( XpsColorContext ) )
+            else if (resourceType == typeof(XpsColorContext))
             {
                 contentType = XpsS0Markup.ColorContextContentType;
             }
-            else if( resourceType == typeof( XpsResourceDictionary ) )
+            else if (resourceType == typeof(XpsResourceDictionary))
             {
                 contentType = XpsS0Markup.ResourceDictionaryContentType;
-             }
+            }
             else
             {
                 contentType = XpsS0Markup.ResourceContentType;
             }
-            return this.CurrentXpsManager.GeneratePart(contentType,resourceUri);
-}
+            return this.CurrentXpsManager.GeneratePart(contentType, resourceUri);
+        }
 
         /// <summary>
         /// Parses the imageExtension and returns the correct ContentType
@@ -1907,15 +1910,15 @@ namespace System.Windows.Xps.Packaging
                 // Verify that the filename is a valid GUID string
                 // Until Guid has a TryParse method we will have to depend on an exception being thrown
                 try
-                {  
-                    Guid guid = new Guid(fileName );
+                {
+                    Guid guid = new Guid(fileName);
                 }
-                catch( FormatException )
+                catch (FormatException)
                 {
                     throw new XpsPackagingException(SR.ReachPackaging_ObfucatedFontNeedGuid);
                 }
 
-                contentType =  XpsS0Markup.FontObfuscatedContentType;
+                contentType = XpsS0Markup.FontObfuscatedContentType;
             }
             else
             {
@@ -1924,7 +1927,7 @@ namespace System.Windows.Xps.Packaging
             }
 
             return contentType;
-         }
+        }
 
 
         #endregion Private methods
@@ -1941,7 +1944,7 @@ namespace System.Windows.Xps.Packaging
         //
         // 0 based page numbeer with in document
         //
-        private int  _pageNumber;
+        private int _pageNumber;
 #if RESOURCESTREAM_USING_PART
         //
         // Metro Resource Part and XML Part Editor for
@@ -1963,17 +1966,17 @@ namespace System.Windows.Xps.Packaging
         // On an existing document this will be populated on query
         // Use UpdateResourceCache to ensure these are filled
         //
-        private Dictionary<Uri,XpsImage>                _imageCache;
-        private Dictionary<Uri,XpsFont>                 _fontCache;
-        private Dictionary<Uri,XpsColorContext>         _colorContextCache;
-        private Dictionary<Uri,XpsResourceDictionary>   _resourceDictionaryCache;
-        private Dictionary<Uri,XpsResource>             _resourceCache;
+        private Dictionary<Uri, XpsImage> _imageCache;
+        private Dictionary<Uri, XpsFont> _fontCache;
+        private Dictionary<Uri, XpsColorContext> _colorContextCache;
+        private Dictionary<Uri, XpsResourceDictionary> _resourceDictionaryCache;
+        private Dictionary<Uri, XpsResource> _resourceCache;
 
         //
         // This variable flags whether the PrintTicket has been
         // committed.  A writer can only commit this property once.
         //
-        private bool                                    _isPrintTicketCommitted;
+        private bool _isPrintTicketCommitted;
 
         //
         // These variables are used to keep track of the parent
@@ -1981,15 +1984,15 @@ namespace System.Windows.Xps.Packaging
         // down the current tree.  This is used be the flushing
         // policy to do interleave flushing of parts correctly.
         //
-        private XpsFixedDocumentReaderWriter            _parentNode;
-        private List<INode>                             _currentChildren;
+        private XpsFixedDocumentReaderWriter _parentNode;
+        private List<INode> _currentChildren;
 
         // This variable flags wheter the _resourceCache
         // has been populated by parsing the relationships
-        private bool                                    _hasParsedResources;
+        private bool _hasParsedResources;
 
-        private XpsThumbnail                            _thumbnail;
-        private XpsStructure                            _storyFragment;
+        private XpsThumbnail _thumbnail;
+        private XpsStructure _storyFragment;
         #endregion Private data
 
         #region Internal properties
@@ -2039,7 +2042,7 @@ namespace System.Windows.Xps.Packaging
             _resourceXmlWriter.Flush();
             _pageXmlWriter.Flush();
 
-            if(_resourceStream.ToString().Length > 0)
+            if (_resourceStream.ToString().Length > 0)
             {
                 _resourceDictionaryXmlWriter.WriteStartElement(XpsS0Markup.PageResources);
                 _resourceDictionaryXmlWriter.WriteStartElement(XpsS0Markup.ResourceDictionary);
@@ -2072,7 +2075,7 @@ namespace System.Windows.Xps.Packaging
             //
             CommitPrintTicket();
 
-            if ( _currentChildren!= null && _currentChildren.Count > 0)
+            if (_currentChildren != null && _currentChildren.Count > 0)
             {
 #if RESOURCESTREAM_USING_PART
                 //
@@ -2081,8 +2084,8 @@ namespace System.Windows.Xps.Packaging
                 _resourcePartEditor.Flush();
 #endif
                 _currentChildren.Clear();
-}
-}
+            }
+        }
 
         void
         INode.CommitInternal(

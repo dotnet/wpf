@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //#define ENABLE_AUTOMATIONPEER_LOGGING   // uncomment to include logging of various activities
 
 using System.Collections;
-using System.Windows.Threading;
 using System.Windows.Automation.Provider;
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Automation;
 
@@ -221,8 +221,10 @@ namespace System.Windows.Automation.Peers
 
         internal static HostedWindowWrapper CreateInternal(IntPtr hwnd)
         {
-            HostedWindowWrapper wrapper = new HostedWindowWrapper();
-            wrapper._hwnd = hwnd;
+            HostedWindowWrapper wrapper = new HostedWindowWrapper
+            {
+                _hwnd = hwnd
+            };
             return wrapper;
         }
 
@@ -239,7 +241,7 @@ namespace System.Windows.Automation.Peers
 
 
     ///
-    public abstract class AutomationPeer: DispatcherObject
+    public abstract class AutomationPeer : DispatcherObject
     {
         ///
         static AutomationPeer()
@@ -276,7 +278,8 @@ namespace System.Windows.Automation.Peers
         ///
         public void InvalidatePeer()
         {
-            if(_invalidated) return;
+            if (_invalidated)
+                return;
 
             Dispatcher.BeginInvoke(DispatcherPriority.Background, _updatePeer, this);
             _invalidated = true;
@@ -333,7 +336,7 @@ namespace System.Windows.Automation.Peers
             // Only send the event if there are listeners for this property change
             if (AutomationInteropProvider.ClientsAreListening)
             {
-                RaisePropertyChangedInternal(ProviderFromPeer(this), property,oldValue,newValue);
+                RaisePropertyChangedInternal(ProviderFromPeer(this), property, oldValue, newValue);
             }
         }
 
@@ -349,7 +352,7 @@ namespace System.Windows.Automation.Peers
             if (EventMap.HasRegisteredEvent(AutomationEvents.AsyncContentLoaded))
             {
                 IRawElementProviderSimple provider = ProviderFromPeer(this);
-                if(provider != null)
+                if (provider != null)
                 {
                     AutomationInteropProvider.RaiseAutomationEvent(
                         AutomationElementIdentifiers.AsyncContentLoadedEvent,
@@ -458,11 +461,13 @@ namespace System.Windows.Automation.Peers
         {
             ArgumentNullException.ThrowIfNull(connectedPeer);
 
-            if (_parent != null && _hwnd != IntPtr.Zero) return this;
+            if (_parent != null && _hwnd != IntPtr.Zero)
+                return this;
 
-            if((connectedPeer._hwnd) != IntPtr.Zero)
+            if ((connectedPeer._hwnd) != IntPtr.Zero)
             {
-                while(connectedPeer._parent != null) connectedPeer = connectedPeer._parent;
+                while (connectedPeer._parent != null)
+                    connectedPeer = connectedPeer._parent;
 
                 //now connectedPeer is the root
                 if ((connectedPeer == this) || isDescendantOf(connectedPeer))
@@ -473,17 +478,17 @@ namespace System.Windows.Automation.Peers
             //only start fault in the tree from the root if we are not in the recursive sync update
             //Otherwise it will go through the peers that are currently on the stack
             ContextLayoutManager lm = ContextLayoutManager.From(this.Dispatcher);
-            if(lm != null && lm.AutomationSyncUpdateCounter == 0)
+            if (lm != null && lm.AutomationSyncUpdateCounter == 0)
             {
                 AutomationPeer[] roots = lm.GetAutomationRoots();
-                for(int i = 0; i < roots.Length; i++)
+                for (int i = 0; i < roots.Length; i++)
                 {
                     AutomationPeer root = roots[i];
 
                     if (root != null)
                     {
-                        if((root == this) || isDescendantOf(root))
-                        return this;
+                        if ((root == this) || isDescendantOf(root))
+                            return this;
                     }
                 }
             }
@@ -504,7 +509,7 @@ namespace System.Windows.Automation.Peers
         {
             Invariant.Assert((peer != null));
 
-            if(peer._hwnd == IntPtr.Zero)
+            if (peer._hwnd == IntPtr.Zero)
             {
                 // parent is not yet part of Automation Tree itself
                 return false;
@@ -542,18 +547,18 @@ namespace System.Windows.Automation.Peers
         {
             ArgumentNullException.ThrowIfNull(parent);
 
-            List<AutomationPeer> children  = parent.GetChildren();
+            List<AutomationPeer> children = parent.GetChildren();
 
-            if(children == null)
+            if (children == null)
                 return false;
 
             int cnt = children.Count;
-            for(int i = 0; i < cnt; ++i)
+            for (int i = 0; i < cnt; ++i)
             {
                 AutomationPeer child = children[i];
 
                 //depth first
-                if(child == this || this.isDescendantOf(child))
+                if (child == this || this.isDescendantOf(child))
                     return true;
             }
 
@@ -582,7 +587,7 @@ namespace System.Windows.Automation.Peers
             HostedWindowWrapper host = null;
 
             //in normal Avalon subtrees, only root peers should return wrapped HWND
-            if(GetParent() == null)
+            if (GetParent() == null)
             {
                 // this way of creating HostedWindowWrapper does not require FullTrust
                 host = HostedWindowWrapper.CreateInternal(Hwnd);
@@ -600,7 +605,7 @@ namespace System.Windows.Automation.Peers
         /// Returns 'true' only if this is a peer that hosts HWND in Avalon (WindowsFormsHost or Popup for example).
         /// Such peers also have to override GetHostRawElementProviderCore method.
         ///</summary>
-        virtual protected internal bool IsHwndHost { get { return false; }}
+        virtual protected internal bool IsHwndHost { get { return false; } }
 
         //
         // P R O P E R T I E S
@@ -662,7 +667,8 @@ namespace System.Windows.Automation.Peers
         abstract protected bool IsControlElementCore();
 
         ///
-        virtual protected bool IsDialogCore(){
+        virtual protected bool IsDialogCore()
+        {
             return false;
         }
 
@@ -1333,8 +1339,9 @@ namespace System.Windows.Automation.Peers
             Level8,
             Level9,
         }
-        private static HeadingLevel ConvertHeadingLevelToId(AutomationHeadingLevel value){
-            switch(value)
+        private static HeadingLevel ConvertHeadingLevelToId(AutomationHeadingLevel value)
+        {
+            switch (value)
             {
                 case AutomationHeadingLevel.None:
                     return HeadingLevel.None;
@@ -1374,7 +1381,7 @@ namespace System.Windows.Automation.Peers
         public bool IsDialog()
         {
             bool result = false;
-            if(_publicCallInProgress)
+            if (_publicCallInProgress)
                 throw new InvalidOperationException(SR.Automation_RecursivePublicCall);
 
             try
@@ -1452,7 +1459,7 @@ namespace System.Windows.Automation.Peers
         ///
         internal int[] GetRuntimeId()
         {
-            return new int [] { 7, Environment.ProcessId, this.GetHashCode() };
+            return new int[] { 7, Environment.ProcessId, this.GetHashCode() };
         }
 
         ///
@@ -1536,10 +1543,10 @@ namespace System.Windows.Automation.Peers
             {
                 parent.EnsureChildren();
 
-                if (    parent._children != null
-                    &&  _index >= 0
-                    &&  _index + 1 < parent._children.Count
-                    &&  parent._children[_index] == this    )
+                if (parent._children != null
+                    && _index >= 0
+                    && _index + 1 < parent._children.Count
+                    && parent._children[_index] == this)
                 {
                     sibling = parent._children[_index + 1];
                     sibling.IterationParent = parent;
@@ -1559,10 +1566,10 @@ namespace System.Windows.Automation.Peers
             {
                 parent.EnsureChildren();
 
-                if (    parent._children != null
-                    &&  _index - 1 >= 0
-                    &&  _index < parent._children.Count
-                    &&  parent._children[_index] == this    )
+                if (parent._children != null
+                    && _index - 1 >= 0
+                    && _index < parent._children.Count
+                    && parent._children[_index] == this)
                 {
                     sibling = parent._children[_index - 1];
                     sibling.IterationParent = parent;
@@ -1700,46 +1707,125 @@ namespace System.Windows.Automation.Peers
 
             switch (type)
             {
-                case AutomationControlType.Button:        controlType = ControlType.Button;       break;
-                case AutomationControlType.Calendar:      controlType = ControlType.Calendar;     break;
-                case AutomationControlType.CheckBox:      controlType = ControlType.CheckBox;     break;
-                case AutomationControlType.ComboBox:      controlType = ControlType.ComboBox;     break;
-                case AutomationControlType.Edit:          controlType = ControlType.Edit;         break;
-                case AutomationControlType.Hyperlink:     controlType = ControlType.Hyperlink;    break;
-                case AutomationControlType.Image:         controlType = ControlType.Image;        break;
-                case AutomationControlType.ListItem:      controlType = ControlType.ListItem;     break;
-                case AutomationControlType.List:          controlType = ControlType.List;         break;
-                case AutomationControlType.Menu:          controlType = ControlType.Menu;         break;
-                case AutomationControlType.MenuBar:       controlType = ControlType.MenuBar;      break;
-                case AutomationControlType.MenuItem:      controlType = ControlType.MenuItem;     break;
-                case AutomationControlType.ProgressBar:   controlType = ControlType.ProgressBar;  break;
-                case AutomationControlType.RadioButton:   controlType = ControlType.RadioButton;  break;
-                case AutomationControlType.ScrollBar:     controlType = ControlType.ScrollBar;    break;
-                case AutomationControlType.Slider:        controlType = ControlType.Slider;       break;
-                case AutomationControlType.Spinner:       controlType = ControlType.Spinner;      break;
-                case AutomationControlType.StatusBar:     controlType = ControlType.StatusBar;    break;
-                case AutomationControlType.Tab:           controlType = ControlType.Tab;          break;
-                case AutomationControlType.TabItem:       controlType = ControlType.TabItem;      break;
-                case AutomationControlType.Text:          controlType = ControlType.Text;         break;
-                case AutomationControlType.ToolBar:       controlType = ControlType.ToolBar;      break;
-                case AutomationControlType.ToolTip:       controlType = ControlType.ToolTip;      break;
-                case AutomationControlType.Tree:          controlType = ControlType.Tree;         break;
-                case AutomationControlType.TreeItem:      controlType = ControlType.TreeItem;     break;
-                case AutomationControlType.Custom:        controlType = ControlType.Custom;       break;
-                case AutomationControlType.Group:         controlType = ControlType.Group;        break;
-                case AutomationControlType.Thumb:         controlType = ControlType.Thumb;        break;
-                case AutomationControlType.DataGrid:      controlType = ControlType.DataGrid;     break;
-                case AutomationControlType.DataItem:      controlType = ControlType.DataItem;     break;
-                case AutomationControlType.Document:      controlType = ControlType.Document;     break;
-                case AutomationControlType.SplitButton:   controlType = ControlType.SplitButton;  break;
-                case AutomationControlType.Window:        controlType = ControlType.Window;       break;
-                case AutomationControlType.Pane:          controlType = ControlType.Pane;         break;
-                case AutomationControlType.Header:        controlType = ControlType.Header;       break;
-                case AutomationControlType.HeaderItem:    controlType = ControlType.HeaderItem;   break;
-                case AutomationControlType.Table:         controlType = ControlType.Table;        break;
-                case AutomationControlType.TitleBar:      controlType = ControlType.TitleBar;     break;
-                case AutomationControlType.Separator:     controlType = ControlType.Separator;    break;
-                default: break;
+                case AutomationControlType.Button:
+                    controlType = ControlType.Button;
+                    break;
+                case AutomationControlType.Calendar:
+                    controlType = ControlType.Calendar;
+                    break;
+                case AutomationControlType.CheckBox:
+                    controlType = ControlType.CheckBox;
+                    break;
+                case AutomationControlType.ComboBox:
+                    controlType = ControlType.ComboBox;
+                    break;
+                case AutomationControlType.Edit:
+                    controlType = ControlType.Edit;
+                    break;
+                case AutomationControlType.Hyperlink:
+                    controlType = ControlType.Hyperlink;
+                    break;
+                case AutomationControlType.Image:
+                    controlType = ControlType.Image;
+                    break;
+                case AutomationControlType.ListItem:
+                    controlType = ControlType.ListItem;
+                    break;
+                case AutomationControlType.List:
+                    controlType = ControlType.List;
+                    break;
+                case AutomationControlType.Menu:
+                    controlType = ControlType.Menu;
+                    break;
+                case AutomationControlType.MenuBar:
+                    controlType = ControlType.MenuBar;
+                    break;
+                case AutomationControlType.MenuItem:
+                    controlType = ControlType.MenuItem;
+                    break;
+                case AutomationControlType.ProgressBar:
+                    controlType = ControlType.ProgressBar;
+                    break;
+                case AutomationControlType.RadioButton:
+                    controlType = ControlType.RadioButton;
+                    break;
+                case AutomationControlType.ScrollBar:
+                    controlType = ControlType.ScrollBar;
+                    break;
+                case AutomationControlType.Slider:
+                    controlType = ControlType.Slider;
+                    break;
+                case AutomationControlType.Spinner:
+                    controlType = ControlType.Spinner;
+                    break;
+                case AutomationControlType.StatusBar:
+                    controlType = ControlType.StatusBar;
+                    break;
+                case AutomationControlType.Tab:
+                    controlType = ControlType.Tab;
+                    break;
+                case AutomationControlType.TabItem:
+                    controlType = ControlType.TabItem;
+                    break;
+                case AutomationControlType.Text:
+                    controlType = ControlType.Text;
+                    break;
+                case AutomationControlType.ToolBar:
+                    controlType = ControlType.ToolBar;
+                    break;
+                case AutomationControlType.ToolTip:
+                    controlType = ControlType.ToolTip;
+                    break;
+                case AutomationControlType.Tree:
+                    controlType = ControlType.Tree;
+                    break;
+                case AutomationControlType.TreeItem:
+                    controlType = ControlType.TreeItem;
+                    break;
+                case AutomationControlType.Custom:
+                    controlType = ControlType.Custom;
+                    break;
+                case AutomationControlType.Group:
+                    controlType = ControlType.Group;
+                    break;
+                case AutomationControlType.Thumb:
+                    controlType = ControlType.Thumb;
+                    break;
+                case AutomationControlType.DataGrid:
+                    controlType = ControlType.DataGrid;
+                    break;
+                case AutomationControlType.DataItem:
+                    controlType = ControlType.DataItem;
+                    break;
+                case AutomationControlType.Document:
+                    controlType = ControlType.Document;
+                    break;
+                case AutomationControlType.SplitButton:
+                    controlType = ControlType.SplitButton;
+                    break;
+                case AutomationControlType.Window:
+                    controlType = ControlType.Window;
+                    break;
+                case AutomationControlType.Pane:
+                    controlType = ControlType.Pane;
+                    break;
+                case AutomationControlType.Header:
+                    controlType = ControlType.Header;
+                    break;
+                case AutomationControlType.HeaderItem:
+                    controlType = ControlType.HeaderItem;
+                    break;
+                case AutomationControlType.Table:
+                    controlType = ControlType.Table;
+                    break;
+                case AutomationControlType.TitleBar:
+                    controlType = ControlType.TitleBar;
+                    break;
+                case AutomationControlType.Separator:
+                    controlType = ControlType.Separator;
+                    break;
+                default:
+                    break;
             }
 
             return controlType;
@@ -1754,19 +1840,19 @@ namespace System.Windows.Automation.Peers
         {
             AutomationPeer found = null;
 
-            if(!IsOffscreen())
+            if (!IsOffscreen())
             {
                 List<AutomationPeer> children = GetChildren();
-                if(children != null)
+                if (children != null)
                 {
                     int count = children.Count;
-                    for(int i = count-1; (i >= 0) && (found == null); --i)
+                    for (int i = count - 1; (i >= 0) && (found == null); --i)
                     {
                         found = children[i].GetPeerFromPoint(point);
                     }
                 }
 
-                if(found == null)
+                if (found == null)
                 {
                     Rect bounds = GetVisibleBoundingRect();
                     if (bounds.Contains(point))
@@ -1797,7 +1883,7 @@ namespace System.Windows.Automation.Peers
 
             //replace itself with EventsSource if we are aggregated and hidden from the UIA
             AutomationPeer eventsSource;
-            if((peer == this) && ((eventsSource = EventsSource) != null))
+            if ((peer == this) && ((eventsSource = EventsSource) != null))
             {
                 referencePeer = peer = eventsSource;
             }
@@ -1870,8 +1956,8 @@ namespace System.Windows.Automation.Peers
                                                              object newValue)
         {
             // Callers have only checked if automation clients are present so filter for any interest in this particular event.
-            if (  provider != null
-               && EventMap.HasRegisteredEvent(AutomationEvents.PropertyChanged) )
+            if (provider != null
+               && EventMap.HasRegisteredEvent(AutomationEvents.PropertyChanged))
             {
                 AutomationPropertyChangedEventArgs e = new AutomationPropertyChangedEventArgs(propertyId, oldValue, newValue);
                 AutomationInteropProvider.RaiseAutomationPropertyChangedEvent(provider, e);
@@ -1896,10 +1982,10 @@ namespace System.Windows.Automation.Peers
                 return;
 
             //store old children in a hashset
-            if(oldChildren != null)
+            if (oldChildren != null)
             {
                 hs = new HashSet<AutomationPeer>();
-                for(int count = oldChildren.Count, i = 0; i < count; i++)
+                for (int count = oldChildren.Count, i = 0; i < count; i++)
                 {
                     hs.Add(oldChildren[i]);
                 }
@@ -1909,24 +1995,25 @@ namespace System.Windows.Automation.Peers
             //and add new ones into addedChildren list
             int addedCount = 0;
 
-            if(_children != null)
+            if (_children != null)
             {
-                for(int count = _children.Count, i = 0; i < count; i++)
+                for (int count = _children.Count, i = 0; i < count; i++)
                 {
                     AutomationPeer child = _children[i];
-                    if(hs != null && hs.Contains(child))
+                    if (hs != null && hs.Contains(child))
                     {
                         hs.Remove(child); //same child, nothing to notify
                     }
                     else
                     {
-                        if(addedChildren == null) addedChildren = new List<AutomationPeer>();
+                        if (addedChildren == null)
+                            addedChildren = new List<AutomationPeer>();
 
                         //stop accumulatin new children here because the notification
                         //is going to become "bulk anyways and exact set of chidlren is not
                         //needed, only count.
                         ++addedCount;
-                        if(addedCount <= invalidateLimit)
+                        if (addedCount <= invalidateLimit)
                             addedChildren.Add(child);
                     }
                 }
@@ -1936,22 +2023,22 @@ namespace System.Windows.Automation.Peers
             //calls for "bulk" notification, use per-child notification, otherwise use "bulk"
             int removedCount = (hs == null ? 0 : hs.Count);
 
-            if(removedCount + addedCount > invalidateLimit) //bilk invalidation
+            if (removedCount + addedCount > invalidateLimit) //bilk invalidation
             {
                 StructureChangeType flags;
 
                 // Set bulk event type depending on if these were adds, removes or a mix
                 if (addedCount == 0)
                     flags = StructureChangeType.ChildrenBulkRemoved;
-                else if ( removedCount == 0 )
+                else if (removedCount == 0)
                     flags = StructureChangeType.ChildrenBulkAdded;
                 else
                     flags = StructureChangeType.ChildrenInvalidated;
 
                 IRawElementProviderSimple provider = ProviderFromPeerNoDelegation(this);
-                if(provider != null)
+                if (provider != null)
                 {
-                    int [] rid = this.GetRuntimeId(); //use runtimeID of parent for bulk notifications
+                    int[] rid = this.GetRuntimeId(); //use runtimeID of parent for bulk notifications
 
                     AutomationInteropProvider.RaiseStructureChangedEvent(
                                     provider,
@@ -2021,7 +2108,7 @@ namespace System.Windows.Automation.Peers
         internal void UpdateSubtree()
         {
             ContextLayoutManager lm = ContextLayoutManager.From(this.Dispatcher);
-            if(lm != null)
+            if (lm != null)
             {
                 lm.AutomationSyncUpdateCounter = lm.AutomationSyncUpdateCounter + 1;
 
@@ -2041,7 +2128,7 @@ namespace System.Windows.Automation.Peers
                         string itemStatus = GetItemStatusCore();
                         if (itemStatus != _itemStatus)
                         {
-                            if(provider == null)
+                            if (provider == null)
                                 provider = ProviderFromPeerNoDelegation(this);
                             RaisePropertyChangedInternal(provider,
                                                          AutomationElementIdentifiers.ItemStatusProperty,
@@ -2053,7 +2140,7 @@ namespace System.Windows.Automation.Peers
                         string name = GetNameCore();
                         if (name != _name)
                         {
-                            if(provider == null)
+                            if (provider == null)
                                 provider = ProviderFromPeerNoDelegation(this);
                             RaisePropertyChangedInternal(provider,
                                                          AutomationElementIdentifiers.NameProperty,
@@ -2065,7 +2152,7 @@ namespace System.Windows.Automation.Peers
                         bool isOffscreen = IsOffscreenCore();
                         if (isOffscreen != _isOffscreen)
                         {
-                            if(provider == null)
+                            if (provider == null)
                                 provider = ProviderFromPeerNoDelegation(this);
                             RaisePropertyChangedInternal(provider,
                                                          AutomationElementIdentifiers.IsOffscreenProperty,
@@ -2077,7 +2164,7 @@ namespace System.Windows.Automation.Peers
                         bool isEnabled = IsEnabledCore();
                         if (isEnabled != _isEnabled)
                         {
-                            if(provider == null)
+                            if (provider == null)
                                 provider = ProviderFromPeerNoDelegation(this);
                             RaisePropertyChangedInternal(provider,
                                                          AutomationElementIdentifiers.IsEnabledProperty,
@@ -2085,17 +2172,17 @@ namespace System.Windows.Automation.Peers
                                                          isEnabled);
                             _isEnabled = isEnabled;
                         }
-}
+                    }
 
                     //  did anybody ask for structure changed norification?
                     //  if somebody asked for property changed then structure must be updated
-                    if (this._childrenValid? (this.AncestorsInvalid || (ControlType.Custom == this.GetControlType())) : (notifyStructureChanged || notifyPropertyChanged))
+                    if (this._childrenValid ? (this.AncestorsInvalid || (ControlType.Custom == this.GetControlType())) : (notifyStructureChanged || notifyPropertyChanged))
                     {
                         using (UpdateChildren())
                         {
                             AncestorsInvalid = false;
 
-                            for(AutomationPeer peer = GetFirstChild(); peer != null; peer = peer.GetNextSibling())
+                            for (AutomationPeer peer = GetFirstChild(); peer != null; peer = peer.GetNextSibling())
                             {
                                 peer.UpdateSubtree();
                             }
@@ -2142,13 +2229,13 @@ namespace System.Windows.Automation.Peers
 
         internal void AddToAutomationEventList()
         {
-            if(!_addedToEventList)
+            if (!_addedToEventList)
             {
                 ContextLayoutManager lm = ContextLayoutManager.From(this.Dispatcher);
                 lm.AutomationEvents.Add(this); //this adds the root peer into the list of roots, for deferred event firing
                 _addedToEventList = true;
             }
-}
+        }
 
         internal IntPtr Hwnd
         {
@@ -2185,7 +2272,7 @@ namespace System.Windows.Automation.Peers
             if (getProperty != null)
             {
                 result = getProperty(this);
-                if(AutomationElementIdentifiers.HeadingLevelProperty != null && propertyId == AutomationElementIdentifiers.HeadingLevelProperty.Id)
+                if (AutomationElementIdentifiers.HeadingLevelProperty != null && propertyId == AutomationElementIdentifiers.HeadingLevelProperty.Id)
                 {
                     result = ConvertHeadingLevelToId((AutomationHeadingLevel)result);
                 }
@@ -2231,10 +2318,10 @@ namespace System.Windows.Automation.Peers
         // rather than creating the new Wrapper object if there is need and it still exist.
         internal WeakReference ElementProxyWeakReference
         {
-            get{ return _elementProxyWeakReference; }
+            get { return _elementProxyWeakReference; }
             set
             {
-                if(value.Target as ElementProxy != null)
+                if (value.Target as ElementProxy != null)
                     _elementProxyWeakReference = value;
             }
         }
@@ -2365,24 +2452,24 @@ namespace System.Windows.Automation.Peers
         {
             //  initializeing patterns
             s_patternInfo = new Hashtable();
-            s_patternInfo[InvokePatternIdentifiers.Pattern.Id]          = new PatternInfo(InvokePatternIdentifiers.Pattern.Id,          new WrapObject(InvokeProviderWrapper.Wrap),             PatternInterface.Invoke);
-            s_patternInfo[SelectionPatternIdentifiers.Pattern.Id]       = new PatternInfo(SelectionPatternIdentifiers.Pattern.Id,       new WrapObject(SelectionProviderWrapper.Wrap),          PatternInterface.Selection);
-            s_patternInfo[ValuePatternIdentifiers.Pattern.Id]           = new PatternInfo(ValuePatternIdentifiers.Pattern.Id,           new WrapObject(ValueProviderWrapper.Wrap),              PatternInterface.Value);
-            s_patternInfo[RangeValuePatternIdentifiers.Pattern.Id]      = new PatternInfo(RangeValuePatternIdentifiers.Pattern.Id,      new WrapObject(RangeValueProviderWrapper.Wrap),         PatternInterface.RangeValue);
-            s_patternInfo[ScrollPatternIdentifiers.Pattern.Id]          = new PatternInfo(ScrollPatternIdentifiers.Pattern.Id,          new WrapObject(ScrollProviderWrapper.Wrap),             PatternInterface.Scroll);
-            s_patternInfo[ScrollItemPatternIdentifiers.Pattern.Id]      = new PatternInfo(ScrollItemPatternIdentifiers.Pattern.Id,      new WrapObject(ScrollItemProviderWrapper.Wrap),         PatternInterface.ScrollItem);
-            s_patternInfo[ExpandCollapsePatternIdentifiers.Pattern.Id]  = new PatternInfo(ExpandCollapsePatternIdentifiers.Pattern.Id,  new WrapObject(ExpandCollapseProviderWrapper.Wrap),     PatternInterface.ExpandCollapse);
-            s_patternInfo[GridPatternIdentifiers.Pattern.Id]            = new PatternInfo(GridPatternIdentifiers.Pattern.Id,            new WrapObject(GridProviderWrapper.Wrap),               PatternInterface.Grid);
-            s_patternInfo[GridItemPatternIdentifiers.Pattern.Id]        = new PatternInfo(GridItemPatternIdentifiers.Pattern.Id,        new WrapObject(GridItemProviderWrapper.Wrap),           PatternInterface.GridItem);
-            s_patternInfo[MultipleViewPatternIdentifiers.Pattern.Id]    = new PatternInfo(MultipleViewPatternIdentifiers.Pattern.Id,    new WrapObject(MultipleViewProviderWrapper.Wrap),       PatternInterface.MultipleView);
-            s_patternInfo[WindowPatternIdentifiers.Pattern.Id]          = new PatternInfo(WindowPatternIdentifiers.Pattern.Id,          new WrapObject(WindowProviderWrapper.Wrap),             PatternInterface.Window);
-            s_patternInfo[SelectionItemPatternIdentifiers.Pattern.Id]   = new PatternInfo(SelectionItemPatternIdentifiers.Pattern.Id,   new WrapObject(SelectionItemProviderWrapper.Wrap),      PatternInterface.SelectionItem);
-            s_patternInfo[DockPatternIdentifiers.Pattern.Id]            = new PatternInfo(DockPatternIdentifiers.Pattern.Id,            new WrapObject(DockProviderWrapper.Wrap),               PatternInterface.Dock);
-            s_patternInfo[TablePatternIdentifiers.Pattern.Id]           = new PatternInfo(TablePatternIdentifiers.Pattern.Id,           new WrapObject(TableProviderWrapper.Wrap),              PatternInterface.Table);
-            s_patternInfo[TableItemPatternIdentifiers.Pattern.Id]       = new PatternInfo(TableItemPatternIdentifiers.Pattern.Id,       new WrapObject(TableItemProviderWrapper.Wrap),          PatternInterface.TableItem);
-            s_patternInfo[TogglePatternIdentifiers.Pattern.Id]          = new PatternInfo(TogglePatternIdentifiers.Pattern.Id,          new WrapObject(ToggleProviderWrapper.Wrap),             PatternInterface.Toggle);
-            s_patternInfo[TransformPatternIdentifiers.Pattern.Id]       = new PatternInfo(TransformPatternIdentifiers.Pattern.Id,       new WrapObject(TransformProviderWrapper.Wrap),          PatternInterface.Transform);
-            s_patternInfo[TextPatternIdentifiers.Pattern.Id]            = new PatternInfo(TextPatternIdentifiers.Pattern.Id,            new WrapObject(TextProviderWrapper.Wrap),               PatternInterface.Text);
+            s_patternInfo[InvokePatternIdentifiers.Pattern.Id] = new PatternInfo(InvokePatternIdentifiers.Pattern.Id, new WrapObject(InvokeProviderWrapper.Wrap), PatternInterface.Invoke);
+            s_patternInfo[SelectionPatternIdentifiers.Pattern.Id] = new PatternInfo(SelectionPatternIdentifiers.Pattern.Id, new WrapObject(SelectionProviderWrapper.Wrap), PatternInterface.Selection);
+            s_patternInfo[ValuePatternIdentifiers.Pattern.Id] = new PatternInfo(ValuePatternIdentifiers.Pattern.Id, new WrapObject(ValueProviderWrapper.Wrap), PatternInterface.Value);
+            s_patternInfo[RangeValuePatternIdentifiers.Pattern.Id] = new PatternInfo(RangeValuePatternIdentifiers.Pattern.Id, new WrapObject(RangeValueProviderWrapper.Wrap), PatternInterface.RangeValue);
+            s_patternInfo[ScrollPatternIdentifiers.Pattern.Id] = new PatternInfo(ScrollPatternIdentifiers.Pattern.Id, new WrapObject(ScrollProviderWrapper.Wrap), PatternInterface.Scroll);
+            s_patternInfo[ScrollItemPatternIdentifiers.Pattern.Id] = new PatternInfo(ScrollItemPatternIdentifiers.Pattern.Id, new WrapObject(ScrollItemProviderWrapper.Wrap), PatternInterface.ScrollItem);
+            s_patternInfo[ExpandCollapsePatternIdentifiers.Pattern.Id] = new PatternInfo(ExpandCollapsePatternIdentifiers.Pattern.Id, new WrapObject(ExpandCollapseProviderWrapper.Wrap), PatternInterface.ExpandCollapse);
+            s_patternInfo[GridPatternIdentifiers.Pattern.Id] = new PatternInfo(GridPatternIdentifiers.Pattern.Id, new WrapObject(GridProviderWrapper.Wrap), PatternInterface.Grid);
+            s_patternInfo[GridItemPatternIdentifiers.Pattern.Id] = new PatternInfo(GridItemPatternIdentifiers.Pattern.Id, new WrapObject(GridItemProviderWrapper.Wrap), PatternInterface.GridItem);
+            s_patternInfo[MultipleViewPatternIdentifiers.Pattern.Id] = new PatternInfo(MultipleViewPatternIdentifiers.Pattern.Id, new WrapObject(MultipleViewProviderWrapper.Wrap), PatternInterface.MultipleView);
+            s_patternInfo[WindowPatternIdentifiers.Pattern.Id] = new PatternInfo(WindowPatternIdentifiers.Pattern.Id, new WrapObject(WindowProviderWrapper.Wrap), PatternInterface.Window);
+            s_patternInfo[SelectionItemPatternIdentifiers.Pattern.Id] = new PatternInfo(SelectionItemPatternIdentifiers.Pattern.Id, new WrapObject(SelectionItemProviderWrapper.Wrap), PatternInterface.SelectionItem);
+            s_patternInfo[DockPatternIdentifiers.Pattern.Id] = new PatternInfo(DockPatternIdentifiers.Pattern.Id, new WrapObject(DockProviderWrapper.Wrap), PatternInterface.Dock);
+            s_patternInfo[TablePatternIdentifiers.Pattern.Id] = new PatternInfo(TablePatternIdentifiers.Pattern.Id, new WrapObject(TableProviderWrapper.Wrap), PatternInterface.Table);
+            s_patternInfo[TableItemPatternIdentifiers.Pattern.Id] = new PatternInfo(TableItemPatternIdentifiers.Pattern.Id, new WrapObject(TableItemProviderWrapper.Wrap), PatternInterface.TableItem);
+            s_patternInfo[TogglePatternIdentifiers.Pattern.Id] = new PatternInfo(TogglePatternIdentifiers.Pattern.Id, new WrapObject(ToggleProviderWrapper.Wrap), PatternInterface.Toggle);
+            s_patternInfo[TransformPatternIdentifiers.Pattern.Id] = new PatternInfo(TransformPatternIdentifiers.Pattern.Id, new WrapObject(TransformProviderWrapper.Wrap), PatternInterface.Transform);
+            s_patternInfo[TextPatternIdentifiers.Pattern.Id] = new PatternInfo(TextPatternIdentifiers.Pattern.Id, new WrapObject(TextProviderWrapper.Wrap), PatternInterface.Text);
 
             // To avoid the worst situation on legacy systems which may not have new unmanaged core. with this change with old unmanaged core
             // this will these patterns will be null and won't be added and hence reponse will be as it is not present at all rather than any crash.
@@ -2441,7 +2528,7 @@ namespace System.Windows.Automation.Peers
                 s_propertyInfo[AutomationElementIdentifiers.PositionInSetProperty.Id] = new GetProperty(GetPositionInSet);
             }
             if (AutomationElementIdentifiers.HeadingLevelProperty != null)
-            { 
+            {
                 s_propertyInfo[AutomationElementIdentifiers.HeadingLevelProperty.Id] = new GetProperty(GetHeadingLevel);
             }
             if (AutomationElementIdentifiers.IsDialogProperty != null)
@@ -2468,39 +2555,39 @@ namespace System.Windows.Automation.Peers
 
         private delegate object GetProperty(AutomationPeer peer);
 
-        private static object IsControlElement(AutomationPeer peer)         {   return peer.IsControlElement(); }
-        private static object GetControlType(AutomationPeer peer)           {   ControlType controlType = peer.GetControlType(); return controlType.Id;  }
-        private static object IsContentElement(AutomationPeer peer)         {   return peer.IsContentElement(); }
-        private static object GetLabeledBy(AutomationPeer peer)             {   AutomationPeer byPeer = peer.GetLabeledBy(); return ElementProxy.StaticWrap(byPeer, peer);  }
-        private static object GetNativeWindowHandle(AutomationPeer peer)    {   return null /* not used? */;    }
-        private static object GetAutomationId(AutomationPeer peer)          {   return peer.GetAutomationId();  }
-        private static object GetItemType(AutomationPeer peer)              {   return peer.GetItemType();      }
-        private static object IsPassword(AutomationPeer peer)               {   return peer.IsPassword();       }
-        private static object GetLocalizedControlType(AutomationPeer peer)  {   return peer.GetLocalizedControlType();  }
-        private static object GetName(AutomationPeer peer)                  {   return peer.GetName();          }
-        private static object GetAcceleratorKey(AutomationPeer peer)        {   return peer.GetAcceleratorKey();    }
-        private static object GetAccessKey(AutomationPeer peer)             {   return peer.GetAccessKey();     }
-        private static object HasKeyboardFocus(AutomationPeer peer)         {   return peer.HasKeyboardFocus(); }
-        private static object IsKeyboardFocusable(AutomationPeer peer)      {   return peer.IsKeyboardFocusable();  }
-        private static object IsEnabled(AutomationPeer peer)                {   return peer.IsEnabled();        }
-        private static object GetBoundingRectangle(AutomationPeer peer)     {   return peer.GetBoundingRectangle(); }
-        private static object GetCurrentProcessId(AutomationPeer peer)      {   return Environment.ProcessId; }
-        private static object GetRuntimeId(AutomationPeer peer)             {   return peer.GetRuntimeId();     }
-        private static object GetClassName(AutomationPeer peer)             {   return peer.GetClassName();     }
-        private static object GetHelpText(AutomationPeer peer)              {   return peer.GetHelpText();  }
-        private static object GetClickablePoint(AutomationPeer peer)        {   Point pt = peer.GetClickablePoint(); return new double[] {pt.X, pt.Y};  }
-        private static object GetCultureInfo(AutomationPeer peer)           {   return null;    }
-        private static object IsOffscreen(AutomationPeer peer)              {   return peer.IsOffscreen();  }
-        private static object GetOrientation(AutomationPeer peer)           {   return peer.GetOrientation();   }
-        private static object GetFrameworkId(AutomationPeer peer)           {   return peer.GetFrameworkId();   }
-        private static object IsRequiredForForm(AutomationPeer peer)        {   return peer.IsRequiredForForm();    }
-        private static object GetItemStatus(AutomationPeer peer)            {   return peer.GetItemStatus();    }
-        private static object GetLiveSetting(AutomationPeer peer)           {   return peer.GetLiveSetting(); }
-        private static object GetControllerFor(AutomationPeer peer)         {   return peer.GetControllerForProviderArray(); }
-        private static object GetSizeOfSet(AutomationPeer peer)             {   return peer.GetSizeOfSet(); }
-        private static object GetPositionInSet(AutomationPeer peer)         {   return peer.GetPositionInSet(); }
-        private static object GetHeadingLevel(AutomationPeer peer)          {   return peer.GetHeadingLevel(); }
-        private static object IsDialog(AutomationPeer peer)                 {   return peer.IsDialog(); }
+        private static object IsControlElement(AutomationPeer peer) { return peer.IsControlElement(); }
+        private static object GetControlType(AutomationPeer peer) { ControlType controlType = peer.GetControlType(); return controlType.Id; }
+        private static object IsContentElement(AutomationPeer peer) { return peer.IsContentElement(); }
+        private static object GetLabeledBy(AutomationPeer peer) { AutomationPeer byPeer = peer.GetLabeledBy(); return ElementProxy.StaticWrap(byPeer, peer); }
+        private static object GetNativeWindowHandle(AutomationPeer peer) { return null /* not used? */; }
+        private static object GetAutomationId(AutomationPeer peer) { return peer.GetAutomationId(); }
+        private static object GetItemType(AutomationPeer peer) { return peer.GetItemType(); }
+        private static object IsPassword(AutomationPeer peer) { return peer.IsPassword(); }
+        private static object GetLocalizedControlType(AutomationPeer peer) { return peer.GetLocalizedControlType(); }
+        private static object GetName(AutomationPeer peer) { return peer.GetName(); }
+        private static object GetAcceleratorKey(AutomationPeer peer) { return peer.GetAcceleratorKey(); }
+        private static object GetAccessKey(AutomationPeer peer) { return peer.GetAccessKey(); }
+        private static object HasKeyboardFocus(AutomationPeer peer) { return peer.HasKeyboardFocus(); }
+        private static object IsKeyboardFocusable(AutomationPeer peer) { return peer.IsKeyboardFocusable(); }
+        private static object IsEnabled(AutomationPeer peer) { return peer.IsEnabled(); }
+        private static object GetBoundingRectangle(AutomationPeer peer) { return peer.GetBoundingRectangle(); }
+        private static object GetCurrentProcessId(AutomationPeer peer) { return Environment.ProcessId; }
+        private static object GetRuntimeId(AutomationPeer peer) { return peer.GetRuntimeId(); }
+        private static object GetClassName(AutomationPeer peer) { return peer.GetClassName(); }
+        private static object GetHelpText(AutomationPeer peer) { return peer.GetHelpText(); }
+        private static object GetClickablePoint(AutomationPeer peer) { Point pt = peer.GetClickablePoint(); return new double[] { pt.X, pt.Y }; }
+        private static object GetCultureInfo(AutomationPeer peer) { return null; }
+        private static object IsOffscreen(AutomationPeer peer) { return peer.IsOffscreen(); }
+        private static object GetOrientation(AutomationPeer peer) { return peer.GetOrientation(); }
+        private static object GetFrameworkId(AutomationPeer peer) { return peer.GetFrameworkId(); }
+        private static object IsRequiredForForm(AutomationPeer peer) { return peer.IsRequiredForForm(); }
+        private static object GetItemStatus(AutomationPeer peer) { return peer.GetItemStatus(); }
+        private static object GetLiveSetting(AutomationPeer peer) { return peer.GetLiveSetting(); }
+        private static object GetControllerFor(AutomationPeer peer) { return peer.GetControllerForProviderArray(); }
+        private static object GetSizeOfSet(AutomationPeer peer) { return peer.GetSizeOfSet(); }
+        private static object GetPositionInSet(AutomationPeer peer) { return peer.GetPositionInSet(); }
+        private static object GetHeadingLevel(AutomationPeer peer) { return peer.GetHeadingLevel(); }
+        private static object IsDialog(AutomationPeer peer) { return peer.IsDialog(); }
 
         private static Hashtable s_patternInfo;
         private static Hashtable s_propertyInfo;
@@ -2534,8 +2621,8 @@ namespace System.Windows.Automation.Peers
             private AutomationPeer _eventsSource;
             public AutomationPeer EventsSource
             {
-                 get { return _eventsSource; }
-                 set { _eventsSource = value; }
+                get { return _eventsSource; }
+                set { _eventsSource = value; }
             }
 
             private AutomationPeer _iterationParent;

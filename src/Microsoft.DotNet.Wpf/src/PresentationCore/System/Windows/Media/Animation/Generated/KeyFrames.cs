@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -71,11 +71,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -129,7 +129,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Boolean InterpolateValue(
-            Boolean baseValue, 
+            Boolean baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -151,7 +151,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -212,11 +212,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -270,7 +270,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Byte InterpolateValue(
-            Byte baseValue, 
+            Byte baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -292,7 +292,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -353,11 +353,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -411,7 +411,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Char InterpolateValue(
-            Char baseValue, 
+            Char baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -433,7 +433,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -494,11 +494,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -552,7 +552,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Color InterpolateValue(
-            Color baseValue, 
+            Color baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -574,7 +574,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -635,11 +635,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -693,7 +693,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Decimal InterpolateValue(
-            Decimal baseValue, 
+            Decimal baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -715,7 +715,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -776,11 +776,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -834,7 +834,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Double InterpolateValue(
-            Double baseValue, 
+            Double baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -856,7 +856,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -917,11 +917,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -975,7 +975,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Int16 InterpolateValue(
-            Int16 baseValue, 
+            Int16 baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -997,7 +997,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -1058,11 +1058,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -1116,7 +1116,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Int32 InterpolateValue(
-            Int32 baseValue, 
+            Int32 baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -1138,7 +1138,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -1199,11 +1199,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -1257,7 +1257,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Int64 InterpolateValue(
-            Int64 baseValue, 
+            Int64 baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -1279,7 +1279,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -1340,11 +1340,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -1398,7 +1398,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Matrix InterpolateValue(
-            Matrix baseValue, 
+            Matrix baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -1420,7 +1420,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -1481,11 +1481,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -1539,7 +1539,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Object InterpolateValue(
-            Object baseValue, 
+            Object baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -1561,7 +1561,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -1622,11 +1622,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -1680,7 +1680,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Point InterpolateValue(
-            Point baseValue, 
+            Point baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -1702,7 +1702,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -1763,11 +1763,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -1821,7 +1821,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Point3D InterpolateValue(
-            Point3D baseValue, 
+            Point3D baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -1843,7 +1843,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -1904,11 +1904,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -1962,7 +1962,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Quaternion InterpolateValue(
-            Quaternion baseValue, 
+            Quaternion baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -1984,7 +1984,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -2045,11 +2045,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -2103,7 +2103,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Rotation3D InterpolateValue(
-            Rotation3D baseValue, 
+            Rotation3D baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -2125,7 +2125,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -2186,11 +2186,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -2244,7 +2244,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Rect InterpolateValue(
-            Rect baseValue, 
+            Rect baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -2266,7 +2266,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -2327,11 +2327,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -2385,7 +2385,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Single InterpolateValue(
-            Single baseValue, 
+            Single baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -2407,7 +2407,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -2468,11 +2468,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -2526,7 +2526,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Size InterpolateValue(
-            Size baseValue, 
+            Size baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -2548,7 +2548,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -2609,11 +2609,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -2667,7 +2667,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public String InterpolateValue(
-            String baseValue, 
+            String baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -2689,7 +2689,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -2750,11 +2750,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -2808,7 +2808,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Vector InterpolateValue(
-            Vector baseValue, 
+            Vector baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -2830,7 +2830,7 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 
 
     /// <summary>
@@ -2891,11 +2891,11 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-            return (KeyTime)GetValue(KeyTimeProperty);
+                return (KeyTime)GetValue(KeyTimeProperty);
             }
             set
             {
-            SetValueInternal(KeyTimeProperty, value);
+                SetValueInternal(KeyTimeProperty, value);
             }
         }
 
@@ -2949,7 +2949,7 @@ namespace System.Windows.Media.Animation
         /// specific key frame.
         /// </summary>
         public Vector3D InterpolateValue(
-            Vector3D baseValue, 
+            Vector3D baseValue,
             double keyFrameProgress)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
@@ -2971,5 +2971,5 @@ namespace System.Windows.Media.Animation
             double keyFrameProgress);
 
         #endregion
-    }                 
+    }
 }

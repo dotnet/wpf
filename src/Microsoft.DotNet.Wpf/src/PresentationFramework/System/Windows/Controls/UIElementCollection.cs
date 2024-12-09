@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -112,9 +112,9 @@ namespace System.Windows.Controls
             {
                 VerifyWriteAccess();
                 ValidateElement(value);
-                
+
                 VisualCollection vc = _visualChildren;
-                
+
                 //if setting new element into slot or assigning null, 
                 //remove previously hooked element from the logical tree
                 if (vc[index] != value)
@@ -122,11 +122,11 @@ namespace System.Windows.Controls
                     UIElement e = vc[index] as UIElement;
                     if (e != null)
                         ClearLogicalParent(e);
-                
-                    vc[index] = value; 
-  
+
+                    vc[index] = value;
+
                     SetLogicalParent(value);
-                
+
                     _visualParent.InvalidateMeasure();
                 }
             }
@@ -139,19 +139,19 @@ namespace System.Windows.Controls
         internal void SetInternal(int index, UIElement item)
         {
             ValidateElement(item);
-            
+
             VisualCollection vc = _visualChildren;
-            
-            if(vc[index] != item)
+
+            if (vc[index] != item)
             {
                 vc[index] = null; // explicitly disconnect the existing visual;
-                vc[index] = item; 
-            
+                vc[index] = item;
+
                 _visualParent.InvalidateMeasure();
-            }        
+            }
         }
 
-        
+
         /// <summary>
         /// Adds the element to the UIElementCollection
         /// For more details, see <see cref="System.Windows.Media.VisualCollection" />
@@ -380,7 +380,7 @@ namespace System.Windows.Controls
         {
             _visualChildren.Move(visual, destination);
         }
-		
+
         private UIElement Cast(object value)
         {
             if (value == null)
@@ -393,7 +393,7 @@ namespace System.Windows.Controls
 
             return element;
         }
-		
+
         #region IList Members
 
         /// <summary>

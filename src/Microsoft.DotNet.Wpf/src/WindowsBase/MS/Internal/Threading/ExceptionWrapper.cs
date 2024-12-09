@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -47,14 +47,14 @@ namespace System.Windows.Threading
             // of an arbitrary "params object[]" is passed.
             int numArgsEx = numArgs;
             object singleArg = args;
-            if(numArgs == -1)
+            if (numArgs == -1)
             {
                 object[] argsArr = (object[])args;
                 if (argsArr == null || argsArr.Length == 0)
                 {
                     numArgsEx = 0;
                 }
-                else if(argsArr.Length == 1)
+                else if (argsArr.Length == 1)
                 {
                     numArgsEx = 1;
                     singleArg = argsArr[0];
@@ -63,7 +63,7 @@ namespace System.Windows.Threading
 
             // Special-case delegates that we know about to avoid the
             // expensive DynamicInvoke call.
-            if(numArgsEx == 0)
+            if (numArgsEx == 0)
             {
                 Action action = callback as Action;
                 if (action != null)
@@ -73,7 +73,7 @@ namespace System.Windows.Threading
                 else
                 {
                     Dispatcher.ShutdownCallback shutdownCallback = callback as Dispatcher.ShutdownCallback;
-                    if(shutdownCallback != null)
+                    if (shutdownCallback != null)
                     {
                         shutdownCallback();
                     }
@@ -84,23 +84,23 @@ namespace System.Windows.Threading
                     }
                 }
             }
-            else if(numArgsEx == 1)
+            else if (numArgsEx == 1)
             {
                 DispatcherOperationCallback dispatcherOperationCallback = callback as DispatcherOperationCallback;
-                if(dispatcherOperationCallback != null)
+                if (dispatcherOperationCallback != null)
                 {
                     result = dispatcherOperationCallback(singleArg);
                 }
                 else
                 {
                     SendOrPostCallback sendOrPostCallback = callback as SendOrPostCallback;
-                    if(sendOrPostCallback != null)
+                    if (sendOrPostCallback != null)
                     {
                         sendOrPostCallback(singleArg);
                     }
                     else
                     {
-                        if(numArgs == -1)
+                        if (numArgs == -1)
                         {
                             // Explicitly pass an object[] to DynamicInvoke so that
                             // it will not try to wrap the arg in another object[].
@@ -131,7 +131,7 @@ namespace System.Windows.Threading
             // If we have a Catch handler we should catch the exception
             // unless the Filter handler says we shouldn't.
             bool shouldCatch = (null != Catch);
-            if(null != Filter)
+            if (null != Filter)
             {
                 shouldCatch = Filter(source, e);
             }
@@ -144,7 +144,7 @@ namespace System.Windows.Threading
         {
             if (catchHandler != null)
             {
-                if(catchHandler is DispatcherOperationCallback)
+                if (catchHandler is DispatcherOperationCallback)
                 {
                     ((DispatcherOperationCallback)catchHandler)(null);
                 }
@@ -154,7 +154,7 @@ namespace System.Windows.Threading
                 }
             }
 
-            if(null != Catch)
+            if (null != Catch)
                 return Catch(source, e);
 
             return false;

@@ -1,22 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal.KnownBoxes;
-using System.Windows.Threading;
-using System.Globalization;
-
-using System.ComponentModel;
 using System.Collections;
 using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Globalization;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
-using System.Windows.Data;
-using System.Windows.Media;
-using System.Windows.Input;
-
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
+using MS.Internal.KnownBoxes;
 
 // Disable CS3001: Warning as Error: not CLS-compliant
 #pragma warning disable 3001
@@ -387,14 +385,14 @@ namespace System.Windows.Controls
         [Localizability(LocalizationCategory.NeverLocalize)]
         public ICommand Command
         {
-            get { return (ICommand) GetValue(CommandProperty); }
+            get { return (ICommand)GetValue(CommandProperty); }
             set { SetValue(CommandProperty, value); }
         }
 
         private static void OnCommandChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            MenuItem item = (MenuItem) d;
-            item.OnCommandChanged((ICommand) e.OldValue, (ICommand) e.NewValue);
+            MenuItem item = (MenuItem)d;
+            item.OnCommandChanged((ICommand)e.OldValue, (ICommand)e.NewValue);
         }
 
         private void OnCommandChanged(ICommand oldCommand, ICommand newCommand)
@@ -505,7 +503,7 @@ namespace System.Windows.Controls
         public static readonly DependencyProperty CommandTargetProperty =
                 ButtonBase.CommandTargetProperty.AddOwner(
                         typeof(MenuItem),
-                        new FrameworkPropertyMetadata((IInputElement) null));
+                        new FrameworkPropertyMetadata((IInputElement)null));
 
         /// <summary>
         ///     The target element on which to fire the command.
@@ -539,15 +537,15 @@ namespace System.Windows.Controls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool IsSubmenuOpen
         {
-            get { return (bool) GetValue(IsSubmenuOpenProperty); }
+            get { return (bool)GetValue(IsSubmenuOpenProperty); }
             set { SetValue(IsSubmenuOpenProperty, BooleanBoxes.Box(value)); }
         }
 
         private static object CoerceIsSubmenuOpen(DependencyObject d, object value)
         {
-            if ((bool) value)
+            if ((bool)value)
             {
-                MenuItem mi = (MenuItem) d;
+                MenuItem mi = (MenuItem)d;
                 if (!mi.IsLoaded)
                 {
                     mi.RegisterToOpenOnLoad();
@@ -561,7 +559,7 @@ namespace System.Windows.Controls
         // Disable tooltips on opened menu items
         private static object CoerceToolTipIsEnabled(DependencyObject d, object value)
         {
-            MenuItem mi = (MenuItem) d;
+            MenuItem mi = (MenuItem)d;
             return mi.IsSubmenuOpen ? BooleanBoxes.FalseBox : value;
         }
 
@@ -573,7 +571,7 @@ namespace System.Windows.Controls
         private void OpenOnLoad(object sender, RoutedEventArgs e)
         {
             // Open menu after it has rendered (Loaded is fired before 1st render)
-            Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate(object param)
+            Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate (object param)
             {
                 CoerceValue(IsSubmenuOpenProperty);
 
@@ -588,8 +586,8 @@ namespace System.Windows.Controls
         {
             MenuItem menuItem = (MenuItem)d;
 
-            bool oldValue = (bool) e.OldValue;
-            bool newValue = (bool) e.NewValue;
+            bool oldValue = (bool)e.OldValue;
+            bool newValue = (bool)e.NewValue;
             // The IsSubmenuOpen value has changed; this should stop any timers
             // we may have set to open/close the menus.
             menuItem.StopTimer(ref menuItem._openHierarchyTimer);
@@ -639,7 +637,7 @@ namespace System.Windows.Controls
                 // opened.  Otherwise we may highlight a menu item under the mouse even though
                 // the user opened the menu with the keyboard
                 // This is fired below input priority so any mouse events happen before setting the flag
-                menuItem.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate(object param)
+                menuItem.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate (object param)
                 {
                     MenuItem.SetBoolField(menuItem, BoolField.IgnoreMouseEvents, false);
                     return null;
@@ -759,7 +757,7 @@ namespace System.Windows.Controls
         [Category("Behavior")]
         public MenuItemRole Role
         {
-            get { return (MenuItemRole) GetValue(RoleProperty); }
+            get { return (MenuItemRole)GetValue(RoleProperty); }
         }
 
         private void UpdateRole()
@@ -818,7 +816,7 @@ namespace System.Windows.Controls
 
         private static void OnIsCheckableChanged(DependencyObject target, DependencyPropertyChangedEventArgs e)
         {
-            ((MenuItem) target).UpdateRole();
+            ((MenuItem)target).UpdateRole();
         }
 
         /// <summary>
@@ -846,7 +844,7 @@ namespace System.Windows.Controls
         [Browsable(false), Category("Appearance")]
         public bool IsPressed
         {
-            get { return (bool) GetValue(IsPressedProperty); }
+            get { return (bool)GetValue(IsPressedProperty); }
             protected set { SetValue(IsPressedPropertyKey, BooleanBoxes.Box(value)); }
         }
 
@@ -890,7 +888,7 @@ namespace System.Windows.Controls
         [Browsable(false), Category("Appearance")]
         public bool IsHighlighted
         {
-            get { return (bool) GetValue(IsHighlightedProperty); }
+            get { return (bool)GetValue(IsHighlightedProperty); }
             protected set { SetValue(IsHighlightedPropertyKey, BooleanBoxes.Box(value)); }
         }
 
@@ -915,7 +913,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public bool IsChecked
         {
-            get { return (bool) GetValue(IsCheckedProperty); }
+            get { return (bool)GetValue(IsCheckedProperty); }
             set { SetValue(IsCheckedProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -942,7 +940,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void OnIsCheckedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            MenuItem menuItem = (MenuItem) d;
+            MenuItem menuItem = (MenuItem)d;
 
             bool oldValue = (bool)e.OldValue;
             bool newValue = (bool)e.NewValue;
@@ -955,7 +953,7 @@ namespace System.Windows.Controls
             {
                 menuItem.OnUnchecked(new RoutedEventArgs(UncheckedEvent));
             }
-            
+
             MenuItemAutomationPeer peer = UIElementAutomationPeer.FromElement(menuItem) as MenuItemAutomationPeer;
             if (peer != null)
             {
@@ -981,7 +979,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Behavior")]
         public bool StaysOpenOnClick
         {
-            get { return (bool) GetValue(StaysOpenOnClickProperty); }
+            get { return (bool)GetValue(StaysOpenOnClickProperty); }
             set { SetValue(StaysOpenOnClickProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -992,7 +990,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal bool IsSelected
         {
-            get { return (bool) GetValue(IsSelectedProperty); }
+            get { return (bool)GetValue(IsSelectedProperty); }
             set { SetValue(IsSelectedProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -1020,7 +1018,7 @@ namespace System.Windows.Controls
 
             // If IsSelected is changing to false, make sure to close
             // our submenu before doing anything.
-            if ((bool) e.OldValue)
+            if ((bool)e.OldValue)
             {
                 if (menuItem.IsSubmenuOpen)
                 {
@@ -1032,7 +1030,7 @@ namespace System.Windows.Controls
                 menuItem.StopTimer(ref menuItem._closeHierarchyTimer);
             }
 
-            menuItem.RaiseEvent(new RoutedPropertyChangedEventArgs<bool>((bool) e.OldValue, (bool) e.NewValue, MenuBase.IsSelectedChangedEvent));
+            menuItem.RaiseEvent(new RoutedPropertyChangedEventArgs<bool>((bool)e.OldValue, (bool)e.NewValue, MenuBase.IsSelectedChangedEvent));
         }
 
         /// <summary>
@@ -1108,7 +1106,7 @@ namespace System.Windows.Controls
         [Bindable(true), CustomCategory("Content")]
         public string InputGestureText
         {
-            get { return (string) GetValue(InputGestureTextProperty); }
+            get { return (string)GetValue(InputGestureTextProperty); }
             set { SetValue(InputGestureTextProperty, value); }
         }
 
@@ -1126,7 +1124,7 @@ namespace System.Windows.Controls
             RoutedCommand routedCommand;
 
             if (String.IsNullOrEmpty((string)value) && !menuItem.HasNonDefaultValue(InputGestureTextProperty)
-                && (routedCommand = menuItem.Command as RoutedCommand) != null )
+                && (routedCommand = menuItem.Command as RoutedCommand) != null)
             {
                 InputGestureCollection col = routedCommand.InputGestures;
                 if ((col != null) && (col.Count >= 1))
@@ -1214,7 +1212,7 @@ namespace System.Windows.Controls
                     // Delay setting InMenuMode on this until after bindings have done their
                     // work and opened the popup (if it exists)
                     Dispatcher.BeginInvoke(DispatcherPriority.Input,
-                            (DispatcherOperationCallback)delegate(object arg)
+                            (DispatcherOperationCallback)delegate (object arg)
                             {
                                 ((MenuItem)arg).IsSuspendingPopupAnimation = true;
                                 return null;
@@ -1619,7 +1617,7 @@ namespace System.Windows.Controls
         /// <summary>
         ///     An event reporting the mouse entered or left this element.
         /// </summary>
-        protected override void OnMouseLeave(MouseEventArgs  e)
+        protected override void OnMouseLeave(MouseEventArgs e)
         {
             base.OnMouseLeave(e);
 
@@ -1665,7 +1663,7 @@ namespace System.Windows.Controls
         /// <summary>
         ///     An event reporting the mouse entered or left this element.
         /// </summary>
-        protected override void OnMouseEnter(MouseEventArgs  e)
+        protected override void OnMouseEnter(MouseEventArgs e)
         {
             base.OnMouseEnter(e);
             MouseEnterHelper();
@@ -1998,7 +1996,7 @@ namespace System.Windows.Controls
 
                     // MenuItem should ignore any mouse enter or move events until the menu has fully
                     // moved.  So this is added to the Dispatcher with Background
-                    parent.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate(object param)
+                    parent.Dispatcher.BeginInvoke(DispatcherPriority.Background, new DispatcherOperationCallback(delegate (object param)
                     {
                         MenuItem.SetBoolField(parent, BoolField.IgnoreMouseEvents, false);
                         return null;
@@ -2036,8 +2034,8 @@ namespace System.Windows.Controls
                         }
                         break;
 
-                    case MenuItemRole.TopLevelHeader :
-                    case MenuItemRole.SubmenuHeader :
+                    case MenuItemRole.TopLevelHeader:
+                    case MenuItemRole.SubmenuHeader:
                         {
                             OpenSubmenuWithKeyboard();
                         }
@@ -2140,10 +2138,12 @@ namespace System.Windows.Controls
             // get it to work anyway.
             if (Parent != null && newParent != null && Parent != newParent)
             {
-                Binding binding = new Binding();
-                binding.Path = new PropertyPath(DefinitionBase.PrivateSharedSizeScopeProperty);
-                binding.Mode = BindingMode.OneWay;
-                binding.Source = newParent;
+                Binding binding = new Binding
+                {
+                    Path = new PropertyPath(DefinitionBase.PrivateSharedSizeScopeProperty),
+                    Mode = BindingMode.OneWay,
+                    Source = newParent
+                };
                 BindingOperations.SetBinding(this, DefinitionBase.PrivateSharedSizeScopeProperty, binding);
             }
 
@@ -2531,7 +2531,7 @@ namespace System.Windows.Controls
             if (_openHierarchyTimer == null)
             {
                 _openHierarchyTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                _openHierarchyTimer.Tick += (EventHandler)delegate(object sender, EventArgs e)
+                _openHierarchyTimer.Tick += (EventHandler)delegate (object sender, EventArgs e)
                 {
                     OpenHierarchy(Role);
                     StopTimer(ref _openHierarchyTimer);
@@ -2550,7 +2550,7 @@ namespace System.Windows.Controls
             if (_closeHierarchyTimer == null)
             {
                 _closeHierarchyTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                _closeHierarchyTimer.Tick += (EventHandler)delegate(object sender, EventArgs e)
+                _closeHierarchyTimer.Tick += (EventHandler)delegate (object sender, EventArgs e)
                 {
                     // Deselect the item; will remove highlight and collapse hierarchy.
                     SetCurrentValueInternal(IsSelectedProperty, BooleanBoxes.FalseBox);

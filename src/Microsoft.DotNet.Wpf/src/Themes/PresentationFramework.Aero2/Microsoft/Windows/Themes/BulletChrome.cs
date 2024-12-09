@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -120,8 +120,10 @@ namespace Microsoft.Windows.Themes
                 {
                     Duration duration = new Duration(TimeSpan.FromSeconds(0.2));
 
-                    DoubleAnimation da = new DoubleAnimation();
-                    da.Duration = duration;
+                    DoubleAnimation da = new DoubleAnimation
+                    {
+                        Duration = duration
+                    };
 
                     chrome.BorderOverlayPen.Brush.BeginAnimation(SolidColorBrush.OpacityProperty, da);
                     chrome.BackgroundOverlay.BeginAnimation(SolidColorBrush.OpacityProperty, da);
@@ -178,8 +180,10 @@ namespace Microsoft.Windows.Themes
             chrome.BackgroundOverlay.BeginAnimation(SolidColorBrush.OpacityProperty, da);
 
             // Background and Border Overlay Colors
-            ColorAnimation ca = new ColorAnimation();
-            ca.Duration = duration;
+            ColorAnimation ca = new ColorAnimation
+            {
+                Duration = duration
+            };
             chrome.BorderOverlayPen.Brush.BeginAnimation(SolidColorBrush.ColorProperty, ca);
             chrome.BackgroundOverlay.BeginAnimation(SolidColorBrush.ColorProperty, ca);
             GradientStopCollection stops;
@@ -434,16 +438,20 @@ namespace Microsoft.Windows.Themes
                     Duration duration = new Duration(TimeSpan.FromSeconds(0.3));
                     if (chrome.IsChecked != true)
                     {
-                        DoubleAnimation da = new DoubleAnimation();
-                        da.Duration = duration;
+                        DoubleAnimation da = new DoubleAnimation
+                        {
+                            Duration = duration
+                        };
                         chrome.GlyphFill.BeginAnimation(Brush.OpacityProperty, da);
                         chrome.GlyphStroke.Brush.BeginAnimation(Brush.OpacityProperty, da);
                     }
 
                     if (chrome.IsRound)
                     {
-                        ColorAnimation ca = new ColorAnimation();
-                        ca.Duration = duration;
+                        ColorAnimation ca = new ColorAnimation
+                        {
+                            Duration = duration
+                        };
 
                         GradientStopCollection stops = ((GradientBrush)chrome.GlyphFill).GradientStops;
                         stops[0].BeginAnimation(GradientStop.ColorProperty, ca);
@@ -506,16 +514,20 @@ namespace Microsoft.Windows.Themes
                     
                         chrome.GlyphStroke.Brush.BeginAnimation(Brush.OpacityProperty, da);
                         chrome.GlyphFill.BeginAnimation(Brush.OpacityProperty, da);
-                    
-                        da = new DoubleAnimation();
-                        da.Duration = duration;
+
+                        da = new DoubleAnimation
+                        {
+                            Duration = duration
+                        };
                         chrome.HighlightStroke.Brush.BeginAnimation(Brush.OpacityProperty, da);
                     }
                     else
                     {
-                        DoubleAnimation da = new DoubleAnimation();
-                        da.Duration = duration;
-                    
+                        DoubleAnimation da = new DoubleAnimation
+                        {
+                            Duration = duration
+                        };
+
                         chrome.GlyphStroke.Brush.BeginAnimation(SolidColorBrush.OpacityProperty, da);
                         chrome.GlyphFill.BeginAnimation(SolidColorBrush.OpacityProperty, da);
                         chrome.HighlightStroke.Brush.BeginAnimation(Brush.OpacityProperty, da);
@@ -527,8 +539,10 @@ namespace Microsoft.Windows.Themes
                     }
                     else
                     {
-                        ColorAnimation ca = new ColorAnimation();
-                        ca.Duration = duration;
+                        ColorAnimation ca = new ColorAnimation
+                        {
+                            Duration = duration
+                        };
                         GradientStopCollection stops = ((GradientBrush)chrome.InnerBorderPen.Brush).GradientStops;
                         stops[0].BeginAnimation(GradientStop.ColorProperty, ca);
                         stops[1].BeginAnimation(GradientStop.ColorProperty, ca);
@@ -867,8 +881,10 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_checkMarkGeometry == null)
                         {
-                            PathFigure figure = new PathFigure();
-                            figure.StartPoint = new Point(9.0, 1.833);
+                            PathFigure figure = new PathFigure
+                            {
+                                StartPoint = new Point(9.0, 1.833)
+                            };
                             figure.Segments.Add(new LineSegment(new Point(10.667, 3.167), true));
                             figure.Segments.Add(new LineSegment(new Point(7, 10.667), true));
                             figure.Segments.Add(new LineSegment(new Point(5.333, 10.667), true));
@@ -902,9 +918,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonCheckMarkStroke == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1.5;
-                            temp.Brush = new SolidColorBrush(Colors.White);
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1.5,
+                                Brush = new SolidColorBrush(Colors.White)
+                            };
                             temp.Freeze();
 
                             // Static field must not be set until the local has been frozen
@@ -926,10 +944,14 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonCheckMarkPressedStroke == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1.5;
-                            temp.Brush = new SolidColorBrush(Colors.White);
-                            temp.Brush.Opacity = 0.7;
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1.5,
+                                Brush = new SolidColorBrush(Colors.White)
+                                {
+                                    Opacity = 0.7
+                                }
+                            };
                             temp.Freeze();
                             _commonCheckMarkPressedStroke = temp;
                         }
@@ -949,9 +971,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonRadioButtonDisabledGlyphStroke == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1;
-                            temp.Brush = new SolidColorBrush(Color.FromRgb(0xA2, 0xAE, 0xB9));
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1,
+                                Brush = new SolidColorBrush(Color.FromRgb(0xA2, 0xAE, 0xB9))
+                            };
                             temp.Freeze();
                             _commonRadioButtonDisabledGlyphStroke = temp;
                         }
@@ -972,9 +996,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonRadioButtonGlyphStroke == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1;
-                            temp.Brush = new SolidColorBrush(Color.FromRgb(0x19, 0x3B, 0x55));
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1,
+                                Brush = new SolidColorBrush(Color.FromRgb(0x19, 0x3B, 0x55))
+                            };
                             temp.Freeze();
                             _commonRadioButtonGlyphStroke = temp;
                         }
@@ -994,11 +1020,15 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonIndeterminateHighlight == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1;
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(1, 1);
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0x80, 0xFF, 0xFF, 0xFF), 0));
                             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0x00, 0xFF, 0xFF, 0xFF), 0.5));
@@ -1027,11 +1057,15 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonIndeterminateHoverHighlight == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1;
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(1, 1);
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0x80, 0xFF, 0xFF, 0xFF), 0));
                             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0x00, 0xFF, 0xFF, 0xFF), 0.5));
@@ -1059,11 +1093,15 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonIndeterminatePressedHighlight == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1;
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(1, 1);
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0x00, 0xFF, 0xFF, 0xFF), 0.5));
                             brush.GradientStops.Add(new GradientStop(Color.FromArgb(0x20, 0xFF, 0xFF, 0xFF), 1));
@@ -1165,8 +1203,10 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonCheckMarkPressedFill == null)
                         {
-                            SolidColorBrush temp = new SolidColorBrush(Color.FromRgb(0x31, 0x34, 0x7C));
-                            temp.Opacity = 0.7;
+                            SolidColorBrush temp = new SolidColorBrush(Color.FromRgb(0x31, 0x34, 0x7C))
+                            {
+                                Opacity = 0.7
+                            };
                             temp.Freeze();
                             _commonCheckMarkPressedFill = temp;
                         }
@@ -1186,13 +1226,14 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonRadioButtonGlyphDisabledFill == null)
                         {
-                            RadialGradientBrush temp = new RadialGradientBrush();
-
-                            temp.Center = new Point(0.25, 0.25);
-                            temp.GradientOrigin = new Point(0.25, 0.25);
-                            temp.RadiusX = 0.75;
-                            temp.RadiusY = 0.75;
-                            temp.Opacity = 0.7;
+                            RadialGradientBrush temp = new RadialGradientBrush
+                            {
+                                Center = new Point(0.25, 0.25),
+                                GradientOrigin = new Point(0.25, 0.25),
+                                RadiusX = 0.75,
+                                RadiusY = 0.75,
+                                Opacity = 0.7
+                            };
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0xC9, 0xD5, 0xDE), 0));
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0xC0, 0xE3, 0xE8), 0.35));
@@ -1217,12 +1258,13 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonRadioButtonGlyphFill == null)
                         {
-                            RadialGradientBrush temp = new RadialGradientBrush();
-
-                            temp.Center = new Point(0.25, 0.25);
-                            temp.GradientOrigin = new Point(0.25, 0.25);
-                            temp.RadiusX = 0.75;
-                            temp.RadiusY = 0.75;
+                            RadialGradientBrush temp = new RadialGradientBrush
+                            {
+                                Center = new Point(0.25, 0.25),
+                                GradientOrigin = new Point(0.25, 0.25),
+                                RadiusX = 0.75,
+                                RadiusY = 0.75
+                            };
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0xE5, 0xE5, 0xE5), 0.1));
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x5D, 0xCE, 0xDD), 0.35));
@@ -1247,12 +1289,13 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonRadioButtonGlyphHoverFill == null)
                         {
-                            RadialGradientBrush temp = new RadialGradientBrush();
-
-                            temp.Center = new Point(0.25, 0.25);
-                            temp.GradientOrigin = new Point(0.25, 0.25);
-                            temp.RadiusX = 0.75;
-                            temp.RadiusY = 0.75;
+                            RadialGradientBrush temp = new RadialGradientBrush
+                            {
+                                Center = new Point(0.25, 0.25),
+                                GradientOrigin = new Point(0.25, 0.25),
+                                RadiusX = 0.75,
+                                RadiusY = 0.75
+                            };
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0xFF, 0xFF, 0xFF), 0.1));
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x74, 0xFF, 0xFF), 0.35));
@@ -1279,12 +1322,13 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonRadioButtonGlyphPressedFill == null)
                         {
-                            RadialGradientBrush temp = new RadialGradientBrush();
-
-                            temp.Center = new Point(0.25, 0.25);
-                            temp.GradientOrigin = new Point(0.25, 0.25);
-                            temp.RadiusX = 0.75;
-                            temp.RadiusY = 0.75;
+                            RadialGradientBrush temp = new RadialGradientBrush
+                            {
+                                Center = new Point(0.25, 0.25),
+                                GradientOrigin = new Point(0.25, 0.25),
+                                RadiusX = 0.75,
+                                RadiusY = 0.75
+                            };
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x95, 0xD9, 0xFC), 0));
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x3A, 0x84, 0xAA), 0.35));
@@ -1369,9 +1413,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonHoverBorderOverlay == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1;
-                            temp.Brush = new SolidColorBrush(Color.FromRgb(0x3C, 0x7F, 0xB1));
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1,
+                                Brush = new SolidColorBrush(Color.FromRgb(0x3C, 0x7F, 0xB1))
+                            };
                             temp.Freeze();
                             _commonHoverBorderOverlay = temp;
                         }
@@ -1391,9 +1437,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonPressedBorderOverlay == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1;
-                            temp.Brush = new SolidColorBrush(Color.FromRgb(0x2C, 0x62, 0x8B));
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1,
+                                Brush = new SolidColorBrush(Color.FromRgb(0x2C, 0x62, 0x8B))
+                            };
                             temp.Freeze();
                             _commonPressedBorderOverlay = temp;
                         }
@@ -1413,9 +1461,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonDisabledBorderOverlay == null)
                         {
-                            Pen temp = new Pen();
-                            temp.Thickness = 1;
-                            temp.Brush = new SolidColorBrush(Color.FromRgb(0xAD, 0xB2, 0xB5));
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1,
+                                Brush = new SolidColorBrush(Color.FromRgb(0xAD, 0xB2, 0xB5))
+                            };
                             temp.Freeze();
                             _commonDisabledBorderOverlay = temp;
                         }
@@ -1435,13 +1485,16 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonCheckBoxDisabledInnerBorderPen == null)
                         {
-                            Pen temp = new Pen();
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
 
-                            temp.Thickness = 1;
-
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0,0);
-                            brush.EndPoint = new Point(1,1);
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0xE1, 0xE3, 0xE5), 0.25));
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0xE8, 0xE9, 0xEA), 0.5));
@@ -1467,13 +1520,16 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonCheckBoxInnerBorderPen == null)
                         {
-                            Pen temp = new Pen();
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
 
-                            temp.Thickness = 1;
-
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0,0);
-                            brush.EndPoint = new Point(1,1);
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0xAE, 0xB3, 0xB9), 0.25));
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0xC2, 0xC4, 0xC6), 0.5));
@@ -1499,13 +1555,16 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonCheckBoxHoverInnerBorderPen == null)
                         {
-                            Pen temp = new Pen();
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
 
-                            temp.Thickness = 1;
-
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(1, 1);
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x79, 0xC6, 0xF9), 0.3));
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x79, 0xC6, 0xF9), 0.5));
@@ -1531,13 +1590,16 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonCheckBoxPressedInnerBorderPen == null)
                         {
-                            Pen temp = new Pen();
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
 
-                            temp.Thickness = 1;
-
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(1, 1);
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x54, 0xA6, 0xD5), 0.3));
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x5E, 0xB5, 0xE4), 0.5));
@@ -1563,13 +1625,16 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonIndeterminateDisabledInnerBorderPen == null)
                         {
-                            Pen temp = new Pen();
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
 
-                            temp.Thickness = 1;
-
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(1, 1);
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0xBF, 0xD0, 0xDD), 0));
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0xBD, 0xCB, 0xD7), 0.5));
@@ -1595,13 +1660,16 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonIndeterminateInnerBorderPen == null)
                         {
-                            Pen temp = new Pen();
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
 
-                            temp.Thickness = 1;
-
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(1, 1);
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x2A, 0x62, 0x8D), 0));
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x24, 0x54, 0x79), 0.5));
@@ -1627,13 +1695,16 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonIndeterminateHoverInnerBorderPen == null)
                         {
-                            Pen temp = new Pen();
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
 
-                            temp.Thickness = 1;
-
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(1, 1);
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x29, 0x62, 0x8D), 0));
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x24, 0x54, 0x79), 0.5));
@@ -1659,13 +1730,16 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonIndeterminatePressedInnerBorderPen == null)
                         {
-                            Pen temp = new Pen();
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
 
-                            temp.Thickness = 1;
-
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(1, 1);
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x19, 0x3B, 0x55), 0));
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x24, 0x54, 0x79), 0.5));
@@ -1692,14 +1766,17 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonRadioButtonInnerBorderPen == null)
                         {
-                            Pen temp = new Pen();
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
 
-                            temp.Thickness = 1;
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(1, 1);
-                            
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0xB3, 0xB8, 0xBD), 0));
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0xEB, 0xEB, 0xEB), 1));
 
@@ -1723,13 +1800,16 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonRadioButtonHoverInnerBorderPen == null)
                         {
-                            Pen temp = new Pen();
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
 
-                            temp.Thickness = 1;
-
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(1, 1);
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x80, 0xCA, 0xF9), 0));
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0xD2, 0xEE, 0xFD), 1));
@@ -1754,13 +1834,16 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonRadioButtonPressedInnerBorderPen == null)
                         {
-                            Pen temp = new Pen();
+                            Pen temp = new Pen
+                            {
+                                Thickness = 1
+                            };
 
-                            temp.Thickness = 1;
-
-                            LinearGradientBrush brush = new LinearGradientBrush();
-                            brush.StartPoint = new Point(0, 0);
-                            brush.EndPoint = new Point(1, 1);
+                            LinearGradientBrush brush = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0x5C, 0xAA, 0xD7), 0));
                             brush.GradientStops.Add(new GradientStop(Color.FromRgb(0xC3, 0xE4, 0xF6), 1));
@@ -1827,9 +1910,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonCheckBoxInnerFill == null)
                         {
-                            LinearGradientBrush temp = new LinearGradientBrush();
-                            temp.StartPoint = new Point(0, 0);
-                            temp.EndPoint = new Point(1, 1);
+                            LinearGradientBrush temp = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0xCB, 0xCF, 0xD5), 0.2));
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0xF7, 0xF7, 0xF7), 0.8));
@@ -1853,9 +1938,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonCheckBoxHoverInnerFill == null)
                         {
-                            LinearGradientBrush temp = new LinearGradientBrush();
-                            temp.StartPoint = new Point(0, 0);
-                            temp.EndPoint = new Point(1, 1);
+                            LinearGradientBrush temp = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0xB1, 0xDF, 0xFD), 0.2));
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0xE9, 0xF7, 0xFE), 0.8));
@@ -1879,9 +1966,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonCheckBoxPressedInnerFill == null)
                         {
-                            LinearGradientBrush temp = new LinearGradientBrush();
-                            temp.StartPoint = new Point(0, 0);
-                            temp.EndPoint = new Point(1, 1);
+                            LinearGradientBrush temp = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x7F, 0xBA, 0xDC), 0.2));
@@ -1908,9 +1997,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonIndeterminateDisabledFill == null)
                         {
-                            LinearGradientBrush temp = new LinearGradientBrush();
-                            temp.StartPoint = new Point(0, 0);
-                            temp.EndPoint = new Point(1, 1);
+                            LinearGradientBrush temp = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0xC0, 0xE5, 0xF3), 0.2));
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0xBD, 0xCD, 0xDC), 0.8));
@@ -1935,9 +2026,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonIndeterminateFill == null)
                         {
-                            LinearGradientBrush temp = new LinearGradientBrush();
-                            temp.StartPoint = new Point(0, 0);
-                            temp.EndPoint = new Point(1, 1);
+                            LinearGradientBrush temp = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x2F, 0xA8, 0xD5), 0.2));
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x25, 0x59, 0x8C), 0.8));
@@ -1961,9 +2054,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonIndeterminateHoverFill == null)
                         {
-                            LinearGradientBrush temp = new LinearGradientBrush();
-                            temp.StartPoint = new Point(0, 0);
-                            temp.EndPoint = new Point(1, 1);
+                            LinearGradientBrush temp = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x33, 0xD7, 0xED), 0.2));
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x20, 0x94, 0xCE), 0.8));
@@ -1987,9 +2082,11 @@ namespace Microsoft.Windows.Themes
                     {
                         if (_commonIndeterminatePressedFill == null)
                         {
-                            LinearGradientBrush temp = new LinearGradientBrush();
-                            temp.StartPoint = new Point(0, 0);
-                            temp.EndPoint = new Point(1, 1);
+                            LinearGradientBrush temp = new LinearGradientBrush
+                            {
+                                StartPoint = new Point(0, 0),
+                                EndPoint = new Point(1, 1)
+                            };
 
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x17, 0x44, 0x7A), 0.2));
                             temp.GradientStops.Add(new GradientStop(Color.FromRgb(0x21, 0x8B, 0xC3), 0.8));

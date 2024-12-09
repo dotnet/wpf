@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,10 +6,10 @@
 //  This class is a helper to load a set of associations between a user and the use license
 //  granted to that user.
 
-using System.Text;
 using System.IO;
 using System.IO.Packaging;
 using System.Security.RightsManagement;
+using System.Text;
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
@@ -49,7 +49,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         //------------------------------------------------------
 
         #region Internal Properties 
-        internal Dictionary<ContentUser, UseLicense> LoadedDictionary 
+        internal Dictionary<ContentUser, UseLicense> LoadedDictionary
         {
             get
             {
@@ -76,7 +76,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <exception cref="ArgumentNullException">
         /// If <paramref name="rmet"/> is null.
         /// </exception>
-        private void Load(RightsManagementEncryptionTransform rmet )
+        private void Load(RightsManagementEncryptionTransform rmet)
         {
             rmet.EnumUseLicenseStreams(
                     new RightsManagementEncryptionTransform.UseLicenseStreamCallback(
@@ -115,7 +115,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             ContentUser user;
             using (Stream stream = si.GetStream(FileMode.Open, FileAccess.Read))
             {
-                using(BinaryReader utf8Reader = new BinaryReader(stream, _utf8Encoding))
+                using (BinaryReader utf8Reader = new BinaryReader(stream, _utf8Encoding))
                 {
                     UseLicense useLicense = rmet.LoadUseLicenseAndUserFromStream(utf8Reader, out user);
 

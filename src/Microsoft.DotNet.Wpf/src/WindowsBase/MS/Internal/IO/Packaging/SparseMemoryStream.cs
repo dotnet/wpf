@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,7 +10,7 @@ using System.IO;
 
 namespace MS.Internal.IO.Packaging
 {
-    internal class SparseMemoryStream:  Stream
+    internal class SparseMemoryStream : Stream
     {
         //------------------------------------------------------
         //
@@ -47,7 +47,7 @@ namespace MS.Internal.IO.Packaging
             {
                 CheckDisposed();
 
-                return  _currentStreamLength;
+                return _currentStreamLength;
             }
         }
 
@@ -129,7 +129,7 @@ namespace MS.Internal.IO.Packaging
             SwitchModeIfNecessary();
 
 #if DEBUG
-    DebugAssertConsistentArrayStructure();
+            DebugAssertConsistentArrayStructure();
 #endif
         }
 
@@ -138,26 +138,28 @@ namespace MS.Internal.IO.Packaging
             CheckDisposed();
             long newStreamPosition = _currentStreamPosition;
 
-            if (origin ==SeekOrigin.Begin)
+            if (origin == SeekOrigin.Begin)
             {
                 newStreamPosition = offset;
             }
-            else if  (origin == SeekOrigin.Current)
+            else if (origin == SeekOrigin.Current)
             {
-                checked { newStreamPosition += offset; }
+                checked
+                { newStreamPosition += offset; }
             }
-            else if  (origin == SeekOrigin.End)
+            else if (origin == SeekOrigin.End)
             {
-                checked { newStreamPosition = _currentStreamLength + offset; }
+                checked
+                { newStreamPosition = _currentStreamLength + offset; }
             }
             else
             {
                 throw new ArgumentOutOfRangeException("origin");
             }
 
-            if (newStreamPosition  < 0)
+            if (newStreamPosition < 0)
             {
-                 throw new ArgumentException(SR.SeekNegative);
+                throw new ArgumentException(SR.SeekNegative);
             }
             _currentStreamPosition = newStreamPosition;
 
@@ -184,7 +186,7 @@ namespace MS.Internal.IO.Packaging
             }
 
             // No need to use checked{} since _currentStreamLength > _currentStreamPosition
-            int bytesToRead = (int) Math.Min((long)count, _currentStreamLength - _currentStreamPosition);
+            int bytesToRead = (int)Math.Min((long)count, _currentStreamLength - _currentStreamPosition);
 
             checked
             {
@@ -204,14 +206,14 @@ namespace MS.Internal.IO.Packaging
                     // let's reset data to 0 first, so that gaps will be filled with 0s
                     // this is required for consistent behavior between the read calls used by the CRC Calculator
                     // and the WriteToStream calls used by the Flush/Save routines
-                    Array.Clear(buffer,offset,bytesToRead);
+                    Array.Clear(buffer, offset, bytesToRead);
 
                     int index = _memoryStreamList.BinarySearch(GetSearchBlockForOffset(_currentStreamPosition));
                     if (index < 0) // the head of new write block does not overlap with any existing blocks
                         // ~startIndex represents the insertion position
                         index = ~index;
 
-                    for ( ; index < _memoryStreamList.Count; ++index)
+                    for (; index < _memoryStreamList.Count; ++index)
                     {
                         MemoryStreamBlock memStreamBlock = _memoryStreamList[index];
                         long overlapBlockOffset;
@@ -245,7 +247,7 @@ namespace MS.Internal.IO.Packaging
         {
             CheckDisposed();
 #if DEBUG
-    DebugAssertConsistentArrayStructure();
+            DebugAssertConsistentArrayStructure();
 #endif
 
             PackagingUtilities.VerifyStreamWriteArgs(this, buffer, offset, count);
@@ -275,10 +277,10 @@ namespace MS.Internal.IO.Packaging
                 _currentStreamLength = Math.Max(_currentStreamLength, _currentStreamPosition);
             }
 
-             // this can potentially affect memory consumption
+            // this can potentially affect memory consumption
             SwitchModeIfNecessary();
 #if DEBUG
-    DebugAssertConsistentArrayStructure();
+            DebugAssertConsistentArrayStructure();
 #endif
         }
 
@@ -309,7 +311,7 @@ namespace MS.Internal.IO.Packaging
                                                 Int64.MaxValue/*bytes to copy*/,
                                                 0x80000 /*512K buffer size */);
                     }
-                 }
+                }
                 else
                 {
                     CopyMemoryBlocksToStream(stream);
@@ -332,9 +334,9 @@ namespace MS.Internal.IO.Packaging
         ///      if we consume more memory than highWaterMark implementation will use the isolatedStorage
         ///      (vaue Int64.MaxVaue will disable isolated storage mode )
         /// </param>
-        internal  SparseMemoryStream(
+        internal SparseMemoryStream(
                                         long lowWaterMark,
-                                        long highWaterMark): this(lowWaterMark, highWaterMark, true)
+                                        long highWaterMark) : this(lowWaterMark, highWaterMark, true)
         {
         }
 
@@ -356,12 +358,12 @@ namespace MS.Internal.IO.Packaging
         ///       that data located between blocks, so we shouldn't merge them (if the gap is small and doesn't justify an
         ///       overhead of the extra block record)
         /// </param>
-        internal  SparseMemoryStream(
+        internal SparseMemoryStream(
                                         long lowWaterMark,
                                         long highWaterMark,
                                         bool autoCloseSmallBlockGaps)
         {
-            Invariant.Assert(lowWaterMark >=0 && highWaterMark >=0); // both of them must be positive or 0
+            Invariant.Assert(lowWaterMark >= 0 && highWaterMark >= 0); // both of them must be positive or 0
             Invariant.Assert(lowWaterMark < highWaterMark); // low water mark must below high water mark
             Invariant.Assert(lowWaterMark <= Int32.MaxValue);  // low water mark must fit single memory stream 2G
 
@@ -515,7 +517,7 @@ namespace MS.Internal.IO.Packaging
                         prevMemStreamBlock = _memoryStreamList[index - 1];
 
                     // If the write request is close enough to the previous block and if the collapsing is allowed
-                    if (CanCollapseWithPreviousBlock(prevMemStreamBlock, _currentStreamPosition, (long) count))
+                    if (CanCollapseWithPreviousBlock(prevMemStreamBlock, _currentStreamPosition, (long)count))
                     {
                         // write out any intervening zero's
                         prevMemStreamBlock.Stream.Seek(0, SeekOrigin.End);
@@ -591,26 +593,26 @@ namespace MS.Internal.IO.Packaging
                         // write out any intervening zero's
                         prevMemStreamBlock.Stream.Seek(0, SeekOrigin.End);
                         SkipWrite(prevMemStreamBlock.Stream, _currentStreamPosition, memStreamBlock.Offset);
-                        prevMemStreamBlock.Stream.Write(memStreamBlock.Stream.GetBuffer(), 0, (int) memStreamBlock.Stream.Length);
+                        prevMemStreamBlock.Stream.Write(memStreamBlock.Stream.GetBuffer(), 0, (int)memStreamBlock.Stream.Length);
                     }
                 }
                 else    // Overlapping
                 {
                     _memoryStreamList.RemoveAt(index);
                     // Memory stream length or buffer offset cannot be bigger than Int32.MaxValue
-                    int leftoverSize = (int) (memStreamBlock.Stream.Length - blockOffset);
+                    int leftoverSize = (int)(memStreamBlock.Stream.Length - blockOffset);
 
                     if (prevMemStreamBlock.Stream.Length + leftoverSize <= Int32.MaxValue)
                     {
                         prevMemStreamBlock.Stream.Seek(0, SeekOrigin.End);
-                        prevMemStreamBlock.Stream.Write(memStreamBlock.Stream.GetBuffer(), (int) blockOffset, leftoverSize);
+                        prevMemStreamBlock.Stream.Write(memStreamBlock.Stream.GetBuffer(), (int)blockOffset, leftoverSize);
                     }
                     else
                     {
                         memStreamBlock = ConstructMemoryStreamFromWriteRequest(memStreamBlock.Stream.GetBuffer(),
                                                                 _currentStreamPosition,
                                                                 leftoverSize,
-                                                                (int) blockOffset);
+                                                                (int)blockOffset);
                         Debug.Assert(memStreamBlock.Stream.Length > 0);
                         _memoryStreamList.Insert(index, memStreamBlock);
                     }
@@ -621,16 +623,16 @@ namespace MS.Internal.IO.Packaging
         private MemoryStreamBlock ConstructMemoryStreamFromWriteRequest(
                                                                                 byte[] buffer,  // data buffer to be used for the new Memory Stream Block
                                                                                 long writeRequestOffset,
-                                                                                int  writeRequestSize,
-                                                                                int  bufferOffset)
+                                                                                int writeRequestSize,
+                                                                                int bufferOffset)
         {
             Debug.Assert(!_isolatedStorageMode);
-            MemoryStreamBlock newMemStreamBlock  = new MemoryStreamBlock
+            MemoryStreamBlock newMemStreamBlock = new MemoryStreamBlock
                                                     (_trackingMemoryStreamFactory.Create(writeRequestSize),
                                                     writeRequestOffset);
 
-            newMemStreamBlock.Stream.Seek(0,SeekOrigin.Begin);
-            newMemStreamBlock.Stream.Write(buffer,bufferOffset,writeRequestSize);
+            newMemStreamBlock.Stream.Seek(0, SeekOrigin.Begin);
+            newMemStreamBlock.Stream.Write(buffer, bufferOffset, writeRequestSize);
 
             return newMemStreamBlock;
         }
@@ -639,7 +641,7 @@ namespace MS.Internal.IO.Packaging
         {
             if (_isolatedStorageMode)
             {
-                Debug.Assert(_memoryStreamList.Count ==0); // it must be empty in isolated storage mode
+                Debug.Assert(_memoryStreamList.Count == 0); // it must be empty in isolated storage mode
 
                 // if we are in isolated storage mode we need to check the Low Water Mark crossing
                 if (_isolatedStorageStream.Length < _lowWaterMark)
@@ -647,7 +649,7 @@ namespace MS.Internal.IO.Packaging
                     if (_isolatedStorageStream.Length > 0)
                     {
                         //build memory stream
-                        MemoryStreamBlock newMemStreamBlock  = new MemoryStreamBlock
+                        MemoryStreamBlock newMemStreamBlock = new MemoryStreamBlock
                                                     (_trackingMemoryStreamFactory.Create((int)_isolatedStorageStream.Length),
                                                     0);
 
@@ -666,7 +668,7 @@ namespace MS.Internal.IO.Packaging
                     }
 
                     //switch mode
-                     _isolatedStorageMode = false;
+                    _isolatedStorageMode = false;
 
                     // release isolated storage disk space by setting its length to 0
                     // This way we don't have to re-open the isolated storage again if the memory consumption
@@ -699,7 +701,7 @@ namespace MS.Internal.IO.Packaging
                     _isolatedStorageMode = true;
 
                     //release memory stream resources
-                    foreach(MemoryStreamBlock memStreamBlock in _memoryStreamList)
+                    foreach (MemoryStreamBlock memStreamBlock in _memoryStreamList)
                     {
                         // this will report the appropriate Memory usage back to the  ITrackingMemoryStreamFactory
                         memStreamBlock.Stream.Close();
@@ -726,7 +728,7 @@ namespace MS.Internal.IO.Packaging
             {
                 // emit all memory blocks
                 long trackingPosition = 0;
-                foreach(MemoryStreamBlock memStreamBlock in _memoryStreamList)
+                foreach (MemoryStreamBlock memStreamBlock in _memoryStreamList)
                 {
                     // write out any intervening zero's
                     trackingPosition = SkipWrite(targetStream, trackingPosition, memStreamBlock.Offset);
@@ -780,10 +782,10 @@ namespace MS.Internal.IO.Packaging
             if (_memoryStreamList != null)
             {
                 long testTrackingPosition = 0;
-                foreach(MemoryStreamBlock memStreamBlock in _memoryStreamList)
+                foreach (MemoryStreamBlock memStreamBlock in _memoryStreamList)
                 {
-                    Debug.Assert(testTrackingPosition  <= memStreamBlock.Offset);
-                    testTrackingPosition  = memStreamBlock.Offset + memStreamBlock.Stream.Length;
+                    Debug.Assert(testTrackingPosition <= memStreamBlock.Offset);
+                    testTrackingPosition = memStreamBlock.Offset + memStreamBlock.Stream.Length;
                 }
 
                 Debug.Assert(testTrackingPosition <= _currentStreamLength);
@@ -811,8 +813,8 @@ namespace MS.Internal.IO.Packaging
         private string _isolatedStorageStreamFileName;
         private Stream _isolatedStorageStream;
         private const int _fixBlockInMemoryOverhead = 100; // If the gap between blocks is smaller than this
-                                    // threshold, it is not worth keeping them sperate due to overhead
-                                    // This value is used to determine if blocks need to be collapsed
+                                                           // threshold, it is not worth keeping them sperate due to overhead
+                                                           // This value is used to determine if blocks need to be collapsed
 
         //support for Stream methods
         private bool _disposedFlag;
@@ -823,9 +825,9 @@ namespace MS.Internal.IO.Packaging
         private long _currentStreamPosition;
 
         private List<MemoryStreamBlock> _memoryStreamList;  // list of memory streams for buffering data
-                                                        // it contains non-contiguous blocks of MemoryStreams which represents a whole stream
-                                                        // Memory Streams in Array must not overlap
-                                                        // This list is also maintained in offset order
+                                                            // it contains non-contiguous blocks of MemoryStreams which represents a whole stream
+                                                            // Memory Streams in Array must not overlap
+                                                            // This list is also maintained in offset order
         private MemoryStreamBlock _searchBlock;
 
         private long _lowWaterMark;
@@ -838,7 +840,7 @@ namespace MS.Internal.IO.Packaging
     {
         internal MemoryStreamBlock(MemoryStream stream, long offset)
         {
-            Debug.Assert(offset >=0);
+            Debug.Assert(offset >= 0);
 
             _stream = stream;
             _offset = offset;
@@ -860,7 +862,7 @@ namespace MS.Internal.IO.Packaging
             }
             set
             {
-               Debug.Assert(value >= 0);
+                Debug.Assert(value >= 0);
 
                 _offset = value;
             }

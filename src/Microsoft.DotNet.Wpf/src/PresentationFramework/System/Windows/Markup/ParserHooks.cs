@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// parser should do normal processing
         /// </summary>
-        Normal,  
+        Normal,
 
         /// <summary>
         /// Parser should not process this node.
@@ -41,7 +41,7 @@ namespace System.Windows.Markup
     /// 1. The Uid generation tool wants to know the different xaml nodes and their positions in a xaml file
     /// 2. Used to strip out the localization attributes during compilation to Baml
     /// </remarks>
-    internal abstract class ParserHooks  
+    internal abstract class ParserHooks
     {
         /// <summary>
         /// Called by parser after it determines what node type for
@@ -52,7 +52,7 @@ namespace System.Windows.Markup
         /// The return value is a ParserAction value which indicates if the parser
         /// should: continue normal processing; skip this node and any children
         /// </remarks>
-        internal virtual ParserAction LoadNode(XamlNode  tokenNode)
+        internal virtual ParserAction LoadNode(XamlNode tokenNode)
         {
             return ParserAction.Normal;
         }

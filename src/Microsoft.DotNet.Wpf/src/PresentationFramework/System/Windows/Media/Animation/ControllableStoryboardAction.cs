@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,92 +22,92 @@ namespace System.Windows.Media.Animation
     /// of the Storyboard in a resource dictionary.
     /// </summary>
     public abstract class ControllableStoryboardAction : TriggerAction
-{
-    /// <summary>
-    ///     Internal constructor - nobody is supposed to ever create an instance
-    /// of this class.  Use a derived class instead.
-    /// </summary>
-    internal ControllableStoryboardAction()
     {
-    }
-    
-    /// <summary>
-    ///     Name to use for resolving the storyboard reference needed.  This
-    /// points to a BeginStoryboard instance, and we're controlling that one.
-    /// </summary>
-    [DefaultValue(null)]
-    public string BeginStoryboardName
-    {
-        get
+        /// <summary>
+        ///     Internal constructor - nobody is supposed to ever create an instance
+        /// of this class.  Use a derived class instead.
+        /// </summary>
+        internal ControllableStoryboardAction()
         {
-            return _beginStoryboardName;
         }
-        set
+
+        /// <summary>
+        ///     Name to use for resolving the storyboard reference needed.  This
+        /// points to a BeginStoryboard instance, and we're controlling that one.
+        /// </summary>
+        [DefaultValue(null)]
+        public string BeginStoryboardName
         {
-            if (IsSealed)
+            get
             {
-                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "ControllableStoryboardAction"));
+                return _beginStoryboardName;
+            }
+            set
+            {
+                if (IsSealed)
+                {
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "ControllableStoryboardAction"));
+                }
+
+                // Null is allowed to wipe out existing name - as long as another
+                //  valid name is set before Invoke time.
+                _beginStoryboardName = value;
+            }
+        }
+
+        internal sealed override void Invoke(FrameworkElement fe, FrameworkContentElement fce, Style targetStyle, FrameworkTemplate frameworkTemplate, Int64 layer)
+        {
+            Debug.Assert(fe != null || fce != null, "Caller of internal function failed to verify that we have a FE or FCE - we have neither.");
+            Debug.Assert(targetStyle != null || frameworkTemplate != null,
+                "This function expects to be called when the associated action is inside a Style/Template.  But it was not given a reference to anything.");
+
+            INameScope nameScope = null;
+            if (targetStyle != null)
+            {
+                nameScope = targetStyle;
+            }
+            else
+            {
+                Debug.Assert(frameworkTemplate != null);
+                nameScope = frameworkTemplate;
             }
 
-            // Null is allowed to wipe out existing name - as long as another
-            //  valid name is set before Invoke time.
-            _beginStoryboardName = value;
+            Invoke(fe, fce, GetStoryboard(fe, fce, nameScope));
         }
-    }
 
-    internal sealed override void Invoke( FrameworkElement fe, FrameworkContentElement fce, Style targetStyle, FrameworkTemplate frameworkTemplate, Int64 layer )
-    {
-        Debug.Assert( fe != null || fce != null, "Caller of internal function failed to verify that we have a FE or FCE - we have neither." );
-        Debug.Assert( targetStyle != null || frameworkTemplate != null,
-            "This function expects to be called when the associated action is inside a Style/Template.  But it was not given a reference to anything." );
-
-        INameScope nameScope = null;
-        if( targetStyle != null )
+        internal sealed override void Invoke(FrameworkElement fe)
         {
-            nameScope = targetStyle;
+            Debug.Assert(fe != null, "Invoke needs an object as starting point");
+
+            Invoke(fe, null, GetStoryboard(fe, null, null));
         }
-        else
+
+        internal virtual void Invoke(FrameworkElement containingFE, FrameworkContentElement containingFCE, Storyboard storyboard)
         {
-            Debug.Assert( frameworkTemplate != null );
-            nameScope = frameworkTemplate;
         }
 
-        Invoke( fe, fce, GetStoryboard( fe, fce, nameScope ) );
-    }
-    
-    internal sealed override void Invoke( FrameworkElement fe )
-    {
-        Debug.Assert( fe != null, "Invoke needs an object as starting point");
-
-        Invoke( fe, null, GetStoryboard( fe, null, null ) );
-    }
-
-    internal virtual void Invoke( FrameworkElement containingFE, FrameworkContentElement containingFCE,  Storyboard storyboard )
-    {
-    }
-
-    // Find a Storyboard object for this StoryboardAction to act on, using the
-    //  given BeginStoryboardName to find a BeginStoryboard instance and use
-    //  its Storyboard object reference.
-    private Storyboard GetStoryboard( FrameworkElement fe, FrameworkContentElement fce, INameScope nameScope )
-    {
-        if( BeginStoryboardName == null )
+        // Find a Storyboard object for this StoryboardAction to act on, using the
+        //  given BeginStoryboardName to find a BeginStoryboard instance and use
+        //  its Storyboard object reference.
+        private Storyboard GetStoryboard(FrameworkElement fe, FrameworkContentElement fce, INameScope nameScope)
         {
-            throw new InvalidOperationException(SR.Storyboard_BeginStoryboardNameRequired);
+            if (BeginStoryboardName == null)
+            {
+                throw new InvalidOperationException(SR.Storyboard_BeginStoryboardNameRequired);
+            }
+
+            BeginStoryboard keyedBeginStoryboard = Storyboard.ResolveBeginStoryboardName(BeginStoryboardName, nameScope, fe, fce);
+
+            Storyboard storyboard = keyedBeginStoryboard.Storyboard;
+
+            if (storyboard == null)
+            {
+                throw new InvalidOperationException(SR.Format(SR.Storyboard_BeginStoryboardNoStoryboard, BeginStoryboardName));
+            }
+
+            return storyboard;
         }
 
-        BeginStoryboard keyedBeginStoryboard = Storyboard.ResolveBeginStoryboardName( BeginStoryboardName, nameScope, fe, fce );
-        
-        Storyboard storyboard = keyedBeginStoryboard.Storyboard;
-
-        if( storyboard == null )
-        {
-            throw new InvalidOperationException(SR.Format(SR.Storyboard_BeginStoryboardNoStoryboard, BeginStoryboardName));
-        }
-        
-        return storyboard;
+        private string _beginStoryboardName = null;
     }
-
-    private string     _beginStoryboardName = null;
-}
 }

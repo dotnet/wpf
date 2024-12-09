@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,9 +29,9 @@ namespace System.Windows.Xps.Packaging
 
         internal
         XpsResource(
-            XpsManager    xpsManager,
-            INode           parent,
-            PackagePart     part
+            XpsManager xpsManager,
+            INode parent,
+            PackagePart part
             )
             : base(xpsManager)
         {
@@ -133,7 +133,7 @@ namespace System.Windows.Xps.Packaging
         INode.Flush(
             )
         {
-            if( _partEditor != null )
+            if (_partEditor != null)
             {
                 //
                 // Flush the part editor

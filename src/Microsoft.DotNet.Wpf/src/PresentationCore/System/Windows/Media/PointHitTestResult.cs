@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace System.Windows.Media
         {
             _pointHit = pointHit;
         }
-        
+
         /// <summary>
         /// The point in local space of the hit visual.
         /// </summary>
@@ -35,11 +35,11 @@ namespace System.Windows.Media
         /// <summary>
         ///     Re-expose Visual property strongly typed to 2D Visual.
         /// </summary>
-        public new Visual VisualHit 
-        { 
+        public new Visual VisualHit
+        {
             get
             {
-                return (Visual) base.VisualHit;
+                return (Visual)base.VisualHit;
             }
         }
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,44 +11,44 @@ namespace MS.Internal
 {
     internal static partial class Parsers
     {
-        private const int s_zeroChar = (int) '0';
-        private const int s_aLower   = (int) 'a';
-        private const int s_aUpper   = (int) 'A';
+        private const int s_zeroChar = (int)'0';
+        private const int s_aLower = (int)'a';
+        private const int s_aUpper = (int)'A';
 
-        static private int ParseHexChar(char c )
+        static private int ParseHexChar(char c)
         {
-            int intChar = (int) c;
+            int intChar = (int)c;
 
-            if ((intChar >= s_zeroChar) && (intChar <= (s_zeroChar+9)))
+            if ((intChar >= s_zeroChar) && (intChar <= (s_zeroChar + 9)))
             {
-                return (intChar-s_zeroChar);
+                return (intChar - s_zeroChar);
             }
 
-            if ((intChar >= s_aLower) && (intChar <= (s_aLower+5)))
+            if ((intChar >= s_aLower) && (intChar <= (s_aLower + 5)))
             {
-                return (intChar-s_aLower + 10);
+                return (intChar - s_aLower + 10);
             }
 
-            if ((intChar >= s_aUpper) && (intChar <= (s_aUpper+5)))
+            if ((intChar >= s_aUpper) && (intChar <= (s_aUpper + 5)))
             {
-                return (intChar-s_aUpper + 10);
+                return (intChar - s_aUpper + 10);
             }
             throw new FormatException(SR.Parsers_IllegalToken);
         }
 
         static private Color ParseHexColor(string trimmedColor)
         {
-            int a,r,g,b;
+            int a, r, g, b;
             a = 255;
 
-            if ( trimmedColor.Length > 7 )
+            if (trimmedColor.Length > 7)
             {
                 a = ParseHexChar(trimmedColor[1]) * 16 + ParseHexChar(trimmedColor[2]);
                 r = ParseHexChar(trimmedColor[3]) * 16 + ParseHexChar(trimmedColor[4]);
                 g = ParseHexChar(trimmedColor[5]) * 16 + ParseHexChar(trimmedColor[6]);
                 b = ParseHexChar(trimmedColor[7]) * 16 + ParseHexChar(trimmedColor[8]);
             }
-            else if ( trimmedColor.Length > 5)
+            else if (trimmedColor.Length > 5)
             {
                 r = ParseHexChar(trimmedColor[1]) * 16 + ParseHexChar(trimmedColor[2]);
                 g = ParseHexChar(trimmedColor[3]) * 16 + ParseHexChar(trimmedColor[4]);
@@ -57,31 +57,31 @@ namespace MS.Internal
             else if (trimmedColor.Length > 4)
             {
                 a = ParseHexChar(trimmedColor[1]);
-                a = a + a*16;
+                a = a + a * 16;
                 r = ParseHexChar(trimmedColor[2]);
-                r = r + r*16;
+                r = r + r * 16;
                 g = ParseHexChar(trimmedColor[3]);
-                g = g + g*16;
+                g = g + g * 16;
                 b = ParseHexChar(trimmedColor[4]);
-                b = b + b*16;
+                b = b + b * 16;
             }
             else
             {
                 r = ParseHexChar(trimmedColor[1]);
-                r = r + r*16;
+                r = r + r * 16;
                 g = ParseHexChar(trimmedColor[2]);
-                g = g + g*16;
+                g = g + g * 16;
                 b = ParseHexChar(trimmedColor[3]);
-                b = b + b*16;
+                b = b + b * 16;
             }
 
-            return ( Color.FromArgb ((byte)a, (byte)r, (byte)g, (byte)b) );
+            return (Color.FromArgb((byte)a, (byte)r, (byte)g, (byte)b));
         }
 
-    internal const string s_ContextColor = "ContextColor ";
-    internal const string s_ContextColorNoSpace = "ContextColor";
+        internal const string s_ContextColor = "ContextColor ";
+        internal const string s_ContextColorNoSpace = "ContextColor";
 
-    static private Color ParseContextColor(string trimmedColor, IFormatProvider formatProvider, ITypeDescriptorContext context)
+        static private Color ParseContextColor(string trimmedColor, IFormatProvider formatProvider, ITypeDescriptorContext context)
         {
             if (!trimmedColor.StartsWith(s_ContextColor, StringComparison.OrdinalIgnoreCase))
             {
@@ -113,7 +113,7 @@ namespace MS.Internal
 
             string profileString = preSplit[0];
 
-            UriHolder uriHolder = TypeConverterHelper.GetUriFromUriContext(context,profileString);
+            UriHolder uriHolder = TypeConverterHelper.GetUriFromUriContext(context, profileString);
 
             Uri profileUri;
 
@@ -200,7 +200,7 @@ namespace MS.Internal
             if ((isPossibleKnowColor == false) &&
                 (isNumericColor == false) &&
                 (isScRgbColor == false) &&
-                (isContextColor== false))
+                (isContextColor == false))
             {
                 throw new FormatException(SR.Parsers_IllegalToken);
             }
@@ -308,10 +308,10 @@ namespace MS.Internal
             AbbreviatedGeometryParser parser = new AbbreviatedGeometryParser();
 
             parser.ParseToGeometryContext(context, pathString, 0 /* curIndex */);
-            
+
             PathGeometry pathGeometry = context.GetPathGeometry();
 
             return pathGeometry.Figures;
         }
-}
+    }
 }

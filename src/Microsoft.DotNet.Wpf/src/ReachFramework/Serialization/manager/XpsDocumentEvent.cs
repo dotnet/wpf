@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System.Windows.Xps.Packaging;
 using System.Printing;
+using System.Windows.Xps.Packaging;
 
 #pragma warning disable 1634, 1691 //Allows suppression of certain PreSharp messages
 
@@ -18,7 +18,7 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// No value
         /// </summary>        
-        None  = 0,
+        None = 0,
         /// <summary>
         /// Xps Document events AddFixedDocumentSequencePre
         /// </summary>        
@@ -70,7 +70,7 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// Xps serialization cancelled
         /// </summary>        
-        XpsDocumentCancel = 6,        
+        XpsDocumentCancel = 6,
 
     };
 
@@ -82,14 +82,14 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         XpsDriverDocEventManager(
-            XpsSerializationManager     manager
+            XpsSerializationManager manager
             )
         {
             this._manager = manager;
-            
+
             _documentEvent = XpsDocumentEventType.None;
-            _currentCount  = 0;
-            _currentPage   = 0;
+            _currentCount = 0;
+            _currentPage = 0;
             _currentDocSequence = 0;
             _currentFixedDocument = 0;
             _printTicket = null;
@@ -99,84 +99,84 @@ namespace System.Windows.Xps.Serialization
 
         internal
         void
-        ForwardPackagingProgressEvent(        
-            Object                     sender,
+        ForwardPackagingProgressEvent(
+            Object sender,
             PackagingProgressEventArgs e
             )
         {
             switch (e.Action)
             {
                 case PackagingAction.AddingDocumentSequence:
-                {
-                    _currentDocSequence = 1;
-                    _currentFixedDocument = 0;
-                    _currentPage = 0;
-
-                    _currentCount = _currentDocSequence;
-                    _documentEvent = XpsDocumentEventType.AddFixedDocumentSequencePre;
-
-                    OnXpsDriverDocEvent();
-                    break;
-                }
-                case PackagingAction.DocumentSequenceCompleted:
-                {
-                    _currentCount = _currentDocSequence;
-                    _documentEvent = XpsDocumentEventType.AddFixedDocumentSequencePost;
-
-                    OnXpsDriverDocEvent();
-                    break;
-                }
-                case PackagingAction.AddingFixedDocument:
-                {
-                    _currentFixedDocument++;
-                    _currentPage = 0;
-
-                    _currentCount = _currentFixedDocument;
-                    _documentEvent = XpsDocumentEventType.AddFixedDocumentPre;
-
-                    OnXpsDriverDocEvent();
-                    break;
-                }
-                case PackagingAction.FixedDocumentCompleted:
-                {
-                    _currentCount = _currentFixedDocument;
-                    _documentEvent = XpsDocumentEventType.AddFixedDocumentPost;
-
-                    OnXpsDriverDocEvent();
-                    break;
-                }
-                case PackagingAction.AddingFixedPage:
-                {
-                    _currentPage++;
-
-                    _currentCount = _currentPage;
-                    _documentEvent = XpsDocumentEventType.AddFixedPagePre;
-
-                    OnXpsDriverDocEvent();
-                    break;
-                }
-                case PackagingAction.FixedPageCompleted:
-                {
-                    _documentEvent = XpsDocumentEventType.AddFixedPagePost;
-                    for (int i = e.NumberCompleted; i > 0; i--)
                     {
-                        _currentCount = _currentPage - i + 1;
+                        _currentDocSequence = 1;
+                        _currentFixedDocument = 0;
+                        _currentPage = 0;
+
+                        _currentCount = _currentDocSequence;
+                        _documentEvent = XpsDocumentEventType.AddFixedDocumentSequencePre;
+
                         OnXpsDriverDocEvent();
+                        break;
                     }
-                    break;
-                }
+                case PackagingAction.DocumentSequenceCompleted:
+                    {
+                        _currentCount = _currentDocSequence;
+                        _documentEvent = XpsDocumentEventType.AddFixedDocumentSequencePost;
+
+                        OnXpsDriverDocEvent();
+                        break;
+                    }
+                case PackagingAction.AddingFixedDocument:
+                    {
+                        _currentFixedDocument++;
+                        _currentPage = 0;
+
+                        _currentCount = _currentFixedDocument;
+                        _documentEvent = XpsDocumentEventType.AddFixedDocumentPre;
+
+                        OnXpsDriverDocEvent();
+                        break;
+                    }
+                case PackagingAction.FixedDocumentCompleted:
+                    {
+                        _currentCount = _currentFixedDocument;
+                        _documentEvent = XpsDocumentEventType.AddFixedDocumentPost;
+
+                        OnXpsDriverDocEvent();
+                        break;
+                    }
+                case PackagingAction.AddingFixedPage:
+                    {
+                        _currentPage++;
+
+                        _currentCount = _currentPage;
+                        _documentEvent = XpsDocumentEventType.AddFixedPagePre;
+
+                        OnXpsDriverDocEvent();
+                        break;
+                    }
+                case PackagingAction.FixedPageCompleted:
+                    {
+                        _documentEvent = XpsDocumentEventType.AddFixedPagePost;
+                        for (int i = e.NumberCompleted; i > 0; i--)
+                        {
+                            _currentCount = _currentPage - i + 1;
+                            OnXpsDriverDocEvent();
+                        }
+                        break;
+                    }
                 default:
-                {
-                    break;
-                }
+                    {
+                        break;
+                    }
             }
         }
 
         internal
         void
         ForwardUserPrintTicket(
-            Object                                          sender,
-            XpsSerializationPrintTicketRequiredEventArgs    e
+            Object sender,
+            XpsSerializationPrintTicketRequiredEventArgs e
         )
         {
             Boolean mustCallXpsDriverDocEvent = true;
@@ -187,28 +187,28 @@ namespace System.Windows.Xps.Serialization
             switch (_printTicketLevel)
             {
                 case PrintTicketLevel.FixedDocumentSequencePrintTicket:
-                {
-                    _currentCount = _currentDocSequence;
-                    _documentEvent = XpsDocumentEventType.AddFixedDocumentSequencePrintTicketPre;
-                    break;
-                }
+                    {
+                        _currentCount = _currentDocSequence;
+                        _documentEvent = XpsDocumentEventType.AddFixedDocumentSequencePrintTicketPre;
+                        break;
+                    }
                 case PrintTicketLevel.FixedDocumentPrintTicket:
-                {
-                    _currentCount = _currentFixedDocument;
-                    _documentEvent = XpsDocumentEventType.AddFixedDocumentPrintTicketPre;
-                    break;
-                }
+                    {
+                        _currentCount = _currentFixedDocument;
+                        _documentEvent = XpsDocumentEventType.AddFixedDocumentPrintTicketPre;
+                        break;
+                    }
                 case PrintTicketLevel.FixedPagePrintTicket:
-                {
-                    _currentCount = _currentPage + 1;
-                    _documentEvent = XpsDocumentEventType.AddFixedPagePrintTicketPre;
-                    break;
-                }
+                    {
+                        _currentCount = _currentPage + 1;
+                        _documentEvent = XpsDocumentEventType.AddFixedPagePrintTicketPre;
+                        break;
+                    }
                 default:
-                {
-                    mustCallXpsDriverDocEvent = false;
-                    break;
-                }
+                    {
+                        mustCallXpsDriverDocEvent = false;
+                        break;
+                    }
             }
 
             if (mustCallXpsDriverDocEvent)
@@ -225,7 +225,7 @@ namespace System.Windows.Xps.Serialization
         internal
         void
         ForwardSerializationCompleted(
-            object                              sender,
+            object sender,
             XpsSerializationCompletedEventArgs e
             )
         {
@@ -249,29 +249,29 @@ namespace System.Windows.Xps.Serialization
             return e;
         }
 
-        private 
-        XpsSerializationManager         _manager;
+        private
+        XpsSerializationManager _manager;
 
         private
-        XpsDocumentEventType            _documentEvent;
+        XpsDocumentEventType _documentEvent;
 
         private
-        int                             _currentCount;
+        int _currentCount;
 
         private
-        int                             _currentPage;
+        int _currentPage;
 
         private
-        int                             _currentDocSequence;
+        int _currentDocSequence;
 
         private
-        int                             _currentFixedDocument;
+        int _currentFixedDocument;
 
         private
-        PrintTicket                     _printTicket;
+        PrintTicket _printTicket;
 
         private
-        PrintTicketLevel                _printTicketLevel;
+        PrintTicketLevel _printTicketLevel;
 
     };
 
@@ -298,9 +298,9 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         XpsSerializationXpsDriverDocEventArgs(
-            XpsDocumentEventType    documentEvent,
-            int                     currentCount,
-            PrintTicket             printTicket
+            XpsDocumentEventType documentEvent,
+            int currentCount,
+            PrintTicket printTicket
             )
         {
             _currentCount = currentCount;
@@ -369,15 +369,15 @@ namespace System.Windows.Xps.Serialization
 
         private
         XpsDocumentEventType _documentEvent;
-        
-        private 
-        int                 _currentCount;
-        
-        private 
-        PrintTicket         _printTicket;
 
         private
-        bool                _modified;
+        int _currentCount;
+
+        private
+        PrintTicket _printTicket;
+
+        private
+        bool _modified;
 
     };
 }

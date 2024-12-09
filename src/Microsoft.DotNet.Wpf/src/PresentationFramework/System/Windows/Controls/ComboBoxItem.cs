@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal.KnownBoxes;
-using System.Windows.Media;
 using System.Windows.Input;
+using System.Windows.Media;
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls
 {
@@ -51,7 +51,7 @@ namespace System.Windows.Controls
         ///     The key needed set a read-only property.
         /// </summary>
         private static readonly DependencyPropertyKey IsHighlightedPropertyKey =
-            DependencyProperty.RegisterReadOnly("IsHighlighted", typeof(bool), typeof(ComboBoxItem), 
+            DependencyProperty.RegisterReadOnly("IsHighlighted", typeof(bool), typeof(ComboBoxItem),
                                         new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
         /// <summary>
@@ -149,7 +149,7 @@ namespace System.Windows.Controls
         protected override void OnContentChanged(object oldContent, object newContent)
         {
             base.OnContentChanged(oldContent, newContent);
-            
+
             // If this is selected, we need to update ParentComboBox.Text
             // Scenario:
             //      <ComboBox Width="200" Height="20" IsEditable="True" MaxDropDownHeight="50">
@@ -180,7 +180,7 @@ namespace System.Windows.Controls
         protected override void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e)
         {
             e.Handled = true;
-            
+
             ComboBox parent = ParentComboBox;
 
             if (parent != null)
@@ -190,7 +190,7 @@ namespace System.Windows.Controls
 
             base.OnGotKeyboardFocus(e);
         }
-        
+
         #endregion
 
         //-------------------------------------------------------------------

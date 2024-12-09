@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -135,7 +135,7 @@ namespace System.ComponentModel
                     String[] keys = new String[ic.Count];
                     ic.CopyTo(keys, 0);
 
-                    for (int i=keys.Length-1; i>=0; --i)
+                    for (int i = keys.Length - 1; i >= 0; --i)
                     {
                         if (keys[i] == AllListenersKey)
                         {
@@ -517,9 +517,9 @@ namespace System.ComponentModel
                             // there are both specific and generic listeners -
                             // combine the two lists.
                             list = new ListenerList<PropertyChangedEventArgs>(listeners.Count + genericListeners.Count);
-                            for (int i=0, n=listeners.Count; i<n; ++i)
+                            for (int i = 0, n = listeners.Count; i < n; ++i)
                                 list.Add(listeners.GetListener(i));
-                            for (int i=0, n=genericListeners.Count; i<n; ++i)
+                            for (int i = 0, n = genericListeners.Count; i < n; ++i)
                                 list.Add(genericListeners.GetListener(i));
                         }
                         else
@@ -552,7 +552,7 @@ namespace System.ComponentModel
                         foreach (DictionaryEntry de in dict)
                         {
                             ListenerList listeners = ((ListenerList)de.Value);
-                            for (int i=0, n=listeners.Count;  i<n;  ++i)
+                            for (int i = 0, n = listeners.Count; i < n; ++i)
                             {
                                 list.Add(listeners.GetListener(i));
                             }

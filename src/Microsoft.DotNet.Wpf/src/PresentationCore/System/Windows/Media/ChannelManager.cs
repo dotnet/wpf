@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -70,10 +70,10 @@ namespace System.Windows.Media
                 //
                 // Close the synchronous channels.
                 //
-                
+
                 if (_freeSyncChannels != null)
                 {
-                    while (_freeSyncChannels.Count > 0) 
+                    while (_freeSyncChannels.Count > 0)
                     {
                         _freeSyncChannels.Dequeue().Close();
                     }
@@ -104,7 +104,7 @@ namespace System.Windows.Media
                     _asyncOutOfBandChannel.Close();
                     _asyncOutOfBandChannel = null;
                 }
-               
+
                 RemoveSyncChannels();
 
                 if (_pSyncConnection != IntPtr.Zero)
@@ -112,7 +112,7 @@ namespace System.Windows.Media
                     HRESULT.Check(UnsafeNativeMethods.WgxConnection_Disconnect(_pSyncConnection));
                     _pSyncConnection = IntPtr.Zero;
                 }
-}
+            }
 
             /// <summary>
             /// Create a fresh or fetch one from the pool synchronous channel.
@@ -137,12 +137,12 @@ namespace System.Windows.Media
                     _freeSyncChannels = new Queue<DUCE.Channel>(3);
                 }
 
-                if (_freeSyncChannels.Count > 0) 
+                if (_freeSyncChannels.Count > 0)
                 {
                     //
                     // If there is a free sync channel in the queue, we're done:
                     //
-                    
+
                     return _freeSyncChannels.Dequeue();
                 }
                 else
@@ -152,17 +152,17 @@ namespace System.Windows.Media
                     // when the ReleaseSyncChannel call is made. Also ensure the
                     // synchronous service channel and glyph cache.
                     //
-                    
-                    if (_syncServiceChannel == null) 
+
+                    if (_syncServiceChannel == null)
                     {
-                        _syncServiceChannel  = new DUCE.Channel(
+                        _syncServiceChannel = new DUCE.Channel(
                             null,
                             false,      // not out of band
                             _pSyncConnection,
                             true        // synchronous
                             );
                     }
-                    
+
                     syncChannel = new DUCE.Channel(
                         _syncServiceChannel,
                         false,      // not out of band
@@ -186,8 +186,8 @@ namespace System.Windows.Media
                 // in re-using this channel later. For now, store up to three
                 // synchronous channel in the queue.
                 //
-                
-                if (_freeSyncChannels.Count <= 3) 
+
+                if (_freeSyncChannels.Count <= 3)
                 {
                     _freeSyncChannels.Enqueue(channel);
                 }
@@ -195,7 +195,7 @@ namespace System.Windows.Media
                 {
                     channel.Close();
                 }
-}
+            }
 
             /// <summary>
             /// Returns the asynchronous channel.
@@ -218,7 +218,7 @@ namespace System.Windows.Media
                     return _asyncOutOfBandChannel;
                 }
             }
-            
+
             /// <summary>
             /// The asynchronous channel.
             /// </summary>

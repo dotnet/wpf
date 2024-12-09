@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -67,12 +67,11 @@
 //
 //      </Manifest>
 
+using System.IO;
+using System.IO.Packaging;
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
 using System.Xml;
-using System.IO;
-using System.IO.Packaging;
-
 using PackageRelationship = MS.Internal.IO.Packaging.Extensions.PackageRelationship;
 
 namespace MS.Internal.IO.Packaging
@@ -318,13 +317,13 @@ namespace MS.Internal.IO.Packaging
             List<String> transforms = null;
             bool relationshipTransformFound = false;
             int transformsCountWhenRelationshipTransformFound = 0;
-                        
+
             // Look for transforms.
             // There are currently only 3 legal transforms which can be arranged in any
             // combination.
             while (reader.Read() && (reader.MoveToContent() == XmlNodeType.Element))
             {
-                String transformName = null;               
+                String transformName = null;
 
                 // at this level, all tags must be Transform tags
                 if (reader.Depth != 4
@@ -362,7 +361,7 @@ namespace MS.Internal.IO.Packaging
                         }
                         else
                             throw new XmlException(SR.MultipleRelationshipTransformsFound);
-                    }                    
+                    }
                     else
                     {
                         // non-Relationship transform should have no children
@@ -386,7 +385,7 @@ namespace MS.Internal.IO.Packaging
 
             if (transforms.Count == 0)
                 throw new XmlException(SR.XmlSignatureParseError);
-            
+
             //If we found another transform after the Relationship transform, it will be validated earlier
             //in this method to make sure that its a supported xml canonicalization algorithm and so we can 
             //simplify this test condition - As per the OPC spec - Relationship transform must be followed
@@ -533,13 +532,13 @@ namespace MS.Internal.IO.Packaging
             XmlNode manifest)
         {
             // PartUri - and its list of PackageRelationshipSelectors
-            Dictionary<Uri, List<PackageRelationshipSelector>> partAndSelectorDictionary 
+            Dictionary<Uri, List<PackageRelationshipSelector>> partAndSelectorDictionary
                 = new Dictionary<Uri, List<PackageRelationshipSelector>>();
 
             foreach (PackageRelationshipSelector relationshipSelector in relationshipSelectors)
             {
                 //update the partAndSelectorDictionary for each relationshipSelector
-                Uri relationshipPartUri = System.IO.Packaging.PackUriHelper.GetRelationshipPartUri(relationshipSelector.SourceUri);                
+                Uri relationshipPartUri = System.IO.Packaging.PackUriHelper.GetRelationshipPartUri(relationshipSelector.SourceUri);
 
                 List<PackageRelationshipSelector> selectors;
                 if (partAndSelectorDictionary.ContainsKey(relationshipPartUri))
@@ -550,9 +549,9 @@ namespace MS.Internal.IO.Packaging
                     partAndSelectorDictionary.Add(relationshipPartUri, selectors);
                 }
 
-                selectors.Add(relationshipSelector);                                  
+                selectors.Add(relationshipSelector);
             }
-        
+
             // now that we have them grouped by Part name, emit the XML
             // Here is an optimization for saving space by declaring the OPC namespace and prefix
             // in the <Manifest> tag. It will become: 
@@ -562,7 +561,7 @@ namespace MS.Internal.IO.Packaging
             // RelationshipSigningReference.
             // 
             XmlElement xmlE = (XmlElement)manifest;
-            xmlE.SetAttribute(XTable.Get(XTable.ID.OpcSignatureNamespaceAttribute), 
+            xmlE.SetAttribute(XTable.Get(XTable.ID.OpcSignatureNamespaceAttribute),
                                 XTable.Get(XTable.ID.OpcSignatureNamespace));
 
             int count = 0;
@@ -570,7 +569,7 @@ namespace MS.Internal.IO.Packaging
             {
                 // emit xml and append
                 manifest.AppendChild(
-                    GenerateRelationshipSigningReference(manager, xDoc, hashAlgorithm, 
+                    GenerateRelationshipSigningReference(manager, xDoc, hashAlgorithm,
                     partName, /* we are guaranteed that this is a valid part Uri, so we do not use PackUriHelper.CreatePartUri */
                     partAndSelectorDictionary[partName]));
 
@@ -597,7 +596,7 @@ namespace MS.Internal.IO.Packaging
                     {
                         // truncate the prefix and validate
                         contentType = new ContentType(query.Substring(_contentTypeQueryStringPrefix.Length));
-}
+                    }
 
                     // now construct the uri without the query
                     uri = PackUriHelper.ValidatePartUri(new Uri(attrValue.Substring(0, index), UriKind.Relative));
@@ -704,7 +703,7 @@ namespace MS.Internal.IO.Packaging
 
                 //Currently we only support two transforms and so we validate whether its
                 //one of those
-                if (transformName == null || 
+                if (transformName == null ||
                     transformName.Length == 0 ||
                     !XmlDigitalSignatureProcessor.IsValidXmlCanonicalizationTransform(transformName))
                     throw new InvalidOperationException(SR.UnsupportedTransformAlgorithm);
@@ -816,7 +815,7 @@ namespace MS.Internal.IO.Packaging
                 foreach (System.IO.Packaging.PackageRelationship r in relationshipSelector.Select(manager.Package))
                 {
                     // add relationship
-                    if(!relationshipsDictionarySortedById.ContainsKey(r.Id))
+                    if (!relationshipsDictionarySortedById.ContainsKey(r.Id))
                         relationshipsDictionarySortedById.Add(r.Id, r);
                 }
             }

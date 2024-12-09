@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,9 +53,9 @@ namespace System.Windows.Media
             DUCE.ResourceHandle rootHandle = DUCE.ResourceHandle.Null;
 
             Matrix deviceTransform = new Matrix(
-                dpiX * (1.0 / 96.0),    0,
-                0,                      dpiY * (1.0 / 96.0),
-                0,                      0);
+                dpiX * (1.0 / 96.0), 0,
+                0, dpiY * (1.0 / 96.0),
+                0, 0);
 
             deviceTransform = worldTransform * deviceTransform;
             MatrixTransform mtDeviceTransform = new MatrixTransform(deviceTransform);
@@ -116,7 +116,7 @@ namespace System.Windows.Media
 
                 MediaContext mediaContext = MediaContext.CurrentMediaContext;
                 mediaContext.NotifySyncChannelMessage(channel);
-}
+            }
             finally
             {
                 // ------------------------------------------------------------

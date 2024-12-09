@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
+using MS.Internal;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
@@ -57,14 +57,14 @@ namespace System.Windows.Media
 
         private static void OffsetPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DashStyle target = ((DashStyle) d);
+            DashStyle target = ((DashStyle)d);
 
 
             target.PropertyChanged(OffsetProperty);
         }
         private static void DashesPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DashStyle target = ((DashStyle) d);
+            DashStyle target = ((DashStyle)d);
 
 
             target.PropertyChanged(DashesProperty);
@@ -80,7 +80,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(OffsetProperty);
+                return (double)GetValue(OffsetProperty);
             }
             set
             {
@@ -95,7 +95,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (DoubleCollection) GetValue(DashesProperty);
+                return (DoubleCollection)GetValue(DashesProperty);
             }
             set
             {
@@ -173,7 +173,7 @@ namespace System.Windows.Media
 
 
                     // Copy this collection's elements (or their handles) to reserved data
-                    for(int i = 0; i < DashesCount; i++)
+                    for (int i = 0; i < DashesCount; i++)
                     {
                         Double resource = vDashes.Internal_GetItem(i);
                         channel.AppendCommandData(
@@ -188,7 +188,7 @@ namespace System.Windows.Media
         }
         DUCE.ResourceHandle DUCE.IResource.AddRefOnChannel(DUCE.Channel channel)
         {
-            using (CompositionEngineLock.Acquire()) 
+            using (CompositionEngineLock.Acquire())
             {
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_DASHSTYLE))
                 {
@@ -203,14 +203,14 @@ namespace System.Windows.Media
         }
         void DUCE.IResource.ReleaseOnChannel(DUCE.Channel channel)
         {
-            using (CompositionEngineLock.Acquire()) 
+            using (CompositionEngineLock.Acquire())
             {
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     ReleaseOnChannelAnimations(channel);
-}
+                }
             }
         }
         DUCE.ResourceHandle DUCE.IResource.GetHandle(DUCE.Channel channel)

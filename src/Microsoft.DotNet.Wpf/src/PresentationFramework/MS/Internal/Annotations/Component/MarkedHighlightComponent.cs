@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,16 +12,16 @@
 //              See spec at StickyNoteControlSpec.mht
 //
 
+using System.Collections;
 using System.Windows;
+using System.Windows.Annotations;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Annotations;
 using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using System.Collections;
 using System.Xml;
-using System.Windows.Input;
 using MS.Internal.Annotations.Anchoring;
 using MS.Utility;
 
@@ -485,7 +485,8 @@ namespace MS.Internal.Annotations.Component
 
             //host in the appropriate adorner layer
             AdornerLayer layer = AdornerLayer.GetAdornerLayer(AnnotatedElement); // note, GetAdornerLayer requires UIElement
-            if (layer == null) throw new InvalidOperationException(SR.Format(SR.NoPresentationContextForGivenElement, AnnotatedElement));
+            if (layer == null)
+                throw new InvalidOperationException(SR.Format(SR.NoPresentationContextForGivenElement, AnnotatedElement));
 
             AdornerPresentationContext.HostComponent(layer, this, AnnotatedElement, false);
 
@@ -573,15 +574,21 @@ namespace MS.Internal.Annotations.Component
         /// <returns>The MarkerComponent</returns>
         private Path CreateMarker(Geometry geometry)
         {
-            Path marker = new Path();
-            marker.Data = geometry;
+            Path marker = new Path
+            {
+                Data = geometry
+            };
 
             //set activation binding
-            Binding markerStroke = new Binding("MarkerBrushProperty");
-            markerStroke.Source = this;
+            Binding markerStroke = new Binding("MarkerBrushProperty")
+            {
+                Source = this
+            };
             marker.SetBinding(Path.StrokeProperty, markerStroke);
-            Binding markerStrokeThickness = new Binding("StrokeThicknessProperty");
-            markerStrokeThickness.Source = this;
+            Binding markerStrokeThickness = new Binding("StrokeThicknessProperty")
+            {
+                Source = this
+            };
             marker.SetBinding(Path.StrokeThicknessProperty, markerStrokeThickness);
             marker.StrokeEndLineCap = PenLineCap.Round;
             marker.StrokeStartLineCap = PenLineCap.Round;

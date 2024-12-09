@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@ namespace System.Windows
         /// <summary>
         ///     No options
         /// </summary>
-        None    = 0,
+        None = 0,
 
         /// <summary>
         ///     Expression may not be set in multiple places
@@ -87,7 +87,7 @@ namespace System.Windows
         {
             _flags = 0;
 
-            switch(mode)
+            switch (mode)
             {
                 case ExpressionMode.None:
                     break;
@@ -116,7 +116,7 @@ namespace System.Windows
         // We need this Clone method to copy a binding during Freezable.Copy.  We shouldn't be taking
         // the target object/dp parameters here, but Binding.ProvideValue requires it.  (Binding
         // could probably be re-factored so that we don't need this).
-        internal virtual Expression Copy( DependencyObject targetObject, DependencyProperty targetDP )
+        internal virtual Expression Copy(DependencyObject targetObject, DependencyProperty targetDP)
         {
             // By default, just use the same copy.
             return this;
@@ -278,12 +278,12 @@ namespace System.Windows
         [Flags]
         private enum InternalFlags
         {
-            None         = 0x0,
+            None = 0x0,
             NonShareable = 0x1,
             ForwardsInvalidations = 0x2,
             SupportsUnboundSources = 0x4,
-            Attached    = 0x8,
-            Detached    = 0x10,
+            Attached = 0x8,
+            Detached = 0x10,
         }
-}
+    }
 }

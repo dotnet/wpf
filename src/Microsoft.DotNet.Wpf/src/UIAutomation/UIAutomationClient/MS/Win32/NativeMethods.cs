@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,12 +22,12 @@ namespace MS.Win32
 {
     internal static class NativeMethods
     {
-        public const int MAX_PATH   = 260;
+        public const int MAX_PATH = 260;
 
         // Dialog Codes
         internal const int WM_GETDLGCODE = 0x0087;
         internal const int DLGC_STATIC = 0x0100;
-        
+
         [StructLayout(LayoutKind.Sequential)]
         public struct HWND
         {
@@ -35,8 +35,10 @@ namespace MS.Win32
 
             public static HWND Cast(IntPtr h)
             {
-                HWND hTemp = new HWND();
-                hTemp.h = h;
+                HWND hTemp = new HWND
+                {
+                    h = h
+                };
                 return hTemp;
             }
 
@@ -49,18 +51,20 @@ namespace MS.Win32
             {
                 get
                 {
-                    HWND hTemp = new HWND();
-                    hTemp.h = IntPtr.Zero;
+                    HWND hTemp = new HWND
+                    {
+                        h = IntPtr.Zero
+                    };
                     return hTemp;
                 }
             }
 
-            public static bool operator==(HWND hl, HWND hr)
+            public static bool operator ==(HWND hl, HWND hr)
             {
                 return hl.h == hr.h;
             }
 
-            public static bool operator!=(HWND hl, HWND hr)
+            public static bool operator !=(HWND hl, HWND hr)
             {
                 return hl.h != hr.h;
             }
@@ -73,7 +77,7 @@ namespace MS.Win32
 
             public override int GetHashCode()
             {
-                return (int) h;
+                return (int)h;
             }
         }
 
@@ -88,9 +92,9 @@ namespace MS.Win32
 
             public RECT(int left, int top, int right, int bottom)
             {
-                this.left   = left;
-                this.top    = top;
-                this.right  = right;
+                this.left = left;
+                this.top = top;
+                this.right = right;
                 this.bottom = bottom;
             }
 
@@ -111,8 +115,8 @@ namespace MS.Win32
 
             public POINT(int x, int y)
             {
-                this.x  = x;
-                this.y  = y;
+                this.x = x;
+                this.y = y;
             }
         }
 

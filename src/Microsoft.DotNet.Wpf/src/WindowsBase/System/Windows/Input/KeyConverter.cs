@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -149,54 +149,150 @@ namespace System.Windows.Input
                     Key keyFound = (Key)(-1);
                     switch (keyToken)
                     {
-                        case "ENTER": keyFound = Key.Return; break;
-                        case "ESC": keyFound = Key.Escape; break;
-                        case "PGUP": keyFound = Key.PageUp; break;
-                        case "PGDN": keyFound = Key.PageDown; break;
-                        case "PRTSC": keyFound = Key.PrintScreen; break;
-                        case "INS": keyFound = Key.Insert; break;
-                        case "DEL": keyFound = Key.Delete; break;
-                        case "WINDOWS": keyFound = Key.LWin; break;
-                        case "WIN": keyFound = Key.LWin; break;
-                        case "LEFTWINDOWS": keyFound = Key.LWin; break;
-                        case "RIGHTWINDOWS": keyFound = Key.RWin; break;
-                        case "APPS": keyFound = Key.Apps; break;
-                        case "APPLICATION": keyFound = Key.Apps; break;
-                        case "BREAK": keyFound = Key.Cancel; break;
-                        case "BACKSPACE": keyFound = Key.Back; break;
-                        case "BKSP": keyFound = Key.Back; break;
-                        case "BS": keyFound = Key.Back; break;
-                        case "SHIFT": keyFound = Key.LeftShift; break;
-                        case "LEFTSHIFT": keyFound = Key.LeftShift; break;
-                        case "RIGHTSHIFT": keyFound = Key.RightShift; break;
-                        case "CONTROL": keyFound = Key.LeftCtrl; break;
-                        case "CTRL": keyFound = Key.LeftCtrl; break;
-                        case "LEFTCTRL": keyFound = Key.LeftCtrl; break;
-                        case "RIGHTCTRL": keyFound = Key.RightCtrl; break;
-                        case "ALT": keyFound = Key.LeftAlt; break;
-                        case "LEFTALT": keyFound = Key.LeftAlt; break;
-                        case "RIGHTALT": keyFound = Key.RightAlt; break;
-                        case "SEMICOLON": keyFound = Key.OemSemicolon; break;
-                        case "PLUS": keyFound = Key.OemPlus; break;
-                        case "COMMA": keyFound = Key.OemComma; break;
-                        case "MINUS": keyFound = Key.OemMinus; break;
-                        case "PERIOD": keyFound = Key.OemPeriod; break;
-                        case "QUESTION": keyFound = Key.OemQuestion; break;
-                        case "TILDE": keyFound = Key.OemTilde; break;
-                        case "OPENBRACKETS": keyFound = Key.OemOpenBrackets; break;
-                        case "PIPE": keyFound = Key.OemPipe; break;
-                        case "CLOSEBRACKETS": keyFound = Key.OemCloseBrackets; break;
-                        case "QUOTES": keyFound = Key.OemQuotes; break;
-                        case "BACKSLASH": keyFound = Key.OemBackslash; break;
-                        case "FINISH": keyFound = Key.OemFinish; break;
-                        case "ATTN": keyFound = Key.Attn; break;
-                        case "CRSEL": keyFound = Key.CrSel; break;
-                        case "EXSEL": keyFound = Key.ExSel; break;
-                        case "ERASEEOF": keyFound = Key.EraseEof; break;
-                        case "PLAY": keyFound = Key.Play; break;
-                        case "ZOOM": keyFound = Key.Zoom; break;
-                        case "PA1": keyFound = Key.Pa1; break;
-                        default: keyFound = Enum.Parse<Key>(keyToken, true); break;
+                        case "ENTER":
+                            keyFound = Key.Return;
+                            break;
+                        case "ESC":
+                            keyFound = Key.Escape;
+                            break;
+                        case "PGUP":
+                            keyFound = Key.PageUp;
+                            break;
+                        case "PGDN":
+                            keyFound = Key.PageDown;
+                            break;
+                        case "PRTSC":
+                            keyFound = Key.PrintScreen;
+                            break;
+                        case "INS":
+                            keyFound = Key.Insert;
+                            break;
+                        case "DEL":
+                            keyFound = Key.Delete;
+                            break;
+                        case "WINDOWS":
+                            keyFound = Key.LWin;
+                            break;
+                        case "WIN":
+                            keyFound = Key.LWin;
+                            break;
+                        case "LEFTWINDOWS":
+                            keyFound = Key.LWin;
+                            break;
+                        case "RIGHTWINDOWS":
+                            keyFound = Key.RWin;
+                            break;
+                        case "APPS":
+                            keyFound = Key.Apps;
+                            break;
+                        case "APPLICATION":
+                            keyFound = Key.Apps;
+                            break;
+                        case "BREAK":
+                            keyFound = Key.Cancel;
+                            break;
+                        case "BACKSPACE":
+                            keyFound = Key.Back;
+                            break;
+                        case "BKSP":
+                            keyFound = Key.Back;
+                            break;
+                        case "BS":
+                            keyFound = Key.Back;
+                            break;
+                        case "SHIFT":
+                            keyFound = Key.LeftShift;
+                            break;
+                        case "LEFTSHIFT":
+                            keyFound = Key.LeftShift;
+                            break;
+                        case "RIGHTSHIFT":
+                            keyFound = Key.RightShift;
+                            break;
+                        case "CONTROL":
+                            keyFound = Key.LeftCtrl;
+                            break;
+                        case "CTRL":
+                            keyFound = Key.LeftCtrl;
+                            break;
+                        case "LEFTCTRL":
+                            keyFound = Key.LeftCtrl;
+                            break;
+                        case "RIGHTCTRL":
+                            keyFound = Key.RightCtrl;
+                            break;
+                        case "ALT":
+                            keyFound = Key.LeftAlt;
+                            break;
+                        case "LEFTALT":
+                            keyFound = Key.LeftAlt;
+                            break;
+                        case "RIGHTALT":
+                            keyFound = Key.RightAlt;
+                            break;
+                        case "SEMICOLON":
+                            keyFound = Key.OemSemicolon;
+                            break;
+                        case "PLUS":
+                            keyFound = Key.OemPlus;
+                            break;
+                        case "COMMA":
+                            keyFound = Key.OemComma;
+                            break;
+                        case "MINUS":
+                            keyFound = Key.OemMinus;
+                            break;
+                        case "PERIOD":
+                            keyFound = Key.OemPeriod;
+                            break;
+                        case "QUESTION":
+                            keyFound = Key.OemQuestion;
+                            break;
+                        case "TILDE":
+                            keyFound = Key.OemTilde;
+                            break;
+                        case "OPENBRACKETS":
+                            keyFound = Key.OemOpenBrackets;
+                            break;
+                        case "PIPE":
+                            keyFound = Key.OemPipe;
+                            break;
+                        case "CLOSEBRACKETS":
+                            keyFound = Key.OemCloseBrackets;
+                            break;
+                        case "QUOTES":
+                            keyFound = Key.OemQuotes;
+                            break;
+                        case "BACKSLASH":
+                            keyFound = Key.OemBackslash;
+                            break;
+                        case "FINISH":
+                            keyFound = Key.OemFinish;
+                            break;
+                        case "ATTN":
+                            keyFound = Key.Attn;
+                            break;
+                        case "CRSEL":
+                            keyFound = Key.CrSel;
+                            break;
+                        case "EXSEL":
+                            keyFound = Key.ExSel;
+                            break;
+                        case "ERASEEOF":
+                            keyFound = Key.EraseEof;
+                            break;
+                        case "PLAY":
+                            keyFound = Key.Play;
+                            break;
+                        case "ZOOM":
+                            keyFound = Key.Zoom;
+                            break;
+                        case "PA1":
+                            keyFound = Key.Pa1;
+                            break;
+                        default:
+                            keyFound = Enum.Parse<Key>(keyToken, true);
+                            break;
                     }
 
                     if ((int)keyFound != -1)
@@ -216,9 +312,12 @@ namespace System.Windows.Input
             {
                 switch (key)
                 {
-                    case Key.Back: return "Backspace";
-                    case Key.LineFeed: return "Clear";
-                    case Key.Escape: return "Esc";
+                    case Key.Back:
+                        return "Backspace";
+                    case Key.LineFeed:
+                        return "Clear";
+                    case Key.Escape:
+                        return "Esc";
                 }
             }
             if ((int)key >= (int)Key.None && (int)key <= (int)Key.DeadCharProcessed)

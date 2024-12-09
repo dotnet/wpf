@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace System.Windows
     /// FigureUnitType enum is used to indicate what kind of value the 
     /// FigureLength is holding.
     /// </summary>
-    public enum FigureUnitType 
+    public enum FigureUnitType
     {
         /// <summary>
         /// The value indicates that content should be calculated without constraints. 
@@ -111,11 +111,11 @@ namespace System.Windows
             {
                 throw new ArgumentOutOfRangeException(SR.Format(SR.InvalidCtorParameterNoNegative, "value"));
             }
-            if (    type != FigureUnitType.Auto
-                &&  type != FigureUnitType.Pixel
-                &&  type != FigureUnitType.Column
-                &&  type != FigureUnitType.Content
-                &&  type != FigureUnitType.Page   )
+            if (type != FigureUnitType.Auto
+                && type != FigureUnitType.Pixel
+                && type != FigureUnitType.Column
+                && type != FigureUnitType.Content
+                && type != FigureUnitType.Page)
             {
                 throw new ArgumentException(SR.Format(SR.InvalidCtorParameterUnknownFigureUnitType, "type"));
             }
@@ -155,10 +155,10 @@ namespace System.Windows
         /// <param name="fl2">second FigureLength to compare.</param>
         /// <returns>true if specified FigureLengths have same value 
         /// and unit type.</returns>
-        public static bool operator == (FigureLength fl1, FigureLength fl2)
+        public static bool operator ==(FigureLength fl1, FigureLength fl2)
         {
-            return (    fl1.FigureUnitType == fl2.FigureUnitType 
-                    &&  fl1.Value == fl2.Value  );
+            return (fl1.FigureUnitType == fl2.FigureUnitType
+                    && fl1.Value == fl2.Value);
         }
 
         /// <summary>
@@ -168,10 +168,10 @@ namespace System.Windows
         /// <param name="fl2">second FigureLength to compare.</param>
         /// <returns>true if specified FigureLengths have either different value or 
         /// unit type.</returns>
-        public static bool operator != (FigureLength fl1, FigureLength fl2)
+        public static bool operator !=(FigureLength fl1, FigureLength fl2)
         {
-            return (    fl1.FigureUnitType != fl2.FigureUnitType 
-                    ||  fl1.Value != fl2.Value  );
+            return (fl1.FigureUnitType != fl2.FigureUnitType
+                    || fl1.Value != fl2.Value);
         }
 
         /// <summary>
@@ -182,7 +182,7 @@ namespace System.Windows
         /// and unit type as oCompare.</returns>
         override public bool Equals(object oCompare)
         {
-            if(oCompare is FigureLength)
+            if (oCompare is FigureLength)
             {
                 FigureLength l = (FigureLength)oCompare;
                 return (this == l);
@@ -255,7 +255,7 @@ namespace System.Windows
         {
             return FigureLengthConverter.ToString(this, CultureInfo.InvariantCulture);
         }
-        
+
         #endregion Public Methods 
 
         //------------------------------------------------------

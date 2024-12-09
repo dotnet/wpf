@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,11 +8,11 @@
 //              See spec at: AdornerLayer Spec.htm
 // 
 
-using System.Windows.Media;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Windows.Threading;
 using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Controls;
 using MS.Internal.Media;
@@ -121,7 +121,7 @@ namespace System.Windows.Documents
         //------------------------------------------------------
 
         #region Constructors
- 
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -346,7 +346,7 @@ namespace System.Windows.Documents
         //  Protected Methods
         //
         //------------------------------------------------------
- 
+
         #region Protected Methods
 
 
@@ -362,11 +362,11 @@ namespace System.Windows.Documents
         /// </summary>        
         protected override int VisualChildrenCount
         {
-            get 
-            { 
+            get
+            {
                 //_children cannot be null as its initialized in the constructor
-                return _children.Count; 
-            }       
+                return _children.Count;
+            }
         }
 
         /// <summary>
@@ -473,7 +473,7 @@ namespace System.Windows.Documents
                         {
                             // Get the matrix transform out, skip all non affine transforms
                             Transform transform = (adornerTransform != null) ? adornerTransform.AffineTransform : null;
-                            
+
                             ((Adorner)(_children[index])).AdornerTransform = transform;
                         }
                     }
@@ -510,8 +510,10 @@ namespace System.Windows.Documents
         {
             ArgumentNullException.ThrowIfNull(adorner);
 
-            AdornerInfo adornerInfo = new AdornerInfo(adorner);
-            adornerInfo.ZOrder = zOrder;
+            AdornerInfo adornerInfo = new AdornerInfo(adorner)
+            {
+                ZOrder = zOrder
+            };
 
             AddAdornerInfo(ElementMap, adornerInfo, adorner.AdornedElement);
 
@@ -717,7 +719,7 @@ namespace System.Windows.Documents
             //
             // See if the adorners need to be rerendered due to object resizing
             //
-            GeneralTransform transform = element.TransformToAncestor(adornerLayerParent);                            
+            GeneralTransform transform = element.TransformToAncestor(adornerLayerParent);
 
             for (int i = 0; i < adornerInfos.Count; i++)
             {
@@ -849,8 +851,10 @@ namespace System.Windows.Documents
                     {
                         GeneralTransform transform = oldElement.TransformToAncestor(element);
                         combinedGeometry.Transform = transform.AffineTransform;
-                        combinedGeometry = new CombinedGeometry(combinedGeometry, geometry);
-                        combinedGeometry.GeometryCombineMode = GeometryCombineMode.Intersect;
+                        combinedGeometry = new CombinedGeometry(combinedGeometry, geometry)
+                        {
+                            GeometryCombineMode = GeometryCombineMode.Intersect
+                        };
                     }
                     oldElement = element;
                 }
@@ -949,7 +953,7 @@ namespace System.Windows.Documents
             }
             adornerInfos.Add(adornerInfo);
         }
-        
+
         //
         //  This property
         //  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,7 +12,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class TransformPattern: BasePattern
 #else
-    public class TransformPattern: BasePattern
+    public class TransformPattern : BasePattern
 #endif
     {
         //------------------------------------------------------
@@ -20,7 +20,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         private TransformPattern(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -38,7 +38,7 @@ namespace System.Windows.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>Returns the Transform pattern identifier</summary>
@@ -62,7 +62,7 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace System.Windows.Automation
         /// 
         /// <param name="x">absolute on-screen position of the top left corner</param>
         /// <param name="y">absolute on-screen position of the top left corner</param>
-        public void Move( double x, double y )
+        public void Move(double x, double y)
         {
             UiaCoreApi.TransformPattern_Move(_hPattern, x, y);
         }
@@ -86,7 +86,7 @@ namespace System.Windows.Automation
         /// </summary>
         /// <param name="width">The requested width of the window.</param>
         /// <param name="height">The requested height of the window.</param>
-        public void Resize( double width, double height )
+        public void Resize(double width, double height)
         {
             UiaCoreApi.TransformPattern_Resize(_hPattern, width, height);
         }
@@ -96,7 +96,7 @@ namespace System.Windows.Automation
         /// </summary>
         /// <param name="degrees">The requested degrees to rotate the element.  A positive number rotates clockwise
         /// a negative number rotates counter clockwise</param>
-        public void Rotate( double degrees )
+        public void Rotate(double degrees)
         {
             UiaCoreApi.TransformPattern_Rotate(_hPattern, degrees);
         }
@@ -110,7 +110,7 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
         /// <summary>
         /// This member allows access to previously requested
@@ -170,7 +170,7 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -186,7 +186,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private SafePatternHandle _hPattern;
@@ -232,7 +232,7 @@ namespace System.Windows.Automation
             //  Public Properties
             //
             //------------------------------------------------------
- 
+
             #region Public Properties
 
             /// <summary>Returns true if the element can be moved otherwise returns false.</summary>

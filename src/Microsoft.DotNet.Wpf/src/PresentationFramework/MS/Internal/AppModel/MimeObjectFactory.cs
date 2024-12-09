@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,7 +31,7 @@ namespace MS.Internal.AppModel
         {
             return GetObjectAndCloseStreamCore(s, contentType, baseUri, canUseTopLevelBrowser, sandboxExternalContent, allowAsync, isJournalNavigation, out asyncObjectConverter, false);
         }
-        
+
         internal static object GetObjectAndCloseStreamCore(Stream s, ContentType contentType, Uri baseUri, bool canUseTopLevelBrowser, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter, bool isUnsafe)
         {
             object objToReturn = null;
@@ -42,7 +42,7 @@ namespace MS.Internal.AppModel
                 StreamToObjectFactoryDelegateCore d;
                 if (_objectConvertersCore.TryGetValue(contentType, out d))
                 {
-                    objToReturn = d(s, baseUri, canUseTopLevelBrowser, sandboxExternalContent, allowAsync, isJournalNavigation, out asyncObjectConverter,  isUnsafe);
+                    objToReturn = d(s, baseUri, canUseTopLevelBrowser, sandboxExternalContent, allowAsync, isJournalNavigation, out asyncObjectConverter, isUnsafe);
                 }
             }
 
@@ -53,7 +53,7 @@ namespace MS.Internal.AppModel
         {
             _objectConvertersCore[contentType] = method;
         }
-        
+
         // The delegate registered here will be responsible for closing the stream passed to it.
         internal static void Register(ContentType contentType, StreamToObjectFactoryDelegate method)
         {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,7 +10,7 @@ namespace System.Windows.Input
 
     internal sealed class PenContext
     {
-        internal PenContext(IPimcContext3 pimcContext, IntPtr hwnd, 
+        internal PenContext(IPimcContext3 pimcContext, IntPtr hwnd,
                                 PenContexts contexts, bool supportInRange, bool isIntegrated,
                                 int id, IntPtr commHandle, int tabletDeviceId, UInt32 wispContextKey)
         {
@@ -33,7 +33,7 @@ namespace System.Windows.Input
         /// </summary>
         ~PenContext()
         {
-            TryRemove(shutdownWorkerThread:false); // Make sure we remove the context from the active list.
+            TryRemove(shutdownWorkerThread: false); // Make sure we remove the context from the active list.
 
             _pimcContext = null;
             _contexts = null;
@@ -104,7 +104,7 @@ namespace System.Windows.Input
 
             // We should always have a valid IPimcContext3 interface pointer.
             Debug.Assert(_pimcContext != null);
-            
+
             _pimcContext.GetPacketDescriptionInfo(out cProps, out cButtons); // Calls Unmanaged code - SecurityCritical with SUC.
 
             List<StylusPointPropertyInfo> propertyInfos = new List<StylusPointPropertyInfo>(cProps + cButtons + 3);
@@ -120,19 +120,19 @@ namespace System.Windows.Input
                 {
                     pressureIndex = i;
                 }
-                
+
                 if (_statusPropertyIndex == -1 && guid == StylusPointPropertyIds.PacketStatus)
                 {
                     _statusPropertyIndex = i;
                 }
 
                 StylusPointPropertyInfo propertyInfo = new StylusPointPropertyInfo(new StylusPointProperty(guid, false), min, max, (StylusPointPropertyUnit)units, res);
-                
+
                 propertyInfos.Add(propertyInfo);
             }
 
             Debug.Assert(_statusPropertyIndex != -1);  // We should always see this.
-            
+
             // Make sure we actually created propertyInfos OK
             if (propertyInfos != null)
             {
@@ -149,7 +149,7 @@ namespace System.Windows.Input
                 //validate we can never get X, Y at index != 0, 1
                 Debug.Assert(propertyInfos[StylusPointDescription.RequiredXIndex /*0*/].Id == StylusPointPropertyIds.X, "X isn't where we expect it! Fix PenImc to ask for X at index 0");
                 Debug.Assert(propertyInfos[StylusPointDescription.RequiredYIndex /*0*/].Id == StylusPointPropertyIds.Y, "Y isn't where we expect it! Fix PenImc to ask for Y at index 1");
-                Debug.Assert(pressureIndex == -1 || pressureIndex == StylusPointDescription.RequiredPressureIndex /*2*/, 
+                Debug.Assert(pressureIndex == -1 || pressureIndex == StylusPointDescription.RequiredPressureIndex /*2*/,
                     "Fix PenImc to ask for NormalPressure at index 2!");
                 if (pressureIndex == -1)
                 {
@@ -158,10 +158,10 @@ namespace System.Windows.Input
                 }
                 _infoX = propertyInfos[0];
                 _infoY = propertyInfos[1];
-                
+
                 _stylusPointDescription = new StylusPointDescription(propertyInfos, pressureIndex);
             }
-}
+        }
 
 
         internal void Enable()
@@ -176,7 +176,7 @@ namespace System.Windows.Input
         {
             if (TryRemove(shutdownWorkerThread))
             {
-                
+
                 // A successful removal should suppress finalization as this is call is
                 // explicity and the finalizer only calls DisableImpl directly.
                 GC.SuppressFinalize(this);
@@ -191,7 +191,7 @@ namespace System.Windows.Input
         /// <returns>True if context removal is successful, false otherwise.</returns>
         private bool TryRemove(bool shutdownWorkerThread)
         {
-            
+
             // There was a prior assumption here that this would always be called under Dispatcher.DisableProcessing.
             // This assumption has not been valid for some time, leading to re-entrancy.
             if (_penThreadPenContext != null)
@@ -201,7 +201,7 @@ namespace System.Windows.Input
                     // Check if we need to shut down our pen thread.
                     if (shutdownWorkerThread)
                     {
-                        
+
                         // A re-entrant call might find us with a null penThreadContext so we 
                         // need to guard the call to Dispose against a null even though we already 
                         // have a check above.
@@ -238,7 +238,7 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        internal void FirePenDown (int stylusPointerId, int[] data, int timestamp)
+        internal void FirePenDown(int stylusPointerId, int[] data, int timestamp)
         {
             timestamp = EnsureTimestampUnique(timestamp);
             _lastInRangeTime = timestamp;
@@ -248,23 +248,23 @@ namespace System.Windows.Input
             {
                 InitStylusPointDescription(); // init _stylusPointDescription.
             }
-            
+
             _contexts.OnPenDown(this, _tabletDeviceId, stylusPointerId, data, timestamp);
         }
 
         /////////////////////////////////////////////////////////////////////
 
-        internal void FirePenUp (int stylusPointerId, int[] data, int timestamp)
+        internal void FirePenUp(int stylusPointerId, int[] data, int timestamp)
         {
             timestamp = EnsureTimestampUnique(timestamp);
             _lastInRangeTime = timestamp;
-            
+
             // make sure this gets initialized on the penthread!!
             if (_stylusPointDescription == null)
             {
                 InitStylusPointDescription(); // init _stylusPointDescription.
             }
-            
+
             _contexts.OnPenUp(this, _tabletDeviceId, stylusPointerId, data, timestamp);
         }
 
@@ -274,13 +274,13 @@ namespace System.Windows.Input
         {
             timestamp = EnsureTimestampUnique(timestamp);
             _lastInRangeTime = timestamp;
-            
+
             // make sure this gets initialized on the penthread!!
             if (_stylusPointDescription == null)
             {
                 InitStylusPointDescription(); // init _stylusPointDescription.
             }
-            
+
             bool fDownPackets = false;
             if (_statusPropertyIndex != -1)
             {
@@ -307,7 +307,7 @@ namespace System.Windows.Input
             {
                 InitStylusPointDescription(); // init _stylusPointDescription.
             }
-            
+
             // Special case where we want to forward this to the application early (this is the real
             // stylus InRange event we don't currently use).
             if (data == null)
@@ -373,7 +373,7 @@ namespace System.Windows.Input
                 }
 
                 // Send event for each StylusDevice being out of range, then clear out the map.
-                for(int i=0; i < _stylusDevicesInRange.Count; i++)
+                for (int i = 0; i < _stylusDevicesInRange.Count; i++)
                 {
                     _contexts.OnPenOutOfRange(this, _tabletDeviceId, _stylusDevicesInRange[i], timestamp);
                 }
@@ -387,13 +387,13 @@ namespace System.Windows.Input
         {
             timestamp = EnsureTimestampUnique(timestamp);
             _lastInRangeTime = timestamp;
-            
+
             // make sure this gets initialized on the penthread!!
             if (_stylusPointDescription == null)
             {
                 InitStylusPointDescription(); // init _stylusPointDescription.
             }
-            
+
             int id;
             int modifier;
             int character;
@@ -425,7 +425,7 @@ namespace System.Windows.Input
 
             Debug.Assert(numPackets != 0);
             Debug.Assert(data != null);
-            
+
             if (_stylusPointDescription == null)
             {
                 InitStylusPointDescription(); // init _stylusPointDescription.
@@ -454,7 +454,7 @@ namespace System.Windows.Input
             get;
             set;
         }
-        
+
         /////////////////////////////////////////////////////////////////////
         //
         // Make sure timestamp is unique for each event.  Note that on each InRange event the
@@ -478,10 +478,10 @@ namespace System.Windows.Input
             {
                 timestamp = unchecked(_lastInRangeTime + 1);
             }
-            
+
             return timestamp;
         }
-        
+
         // This keeps track of the last time we saw an InRange/OutOfRange event on the pen thread.
         internal int LastInRangeTime
         {
@@ -511,22 +511,22 @@ namespace System.Windows.Input
         internal IPimcContext3 _pimcContext;
         private readonly IntPtr _hwnd;
         private readonly IntPtr _commHandle;
-        
-        PenContexts             _contexts;
-        
-        PenThread               _penThreadPenContext;
-        int                     _id;
-        int                     _tabletDeviceId;
+
+        PenContexts _contexts;
+
+        PenThread _penThreadPenContext;
+        int _id;
+        int _tabletDeviceId;
         StylusPointPropertyInfo _infoX;
         StylusPointPropertyInfo _infoY;
-        bool                    _supportInRange;
-        List<int>               _stylusDevicesInRange;
-        bool                    _isIntegrated;
+        bool _supportInRange;
+        List<int> _stylusDevicesInRange;
+        bool _isIntegrated;
 
-        StylusPointDescription  _stylusPointDescription;
-        int                     _statusPropertyIndex = -1;
+        StylusPointDescription _stylusPointDescription;
+        int _statusPropertyIndex = -1;
 
-        int                     _lastInRangeTime;
-        int                     _queuedInRangeCount;
+        int _lastInRangeTime;
+        int _queuedInRangeCount;
     }
 }

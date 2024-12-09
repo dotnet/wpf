@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace System.Windows
         }
 
         #endregion Constructor
-        
+
         #region ProtectedMethods
 
         /// <summary>
@@ -27,11 +27,11 @@ namespace System.Windows
         /// </summary>
         protected override void ClearItems()
         {
-            for (int i=0; i<Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 _owner.RemoveParentOwners(this[i]);
             }
-            
+
             base.ClearItems();
         }
 
@@ -62,7 +62,7 @@ namespace System.Windows
         #region Data
 
         private ResourceDictionary _owner;
-        
+
         #endregion Data
     }
 }

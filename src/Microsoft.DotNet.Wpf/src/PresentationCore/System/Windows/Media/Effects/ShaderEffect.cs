@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -776,7 +776,8 @@ namespace System.Windows.Media.Effects
                 }
 
                 PixelShader vPixelShader = PixelShader;
-                if (vPixelShader != null) ((DUCE.IResource)vPixelShader).AddRefOnChannel(channel);
+                if (vPixelShader != null)
+                    ((DUCE.IResource)vPixelShader).AddRefOnChannel(channel);
 
                 AddRefOnChannelAnimations(channel);
 
@@ -816,7 +817,8 @@ namespace System.Windows.Media.Effects
                 }
 
                 PixelShader vPixelShader = PixelShader;
-                if (vPixelShader != null) ((DUCE.IResource)vPixelShader).ReleaseOnChannel(channel);
+                if (vPixelShader != null)
+                    ((DUCE.IResource)vPixelShader).ReleaseOnChannel(channel);
 
                 ReleaseOnChannelAnimations(channel);
             }

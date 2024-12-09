@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,9 +11,9 @@
 //
 //
 
-using System.Windows.Navigation;        // PageFunctionBase
 using System.ComponentModel;            // DesignerSerializationVisibilityAttribute & DefaultValue
 using System.Windows.Markup;     // DependsOnAttribute
+using System.Windows.Navigation;        // PageFunctionBase
 
 namespace System.Windows.Controls
 {
@@ -24,7 +24,7 @@ namespace System.Windows.Controls
     ///     defines the default ControlTemplate and the app author 
     ///     can override this.
     /// </summary>
-    [Localizability(LocalizationCategory.None, Readability=Readability.Unreadable)]
+    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
     [DictionaryKeyProperty("TargetType")]
     public class ControlTemplate : FrameworkTemplate
     {
@@ -45,7 +45,7 @@ namespace System.Windows.Controls
             ValidateTargetType(targetType, "targetType");
             _targetType = targetType;
         }
-        
+
         #endregion Construction
 
         #region PublicMethods
@@ -85,7 +85,7 @@ namespace System.Windows.Controls
         [DefaultValue(null)]
         public Type TargetType
         {
-            get {  return _targetType; }
+            get { return _targetType; }
             set
             {
                 ValidateTargetType(value, "value");
@@ -93,7 +93,7 @@ namespace System.Windows.Controls
                 _targetType = value;
             }
         }
-        
+
         /// <summary>
         ///     Collection of Triggers
         /// </summary>
@@ -102,8 +102,8 @@ namespace System.Windows.Controls
         [DependsOn("Template")]
         public TriggerCollection Triggers
         {
-            get 
-            { 
+            get
+            {
                 if (_triggers == null)
                 {
                     _triggers = new TriggerCollection();
@@ -115,7 +115,7 @@ namespace System.Windows.Controls
                         _triggers.Seal();
                     }
                 }
-                return _triggers; 
+                return _triggers;
             }
         }
 
@@ -139,22 +139,22 @@ namespace System.Windows.Controls
                 throw new ArgumentException(SR.Format(SR.InvalidControlTemplateTargetType, targetType.Name));
             }
         }
-        
+
         #endregion NonPublicMethods
 
         #region NonPublicProperties
-        
+
         //
         //  TargetType for ControlTemplate. This is override is 
         //  so FrameworkTemplate can see this property.
         //
         internal override Type TargetTypeInternal
         {
-            get 
-            {  
+            get
+            {
                 if (TargetType != null)
                 {
-                    return TargetType; 
+                    return TargetType;
                 }
 
                 return DefaultTargetType;
@@ -181,9 +181,9 @@ namespace System.Windows.Controls
 
         #region Data
 
-        private Type                    _targetType;
-        private TriggerCollection       _triggers;
-        
+        private Type _targetType;
+        private TriggerCollection _triggers;
+
         // Target type is FrameworkElement by default
         internal static readonly Type DefaultTargetType = typeof(Control);
 

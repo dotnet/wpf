@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Markup;
 using System.Reflection;
+using System.Windows.Markup;
 
 //
 //  Contents:  ValueSerializer for the ICommand interface
@@ -11,7 +11,7 @@ using System.Reflection;
 
 namespace System.Windows.Input
 {
-    internal class CommandValueSerializer : ValueSerializer 
+    internal class CommandValueSerializer : ValueSerializer
     {
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
@@ -25,7 +25,7 @@ namespace System.Windows.Input
             {
                 return false;
             }
-            
+
             if (CommandConverter.IsKnownType(command.OwnerType))
             {
                 return true;
@@ -47,7 +47,7 @@ namespace System.Windows.Input
                     return true;
             }
 
-            return false; 
+            return false;
         }
 
         public override bool CanConvertFromString(string value, IValueSerializerContext context)
@@ -73,14 +73,14 @@ namespace System.Windows.Input
 
                         if (context == null)
                         {
-                            throw new InvalidOperationException(SR.Format(SR.ValueSerializerContextUnavailable, this.GetType().Name ));
+                            throw new InvalidOperationException(SR.Format(SR.ValueSerializerContextUnavailable, this.GetType().Name));
                         }
 
                         // Get the ValueSerializer for the System.Type type
                         typeSerializer = context.GetValueSerializerFor(typeof(Type));
                         if (typeSerializer == null)
                         {
-                            throw new InvalidOperationException(SR.Format(SR.TypeValueSerializerUnavailable, this.GetType().Name ));
+                            throw new InvalidOperationException(SR.Format(SR.TypeValueSerializerUnavailable, this.GetType().Name));
                         }
 
                         return $"{typeSerializer.ConvertToString(command.OwnerType, context)}.{command.Name}Command";
@@ -89,7 +89,7 @@ namespace System.Windows.Input
             }
             else
                 return string.Empty;
-            
+
             throw GetConvertToException(value, typeof(string));
         }
 
@@ -119,7 +119,7 @@ namespace System.Windows.Input
                     String commandName;
 
                     // Check for "ns:Class.Command" syntax.
-                    
+
                     int dotIndex = value.IndexOf('.');
                     if (dotIndex >= 0)
                     {
@@ -130,14 +130,14 @@ namespace System.Windows.Input
 
                         if (context == null)
                         {
-                            throw new InvalidOperationException(SR.Format(SR.ValueSerializerContextUnavailable, this.GetType().Name ));
+                            throw new InvalidOperationException(SR.Format(SR.ValueSerializerContextUnavailable, this.GetType().Name));
                         }
 
                         // Get the ValueSerializer for the System.Type type
                         ValueSerializer typeSerializer = context.GetValueSerializerFor(typeof(Type));
                         if (typeSerializer == null)
                         {
-                            throw new InvalidOperationException(SR.Format(SR.TypeValueSerializerUnavailable, this.GetType().Name ));
+                            throw new InvalidOperationException(SR.Format(SR.TypeValueSerializerUnavailable, this.GetType().Name));
                         }
 
 
@@ -154,7 +154,7 @@ namespace System.Windows.Input
                     }
 
                     // Find the command given the declaring type & name (this is shared with CommandConverter)
-                    ICommand command = CommandConverter.ConvertFromHelper( declaringType, commandName );
+                    ICommand command = CommandConverter.ConvertFromHelper(declaringType, commandName);
 
                     if (command != null)
                     {

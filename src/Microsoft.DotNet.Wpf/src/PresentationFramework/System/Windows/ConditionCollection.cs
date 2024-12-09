@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -63,7 +63,7 @@ namespace System.Windows
         #endregion ProtectedMethods
 
         #region PublicMethods
-        
+
         /// <summary>
         ///     Returns the sealed state of this object.  If true, any attempt
         ///     at modifying the state of this object will trigger an exception.
@@ -75,24 +75,24 @@ namespace System.Windows
                 return _sealed;
             }
         }
-        
+
         #endregion PublicMethods
 
         #region InternalMethods
-        
+
         internal void Seal(ValueLookupType type)
         {
             _sealed = true;
 
             // Seal all the conditions
-            for (int i=0; i<Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 this[i].Seal(type);
             }
         }
 
         #endregion InternalMethods
-        
+
         #region PrivateMethods
 
         private void CheckSealed()
@@ -102,7 +102,7 @@ namespace System.Windows
                 throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "ConditionCollection"));
             }
         }
-        
+
         private void ConditionValidation(object value)
         {
             ArgumentNullException.ThrowIfNull(value);
@@ -117,7 +117,7 @@ namespace System.Windows
         #endregion PrivateMethods
 
         #region Data
-    
+
         private bool _sealed;
 
         #endregion Data

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -412,8 +412,8 @@ namespace MS.Internal.Documents
 #if DEBUG
             Debug.Assert(dcp >= lines[lineIndex].StartPositionCP);
             Debug.Assert(dcp < lines[lineIndex].EndPositionCP ||
-                         (  dcp == lines[lineIndex].EndPositionCP && 
-                            (   position.LogicalDirection == LogicalDirection.Backward || 
+                         (dcp == lines[lineIndex].EndPositionCP &&
+                            (position.LogicalDirection == LogicalDirection.Backward ||
                                 (position.LogicalDirection == LogicalDirection.Forward && (lineIndex == lines.Count - 1)))));
 #endif
             return lineIndex;

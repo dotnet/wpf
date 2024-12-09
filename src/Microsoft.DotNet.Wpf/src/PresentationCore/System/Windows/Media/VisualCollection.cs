@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -101,7 +101,7 @@ namespace System.Windows.Media
         {
             if (IsReadOnlyInternal)
             {
-                throw new InvalidOperationException(SR.VisualCollection_ReadOnly); 
+                throw new InvalidOperationException(SR.VisualCollection_ReadOnly);
             }
         }
 
@@ -185,11 +185,11 @@ namespace System.Windows.Media
 
             // System.Array does not have a CopyTo method that takes a count. Therefore
             // the loop is programmed here out.
-            for (int i=0; i < _size; i++)
+            for (int i = 0; i < _size; i++)
             {
-                array.SetValue(_items[i], i+index);
+                array.SetValue(_items[i], i + index);
             }
-}
+        }
 
         /// <summary>
         /// Copies the Visual collection to the specified array starting at the specified index.
@@ -208,9 +208,9 @@ namespace System.Windows.Media
 
             // System.Array does not have a CopyTo method that takes a count. Therefore
             // the loop is programmed here out.
-            for (int i=0; i < _size; i++)
+            for (int i = 0; i < _size; i++)
             {
-                array[i+index] = _items[i];
+                array[i + index] = _items[i];
             }
         }
 
@@ -378,7 +378,7 @@ namespace System.Windows.Media
             //
             _owner.VerifyAccess();
             value.VerifyAccess();
-            
+
             // It is invalid to modify the children collection that we 
             // might be iterating during a property invalidation tree walk.
             if (_owner.IsVisualChildrenIterationInProgress)
@@ -415,7 +415,7 @@ namespace System.Windows.Media
             // (This is a noop if this object is not assigned to a Dispatcher.)
             //
             child.VerifyAccess();
-            
+
             Visual oldParent = VisualTreeHelper.GetContainingVisual2D(child._parent);
             int oldParentIndex = child._parentIndex;
 
@@ -457,7 +457,7 @@ namespace System.Windows.Media
 
             if ((_items == null) || (_size == _items.Length))
             {
-                EnsureCapacity(_size+1);
+                EnsureCapacity(_size + 1);
             }
             int addedPosition = _size++;
             Debug.Assert(_items[addedPosition] == null);
@@ -536,7 +536,7 @@ namespace System.Windows.Media
                     // If the Visual is not in this collection we silently return without
                     // failing. This is the same behavior that ArrayList implements. See
                     // also Windows OS 
-                    return; 
+                    return;
                 }
 
                 Debug.Assert(visual._parent != null);
@@ -564,7 +564,7 @@ namespace System.Windows.Media
 
                 for (int i = indexToRemove; i < _size; i++)
                 {
-                    Visual  child = _items[i+1];
+                    Visual child = _items[i + 1];
                     if (child != null)
                     {
                         child._parentIndex = i;
@@ -623,7 +623,7 @@ namespace System.Windows.Media
 
             if (visual == null)
             {
-                for (int i=0; i < _size; i++)
+                for (int i = 0; i < _size; i++)
                 {
                     if (_items[i] == null)
                     {
@@ -650,7 +650,7 @@ namespace System.Windows.Media
         {
             VerifyAPIReadWrite();
 
-            for (int i=0; i < _size; i++)
+            for (int i = 0; i < _size; i++)
             {
                 if (_items[i] != null)
                 {
@@ -706,14 +706,14 @@ namespace System.Windows.Media
                 EnsureCapacity(_size + 1);
             }
 
-            for (int i = _size-1; i >= index; i--)
+            for (int i = _size - 1; i >= index; i--)
             {
                 Visual child = _items[i];
                 if (child != null)
                 {
-                    child._parentIndex = i+1;
+                    child._parentIndex = i + 1;
                 }
-                _items[i+1] = child;
+                _items[i + 1] = child;
             }
             _items[index] = null;
 
@@ -799,7 +799,7 @@ namespace System.Windows.Media
                     _items[i + count] = null;
                 }
                 IncrementVersion(); // Incrementing version number here to be consistent with the ArrayList
-                            // implementation.
+                                    // implementation.
             }
         }
 
@@ -1003,7 +1003,7 @@ namespace System.Windows.Media
                 _index = -1; // not started.
             }
         }
-     }
+    }
 }
 
 

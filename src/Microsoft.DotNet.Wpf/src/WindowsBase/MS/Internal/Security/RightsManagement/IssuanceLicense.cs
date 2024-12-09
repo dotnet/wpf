@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description:
 //   This class wraps the issuance license publishing services
 
-using System.Text;
 using System.Security.RightsManagement;
+using System.Text;
 
 namespace MS.Internal.Security.RightsManagement
 {
@@ -255,7 +255,8 @@ namespace MS.Internal.Security.RightsManagement
             uint validityDays = 0;
             int hr = SafeNativeMethods.DRMGetIntervalTime(_issuanceLicenseHandle, ref validityDays);
             Errors.ThrowOnErrorCode(hr);
-            checked { unsignedPublishLicense.RightValidityIntervalDays = (int)validityDays; }
+            checked
+            { unsignedPublishLicense.RightValidityIntervalDays = (int)validityDays; }
 
             // let's get the rights information 
             int userIndex = 0;
@@ -406,7 +407,8 @@ namespace MS.Internal.Security.RightsManagement
             // the managed APIs treat Locale Id as int and the unmanaged ones as uint 
             // we need to convert it back and force
             uint locId;
-            checked { locId = (uint)localeId; }
+            checked
+            { locId = (uint)localeId; }
 
             int hr = SafeNativeMethods.DRMSetNameAndDescription(
                                     _issuanceLicenseHandle,
@@ -691,7 +693,8 @@ namespace MS.Internal.Security.RightsManagement
 
             // the managed APIs treat Locale Id as int and the unmanaged ones as uint 
             // we need to convert it back and force
-            checked { localeId = (int)locId; }
+            checked
+            { localeId = (int)locId; }
 
             // now we can build a ContentUser
             return new LocalizedNameDescriptionPair(name == null ? null : name.ToString(),
@@ -908,10 +911,10 @@ namespace MS.Internal.Security.RightsManagement
                                 revocationPoint.Id,
                                 revocationPoint.IdType,
                                 revocationPoint.Url.AbsoluteUri, // We are using Uri class as a basic validation mechanism. These URIs come from unmanaged 
-                // code libraries and go back as parameters into the unmanaged code libraries. 
-                // We use AbsoluteUri property as means of verifying that it is actually an absolute and 
-                // well formed Uri. If by any chance it happened to be a relative URI, an exception will 
-                // be thrown here. This will perform the necessary escaping.
+                                                                 // code libraries and go back as parameters into the unmanaged code libraries. 
+                                                                 // We use AbsoluteUri property as means of verifying that it is actually an absolute and 
+                                                                 // well formed Uri. If by any chance it happened to be a relative URI, an exception will 
+                                                                 // be thrown here. This will perform the necessary escaping.
                                 revocationPoint.Frequency,
                                 revocationPoint.Name,
                                 revocationPoint.PublicKey);
@@ -995,14 +998,15 @@ namespace MS.Internal.Security.RightsManagement
                                 publicKeyTemp);
             Errors.ThrowOnErrorCode(hr);
 
-            RevocationPoint resultRevocationPoint = new RevocationPoint();
-
-            resultRevocationPoint.Id = (idTemp == null) ? null : idTemp.ToString();
-            resultRevocationPoint.IdType = (idTypeTemp == null) ? null : idTypeTemp.ToString();
-            resultRevocationPoint.Url = (urlTemp == null) ? null : new Uri(urlTemp.ToString());
-            resultRevocationPoint.Name = (nameTemp == null) ? null : nameTemp.ToString();
-            resultRevocationPoint.PublicKey = (publicKeyTemp == null) ? null : publicKeyTemp.ToString();
-            resultRevocationPoint.Frequency = frequency;
+            RevocationPoint resultRevocationPoint = new RevocationPoint
+            {
+                Id = (idTemp == null) ? null : idTemp.ToString(),
+                IdType = (idTypeTemp == null) ? null : idTypeTemp.ToString(),
+                Url = (urlTemp == null) ? null : new Uri(urlTemp.ToString()),
+                Name = (nameTemp == null) ? null : nameTemp.ToString(),
+                PublicKey = (publicKeyTemp == null) ? null : publicKeyTemp.ToString(),
+                Frequency = frequency
+            };
 
             return resultRevocationPoint;
         }

@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.ComponentModel;
 using System.Collections;
+using System.ComponentModel;
 
 namespace System.Windows.Markup.Primitives
 {
@@ -38,9 +38,9 @@ namespace System.Windows.Markup.Primitives
             get
             {
                 Type propertyType = PropertyType;
-                
-                return (typeof(IList).IsAssignableFrom(propertyType) || 
-                        typeof(IDictionary).IsAssignableFrom(propertyType) || 
+
+                return (typeof(IList).IsAssignableFrom(propertyType) ||
+                        typeof(IDictionary).IsAssignableFrom(propertyType) ||
                         propertyType.IsArray);
             }
         }

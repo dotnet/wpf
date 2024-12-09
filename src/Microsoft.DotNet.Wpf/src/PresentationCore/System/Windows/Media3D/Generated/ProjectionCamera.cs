@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,35 +53,35 @@ namespace System.Windows.Media.Media3D
 
         private static void NearPlaneDistancePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ProjectionCamera target = ((ProjectionCamera) d);
+            ProjectionCamera target = ((ProjectionCamera)d);
 
 
             target.PropertyChanged(NearPlaneDistanceProperty);
         }
         private static void FarPlaneDistancePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ProjectionCamera target = ((ProjectionCamera) d);
+            ProjectionCamera target = ((ProjectionCamera)d);
 
 
             target.PropertyChanged(FarPlaneDistanceProperty);
         }
         private static void PositionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ProjectionCamera target = ((ProjectionCamera) d);
+            ProjectionCamera target = ((ProjectionCamera)d);
 
 
             target.PropertyChanged(PositionProperty);
         }
         private static void LookDirectionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ProjectionCamera target = ((ProjectionCamera) d);
+            ProjectionCamera target = ((ProjectionCamera)d);
 
 
             target.PropertyChanged(LookDirectionProperty);
         }
         private static void UpDirectionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ProjectionCamera target = ((ProjectionCamera) d);
+            ProjectionCamera target = ((ProjectionCamera)d);
 
 
             target.PropertyChanged(UpDirectionProperty);
@@ -97,7 +97,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(NearPlaneDistanceProperty);
+                return (double)GetValue(NearPlaneDistanceProperty);
             }
             set
             {
@@ -112,7 +112,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(FarPlaneDistanceProperty);
+                return (double)GetValue(FarPlaneDistanceProperty);
             }
             set
             {
@@ -127,7 +127,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Point3D) GetValue(PositionProperty);
+                return (Point3D)GetValue(PositionProperty);
             }
             set
             {
@@ -142,7 +142,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Vector3D) GetValue(LookDirectionProperty);
+                return (Vector3D)GetValue(LookDirectionProperty);
             }
             set
             {
@@ -157,7 +157,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Vector3D) GetValue(UpDirectionProperty);
+                return (Vector3D)GetValue(UpDirectionProperty);
             }
             set
             {
@@ -259,8 +259,8 @@ namespace System.Windows.Media.Media3D
         internal const double c_NearPlaneDistance = (double)0.125;
         internal const double c_FarPlaneDistance = (double)Double.PositiveInfinity;
         internal static Point3D s_Position = new Point3D();
-        internal static Vector3D s_LookDirection = new Vector3D(0,0,-1);
-        internal static Vector3D s_UpDirection = new Vector3D(0,1,0);
+        internal static Vector3D s_LookDirection = new Vector3D(0, 0, -1);
+        internal static Vector3D s_UpDirection = new Vector3D(0, 1, 0);
 
         #endregion Internal Fields
 
@@ -316,7 +316,7 @@ namespace System.Windows.Media.Media3D
                   RegisterProperty("LookDirection",
                                    typeof(Vector3D),
                                    typeofThis,
-                                   new Vector3D(0,0,-1),
+                                   new Vector3D(0, 0, -1),
                                    new PropertyChangedCallback(LookDirectionPropertyChanged),
                                    null,
                                    /* isIndependentlyAnimated  = */ true,
@@ -325,7 +325,7 @@ namespace System.Windows.Media.Media3D
                   RegisterProperty("UpDirection",
                                    typeof(Vector3D),
                                    typeofThis,
-                                   new Vector3D(0,1,0),
+                                   new Vector3D(0, 1, 0),
                                    new PropertyChangedCallback(UpDirectionPropertyChanged),
                                    null,
                                    /* isIndependentlyAnimated  = */ true,

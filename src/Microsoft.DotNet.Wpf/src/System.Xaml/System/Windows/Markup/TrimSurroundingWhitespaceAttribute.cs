@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,7 +9,7 @@ namespace System.Windows.Markup
     /// <summary>
     /// An attribute that specifies that the whitespace surrounding an element should be trimmed
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple=false, Inherited=true)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = true)]
     [TypeForwardedFrom("WindowsBase, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35")]
     public sealed class TrimSurroundingWhitespaceAttribute : Attribute
     {
@@ -19,5 +19,5 @@ namespace System.Windows.Markup
         public TrimSurroundingWhitespaceAttribute()
         {
         }
-   }
+    }
 }

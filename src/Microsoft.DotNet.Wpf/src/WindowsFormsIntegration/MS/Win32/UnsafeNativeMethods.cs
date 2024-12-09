@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,8 @@ namespace MS.Win32
         [ResourceExposure(ResourceScope.None)]
         internal static extern IntPtr SetParent(IntPtr hWnd, IntPtr hWndParent);
 
-        [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)] [return: MarshalAs(UnmanagedType.Bool)]
+        [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         [ResourceExposure(ResourceScope.None)]
         public static extern bool TranslateMessage([In, Out] ref System.Windows.Interop.MSG msg);
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -362,14 +362,14 @@ namespace System.Windows.Controls
                     {
                         this._owner.SelectedDate = null;
                     }
-                    
+
                     if (_removedItems.Count > 0)
                     {
                         Collection<DateTime> addedItems = new Collection<DateTime>();
                         RaiseSelectionChanged(_removedItems, addedItems);
                         _removedItems.Clear();
                     }
-                    
+
                     this._owner.UpdateCellItems();
                 }
             }
@@ -382,34 +382,34 @@ namespace System.Windows.Controls
                 switch (this._owner.SelectionMode)
                 {
                     case CalendarSelectionMode.SingleDate:
-                    {
-                        if (!this._owner.SelectedDate.HasValue || DateTimeHelper.CompareDays(this._owner.SelectedDate.Value, date) != 0)
                         {
-                            this._owner.SelectedDate = date;
-                        }
-                        else 
-                        {
-                            this._owner.SelectedDate = null;
-                        }
+                            if (!this._owner.SelectedDate.HasValue || DateTimeHelper.CompareDays(this._owner.SelectedDate.Value, date) != 0)
+                            {
+                                this._owner.SelectedDate = date;
+                            }
+                            else
+                            {
+                                this._owner.SelectedDate = null;
+                            }
 
-                        break;
-                    }
+                            break;
+                        }
 
                     case CalendarSelectionMode.MultipleRange:
-                    {
-                        if (!Remove(date))
                         {
-                            Add(date);
+                            if (!Remove(date))
+                            {
+                                Add(date);
+                            }
+
+                            break;
                         }
 
-                        break;
-                    }
-
-                    default: 
-                    {
-                        Debug.Assert(false);
-                        break;
-                    }
+                    default:
+                        {
+                            Debug.Assert(false);
+                            break;
+                        }
                 }
             }
         }

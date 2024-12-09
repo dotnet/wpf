@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -39,13 +39,13 @@ namespace System.Windows.Input
                     OnSystemGesture((RawStylusSystemGestureInputReport)stylusInputReport);
                     return null;
 
-                    /*
-                case RawStylusActions.Move:
-                case RawStylusActions.Activate:
-                case RawStylusActions.Deactivate:
-                case RawStylusActions.OutOfRange:
-                    return null;
-                     */
+                /*
+            case RawStylusActions.Move:
+            case RawStylusActions.Activate:
+            case RawStylusActions.Deactivate:
+            case RawStylusActions.OutOfRange:
+                return null;
+                 */
 
                 default:
                     return null;
@@ -130,7 +130,7 @@ namespace System.Windows.Input
                         _currentState = State.Idle;
                     }
                     break;
-}
+            }
 
             return null;
         }

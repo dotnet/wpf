@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,30 +20,30 @@ namespace MS.Internal.Ink
         #region Fields
 
         // Visuals, geometry builders and drawing stuff
-        DrawingVisual       _containerVisual = null;
-        Brush               _brush = null;
-        Pen                 _pen = null;
+        DrawingVisual _containerVisual = null;
+        Brush _brush = null;
+        Pen _pen = null;
         //Pen                 _linePen = null;
 
         //
-        bool                _isActivated = false;
-        Point               _firstLassoPoint;
-        Point               _lastLassoPoint;
-        int                 _count = 0;
+        bool _isActivated = false;
+        Point _firstLassoPoint;
+        Point _lastLassoPoint;
+        int _count = 0;
 
         // Entire lasso. Collected to hit test InkCanvas' subelements after stylus up.
-        List<Point>         _lasso = null;
-        Rect                _boundingBox;
+        List<Point> _lasso = null;
+        Rect _boundingBox;
 
         // some of these are probably not in sync
         // with the spec (which is not available at this moment), and also might
         // need to be different for the high contrast mode.
-        public const double  MinDistanceSquared     = 49.0;
-        const double  DotRadius                     = 2.5;
-        const double  DotCircumferenceThickness     = 0.5;
-        const double  ConnectLineThickness          = 0.75;
-        const double  ConnectLineOpacity            = 0.75;
-        static readonly Color DotColor              = Colors.Orange;     //FromArgb(1, 0.89f, 0.3607f, 0.1843f);
+        public const double MinDistanceSquared = 49.0;
+        const double DotRadius = 2.5;
+        const double DotCircumferenceThickness = 0.5;
+        const double ConnectLineThickness = 0.75;
+        const double ConnectLineOpacity = 0.75;
+        static readonly Color DotColor = Colors.Orange;     //FromArgb(1, 0.89f, 0.3607f, 0.1843f);
         static readonly Color DotCircumferenceColor = Colors.White;
 
         #endregion
@@ -71,7 +71,7 @@ namespace MS.Internal.Ink
 
             List<Point> justAdded = new List<Point>();
             int count = points.Count;
-            for ( int i = 0; i < count ; i++ )
+            for (int i = 0; i < count; i++)
             {
                 Point point = points[i];
 
@@ -102,7 +102,7 @@ namespace MS.Internal.Ink
 
                         _lastLassoPoint = point;
                         _count++;
-}
+                    }
                     else if (MinDistanceSquared < distanceSquared)
                     {
                         double step = Math.Sqrt(MinDistanceSquared / distanceSquared);
@@ -117,7 +117,7 @@ namespace MS.Internal.Ink
 
                             _lastLassoPoint = lassoPoint;
                             _count++;
-}
+                        }
                     }
                 }
             }
@@ -303,8 +303,10 @@ namespace MS.Internal.Ink
                 //_linePen.Brush.Opacity = ConnectLineOpacity;
                 //_linePen.LineJoin = PenLineJoin.Round;
 
-                _pen = new Pen(new SolidColorBrush(DotCircumferenceColor), DotCircumferenceThickness);
-                _pen.LineJoin = PenLineJoin.Round;
+                _pen = new Pen(new SolidColorBrush(DotCircumferenceColor), DotCircumferenceThickness)
+                {
+                    LineJoin = PenLineJoin.Round
+                };
                 _pen.Freeze();
 
                 _lasso = new List<Point>(100);

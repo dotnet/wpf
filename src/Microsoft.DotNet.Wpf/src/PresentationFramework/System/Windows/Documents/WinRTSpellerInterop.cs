@@ -1,8 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal.WindowsRuntime.Windows.Data.Text;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
@@ -11,11 +10,11 @@ using System.Security;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Windows.Controls;
+using System.Windows.Documents.MsSpellCheckLib;
 using System.Windows.Documents.Tracing;
 using System.Windows.Input;
 using System.Windows.Threading;
-
-using System.Windows.Documents.MsSpellCheckLib;
+using MS.Internal.WindowsRuntime.Windows.Data.Text;
 
 //
 // Description: Custom COM marshalling code and interfaces for interaction
@@ -25,7 +24,7 @@ using System.Windows.Documents.MsSpellCheckLib;
 
 namespace System.Windows.Documents
 {
-    internal partial class WinRTSpellerInterop: SpellerInteropBase
+    internal partial class WinRTSpellerInterop : SpellerInteropBase
     {
         #region Constructors
 
@@ -43,7 +42,7 @@ namespace System.Windows.Documents
             }
             catch (Exception ex)
                 // Sometimes, InvalidCastException is thrown when SpellCheckerFactory fails to instantiate correctly
-                when (ex is InvalidCastException || ex is COMException )
+                when (ex is InvalidCastException || ex is COMException)
             {
                 Dispose();
                 throw new PlatformNotSupportedException(string.Empty, ex);
@@ -91,7 +90,7 @@ namespace System.Windows.Documents
 
         #region IDispose
 
-        public override void  Dispose()
+        public override void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
@@ -200,7 +199,8 @@ namespace System.Windows.Documents
         /// <param name="token"></param>
         internal override void UnloadDictionary(object token)
         {
-            if (_isDisposed) return;
+            if (_isDisposed)
+                return;
 
             var data = (Tuple<string, string>)token;
             string ietfLanguageTag = data.Item1;
@@ -272,7 +272,7 @@ namespace System.Windows.Documents
                 return false;
             }
 
-            if(!_spellCheckers.ContainsKey(culture))
+            if (!_spellCheckers.ContainsKey(culture))
             {
                 WordsSegmenter wordBreaker = null;
 
@@ -282,7 +282,7 @@ namespace System.Windows.Documents
                     // WordsSegmenter instance will not inadvertently de-compound words into stems. For e.g.,
                     // the dedicated segmenter for German will break down words like Hausnummer into {Haus, nummer},
                     // whereas the nuetral segmenter will not do so.
-                    wordBreaker = WordsSegmenter.Create(culture.Name, shouldPreferNeutralSegmenter:true);
+                    wordBreaker = WordsSegmenter.Create(culture.Name, shouldPreferNeutralSegmenter: true);
                 }
                 catch when (!throwOnError)
                 {
@@ -370,14 +370,15 @@ namespace System.Windows.Documents
             var spellChecker = CurrentSpellChecker;
 
             bool spellCheckerNeeded = _mode.HasFlag(SpellerMode.SpellingErrors) || _mode.HasFlag(SpellerMode.Suggestions);
-            if ((wordBreaker == null) || (spellCheckerNeeded && spellChecker == null)) return 0;
+            if ((wordBreaker == null) || (spellCheckerNeeded && spellChecker == null))
+                return 0;
 
             int segmentCount = 0;
             bool continueIteration = true;
 
             // WinRT WordsSegmenter doesn't have the ability to break down text into segments (sentences).
             // Treat the whole text as a single segment for now.
-            foreach(string strSentence in new string[]{string.Join(string.Empty, text)})
+            foreach (string strSentence in new string[] { string.Join(string.Empty, text) })
             {
                 SpellerSentence sentence = new SpellerSentence(strSentence, wordBreaker, CurrentSpellChecker, this);
                 segmentCount += sentence.Segments.Count;
@@ -395,7 +396,8 @@ namespace System.Windows.Documents
                     continueIteration = sentenceCallback(sentence, data);
                 }
 
-                if (!continueIteration) break;
+                if (!continueIteration)
+                    break;
             }
 
             return segmentCount;
@@ -573,8 +575,8 @@ namespace System.Windows.Documents
             }
 
             string before = matches[0];
-            string match  = matches[1];
-            string after  = matches[2];
+            string match = matches[1];
+            string after = matches[2];
 
             // We expect 1 exact match, which implies the following:
             //      before == after == string.Emtpy
@@ -656,7 +658,7 @@ namespace System.Windows.Documents
                     ClearDictionaries(disposing);
                 }
             }
-            catch(InvalidOperationException)
+            catch (InvalidOperationException)
             {
                 // We have no way determining whether or not this is running
                 // on the UI thread. Safest to avoid calling into thread-sensitive
@@ -846,7 +848,7 @@ namespace System.Windows.Documents
 
         #region Internal Types
 
-        internal readonly struct TextRange: SpellerInteropBase.ITextRange
+        internal readonly struct TextRange : SpellerInteropBase.ITextRange
         {
             public TextRange(MS.Internal.WindowsRuntime.Windows.Data.Text.TextSegment textSegment)
             {
@@ -860,7 +862,7 @@ namespace System.Windows.Documents
                 _length = length;
             }
 
-            public TextRange(ITextRange textRange) : 
+            public TextRange(ITextRange textRange) :
                 this(textRange.Start, textRange.Length)
             {
             }
@@ -874,7 +876,7 @@ namespace System.Windows.Documents
 
             public int Start
             {
-                get { return _start;  }
+                get { return _start; }
             }
 
             public int Length
@@ -889,7 +891,7 @@ namespace System.Windows.Documents
         }
 
         [DebuggerDisplay("SubSegments.Count = {SubSegments.Count} TextRange = {TextRange.Start},{TextRange.Length}")]
-        internal class SpellerSegment: ISpellerSegment
+        internal class SpellerSegment : ISpellerSegment
         {
             #region Constructor
 
@@ -1039,7 +1041,7 @@ namespace System.Windows.Documents
         #region Private Types
 
         [DebuggerDisplay("Sentence = {_sentence}")]
-        private class SpellerSentence: ISpellerSentence
+        private class SpellerSentence : ISpellerSentence
         {
             public SpellerSentence(string sentence, WordsSegmenter wordBreaker, SpellChecker spellChecker, WinRTSpellerInterop owner)
             {
@@ -1085,7 +1087,7 @@ namespace System.Windows.Documents
 
             private string _sentence;
             private WordsSegmenter _wordBreaker;
-            private SpellChecker  _spellChecker;
+            private SpellChecker _spellChecker;
             private IReadOnlyList<SpellerSegment> _segments;
 
             /// <remarks>

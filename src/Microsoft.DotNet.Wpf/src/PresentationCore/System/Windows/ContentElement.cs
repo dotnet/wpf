@@ -1,16 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
-using MS.Internal.Interop;
-using MS.Internal.KnownBoxes;
-using MS.Internal.PresentationCore;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
+using MS.Internal;
+using MS.Internal.Interop;
+using MS.Internal.KnownBoxes;
+using MS.Internal.PresentationCore;
 
 namespace System.Windows
 {
@@ -36,7 +36,7 @@ namespace System.Windows
                     BooleanBoxes.FalseBox, // default value
                     new PropertyChangedCallback(IsFocused_Changed)));
         }
-                
+
         #endregion Construction
 
         #region DependencyObject
@@ -63,7 +63,7 @@ namespace System.Windows
 
             // If there was no InputElement parent in the visual ancestry,
             // check along the logical branch.
-            if(e == null && continuePastVisualTree)
+            if (e == null && continuePastVisualTree)
             {
                 DependencyObject doParent = GetUIParentCore();
                 e = InputElement.GetContainingInputElement(doParent) as DependencyObject;
@@ -223,8 +223,8 @@ namespace System.Windows
         internal void CancelSynchronizedInput()
         {
             InputManager.CancelSynchronizedInput();
-        }                     
-        
+        }
+
         #endregion Automation
 
         #region Input
@@ -261,29 +261,29 @@ namespace System.Windows
         /// </summary>
         internal void SynchronizeReverseInheritPropertyFlags(DependencyObject oldParent, bool isCoreParent)
         {
-            if(IsKeyboardFocusWithin)
+            if (IsKeyboardFocusWithin)
             {
                 Keyboard.PrimaryDevice.ReevaluateFocusAsync(this, oldParent, isCoreParent);
             }
 
             // Reevelauate the stylus properties first to guarentee that our property change
             // notifications fire before mouse properties.
-            if(IsStylusOver)
+            if (IsStylusOver)
             {
                 StylusLogic.CurrentStylusLogicReevaluateStylusOver(this, oldParent, isCoreParent);
             }
 
-            if(IsStylusCaptureWithin)
+            if (IsStylusCaptureWithin)
             {
                 StylusLogic.CurrentStylusLogicReevaluateCapture(this, oldParent, isCoreParent);
             }
 
-            if(IsMouseOver)
+            if (IsMouseOver)
             {
                 Mouse.PrimaryDevice.ReevaluateMouseOver(this, oldParent, isCoreParent);
             }
 
-            if(IsMouseCaptureWithin)
+            if (IsMouseCaptureWithin)
             {
                 Mouse.PrimaryDevice.ReevaluateCapture(this, oldParent, isCoreParent);
             }
@@ -300,7 +300,7 @@ namespace System.Windows
         }
 
         /// <summary>
-            /// BlockReverseInheritance method when overriden stops reverseInheritProperties from updating their parent level properties.
+        /// BlockReverseInheritance method when overriden stops reverseInheritProperties from updating their parent level properties.
         /// </summary>
         internal virtual bool BlockReverseInheritance()
         {
@@ -347,7 +347,7 @@ namespace System.Windows
         /// </summary>
         public bool IsMouseCaptured
         {
-            get { return (bool) GetValue(IsMouseCapturedProperty); }
+            get { return (bool)GetValue(IsMouseCapturedProperty); }
         }
 
         /// <summary>
@@ -410,7 +410,7 @@ namespace System.Windows
         /// </summary>
         public bool IsStylusCaptured
         {
-            get { return (bool) GetValue(IsStylusCapturedProperty); }
+            get { return (bool)GetValue(IsStylusCapturedProperty); }
         }
 
         /// <summary>
@@ -476,7 +476,7 @@ namespace System.Windows
         {
             if (Keyboard.Focus(this) == this)
             {
-                
+
                 // In order to show the touch keyboard we need to prompt the WinRT InputPane API.
                 // We only do this when the keyboard focus has changed as the keyboard focus dictates
                 // our current input targets for the touch and physical keyboards.
@@ -551,9 +551,9 @@ namespace System.Windows
 
         private static void IsFocused_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ContentElement ce = ((ContentElement) d);
+            ContentElement ce = ((ContentElement)d);
 
-            if ((bool) e.NewValue)
+            if ((bool)e.NewValue)
             {
                 ce.OnGotFocus(new RoutedEventArgs(GotFocusEvent, ce));
             }
@@ -586,7 +586,7 @@ namespace System.Windows
         /// </summary>
         public bool IsFocused
         {
-            get { return (bool) GetValue(IsFocusedProperty); }
+            get { return (bool)GetValue(IsFocusedProperty); }
         }
 
         /// <summary>
@@ -606,7 +606,7 @@ namespace System.Windows
         /// </summary>
         public bool IsEnabled
         {
-            get { return (bool) GetValue(IsEnabledProperty); }
+            get { return (bool)GetValue(IsEnabledProperty); }
             set { SetValue(IsEnabledProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -641,14 +641,14 @@ namespace System.Windows
 
         private static object CoerceIsEnabled(DependencyObject d, object value)
         {
-            ContentElement ce = (ContentElement) d;
+            ContentElement ce = (ContentElement)d;
 
             // We must be false if our parent is false, but we can be
             // either true or false if our parent is true.
             //
             // Another way of saying this is that we can only be true
             // if our parent is true, but we can always be false.
-            if((bool) value)
+            if ((bool)value)
             {
                 // Use the "logical" parent.  This is different that UIElement, which
                 // uses the visual parent.  But the "content parent" is not a complete
@@ -661,7 +661,7 @@ namespace System.Windows
 
                 DependencyObject parent = ce.GetUIParentCore();
 
-                if(parent == null || (bool)parent.GetValue(IsEnabledProperty))
+                if (parent == null || (bool)parent.GetValue(IsEnabledProperty))
                 {
                     return BooleanBoxes.Box(ce.IsEnabledCore);
                 }
@@ -712,7 +712,7 @@ namespace System.Windows
         /// </summary>
         public bool Focusable
         {
-            get { return (bool) GetValue(FocusableProperty); }
+            get { return (bool)GetValue(FocusableProperty); }
             set { SetValue(FocusableProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -721,13 +721,13 @@ namespace System.Windows
         /// </summary>
         public event DependencyPropertyChangedEventHandler FocusableChanged
         {
-            add {EventHandlersStoreAdd(UIElement.FocusableChangedKey, value);}
-            remove {EventHandlersStoreRemove(UIElement.FocusableChangedKey, value);}
+            add { EventHandlersStoreAdd(UIElement.FocusableChangedKey, value); }
+            remove { EventHandlersStoreRemove(UIElement.FocusableChangedKey, value); }
         }
 
         private static void OnFocusableChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ContentElement ce = (ContentElement) d;
+            ContentElement ce = (ContentElement)d;
 
             // Raise the public changed event.
             ce.RaiseDependencyPropertyChanged(UIElement.FocusableChangedKey, e);
@@ -742,7 +742,7 @@ namespace System.Windows
         /// </summary>
         public bool IsInputMethodEnabled
         {
-            get { return (bool) GetValue(InputMethod.IsInputMethodEnabledProperty); }
+            get { return (bool)GetValue(InputMethod.IsInputMethodEnabledProperty); }
         }
 
 
@@ -794,7 +794,7 @@ namespace System.Windows
         /// </summary>
         public bool AllowDrop
         {
-            get { return (bool) GetValue(AllowDropProperty); }
+            get { return (bool)GetValue(AllowDropProperty); }
             set { SetValue(AllowDropProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -951,7 +951,7 @@ namespace System.Windows
 
         // Caches the ContentElement's DependencyObjectType
         private static DependencyObjectType ContentElementType = DependencyObjectType.FromSystemTypeInternal(typeof(ContentElement));
-      
+
         #endregion Data
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -54,7 +54,7 @@ namespace System.Windows.Media.Imaging
 
         private static void SourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TransformedBitmap target = ((TransformedBitmap) d);
+            TransformedBitmap target = ((TransformedBitmap)d);
 
 
             target.SourcePropertyChangedHook(e);
@@ -69,7 +69,7 @@ namespace System.Windows.Media.Imaging
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
@@ -81,7 +81,7 @@ namespace System.Windows.Media.Imaging
         }
         private static void TransformPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            TransformedBitmap target = ((TransformedBitmap) d);
+            TransformedBitmap target = ((TransformedBitmap)d);
 
 
             target.TransformPropertyChangedHook(e);
@@ -96,7 +96,7 @@ namespace System.Windows.Media.Imaging
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
@@ -117,7 +117,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (BitmapSource) GetValue(SourceProperty);
+                return (BitmapSource)GetValue(SourceProperty);
             }
             set
             {
@@ -132,7 +132,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (Transform) GetValue(TransformProperty);
+                return (Transform)GetValue(TransformProperty);
             }
             set
             {
@@ -163,7 +163,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap) source;
+            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceTransformedBitmap);
@@ -180,7 +180,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap) source;
+            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceTransformedBitmap);
@@ -197,7 +197,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap) source;
+            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceTransformedBitmap);
@@ -214,7 +214,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap) source;
+            TransformedBitmap sourceTransformedBitmap = (TransformedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceTransformedBitmap);

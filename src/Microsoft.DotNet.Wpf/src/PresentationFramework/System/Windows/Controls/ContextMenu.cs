@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -90,7 +90,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Layout")]
         public double HorizontalOffset
         {
-            get { return (double) GetValue(HorizontalOffsetProperty); }
+            get { return (double)GetValue(HorizontalOffsetProperty); }
             set { SetValue(HorizontalOffsetProperty, value); }
         }
 
@@ -114,7 +114,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Layout")]
         public double VerticalOffset
         {
-            get { return (double) GetValue(VerticalOffsetProperty); }
+            get { return (double)GetValue(VerticalOffsetProperty); }
             set { SetValue(VerticalOffsetProperty, value); }
         }
 
@@ -136,15 +136,15 @@ namespace System.Windows.Controls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public bool IsOpen
         {
-            get { return (bool) GetValue(IsOpenProperty); }
+            get { return (bool)GetValue(IsOpenProperty); }
             set { SetValue(IsOpenProperty, BooleanBoxes.Box(value)); }
         }
 
         private static void OnIsOpenChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ContextMenu ctrl = (ContextMenu) d;
+            ContextMenu ctrl = (ContextMenu)d;
 
-            if ((bool) e.NewValue)
+            if ((bool)e.NewValue)
             {
                 if (ctrl._parentPopup == null)
                 {
@@ -183,7 +183,7 @@ namespace System.Windows.Controls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public UIElement PlacementTarget
         {
-            get { return (UIElement) GetValue(PlacementTargetProperty); }
+            get { return (UIElement)GetValue(PlacementTargetProperty); }
             set { SetValue(PlacementTargetProperty, value); }
         }
 
@@ -206,7 +206,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Layout")]
         public Rect PlacementRectangle
         {
-            get { return (Rect) GetValue(PlacementRectangleProperty); }
+            get { return (Rect)GetValue(PlacementRectangleProperty); }
             set { SetValue(PlacementRectangleProperty, value); }
         }
 
@@ -229,7 +229,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Layout")]
         public PlacementMode Placement
         {
-            get { return (PlacementMode) GetValue(PlacementProperty); }
+            get { return (PlacementMode)GetValue(PlacementProperty); }
             set { SetValue(PlacementProperty, value); }
         }
 
@@ -277,7 +277,7 @@ namespace System.Windows.Controls
         [Bindable(false), Category("Layout")]
         public CustomPopupPlacementCallback CustomPopupPlacementCallback
         {
-            get { return (CustomPopupPlacementCallback) GetValue(CustomPopupPlacementCallbackProperty); }
+            get { return (CustomPopupPlacementCallback)GetValue(CustomPopupPlacementCallbackProperty); }
             set { SetValue(CustomPopupPlacementCallbackProperty, value); }
         }
 
@@ -296,7 +296,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Behavior")]
         public bool StaysOpen
         {
-            get { return (bool) GetValue(StaysOpenProperty); }
+            get { return (bool)GetValue(StaysOpenProperty); }
             set { SetValue(StaysOpenProperty, value); }
         }
 
@@ -448,8 +448,8 @@ namespace System.Windows.Controls
             base.OnKeyUp(e);
             if (!e.Handled && IsOpen && e.Key == Key.Apps)
             {
-                    KeyboardLeaveMenuMode();
-                    e.Handled = true;
+                KeyboardLeaveMenuMode();
+                e.Handled = true;
             }
         }
 
@@ -480,9 +480,10 @@ namespace System.Windows.Controls
         {
             Debug.Assert(_parentPopup == null, "_parentPopup should be null");
 
-            _parentPopup = new Popup();
-
-            _parentPopup.AllowsTransparency = true;
+            _parentPopup = new Popup
+            {
+                AllowsTransparency = true
+            };
 
             // Coerce HasDropShadow property in case popup can't be transparent
             CoerceValue(HasDropShadowProperty);
@@ -549,7 +550,7 @@ namespace System.Windows.Controls
                 // while we do things like release capture so that notifications
                 // go up the tree correctly. Post this for later.
                 Dispatcher.BeginInvoke(DispatcherPriority.Normal,
-                    (DispatcherOperationCallback)delegate(object arg)
+                    (DispatcherOperationCallback)delegate (object arg)
                     {
                         ContextMenu cm = (ContextMenu)arg;
                         if (!cm.IsOpen) // Check that the menu is still closed
@@ -573,7 +574,7 @@ namespace System.Windows.Controls
                 // This will be called during a tree walk, closing the menu will cause a tree change,
                 // so post for later.
                 Dispatcher.BeginInvoke(DispatcherPriority.Send,
-                    (DispatcherOperationCallback)delegate(object arg)
+                    (DispatcherOperationCallback)delegate (object arg)
                     {
                         ContextMenu cm = (ContextMenu)arg;
                         if (cm.IsOpen) // Check that the menu is still open
@@ -607,7 +608,7 @@ namespace System.Windows.Controls
             {
                 SetCurrentValueInternal(IsOpenProperty, BooleanBoxes.FalseBox);
 
-                if(_weakRefToPreviousFocus != null)
+                if (_weakRefToPreviousFocus != null)
                 {
                     IInputElement previousFocus;
                     if (_weakRefToPreviousFocus.TryGetTarget(out previousFocus))
@@ -615,7 +616,7 @@ namespace System.Windows.Controls
                         // Previous focused element is still alive, so return focus to it.
                         previousFocus.Focus();
                     }
-                    
+
                     _weakRefToPreviousFocus = null;
                 }
             }
@@ -628,7 +629,7 @@ namespace System.Windows.Controls
             // in this case.
             //
             // See MenuBase.OnIsKeyboardFocusWithinChanged
-            if((bool)e.NewValue == false)
+            if ((bool)e.NewValue == false)
             {
                 _weakRefToPreviousFocus = null;
             }

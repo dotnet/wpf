@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,7 +25,7 @@ namespace System.Windows.Media
     public abstract partial class TileBrush : Brush
     {
         #region Constructors
-    
+
         /// <summary>
         /// Protected constructor for TileBrush.  
         /// Sets all values to their defaults.  
@@ -34,7 +34,7 @@ namespace System.Windows.Media
         protected TileBrush()
         {
         }
-   
+
         #endregion Constructors
 
         /// <summary>
@@ -55,17 +55,17 @@ namespace System.Windows.Media
         ///     space of the shape it is filling
         /// </param>
         internal void GetTileBrushMapping(
-            Rect shapeFillBounds,   
+            Rect shapeFillBounds,
             out Matrix tileBrushMapping
             )
         {
-            Rect contentBounds = Rect.Empty;            
+            Rect contentBounds = Rect.Empty;
             BrushMappingMode viewboxUnits = ViewboxUnits;
-            bool brushIsEmpty = false;            
- 
+            bool brushIsEmpty = false;
+
             // Initialize out-param 
             tileBrushMapping = Matrix.Identity;
- 
+
             // Obtain content bounds for RelativeToBoundingBox ViewboxUnits
             //
             // If ViewboxUnits is RelativeToBoundingBox, then the tile-brush
@@ -86,42 +86,42 @@ namespace System.Windows.Media
             // Pass the properties to MilUtility_GetTileBrushMapping to calculate
             // the mapping, unless the brush is already determined to be empty
             //
-            
+
             if (!brushIsEmpty)
             {
                 //
                 // Obtain properties that must be set into local variables
                 // 
-                
+
                 Rect viewport = Viewport;
                 Rect viewbox = Viewbox;
                 Matrix transformValue;
-                Matrix relativeTransformValue; 
+                Matrix relativeTransformValue;
 
                 Transform.GetTransformValue(
-                    Transform, 
-                    out transformValue 
+                    Transform,
+                    out transformValue
                     );
-                
+
                 Transform.GetTransformValue(
                     RelativeTransform,
                     out relativeTransformValue
-                    );                
-                
+                    );
+
                 unsafe
                 {
                     D3DMATRIX d3dTransform;
                     D3DMATRIX d3dRelativeTransform;
 
-                    D3DMATRIX d3dContentToShape;   
-                    int brushIsEmptyBOOL;                
+                    D3DMATRIX d3dContentToShape;
+                    int brushIsEmptyBOOL;
 
                     // Call MilUtility_GetTileBrushMapping, converting Matrix's to
                     // D3DMATRIX's when needed.
-                    
+
                     MILUtilities.ConvertToD3DMATRIX(&transformValue, &d3dTransform);
-                    MILUtilities.ConvertToD3DMATRIX(&relativeTransformValue, &d3dRelativeTransform);                
-                    
+                    MILUtilities.ConvertToD3DMATRIX(&relativeTransformValue, &d3dRelativeTransform);
+
                     MS.Win32.PresentationCore.UnsafeNativeMethods.MilCoreApi.MilUtility_GetTileBrushMapping(
                         &d3dTransform,
                         &d3dRelativeTransform,
@@ -139,20 +139,20 @@ namespace System.Windows.Media
                         );
 
                     // Convert the brushIsEmpty flag from BOOL to a bool.                      
-                    brushIsEmpty = (brushIsEmptyBOOL != 0);                     
+                    brushIsEmpty = (brushIsEmptyBOOL != 0);
 
                     // Set output matrix if the brush isn't empty.  Otherwise, the
                     // output of MilUtility_GetTileBrushMapping must be ignored.
                     if (!brushIsEmpty)
                     {
-                        Matrix contentToShape;                        
+                        Matrix contentToShape;
                         MILUtilities.ConvertFromD3DMATRIX(&d3dContentToShape, &contentToShape);
 
                         // Set the out-param to the computed tile brush mapping
-                        tileBrushMapping = contentToShape;                         
-                    }   
+                        tileBrushMapping = contentToShape;
+                    }
                 }
             }
-        }    
+        }
     }
 }

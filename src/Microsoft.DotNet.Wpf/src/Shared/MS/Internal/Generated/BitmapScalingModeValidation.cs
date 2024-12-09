@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,14 +32,14 @@ namespace System.Windows.Media
         /// <returns> 'true' if the enumeration contains a valid value, 'false' otherwise. </returns>
         public static bool IsBitmapScalingModeValid(object valueObject)
         {
-            BitmapScalingMode value = (BitmapScalingMode) valueObject;
+            BitmapScalingMode value = (BitmapScalingMode)valueObject;
 
-            return (value == BitmapScalingMode.Unspecified) || 
-                   (value == BitmapScalingMode.LowQuality) || 
-                   (value == BitmapScalingMode.HighQuality) || 
-                   (value == BitmapScalingMode.Linear) || 
-                   (value == BitmapScalingMode.Fant) || 
+            return (value == BitmapScalingMode.Unspecified) ||
+                   (value == BitmapScalingMode.LowQuality) ||
+                   (value == BitmapScalingMode.HighQuality) ||
+                   (value == BitmapScalingMode.Linear) ||
+                   (value == BitmapScalingMode.Fant) ||
                    (value == BitmapScalingMode.NearestNeighbor);
-        }                                
+        }
     }
 }

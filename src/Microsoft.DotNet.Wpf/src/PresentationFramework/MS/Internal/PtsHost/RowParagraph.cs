@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,8 +8,8 @@
 //
 using System.Windows;
 using System.Windows.Documents;
-using MS.Internal.Text;
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -42,9 +42,9 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         public override void Dispose()
         {
-            if(_cellParagraphs != null)
+            if (_cellParagraphs != null)
             {
-                for(int index = 0; index < _cellParagraphs.Length; index++)
+                for (int index = 0; index < _cellParagraphs.Length; index++)
                 {
                     _cellParagraphs[index].Dispose();
                 }
@@ -107,7 +107,7 @@ namespace MS.Internal.PtsHost
         {
             // local variables
             PTS.FSKROWHEIGHTRESTRICTION fskrowheight;
-            int                         dvrAboveBelow;
+            int dvrAboveBelow;
             bool isLastRowOfRowGroup = (Row.Index == Row.RowGroup.Rows.Count - 1);
 
             //  Note: PTS generally does not accept rows with no real cells
@@ -123,13 +123,14 @@ namespace MS.Internal.PtsHost
             GetRowHeight(out fskrowheight, out dvrAboveBelow);
 
             // initialize output parameter(s)
-            rowprops = new PTS.FSTABLEROWPROPS();
-
-            rowprops.fskrowbreak = PTS.FSKROWBREAKRESTRICTION.fskrowbreakAnywhere;
-            rowprops.fskrowheight = fskrowheight;
-            rowprops.dvrRowHeightRestriction = 0;
-            rowprops.dvrAboveRow = dvrAboveBelow;
-            rowprops.dvrBelowRow = dvrAboveBelow;
+            rowprops = new PTS.FSTABLEROWPROPS
+            {
+                fskrowbreak = PTS.FSKROWBREAKRESTRICTION.fskrowbreakAnywhere,
+                fskrowheight = fskrowheight,
+                dvrRowHeightRestriction = 0,
+                dvrAboveRow = dvrAboveBelow,
+                dvrBelowRow = dvrAboveBelow
+            };
 
 
             int cellSpacing = TextDpi.ToTextDpi(Table.InternalCellSpacing);
@@ -194,9 +195,9 @@ namespace MS.Internal.PtsHost
             urBBox = 0;
             durBBox = 0;
 
-            for(int index = 0; index < cCells; index++)
+            for (int index = 0; index < cCells; index++)
             {
-                if(rgpfsCell[index] != IntPtr.Zero)
+                if (rgpfsCell[index] != IntPtr.Zero)
                 {
                     CellParaClient cellParaClient = PtsContext.HandleToObject(rgpfsCell[index]) as CellParaClient;
                     PTS.ValidateHandle(cellParaClient);
@@ -205,7 +206,7 @@ namespace MS.Internal.PtsHost
                     break;
                 }
             }
-}
+        }
 
         /// <summary>
         /// GetCells
@@ -253,7 +254,7 @@ namespace MS.Internal.PtsHost
 
                 for (int j = 0; j < _spannedCells.Length; ++j)
                 {
-                    Debug.Assert (_spannedCells[j] != null);
+                    Debug.Assert(_spannedCells[j] != null);
 
                     TableCell cell = _spannedCells[j].Cell;
                     rgnmCell[i] = _spannedCells[j].Handle;
@@ -289,7 +290,7 @@ namespace MS.Internal.PtsHost
         {
             RowParagraph rowPrevious = null;
 
-            if(Row.Index != 0 && Previous != null)
+            if (Row.Index != 0 && Previous != null)
             {
                 rowPrevious = ((RowParagraph)Previous);
             }
@@ -298,7 +299,7 @@ namespace MS.Internal.PtsHost
 
             _cellParagraphs = new CellParagraph[Row.Cells.Count];
 
-            for(int cellIndex = 0; cellIndex < Row.Cells.Count; cellIndex++)
+            for (int cellIndex = 0; cellIndex < Row.Cells.Count; cellIndex++)
             {
                 _cellParagraphs[cellIndex] = new CellParagraph(Row.Cells[cellIndex], StructuralCache);
             }
@@ -314,7 +315,7 @@ namespace MS.Internal.PtsHost
                 _spannedCells = Array.Empty<CellParagraph>();
             }
 
-            for(int index = 0; index < _spannedCells.Length; index++)
+            for (int index = 0; index < _spannedCells.Length; index++)
             {
                 _spannedCells[index] = FindCellParagraphForCell(rowPrevious, Row.SpannedCells[index]);
             }
@@ -386,19 +387,19 @@ namespace MS.Internal.PtsHost
         /// </summary>
         private CellParagraph FindCellParagraphForCell(RowParagraph previousRow, TableCell cell)
         {
-            for(int index = 0; index < _cellParagraphs.Length; index++)
+            for (int index = 0; index < _cellParagraphs.Length; index++)
             {
-                if(_cellParagraphs[index].Cell == cell)
+                if (_cellParagraphs[index].Cell == cell)
                 {
                     return _cellParagraphs[index];
                 }
             }
 
-            if(previousRow != null)
+            if (previousRow != null)
             {
-                for(int index = 0; index < previousRow._spannedCells.Length; index++)
+                for (int index = 0; index < previousRow._spannedCells.Length; index++)
                 {
-                    if(previousRow._spannedCells[index].Cell == cell)
+                    if (previousRow._spannedCells[index].Cell == cell)
                     {
                         return previousRow._spannedCells[index];
                     }

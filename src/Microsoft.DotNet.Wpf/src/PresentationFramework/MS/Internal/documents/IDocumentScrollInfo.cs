@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+Ôªø// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,10 +8,10 @@
 //
 
 using System.Collections.ObjectModel;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
-using System.Windows;
 
 namespace MS.Internal.Documents
 {
@@ -49,7 +49,7 @@ namespace MS.Internal.Documents
 
         /// <summary>
         /// Scrolls the next row of pages into view.  This differs from 
-        /// IScrollInfoís ìPageDownî in that PageDown pages by Viewports 
+        /// IScrollInfo‚Äôs ‚ÄúPageDown‚Äù in that PageDown pages by Viewports 
         /// which may not coincide with page dimensions, whereas 
         /// ScrollToNextRow takes these dimensions into account so that 
         /// precisely the next row of pages is displayed.
@@ -57,7 +57,7 @@ namespace MS.Internal.Documents
         void ScrollToNextRow();
 
         /// Scrolls the previous row of pages into view.  This differs from 
-        /// IScrollInfoís ìPageUpî in that PageUp pages by Viewports 
+        /// IScrollInfo‚Äôs ‚ÄúPageUp‚Äù in that PageUp pages by Viewports 
         /// which may not coincide with page dimensions, whereas 
         /// ScrollToPreviousRow takes these dimensions into account so that 
         /// precisely the previous row of pages is displayed.
@@ -109,7 +109,7 @@ namespace MS.Internal.Documents
         void FitToPageHeight();
 
         /// <summary>
-        /// Changes the view to ìthumbnail viewî which will scale the document 
+        /// Changes the view to ‚Äúthumbnail view‚Äù which will scale the document 
         /// such that as many pages are visible at once as is possible.
         /// </summary>
         void ViewThumbnails();
@@ -155,19 +155,19 @@ namespace MS.Internal.Documents
         int MaxPagesAcross { get; }
 
         /// <summary>
-        /// Specifies the vertical gap between Pages when laid out, in pixel (1/96î) units.  
+        /// Specifies the vertical gap between Pages when laid out, in pixel (1/96‚Äù) units.  
         /// </summary>
         /// <value></value>
         double VerticalPageSpacing { get; set; }
 
         /// <summary>
-        /// Specifies the horizontal gap between Pages when laid out, in pixel (1/96î) units.  
+        /// Specifies the horizontal gap between Pages when laid out, in pixel (1/96‚Äù) units.  
         /// </summary>
         /// <value></value>
         double HorizontalPageSpacing { get; set; }
 
         /// <summary>
-        /// Specifies whether each displayed page should be adorned with a ìDrop Shadowî border or not.
+        /// Specifies whether each displayed page should be adorned with a ‚ÄúDrop Shadow‚Äù border or not.
         /// </summary>
         /// <value></value>
         bool ShowPageBorders { get; set; }
@@ -196,9 +196,9 @@ namespace MS.Internal.Documents
 
         /// <summary>
         /// DocumentViewerOwner is the DocumentViewer Control and UI that hosts the IDocumentScrollInfo object.  
-        /// This control is dependent on this IDSIís properties, so implementers of IDSI should call 
+        /// This control is dependent on this IDSI‚Äôs properties, so implementers of IDSI should call 
         /// InvalidateDocumentScrollInfo() on this object when related properties change so that 
-        /// DocumentViewerís UI will be kept in sync.  This property is analogous to IScrollInfoís ScrollOwner 
+        /// DocumentViewer‚Äôs UI will be kept in sync.  This property is analogous to IScrollInfo‚Äôs ScrollOwner 
         /// property.
         /// </summary>
         /// <value></value>

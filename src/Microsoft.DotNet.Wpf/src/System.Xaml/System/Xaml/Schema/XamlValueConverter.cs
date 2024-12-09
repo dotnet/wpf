@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Xaml.Schema
         public XamlType TargetType { get; }
 
         public XamlValueConverter(Type converterType, XamlType targetType)
-            :this(converterType, targetType, null)
+            : this(converterType, targetType, null)
         {
         }
 

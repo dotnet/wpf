@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace MS.Internal.PtsHost
     {
         internal TextFormatterHost(TextFormatter textFormatter, TextFormattingMode textFormattingMode, double pixelsPerDip)
         {
-            if(textFormatter == null)
+            if (textFormatter == null)
             {
                 TextFormatter = TextFormatter.FromCurrentDispatcher(textFormattingMode);
             }
@@ -68,10 +68,10 @@ namespace MS.Internal.PtsHost
             )
         {
             Debug.Assert(Context != null, "TextFormatter host is not initialized.");
-            Debug.Assert(textSourceCharacterIndex>= 0, "Character index must be non-negative.");
+            Debug.Assert(textSourceCharacterIndex >= 0, "Character index must be non-negative.");
             return Context.GetTextEffectCharacterIndexFromTextSourceCharacterIndex(textSourceCharacterIndex);
         }
-        
+
         //-------------------------------------------------------------------
         // TextFormatterHost context, object responsible for providing 
         // formatting information.

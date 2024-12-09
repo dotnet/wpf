@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class TableItemPattern: GridItemPattern
 #else
-    public class TableItemPattern: GridItemPattern
+    public class TableItemPattern : GridItemPattern
 #endif
     {
         //------------------------------------------------------
@@ -23,7 +23,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         private TableItemPattern(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -40,7 +40,7 @@ namespace System.Windows.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>TableItem pattern</summary>
@@ -60,7 +60,7 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
 
@@ -72,7 +72,7 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
 
         /// <summary>
@@ -132,7 +132,7 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static new object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -148,7 +148,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private SafePatternHandle _hPattern;
@@ -193,7 +193,7 @@ namespace System.Windows.Automation
             //  Public Properties
             //
             //------------------------------------------------------
- 
+
             #region Public Properties
 
             /// <summary>

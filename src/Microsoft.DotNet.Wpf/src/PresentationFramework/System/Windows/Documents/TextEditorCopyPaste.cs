@@ -1,15 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
 using System.Globalization;
-using System.Xml;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Windows.Input;
 using System.Windows.Controls; // ScrollChangedEventArgs
+using System.Windows.Input;
 using System.Windows.Markup;
+using System.Xml;
+using MS.Internal;
 using MS.Internal.Commands; // CommandHelpers
 
 //
@@ -94,32 +94,32 @@ namespace System.Windows.Documents
             // We do this only if our content is rich
             if (This.AcceptsRichContent)
             {
-                    Stream wpfContainerMemory = null;
-                    // null wpfContainerMemory on entry means that container is optional
-                    // and will be not created when there is no images in the range.
+                Stream wpfContainerMemory = null;
+                // null wpfContainerMemory on entry means that container is optional
+                // and will be not created when there is no images in the range.
 
-                    // Create in-memory wpf package, and serialize the content of selection into it
-                    string xamlTextWithImages = WpfPayload.SaveRange(This.Selection, ref wpfContainerMemory, /*useFlowDocumentAsRoot:*/false);
+                // Create in-memory wpf package, and serialize the content of selection into it
+                string xamlTextWithImages = WpfPayload.SaveRange(This.Selection, ref wpfContainerMemory, /*useFlowDocumentAsRoot:*/false);
 
-                    if (xamlTextWithImages.Length > 0)
+                if (xamlTextWithImages.Length > 0)
+                {
+                    // ConfirmDataFormatSetting raises a public event - could throw recoverable exception.
+                    if (wpfContainerMemory != null && ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.XamlPackage))
                     {
-                        // ConfirmDataFormatSetting raises a public event - could throw recoverable exception.
-                        if (wpfContainerMemory != null && ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.XamlPackage))
-                        {
-                            dataObject.SetData(DataFormats.XamlPackage, wpfContainerMemory);
-                        }
+                        dataObject.SetData(DataFormats.XamlPackage, wpfContainerMemory);
+                    }
 
-                        // ConfirmDataFormatSetting raises a public event - could throw recoverable exception.
-                        if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.Rtf))
-                        {
-                            // Convert xaml to rtf text to set rtf data into data object.
-                            string rtfText = ConvertXamlToRtf(xamlTextWithImages, wpfContainerMemory);
+                    // ConfirmDataFormatSetting raises a public event - could throw recoverable exception.
+                    if (ConfirmDataFormatSetting(This.UiScope, dataObject, DataFormats.Rtf))
+                    {
+                        // Convert xaml to rtf text to set rtf data into data object.
+                        string rtfText = ConvertXamlToRtf(xamlTextWithImages, wpfContainerMemory);
 
-                            if (rtfText != String.Empty)
-                            {
-                                dataObject.SetData(DataFormats.Rtf, rtfText, true);
-                            }
+                        if (rtfText != String.Empty)
+                        {
+                            dataObject.SetData(DataFormats.Rtf, rtfText, true);
                         }
+                    }
 
                     // Add a CF_BITMAP if we have only one image selected.
                     Image image = This.Selection.GetUIElementSelected() as Image;
@@ -335,7 +335,7 @@ namespace System.Windows.Documents
                         // One of reason should be the opening fail of Clipboard by the destroyed hwnd.
                         Clipboard.CriticalSetDataObject(dataObject, true);
                     }
-                    catch (ExternalException) 
+                    catch (ExternalException)
                         when (!FrameworkCompatibilityPreferences.ShouldThrowOnCopyOrCutFailure)
                     {
                         // Clipboard is failed to set the data object.
@@ -440,8 +440,10 @@ namespace System.Windows.Documents
                 using (Stream xamlStream = wpfPayload.CreateXamlStream())
                 {
                     // Create XamlRtfConverter to process the converting from Rtf to Xaml
-                    XamlRtfConverter xamlRtfConverter = new XamlRtfConverter();
-                    xamlRtfConverter.WpfPayload = wpfPayload;
+                    XamlRtfConverter xamlRtfConverter = new XamlRtfConverter
+                    {
+                        WpfPayload = wpfPayload
+                    };
 
                     string xamlContent = xamlRtfConverter.ConvertRtfToXaml(rtfContent);
                     if (xamlContent != string.Empty)

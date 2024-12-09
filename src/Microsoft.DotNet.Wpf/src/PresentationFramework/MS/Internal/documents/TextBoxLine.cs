@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -371,7 +371,8 @@ namespace System.Windows.Controls
             get
             {
                 // If there are no Newline characters, it is not the end of paragraph.
-                if (_line.NewlineLength == 0) { return false; }
+                if (_line.NewlineLength == 0)
+                { return false; }
                 // Since there are Newline characters in the line, do more expensive and
                 // accurate check.
                 IList<TextSpan<TextRun>> runs = _line.GetTextRunSpans();
@@ -448,7 +449,7 @@ namespace System.Windows.Controls
 
             var textEditor = position.TextContainer.TextSelection?.TextEditor;
 
-            
+
             // Apply selection highlighting if needed
             if ((textEditor?.TextView?.RendersOwnSelection == true)
                 && highlights.GetHighlightValue(position, LogicalDirection.Forward, typeof(TextSelection)) != DependencyProperty.UnsetValue)

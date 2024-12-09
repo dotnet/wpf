@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,8 +7,8 @@
 // Description: Base class for DataTemplateKey, TableTemplateKey.
 //
 
-using System.Reflection;
 using System.ComponentModel;
+using System.Reflection;
 using System.Windows.Markup;
 
 namespace System.Windows
@@ -35,7 +35,7 @@ namespace System.Windows
             _templateType = templateType;
         }
 
-#region ISupportInitialize
+        #region ISupportInitialize
 
         /// <summary>Begin Initialization</summary>
         void ISupportInitialize.BeginInit()
@@ -54,7 +54,7 @@ namespace System.Windows
             _initializing = false;
         }
 
-#endregion ISupportInitialize
+        #endregion ISupportInitialize
 
         /// <summary>
         /// The type for which the template is designed.  This is either
@@ -106,7 +106,7 @@ namespace System.Windows
             TemplateKey key = o as TemplateKey;
             if (key != null)
             {
-                return  _templateType == key._templateType &&
+                return _templateType == key._templateType &&
                         Object.Equals(_dataType, key._dataType);
             }
             return false;
@@ -117,8 +117,8 @@ namespace System.Windows
         {
             Type type = DataType as Type;
             return (DataType != null)
-                    ?   string.Create(TypeConverterHelper.InvariantEnglishUS, $"{this.GetType().Name}({DataType})")
-                    :   string.Create(TypeConverterHelper.InvariantEnglishUS, $"{this.GetType().Name}(null)");
+                    ? string.Create(TypeConverterHelper.InvariantEnglishUS, $"{this.GetType().Name}({DataType})")
+                    : string.Create(TypeConverterHelper.InvariantEnglishUS, $"{this.GetType().Name}(null)");
         }
 
         /// <summary>

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -47,9 +47,9 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="origin">drawing origin</param>
         /// <param name="inversion">indicate the inversion of the drawing surface</param>
         public abstract void Draw(
-            DrawingContext      drawingContext,
-            Point               origin,
-            InvertAxes          inversion
+            DrawingContext drawingContext,
+            Point origin,
+            InvertAxes inversion
             );
 
 
@@ -58,7 +58,7 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         /// <param name="collapsingPropertiesList">a list of collapsing properties</param>
         public abstract TextLine Collapse(
-            params TextCollapsingProperties[]   collapsingPropertiesList
+            params TextCollapsingProperties[] collapsingPropertiesList
             );
 
 
@@ -75,10 +75,10 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="distance">distance in text flow direction from the beginning of the line</param>
         /// <returns>character hit</returns>
         public abstract CharacterHit GetCharacterHitFromDistance(
-            double      distance
+            double distance
             );
 
-        
+
         /// <summary>
         /// Client to get the distance from the beginning of the line from the specified 
         /// character hit.
@@ -86,7 +86,7 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="characterHit">character hit of the character to query the distance.</param>
         /// <returns>distance in text flow direction from the beginning of the line.</returns>
         public abstract double GetDistanceFromCharacterHit(
-            CharacterHit    characterHit
+            CharacterHit characterHit
             );
 
 
@@ -96,7 +96,7 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="characterHit">the current character hit</param>
         /// <returns>the next character hit</returns>
         public abstract CharacterHit GetNextCaretCharacterHit(
-            CharacterHit    characterHit
+            CharacterHit characterHit
             );
 
 
@@ -106,7 +106,7 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="characterHit">the current character hit</param>
         /// <returns>the previous character hit</returns>
         public abstract CharacterHit GetPreviousCaretCharacterHit(
-            CharacterHit    characterHit
+            CharacterHit characterHit
             );
 
 
@@ -116,7 +116,7 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="characterHit">the current character hit</param>
         /// <returns>the character hit after backspacing</returns>
         public abstract CharacterHit GetBackspaceCaretCharacterHit(
-            CharacterHit    characterHit
+            CharacterHit characterHit
             );
 
         public double PixelsPerDip
@@ -139,7 +139,7 @@ namespace System.Windows.Media.TextFormatting
         /// return back to it,  vice versa for the trailing edge of a codepoint. 
         /// </remarks>
         internal bool IsAtCaretCharacterHit(CharacterHit characterHit, int cpFirst)
-        {   
+        {
             // TrailingLength is used as a flag to indicate whether the character 
             // hit is on the leading or trailing edge of the character.
             if (characterHit.TrailingLength == 0)
@@ -157,12 +157,12 @@ namespace System.Windows.Media.TextFormatting
             }
             else
             {
-                CharacterHit previousHit = GetPreviousCaretCharacterHit(characterHit);              
-                CharacterHit nextHit     = GetNextCaretCharacterHit(previousHit);
-                return nextHit == characterHit; 
+                CharacterHit previousHit = GetPreviousCaretCharacterHit(characterHit);
+                CharacterHit nextHit = GetNextCaretCharacterHit(previousHit);
+                return nextHit == characterHit;
             }
         }
-        
+
 
 
         /// <summary>
@@ -172,8 +172,8 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="textLength">number of characters of the specified range</param>
         /// <returns>an array of bounding rectangles.</returns>
         public abstract IList<TextBounds> GetTextBounds(
-            int     firstTextSourceCharacterIndex,
-            int     textLength
+            int firstTextSourceCharacterIndex,
+            int textLength
             );
 
 
@@ -188,21 +188,21 @@ namespace System.Windows.Media.TextFormatting
         /// in the line. Through IndexedGlyphRun client can obtain glyph information of 
         /// a text source character. 
         /// </summary>
-        public abstract IEnumerable<IndexedGlyphRun> GetIndexedGlyphRuns();        
+        public abstract IEnumerable<IndexedGlyphRun> GetIndexedGlyphRuns();
 
 
         /// <summary>
         /// Client to get a boolean value indicates whether content of the line overflows 
         /// the specified paragraph width.
         /// </summary>
-        public abstract bool HasOverflowed 
+        public abstract bool HasOverflowed
         { get; }
 
 
         /// <summary>
         /// Client to get a boolean value indicates whether a line has been collapsed
         /// </summary>
-        public abstract bool HasCollapsed 
+        public abstract bool HasCollapsed
         { get; }
 
 
@@ -232,14 +232,14 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Client to get the number of text source positions of this line
         /// </summary>
-        public abstract int Length 
+        public abstract int Length
         { get; }
 
 
         /// <summary>
         /// Client to get the number of whitespace characters at the end of the line.
         /// </summary>
-        public abstract int TrailingWhitespaceLength 
+        public abstract int TrailingWhitespaceLength
         { get; }
 
 
@@ -247,42 +247,42 @@ namespace System.Windows.Media.TextFormatting
         /// Client to get the number of characters following the last character 
         /// of the line that may trigger reformatting of the current line.
         /// </summary>
-        public abstract int DependentLength 
+        public abstract int DependentLength
         { get; }
 
 
         /// <summary>
         /// Client to get the number of newline characters at line end
         /// </summary>
-        public abstract int NewlineLength 
+        public abstract int NewlineLength
         { get; }
 
 
         /// <summary>
         /// Client to get distance from paragraph start to line start
         /// </summary>
-        public abstract double Start 
+        public abstract double Start
         { get; }
 
 
         /// <summary>
         /// Client to get the total width of this line
         /// </summary>
-        public abstract double Width 
+        public abstract double Width
         { get; }
 
 
         /// <summary>
         /// Client to get the total width of this line including width of whitespace characters at the end of the line.
         /// </summary>
-        public abstract double WidthIncludingTrailingWhitespace 
+        public abstract double WidthIncludingTrailingWhitespace
         { get; }
 
 
         /// <summary>
         /// Client to get the height of the line
         /// </summary>
-        public abstract double Height 
+        public abstract double Height
         { get; }
 
 
@@ -297,14 +297,14 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Client to get the height of the actual black of the line
         /// </summary>
-        public abstract double Extent 
+        public abstract double Extent
         { get; }
 
 
         /// <summary>
         /// Client to get the distance from top to baseline of this text line
         /// </summary>
-        public abstract double Baseline 
+        public abstract double Baseline
         { get; }
 
 
@@ -320,36 +320,36 @@ namespace System.Windows.Media.TextFormatting
         /// Client to get the distance from the before edge of line height 
         /// to the baseline of marker of the line if any.
         /// </summary>
-        public abstract double MarkerBaseline 
+        public abstract double MarkerBaseline
         { get; }
 
 
         /// <summary>
         /// Client to get the overall height of the list items marker of the line if any.
         /// </summary>
-        public abstract double MarkerHeight 
+        public abstract double MarkerHeight
         { get; }
 
 
         /// <summary>
         /// Client to get the distance covering all black preceding the leading edge of the line.
         /// </summary>
-        public abstract double OverhangLeading 
+        public abstract double OverhangLeading
         { get; }
 
 
         /// <summary>
         /// Client to get the distance covering all black following the trailing edge of the line.
         /// </summary>
-        public abstract double OverhangTrailing 
+        public abstract double OverhangTrailing
         { get; }
 
 
         /// <summary>
         /// Client to get the distance from the after edge of line height to the after edge of the extent of the line.
         /// </summary>
-        public abstract double OverhangAfter 
-        { get; }       
+        public abstract double OverhangAfter
+        { get; }
         #endregion
     }
 

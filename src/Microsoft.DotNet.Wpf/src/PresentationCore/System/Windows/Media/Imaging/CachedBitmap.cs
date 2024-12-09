@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -133,49 +133,49 @@ namespace System.Windows.Media.Imaging
 
             if (pixels is byte[])
             {
-                fixed(void * pixelArray = (byte[])pixels)
+                fixed (void* pixelArray = (byte[])pixels)
                     InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
                                       pixelFormat, palette,
                                       (IntPtr)pixelArray, destBufferSize, stride);
             }
             else if (pixels is short[])
             {
-                fixed(void * pixelArray = (short[])pixels)
+                fixed (void* pixelArray = (short[])pixels)
                     InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
                                       pixelFormat, palette,
                                       (IntPtr)pixelArray, destBufferSize, stride);
             }
             else if (pixels is ushort[])
             {
-                fixed(void * pixelArray = (ushort[])pixels)
+                fixed (void* pixelArray = (ushort[])pixels)
                     InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
                                       pixelFormat, palette,
                                       (IntPtr)pixelArray, destBufferSize, stride);
             }
             else if (pixels is int[])
             {
-                fixed(void * pixelArray = (int[])pixels)
+                fixed (void* pixelArray = (int[])pixels)
                     InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
                                       pixelFormat, palette,
                                       (IntPtr)pixelArray, destBufferSize, stride);
             }
             else if (pixels is uint[])
             {
-                fixed(void * pixelArray = (uint[])pixels)
+                fixed (void* pixelArray = (uint[])pixels)
                     InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
                                       pixelFormat, palette,
                                       (IntPtr)pixelArray, destBufferSize, stride);
             }
             else if (pixels is float[])
             {
-                fixed(void * pixelArray = (float[])pixels)
+                fixed (void* pixelArray = (float[])pixels)
                     InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
                                       pixelFormat, palette,
                                       (IntPtr)pixelArray, destBufferSize, stride);
             }
             else if (pixels is double[])
             {
-                fixed(void * pixelArray = (double[])pixels)
+                fixed (void* pixelArray = (double[])pixels)
                     InitFromMemoryPtr(pixelWidth, pixelHeight, dpiX, dpiY,
                                       pixelFormat, palette,
                                       (IntPtr)pixelArray, destBufferSize, stride);
@@ -293,7 +293,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            CachedBitmap sourceBitmap = (CachedBitmap) sourceFreezable;
+            CachedBitmap sourceBitmap = (CachedBitmap)sourceFreezable;
 
             base.CloneCore(sourceFreezable);
 
@@ -305,7 +305,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            CachedBitmap sourceBitmap = (CachedBitmap) sourceFreezable;
+            CachedBitmap sourceBitmap = (CachedBitmap)sourceFreezable;
 
             base.CloneCurrentValueCore(sourceFreezable);
 
@@ -450,9 +450,9 @@ namespace System.Windows.Media.Imaging
             UpdateCachedSettings();
         }
 
-        BitmapSource        _source;
+        BitmapSource _source;
         BitmapCreateOptions _createOptions = BitmapCreateOptions.None;
-        BitmapCacheOption   _cacheOption = BitmapCacheOption.Default;
+        BitmapCacheOption _cacheOption = BitmapCacheOption.Default;
     }
     #endregion // CachedBitmap
 }

@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.ComponentModel;
 using MS.Win32;
 
 // Used to support the warnings disabled below
@@ -17,9 +17,9 @@ namespace System.Windows.Automation.Peers
     public class GenericRootAutomationPeer : UIElementAutomationPeer
     {
         ///
-        public GenericRootAutomationPeer(UIElement owner): base(owner)
-        {}
-    
+        public GenericRootAutomationPeer(UIElement owner) : base(owner)
+        { }
+
         ///
         override protected string GetClassNameCore()
         {
@@ -37,10 +37,10 @@ namespace System.Windows.Automation.Peers
         {
             string name = base.GetNameCore();
 
-            if(name == string.Empty)
+            if (name == string.Empty)
             {
                 IntPtr hwnd = this.Hwnd;
-                if(hwnd != IntPtr.Zero)
+                if (hwnd != IntPtr.Zero)
                 {
                     try
                     {
@@ -51,12 +51,12 @@ namespace System.Windows.Automation.Peers
 
                         name = sb.ToString();
                     }
-// Allow empty catch statements.
+                    // Allow empty catch statements.
 #pragma warning disable 56502
-                    catch(Win32Exception) {}
-// Disallow empty catch statements.
+                    catch (Win32Exception) { }
+                    // Disallow empty catch statements.
 #pragma warning restore 56502
-                    
+
                     if (name == null)
                         name = string.Empty;
                 }
@@ -68,21 +68,21 @@ namespace System.Windows.Automation.Peers
         ///
         override protected Rect GetBoundingRectangleCore()
         {
-            Rect bounds = new Rect(0,0,0,0);
-            
+            Rect bounds = new Rect(0, 0, 0, 0);
+
             IntPtr hwnd = this.Hwnd;
-            if(hwnd != IntPtr.Zero)
+            if (hwnd != IntPtr.Zero)
             {
-                NativeMethods.RECT rc = new NativeMethods.RECT(0,0,0,0);
-                try 
-                { 
+                NativeMethods.RECT rc = new NativeMethods.RECT(0, 0, 0, 0);
+                try
+                {
                     //This method elevates via SuppressUnmanadegCodeSecurity and throws Win32Exception on GetLastError
-                    SafeNativeMethods.GetWindowRect(new HandleRef(null, hwnd), ref rc); 
+                    SafeNativeMethods.GetWindowRect(new HandleRef(null, hwnd), ref rc);
                 }
-// Allow empty catch statements.
+                // Allow empty catch statements.
 #pragma warning disable 56502
-                catch(Win32Exception) {}
-// Disallow empty catch statements.
+                catch (Win32Exception) { }
+                // Disallow empty catch statements.
 #pragma warning restore 56502
 
                 bounds = new Rect(rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top);
@@ -90,7 +90,7 @@ namespace System.Windows.Automation.Peers
 
             return bounds;
         }
-}
+    }
 }
 
 

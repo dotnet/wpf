@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using System.ComponentModel;
-using System.Windows.Markup;
 using System.Windows.Converters;
+using System.Windows.Markup;
+using MS.Internal;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows
@@ -44,7 +44,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='vector1'>The first Vector to compare</param>
         /// <param name='vector2'>The second Vector to compare</param>
-        public static bool operator == (Vector vector1, Vector vector2)
+        public static bool operator ==(Vector vector1, Vector vector2)
         {
             return vector1.X == vector2.X &&
                    vector1.Y == vector2.Y;
@@ -61,7 +61,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='vector1'>The first Vector to compare</param>
         /// <param name='vector2'>The second Vector to compare</param>
-        public static bool operator != (Vector vector1, Vector vector2)
+        public static bool operator !=(Vector vector1, Vector vector2)
         {
             return !(vector1 == vector2);
         }
@@ -77,7 +77,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='vector1'>The first Vector to compare</param>
         /// <param name='vector2'>The second Vector to compare</param>
-        public static bool Equals (Vector vector1, Vector vector2)
+        public static bool Equals(Vector vector1, Vector vector2)
         {
             return vector1.X.Equals(vector2.X) &&
                    vector1.Y.Equals(vector2.Y);
@@ -102,7 +102,7 @@ namespace System.Windows
             }
 
             Vector value = (Vector)o;
-            return Vector.Equals(this,value);
+            return Vector.Equals(this, value);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace System.Windows
             {
                 _x = value;
             }
-}
+        }
 
         /// <summary>
         ///     Y - double.  Default value is 0.
@@ -201,7 +201,7 @@ namespace System.Windows
             {
                 _y = value;
             }
-}
+        }
 
         #endregion Public Properties
 

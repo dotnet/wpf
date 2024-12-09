@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,7 +16,7 @@ namespace MS.Internal.Automation
         // This constructor is used by the P/Invoke marshaling layer
         // to allocate a SafeHandle instance.  P/Invoke then does the
         // appropriate method call, storing the handle in this class.
-        private SafeProcessHandle() : base(true) {}
+        private SafeProcessHandle() : base(true) { }
 
         internal SafeProcessHandle(NativeMethods.HWND hwnd) : base(true)
         {

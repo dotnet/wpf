@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System.Xml;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Xml;
 using MS.Utility;
 
 namespace System.Windows.Xps.Serialization
@@ -22,7 +22,7 @@ namespace System.Windows.Xps.Serialization
         public
         ReachVisualSerializer(
             PackageSerializationManager manager
-            ):
+            ) :
         base(manager)
         {
         }
@@ -47,12 +47,12 @@ namespace System.Windows.Xps.Serialization
             //  The new class XpsOMSerializationManager now also interacts with this class
             // the cast below is shorthand for cast to either XpsSerializationManager or XpsOMSerializationManager
             // we want this to throw an InvalidCastException if it fails to mantain compatibility.
-            if((IXpsSerializationManager)SerializationManager != null)
+            if ((IXpsSerializationManager)SerializationManager != null)
             {
-                XmlWriter pageWriter  = SerializationManager.
+                XmlWriter pageWriter = SerializationManager.
                                         PackagingPolicy.AcquireXmlWriterForPage();
 
-                XmlWriter resWriter   = SerializationManager.
+                XmlWriter resWriter = SerializationManager.
                                         PackagingPolicy.AcquireXmlWriterForResourceDictionary();
 
                 SerializeTree(v, resWriter, pageWriter);
@@ -89,7 +89,7 @@ namespace System.Windows.Xps.Serialization
 
             Size fixedPageSize = ((IXpsSerializationManager)SerializationManager).FixedPageSize;
 
-            VisualTreeFlattener flattener  = ((IXpsSerializationManager)SerializationManager).
+            VisualTreeFlattener flattener = ((IXpsSerializationManager)SerializationManager).
                                               VisualSerializationService.AcquireVisualTreeFlattener(resWriter,
                                                                                                     bodyWriter,
                                                                                                     fixedPageSize);
@@ -129,7 +129,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             //
@@ -147,7 +147,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if(base.XmlWriter == null)
+                if (base.XmlWriter == null)
                 {
                     base.XmlWriter = SerializationManager.AcquireXmlWriter(typeof(FixedPage));
                 }
@@ -185,15 +185,15 @@ namespace System.Windows.Xps.Serialization
             // we want this to throw an InvalidCastException if it fails to mantain compatibility.
             if ((IXpsSerializationManager)SerializationManager != null)
             {
-                XmlWriter           pageWriter  = SerializationManager.
+                XmlWriter pageWriter = SerializationManager.
                                                   PackagingPolicy.AcquireXmlWriterForPage();
 
-                XmlWriter           resWriter   = SerializationManager.
+                XmlWriter resWriter = SerializationManager.
                                                   PackagingPolicy.AcquireXmlWriterForResourceDictionary();
 
                 Size fixedPageSize = ((IXpsSerializationManager)SerializationManager).FixedPageSize;
 
-                VisualTreeFlattener flattener  = ((IXpsSerializationManager)SerializationManager).
+                VisualTreeFlattener flattener = ((IXpsSerializationManager)SerializationManager).
                                                   VisualSerializationService.AcquireVisualTreeFlattener(resWriter,
                                                                                                         pageWriter,
                                                                                                         fixedPageSize);
@@ -242,7 +242,7 @@ namespace System.Windows.Xps.Serialization
             {
                 // VisualTreeFlattener will flatten Viewport3DVisual into an image.  We shouldn't
                 // be attempting to walk Visual3D children.
-                child = (Visual) VisualTreeHelper.GetChild(nodeVisual, index);
+                child = (Visual)VisualTreeHelper.GetChild(nodeVisual, index);
                 index++;
             }
 

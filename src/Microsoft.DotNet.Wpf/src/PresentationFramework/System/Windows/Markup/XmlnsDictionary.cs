@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,7 +33,7 @@ namespace System.Windows.Markup
     public class XmlnsDictionary : IDictionary, System.Xaml.IXamlNamespaceResolver
 #endif
     {
-#region Public Methods
+        #region Public Methods
         /// <summary>
         /// NamespaceDeclaration class which is similar to NamespaceDeclaration class in
         /// XmlNamespaceManager code in BCL. ScopeCount gets incremented and decremented
@@ -45,23 +45,23 @@ namespace System.Windows.Markup
             /// namespace prefix
             /// </summary>
             public string Prefix;
-            
+
             /// <summary>
             /// xml namespace uri.
             /// </summary>
             public string Uri;
-            
+
             /// <summary>
             /// ScopeCount.  Incremented for nested scopes.   
             /// </summary>
-            public int    ScopeCount;
+            public int ScopeCount;
         }
 
         /// <summary>
         /// Namespace Scope 
         /// to retrieve all the declarations at current level or from the root node 
         /// </summary>
-        enum NamespaceScope 
+        enum NamespaceScope
         {
             /// <summary>
             /// All Namespaces from root to this Node
@@ -92,23 +92,23 @@ namespace System.Windows.Markup
         /// <param name="xmlnsDictionary">The dictionary on which to base the new one</param>
         public XmlnsDictionary(XmlnsDictionary xmlnsDictionary)
         {
-            if(null == xmlnsDictionary)
+            if (null == xmlnsDictionary)
             {
-                throw new ArgumentNullException( "xmlnsDictionary" );
+                throw new ArgumentNullException("xmlnsDictionary");
             }
-            
+
             // Copy the Declarations if they exists 
             if (xmlnsDictionary != null && xmlnsDictionary.Count > 0)
             {
                 _lastDecl = xmlnsDictionary._lastDecl;
                 if (_nsDeclarations == null)
                 {
-                    _nsDeclarations = new NamespaceDeclaration[_lastDecl+1];
+                    _nsDeclarations = new NamespaceDeclaration[_lastDecl + 1];
                 }
 
                 // Initialize the count to Zero and start counting.
                 _countDecl = 0;
-                
+
                 for (int i = 0; i <= _lastDecl; i++)
                 {
                     // We copy the entire Dictionary, but update the count only for non-null uri/
@@ -116,10 +116,10 @@ namespace System.Windows.Markup
                     // storage in our own way. We don't remove the namespace declarations when 
                     // asked to remove, instead we set their uri values to null.
                     if (xmlnsDictionary._nsDeclarations[i].Uri != null)
-                    {    _countDecl++;  }
+                    { _countDecl++; }
 
-                    _nsDeclarations[i].Prefix     = xmlnsDictionary._nsDeclarations[i].Prefix;
-                    _nsDeclarations[i].Uri        = xmlnsDictionary._nsDeclarations[i].Uri;
+                    _nsDeclarations[i].Prefix = xmlnsDictionary._nsDeclarations[i].Prefix;
+                    _nsDeclarations[i].Uri = xmlnsDictionary._nsDeclarations[i].Uri;
                     _nsDeclarations[i].ScopeCount = xmlnsDictionary._nsDeclarations[i].ScopeCount;
                 }
             }
@@ -144,7 +144,7 @@ namespace System.Windows.Markup
             }
             // Add calls gets delegated to AddNamespace which adds a NamespaceDeclaration to the list of Declarations
             AddNamespace((string)prefix, (string)xmlNamespace);
-         }
+        }
 
 #if !PBTCOMPILER
         /// <summary>
@@ -152,7 +152,7 @@ namespace System.Windows.Markup
         /// </summary>
         /// <param name="prefix">The XML prefix of this namespace</param>
         /// <param name="xmlNamespace">The namespace the prefix maps to</param>
-        public void Add(string prefix,string xmlNamespace)
+        public void Add(string prefix, string xmlNamespace)
         {
             // Add calls gets delegated to AddNamespace which adds a NamespaceDeclaration to the list of Declarations
             AddNamespace(prefix, xmlNamespace);
@@ -195,7 +195,7 @@ namespace System.Windows.Markup
         /// <param name="prefix">The prefix to be removed</param>
         public void Remove(object prefix)
         {
-            this.Remove((string)prefix);           
+            this.Remove((string)prefix);
         }
 
 #if !PBTCOMPILER
@@ -210,7 +210,7 @@ namespace System.Windows.Markup
         }
 #endif
 
-#region IDictionaryMethods
+        #region IDictionaryMethods
 
         /// <summary>
         /// IDictionary interface that returns an enumerator on the dictionary contents
@@ -220,7 +220,7 @@ namespace System.Windows.Markup
         {
             HybridDictionary namespaceTable = new HybridDictionary(_lastDecl);
 
-            for (int thisDecl = 0; thisDecl < _lastDecl;  thisDecl++)
+            for (int thisDecl = 0; thisDecl < _lastDecl; thisDecl++)
             {
                 if (_nsDeclarations[thisDecl].Uri != null)
                 {
@@ -231,9 +231,9 @@ namespace System.Windows.Markup
             return namespaceTable.GetEnumerator();
         }
 
-#endregion IDictionaryMethods
+        #endregion IDictionaryMethods
 
-#region IEnumerableMethods
+        #region IEnumerableMethods
 
         /// <summary>
         /// IEnumerator interface that returns an enumerator on the dictionary contents
@@ -244,9 +244,9 @@ namespace System.Windows.Markup
             return this.GetEnumerator();
         }
 
-#endregion IEnumerableMethods
+        #endregion IEnumerableMethods
 
-#region ICollectionMethods
+        #region ICollectionMethods
 
         /// <summary>
         /// ICollection method to copy the dictionary to an array
@@ -257,12 +257,12 @@ namespace System.Windows.Markup
         {
             IDictionary dict = GetNamespacesInScope(NamespaceScope.All) as IDictionary;
             if (dict != null)
-                dict.CopyTo(array,index);
+                dict.CopyTo(array, index);
         }
 
-#endregion ICollectionMethods
+        #endregion ICollectionMethods
 
-#region IXamlNamespaceResolver Members
+        #region IXamlNamespaceResolver Members
 
 #if !PBTCOMPILER
         public string GetNamespace(string prefix)
@@ -282,7 +282,7 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion
+        #endregion
 
 
 #if !PBTCOMPILER
@@ -336,14 +336,14 @@ namespace System.Windows.Markup
         {
             if (prefix == null)
             {
-                throw new ArgumentNullException( "prefix" ); 
+                throw new ArgumentNullException("prefix");
             }
-            
-            if (_lastDecl >0)
+
+            if (_lastDecl > 0)
             {
-                for (int thisDecl = _lastDecl-1; thisDecl >= 0; thisDecl--)
+                for (int thisDecl = _lastDecl - 1; thisDecl >= 0; thisDecl--)
                 {
-                    if ((_nsDeclarations[thisDecl].Prefix == prefix) && 
+                    if ((_nsDeclarations[thisDecl].Prefix == prefix) &&
                         !string.IsNullOrEmpty(_nsDeclarations[thisDecl].Uri))
                     {
                         return _nsDeclarations[thisDecl].Uri;
@@ -367,28 +367,28 @@ namespace System.Windows.Markup
         {
             if (xmlNamespace == null)
             {
-                throw new ArgumentNullException( "xmlNamespace" ); 
+                throw new ArgumentNullException("xmlNamespace");
             }
 
             if (_lastDecl > 0)
             {
-                for (int thisDecl = _lastDecl-1; thisDecl >= 0; thisDecl--)
+                for (int thisDecl = _lastDecl - 1; thisDecl >= 0; thisDecl--)
                 {
                     if (_nsDeclarations[thisDecl].Uri == xmlNamespace)
-                        return _nsDeclarations[thisDecl].Prefix;         
+                        return _nsDeclarations[thisDecl].Prefix;
                 }
             }
             return null;
-       }
+        }
 
         /// <summary>
         /// DefaultNamespace for easy Access.
         /// </summary>
         public string DefaultNamespace()
         {
-             string defaultNs = LookupNamespace(string.Empty);
-             return (defaultNs == null) ? string.Empty : defaultNs;
-         }
+            string defaultNs = LookupNamespace(string.Empty);
+            return (defaultNs == null) ? string.Empty : defaultNs;
+        }
 #endif
 
         /// <summary>
@@ -414,7 +414,7 @@ namespace System.Windows.Markup
             int lastScopeCount = _nsDeclarations[_lastDecl].ScopeCount;
             int decl = _lastDecl;
 
-            while (decl > 0 && _nsDeclarations[decl-1].ScopeCount == lastScopeCount) 
+            while (decl > 0 && _nsDeclarations[decl - 1].ScopeCount == lastScopeCount)
             {
                 decl--;
             }
@@ -427,13 +427,13 @@ namespace System.Windows.Markup
                 _nsDeclarations[decl].Prefix = String.Empty;
                 _nsDeclarations[decl].Uri = null;
             }
-            
+
             _lastDecl = decl;
         }
-        
-#endregion Public Methods
 
-#region Properties
+        #endregion Public Methods
+
+        #region Properties
 
         /// <summary>
         /// IDictionary property specifying whether the dictionary is fixed size (always false)
@@ -456,8 +456,8 @@ namespace System.Windows.Markup
         /// </summary>
         public string this[string prefix]
         {
-            get {   return LookupNamespace(prefix); }
-            set {   AddNamespace(prefix, value as string);}
+            get { return LookupNamespace(prefix); }
+            set { AddNamespace(prefix, value as string); }
         }
 
         /// <summary>
@@ -465,21 +465,21 @@ namespace System.Windows.Markup
         /// </summary>
         public object this[object prefix]
         {
-            get 
+            get
             {
                 if (!(prefix is string))
                 {
                     throw new ArgumentException(SR.ParserKeysAreStrings);
                 }
-                return LookupNamespace((string)prefix); 
+                return LookupNamespace((string)prefix);
             }
-            set 
-            {   
+            set
+            {
                 if (!(prefix is string) || !(value is string))
                 {
                     throw new ArgumentException(SR.ParserKeysAreStrings);
                 }
-                AddNamespace((string)prefix, (string)value); 
+                AddNamespace((string)prefix, (string)value);
             }
         }
 
@@ -488,13 +488,13 @@ namespace System.Windows.Markup
         /// </summary>
         public ICollection Keys
         {
-            get 
+            get
             {
                 // Dynamically create the keys table and return it.
                 // should be used mainly in foreach cases thru IEnumerator.
                 // Indexer is provided, so this is seldom useful.
-                ArrayList prefixes = new ArrayList(_lastDecl+1);
-                for (int thisDecl =0; thisDecl < _lastDecl; thisDecl++)
+                ArrayList prefixes = new ArrayList(_lastDecl + 1);
+                for (int thisDecl = 0; thisDecl < _lastDecl; thisDecl++)
                 {
                     // add all the Namespace Declarations whose Namespaces are not null
                     if (_nsDeclarations[thisDecl].Uri != null)
@@ -513,9 +513,9 @@ namespace System.Windows.Markup
         /// </summary>
         public ICollection Values
         {
-            get 
-            {                
-                HybridDictionary namespaceTable = new HybridDictionary(_lastDecl+1);
+            get
+            {
+                HybridDictionary namespaceTable = new HybridDictionary(_lastDecl + 1);
                 for (int thisDecl = 0; thisDecl < _lastDecl; thisDecl++)
                 {
                     if (_nsDeclarations[thisDecl].Uri != null)
@@ -532,7 +532,7 @@ namespace System.Windows.Markup
         /// </summary>
         public int Count
         {
-            get 
+            get
             {
                 return _countDecl;
             }
@@ -543,7 +543,7 @@ namespace System.Windows.Markup
         /// </summary>
         public bool IsSynchronized
         {
-            get  {return _nsDeclarations.IsSynchronized; }
+            get { return _nsDeclarations.IsSynchronized; }
         }
 
         /// <summary>
@@ -551,7 +551,7 @@ namespace System.Windows.Markup
         /// </summary>
         public object SyncRoot
         {
-            get {return _nsDeclarations.SyncRoot; }
+            get { return _nsDeclarations.SyncRoot; }
         }
 
 #if !PBTCOMPILER
@@ -564,19 +564,19 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Properties
+        #endregion Properties
 
 #if !PBTCOMPILER
-#region Internal
+        #region Internal
         // Unseal the dictionary internally
         internal void Unseal()
         {
             _sealed = false;
         }
- #endregion Internal
- #endif
+        #endregion Internal
+#endif
 
-#region Private       
+        #region Private       
         private void Initialize()
         {
             // We set the initial array to 8 and double from there when we run of the space. 
@@ -587,9 +587,9 @@ namespace System.Windows.Markup
             _nsDeclarations[0].ScopeCount = 0;
             _lastDecl = 0;
             _countDecl = 0;
-       }
+        }
 
-       private void CheckSealed()
+        private void CheckSealed()
         {
             if (IsReadOnly)
             {
@@ -606,7 +606,7 @@ namespace System.Windows.Markup
         private void AddNamespace(string prefix, string xmlNamespace)
         {
             CheckSealed();
-            
+
             if (xmlNamespace == null)
                 throw new ArgumentNullException("xmlNamespace");
 
@@ -618,15 +618,15 @@ namespace System.Windows.Markup
             if (_lastDecl > 0)
             {
                 // Check the local scope for the given prefix
-                for (int thisDecl = _lastDecl-1; 
-                     thisDecl >= 0 && _nsDeclarations[thisDecl].ScopeCount == lastScopeCount; 
+                for (int thisDecl = _lastDecl - 1;
+                     thisDecl >= 0 && _nsDeclarations[thisDecl].ScopeCount == lastScopeCount;
                      thisDecl--)
                 {
                     if (String.Equals(_nsDeclarations[thisDecl].Prefix, prefix))
                     {
                         // Redefine an existing namespace
                         _nsDeclarations[thisDecl].Uri = xmlNamespace;
-                        return; 
+                        return;
                     }
                 }
 
@@ -640,7 +640,7 @@ namespace System.Windows.Markup
                 }
             }
 
-             _countDecl++;
+            _countDecl++;
             _nsDeclarations[_lastDecl].Prefix = prefix;
             _nsDeclarations[_lastDecl].Uri = xmlNamespace;
             _lastDecl++;
@@ -666,10 +666,10 @@ namespace System.Windows.Markup
                     throw new ArgumentNullException("prefix");
                 }
 
-               int lastScopeCount = _nsDeclarations[_lastDecl-1].ScopeCount;
-               for (int thisDecl = _lastDecl-1; 
-                     thisDecl >= 0 && _nsDeclarations[thisDecl].ScopeCount == lastScopeCount; 
-                     thisDecl--)
+                int lastScopeCount = _nsDeclarations[_lastDecl - 1].ScopeCount;
+                for (int thisDecl = _lastDecl - 1;
+                      thisDecl >= 0 && _nsDeclarations[thisDecl].ScopeCount == lastScopeCount;
+                      thisDecl--)
                 {
                     if ((_nsDeclarations[thisDecl].Prefix == prefix) && (_nsDeclarations[thisDecl].Uri == xmlNamespace))
                     {
@@ -681,7 +681,7 @@ namespace System.Windows.Markup
         }
 
         // Get all namespaces in the local or scope from the last parent
-        private  IDictionary GetNamespacesInScope(NamespaceScope scope)
+        private IDictionary GetNamespacesInScope(NamespaceScope scope)
         {
             int i = 0;
 
@@ -694,18 +694,18 @@ namespace System.Windows.Markup
                 case NamespaceScope.Local:
                     i = _lastDecl;
                     int lastScopeCount = _nsDeclarations[i].ScopeCount;
-                    while (_nsDeclarations[i].ScopeCount == lastScopeCount)  
+                    while (_nsDeclarations[i].ScopeCount == lastScopeCount)
                         i--;
                     i++;
                     break;
             }
 
-            HybridDictionary dict = new HybridDictionary(_lastDecl -i + 1);
+            HybridDictionary dict = new HybridDictionary(_lastDecl - i + 1);
 
             for (; i < _lastDecl; i++)
             {
                 string prefix = _nsDeclarations[i].Prefix;
-                string xmlNamespace    = _nsDeclarations[i].Uri;
+                string xmlNamespace = _nsDeclarations[i].Uri;
 
                 Debug.Assert(prefix != null);
                 if (xmlNamespace.Length > 0 || prefix.Length > 0)
@@ -727,11 +727,11 @@ namespace System.Windows.Markup
         {
             if (_lastDecl > 0)
             {
-                for (int thisDecl = _lastDecl-1; 
+                for (int thisDecl = _lastDecl - 1;
                      thisDecl >= 0;
                      thisDecl--)
                 {
-                    if ( (_nsDeclarations[thisDecl].Prefix == prefix) && _nsDeclarations[thisDecl].Uri != null)
+                    if ((_nsDeclarations[thisDecl].Prefix == prefix) && _nsDeclarations[thisDecl].Uri != null)
                     {
                         if (prefix.Length > 0 || _nsDeclarations[thisDecl].Uri.Length > 0)
                         {
@@ -745,9 +745,9 @@ namespace System.Windows.Markup
             return false;
         }
 
-#endregion Private
+        #endregion Private
 
-#region Private Data
+        #region Private Data
         /// <summary>
         /// Namespace Declarations Array. Used to Index Namespaces within Context.
         /// </summary>
@@ -757,7 +757,7 @@ namespace System.Windows.Markup
         /// Namespace Declarations Rear Index, where we do additions and deletions, also
         /// this is the index from which we start lookup for namespaces.
         /// </summary>
-        private int   _lastDecl = 0;
+        private int _lastDecl = 0;
 
         /// <summary>
         /// Namespace Declarations Rear Index, where we do additions and deletions, also
@@ -769,7 +769,7 @@ namespace System.Windows.Markup
         /// Seals the Current Dictionary from further updating it.
         /// </summary>
         private bool _sealed = false;       // True if dictionary is immutable.
-#endregion Private Data
+        #endregion Private Data
 
     } //XmlNamespaceManager
 }

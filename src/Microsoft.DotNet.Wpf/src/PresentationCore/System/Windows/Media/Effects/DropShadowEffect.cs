@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,7 +37,7 @@ namespace System.Windows.Media.Effects
             bottomRight.Y = contentBounds.BottomRight.Y + radius;
 
             double depth = ShadowDepth;
-            double direction = Math.PI/180 * Direction;
+            double direction = Math.PI / 180 * Direction;
             double offsetX = depth * Math.Cos(direction);
             double offsetY = depth * Math.Sin(direction);
 
@@ -58,7 +58,7 @@ namespace System.Windows.Media.Effects
                 topLeft.Y -= offsetY;
             }
             // If the shadow is below the original element...
-            else 
+            else
             {
                 bottomRight.Y -= offsetY;
             }

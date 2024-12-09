@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Win32;
 using System.Windows.Input;
+using MS.Win32;
 
 namespace System.Windows.Interop
 {
@@ -17,10 +17,10 @@ namespace System.Windows.Interop
         /// <summary>
         ///     Simple Ctor w/ just a WindowName
         /// </summary>
-        public HwndSourceParameters(string name): this()
+        public HwndSourceParameters(string name) : this()
         {
             // Initialize some fields to useful default values
-            _styleBits  = NativeMethods.WS_VISIBLE;
+            _styleBits = NativeMethods.WS_VISIBLE;
             _styleBits |= NativeMethods.WS_CAPTION;
             _styleBits |= NativeMethods.WS_SYSMENU;
             _styleBits |= NativeMethods.WS_THICKFRAME;
@@ -30,7 +30,7 @@ namespace System.Windows.Interop
 
             // The Visual Manager has a hard time creating
             // a surface with zero pixels.
-            _width  = 1;
+            _width = 1;
             _height = 1;
 
             _x = NativeMethods.CW_USEDEFAULT;
@@ -45,7 +45,7 @@ namespace System.Windows.Interop
         /// <param name="name">  Name of the window </param>
         /// <param name="width">  Width of the window </param>
         /// <param name="height">  Height of the window </param>
-        public HwndSourceParameters(string name, int width, int height): this(name)
+        public HwndSourceParameters(string name, int width, int height) : this(name)
         {
             Width = width;
             Height = height;
@@ -55,7 +55,7 @@ namespace System.Windows.Interop
         ///     Returns the hashcode for this struct.
         /// </summary>
         /// <returns>hashcode</returns>
-        public override int GetHashCode( )
+        public override int GetHashCode()
         {
             return base.GetHashCode();
         }
@@ -65,8 +65,8 @@ namespace System.Windows.Interop
         /// </summary>
         public int WindowClassStyle
         {
-            get{ return _classStyleBits; }
-            set{ _classStyleBits = value; }
+            get { return _classStyleBits; }
+            set { _classStyleBits = value; }
         }
 
         /// <summary>
@@ -75,11 +75,13 @@ namespace System.Windows.Interop
         /// </summary>
         public int WindowStyle
         {
-            get{
+            get
+            {
                 return _styleBits;
             }
-            
-            set{
+
+            set
+            {
                 _styleBits = value | NativeMethods.WS_CLIPCHILDREN;
             }
         }
@@ -89,8 +91,8 @@ namespace System.Windows.Interop
         /// </summary>
         public int ExtendedWindowStyle
         {
-            get{ return _extendedStyleBits; }
-            set{ _extendedStyleBits = value; }
+            get { return _extendedStyleBits; }
+            set { _extendedStyleBits = value; }
         }
 
         /// <summary>
@@ -107,8 +109,8 @@ namespace System.Windows.Interop
         /// </summary>
         public int PositionX
         {
-            get{ return _x; }
-            set{ _x = value; }
+            get { return _x; }
+            set { _x = value; }
         }
 
         /// <summary>
@@ -116,8 +118,8 @@ namespace System.Windows.Interop
         /// </summary>
         public int PositionY
         {
-            get{ return _y; }
-            set{ _y = value; }
+            get { return _y; }
+            set { _y = value; }
         }
 
         /// <summary>
@@ -135,8 +137,9 @@ namespace System.Windows.Interop
         /// </summary>
         public int Width
         {
-            get{ return _width; }
-            set{
+            get { return _width; }
+            set
+            {
                 _width = value;
                 _hasAssignedSize = true;
             }
@@ -147,8 +150,9 @@ namespace System.Windows.Interop
         /// </summary>
         public int Height
         {
-            get{ return _height; }
-            set{
+            get { return _height; }
+            set
+            {
                 _height = value;
                 _hasAssignedSize = true;
             }
@@ -167,8 +171,8 @@ namespace System.Windows.Interop
         /// </summary>
         public string WindowName
         {
-            get{ return _name; }
-            set{ _name = value; }
+            get { return _name; }
+            set { _name = value; }
         }
 
         /// <summary>
@@ -176,8 +180,8 @@ namespace System.Windows.Interop
         /// </summary>
         public IntPtr ParentWindow
         {
-            get{ return _parent; }
-            set{ _parent = value; }
+            get { return _parent; }
+            set { _parent = value; }
         }
 
         /// <summary>
@@ -188,8 +192,8 @@ namespace System.Windows.Interop
         /// </summary>
         public HwndSourceHook HwndSourceHook
         {
-            get{ return _hwndSourceHook; }
-            set{ this._hwndSourceHook = value; }
+            get { return _hwndSourceHook; }
+            set { this._hwndSourceHook = value; }
         }
 
         /// <summary>
@@ -232,7 +236,7 @@ namespace System.Windows.Interop
         /// </remarks>
         public bool UsesPerPixelOpacity
         {
-            get {return _usesPerPixelOpacity;}
+            get { return _usesPerPixelOpacity; }
             set { _usesPerPixelOpacity = value; }
         }
         /// <summary>
@@ -318,7 +322,7 @@ namespace System.Windows.Interop
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static bool operator==(HwndSourceParameters a, HwndSourceParameters b)
+        public static bool operator ==(HwndSourceParameters a, HwndSourceParameters b)
         {
             return a.Equals(b);
         }
@@ -329,7 +333,7 @@ namespace System.Windows.Interop
         /// <param name="a"></param>
         /// <param name="b"></param>
         /// <returns></returns>
-        public static bool operator!=(HwndSourceParameters a, HwndSourceParameters b)
+        public static bool operator !=(HwndSourceParameters a, HwndSourceParameters b)
         {
             return !a.Equals(b);
         }
@@ -346,7 +350,7 @@ namespace System.Windows.Interop
                 return false;
             }
 
-            return Equals( (HwndSourceParameters)obj );
+            return Equals((HwndSourceParameters)obj);
         }
 
         /// <summary>
@@ -356,16 +360,16 @@ namespace System.Windows.Interop
         /// <returns></returns>
         public bool Equals(HwndSourceParameters obj)
         {
-            return ((this._classStyleBits    == obj._classStyleBits)
-                 && (this._styleBits         == obj._styleBits)
+            return ((this._classStyleBits == obj._classStyleBits)
+                 && (this._styleBits == obj._styleBits)
                  && (this._extendedStyleBits == obj._extendedStyleBits)
                  && (this._x == obj._x)
                  && (this._y == obj._y)
-                 && (this._width  == obj._width)
+                 && (this._width == obj._width)
                  && (this._height == obj._height)
-                 && (this._name   == obj._name)
+                 && (this._name == obj._name)
                  && (this._parent == obj._parent)
-                 && (this._hwndSourceHook  == obj._hwndSourceHook)
+                 && (this._hwndSourceHook == obj._hwndSourceHook)
                  && (this._adjustSizingForNonClientArea == obj._adjustSizingForNonClientArea)
                  && (this._hasAssignedSize == obj._hasAssignedSize)
                  // && (this._colorKey == obj._colorKey)
@@ -386,7 +390,7 @@ namespace System.Windows.Interop
         private string _name;
         private IntPtr _parent;
         private HwndSourceHook _hwndSourceHook;
-        
+
         private bool _adjustSizingForNonClientArea;
         private bool _hasAssignedSize;
         // private Nullable<Color> _colorKey;

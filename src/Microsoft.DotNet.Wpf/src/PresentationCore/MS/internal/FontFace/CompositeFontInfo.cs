@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,13 +14,13 @@ namespace MS.Internal.FontFace
     /// </summary>
     internal sealed class CompositeFontInfo
     {
-        private LanguageSpecificStringDictionary    _familyNames;
-        private double                              _baseline;
-        private double                              _lineSpacing;
-        private FamilyTypefaceCollection            _familyTypefaces;
-        private FontFamilyMapCollection             _familyMaps;
-        private ushort[]                            _defaultFamilyMapRanges;
-        private Dictionary<XmlLanguage, ushort[]>   _familyMapRangesByLanguage;
+        private LanguageSpecificStringDictionary _familyNames;
+        private double _baseline;
+        private double _lineSpacing;
+        private FamilyTypefaceCollection _familyTypefaces;
+        private FontFamilyMapCollection _familyMaps;
+        private ushort[] _defaultFamilyMapRanges;
+        private Dictionary<XmlLanguage, ushort[]> _familyMapRangesByLanguage;
 
 
         private const int InitialCultureCount = 1;  // at least a familyMap for one locale available
@@ -32,7 +32,7 @@ namespace MS.Internal.FontFace
         /// </summary>
         internal CompositeFontInfo()
         {
-            _familyNames = new LanguageSpecificStringDictionary(new Dictionary<XmlLanguage,string>(InitialCultureCount));
+            _familyNames = new LanguageSpecificStringDictionary(new Dictionary<XmlLanguage, string>(InitialCultureCount));
             _familyMaps = new FontFamilyMapCollection(this);
             _defaultFamilyMapRanges = EmptyFamilyMapRanges;
         }
@@ -300,10 +300,10 @@ namespace MS.Internal.FontFace
         /// <summary>
         /// Distance from character cell top to English baseline relative to em size. 
         /// </summary>
-        internal double Baseline 
-        { 
+        internal double Baseline
+        {
             get { return _baseline; }
-            set 
+            set
             {
                 CompositeFontParser.VerifyNonNegativeMultiplierOfEm("Baseline", ref value);
                 _baseline = value;

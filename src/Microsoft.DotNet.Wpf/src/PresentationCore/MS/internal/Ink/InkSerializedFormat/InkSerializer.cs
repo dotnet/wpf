@@ -4,11 +4,11 @@
 
 //#define OLD_ISF
 
-using System.Windows;
-using System.Windows.Media;
 using System.IO;
-using System.Windows.Input;
+using System.Windows;
 using System.Windows.Ink;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {
@@ -795,9 +795,9 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
         }
 #endif
-        if (0 != remainingBytesInStream)
-            throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "inkdata");
-    }
+            if (0 != remainingBytesInStream)
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "inkdata");
+        }
 #if OLD_ISF
     /// <summary>
     /// Loads a DrawingAttributes Table from the stream and adds individual drawing attributes to the drawattr
@@ -805,138 +805,140 @@ namespace MS.Internal.Ink.InkSerializedFormat
     /// </summary>
     /// <returns></returns>
 #else
-    /// <summary>
-    /// Loads a DrawingAttributes Table from the stream and adds individual drawing attributes to the drawattr
-    /// list passed
-    /// </summary>
+        /// <summary>
+        /// Loads a DrawingAttributes Table from the stream and adds individual drawing attributes to the drawattr
+        /// list passed
+        /// </summary>
 #endif
-    private uint LoadDrawAttrsTable(Stream strm, GuidList guidList, uint cbSize)
-    {
-        _drawingAttributesTable.Clear();
-
-        // First, allocate a temporary buffer and read the stream into it.
-        // These will be compressed DRAW_ATTR structures.
-        uint cbTotal = cbSize;
-
-        // OK, now we count the number of DRAW_ATTRS compressed into this block
-        uint cbDA = 0;
-
-        while (cbTotal > 0)
+        private uint LoadDrawAttrsTable(Stream strm, GuidList guidList, uint cbSize)
         {
-            // First read the size of the first drawing attributes block
-            uint cb = SerializationHelper.Decode(strm, out cbDA);
+            _drawingAttributesTable.Clear();
 
-            if (cbSize < cb)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+            // First, allocate a temporary buffer and read the stream into it.
+            // These will be compressed DRAW_ATTR structures.
+            uint cbTotal = cbSize;
 
+            // OK, now we count the number of DRAW_ATTRS compressed into this block
+            uint cbDA = 0;
 
-            cbTotal -= cb;
-            if (cbTotal < cbDA)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+            while (cbTotal > 0)
+            {
+                // First read the size of the first drawing attributes block
+                uint cb = SerializationHelper.Decode(strm, out cbDA);
 
-
-
-            // Create a new drawing attribute
-            DrawingAttributes attributes = new DrawingAttributes();
-            // pull off our defaults onthe drawing attribute as we need to
-            //  respect what the ISF has.
-            attributes.DrawingFlags = 0;
-            cb = DrawingAttributeSerializer.DecodeAsISF(strm, guidList, cbDA, attributes);
-
-            // Load the stream into this attribute
-            if (cbSize < cbDA)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                if (cbSize < cb)
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
 
-            cbTotal -= cbDA;
+                cbTotal -= cb;
+                if (cbTotal < cbDA)
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
-            // Add this attribute to the global list
-            _drawingAttributesTable.Add(attributes);
+
+
+                // Create a new drawing attribute
+                DrawingAttributes attributes = new DrawingAttributes
+                {
+                    // pull off our defaults onthe drawing attribute as we need to
+                    //  respect what the ISF has.
+                    DrawingFlags = 0
+                };
+                cb = DrawingAttributeSerializer.DecodeAsISF(strm, guidList, cbDA, attributes);
+
+                // Load the stream into this attribute
+                if (cbSize < cbDA)
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
+
+
+                cbTotal -= cbDA;
+
+                // Add this attribute to the global list
+                _drawingAttributesTable.Add(attributes);
+            }
+
+            if (0 != cbTotal)
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
+
+
+            return cbSize;
         }
 
-        if (0 != cbTotal)
-            throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
-
-
-        return cbSize;
-    }
-
-    /// <summary>
-    /// Reads and Decodes a stroke descriptor information from the stream. For details on how it is stored
-    /// please refer the spec
-    /// </summary>
-    /// <param name="strm"></param>
-    /// <param name="cbSize"></param>
-    /// <param name="descr"></param>
-    /// <returns></returns>
-    private uint DecodeStrokeDescriptor(Stream strm, uint cbSize, out StrokeDescriptor descr)
-    {
-        descr = new StrokeDescriptor();
-        if (0 == cbSize)
-            return 0;
-
-        uint cb;
-        uint cbBlock = cbSize;
-
-        while (cbBlock > 0)
+        /// <summary>
+        /// Reads and Decodes a stroke descriptor information from the stream. For details on how it is stored
+        /// please refer the spec
+        /// </summary>
+        /// <param name="strm"></param>
+        /// <param name="cbSize"></param>
+        /// <param name="descr"></param>
+        /// <returns></returns>
+        private uint DecodeStrokeDescriptor(Stream strm, uint cbSize, out StrokeDescriptor descr)
         {
-            // first read the tag
-            KnownTagCache.KnownTagIndex tag;
-            uint uiTag;
+            descr = new StrokeDescriptor();
+            if (0 == cbSize)
+                return 0;
 
-            cb = SerializationHelper.Decode(strm, out uiTag);
-            tag = (KnownTagCache.KnownTagIndex)uiTag;
-            if (cb > cbBlock)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+            uint cb;
+            uint cbBlock = cbSize;
 
-            cbBlock -= cb;
-            descr.Template.Add(tag);
-
-            // If this is TAG_BUTTONS
-            if (KnownTagCache.KnownTagIndex.Buttons == tag && cbBlock > 0)
+            while (cbBlock > 0)
             {
-                uint cbButton;
+                // first read the tag
+                KnownTagCache.KnownTagIndex tag;
+                uint uiTag;
 
-                // Read the no. of buttons first
-                cb = SerializationHelper.Decode(strm, out cbButton);
+                cb = SerializationHelper.Decode(strm, out uiTag);
+                tag = (KnownTagCache.KnownTagIndex)uiTag;
                 if (cb > cbBlock)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
                 cbBlock -= cb;
-                descr.Template.Add((KnownTagCache.KnownTagIndex)cbButton);
-                while (cbBlock > 0 && cbButton > 0)
-                {
-                    uint dw;
+                descr.Template.Add(tag);
 
-                    cb = SerializationHelper.Decode(strm, out dw);
+                // If this is TAG_BUTTONS
+                if (KnownTagCache.KnownTagIndex.Buttons == tag && cbBlock > 0)
+                {
+                    uint cbButton;
+
+                    // Read the no. of buttons first
+                    cb = SerializationHelper.Decode(strm, out cbButton);
                     if (cb > cbBlock)
-                        throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                        throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
                     cbBlock -= cb;
-                    cbButton--;
-                    descr.Template.Add((KnownTagCache.KnownTagIndex)dw);
+                    descr.Template.Add((KnownTagCache.KnownTagIndex)cbButton);
+                    while (cbBlock > 0 && cbButton > 0)
+                    {
+                        uint dw;
+
+                        cb = SerializationHelper.Decode(strm, out dw);
+                        if (cb > cbBlock)
+                            throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
+
+                        cbBlock -= cb;
+                        cbButton--;
+                        descr.Template.Add((KnownTagCache.KnownTagIndex)dw);
+                    }
                 }
-            }
-            else if (KnownTagCache.KnownTagIndex.StrokePropertyList == tag && cbBlock > 0)
-            {
-                // Usually stroke property comes last in the template. Hence everything below this is
-                // are Tags for strokes extended properties
-                while (cbBlock > 0)
+                else if (KnownTagCache.KnownTagIndex.StrokePropertyList == tag && cbBlock > 0)
                 {
-                    uint dw;
+                    // Usually stroke property comes last in the template. Hence everything below this is
+                    // are Tags for strokes extended properties
+                    while (cbBlock > 0)
+                    {
+                        uint dw;
 
-                    cb = SerializationHelper.Decode(strm, out dw);
-                    if (cb > cbBlock)
-                        throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                        cb = SerializationHelper.Decode(strm, out dw);
+                        if (cb > cbBlock)
+                            throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
-                    cbBlock -= cb;
-                    descr.Template.Add((KnownTagCache.KnownTagIndex)dw);
+                        cbBlock -= cb;
+                        descr.Template.Add((KnownTagCache.KnownTagIndex)dw);
+                    }
                 }
-            }
             }
 
             if (0 != cbBlock)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
             return cbSize;
         }
@@ -959,7 +961,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             uint cbRead = DecodeStrokeDescriptor(strm, cbSize, out descr);
 
             if (cbRead != cbSize)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
             _strokeDescriptorTable.Add(descr);
             return cbRead;
@@ -989,12 +991,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 cb = SerializationHelper.Decode(strm, out cbBlock);
                 if (cb > cbTotal)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
 
                 cbTotal -= cb;
                 if (cbBlock > cbTotal)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
 
 
@@ -1002,7 +1004,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 cb = DecodeStrokeDescriptor(strm, cbBlock, out descr);
                 if (cb != cbBlock)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
 
                 cbTotal -= cb;
@@ -1012,7 +1014,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
 
             if (0 != cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
 
             return cbSize;
@@ -1044,7 +1046,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 cb = SerializationHelper.Decode(strm, out dw);
                 if (cb + dw > cbTotal)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
 
                 cbTotal -= cb;
@@ -1053,7 +1055,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 cb = DecodeMetricBlock(strm, dw, out newblock);
                 if (cb != dw)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
 
                 cbTotal -= cb;
@@ -1061,7 +1063,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
 
             if (0 != cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
 
             return cbSize;
@@ -1093,7 +1095,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 cb = SerializationHelper.Decode(strm, out dw);
                 if (cb > cbTotal)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
 
                 cbTotal -= cb;
@@ -1101,22 +1103,23 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 // Next read the size of the metric data
                 cb = SerializationHelper.Decode(strm, out size);
                 if (cb + size > cbTotal)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
 
                 cbTotal -= cb;
 
                 // now create new metric entry
-                MetricEntry entry = new MetricEntry();
-
-                entry.Tag = (KnownTagCache.KnownTagIndex)dw;
+                MetricEntry entry = new MetricEntry
+                {
+                    Tag = (KnownTagCache.KnownTagIndex)dw
+                };
 
                 byte[] data = new byte[size];
 
                 uint bytesRead = StrokeCollectionSerializer.ReliableRead(strm, data, size);
                 cbTotal -= bytesRead;
 
-                if ( bytesRead != size )
+                if (bytesRead != size)
                 {
                     // Make sure the bytes read are expected. If not, we should bail out.
                     // An exception will be thrown.
@@ -1125,10 +1128,10 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 entry.Data = data;
                 block.AddMetricEntry(entry);
-}
+            }
 
             if (0 != cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
 
             return cbSize;
@@ -1166,7 +1169,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 cb = SerializationHelper.Decode(strm, out uiTag);
                 tag = (KnownTagCache.KnownTagIndex)uiTag;
                 if (cb > cbTotal)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
                 cbTotal -= cb;
 
@@ -1187,7 +1190,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
 
             if (0 != cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
             return cbSize;
         }
@@ -1237,8 +1240,10 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         private uint DecodeTransformBlock(Stream strm, KnownTagCache.KnownTagIndex tag, uint cbSize, bool useDoubles, out TransformDescriptor xform)
         {
-            xform = new TransformDescriptor();
-            xform.Tag = tag;
+            xform = new TransformDescriptor
+            {
+                Tag = tag
+            };
 
             uint cbRead = 0;
             uint cbTotal = cbSize;
@@ -1260,7 +1265,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
                 cbRead = SerializationHelper.Decode(strm, out angle);
                 if (cbRead > cbSize)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
 
                 xform.Transform[0] = (double)angle;
@@ -1295,7 +1300,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 }
 
                 if (cbRead > cbSize)
-                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                    throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
 
                 for (int i = 0; i < xform.Size; i++)
@@ -1331,46 +1336,46 @@ namespace MS.Internal.Ink.InkSerializedFormat
             //Left
             cb = SerializationHelper.SignDecode(strm, out data);
             if (cb > cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
             cbTotal -= cb;
             cbRead += cb;
             _inkSpaceRectangle.X = data;
             if (cbRead > cbSize)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
             //Top
             cb = SerializationHelper.SignDecode(strm, out data);
             if (cb > cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
             cbTotal -= cb;
             cbRead += cb;
             _inkSpaceRectangle.Y = data;
             if (cbRead > cbSize)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
             //Right
             cb = SerializationHelper.SignDecode(strm, out data);
             if (cb > cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
             cbTotal -= cb;
             cbRead += cb;
             _inkSpaceRectangle.Width = data - _inkSpaceRectangle.Left;
             if (cbRead > cbSize)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
             //Bottom
             cb = SerializationHelper.SignDecode(strm, out data);
             if (cb > cbTotal)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
             cbTotal -= cb;
             cbRead += cb;
             _inkSpaceRectangle.Height = data - _inkSpaceRectangle.Top;
             if (cbRead > cbSize)
-                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"),"strm");
+                throw new ArgumentException(ISFDebugMessage("Invalid ISF data"), "strm");
 
             return cbRead;
         }
@@ -1540,7 +1545,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
 
             // return a new StylusPointPropertyInfo
-            return new StylusPointPropertyInfo( new StylusPointProperty(guid, StylusPointPropertyIds.IsKnownButton(guid)),
+            return new StylusPointPropertyInfo(new StylusPointProperty(guid, StylusPointPropertyIds.IsKnownButton(guid)),
                                                 minimum,
                                                 maximum,
                                                 unit,
@@ -1587,7 +1592,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                             Guid guid = guidList.FindGuid(strd.Template[cTags]);
                             if (guid == Guid.Empty)
                             {
-                                throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Button guid tag embedded in ISF stream does not match guid table"),"strd");
+                                throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Button guid tag embedded in ISF stream does not match guid table"), "strd");
                             }
 
                             buttonguids[(int)u] = guid;
@@ -2012,13 +2017,14 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 {
                     if (strkIds[i] != (i + 1))
                     {
-                            // if non-sequential or non-consecutive, then persist the ids
+                        // if non-sequential or non-consecutive, then persist the ids
                         fDefIds = false;
                         break;
                     }
                 }
                 // no need to store them if all of them follow the default sequence
-                if (fDefIds) return 0;
+                if (fDefIds)
+                    return 0;
             }
 
             // The format is as follows
@@ -2483,7 +2489,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     totalSizeOfSerializedBytes += bytesWritten;
                     Debug.Assert(sizeOfHeaderInBytes == bytesWritten);
 
-                    stream.Write(   drawingAttributeStream.GetBuffer(), //returns a direct ref, no copied
+                    stream.Write(drawingAttributeStream.GetBuffer(), //returns a direct ref, no copied
                                     0,
                                     Convert.ToInt32(bytesWritten));
 
@@ -2522,7 +2528,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     totalSizeOfSerializedBytes += bytesWritten;
                     Debug.Assert(sizes[i] == bytesWritten);
 
-                    stream.Write(   drawingAttributeStreams[i].GetBuffer(), //returns a direct ref, no copies
+                    stream.Write(drawingAttributeStreams[i].GetBuffer(), //returns a direct ref, no copies
                                     0,
                                     Convert.ToInt32(bytesWritten));
 
@@ -2698,9 +2704,9 @@ namespace MS.Internal.Ink.InkSerializedFormat
         private Vector _himetricSize = new Vector(0.0f, 0.0f);
 
 
-            // The ink space rectangle (e.g. bounding box for GIF) is stored
-            //      with the serialization info so that load/save roundtrip the
-            //      rectangle
+        // The ink space rectangle (e.g. bounding box for GIF) is stored
+        //      with the serialization info so that load/save roundtrip the
+        //      rectangle
         private Rect _inkSpaceRectangle = new Rect();
 
         System.Collections.Generic.Dictionary<Stroke, StrokeLookupEntry> _strokeLookupTable = null;

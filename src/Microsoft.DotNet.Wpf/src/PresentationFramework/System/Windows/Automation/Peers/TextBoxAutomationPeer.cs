@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,11 +14,11 @@ namespace System.Windows.Automation.Peers
     public class TextBoxAutomationPeer : TextAutomationPeer, IValueProvider
     {
         ///
-        public TextBoxAutomationPeer(TextBox owner): base(owner)
+        public TextBoxAutomationPeer(TextBox owner) : base(owner)
         {
             _textPattern = new TextAdaptor(this, ((TextBoxBase)owner).TextContainer);
         }
-    
+
         ///
         override protected string GetClassNameCore()
         {
@@ -36,12 +36,12 @@ namespace System.Windows.Automation.Peers
         {
             object returnValue = null;
 
-            if(patternInterface == PatternInterface.Value)
+            if (patternInterface == PatternInterface.Value)
                 returnValue = this;
 
             if (patternInterface == PatternInterface.Text)
             {
-                if(_textPattern == null)
+                if (_textPattern == null)
                     _textPattern = new TextAdaptor(this, ((TextBoxBase)Owner).TextContainer);
 
                 return _textPattern;
@@ -75,7 +75,7 @@ namespace System.Windows.Automation.Peers
 
         string IValueProvider.Value
         {
-            get 
+            get
             {
                 TextBox owner = (TextBox)Owner;
                 return owner.Text;
@@ -84,7 +84,7 @@ namespace System.Windows.Automation.Peers
 
         void IValueProvider.SetValue(string value)
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             TextBox owner = (TextBox)Owner;
@@ -126,7 +126,7 @@ namespace System.Windows.Automation.Peers
             return new List<AutomationPeer>();
         }
 
-        private TextAdaptor _textPattern;        
+        private TextAdaptor _textPattern;
     }
 }
 

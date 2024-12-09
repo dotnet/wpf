@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -43,37 +43,37 @@ namespace MS.Internal.Shaping
             _charMap = new UshortList(charCount, 16);
             _layoutWorkspace = new OpenTypeLayoutWorkspace();
 
-            _charMap.SetRange(0,charCount);
+            _charMap.SetRange(0, charCount);
             if (glyphCount > 0)
             {
-                _glyphInfoList.SetRange(0,glyphCount);
+                _glyphInfoList.SetRange(0, glyphCount);
             }
-}
-        
-         ~ShaperBuffers()
-         {
-             _glyphInfoList = null;
-             _charMap = null;
-             _layoutWorkspace = null;
-             _textFeatures = null;
-         }
-         
-         // I have laid these out alphabetically.  If a particular variable has
-         // an accessor with a different name than the variable, I've added a
-         // comment in the position of the variable...
+        }
 
-        public UshortList                       CharMap
+        ~ShaperBuffers()
+        {
+            _glyphInfoList = null;
+            _charMap = null;
+            _layoutWorkspace = null;
+            _textFeatures = null;
+        }
+
+        // I have laid these out alphabetically.  If a particular variable has
+        // an accessor with a different name than the variable, I've added a
+        // comment in the position of the variable...
+
+        public UshortList CharMap
         {
             get { return _charMap; }
         }
-         
-        
-        public GlyphInfoList                    GlyphInfoList
+
+
+        public GlyphInfoList GlyphInfoList
         {
             get { return _glyphInfoList; }
             set { _glyphInfoList = value; }
         }
-        
+
 
         /// <summary>
         /// ShaperBuffers.Initialize - initializer for GetGlyphs.
@@ -113,21 +113,21 @@ namespace MS.Internal.Shaping
         }
 
 
-         /// <summary>
-         /// ShaperBuffers.InitializeFeatureList - initializer for GetGlyphs.
-         /// </summary>
-         /// <param name="size">Requested new array size</param>
-         /// <param name="keep">number of features to copy into new array</param>
-         /// <remarks>
-         ///   Called by pertinent shaper's GetGlyph method; ie, those shapers
-         ///   that need to create a text dependent list of features
-         ///   (e.g. Arabic, Mongolian).
-         ///   The "keep" count takes priority over "size" if there's already an
-         ///   array, so if size size is less than keep, the resized array has at
-         ///    least keep elements.  It is possible to create a 0 sized array.
-         /// </remarks>
-         public bool InitializeFeatureList(ushort size, ushort keep)
-         {
+        /// <summary>
+        /// ShaperBuffers.InitializeFeatureList - initializer for GetGlyphs.
+        /// </summary>
+        /// <param name="size">Requested new array size</param>
+        /// <param name="keep">number of features to copy into new array</param>
+        /// <remarks>
+        ///   Called by pertinent shaper's GetGlyph method; ie, those shapers
+        ///   that need to create a text dependent list of features
+        ///   (e.g. Arabic, Mongolian).
+        ///   The "keep" count takes priority over "size" if there's already an
+        ///   array, so if size size is less than keep, the resized array has at
+        ///    least keep elements.  It is possible to create a 0 sized array.
+        /// </remarks>
+        public bool InitializeFeatureList(ushort size, ushort keep)
+        {
             if (_textFeatures == null)
             {
                 _textFeatures = new ShaperFeaturesList();
@@ -135,7 +135,7 @@ namespace MS.Internal.Shaping
                 {
                     return false;
                 }
-                
+
                 _textFeatures.Initialize(size);
             }
             else
@@ -144,65 +144,65 @@ namespace MS.Internal.Shaping
             }
 
             return true;
-         }
-         
-
-         public OpenTypeLayoutWorkspace            LayoutWorkspace
-         {
-             get { return _layoutWorkspace; }
-         }
-         
-         //                                          NextIx; see CurrentCharIx
+        }
 
 
-        public ShaperFeaturesList                  TextFeatures
+        public OpenTypeLayoutWorkspace LayoutWorkspace
+        {
+            get { return _layoutWorkspace; }
+        }
+
+        //                                          NextIx; see CurrentCharIx
+
+
+        public ShaperFeaturesList TextFeatures
         {
             get { return _textFeatures; }
         }
 
-        
+
         // these are one per shaping engine (or per thread) and are kept around
         // between calls (ie, we allocate these once for the lifetime of this
         // ShapingWorkspace instance)
-        private UshortList                  _charMap;
-        private GlyphInfoList               _glyphInfoList;
-        private OpenTypeLayoutWorkspace     _layoutWorkspace;
-        private ShaperFeaturesList          _textFeatures;
-}
+        private UshortList _charMap;
+        private GlyphInfoList _glyphInfoList;
+        private OpenTypeLayoutWorkspace _layoutWorkspace;
+        private ShaperFeaturesList _textFeatures;
+    }
 
     internal class ShaperFeaturesList
     {
-        public int                                FeaturesCount
+        public int FeaturesCount
         {
             get { return _featuresCount; }
         }
-         
-        public Feature[]                          Features
+
+        public Feature[] Features
         {
             get { return _features; }
         }
-        
-        public int                                NextIx
+
+        public int NextIx
         {
             get { return _featuresCount; }
         }
 
-        public uint                               CurrentTag
+        public uint CurrentTag
         {
-            get { return _featuresCount == 0 ? 0 : _features[_featuresCount - 1].Tag;}
+            get { return _featuresCount == 0 ? 0 : _features[_featuresCount - 1].Tag; }
         }
 
-        public int                                Length
+        public int Length
         {
             get { return _featuresCount; }
         }
 
-        public void SetFeatureParameter (ushort featureIx, uint paramValue)
+        public void SetFeatureParameter(ushort featureIx, uint paramValue)
         {
-            Invariant.Assert ( _featuresCount > featureIx );
+            Invariant.Assert(_featuresCount > featureIx);
             _features[featureIx].Parameter = paramValue;
         }
-        
+
         /// <summary>
         /// ShaperFeateruList.Initialize - initializer for GetGlyphs.
         /// </summary>
@@ -213,9 +213,9 @@ namespace MS.Internal.Shaping
         ///   called by those shapers that need to create a text dependent
         ///   list of features (e.g. Arabic, Mongolian).
         /// </remarks>
-        internal bool Initialize (ushort newSize)
+        internal bool Initialize(ushort newSize)
         {
-            if (_features == null || 
+            if (_features == null ||
                 newSize > _features.Length ||
                 newSize == 0)
             {
@@ -242,12 +242,12 @@ namespace MS.Internal.Shaping
         ///   The "keepCount" count takes priority over "newSize" if there's already an
         ///   array, so if size is less than keep, the resized array has at least keep elements.
         /// </remarks>
-        internal bool Resize (ushort newSize, ushort keepCount)
+        internal bool Resize(ushort newSize, ushort keepCount)
         {
             _featuresCount = keepCount;     // 
-   
-            if (_features != null && 
-                _features.Length != 0 && 
+
+            if (_features != null &&
+                _features.Length != 0 &&
                 keepCount > 0 &&
                 _features.Length >= keepCount)
             {
@@ -260,7 +260,7 @@ namespace MS.Internal.Shaping
                 {
                     newSize = keepCount;
                 }
-                
+
                 // if new size is bigger than the current array, create
                 // a new array
                 if (newSize > currentLength)
@@ -268,9 +268,9 @@ namespace MS.Internal.Shaping
                     // always use minimum leap for adding to array
                     if (newSize < (currentLength + _minimumAddCount))
                     {
-                       newSize = (ushort)(currentLength + _minimumAddCount);
+                        newSize = (ushort)(currentLength + _minimumAddCount);
                     }
-                    
+
                     Feature[] newArray = new Feature[newSize];
                     if (newArray == null)
                     {
@@ -278,7 +278,7 @@ namespace MS.Internal.Shaping
                         // have our current array)
                         return false;
                     }
-                    
+
                     // Our client wants us to keep the first "keepCount" entries.
                     // so copy them now.
                     for (int i = 0; i < keepCount; ++i)
@@ -296,8 +296,8 @@ namespace MS.Internal.Shaping
             }
 
             return true;
-}
-        
+        }
+
         /// <summary>
         /// ShaperFeateruList.AddFeature - add a feature to the array
         /// </summary>
@@ -307,18 +307,18 @@ namespace MS.Internal.Shaping
         ///     to the array (generally used for required, all character
         ///     features added at the start of shaping)
         /// </remarks>
-        internal void AddFeature (Feature feature)
+        internal void AddFeature(Feature feature)
         {
-            if ( _featuresCount == _features.Length )
+            if (_featuresCount == _features.Length)
             {
                 // need more space, so resize the array
-               if (!Resize((ushort)(_featuresCount + 1),_featuresCount))
-               {
+                if (!Resize((ushort)(_featuresCount + 1), _featuresCount))
+                {
                     return; // can't resize array, fail quietly (not going
                             // to apply this feature!)
-               }
+                }
             }
-            
+
             _features[_featuresCount] = feature;
             ++_featuresCount;
         }
@@ -329,17 +329,17 @@ namespace MS.Internal.Shaping
         /// <remarks>
         ///     An alternative to adding an already created feature.
         /// </remarks>
-        internal void AddFeature (ushort startIndex, ushort length, uint featureTag, uint parameter)
+        internal void AddFeature(ushort startIndex, ushort length, uint featureTag, uint parameter)
         {
-            if ( _featuresCount == _features.Length )
+            if (_featuresCount == _features.Length)
             {
                 // need more space
-               if (!Resize((ushort)(_featuresCount + 1),_featuresCount))
-               {
+                if (!Resize((ushort)(_featuresCount + 1), _featuresCount))
+                {
                     return;
-               }
+                }
             }
-            
+
             if (_features[_featuresCount] != null)
             {
                 _features[_featuresCount].Tag = featureTag;
@@ -349,9 +349,9 @@ namespace MS.Internal.Shaping
             }
             else
             {
-                _features[_featuresCount] = new Feature(startIndex,length,featureTag,parameter);
+                _features[_featuresCount] = new Feature(startIndex, length, featureTag, parameter);
             }
-            
+
             ++_featuresCount;
         }
 
@@ -362,13 +362,13 @@ namespace MS.Internal.Shaping
         ///     This variation of "AddFeature" is used by the shaper state
         ///     machines for adding each new feature.
         /// </remarks>
-        internal void AddFeature (ushort charIx, uint featureTag )
+        internal void AddFeature(ushort charIx, uint featureTag)
         {
             if (featureTag == 1)     // "NotShaped"
             {
                 return;
             }
-            
+
             if (_featuresCount > 0)     // if previous feature exists
             {
                 // see if this feature can just be subsumed in the latest feature
@@ -390,10 +390,10 @@ namespace MS.Internal.Shaping
             }
             else if (featureTag != 0)        // cant' be "Same" (there's no feature yet)
             {
-                AddFeature(charIx,1,featureTag,1);
+                AddFeature(charIx, 1, featureTag, 1);
             }
-}
-        
+        }
+
         /// <summary>
         /// ShaperFeateruList.UpdatePreviousShapedChar - adjust previous char's tag
         /// </summary>
@@ -401,13 +401,13 @@ namespace MS.Internal.Shaping
         ///     This is used by the shaper state machines for modifying the
         ///     feature tag of the previous character.
         /// </remarks>
-        internal void UpdatePreviousShapedChar (uint featureTag)
+        internal void UpdatePreviousShapedChar(uint featureTag)
         {
             if (featureTag <= 1)     // nothing to do if "NotShaped" or "Same"
             {
                 return;
             }
-            
+
             if (_featuresCount > 0)
             {
                 // see if this feature can just be subsumed in the latest feature
@@ -422,8 +422,8 @@ namespace MS.Internal.Shaping
             }
         }
 
-        private ushort                            _minimumAddCount;
-        private ushort                            _featuresCount;
-        private Feature[]                         _features;
+        private ushort _minimumAddCount;
+        private ushort _featuresCount;
+        private Feature[] _features;
     }
 }

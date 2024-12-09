@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,10 +7,10 @@
 // Description: Collection of utility classes for the Media3D namespace.
 //
 
-using MS.Utility;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
+using MS.Utility;
 
 namespace MS.Internal.Media3D
 {
@@ -27,12 +27,12 @@ namespace MS.Internal.Media3D
             double v = barycentric.X;
             double w = barycentric.Y;
             double u = 1 - v - w;
-                
-            return new Point3D(u*v0.X + v*v1.X + w*v2.X,
-                               u*v0.Y + v*v1.Y + w*v2.Y,
-                               u*v0.Z + v*v1.Z + w*v2.Z);
+
+            return new Point3D(u * v0.X + v * v1.X + w * v2.X,
+                               u * v0.Y + v * v1.Y + w * v2.Y,
+                               u * v0.Z + v * v1.Z + w * v2.Z);
         }
-        
+
         // Helper method for compiting the bounds of a set of points.  The given point
         // is added to the bounds of the given Rect3D.  The point/bounds are both passed
         // by reference for perf.  Only the bounds may be modified.
@@ -92,7 +92,7 @@ namespace MS.Internal.Media3D
                     Point3D p = points[0];
                     Rect3D newBounds = new Rect3D(p.X, p.Y, p.Z, 0, 0, 0);
 
-                    for(int i = 1; i < points.Count; i++)
+                    for (int i = 1; i < points.Count; i++)
                     {
                         p = points[i];
 
@@ -143,7 +143,7 @@ namespace MS.Internal.Media3D
         internal static Rect3D ComputeTransformedAxisAlignedBoundingBoxAffine(/* IN */ ref Rect3D originalBox, /* IN */ ref Matrix3D matrix)
         {
             Debug.Assert(matrix.IsAffine);
-            
+
             // Based on Arvo's paper "Transforming Axis-Aligned Bounding Boxes" 
             // from the original Graphics Gems book. Specifically, this code
             // is based on Figure 1 which is for a box stored as min and
@@ -190,7 +190,7 @@ namespace MS.Internal.Media3D
                     newMinX += b;
                     newMaxX += a;
                 }
-                
+
                 // i = 1 (X), j = 2 (Y)
                 a = matrix.M21 * originalBox.Y;
                 b = matrix.M21 * oldMaxY;
@@ -204,7 +204,7 @@ namespace MS.Internal.Media3D
                     newMinX += b;
                     newMaxX += a;
                 }
-                
+
                 // i = 1 (X), j = 3 (Z)
                 a = matrix.M31 * originalBox.Z;
                 b = matrix.M31 * oldMaxZ;
@@ -237,7 +237,7 @@ namespace MS.Internal.Media3D
                     newMinY += b;
                     newMaxY += a;
                 }
-                
+
                 // i = 2 (Y), j = 2 (Y)
                 a = matrix.M22 * originalBox.Y;
                 b = matrix.M22 * oldMaxY;
@@ -251,7 +251,7 @@ namespace MS.Internal.Media3D
                     newMinY += b;
                     newMaxY += a;
                 }
-                
+
                 // i = 2 (Y), j = 3 (Z)
                 a = matrix.M32 * originalBox.Z;
                 b = matrix.M32 * oldMaxZ;
@@ -264,7 +264,7 @@ namespace MS.Internal.Media3D
                 {
                     newMinY += b;
                     newMaxY += a;
-                } 
+                }
             }
 
             // i = 3 (Z)
@@ -284,7 +284,7 @@ namespace MS.Internal.Media3D
                     newMinZ += b;
                     newMaxZ += a;
                 }
-                
+
                 // i = 3 (Z), j = 2 (Y)
                 a = matrix.M23 * originalBox.Y;
                 b = matrix.M23 * oldMaxY;
@@ -298,7 +298,7 @@ namespace MS.Internal.Media3D
                     newMinZ += b;
                     newMaxZ += a;
                 }
-                
+
                 // i = 3 (Z), j = 3 (Z)
                 a = matrix.M33 * originalBox.Z;
                 b = matrix.M33 * oldMaxZ;
@@ -313,7 +313,7 @@ namespace MS.Internal.Media3D
                     newMaxZ += a;
                 }
             }
-           
+
             return new Rect3D(newMinX, newMinY, newMinZ, newMaxX - newMinX, newMaxY - newMinY, newMaxZ - newMinZ);
         }
 
@@ -321,7 +321,7 @@ namespace MS.Internal.Media3D
         internal static Rect3D ComputeTransformedAxisAlignedBoundingBoxNonAffine(/* IN */ ref Rect3D originalBox, /* IN */ ref Matrix3D matrix)
         {
             Debug.Assert(!matrix.IsAffine);
-            
+
             double x1 = originalBox.X;
             double y1 = originalBox.Y;
             double z1 = originalBox.Z;
@@ -346,7 +346,7 @@ namespace MS.Internal.Media3D
             Rect3D newBounds = new Rect3D(p.X, p.Y, p.Z, 0, 0, 0);
 
             // Traverse the entire mesh and compute bounding box.
-            for(int i = 1; i < points.Length; i++)
+            for (int i = 1; i < points.Length; i++)
             {
                 p = points[i];
 
@@ -366,24 +366,24 @@ namespace MS.Internal.Media3D
         internal static Point GetNormalizedPoint(Point point, Size size)
         {
             return new Point(
-                ((2*point.X)/size.Width) - 1,
-                -(((2*point.Y)/size.Height) - 1));
+                ((2 * point.X) / size.Width) - 1,
+                -(((2 * point.Y) / size.Height) - 1));
         }
 
         internal static double RadiansToDegrees(double radians)
         {
-            return radians*(180.0/Math.PI);
+            return radians * (180.0 / Math.PI);
         }
 
         internal static double DegreesToRadians(double degrees)
         {
-            return degrees*(Math.PI/180.0);
+            return degrees * (Math.PI / 180.0);
         }
 
         internal static Matrix3D GetWorldToViewportTransform3D(Camera camera, Rect viewport)
         {
             Debug.Assert(camera != null, "Caller is responsible for ensuring camera is not null.");
-            
+
             return camera.GetViewMatrix() *
                 camera.GetProjectionMatrix(M3DUtil.GetAspectRatio(viewport.Size)) *
                 M3DUtil.GetHomogeneousToViewportTransform3D(viewport);
@@ -474,11 +474,11 @@ namespace MS.Internal.Media3D
             double ty = viewport.Y + sy;
 
             return new Matrix3D(
-                sx,  0, 0, 0,
-                0 , -sy, 0, 0,
-                0 ,  0, 1, 0,
-                tx, ty, 0, 1);                
-}
+                sx, 0, 0, 0,
+                0, -sy, 0, 0,
+                0, 0, 1, 0,
+                tx, ty, 0, 1);
+        }
 
         /// <summary>
         /// Same as GetHomogeneousToViewportTransform3D but returns a 2D matrix.
@@ -492,9 +492,9 @@ namespace MS.Internal.Media3D
             double ty = viewport.Y + sy;
 
             return new Matrix(
-                sx,  0,
-                0 , -sy,
-                tx, ty);                
+                sx, 0,
+                0, -sy,
+                tx, ty);
         }
 
         /// <summary>
@@ -519,17 +519,17 @@ namespace MS.Internal.Media3D
         {
             DependencyObject dependencyObject = visual3DStart;
             Matrix3D worldTransform = Matrix3D.Identity;
-       
+
             while (dependencyObject != null)
             {
                 Visual3D visual3D = dependencyObject as Visual3D;
 
                 // we reached the top
-                if (visual3D == null) 
+                if (visual3D == null)
                 {
                     break;
                 }
-                
+
                 Transform3D transform = (Transform3D)visual3D.GetValue(Visual3D.TransformProperty);
 
                 if (transform != null)
@@ -537,7 +537,7 @@ namespace MS.Internal.Media3D
                     transform.Append(ref worldTransform);
                 }
 
-                dependencyObject = VisualTreeHelper.GetParent(dependencyObject);      
+                dependencyObject = VisualTreeHelper.GetParent(dependencyObject);
             }
 
             if (dependencyObject != null)
@@ -598,22 +598,22 @@ namespace MS.Internal.Media3D
             double F = triUVVertices[2].Y - p.Y;
 
             denom = (A * E - B * D);
-            if (denom == 0) 
+            if (denom == 0)
             {
                 return false;
             }
             double lambda1 = (B * F - C * E) / denom;
 
             denom = (B * D - A * E);
-            if (denom == 0) 
+            if (denom == 0)
             {
                 return false;
             }
             double lambda2 = (A * F - C * D) / denom;
 
-            if (lambda1 < 0 || lambda1 > 1 || 
-                lambda2 < 0 || lambda2 > 1 || 
-                (lambda1 + lambda2) > 1) 
+            if (lambda1 < 0 || lambda1 > 1 ||
+                lambda2 < 0 || lambda2 > 1 ||
+                (lambda1 + lambda2) > 1)
             {
                 return false;
             }

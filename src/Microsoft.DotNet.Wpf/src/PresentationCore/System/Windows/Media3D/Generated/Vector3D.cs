@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using System.ComponentModel;
 using System.Windows.Markup;
 using System.Windows.Media.Media3D.Converters;
+using MS.Internal;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media.Media3D
@@ -44,7 +44,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='vector1'>The first Vector3D to compare</param>
         /// <param name='vector2'>The second Vector3D to compare</param>
-        public static bool operator == (Vector3D vector1, Vector3D vector2)
+        public static bool operator ==(Vector3D vector1, Vector3D vector2)
         {
             return vector1.X == vector2.X &&
                    vector1.Y == vector2.Y &&
@@ -62,7 +62,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='vector1'>The first Vector3D to compare</param>
         /// <param name='vector2'>The second Vector3D to compare</param>
-        public static bool operator != (Vector3D vector1, Vector3D vector2)
+        public static bool operator !=(Vector3D vector1, Vector3D vector2)
         {
             return !(vector1 == vector2);
         }
@@ -78,7 +78,7 @@ namespace System.Windows.Media.Media3D
         /// </returns>
         /// <param name='vector1'>The first Vector3D to compare</param>
         /// <param name='vector2'>The second Vector3D to compare</param>
-        public static bool Equals (Vector3D vector1, Vector3D vector2)
+        public static bool Equals(Vector3D vector1, Vector3D vector2)
         {
             return vector1.X.Equals(vector2.X) &&
                    vector1.Y.Equals(vector2.Y) &&
@@ -104,7 +104,7 @@ namespace System.Windows.Media.Media3D
             }
 
             Vector3D value = (Vector3D)o;
-            return Vector3D.Equals(this,value);
+            return Vector3D.Equals(this, value);
         }
 
         /// <summary>
@@ -189,7 +189,7 @@ namespace System.Windows.Media.Media3D
             {
                 _x = value;
             }
-}
+        }
 
         /// <summary>
         ///     Y - double.  Default value is 0.
@@ -205,7 +205,7 @@ namespace System.Windows.Media.Media3D
             {
                 _y = value;
             }
-}
+        }
 
         /// <summary>
         ///     Z - double.  Default value is 0.
@@ -221,7 +221,7 @@ namespace System.Windows.Media.Media3D
             {
                 _z = value;
             }
-}
+        }
 
         #endregion Public Properties
 

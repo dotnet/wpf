@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,8 +7,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Windows.Annotations.Storage;
-using System.Windows.Documents;
 using System.Windows.Controls.Primitives;
+using System.Windows.Documents;
 using System.Windows.Media;
 using MS.Internal;
 using MS.Internal.Annotations;
@@ -115,7 +115,7 @@ namespace System.Windows.Annotations
         /// </remarks>
         public override int PageCount
         {
-            get { return _originalPaginator.PageCount;  }
+            get { return _originalPaginator.PageCount; }
         }
 
         /// <summary>
@@ -231,7 +231,7 @@ namespace System.Windows.Annotations
         //------------------------------------------------------
 
         #region Private Methods
-        
+
         /// <summary>
         ///    We are being notified by the wrapped paginator.  If getting the page
         ///    was successful, we use the resulting page to produce a new page that
@@ -240,11 +240,11 @@ namespace System.Windows.Annotations
         /// <param name="sender">source of the event</param>
         /// <param name="e">the args for this event</param>
         private void HandleGetPageCompleted(object sender, GetPageCompletedEventArgs e)
-        {            
+        {
             // If no errors, not cancelled, and page isn't missing, create a new page
             // with annotations and create a new event args for that page.
-            if (!e.Cancelled && e.Error == null && e.DocumentPage != DocumentPage.Missing) 
-            {      
+            if (!e.Cancelled && e.Error == null && e.DocumentPage != DocumentPage.Missing)
+            {
                 // Since we can't change the page the args is holding we create a new
                 // args object with the page we produce.
                 DocumentPage documentPage = ComposePageWithAnnotationVisuals(e.PageNumber, e.DocumentPage);
@@ -292,12 +292,16 @@ namespace System.Windows.Annotations
             // causes the page to be disposed
             Size tempSize = page.Size;
 
-            AdornerDecorator decorator = new AdornerDecorator();
-            decorator.FlowDirection = _flowDirection;
-            DocumentPageView dpv = new DocumentPageView();
-            dpv.UseAsynchronousGetPage = false;
-            dpv.DocumentPaginator = _originalPaginator;
-            dpv.PageNumber = pageNumber;
+            AdornerDecorator decorator = new AdornerDecorator
+            {
+                FlowDirection = _flowDirection
+            };
+            DocumentPageView dpv = new DocumentPageView
+            {
+                UseAsynchronousGetPage = false,
+                DocumentPaginator = _originalPaginator,
+                PageNumber = pageNumber
+            };
             decorator.Child = dpv;
 
             // Arrange the first time to get the DPV setup right
@@ -307,26 +311,26 @@ namespace System.Windows.Annotations
 
             // Create a new one for each page because it keeps a cache of annotation components
             // and we don't want to be holding them in memory once the page is no longer used
-            AnnotationComponentManager manager = new MS.Internal.Annotations.Component.AnnotationComponentManager(null); 
+            AnnotationComponentManager manager = new MS.Internal.Annotations.Component.AnnotationComponentManager(null);
 
             // Setup DPs and processors for annotation handling.  If the service isn't already
             // enabled the processors will be registered by the service when it is enabled.
             if (_isFixedContent)
             {
                 // Setup service to look for FixedPages in the content
-                AnnotationService.SetSubTreeProcessorId(decorator, FixedPageProcessor.Id);                
+                AnnotationService.SetSubTreeProcessorId(decorator, FixedPageProcessor.Id);
                 // If the service is already registered, set it up for fixed content
                 _locatorManager.RegisterSelectionProcessor(new FixedTextSelectionProcessor(), typeof(TextRange));
             }
-            else 
+            else
             {
                 // Setup up an initial DataId used to identify the document
-                AnnotationService.SetDataId(decorator, "FlowDocument");                
+                AnnotationService.SetDataId(decorator, "FlowDocument");
                 _locatorManager.RegisterSelectionProcessor(new TextViewSelectionProcessor(), typeof(DocumentPageView));
                 // Setup the selection processor, pre-targeting it at a specific DocumentPageView
                 TextSelectionProcessor textSelectionProcessor = new TextSelectionProcessor();
                 textSelectionProcessor.SetTargetDocumentPageView(dpv);
-                _locatorManager.RegisterSelectionProcessor(textSelectionProcessor, typeof(TextRange));                
+                _locatorManager.RegisterSelectionProcessor(textSelectionProcessor, typeof(TextRange));
             }
 
             // Get attached annotations for the page
@@ -346,12 +350,12 @@ namespace System.Windows.Annotations
             decorator.Arrange(new Rect(decorator.DesiredSize));
             decorator.UpdateLayout();
 
-/*          Look into using the VisualBrush in order to get a dead page instead of a live one...
-            VisualBrush visualBrush = new VisualBrush(decorator);
-            Rectangle rectangle = new Rectangle();
-            rectangle.Fill = visualBrush;
-            rectangle.Margin = new Thickness(0);
-*/
+            /*          Look into using the VisualBrush in order to get a dead page instead of a live one...
+                        VisualBrush visualBrush = new VisualBrush(decorator);
+                        Rectangle rectangle = new Rectangle();
+                        rectangle.Fill = visualBrush;
+                        rectangle.Margin = new Thickness(0);
+            */
 
             return new AnnotatedDocumentPage(page, decorator, tempSize, new Rect(tempSize), new Rect(tempSize));
         }
@@ -388,7 +392,7 @@ namespace System.Windows.Annotations
                             object attachedAnchor = _locatorManager.FindAttachedAnchor(dpv, lists, locator, out attachmentLevel);
 
                             if (attachmentLevel != AttachmentLevel.Unresolved)
-                            {              
+                            {
                                 Invariant.Assert(VisualTreeHelper.GetChildrenCount(dpv) == 1, "DocumentPageView has no visual children.");
                                 DependencyObject firstElement = VisualTreeHelper.GetChild(dpv, 0);
 
@@ -407,7 +411,7 @@ namespace System.Windows.Annotations
 
         #endregion Private Methods
 
-        
+
         //------------------------------------------------------
         //
         //  Private Fields

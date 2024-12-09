@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -225,10 +225,10 @@ namespace MS.Internal.FontCache
         private const int MaxBufferLength = 1024;
 
         // Indices in _buffers for each supported type.
-        private const int GlyphMetricsIndex         = 0;
-        private const int UIntsIndex                = 1;
-        private const int UShortsIndex              = 2;
-        private const int BuffersLength             = 3;
+        private const int GlyphMetricsIndex = 0;
+        private const int UIntsIndex = 1;
+        private const int UShortsIndex = 2;
+        private const int BuffersLength = 3;
 
         // Guards access to _buffers.
         static private long _mutex;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -149,7 +149,7 @@ namespace MS.Internal.IO.Packaging
         private const string _glyphRunName = "Glyphs";
         #endregion Constants
 
-        private XmlNode     _pageNode;
+        private XmlNode _pageNode;
         private XmlNodeList _nodeList = null;
         private XmlGlyphRunInfo[] _glyphRunList = null;
         #endregion Private Fields

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,7 +34,7 @@ namespace System.Windows.Markup
     internal class TemplateXamlParser : XamlParser
     {
 
-#region Constructors
+        #region Constructors
 
 #if !PBTCOMPILER
         /// <summary>
@@ -62,20 +62,20 @@ namespace System.Windows.Markup
         /// the token reader uses with ourself.  Then restore it when we're done parsing.
         /// </remarks>
         internal TemplateXamlParser(
-            XamlReaderHelper      tokenReader,
-            ParserContext   parserContext)
+            XamlReaderHelper tokenReader,
+            ParserContext parserContext)
         {
-            TokenReader       = tokenReader;
-            ParserContext     = parserContext;
+            TokenReader = tokenReader;
+            ParserContext = parserContext;
 
             _previousXamlParser = TokenReader.ControllingXamlParser;
             TokenReader.ControllingXamlParser = this;
             _startingDepth = TokenReader.XmlReader.Depth;
         }
 
-#endregion Constructors
+        #endregion Constructors
 
-#region Overrides
+        #region Overrides
 
 
         /// <summary>
@@ -87,10 +87,10 @@ namespace System.Windows.Markup
         /// </remarks>
         internal override void ProcessXamlNode(
                XamlNode xamlNode,
-           ref bool     cleanup,
-           ref bool     done)
+           ref bool cleanup,
+           ref bool done)
         {
-            switch(xamlNode.TokenType)
+            switch (xamlNode.TokenType)
             {
                 // Ignore some types of xaml nodes, since they are not
                 // relevent to template parsing.
@@ -159,7 +159,7 @@ namespace System.Windows.Markup
             // Keep mode and other state up-to-date.  This
             // must be called before updating stack.
 
-             CommonElementStartProcessing(xamlUnknownTagStartNode, null, ref mode);
+            CommonElementStartProcessing(xamlUnknownTagStartNode, null, ref mode);
             _styleModeStack.Push(mode);
 
 
@@ -215,7 +215,7 @@ namespace System.Windows.Markup
             }
 #endif
 
-         }
+        }
 
         /// <summary>
         /// Write Start element for a dictionary key section.
@@ -264,7 +264,7 @@ namespace System.Windows.Markup
                 if (!localTag || !IsLocalPass1)
                 {
 #endif
-                   base.WriteUnknownTagEnd(xamlUnknownTagEndNode);
+                    base.WriteUnknownTagEnd(xamlUnknownTagEndNode);
 #if PBTCOMPILER
                 }
 #endif
@@ -438,7 +438,7 @@ namespace System.Windows.Markup
             if (-1 != dotIndex)
             {
                 target = propertyName.Substring(0, dotIndex);
-                member = propertyName.Substring(dotIndex+1);
+                member = propertyName.Substring(dotIndex + 1);
             }
             int colonIndex = target.IndexOf(':');
             if (-1 != colonIndex)
@@ -447,7 +447,7 @@ namespace System.Windows.Markup
                 prefix = target.Substring(0, colonIndex);
                 if (-1 == dotIndex)
                 {
-                    member = target.Substring(colonIndex+1);
+                    member = target.Substring(colonIndex + 1);
                 }
             }
 
@@ -747,23 +747,23 @@ namespace System.Windows.Markup
             {
                 XamlSerializer serializer = XamlTypeMapper.CreateInstance(xamlElementStartNode.SerializerType)
                                                           as XamlSerializer;
-                 if (serializer == null)
-                 {
-                     ThrowException(nameof(SR.ParserNoSerializer),
-                                   xamlElementStartNode.TypeFullName,
-                                   xamlElementStartNode.LineNumber,
-                                   xamlElementStartNode.LinePosition);
-                 }
-                 else
-                 {
-                     // Depending on whether this is the compile case or the parse xaml
-                     // case, we want to convert the xaml into baml or objects.
+                if (serializer == null)
+                {
+                    ThrowException(nameof(SR.ParserNoSerializer),
+                                  xamlElementStartNode.TypeFullName,
+                                  xamlElementStartNode.LineNumber,
+                                  xamlElementStartNode.LinePosition);
+                }
+                else
+                {
+                    // Depending on whether this is the compile case or the parse xaml
+                    // case, we want to convert the xaml into baml or objects.
 
-                     #if PBTCOMPILER
-                         serializer.ConvertXamlToBaml(TokenReader,
-                                       BamlRecordWriter == null ? ParserContext : BamlRecordWriter.ParserContext,
-                                       xamlElementStartNode, BamlRecordWriter);
-                     #else
+#if PBTCOMPILER
+                    serializer.ConvertXamlToBaml(TokenReader,
+                                  BamlRecordWriter == null ? ParserContext : BamlRecordWriter.ParserContext,
+                                  xamlElementStartNode, BamlRecordWriter);
+#else
 
                          // If we're in the content of the template, we'll convert to baml.  Then TemplateBamlRecordReader
                          // gets the option of instantiating it or keeping it in baml.  For example, if this is a nested
@@ -803,9 +803,9 @@ namespace System.Windows.Markup
                                                TreeBuilder.RecordReader);
                          }
 
-                     #endif
+#endif
 
-                 }
+                }
 
             }
             else
@@ -826,10 +826,10 @@ namespace System.Windows.Markup
         //  This is used by WriteElementStart and WriteUnknownTagStart.  It is used
         //  to keep style mode up-to-date.
         //
-        private void CommonElementStartProcessing (XamlNode xamlNode, Type elementType, ref StyleMode mode)
+        private void CommonElementStartProcessing(XamlNode xamlNode, Type elementType, ref StyleMode mode)
         {
 
-            if (mode == StyleMode.Base && _styleModeStack.Depth > 0 )
+            if (mode == StyleMode.Base && _styleModeStack.Depth > 0)
             {
                 if (_templateRootCount++ > 0)
                 {
@@ -1228,7 +1228,7 @@ namespace System.Windows.Markup
             }
             else if (_styleModeStack.Depth == 1 && mode == StyleMode.Base)
             {
-                if( xamlPropertyIDictionaryStartNode.PropName == XamlTemplateSerializer.ResourcesPropertyName)
+                if (xamlPropertyIDictionaryStartNode.PropName == XamlTemplateSerializer.ResourcesPropertyName)
                 {
                     mode = StyleMode.Resources;
                 }
@@ -1314,7 +1314,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                for (int i = 0; i< xamlTextNode.Text.Length; i++)
+                for (int i = 0; i < xamlTextNode.Text.Length; i++)
                 {
                     if (!XamlReaderHelper.IsWhiteSpace(xamlTextNode.Text[i]))
                     {
@@ -1359,7 +1359,7 @@ namespace System.Windows.Markup
                     // the attached event, and the compiler needs to know the type of
                     // the listener.
 
-                    xamlClrEventNode.ListenerType = (Type) _elementTypeStack.Peek();
+                    xamlClrEventNode.ListenerType = (Type)_elementTypeStack.Peek();
                 }
 
                 _previousXamlParser.WriteClrEvent(xamlClrEventNode);
@@ -1685,7 +1685,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Called when the parse was cancelled by the designer or the user.
         /// </summary>
-        internal override void  ParseCancelled()
+        internal override void ParseCancelled()
         {
             // Override so we don't close the writer stream, since we're a sub-parser
         }
@@ -1706,9 +1706,9 @@ namespace System.Windows.Markup
             get { return false; }
         }
 
-#endregion Overrides
+        #endregion Overrides
 
-#region Methods
+        #region Methods
 
         /// <summary>
         /// Helper function if we are going to a Reader/Writer stream closes the writer
@@ -1729,9 +1729,9 @@ namespace System.Windows.Markup
 #endif
         }
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
 #if !PBTCOMPILER
         /// <summary>
@@ -1750,9 +1750,12 @@ namespace System.Windows.Markup
         /// </summary>
         bool InDeferLoadedSection
         {
-            get { return BamlRecordWriter != null &&
+            get
+            {
+                return BamlRecordWriter != null &&
                          BamlRecordWriter.InDeferLoadedSection &&
-                         _previousXamlParser.GetType() != typeof(StyleXamlParser); }
+                         _previousXamlParser.GetType() != typeof(StyleXamlParser);
+            }
         }
 
         /// <summary>
@@ -1762,7 +1765,7 @@ namespace System.Windows.Markup
         {
             get { return BamlRecordWriter == null; }
         }
-        
+
         private Type ItemContainerTemplateType
         {
             get
@@ -1789,9 +1792,9 @@ namespace System.Windows.Markup
 
 #endif
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
 #if !PBTCOMPILER
         // TreeBuilder that created this parser
@@ -1799,26 +1802,26 @@ namespace System.Windows.Markup
 #endif
         // The XamlParser that the TokenReader was using when this instance of
         // the TemplateXamlParser was created.  This must be restored on exit
-        XamlParser      _previousXamlParser;
+        XamlParser _previousXamlParser;
 
         // Depth in the Xaml file when parsing of this template block started.
         // This is used to determine when to stop parsing
-        int             _startingDepth;
+        int _startingDepth;
 
         // Number of template root nodes encountered immediately under a Template.  Only 1
         // is allowed.
-        int             _templateRootCount;
+        int _templateRootCount;
 
-        StyleModeStack  _styleModeStack = new StyleModeStack();
+        StyleModeStack _styleModeStack = new StyleModeStack();
 
         // Depth in the element tree where a <Setter .../> has begun.
-        int             _inSetterDepth = -1;
+        int _inSetterDepth = -1;
 
         // The actual Type of the TargetType property on template.  This may be null.
-        Type            _templateTargetTypeType;
+        Type _templateTargetTypeType;
 
         // The default TargetType of the template to use when TargetType is not set.
-        Type            _defaultTargetType;
+        Type _defaultTargetType;
 
         // The XamlPropertyNode for the "Foo" Property attribute in <Setter Property="Foo" ... />
         // or <Trigger Property="Foo" .../>
@@ -1830,30 +1833,30 @@ namespace System.Windows.Markup
 
         // Depth in the element tree where a Trigger or MultiTrigger
         // section has begun.  Set to -1 to indicate it is not within such a section.
-        int             _inPropertyTriggerDepth = -1;
+        int _inPropertyTriggerDepth = -1;
 
         // Depth of nested complex properties within a VisualTree.  This is used to
         // track when it is valid to have a clr property vs a dependency property
         // specified in the VisualTree;
-        int             _visualTreeComplexPropertyDepth = -1;
+        int _visualTreeComplexPropertyDepth = -1;
 
         // Depth of nested complex properties within the Triggers section.  This is used to
         // track when it is valid to have text.
-        int             _triggerComplexPropertyDepth = -1;
+        int _triggerComplexPropertyDepth = -1;
 #if PBTCOMPILER
         // True if x:Key property was found on the template tag
-        bool            _defNameFound;
+        bool _defNameFound;
 
         // During second pass, remember the info for the DataType property, so
         // that we can write out a key if no x:Key is present
         XamlPropertyWithTypeNode _dataTypePropertyNode;
-        int                      _dataTypePropertyNodeDepth;
+        int _dataTypePropertyNodeDepth;
 
         // True if event is in the same VisualTree FEF.
-        bool            _isSameScope;
+        bool _isSameScope;
 
         // Type to use for the implicit key in the dictionary
-        Type            _templateKeyType;
+        Type _templateKeyType;
 
         // Cached Type for ItemContainerTemplate
         private static Type _itemContainerTemplateType;
@@ -1866,21 +1869,21 @@ namespace System.Windows.Markup
 
 #endif
         // Stack to keep track of element types during compile.
-        Stack           _elementTypeStack = new Stack(5);
+        Stack _elementTypeStack = new Stack(5);
 
         // Dictionary of names, where the key is the name string and the value
         // is the element type that is using that name.
-        Hashtable       _IDTypes = new Hashtable();
+        Hashtable _IDTypes = new Hashtable();
 
         // The value of <Setter TargetName="foo" ... /> that identifies the target
         // of the set operation or the value of <Condition SourceName="bar" ... />
         // that identifies the source of a trigger condition.
-        string          _setterTargetNameOrConditionSourceName;
+        string _setterTargetNameOrConditionSourceName;
 
         // MemberInfo fo the DP Property value for the case where a Value is read as ComplexAsSimple.
-        MemberInfo      _setterOrTriggerPropertyMemberInfo;
+        MemberInfo _setterOrTriggerPropertyMemberInfo;
 
-#endregion Data
+        #endregion Data
     }
 }
 

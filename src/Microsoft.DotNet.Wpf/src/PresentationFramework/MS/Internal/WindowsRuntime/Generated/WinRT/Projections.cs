@@ -112,7 +112,7 @@ namespace WinRT
         {
             if (type.IsConstructedGenericType)
             {
-                if(IsTypeWindowsRuntimeTypeNoArray(type.GetGenericTypeDefinition()))
+                if (IsTypeWindowsRuntimeTypeNoArray(type.GetGenericTypeDefinition()))
                 {
                     foreach (var arg in type.GetGenericArguments())
                     {
@@ -198,7 +198,7 @@ namespace WinRT
 
         internal static bool TryGetMarshalerTypeForProjectedRuntimeClass(IObjectReference objectReference, out Type type)
         {
-            if(objectReference.TryAs<IInspectable.Vftbl>(out var inspectablePtr) == 0)
+            if (objectReference.TryAs<IInspectable.Vftbl>(out var inspectablePtr) == 0)
             {
                 rwlock.EnterReadLock();
                 try

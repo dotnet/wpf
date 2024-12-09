@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Main class used by Automation clients, represents a UI element
 
-using System.Windows.Automation.Provider;
 using System.Collections;
-using System.Diagnostics;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
 
 #if EVENT_TRACING_PROPERTY
@@ -33,7 +33,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // Private ctor, used mostly by CacheHelper when reconstructing AutomationElements from
@@ -71,7 +71,7 @@ namespace System.Windows.Automation
         ~AutomationElement()
         {
         }
-        
+
         // Used by methods that return non-cached AutomationElements - examples currently include
         // AutomationElements returned as properties (SelecitonContainer, RowHeaders).
         internal static AutomationElement Wrap(SafeNodeHandle hnode)
@@ -84,14 +84,14 @@ namespace System.Windows.Automation
             return new AutomationElement(hnode, null, 0, null);
         }
 
-       #endregion Constructors
+        #endregion Constructors
 
         //------------------------------------------------------
         //
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>
@@ -390,7 +390,7 @@ namespace System.Windows.Automation
             //Debug.Assert(false, "Should always have runtimeID from cache at ctor.");
 
             // false -> return null (instead of throwing) if not available; true->wrap
-            int [] val = LookupCachedValue(AutomationElement.RuntimeIdProperty, false, true) as int[];
+            int[] val = LookupCachedValue(AutomationElement.RuntimeIdProperty, false, true) as int[];
             if (val != null)
             {
                 _runtimeId = val;
@@ -509,7 +509,7 @@ namespace System.Windows.Automation
             // PRESHARP will flag this as warning 56506/6506:Parameter 'property' to this public method must be validated: A null-dereference can occur here.
             // False positive, property is checked, see above
 #pragma warning suppress 6506
-             UiaCoreApi.UiaGetPropertyValue(_hnode, property.Id, out value);
+            UiaCoreApi.UiaGetPropertyValue(_hnode, property.Id, out value);
             if (value != AutomationElement.NotSupported)
             {
                 // we need to verify that we've got the expected basic variant type before casting/returning?
@@ -781,12 +781,12 @@ namespace System.Windows.Automation
 
             AutomationElement[] els = new AutomationElement[responses.Length];
 
-            for( int i = 0 ; i < responses.Length ; i ++ )
+            for (int i = 0; i < responses.Length; i++)
             {
                 els[i] = CacheHelper.BuildAutomationElementsFromResponse(request, responses[i]);
             }
 
-            return new AutomationElementCollection( els );
+            return new AutomationElementCollection(els);
         }
 
         /// <summary>
@@ -798,7 +798,7 @@ namespace System.Windows.Automation
         /// currently support or which have null or empty values. Use GetPropertyValue to determine
         /// whether a property is currently supported and to determine what its current value is.
         /// </remarks>
-        public AutomationProperty [ ] GetSupportedProperties()
+        public AutomationProperty[] GetSupportedProperties()
         {
             CheckElement();
 
@@ -828,7 +828,7 @@ namespace System.Windows.Automation
         /// Get the interfaces that this object supports
         /// </summary>
         /// <returns>An array of AutomationPatterns that represent the supported interfaces</returns>
-        public AutomationPattern [ ] GetSupportedPatterns()
+        public AutomationPattern[] GetSupportedPatterns()
         {
             CheckElement();
 
@@ -869,10 +869,10 @@ namespace System.Windows.Automation
         /// </summary>
         /// <param name="pt">A point that can be used ba a client to click on this LogicalElement</param>
         /// <returns>true if there is point that is clickable</returns>
-        public bool TryGetClickablePoint( out Point pt )
+        public bool TryGetClickablePoint(out Point pt)
         {
             // initialize point here so if we return false its initialized
-            pt = new Point (0, 0);
+            pt = new Point(0, 0);
 
             // Request the provider for a clickable point. 
             object ptClickable = GetCurrentPropertyValue(AutomationElement.ClickablePointProperty);
@@ -886,7 +886,7 @@ namespace System.Windows.Automation
             if (ptClickable is Point)
             {
                 //If the ClickablePointProperty from the provider is NaN that means no point.
-                if (double.IsNaN (((Point) ptClickable).X) || double.IsNaN (((Point) ptClickable).Y))
+                if (double.IsNaN(((Point)ptClickable).X) || double.IsNaN(((Point)ptClickable).Y))
                 {
                     return false;
                 }
@@ -904,15 +904,15 @@ namespace System.Windows.Automation
                     scan = TreeWalker.RawViewWalker.GetParent(scan, CacheRequest.DefaultCacheRequest);
                 }
             }
-            
+
             // the providers point is either no good or they did not have one so poke around 
             // trying to find one.
-            if (ClickablePoint.HitTestForClickablePoint( (AutomationElement)this, out pt) )
+            if (ClickablePoint.HitTestForClickablePoint((AutomationElement)this, out pt))
                 return true;
-            
+
             return false;
         }
-        
+
         /// <summary>
         /// Get a point that can be clicked on.  This throws the NoClickablePointException if there is no clickable point
         /// </summary>
@@ -921,7 +921,7 @@ namespace System.Windows.Automation
         public Point GetClickablePoint()
         {
             Point pt;
-            if ( !TryGetClickablePoint( out pt ) )
+            if (!TryGetClickablePoint(out pt))
                 throw new NoClickablePointException(SR.LogicalElementNoClickablePoint);
 
             return pt;
@@ -934,7 +934,7 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
 
         /// <summary>
@@ -1107,7 +1107,7 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal void CheckElement()
@@ -1134,7 +1134,7 @@ namespace System.Windows.Automation
             return CacheHelper.BuildAutomationElementsFromResponse(cacheRequest, response);
         }
 
-        internal AutomationElement Normalize(Condition condition, CacheRequest request )
+        internal AutomationElement Normalize(Condition condition, CacheRequest request)
         {
             CheckElement();
 
@@ -1189,7 +1189,7 @@ namespace System.Windows.Automation
         //  Internal Properties
         //
         //------------------------------------------------------
- 
+
         #region Internal Properties
 
         internal SafeNodeHandle RawNode
@@ -1206,7 +1206,7 @@ namespace System.Windows.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         // Lookup a cached AutomationPattern or AutomationProperty
@@ -1304,8 +1304,10 @@ namespace System.Windows.Automation
             }
 
             // Set up a find struct...
-            UiaCoreApi.UiaFindParams findParams = new UiaCoreApi.UiaFindParams();
-            findParams.FindFirst = findFirst;
+            UiaCoreApi.UiaFindParams findParams = new UiaCoreApi.UiaFindParams
+            {
+                FindFirst = findFirst
+            };
 
             if ((scope & TreeScope.Descendants) != 0)
                 findParams.MaxDepth = -1;
@@ -1330,7 +1332,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private SafeNodeHandle _hnode;
@@ -1392,80 +1394,80 @@ namespace System.Windows.Automation
             //  Public Properties
             //
             //------------------------------------------------------
- 
+
             #region Public Properties
 
             /// <summary>The ControlType of this Element</summary>
-            public ControlType  ControlType           { get { return (ControlType) _el.GetPatternPropertyValue(ControlTypeProperty,          _useCache); } }
+            public ControlType ControlType { get { return (ControlType)_el.GetPatternPropertyValue(ControlTypeProperty, _useCache); } }
 
             /// <summary>Localized control type description (eg. "Button")</summary>
-            public string       LocalizedControlType  { get { return (string)      _el.GetPatternPropertyValue(LocalizedControlTypeProperty, _useCache); } }
-            
+            public string LocalizedControlType { get { return (string)_el.GetPatternPropertyValue(LocalizedControlTypeProperty, _useCache); } }
+
             /// <summary>Name of this instance of control</summary>
-            public string       Name                  { get { return (string)      _el.GetPatternPropertyValue(NameProperty,                 _useCache); } }
-            
+            public string Name { get { return (string)_el.GetPatternPropertyValue(NameProperty, _useCache); } }
+
             /// <summary>Hot-key equivalent for this command item. (eg. Ctrl-P for Print)</summary>
-            public string       AcceleratorKey        { get { return (string)      _el.GetPatternPropertyValue(AcceleratorKeyProperty,       _useCache); } }
-            
+            public string AcceleratorKey { get { return (string)_el.GetPatternPropertyValue(AcceleratorKeyProperty, _useCache); } }
+
             /// <summary>Keys used to move focus to this control</summary>
-            public string       AccessKey             { get { return (string)      _el.GetPatternPropertyValue(AccessKeyProperty,            _useCache); } }
-            
+            public string AccessKey { get { return (string)_el.GetPatternPropertyValue(AccessKeyProperty, _useCache); } }
+
             /// <summary>Indicates whether this control has keyboard focus</summary>
-            public bool         HasKeyboardFocus      { get { return (bool)        _el.GetPatternPropertyValue(HasKeyboardFocusProperty,     _useCache); } }
-            
+            public bool HasKeyboardFocus { get { return (bool)_el.GetPatternPropertyValue(HasKeyboardFocusProperty, _useCache); } }
+
             /// <summary>True if this control can take keyboard focus</summary>
-            public bool         IsKeyboardFocusable   { get { return (bool)        _el.GetPatternPropertyValue(IsKeyboardFocusableProperty,  _useCache); } }
-            
+            public bool IsKeyboardFocusable { get { return (bool)_el.GetPatternPropertyValue(IsKeyboardFocusableProperty, _useCache); } }
+
             /// <summary>True if this control is enabled</summary>
-            public bool         IsEnabled             { get { return (bool)        _el.GetPatternPropertyValue(IsEnabledProperty,            _useCache); } }
-            
+            public bool IsEnabled { get { return (bool)_el.GetPatternPropertyValue(IsEnabledProperty, _useCache); } }
+
             /// <summary>Bounding rectangle, in screen coordinates</summary>
-            public Rect         BoundingRectangle     { get { return (Rect)        _el.GetPatternPropertyValue(BoundingRectangleProperty,    _useCache); } }
-            
+            public Rect BoundingRectangle { get { return (Rect)_el.GetPatternPropertyValue(BoundingRectangleProperty, _useCache); } }
+
             /// <summary>HelpText - brief description of what this control does</summary>
-            public string       HelpText              { get { return (string)      _el.GetPatternPropertyValue(HelpTextProperty,             _useCache); } }
-            
+            public string HelpText { get { return (string)_el.GetPatternPropertyValue(HelpTextProperty, _useCache); } }
+
             /// <summary>Indicates that this element should be included in the Control view of the tree</summary>
-            public bool         IsControlElement      { get { return (bool)        _el.GetPatternPropertyValue(IsControlElementProperty,     _useCache); } }
+            public bool IsControlElement { get { return (bool)_el.GetPatternPropertyValue(IsControlElementProperty, _useCache); } }
 
             /// <summary>Indicates that this element should be included in the Content view of the tree</summary>
-            public bool         IsContentElement      { get { return (bool)        _el.GetPatternPropertyValue(IsContentElementProperty,     _useCache); } }
+            public bool IsContentElement { get { return (bool)_el.GetPatternPropertyValue(IsContentElementProperty, _useCache); } }
 
             /// <summary>The AutomationElement that labels this element</summary>
-            public AutomationElement LabeledBy        { get { return (AutomationElement) _el.GetPatternPropertyValue(LabeledByProperty,      _useCache); } }
+            public AutomationElement LabeledBy { get { return (AutomationElement)_el.GetPatternPropertyValue(LabeledByProperty, _useCache); } }
 
             /// <summary>The identifier for an element that is unique within its containing element</summary>
-            public string       AutomationId          { get { return (string)      _el.GetPatternPropertyValue(AutomationIdProperty,         _useCache); } }
+            public string AutomationId { get { return (string)_el.GetPatternPropertyValue(AutomationIdProperty, _useCache); } }
 
             /// <summary>Localized string that indicates what the items in a list represent</summary>
-            public string       ItemType              { get { return (string)      _el.GetPatternPropertyValue(ItemTypeProperty,             _useCache ); } }
+            public string ItemType { get { return (string)_el.GetPatternPropertyValue(ItemTypeProperty, _useCache); } }
 
             /// <summary>True if the control is a password protected field.</summary>
-            public bool         IsPassword            { get { return (bool)        _el.GetPatternPropertyValue(IsPasswordProperty,           _useCache); } }
+            public bool IsPassword { get { return (bool)_el.GetPatternPropertyValue(IsPasswordProperty, _useCache); } }
 
             /// <summary>Name of underlying class - implementation dependant, but useful for test</summary>
-            public string       ClassName             { get { return (string)      _el.GetPatternPropertyValue(ClassNameProperty,            _useCache); } }
+            public string ClassName { get { return (string)_el.GetPatternPropertyValue(ClassNameProperty, _useCache); } }
 
             /// <summary>Window Handle, if the underlying control is a Window</summary>
-            public int          NativeWindowHandle    { get { return (int)         _el.GetPatternPropertyValue(NativeWindowHandleProperty,   _useCache); } }
+            public int NativeWindowHandle { get { return (int)_el.GetPatternPropertyValue(NativeWindowHandleProperty, _useCache); } }
 
             /// <summary>Id of process that this element lives in</summary>
-            public int          ProcessId             { get { return (int)         _el.GetPatternPropertyValue(ProcessIdProperty,            _useCache); } }
-            
+            public int ProcessId { get { return (int)_el.GetPatternPropertyValue(ProcessIdProperty, _useCache); } }
+
             /// <summary>True if this control is not visible to the sighted user</summary>
-            public bool         IsOffscreen           { get { return (bool)        _el.GetPatternPropertyValue(IsOffscreenProperty,          _useCache); } }
+            public bool IsOffscreen { get { return (bool)_el.GetPatternPropertyValue(IsOffscreenProperty, _useCache); } }
 
             /// <summary>The controls specfied direction</summary>
-            public OrientationType Orientation        { get { return (OrientationType) _el.GetPatternPropertyValue(OrientationProperty,      _useCache); } }
+            public OrientationType Orientation { get { return (OrientationType)_el.GetPatternPropertyValue(OrientationProperty, _useCache); } }
 
             /// <summary>The controls specfied direction</summary>
-            public string       FrameworkId           { get { return (string)      _el.GetPatternPropertyValue(FrameworkIdProperty,          _useCache); } }
+            public string FrameworkId { get { return (string)_el.GetPatternPropertyValue(FrameworkIdProperty, _useCache); } }
 
             /// <summary>True if this element is required to be filled out on a form</summary>
-            public bool         IsRequiredForForm     { get { return (bool)        _el.GetPatternPropertyValue(IsRequiredForFormProperty,    _useCache); } }
+            public bool IsRequiredForForm { get { return (bool)_el.GetPatternPropertyValue(IsRequiredForFormProperty, _useCache); } }
 
             /// <summary>The visual status of a complex item as a string</summary>
-            public string       ItemStatus            { get { return (string)      _el.GetPatternPropertyValue(ItemStatusProperty,           _useCache); } }
+            public string ItemStatus { get { return (string)_el.GetPatternPropertyValue(ItemStatusProperty, _useCache); } }
 
             #endregion Public Properties
 

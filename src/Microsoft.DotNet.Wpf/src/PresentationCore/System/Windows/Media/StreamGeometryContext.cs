@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -65,7 +65,7 @@ namespace MS.Internal.Markup
         #endregion IDisposable
 
         #region Public Methods
-        
+
         /// <summary>
         /// Closes the StreamContext and flushes the content.
         /// Afterwards the StreamContext can not be used anymore.
@@ -84,7 +84,7 @@ namespace MS.Internal.Markup
         /// BeginFigure - Start a new figure.
         /// </summary>
         public abstract void BeginFigure(Point startPoint, bool isFilled, bool isClosed);
-        
+
         /// <summary>
         /// LineTo - append a LineTo to the current figure.
         /// </summary>
@@ -94,12 +94,12 @@ namespace MS.Internal.Markup
         /// QuadraticBezierTo - append a QuadraticBezierTo to the current figure.
         /// </summary>
         public abstract void QuadraticBezierTo(Point point1, Point point2, bool isStroked, bool isSmoothJoin);
-        
+
         /// <summary>
         /// BezierTo - apply a BezierTo to the current figure.
         /// </summary>
         public abstract void BezierTo(Point point1, Point point2, Point point3, bool isStroked, bool isSmoothJoin);
-        
+
         /// <summary>
         /// PolyLineTo - append a PolyLineTo to the current figure.
         /// </summary>
@@ -138,7 +138,7 @@ namespace MS.Internal.Markup
         /// <exception cref="ObjectDisposedException">
         /// This call is illegal if this object has already been closed or disposed.
         /// </exception>
-        internal virtual void DisposeCore() {}
+        internal virtual void DisposeCore() { }
 
         /// <summary>
         /// SetClosedState - Sets the current closed state of the figure. 

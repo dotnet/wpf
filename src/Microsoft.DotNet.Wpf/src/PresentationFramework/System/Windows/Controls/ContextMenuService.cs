@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
+using System.ComponentModel;
 using System.Windows.Controls.Primitives;
 using MS.Internal.KnownBoxes;
-using System.ComponentModel;
 
 namespace System.Windows.Controls
 {
@@ -19,7 +19,7 @@ namespace System.Windows.Controls
         /// <summary>
         ///     The DependencyProperty for the ContextMenu property.
         /// </summary>
-        public static readonly DependencyProperty ContextMenuProperty = 
+        public static readonly DependencyProperty ContextMenuProperty =
                 DependencyProperty.RegisterAttached(
                        "ContextMenu",              // Name
                         typeof(ContextMenu),        // Type
@@ -45,7 +45,7 @@ namespace System.Windows.Controls
             }
 
             return cm;
-       }
+        }
 
         /// <summary>
         ///     Sets the ContextMenu property on the specified object.
@@ -333,9 +333,9 @@ namespace System.Windows.Controls
         ///     to automatically open a ContextMenu.
         /// </summary>
         public static readonly RoutedEvent ContextMenuOpeningEvent =
-            EventManager.RegisterRoutedEvent("ContextMenuOpening", 
-                                               RoutingStrategy.Bubble, 
-                                               typeof(ContextMenuEventHandler), 
+            EventManager.RegisterRoutedEvent("ContextMenuOpening",
+                                               RoutingStrategy.Bubble,
+                                               typeof(ContextMenuEventHandler),
                                                typeof(ContextMenuService));
 
         /// <summary>
@@ -451,7 +451,7 @@ namespace System.Windows.Controls
         {
             _left = left;
             _top = top;
-            RoutedEvent =(opening ? ContextMenuService.ContextMenuOpeningEvent : ContextMenuService.ContextMenuClosingEvent);
+            RoutedEvent = (opening ? ContextMenuService.ContextMenuOpeningEvent : ContextMenuService.ContextMenuClosingEvent);
             Source = source;
         }
 

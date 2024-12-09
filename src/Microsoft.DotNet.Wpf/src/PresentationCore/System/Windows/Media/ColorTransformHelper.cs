@@ -1,11 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
-using MS.Internal;
 using Microsoft.Win32.SafeHandles;
-
+using MS.Internal;
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
@@ -78,7 +77,7 @@ namespace System.Windows.Media
                 handles[0] = sourceProfile.DangerousGetHandle();
                 handles[1] = destinationProfile.DangerousGetHandle();
 
-                UInt32[] dwIntents = new UInt32[2] {INTENT_PERCEPTUAL, INTENT_PERCEPTUAL};
+                UInt32[] dwIntents = new UInt32[2] { INTENT_PERCEPTUAL, INTENT_PERCEPTUAL };
 
                 // No need to get rid of the old handle as it will get GC'ed
                 _transformHandle = UnsafeNativeMethods.Mscms.CreateMultiProfileTransform(

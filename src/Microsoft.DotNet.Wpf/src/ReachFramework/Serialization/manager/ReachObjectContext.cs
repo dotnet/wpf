@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -58,9 +58,9 @@ namespace System.Windows.Xps.Serialization
             //
             ArgumentNullException.ThrowIfNull(target);
 
-            _targetObject            = target;
-            _isComplexValue          = false;
-            _backingPropertyContext  = serializablePropertyContext;
+            _targetObject = target;
+            _isComplexValue = false;
+            _backingPropertyContext = serializablePropertyContext;
         }
 
 
@@ -76,7 +76,7 @@ namespace System.Windows.Xps.Serialization
         /// </param>
         public
         SerializableObjectContext(
-            object                      target,
+            object target,
             SerializablePropertyContext serializablePropertyContext
             )
         {
@@ -107,9 +107,9 @@ namespace System.Windows.Xps.Serialization
         static
         SerializableObjectContext
         CreateContext(
-            PackageSerializationManager   serializationManager,
-            object                      serializableObject,
-            SerializableObjectContext   serializableObjectParentContext,
+            PackageSerializationManager serializationManager,
+            object serializableObject,
+            SerializableObjectContext serializableObjectParentContext,
             SerializablePropertyContext serializablePropertyContext
             )
         {
@@ -121,13 +121,13 @@ namespace System.Windows.Xps.Serialization
 
             object currentObject = null;
 
-            for(currentObject = serializationManager.GraphContextStack[stackIndex];
+            for (currentObject = serializationManager.GraphContextStack[stackIndex];
                 currentObject != null;
                 currentObject = serializationManager.GraphContextStack[++stackIndex])
             {
                 SerializableObjectContext currentObjectContext = currentObject as SerializableObjectContext;
 
-                if(currentObjectContext!=null &&
+                if (currentObjectContext != null &&
                    currentObjectContext.TargetObject == serializableObject)
                 {
                     throw new XpsSerializationException(SR.ReachSerialization_CycleDetectedInSerialization);
@@ -143,7 +143,7 @@ namespace System.Windows.Xps.Serialization
                     (SerializableObjectContext)_recycableSerializableObjectContexts.Pop();
             }
 
-            if(serializableObjectContext == null)
+            if (serializableObjectContext == null)
             {
                 serializableObjectContext = new SerializableObjectContext(serializableObject,
                                                                           serializablePropertyContext);
@@ -171,9 +171,9 @@ namespace System.Windows.Xps.Serialization
                 //
                 // Properties related creation within the context
                 //
-                if(serializableObjectContext.PropertiesCollection == null)
+                if (serializableObjectContext.PropertiesCollection == null)
                 {
-                    serializableObjectContext.PropertiesCollection = new  SerializablePropertyCollection(serializationManager,
+                    serializableObjectContext.PropertiesCollection = new SerializablePropertyCollection(serializationManager,
                                                                                                          serializableObject);
                 }
                 else
@@ -199,7 +199,7 @@ namespace System.Windows.Xps.Serialization
         static
         void
         RecycleContext(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             serializableObjectContext.Clear();
@@ -313,23 +313,23 @@ namespace System.Windows.Xps.Serialization
         public
         void
         Initialize(
-            object                      target,
+            object target,
             SerializablePropertyContext serializablePropertyContext
             )
         {
             Initialize();
-            _targetObject           = target;
-            _isComplexValue         = false;
+            _targetObject = target;
+            _isComplexValue = false;
             _backingPropertyContext = serializablePropertyContext;
 
-            if(_backingPropertyContext!=null)
+            if (_backingPropertyContext != null)
             {
-                _isComplexValue  = _backingPropertyContext.IsComplex;
+                _isComplexValue = _backingPropertyContext.IsComplex;
                 _isReadOnlyValue = _backingPropertyContext.IsReadOnly;
             }
             else
             {
-                _isComplexValue  = true;
+                _isComplexValue = true;
                 _isReadOnlyValue = false;
             }
         }
@@ -342,10 +342,10 @@ namespace System.Windows.Xps.Serialization
         void
         Clear()
         {
-            _targetObject    = null;
-            _isComplexValue  = false;
+            _targetObject = null;
+            _isComplexValue = false;
             _isReadOnlyValue = false;
-            _namespaceTable  = null;
+            _namespaceTable = null;
 
             if (_propertiesCollection != null)
             {
@@ -360,21 +360,21 @@ namespace System.Windows.Xps.Serialization
         #region Private Data
 
         private
-        object                               _targetObject;
+        object _targetObject;
         private
-        MetroSerializationNamespaceTable     _namespaceTable;
+        MetroSerializationNamespaceTable _namespaceTable;
         private
-        SerializablePropertyCollection       _propertiesCollection;
+        SerializablePropertyCollection _propertiesCollection;
         private
-        bool                                 _isComplexValue;
+        bool _isComplexValue;
         private
-        bool                                 _isReadOnlyValue;
+        bool _isReadOnlyValue;
         private
-        SerializablePropertyContext          _backingPropertyContext;
+        SerializablePropertyContext _backingPropertyContext;
         static
-        Stack                                _recycableSerializableObjectContexts;
+        Stack _recycableSerializableObjectContexts;
         static
-        object                               _stackLock = new Object();
+        object _stackLock = new Object();
 
         #endregion Private Data
     };

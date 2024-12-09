@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,13 +28,13 @@ namespace System.Windows.Xps.Serialization.RCW
         new IOpcPartUri GetPartName();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        new void SetPartName([MarshalAs(UnmanagedType.Interface)] [In] IOpcPartUri partUri);
+        new void SetPartName([MarshalAs(UnmanagedType.Interface)][In] IOpcPartUri partUri);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.Interface)]
         IStream GetStream();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetContent([MarshalAs(UnmanagedType.Interface)] [In] IStream sourceStream, [MarshalAs(UnmanagedType.Interface)] [In] IOpcPartUri partName);
+        void SetContent([MarshalAs(UnmanagedType.Interface)][In] IStream sourceStream, [MarshalAs(UnmanagedType.Interface)][In] IOpcPartUri partName);
     }
 }

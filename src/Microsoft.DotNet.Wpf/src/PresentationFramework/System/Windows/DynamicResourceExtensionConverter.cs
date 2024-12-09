@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows
     /// Type converter to inform the serialization system how to construct a DynamicResourceExtension from
     /// an instance. It reports that ResourceKey should be used as the first parameter to the constructor.
     /// </summary>
-    public class DynamicResourceExtensionConverter: TypeConverter
+    public class DynamicResourceExtensionConverter : TypeConverter
     {
         /// <summary>
         /// True if converting to an instance descriptor
@@ -45,10 +45,10 @@ namespace System.Windows
                 DynamicResourceExtension dynamicResource = value as DynamicResourceExtension;
 
                 if (dynamicResource == null)
-                    throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "DynamicResourceExtension"), "value"); 
+                    throw new ArgumentException(SR.Format(SR.MustBeOfType, "value", "DynamicResourceExtension"), "value");
 
-                return new InstanceDescriptor(typeof(DynamicResourceExtension).GetConstructor(new Type[] { typeof(object) }), 
-                    new object[] { dynamicResource.ResourceKey } );
+                return new InstanceDescriptor(typeof(DynamicResourceExtension).GetConstructor(new Type[] { typeof(object) }),
+                    new object[] { dynamicResource.ResourceKey });
             }
             return base.ConvertTo(context, culture, value, destinationType);
         }

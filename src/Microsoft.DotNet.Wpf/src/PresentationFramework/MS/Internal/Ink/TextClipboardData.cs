@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,7 +24,7 @@ namespace MS.Internal.Ink
         #region Constructors
 
         // The default constructor
-        internal TextClipboardData() : this(null) {}
+        internal TextClipboardData() : this(null) { }
 
         // The constructor with a string as argument
         internal TextClipboardData(string text)
@@ -37,9 +37,9 @@ namespace MS.Internal.Ink
         // Checks if the data can be pasted.
         internal override bool CanPaste(IDataObject dataObject)
         {
-            return ( dataObject.GetDataPresent(DataFormats.UnicodeText, false)
+            return (dataObject.GetDataPresent(DataFormats.UnicodeText, false)
                         || dataObject.GetDataPresent(DataFormats.Text, false)
-                        || dataObject.GetDataPresent(DataFormats.OemText, false) );
+                        || dataObject.GetDataPresent(DataFormats.OemText, false));
         }
 
         //-------------------------------------------------------------------------------
@@ -68,28 +68,29 @@ namespace MS.Internal.Ink
         protected override void DoPaste(IDataObject dataObject)
         {
             ElementList = new List<UIElement>();
-        
+
             // Get the string from the data object.
             string text = dataObject.GetData(DataFormats.UnicodeText, true) as string;
 
-            if ( String.IsNullOrEmpty(text) )
+            if (String.IsNullOrEmpty(text))
             {
                 // OemText can be retrieved as CF_TEXT.
                 text = dataObject.GetData(DataFormats.Text, true) as string;
             }
 
-            if ( !String.IsNullOrEmpty(text) )
+            if (!String.IsNullOrEmpty(text))
             {
                 // Now, create a text box and set the text to it.
-                TextBox textBox = new TextBox();
-
-                textBox.Text = text;
-                textBox.TextWrapping = TextWrapping.Wrap;
+                TextBox textBox = new TextBox
+                {
+                    Text = text,
+                    TextWrapping = TextWrapping.Wrap
+                };
 
                 // Add the textbox to the internal array list.
                 ElementList.Add(textBox);
             }
-}
+        }
 
         #endregion Protected Methods
 
@@ -101,7 +102,7 @@ namespace MS.Internal.Ink
 
         #region Private Fields
 
-        private string      _text;
+        private string _text;
 
         #endregion Private Fields
     }

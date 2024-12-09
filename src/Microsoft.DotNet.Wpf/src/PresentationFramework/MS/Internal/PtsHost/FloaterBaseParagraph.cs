@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -84,7 +84,7 @@ namespace MS.Internal.PtsHost
         //-------------------------------------------------------------------
         internal override abstract void CreateParaclient(
             out IntPtr paraClientHandle);       // OUT: opaque to PTS paragraph client
-        
+
         //-------------------------------------------------------------------
         // CollapseMargin
         //-------------------------------------------------------------------
@@ -94,14 +94,14 @@ namespace MS.Internal.PtsHost
             uint fswdir,                        // IN:  current direction (of the track, in which margin collapsing is happening)
             bool suppressTopSpace,              // IN:  suppress empty space at the top of page
             out int dvr);                        // OUT: dvr, calculated based on margin collapsing state
-       
+
         //-------------------------------------------------------------------
         // GetFloaterProperties
         //-------------------------------------------------------------------
         internal abstract void GetFloaterProperties(
             uint fswdirTrack,                       // IN:  direction of track
             out PTS.FSFLOATERPROPS fsfloaterprops);  // OUT: properties of the floater
-        
+
 
         //-------------------------------------------------------------------
         // GetFloaterPolygons
@@ -136,7 +136,7 @@ namespace MS.Internal.PtsHost
             int durAvailable,                   // IN:  width of available space
             int dvrAvailable,                   // IN:  height of available space
             PTS.FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
-                                                // IN: suppress breaks at track start?
+            // IN: suppress breaks at track start?
             out PTS.FSFMTR fsfmtr,              // OUT: result of formatting
             out IntPtr pfsFloatContent,         // OUT: opaque for PTS pointer pointer to formatted content
             out IntPtr pbrkrecOut,              // OUT: pointer to the floater content break record
@@ -145,7 +145,7 @@ namespace MS.Internal.PtsHost
             out PTS.FSBBOX fsbbox,              // OUT: floater bbox
             out int cPolygons,                  // OUT: number of polygons
             out int cVertices);                 // OUT: total number of vertices in all polygons
-       
+
         //-------------------------------------------------------------------
         // FormatFloaterContentBottomless
         //-------------------------------------------------------------------
@@ -163,7 +163,7 @@ namespace MS.Internal.PtsHost
             out PTS.FSBBOX fsbbox,              // OUT: floater bbox
             out int cPolygons,                  // OUT: number of polygons
             out int cVertices);                 // OUT: total number of vertices in all polygons
-        
+
         //-------------------------------------------------------------------
         // FormatFloaterContentBottomless
         //-------------------------------------------------------------------

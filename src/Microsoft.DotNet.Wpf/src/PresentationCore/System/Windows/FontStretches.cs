@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows
         /// <summary>
         /// Predefined font stretch : Ultra-condensed.
         /// </summary>
-        public static FontStretch UltraCondensed    { get { return new FontStretch(1); } }
+        public static FontStretch UltraCondensed { get { return new FontStretch(1); } }
 
         /// <summary>
         /// Predefined font stretch : Extra-condensed.
@@ -34,37 +34,37 @@ namespace System.Windows
         /// <summary>
         /// Predefined font stretch : Semi-condensed.
         /// </summary>
-        public static FontStretch SemiCondensed      { get { return new FontStretch(4); } }
+        public static FontStretch SemiCondensed { get { return new FontStretch(4); } }
 
         /// <summary>
         /// Predefined font stretch : Normal.
         /// </summary>
-        public static FontStretch Normal     { get { return new FontStretch(5); } }
+        public static FontStretch Normal { get { return new FontStretch(5); } }
 
         /// <summary>
         /// Predefined font stretch : Medium.
         /// </summary>
-        public static FontStretch Medium     { get { return new FontStretch(5); } }
+        public static FontStretch Medium { get { return new FontStretch(5); } }
 
         /// <summary>
         /// Predefined font stretch : Semi-expanded.
         /// </summary>
-        public static FontStretch SemiExpanded  { get { return new FontStretch(6); } }
+        public static FontStretch SemiExpanded { get { return new FontStretch(6); } }
 
         /// <summary>
         /// Predefined font stretch : Expanded.
         /// </summary>
-        public static FontStretch Expanded  { get { return new FontStretch(7); } }
+        public static FontStretch Expanded { get { return new FontStretch(7); } }
 
         /// <summary>
         /// Predefined font stretch : Extra-expanded.
         /// </summary>
-        public static FontStretch ExtraExpanded  { get { return new FontStretch(8); } }
+        public static FontStretch ExtraExpanded { get { return new FontStretch(8); } }
 
         /// <summary>
         /// Predefined font stretch : Ultra-expanded.
         /// </summary>
-        public static FontStretch UltraExpanded  { get { return new FontStretch(9); } }
+        public static FontStretch UltraExpanded { get { return new FontStretch(9); } }
 
         internal static bool FontStretchStringToKnownStretch(string s, IFormatProvider provider, ref FontStretch fontStretch)
         {

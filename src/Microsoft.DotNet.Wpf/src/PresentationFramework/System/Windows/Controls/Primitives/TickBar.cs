@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
-using MS.Internal;
 using System.Windows.Data;
 using System.Windows.Media;
+using MS.Internal;
 using MS.Internal.KnownBoxes;
 
 
@@ -119,7 +119,7 @@ namespace System.Windows.Controls.Primitives
         [Bindable(true), Category("Appearance")]
         public double Minimum
         {
-            get { return (double) GetValue(MinimumProperty); }
+            get { return (double)GetValue(MinimumProperty); }
             set { SetValue(MinimumProperty, value); }
         }
 
@@ -139,7 +139,7 @@ namespace System.Windows.Controls.Primitives
         [Bindable(true), Category("Appearance")]
         public double Maximum
         {
-            get { return (double) GetValue(MaximumProperty); }
+            get { return (double)GetValue(MaximumProperty); }
             set { SetValue(MaximumProperty, value); }
         }
 
@@ -159,7 +159,7 @@ namespace System.Windows.Controls.Primitives
         [Bindable(true), Category("Appearance")]
         public double SelectionStart
         {
-            get { return (double) GetValue(SelectionStartProperty); }
+            get { return (double)GetValue(SelectionStartProperty); }
             set { SetValue(SelectionStartProperty, value); }
         }
 
@@ -179,7 +179,7 @@ namespace System.Windows.Controls.Primitives
         [Bindable(true), Category("Appearance")]
         public double SelectionEnd
         {
-            get { return (double) GetValue(SelectionEndProperty); }
+            get { return (double)GetValue(SelectionEndProperty); }
             set { SetValue(SelectionEndProperty, value); }
         }
 
@@ -199,7 +199,7 @@ namespace System.Windows.Controls.Primitives
         [Bindable(true), Category("Appearance")]
         public bool IsSelectionRangeEnabled
         {
-            get { return (bool) GetValue(IsSelectionRangeEnabledProperty); }
+            get { return (bool)GetValue(IsSelectionRangeEnabledProperty); }
             set { SetValue(IsSelectionRangeEnabledProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -219,7 +219,7 @@ namespace System.Windows.Controls.Primitives
         [Bindable(true), Category("Appearance")]
         public double TickFrequency
         {
-            get { return (double) GetValue(TickFrequencyProperty); }
+            get { return (double)GetValue(TickFrequencyProperty); }
             set { SetValue(TickFrequencyProperty, value); }
         }
 
@@ -241,7 +241,7 @@ namespace System.Windows.Controls.Primitives
         [Bindable(true), Category("Appearance")]
         public DoubleCollection Ticks
         {
-            get { return (DoubleCollection) GetValue(TicksProperty); }
+            get { return (DoubleCollection)GetValue(TicksProperty); }
             set { SetValue(TicksProperty, value); }
         }
 
@@ -265,7 +265,7 @@ namespace System.Windows.Controls.Primitives
         [Bindable(true), Category("Appearance")]
         public bool IsDirectionReversed
         {
-            get { return (bool) GetValue(IsDirectionReversedProperty); }
+            get { return (bool)GetValue(IsDirectionReversedProperty); }
             set { SetValue(IsDirectionReversedProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -290,7 +290,7 @@ namespace System.Windows.Controls.Primitives
         [Bindable(true), Category("Appearance")]
         public TickBarPlacement Placement
         {
-            get { return (TickBarPlacement) GetValue(PlacementProperty); }
+            get { return (TickBarPlacement)GetValue(PlacementProperty); }
             set { SetValue(PlacementProperty, value); }
         }
 
@@ -324,7 +324,7 @@ namespace System.Windows.Controls.Primitives
         [Bindable(true), Category("Appearance")]
         public double ReservedSpace
         {
-            get { return (double) GetValue(ReservedSpaceProperty); }
+            get { return (double)GetValue(ReservedSpaceProperty); }
             set { SetValue(ReservedSpaceProperty, value); }
         }
 
@@ -346,19 +346,19 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         protected override void OnRender(DrawingContext dc)
         {
-            Size size = new Size(ActualWidth,ActualHeight);
+            Size size = new Size(ActualWidth, ActualHeight);
             double range = Maximum - Minimum;
             double tickLen = 0.0d;  // Height for Primary Tick (for Mininum and Maximum value)
             double tickLen2;        // Height for Secondary Tick
             double logicalToPhysical = 1.0;
             double progression = 1.0d;
-            Point startPoint = new Point(0d,0d);
+            Point startPoint = new Point(0d, 0d);
             Point endPoint = new Point(0d, 0d);
 
             // Take Thumb size in to account
             double halfReservedSpace = ReservedSpace * 0.5;
 
-            switch(Placement)
+            switch (Placement)
             {
                 case TickBarPlacement.Top:
                     if (DoubleUtil.GreaterThanOrClose(ReservedSpace, size.Width))
@@ -366,7 +366,7 @@ namespace System.Windows.Controls.Primitives
                         return;
                     }
                     size.Width -= ReservedSpace;
-                    tickLen = - size.Height;
+                    tickLen = -size.Height;
                     startPoint = new Point(halfReservedSpace, size.Height);
                     endPoint = new Point(halfReservedSpace + size.Width, size.Height);
                     logicalToPhysical = size.Width / range;
@@ -476,7 +476,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     for (int i = 0; i < ticks.Count; i++)
                     {
-                        if (DoubleUtil.LessThanOrClose(ticks[i],Minimum) || DoubleUtil.GreaterThanOrClose(ticks[i],Maximum))
+                        if (DoubleUtil.LessThanOrClose(ticks[i], Minimum) || DoubleUtil.GreaterThanOrClose(ticks[i], Maximum))
                         {
                             continue;
                         }
@@ -583,7 +583,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     for (int i = 0; i < ticks.Count; i++)
                     {
-                        if (DoubleUtil.LessThanOrClose(ticks[i],Minimum) || DoubleUtil.GreaterThanOrClose(ticks[i],Maximum))
+                        if (DoubleUtil.LessThanOrClose(ticks[i], Minimum) || DoubleUtil.GreaterThanOrClose(ticks[i], Maximum))
                         {
                             continue;
                         }
@@ -661,9 +661,11 @@ namespace System.Windows.Controls.Primitives
         {
             if (!HasNonDefaultValue(target))
             {
-                Binding binding = new Binding();
-                binding.RelativeSource = RelativeSource.TemplatedParent;
-                binding.Path = new PropertyPath(source);
+                Binding binding = new Binding
+                {
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Path = new PropertyPath(source)
+                };
                 SetBinding(target, binding);
             }
         }
@@ -690,8 +692,10 @@ namespace System.Windows.Controls.Primitives
 
                 if (!HasNonDefaultValue(ReservedSpaceProperty) && parent.Track != null)
                 {
-                    Binding binding = new Binding();
-                    binding.Source = parent.Track.Thumb;
+                    Binding binding = new Binding
+                    {
+                        Source = parent.Track.Thumb
+                    };
 
                     if (parent.Orientation == Orientation.Horizontal)
                     {

@@ -1,24 +1,23 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;                  // DoubleUtil
-using MS.Internal.Documents;
-using System.Windows.Threading;     // Dispatcher
-using System.Windows.Automation.Peers;    // AutomationPeer
-using System.Windows.Documents.DocumentStructures;
-using System.Windows.Media;         // Visual
-using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
-using System.IO;
-using System.IO.Packaging;
 using System.Collections;
 using System.ComponentModel;        // DesignerSerializationVisibility
 using System.Globalization;
-using MS.Internal.Annotations.Component;
-using System.Windows.Navigation;
+using System.IO;
+using System.IO.Packaging;
+using System.Windows.Automation.Peers;    // AutomationPeer
 using System.Windows.Controls;
+using System.Windows.Documents.DocumentStructures;
+using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
+using System.Windows.Media;         // Visual
+using System.Windows.Navigation;
+using System.Windows.Threading;     // Dispatcher
+using MS.Internal;                  // DoubleUtil
+using MS.Internal.Annotations.Component;
+using MS.Internal.Documents;
 using MS.Internal.IO.Packaging;
-
 using PackUriHelper = System.IO.Packaging.PackUriHelper;
 
 //
@@ -90,7 +89,7 @@ namespace System.Windows.Documents
         /// </param>
         object IServiceProvider.GetService(Type serviceType)
         {
-//             Dispatcher.VerifyAccess();
+            //             Dispatcher.VerifyAccess();
             ArgumentNullException.ThrowIfNull(serviceType);
 
             if (serviceType == typeof(ITextContainer))
@@ -127,7 +126,7 @@ namespace System.Windows.Documents
         {
             ArgumentNullException.ThrowIfNull(value);
 
-//             Dispatcher.VerifyAccess();
+            //             Dispatcher.VerifyAccess();
 
             PageContent fp = value as PageContent;
 
@@ -175,7 +174,7 @@ namespace System.Windows.Documents
         /// </summary>
         Uri IUriContext.BaseUri
         {
-            get { return (Uri) GetValue(BaseUriHelper.BaseUriProperty); }
+            get { return (Uri)GetValue(BaseUriHelper.BaseUriProperty); }
             set { SetValue(BaseUriHelper.BaseUriProperty, value); }
         }
         #endregion IUriContext
@@ -209,7 +208,7 @@ namespace System.Windows.Documents
                 //
                 // Metro defines all external page are 1 based. All internals are 0 based.
                 //
-                pageNumber --;
+                pageNumber--;
 
                 uiElementRet = GetFixedPage(pageNumber);
                 rootFixedPage = GetFixedPage(pageNumber);
@@ -269,7 +268,7 @@ namespace System.Windows.Documents
 
         internal NavigationService NavigationService
         {
-            get { return (NavigationService) GetValue(NavigationService.NavigationServiceProperty); }
+            get { return (NavigationService)GetValue(NavigationService.NavigationServiceProperty); }
             set { SetValue(NavigationService.NavigationServiceProperty, value); }
         }
 
@@ -283,7 +282,7 @@ namespace System.Windows.Documents
         {
             get
             {
-//                 this.Dispatcher.VerifyAccess();
+                //                 this.Dispatcher.VerifyAccess();
                 return this.Pages.GetEnumerator();
             }
         }
@@ -315,7 +314,7 @@ namespace System.Windows.Documents
             DocumentsTrace.FixedFormat.IDF.Trace($"IDP.GetPage({pageNumber})");
 
             // Make sure that the call is in the right context.
-//             Dispatcher.VerifyAccess();
+            //             Dispatcher.VerifyAccess();
 
             // Page number cannot be negative.
             if (pageNumber < 0)
@@ -360,7 +359,7 @@ namespace System.Windows.Documents
             DocumentsTrace.FixedFormat.IDF.Trace($"IDP.GetPageAsync({pageNumber}, {userState})");
 
             // Make sure that the call is in the right context.
-//             Dispatcher.VerifyAccess();
+            //             Dispatcher.VerifyAccess();
 
             // Page number cannot be negative.
             if (pageNumber < 0)
@@ -394,7 +393,7 @@ namespace System.Windows.Documents
         /// <exception cref="ArgumentException">ContentPosition does not exist within this element?s tree.</exception>
         internal int GetPageNumber(ContentPosition contentPosition)
         {
-//             Dispatcher.VerifyAccess();
+            //             Dispatcher.VerifyAccess();
 
             ArgumentNullException.ThrowIfNull(contentPosition);
 
@@ -414,12 +413,12 @@ namespace System.Windows.Documents
         internal void CancelAsync(object userState)
         {
             DocumentsTrace.FixedFormat.IDF.Trace($"IDP.GetPageAsyncCancel([{userState}])");
-//             Dispatcher.VerifyAccess();
+            //             Dispatcher.VerifyAccess();
 
             ArgumentNullException.ThrowIfNull(userState);
 
             GetPageAsyncRequest asyncRequest;
-            if (_asyncOps.TryGetValue(userState,out asyncRequest))
+            if (_asyncOps.TryGetValue(userState, out asyncRequest))
             {
                 if (asyncRequest != null)
                 {
@@ -445,7 +444,7 @@ namespace System.Windows.Documents
             }
             DocumentsTrace.FixedFormat.IDF.Trace($"IDF.GetContentPositionForElement({element})");
             // Make sure that the call is in the right context.
-//             Dispatcher.VerifyAccess();
+            //             Dispatcher.VerifyAccess();
 
 
             // walk up the logical parent chain to find the containing page
@@ -484,9 +483,9 @@ namespace System.Windows.Documents
             if (pageIndex >= 0)
             {
                 FixedPosition fixedPosition;
-                FlowPosition flowPosition=null;
+                FlowPosition flowPosition = null;
                 System.Windows.Shapes.Path p = element as System.Windows.Shapes.Path;
-                if (element is Glyphs || element is Image || (p != null &&  p.Fill is ImageBrush))
+                if (element is Glyphs || element is Image || (p != null && p.Fill is ImageBrush))
                 {
                     fixedPosition = new FixedPosition(fixedPage.CreateFixedNode(pageIndex, (UIElement)element), 0);
                     flowPosition = FixedContainer.FixedTextBuilder.CreateFlowPosition(fixedPosition);
@@ -583,7 +582,7 @@ namespace System.Windows.Documents
             }
             set
             {
-                SetValue(PrintTicketProperty,value);
+                SetValue(PrintTicketProperty, value);
             }
         }
 
@@ -931,8 +930,10 @@ namespace System.Windows.Documents
             {
                 pageStream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(AbsoluteUriDoc, out mimeType);
 
-                ParserContext pc = new ParserContext();
-                pc.BaseUri = AbsoluteUriDoc;
+                ParserContext pc = new ParserContext
+                {
+                    BaseUri = AbsoluteUriDoc
+                };
 
                 XpsValidatingLoader loader = new XpsValidatingLoader();
                 if (validateOnly)
@@ -957,7 +958,7 @@ namespace System.Windows.Documents
             return o;
         }
 
-         /// <summary>
+        /// <summary>
         /// Retrieves the Uri for the DocumentStructure from the container's relationship
         /// </summary>
         static private Uri GetStructureUriFromRelationship(Uri contentUri, string relationshipName)
@@ -1137,9 +1138,9 @@ namespace System.Windows.Documents
             {
                 TextSegment textSegment = (TextSegment)ranges[i];
                 int startPage = this.FixedContainer.GetPageNumber(textSegment.Start);
-                int endPage =  this.FixedContainer.GetPageNumber(textSegment.End);
+                int endPage = this.FixedContainer.GetPageNumber(textSegment.End);
 
-                for (int count = startPage; count <= endPage; count ++)
+                for (int count = startPage; count <= endPage; count++)
                 {
                     if (dirtyPages.IndexOf(count) < 0)
                     {
@@ -1156,8 +1157,8 @@ namespace System.Windows.Documents
                 if (!newHighlightPages.Contains(page))
                 {
                     int pageNo = GetIndexOfPage(page);
-                    Debug.Assert(pageNo >= 0 && pageNo<PageCount);
-                    if (pageNo >=0 && pageNo < PageCount && dirtyPages.IndexOf(pageNo) < 0)
+                    Debug.Assert(pageNo >= 0 && pageNo < PageCount);
+                    if (pageNo >= 0 && pageNo < PageCount && dirtyPages.IndexOf(pageNo) < 0)
                     {
                         dirtyPages.Add(pageNo);
                     }
@@ -1231,7 +1232,7 @@ namespace System.Windows.Documents
                                 FixedPage c = (FixedPage)args.Result;
                                 Size fixedSize = ComputePageSize(c);
 
-//                              Measure / Arrange in GetVisual override of FixedDocumentPage, not here
+                                //                              Measure / Arrange in GetVisual override of FixedDocumentPage, not here
                                 result = new FixedDocumentPage(this, c, fixedSize, Pages.IndexOf(pc));
                             }
                         }
@@ -1291,14 +1292,14 @@ namespace System.Windows.Documents
         private double _pageHeight = 11 * 96.0d;     // default page size
         private FixedTextContainer _fixedTextContainer;
         private RubberbandSelector _rubberbandSelector;
-        private bool _navigateAfterPagination = false ;
+        private bool _navigateAfterPagination = false;
         private string _navigateFragment;
         private FixedDocumentPaginator _paginator;
         private DocumentReference _documentReference;
         private bool _hasExplicitStructure;
 
-        private const string _structureRelationshipName       = "http://schemas.microsoft.com/xps/2005/06/documentstructure";
-        private const string _storyFragmentsRelationshipName  = "http://schemas.microsoft.com/xps/2005/06/storyfragments";
+        private const string _structureRelationshipName = "http://schemas.microsoft.com/xps/2005/06/documentstructure";
+        private const string _storyFragmentsRelationshipName = "http://schemas.microsoft.com/xps/2005/06/storyfragments";
         private static readonly ContentType _storyFragmentsContentType = new ContentType("application/vnd.ms-package.xps-storyfragments+xml");
         private static readonly ContentType _documentStructureContentType = new ContentType("application/vnd.ms-package.xps-documentstructure+xml");
 
@@ -1407,7 +1408,7 @@ namespace System.Windows.Documents
                     _layedOut = true;
 
                     UIElement e;
-                    if ((e = ((object)base.Visual) as UIElement)!=null)
+                    if ((e = ((object)base.Visual) as UIElement) != null)
                     {
                         e.Measure(base.Size);
                         e.Arrange(new Rect(base.Size));

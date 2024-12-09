@@ -1,21 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Threading;
 using System.ComponentModel;
-using System.Windows.Media;
-using System.Windows.Automation.Provider;
-using System.Windows.Automation.Peers;
-using System.Windows.Media.Composition;
 using System.Runtime.InteropServices;
+using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Media;
+using System.Windows.Media.Composition;
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Automation;
 using MS.Internal.Interop;
+using MS.Internal.PresentationCore;
 using MS.Utility;
 using MS.Win32;
-using MS.Internal.PresentationCore;
-
 using HRESULT = MS.Internal.HRESULT;
 using NativeMethodsSetLastError = MS.Internal.WindowsBase.NativeMethodsSetLastError;
 using PROCESS_DPI_AWARENESS = MS.Win32.NativeMethods.PROCESS_DPI_AWARENESS;
@@ -90,7 +89,7 @@ namespace System.Windows.Interop
         /// This is returned by <see cref="HandleMessage(WindowMessage, IntPtr, IntPtr)"/>
         /// when a Window message handled exclusively by it.
         /// </summary>
-        private static readonly IntPtr Handled  = new IntPtr(0x1);
+        private static readonly IntPtr Handled = new IntPtr(0x1);
 
         /// <summary>
         /// This is returned by <see cref="HandleMessage(WindowMessage, IntPtr, IntPtr)"/>
@@ -268,8 +267,8 @@ namespace System.Windows.Interop
                 _worldTransform = new MatrixTransform(
                     new Matrix(
                         CurrentDpiScale.DpiScaleX, 0,
-                        0 , CurrentDpiScale.DpiScaleY,
-                        0 , 0));
+                        0, CurrentDpiScale.DpiScaleY,
+                        0, 0));
 
                 //
                 // Register CompositionTarget with MediaContext.
@@ -291,9 +290,9 @@ namespace System.Windows.Interop
                 // will be left in a state when no other HwndTarget can be created
                 // for it.
                 //
-                if(exceptionThrown)
+                if (exceptionThrown)
                 {
-                    #pragma warning suppress 6031 // Return value ignored on purpose.
+#pragma warning suppress 6031 // Return value ignored on purpose.
                     VisualTarget_DetachFromHwnd(hwnd);
                 }
             }
@@ -504,8 +503,8 @@ namespace System.Windows.Interop
                     {
                         normalizedHwnd = new HandleRef(wrapperObject, hwndParent);
                     }
-} while (hwndParent != IntPtr.Zero);
-}
+                } while (hwndParent != IntPtr.Zero);
+            }
 
             Debug.Assert(normalizedHwnd.Handle != IntPtr.Zero);
             return normalizedHwnd;
@@ -672,13 +671,13 @@ namespace System.Windows.Interop
         /// </summary>
         public override void Dispose()
         {
-           // Its outside the try finally block because we want the exception to be
-           // thrown if we are on a different thread and we don't want to call Dispose
-           // on base class in that case.
-           VerifyAccess();
+            // Its outside the try finally block because we want the exception to be
+            // thrown if we are on a different thread and we don't want to call Dispose
+            // on base class in that case.
+            VerifyAccess();
 
-           try
-           {
+            try
+            {
                 // According to spec: Dispose should not raise exception if called multiple times.
                 // This test is needed because the HwndTarget is Disposed from both the media contex and
                 // the hwndsrc.
@@ -703,7 +702,7 @@ namespace System.Windows.Interop
                     // Unregister for Fast User Switching messages
                     UnsafeNativeMethods.WTSUnRegisterSessionNotification(_hWnd);
                 }
-}
+            }
             finally
             {
                 base.Dispose();
@@ -1003,7 +1002,7 @@ namespace System.Windows.Interop
                 {
                     if (!_hasRePresentedSinceWake || fWithinPresentRetryWindow)
                     {
-                        UnsafeNativeMethods.InvalidateRect(_hWnd.MakeHandleRef(this), IntPtr.Zero , true);
+                        UnsafeNativeMethods.InvalidateRect(_hWnd.MakeHandleRef(this), IntPtr.Zero, true);
                         DoPaint();
                         _hasRePresentedSinceWake = true;
                     }
@@ -1019,7 +1018,7 @@ namespace System.Windows.Interop
             }
 
             switch (msg)
-                {
+            {
                 case WindowMessage.WM_DPICHANGED:
                     result = HandleDpiChangedMessage(wparam, lparam) ? Handled : Unhandled;
                     break;
@@ -1103,12 +1102,12 @@ namespace System.Windows.Interop
                 case WindowMessage.WM_SETTINGCHANGE:
                     if (OnSettingChange(NativeMethods.IntPtrToInt32(wparam)))
                     {
-                        UnsafeNativeMethods.InvalidateRect(_hWnd.MakeHandleRef(this), IntPtr.Zero , true);
+                        UnsafeNativeMethods.InvalidateRect(_hWnd.MakeHandleRef(this), IntPtr.Zero, true);
                     }
                     break;
 
                 case WindowMessage.WM_GETOBJECT:
-                    result = CriticalHandleWMGetobject( wparam, lparam, RootVisual, _hWnd );
+                    result = CriticalHandleWMGetobject(wparam, lparam, RootVisual, _hWnd);
                     break;
 
                 case WindowMessage.WM_WINDOWPOSCHANGING:
@@ -1147,11 +1146,11 @@ namespace System.Windows.Interop
                 case WindowMessage.WM_STYLECHANGING:
                     unsafe
                     {
-                        NativeMethods.STYLESTRUCT * styleStruct = (NativeMethods.STYLESTRUCT *) lparam;
+                        NativeMethods.STYLESTRUCT* styleStruct = (NativeMethods.STYLESTRUCT*)lparam;
 
                         if ((int)wparam == NativeMethods.GWL_EXSTYLE)
                         {
-                            if(UsesPerPixelOpacity)
+                            if (UsesPerPixelOpacity)
                             {
                                 // We need layered composition to accomplish per-pixel opacity.
                                 //
@@ -1182,7 +1181,7 @@ namespace System.Windows.Interop
                     {
                         bool updateWindowSettings = false;
 
-                        NativeMethods.STYLESTRUCT * styleStruct = (NativeMethods.STYLESTRUCT *) lparam;
+                        NativeMethods.STYLESTRUCT* styleStruct = (NativeMethods.STYLESTRUCT*)lparam;
 
                         if ((int)wparam == NativeMethods.GWL_STYLE)
                         {
@@ -1193,11 +1192,11 @@ namespace System.Windows.Interop
                         else
                         {
                             bool oldIsRTL = (styleStruct->styleOld & NativeMethods.WS_EX_LAYOUTRTL) == NativeMethods.WS_EX_LAYOUTRTL;
-                            bool newIsRTL  = (styleStruct->styleNew & NativeMethods.WS_EX_LAYOUTRTL) == NativeMethods.WS_EX_LAYOUTRTL;
+                            bool newIsRTL = (styleStruct->styleNew & NativeMethods.WS_EX_LAYOUTRTL) == NativeMethods.WS_EX_LAYOUTRTL;
                             updateWindowSettings = (oldIsRTL != newIsRTL);
                         }
 
-                        if(updateWindowSettings)
+                        if (updateWindowSettings)
                         {
                             UpdateWindowSettings();
                         }
@@ -1244,7 +1243,7 @@ namespace System.Windows.Interop
                             _isSessionDisconnected = false;
                             if (_needsRePresentOnWake || _wasWmPaintProcessingDeferred)
                             {
-                                UnsafeNativeMethods.InvalidateRect(_hWnd.MakeHandleRef(this), IntPtr.Zero , true);
+                                UnsafeNativeMethods.InvalidateRect(_hWnd.MakeHandleRef(this), IntPtr.Zero, true);
                                 _needsRePresentOnWake = false;
                             }
                             DoPaint();
@@ -1281,7 +1280,7 @@ namespace System.Windows.Interop
                             _isSuspended = false;
                             if (_needsRePresentOnWake)
                             {
-                                UnsafeNativeMethods.InvalidateRect(_hWnd.MakeHandleRef(this), IntPtr.Zero , true);
+                                UnsafeNativeMethods.InvalidateRect(_hWnd.MakeHandleRef(this), IntPtr.Zero, true);
                                 _needsRePresentOnWake = false;
                             }
                             DoPaint();
@@ -1345,7 +1344,7 @@ namespace System.Windows.Interop
 
                 sourceDT.Stop();
             }
-}
+        }
 
         /// <summary>
         /// Paints a rect
@@ -1413,10 +1412,10 @@ namespace System.Windows.Interop
                 peer = UIElementAutomationPeer.CreatePeerForElement(uiroot);
 
                 //there is no specific peer for this UIElement, create a generic root
-                if(peer == null)
+                if (peer == null)
                     peer = uiroot.CreateGenericRootAutomationPeer();
 
-                if(peer != null)
+                if (peer != null)
                     peer.Hwnd = handle;
             }
 
@@ -1462,7 +1461,7 @@ namespace System.Windows.Interop
 #pragma warning disable 56500
             catch (Exception e)
             {
-                if(CriticalExceptions.IsCriticalException(e))
+                if (CriticalExceptions.IsCriticalException(e))
                 {
                     throw;
                 }
@@ -1496,14 +1495,14 @@ namespace System.Windows.Interop
         {
             int windowStyle = SafeNativeMethods.GetWindowStyle(handleRef, true);
 
-            if(( windowStyle & NativeMethods.WS_EX_LAYOUTRTL ) == NativeMethods.WS_EX_LAYOUTRTL)
+            if ((windowStyle & NativeMethods.WS_EX_LAYOUTRTL) == NativeMethods.WS_EX_LAYOUTRTL)
             {
                 NativeMethods.RECT rcClient = new NativeMethods.RECT();
                 SafeNativeMethods.GetClientRect(handleRef, ref rcClient);
 
-                int width   = rc.right - rc.left;       // preserve width
-                rc.right    = rcClient.right - rc.left; // set right of rect to be as far from right of window as left of rect was from left of window
-                rc.left     = rc.right - width;         // restore width by adjusting left and preserving right
+                int width = rc.right - rc.left;       // preserve width
+                rc.right = rcClient.right - rc.left; // set right of rect to be as far from right of window as left of rect was from left of window
+                rc.left = rc.right - width;         // restore width by adjusting left and preserving right
             }
         }
 
@@ -1514,7 +1513,7 @@ namespace System.Windows.Interop
         ///<returns>true if rerendering was forced</returns>
         private bool OnSettingChange(Int32 firstParam)
         {
-            if ( (int)firstParam == (int)NativeMethods.SPI_SETFONTSMOOTHING ||
+            if ((int)firstParam == (int)NativeMethods.SPI_SETFONTSMOOTHING ||
                  (int)firstParam == (int)NativeMethods.SPI_SETFONTSMOOTHINGTYPE ||
                  (int)firstParam == (int)NativeMethods.SPI_SETFONTSMOOTHINGCONTRAST ||
                  (int)firstParam == (int)NativeMethods.SPI_SETFONTSMOOTHINGORIENTATION ||
@@ -1642,7 +1641,7 @@ namespace System.Windows.Interop
             NativeMethods.POINT ptClientBottomRight = new NativeMethods.POINT(rcClient.right, rcClient.bottom);
             UnsafeNativeMethods.ClientToScreen(hWnd, ref ptClientBottomRight);
 
-            if(ptClientBottomRight.x >= ptClientTopLeft.x)
+            if (ptClientBottomRight.x >= ptClientTopLeft.x)
             {
                 _hwndClientRectInScreenCoords.left = ptClientTopLeft.x;
                 _hwndClientRectInScreenCoords.right = ptClientBottomRight.x;
@@ -1654,7 +1653,7 @@ namespace System.Windows.Interop
                 _hwndClientRectInScreenCoords.right = ptClientTopLeft.x;
             }
 
-            if(ptClientBottomRight.y >= ptClientTopLeft.y)
+            if (ptClientBottomRight.y >= ptClientTopLeft.y)
             {
                 _hwndClientRectInScreenCoords.top = ptClientTopLeft.y;
                 _hwndClientRectInScreenCoords.bottom = ptClientBottomRight.y;
@@ -1754,7 +1753,7 @@ namespace System.Windows.Interop
             UpdateWorldTransform(newDpi);
             PropagateDpiChangeToRootVisual(oldDpi, newDpi);
             NotifyListenersOfWorldTransformAndClipBoundsChanged();
-            NotifyRendererOfDpiChange(afterParent:false);
+            NotifyRendererOfDpiChange(afterParent: false);
 
             // Set the new window size.
             UnsafeNativeMethods.SetWindowPos(
@@ -1776,7 +1775,7 @@ namespace System.Windows.Interop
             UpdateWorldTransform(newDpi);
             PropagateDpiChangeToRootVisual(oldDpi, newDpi);
             NotifyListenersOfWorldTransformAndClipBoundsChanged();
-            NotifyRendererOfDpiChange(afterParent:true);
+            NotifyRendererOfDpiChange(afterParent: true);
 
             // Update the window position
             UnsafeNativeMethods.SetWindowPos(
@@ -1901,7 +1900,7 @@ namespace System.Windows.Interop
                 //
                 NativeMethods.RECT windowRectInScreenCoords = new NativeMethods.RECT(windowPos.x, windowPos.y, windowPos.x + windowPos.cx, windowPos.y + windowPos.cy);
                 IntPtr hwndParent = UnsafeNativeMethods.GetParent(new HandleRef(null, windowPos.hwnd));
-                if(hwndParent != IntPtr.Zero)
+                if (hwndParent != IntPtr.Zero)
                 {
                     SafeSecurityHelper.TransformLocalRectToScreen(new HandleRef(null, hwndParent), ref windowRectInScreenCoords);
                 }
@@ -1931,7 +1930,7 @@ namespace System.Windows.Interop
                     windowRectInScreenCoords.bottom = windowRectInScreenCoords.top + height;
                 }
 
-                positionChanged = (   _hwndWindowRectInScreenCoords.left != windowRectInScreenCoords.left
+                positionChanged = (_hwndWindowRectInScreenCoords.left != windowRectInScreenCoords.left
                                    || _hwndWindowRectInScreenCoords.top != windowRectInScreenCoords.top
                                    || _hwndWindowRectInScreenCoords.right != windowRectInScreenCoords.right
                                    || _hwndWindowRectInScreenCoords.bottom != windowRectInScreenCoords.bottom);
@@ -1948,9 +1947,9 @@ namespace System.Windows.Interop
             // a WM_WINDOWPOSCHANGED, so we can't disable the render target.
             //
             bool enableRenderTarget = SafeNativeMethods.IsWindowVisible(_hWnd.MakeHandleRef(this));
-            if(enableRenderTarget)
+            if (enableRenderTarget)
             {
-                if(_windowPosChanging && (positionChanged))
+                if (_windowPosChanging && (positionChanged))
                 {
                     enableRenderTarget = false;
                 }
@@ -2192,16 +2191,18 @@ namespace System.Windows.Interop
                 // The window is layered but should not be -- unset the layered flag.
                 UnsafeNativeMethods.SetWindowLong(_hWnd.MakeHandleRef(this), NativeMethods.GWL_EXSTYLE, new IntPtr(exStyle & ~NativeMethods.WS_EX_LAYERED));
             }
-            else if(isLayered && flags != MILTransparencyFlags.Opaque && _isRenderTargetEnabled && (width == 0 || height == 0))
+            else if (isLayered && flags != MILTransparencyFlags.Opaque && _isRenderTargetEnabled && (width == 0 || height == 0))
             {
                 // The window is already layered, and it should be.  But we are enabling a window
                 // that is has a 0-size dimension.  This may cause us to leave the last sprite
                 // on the screen.  The best way to get rid of this is to just make the entire
                 // sprite transparent.
 
-                NativeMethods.BLENDFUNCTION blend = new NativeMethods.BLENDFUNCTION();
-                blend.BlendOp = NativeMethods.AC_SRC_OVER;
-                blend.SourceConstantAlpha = 0; // transparent
+                NativeMethods.BLENDFUNCTION blend = new NativeMethods.BLENDFUNCTION
+                {
+                    BlendOp = NativeMethods.AC_SRC_OVER,
+                    SourceConstantAlpha = 0 // transparent
+                };
                 unsafe
                 {
                     UnsafeNativeMethods.UpdateLayeredWindow(_hWnd.h, IntPtr.Zero, null, null, IntPtr.Zero, null, 0, ref blend, NativeMethods.ULW_ALPHA);
@@ -2307,7 +2308,7 @@ namespace System.Windows.Interop
                     {
                         DpiFlags dpiFlags = DpiUtil.UpdateDpiScalesAndGetIndex(CurrentDpiScale.PixelsPerInchX, CurrentDpiScale.PixelsPerInchY);
                         DpiScale newDpiScale = new DpiScale(UIElement.DpiScaleXValues[dpiFlags.Index], UIElement.DpiScaleYValues[dpiFlags.Index]);
-                        RootVisual.RecursiveSetDpiScaleVisualFlags(new DpiRecursiveChangeArgs( dpiFlags, RootVisual.GetDpi(), newDpiScale));
+                        RootVisual.RecursiveSetDpiScaleVisualFlags(new DpiRecursiveChangeArgs(dpiFlags, RootVisual.GetDpi(), newDpiScale));
                     }
 
                     // UIAutomation listens for the EventObjectUIFragmentCreate WinEvent to
@@ -2347,7 +2348,7 @@ namespace System.Windows.Interop
             {
                 VerifyAPIReadOnly();
                 Matrix m = Matrix.Identity;
-                m.Scale(1.0f/CurrentDpiScale.DpiScaleX, 1.0f/CurrentDpiScale.DpiScaleY);
+                m.Scale(1.0f / CurrentDpiScale.DpiScaleX, 1.0f / CurrentDpiScale.DpiScaleY);
                 return m;
             }
         }
@@ -2472,7 +2473,7 @@ namespace System.Windows.Interop
             {
                 VerifyAPIReadWrite();
 
-                if(_usesPerPixelOpacity != value)
+                if (_usesPerPixelOpacity != value)
                 {
                     _usesPerPixelOpacity = value;
 

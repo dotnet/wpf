@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -81,7 +81,8 @@ namespace System.Windows.Automation.Peers
                         break;
                     }
 
-                default: break;
+                default:
+                    break;
             }
 
             return base.GetPattern(patternInterface);
@@ -108,7 +109,7 @@ namespace System.Windows.Automation.Peers
             }
 
             List<AutomationPeer> peers = new List<AutomationPeer>();
-            Dictionary<DateTimeCalendarModePair, DateTimeAutomationPeer> newChildren = new Dictionary<DateTimeCalendarModePair,DateTimeAutomationPeer>();
+            Dictionary<DateTimeCalendarModePair, DateTimeAutomationPeer> newChildren = new Dictionary<DateTimeCalendarModePair, DateTimeAutomationPeer>();
 
             // Step 1: Add previous, header and next buttons
             AutomationPeer buttonPeer;
@@ -213,7 +214,7 @@ namespace System.Windows.Automation.Peers
         {
             return GetOrCreateDateTimeAutomationPeer(date, buttonMode, /*addParentInfo*/ true);
         }
-        
+
         private DateTimeAutomationPeer GetOrCreateDateTimeAutomationPeer(DateTime date, CalendarMode buttonMode, bool addParentInfo)
         {
             // try to reuse old peer if it exists either in Current AT or in WeakRefStorage of Peers being sent to Client
@@ -232,14 +233,14 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            if( peer == null )
+            if (peer == null)
             {
                 peer = new DateTimeAutomationPeer(date, OwningCalendar, buttonMode);
-                
+
                 // Sets hwnd and parent info
                 if (addParentInfo)
                 {
-                    if(peer != null)
+                    if (peer != null)
                         peer.TrySetParentInfo(this);
                 }
             }
@@ -399,12 +400,12 @@ namespace System.Windows.Automation.Peers
 
         #region IMultipleViewProvider
 
-        int IMultipleViewProvider.CurrentView 
-        { 
-            get 
-            { 
-                return (int)this.OwningCalendar.DisplayMode; 
-            } 
+        int IMultipleViewProvider.CurrentView
+        {
+            get
+            {
+                return (int)this.OwningCalendar.DisplayMode;
+            }
         }
 
         int[] IMultipleViewProvider.GetSupportedViews()
@@ -458,18 +459,18 @@ namespace System.Windows.Automation.Peers
             }
         }
 
-        bool ISelectionProvider.IsSelectionRequired 
-        { 
-            get 
-            { 
-                return false; 
-            } 
+        bool ISelectionProvider.IsSelectionRequired
+        {
+            get
+            {
+                return false;
+            }
         }
 
         IRawElementProviderSimple[] ISelectionProvider.GetSelection()
         {
             List<IRawElementProviderSimple> providers = new List<IRawElementProviderSimple>();
-            
+
             foreach (DateTime date in OwningCalendar.SelectedDates)
             {
                 AutomationPeer peer = GetOrCreateDateTimeAutomationPeer(date, CalendarMode.Month);
@@ -487,11 +488,11 @@ namespace System.Windows.Automation.Peers
         #endregion ISelectionProvider
 
         #region IItemContainerProvider
-        
+
         IRawElementProviderSimple IItemContainerProvider.FindItemByProperty(IRawElementProviderSimple startAfterProvider, int propertyId, object value)
         {
             DateTimeAutomationPeer startAfterDatePeer = null;
-            
+
             if (startAfterProvider != null)
             {
                 startAfterDatePeer = PeerFromProvider(startAfterProvider) as DateTimeAutomationPeer;
@@ -505,7 +506,7 @@ namespace System.Windows.Automation.Peers
             DateTime? nextDate = null;
             CalendarMode currentMode = 0;
 
-            if( propertyId == SelectionItemPatternIdentifiers.IsSelectedProperty.Id)
+            if (propertyId == SelectionItemPatternIdentifiers.IsSelectedProperty.Id)
             {
                 currentMode = CalendarMode.Month;
                 nextDate = GetNextSelectedDate(startAfterDatePeer, (bool)value);
@@ -520,7 +521,7 @@ namespace System.Windows.Automation.Peers
                     nextDate = parsedDate;
                 }
 
-                if( !nextDate.HasValue || (startAfterDatePeer != null && nextDate <= startAfterDatePeer.Date) )
+                if (!nextDate.HasValue || (startAfterDatePeer != null && nextDate <= startAfterDatePeer.Date))
                 {
                     throw new InvalidOperationException(SR.CalendarNamePropertyValueNotValid);
                 }
@@ -559,7 +560,7 @@ namespace System.Windows.Automation.Peers
             DateTime? nextDate = null;
 
             DateTime startDate = (currentDatePeer != null) ? currentDatePeer.Date : OwningCalendar.DisplayDate;
-            
+
             if (currentMode == CalendarMode.Month)
                 nextDate = startDate.AddDays(1);
             else if (currentMode == CalendarMode.Year)
@@ -681,7 +682,7 @@ namespace System.Windows.Automation.Peers
             Date = date;
         }
 
-       CalendarMode ButtonMode;
-       DateTime Date;
+        CalendarMode ButtonMode;
+        DateTime Date;
     }
 }

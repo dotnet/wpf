@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -50,23 +50,25 @@ namespace System.Windows.Markup
         ///   Convert from Xaml read by a token reader into baml being written
         ///   out by a record writer.  The context gives mapping information.
         /// </summary>
-        internal override void ConvertXamlToBaml (
-            XamlReaderHelper             tokenReader,
-            ParserContext          context,
-            XamlNode               xamlNode,
-            BamlRecordWriter       bamlWriter)
+        internal override void ConvertXamlToBaml(
+            XamlReaderHelper tokenReader,
+            ParserContext context,
+            XamlNode xamlNode,
+            BamlRecordWriter bamlWriter)
         {
 
-            TemplateXamlParser templateParser = new TemplateXamlParser(tokenReader, context);
-            templateParser.ParserHooks = _parserHooks;
-            templateParser.BamlRecordWriter = bamlWriter;
+            TemplateXamlParser templateParser = new TemplateXamlParser(tokenReader, context)
+            {
+                ParserHooks = _parserHooks,
+                BamlRecordWriter = bamlWriter
+            };
 
             // Process the xamlNode that is passed in so that the <Template> element is written to baml
             templateParser.WriteElementStart((XamlElementStartNode)xamlNode);
 
             // Parse the entire Template section now, writing everything out directly to BAML.
             templateParser.Parse();
-       }
+        }
 #else
         /// <summary>
         ///   If the Template represented by a group of baml records is stored in a dictionary, this
@@ -74,12 +76,12 @@ namespace System.Windows.Markup
         ///   collection of baml records.  For ControlTemplate, this is the styleTargetType.
         ///   For DataTemplate, this is the DataTemplateKey containing the DataType.
         /// </summary>
-        internal override object GetDictionaryKey(BamlRecord startRecord,  ParserContext parserContext)
+        internal override object GetDictionaryKey(BamlRecord startRecord, ParserContext parserContext)
         {
-            object     key = null;
-            int        numberOfElements = 0;
+            object key = null;
+            int numberOfElements = 0;
             BamlRecord record = startRecord;
-            short      ownerTypeId = 0;
+            short ownerTypeId = 0;
 
             while (record != null)
             {
@@ -154,8 +156,8 @@ namespace System.Windows.Markup
         // Helper to insert line and position numbers into message, if they are present
         void ThrowException(
              string id,
-             int  lineNumber,
-             int  linePosition,
+             int lineNumber,
+             int linePosition,
              Exception innerException)
         {
             string message = SR.GetResourceString(id);
@@ -187,27 +189,27 @@ namespace System.Windows.Markup
         #region Data
 
         // Constants used for emitting specific properties and attributes for a Style
-        internal const string ControlTemplateTagName                        = "ControlTemplate";
-        internal const string DataTemplateTagName                           = "DataTemplate";
-        internal const string HierarchicalDataTemplateTagName               = "HierarchicalDataTemplate";
-        internal const string ItemsPanelTemplateTagName                     = "ItemsPanelTemplate";
-        internal const string TargetTypePropertyName                        = "TargetType";
-        internal const string DataTypePropertyName                          = "DataType";
-        internal const string TriggersPropertyName                          = "Triggers";
-        internal const string ResourcesPropertyName                         = "Resources";
-        internal const string SettersPropertyName                           = "Setters";
-        internal const string ItemsSourcePropertyName                       = "ItemsSource";
-        internal const string ItemTemplatePropertyName                      = "ItemTemplate";
-        internal const string ItemTemplateSelectorPropertyName              = "ItemTemplateSelector";
-        internal const string ItemContainerStylePropertyName                = "ItemContainerStyle";
-        internal const string ItemContainerStyleSelectorPropertyName        = "ItemContainerStyleSelector";
-        internal const string ItemStringFormatPropertyName                  = "ItemStringFormat";
-        internal const string ItemBindingGroupPropertyName                  = "ItemBindingGroup";
-        internal const string AlternationCountPropertyName                  = "AlternationCount";
-        internal const string ControlTemplateTriggersFullPropertyName       = $"{ControlTemplateTagName}.{TriggersPropertyName}";
-        internal const string ControlTemplateResourcesFullPropertyName      = $"{ControlTemplateTagName}.{ResourcesPropertyName}";
-        internal const string DataTemplateTriggersFullPropertyName          = $"{DataTemplateTagName}.{TriggersPropertyName}";
-        internal const string DataTemplateResourcesFullPropertyName         = $"{DataTemplateTagName}.{ResourcesPropertyName}";
+        internal const string ControlTemplateTagName = "ControlTemplate";
+        internal const string DataTemplateTagName = "DataTemplate";
+        internal const string HierarchicalDataTemplateTagName = "HierarchicalDataTemplate";
+        internal const string ItemsPanelTemplateTagName = "ItemsPanelTemplate";
+        internal const string TargetTypePropertyName = "TargetType";
+        internal const string DataTypePropertyName = "DataType";
+        internal const string TriggersPropertyName = "Triggers";
+        internal const string ResourcesPropertyName = "Resources";
+        internal const string SettersPropertyName = "Setters";
+        internal const string ItemsSourcePropertyName = "ItemsSource";
+        internal const string ItemTemplatePropertyName = "ItemTemplate";
+        internal const string ItemTemplateSelectorPropertyName = "ItemTemplateSelector";
+        internal const string ItemContainerStylePropertyName = "ItemContainerStyle";
+        internal const string ItemContainerStyleSelectorPropertyName = "ItemContainerStyleSelector";
+        internal const string ItemStringFormatPropertyName = "ItemStringFormat";
+        internal const string ItemBindingGroupPropertyName = "ItemBindingGroup";
+        internal const string AlternationCountPropertyName = "AlternationCount";
+        internal const string ControlTemplateTriggersFullPropertyName = $"{ControlTemplateTagName}.{TriggersPropertyName}";
+        internal const string ControlTemplateResourcesFullPropertyName = $"{ControlTemplateTagName}.{ResourcesPropertyName}";
+        internal const string DataTemplateTriggersFullPropertyName = $"{DataTemplateTagName}.{TriggersPropertyName}";
+        internal const string DataTemplateResourcesFullPropertyName = $"{DataTemplateTagName}.{ResourcesPropertyName}";
         internal const string HierarchicalDataTemplateTriggersFullPropertyName = $"{HierarchicalDataTemplateTagName}.{TriggersPropertyName}";
         internal const string HierarchicalDataTemplateItemsSourceFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemsSourcePropertyName}";
         internal const string HierarchicalDataTemplateItemTemplateFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemTemplatePropertyName}";
@@ -217,22 +219,22 @@ namespace System.Windows.Markup
         internal const string HierarchicalDataTemplateItemStringFormatFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemStringFormatPropertyName}";
         internal const string HierarchicalDataTemplateItemBindingGroupFullPropertyName = $"{HierarchicalDataTemplateTagName}.{ItemBindingGroupPropertyName}";
         internal const string HierarchicalDataTemplateAlternationCountFullPropertyName = $"{HierarchicalDataTemplateTagName}.{AlternationCountPropertyName}";
-        internal const string PropertyTriggerPropertyName                   = "Property";
-        internal const string PropertyTriggerValuePropertyName              = "Value";
-        internal const string PropertyTriggerSourceName                     = "SourceName";
-        internal const string PropertyTriggerEnterActions                   = "EnterActions";
-        internal const string PropertyTriggerExitActions                    = "ExitActions";
-        internal const string DataTriggerBindingPropertyName                = "Binding";
-        internal const string EventTriggerEventName                         = "RoutedEvent";
-        internal const string EventTriggerSourceName                          = "SourceName";
-        internal const string EventTriggerActions                           = "Actions";
-        internal const string MultiPropertyTriggerConditionsPropertyName    = "Conditions";
-        internal const string SetterTagName                                 = "Setter";
-        internal const string SetterPropertyAttributeName                   = "Property";
-        internal const string SetterValueAttributeName                      = "Value";
-        internal const string SetterTargetAttributeName                     = "TargetName";
-        internal const string SetterEventAttributeName                      = "Event";
-        internal const string SetterHandlerAttributeName                    = "Handler";
+        internal const string PropertyTriggerPropertyName = "Property";
+        internal const string PropertyTriggerValuePropertyName = "Value";
+        internal const string PropertyTriggerSourceName = "SourceName";
+        internal const string PropertyTriggerEnterActions = "EnterActions";
+        internal const string PropertyTriggerExitActions = "ExitActions";
+        internal const string DataTriggerBindingPropertyName = "Binding";
+        internal const string EventTriggerEventName = "RoutedEvent";
+        internal const string EventTriggerSourceName = "SourceName";
+        internal const string EventTriggerActions = "Actions";
+        internal const string MultiPropertyTriggerConditionsPropertyName = "Conditions";
+        internal const string SetterTagName = "Setter";
+        internal const string SetterPropertyAttributeName = "Property";
+        internal const string SetterValueAttributeName = "Value";
+        internal const string SetterTargetAttributeName = "TargetName";
+        internal const string SetterEventAttributeName = "Event";
+        internal const string SetterHandlerAttributeName = "Handler";
 #if HANDLEDEVENTSTOO
         internal const string SetterHandledEventsTooAttributeName           = "HandledEventsToo";
 #endif

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,7 +26,7 @@ namespace System.Windows.Input
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         internal InputMethodStateChangedEventArgs(InputMethodStateType statetype)
         {
             _statetype = statetype;
@@ -37,15 +37,15 @@ namespace System.Windows.Input
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         /// <summary>
         /// IME (open/close) state is changed.
         /// </summary>
         public bool IsImeStateChanged
         {
-            get  
-            { 
-                return (_statetype == InputMethodStateType.ImeState); 
+            get
+            {
+                return (_statetype == InputMethodStateType.ImeState);
             }
         }
 
@@ -54,9 +54,9 @@ namespace System.Windows.Input
         /// </summary>
         public bool IsMicrophoneStateChanged
         {
-            get  
-            { 
-                return (_statetype == InputMethodStateType.MicrophoneState); 
+            get
+            {
+                return (_statetype == InputMethodStateType.MicrophoneState);
             }
         }
 
@@ -65,9 +65,9 @@ namespace System.Windows.Input
         /// </summary>
         public bool IsHandwritingStateChanged
         {
-            get  
-            { 
-                return (_statetype == InputMethodStateType.HandwritingState); 
+            get
+            {
+                return (_statetype == InputMethodStateType.HandwritingState);
             }
         }
 
@@ -76,9 +76,9 @@ namespace System.Windows.Input
         /// </summary>
         public bool IsSpeechModeChanged
         {
-            get  
-            { 
-                return (_statetype == InputMethodStateType.SpeechMode); 
+            get
+            {
+                return (_statetype == InputMethodStateType.SpeechMode);
             }
         }
 
@@ -87,9 +87,9 @@ namespace System.Windows.Input
         /// </summary>
         public bool IsImeConversionModeChanged
         {
-            get  
-            { 
-                return (_statetype == InputMethodStateType.ImeConversionModeValues); 
+            get
+            {
+                return (_statetype == InputMethodStateType.ImeConversionModeValues);
             }
         }
 
@@ -98,9 +98,9 @@ namespace System.Windows.Input
         /// </summary>
         public bool IsImeSentenceModeChanged
         {
-            get  
-            { 
-                return (_statetype == InputMethodStateType.ImeSentenceModeValues); 
+            get
+            {
+                return (_statetype == InputMethodStateType.ImeSentenceModeValues);
             }
         }
 
@@ -109,7 +109,7 @@ namespace System.Windows.Input
         //  Private Fields
         //
         //------------------------------------------------------
-                
+
         #region Private Fields
 
         private InputMethodStateType _statetype;

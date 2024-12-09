@@ -1,18 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections;               // For ArrayList
+using System.Collections.Specialized;   // HybridDictionary
+using System.Globalization;
 using System.Threading;
 using System.Windows.Baml2006;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Markup;
-using System.Collections;               // For ArrayList
-using System.Collections.Specialized;   // HybridDictionary
-using System.Globalization;
 using System.Windows.Media.Media3D;
-using MS.Utility;
 using MS.Internal;
+using MS.Utility;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -80,14 +80,14 @@ namespace System.Windows
                     throw new InvalidOperationException(SR.FrameworkElementFactoryCannotAddText);
                 }
 
-                if ( value != null ) // We allow null up until Seal
+                if (value != null) // We allow null up until Seal
                 {
                     // If non-null, must be derived from one of the supported types
                     if (!typeof(FrameworkElement).IsAssignableFrom(value) &&
                         !typeof(FrameworkContentElement).IsAssignableFrom(value) &&
                         !typeof(Visual3D).IsAssignableFrom(value))
                     {
-                        #pragma warning suppress 6506 // value is obviously not null
+#pragma warning suppress 6506 // value is obviously not null
                         throw new ArgumentException(SR.Format(SR.MustBeFrameworkOr3DDerived, value.Name));
                     }
                 }
@@ -219,7 +219,7 @@ namespace System.Windows
                 throw new NotSupportedException(SR.Format(SR.ModifyingLogicalTreeViaStylesNotImplemented, value, "FrameworkElementFactory.SetValue"));
             }
 
-            #pragma warning suppress 6506 // dp.DefaultMetadata is never null
+#pragma warning suppress 6506 // dp.DefaultMetadata is never null
             if (dp.ReadOnly)
             {
                 // Read-only properties will not be consulting FrameworkElementFactory for value.
@@ -231,11 +231,11 @@ namespace System.Windows
             DynamicResourceExtension dynamicResourceExtension = value as DynamicResourceExtension;
             object resourceKey = null;
 
-            if( resourceExpression != null )
+            if (resourceExpression != null)
             {
                 resourceKey = resourceExpression.ResourceKey;
             }
-            else if( dynamicResourceExtension != null )
+            else if (dynamicResourceExtension != null)
             {
                 resourceKey = dynamicResourceExtension.ResourceKey;
             }
@@ -245,11 +245,11 @@ namespace System.Windows
                 TemplateBindingExtension templateBinding = value as TemplateBindingExtension;
                 if (templateBinding == null)
                 {
-                    UpdatePropertyValueList( dp, PropertyValueType.Set, value );
+                    UpdatePropertyValueList(dp, PropertyValueType.Set, value);
                 }
                 else
                 {
-                    UpdatePropertyValueList( dp, PropertyValueType.TemplateBinding, templateBinding );
+                    UpdatePropertyValueList(dp, PropertyValueType.TemplateBinding, templateBinding);
                 }
             }
             else
@@ -284,7 +284,7 @@ namespace System.Windows
 
             ArgumentNullException.ThrowIfNull(dp);
 
-            UpdatePropertyValueList( dp, PropertyValueType.Resource, name );
+            UpdatePropertyValueList(dp, PropertyValueType.Resource, name);
         }
 
         /// <summary>
@@ -326,8 +326,8 @@ namespace System.Windows
             // if so, we have to trigger a listener in the FE/FCE (as a performance
             // optimization).
 
-            if (  (routedEvent == FrameworkElement.LoadedEvent)
-                ||(routedEvent == FrameworkElement.UnloadedEvent))
+            if ((routedEvent == FrameworkElement.LoadedEvent)
+                || (routedEvent == FrameworkElement.UnloadedEvent))
             {
                 HasLoadedChangeHandler = true;
             }
@@ -357,11 +357,11 @@ namespace System.Windows
 
                 // Update the loaded/unloaded optimization flags if necessary
 
-                if (  (routedEvent == FrameworkElement.LoadedEvent)
-                    ||(routedEvent == FrameworkElement.UnloadedEvent))
+                if ((routedEvent == FrameworkElement.LoadedEvent)
+                    || (routedEvent == FrameworkElement.UnloadedEvent))
                 {
-                    if (  !_eventHandlersStore.Contains(FrameworkElement.LoadedEvent)
-                        &&!_eventHandlersStore.Contains(FrameworkElement.UnloadedEvent))
+                    if (!_eventHandlersStore.Contains(FrameworkElement.LoadedEvent)
+                        && !_eventHandlersStore.Contains(FrameworkElement.UnloadedEvent))
                     {
                         HasLoadedChangeHandler = false;
                     }
@@ -409,16 +409,16 @@ namespace System.Windows
         {
             // Check for existing value on dp
             int existingIndex = -1;
-            for( int i = 0; i < PropertyValues.Count; i++ )
+            for (int i = 0; i < PropertyValues.Count; i++)
             {
-                if( PropertyValues[i].Property == dp )
+                if (PropertyValues[i].Property == dp)
                 {
                     existingIndex = i;
                     break;
                 }
             }
 
-            if( existingIndex >= 0 )
+            if (existingIndex >= 0)
             {
                 // Overwrite existing value for dp
                 lock (_synchronized)
@@ -433,11 +433,13 @@ namespace System.Windows
             else
             {
                 // Store original data
-                PropertyValue propertyValue = new PropertyValue();
-                propertyValue.ValueType = valueType;
-                propertyValue.ChildName = null;  // Delayed
-                propertyValue.Property = dp;
-                propertyValue.ValueInternal = value;
+                PropertyValue propertyValue = new PropertyValue
+                {
+                    ValueType = valueType,
+                    ChildName = null,  // Delayed
+                    Property = dp,
+                    ValueInternal = value
+                };
 
                 lock (_synchronized)
                 {
@@ -598,7 +600,7 @@ namespace System.Windows
 
             // Convert ChildName to Template-specific ChildIndex, if applicable
             if ((_childName != null) && (_childName != String.Empty) &&
-                _frameworkTemplate != null )
+                _frameworkTemplate != null)
             {
                 _childIndex = StyleHelper.CreateChildIndexFromChildName(_childName, _frameworkTemplate);
             }
@@ -627,12 +629,12 @@ namespace System.Windows
         //  are added to the chain in depth-first order as well.
         //[CodeAnalysis("AptcaMethodsShouldOnlyCallAptcaMethods")] //Tracking Bug: 29647
         internal DependencyObject InstantiateTree(
-                UncommonField<HybridDictionary[]>           dataField,
-                DependencyObject                            container,
-                DependencyObject                            parent,
-                List<DependencyObject>                      affectedChildren,
-            ref List<DependencyObject>                      noChildIndexChildren,
-            ref FrugalStructList<ChildPropertyDependent>    resourceDependents)
+                UncommonField<HybridDictionary[]> dataField,
+                DependencyObject container,
+                DependencyObject parent,
+                List<DependencyObject> affectedChildren,
+            ref List<DependencyObject> noChildIndexChildren,
+            ref FrugalStructList<ChildPropertyDependent> resourceDependents)
         {
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose, EventTrace.Event.WClientParseFefCrInstBegin);
 
@@ -681,7 +683,7 @@ namespace System.Windows
                         treeNodeIsVisual3D = true;
                 }
 
-                Debug.Assert( treeNodeFO.IsValid || (treeNodeVisual3D != null),
+                Debug.Assert(treeNodeFO.IsValid || (treeNodeVisual3D != null),
                     "We should not be trying to instantiate a node that is neither FrameworkElement nor FrameworkContentElement.  A type check should have been done when Type is set");
 
                 // And here's the bool we'll use to make the decision.
@@ -692,7 +694,7 @@ namespace System.Windows
                 if (!treeNodeIsVisual3D)
                 {
                     // Postpone "Initialized" event
-                    NewNodeBeginInit( treeNodeIsFE, treeNodeFO.FE, treeNodeFO.FCE );
+                    NewNodeBeginInit(treeNodeIsFE, treeNodeFO.FE, treeNodeFO.FCE);
 
                     // Set the resource reference flags
                     if (StyleHelper.HasResourceDependentsForChild(_childIndex, ref resourceDependents))
@@ -702,19 +704,19 @@ namespace System.Windows
 
                     // Update the two chains that tracks all the nodes created
                     //  from all the FrameworkElementFactory of this Style.
-                    UpdateChildChains( _childName, _childIndex,
+                    UpdateChildChains(_childName, _childIndex,
                         treeNodeIsFE, treeNodeFO.FE, treeNodeFO.FCE,
-                        affectedChildren, ref noChildIndexChildren );
+                        affectedChildren, ref noChildIndexChildren);
 
                     // All FrameworkElementFactory-created elements point to the object
                     //  whose Style.VisualTree definition caused all this to occur
-                    NewNodeStyledParentProperty( container, isContainerAnFE, treeNodeIsFE, treeNodeFO.FE, treeNodeFO.FCE );
+                    NewNodeStyledParentProperty(container, isContainerAnFE, treeNodeIsFE, treeNodeFO.FE, treeNodeFO.FCE);
 
                     // Initialize the per-instance data for the new element.  This
                     // needs to be done before any properties are invalidated.
                     if (_childIndex != -1)
                     {
-                        Debug.Assert( _frameworkTemplate != null );
+                        Debug.Assert(_frameworkTemplate != null);
 
                         StyleHelper.CreateInstanceDataForChild(dataField, container, treeNode, _childIndex,
                             _frameworkTemplate.HasInstanceValues, ref _frameworkTemplate.ChildRecordFromChildIndex);
@@ -772,14 +774,14 @@ namespace System.Windows
                         // The root is added to the logical tree for the case
                         // of FrameworkContentElement parent.  This is the logical equivalent
                         // to what happens when adding a child to a visual collection.
-                        AddNodeToLogicalTree( (FrameworkContentElement)parent, _type,
-                            treeNodeIsFE, treeNodeFO.FE, treeNodeFO.FCE );
+                        AddNodeToLogicalTree((FrameworkContentElement)parent, _type,
+                            treeNodeIsFE, treeNodeFO.FE, treeNodeFO.FCE);
                     }
                 }
                 else
                 {
                     // Call parent IAddChild to add treeNodeFO
-                    AddNodeToParent( parent, treeNodeFO );
+                    AddNodeToParent(parent, treeNodeFO);
                 }
 
                 // Either set properties or invalidate them, depending on the type
@@ -790,7 +792,7 @@ namespace System.Windows
                     // came from FrameworkElementFactory.SetValue or VisulaTrigger.SetValue
                     // so that they can get picked up.
 
-                    Debug.Assert( _frameworkTemplate != null );
+                    Debug.Assert(_frameworkTemplate != null);
                     StyleHelper.InvalidatePropertiesOnTemplateNode(
                                 container,
                                 treeNodeFO,
@@ -828,8 +830,8 @@ namespace System.Windows
                             if (me != null)
                             {
                                 ProvideValueServiceProvider serviceProvider = new ProvideValueServiceProvider();
-                                serviceProvider.SetData( treeNodeVisual3D, propertyValue.Property );
-                                o = me.ProvideValue( serviceProvider );
+                                serviceProvider.SetData(treeNodeVisual3D, propertyValue.Property);
+                                o = me.ProvideValue(serviceProvider);
                             }
 
                             // Finally, set the value onto the object.
@@ -839,7 +841,7 @@ namespace System.Windows
                         else
                         {
                             // We don't support resource references, triggers, etc within the 3D content
-                            throw new NotSupportedException(SR.Format(SR.Template3DValueOnly, propertyValue.Property) );
+                            throw new NotSupportedException(SR.Format(SR.Template3DValueOnly, propertyValue.Property));
                         }
                     }
                 }
@@ -863,7 +865,7 @@ namespace System.Windows
                 if (!treeNodeIsVisual3D)
                 {
                     // Fire "Initialized" event
-                    NewNodeEndInit( treeNodeIsFE, treeNodeFO.FE, treeNodeFO.FCE );
+                    NewNodeEndInit(treeNodeIsFE, treeNodeFO.FE, treeNodeFO.FCE);
                 }
             }
             return treeNode;
@@ -876,16 +878,16 @@ namespace System.Windows
         //  children directly  under the Grid.
         //
 
-        private void AddNodeToParent( DependencyObject parent, FrameworkObject childFrameworkObject )
+        private void AddNodeToParent(DependencyObject parent, FrameworkObject childFrameworkObject)
         {
             Grid parentGrid;
             ColumnDefinition childNodeColumnDefinition;
             RowDefinition childNodeRowDefinition = null;
 
-            if (    childFrameworkObject.IsFCE
-                &&  (parentGrid = parent as Grid) != null
-                &&  (   (childNodeColumnDefinition = childFrameworkObject.FCE as ColumnDefinition) != null
-                    ||  (childNodeRowDefinition = childFrameworkObject.FCE as RowDefinition) != null  )
+            if (childFrameworkObject.IsFCE
+                && (parentGrid = parent as Grid) != null
+                && ((childNodeColumnDefinition = childFrameworkObject.FCE as ColumnDefinition) != null
+                    || (childNodeRowDefinition = childFrameworkObject.FCE as RowDefinition) != null)
                 )
             {
                 if (childNodeColumnDefinition != null)
@@ -937,7 +939,7 @@ namespace System.Windows
             // Set values for this object, taking them from the shared values table.
 
             ProvideValueServiceProvider provideValueServiceProvider = null;
-            FrameworkTemplate.SetTemplateParentValues( Name, frameworkObject.DO, _frameworkTemplate, ref provideValueServiceProvider );
+            FrameworkTemplate.SetTemplateParentValues(Name, frameworkObject.DO, _frameworkTemplate, ref provideValueServiceProvider);
 
             // Get the first child
 
@@ -946,7 +948,7 @@ namespace System.Windows
             // If we have children, get this object's IAddChild, because it's going to be a parent.
 
             IAddChild iAddChild = null;
-            if( childFactory != null )
+            if (childFactory != null)
             {
                 iAddChild = frameworkObject.DO as IAddChild;
                 if (iAddChild == null)
@@ -970,7 +972,7 @@ namespace System.Windows
                 {
                     // Use frameworkObject's IAddChild to add this node.
                     FrameworkObject childFrameworkObject = childFactory.InstantiateUnoptimizedTree();
-                    AddNodeToParent(frameworkObject.DO, childFrameworkObject );
+                    AddNodeToParent(frameworkObject.DO, childFrameworkObject);
                 }
 
                 childFactory = childFactory._nextSibling;
@@ -997,14 +999,14 @@ namespace System.Windows
         /// 'noChildIndexChildren' so called because the nodes we don't
         /// care about were not assigned a child index.
         /// </remarks>
-        private static void UpdateChildChains( string childID, int childIndex,
+        private static void UpdateChildChains(string childID, int childIndex,
             bool treeNodeIsFE, FrameworkElement treeNodeFE, FrameworkContentElement treeNodeFCE,
-            List<DependencyObject> affectedChildren, ref List<DependencyObject> noChildIndexChildren )
+            List<DependencyObject> affectedChildren, ref List<DependencyObject> noChildIndexChildren)
         {
             if (childID != null)
             {
                 // If a child ID exists, then, a valid child index exists as well
-                if( treeNodeIsFE )
+                if (treeNodeIsFE)
                 {
                     treeNodeFE.TemplateChildIndex = childIndex;
                 }
@@ -1036,10 +1038,10 @@ namespace System.Windows
         ///     Call BeginInit on the newly-created node to postpone the
         /// "Initialized" event.
         /// </summary>
-        internal static void NewNodeBeginInit( bool treeNodeIsFE,
-            FrameworkElement treeNodeFE, FrameworkContentElement treeNodeFCE )
+        internal static void NewNodeBeginInit(bool treeNodeIsFE,
+            FrameworkElement treeNodeFE, FrameworkContentElement treeNodeFCE)
         {
-            if( treeNodeIsFE )
+            if (treeNodeIsFE)
             {
                 // Mark the beginning of the initialization phase
                 treeNodeFE.BeginInit();
@@ -1055,10 +1057,10 @@ namespace System.Windows
         ///     Call EndInit on the newly-created node to fire the
         /// "Initialized" event.
         /// </summary>
-        private static void NewNodeEndInit( bool treeNodeIsFE,
-            FrameworkElement treeNodeFE, FrameworkContentElement treeNodeFCE )
+        private static void NewNodeEndInit(bool treeNodeIsFE,
+            FrameworkElement treeNodeFE, FrameworkContentElement treeNodeFCE)
         {
-            if( treeNodeIsFE )
+            if (treeNodeIsFE)
             {
                 // Mark the beginning of the initialization phase
                 treeNodeFE.EndInit();
@@ -1079,14 +1081,14 @@ namespace System.Windows
             DependencyObject container, bool isContainerAnFE,
             bool treeNodeIsFE, FrameworkElement treeNodeFE, FrameworkContentElement treeNodeFCE)
         {
-            if( treeNodeIsFE )
+            if (treeNodeIsFE)
             {
-                treeNodeFE._templatedParent = container ;
+                treeNodeFE._templatedParent = container;
                 treeNodeFE.IsTemplatedParentAnFE = isContainerAnFE;
             }
             else
             {
-                treeNodeFCE._templatedParent = container ;
+                treeNodeFCE._templatedParent = container;
                 treeNodeFCE.IsTemplatedParentAnFE = isContainerAnFE;
             }
         }
@@ -1099,7 +1101,7 @@ namespace System.Windows
         /// <remarks>
         ///     A prime example of trying to shove a square peg into a round hole.
         /// </remarks>
-        internal static void AddNodeToLogicalTree( DependencyObject parent, Type type,
+        internal static void AddNodeToLogicalTree(DependencyObject parent, Type type,
             bool treeNodeIsFE, FrameworkElement treeNodeFE, FrameworkContentElement treeNodeFCE)
         {
             // If the logical parent already has children, then we can't add
@@ -1116,7 +1118,7 @@ namespace System.Windows
                 }
             }
 
-            IAddChild  addChildParent = parent as IAddChild;
+            IAddChild addChildParent = parent as IAddChild;
             if (addChildParent == null)
             {
                 throw new InvalidOperationException(SR.Format(SR.CannotHookupFCERoot,
@@ -1258,14 +1260,15 @@ namespace System.Windows
         private bool _sealed;
 
         // Synchronized (write locks, lock-free reads): Covered by FrameworkElementFactory instance lock
-        /* property */ internal FrugalStructList<System.Windows.PropertyValue> PropertyValues = new FrugalStructList<System.Windows.PropertyValue>();
+        /* property */
+        internal FrugalStructList<System.Windows.PropertyValue> PropertyValues = new FrugalStructList<System.Windows.PropertyValue>();
 
         // Store all the event handlers for this FEF
         // NOTE: We cannot use UnCommonField<T> because that uses property engine
         // storage that can be set only on a DependencyObject
         private EventHandlersStore _eventHandlersStore;
 
-        internal bool                   _hasLoadedChangeHandler;
+        internal bool _hasLoadedChangeHandler;
 
         private Type _type;
         private string _text;

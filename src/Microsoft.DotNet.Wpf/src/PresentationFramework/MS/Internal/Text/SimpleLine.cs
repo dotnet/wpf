@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -36,7 +36,7 @@ namespace MS.Internal.Text
             TextRun run;
 
             // There is only one run of text.
-            if (dcp  < _content.Length)
+            if (dcp < _content.Length)
             {
                 // LineLayout may ask for dcp != 0. This case may only happen during partial 
                 // validation of TextRunCache.
@@ -78,16 +78,16 @@ namespace MS.Internal.Text
 
             if (dcp > 0)
             {
-                charString = new CharacterBufferRange(  
-                    _content, 
+                charString = new CharacterBufferRange(
+                    _content,
                     0,
                     Math.Min(dcp, _content.Length)
                     );
                 culture = _textProps.CultureInfo;
             }
 
-            return new TextSpan<CultureSpecificCharacterBufferRange> (
-                dcp, 
+            return new TextSpan<CultureSpecificCharacterBufferRange>(
+                dcp,
                 new CultureSpecificCharacterBufferRange(culture, charString)
                 );
         }

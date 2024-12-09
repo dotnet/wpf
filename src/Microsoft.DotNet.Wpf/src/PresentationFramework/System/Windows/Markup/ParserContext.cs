@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,10 +8,10 @@
 //
 
 using System;
-using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Reflection;
 using System.Xml;
 using MS.Internal.Xaml.Parser;
 
@@ -56,7 +56,7 @@ namespace System.Windows.Markup
     public class ParserContext : IUriContext
 #endif
     {
-#region Public Methods
+        #region Public Methods
 
         ///    <summary>
         ///    Constructor
@@ -73,10 +73,10 @@ namespace System.Windows.Markup
         {
             _xmlnsDictionary = null;    // created on its first use
 #if !PBTCOMPILER
-            _nameScopeStack    = null;
+            _nameScopeStack = null;
 #endif
-            _xmlLang        = String.Empty;
-            _xmlSpace       = String.Empty;
+            _xmlLang = String.Empty;
+            _xmlSpace = String.Empty;
         }
 
 
@@ -91,18 +91,18 @@ namespace System.Windows.Markup
         {
             if (xmlParserContext == null)
             {
-                throw new ArgumentNullException( "xmlParserContext" );
+                throw new ArgumentNullException("xmlParserContext");
             }
 
-            _xmlLang     = xmlParserContext.XmlLang;
+            _xmlLang = xmlParserContext.XmlLang;
 
             TypeConverter typeConverter = TypeDescriptor.GetConverter(typeof(XmlSpace));
             if (typeConverter != null)
-                _xmlSpace = (string) typeConverter.ConvertToString(null, TypeConverterHelper.InvariantEnglishUS, xmlParserContext.XmlSpace);
+                _xmlSpace = (string)typeConverter.ConvertToString(null, TypeConverterHelper.InvariantEnglishUS, xmlParserContext.XmlSpace);
             else
                 _xmlSpace = String.Empty;
 
-            _xmlnsDictionary = new XmlnsDictionary() ;
+            _xmlnsDictionary = new XmlnsDictionary();
 
             if (xmlParserContext.BaseURI != null && xmlParserContext.BaseURI.Length > 0)
             {
@@ -126,16 +126,16 @@ namespace System.Windows.Markup
         /// Constructor overload that takes an XmlReader, in order to
         /// pull the BaseURI, Lang, and Space from it.
         /// </summary>
-        internal ParserContext( XmlReader xmlReader )
+        internal ParserContext(XmlReader xmlReader)
         {
-            if( xmlReader.BaseURI != null && xmlReader.BaseURI.Length != 0 )
+            if (xmlReader.BaseURI != null && xmlReader.BaseURI.Length != 0)
             {
-                BaseUri = new Uri( xmlReader.BaseURI );
+                BaseUri = new Uri(xmlReader.BaseURI);
             }
 
             XmlLang = xmlReader.XmlLang;
 
-            if( xmlReader.XmlSpace != System.Xml.XmlSpace.None )
+            if (xmlReader.XmlSpace != System.Xml.XmlSpace.None)
             {
                 XmlSpace = xmlReader.XmlSpace.ToString();
             }
@@ -150,13 +150,13 @@ namespace System.Windows.Markup
         /// <param name="parserContext">xmlParserContext to use</param>
         internal ParserContext(ParserContext parserContext)
         {
-            _xmlLang     = parserContext.XmlLang;
-            _xmlSpace    = parserContext.XmlSpace;
-            _xamlTypeMapper      = parserContext.XamlTypeMapper;
-            _mapTable    = parserContext.MapTable;
-            _baseUri     = parserContext.BaseUri;
+            _xmlLang = parserContext.XmlLang;
+            _xmlSpace = parserContext.XmlSpace;
+            _xamlTypeMapper = parserContext.XamlTypeMapper;
+            _mapTable = parserContext.MapTable;
+            _baseUri = parserContext.BaseUri;
             _masterBracketCharacterCache = parserContext.MasterBracketCharacterCache;
-            
+
             _rootElement = parserContext._rootElement;
             if (parserContext._nameScopeStack != null)
                 _nameScopeStack = (Stack)parserContext._nameScopeStack.Clone();
@@ -169,7 +169,7 @@ namespace System.Windows.Markup
             _xmlnsDictionary = null;
 
             // when there are no namespace prefix mappings in incoming ParserContext,
-             // we are not going to create an empty XmlnsDictionary.
+            // we are not going to create an empty XmlnsDictionary.
             if (parserContext._xmlnsDictionary != null &&
                 parserContext._xmlnsDictionary.Count > 0)
             {
@@ -232,10 +232,10 @@ namespace System.Windows.Markup
             {
                 if (null != _langSpaceStack && _langSpaceStack.Count > 0)
                 {
-                    _repeat = (int) _langSpaceStack.Pop();
-                    _targetType = (Type) _langSpaceStack.Pop();
-                    _xmlSpace = (string) _langSpaceStack.Pop();
-                    _xmlLang = (string) _langSpaceStack.Pop();
+                    _repeat = (int)_langSpaceStack.Pop();
+                    _targetType = (Type)_langSpaceStack.Pop();
+                    _xmlSpace = (string)_langSpaceStack.Pop();
+                    _xmlLang = (string)_langSpaceStack.Pop();
                 }
             }
 
@@ -244,7 +244,7 @@ namespace System.Windows.Markup
             {
                 // If the end of the current frame has been reached, pop
                 // the next frame off the freeze stack
-                _currentFreezeStackFrame = (FreezeStackFrame) _freezeStack.Pop();
+                _currentFreezeStackFrame = (FreezeStackFrame)_freezeStack.Pop();
             }
 
             // Wait till the context needs XmlnsDictionary, create on first use.
@@ -255,7 +255,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// XmlNamespaceDictionary
         /// </summary>
-        public XmlnsDictionary  XmlnsDictionary
+        public XmlnsDictionary XmlnsDictionary
         {
             get
             {
@@ -333,7 +333,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                return _xamlTypeMapper ;
+                return _xamlTypeMapper;
             }
             set
             {
@@ -355,10 +355,10 @@ namespace System.Windows.Markup
         {
             get
             {
-               if (_nameScopeStack == null)
-                   _nameScopeStack = new Stack(2);
+                if (_nameScopeStack == null)
+                    _nameScopeStack = new Stack(2);
 
-               return _nameScopeStack;
+                return _nameScopeStack;
             }
         }
 #endif
@@ -370,7 +370,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                return _baseUri ;
+                return _baseUri;
             }
             set
             {
@@ -392,7 +392,7 @@ namespace System.Windows.Markup
         //
         // The Assembly which hosts the Baml stream.
         // 
-        internal Assembly StreamCreatedAssembly 
+        internal Assembly StreamCreatedAssembly
         {
             get { return _streamCreatedAssembly; }
 
@@ -420,7 +420,7 @@ namespace System.Windows.Markup
         {
             if (parserContext == null)
             {
-                throw new ArgumentNullException( "parserContext" );
+                throw new ArgumentNullException("parserContext");
             }
 
             XmlNamespaceManager xmlnsMgr = new XmlNamespaceManager(new NameTable());
@@ -453,7 +453,7 @@ namespace System.Windows.Markup
             }
 
             XmlParserContext xmlParserContext = new XmlParserContext(null, xmlnsMgr, parserContext.XmlLang, xmlSpace);
-            if( parserContext.BaseUri == null)
+            if (parserContext.BaseUri == null)
             {
                 xmlParserContext.BaseURI = null;
             }
@@ -461,16 +461,16 @@ namespace System.Windows.Markup
             {
                 string serializedSafe = parserContext.BaseUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.SafeUnescaped);
                 Uri sameUri = new Uri(serializedSafe);
-                string cannonicalString =  sameUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
+                string cannonicalString = sameUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
                 xmlParserContext.BaseURI = cannonicalString;
             }
 
             return xmlParserContext;
         }
 
-#endregion Public Methods
+        #endregion Public Methods
 
-#region Internal
+        #region Internal
 
         internal bool FromRestrictiveReader { get; set; }
 
@@ -592,25 +592,25 @@ namespace System.Windows.Markup
                 {
                     _provideValueServiceProvider = new ProvideValueServiceProvider(this);
                 }
-                
+
                 return _provideValueServiceProvider;
             }
         }
-        
+
         /// <summary>
         /// This is used to resolve a StaticResourceId record within a deferred content 
         /// section against a StaticResourceExtension on the parent dictionary.
         /// </summary>
         internal List<object[]> StaticResourcesStack
         {
-            get 
-            { 
+            get
+            {
                 if (_staticResourcesStack == null)
                 {
                     _staticResourcesStack = new List<object[]>();
                 }
-                
-                return _staticResourcesStack; 
+
+                return _staticResourcesStack;
             }
         }
 
@@ -630,30 +630,31 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal ParserContext ScopedCopy()
         {
-            return ScopedCopy( true /* copyNameScopeStack */ );
+            return ScopedCopy(true /* copyNameScopeStack */ );
         }
 #endif
 
 #if !PBTCOMPILER
         internal ParserContext ScopedCopy(bool copyNameScopeStack)
         {
-            ParserContext context = new ParserContext();
+            ParserContext context = new ParserContext
+            {
+                _baseUri = _baseUri,
+                _skipJournaledProperties = _skipJournaledProperties,
+                _xmlLang = _xmlLang,
+                _xmlSpace = _xmlSpace,
+                _repeat = _repeat,
+                _lineNumber = _lineNumber,
+                _linePosition = _linePosition,
+                _isDebugBamlStream = _isDebugBamlStream,
+                _mapTable = _mapTable,
+                _xamlTypeMapper = _xamlTypeMapper,
+                _targetType = _targetType,
 
-            context._baseUri = _baseUri;
-            context._skipJournaledProperties = _skipJournaledProperties;
-            context._xmlLang = _xmlLang;
-            context._xmlSpace = _xmlSpace;
-            context._repeat = _repeat;
-            context._lineNumber = _lineNumber;
-            context._linePosition = _linePosition;
-            context._isDebugBamlStream = _isDebugBamlStream;
-            context._mapTable = _mapTable;
-            context._xamlTypeMapper = _xamlTypeMapper;
-            context._targetType = _targetType;
-
-            context._streamCreatedAssembly = _streamCreatedAssembly;
-            context._rootElement = _rootElement;
-            context._styleConnector = _styleConnector;
+                _streamCreatedAssembly = _streamCreatedAssembly,
+                _rootElement = _rootElement,
+                _styleConnector = _styleConnector
+            };
 
             // Copy the name scope stack, if necessary.
 
@@ -671,7 +672,7 @@ namespace System.Windows.Markup
                 context._xmlnsDictionary = null;
 
             context._currentFreezeStackFrame = _currentFreezeStackFrame;
-            context._freezeStack = (_freezeStack != null) ? (Stack) _freezeStack.Clone() : null;
+            context._freezeStack = (_freezeStack != null) ? (Stack)_freezeStack.Clone() : null;
 
             return context;
         }
@@ -685,10 +686,10 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal void TrimState()
         {
-                if( _nameScopeStack != null && _nameScopeStack.Count == 0 )
-                {
-                    _nameScopeStack = null;
-                }
+            if (_nameScopeStack != null && _nameScopeStack.Count == 0)
+            {
+                _nameScopeStack = null;
+            }
         }
 #endif
 
@@ -750,7 +751,7 @@ namespace System.Windows.Markup
                     // a directive to restore the old state by un-doing the increment
                     // and pushing the stack frame
 #if DEBUG
-                    bool canDecrement = 
+                    bool canDecrement =
 #endif
                     _currentFreezeStackFrame.DecrementRepeatCount();
 #if DEBUG
@@ -810,32 +811,32 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Internal
+        #endregion Internal
 
-#region Date
+        #region Date
 
-        private XamlTypeMapper          _xamlTypeMapper;
-        private Uri                     _baseUri;
+        private XamlTypeMapper _xamlTypeMapper;
+        private Uri _baseUri;
 
-        private XmlnsDictionary         _xmlnsDictionary;
-        private String                  _xmlLang        = String.Empty;
-        private String                  _xmlSpace       = String.Empty;
-        private Stack                   _langSpaceStack;
-        private int                     _repeat;
-        private Type                    _targetType;
+        private XmlnsDictionary _xmlnsDictionary;
+        private String _xmlLang = String.Empty;
+        private String _xmlSpace = String.Empty;
+        private Stack _langSpaceStack;
+        private int _repeat;
+        private Type _targetType;
         private Dictionary<Type, Dictionary<string, SpecialBracketCharacters>> _masterBracketCharacterCache;
 
 #if !PBTCOMPILER
-        private bool                    _skipJournaledProperties;
-        private Assembly                _streamCreatedAssembly;
-        private bool                    _ownsBamlStream;
+        private bool _skipJournaledProperties;
+        private Assembly _streamCreatedAssembly;
+        private bool _ownsBamlStream;
         private ProvideValueServiceProvider _provideValueServiceProvider;
         private IStyleConnector _styleConnector;
-        private Stack                   _nameScopeStack;
-        private List<object[]>          _staticResourcesStack;
+        private Stack _nameScopeStack;
+        private List<object[]> _staticResourcesStack;
 
-        object                                      _rootElement;  // RootElement for the Page scoping [temporary, should be
-                                                                   // something like page name or baseUri]
+        object _rootElement;  // RootElement for the Page scoping [temporary, should be
+                              // something like page name or baseUri]
 
 #endif
 
@@ -922,7 +923,7 @@ namespace System.Windows.Markup
             internal bool FreezeFreezables
             {
                 get { return _freezeFreezables; }
-            }            
+            }
 
             // Reset's this frame to a new scope.  Only used with _currentFreezeStackFrame.
             internal void Reset(bool freezeFreezables)
@@ -941,7 +942,7 @@ namespace System.Windows.Markup
             // state changes.  That information is tracked by _repeatCount.
             private int _repeatCount;
         }
-            
+
         // First frame is maintained off of the _freezeStack to avoid allocating
         // a Stack<FreezeStackFlag> for the common case where Freeze isn't specified.
         FreezeStackFrame _currentFreezeStackFrame;
@@ -956,11 +957,11 @@ namespace System.Windows.Markup
 
         private int _lineNumber = 0;    // number of lines between the start of the file and
                                         // our starting point (the starting point of this context)
-        private int _linePosition=0;      // default start ot left of first character which is a zero
+        private int _linePosition = 0;      // default start ot left of first character which is a zero
         private BamlMapTable _mapTable;
 #if !PBTCOMPILER
         private bool _isDebugBamlStream = false;
 #endif
-#endregion Data
+        #endregion Data
     }
 }

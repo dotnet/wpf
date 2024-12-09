@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -87,14 +87,14 @@ namespace System.Windows.Controls
                 type != DataGridLengthUnitType.SizeToHeader)
             {
                 throw new ArgumentException(
-                    SR.DataGridLength_InvalidType, 
+                    SR.DataGridLength_InvalidType,
                     "type");
             }
 
             if (Double.IsInfinity(desiredValue))
             {
                 throw new ArgumentException(
-                    SR.DataGridLength_Infinity, 
+                    SR.DataGridLength_Infinity,
                     "desiredValue");
             }
 
@@ -125,8 +125,8 @@ namespace System.Windows.Controls
         /// and unit type.</returns>
         public static bool operator ==(DataGridLength gl1, DataGridLength gl2)
         {
-            return gl1.UnitType == gl2.UnitType 
-                   && gl1.Value == gl2.Value 
+            return gl1.UnitType == gl2.UnitType
+                   && gl1.Value == gl2.Value
                    && ((gl1.DesiredValue == gl2.DesiredValue) || (double.IsNaN(gl1.DesiredValue) && double.IsNaN(gl2.DesiredValue)))
                    && ((gl1.DisplayValue == gl2.DisplayValue) || (double.IsNaN(gl1.DisplayValue) && double.IsNaN(gl2.DisplayValue)));
         }
@@ -140,7 +140,7 @@ namespace System.Windows.Controls
         /// unit type.</returns>
         public static bool operator !=(DataGridLength gl1, DataGridLength gl2)
         {
-            return gl1.UnitType != gl2.UnitType 
+            return gl1.UnitType != gl2.UnitType
                    || gl1.Value != gl2.Value
                    || ((gl1.DesiredValue != gl2.DesiredValue) && !(double.IsNaN(gl1.DesiredValue) && double.IsNaN(gl2.DesiredValue)))
                    || ((gl1.DisplayValue != gl2.DisplayValue) && !(double.IsNaN(gl1.DisplayValue) && double.IsNaN(gl2.DisplayValue)));
@@ -189,36 +189,36 @@ namespace System.Windows.Controls
         ///     Returns <c>true</c> if this DataGridLength instance holds 
         ///     an absolute (pixel) value.
         /// </summary>
-        public bool IsAbsolute 
-        { 
-            get 
-            { 
-                return _unitType == DataGridLengthUnitType.Pixel; 
-            } 
+        public bool IsAbsolute
+        {
+            get
+            {
+                return _unitType == DataGridLengthUnitType.Pixel;
+            }
         }
 
         /// <summary>
         ///     Returns <c>true</c> if this DataGridLength instance is 
         ///     automatic (not specified).
         /// </summary>
-        public bool IsAuto 
-        { 
-            get 
-            { 
-                return _unitType == DataGridLengthUnitType.Auto; 
-            } 
+        public bool IsAuto
+        {
+            get
+            {
+                return _unitType == DataGridLengthUnitType.Auto;
+            }
         }
 
         /// <summary>
         ///     Returns <c>true</c> if this DataGridLength instance holds a weighted proportion
         ///     of available space.
         /// </summary>
-        public bool IsStar 
-        { 
-            get 
-            { 
-                return _unitType == DataGridLengthUnitType.Star; 
-            } 
+        public bool IsStar
+        {
+            get
+            {
+                return _unitType == DataGridLengthUnitType.Star;
+            }
         }
 
         /// <summary>
@@ -240,45 +240,45 @@ namespace System.Windows.Controls
         /// <summary>
         ///     Returns value part of this DataGridLength instance.
         /// </summary>
-        public double Value 
-        { 
-            get 
-            { 
-                return (_unitType == DataGridLengthUnitType.Auto) ? AutoValue : _unitValue; 
-            } 
+        public double Value
+        {
+            get
+            {
+                return (_unitType == DataGridLengthUnitType.Auto) ? AutoValue : _unitValue;
+            }
         }
 
         /// <summary>
         ///     Returns unit type of this DataGridLength instance.
         /// </summary>
-        public DataGridLengthUnitType UnitType 
-        { 
-            get 
-            { 
-                return _unitType; 
-            } 
+        public DataGridLengthUnitType UnitType
+        {
+            get
+            {
+                return _unitType;
+            }
         }
 
         /// <summary>
         ///     Returns the desired value of this instance.
         /// </summary>
-        public double DesiredValue 
-        { 
-            get 
-            { 
-                return _desiredValue; 
-            } 
+        public double DesiredValue
+        {
+            get
+            {
+                return _desiredValue;
+            }
         }
 
         /// <summary>
         ///     Returns the display value of this instance.
         /// </summary>
-        public double DisplayValue 
-        { 
-            get 
-            { 
-                return _displayValue; 
-            } 
+        public double DisplayValue
+        {
+            get
+            {
+                return _displayValue;
+            }
         }
 
         /// <summary>
@@ -288,7 +288,7 @@ namespace System.Windows.Controls
         {
             return DataGridLengthConverter.ConvertToString(this, CultureInfo.InvariantCulture);
         }
-        
+
         #endregion
 
         #region Pre-defined values
@@ -340,7 +340,7 @@ namespace System.Windows.Controls
         private DataGridLengthUnitType _unitType; // unit type storage
         private double _desiredValue; // desired value storage
         private double _displayValue; // display value storage
-        
+
         private const double AutoValue = 1.0;
 
         // static instance of Auto DataGridLength

@@ -1,17 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Buffers;
-using System.IO;
-using System.Xaml;
 using System.ComponentModel;
+using System.Globalization;
+using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Windows.Diagnostics;
 using System.Windows.Media;
-using System.Globalization;
+using System.Xaml;
 using XamlReaderHelper = System.Windows.Markup.XamlReaderHelper;
-using System.Runtime.CompilerServices;
 
 namespace System.Windows.Baml2006
 {
@@ -759,8 +759,10 @@ namespace System.Windows.Baml2006
             }
             else
             {
-                var xData = new System.Windows.Markup.XData();
-                xData.Text = value;
+                var xData = new System.Windows.Markup.XData
+                {
+                    Text = value
+                };
                 _xamlNodesWriter.WriteValue(xData);
             }
 
@@ -885,8 +887,10 @@ namespace System.Windows.Baml2006
                     string propertyName = GetStaticExtensionValue(keyId, out memberType, out providedValue);
                     if (providedValue == null)
                     {
-                        var staticExtension = new System.Windows.Markup.StaticExtension(propertyName);
-                        staticExtension.MemberType = memberType;
+                        var staticExtension = new System.Windows.Markup.StaticExtension(propertyName)
+                        {
+                            MemberType = memberType
+                        };
                         providedValue = staticExtension.ProvideValue(null);
                     }
                     optimizedStaticResource.KeyValue = providedValue;
@@ -1200,7 +1204,7 @@ namespace System.Windows.Baml2006
 
             // Need to output the keys if we're in deferred content
             if (_context.PreviousFrame.IsDeferredContent && _context.InsideStaticResource == false)
-            {         
+            {
                 // If we're providing binary, that means we've delay loaded the ResourceDictionary
                 // and the object we're currently creating doens't actually need the key.
                 if (!_isBinaryProvider)
@@ -1310,8 +1314,10 @@ namespace System.Windows.Baml2006
 
             // Store a key record that can be accessed later.
             // This is a complex scenario so we need to write to the keyList
-            KeyRecord key = new KeyRecord(isShared, isSharedSet, valuePosition, _context.SchemaContext);
-            key.Flags = flags;
+            KeyRecord key = new KeyRecord(isShared, isSharedSet, valuePosition, _context.SchemaContext)
+            {
+                Flags = flags
+            };
             key.KeyNodeList.Writer.WriteStartObject(type);
 
 
@@ -1573,7 +1579,7 @@ namespace System.Windows.Baml2006
 
             object value = _binaryReader.ReadString();
             short typeConverterId = _binaryReader.ReadInt16();
-            if (_isBinaryProvider && 
+            if (_isBinaryProvider &&
                 typeConverterId < 0 &&
                 -typeConverterId != System.Windows.Baml2006.Baml2006SchemaContext.KnownTypes.StringConverter)
             {
@@ -1726,8 +1732,10 @@ namespace System.Windows.Baml2006
                     }
                     else
                     {
-                        System.Windows.Markup.StaticExtension staticExtension = new System.Windows.Markup.StaticExtension((string)param);
-                        staticExtension.MemberType = memberType;
+                        System.Windows.Markup.StaticExtension staticExtension = new System.Windows.Markup.StaticExtension((string)param)
+                        {
+                            MemberType = memberType
+                        };
                         value = staticExtension;
                     }
                     handled = true;
@@ -1805,7 +1813,7 @@ namespace System.Windows.Baml2006
                             value = BitConverter.GetBytes(valueId);
                         }
                         else
-                        {       
+                        {
                             value = Logic_GetFullyQualifiedNameForMember(valueId);
                         }
                     }
@@ -2029,7 +2037,7 @@ namespace System.Windows.Baml2006
 
             while (currentFrame != null)
             {
-                foreach(string xmlns in xamlNamespaces)
+                foreach (string xmlns in xamlNamespaces)
                 {
                     string prefix = null;
 
@@ -2050,7 +2058,7 @@ namespace System.Windows.Baml2006
             }
 
             throw new InvalidOperationException($"Could not find prefix for type: {type.Name}");
-        } 
+        }
 
         private string Logic_GetFullXmlns(string uriInput)
         {
@@ -2112,7 +2120,7 @@ namespace System.Windows.Baml2006
             Read_RecordSize();
             string prefix = _binaryReader.ReadString();
             string xamlNs = _binaryReader.ReadString();
-            
+
             xamlNs = Logic_GetFullXmlns(xamlNs);
 
             _context.CurrentFrame.AddNamespace(prefix, xamlNs);
@@ -2214,7 +2222,7 @@ namespace System.Windows.Baml2006
             Read_RecordSize();
             short propertyId = _binaryReader.ReadInt16();
             Int16 declaringTypeId = _binaryReader.ReadInt16();
-            byte usage = _binaryReader.ReadByte();  
+            byte usage = _binaryReader.ReadByte();
             string propertyName = _binaryReader.ReadString();
 
             BamlSchemaContext.AddProperty(propertyId, declaringTypeId, propertyName);
@@ -2530,7 +2538,7 @@ namespace System.Windows.Baml2006
                     {
                         using (BinaryReader binReader = new BinaryReader(memStream))
                         {
-                            System.Windows.Markup.XamlPathDataSerializer serializer = 
+                            System.Windows.Markup.XamlPathDataSerializer serializer =
                                 new System.Windows.Markup.XamlPathDataSerializer();
                             object o = serializer.ConvertCustomBinaryToObject(binReader);
                             return o.ToString();
@@ -2554,7 +2562,7 @@ namespace System.Windows.Baml2006
                     {
                         using (BinaryReader binReader = new BinaryReader(memStream))
                         {
-                            System.Windows.Markup.XamlVector3DCollectionSerializer serializer = 
+                            System.Windows.Markup.XamlVector3DCollectionSerializer serializer =
                                 new System.Windows.Markup.XamlVector3DCollectionSerializer();
                             object o = serializer.ConvertCustomBinaryToObject(binReader);
                             return o.ToString();
@@ -2578,7 +2586,7 @@ namespace System.Windows.Baml2006
                     {
                         using (BinaryReader binReader = new BinaryReader(memStream))
                         {
-                            System.Windows.Markup.XamlInt32CollectionSerializer serializer = 
+                            System.Windows.Markup.XamlInt32CollectionSerializer serializer =
                                 new System.Windows.Markup.XamlInt32CollectionSerializer();
                             object o = serializer.ConvertCustomBinaryToObject(binReader);
                             return o.ToString();
@@ -2663,7 +2671,7 @@ namespace System.Windows.Baml2006
                 }
             }
             else
-            {         
+            {
                 if (_isBinaryProvider)
                 {
                     memberType = BamlSchemaContext.GetPropertyDeclaringType(valueId).UnderlyingType;
@@ -2685,7 +2693,7 @@ namespace System.Windows.Baml2006
             int depth = 0;
             while (reader.Read())
             {
-                switch(reader.NodeType)
+                switch (reader.NodeType)
                 {
                     case XamlNodeType.StartObject:
                         depth += 1;

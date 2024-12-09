@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,7 +17,7 @@ namespace MS.Internal.Controls
         private UnsafeNativeMethods.IConnectionPoint connectionPoint;
         private int cookie;
 
-        
+
         /// Creates a connection point to of the given interface type.
         /// which will call on a managed code sink that implements that interface.
         internal ConnectionPointCookie(object source, object sink, Type eventInterface)
@@ -37,11 +37,11 @@ namespace MS.Internal.Controls
                 }
                 catch (Exception e)
                 {
-                    if(CriticalExceptions.IsCriticalException(e))
+                    if (CriticalExceptions.IsCriticalException(e))
                     {
                         throw;
                     }
-                    
+
                     connectionPoint = null;
                 }
 
@@ -93,7 +93,7 @@ namespace MS.Internal.Controls
 
 #pragma warning disable 6500
 
-// The 6500 warning is actually handled in below code, but the PreSharp explicitly checks the presence of NullReferenceException and SEHException, and still treat below code as violation of presharp rule, so suppress it here.
+        // The 6500 warning is actually handled in below code, but the PreSharp explicitly checks the presence of NullReferenceException and SEHException, and still treat below code as violation of presharp rule, so suppress it here.
 
         /// <summary>
         /// Disconnect the current connection point.  If the object is not connected,

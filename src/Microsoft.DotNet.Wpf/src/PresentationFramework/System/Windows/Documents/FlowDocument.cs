@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -208,7 +208,7 @@ namespace System.Windows.Documents
         )]
         public FontFamily FontFamily
         {
-            get { return (FontFamily) GetValue(FontFamilyProperty); }
+            get { return (FontFamily)GetValue(FontFamilyProperty); }
             set { SetValue(FontFamilyProperty, value); }
         }
 
@@ -223,7 +223,7 @@ namespace System.Windows.Documents
         /// </summary>
         public FontStyle FontStyle
         {
-            get { return (FontStyle) GetValue(FontStyleProperty); }
+            get { return (FontStyle)GetValue(FontStyleProperty); }
             set { SetValue(FontStyleProperty, value); }
         }
 
@@ -238,7 +238,7 @@ namespace System.Windows.Documents
         /// </summary>
         public FontWeight FontWeight
         {
-            get { return (FontWeight) GetValue(FontWeightProperty); }
+            get { return (FontWeight)GetValue(FontWeightProperty); }
             set { SetValue(FontWeightProperty, value); }
         }
 
@@ -253,7 +253,7 @@ namespace System.Windows.Documents
         /// </summary>
         public FontStretch FontStretch
         {
-            get { return (FontStretch) GetValue(FontStretchProperty); }
+            get { return (FontStretch)GetValue(FontStretchProperty); }
             set { SetValue(FontStretchProperty, value); }
         }
 
@@ -271,7 +271,7 @@ namespace System.Windows.Documents
         [Localizability(LocalizationCategory.None)]
         public double FontSize
         {
-            get { return (double) GetValue(FontSizeProperty); }
+            get { return (double)GetValue(FontSizeProperty); }
             set { SetValue(FontSizeProperty, value); }
         }
 
@@ -287,7 +287,7 @@ namespace System.Windows.Documents
         /// </summary>
         public Brush Foreground
         {
-            get { return (Brush) GetValue(ForegroundProperty); }
+            get { return (Brush)GetValue(ForegroundProperty); }
             set { SetValue(ForegroundProperty, value); }
         }
 
@@ -306,7 +306,7 @@ namespace System.Windows.Documents
         /// </summary>
         public Brush Background
         {
-            get { return (Brush) GetValue(BackgroundProperty); }
+            get { return (Brush)GetValue(BackgroundProperty); }
             set { SetValue(BackgroundProperty, value); }
         }
 
@@ -325,7 +325,7 @@ namespace System.Windows.Documents
         /// </summary>
         public TextEffectCollection TextEffects
         {
-            get { return (TextEffectCollection) GetValue(TextEffectsProperty); }
+            get { return (TextEffectCollection)GetValue(TextEffectsProperty); }
             set { SetValue(TextEffectsProperty, value); }
         }
 
@@ -436,7 +436,7 @@ namespace System.Windows.Documents
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public double ColumnGap
         {
-            get { return (double) GetValue(ColumnGapProperty); }
+            get { return (double)GetValue(ColumnGapProperty); }
             set { SetValue(ColumnGapProperty, value); }
         }
 
@@ -552,7 +552,7 @@ namespace System.Windows.Documents
         [TypeConverter(typeof(LengthConverter))]
         public double PageWidth
         {
-            get { return (double) GetValue(PageWidthProperty); }
+            get { return (double)GetValue(PageWidthProperty); }
             set { SetValue(PageWidthProperty, value); }
         }
 
@@ -577,7 +577,7 @@ namespace System.Windows.Documents
         [TypeConverter(typeof(LengthConverter))]
         public double MinPageWidth
         {
-            get { return (double) GetValue(MinPageWidthProperty); }
+            get { return (double)GetValue(MinPageWidthProperty); }
             set { SetValue(MinPageWidthProperty, value); }
         }
 
@@ -603,7 +603,7 @@ namespace System.Windows.Documents
         [TypeConverter(typeof(LengthConverter))]
         public double MaxPageWidth
         {
-            get { return (double) GetValue(MaxPageWidthProperty); }
+            get { return (double)GetValue(MaxPageWidthProperty); }
             set { SetValue(MaxPageWidthProperty, value); }
         }
 
@@ -629,7 +629,7 @@ namespace System.Windows.Documents
         [TypeConverter(typeof(LengthConverter))]
         public double PageHeight
         {
-            get { return (double) GetValue(PageHeightProperty); }
+            get { return (double)GetValue(PageHeightProperty); }
             set { SetValue(PageHeightProperty, value); }
         }
 
@@ -654,7 +654,7 @@ namespace System.Windows.Documents
         [TypeConverter(typeof(LengthConverter))]
         public double MinPageHeight
         {
-            get { return (double) GetValue(MinPageHeightProperty); }
+            get { return (double)GetValue(MinPageHeightProperty); }
             set { SetValue(MinPageHeightProperty, value); }
         }
 
@@ -680,7 +680,7 @@ namespace System.Windows.Documents
         [TypeConverter(typeof(LengthConverter))]
         public double MaxPageHeight
         {
-            get { return (double) GetValue(MaxPageHeightProperty); }
+            get { return (double)GetValue(MaxPageHeightProperty); }
             set { SetValue(MaxPageHeightProperty, value); }
         }
 
@@ -709,7 +709,7 @@ namespace System.Windows.Documents
         /// </summary>
         public Thickness PagePadding
         {
-            get { return (Thickness) GetValue(PagePaddingProperty); }
+            get { return (Thickness)GetValue(PagePaddingProperty); }
             set { SetValue(PagePaddingProperty, value); }
         }
 
@@ -1136,7 +1136,7 @@ namespace System.Windows.Documents
         {
             get
             {
-                if(_formatter != null)
+                if (_formatter != null)
                 {
                     return _formatter.IsLayoutDataValid;
                 }
@@ -1299,8 +1299,8 @@ namespace System.Windows.Documents
         /// </summary>
         private static object CoerceMaxPageWidth(DependencyObject d, object value)
         {
-            FlowDocument fd = (FlowDocument) d;
-            double max = (double) value;
+            FlowDocument fd = (FlowDocument)d;
+            double max = (double)value;
             double min = fd.MinPageWidth;
             if (max < min)
             {
@@ -1314,8 +1314,8 @@ namespace System.Windows.Documents
         /// </summary>
         private static object CoerceMaxPageHeight(DependencyObject d, object value)
         {
-            FlowDocument fd = (FlowDocument) d;
-            double max = (double) value;
+            FlowDocument fd = (FlowDocument)d;
+            double max = (double)value;
             double min = fd.MinPageHeight;
             if (max < min)
             {
@@ -1329,8 +1329,8 @@ namespace System.Windows.Documents
         /// </summary>
         private static object CoercePageWidth(DependencyObject d, object value)
         {
-            FlowDocument fd = (FlowDocument) d;
-            double width = (double) value;
+            FlowDocument fd = (FlowDocument)d;
+            double width = (double)value;
 
             if (!double.IsNaN(width))
             {
@@ -1355,8 +1355,8 @@ namespace System.Windows.Documents
         /// </summary>
         private static object CoercePageHeight(DependencyObject d, object value)
         {
-            FlowDocument fd = (FlowDocument) d;
-            double height = (double) value;
+            FlowDocument fd = (FlowDocument)d;
+            double height = (double)value;
 
             if (!double.IsNaN(height))
             {

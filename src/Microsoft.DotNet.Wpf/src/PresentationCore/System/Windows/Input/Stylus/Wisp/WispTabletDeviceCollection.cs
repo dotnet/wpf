@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using Microsoft.Win32;
-using MS.Win32;
 using System.Runtime.InteropServices;
 using System.Windows.Input.Tracing;
+using Microsoft.Win32;
+using MS.Win32;
 
 namespace System.Windows.Input.StylusWisp
 {
@@ -61,11 +61,11 @@ namespace System.Windows.Input.StylusWisp
             // (since wisptis would not return us any tablet devices).  This should be a fairly rare
             // case though.
             //
-            
+
             // Modify this with the new AppContext switch to disable the stylus stack.  This prevents
             // any tablet loads due to collection instantiation.
             if (StylusLogic.IsStylusAndTouchSupportEnabled
-                && IsWisptisRegistered() 
+                && IsWisptisRegistered()
                 && HasTabletDevices())
             {
                 enabled = true; // start up wisptis
@@ -134,8 +134,10 @@ namespace System.Windows.Input.StylusWisp
                     {
                         if (ridl[i].dwType == NativeMethods.RIM_TYPEHID)
                         {
-                            NativeMethods.RID_DEVICE_INFO deviceInfo = new NativeMethods.RID_DEVICE_INFO();
-                            deviceInfo.cbSize = (uint)Marshal.SizeOf(typeof(NativeMethods.RID_DEVICE_INFO));
+                            NativeMethods.RID_DEVICE_INFO deviceInfo = new NativeMethods.RID_DEVICE_INFO
+                            {
+                                cbSize = (uint)Marshal.SizeOf(typeof(NativeMethods.RID_DEVICE_INFO))
+                            };
                             uint cbSize = (uint)deviceInfo.cbSize;
                             int cBytes = (int)MS.Win32.UnsafeNativeMethods.GetRawInputDeviceInfo(ridl[i].hDevice, NativeMethods.RIDI_DEVICEINFO, ref deviceInfo, ref cbSize);
 
@@ -149,9 +151,9 @@ namespace System.Windows.Input.StylusWisp
                                         case NativeMethods.HID_USAGE_DIGITIZER_PEN:
                                         case NativeMethods.HID_USAGE_DIGITIZER_TOUCHSCREEN:
                                         case NativeMethods.HID_USAGE_DIGITIZER_LIGHTPEN:
-                                        {
-                                            return true;
-                                        }
+                                            {
+                                                return true;
+                                            }
                                     }
                                 }
                             }
@@ -267,14 +269,15 @@ namespace System.Windows.Input.StylusWisp
                 return;
             }
 
-            TabletDeviceInfo [] tabletdevices = penThread.WorkerGetTabletsInfo();
+            TabletDeviceInfo[] tabletdevices = penThread.WorkerGetTabletsInfo();
 
             // First find out the index of the mouse device (usually the first at index 0)
             uint indexMouseTablet = UInt32.MaxValue;
             for (uint i = 0; i < tabletdevices.Length; i++)
             {
                 // See if this is a bogus entry first.
-                if (tabletdevices[i].PimcTablet == null) continue;
+                if (tabletdevices[i].PimcTablet == null)
+                    continue;
 
                 // If it is the mouse tablet device we want to ignore it.
                 if (tabletdevices[i].DeviceType == (TabletDeviceType)(-1))
@@ -288,7 +291,8 @@ namespace System.Windows.Input.StylusWisp
             uint count = 0;
             for (uint k = 0; k < tabletdevices.Length; k++)
             {
-                if (tabletdevices[k].PimcTablet != null) count++;
+                if (tabletdevices[k].PimcTablet != null)
+                    count++;
             }
 
             TabletDevice[] tablets = new TabletDevice[count];
@@ -352,7 +356,7 @@ namespace System.Windows.Input.StylusWisp
                 }
 
                 tabletsIndex++;
-}
+            }
 
             if (unchangedTabletCount == _tablets.Length &&
                 unchangedTabletCount == tabletsIndex &&
@@ -545,7 +549,7 @@ namespace System.Windows.Input.StylusWisp
 
             Array.Copy(_tablets, 0, newTablets, 0, preCopyCount);
             newTablets[index] = tabletDevice;
-            Array.Copy(_tablets, index, newTablets, index+1, postCopyCount);
+            Array.Copy(_tablets, index, newTablets, index + 1, postCopyCount);
             _tablets = newTablets;
             TabletDevices = new List<TabletDevice>(_tablets);
         }
@@ -565,7 +569,7 @@ namespace System.Windows.Input.StylusWisp
             uint postCopyCount = (uint)_tablets.Length - index - 1;
 
             Array.Copy(_tablets, 0, tablets, 0, preCopyCount);
-            Array.Copy(_tablets, index+1, tablets, index, postCopyCount);
+            Array.Copy(_tablets, index + 1, tablets, index, postCopyCount);
 
             _tablets = tablets;
             TabletDevices = new List<TabletDevice>(_tablets);
@@ -691,10 +695,10 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        TabletDevice[]          _tablets = Array.Empty<TabletDevice>();
-        uint                    _indexMouseTablet = UInt32.MaxValue;
-        bool                    _inUpdateTablets;       // detect re-entrancy
-        bool                    _hasUpdateTabletsBeenCalledReentrantly;
-        List<TabletDevice>      _deferredTablets = new List<TabletDevice>();
+        TabletDevice[] _tablets = Array.Empty<TabletDevice>();
+        uint _indexMouseTablet = UInt32.MaxValue;
+        bool _inUpdateTablets;       // detect re-entrancy
+        bool _hasUpdateTabletsBeenCalledReentrantly;
+        List<TabletDevice> _deferredTablets = new List<TabletDevice>();
     }
 }

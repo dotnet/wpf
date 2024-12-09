@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,16 +7,14 @@
 //
 
 using System.Globalization;
+using System.Reflection;
 using System.Text;
 using System.Windows.Markup;
 using System.Windows.Media;
-using System.Reflection;
-
 using MS.Internal;
 using MS.Internal.AppModel;
 using MS.Internal.IO.Packaging;
 using MS.Internal.PresentationCore;
-
 using PackUriHelper = System.IO.Packaging.PackUriHelper;
 // In order to avoid generating warnings about unknown message numbers and
 // unknown pragmas when compiling your C# source code with the actual C# compiler,
@@ -116,7 +114,7 @@ namespace System.Windows.Navigation
         }
 
 
-       #endregion public property and method
+        #endregion public property and method
 
         #region internal properties and methods
 
@@ -140,10 +138,10 @@ namespace System.Windows.Navigation
         /// Checks whether the input uri is in the "pack://application:,,," form
         /// </summary>
         internal static bool IsPackApplicationUri(Uri uri)
-        {        
-            return 
+        {
+            return
                 // Is the "outer" URI absolute?
-                uri.IsAbsoluteUri && 
+                uri.IsAbsoluteUri &&
 
                 // Does the "outer" URI have the pack: scheme?
                 string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) &&
@@ -199,12 +197,13 @@ namespace System.Windows.Navigation
         internal static Assembly GetLoadedAssembly(string assemblyName, string assemblyVersion, string assemblyKey)
         {
             Assembly assembly;
-            AssemblyName asmName = new AssemblyName(assemblyName);
-
-            // We always use the primary assembly (culture neutral) for resource manager.
-            // if the required resource lives in satellite assembly, ResourceManager can find
-            // the right satellite assembly later.
-            asmName.CultureInfo = new CultureInfo(String.Empty);
+            AssemblyName asmName = new AssemblyName(assemblyName)
+            {
+                // We always use the primary assembly (culture neutral) for resource manager.
+                // if the required resource lives in satellite assembly, ResourceManager can find
+                // the right satellite assembly later.
+                CultureInfo = new CultureInfo(String.Empty)
+            };
 
             if (!String.IsNullOrEmpty(assemblyVersion))
             {
@@ -344,7 +343,7 @@ namespace System.Windows.Navigation
             }
             return false;
         }
-                
+
         static internal Uri GetResolvedUri(Uri baseUri, Uri orgUri)
         {
             return new Uri(baseUri, orgUri);
@@ -353,7 +352,7 @@ namespace System.Windows.Navigation
         static internal Uri MakeRelativeToSiteOfOriginIfPossible(Uri sUri)
         {
             if (Uri.Compare(sUri, SiteOfOriginBaseUri, UriComponents.Scheme, UriFormat.UriEscaped, StringComparison.OrdinalIgnoreCase) == 0)
-            {                
+            {
                 Uri packageUri = PackUriHelper.GetPackageUri(sUri);
                 if (string.Equals(packageUri.GetComponents(UriComponents.AbsoluteUri, UriFormat.UriEscaped), _packageSiteOfOriginBaseUriEscaped, StringComparison.OrdinalIgnoreCase))
                 {
@@ -370,13 +369,13 @@ namespace System.Windows.Navigation
 
             Uri relative = MakeRelativeToSiteOfOriginIfPossible(packUri);
 
-            if (! relative.IsAbsoluteUri)
+            if (!relative.IsAbsoluteUri)
             {
                 return new Uri(SiteOfOriginContainer.SiteOfOrigin, relative);
             }
             else
             {
-               throw new InvalidOperationException(SR.Format(SR.CannotNavigateToApplicationResourcesInWebBrowser, packUri));
+                throw new InvalidOperationException(SR.Format(SR.CannotNavigateToApplicationResourcesInWebBrowser, packUri));
             }
         }
 
@@ -426,7 +425,7 @@ namespace System.Windows.Navigation
                 _resourceAssembly = value;
             }
         }
-        
+
         // If the Uri provided is a pack Uri calling out an assembly and the assembly name matches that from assemblyInfo
         // this method will append the version taken from assemblyInfo, provided the Uri does not already have a version,
         // if the Uri provided the public Key token we must also verify that it matches the one in assemblyInfo.
@@ -440,7 +439,7 @@ namespace System.Windows.Navigation
             // assemblyInfo.GetName does not work in PartialTrust, so do this instead.
             AssemblyName currAssemblyName = new AssemblyName(assemblyInfo.FullName);
             string version = currAssemblyName.Version?.ToString();
-            
+
             if (uri != null && !string.IsNullOrEmpty(version))
             {
                 if (uri.IsAbsoluteUri)
@@ -509,7 +508,7 @@ namespace System.Windows.Navigation
                 }
 
             }
-            
+
             return null;
         }
 
@@ -539,72 +538,72 @@ namespace System.Windows.Navigation
             //
             doCurrent = element;
 
-                while (doCurrent != null)
+            while (doCurrent != null)
+            {
+                // Try to get BaseUri property value from current node.
+                baseUri = doCurrent.GetValue(BaseUriProperty) as Uri;
+
+                if (baseUri != null)
                 {
-                    // Try to get BaseUri property value from current node.
-                    baseUri = doCurrent.GetValue(BaseUriProperty) as Uri;
+                    // Got the right node which is the closest to original element.
+                    // Stop searching here.
+                    break;
+                }
+
+                IUriContext uriContext = doCurrent as IUriContext;
+
+                if (uriContext != null)
+                {
+                    // If the element implements IUriContext, and if the BaseUri
+                    // is not null, just take the BaseUri from there.
+                    // and stop the search loop.
+                    baseUri = uriContext.BaseUri;
 
                     if (baseUri != null)
-                    {
-                        // Got the right node which is the closest to original element.
-                        // Stop searching here.
                         break;
-                    }
+                }
 
-                    IUriContext uriContext = doCurrent as IUriContext;
+                //
+                // The current node doesn't contain BaseUri value,
+                // try its parent node in the tree.
 
-                    if (uriContext != null)
+                UIElement uie = doCurrent as UIElement;
+
+                if (uie != null)
+                {
+                    // Do the tree walk up
+                    doCurrent = uie.GetUIParent(true);
+                }
+                else
+                {
+                    ContentElement ce = doCurrent as ContentElement;
+
+                    if (ce != null)
                     {
-                        // If the element implements IUriContext, and if the BaseUri
-                        // is not null, just take the BaseUri from there.
-                        // and stop the search loop.
-                        baseUri = uriContext.BaseUri;
-
-                        if (baseUri != null)
-                            break;
-                    }
-
-                    //
-                    // The current node doesn't contain BaseUri value,
-                    // try its parent node in the tree.
-
-                    UIElement uie = doCurrent as UIElement;
-
-                    if (uie != null)
-                    {
-                        // Do the tree walk up
-                        doCurrent = uie.GetUIParent(true);
+                        doCurrent = ce.Parent;
                     }
                     else
                     {
-                        ContentElement ce = doCurrent as ContentElement;
+                        Visual vis = doCurrent as Visual;
 
-                        if (ce != null)
+                        if (vis != null)
                         {
-                            doCurrent = ce.Parent;
+                            // Try the Visual tree search
+                            doCurrent = VisualTreeHelper.GetParent(vis);
                         }
                         else
                         {
-                            Visual vis = doCurrent as Visual;
-
-                            if (vis != null)
-                            {
-                                // Try the Visual tree search
-                                doCurrent = VisualTreeHelper.GetParent(vis);
-                            }
-                            else
-                            {
-                                // Not a Visual.
-                                // Stop here for the tree searching to aviod an infinite loop.
-                                break;
-                            }
+                            // Not a Visual.
+                            // Stop here for the tree searching to aviod an infinite loop.
+                            break;
                         }
                     }
                 }
+            }
 
             return baseUri;
         }
-        
+
         private static bool AssemblyMatchesKeyString(AssemblyName asmName, string assemblyKey)
         {
             byte[] parsedKeyToken = ParseAssemblyKey(assemblyKey);
@@ -635,7 +634,7 @@ namespace System.Windows.Navigation
         private const string COMPONENT = ";component";
         private const string VERSION = "v";
         private const char COMPONENT_DELIMITER = ';';
-       
+
         private static Assembly _resourceAssembly;
     }
 }

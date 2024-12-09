@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,9 +29,9 @@ namespace MS.Internal.TextFormatting
         /// <param name="paragraphProperties">paragraph properties</param>
         /// <param name="optimalBreak">produce optimal break</param>
         internal ParaProp(
-            TextFormatterImp        formatter,
+            TextFormatterImp formatter,
             TextParagraphProperties paragraphProperties,
-            bool                    optimalBreak
+            bool optimalBreak
             )
         {
             _paragraphProperties = paragraphProperties;
@@ -56,8 +56,8 @@ namespace MS.Internal.TextFormatting
         [Flags]
         private enum StatusFlags
         {
-            Rtl             = 0x00000001,   // right-to-left reading
-            OptimalBreak    = 0x00000002,   // produce optimal break
+            Rtl = 0x00000001,   // right-to-left reading
+            OptimalBreak = 0x00000002,   // produce optimal break
         }
 
         internal bool RightToLeft
@@ -155,12 +155,12 @@ namespace MS.Internal.TextFormatting
             get { return _paragraphProperties.DefaultTextRunProperties.ForegroundBrush; }
         }
 
-        private StatusFlags                 _statusFlags;
-        private TextParagraphProperties     _paragraphProperties;
-        private int                         _emSize;
-        private int                         _indent;
-        private int                         _paragraphIndent;
-        private int                         _height;
+        private StatusFlags _statusFlags;
+        private TextParagraphProperties _paragraphProperties;
+        private int _emSize;
+        private int _indent;
+        private int _paragraphIndent;
+        private int _height;
     }
 
 
@@ -171,15 +171,15 @@ namespace MS.Internal.TextFormatting
     internal sealed class TextRunInfo
     {
         private CharacterBufferRange _charBufferRange;
-        private int                  _textRunLength;
-        private int                  _offsetToFirstCp;
-        private TextRun              _textRun;
-        private Plsrun               _plsrun;
-        private CultureInfo          _digitCulture;
-        private ushort               _charFlags;
-        private ushort               _runFlags;
-        private TextModifierScope    _modifierScope;
-        private TextRunProperties    _properties;
+        private int _textRunLength;
+        private int _offsetToFirstCp;
+        private TextRun _textRun;
+        private Plsrun _plsrun;
+        private CultureInfo _digitCulture;
+        private ushort _charFlags;
+        private ushort _runFlags;
+        private TextModifierScope _modifierScope;
+        private TextRunProperties _properties;
 
         /// <summary>
         /// Constructing a textrun info
@@ -196,15 +196,15 @@ namespace MS.Internal.TextFormatting
         /// <param name="modifierScope">The current TextModifier scope for this TextRunInfo</param>        
         internal TextRunInfo(
             CharacterBufferRange charBufferRange,
-            int                  textRunLength,
-            int                  offsetToFirstCp,
-            TextRun              textRun,
-            Plsrun               lsRunType,
-            ushort               charFlags,
-            CultureInfo          digitCulture,
-            bool                 contextualSubstitution,
-            bool                 symbolTypeface,
-            TextModifierScope    modifierScope
+            int textRunLength,
+            int offsetToFirstCp,
+            TextRun textRun,
+            Plsrun lsRunType,
+            ushort charFlags,
+            CultureInfo digitCulture,
+            bool contextualSubstitution,
+            bool symbolTypeface,
+            TextModifierScope modifierScope
             )
         {
             _charBufferRange = charBufferRange;
@@ -242,7 +242,7 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         internal TextRunProperties Properties
         {
-            get 
+            get
             {
                 // The non-null value is cached 
                 if (_properties == null)
@@ -369,11 +369,11 @@ namespace MS.Internal.TextFormatting
         /// <summary>
         /// The modification scope of this run
         /// </summary>
-        internal TextModifierScope TextModifierScope 
+        internal TextModifierScope TextModifierScope
         {
             get { return _modifierScope; }
         }
-    
+
 
         /// <summary>
         /// Get rough width of the run
@@ -416,8 +416,8 @@ namespace MS.Internal.TextFormatting
         [Flags]
         private enum RunFlags
         {
-            ContextualSubstitution  = 0x0001,
-            IsSymbol                = 0x0002,
+            ContextualSubstitution = 0x0001,
+            IsSymbol = 0x0002,
         }
     }
 }

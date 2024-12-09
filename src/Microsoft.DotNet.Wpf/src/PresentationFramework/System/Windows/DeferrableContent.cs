@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.IO;
-using System.Xaml;
-using System.Windows.Baml2006;
 using System.ComponentModel;
+using System.IO;
+using System.Windows.Baml2006;
+using System.Xaml;
 
 namespace System.Windows
 {
@@ -27,7 +27,7 @@ namespace System.Windows
         // valid outside the scope of a DeferringContentLoader.Load call.
         internal IServiceProvider ServiceProvider { get; private set; }
 
-        internal DeferrableContent(Stream stream, Baml2006SchemaContext schemaContext, 
+        internal DeferrableContent(Stream stream, Baml2006SchemaContext schemaContext,
             IXamlObjectWriterFactory objectWriterFactory, IServiceProvider serviceProvider,
             object rootObject)
         {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -197,10 +197,12 @@ namespace MS.Internal.AutomationProxies
 
         private unsafe int getRebarBandIDFromPoint (NativeMethods.Win32Point pt)
         {
-            NativeMethods.RB_HITTESTINFO rbHitTestInfo = new NativeMethods.RB_HITTESTINFO ();
-            rbHitTestInfo.pt = pt;
-            rbHitTestInfo.uFlags = 0;
-            rbHitTestInfo.iBand = 0;
+            NativeMethods.RB_HITTESTINFO rbHitTestInfo = new NativeMethods.RB_HITTESTINFO
+            {
+                pt = pt,
+                uFlags = 0,
+                iBand = 0
+            };
 
             return XSendMessage.XSendGetIndex(_hwnd, NativeMethods.RB_HITTEST, IntPtr.Zero, new IntPtr(&rbHitTestInfo), Marshal.SizeOf(rbHitTestInfo.GetType()));
         }
@@ -424,8 +426,10 @@ namespace MS.Internal.AutomationProxies
                 {
                     if (_hwndBand == IntPtr.Zero)
                     {
-                        NativeMethods.REBARBANDINFO rebarBandInfo = new NativeMethods.REBARBANDINFO();
-                        rebarBandInfo.fMask = RBBIM_CHILD;
+                        NativeMethods.REBARBANDINFO rebarBandInfo = new NativeMethods.REBARBANDINFO
+                        {
+                            fMask = RBBIM_CHILD
+                        };
 
                         unsafe
                         {

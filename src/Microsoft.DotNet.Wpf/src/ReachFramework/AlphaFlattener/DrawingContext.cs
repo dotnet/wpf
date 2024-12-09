@@ -1,14 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.Collections;              // for ArrayList
-
+using System.Printing;
 using System.Windows;                  // for Rect                        WindowsBase.dll
 using System.Windows.Media;            // for Geometry, Brush, ImageData. PresentationCore.dll
 using System.Windows.Media.Imaging;
-using System.Printing;
 
 namespace Microsoft.Internal.AlphaFlattener
 {
@@ -19,11 +18,11 @@ namespace Microsoft.Internal.AlphaFlattener
     {
         #region Private Fields
 
-        private Flattener  _flattener;
-        private double     _opacity;
+        private Flattener _flattener;
+        private double _opacity;
         private BrushProxy _opacityMask;
-        private Matrix     _transform;
-        private Geometry   _clip;
+        private Matrix _transform;
+        private Geometry _clip;
 
         // stores settings prior to pushing new settings
         private Stack _pushedStack = new Stack();
@@ -33,17 +32,17 @@ namespace Microsoft.Internal.AlphaFlattener
         #region Constructors
 
         public DisplayListDrawingContext(
-                    Flattener  flattener, 
-                    double     opacity, 
-                    BrushProxy opacityMask, 
-                    Matrix     trans, 
-                    Geometry   clip)
+                    Flattener flattener,
+                    double opacity,
+                    BrushProxy opacityMask,
+                    Matrix trans,
+                    Geometry clip)
         {
-            _flattener   = flattener;
-            _opacity     = opacity;
+            _flattener = flattener;
+            _opacity = opacity;
             _opacityMask = opacityMask;
-            _transform   = trans;
-            _clip        = clip;
+            _transform = trans;
+            _clip = clip;
         }
 
         #endregion
@@ -97,7 +96,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (pen != null)
             {
-                if (! brushTrans.IsIdentity)
+                if (!brushTrans.IsIdentity)
                 {
                     double scale;
 
@@ -131,8 +130,8 @@ namespace Microsoft.Internal.AlphaFlattener
                 geo.Brush = brush.ApplyTransformCopy(brushTrans);
             }
 
-            geo.Geometry  = geometry;
-            geo.Clip      = clip;
+            geo.Geometry = geometry;
+            geo.Clip = clip;
             geo.Transform = _transform;
 
             geo.PushOpacity(_opacity, _opacityMask);
@@ -150,15 +149,16 @@ namespace Microsoft.Internal.AlphaFlattener
                 return;
             }
 
-            ImagePrimitive ip = new ImagePrimitive();
+            ImagePrimitive ip = new ImagePrimitive
+            {
+                // Fix bug 1460208: Give each ImagePrimitive its own ImageProxy, since rendering may alter
+                // the images.
+                Image = image.Clone(),
+                DstRect = dest,
+                Clip = clip,
+                Transform = trans * _transform
+            };
 
-            // Fix bug 1460208: Give each ImagePrimitive its own ImageProxy, since rendering may alter
-            // the images.
-            ip.Image     = image.Clone();
-            ip.DstRect   = dest;
-            ip.Clip      = clip;
-            ip.Transform = trans * _transform;
-            
             ip.PushOpacity(_opacity, _opacityMask);
             _flattener.AddPrimitive(ip);
         }
@@ -174,13 +174,14 @@ namespace Microsoft.Internal.AlphaFlattener
                 return true;
             }
 
-            GlyphPrimitive gp = new GlyphPrimitive();
+            GlyphPrimitive gp = new GlyphPrimitive
+            {
+                GlyphRun = glyphrun,
+                Clip = clip,
+                Transform = trans * _transform,
+                Brush = foreground
+            };
 
-            gp.GlyphRun  = glyphrun;
-            gp.Clip      = clip;
-            gp.Transform = trans * _transform;
-            gp.Brush     = foreground;
-            
             gp.PushOpacity(_opacity, _opacityMask);
             _flattener.AddPrimitive(gp);
 
@@ -200,14 +201,14 @@ namespace Microsoft.Internal.AlphaFlattener
     {
 #if DEBUG
         static int _seq; // = 0;
-        private string         _comment;
+        private string _comment;
 #endif
 
         #region Private Fields
 
-        private ILegacyDevice  _dc;
-        private bool           _costing;
-        private double         _cost;
+        private ILegacyDevice _dc;
+        private bool _costing;
+        private double _cost;
 
         #endregion
 
@@ -215,9 +216,9 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public BrushProxyDecomposer(ILegacyDevice dc)
         {
-            _dc      = dc;
-         // _costing = false;
-         // _cost    = 0;
+            _dc = dc;
+            // _costing = false;
+            // _cost    = 0;
         }
 
         #endregion
@@ -227,15 +228,15 @@ namespace Microsoft.Internal.AlphaFlattener
         // Breaking RadialGradientBrush apart to simplify drawing
         private bool LinearFillGeometry(BrushProxy linear, BrushProxy other, bool pre, ArrayList brushes, int from, Geometry shape)
         {
-            bool                opacityOnly = false;
-            LinearGradientBrush b           = null;
-            double              opacity     = 0;
-            bool                result      = true;
+            bool opacityOnly = false;
+            LinearGradientBrush b = null;
+            double opacity = 0;
+            bool result = true;
 
             b = linear.Brush as LinearGradientBrush;
 
             BrushProxy saveMask = linear.OpacityMask;
-            double saveOpacity  = linear.Opacity;
+            double saveOpacity = linear.Opacity;
 
             if (b != null)
             {
@@ -243,8 +244,8 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else
             {
-                b           = saveMask.Brush as LinearGradientBrush;
-                opacity     = saveMask.Opacity;
+                b = saveMask.Brush as LinearGradientBrush;
+                opacity = saveMask.Opacity;
                 opacityOnly = true;
 
                 Debug.Assert(b != null, "LinearGradientBrush expected");
@@ -271,7 +272,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 _dc.PushClip(shape);
             }
 
-            for (int i = 0; i < steps; i ++)
+            for (int i = 0; i < steps; i++)
             {
                 Color color;
 
@@ -338,7 +339,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
 
             linear.OpacityMask = saveMask;
-            linear.Opacity     = saveOpacity;
+            linear.Opacity = saveOpacity;
 
             if (!_costing)
             {
@@ -351,14 +352,14 @@ namespace Microsoft.Internal.AlphaFlattener
         // Breaking RadialGradientBrush apart to simplify drawing
         private bool RadialFillGeometry(BrushProxy radial, BrushProxy other, bool pre, ArrayList brushes, int from, Geometry shape)
         {
-            bool                opacityOnly = false;
-            RadialGradientBrush b           = null;
-            double              opacity     = 0;
+            bool opacityOnly = false;
+            RadialGradientBrush b = null;
+            double opacity = 0;
 
             b = radial.Brush as RadialGradientBrush;
 
             BrushProxy saveMask = radial.OpacityMask;
-            double saveOpacity  = radial.Opacity;
+            double saveOpacity = radial.Opacity;
 
             if (b != null)
             {
@@ -366,8 +367,8 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else
             {
-                b           = saveMask.Brush as RadialGradientBrush;
-                opacity     = saveMask.Opacity;
+                b = saveMask.Brush as RadialGradientBrush;
+                opacity = saveMask.Opacity;
                 opacityOnly = true;
 
                 Debug.Assert(b != null, "RadialGradientBrush expected");
@@ -451,9 +452,9 @@ namespace Microsoft.Internal.AlphaFlattener
                     break;
                 }
             }
-            
+
             radial.OpacityMask = saveMask;
-            radial.Opacity     = saveOpacity;
+            radial.Opacity = saveOpacity;
 
             if (!_costing)
             {
@@ -487,7 +488,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 two = brushes[from] as BrushProxy;
 
-                from ++; // Move to next brush
+                from++; // Move to next brush
             }
             else
             {
@@ -503,16 +504,20 @@ namespace Microsoft.Internal.AlphaFlattener
             bool pre = true;
 
             // Try to break the brush with higher BrushTypes first, and then the other one
-            for (int i = 0; i < 2; i ++)
+            for (int i = 0; i < 2; i++)
             {
                 // swap to higher one first iteration, then swap for the second loop
                 if ((typeOne < typeTwo) || (i == 1))
                 {
-                    BrushProxy t = one; one = two; two = t;
+                    BrushProxy t = one;
+                    one = two;
+                    two = t;
 
-                    BrushProxy.BrushTypes bt = typeOne; typeOne = typeTwo; typeTwo = bt;
+                    BrushProxy.BrushTypes bt = typeOne;
+                    typeOne = typeTwo;
+                    typeTwo = bt;
 
-                    pre = ! pre;
+                    pre = !pre;
                 }
 
                 if ((typeOne & BrushProxy.BrushTypes.RadialGradientBrush) != 0)
@@ -547,7 +552,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 Debug.WriteLine("FillGeometry not implemented " + one + " " + two);
             }
 #endif
-   
+
             return false;
         }
 
@@ -572,7 +577,7 @@ namespace Microsoft.Internal.AlphaFlattener
             Rect bounds = shape.Bounds;
 
             _costing = true;
-            _cost    = - Configuration.RasterizationCost(bounds.Width, bounds.Height);
+            _cost = -Configuration.RasterizationCost(bounds.Width, bounds.Height);
 
             bool rslt = FillGeometry(brush.BrushList[0] as BrushProxy, brush.BrushList, 1, shape);
 
@@ -599,8 +604,8 @@ namespace Microsoft.Internal.AlphaFlattener
 
             Rect bounds = shape.Bounds;
 
-            int width  = (int) Math.Round(bounds.Width  * Configuration.RasterizationDPI / 96);
-            int height = (int) Math.Round(bounds.Height * Configuration.RasterizationDPI / 96);
+            int width = (int)Math.Round(bounds.Width * Configuration.RasterizationDPI / 96);
+            int height = (int)Math.Round(bounds.Height * Configuration.RasterizationDPI / 96);
 
             if ((width >= 1) && (height >= 1)) // skip shape which is too small
             {
@@ -612,13 +617,13 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #if DEBUG
                 _seq++;
-                _dc.Comment("-> DrawImage(raster) " + _seq);  		
+                _dc.Comment("-> DrawImage(raster) " + _seq);
 #endif
 
                 _dc.DrawImage(id, null, bounds);
 
 #if DEBUG
-                _dc.Comment("<- DrawImage(raster) " + _seq);  		
+                _dc.Comment("<- DrawImage(raster) " + _seq);
 #endif
 
                 _dc.PopClip();
@@ -711,8 +716,8 @@ namespace Microsoft.Internal.AlphaFlattener
                 LineGeometry line = geometry.CloneCurrentValue() as LineGeometry;
 
                 line.StartPoint = geometry.Transform.Value.Transform(line.StartPoint);
-                line.EndPoint   = geometry.Transform.Value.Transform(line.EndPoint);
-                line.Transform  = Transform.Identity;
+                line.EndPoint = geometry.Transform.Value.Transform(line.EndPoint);
+                line.Transform = Transform.Identity;
             }
 
             if ((brush != null) && (brush.BrushList != null)) // List of brushes
@@ -729,7 +734,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                     if (!rasterize)
                     {
-                        rasterize = ! FillGeometry(brush.BrushList[0] as BrushProxy, brush.BrushList, 1, geometry);
+                        rasterize = !FillGeometry(brush.BrushList[0] as BrushProxy, brush.BrushList, 1, geometry);
                     }
 
                     if (rasterize)
@@ -752,7 +757,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else // Single Avalon brush or pen
             {
-                Pen p                  = null;
+                Pen p = null;
                 BrushProxy strokeBrush = null;
 
                 if (pen != null) // Blend pen with White
@@ -760,7 +765,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     p = pen.GetPen(true);
                     strokeBrush = pen.StrokeBrush;
 
-                    if (! strokeBrush.IsOpaque())
+                    if (!strokeBrush.IsOpaque())
                     {
                         strokeBrush = BrushProxy.BlendColorWithBrush(false, Colors.White, strokeBrush, false);
                     }
@@ -792,7 +797,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         b = brush.GetRealBrush();
                     }
-                
+
 #if DEBUG
                     _seq++;
 
@@ -883,24 +888,24 @@ namespace Microsoft.Internal.AlphaFlattener
             }
 
             image.BlendOverColor(Colors.White, 1.0, false);
-            
+
             // BitmapSource img = image.GetImage();
-            
+
             if (clip != null)
             {
                 _dc.PushClip(clip);
             }
-                        
-            if (! trans.IsIdentity)
+
+            if (!trans.IsIdentity)
             {
                 _dc.PushTransform(trans);
             }
 
 #if DEBUG
-            _seq ++;
+            _seq++;
             _dc.Comment("-> DrawImage " + _seq);
 #endif
-            
+
             _dc.DrawImage(image.Image, image.Buffer, dest);
 
 #if DEBUG
@@ -935,26 +940,26 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 return false;
             }
-            
+
             if (clip != null)
             {
                 _dc.PushClip(clip);
             }
-            
+
             if (!trans.IsIdentity)
             {
                 _dc.PushTransform(trans);
             }
 
 #if DEBUG
-            _seq ++;
-            _dc.Comment("-> DrawGlyphRun " + _seq);  		
+            _seq++;
+            _dc.Comment("-> DrawGlyphRun " + _seq);
 #endif
 
             _dc.DrawGlyphRun(b, glyphrun);
 
 #if DEBUG
-            _dc.Comment("<- DrawGlyphRun " + _seq);  		
+            _dc.Comment("<- DrawGlyphRun " + _seq);
 
             if (Configuration.Verbose >= 2)
             {

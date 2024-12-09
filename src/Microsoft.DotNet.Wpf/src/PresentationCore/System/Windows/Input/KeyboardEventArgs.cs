@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,7 +30,7 @@ namespace System.Windows.Input
         /// </summary>
         public KeyboardDevice KeyboardDevice
         {
-            get {return (KeyboardDevice) this.Device;}
+            get { return (KeyboardDevice)this.Device; }
         }
 
         /// <summary>
@@ -46,8 +46,8 @@ namespace System.Windows.Input
         /// <ExternalAPI/> 
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            KeyboardEventHandler handler = (KeyboardEventHandler) genericHandler;
-            
+            KeyboardEventHandler handler = (KeyboardEventHandler)genericHandler;
+
             handler(genericTarget, this);
         }
     }

@@ -35,6 +35,6 @@ namespace System.Xaml
         }
 
         public object Value { get { return _value; } }
-        public XamlMember RetrievedProperty { get { return _property; }  }
+        public XamlMember RetrievedProperty { get { return _property; } }
     }
 }

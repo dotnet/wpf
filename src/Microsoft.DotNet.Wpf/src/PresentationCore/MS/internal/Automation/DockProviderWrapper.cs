@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 //
 //
 
-using System.Windows.Threading;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -29,17 +29,17 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class DockProviderWrapper: MarshalByRefObject, IDockProvider
+    internal class DockProviderWrapper : MarshalByRefObject, IDockProvider
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        private DockProviderWrapper( AutomationPeer peer, IDockProvider iface )
+        private DockProviderWrapper(AutomationPeer peer, IDockProvider iface)
         {
             _peer = peer;
             _iface = iface;
@@ -53,19 +53,19 @@ namespace MS.Internal.Automation
         //  Interface IDockProvider
         //
         //------------------------------------------------------
- 
+
         #region Interface IDockProvider
 
         public void SetDockPosition(DockPosition dockPosition)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( SetDockPosition ), dockPosition );
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(SetDockPosition), dockPosition);
         }
 
         public DockPosition DockPosition
         {
             get
             {
-                return (DockPosition)ElementUtil.Invoke(_peer, new DispatcherOperationCallback( GetDockPosition ), null);              
+                return (DockPosition)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetDockPosition), null);
             }
         }
 
@@ -77,12 +77,12 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new DockProviderWrapper( peer, (IDockProvider) iface );
+            return new DockProviderWrapper(peer, (IDockProvider)iface);
         }
 
         #endregion Internal Methods
@@ -92,16 +92,16 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
-        private object SetDockPosition( object arg )
+        private object SetDockPosition(object arg)
         {
-            _iface.SetDockPosition( (DockPosition) arg );
+            _iface.SetDockPosition((DockPosition)arg);
             return null;
         }
 
-        private object GetDockPosition( object unused )
+        private object GetDockPosition(object unused)
         {
             return _iface.DockPosition;
         }
@@ -114,7 +114,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;

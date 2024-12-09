@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Utility;
-using MS.Win32;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using MS.Utility;
+using MS.Win32;
 
 namespace MS.Internal
 {
@@ -38,7 +38,7 @@ namespace MS.Internal
             /// </summary>
             /// <param name="dpiAwarenessContextValue"></param>
             /// <param name="dpiScale"></param>
-            internal HwndDpiInfo(DpiAwarenessContextValue dpiAwarenessContextValue, DpiScale2 dpiScale) 
+            internal HwndDpiInfo(DpiAwarenessContextValue dpiAwarenessContextValue, DpiScale2 dpiScale)
                 : base(dpiAwarenessContextValue, dpiScale)
             {
                 // Get information from the desktop as the default. This information would still be

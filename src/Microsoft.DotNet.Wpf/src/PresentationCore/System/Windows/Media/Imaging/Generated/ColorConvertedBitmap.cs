@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -54,7 +54,7 @@ namespace System.Windows.Media.Imaging
 
         private static void SourcePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ColorConvertedBitmap target = ((ColorConvertedBitmap) d);
+            ColorConvertedBitmap target = ((ColorConvertedBitmap)d);
 
 
             target.SourcePropertyChangedHook(e);
@@ -69,7 +69,7 @@ namespace System.Windows.Media.Imaging
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
@@ -81,7 +81,7 @@ namespace System.Windows.Media.Imaging
         }
         private static void SourceColorContextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ColorConvertedBitmap target = ((ColorConvertedBitmap) d);
+            ColorConvertedBitmap target = ((ColorConvertedBitmap)d);
 
 
             target.SourceColorContextPropertyChangedHook(e);
@@ -90,7 +90,7 @@ namespace System.Windows.Media.Imaging
         }
         private static void DestinationColorContextPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ColorConvertedBitmap target = ((ColorConvertedBitmap) d);
+            ColorConvertedBitmap target = ((ColorConvertedBitmap)d);
 
 
             target.DestinationColorContextPropertyChangedHook(e);
@@ -99,7 +99,7 @@ namespace System.Windows.Media.Imaging
         }
         private static void DestinationFormatPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ColorConvertedBitmap target = ((ColorConvertedBitmap) d);
+            ColorConvertedBitmap target = ((ColorConvertedBitmap)d);
 
 
             target.DestinationFormatPropertyChangedHook(e);
@@ -117,7 +117,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (BitmapSource) GetValue(SourceProperty);
+                return (BitmapSource)GetValue(SourceProperty);
             }
             set
             {
@@ -132,7 +132,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (ColorContext) GetValue(SourceColorContextProperty);
+                return (ColorContext)GetValue(SourceColorContextProperty);
             }
             set
             {
@@ -147,7 +147,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (ColorContext) GetValue(DestinationColorContextProperty);
+                return (ColorContext)GetValue(DestinationColorContextProperty);
             }
             set
             {
@@ -162,7 +162,7 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-                return (PixelFormat) GetValue(DestinationFormatProperty);
+                return (PixelFormat)GetValue(DestinationFormatProperty);
             }
             set
             {
@@ -193,7 +193,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCore(Freezable source)
         {
-            ColorConvertedBitmap sourceColorConvertedBitmap = (ColorConvertedBitmap) source;
+            ColorConvertedBitmap sourceColorConvertedBitmap = (ColorConvertedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceColorConvertedBitmap);
@@ -210,7 +210,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable source)
         {
-            ColorConvertedBitmap sourceColorConvertedBitmap = (ColorConvertedBitmap) source;
+            ColorConvertedBitmap sourceColorConvertedBitmap = (ColorConvertedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceColorConvertedBitmap);
@@ -227,7 +227,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetAsFrozenCore(Freezable source)
         {
-            ColorConvertedBitmap sourceColorConvertedBitmap = (ColorConvertedBitmap) source;
+            ColorConvertedBitmap sourceColorConvertedBitmap = (ColorConvertedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceColorConvertedBitmap);
@@ -244,7 +244,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable source)
         {
-            ColorConvertedBitmap sourceColorConvertedBitmap = (ColorConvertedBitmap) source;
+            ColorConvertedBitmap sourceColorConvertedBitmap = (ColorConvertedBitmap)source;
 
             // Set any state required before actual clone happens
             ClonePrequel(sourceColorConvertedBitmap);

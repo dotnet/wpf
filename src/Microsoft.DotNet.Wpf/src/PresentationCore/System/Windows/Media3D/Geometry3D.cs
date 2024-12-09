@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,9 +6,9 @@
 //
 //
 
-using MS.Internal.Media3D;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
+using MS.Internal.Media3D;
 
 namespace System.Windows.Media.Media3D
 {
@@ -28,10 +28,10 @@ namespace System.Windows.Media.Media3D
         #region Constructors
 
         // Prevent 3rd parties from extending this abstract base class.
-        internal Geometry3D() {}
-        
+        internal Geometry3D() { }
+
         #endregion Constructors
-        
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -39,12 +39,12 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Public Methods
-        
+
         /// <summary>
         ///     Gets bounds for this Geometry3D.
         /// </summary>
         public abstract Rect3D Bounds { get; }
-        
+
         #endregion Public Methods
 
         //------------------------------------------------------
@@ -52,13 +52,13 @@ namespace System.Windows.Media.Media3D
         //  Public Properties
         //
         //------------------------------------------------------
-        
+
         //------------------------------------------------------
         //
         //  Public Events
         //
         //------------------------------------------------------
-       
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -75,9 +75,9 @@ namespace System.Windows.Media.Media3D
         //       the hit testing parameters by the Visual's transform.
         internal void RayHitTest(RayHitTestParameters rayParams, FaceType facesToHit)
         {
-            Debug.Assert(facesToHit != FaceType.None, 
+            Debug.Assert(facesToHit != FaceType.None,
                 "Caller should make sure we're trying to hit something");
-               
+
             Rect3D bounds = Bounds;
 
             if (bounds.IsEmpty)
@@ -100,7 +100,7 @@ namespace System.Windows.Media.Media3D
             {
                 RayHitTestCore(rayParams, facesToHit);
             }
-            
+
             // Geometry3D's do not yet support a Transform property
             //
             // rayParams.PopTransform(transform);

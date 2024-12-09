@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -65,7 +65,7 @@ namespace System.Windows.Markup.Primitives
                     yield return _key;
                 }
             }
-            else 
+            else
             {
                 Dictionary<string, string> constructorArguments = null;
 
@@ -76,7 +76,7 @@ namespace System.Windows.Markup.Primitives
                 {
                     ParameterInfo[] parameters;
                     ICollection arguments;
-                    if(TryGetConstructorInfoArguments(_instance, out parameters, out arguments))
+                    if (TryGetConstructorInfoArguments(_instance, out parameters, out arguments))
                     {
                         int i = 0;
                         foreach (object value in arguments)
@@ -148,7 +148,7 @@ namespace System.Windows.Markup.Primitives
                         yield return new ElementItemsPseudoProperty(enumerable, typeof(IEnumerable), this);
                     }
                 }
-                    
+
                 if (_key != null)
                 {
                     yield return _key;
@@ -185,14 +185,14 @@ namespace System.Windows.Markup.Primitives
         {
             ElementMarkupObject _object;
 
-            public ElementObjectContext(ElementMarkupObject obj, IValueSerializerContext baseContext): base(baseContext)
+            public ElementObjectContext(ElementMarkupObject obj, IValueSerializerContext baseContext) : base(baseContext)
             {
                 _object = obj;
             }
 
             object ITypeDescriptorContext.Instance
             {
-                get 
+                get
                 {
                     return _object.Instance;
                 }
@@ -205,12 +205,12 @@ namespace System.Windows.Markup.Primitives
             object invokeInstance = instance;
 
             DependencyPropertyDescriptor dpd = DependencyPropertyDescriptor.FromProperty(pd);
-            if (dpd != null && dpd.IsAttached) 
+            if (dpd != null && dpd.IsAttached)
             {
                 Type ownerType = dpd.DependencyProperty.OwnerType;
                 string propertyName = dpd.DependencyProperty.Name;
                 string keyName = $"{propertyName}!";
-                if (!TryGetShouldSerializeMethod(new ShouldSerializeKey(ownerType, keyName), out shouldSerializeMethod)) 
+                if (!TryGetShouldSerializeMethod(new ShouldSerializeKey(ownerType, keyName), out shouldSerializeMethod))
                 {
                     string methodName = $"ShouldSerialize{propertyName}";
                     shouldSerializeMethod = ownerType.GetMethod(methodName, BindingFlags.Static |
@@ -230,9 +230,9 @@ namespace System.Windows.Markup.Primitives
                 }
                 invokeInstance = null; // static method
             }
-            else 
+            else
             {
-                if (!TryGetShouldSerializeMethod(new ShouldSerializeKey(instance.GetType(), pd.Name), out shouldSerializeMethod)) 
+                if (!TryGetShouldSerializeMethod(new ShouldSerializeKey(instance.GetType(), pd.Name), out shouldSerializeMethod))
                 {
                     Type instanceType = instance.GetType();
                     string methodName = $"ShouldSerialize{pd.Name}";
@@ -291,7 +291,8 @@ namespace System.Windows.Markup.Primitives
 
             public override bool Equals(object obj)
             {
-                if (!(obj is ShouldSerializeKey)) return false;
+                if (!(obj is ShouldSerializeKey))
+                    return false;
                 ShouldSerializeKey other = (ShouldSerializeKey)obj;
                 return other._type == _type && other._propertyName == _propertyName;
             }
@@ -348,9 +349,9 @@ namespace System.Windows.Markup.Primitives
                 _shouldSerializeCache[key] = value;
             }
         }
-        
+
         private bool TryGetConstructorInfoArguments(object instance, out ParameterInfo[] parameters, out ICollection arguments)
-        {        
+        {
             // Detect if the instance should be constructed using constructor parameters by
             // seeing if it can be converted to an instance descriptor that uses a constructor.
             TypeConverter converter = TypeDescriptor.GetConverter(instance);
@@ -372,14 +373,14 @@ namespace System.Windows.Markup.Primitives
                     // If we get this just ignore the converter
                     instanceDescriptor = null;
                 }
-                
+
                 if (instanceDescriptor != null)
-                {            
+                {
                     ConstructorInfo ctorInfo = instanceDescriptor.MemberInfo as ConstructorInfo;
                     if (ctorInfo != null)
                     {
                         ParameterInfo[] ctorParameters = ctorInfo.GetParameters();
-                        
+
                         if (ctorParameters != null && ctorParameters.Length == instanceDescriptor.Arguments.Count)
                         {
                             parameters = ctorParameters;
@@ -389,7 +390,7 @@ namespace System.Windows.Markup.Primitives
                     }
                 }
             }
-            
+
             parameters = null;
             arguments = null;
             return false;
@@ -424,7 +425,7 @@ namespace System.Windows.Markup.Primitives
                 {
                     _isCompositeCalculated = true;
                     object value = Value;
-                    
+
                     if (value == null)
                     {
                         _isComposite = true;
@@ -454,7 +455,7 @@ namespace System.Windows.Markup.Primitives
                 {
                     return String.Empty;
                 }
-                
+
                 object value = Value;
                 string stringValue = value as string;
                 if (stringValue != null)
@@ -467,7 +468,7 @@ namespace System.Windows.Markup.Primitives
                 {
                     return String.Empty;
                 }
-                
+
                 return serializer.ConvertToString(value, Context);
             }
         }
@@ -501,16 +502,16 @@ namespace System.Windows.Markup.Primitives
                             // ToString() values will not be emitted deterministically.
                             DictionaryEntry[] entries = new DictionaryEntry[dictionary.Count];
                             dictionary.CopyTo(entries, 0);
-                            Array.Sort(entries, delegate(DictionaryEntry one, DictionaryEntry two)
+                            Array.Sort(entries, delegate (DictionaryEntry one, DictionaryEntry two)
                             {
                                 return String.Compare(one.Key.ToString(), two.Key.ToString());
                             });
                             foreach (DictionaryEntry entry in entries)
                             {
-                                ElementMarkupObject subItem 
+                                ElementMarkupObject subItem
                                     = new ElementMarkupObject(
                                         ElementProperty.CheckForMarkupExtension(typeof(Object), entry.Value, Context, false), Manager);
-                                
+
                                 subItem.SetKey(new ElementKey(entry.Key, keyType, subItem));
                                 yield return subItem;
                             }
@@ -522,10 +523,10 @@ namespace System.Windows.Markup.Primitives
                             {
                                 foreach (object o in items)
                                 {
-                                    MarkupObject subItem 
+                                    MarkupObject subItem
                                         = new ElementMarkupObject(
                                             ElementProperty.CheckForMarkupExtension(typeof(Object), o, Context, false), Manager);
-                                    
+
                                     yield return subItem;
                                 }
                             }
@@ -538,10 +539,10 @@ namespace System.Windows.Markup.Primitives
                                 }
                                 else
                                 {
-                                    MarkupObject subItem 
+                                    MarkupObject subItem
                                         = new ElementMarkupObject(
                                             ElementProperty.CheckForMarkupExtension(typeof(Object), value, Context, true), Manager);
-                                    
+
                                     yield return subItem;
                                 }
                             }
@@ -549,10 +550,10 @@ namespace System.Windows.Markup.Primitives
                     }
                     else
                     {
-                        MarkupObject subItem 
+                        MarkupObject subItem
                             = new ElementMarkupObject(
                                 ElementProperty.CheckForMarkupExtension(typeof(Object), value, Context, true), Manager);
-                        
+
                         yield return subItem;
                     }
                 }
@@ -564,7 +565,7 @@ namespace System.Windows.Markup.Primitives
             }
         }
 
-        private bool PropertyIsAttached(PropertyDescriptor descriptor) 
+        private bool PropertyIsAttached(PropertyDescriptor descriptor)
         {
             DependencyPropertyDescriptor dependencyPropertyDescriptor = DependencyPropertyDescriptor.FromProperty(PropertyDescriptor);
             return dependencyPropertyDescriptor != null && dependencyPropertyDescriptor.IsAttached;
@@ -628,15 +629,15 @@ namespace System.Windows.Markup.Primitives
             }
         }
 
-        protected bool CanConvertToString( object value )
+        protected bool CanConvertToString(object value)
         {
             // See if this value can be converted to a string by a value serializer or type converter
-            
-            if( value == null )
+
+            if (value == null)
             {
                 return false;
             }
-            
+
             ValueSerializer serializer = GetValueSerializer();
             return serializer != null && serializer.CanConvertToString(value, Context);
         }
@@ -712,7 +713,7 @@ namespace System.Windows.Markup.Primitives
 
     internal abstract class ElementObjectPropertyBase : ElementPropertyBase
     {
-        protected ElementObjectPropertyBase(ElementMarkupObject obj): base(obj.Manager)
+        protected ElementObjectPropertyBase(ElementMarkupObject obj) : base(obj.Manager)
         {
             Debug.Assert(obj != null);
             _object = obj;
@@ -759,10 +760,10 @@ namespace System.Windows.Markup.Primitives
 
         public override bool IsAttached
         {
-            get 
+            get
             {
                 UpdateDependencyProperty();
-                return _isAttached; 
+                return _isAttached;
             }
         }
 
@@ -777,7 +778,8 @@ namespace System.Windows.Markup.Primitives
 
         public override object Value
         {
-            get {
+            get
+            {
                 object value;
 
                 DependencyProperty DP = DependencyProperty;
@@ -799,9 +801,9 @@ namespace System.Windows.Markup.Primitives
                     {
                         // Special-case: Expressions always get converted to an ME if 
                         // possible (and requested), and get de-referenced otherwise.
-                        
+
                         TypeConverter converter = TypeDescriptor.GetConverter(value);
-                        
+
                         if (Manager.XamlWriterMode == XamlWriterMode.Expression &&
                             converter.CanConvertTo(typeof(MarkupExtension)))
                         {
@@ -827,12 +829,12 @@ namespace System.Windows.Markup.Primitives
                          &&
                          Context.Instance is FrameworkTemplate
                          &&
-                         (Context.Instance as FrameworkTemplate).HasContent )
+                         (Context.Instance as FrameworkTemplate).HasContent)
                 {
                     // Instantiate the template, in un-optimized form.  This makes the template content
                     // load as if it were loaded from xaml outside a template.  The only exception is that
                     // TemplateBinding's will show up as a TemplateBindingExtension.
-                    
+
                     value = (Context.Instance as FrameworkTemplate).LoadContent();
                 }
 
@@ -847,7 +849,7 @@ namespace System.Windows.Markup.Primitives
                 // but only if there is no value serializer; if the type supports conversion to both
                 // string and ME, we give preference to the string conversion.
 
-                if( !(value is MarkupExtension) && !CanConvertToString(value) )
+                if (!(value is MarkupExtension) && !CanConvertToString(value))
                 {
                     value = CheckForMarkupExtension(PropertyType, value, Context, true);
                 }
@@ -866,7 +868,7 @@ namespace System.Windows.Markup.Primitives
             if (!_isDependencyPropertyCached)
             {
                 DependencyPropertyDescriptor dpDesc = DependencyPropertyDescriptor.FromProperty(_descriptor);
-                if (dpDesc != null) 
+                if (dpDesc != null)
                 {
                     _dependencyProperty = dpDesc.DependencyProperty;
                     _isAttached = dpDesc.IsAttached;
@@ -880,15 +882,15 @@ namespace System.Windows.Markup.Primitives
         //  they are a well known type ((null, arrays, enums, and types), or because they
         //  can be type converted into an ME.
         //
-        
+
         internal static object CheckForMarkupExtension(
                                     Type propertyType,
-                                    object value, 
-                                    IValueSerializerContext context, 
+                                    object value,
+                                    IValueSerializerContext context,
                                     bool convertEnums)
         {
             // null => NullExtension
-            
+
             if (value == null)
             {
                 return new NullExtension();
@@ -906,14 +908,14 @@ namespace System.Windows.Markup.Primitives
             }
 
             // System.Type => TypeExtension
-            
+
             Type type = value as Type;
             if (type != null)
             {
                 // If the property is declared to be a type already, we don't need to convert it
                 // into {x:Type} syntax.
-                
-                if( propertyType == typeof(Type) )
+
+                if (propertyType == typeof(Type))
                 {
                     return value;
                 }
@@ -922,7 +924,7 @@ namespace System.Windows.Markup.Primitives
             }
 
             // Enums => StaticExtension
-            
+
             if (convertEnums)
             {
                 Enum enumValue = value as Enum;
@@ -936,7 +938,7 @@ namespace System.Windows.Markup.Primitives
             }
 
             // Arrays => ArrayExtension
-            
+
             Array array = value as Array;
             if (array != null)
             {
@@ -944,7 +946,7 @@ namespace System.Windows.Markup.Primitives
             }
 
             // Otherwise, value is unchanged.
-            
+
             return value;
         }
 
@@ -989,7 +991,7 @@ namespace System.Windows.Markup.Primitives
             get
             {
                 ValueSerializer serializer = ValueSerializer.GetSerializerFor(_object.ObjectType, _object.Context);
-                Debug.Assert(serializer != null && serializer.CanConvertToString(_object.Instance, _object.Context), 
+                Debug.Assert(serializer != null && serializer.CanConvertToString(_object.Instance, _object.Context),
                     "StringValue property value created for a type that cannot be converted to string");
                 return serializer.ConvertToString(_object.Instance, _object.Context);
             }
@@ -1014,7 +1016,7 @@ namespace System.Windows.Markup.Primitives
             get
             {
                 ValueSerializer serializer = ValueSerializer.GetSerializerFor(_object.ObjectType, _object.Context);
-                Debug.Assert(serializer != null && serializer.CanConvertToString(_object.Instance, _object.Context), 
+                Debug.Assert(serializer != null && serializer.CanConvertToString(_object.Instance, _object.Context),
                     "StringValue property value created for a type that cannot be converted to string");
                 return serializer.TypeReferences(_object.Instance, _object.Context);
             }
@@ -1090,7 +1092,7 @@ namespace System.Windows.Markup.Primitives
 
         public override bool IsConstructorArgument
         {
-            get { return true;  }
+            get { return true; }
         }
     }
 
@@ -1099,7 +1101,7 @@ namespace System.Windows.Markup.Primitives
     /// </summary>
     internal class ElementItemsPseudoProperty : ElementPseudoPropertyBase
     {
-        internal ElementItemsPseudoProperty(IEnumerable value, Type type, ElementMarkupObject obj) : base(value, type, obj) 
+        internal ElementItemsPseudoProperty(IEnumerable value, Type type, ElementMarkupObject obj) : base(value, type, obj)
         {
             _value = value;
         }
@@ -1121,7 +1123,7 @@ namespace System.Windows.Markup.Primitives
 
         public override IEnumerable<MarkupObject> Items
         {
-            get 
+            get
             {
                 foreach (object instance in _value)
                 {
@@ -1138,7 +1140,7 @@ namespace System.Windows.Markup.Primitives
     /// </summary>
     internal class ElementDictionaryItemsPseudoProperty : ElementPseudoPropertyBase
     {
-        internal ElementDictionaryItemsPseudoProperty(IDictionary value, Type type, ElementMarkupObject obj) : base(value, type, obj) 
+        internal ElementDictionaryItemsPseudoProperty(IDictionary value, Type type, ElementMarkupObject obj) : base(value, type, obj)
         {
             _value = value;
         }
@@ -1237,7 +1239,7 @@ namespace System.Windows.Markup.Primitives
 
         public PropertyDescriptor PropertyDescriptor
         {
-            get 
+            get
             {
                 if (_baseContext != null)
                     return _baseContext.PropertyDescriptor;

@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Threading;
-using System.Diagnostics.CodeAnalysis;
 
 namespace Standard
 {
@@ -17,10 +17,10 @@ namespace Standard
         static MessageWindow()
         {
         }
-        
+
         // Alias this to a static so the wrapper doesn't get GC'd
         private static readonly WndProc s_WndProc = new WndProc(_WndProc);
-        
+
         private static readonly Dictionary<IntPtr, MessageWindow> s_windowLookup = new Dictionary<IntPtr, MessageWindow>();
 
         private WndProc _wndProcCallback;
@@ -28,11 +28,11 @@ namespace Standard
         private bool _isDisposed;
         Dispatcher _dispatcher;
 
-        public IntPtr Handle 
-        { 
-            get; 
-            
-            private set; 
+        public IntPtr Handle
+        {
+            get;
+
+            private set;
         }
 
         public MessageWindow(CS classStyle, WS style, WS_EX exStyle, Rect location, string name, WndProc callback)
@@ -78,7 +78,7 @@ namespace Standard
             {
                 gcHandle.Free();
             }
-            
+
             _dispatcher = Dispatcher.CurrentDispatcher;
         }
 
@@ -111,7 +111,7 @@ namespace Standard
 
             if (isHwndBeingDestroyed)
             {
-                _dispatcher.BeginInvoke(DispatcherPriority.Normal, (DispatcherOperationCallback)_DestroyWindowCallback, new object [] { IntPtr.Zero, className });
+                _dispatcher.BeginInvoke(DispatcherPriority.Normal, (DispatcherOperationCallback)_DestroyWindowCallback, new object[] { IntPtr.Zero, className });
             }
             else if (Handle != IntPtr.Zero)
             {
@@ -121,7 +121,7 @@ namespace Standard
                 }
                 else
                 {
-                    _dispatcher.BeginInvoke(DispatcherPriority.Normal, (DispatcherOperationCallback)_DestroyWindowCallback, new object [] { hwnd, className });
+                    _dispatcher.BeginInvoke(DispatcherPriority.Normal, (DispatcherOperationCallback)_DestroyWindowCallback, new object[] { hwnd, className });
                 }
             }
 
@@ -133,7 +133,7 @@ namespace Standard
 
         private object _DestroyWindowCallback(object arg)
         {
-            object [] args = (object[])arg;
+            object[] args = (object[])arg;
             _DestroyWindow((IntPtr)args[0], (string)args[1]);
             return null;
         }

@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
 using System.Reflection;
 using System.Xaml;
 using System.Xaml.Schema;
-using System.ComponentModel;
 
 namespace System.Windows.Baml2006
 {
@@ -16,12 +16,12 @@ namespace System.Windows.Baml2006
         [Flags]
         private enum BoolMemberBits
         {
-            Frozen                      = 0x0001,
-            HasSpecialTypeConverter     = 0x0002,
-            ReadOnly                    = 0x0004,
-            Ambient                     = 0x0008,
-            ReadPrivate                 = 0x0010,
-            WritePrivate                = 0x0020
+            Frozen = 0x0001,
+            HasSpecialTypeConverter = 0x0002,
+            ReadOnly = 0x0004,
+            Ambient = 0x0008,
+            ReadPrivate = 0x0010,
+            WritePrivate = 0x0020
         }
 
         Action<object, object> _setDelegate;

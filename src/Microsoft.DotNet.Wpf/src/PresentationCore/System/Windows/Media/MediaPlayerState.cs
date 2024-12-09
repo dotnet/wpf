@@ -1,15 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.IO.Packaging;
+using System.Windows.Media.Composition;
+using System.Windows.Navigation;
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.PresentationCore;
 using MS.Win32;
-using System.IO.Packaging;
-using System.Windows.Media.Composition;
-using System.Windows.Threading;
-using System.Windows.Navigation;
-
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 #pragma warning disable 1634, 1691
@@ -38,7 +37,7 @@ namespace System.Windows.Media
         /// </summary>
         internal
         MediaPlayerState(
-            MediaPlayer     mediaPlayer
+            MediaPlayer mediaPlayer
             )
         {
             _dispatcher = mediaPlayer.Dispatcher;
@@ -611,7 +610,7 @@ namespace System.Windows.Media
         internal
         void
         SetClock(
-            MediaClock  clock,
+            MediaClock clock,
             MediaPlayer player
             )
         {
@@ -652,7 +651,7 @@ namespace System.Windows.Media
         internal
         void
         Open(
-            Uri      source
+            Uri source
             )
         {
             VerifyAPI();
@@ -661,7 +660,7 @@ namespace System.Windows.Media
             SetSource(source);
 
             // Media fails to resume playback after setting source property to the same value.
-			// We workaround this by resuing one instance of MediaElement and
+            // We workaround this by resuing one instance of MediaElement and
             // calling play() wont result in seek to zero, Media Freezes.  Ensure
             // we set Media to play from the beginning.
             SetPosition(TimeSpan.Zero);
@@ -736,9 +735,9 @@ namespace System.Windows.Media
         internal
         void
         SendCommandMedia(
-            DUCE.Channel            channel,
-            DUCE.ResourceHandle     handle,
-            bool                    notifyUceDirectly
+            DUCE.Channel channel,
+            DUCE.ResourceHandle handle,
+            bool notifyUceDirectly
             )
         {
             SendMediaPlayerCommand(
@@ -835,7 +834,7 @@ namespace System.Windows.Media
                 Uri appBase = SecurityHelper.GetBaseDirectory(AppDomain.CurrentDomain);
                 // this extracts the URI to open
                 Uri uriToOpen = ResolveUri(source, appBase);
-                toOpen  = DemandPermissions(uriToOpen);
+                toOpen = DemandPermissions(uriToOpen);
             }
             else
             {
@@ -937,7 +936,7 @@ namespace System.Windows.Media
         internal
         void
         SetSource(
-            Uri      source
+            Uri source
             )
         {
             if (source != _sourceUri)
@@ -996,15 +995,15 @@ namespace System.Windows.Media
         private
         void
         SendMediaPlayerCommand(
-            DUCE.Channel            channel,
-            DUCE.ResourceHandle     handle,
-            bool                    notifyUceDirectly
+            DUCE.Channel channel,
+            DUCE.ResourceHandle handle,
+            bool notifyUceDirectly
             )
         {
-//
-// This is an interrop call, but, it does not set a last error being a COM call. So, suppress the
-// presharp warning about losing last error.
-//
+            //
+            // This is an interrop call, but, it does not set a last error being a COM call. So, suppress the
+            // presharp warning about losing last error.
+            //
 #pragma warning disable 6523
 
             //
@@ -1041,8 +1040,8 @@ namespace System.Windows.Media
         private
         void
         OnNewFrame(
-            object          sender,
-            EventArgs       args
+            object sender,
+            EventArgs args
             )
         {
             _newFrameHelper.InvokeEvents(sender, args);
@@ -1055,8 +1054,8 @@ namespace System.Windows.Media
         private
         void
         OnMediaOpened(
-            object          sender,
-            EventArgs       args
+            object sender,
+            EventArgs args
             )
         {
             _mediaOpenedHelper.InvokeEvents(sender, args);

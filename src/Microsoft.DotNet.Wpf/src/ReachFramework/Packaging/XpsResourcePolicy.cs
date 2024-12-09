@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -40,10 +40,10 @@ namespace System.Windows.Xps.Packaging
             _imageCrcTable = null;
             _imageUriHashTable = null;
             _currentPageImageTable = null;
-            
+
             _colorContextTable = null;
             _currentPageColorContextTable = null;
-            
+
             _resourceDictionaryTable = null;
             _currentPageResourceDictionaryTable = null;
         }
@@ -76,8 +76,8 @@ namespace System.Windows.Xps.Packaging
         public
         void
         RegisterService(
-            object      service,
-            Type        serviceType
+            object service,
+            Type serviceType
             )
         {
             ArgumentNullException.ThrowIfNull(serviceType);
@@ -92,7 +92,7 @@ namespace System.Windows.Xps.Packaging
                 throw new XpsPackagingException(SR.Format(SR.ReachPackaging_ServiceTypeAlreadyAdded, serviceType));
             }
         }
-        
+
         internal
         bool
         SubsetComplete(INode node)
@@ -100,29 +100,29 @@ namespace System.Windows.Xps.Packaging
             FontSubsetterCommitPolicies signal = FontSubsetterCommitPolicies.CommitPerPage;
             bool validSubsetNode = true;
             bool subsetComplete = false;
-            if( node is IXpsFixedDocumentSequenceWriter )
+            if (node is IXpsFixedDocumentSequenceWriter)
             {
-                signal  = FontSubsetterCommitPolicies.CommitEntireSequence;
+                signal = FontSubsetterCommitPolicies.CommitEntireSequence;
             }
             else
-            if( node is IXpsFixedDocumentWriter )
+            if (node is IXpsFixedDocumentWriter)
             {
-                signal  = FontSubsetterCommitPolicies.CommitPerDocument;
+                signal = FontSubsetterCommitPolicies.CommitPerDocument;
             }
             else
-            if( node is IXpsFixedPageWriter )
+            if (node is IXpsFixedPageWriter)
             {
-                signal  = FontSubsetterCommitPolicies.CommitPerPage;
-             }
+                signal = FontSubsetterCommitPolicies.CommitPerPage;
+            }
             else
             {
                 validSubsetNode = false;
             }
 
-            if( validSubsetNode )
+            if (validSubsetNode)
             {
                 XpsFontSerializationService fontService = (XpsFontSerializationService)GetService(typeof(XpsFontSerializationService));
-                if( fontService != null )
+                if (fontService != null)
                 {
                     XpsFontSubsetter fontSubsetter = fontService.FontSubsetter;
                     subsetComplete = fontSubsetter.CommitFontSubsetsSignal(signal);
@@ -168,7 +168,7 @@ namespace System.Windows.Xps.Packaging
 
         object
         IServiceProvider.GetService(
-            Type        serviceType
+            Type serviceType
             )
         {
             return GetService(serviceType);
@@ -205,7 +205,7 @@ namespace System.Windows.Xps.Packaging
                 _imageUriHashTable = value;
             }
         }
-        
+
 
 
 
@@ -280,35 +280,35 @@ namespace System.Windows.Xps.Packaging
         }
 
         #endregion Internal Properties
-       
+
         #region Private data
 
         private
-        Dictionary<UInt32, Uri>     _imageCrcTable;
-
-        private 
-        Dictionary<int,Uri>             _imageUriHashTable;
+        Dictionary<UInt32, Uri> _imageCrcTable;
 
         private
-        Dictionary<int, Uri>     _currentPageImageTable;
+        Dictionary<int, Uri> _imageUriHashTable;
 
         private
-        Dictionary<int, Uri>        _colorContextTable;
+        Dictionary<int, Uri> _currentPageImageTable;
 
         private
-        Dictionary<int, Uri>        _currentPageColorContextTable;
+        Dictionary<int, Uri> _colorContextTable;
 
         private
-        Dictionary<int, Uri>        _resourceDictionaryTable;
+        Dictionary<int, Uri> _currentPageColorContextTable;
 
         private
-        Dictionary<int, Uri>        _currentPageResourceDictionaryTable;
+        Dictionary<int, Uri> _resourceDictionaryTable;
 
         private
-        XpsResourceSharing          _sharingMode;
+        Dictionary<int, Uri> _currentPageResourceDictionaryTable;
 
         private
-        Dictionary<Type, object>    _objDict = new Dictionary<Type, object>();
+        XpsResourceSharing _sharingMode;
+
+        private
+        Dictionary<Type, object> _objDict = new Dictionary<Type, object>();
 
         #endregion Private data
     }

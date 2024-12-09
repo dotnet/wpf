@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,7 +32,7 @@ namespace System.Windows.Input
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         /// <summary>
         ///    This is an internal. The source for input languages.
         /// </summary>
@@ -56,7 +56,7 @@ namespace System.Windows.Input
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
@@ -64,8 +64,8 @@ namespace System.Windows.Input
         /// </summary>
         public void Dispose()
         {
-             if (_ipp != null)
-                 Uninitialize();
+            if (_ipp != null)
+                Uninitialize();
         }
 
         /// <summary>
@@ -97,7 +97,7 @@ namespace System.Windows.Input
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         /// <summary>
         ///    returns the current input language of this win32 thread.
         /// </summary>
@@ -118,15 +118,15 @@ namespace System.Windows.Input
         /// </summary>
         public IEnumerable InputLanguageList
         {
-             get
-             {
+            get
+            {
                 EnsureInputProcessorProfile();
 
                 if (_ipp == null)
                     return new CultureInfo[1] { CurrentInputLanguage };
 
                 return _ipp.InputLanguageList;
-             }
+            }
         }
 
         //------------------------------------------------------
@@ -134,7 +134,7 @@ namespace System.Windows.Input
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         /// <summary>
         ///    The input language change call back from the sink.
         /// </summary>
@@ -148,7 +148,7 @@ namespace System.Windows.Input
                     return InputLanguageManager.Current.ReportInputLanguageChanging(new CultureInfo(langid), new CultureInfo(_langid));
                 }
             }
-                
+
             return true;
         }
 
@@ -195,7 +195,7 @@ namespace System.Windows.Input
 
             InputLanguageProfileNotifySink lpns;
             lpns = new InputLanguageProfileNotifySink(this);
-            _ipp= new InputProcessorProfiles();
+            _ipp = new InputProcessorProfiles();
 
             if (!_ipp.Initialize(lpns))
             {
@@ -208,7 +208,7 @@ namespace System.Windows.Input
         //  Private Properties
         //
         //------------------------------------------------------
-                
+
         /// <summary>
         ///    The current input language in LANGID of this win32 thread.
         /// </summary>
@@ -235,7 +235,7 @@ namespace System.Windows.Input
         //  Private Fields
         //
         //------------------------------------------------------
-                
+
         #region Private Fields
 
         // the current input language in LANGID.

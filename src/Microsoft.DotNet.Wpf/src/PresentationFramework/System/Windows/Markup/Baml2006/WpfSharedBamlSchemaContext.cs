@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Windows.Baml2006
         public const Int16 XamlVector3DCollectionSerializer = 752;
     }
 
-    partial class WpfSharedBamlSchemaContext: XamlSchemaContext
+    partial class WpfSharedBamlSchemaContext : XamlSchemaContext
     {
         object _syncObject;
 
@@ -41,7 +41,7 @@ namespace System.Windows.Baml2006
         }
 
         public WpfSharedBamlSchemaContext(XamlSchemaContextSettings settings)
-            :base(settings)
+            : base(settings)
         {
             Initialize();
         }
@@ -100,12 +100,24 @@ namespace System.Windows.Baml2006
 
             switch (assemblyId)
             {
-                case 0: assembly = new Baml6Assembly(typeof(double).Assembly); break;  // never happens ??
-                case 1: assembly = new Baml6Assembly(typeof(System.Uri).Assembly); break;
-                case 2: assembly = new Baml6Assembly(typeof(System.Windows.DependencyObject).Assembly); break;
-                case 3: assembly = new Baml6Assembly(typeof(System.Windows.UIElement).Assembly); break;
-                case 4: assembly = new Baml6Assembly(typeof(System.Windows.FrameworkElement).Assembly); break;
-                default: assembly = null; break;
+                case 0:
+                    assembly = new Baml6Assembly(typeof(double).Assembly);
+                    break;  // never happens ??
+                case 1:
+                    assembly = new Baml6Assembly(typeof(System.Uri).Assembly);
+                    break;
+                case 2:
+                    assembly = new Baml6Assembly(typeof(System.Windows.DependencyObject).Assembly);
+                    break;
+                case 3:
+                    assembly = new Baml6Assembly(typeof(System.Windows.UIElement).Assembly);
+                    break;
+                case 4:
+                    assembly = new Baml6Assembly(typeof(System.Windows.FrameworkElement).Assembly);
+                    break;
+                default:
+                    assembly = null;
+                    break;
             }
 
             return assembly;
@@ -128,12 +140,12 @@ namespace System.Windows.Baml2006
             lock (_syncObject)
             {
                 bamlType = _knownBamlTypes[typeId];
-                if(bamlType == null)
+                if (bamlType == null)
                 {
                     bamlType = CreateKnownBamlType(typeId, true, true);
                     Debug.Assert(bamlType != null);
                     _knownBamlTypes[typeId] = bamlType;
-                    
+
                     _masterTypeTable.Add(bamlType.UnderlyingType, bamlType);
                 }
             }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,9 +10,9 @@ using System.Printing.Interop;
 using System.Runtime.InteropServices;
 using System.Windows.Xps.Serialization;
 using System.Xml;
-using MS.Utility;
 using MS.Internal.PrintWin32Thunk;
 using MS.Internal.ReachFramework;
+using MS.Utility;
 
 /*++
 
@@ -512,7 +512,7 @@ namespace MS.Internal.Printing.Configuration
                 }
 
                 result = UnsafeNativeMethods.DocumentPropertiesW(new HandleRef(this, IntPtr.Zero), this._deviceHandle, this._deviceName, outPtr, buffer, flags);
-                    
+
                 if (result < 0)
                 {
                     throw new Win32Exception();
@@ -539,34 +539,34 @@ namespace MS.Internal.Printing.Configuration
             switch (baseType)
             {
                 case BaseDevModeType.PrinterDefault:
-                {
-                    PRINTER_INFO_2 info = GetPrinterInfo2W();
-                    result = info.pDevMode;
-                    break;
-                }
+                    {
+                        PRINTER_INFO_2 info = GetPrinterInfo2W();
+                        result = info.pDevMode;
+                        break;
+                    }
 
                 case BaseDevModeType.UserDefault:
-                {
-                    PRINTER_INFO_8_AND_9 info = GetPrinterInfo8Or9W(true);
-                    if (info.pDevMode != null)
                     {
-                        result = info.pDevMode;
+                        PRINTER_INFO_8_AND_9 info = GetPrinterInfo8Or9W(true);
+                        if (info.pDevMode != null)
+                        {
+                            result = info.pDevMode;
+                        }
+                        else
+                        {
+                            // No user default devmode, try the printer default, which is 
+                            // effectively the user default if their isn't a per user default
+                            // overriding it.
+                            result = GetDEVMODE(BaseDevModeType.PrinterDefault);
+                        }
+
+                        break;
                     }
-                    else
-                    {
-                        // No user default devmode, try the printer default, which is 
-                        // effectively the user default if their isn't a per user default
-                        // overriding it.
-                        result = GetDEVMODE(BaseDevModeType.PrinterDefault);
-                    }
-                    
-                    break;
-                }
 
                 default:
-                {
-                    throw new ArgumentOutOfRangeException("baseType");
-                }
+                    {
+                        throw new ArgumentOutOfRangeException("baseType");
+                    }
             }
 
             if (result == null)

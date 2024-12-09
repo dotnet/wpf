@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -71,7 +71,7 @@ namespace MS.Internal.Xaml.Parser
 
         private bool Expect(MeTokenType token, string ruleString)
         {
-            if(_tokenizer.Token != token)
+            if (_tokenizer.Token != token)
             {
                 SetBrokenRuleString(ruleString);
                 return false;
@@ -102,27 +102,27 @@ namespace MS.Internal.Xaml.Parser
                     Found f2 = new Found();
                     switch (_tokenizer.Token)
                     {
-                    // MarkupExtension ::= '{' TYPENAME (Arguments)? @'}'
-                    case MeTokenType.Close:  // legal, Arguments is optional
-                        yield return Logic_EndObject();
-                        NextToken();
-                        f.found = true;
-                        break;
+                        // MarkupExtension ::= '{' TYPENAME (Arguments)? @'}'
+                        case MeTokenType.Close:  // legal, Arguments is optional
+                            yield return Logic_EndObject();
+                            NextToken();
+                            f.found = true;
+                            break;
 
-                    case MeTokenType.String:
-                    case MeTokenType.QuotedMarkupExtension:
-                    case MeTokenType.PropertyName:
-                    case MeTokenType.Open:
-                        // MarkupExtension ::= '{' TYPENAME (@Arguments)? '}'
-                        foreach (XamlNode node in P_Arguments(f2))
-                        {
-                            yield return node;
-                        }
-                        break;
+                        case MeTokenType.String:
+                        case MeTokenType.QuotedMarkupExtension:
+                        case MeTokenType.PropertyName:
+                        case MeTokenType.Open:
+                            // MarkupExtension ::= '{' TYPENAME (@Arguments)? '}'
+                            foreach (XamlNode node in P_Arguments(f2))
+                            {
+                                yield return node;
+                            }
+                            break;
 
-                    default:
-                        SetBrokenRuleString("MarkupExtension ::= '{' TYPENAME @(Arguments)? '}'");
-                        break;
+                        default:
+                            SetBrokenRuleString("MarkupExtension ::= '{' TYPENAME @(Arguments)? '}'");
+                            break;
                     }
 
                     if (f2.found)
@@ -151,52 +151,52 @@ namespace MS.Internal.Xaml.Parser
             // Arguments ::= @ (PositionalArgs ( ',' NamedArgs)?) | NamedArgs
             switch (_tokenizer.Token)
             {
-            case MeTokenType.Close:  // not found
-                break;
+                case MeTokenType.Close:  // not found
+                    break;
 
-            // Arguments ::= (@ PositionalArgs ( ',' NamedArgs)?) | NamedArgs
-            case MeTokenType.String:
-            case MeTokenType.QuotedMarkupExtension:
-            case MeTokenType.Open:
-                foreach (XamlNode node in P_PositionalArgs(f2))
-                {
-                    yield return node;
-                }
-                f.found = f2.found;
-                if (f.found)
-                {
-                    if (_context.CurrentArgCount > 0)
+                // Arguments ::= (@ PositionalArgs ( ',' NamedArgs)?) | NamedArgs
+                case MeTokenType.String:
+                case MeTokenType.QuotedMarkupExtension:
+                case MeTokenType.Open:
+                    foreach (XamlNode node in P_PositionalArgs(f2))
                     {
-                        yield return Logic_EndPositionalParameters();
+                        yield return node;
                     }
-                }
+                    f.found = f2.found;
+                    if (f.found)
+                    {
+                        if (_context.CurrentArgCount > 0)
+                        {
+                            yield return Logic_EndPositionalParameters();
+                        }
+                    }
 
-                // Arguments ::= (PositionalArgs @ ( ',' NamedArgs)?) | NamedArgs
-                while (_tokenizer.Token == MeTokenType.Comma)
-                {
-                    // Arguments ::= (PositionalArgs ( @ ',' NamedArgs)?) | NamedArgs
-                    NextToken();
+                    // Arguments ::= (PositionalArgs @ ( ',' NamedArgs)?) | NamedArgs
+                    while (_tokenizer.Token == MeTokenType.Comma)
+                    {
+                        // Arguments ::= (PositionalArgs ( @ ',' NamedArgs)?) | NamedArgs
+                        NextToken();
 
-                    // Arguments ::= (PositionalArgs ( ',' @ NamedArgs)?) | NamedArgs
+                        // Arguments ::= (PositionalArgs ( ',' @ NamedArgs)?) | NamedArgs
+                        foreach (XamlNode node in P_NamedArgs(f2))
+                        {
+                            yield return node;
+                        }
+                    }
+                    break;
+
+                // Arguments ::= (PositionalArgs ( ',' NamedArgs)?) | @ NamedArgs
+                case MeTokenType.PropertyName:
                     foreach (XamlNode node in P_NamedArgs(f2))
                     {
                         yield return node;
                     }
-                }
-                break;
+                    f.found = f2.found;
+                    break;
 
-            // Arguments ::= (PositionalArgs ( ',' NamedArgs)?) | @ NamedArgs
-            case MeTokenType.PropertyName:
-                foreach (XamlNode node in P_NamedArgs(f2))
-                {
-                    yield return node;
-                }
-                f.found = f2.found;
-                break;
-
-            default:
-                SetBrokenRuleString("Arguments ::= @ (PositionalArgs ( ',' NamedArgs)?) | NamedArgs");
-                break;
+                default:
+                    SetBrokenRuleString("Arguments ::= @ (PositionalArgs ( ',' NamedArgs)?) | NamedArgs");
+                    break;
             }
         }
 
@@ -210,68 +210,68 @@ namespace MS.Internal.Xaml.Parser
             //  PositionalArgs ::= @ (Value (',' PositionalArgs)?) | NamedArg
             switch (_tokenizer.Token)
             {
-            //  PositionalArgs ::= ( @ Value (',' PositionalArgs)?) | NamedArg
-            case MeTokenType.String:
-            case MeTokenType.QuotedMarkupExtension:
-            case MeTokenType.Open:
-                if (_context.CurrentArgCount++ == 0)
-                {
-                    yield return Logic_StartPositionalParameters();
-                }
+                //  PositionalArgs ::= ( @ Value (',' PositionalArgs)?) | NamedArg
+                case MeTokenType.String:
+                case MeTokenType.QuotedMarkupExtension:
+                case MeTokenType.Open:
+                    if (_context.CurrentArgCount++ == 0)
+                    {
+                        yield return Logic_StartPositionalParameters();
+                    }
 
-                foreach (XamlNode node in P_Value(f2))
-                {
-                    yield return node;
-                }
-                if (!f2.found)
-                {
-                    SetBrokenRuleString("PositionalArgs ::= (NamedArg | (@Value (',' PositionalArgs)?)");
-                    break;
-                }
-                f.found = f2.found;
-
-                //  PositionalArgs ::= (Value @ (',' PositionalArgs)?) | NamedArg
-                if (_tokenizer.Token == MeTokenType.Comma)
-                {
-                    Found f3 = new Found();
-
-                    //  PositionalArgs ::= (Value ( @ ',' PositionalArgs)?) | NamedArg
-                    NextToken();
-
-                    //  PositionalArgs ::= (Value (',' @ PositionalArgs)?) | NamedArg
-                    foreach (XamlNode node in P_PositionalArgs(f3))
+                    foreach (XamlNode node in P_Value(f2))
                     {
                         yield return node;
                     }
-                    if (!f3.found)
+                    if (!f2.found)
                     {
-                        SetBrokenRuleString("PositionalArgs ::= (Value (',' @ PositionalArgs)?) | NamedArg");
+                        SetBrokenRuleString("PositionalArgs ::= (NamedArg | (@Value (',' PositionalArgs)?)");
                         break;
                     }
-                    // no f.found this is optional
-                }
-                break;
+                    f.found = f2.found;
 
-            //  PositionalArgs ::= (Value (',' PositionalArgs)?) | @ NamedArg
-            case MeTokenType.PropertyName:
-                if (_context.CurrentArgCount > 0)
-                {
-                    yield return Logic_EndPositionalParameters();
-                }
-                foreach (XamlNode node in P_NamedArg(f2))
-                {
-                    yield return node;
-                }
-                if (!f2.found)
-                {
-                    SetBrokenRuleString("PositionalArgs ::= (Value (',' PositionalArgs)?) | @ NamedArg");
-                }
-                f.found = f2.found;
-                break;
+                    //  PositionalArgs ::= (Value @ (',' PositionalArgs)?) | NamedArg
+                    if (_tokenizer.Token == MeTokenType.Comma)
+                    {
+                        Found f3 = new Found();
 
-            default:
-                SetBrokenRuleString("PositionalArgs ::= @ (Value (',' PositionalArgs)?) | NamedArg");
-                break;
+                        //  PositionalArgs ::= (Value ( @ ',' PositionalArgs)?) | NamedArg
+                        NextToken();
+
+                        //  PositionalArgs ::= (Value (',' @ PositionalArgs)?) | NamedArg
+                        foreach (XamlNode node in P_PositionalArgs(f3))
+                        {
+                            yield return node;
+                        }
+                        if (!f3.found)
+                        {
+                            SetBrokenRuleString("PositionalArgs ::= (Value (',' @ PositionalArgs)?) | NamedArg");
+                            break;
+                        }
+                        // no f.found this is optional
+                    }
+                    break;
+
+                //  PositionalArgs ::= (Value (',' PositionalArgs)?) | @ NamedArg
+                case MeTokenType.PropertyName:
+                    if (_context.CurrentArgCount > 0)
+                    {
+                        yield return Logic_EndPositionalParameters();
+                    }
+                    foreach (XamlNode node in P_NamedArg(f2))
+                    {
+                        yield return node;
+                    }
+                    if (!f2.found)
+                    {
+                        SetBrokenRuleString("PositionalArgs ::= (Value (',' PositionalArgs)?) | @ NamedArg");
+                    }
+                    f.found = f2.found;
+                    break;
+
+                default:
+                    SetBrokenRuleString("PositionalArgs ::= @ (Value (',' PositionalArgs)?) | NamedArg");
+                    break;
             }
         }
 
@@ -285,30 +285,30 @@ namespace MS.Internal.Xaml.Parser
             // NamedArgs ::= @NamedArg ( ',' NamedArg )*
             switch (_tokenizer.Token)
             {
-            case MeTokenType.PropertyName:
-                foreach (XamlNode node in P_NamedArg(f2))
-                {
-                    yield return node;
-                }
-                f.found = f2.found;
-
-                // NamedArgs ::= NamedArg @( ',' NamedArg )*
-                while (_tokenizer.Token == MeTokenType.Comma)
-                {
-                    // NamedArgs ::= NamedArg ( @',' NamedArg )*
-                    NextToken();
-
-                    // NamedArgs ::= NamedArg ( ',' @NamedArg )*
+                case MeTokenType.PropertyName:
                     foreach (XamlNode node in P_NamedArg(f2))
                     {
                         yield return node;
                     }
-                }
-                break;
+                    f.found = f2.found;
 
-            default:
-                SetBrokenRuleString("NamedArgs ::= @NamedArg ( ',' NamedArg )*");
-                break;
+                    // NamedArgs ::= NamedArg @( ',' NamedArg )*
+                    while (_tokenizer.Token == MeTokenType.Comma)
+                    {
+                        // NamedArgs ::= NamedArg ( @',' NamedArg )*
+                        NextToken();
+
+                        // NamedArgs ::= NamedArg ( ',' @NamedArg )*
+                        foreach (XamlNode node in P_NamedArg(f2))
+                        {
+                            yield return node;
+                        }
+                    }
+                    break;
+
+                default:
+                    SetBrokenRuleString("NamedArgs ::= @NamedArg ( ',' NamedArg )*");
+                    break;
             }
         }
 
@@ -322,35 +322,35 @@ namespace MS.Internal.Xaml.Parser
             //   Value   ::= @(STRING | QUOTEDMARKUPEXTENSION | MarkupExtension)
             switch (_tokenizer.Token)
             {
-            //   Value   ::= (@STRING | QUOTEDMARKUPEXTENSION | MarkupExtension)
-            case MeTokenType.String:
-                yield return Logic_Text();
-                f.found = true;
-                NextToken();
-                break;
+                //   Value   ::= (@STRING | QUOTEDMARKUPEXTENSION | MarkupExtension)
+                case MeTokenType.String:
+                    yield return Logic_Text();
+                    f.found = true;
+                    NextToken();
+                    break;
 
-            //   Value   ::= (STRING | @QUOTEDMARKUPEXTENSION | MarkupExtension)
-            case MeTokenType.QuotedMarkupExtension:
-                MePullParser nestedParser = new MePullParser(_context);
-                foreach (XamlNode node in nestedParser.Parse(_tokenizer.TokenText, LineNumber, LinePosition))
-                {
-                    yield return node;
-                }
-                f.found = true;
-                NextToken();
-                break;
+                //   Value   ::= (STRING | @QUOTEDMARKUPEXTENSION | MarkupExtension)
+                case MeTokenType.QuotedMarkupExtension:
+                    MePullParser nestedParser = new MePullParser(_context);
+                    foreach (XamlNode node in nestedParser.Parse(_tokenizer.TokenText, LineNumber, LinePosition))
+                    {
+                        yield return node;
+                    }
+                    f.found = true;
+                    NextToken();
+                    break;
 
-            //   Value   ::= (STRING | QUOTEDMARKUPEXTENSION | @MarkupExtension)
-            case MeTokenType.Open:
-                foreach (XamlNode node in P_MarkupExtension(f2))
-                {
-                    yield return node;
-                }
-                f.found = f2.found;
-                break;
+                //   Value   ::= (STRING | QUOTEDMARKUPEXTENSION | @MarkupExtension)
+                case MeTokenType.Open:
+                    foreach (XamlNode node in P_MarkupExtension(f2))
+                    {
+                        yield return node;
+                    }
+                    f.found = f2.found;
+                    break;
 
-            default:
-                break;
+                default:
+                    break;
             }
         }
 
@@ -375,50 +375,50 @@ namespace MS.Internal.Xaml.Parser
                 // NamedArg ::= PROPERTYNAME '=' @(STRING | QUOTEDMARKUPEXTENSION | MarkupExtension)
                 switch (_tokenizer.Token)
                 {
-                // NamedArg ::= PROPERTYNAME '=' (@STRING | QUOTEDMARKUPEXTENSION | MarkupExtension)
-                case MeTokenType.String:
-                    yield return Logic_Text();
-                    f.found = true;
-                    NextToken();
-                    break;
+                    // NamedArg ::= PROPERTYNAME '=' (@STRING | QUOTEDMARKUPEXTENSION | MarkupExtension)
+                    case MeTokenType.String:
+                        yield return Logic_Text();
+                        f.found = true;
+                        NextToken();
+                        break;
 
-                // NamedArg ::= PROPERTYNAME '=' (STRING | @QUOTEDMARKUPEXTENSION | MarkupExtension)
-                case MeTokenType.QuotedMarkupExtension:
-                    MePullParser nestedParser = new MePullParser(_context);
-                    foreach (XamlNode node in nestedParser.Parse(_tokenizer.TokenText, LineNumber, LinePosition))
-                    {
-                        yield return node;
-                    }
-                    f.found = true;
-                    NextToken();
-                    break;
-
-                // NamedArg ::= PROPERTYNAME '=' (STRING | QUOTEDMARKUPEXTENSION | @MarkupExtension)
-                case MeTokenType.Open:
-                    foreach (XamlNode node in P_Value(f2))
-                    {
-                        yield return node;
-                    }
-                    f.found = f2.found;
-                    break;
-
-                case MeTokenType.PropertyName:
-                    {
-                        string error;
-                        if (_context.CurrentMember == null)
+                    // NamedArg ::= PROPERTYNAME '=' (STRING | @QUOTEDMARKUPEXTENSION | MarkupExtension)
+                    case MeTokenType.QuotedMarkupExtension:
+                        MePullParser nestedParser = new MePullParser(_context);
+                        foreach (XamlNode node in nestedParser.Parse(_tokenizer.TokenText, LineNumber, LinePosition))
                         {
-                            error = SR.Format(SR.MissingComma1,  _tokenizer.TokenText);
+                            yield return node;
                         }
-                        else
-                        {
-                            error = SR.Format(SR.MissingComma2, _context.CurrentMember.Name, _tokenizer.TokenText);
-                        }
-                        throw new XamlParseException(_tokenizer, error);
-                    }
+                        f.found = true;
+                        NextToken();
+                        break;
 
-                default:
-                    SetBrokenRuleString("NamedArg ::= PROPERTYNAME '=' @(STRING | QUOTEDMARKUPEXTENSION | MarkupExtension)");
-                    break;
+                    // NamedArg ::= PROPERTYNAME '=' (STRING | QUOTEDMARKUPEXTENSION | @MarkupExtension)
+                    case MeTokenType.Open:
+                        foreach (XamlNode node in P_Value(f2))
+                        {
+                            yield return node;
+                        }
+                        f.found = f2.found;
+                        break;
+
+                    case MeTokenType.PropertyName:
+                        {
+                            string error;
+                            if (_context.CurrentMember == null)
+                            {
+                                error = SR.Format(SR.MissingComma1, _tokenizer.TokenText);
+                            }
+                            else
+                            {
+                                error = SR.Format(SR.MissingComma2, _context.CurrentMember.Name, _tokenizer.TokenText);
+                            }
+                            throw new XamlParseException(_tokenizer, error);
+                        }
+
+                    default:
+                        SetBrokenRuleString("NamedArg ::= PROPERTYNAME '=' @(STRING | QUOTEDMARKUPEXTENSION | MarkupExtension)");
+                        break;
                 }
                 yield return Logic_EndMember();
             }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace MS.Internal.Media
         //  Constructors
         //
         //------------------------------------------------------
-        
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -30,7 +30,7 @@ namespace MS.Internal.Media
         //  Public Properties
         //
         //------------------------------------------------------
-        
+
         //------------------------------------------------------
         //
         //  Public Events
@@ -50,13 +50,13 @@ namespace MS.Internal.Media
         ///     given element.
         /// </summary>
         internal static void PropagateFlags(
-            DependencyObject element, 
+            DependencyObject element,
             VisualFlags flags,
             VisualProxyFlags proxyFlags)
         {
             Visual visual;
             Visual3D visual3D;
-            
+
             AsVisualInternal(element, out visual, out visual3D);
 
             if (visual != null)
@@ -78,7 +78,7 @@ namespace MS.Internal.Media
         {
             Visual visual;
             Visual3D visual3D;
-            
+
             AsVisualInternal(element, out visual, out visual3D);
 
             if (visual != null)
@@ -99,7 +99,7 @@ namespace MS.Internal.Media
         {
             Visual visual;
             Visual3D visual3D;
-            
+
             AsVisualInternal(element, out visual, out visual3D);
 
             if (visual != null)
@@ -128,7 +128,7 @@ namespace MS.Internal.Media
             {
                 return null;
             }
-            
+
             PointHitTestResult resultAsPointHitTestResult = result as PointHitTestResult;
 
             if (resultAsPointHitTestResult != null)
@@ -140,7 +140,7 @@ namespace MS.Internal.Media
 
             if (resultAsRayHitTestResult != null)
             {
-                Visual3D current = (Visual3D) resultAsRayHitTestResult.VisualHit;
+                Visual3D current = (Visual3D)resultAsRayHitTestResult.VisualHit;
                 Matrix3D worldTransform = Matrix3D.Identity;
 
                 while (true)
@@ -166,7 +166,7 @@ namespace MS.Internal.Media
                 {
                     Point4D worldPoint = ((Point4D)resultAsRayHitTestResult.PointHit) * worldTransform;
                     Point viewportPoint = viewport.WorldToViewport(worldPoint);
-                    
+
                     return new PointHitTestResult(viewport, viewportPoint);
                 }
 
@@ -220,7 +220,7 @@ namespace MS.Internal.Media
                 throw new ArgumentException(SR.Visual_NotAVisual);
             }
 
-            element.VerifyAccess();            
+            element.VerifyAccess();
         }
 
         /// <summary>
@@ -236,7 +236,7 @@ namespace MS.Internal.Media
             Debug.Assert((visual == null) != (visual3D == null),
                 "Either visual or visual3D exclusively should be non-null.");
         }
-        
+
         /// <summary>
         ///     Returns null if the given element is null, otherwise visual or visual3D
         ///     will be the strong visual type on exit.
@@ -286,7 +286,7 @@ namespace MS.Internal.Media
 
             return castSucceeded;
         }
-        
+
         #endregion Internal Methods        
 
         //------------------------------------------------------
@@ -294,20 +294,20 @@ namespace MS.Internal.Media
         //  Internal Fields
         //
         //------------------------------------------------------
-        
+
         #region Internal Fields
 
-        public const string BitmapEffectObsoleteMessage = 
+        public const string BitmapEffectObsoleteMessage =
             "BitmapEffects are deprecated and no longer function.  Consider using Effects where appropriate instead.";
 
         #endregion
-            
+
         //------------------------------------------------------
         //
         //  Private Methods
         //
         //------------------------------------------------------
-        
+
         #region Private Methods
 
         // Common code for AsVisual and AsVisualInternal -- Don't call this.
@@ -329,8 +329,8 @@ namespace MS.Internal.Media
                 visual = null;
                 visual3D = elementAsVisual3D;
                 return true;
-            }            
-            
+            }
+
             visual = null;
             visual3D = null;
             return false;

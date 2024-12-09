@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Globalization;
 using System.ComponentModel;
+using System.Globalization;
 using MS.Internal.FontCache;
 
 // Allow suppression of presharp warnings
@@ -250,12 +250,12 @@ namespace System.Windows.Media
 
             // Suppress PRESharp warning that sub can be null; apparently PRESharp
             // doesn't understand short circuit evaluation of operator &&.
-            #pragma warning disable 6506
+#pragma warning disable 6506
             return sub != null &&
                 _source == sub._source &&
                 _substitution == sub._substitution &&
                 (_cultureOverride == null ? (sub._cultureOverride == null) : (_cultureOverride.Equals(sub._cultureOverride)));
-            #pragma warning restore 6506
+#pragma warning restore 6506
         }
 
         private NumberCultureSource _source;

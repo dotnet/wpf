@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,13 +9,13 @@
 // Please see MilCodeGen.html for more information.
 //
 
+using System.ComponentModel;
+using System.Windows.Input;
+using System.Windows.Media.Animation;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationCore;
 using MS.Utility;
-using System.ComponentModel;
-using System.Windows.Input;
-using System.Windows.Media.Animation;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -72,17 +72,17 @@ namespace System.Windows
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-        #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
+#pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
                 throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
-        #pragma warning restore 56506
+#pragma warning restore 56506
             }
 
             if (clock != null
                 && !AnimationStorage.IsAnimationValid(dp, clock.Timeline))
             {
-        #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
+#pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
                 throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, clock.Timeline.GetType(), dp.Name, dp.PropertyType), "clock");
-        #pragma warning restore 56506
+#pragma warning restore 56506
             }
 
             if (!HandoffBehaviorEnum.IsDefined(handoffBehavior))
@@ -93,7 +93,7 @@ namespace System.Windows
             if (IsSealed)
             {
                 throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
-            }                    
+            }
 
             AnimationStorage.ApplyAnimationClock(this, dp, clock, handoffBehavior);
         }
@@ -141,12 +141,12 @@ namespace System.Windows
 
             if (!AnimationStorage.IsPropertyAnimatable(this, dp))
             {
-        #pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
+#pragma warning disable 56506 // Suppress presharp warning: Parameter 'dp' to this public method must be validated:  A null-dereference can occur here.
                 throw new ArgumentException(SR.Format(SR.Animation_DependencyPropertyIsNotAnimatable, dp.Name, this.GetType()), "dp");
-        #pragma warning restore 56506
+#pragma warning restore 56506
             }
 
-            if (   animation != null
+            if (animation != null
                 && !AnimationStorage.IsAnimationValid(dp, animation))
             {
                 throw new ArgumentException(SR.Format(SR.Animation_AnimationTimelineTypeMismatch, animation.GetType(), dp.Name, dp.PropertyType), "animation");
@@ -160,7 +160,7 @@ namespace System.Windows
             if (IsSealed)
             {
                 throw new InvalidOperationException(SR.Format(SR.IAnimatable_CantAnimateSealedDO, dp, this.GetType()));
-            }                    
+            }
 
             AnimationStorage.BeginAnimation(this, dp, animation, handoffBehavior);
         }
@@ -213,8 +213,8 @@ namespace System.Windows
         /// <param name="metadata"></param>
         /// <param name="entry">EffectiveValueEntry computed by base</param>
         internal sealed override void EvaluateAnimatedValueCore(
-                DependencyProperty  dp,
-                PropertyMetadata    metadata,
+                DependencyProperty dp,
+                PropertyMetadata metadata,
             ref EffectiveValueEntry entry)
         {
             if (IAnimatable_HasAnimatedProperties)
@@ -223,7 +223,7 @@ namespace System.Windows
 
                 if (storage != null)
                 {
-                    storage.EvaluateAnimatedValue(metadata, ref entry);                      
+                    storage.EvaluateAnimatedValue(metadata, ref entry);
                 }
             }
         }
@@ -537,7 +537,7 @@ namespace System.Windows
             EnsureEventHandlersStore();
             EventHandlersStore.AddRoutedEventHandler(routedEvent, handler, handledEventsToo);
 
-            OnAddHandler (routedEvent, handler);
+            OnAddHandler(routedEvent, handler);
         }
 
         /// <summary>
@@ -594,7 +594,7 @@ namespace System.Windows
             {
                 store.RemoveRoutedEventHandler(routedEvent, handler);
 
-                OnRemoveHandler (routedEvent, handler);
+                OnRemoveHandler(routedEvent, handler);
 
                 if (store.Count == 0)
                 {
@@ -602,7 +602,7 @@ namespace System.Windows
                     EventHandlersStoreField.ClearValue(this);
                     WriteFlag(CoreFlags.ExistsEventHandlersStore, false);
                 }
-}
+            }
         }
 
         /// <summary>
@@ -650,7 +650,7 @@ namespace System.Windows
             // Add all class listeners for this UIElement
             while (classListeners != null)
             {
-                for(int i = 0; i < classListeners.Handlers.Length; i++)
+                for (int i = 0; i < classListeners.Handlers.Length; i++)
                 {
                     route.Add(this, classListeners.Handlers[i].Handler, classListeners.Handlers[i].InvokeHandledEventsToo);
                 }
@@ -699,7 +699,7 @@ namespace System.Windows
         {
             get
             {
-                if(!ReadFlag(CoreFlags.ExistsEventHandlersStore))
+                if (!ReadFlag(CoreFlags.ExistsEventHandlersStore))
                 {
                     return null;
                 }
@@ -819,7 +819,7 @@ namespace System.Windows
 
         private static void OnPreviewMouseDownThunk(object sender, MouseButtonEventArgs e)
         {
-            if(!e.Handled)
+            if (!e.Handled)
             {
                 UIElement uie = sender as UIElement;
 
@@ -848,12 +848,12 @@ namespace System.Windows
 
         private static void OnMouseDownThunk(object sender, MouseButtonEventArgs e)
         {
-            if(!e.Handled)
+            if (!e.Handled)
             {
                 CommandManager.TranslateInput((IInputElement)sender, e);
             }
 
-            if(!e.Handled)
+            if (!e.Handled)
             {
                 UIElement uie = sender as UIElement;
 
@@ -882,7 +882,7 @@ namespace System.Windows
 
         private static void OnPreviewMouseUpThunk(object sender, MouseButtonEventArgs e)
         {
-            if(!e.Handled)
+            if (!e.Handled)
             {
                 UIElement uie = sender as UIElement;
 
@@ -911,7 +911,7 @@ namespace System.Windows
 
         private static void OnMouseUpThunk(object sender, MouseButtonEventArgs e)
         {
-            if(!e.Handled)
+            if (!e.Handled)
             {
                 UIElement uie = sender as UIElement;
 
@@ -1219,7 +1219,7 @@ namespace System.Windows
 
             CommandManager.TranslateInput((IInputElement)sender, e);
 
-            if(!e.Handled)
+            if (!e.Handled)
             {
                 UIElement uie = sender as UIElement;
 
@@ -1949,7 +1949,7 @@ namespace System.Windows
 
             CommandManager.TranslateInput((IInputElement)sender, e);
 
-            if(!e.Handled)
+            if (!e.Handled)
             {
                 UIElement uie = sender as UIElement;
 
@@ -2780,7 +2780,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the mouse button was pressed
         /// </summary>
-        protected virtual void OnPreviewMouseDown(MouseButtonEventArgs e) {}
+        protected virtual void OnPreviewMouseDown(MouseButtonEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Mouse.MouseDownEvent.
@@ -2799,7 +2799,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the mouse button was pressed
         /// </summary>
-        protected virtual void OnMouseDown(MouseButtonEventArgs e) {}
+        protected virtual void OnMouseDown(MouseButtonEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseUpEvent.
@@ -2818,7 +2818,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the mouse button was released
         /// </summary>
-        protected virtual void OnPreviewMouseUp(MouseButtonEventArgs e) {}
+        protected virtual void OnPreviewMouseUp(MouseButtonEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Mouse.MouseUpEvent.
@@ -2837,7 +2837,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the mouse button was released
         /// </summary>
-        protected virtual void OnMouseUp(MouseButtonEventArgs e) {}
+        protected virtual void OnMouseUp(MouseButtonEventArgs e) { }
 
         /// <summary>
         ///     Declaration of the routed event reporting the left mouse button was pressed
@@ -2856,7 +2856,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the left mouse button was pressed
         /// </summary>
-        protected virtual void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e) {}
+        protected virtual void OnPreviewMouseLeftButtonDown(MouseButtonEventArgs e) { }
 
         /// <summary>
         ///     Declaration of the routed event reporting the left mouse button was pressed
@@ -2875,7 +2875,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the left mouse button was pressed
         /// </summary>
-        protected virtual void OnMouseLeftButtonDown(MouseButtonEventArgs e) {}
+        protected virtual void OnMouseLeftButtonDown(MouseButtonEventArgs e) { }
 
         /// <summary>
         ///     Declaration of the routed event reporting the left mouse button was released
@@ -2894,7 +2894,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the left mouse button was released
         /// </summary>
-        protected virtual void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e) {}
+        protected virtual void OnPreviewMouseLeftButtonUp(MouseButtonEventArgs e) { }
 
         /// <summary>
         ///     Declaration of the routed event reporting the left mouse button was released
@@ -2913,7 +2913,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the left mouse button was released
         /// </summary>
-        protected virtual void OnMouseLeftButtonUp(MouseButtonEventArgs e) {}
+        protected virtual void OnMouseLeftButtonUp(MouseButtonEventArgs e) { }
 
         /// <summary>
         ///     Declaration of the routed event reporting the right mouse button was pressed
@@ -2932,7 +2932,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the right mouse button was pressed
         /// </summary>
-        protected virtual void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e) {}
+        protected virtual void OnPreviewMouseRightButtonDown(MouseButtonEventArgs e) { }
 
         /// <summary>
         ///     Declaration of the routed event reporting the right mouse button was pressed
@@ -2951,7 +2951,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the right mouse button was pressed
         /// </summary>
-        protected virtual void OnMouseRightButtonDown(MouseButtonEventArgs e) {}
+        protected virtual void OnMouseRightButtonDown(MouseButtonEventArgs e) { }
 
         /// <summary>
         ///     Declaration of the routed event reporting the right mouse button was released
@@ -2970,7 +2970,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the right mouse button was released
         /// </summary>
-        protected virtual void OnPreviewMouseRightButtonUp(MouseButtonEventArgs e) {}
+        protected virtual void OnPreviewMouseRightButtonUp(MouseButtonEventArgs e) { }
 
         /// <summary>
         ///     Declaration of the routed event reporting the right mouse button was released
@@ -2989,7 +2989,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the right mouse button was released
         /// </summary>
-        protected virtual void OnMouseRightButtonUp(MouseButtonEventArgs e) {}
+        protected virtual void OnMouseRightButtonUp(MouseButtonEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseMoveEvent.
@@ -3008,7 +3008,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a mouse move
         /// </summary>
-        protected virtual void OnPreviewMouseMove(MouseEventArgs e) {}
+        protected virtual void OnPreviewMouseMove(MouseEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Mouse.MouseMoveEvent.
@@ -3027,7 +3027,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a mouse move
         /// </summary>
-        protected virtual void OnMouseMove(MouseEventArgs e) {}
+        protected virtual void OnMouseMove(MouseEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Mouse.PreviewMouseWheelEvent.
@@ -3046,7 +3046,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a mouse wheel rotation
         /// </summary>
-        protected virtual void OnPreviewMouseWheel(MouseWheelEventArgs e) {}
+        protected virtual void OnPreviewMouseWheel(MouseWheelEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Mouse.MouseWheelEvent.
@@ -3065,7 +3065,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a mouse wheel rotation
         /// </summary>
-        protected virtual void OnMouseWheel(MouseWheelEventArgs e) {}
+        protected virtual void OnMouseWheel(MouseWheelEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Mouse.MouseEnterEvent.
@@ -3084,7 +3084,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the mouse entered this element
         /// </summary>
-        protected virtual void OnMouseEnter(MouseEventArgs e) {}
+        protected virtual void OnMouseEnter(MouseEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Mouse.MouseLeaveEvent.
@@ -3103,7 +3103,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the mouse left this element
         /// </summary>
-        protected virtual void OnMouseLeave(MouseEventArgs e) {}
+        protected virtual void OnMouseLeave(MouseEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Mouse.GotMouseCaptureEvent.
@@ -3122,7 +3122,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting that this element got the mouse capture
         /// </summary>
-        protected virtual void OnGotMouseCapture(MouseEventArgs e) {}
+        protected virtual void OnGotMouseCapture(MouseEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Mouse.LostMouseCaptureEvent.
@@ -3141,7 +3141,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting that this element lost the mouse capture
         /// </summary>
-        protected virtual void OnLostMouseCapture(MouseEventArgs e) {}
+        protected virtual void OnLostMouseCapture(MouseEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Mouse.QueryCursorEvent.
@@ -3160,7 +3160,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the cursor to display was requested
         /// </summary>
-        protected virtual void OnQueryCursor(QueryCursorEventArgs e) {}
+        protected virtual void OnQueryCursor(QueryCursorEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusDownEvent.
@@ -3179,7 +3179,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a stylus-down
         /// </summary>
-        protected virtual void OnPreviewStylusDown(StylusDownEventArgs e) {}
+        protected virtual void OnPreviewStylusDown(StylusDownEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.StylusDownEvent.
@@ -3198,7 +3198,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a stylus-down
         /// </summary>
-        protected virtual void OnStylusDown(StylusDownEventArgs e) {}
+        protected virtual void OnStylusDown(StylusDownEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusUpEvent.
@@ -3217,7 +3217,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a stylus-up
         /// </summary>
-        protected virtual void OnPreviewStylusUp(StylusEventArgs e) {}
+        protected virtual void OnPreviewStylusUp(StylusEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.StylusUpEvent.
@@ -3236,7 +3236,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a stylus-up
         /// </summary>
-        protected virtual void OnStylusUp(StylusEventArgs e) {}
+        protected virtual void OnStylusUp(StylusEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusMoveEvent.
@@ -3255,7 +3255,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a stylus move
         /// </summary>
-        protected virtual void OnPreviewStylusMove(StylusEventArgs e) {}
+        protected virtual void OnPreviewStylusMove(StylusEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.StylusMoveEvent.
@@ -3274,7 +3274,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a stylus move
         /// </summary>
-        protected virtual void OnStylusMove(StylusEventArgs e) {}
+        protected virtual void OnStylusMove(StylusEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusInAirMoveEvent.
@@ -3293,7 +3293,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a stylus-in-air-move
         /// </summary>
-        protected virtual void OnPreviewStylusInAirMove(StylusEventArgs e) {}
+        protected virtual void OnPreviewStylusInAirMove(StylusEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.StylusInAirMoveEvent.
@@ -3312,7 +3312,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a stylus-in-air-move
         /// </summary>
-        protected virtual void OnStylusInAirMove(StylusEventArgs e) {}
+        protected virtual void OnStylusInAirMove(StylusEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.StylusEnterEvent.
@@ -3331,7 +3331,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the stylus entered this element
         /// </summary>
-        protected virtual void OnStylusEnter(StylusEventArgs e) {}
+        protected virtual void OnStylusEnter(StylusEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.StylusLeaveEvent.
@@ -3350,7 +3350,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the stylus left this element
         /// </summary>
-        protected virtual void OnStylusLeave(StylusEventArgs e) {}
+        protected virtual void OnStylusLeave(StylusEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusInRangeEvent.
@@ -3369,7 +3369,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the stylus is now in range of the digitizer
         /// </summary>
-        protected virtual void OnPreviewStylusInRange(StylusEventArgs e) {}
+        protected virtual void OnPreviewStylusInRange(StylusEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.StylusInRangeEvent.
@@ -3388,7 +3388,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the stylus is now in range of the digitizer
         /// </summary>
-        protected virtual void OnStylusInRange(StylusEventArgs e) {}
+        protected virtual void OnStylusInRange(StylusEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusOutOfRangeEvent.
@@ -3407,7 +3407,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the stylus is now out of range of the digitizer
         /// </summary>
-        protected virtual void OnPreviewStylusOutOfRange(StylusEventArgs e) {}
+        protected virtual void OnPreviewStylusOutOfRange(StylusEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.StylusOutOfRangeEvent.
@@ -3426,7 +3426,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the stylus is now out of range of the digitizer
         /// </summary>
-        protected virtual void OnStylusOutOfRange(StylusEventArgs e) {}
+        protected virtual void OnStylusOutOfRange(StylusEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusSystemGestureEvent.
@@ -3445,7 +3445,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a stylus system gesture
         /// </summary>
-        protected virtual void OnPreviewStylusSystemGesture(StylusSystemGestureEventArgs e) {}
+        protected virtual void OnPreviewStylusSystemGesture(StylusSystemGestureEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.StylusSystemGestureEvent.
@@ -3464,7 +3464,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a stylus system gesture
         /// </summary>
-        protected virtual void OnStylusSystemGesture(StylusSystemGestureEventArgs e) {}
+        protected virtual void OnStylusSystemGesture(StylusSystemGestureEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.GotStylusCaptureEvent.
@@ -3483,7 +3483,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting that this element got the stylus capture
         /// </summary>
-        protected virtual void OnGotStylusCapture(StylusEventArgs e) {}
+        protected virtual void OnGotStylusCapture(StylusEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.LostStylusCaptureEvent.
@@ -3502,7 +3502,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting that this element lost the stylus capture
         /// </summary>
-        protected virtual void OnLostStylusCapture(StylusEventArgs e) {}
+        protected virtual void OnLostStylusCapture(StylusEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.StylusButtonDownEvent.
@@ -3521,7 +3521,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the stylus button is down
         /// </summary>
-        protected virtual void OnStylusButtonDown(StylusButtonEventArgs e) {}
+        protected virtual void OnStylusButtonDown(StylusButtonEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.StylusButtonUpEvent.
@@ -3540,7 +3540,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the stylus button is up
         /// </summary>
-        protected virtual void OnStylusButtonUp(StylusButtonEventArgs e) {}
+        protected virtual void OnStylusButtonUp(StylusButtonEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusButtonDownEvent.
@@ -3559,7 +3559,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the stylus button is down
         /// </summary>
-        protected virtual void OnPreviewStylusButtonDown(StylusButtonEventArgs e) {}
+        protected virtual void OnPreviewStylusButtonDown(StylusButtonEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Stylus.PreviewStylusButtonUpEvent.
@@ -3578,7 +3578,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the stylus button is up
         /// </summary>
-        protected virtual void OnPreviewStylusButtonUp(StylusButtonEventArgs e) {}
+        protected virtual void OnPreviewStylusButtonUp(StylusButtonEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Keyboard.PreviewKeyDownEvent.
@@ -3597,7 +3597,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a key was pressed
         /// </summary>
-        protected virtual void OnPreviewKeyDown(KeyEventArgs e) {}
+        protected virtual void OnPreviewKeyDown(KeyEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Keyboard.KeyDownEvent.
@@ -3616,7 +3616,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a key was pressed
         /// </summary>
-        protected virtual void OnKeyDown(KeyEventArgs e) {}
+        protected virtual void OnKeyDown(KeyEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Keyboard.PreviewKeyUpEvent.
@@ -3635,7 +3635,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a key was released
         /// </summary>
-        protected virtual void OnPreviewKeyUp(KeyEventArgs e) {}
+        protected virtual void OnPreviewKeyUp(KeyEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Keyboard.KeyUpEvent.
@@ -3654,7 +3654,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a key was released
         /// </summary>
-        protected virtual void OnKeyUp(KeyEventArgs e) {}
+        protected virtual void OnKeyUp(KeyEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Keyboard.PreviewGotKeyboardFocusEvent.
@@ -3673,7 +3673,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting that the keyboard is focused on this element
         /// </summary>
-        protected virtual void OnPreviewGotKeyboardFocus(KeyboardFocusChangedEventArgs e) {}
+        protected virtual void OnPreviewGotKeyboardFocus(KeyboardFocusChangedEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Keyboard.GotKeyboardFocusEvent.
@@ -3692,7 +3692,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting that the keyboard is focused on this element
         /// </summary>
-        protected virtual void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e) {}
+        protected virtual void OnGotKeyboardFocus(KeyboardFocusChangedEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Keyboard.PreviewLostKeyboardFocusEvent.
@@ -3711,7 +3711,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting that the keyboard is no longer focusekeyboard is no longer focuseed
         /// </summary>
-        protected virtual void OnPreviewLostKeyboardFocus(KeyboardFocusChangedEventArgs e) {}
+        protected virtual void OnPreviewLostKeyboardFocus(KeyboardFocusChangedEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Keyboard.LostKeyboardFocusEvent.
@@ -3730,7 +3730,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting that the keyboard is no longer focusekeyboard is no longer focuseed
         /// </summary>
-        protected virtual void OnLostKeyboardFocus(KeyboardFocusChangedEventArgs e) {}
+        protected virtual void OnLostKeyboardFocus(KeyboardFocusChangedEventArgs e) { }
 
         /// <summary>
         ///     Alias to the TextCompositionManager.PreviewTextInputEvent.
@@ -3749,7 +3749,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting text composition
         /// </summary>
-        protected virtual void OnPreviewTextInput(TextCompositionEventArgs e) {}
+        protected virtual void OnPreviewTextInput(TextCompositionEventArgs e) { }
 
         /// <summary>
         ///     Alias to the TextCompositionManager.TextInputEvent.
@@ -3768,7 +3768,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting text composition
         /// </summary>
-        protected virtual void OnTextInput(TextCompositionEventArgs e) {}
+        protected virtual void OnTextInput(TextCompositionEventArgs e) { }
 
         /// <summary>
         ///     Alias to the DragDrop.PreviewQueryContinueDragEvent.
@@ -3787,7 +3787,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the preview query continue drag is going to happen
         /// </summary>
-        protected virtual void OnPreviewQueryContinueDrag(QueryContinueDragEventArgs e) {}
+        protected virtual void OnPreviewQueryContinueDrag(QueryContinueDragEventArgs e) { }
 
         /// <summary>
         ///     Alias to the DragDrop.QueryContinueDragEvent.
@@ -3806,7 +3806,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the query continue drag is going to happen
         /// </summary>
-        protected virtual void OnQueryContinueDrag(QueryContinueDragEventArgs e) {}
+        protected virtual void OnQueryContinueDrag(QueryContinueDragEventArgs e) { }
 
         /// <summary>
         ///     Alias to the DragDrop.PreviewGiveFeedbackEvent.
@@ -3825,7 +3825,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the preview give feedback is going to happen
         /// </summary>
-        protected virtual void OnPreviewGiveFeedback(GiveFeedbackEventArgs e) {}
+        protected virtual void OnPreviewGiveFeedback(GiveFeedbackEventArgs e) { }
 
         /// <summary>
         ///     Alias to the DragDrop.GiveFeedbackEvent.
@@ -3844,7 +3844,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the give feedback is going to happen
         /// </summary>
-        protected virtual void OnGiveFeedback(GiveFeedbackEventArgs e) {}
+        protected virtual void OnGiveFeedback(GiveFeedbackEventArgs e) { }
 
         /// <summary>
         ///     Alias to the DragDrop.PreviewDragEnterEvent.
@@ -3863,7 +3863,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the preview drag enter is going to happen
         /// </summary>
-        protected virtual void OnPreviewDragEnter(DragEventArgs e) {}
+        protected virtual void OnPreviewDragEnter(DragEventArgs e) { }
 
         /// <summary>
         ///     Alias to the DragDrop.DragEnterEvent.
@@ -3882,7 +3882,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the drag enter is going to happen
         /// </summary>
-        protected virtual void OnDragEnter(DragEventArgs e) {}
+        protected virtual void OnDragEnter(DragEventArgs e) { }
 
         /// <summary>
         ///     Alias to the DragDrop.PreviewDragOverEvent.
@@ -3901,7 +3901,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the preview drag over is going to happen
         /// </summary>
-        protected virtual void OnPreviewDragOver(DragEventArgs e) {}
+        protected virtual void OnPreviewDragOver(DragEventArgs e) { }
 
         /// <summary>
         ///     Alias to the DragDrop.DragOverEvent.
@@ -3920,7 +3920,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the drag over is going to happen
         /// </summary>
-        protected virtual void OnDragOver(DragEventArgs e) {}
+        protected virtual void OnDragOver(DragEventArgs e) { }
 
         /// <summary>
         ///     Alias to the DragDrop.PreviewDragLeaveEvent.
@@ -3939,7 +3939,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the preview drag leave is going to happen
         /// </summary>
-        protected virtual void OnPreviewDragLeave(DragEventArgs e) {}
+        protected virtual void OnPreviewDragLeave(DragEventArgs e) { }
 
         /// <summary>
         ///     Alias to the DragDrop.DragLeaveEvent.
@@ -3958,7 +3958,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the drag leave is going to happen
         /// </summary>
-        protected virtual void OnDragLeave(DragEventArgs e) {}
+        protected virtual void OnDragLeave(DragEventArgs e) { }
 
         /// <summary>
         ///     Alias to the DragDrop.PreviewDropEvent.
@@ -3977,7 +3977,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the preview drop is going to happen
         /// </summary>
-        protected virtual void OnPreviewDrop(DragEventArgs e) {}
+        protected virtual void OnPreviewDrop(DragEventArgs e) { }
 
         /// <summary>
         ///     Alias to the DragDrop.DropEvent.
@@ -3996,7 +3996,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the drag enter is going to happen
         /// </summary>
-        protected virtual void OnDrop(DragEventArgs e) {}
+        protected virtual void OnDrop(DragEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Touch.PreviewTouchDownEvent.
@@ -4016,7 +4016,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a finger touched the screen
         /// </summary>
-        protected virtual void OnPreviewTouchDown(TouchEventArgs e) {}
+        protected virtual void OnPreviewTouchDown(TouchEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Touch.TouchDownEvent.
@@ -4036,7 +4036,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a finger touched the screen
         /// </summary>
-        protected virtual void OnTouchDown(TouchEventArgs e) {}
+        protected virtual void OnTouchDown(TouchEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Touch.PreviewTouchMoveEvent.
@@ -4056,7 +4056,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a finger moved across the screen
         /// </summary>
-        protected virtual void OnPreviewTouchMove(TouchEventArgs e) {}
+        protected virtual void OnPreviewTouchMove(TouchEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Touch.TouchMoveEvent.
@@ -4076,7 +4076,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a finger moved across the screen
         /// </summary>
-        protected virtual void OnTouchMove(TouchEventArgs e) {}
+        protected virtual void OnTouchMove(TouchEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Touch.PreviewTouchUpEvent.
@@ -4096,7 +4096,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a finger lifted off the screen
         /// </summary>
-        protected virtual void OnPreviewTouchUp(TouchEventArgs e) {}
+        protected virtual void OnPreviewTouchUp(TouchEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Touch.TouchUpEvent.
@@ -4116,7 +4116,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a finger lifted off the screen
         /// </summary>
-        protected virtual void OnTouchUp(TouchEventArgs e) {}
+        protected virtual void OnTouchUp(TouchEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Touch.GotTouchCaptureEvent.
@@ -4136,7 +4136,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a finger was captured to an element
         /// </summary>
-        protected virtual void OnGotTouchCapture(TouchEventArgs e) {}
+        protected virtual void OnGotTouchCapture(TouchEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Touch.LostTouchCaptureEvent.
@@ -4156,7 +4156,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting a finger is no longer captured to an element
         /// </summary>
-        protected virtual void OnLostTouchCapture(TouchEventArgs e) {}
+        protected virtual void OnLostTouchCapture(TouchEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Touch.TouchEnterEvent.
@@ -4176,7 +4176,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the mouse entered this element
         /// </summary>
-        protected virtual void OnTouchEnter(TouchEventArgs e) {}
+        protected virtual void OnTouchEnter(TouchEventArgs e) { }
 
         /// <summary>
         ///     Alias to the Touch.TouchLeaveEvent.
@@ -4196,7 +4196,7 @@ namespace System.Windows
         /// <summary>
         ///     Virtual method reporting the mouse left this element
         /// </summary>
-        protected virtual void OnTouchLeave(TouchEventArgs e) {}
+        protected virtual void OnTouchLeave(TouchEventArgs e) { }
 
         /// <summary>
         ///     The key needed set a read-only property.
@@ -4218,7 +4218,7 @@ namespace System.Windows
 
         private static void IsMouseDirectlyOver_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((UIElement) d).RaiseIsMouseDirectlyOverChanged(e);
+            ((UIElement)d).RaiseIsMouseDirectlyOverChanged(e);
         }
 
         /// <summary>
@@ -4232,7 +4232,7 @@ namespace System.Windows
         /// </summary>
         public event DependencyPropertyChangedEventHandler IsMouseDirectlyOverChanged
         {
-            add    { EventHandlersStoreAdd(UIElement.IsMouseDirectlyOverChangedKey, value); }
+            add { EventHandlersStoreAdd(UIElement.IsMouseDirectlyOverChangedKey, value); }
             remove { EventHandlersStoreRemove(UIElement.IsMouseDirectlyOverChangedKey, value); }
         }
 
@@ -4314,7 +4314,7 @@ namespace System.Windows
         /// </summary>
         public event DependencyPropertyChangedEventHandler IsKeyboardFocusWithinChanged
         {
-            add    { EventHandlersStoreAdd(UIElement.IsKeyboardFocusWithinChangedKey, value); }
+            add { EventHandlersStoreAdd(UIElement.IsKeyboardFocusWithinChangedKey, value); }
             remove { EventHandlersStoreRemove(UIElement.IsKeyboardFocusWithinChangedKey, value); }
         }
 
@@ -4354,7 +4354,7 @@ namespace System.Windows
 
         private static void IsMouseCaptured_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((UIElement) d).RaiseIsMouseCapturedChanged(e);
+            ((UIElement)d).RaiseIsMouseCapturedChanged(e);
         }
 
         /// <summary>
@@ -4368,7 +4368,7 @@ namespace System.Windows
         /// </summary>
         public event DependencyPropertyChangedEventHandler IsMouseCapturedChanged
         {
-            add    { EventHandlersStoreAdd(UIElement.IsMouseCapturedChangedKey, value); }
+            add { EventHandlersStoreAdd(UIElement.IsMouseCapturedChangedKey, value); }
             remove { EventHandlersStoreRemove(UIElement.IsMouseCapturedChangedKey, value); }
         }
 
@@ -4416,7 +4416,7 @@ namespace System.Windows
         /// </summary>
         public event DependencyPropertyChangedEventHandler IsMouseCaptureWithinChanged
         {
-            add    { EventHandlersStoreAdd(UIElement.IsMouseCaptureWithinChangedKey, value); }
+            add { EventHandlersStoreAdd(UIElement.IsMouseCaptureWithinChangedKey, value); }
             remove { EventHandlersStoreRemove(UIElement.IsMouseCaptureWithinChangedKey, value); }
         }
 
@@ -4456,7 +4456,7 @@ namespace System.Windows
 
         private static void IsStylusDirectlyOver_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((UIElement) d).RaiseIsStylusDirectlyOverChanged(e);
+            ((UIElement)d).RaiseIsStylusDirectlyOverChanged(e);
         }
 
         /// <summary>
@@ -4470,7 +4470,7 @@ namespace System.Windows
         /// </summary>
         public event DependencyPropertyChangedEventHandler IsStylusDirectlyOverChanged
         {
-            add    { EventHandlersStoreAdd(UIElement.IsStylusDirectlyOverChangedKey, value); }
+            add { EventHandlersStoreAdd(UIElement.IsStylusDirectlyOverChangedKey, value); }
             remove { EventHandlersStoreRemove(UIElement.IsStylusDirectlyOverChangedKey, value); }
         }
 
@@ -4510,7 +4510,7 @@ namespace System.Windows
 
         private static void IsStylusCaptured_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((UIElement) d).RaiseIsStylusCapturedChanged(e);
+            ((UIElement)d).RaiseIsStylusCapturedChanged(e);
         }
 
         /// <summary>
@@ -4524,7 +4524,7 @@ namespace System.Windows
         /// </summary>
         public event DependencyPropertyChangedEventHandler IsStylusCapturedChanged
         {
-            add    { EventHandlersStoreAdd(UIElement.IsStylusCapturedChangedKey, value); }
+            add { EventHandlersStoreAdd(UIElement.IsStylusCapturedChangedKey, value); }
             remove { EventHandlersStoreRemove(UIElement.IsStylusCapturedChangedKey, value); }
         }
 
@@ -4572,7 +4572,7 @@ namespace System.Windows
         /// </summary>
         public event DependencyPropertyChangedEventHandler IsStylusCaptureWithinChanged
         {
-            add    { EventHandlersStoreAdd(UIElement.IsStylusCaptureWithinChangedKey, value); }
+            add { EventHandlersStoreAdd(UIElement.IsStylusCaptureWithinChangedKey, value); }
             remove { EventHandlersStoreRemove(UIElement.IsStylusCaptureWithinChangedKey, value); }
         }
 
@@ -4612,7 +4612,7 @@ namespace System.Windows
 
         private static void IsKeyboardFocused_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((UIElement) d).RaiseIsKeyboardFocusedChanged(e);
+            ((UIElement)d).RaiseIsKeyboardFocusedChanged(e);
         }
 
         /// <summary>
@@ -4626,7 +4626,7 @@ namespace System.Windows
         /// </summary>
         public event DependencyPropertyChangedEventHandler IsKeyboardFocusedChanged
         {
-            add    { EventHandlersStoreAdd(UIElement.IsKeyboardFocusedChangedKey, value); }
+            add { EventHandlersStoreAdd(UIElement.IsKeyboardFocusedChangedKey, value); }
             remove { EventHandlersStoreRemove(UIElement.IsKeyboardFocusedChangedKey, value); }
         }
 
@@ -4719,18 +4719,18 @@ namespace System.Windows
             return (_flags & field) != 0;
         }
 
-        internal void WriteFlag(CoreFlags field,bool value)
+        internal void WriteFlag(CoreFlags field, bool value)
         {
             if (value)
             {
-                 _flags |= field;
+                _flags |= field;
             }
             else
             {
-                 _flags &= (~field);
+                _flags &= (~field);
             }
         }
 
-        private CoreFlags       _flags;
+        private CoreFlags _flags;
     }
 }

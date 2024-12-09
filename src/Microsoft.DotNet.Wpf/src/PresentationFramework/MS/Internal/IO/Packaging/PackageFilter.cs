@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,18 +7,17 @@
 //   Managed equivalent of IFilter implemenation for Package
 //
 
+using System.Collections;
 using System.IO;
 using System.IO.Packaging;
-using System.Collections;
 using System.Runtime.InteropServices;   // For Marshal.ThrowExceptionForHR
 using System.Windows;                   // for ExceptionStringTable
 using Microsoft.Win32;                  // For RegistryKey
 using MS.Internal.Interop;              // For STAT_CHUNK, etc.
-using MS.Internal.Utility;              // For BindUriHelper
-
 using MS.Internal.IO.Packaging.Extensions;
-using Package = System.IO.Packaging.Package;
+using MS.Internal.Utility;              // For BindUriHelper
 using InternalPackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
+using Package = System.IO.Packaging.Package;
 
 namespace MS.Internal.IO.Packaging
 {
@@ -118,11 +117,11 @@ namespace MS.Internal.IO.Packaging
 
             if (_progress == Progress.FilteringCompleted)
             {
-                throw new COMException(SR.FilterEndOfChunks, 
+                throw new COMException(SR.FilterEndOfChunks,
                     (int)FilterErrorCode.FILTER_E_END_OF_CHUNKS);
             }
-                
-            while(true)
+
+            while (true)
             {
                 try
                 {
@@ -146,7 +145,7 @@ namespace MS.Internal.IO.Packaging
                         //
                         if (_progress == Progress.FilteringCoreProperties
                             || (chunk.flags & CHUNKSTATE.CHUNK_VALUE) != CHUNKSTATE.CHUNK_VALUE)
-                      {
+                        {
                             //
                             // Found the next chunk to return.
                             //
@@ -214,7 +213,7 @@ namespace MS.Internal.IO.Packaging
                     throw new COMException(SR.FilterEndOfChunks,
                         (int)FilterErrorCode.FILTER_E_END_OF_CHUNKS);
                 }
-            } 
+            }
         }
 
         /// <summary>
@@ -224,7 +223,7 @@ namespace MS.Internal.IO.Packaging
         {
             if (_progress != Progress.FilteringContent)
             {
-                throw new COMException(SR.FilterGetTextNotSupported, 
+                throw new COMException(SR.FilterGetTextNotSupported,
                     (int)FilterErrorCode.FILTER_E_NO_TEXT);
             }
 
@@ -258,7 +257,7 @@ namespace MS.Internal.IO.Packaging
         {
             throw new NotImplementedException(SR.FilterBindRegionNotImplemented);
         }
-        
+
         #endregion IFilter methods
 
         #region Private methods
@@ -283,12 +282,12 @@ namespace MS.Internal.IO.Packaging
             {
                 filter = (IFilter)Activator.CreateInstance(filterType);
             }
-            catch(InvalidCastException)
+            catch (InvalidCastException)
             {
                 // If the CLSID that was given is not a filter's CLSID, fail the creation silently.
                 return null;
             }
-            catch(COMException)
+            catch (COMException)
             {
                 // If the creation failed at the COM level, fail silently.
                 return null;
@@ -304,7 +303,7 @@ namespace MS.Internal.IO.Packaging
         /// This function results in _progress and _currentFilter being updated.
         /// </remarks>
         private void MoveToNextFilter()
-        {            
+        {
             // Reset _isInternalFilter.
             _isInternalFilter = false;
 
@@ -318,25 +317,26 @@ namespace MS.Internal.IO.Packaging
 
                     IndexingFilterMarshaler corePropertiesFilterMarshaler
                         = new IndexingFilterMarshaler(
-                        new CorePropertiesFilter(_package.PackageProperties));
-
-                    // Avoid exception on end of chunks from part filter.
-                    corePropertiesFilterMarshaler.ThrowOnEndOfChunks = false;
+                        new CorePropertiesFilter(_package.PackageProperties))
+                        {
+                            // Avoid exception on end of chunks from part filter.
+                            ThrowOnEndOfChunks = false
+                        };
 
                     _currentFilter = corePropertiesFilterMarshaler;
                     _currentFilter.Init(_grfFlags, _cAttributes, _aAttributes);
                     _isInternalFilter = true;
-                    
+
                     // Update progress to indicate filtering core properties.
                     _progress = Progress.FilteringCoreProperties;
-                    
+
                     break;
 
-                    #endregion Progress.FilteringNotStarted
+                #endregion Progress.FilteringNotStarted
 
                 case Progress.FilteringCoreProperties:
 
-                    #region Progress.FilteringCoreProperties
+                #region Progress.FilteringCoreProperties
 
                 // Core properties were being filtered. Next move to content filtering.
 
@@ -412,10 +412,11 @@ namespace MS.Internal.IO.Packaging
                             }
 
                             IndexingFilterMarshaler xamlFilterMarshaler
-                                = new IndexingFilterMarshaler(new XamlFilter(_currentStream));
-
-                            // Avoid exception on end of chunks from part filter.
-                            xamlFilterMarshaler.ThrowOnEndOfChunks = false;
+                                = new IndexingFilterMarshaler(new XamlFilter(_currentStream))
+                                {
+                                    // Avoid exception on end of chunks from part filter.
+                                    ThrowOnEndOfChunks = false
+                                };
 
                             _currentFilter = xamlFilterMarshaler;
                             _currentFilter.Init(_grfFlags, _cAttributes, _aAttributes);
@@ -441,13 +442,13 @@ namespace MS.Internal.IO.Packaging
                     {
                         // Tell GetChunk that we are getting input from a new filter.
                         _firstChunkFromFilter = true;
- 
+
                         // Update progress to indicate content being filtered.
                         _progress = Progress.FilteringContent;
                     }
                     break;
 
-                    #endregion Progress.FilteringContent
+                #endregion Progress.FilteringContent
 
                 case Progress.FilteringCompleted:
 
@@ -456,7 +457,7 @@ namespace MS.Internal.IO.Packaging
                     Debug.Assert(false);
                     break;
 
-                    #endregion Progress.FilteringCompleted
+                #endregion Progress.FilteringCompleted
 
                 default:
 
@@ -469,7 +470,7 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-         /// <summary>
+        /// <summary>
         /// Allocates a unique and legal chunk ID.
         /// To be called prior to returning a chunk.
         /// </summary>
@@ -480,9 +481,9 @@ namespace MS.Internal.IO.Packaging
         private uint AllocateChunkID()
         {
             Invariant.Assert(_currentChunkID <= UInt32.MaxValue);
- 
+
             ++_currentChunkID;
-            
+
             return _currentChunkID;
         }
 
@@ -515,7 +516,7 @@ namespace MS.Internal.IO.Packaging
             {
                 return null;
             }
-            RegistryKey iFilterIidKey = 
+            RegistryKey iFilterIidKey =
                 FindSubkey(
                     Registry.ClassesRoot,
                     MakeRegistryPath(_IFilterAddinPath, fileTypeGuid));
@@ -583,7 +584,7 @@ namespace MS.Internal.IO.Packaging
             // Extract \HKEY_CLASSES_ROOT\<extension>\PersistentHandler and return its default value.
             RegistryKey persistentHandlerKey =
                 FindSubkey(
-                    Registry.ClassesRoot, 
+                    Registry.ClassesRoot,
                     MakeRegistryPath(_persistentHandlerKey, dottedExtensionName));
             return (persistentHandlerKey == null ? null : (string)persistentHandlerKey.GetValue(null));
         }
@@ -608,7 +609,7 @@ namespace MS.Internal.IO.Packaging
         {
             Debug.Assert(pathWithGaps != null && stopGaps != null);
 
-            string[] path = (string[]) pathWithGaps.Clone();
+            string[] path = (string[])pathWithGaps.Clone();
             int nextStopGapToUse = 0;
 
             for (int i = 0; i < path.Length; ++i)
@@ -652,30 +653,30 @@ namespace MS.Internal.IO.Packaging
                 "Content Type"
             };
 
-        readonly string[] _persistentHandlerKey = 
+        readonly string[] _persistentHandlerKey =
             {
                 null,  // extension string expected
                 "PersistentHandler"
             };
-        
+
         #endregion Constants
 
         #region Fields
 
-        private Package             _package;
-        private uint                 _currentChunkID;       //defaults to 0
-        private IEnumerator         _partIterator;          //defaults to null
-        private IFilter             _currentFilter;         //defaults to null
-        private Stream              _currentStream;         //defaults to null
-        private bool                _firstChunkFromFilter;  //defaults to false
-        private Progress            _progress               = Progress.FilteringNotStarted;
-        private bool                _isInternalFilter;      //defaults to false
+        private Package _package;
+        private uint _currentChunkID;       //defaults to 0
+        private IEnumerator _partIterator;          //defaults to null
+        private IFilter _currentFilter;         //defaults to null
+        private Stream _currentStream;         //defaults to null
+        private bool _firstChunkFromFilter;  //defaults to false
+        private Progress _progress = Progress.FilteringNotStarted;
+        private bool _isInternalFilter;      //defaults to false
 
-        private IFILTER_INIT        _grfFlags;              //defaults to 0
-        private uint                _cAttributes;           //defaults to 0
-        private FULLPROPSPEC[]      _aAttributes;           //defaults to null
+        private IFILTER_INIT _grfFlags;              //defaults to 0
+        private uint _cAttributes;           //defaults to 0
+        private FULLPROPSPEC[] _aAttributes;           //defaults to null
 
-        private const string        _extension              = "Extension";
+        private const string _extension = "Extension";
 
         #endregion Fields
     }

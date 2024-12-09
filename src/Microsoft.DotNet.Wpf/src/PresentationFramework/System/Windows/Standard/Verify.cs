@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -130,7 +130,7 @@ namespace Standard
                 throw new ArgumentException("The parameter must be null.", name);
             }
         }
-        
+
         [DebuggerStepThrough]
         public static void PropertyIsNotNull<T>(T obj, string name) where T : class
         {
@@ -139,7 +139,7 @@ namespace Standard
                 throw new InvalidOperationException($"The property {name} cannot be null at this time.");
             }
         }
-        
+
         [DebuggerStepThrough]
         public static void PropertyIsNull<T>(T obj, string name) where T : class
         {
@@ -177,7 +177,7 @@ namespace Standard
                 throw new ArgumentException(message, name);
             }
         }
-    
+
         [DebuggerStepThrough]
         public static void AreEqual<T>(T expected, T actual, string parameterName, string message)
         {
@@ -194,7 +194,7 @@ namespace Standard
                 throw new ArgumentException(message, parameterName);
             }
         }
-      
+
         [DebuggerStepThrough]
         public static void AreNotEqual<T>(T notExpected, T actual, string parameterName, string message)
         {
@@ -211,7 +211,7 @@ namespace Standard
                 throw new ArgumentException(message, parameterName);
             }
         }
-        
+
         [DebuggerStepThrough]
         public static void UriIsAbsolute(Uri uri, string parameterName)
         {
@@ -236,7 +236,7 @@ namespace Standard
                 throw new ArgumentException(string.Create(CultureInfo.InvariantCulture, $"The integer value must be bounded with [{lowerBoundInclusive}, {upperBoundExclusive})"), parameterName);
             }
         }
-        
+
         [DebuggerStepThrough]
         public static void BoundedDoubleInc(double lowerBoundInclusive, double value, double upperBoundInclusive, string message, string parameter)
         {
@@ -245,7 +245,7 @@ namespace Standard
                 throw new ArgumentException(message, parameter);
             }
         }
-        
+
         [DebuggerStepThrough]
         public static void TypeSupportsInterface(Type type, Type interfaceType, string parameterName)
         {
@@ -258,7 +258,7 @@ namespace Standard
                 throw new ArgumentException("The type of this parameter does not support a required interface", parameterName);
             }
         }
-        
+
         [DebuggerStepThrough]
         public static void FileExists(string filePath, string parameterName)
         {
@@ -268,7 +268,7 @@ namespace Standard
                 throw new ArgumentException($"No file exists at \"{filePath}\"", parameterName);
             }
         }
-        
+
         [DebuggerStepThrough]
         internal static void ImplementsInterface(object parameter, Type interfaceType, string parameterName)
         {

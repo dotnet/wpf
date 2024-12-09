@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,7 +24,7 @@ namespace System.Windows.Automation.Peers
         public PasswordBoxAutomationPeer(PasswordBox owner) : base(owner)
         {
         }
-    
+
         /// <summary>
         /// Class name for the type for which this is a peer.
         /// </summary>
@@ -90,7 +90,7 @@ namespace System.Windows.Automation.Peers
         {
             return true;
         }
-        
+
         bool IValueProvider.IsReadOnly
         {
             get
@@ -101,7 +101,7 @@ namespace System.Windows.Automation.Peers
 
         string IValueProvider.Value
         {
-            get 
+            get
             {
                 //  We shouldn't throw InvalidOperationException, return an empty string instead
                 if (AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures)
@@ -117,7 +117,7 @@ namespace System.Windows.Automation.Peers
 
         void IValueProvider.SetValue(string value)
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             PasswordBox owner = (PasswordBox)Owner;

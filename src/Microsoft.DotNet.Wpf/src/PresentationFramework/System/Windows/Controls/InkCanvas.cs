@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,24 +9,23 @@
 //      editing ink
 //
 
-using MS.Internal.Commands;
-using MS.Internal.Controls;
-using MS.Internal.Ink;
-using MS.Internal.KnownBoxes;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
-using System.Windows.Media;
+using System.Windows.Automation.Peers;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
+using System.Windows.Media;
 using System.Windows.Threading;
-using System.Windows.Automation.Peers;
-
+using MS.Internal.Commands;
+using MS.Internal.Controls;
+using MS.Internal.Ink;
+using MS.Internal.KnownBoxes;
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 
 namespace System.Windows.Controls
@@ -104,22 +103,30 @@ namespace System.Windows.Controls
             defaultStyle.Setters.Add(new Setter(Stylus.IsTouchFeedbackEnabledProperty, false));
 
             // Set MinWidth to 350d if Width is set to Auto
-            Trigger trigger = new Trigger();
-            trigger.Property = WidthProperty;
-            trigger.Value = double.NaN;
-            Setter setter = new Setter();
-            setter.Property = MinWidthProperty;
-            setter.Value = 350d;
+            Trigger trigger = new Trigger
+            {
+                Property = WidthProperty,
+                Value = double.NaN
+            };
+            Setter setter = new Setter
+            {
+                Property = MinWidthProperty,
+                Value = 350d
+            };
             trigger.Setters.Add(setter);
             defaultStyle.Triggers.Add(trigger);
 
             // Set MinHeight to 250d if Height is set to Auto
-            trigger = new Trigger();
-            trigger.Property = HeightProperty;
-            trigger.Value = double.NaN;
-            setter = new Setter();
-            setter.Property = MinHeightProperty;
-            setter.Value = 250d;
+            trigger = new Trigger
+            {
+                Property = HeightProperty,
+                Value = double.NaN
+            };
+            setter = new Setter
+            {
+                Property = MinHeightProperty,
+                Value = 250d
+            };
             trigger.Setters.Add(setter);
             defaultStyle.Triggers.Add(trigger);
 
@@ -148,8 +155,10 @@ namespace System.Windows.Controls
             //
             // instance the DynamicRenderer and add it to the StylusPlugIns
             //
-            _dynamicRenderer = new DynamicRenderer();
-            _dynamicRenderer.Enabled = false;
+            _dynamicRenderer = new DynamicRenderer
+            {
+                Enabled = false
+            };
             this.StylusPlugIns.Add(_dynamicRenderer);
 
             //
@@ -173,7 +182,7 @@ namespace System.Windows.Controls
 
             // Register rti high contrast callback. Then check whether we are under the high contrast already.
             HighContrastHelper.RegisterHighContrastCallback(_rtiHighContrastCallback);
-            if ( SystemParameters.HighContrast )
+            if (SystemParameters.HighContrast)
             {
                 _rtiHighContrastCallback.TurnHighContrastOn(SystemColors.WindowTextColor);
             }
@@ -208,14 +217,14 @@ namespace System.Windows.Controls
         protected override Size MeasureOverride(Size availableSize)
         {
             // No need to invoke VerifyAccess since _localAdornerDecorator.Measure should check it.
-            if ( _localAdornerDecorator == null )
+            if (_localAdornerDecorator == null)
             {
                 ApplyTemplate();
             }
 
             _localAdornerDecorator.Measure(availableSize);
 
-            return  _localAdornerDecorator.DesiredSize;
+            return _localAdornerDecorator.DesiredSize;
         }
 
         /// <summary>
@@ -227,7 +236,7 @@ namespace System.Windows.Controls
         {
             // No need to invoke VerifyAccess since _localAdornerDecorator.Arrange should check it.
 
-            if ( _localAdornerDecorator == null )
+            if (_localAdornerDecorator == null)
             {
                 ApplyTemplate();
             }
@@ -272,22 +281,22 @@ namespace System.Windows.Controls
                     if (transform != null && !transform.HasAnimatedProperties)
                     {
                         TransformGroup transformGroup = transform as TransformGroup;
-                        if ( transformGroup != null )
+                        if (transformGroup != null)
                         {
                             //walk down the tree looking for animated transforms
                             Stack<Transform> transforms = new Stack<Transform>();
                             transforms.Push(transform);
-                            while ( transforms.Count > 0 )
+                            while (transforms.Count > 0)
                             {
                                 transform = transforms.Pop();
-                                if ( transform.HasAnimatedProperties )
+                                if (transform.HasAnimatedProperties)
                                 {
                                     return;
                                 }
                                 transformGroup = transform as TransformGroup;
-                                if ( transformGroup != null )
+                                if (transformGroup != null)
                                 {
-                                    for ( int i = 0; i < transformGroup.Children.Count; i++ )
+                                    for (int i = 0; i < transformGroup.Children.Count; i++)
                                     {
                                         transforms.Push(transformGroup.Children[i]);
                                     }
@@ -335,7 +344,7 @@ namespace System.Windows.Controls
             //     </AdornerDecorator>
             //  </InkCanvas>
 
-            if ( _localAdornerDecorator == null )
+            if (_localAdornerDecorator == null)
             {
                 //
                 _localAdornerDecorator = new AdornerDecorator();
@@ -364,8 +373,8 @@ namespace System.Windows.Controls
         /// </summary>
         protected override Visual GetVisualChild(int index)
         {
-            if (    (_localAdornerDecorator == null)
-                ||  (index != 0))
+            if ((_localAdornerDecorator == null)
+                || (index != 0))
             {
                 throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
             }
@@ -401,7 +410,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public Brush Background
         {
-            get { return (Brush) GetValue(BackgroundProperty); }
+            get { return (Brush)GetValue(BackgroundProperty); }
             set { SetValue(BackgroundProperty, value); }
         }
 
@@ -549,14 +558,14 @@ namespace System.Windows.Controls
         private static void OnPositioningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = d as UIElement;
-            if ( uie != null )
+            if (uie != null)
             {
                 // Make sure the UIElement is a child of InkCanvasInnerCanvas.
                 InkCanvasInnerCanvas p = VisualTreeHelper.GetParent(uie) as InkCanvasInnerCanvas;
-                if ( p != null )
+                if (p != null)
                 {
-                    if ( e.Property == InkCanvas.LeftProperty
-                        || e.Property == InkCanvas.TopProperty )
+                    if (e.Property == InkCanvas.LeftProperty
+                        || e.Property == InkCanvas.TopProperty)
                     {
                         // Invalidate measure for Left and/or Top.
                         p.InvalidateMeasure();
@@ -602,7 +611,7 @@ namespace System.Windows.Controls
             // only change the prop if it's a different object.  We don't
             // want to be doing this for no reason
             //
-            if ( !object.ReferenceEquals(oldValue, newValue) )
+            if (!object.ReferenceEquals(oldValue, newValue))
             {
                 // Clear the selected strokes without raising event.
                 inkCanvas.CoreChangeSelection(new StrokeCollection(), inkCanvas.InkCanvasSelection.SelectedElements, false);
@@ -625,18 +634,20 @@ namespace System.Windows.Controls
             get
             {
                 // We have to create our visual at this point.
-                if ( _selectionAdorner == null )
+                if (_selectionAdorner == null)
                 {
                     // Create the selection Adorner.
                     _selectionAdorner = new InkCanvasSelectionAdorner(InnerCanvas);
 
                     // Bind the InkCanvas.ActiveEditingModeProperty
                     // to SelectionAdorner.VisibilityProperty.
-                    Binding activeEditingModeBinding = new Binding();
-                    activeEditingModeBinding.Path = new PropertyPath(InkCanvas.ActiveEditingModeProperty);
-                    activeEditingModeBinding.Mode = BindingMode.OneWay;
-                    activeEditingModeBinding.Source = this;
-                    activeEditingModeBinding.Converter = new ActiveEditingMode2VisibilityConverter();
+                    Binding activeEditingModeBinding = new Binding
+                    {
+                        Path = new PropertyPath(InkCanvas.ActiveEditingModeProperty),
+                        Mode = BindingMode.OneWay,
+                        Source = this,
+                        Converter = new ActiveEditingMode2VisibilityConverter()
+                    };
                     _selectionAdorner.SetBinding(UIElement.VisibilityProperty, activeEditingModeBinding);
                 }
 
@@ -653,7 +664,7 @@ namespace System.Windows.Controls
             {
                 VerifyAccess();
 
-                if ( _feedbackAdorner == null )
+                if (_feedbackAdorner == null)
                 {
                     _feedbackAdorner = new InkCanvasFeedbackAdorner(this);
                 }
@@ -701,7 +712,7 @@ namespace System.Windows.Controls
                         new FrameworkPropertyMetadata(
                                 new DrawingAttributesDefaultValueFactory(),
                                 new PropertyChangedCallback(OnDefaultDrawingAttributesChanged)),
-                        (ValidateValueCallback)delegate(object value)
+                        (ValidateValueCallback)delegate (object value)
                             { return value != null; });
 
         /// <summary>
@@ -724,7 +735,7 @@ namespace System.Windows.Controls
             inkCanvas.UpdateDynamicRenderer(newValue);
 
             // We only fire Changed event when there is an instance change.
-            if ( !object.ReferenceEquals(oldValue, newValue) )
+            if (!object.ReferenceEquals(oldValue, newValue))
             {
                 //we didn't throw, change our backing value
                 oldValue.AttributeChanged -= new PropertyDataChangedEventHandler(inkCanvas.DefaultDrawingAttributes_Changed);
@@ -762,7 +773,7 @@ namespace System.Windows.Controls
                 _eraserShape = value;
 
 
-                if ( oldShape.Width != _eraserShape.Width || oldShape.Height != _eraserShape.Height
+                if (oldShape.Width != _eraserShape.Width || oldShape.Height != _eraserShape.Height
                     || oldShape.Rotation != _eraserShape.Rotation || oldShape.GetType() != _eraserShape.GetType())
                 {
                     EditingCoordinator.UpdatePointEraserCursor();
@@ -820,7 +831,7 @@ namespace System.Windows.Controls
 
         private static void OnEditingModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ( (InkCanvas)d ).RaiseEditingModeChanged(
+            ((InkCanvas)d).RaiseEditingModeChanged(
                                 new RoutedEventArgs(InkCanvas.EditingModeChangedEvent, d));
         }
 
@@ -848,7 +859,7 @@ namespace System.Windows.Controls
 
         private static void OnEditingModeInvertedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ( (InkCanvas)d ).RaiseEditingModeInvertedChanged(
+            ((InkCanvas)d).RaiseEditingModeInvertedChanged(
                 new RoutedEventArgs(InkCanvas.EditingModeInvertedChangedEvent, d));
         }
 
@@ -875,7 +886,7 @@ namespace System.Windows.Controls
             {
                 VerifyAccess();
 
-                if ( _useCustomCursor != value )
+                if (_useCustomCursor != value)
                 {
                     _useCustomCursor = value;
                     UpdateCursor();
@@ -1095,8 +1106,8 @@ namespace System.Windows.Controls
                 //
                 // only raise StrokeCollected if we're in InkCanvasEditingMode.Ink or InkCanvasEditingMode.InkAndGesture
                 //
-                if ( this.ActiveEditingMode == InkCanvasEditingMode.Ink ||
-                    this.ActiveEditingMode == InkCanvasEditingMode.InkAndGesture )
+                if (this.ActiveEditingMode == InkCanvasEditingMode.Ink ||
+                    this.ActiveEditingMode == InkCanvasEditingMode.InkAndGesture)
                 {
                     //add the stroke to the StrokeCollection and raise this event
                     this.Strokes.Add(e.Stroke);
@@ -1106,7 +1117,7 @@ namespace System.Windows.Controls
             finally
             {
                 // If the gesture events are failed, we should still add Stroke to the InkCanvas so that the data won't be lost.
-                if ( addStrokeToInkCanvas )
+                if (addStrokeToInkCanvas)
                 {
                     this.Strokes.Add(e.Stroke);
                 }
@@ -1368,13 +1379,13 @@ namespace System.Windows.Controls
         /// Occurs when the user has moved the selection, after they lift their stylus to commit the change.
         /// This event allows the developer to cancel the move.
         /// </summary>
-        public event  InkCanvasSelectionEditingEventHandler SelectionMoving;
+        public event InkCanvasSelectionEditingEventHandler SelectionMoving;
         /// <summary>
         /// Protected virtual version for developers deriving from InkCanvas.
         /// This method is what actually throws the event.
         /// </summary>
         /// <param name="e"> InkCanvasSelectionEditingEventArgs to raise the event with</param>
-        protected virtual void OnSelectionMoving( InkCanvasSelectionEditingEventArgs e)
+        protected virtual void OnSelectionMoving(InkCanvasSelectionEditingEventArgs e)
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
@@ -1389,7 +1400,7 @@ namespace System.Windows.Controls
         /// Allows the EditingBehaviors to raise the SelectionMoving event via the protected virtual
         /// </summary>
         /// <param name="e"> InkCanvasSelectionEditingEventArgs to raise the event with</param>
-        internal void RaiseSelectionMoving( InkCanvasSelectionEditingEventArgs e)
+        internal void RaiseSelectionMoving(InkCanvasSelectionEditingEventArgs e)
         {
             Debug.Assert(e != null, "EventArg can not be null");
             this.OnSelectionMoving(e);
@@ -1511,13 +1522,13 @@ namespace System.Windows.Controls
         /// Occurs when the user has resized the selection, after they lift their stylus to commit the change.
         /// This event allows the developer to cancel the resize.
         /// </summary>
-        public event  InkCanvasSelectionEditingEventHandler SelectionResizing;
+        public event InkCanvasSelectionEditingEventHandler SelectionResizing;
         /// <summary>
         /// Protected virtual version for developers deriving from InkCanvas.
         /// This method is what actually throws the event.
         /// </summary>
         /// <param name="e"> InkCanvasSelectionEditingEventArgs to raise the event with</param>
-        protected virtual void OnSelectionResizing( InkCanvasSelectionEditingEventArgs e)
+        protected virtual void OnSelectionResizing(InkCanvasSelectionEditingEventArgs e)
         {
             // No need to invoke VerifyAccess since this method is thread free.
 
@@ -1532,7 +1543,7 @@ namespace System.Windows.Controls
         /// Allows the EditingBehaviors to raise the SelectionResizing event via the protected virtual
         /// </summary>
         /// <param name="e"> InkCanvasSelectionEditingEventArgs to raise the event with</param>
-        internal void RaiseSelectionResizing( InkCanvasSelectionEditingEventArgs e)
+        internal void RaiseSelectionResizing(InkCanvasSelectionEditingEventArgs e)
         {
             Debug.Assert(e != null, "EventArg can not be null");
             this.OnSelectionResizing(e);
@@ -1738,7 +1749,7 @@ namespace System.Windows.Controls
 
             //
             // Try to switch to Select mode first. If we fail to change the mode, then just simply no-op.
-            if ( EnsureActiveEditingMode(InkCanvasEditingMode.Select) )
+            if (EnsureActiveEditingMode(InkCanvasEditingMode.Select))
             {
                 //
                 // validate
@@ -1764,7 +1775,7 @@ namespace System.Windows.Controls
             VerifyAccess();
 
             // Ensure the visual tree.
-            if ( _localAdornerDecorator == null )
+            if (_localAdornerDecorator == null)
             {
                 ApplyTemplate();
             }
@@ -1792,7 +1803,7 @@ namespace System.Windows.Controls
             InkCanvasClipboardDataFormats copiedDataFormats = PrivateCopySelection();
 
             // Don't even bother if we don't have a selection.
-            if ( copiedDataFormats != InkCanvasClipboardDataFormats.None )
+            if (copiedDataFormats != InkCanvasClipboardDataFormats.None)
             {
                 // Then delete the current selection. Note the XAML format won't be avaliable under Partial
                 // Trust. So, the selected element shouldn't be copied or removed.
@@ -1825,10 +1836,10 @@ namespace System.Windows.Controls
 
             if (double.IsNaN(point.X) ||
                 double.IsNaN(point.Y) ||
-                Double.IsInfinity(point.X)||
-                Double.IsInfinity(point.Y) )
+                Double.IsInfinity(point.X) ||
+                Double.IsInfinity(point.Y))
             {
-                    throw new ArgumentException(SR.InvalidPoint, "point");
+                throw new ArgumentException(SR.InvalidPoint, "point");
             }
 
 
@@ -1899,7 +1910,7 @@ namespace System.Windows.Controls
 
             ArgumentNullException.ThrowIfNull(value);
 
-            ( (IAddChild)InnerCanvas ).AddChild(value);
+            ((IAddChild)InnerCanvas).AddChild(value);
         }
 
         ///<summary>
@@ -1912,7 +1923,7 @@ namespace System.Windows.Controls
         {
             //             VerifyAccess();
 
-            ( (IAddChild)InnerCanvas ).AddText(textData);
+            ((IAddChild)InnerCanvas).AddText(textData);
         }
 
         #endregion IAddChild Interface
@@ -1935,7 +1946,7 @@ namespace System.Windows.Controls
                 //        VerifyAccess( );
 
                 // Return the private logical children of the InnerCanvas
-                return ( (InkCanvasInnerCanvas)InnerCanvas).PrivateLogicalChildren;
+                return ((InkCanvasInnerCanvas)InnerCanvas).PrivateLogicalChildren;
             }
         }
 
@@ -2013,15 +2024,17 @@ namespace System.Windows.Controls
             get
             {
                 VerifyAccess();
-                if ( _inkPresenter == null )
+                if (_inkPresenter == null)
                 {
                     _inkPresenter = new InkPresenter();
 
                     // Bind the InkPresenter.Strokes to InkCanvas.Strokes
-                    Binding strokes = new Binding();
-                    strokes.Path = new PropertyPath(InkCanvas.StrokesProperty);
-                    strokes.Mode = BindingMode.OneWay;
-                    strokes.Source = this;
+                    Binding strokes = new Binding
+                    {
+                        Path = new PropertyPath(InkCanvas.StrokesProperty),
+                        Mode = BindingMode.OneWay,
+                        Source = this
+                    };
                     _inkPresenter.SetBinding(InkPresenter.StrokesProperty, strokes);
                 }
                 return _inkPresenter;
@@ -2064,7 +2077,7 @@ namespace System.Windows.Controls
                 //harden against ExternalException
                 return false;
             }
-            if ( dataObj != null )
+            if (dataObj != null)
             {
                 canPaste = ClipboardProcessor.CheckDataFormats(dataObj);
             }
@@ -2085,12 +2098,12 @@ namespace System.Windows.Controls
             List<UIElement> newElements = new List<UIElement>();
 
             // Paste the data from the data object.
-            if ( !ClipboardProcessor.PasteData(dataObj, ref newStrokes, ref newElements) )
+            if (!ClipboardProcessor.PasteData(dataObj, ref newStrokes, ref newElements))
             {
                 // Paste was failed.
                 return;
             }
-            else if ( newStrokes.Count == 0 && newElements.Count == 0 )
+            else if (newStrokes.Count == 0 && newElements.Count == 0)
             {
                 // Nothing has been received from the clipboard.
                 return;
@@ -2098,12 +2111,12 @@ namespace System.Windows.Controls
 
             // We add elements here. Then we have to wait for the layout update.
             UIElementCollection children = Children;
-            foreach ( UIElement element in newElements )
+            foreach (UIElement element in newElements)
             {
                 children.Add(element);
             }
 
-            if ( newStrokes != null )
+            if (newStrokes != null)
             {
                 Strokes.Add(newStrokes);
             }
@@ -2116,7 +2129,7 @@ namespace System.Windows.Controls
             finally
             {
                 // Now move the selection to the desired location.
-                Rect bounds = GetSelectionBounds( );
+                Rect bounds = GetSelectionBounds();
                 InkCanvasSelection.CommitChanges(Rect.Offset(bounds, -bounds.Left + point.X, -bounds.Top + point.Y), false);
 
                 if (EditingMode != InkCanvasEditingMode.Select)
@@ -2133,14 +2146,14 @@ namespace System.Windows.Controls
         /// </summary>
         private InkCanvasClipboardDataFormats CopyToDataObject()
         {
-             DataObject dataObj;
+            DataObject dataObj;
             dataObj = new DataObject();
             InkCanvasClipboardDataFormats copiedDataFormats = InkCanvasClipboardDataFormats.None;
 
             // Try to copy the data from the InkCanvas to the clipboard.
             copiedDataFormats = ClipboardProcessor.CopySelectedData(dataObj);
 
-            if ( copiedDataFormats != InkCanvasClipboardDataFormats.None )
+            if (copiedDataFormats != InkCanvasClipboardDataFormats.None)
             {
                 // Put our data object into the clipboard.
                 Clipboard.SetDataObject(dataObj, true);
@@ -2185,10 +2198,12 @@ namespace System.Windows.Controls
                     _innerCanvas = new InkCanvasInnerCanvas(this);
 
                     // Bind the inner Canvas' Background to InkCanvas' Background
-                    Binding background = new Binding();
-                    background.Path = new PropertyPath(InkCanvas.BackgroundProperty);
-                    background.Mode = BindingMode.OneWay;
-                    background.Source = this;
+                    Binding background = new Binding
+                    {
+                        Path = new PropertyPath(InkCanvas.BackgroundProperty),
+                        Mode = BindingMode.OneWay,
+                        Source = this
+                    };
                     _innerCanvas.SetBinding(Panel.BackgroundProperty, background);
                 }
 
@@ -2203,7 +2218,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if ( _selection == null )
+                if (_selection == null)
                 {
                     _selection = new InkCanvasSelection(this);
                 }
@@ -2229,7 +2244,7 @@ namespace System.Windows.Controls
         /// Internal helper called by LassoSelectionBehavior to update the display
         /// of dynamically added strokes
         /// </summary>
-        internal void UpdateDynamicSelection(   StrokeCollection strokesToDynamicallySelect,
+        internal void UpdateDynamicSelection(StrokeCollection strokesToDynamicallySelect,
                                                 StrokeCollection strokesToDynamicallyUnselect)
         {
             EditingCoordinator.DebugCheckActiveBehavior(EditingCoordinator.LassoSelectionBehavior);
@@ -2285,7 +2300,7 @@ namespace System.Windows.Controls
         /// <returns>true if selection was cleared even after raising selectionchanging</returns>
         internal bool ClearSelectionRaiseSelectionChanging()
         {
-            if ( !InkCanvasSelection.HasSelection )
+            if (!InkCanvasSelection.HasSelection)
             {
                 return true;
             }
@@ -2293,7 +2308,7 @@ namespace System.Windows.Controls
             //
             // attempt to clear selection
             //
-            ChangeInkCanvasSelection(new StrokeCollection(), new UIElement[]{});
+            ChangeInkCanvasSelection(new StrokeCollection(), new UIElement[] { });
 
             return !InkCanvasSelection.HasSelection;
         }
@@ -2306,7 +2321,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal void ClearSelection(bool raiseSelectionChangedEvent)
         {
-            if ( InkCanvasSelection.HasSelection )
+            if (InkCanvasSelection.HasSelection)
             {
                 // Reset the current selection
                 CoreChangeSelection(new StrokeCollection(), new UIElement[] { }, raiseSelectionChangedEvent);
@@ -2328,7 +2343,7 @@ namespace System.Windows.Controls
             bool strokesAreDifferent;
             bool elementsAreDifferent;
             InkCanvasSelection.SelectionIsDifferentThanCurrent(strokes, out strokesAreDifferent, elements, out elementsAreDifferent);
-            if ( strokesAreDifferent || elementsAreDifferent )
+            if (strokesAreDifferent || elementsAreDifferent)
             {
                 InkCanvasSelectionChangingEventArgs args = new InkCanvasSelectionChangingEventArgs(strokes, elements);
 
@@ -2339,7 +2354,7 @@ namespace System.Windows.Controls
 
                 //now that the event has been raised and all of the delegates
                 //have had their way with it, process the result
-                if ( !args.Cancel )
+                if (!args.Cancel)
                 {
                     //
                     // rock and roll, time to validate our arguments
@@ -2349,15 +2364,15 @@ namespace System.Windows.Controls
 
                     // PERF-2006/05/02-WAYNEZEN,
                     // Check our internal flag. If the SelectedStrokes has been changed, we shouldn't do any extra work here.
-                    if ( args.StrokesChanged )
+                    if (args.StrokesChanged)
                     {
                         validStrokes = ValidateSelectedStrokes(args.GetSelectedStrokes());
                         int countOldSelectedStrokes = strokes.Count;
-                        for ( int i = 0; i < countOldSelectedStrokes; i++ )
+                        for (int i = 0; i < countOldSelectedStrokes; i++)
                         {
                             // PERF-2006/05/02-WAYNEZEN,
                             // We only have to reset IsSelected for the elements no longer exists in the new collection.
-                            if ( !validStrokes.Contains(strokes[i]) )
+                            if (!validStrokes.Contains(strokes[i]))
                             {
                                 //
                                 // Make sure we reset the IsSelected property which could have been
@@ -2370,7 +2385,7 @@ namespace System.Windows.Controls
 
                     // PERF-2006/05/02-WAYNEZEN,
                     // Check our internal flag. If the SelectedElements has been changed, we shouldn't do any extra work here.
-                    if ( args.ElementsChanged )
+                    if (args.ElementsChanged)
                     {
                         validElements = ValidateSelectedElements(args.GetSelectedElements());
                     }
@@ -2381,11 +2396,11 @@ namespace System.Windows.Controls
                 {
                     StrokeCollection currentSelectedStrokes = InkCanvasSelection.SelectedStrokes;
                     int countOldSelectedStrokes = strokes.Count;
-                    for ( int i = 0; i < countOldSelectedStrokes; i++ )
+                    for (int i = 0; i < countOldSelectedStrokes; i++)
                     {
                         // Make sure we reset the IsSelected property which could have been
                         // set to true in the dynamic selection but not being selected previously.
-                        if ( !currentSelectedStrokes.Contains(strokes[i]) )
+                        if (!currentSelectedStrokes.Contains(strokes[i]))
                         {
                             strokes[i].IsSelected = false;
                         }
@@ -2427,15 +2442,15 @@ namespace System.Windows.Controls
             int subsetCount = subset.Count;
 
             // special case an empty subset as a guaranteed subset
-            if ( subsetCount == 0 )
+            if (subsetCount == 0)
             {
                 return validStrokes;
             }
 
-            for ( int i = 0; i < subsetCount; i++ )
+            for (int i = 0; i < subsetCount; i++)
             {
                 Stroke stroke = subset[i];
-                if ( superset.Contains(stroke) )
+                if (superset.Contains(stroke))
                 {
                     validStrokes.Add(stroke);
                 }
@@ -2494,7 +2509,7 @@ namespace System.Windows.Controls
         {
             if (selectedElements == null)
             {
-                return new UIElement[]{};
+                return new UIElement[] { };
             }
 
             List<UIElement> elements = new List<UIElement>();
@@ -2502,12 +2517,12 @@ namespace System.Windows.Controls
             {
                 //
                 // Don't add the duplicated element.
-                if ( !elements.Contains(element) )
+                if (!elements.Contains(element))
                 {
                     //
                     // check the common case first, e
                     //
-                    if ( InkCanvasIsAncestorOf(element) )
+                    if (InkCanvasIsAncestorOf(element))
                     {
                         elements.Add(element);
                     }
@@ -2598,9 +2613,9 @@ namespace System.Windows.Controls
         {
             bool ret = true;
 
-            if ( ActiveEditingMode != newEditingMode )
+            if (ActiveEditingMode != newEditingMode)
             {
-                if ( EditingCoordinator.IsStylusInverted )
+                if (EditingCoordinator.IsStylusInverted)
                 {
                     EditingModeInverted = newEditingMode;
                 }
@@ -2610,7 +2625,7 @@ namespace System.Windows.Controls
                 }
 
                 // Verify whether user has cancelled the change in EditingModeChanging event.
-                ret = ( ActiveEditingMode == newEditingMode );
+                ret = (ActiveEditingMode == newEditingMode);
             }
 
             return ret;
@@ -2621,7 +2636,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                if ( _clipboardProcessor == null )
+                if (_clipboardProcessor == null)
                 {
                     _clipboardProcessor = new ClipboardProcessor(this);
                 }
@@ -2661,16 +2676,16 @@ namespace System.Windows.Controls
                 true);
 
             // Remove the ink.
-            if ( removeSelectedStrokes && strokes != null && strokes.Count != 0 )
+            if (removeSelectedStrokes && strokes != null && strokes.Count != 0)
             {
                 Strokes.Remove(strokes);
             }
 
             // Remove the elements.
-            if ( removeSelectedElements )
+            if (removeSelectedElements)
             {
                 UIElementCollection children = Children;
-                foreach ( UIElement element in elements )
+                foreach (UIElement element in elements)
                 {
                     children.Remove(element);
                 }
@@ -2689,32 +2704,32 @@ namespace System.Windows.Controls
 
             Debug.Assert(inkCanvas != null);
 
-            if ( inkCanvas.IsEnabled && !inkCanvas.EditingCoordinator.UserIsEditing )
+            if (inkCanvas.IsEnabled && !inkCanvas.EditingCoordinator.UserIsEditing)
             {
-                if ( command == ApplicationCommands.Delete )
+                if (command == ApplicationCommands.Delete)
                 {
                     inkCanvas.DeleteCurrentSelection(true, true);
                 }
-                else if ( command == ApplicationCommands.Cut )
+                else if (command == ApplicationCommands.Cut)
                 {
                     inkCanvas.CutSelection();
                 }
-                else if ( command == ApplicationCommands.Copy )
+                else if (command == ApplicationCommands.Copy)
                 {
                     inkCanvas.CopySelection();
                 }
-                else if ( command == ApplicationCommands.SelectAll )
+                else if (command == ApplicationCommands.SelectAll)
                 {
-                    if ( inkCanvas.ActiveEditingMode == InkCanvasEditingMode.Select )
+                    if (inkCanvas.ActiveEditingMode == InkCanvasEditingMode.Select)
                     {
                         IEnumerable<UIElement> children = null;
                         UIElementCollection uiElementCollection = inkCanvas.Children;
-                        if ( uiElementCollection.Count > 0 )
+                        if (uiElementCollection.Count > 0)
                         {
                             //UIElementCollection doesn't implement IEnumerable<UIElement>
                             //for some reason
                             UIElement[] uiElementArray = new UIElement[uiElementCollection.Count];
-                            for ( int i = 0; i < uiElementCollection.Count; i++ )
+                            for (int i = 0; i < uiElementCollection.Count; i++)
                             {
                                 uiElementArray[i] = uiElementCollection[i];
                             }
@@ -2723,27 +2738,27 @@ namespace System.Windows.Controls
                         inkCanvas.Select(inkCanvas.Strokes, children);
                     }
                 }
-                else if ( command == ApplicationCommands.Paste )
+                else if (command == ApplicationCommands.Paste)
                 {
                     try
                     {
                         inkCanvas.Paste();
                     }
                     // Eat it and do nothing if one of the following exceptions is caught.
-                    catch ( System.Runtime.InteropServices.COMException )
+                    catch (System.Runtime.InteropServices.COMException)
                     {
                         // The window may be destroyed which could cause the opening failed..
                     }
-                    catch ( XamlParseException )
+                    catch (XamlParseException)
                     {
                         // The Xaml parser fails
                     }
-                    catch ( ArgumentException )
+                    catch (ArgumentException)
                     {
                         // The ISF decoder fails
                     }
                 }
-                else if ( command == InkCanvas.DeselectCommand )
+                else if (command == InkCanvas.DeselectCommand)
                 {
                     inkCanvas.ClearSelectionRaiseSelectionChanging();
                 }
@@ -2762,19 +2777,19 @@ namespace System.Windows.Controls
 
             Debug.Assert(inkCanvas != null);
 
-            if ( inkCanvas.IsEnabled
+            if (inkCanvas.IsEnabled
                 //
                 // If user is editing, we should disable all commands.
-                && !inkCanvas.EditingCoordinator.UserIsEditing )
+                && !inkCanvas.EditingCoordinator.UserIsEditing)
             {
-                if ( command == ApplicationCommands.Delete
+                if (command == ApplicationCommands.Delete
                     || command == ApplicationCommands.Cut
                     || command == ApplicationCommands.Copy
-                    || command == InkCanvas.DeselectCommand )
+                    || command == InkCanvas.DeselectCommand)
                 {
                     args.CanExecute = inkCanvas.InkCanvasSelection.HasSelection;
                 }
-                else if ( command == ApplicationCommands.Paste )
+                else if (command == ApplicationCommands.Paste)
                 {
                     try
                     {
@@ -2782,17 +2797,17 @@ namespace System.Windows.Controls
                                             ? inkCanvas.UserInitiatedCanPaste() /* Call UserInitiatedCanPaste when the query is initiated by user */
                                             : inkCanvas.CanPaste() /* Call the public CanPaste if not */;
                     }
-                    catch ( System.Runtime.InteropServices.COMException )
+                    catch (System.Runtime.InteropServices.COMException)
                     {
                         // The window may be destroyed which could cause the opening failed..
                         // Eat the exception and do nothing.
                         args.CanExecute = false;
                     }
                 }
-                else if ( command == ApplicationCommands.SelectAll )
+                else if (command == ApplicationCommands.SelectAll)
                 {
                     //anything to select?
-                    args.CanExecute = ( inkCanvas.ActiveEditingMode == InkCanvasEditingMode.Select
+                    args.CanExecute = (inkCanvas.ActiveEditingMode == InkCanvasEditingMode.Select
                                             && (inkCanvas.Strokes.Count > 0 || inkCanvas.Children.Count > 0));
                 }
             }
@@ -2805,8 +2820,8 @@ namespace System.Windows.Controls
 
             //
             // Mark Handled as true so that the clipboard commands stops routing to InkCanvas' ancestors.
-            if ( command == ApplicationCommands.Cut || command == ApplicationCommands.Copy
-                || command == ApplicationCommands.Paste )
+            if (command == ApplicationCommands.Cut || command == ApplicationCommands.Copy
+                || command == ApplicationCommands.Paste)
             {
                 args.Handled = true;
             }
@@ -2817,7 +2832,7 @@ namespace System.Windows.Controls
             InkCanvasClipboardDataFormats copiedDataFormats = InkCanvasClipboardDataFormats.None;
 
             // Don't even bother if we don't have a selection or UserIsEditing has been set.
-            if ( InkCanvasSelection.HasSelection && !_editingCoordinator.UserIsEditing)
+            if (InkCanvasSelection.HasSelection && !_editingCoordinator.UserIsEditing)
             {
                 copiedDataFormats = CopyToDataObject();
             }
@@ -2835,7 +2850,7 @@ namespace System.Windows.Controls
         private static void _OnDeviceDown<TEventArgs>(object sender, TEventArgs e)
             where TEventArgs : InputEventArgs
         {
-            ( (InkCanvas)sender ).EditingCoordinator.OnInkCanvasDeviceDown(sender, e);
+            ((InkCanvas)sender).EditingCoordinator.OnInkCanvasDeviceDown(sender, e);
         }
 
         /// <summary>
@@ -2859,19 +2874,19 @@ namespace System.Windows.Controls
         {
             InkCanvas inkCanvas = (InkCanvas)sender;
 
-            if ( inkCanvas.UseCustomCursor )
+            if (inkCanvas.UseCustomCursor)
             {
                 // If UseCustomCursor is set, we bail out. Let the base class (FrameworkElement) to do the rest.
                 return;
             }
 
             // We should behave like our base - honor ForceCursor property.
-            if ( !e.Handled || inkCanvas.ForceCursor )
+            if (!e.Handled || inkCanvas.ForceCursor)
             {
                 Cursor cursor = inkCanvas.EditingCoordinator.GetActiveBehaviorCursor();
 
                 // If cursor is null, we don't handle the event and leave it as whatever the default is.
-                if ( cursor != null )
+                if (cursor != null)
                 {
                     e.Cursor = cursor;
                     e.Handled = true;
@@ -2887,7 +2902,7 @@ namespace System.Windows.Controls
         /// </summary>
         internal void UpdateCursor()
         {
-            if ( IsMouseOver )
+            if (IsMouseOver)
             {
                 Mouse.UpdateCursor();
             }
@@ -3003,7 +3018,7 @@ namespace System.Windows.Controls
                 InkCanvasEditingMode activeMode = (InkCanvasEditingMode)o;
 
                 // If the current EditingMode is the mode which menuitem is expecting, return true for IsChecked.
-                if ( activeMode != InkCanvasEditingMode.None )
+                if (activeMode != InkCanvasEditingMode.None)
                 {
                     return Visibility.Visible;
                 }
@@ -3027,75 +3042,75 @@ namespace System.Windows.Controls
         /// <summary>
         /// The element that represents the selected ink strokes, if any exist.  Will frequently be null.
         /// </summary>
-        private InkCanvasSelection          _selection = null;
-        private InkCanvasSelectionAdorner   _selectionAdorner = null;
-        private InkCanvasFeedbackAdorner    _feedbackAdorner = null;
+        private InkCanvasSelection _selection = null;
+        private InkCanvasSelectionAdorner _selectionAdorner = null;
+        private InkCanvasFeedbackAdorner _feedbackAdorner = null;
 
         /// <summary>
         /// The internal Canvas used to hold elements
         /// </summary>
-        private InkCanvasInnerCanvas        _innerCanvas = null;
+        private InkCanvasInnerCanvas _innerCanvas = null;
 
         /// <summary>
         /// The internal private AdornerDecorator
         /// </summary>
-        private AdornerDecorator            _localAdornerDecorator = null;
+        private AdornerDecorator _localAdornerDecorator = null;
 
         /// <summary>
         /// Runtime Selection StrokeCollection
         /// </summary>
-        private StrokeCollection            _dynamicallySelectedStrokes;
+        private StrokeCollection _dynamicallySelectedStrokes;
 
         /// <summary>
         /// Our editing logic
         /// </summary>
-        private EditingCoordinator          _editingCoordinator;
+        private EditingCoordinator _editingCoordinator;
 
         /// <summary>
         /// Defines the default StylusPointDescription
         /// </summary>
-        private StylusPointDescription     _defaultStylusPointDescription;
+        private StylusPointDescription _defaultStylusPointDescription;
 
 
         /// <summary>
         /// Defines the shape of the eraser tip
         /// </summary>
-        private StylusShape                 _eraserShape;
+        private StylusShape _eraserShape;
 
         /// <summary>
         /// Determines if EditingBehaviors should use their own cursor or a custom one specified.
         /// </summary>
-        private bool                        _useCustomCursor = false;
+        private bool _useCustomCursor = false;
 
 
         //
         // Rendering support.
         //
-        private InkPresenter                _inkPresenter;
+        private InkPresenter _inkPresenter;
 
         //
         // The RealTimeInking PlugIn that handles our off UIContext rendering.
         //
-        private DynamicRenderer             _dynamicRenderer;
+        private DynamicRenderer _dynamicRenderer;
 
         //
         // Clipboard Helper
         //
-        private ClipboardProcessor          _clipboardProcessor;
+        private ClipboardProcessor _clipboardProcessor;
 
         //
         // Gesture support
         //
-        private GestureRecognizer           _gestureRecognizer;
+        private GestureRecognizer _gestureRecognizer;
 
         //
         // HighContrast support
         //
-        private RTIHighContrastCallback     _rtiHighContrastCallback;
+        private RTIHighContrastCallback _rtiHighContrastCallback;
 
-        private const double                    c_pasteDefaultLocation = 0.0;
+        private const double c_pasteDefaultLocation = 0.0;
 
-        private const string InkCanvasDeselectKey   = "Esc";
+        private const string InkCanvasDeselectKey = "Esc";
         private const string KeyCtrlInsert = "Ctrl+Insert";
         private const string KeyShiftInsert = "Shift+Insert";
         private const string KeyShiftDelete = "Shift+Delete";

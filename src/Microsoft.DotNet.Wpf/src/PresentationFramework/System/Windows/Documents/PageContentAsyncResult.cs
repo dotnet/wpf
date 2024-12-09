@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.IO;
-using System.Windows.Threading;
 using System.Threading;
+using System.Windows.Threading;
 
 //
 // Description:
@@ -46,7 +46,7 @@ namespace System.Windows.Documents
             this._callback = callback;
             this._asyncState = state;
             this._getpageStatus = GetPageStatus.Loading;
-            this._child  = child;
+            this._child = child;
             this._baseUri = baseUri;
             Debug.Assert(source == null || source.IsAbsoluteUri);
             this._source = source;
@@ -68,7 +68,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region IAsyncResult
-    
+
         //---------------------------------------------------------------------
         /// <summary>
         /// Gets a user-defined object that contains information about 
@@ -87,7 +87,7 @@ namespace System.Windows.Documents
         /// </summary>
         public WaitHandle AsyncWaitHandle
         {
-            get { Debug.Assert(false);  return null; }
+            get { Debug.Assert(false); return null; }
         }
 
         //---------------------------------------------------------------------
@@ -115,9 +115,9 @@ namespace System.Windows.Documents
         // Internal Methods
         //
         //---------------------------------------------------------------------
-        
+
         #region DispatcherOperationCallback
-        
+
         //---------------------------------------------------------------------
         internal object Dispatch(object arg)
         {
@@ -145,14 +145,14 @@ namespace System.Windows.Documents
                         //
                         Stream responseStream;
                         PageContent._LoadPageImpl(this._baseUri, this._source, out _result, out responseStream);
-            
+
                         if (_result == null || _result.IsInitialized)
                         {
                             responseStream.Close();
                         }
                         else
                         {
-                            _pendingStream = responseStream; 
+                            _pendingStream = responseStream;
                             _result.Initialized += new EventHandler(_OnPaserFinished);
                         }
                         _getpageStatus = GetPageStatus.Finished;
@@ -162,7 +162,7 @@ namespace System.Windows.Documents
                     {
                         this._exception = e;
                     }
-                    goto case GetPageStatus.Finished;                    
+                    goto case GetPageStatus.Finished;
 
                 case GetPageStatus.Cancelled:
                     // do nothing
@@ -202,7 +202,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
         internal Exception Exception
         {
-            get  { return _exception; }
+            get { return _exception; }
         }
 
         //-----------------------------------------------------------------
@@ -248,18 +248,18 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Private
-        private object              _asyncState;
-        private bool    _isCompleted;
-        private bool    _completedSynchronously;
-        private AsyncCallback  _callback;
-        private Exception      _exception;
+        private object _asyncState;
+        private bool _isCompleted;
+        private bool _completedSynchronously;
+        private AsyncCallback _callback;
+        private Exception _exception;
         private GetPageStatus _getpageStatus;
         private Uri _baseUri;
         private Uri _source;
         private FixedPage _child;
         private Dispatcher _dispatcher;
         private FixedPage _result;
-        private Stream  _pendingStream;
+        private Stream _pendingStream;
         private DispatcherOperation _dispatcherOperation;
         #endregion Private
     }

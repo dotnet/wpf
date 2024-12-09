@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,7 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Constructors
-        
+
         /// <summary>
         ///     Default ctor
         /// </summary>
@@ -29,9 +29,9 @@ namespace System.Windows.Media.Media3D
         {
             _children = new Visual3DCollection(this);
         }
-        
+
         #endregion Constructors
-        
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -50,11 +50,11 @@ namespace System.Windows.Media.Media3D
         ///       During this virtual call it is not valid to modify the Visual tree. 
         /// </summary>
         protected sealed override Visual3D GetVisual3DChild(int index)
-        {            
+        {
             //VisualCollection does the range check for index
             return _children[index];
         }
-        
+
         /// <summary>
         ///  Derived classes override this property to enable the Visual code to enumerate 
         ///  the Visual children. Derived classes need to return the number of children
@@ -65,10 +65,10 @@ namespace System.Windows.Media.Media3D
         ///  Remark: During this virtual method the Visual tree must not be modified.
         /// </summary>        
         protected sealed override int Visual3DChildrenCount
-        {           
+        {
             get { return _children.Count; }
         }
-        
+
         void IAddChild.AddChild(Object value)
         {
             ArgumentNullException.ThrowIfNull(value);
@@ -118,11 +118,12 @@ namespace System.Windows.Media.Media3D
                     /* propertyType = */ typeof(Model3D),
                     /* ownerType = */ typeof(ModelVisual3D),
                     new PropertyMetadata(ContentPropertyChanged),
-                    (ValidateValueCallback) delegate { return MediaContext.CurrentMediaContext.WriteAccessEnabled; });
+                    (ValidateValueCallback)delegate
+                    { return MediaContext.CurrentMediaContext.WriteAccessEnabled; });
 
         private static void ContentPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ModelVisual3D owner = ((ModelVisual3D) d);
+            ModelVisual3D owner = ((ModelVisual3D)d);
 
             // if it's not a subproperty change, then we need to change the protected Model property of Visual3D
             if (!e.IsASubPropertyChange)
@@ -130,7 +131,7 @@ namespace System.Windows.Media.Media3D
                 owner.Visual3DModel = (Model3D)e.NewValue;
             }
         }
-        
+
         /// <summary>
         ///     The Model3D to render
         /// </summary>
@@ -138,7 +139,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Model3D) GetValue(ContentProperty);
+                return (Model3D)GetValue(ContentProperty);
             }
 
             set
@@ -158,7 +159,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Transform3D) GetValue(TransformProperty);
+                return (Transform3D)GetValue(TransformProperty);
             }
 
             set
@@ -166,21 +167,21 @@ namespace System.Windows.Media.Media3D
                 SetValue(TransformProperty, value);
             }
         }
-        
+
         #endregion Public Methods
-        
+
         //------------------------------------------------------
         //
         //  Public Properties
         //
         //------------------------------------------------------
-        
+
         //------------------------------------------------------
         //
         //  Public Events
         //
         //------------------------------------------------------
-        
+
         //------------------------------------------------------
         //
         //  Internal Methods
@@ -192,7 +193,7 @@ namespace System.Windows.Media.Media3D
         //  Private Fields
         //
         //------------------------------------------------------
-        
+
         #region Private Fields
 
         private readonly Visual3DCollection _children;
@@ -204,7 +205,7 @@ namespace System.Windows.Media.Media3D
         //  Internal Fields
         //
         //------------------------------------------------------
-        
+
         #region Internal Fields
 
         #endregion Internal Fields

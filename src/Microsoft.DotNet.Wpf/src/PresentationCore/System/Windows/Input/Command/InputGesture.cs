@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,7 +32,7 @@ namespace System.Windows.Input
         //  Public Methods
         //
         //------------------------------------------------------
-#region Public Methods
+        #region Public Methods
         /// <summary>
         /// Sees if the InputGesture matches the input associated with the inputEventArgs
         /// </summary>
@@ -47,7 +47,7 @@ namespace System.Windows.Input
         /// </returns>
         public abstract bool Matches(object targetElement, InputEventArgs inputEventArgs);
 
-#endregion Public Methods
+        #endregion Public Methods
     }
- }
+}
 

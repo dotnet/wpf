@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace System.Windows.Media.Effects
         }
 
         #endregion
-        
+
         /// <summary>
         /// Takes in content bounds, and returns the bounds of the rendered
         /// output of that content after the Effect is applied.
@@ -35,7 +35,7 @@ namespace System.Windows.Media.Effects
             topLeft.Y = contentBounds.TopLeft.Y - radius;
             bottomRight.X = contentBounds.BottomRight.X + radius;
             bottomRight.Y = contentBounds.BottomRight.Y + radius;
-            
+
             return new Rect(topLeft, bottomRight);
         }
     }

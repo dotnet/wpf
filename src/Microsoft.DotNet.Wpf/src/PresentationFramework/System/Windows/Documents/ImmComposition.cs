@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,15 +7,15 @@
 //  This class handles IMM32 IME's composition string and support level 3 input to TextBox and RichTextBox.
 //
 
-using System.Runtime.InteropServices;
 using System.Collections;
-using System.Windows.Media;
+using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Interop;
-using MS.Win32;
-using MS.Internal.Documents;
+using System.Windows.Media;
 using MS.Internal;
+using MS.Internal.Documents;
 using MS.Internal.Interop;
+using MS.Win32;
 
 // Enable presharp pragma warning suppress directives.
 #pragma warning disable 1634, 1691
@@ -788,8 +788,10 @@ namespace System.Windows.Documents
                 milPointCaret = compositionTarget.TransformToDevice.Transform(milPointCaret);
 
                 // Build COMPOSITIONFORM. COMPOSITIONFORM is window coodidate.
-                NativeMethods.COMPOSITIONFORM compform = new NativeMethods.COMPOSITIONFORM();
-                compform.dwStyle = NativeMethods.CFS_RECT;
+                NativeMethods.COMPOSITIONFORM compform = new NativeMethods.COMPOSITIONFORM
+                {
+                    dwStyle = NativeMethods.CFS_RECT
+                };
                 compform.rcArea.left = ConvertToInt32(milPointTopLeft.X);
                 compform.rcArea.right = ConvertToInt32(milPointBottomRight.X);
                 compform.rcArea.top = ConvertToInt32(milPointTopLeft.Y);
@@ -960,7 +962,7 @@ namespace System.Windows.Documents
                 (((caretOffset >= 0) &&
                   (caretOffset < attributes.Length) &&
                   (attributes[caretOffset] == NativeMethods.ATTR_INPUT)) ||
-                // If the prev char os the cursorPos is INPUTATTR.
+                 // If the prev char os the cursorPos is INPUTATTR.
                  ((caretOffset > 0) &&
                   ((caretOffset - 1) < attributes.Length) &&
                   (attributes[caretOffset - 1] == NativeMethods.ATTR_INPUT))))

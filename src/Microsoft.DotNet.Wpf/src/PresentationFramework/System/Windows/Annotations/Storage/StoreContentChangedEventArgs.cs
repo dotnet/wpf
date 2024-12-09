@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -52,7 +52,7 @@ namespace System.Windows.Annotations.Storage
         //------------------------------------------------------
 
         #region Constructors
-        
+
         /// <summary>
         ///     Creates an instance of AnnotationUpdatedEventArgs with the
         ///     specified action and annotation.
@@ -68,7 +68,7 @@ namespace System.Windows.Annotations.Storage
         }
 
         #endregion Constructors
-        
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -88,7 +88,7 @@ namespace System.Windows.Annotations.Storage
         //------------------------------------------------------
 
         #region Public Properties
-        
+
         /// <summary>
         ///     Returns the IAnnotation that was updated.
         /// </summary>
@@ -127,8 +127,8 @@ namespace System.Windows.Annotations.Storage
 
         #region Private Fields
 
-        private StoreContentAction  _action;        // action taken on the annotation
-        private Annotation          _annotation;    // annotation that was updated
+        private StoreContentAction _action;        // action taken on the annotation
+        private Annotation _annotation;    // annotation that was updated
 
         #endregion Private Fields
     }

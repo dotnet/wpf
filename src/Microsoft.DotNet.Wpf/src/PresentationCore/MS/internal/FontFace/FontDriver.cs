@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.IO;
 using System.Runtime.InteropServices;
-using MS.Internal.PresentationCore;
 using MS.Internal.FontCache;
+using MS.Internal.PresentationCore;
 
 // Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
@@ -31,47 +31,47 @@ namespace MS.Internal.FontFace
 
         private struct DirectoryEntry
         {
-            internal TrueTypeTags   tag;
+            internal TrueTypeTags tag;
             internal CheckedPointer pointer;
         }
 
         private enum TrueTypeTags : int
         {
-            CharToIndexMap      = 0x636d6170,        /* 'cmap' */
-            ControlValue        = 0x63767420,        /* 'cvt ' */
-            BitmapData          = 0x45424454,        /* 'EBDT' */
-            BitmapLocation      = 0x45424c43,        /* 'EBLC' */
-            BitmapScale         = 0x45425343,        /* 'EBSC' */
-            Editor0             = 0x65647430,        /* 'edt0' */
-            Editor1             = 0x65647431,        /* 'edt1' */
-            Encryption          = 0x63727970,        /* 'cryp' */
-            FontHeader          = 0x68656164,        /* 'head' */
-            FontProgram         = 0x6670676d,        /* 'fpgm' */
-            GridfitAndScanProc  = 0x67617370,        /* 'gasp' */
-            GlyphDirectory      = 0x67646972,        /* 'gdir' */
-            GlyphData           = 0x676c7966,        /* 'glyf' */
-            HoriDeviceMetrics   = 0x68646d78,        /* 'hdmx' */
-            HoriHeader          = 0x68686561,        /* 'hhea' */
-            HorizontalMetrics   = 0x686d7478,        /* 'hmtx' */
-            IndexToLoc          = 0x6c6f6361,        /* 'loca' */
-            Kerning             = 0x6b65726e,        /* 'kern' */
-            LinearThreshold     = 0x4c545348,        /* 'LTSH' */
-            MaxProfile          = 0x6d617870,        /* 'maxp' */
-            NamingTable         = 0x6e616d65,        /* 'name' */
-            OS_2                = 0x4f532f32,        /* 'OS/2' */
-            Postscript          = 0x706f7374,        /* 'post' */
-            PreProgram          = 0x70726570,        /* 'prep' */
-            VertDeviceMetrics   = 0x56444d58,        /* 'VDMX' */
-            VertHeader          = 0x76686561,        /* 'vhea' */
-            VerticalMetrics     = 0x766d7478,        /* 'vmtx' */
-            PCLT                = 0x50434C54,        /* 'PCLT' */
-            TTO_GSUB            = 0x47535542,        /* 'GSUB' */
-            TTO_GPOS            = 0x47504F53,        /* 'GPOS' */
-            TTO_GDEF            = 0x47444546,        /* 'GDEF' */
-            TTO_BASE            = 0x42415345,        /* 'BASE' */
-            TTO_JSTF            = 0x4A535446,        /* 'JSTF' */
-            OTTO                = 0x4f54544f,        // Adobe OpenType 'OTTO'
-            TTC_TTCF            = 0x74746366         // 'ttcf'
+            CharToIndexMap = 0x636d6170,        /* 'cmap' */
+            ControlValue = 0x63767420,        /* 'cvt ' */
+            BitmapData = 0x45424454,        /* 'EBDT' */
+            BitmapLocation = 0x45424c43,        /* 'EBLC' */
+            BitmapScale = 0x45425343,        /* 'EBSC' */
+            Editor0 = 0x65647430,        /* 'edt0' */
+            Editor1 = 0x65647431,        /* 'edt1' */
+            Encryption = 0x63727970,        /* 'cryp' */
+            FontHeader = 0x68656164,        /* 'head' */
+            FontProgram = 0x6670676d,        /* 'fpgm' */
+            GridfitAndScanProc = 0x67617370,        /* 'gasp' */
+            GlyphDirectory = 0x67646972,        /* 'gdir' */
+            GlyphData = 0x676c7966,        /* 'glyf' */
+            HoriDeviceMetrics = 0x68646d78,        /* 'hdmx' */
+            HoriHeader = 0x68686561,        /* 'hhea' */
+            HorizontalMetrics = 0x686d7478,        /* 'hmtx' */
+            IndexToLoc = 0x6c6f6361,        /* 'loca' */
+            Kerning = 0x6b65726e,        /* 'kern' */
+            LinearThreshold = 0x4c545348,        /* 'LTSH' */
+            MaxProfile = 0x6d617870,        /* 'maxp' */
+            NamingTable = 0x6e616d65,        /* 'name' */
+            OS_2 = 0x4f532f32,        /* 'OS/2' */
+            Postscript = 0x706f7374,        /* 'post' */
+            PreProgram = 0x70726570,        /* 'prep' */
+            VertDeviceMetrics = 0x56444d58,        /* 'VDMX' */
+            VertHeader = 0x76686561,        /* 'vhea' */
+            VerticalMetrics = 0x766d7478,        /* 'vmtx' */
+            PCLT = 0x50434C54,        /* 'PCLT' */
+            TTO_GSUB = 0x47535542,        /* 'GSUB' */
+            TTO_GPOS = 0x47504F53,        /* 'GPOS' */
+            TTO_GDEF = 0x47444546,        /* 'GDEF' */
+            TTO_BASE = 0x42415345,        /* 'BASE' */
+            TTO_JSTF = 0x4A535446,        /* 'JSTF' */
+            OTTO = 0x4f54544f,        // Adobe OpenType 'OTTO'
+            TTC_TTCF = 0x74746366         // 'ttcf'
         }
 
         #endregion
@@ -92,7 +92,7 @@ namespace MS.Internal.FontFace
         {
             unsafe
             {
-                byte * readBuffer = (byte *)pointer.Probe(0, 2);
+                byte* readBuffer = (byte*)pointer.Probe(0, 2);
                 ushort result = (ushort)((readBuffer[0] << 8) + readBuffer[1]);
                 return result;
             }
@@ -102,7 +102,7 @@ namespace MS.Internal.FontFace
         {
             unsafe
             {
-                byte * readBuffer = (byte *)pointer.Probe(0, 4);
+                byte* readBuffer = (byte*)pointer.Probe(0, 4);
                 int result = (int)((((((readBuffer[0] << 8) + readBuffer[1]) << 8) + readBuffer[2]) << 8) + readBuffer[3]);
                 return result;
             }
@@ -269,17 +269,17 @@ namespace MS.Internal.FontFace
             }
         }
 
-            
+
         #endregion Public methods and properties   
-        
+
         #region Fields
 
         // file-specific state
-        private CheckedPointer          _fileStream;
-        private UnmanagedMemoryStream   _unmanagedMemoryStream;
-        private Uri                     _sourceUri;
-        private int                     _numFaces;
-        private FontTechnology          _technology;
+        private CheckedPointer _fileStream;
+        private UnmanagedMemoryStream _unmanagedMemoryStream;
+        private Uri _sourceUri;
+        private int _numFaces;
+        private FontTechnology _technology;
 
         // face-specific state
         private int _faceIndex;

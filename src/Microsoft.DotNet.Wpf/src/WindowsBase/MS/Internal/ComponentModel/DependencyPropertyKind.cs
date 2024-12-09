@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,7 +34,7 @@ namespace MS.Internal.ComponentModel
     // A property cannot be both attached and direct.  If a property defines
     // both accessors direct accessors take precidence.
     //
-    internal class DependencyPropertyKind 
+    internal class DependencyPropertyKind
     {
         //------------------------------------------------------
         //
@@ -64,14 +64,14 @@ namespace MS.Internal.ComponentModel
         {
             get
             {
-                if (!_isInternalChecked) 
+                if (!_isInternalChecked)
                 {
                     // The property is internal if it has no public
                     // static Get method or no public CLR accessor.  If we already
                     // calculated it to be a direct or attached property, bail because
                     // it's clearly not internal.
 
-                    if (!_isAttached && !_isDirect) 
+                    if (!_isAttached && !_isDirect)
                     {
                         if (DependencyObjectPropertyDescriptor.GetAttachedPropertyMethod(_dp) == null &&
                             _dp.OwnerType.GetProperty(_dp.Name, _dp.PropertyType) == null)
@@ -94,7 +94,7 @@ namespace MS.Internal.ComponentModel
         {
             get
             {
-                if (!_isAttachedChecked) 
+                if (!_isAttachedChecked)
                 {
                     // A property cannot be both attached and direct,
                     // so if this property is already direct we have our
@@ -103,14 +103,14 @@ namespace MS.Internal.ComponentModel
                     // over attached on the same object, so we need to 
                     // force the check if it hasn't been done.
 
-                    if (!IsDirect) 
+                    if (!IsDirect)
                     {
                         // If the attached property is AddOwnered to this type, we
                         // don't treat it as attached because, by definition, attached
                         // properties can only have one owner, and any AddOwnered version
                         // beceomes a direct property.
 
-                        if (_dp.OwnerType == _targetType || _dp.OwnerType.IsAssignableFrom(_targetType) || DependencyProperty.FromName(_dp.Name, _targetType) != _dp) 
+                        if (_dp.OwnerType == _targetType || _dp.OwnerType.IsAssignableFrom(_targetType) || DependencyProperty.FromName(_dp.Name, _targetType) != _dp)
                         {
                             if (DependencyObjectPropertyDescriptor.GetAttachedPropertyMethod(_dp) != null)
                             {
@@ -133,7 +133,7 @@ namespace MS.Internal.ComponentModel
         {
             get
             {
-                if (!_isDirectChecked) 
+                if (!_isDirectChecked)
                 {
                     // If we've already calculated attached, we 
                     // know the answer if _isAttached is true because
@@ -141,9 +141,9 @@ namespace MS.Internal.ComponentModel
 
                     // No need to also check _isAttachedChecked since this will 
                     // only be true if the check has been done.
-                    if (!_isAttached) 
+                    if (!_isAttached)
                     {
-                        if (DependencyProperty.FromName(_dp.Name, _targetType) == _dp) 
+                        if (DependencyProperty.FromName(_dp.Name, _targetType) == _dp)
                         {
                             if (_targetType.GetProperty(_dp.Name, _dp.PropertyType) != null)
                             {
@@ -160,7 +160,7 @@ namespace MS.Internal.ComponentModel
             }
         }
 
-    
+
         //------------------------------------------------------
         //
         //  Private Fields

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,11 +15,11 @@ namespace System.Windows.Automation.Peers
         IInvokeProvider, IScrollItemProvider, ITransformProvider, IVirtualizedItemProvider
     {
         public DataGridColumnHeaderItemAutomationPeer(object item, DataGridColumn column, DataGridColumnHeadersPresenterAutomationPeer peer)
-            :base(item, peer)
+            : base(item, peer)
         {
             _column = column;
         }
-                
+
         #region AutomationPeer Overrides
 
         /// <summary>
@@ -84,7 +84,7 @@ namespace System.Windows.Automation.Peers
                         {
                             return this;
                         }
-                        
+
                         break;
                     }
                 case PatternInterface.VirtualizedItem:
@@ -136,36 +136,36 @@ namespace System.Windows.Automation.Peers
 
         #region ITransformProvider
 
-        bool ITransformProvider.CanMove 
-        { 
-            get 
-            { 
-                return false; 
-            } 
+        bool ITransformProvider.CanMove
+        {
+            get
+            {
+                return false;
+            }
         }
 
-        bool ITransformProvider.CanResize 
-        { 
-            get 
-            { 
+        bool ITransformProvider.CanResize
+        {
+            get
+            {
                 if (this.Column != null)
                     return Column.CanUserResize;
                 return false;
-            } 
+            }
         }
 
-        bool ITransformProvider.CanRotate 
-        { 
-            get 
-            { 
-                return false; 
-            } 
+        bool ITransformProvider.CanRotate
+        {
+            get
+            {
+                return false;
+            }
         }
 
         void ITransformProvider.Move(double x, double y)
         {
             throw new InvalidOperationException(SR.DataGridColumnHeaderItemAutomationPeer_Unsupported);
-        } 
+        }
 
         void ITransformProvider.Resize(double width, double height)
         {
@@ -190,7 +190,7 @@ namespace System.Windows.Automation.Peers
         void IVirtualizedItemProvider.Realize()
         {
             if (this.OwningDataGrid != null)
-                OwningDataGrid.ScrollIntoView(null,Column);
+                OwningDataGrid.ScrollIntoView(null, Column);
         }
 
         #endregion

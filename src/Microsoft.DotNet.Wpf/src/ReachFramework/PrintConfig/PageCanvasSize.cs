@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -180,10 +180,10 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="XmlException">XML parser finds non-well-formness of XML</exception>
         internal override sealed bool BuildProperty(XmlPrintCapReader reader)
         {
-            #if _DEBUG
+#if _DEBUG
             Trace.Assert(reader.CurrentElementNodeType == PrintSchemaNodeTypes.Property,
                     "THIS SHOULD NOT HAPPEN: RootPropertyPropCallback gets non-Property node");
-            #endif
+#endif
 
             int subPropDepth = reader.CurrentElementDepth + 1;
 
@@ -198,16 +198,16 @@ namespace MS.Internal.Printing.Configuration
                         this._imageableSizeWidth = reader.GetCurrentPropertyIntValueWithException();
                     }
                     // We want to catch internal FormatException to skip recoverable XML content syntax error
-                    #pragma warning suppress 56502
-                    #if _DEBUG
+#pragma warning suppress 56502
+#if _DEBUG
                     catch (FormatException e)
-                    #else
+#else
                     catch (FormatException)
-                    #endif
+#endif
                     {
-                        #if _DEBUG
+#if _DEBUG
                         Trace.WriteLine("-Error- " + e.Message);
-                        #endif
+#endif
                     }
                 }
                 else if (reader.CurrentElementNameAttrValue == PrintSchemaTags.Keywords.PageImageableSizeKeys.ImageableSizeHeight)
@@ -217,16 +217,16 @@ namespace MS.Internal.Printing.Configuration
                         this._imageableSizeHeight = reader.GetCurrentPropertyIntValueWithException();
                     }
                     // We want to catch internal FormatException to skip recoverable XML content syntax error
-                    #pragma warning suppress 56502
-                    #if _DEBUG
+#pragma warning suppress 56502
+#if _DEBUG
                     catch (FormatException e)
-                    #else
+#else
                     catch (FormatException)
-                    #endif
+#endif
                     {
-                        #if _DEBUG
+#if _DEBUG
                         Trace.WriteLine("-Error- " + e.Message);
-                        #endif
+#endif
                     }
                 }
                 else if (reader.CurrentElementNameAttrValue == PrintSchemaTags.Keywords.PageImageableSizeKeys.ImageableArea)
@@ -249,16 +249,16 @@ namespace MS.Internal.Printing.Configuration
                                 this._imageableArea._originWidth = reader.GetCurrentPropertyIntValueWithException();
                             }
                             // We want to catch internal FormatException to skip recoverable XML content syntax error
-                            #pragma warning suppress 56502
-                            #if _DEBUG
+#pragma warning suppress 56502
+#if _DEBUG
                             catch (FormatException e)
-                            #else
+#else
                             catch (FormatException)
-                            #endif
+#endif
                             {
-                                #if _DEBUG
+#if _DEBUG
                                 Trace.WriteLine("-Error- " + e.Message);
-                                #endif
+#endif
                             }
                         }
                         else if (reader.CurrentElementNameAttrValue == PrintSchemaTags.Keywords.PageImageableSizeKeys.OriginHeight)
@@ -268,16 +268,16 @@ namespace MS.Internal.Printing.Configuration
                                 this._imageableArea._originHeight = reader.GetCurrentPropertyIntValueWithException();
                             }
                             // We want to catch internal FormatException to skip recoverable XML content syntax error
-                            #pragma warning suppress 56502
-                            #if _DEBUG
+#pragma warning suppress 56502
+#if _DEBUG
                             catch (FormatException e)
-                            #else
+#else
                             catch (FormatException)
-                            #endif
+#endif
                             {
-                                #if _DEBUG
+#if _DEBUG
                                 Trace.WriteLine("-Error- " + e.Message);
-                                #endif
+#endif
                             }
                         }
                         else if (reader.CurrentElementNameAttrValue == PrintSchemaTags.Keywords.PageImageableSizeKeys.ExtentWidth)
@@ -287,16 +287,16 @@ namespace MS.Internal.Printing.Configuration
                                 this._imageableArea._extentWidth = reader.GetCurrentPropertyIntValueWithException();
                             }
                             // We want to catch internal FormatException to skip recoverable XML content syntax error
-                            #pragma warning suppress 56502
-                            #if _DEBUG
+#pragma warning suppress 56502
+#if _DEBUG
                             catch (FormatException e)
-                            #else
+#else
                             catch (FormatException)
-                            #endif
+#endif
                             {
-                                #if _DEBUG
+#if _DEBUG
                                 Trace.WriteLine ("-Error- " + e.Message);
-                                #endif
+#endif
                             }
                         }
                         else if (reader.CurrentElementNameAttrValue == PrintSchemaTags.Keywords.PageImageableSizeKeys.ExtentHeight)
@@ -306,37 +306,37 @@ namespace MS.Internal.Printing.Configuration
                                 this._imageableArea._extentHeight = reader.GetCurrentPropertyIntValueWithException();
                             }
                             // We want to catch internal FormatException to skip recoverable XML content syntax error
-                            #pragma warning suppress 56502
-                            #if _DEBUG
+#pragma warning suppress 56502
+#if _DEBUG
                             catch (FormatException e)
-                            #else
+#else
                             catch (FormatException)
-                            #endif
+#endif
                             {
-                                #if _DEBUG
+#if _DEBUG
                                 Trace.WriteLine ("-Error- " + e.Message);
-                                #endif
+#endif
                             }
                         }
                         else
                         {
-                            #if _DEBUG
+#if _DEBUG
                             Trace.WriteLine("-Warning- skip unknown ImageableArea sub-property '" +
                                             reader.CurrentElementNameAttrValue + "' at line " +
                                             reader._xmlReader.LineNumber + ", position " +
                                             reader._xmlReader.LinePosition);
-                            #endif
+#endif
                         }
                     }
                 }
                 else
                 {
-                    #if _DEBUG
+#if _DEBUG
                     Trace.WriteLine("-Warning- skip unknown PageImageableSize sub-Property '" +
                                     reader.CurrentElementNameAttrValue + "' at line " +
                                     reader._xmlReader.LineNumber + ", position " +
                                     reader._xmlReader.LinePosition);
-                    #endif
+#endif
                 }
             }
 
@@ -362,9 +362,9 @@ namespace MS.Internal.Printing.Configuration
             }
             else
             {
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Error- invalid PageImageableSize size values: " + this.ToString());
-                #endif
+#endif
             }
 
             return isValid;

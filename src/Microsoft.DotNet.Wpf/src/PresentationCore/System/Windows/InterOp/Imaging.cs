@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //
 //
 
-using MS.Internal;
 using System.Windows.Media.Imaging;
+using MS.Internal;
 
 namespace System.Windows.Interop
 {
@@ -57,7 +57,7 @@ namespace System.Windows.Interop
 
             return new InteropBitmap(bitmap, palette, sourceRect, sizeOptions, alphaOptions); // use the critical version
         }
-        
+
         /// <summary>
         /// Construct an Bitmap from a HICON.
         /// </summary>
@@ -109,6 +109,6 @@ namespace System.Windows.Interop
 
             return new InteropBitmap(section, pixelWidth, pixelHeight, format, stride, offset);
         }
-}
+    }
 }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -96,10 +96,10 @@ namespace MS.Internal.PtsHost
                     // NOTE: dcpO - dcpN is always <= delN
                     if (dtr.StartIndex < _dtrs[i].StartIndex)
                     {
-                        int delta  = _dtrs[i].StartIndex - dtr.StartIndex;
+                        int delta = _dtrs[i].StartIndex - dtr.StartIndex;
                         int adjust = Math.Min(_dtrs[i].PositionsAdded, dtr.PositionsRemoved - delta);
-                        _dtrs[i].StartIndex        = dtr.StartIndex;
-                        _dtrs[i].PositionsAdded   += dtr.PositionsAdded   - adjust;
+                        _dtrs[i].StartIndex = dtr.StartIndex;
+                        _dtrs[i].PositionsAdded += dtr.PositionsAdded - adjust;
                         _dtrs[i].PositionsRemoved += dtr.PositionsRemoved - adjust;
                     }
                     // b) New DTR starts in the range of the previous DTR. In this case
@@ -110,10 +110,10 @@ namespace MS.Internal.PtsHost
                     // NOTE: dcpN - dcpO is always <= addO
                     else
                     {
-                        int delta  = dtr.StartIndex - _dtrs[i].StartIndex;
+                        int delta = dtr.StartIndex - _dtrs[i].StartIndex;
                         int adjust = Math.Min(dtr.PositionsRemoved, _dtrs[i].PositionsAdded - delta);
                         //_dtrs[i].dcp: no need to change it
-                        _dtrs[i].PositionsAdded   += dtr.PositionsAdded   - adjust;
+                        _dtrs[i].PositionsAdded += dtr.PositionsAdded - adjust;
                         _dtrs[i].PositionsRemoved += dtr.PositionsRemoved - adjust;
                     }
 
@@ -123,8 +123,9 @@ namespace MS.Internal.PtsHost
                 else
                 {
                     // The new DTR has to be inserted before DTR at position 'i'.
-                    if (_count == _dtrs.Length) { Resize(); }
-                    Array.Copy(_dtrs, i, _dtrs, i+1, _count-i);
+                    if (_count == _dtrs.Length)
+                    { Resize(); }
+                    Array.Copy(_dtrs, i, _dtrs, i + 1, _count - i);
                     _dtrs[i] = dtr;
                     ++_count;
                 }
@@ -133,7 +134,8 @@ namespace MS.Internal.PtsHost
             else
             {
                 // The new DTR has to be appended to the end of the list.
-                if (_count == _dtrs.Length) { Resize(); }
+                if (_count == _dtrs.Length)
+                { Resize(); }
                 _dtrs[_count] = dtr;
                 ++_count;
             }
@@ -234,7 +236,7 @@ namespace MS.Internal.PtsHost
                 }
                 ++i;
             }
-            last = (i < _count) ? i : _count-1;
+            last = (i < _count) ? i : _count - 1;
 
             // If there are DTRs in the specified range, create new DtrList object
             if (last >= first)
@@ -262,7 +264,7 @@ namespace MS.Internal.PtsHost
         {
             while (index + 1 < _count)
             {
-                DirtyTextRange dtrNext = _dtrs[index+1];
+                DirtyTextRange dtrNext = _dtrs[index + 1];
 
                 // DTR starts in the range of the previous DTR. In this case
                 // merge these 2 DTRs.
@@ -297,7 +299,8 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         private void Append(DirtyTextRange dtr)
         {
-            if (_count == _dtrs.Length) { Resize(); }
+            if (_count == _dtrs.Length)
+            { Resize(); }
             _dtrs[_count] = dtr;
             ++_count;
         }
@@ -311,7 +314,7 @@ namespace MS.Internal.PtsHost
             Debug.Assert(_dtrs.Length > 0);
 
             // Allocate new array and copy all existing entries into it
-            DirtyTextRange [] newdtrs = new DirtyTextRange[_dtrs.Length * 2];
+            DirtyTextRange[] newdtrs = new DirtyTextRange[_dtrs.Length * 2];
             Array.Copy(_dtrs, newdtrs, _dtrs.Length);
             _dtrs = newdtrs;
         }
@@ -319,9 +322,9 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Array like access to list of DTRs.
         // ------------------------------------------------------------------
-        internal int Length 
-        { 
-            get { return _count; } 
+        internal int Length
+        {
+            get { return _count; }
         }
         internal DirtyTextRange this[int index]
         {
@@ -331,7 +334,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Array of DTRs. This array stores sorted list of DTRs.
         // ------------------------------------------------------------------
-        private DirtyTextRange [] _dtrs;
+        private DirtyTextRange[] _dtrs;
 
         // ------------------------------------------------------------------
         // Default capacity of the DTRs array. The array capacity is always

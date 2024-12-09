@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -752,7 +752,7 @@ namespace System.Windows.Controls
                 if (IsUsingItemsSource)
                 {
                     // see discussion in XML comment above.
-                    #pragma warning suppress 6503 // "Property get methods should not throw exceptions."
+#pragma warning suppress 6503 // "Property get methods should not throw exceptions."
                     throw new NotSupportedException(SR.ItemCollectionShouldUseInnerSyncRoot);
                 }
 
@@ -900,7 +900,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Return true if the view supports <seealso cref="IEditableCollectionView.AddNew"/>.
         /// </summary>
-        bool    IEditableCollectionView.CanAddNew
+        bool IEditableCollectionView.CanAddNew
         {
             get
             {
@@ -922,7 +922,7 @@ namespace System.Windows.Controls
         /// <seealso cref="IEditableCollectionView.CommitNew"/> or <seealso cref="IEditableCollectionView.CancelNew"/> should be
         /// called to complete the transaction.
         /// </summary>
-        object  IEditableCollectionView.AddNew()
+        object IEditableCollectionView.AddNew()
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
             if (ecv != null)
@@ -941,7 +941,7 @@ namespace System.Windows.Controls
         /// item remains in the collection, and the view's sort, filter, and grouping
         /// specifications (if any) are applied to the new item.
         /// </summary>
-        void    IEditableCollectionView.CommitNew()
+        void IEditableCollectionView.CommitNew()
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
             if (ecv != null)
@@ -958,7 +958,7 @@ namespace System.Windows.Controls
         /// Complete the transaction started by <seealso cref="IEditableCollectionView.AddNew"/>.  The new
         /// item is removed from the collection.
         /// </summary>
-        void    IEditableCollectionView.CancelNew()
+        void IEditableCollectionView.CancelNew()
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
             if (ecv != null)
@@ -974,7 +974,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Returns true if an </seealso cref="IEditableCollectionView.AddNew"> transaction is in progress.
         /// </summary>
-        bool    IEditableCollectionView.IsAddingNew
+        bool IEditableCollectionView.IsAddingNew
         {
             get
             {
@@ -994,7 +994,7 @@ namespace System.Windows.Controls
         /// When an </seealso cref="IEditableCollectionView.AddNew"> transaction is in progress, this property
         /// returns the new item.  Otherwise it returns null.
         /// </summary>
-        object  IEditableCollectionView.CurrentAddItem
+        object IEditableCollectionView.CurrentAddItem
         {
             get
             {
@@ -1018,7 +1018,7 @@ namespace System.Windows.Controls
         /// Return true if the view supports <seealso cref="IEditableCollectionView.Remove"/> and
         /// <seealso cref="RemoveAt"/>.
         /// </summary>
-        bool    IEditableCollectionView.CanRemove
+        bool IEditableCollectionView.CanRemove
         {
             get
             {
@@ -1039,7 +1039,7 @@ namespace System.Windows.Controls
         /// The index is interpreted with respect to the view (not with respect to
         /// the underlying collection).
         /// </summary>
-        void    IEditableCollectionView.RemoveAt(int index)
+        void IEditableCollectionView.RemoveAt(int index)
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
             if (ecv != null)
@@ -1055,7 +1055,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Remove the given item from the underlying collection.
         /// </summary>
-        void    IEditableCollectionView.Remove(object item)
+        void IEditableCollectionView.Remove(object item)
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
             if (ecv != null)
@@ -1079,7 +1079,7 @@ namespace System.Windows.Controls
         /// the transaction are considered "pending", provided that the view supports
         /// the notion of "pending changes" for the given item.
         /// </summary>
-        void    IEditableCollectionView.EditItem(object item)
+        void IEditableCollectionView.EditItem(object item)
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
             if (ecv != null)
@@ -1096,7 +1096,7 @@ namespace System.Windows.Controls
         /// Complete the transaction started by <seealso cref="IEditableCollectionView.EditItem"/>.
         /// The pending changes (if any) to the item are committed.
         /// </summary>
-        void    IEditableCollectionView.CommitEdit()
+        void IEditableCollectionView.CommitEdit()
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
             if (ecv != null)
@@ -1113,7 +1113,7 @@ namespace System.Windows.Controls
         /// Complete the transaction started by <seealso cref="IEditableCollectionView.EditItem"/>.
         /// The pending changes (if any) to the item are discarded.
         /// </summary>
-        void    IEditableCollectionView.CancelEdit()
+        void IEditableCollectionView.CancelEdit()
         {
             IEditableCollectionView ecv = _collectionView as IEditableCollectionView;
             if (ecv != null)
@@ -1134,7 +1134,7 @@ namespace System.Windows.Controls
         /// knowledge about the item that it can use to support rollback of pending
         /// changes.
         /// </summary>
-        bool    IEditableCollectionView.CanCancelEdit
+        bool IEditableCollectionView.CanCancelEdit
         {
             get
             {
@@ -1153,7 +1153,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Returns true if an </seealso cref="IEditableCollectionView.EditItem"> transaction is in progress.
         /// </summary>
-        bool    IEditableCollectionView.IsEditingItem
+        bool IEditableCollectionView.IsEditingItem
         {
             get
             {
@@ -1173,7 +1173,7 @@ namespace System.Windows.Controls
         /// When an </seealso cref="IEditableCollectionView.EditItem"> transaction is in progress, this property
         /// returns the affected item.  Otherwise it returns null.
         /// </summary>
-        object  IEditableCollectionView.CurrentEditItem
+        object IEditableCollectionView.CurrentEditItem
         {
             get
             {
@@ -1198,7 +1198,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Return true if the view supports <seealso cref="IEditableCollectionViewAddNewItem.AddNewItem"/>.
         /// </summary>
-        bool    IEditableCollectionViewAddNewItem.CanAddNewItem
+        bool IEditableCollectionViewAddNewItem.CanAddNewItem
         {
             get
             {
@@ -1220,7 +1220,7 @@ namespace System.Windows.Controls
         /// <seealso cref="IEditableCollectionView.CommitNew"/> or <seealso cref="IEditableCollectionView.CancelNew"/> should be
         /// called to complete the transaction.
         /// </summary>
-        object  IEditableCollectionViewAddNewItem.AddNewItem(object newItem)
+        object IEditableCollectionViewAddNewItem.AddNewItem(object newItem)
         {
             IEditableCollectionViewAddNewItem ani = _collectionView as IEditableCollectionViewAddNewItem;
             if (ani != null)
@@ -1458,7 +1458,7 @@ namespace System.Windows.Controls
         /// a type descriptor, from a representative item, or from some other source
         /// known to the view.
         /// </summary>
-        ReadOnlyCollection<ItemPropertyInfo>    IItemProperties.ItemProperties
+        ReadOnlyCollection<ItemPropertyInfo> IItemProperties.ItemProperties
         {
             get
             {
@@ -1584,7 +1584,7 @@ namespace System.Windows.Controls
             format(level, this, false, sources);
             if (_collectionView != null)
             {
-                _collectionView.GetCollectionChangedSources(level+1, format, sources);
+                _collectionView.GetCollectionChangedSources(level + 1, format, sources);
             }
         }
 
@@ -1978,8 +1978,8 @@ namespace System.Windows.Controls
         // be sure that we reference that member on the derived class.
         private new void VerifyRefreshNotDeferred()
         {
-            #pragma warning disable 1634, 1691 // about to use PreSharp message numbers - unknown to C#
-            #pragma warning disable 6503
+#pragma warning disable 1634, 1691 // about to use PreSharp message numbers - unknown to C#
+#pragma warning disable 6503
             // If the Refresh is being deferred to change filtering or sorting of the
             // data by this CollectionView, then CollectionView will not reflect the correct
             // state of the underlying data.
@@ -1987,8 +1987,8 @@ namespace System.Windows.Controls
             if (IsRefreshDeferred)
                 throw new InvalidOperationException(SR.NoCheckOrChangeWhenDeferred);
 
-            #pragma warning restore 6503
-            #pragma warning restore 1634, 1691
+#pragma warning restore 6503
+#pragma warning restore 1634, 1691
         }
 
         // SortDescription was added/removed to/from this ItemCollection.SortDescriptions, refresh CollView
@@ -2453,19 +2453,19 @@ namespace System.Windows.Controls
 
         #region Private Fields
 
-        private InnerItemCollectionView  _internalView;     // direct-mode list and view
-        private IEnumerable         _itemsSource;           // ItemsControl.ItemsSource property
-        private CollectionView      _collectionView;        // delegate ICollectionView
-        private int                 _defaultCapacity = 16;
+        private InnerItemCollectionView _internalView;     // direct-mode list and view
+        private IEnumerable _itemsSource;           // ItemsControl.ItemsSource property
+        private CollectionView _collectionView;        // delegate ICollectionView
+        private int _defaultCapacity = 16;
 
-        private bool    _isUsingItemsSource;        // true when using ItemsSource
-        private bool    _isInitializing;            // when true, ItemCollection does not listen to events of _collectionView
+        private bool _isUsingItemsSource;        // true when using ItemsSource
+        private bool _isInitializing;            // when true, ItemCollection does not listen to events of _collectionView
 
-        private int         _deferLevel;
+        private int _deferLevel;
         private IDisposable _deferInnerRefresh;
-        private ShapingStorage  _shapingStorage;
+        private ShapingStorage _shapingStorage;
 
-        private WeakReference       _modelParent;       // use WeakRef to avoid leaking the parent
+        private WeakReference _modelParent;       // use WeakRef to avoid leaking the parent
 
         #endregion Private Fields
 
@@ -2481,29 +2481,29 @@ namespace System.Windows.Controls
         // ItemCollection rarely uses shaping directly.   Make it pay-for-play
         private class ShapingStorage
         {
-            public bool    _isSortingSet;       // true when user has added to this.SortDescriptions
-            public bool    _isGroupingSet;      // true when user has added to this.GroupDescriptions
-            public bool    _isLiveSortingSet;   // true when user has added to this.LiveSortingProperties
-            public bool    _isLiveFilteringSet; // true when user has added to this.LiveFilteringProperties
-            public bool    _isLiveGroupingSet;  // true when user has added to this.LiveGroupingProperties
+            public bool _isSortingSet;       // true when user has added to this.SortDescriptions
+            public bool _isGroupingSet;      // true when user has added to this.GroupDescriptions
+            public bool _isLiveSortingSet;   // true when user has added to this.LiveSortingProperties
+            public bool _isLiveFilteringSet; // true when user has added to this.LiveFilteringProperties
+            public bool _isLiveGroupingSet;  // true when user has added to this.LiveGroupingProperties
 
-            public SortDescriptionCollection    _sort;      // storage for SortDescriptions; will forward to _collectionView.SortDescriptions when available
-            public Predicate<object>            _filter;    // storage for Filter when _collectionView is not available
+            public SortDescriptionCollection _sort;      // storage for SortDescriptions; will forward to _collectionView.SortDescriptions when available
+            public Predicate<object> _filter;    // storage for Filter when _collectionView is not available
             public ObservableCollection<GroupDescription> _groupBy; // storage for GroupDescriptions; will forward to _collectionView.GroupDescriptions when available
 
-            public bool?    _isLiveSorting;     // true if live Sorting is requested
-            public bool?    _isLiveFiltering;   // true if live Filtering is requested
-            public bool?    _isLiveGrouping;    // true if live Grouping is requested
+            public bool? _isLiveSorting;     // true if live Sorting is requested
+            public bool? _isLiveFiltering;   // true if live Filtering is requested
+            public bool? _isLiveGrouping;    // true if live Grouping is requested
 
             public ObservableCollection<string> _liveSortingProperties; // storage for LiveSortingProperties; will forward to _collectionView.LiveSortingProperties when available
             public ObservableCollection<string> _liveFilteringProperties; // storage for LiveFilteringProperties; will forward to _collectionView.LiveFilteringProperties when available
             public ObservableCollection<string> _liveGroupingProperties; // storage for LiveGroupingProperties; will forward to _collectionView.LiveGroupingProperties when available
 
-            public MonitorWrapper      _sortDescriptionsMonitor;
-            public MonitorWrapper      _groupDescriptionsMonitor;
-            public MonitorWrapper      _liveSortingMonitor;
-            public MonitorWrapper      _liveFilteringMonitor;
-            public MonitorWrapper      _liveGroupingMonitor;
+            public MonitorWrapper _sortDescriptionsMonitor;
+            public MonitorWrapper _groupDescriptionsMonitor;
+            public MonitorWrapper _liveSortingMonitor;
+            public MonitorWrapper _liveFilteringMonitor;
+            public MonitorWrapper _liveGroupingMonitor;
         }
 
         private class DeferHelper : IDisposable

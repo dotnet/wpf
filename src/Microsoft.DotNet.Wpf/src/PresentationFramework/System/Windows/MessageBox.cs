@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System.Runtime.InteropServices;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using MS.Win32;
 
@@ -18,7 +18,7 @@ namespace System.Windows
     ///       user.
     ///    </para>
     /// </devdoc>
-    public sealed class MessageBox 
+    public sealed class MessageBox
     {
 #if NEVER
         class WindowWin32Window : IWin32Window
@@ -42,29 +42,29 @@ namespace System.Windows
             }
         }
 #endif
-        private const int IDOK             = 1;
-        private const int IDCANCEL         = 2;
-        private const int IDABORT          = 3;
-        private const int IDRETRY          = 4;
-        private const int IDIGNORE         = 5;
-        private const int IDYES            = 6;
-        private const int IDNO             = 7;
-        private const int DEFAULT_BUTTON1  = 0x00000000;
-        private const int DEFAULT_BUTTON2  = 0x00000100;
-        private const int DEFAULT_BUTTON3  = 0x00000200;
+        private const int IDOK = 1;
+        private const int IDCANCEL = 2;
+        private const int IDABORT = 3;
+        private const int IDRETRY = 4;
+        private const int IDIGNORE = 5;
+        private const int IDYES = 6;
+        private const int IDNO = 7;
+        private const int DEFAULT_BUTTON1 = 0x00000000;
+        private const int DEFAULT_BUTTON2 = 0x00000100;
+        private const int DEFAULT_BUTTON3 = 0x00000200;
 
         /// <devdoc>
         ///     This constructor is private so people aren't tempted to try and create
         ///     instances of these -- they should just use the static show
         ///     methods.
         /// </devdoc>
-        private MessageBox() 
+        private MessageBox()
         {
         }
 
-        private static MessageBoxResult Win32ToMessageBoxResult(int value) 
+        private static MessageBoxResult Win32ToMessageBoxResult(int value)
         {
-            switch (value) 
+            switch (value)
             {
                 case IDOK:
                     return MessageBoxResult.OK;
@@ -86,12 +86,12 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         public static MessageBoxResult Show(
-            string messageBoxText, 
-            string caption, 
-            MessageBoxButton button, 
-            MessageBoxImage icon, 
-            MessageBoxResult defaultResult, 
-            MessageBoxOptions options) 
+            string messageBoxText,
+            string caption,
+            MessageBoxButton button,
+            MessageBoxImage icon,
+            MessageBoxResult defaultResult,
+            MessageBoxOptions options)
         {
             return ShowCore(IntPtr.Zero, messageBoxText, caption, button, icon, defaultResult, options);
         }
@@ -102,11 +102,11 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         public static MessageBoxResult Show(
-            string messageBoxText, 
-            string caption, 
-            MessageBoxButton button, 
-            MessageBoxImage icon, 
-            MessageBoxResult defaultResult) 
+            string messageBoxText,
+            string caption,
+            MessageBoxButton button,
+            MessageBoxImage icon,
+            MessageBoxResult defaultResult)
         {
             return ShowCore(IntPtr.Zero, messageBoxText, caption, button, icon, defaultResult, 0);
         }
@@ -117,10 +117,10 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         public static MessageBoxResult Show(
-            string messageBoxText, 
-            string caption, 
-            MessageBoxButton button, 
-            MessageBoxImage icon) 
+            string messageBoxText,
+            string caption,
+            MessageBoxButton button,
+            MessageBoxImage icon)
         {
             return ShowCore(IntPtr.Zero, messageBoxText, caption, button, icon, 0, 0);
         }
@@ -131,9 +131,9 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         public static MessageBoxResult Show(
-            string messageBoxText, 
-            string caption, 
-            MessageBoxButton button) 
+            string messageBoxText,
+            string caption,
+            MessageBoxButton button)
         {
             return ShowCore(IntPtr.Zero, messageBoxText, caption, button, MessageBoxImage.None, 0, 0);
         }
@@ -143,7 +143,7 @@ namespace System.Windows
         ///       Displays a message box with specified text and caption.
         ///    </para>
         /// </devdoc>
-        public static MessageBoxResult Show(string messageBoxText, string caption) 
+        public static MessageBoxResult Show(string messageBoxText, string caption)
         {
             return ShowCore(IntPtr.Zero, messageBoxText, caption, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
         }
@@ -153,7 +153,7 @@ namespace System.Windows
         ///       Displays a message box with specified text.
         ///    </para>
         /// </devdoc>
-        public static MessageBoxResult Show(string messageBoxText) 
+        public static MessageBoxResult Show(string messageBoxText)
         {
             return ShowCore(IntPtr.Zero, messageBoxText, String.Empty, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
         }
@@ -237,12 +237,12 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         public static MessageBoxResult Show(
-            Window owner, 
-            string messageBoxText, 
-            string caption, 
-            MessageBoxButton button, 
-            MessageBoxImage icon, MessageBoxResult defaultResult, 
-            MessageBoxOptions options) 
+            Window owner,
+            string messageBoxText,
+            string caption,
+            MessageBoxButton button,
+            MessageBoxImage icon, MessageBoxResult defaultResult,
+            MessageBoxOptions options)
         {
             return ShowCore((new WindowInteropHelper(owner)).CriticalHandle, messageBoxText, caption, button, icon, defaultResult, options);
         }
@@ -253,14 +253,14 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         public static MessageBoxResult Show(
-            Window owner, 
-            string messageBoxText, 
-            string caption, 
-            MessageBoxButton button, 
-            MessageBoxImage icon, 
-            MessageBoxResult defaultResult) 
+            Window owner,
+            string messageBoxText,
+            string caption,
+            MessageBoxButton button,
+            MessageBoxImage icon,
+            MessageBoxResult defaultResult)
         {
-            return ShowCore((new WindowInteropHelper (owner)).CriticalHandle, messageBoxText, caption, button, icon, defaultResult, 0);
+            return ShowCore((new WindowInteropHelper(owner)).CriticalHandle, messageBoxText, caption, button, icon, defaultResult, 0);
         }
 
         /// <devdoc>
@@ -269,13 +269,13 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         public static MessageBoxResult Show(
-            Window owner, 
-            string messageBoxText, 
-            string caption, 
-            MessageBoxButton button, 
-            MessageBoxImage icon) 
+            Window owner,
+            string messageBoxText,
+            string caption,
+            MessageBoxButton button,
+            MessageBoxImage icon)
         {
-            return ShowCore((new WindowInteropHelper (owner)).CriticalHandle, messageBoxText, caption, button, icon, 0, 0);
+            return ShowCore((new WindowInteropHelper(owner)).CriticalHandle, messageBoxText, caption, button, icon, 0, 0);
         }
 
         /// <devdoc>
@@ -284,12 +284,12 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         public static MessageBoxResult Show(
-            Window owner, 
-            string messageBoxText, 
-            string caption, 
-            MessageBoxButton button) 
+            Window owner,
+            string messageBoxText,
+            string caption,
+            MessageBoxButton button)
         {
-            return ShowCore((new WindowInteropHelper (owner)).CriticalHandle, messageBoxText, caption, button, MessageBoxImage.None, 0, 0);
+            return ShowCore((new WindowInteropHelper(owner)).CriticalHandle, messageBoxText, caption, button, MessageBoxImage.None, 0, 0);
         }
 
         /// <devdoc>
@@ -297,9 +297,9 @@ namespace System.Windows
         ///       Displays a message box with specified text and caption.
         ///    </para>
         /// </devdoc>
-        public static MessageBoxResult Show(Window owner, string messageBoxText, string caption) 
+        public static MessageBoxResult Show(Window owner, string messageBoxText, string caption)
         {
-            return ShowCore((new WindowInteropHelper (owner)).CriticalHandle, messageBoxText, caption, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
+            return ShowCore((new WindowInteropHelper(owner)).CriticalHandle, messageBoxText, caption, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
         }
 
         /// <devdoc>
@@ -307,29 +307,34 @@ namespace System.Windows
         ///       Displays a message box with specified text.
         ///    </para>
         /// </devdoc>
-        public static MessageBoxResult Show(Window owner, string messageBoxText) 
+        public static MessageBoxResult Show(Window owner, string messageBoxText)
         {
-            return ShowCore((new WindowInteropHelper (owner)).CriticalHandle, messageBoxText, String.Empty, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
+            return ShowCore((new WindowInteropHelper(owner)).CriticalHandle, messageBoxText, String.Empty, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
         }
         #endregion
 
         private static int DefaultResultToButtonNumber(MessageBoxResult result, MessageBoxButton button)
         {
-            if (result == 0) return DEFAULT_BUTTON1;
+            if (result == 0)
+                return DEFAULT_BUTTON1;
 
             switch (button)
             {
                 case MessageBoxButton.OK:
                     return DEFAULT_BUTTON1;
                 case MessageBoxButton.OKCancel:
-                    if (result == MessageBoxResult.Cancel) return DEFAULT_BUTTON2;
+                    if (result == MessageBoxResult.Cancel)
+                        return DEFAULT_BUTTON2;
                     return DEFAULT_BUTTON1;
                 case MessageBoxButton.YesNo:
-                    if (result == MessageBoxResult.No) return DEFAULT_BUTTON2;
+                    if (result == MessageBoxResult.No)
+                        return DEFAULT_BUTTON2;
                     return DEFAULT_BUTTON1;
                 case MessageBoxButton.YesNoCancel:
-                    if (result == MessageBoxResult.No) return DEFAULT_BUTTON2;
-                    if (result == MessageBoxResult.Cancel) return DEFAULT_BUTTON3;
+                    if (result == MessageBoxResult.No)
+                        return DEFAULT_BUTTON2;
+                    if (result == MessageBoxResult.Cancel)
+                        return DEFAULT_BUTTON3;
                     return DEFAULT_BUTTON1;
                 default:
                     return DEFAULT_BUTTON1;
@@ -337,59 +342,59 @@ namespace System.Windows
         }
 
         internal static MessageBoxResult ShowCore(
-            IntPtr owner, 
-            string messageBoxText, 
+            IntPtr owner,
+            string messageBoxText,
             string caption,
-            MessageBoxButton button, 
-            MessageBoxImage icon, 
+            MessageBoxButton button,
+            MessageBoxImage icon,
             MessageBoxResult defaultResult,
-            MessageBoxOptions options) 
+            MessageBoxOptions options)
         {
             if (!IsValidMessageBoxButton(button))
             {
-                throw new InvalidEnumArgumentException ("button", (int)button, typeof(MessageBoxButton));
+                throw new InvalidEnumArgumentException("button", (int)button, typeof(MessageBoxButton));
             }
             if (!IsValidMessageBoxImage(icon))
             {
-                throw new InvalidEnumArgumentException ("icon", (int)icon, typeof(MessageBoxImage));
+                throw new InvalidEnumArgumentException("icon", (int)icon, typeof(MessageBoxImage));
             }
             if (!IsValidMessageBoxResult(defaultResult))
             {
-                throw new InvalidEnumArgumentException ("defaultResult", (int)defaultResult, typeof(MessageBoxResult));
+                throw new InvalidEnumArgumentException("defaultResult", (int)defaultResult, typeof(MessageBoxResult));
             }
             if (!IsValidMessageBoxOptions(options))
             {
                 throw new InvalidEnumArgumentException("options", (int)options, typeof(MessageBoxOptions));
-            }            
-            
+            }
+
             // UserInteractive??
             //
             /*if (!SystemInformation.UserInteractive && (options & (MessageBoxOptions.ServiceNotification | MessageBoxOptions.DefaultDesktopOnly)) == 0) {
                 throw new InvalidOperationException("UNDONE: SR.GetString(SR.CantShowModalOnNonInteractive)");
             }*/
 
-            if ( (options & (MessageBoxOptions.ServiceNotification | MessageBoxOptions.DefaultDesktopOnly)) != 0) 
+            if ((options & (MessageBoxOptions.ServiceNotification | MessageBoxOptions.DefaultDesktopOnly)) != 0)
             {
                 if (owner != IntPtr.Zero)
                 {
                     throw new ArgumentException(SR.CantShowMBServiceWithOwner);
-                }                
+                }
             }
             else
-            {                                    
+            {
                 if (owner == IntPtr.Zero)
                 {
                     owner = UnsafeNativeMethods.GetActiveWindow();
-                }                
+                }
             }
-            
-            int style = (int) button | (int) icon | (int) DefaultResultToButtonNumber(defaultResult, button) | (int) options;
+
+            int style = (int)button | (int)icon | (int)DefaultResultToButtonNumber(defaultResult, button) | (int)options;
 
             // modal dialog notification?
             //
             //Application.BeginModalMessageLoop();
             //MessageBoxResult result = Win32ToMessageBoxResult(SafeNativeMethods.MessageBox(new HandleRef(owner, handle), messageBoxText, caption, style));
-            MessageBoxResult result = Win32ToMessageBoxResult (UnsafeNativeMethods.MessageBox (new HandleRef (null, owner), messageBoxText, caption, style));
+            MessageBoxResult result = Win32ToMessageBoxResult(UnsafeNativeMethods.MessageBox(new HandleRef(null, owner), messageBoxText, caption, style));
             // modal dialog notification?
             //
             //Application.EndModalMessageLoop();
@@ -429,11 +434,11 @@ namespace System.Windows
 
         private static bool IsValidMessageBoxOptions(MessageBoxOptions value)
         {
-            int  mask = ~((int)MessageBoxOptions.ServiceNotification |
+            int mask = ~((int)MessageBoxOptions.ServiceNotification |
                          (int)MessageBoxOptions.DefaultDesktopOnly |
                          (int)MessageBoxOptions.RightAlign |
                          (int)MessageBoxOptions.RtlReading);
-            
+
             if (((int)value & mask) == 0)
                 return true;
             return false;
@@ -448,7 +453,7 @@ namespace System.Windows
     ///    </para>
     /// </devdoc>
     /// <ExternalAPI/> 
-    public enum MessageBoxResult 
+    public enum MessageBoxResult
     {
 
         /// <devdoc>
@@ -510,7 +515,7 @@ namespace System.Windows
     ///    <para>[To be supplied.]</para>
     /// </devdoc>
     [Flags]
-    public enum MessageBoxOptions 
+    public enum MessageBoxOptions
     {
         /// <devdoc>
         ///     <para>
@@ -519,7 +524,7 @@ namespace System.Windows
         /// </devdoc>
         /// <ExternalApi />
         None = 0x00000000,
-        
+
         /// <devdoc>
         ///    <para>
         ///       Specifies that the message box is displayed on the active desktop. 
@@ -542,7 +547,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        RightAlign         = 0x00080000,
+        RightAlign = 0x00080000,
 
         /// <devdoc>
         ///    <para>
@@ -550,12 +555,12 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        RtlReading         = 0x00100000,
+        RtlReading = 0x00100000,
     }
     /// <devdoc>
     ///    <para>[To be supplied.]</para>
     /// </devdoc>
-    public enum MessageBoxImage 
+    public enum MessageBoxImage
     {
         /// <devdoc>
         ///    <para>
@@ -564,7 +569,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        None         = 0,
+        None = 0,
 
         /// <devdoc>
         ///    <para>
@@ -574,7 +579,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        Hand         = 0x00000010,
+        Hand = 0x00000010,
 
         /// <devdoc>
         ///    <para>
@@ -585,7 +590,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        Question     = 0x00000020,
+        Question = 0x00000020,
 
         /// <devdoc>
         ///    <para>
@@ -595,7 +600,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        Exclamation  = 0x00000030,
+        Exclamation = 0x00000030,
 
         /// <devdoc>
         ///    <para>
@@ -605,7 +610,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        Asterisk     = 0x00000040,
+        Asterisk = 0x00000040,
 
         /// <devdoc>
         ///    <para>
@@ -614,7 +619,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        Stop         = Hand,
+        Stop = Hand,
 
         /// <devdoc>
         ///    <para>
@@ -624,7 +629,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        Error        = Hand,
+        Error = Hand,
 
         /// <devdoc>
         ///    <para>
@@ -632,7 +637,7 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        Warning      = Exclamation,
+        Warning = Exclamation,
 
         /// <devdoc>
         ///    <para>
@@ -642,14 +647,14 @@ namespace System.Windows
         ///    </para>
         /// </devdoc>
         /// <ExternalAPI/> 
-        Information  = Asterisk,
+        Information = Asterisk,
 
         // NOTE: if you add or remove any values in this enum, be sure to update MessageBox.IsValidMessageBoxIcon()    
     }
     /// <devdoc>
     ///    <para>[To be supplied.]</para>
     /// </devdoc>
-    public enum MessageBoxButton 
+    public enum MessageBoxButton
     {
         /// <devdoc>
         ///    <para>
@@ -658,7 +663,7 @@ namespace System.Windows
         ///       constant.
         ///    </para>
         /// </devdoc>
-        OK               = 0x00000000,
+        OK = 0x00000000,
 
         /// <devdoc>
         ///    <para>
@@ -668,7 +673,7 @@ namespace System.Windows
         ///       constant.
         ///    </para>
         /// </devdoc>
-        OKCancel         = 0x00000001,
+        OKCancel = 0x00000001,
 
         /// <devdoc>
         ///    <para>
@@ -678,7 +683,7 @@ namespace System.Windows
         ///       constant.
         ///    </para>
         /// </devdoc>
-        YesNoCancel      = 0x00000003,
+        YesNoCancel = 0x00000003,
 
         /// <devdoc>
         ///    <para>
@@ -687,7 +692,7 @@ namespace System.Windows
         ///       constant.
         ///    </para>
         /// </devdoc>
-        YesNo            = 0x00000004,
+        YesNo = 0x00000004,
 
         // NOTE: if you add or remove any values in this enum, be sure to update MessageBox.IsValidMessageBoxButton()
     }

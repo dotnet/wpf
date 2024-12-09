@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -45,8 +45,8 @@ namespace System.Windows.Xps.Serialization
         override
         bool
         CanConvertFrom(
-            ITypeDescriptorContext      context,
-            Type                        sourceType
+            ITypeDescriptorContext context,
+            Type sourceType
             )
         {
             return IsSupportedType(sourceType);
@@ -70,8 +70,8 @@ namespace System.Windows.Xps.Serialization
         override
         bool
         CanConvertTo(
-            ITypeDescriptorContext      context,
-            Type                        destinationType
+            ITypeDescriptorContext context,
+            Type destinationType
             )
         {
             return IsSupportedType(destinationType);
@@ -96,9 +96,9 @@ namespace System.Windows.Xps.Serialization
         override
         object
         ConvertFrom(
-            ITypeDescriptorContext              context,
-            System.Globalization.CultureInfo    culture,
-            object                              value
+            ITypeDescriptorContext context,
+            System.Globalization.CultureInfo culture,
+            object value
             )
         {
             ArgumentNullException.ThrowIfNull(value);
@@ -134,10 +134,10 @@ namespace System.Windows.Xps.Serialization
         override
         object
         ConvertTo(
-            ITypeDescriptorContext              context,
-            System.Globalization.CultureInfo    culture,
-            object                              value,
-            Type                                destinationType
+            ITypeDescriptorContext context,
+            System.Globalization.CultureInfo culture,
+            object value,
+            Type destinationType
             )
         {
             ArgumentNullException.ThrowIfNull(context);
@@ -206,9 +206,9 @@ namespace System.Windows.Xps.Serialization
         override
         PropertyDescriptorCollection
         GetProperties(
-            ITypeDescriptorContext      context,
-            object                      value,
-            Attribute[]                 attributes
+            ITypeDescriptorContext context,
+            object value,
+            Attribute[] attributes
             )
         {
             throw new NotImplementedException();
@@ -233,7 +233,7 @@ namespace System.Windows.Xps.Serialization
         static
         bool
         IsSupportedType(
-            Type    type
+            Type type
             )
         {
             return typeof(Uri).Equals(type);

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows.Automation.Peers
         ///
         override public object GetPattern(PatternInterface patternInterface)
         {
-            if(patternInterface == PatternInterface.SelectionItem)
+            if (patternInterface == PatternInterface.SelectionItem)
             {
                 return this;
             }
@@ -32,7 +32,7 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         void ISelectionItemProvider.Select()
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             Selector parentSelector = (Selector)(ItemsControlAutomationPeer.Owner);
@@ -50,7 +50,7 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         void ISelectionItemProvider.AddToSelection()
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             Selector parentSelector = (Selector)(ItemsControlAutomationPeer.Owner);
@@ -72,7 +72,7 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         void ISelectionItemProvider.RemoveFromSelection()
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             Selector parentSelector = (Selector)(ItemsControlAutomationPeer.Owner);

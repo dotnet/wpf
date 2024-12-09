@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,7 +29,7 @@ namespace System.Windows.Documents
         /// Navigate to the element with ID= elementID
         /// </summary>
         /// <param name="elementID"></param>
-        void NavigateAsync (string  elementID);
+        void NavigateAsync(string elementID);
     }
 
     internal static class FixedHyperLink
@@ -43,8 +43,8 @@ namespace System.Windows.Documents
 
             if (fixedContent != null)
             {
-                NavigationService oldService = (NavigationService) e.OldValue;
-                NavigationService newService = (NavigationService) e.NewValue;
+                NavigationService oldService = (NavigationService)e.OldValue;
+                NavigationService newService = (NavigationService)e.NewValue;
 
                 if (oldService != null)
                 {
@@ -101,7 +101,7 @@ namespace System.Windows.Documents
                     //
                     targetElement.BringIntoView();
                 }
-                else 
+                else
                 {
                     //Just passing in raw rect of targetElement.  Let DocumentViewer/Grid handle transforms
                     targetElement.BringIntoView(targetElement.VisualContentBounds);

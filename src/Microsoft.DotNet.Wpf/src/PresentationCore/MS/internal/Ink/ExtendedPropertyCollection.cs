@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -83,7 +83,7 @@ namespace System.Windows.Ink
 
         /// <summary>Overload of the not equals operator to determine if two
         /// ExtendedPropertyCollections have different key/value pairs</summary>
-        public static bool operator!=(ExtendedPropertyCollection first, ExtendedPropertyCollection second)
+        public static bool operator !=(ExtendedPropertyCollection first, ExtendedPropertyCollection second)
         {
             return !(first == second);
         }
@@ -341,7 +341,7 @@ namespace System.Windows.Ink
                 return _extendedProperties[_optimisticIndex];
             }
 
-                //we didn't find the ep optimistically, perform linear lookup
+            //we didn't find the ep optimistically, perform linear lookup
             for (int i = 0; i < _extendedProperties.Count; i++)
             {
                 if (_extendedProperties[i].Id == id)
@@ -352,11 +352,11 @@ namespace System.Windows.Ink
 
             return null;
         }
-        
+
         // the set of ExtendedProperties stored in this collection
         private List<ExtendedProperty> _extendedProperties = new List<ExtendedProperty>();
 
-        
+
         //used to optimize across Contains / Index calls
         private int _optimisticIndex = -1;
     }

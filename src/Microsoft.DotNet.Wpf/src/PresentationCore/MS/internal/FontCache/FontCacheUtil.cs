@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,11 +14,9 @@ using System.IO.Packaging;
 using System.Runtime.InteropServices;
 using System.Windows.Markup;    // for XmlLanguage
 using System.Windows.Navigation;
-
-using MS.Win32;
-using MS.Internal.PresentationCore;
-
 using Microsoft.Win32.SafeHandles;
+using MS.Internal.PresentationCore;
+using MS.Win32;
 
 // Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
@@ -32,7 +30,7 @@ namespace MS.Internal.FontCache
     /// </summary>
     internal struct CheckedPointer
     {
-        internal unsafe CheckedPointer(void * pointer, int size)
+        internal unsafe CheckedPointer(void* pointer, int size)
         {
             _pointer = pointer;
             _size = size;
@@ -41,7 +39,8 @@ namespace MS.Internal.FontCache
         internal CheckedPointer(UnmanagedMemoryStream stream)
         {
             Debug.Assert(stream.Position == 0);
-            unsafe { _pointer = stream.PositionPointer; }
+            unsafe
+            { _pointer = stream.PositionPointer; }
             long length = stream.Length;
             ArgumentOutOfRangeException.ThrowIfNegative(length);
             ArgumentOutOfRangeException.ThrowIfGreaterThan(length, int.MaxValue);
@@ -49,7 +48,7 @@ namespace MS.Internal.FontCache
             _size = (int)length;
         }
 
-        internal bool IsNull    
+        internal bool IsNull
         {
             get
             {
@@ -89,7 +88,7 @@ namespace MS.Internal.FontCache
                     throw new ArgumentOutOfRangeException();
 
                 byte* s = (byte*)_pointer;
-                byte * d = (byte *)dest.Probe(0, _size);
+                byte* d = (byte*)dest.Probe(0, _size);
                 for (int i = 0; i < _size; ++i)
                 {
                     d[i] = s[i];
@@ -101,7 +100,7 @@ namespace MS.Internal.FontCache
         // with a bounds check.  The returned offset may be equal to the size,
         // but not greater. Throws ArgumentOutOfRangeException if pointer
         // is not within the bounds of the mapping.
-        internal unsafe int OffsetOf(void * pointer)
+        internal unsafe int OffsetOf(void* pointer)
         {
             long offset = (byte*)pointer - (byte*)_pointer;
             if (offset < 0 || offset > _size || _pointer == null || pointer == null)
@@ -121,7 +120,7 @@ namespace MS.Internal.FontCache
             }
         }
 
-        public static CheckedPointer operator+(CheckedPointer rhs, int offset)
+        public static CheckedPointer operator +(CheckedPointer rhs, int offset)
         {
             // In future I'll just use checked context. That'll require modifying callers to expect integer overflow exceptions.
             unsafe
@@ -134,11 +133,11 @@ namespace MS.Internal.FontCache
             return rhs;
         }
 
-        internal unsafe void * Probe(int offset, int length)
+        internal unsafe void* Probe(int offset, int length)
         {
             if (_pointer == null || offset < 0 || offset > _size || offset + length > _size || offset + length < 0)
                 throw new ArgumentOutOfRangeException();
-            return (byte *)_pointer + offset;
+            return (byte*)_pointer + offset;
         }
 
         /// <summary>
@@ -189,7 +188,7 @@ namespace MS.Internal.FontCache
             }
         }
 
-        private unsafe void *   _pointer;
+        private unsafe void* _pointer;
 
         private int _size;
     }
@@ -222,7 +221,7 @@ namespace MS.Internal.FontCache
             // default value for "scrambling constant"
             const int RANDOM_CONSTANT = 314159269;
             // large prime number, also used for scrambling
-            const uint RANDOM_PRIME =   1000000007;
+            const uint RANDOM_PRIME = 1000000007;
 
             // we must cast to uint and back to int to correspond to current C++ behavior for operator%
             // since we have a matching hash function in native code
@@ -239,13 +238,13 @@ namespace MS.Internal.FontCache
         /// <param name="numBytes">Size of the memory block in bytes</param>
         /// <param name="hash">Previous hash code to combine with</param>
         /// <returns>Hash code</returns>
-        internal unsafe static int HashMemory(void * pv, int numBytes, int hash)
+        internal unsafe static int HashMemory(void* pv, int numBytes, int hash)
         {
-            byte * pb = (byte*)pv;
+            byte* pb = (byte*)pv;
 
             while (numBytes-- > 0)
             {
-                hash = HashMultiply(hash)  +  *pb;
+                hash = HashMultiply(hash) + *pb;
                 ++pb;
             }
 
@@ -256,7 +255,7 @@ namespace MS.Internal.FontCache
         {
             foreach (char c in s)
             {
-                hash = HashMultiply(hash)  +  (ushort)c;
+                hash = HashMultiply(hash) + (ushort)c;
             }
             return hash;
         }
@@ -288,7 +287,7 @@ namespace MS.Internal.FontCache
                 ".TTE"
             };
 
-        
+
         private static readonly char[] InvalidFileNameChars = Path.GetInvalidFileNameChars();
 
         internal const UriComponents UriWithoutFragment = UriComponents.AbsoluteUri & ~UriComponents.Fragment;
@@ -298,8 +297,8 @@ namespace MS.Internal.FontCache
         private const string EmptyCanonicalName = "";
 
         private static readonly object _dpiLock = new object();
-        private static int    _dpi;
-        private static bool   _dpiInitialized = false;
+        private static int _dpi;
+        private static bool _dpiInitialized = false;
 
         static Util()
         {
@@ -611,7 +610,7 @@ namespace MS.Internal.FontCache
             }
         }
 
-        
+
         /// <summary>
         /// Converts a font family reference to a normalized form.
         /// </summary>
@@ -885,7 +884,7 @@ namespace MS.Internal.FontCache
     internal class LocalizedName
     {
         internal LocalizedName(XmlLanguage language, string name) : this(language, name, language.GetEquivalentCulture().LCID)
-        {}
+        { }
 
         internal LocalizedName(XmlLanguage language, string name, int originalLCID)
         {
@@ -959,8 +958,8 @@ namespace MS.Internal.FontCache
         }
 
         private XmlLanguage _language;  // the language identifier
-        private string      _name;      // name converted to Unicode
-        private int         _originalLCID; // original LCID, used in cases when we want to preserve it to avoid information loss
+        private string _name;      // name converted to Unicode
+        private int _originalLCID; // original LCID, used in cases when we want to preserve it to avoid information loss
 
         private static NameComparerClass _nameComparer = new NameComparerClass();
         private static LanguageComparerClass _languageComparer = new LanguageComparerClass();

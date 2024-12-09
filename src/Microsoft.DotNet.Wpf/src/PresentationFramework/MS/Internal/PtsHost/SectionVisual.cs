@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,9 +10,8 @@
 
 using System.Windows;
 using System.Windows.Media;
-using MS.Internal.Text;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -47,16 +46,16 @@ namespace MS.Internal.PtsHost
                 if (ruleWidth > 0)
                 {
                     int gapWidth = (arrayColumnDesc[1].fsrc.u - (arrayColumnDesc[0].fsrc.u + arrayColumnDesc[0].fsrc.du)) / 2;
-                    rulePositions = new Point[(arrayColumnDesc.Length - 1)*2];
+                    rulePositions = new Point[(arrayColumnDesc.Length - 1) * 2];
                     for (int index = 1; index < arrayColumnDesc.Length; index++)
                     {
                         double u = TextDpi.FromTextDpi(arrayColumnDesc[index].fsrc.u - gapWidth);
                         double v = columnVStart;
                         double dv = columnHeight;
-                        rulePositions[(index-1)*2].X = u;
-                        rulePositions[(index-1)*2].Y = v;
-                        rulePositions[(index-1)*2+1].X = u;
-                        rulePositions[(index-1)*2+1].Y = v + dv;
+                        rulePositions[(index - 1) * 2].X = u;
+                        rulePositions[(index - 1) * 2].Y = v;
+                        rulePositions[(index - 1) * 2 + 1].X = u;
+                        rulePositions[(index - 1) * 2 + 1].Y = v + dv;
                     }
                 }
             }
@@ -71,7 +70,7 @@ namespace MS.Internal.PtsHost
                 {
                     for (int index = 0; index < rulePositions.Length; index++)
                     {
-                        if (!DoubleUtil.AreClose(rulePositions[index].X, _rulePositions[index].X) || 
+                        if (!DoubleUtil.AreClose(rulePositions[index].X, _rulePositions[index].X) ||
                             !DoubleUtil.AreClose(rulePositions[index].Y, _rulePositions[index].Y))
                         {
                             needsUpdate = true;
@@ -102,12 +101,13 @@ namespace MS.Internal.PtsHost
                         // freeze pen below, therefore we make our own copy of the Brush if
                         // it is not already frozen.
                         Brush columnRuleBrush = (Brush)FreezableOperations.GetAsFrozenIfPossible(columnProperties.ColumnRuleBrush);
-                        
+
                         Pen pen = new Pen(columnRuleBrush, ruleWidth);
-                        
+
                         // Freeze the pen if possible.  Doing this avoids the overhead of
                         // maintaining changed handlers.
-                        if (pen.CanFreeze) { pen.Freeze(); }
+                        if (pen.CanFreeze)
+                        { pen.Freeze(); }
 
                         for (int index = 0; index < rulePositions.Length; index += 2)
                         {

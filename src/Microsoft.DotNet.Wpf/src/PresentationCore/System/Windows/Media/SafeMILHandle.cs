@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,15 +21,15 @@ namespace System.Windows.Media
         /// set the handle with SetHandle. SafeMILHandle owns the release
         /// of the handle.
         /// </summary>
-        internal SafeMILHandle() : base(true) 
-        { 
+        internal SafeMILHandle() : base(true)
+        {
         }
 
         /// <summary>
         /// Use this constructor if the handle exists at construction time.
         /// SafeMILHandle owns the release of the parameter.
         /// </summary>
-        internal SafeMILHandle(IntPtr handle) : base(true) 
+        internal SafeMILHandle(IntPtr handle) : base(true)
         {
             SetHandle(handle);
         }
@@ -79,7 +79,7 @@ namespace System.Windows.Media
         }
 
         // Estimated size of the unmanaged memory
-        private SafeMILHandleMemoryPressure _gcPressure; 
+        private SafeMILHandleMemoryPressure _gcPressure;
     }
 }
 

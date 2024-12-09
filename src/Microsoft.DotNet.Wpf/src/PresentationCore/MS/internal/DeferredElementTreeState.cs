@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,7 +13,7 @@ namespace MS.Internal
     {
         public void SetCoreParent(DependencyObject element, DependencyObject parent)
         {
-            if(!_oldCoreParents.ContainsKey(element))
+            if (!_oldCoreParents.ContainsKey(element))
             {
                 _oldCoreParents[element] = parent;
             }
@@ -22,22 +22,22 @@ namespace MS.Internal
         public static DependencyObject GetCoreParent(DependencyObject element, DeferredElementTreeState treeState)
         {
             DependencyObject parent = null;
-            
-            if(treeState != null && treeState._oldCoreParents.ContainsKey(element))
+
+            if (treeState != null && treeState._oldCoreParents.ContainsKey(element))
             {
                 parent = treeState._oldCoreParents[element];
             }
             else
             {
                 Visual v = element as Visual;
-                if(v != null)
+                if (v != null)
                 {
                     parent = VisualTreeHelper.GetParent(v);
                 }
                 else
                 {
                     ContentElement ce = element as ContentElement;
-                    if(ce != null)
+                    if (ce != null)
                     {
                         parent = ContentOperations.GetParent(ce);
                     }
@@ -49,7 +49,7 @@ namespace MS.Internal
                             parent = VisualTreeHelper.GetParent(v3D);
                         }
                     }
-}
+                }
             }
 
             return parent;
@@ -58,7 +58,7 @@ namespace MS.Internal
         public static DependencyObject GetInputElementParent(DependencyObject element, DeferredElementTreeState treeState)
         {
             DependencyObject parent = element;
-            
+
             while (true)
             {
                 parent = GetCoreParent(parent, treeState);
@@ -74,7 +74,7 @@ namespace MS.Internal
 
         public void SetLogicalParent(DependencyObject element, DependencyObject parent)
         {
-            if(!_oldLogicalParents.ContainsKey(element))
+            if (!_oldLogicalParents.ContainsKey(element))
             {
                 _oldLogicalParents[element] = parent;
             }
@@ -83,21 +83,21 @@ namespace MS.Internal
         public static DependencyObject GetLogicalParent(DependencyObject element, DeferredElementTreeState treeState)
         {
             DependencyObject parent = null;
-            
-            if(treeState != null && treeState._oldLogicalParents.ContainsKey(element))
+
+            if (treeState != null && treeState._oldLogicalParents.ContainsKey(element))
             {
                 parent = treeState._oldLogicalParents[element];
             }
             else
             {
                 UIElement e = element as UIElement;
-                if(e != null)
+                if (e != null)
                 {
                     parent = e.GetUIParentCore();  // Overriden by FrameworkElement.
                 }
 
                 ContentElement ce = element as ContentElement;
-                if(ce != null)
+                if (ce != null)
                 {
                     parent = ce.GetUIParentCore(); // Overriden by FrameworkContentElement.
                 }
@@ -119,7 +119,7 @@ namespace MS.Internal
                 return _oldCoreParents.Count == 0 && _oldLogicalParents.Count == 0;
             }
         }
-        
+
         private Dictionary<DependencyObject, DependencyObject> _oldCoreParents = new Dictionary<DependencyObject, DependencyObject>();
         private Dictionary<DependencyObject, DependencyObject> _oldLogicalParents = new Dictionary<DependencyObject, DependencyObject>();
     }

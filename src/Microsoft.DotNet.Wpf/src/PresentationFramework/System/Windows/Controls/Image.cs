@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -69,7 +69,7 @@ namespace System.Windows.Controls
         /// </summary>
         public ImageSource Source
         {
-            get { return (ImageSource) GetValue(SourceProperty); }
+            get { return (ImageSource)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
         }
 
@@ -80,7 +80,7 @@ namespace System.Windows.Controls
         /// <seealso cref="Image.StretchProperty" />
         public Stretch Stretch
         {
-            get { return (Stretch) GetValue(StretchProperty); }
+            get { return (Stretch)GetValue(StretchProperty); }
             set { SetValue(StretchProperty, value); }
         }
 
@@ -216,7 +216,7 @@ namespace System.Windows.Controls
                 DpiScale dpiInfo = GetDpi();
                 OnDpiChanged(dpiInfo, dpiInfo);
             }
-            
+
             return MeasureArrangeHelper(constraint);
         }
 
@@ -321,7 +321,7 @@ namespace System.Windows.Controls
 
                 naturalSize = imageSource.Size;
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 SetCurrentValue(SourceProperty, null);
                 RaiseEvent(new ExceptionRoutedEventArgs(ImageFailedEvent, this, e));
@@ -408,7 +408,7 @@ namespace System.Windows.Controls
         private static Style CreateDefaultStyles()
         {
             Style style = new Style(typeof(Image), null);
-            style.Setters.Add (new Setter(FlowDirectionProperty, FlowDirection.LeftToRight));
+            style.Setters.Add(new Setter(FlowDirectionProperty, FlowDirection.LeftToRight));
             style.Seal();
             return style;
         }

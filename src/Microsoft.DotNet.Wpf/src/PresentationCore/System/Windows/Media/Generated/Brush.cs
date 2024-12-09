@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,9 +10,9 @@
 //
 
 using System.ComponentModel;
+using System.Windows.Markup;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Windows.Markup;
 using System.Windows.Media.Converters;
 // These types are aliased to match the unamanaged names used in interop
 
@@ -61,7 +61,7 @@ namespace System.Windows.Media
 
         private static void OpacityPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Brush target = ((Brush) d);
+            Brush target = ((Brush)d);
 
 
             target.PropertyChanged(OpacityProperty);
@@ -76,18 +76,18 @@ namespace System.Windows.Media
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            Brush target = ((Brush) d);
+            Brush target = ((Brush)d);
 
 
-            Transform oldV = (Transform) e.OldValue;
-            Transform newV = (Transform) e.NewValue;
+            Transform oldV = (Transform)e.OldValue;
+            Transform newV = (Transform)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -102,8 +102,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -120,18 +120,18 @@ namespace System.Windows.Media
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            Brush target = ((Brush) d);
+            Brush target = ((Brush)d);
 
 
-            Transform oldV = (Transform) e.OldValue;
-            Transform newV = (Transform) e.NewValue;
+            Transform oldV = (Transform)e.OldValue;
+            Transform newV = (Transform)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -146,8 +146,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -165,7 +165,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(OpacityProperty);
+                return (double)GetValue(OpacityProperty);
             }
             set
             {
@@ -180,7 +180,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Transform) GetValue(TransformProperty);
+                return (Transform)GetValue(TransformProperty);
             }
             set
             {
@@ -195,7 +195,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Transform) GetValue(RelativeTransformProperty);
+                return (Transform)GetValue(RelativeTransformProperty);
             }
             set
             {

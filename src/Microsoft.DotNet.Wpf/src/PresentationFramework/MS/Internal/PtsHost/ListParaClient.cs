@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,11 +10,10 @@
 
 
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Documents;
-using MS.Internal.Text;
-
+using System.Windows.Media;
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -23,7 +22,7 @@ namespace MS.Internal.PtsHost
     /// of break paragraphs. 
     /// </summary>
     internal sealed class ListParaClient : ContainerParaClient
-    {        
+    {
         /// <summary>
         /// Constructor. 
         /// </summary>
@@ -56,7 +55,7 @@ namespace MS.Internal.PtsHost
             uint fswdir = PTS.FlowDirectionToFswdir((FlowDirection)Paragraph.Element.GetValue(FrameworkElement.FlowDirectionProperty));
 
             Brush backgroundBrush = (Brush)Paragraph.Element.GetValue(TextElement.BackgroundProperty);
-            
+
             // This textProperties object is eventually used in creation of LineProperties, which leads to creation of a TextMarkerSource. TextMarkerSource relies on PixelsPerDip
             // from TextProperties, therefore it must be set here properly.
             TextProperties textProperties = new TextProperties(Paragraph.Element, StaticTextPointer.Null, false /* inline objects */, false /* get background */,
@@ -65,34 +64,34 @@ namespace MS.Internal.PtsHost
             // There might be possibility to get empty sub-track, skip the sub-track in such case.
             if (subtrackDetails.cParas != 0)
             {
-                PTS.FSPARADESCRIPTION [] arrayParaDesc;
+                PTS.FSPARADESCRIPTION[] arrayParaDesc;
                 PtsHelper.ParaListFromSubtrack(PtsContext, _paraHandle, ref subtrackDetails, out arrayParaDesc);
 
-                using(DrawingContext ctx = _visual.RenderOpen())
+                using (DrawingContext ctx = _visual.RenderOpen())
                 {
                     _visual.DrawBackgroundAndBorderIntoContext(ctx, backgroundBrush, mbp.BorderBrush, mbp.Border, _rect.FromTextDpi(), IsFirstChunk, IsLastChunk);
 
-                        // Get list of paragraphs
+                    // Get list of paragraphs
                     ListMarkerLine listMarkerLine = new ListMarkerLine(Paragraph.StructuralCache.TextFormatterHost, this);
                     int indexFirstParaInSubtrack = 0;
 
-                    for(int index = 0; index < subtrackDetails.cParas; index++)
+                    for (int index = 0; index < subtrackDetails.cParas; index++)
                     {
                         List list = Paragraph.Element as List;
 
                         BaseParaClient listItemParaClient = PtsContext.HandleToObject(arrayParaDesc[index].pfsparaclient) as BaseParaClient;
                         PTS.ValidateHandle(listItemParaClient);
 
-                        if(index == 0)
+                        if (index == 0)
                         {
                             indexFirstParaInSubtrack = list.GetListItemIndex(listItemParaClient.Paragraph.Element as ListItem);
                         }
 
-                        if(listItemParaClient.IsFirstChunk)
+                        if (listItemParaClient.IsFirstChunk)
                         {
                             int dvBaseline = listItemParaClient.GetFirstTextLineBaseline();
 
-                            if(PageFlowDirection != ThisFlowDirection)
+                            if (PageFlowDirection != ThisFlowDirection)
                             {
                                 ctx.PushTransform(new MatrixTransform(-1.0, 0.0, 0.0, 1.0, TextDpi.FromTextDpi(2 * listItemParaClient.Rect.u + listItemParaClient.Rect.du), 0.0));
                             }
@@ -109,7 +108,7 @@ namespace MS.Internal.PtsHost
                             LineProperties lineProps = new LineProperties(Paragraph.Element, Paragraph.StructuralCache.FormattingOwner, textProperties, new MarkerProperties(list, adjustedIndex));
                             listMarkerLine.FormatAndDrawVisual(ctx, lineProps, listItemParaClient.Rect.u, dvBaseline);
 
-                            if(PageFlowDirection != ThisFlowDirection)
+                            if (PageFlowDirection != ThisFlowDirection)
                             {
                                 ctx.Pop();
                             }
@@ -127,6 +126,6 @@ namespace MS.Internal.PtsHost
             {
                 _visual.Children.Clear();
             }
-}
+        }
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -42,7 +42,7 @@ namespace System.Windows.Controls.Primitives
                                         GeneratorPosition position,
                                         int itemCount,
                                         int itemUICount) : this(action, position, new GeneratorPosition(-1, 0), itemCount, itemUICount)
-                 
+
         {
         }
 
@@ -56,16 +56,16 @@ namespace System.Windows.Controls.Primitives
         public NotifyCollectionChangedAction Action { get { return _action; } }
 
         /// <summary> Where it happened </summary>
-        public GeneratorPosition Position       { get { return _position; } }
+        public GeneratorPosition Position { get { return _position; } }
 
         /// <summary> Where it happened </summary>
-        public GeneratorPosition OldPosition    { get { return _oldPosition; } }
+        public GeneratorPosition OldPosition { get { return _oldPosition; } }
 
         /// <summary> How many items were involved </summary>
-        public int ItemCount                    { get { return _itemCount; } }
+        public int ItemCount { get { return _itemCount; } }
 
         /// <summary> How many UI elements were involved </summary>
-        public int ItemUICount                  { get { return _itemUICount; } }
+        public int ItemUICount { get { return _itemUICount; } }
 
 
         //------------------------------------------------------
@@ -74,11 +74,11 @@ namespace System.Windows.Controls.Primitives
         //
         //------------------------------------------------------
 
-        NotifyCollectionChangedAction  _action;
-        GeneratorPosition       _position;
-        GeneratorPosition       _oldPosition;
-        int                     _itemCount;
-        int                     _itemUICount;
+        NotifyCollectionChangedAction _action;
+        GeneratorPosition _position;
+        GeneratorPosition _oldPosition;
+        int _itemCount;
+        int _itemUICount;
     }
 
     /// <summary>

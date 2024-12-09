@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,8 @@ Abstract:
 
 --*/
 
-using System.IO;
 using System.Globalization;
+using System.IO;
 using MS.Internal.Printing.Configuration;
 
 namespace System.Printing
@@ -1384,7 +1384,7 @@ namespace System.Printing
         #endregion Internal Properties
 
         #region Internal Methods
-        
+
         // Like PTProvider.cs:PackStreamToNativeBuffer().
         internal string ToXmlString()
         {
@@ -1403,9 +1403,9 @@ namespace System.Printing
             // assumes the XML is UTF8-encoded so this is safe.
             return System.Text.Encoding.UTF8.GetString(ms.ToArray());
         }
-        
+
         #endregion Internal Methods
-        
+
         #region Private Methods
 
         private EnumType GetEnumValueFromCacheOrXml<EnumType>(CapabilityName feature,

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,7 +27,7 @@ namespace System.Windows.Xps.Serialization.RCW
         new IOpcPartUri GetPartName();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        new void SetPartName([MarshalAs(UnmanagedType.Interface)] [In] IOpcPartUri partUri);
+        new void SetPartName([MarshalAs(UnmanagedType.Interface)][In] IOpcPartUri partUri);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.Interface)]
@@ -42,35 +42,35 @@ namespace System.Windows.Xps.Serialization.RCW
         XPS_SIZE GetPageDimensions();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetPageDimensions([ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_SIZE")] [In] ref XPS_SIZE pageDimensions);
+        void SetPageDimensions([ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_SIZE")][In] ref XPS_SIZE pageDimensions);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_RECT")]
         XPS_RECT GetContentBox();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetContentBox([ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_RECT")] [In] ref XPS_RECT contentBox);
+        void SetContentBox([ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_RECT")][In] ref XPS_RECT contentBox);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_RECT")]
         XPS_RECT GetBleedBox();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetBleedBox([ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_RECT")] [In] ref XPS_RECT bleedBox);
+        void SetBleedBox([ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_RECT")][In] ref XPS_RECT bleedBox);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.LPWStr)]
         string GetLanguage();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetLanguage([MarshalAs(UnmanagedType.LPWStr)] [In] string language);
+        void SetLanguage([MarshalAs(UnmanagedType.LPWStr)][In] string language);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.LPWStr)]
         string GetName();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetName([MarshalAs(UnmanagedType.LPWStr)] [In] string name);
+        void SetName([MarshalAs(UnmanagedType.LPWStr)][In] string name);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         int GetIsHyperlinkTarget();
@@ -87,21 +87,21 @@ namespace System.Windows.Xps.Serialization.RCW
         IXpsOMDictionary GetDictionaryLocal();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetDictionaryLocal([MarshalAs(UnmanagedType.Interface)] [In] IXpsOMDictionary resourceDictionary);
+        void SetDictionaryLocal([MarshalAs(UnmanagedType.Interface)][In] IXpsOMDictionary resourceDictionary);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.Interface)]
         IXpsOMRemoteDictionaryResource GetDictionaryResource();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetDictionaryResource([MarshalAs(UnmanagedType.Interface)] [In] IXpsOMRemoteDictionaryResource remoteDictionaryResource);
+        void SetDictionaryResource([MarshalAs(UnmanagedType.Interface)][In] IXpsOMRemoteDictionaryResource remoteDictionaryResource);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void Write([MarshalAs(UnmanagedType.Interface)] [In] ISequentialStream stream, [In] int optimizeMarkupSize);
+        void Write([MarshalAs(UnmanagedType.Interface)][In] ISequentialStream stream, [In] int optimizeMarkupSize);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.LPWStr)]
-        string GenerateUnusedLookupKey([ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_OBJECT_TYPE")] [In] XPS_OBJECT_TYPE type);
+        string GenerateUnusedLookupKey([ComAliasName("System.Windows.Xps.Serialization.RCW.XPS_OBJECT_TYPE")][In] XPS_OBJECT_TYPE type);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.Interface)]

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,7 +31,7 @@ namespace System.Windows.Documents
         // Creates a new InputScopeAttribute instance.
         internal InputScopeAttribute(InputScope inputscope)
         {
-            _inputScope= inputscope;
+            _inputScope = inputscope;
         }
 
         #endregion Constructors
@@ -52,7 +52,7 @@ namespace System.Windows.Documents
             {
                 int offset = 0;
                 count = _inputScope.Names.Count;
-                try 
+                try
                 {
                     ppinputscopes = Marshal.AllocCoTaskMem(sizeof(Int32) * count);
                 }
@@ -90,7 +90,7 @@ namespace System.Windows.Documents
             }
 
             int offset = 0;
-            for(int i=0; i <count; i++)
+            for (int i = 0; i < count; i++)
             {
                 IntPtr pbstr;
                 try
@@ -100,19 +100,19 @@ namespace System.Windows.Documents
                 catch (OutOfMemoryException)
                 {
                     offset = 0;
-                    for (int j=0; j < i; j++)
+                    for (int j = 0; j < i; j++)
                     {
-                        Marshal.FreeBSTR(Marshal.ReadIntPtr(ppbstrPhrases,  offset));
+                        Marshal.FreeBSTR(Marshal.ReadIntPtr(ppbstrPhrases, offset));
                         offset += IntPtr.Size;
                     }
                     throw new COMException(SR.InputScopeAttribute_E_OUTOFMEMORY, NativeMethods.E_OUTOFMEMORY);
                 }
 
-                Marshal.WriteIntPtr(ppbstrPhrases , offset, pbstr);
+                Marshal.WriteIntPtr(ppbstrPhrases, offset, pbstr);
                 offset += IntPtr.Size;
             }
-             
-            return  count > 0 ? NativeMethods.S_OK : NativeMethods.S_FALSE;
+
+            return count > 0 ? NativeMethods.S_OK : NativeMethods.S_FALSE;
         }
 
         // A method of ITfInputScope.
@@ -131,7 +131,7 @@ namespace System.Windows.Documents
         public int GetSRGC(out string desc)
         {
             desc = null;
-            
+
             if (_inputScope != null)
             {
                 desc = _inputScope.SrgsMarkup;

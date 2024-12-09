@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 //
 
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.ComponentModel;
-using System.Xml;
+using System.Globalization;
 using System.Windows.Controls;  // Validation
+using System.Xml;
 using MS.Internal; // Invariant.Assert
 using MS.Internal.Controls; // Validation
 using MS.Internal.Data;
@@ -150,7 +150,7 @@ namespace System.Windows.Data
 
         // PreSharp uses message numbers that the C# compiler doesn't know about.
         // Disable the C# complaints, per the PreSharp documentation.
-        #pragma warning disable 1634, 1691
+#pragma warning disable 1634, 1691
 
         // PreSharp checks that the type of the DP agrees with the type of the static
         // accessors.  But setting the type of the DP to XmlNamespaceManager would
@@ -158,12 +158,12 @@ namespace System.Windows.Data
         // So instead we set the type of the DP to 'object' and use the
         // ValidateValueCallback to ensure that only values of the right type are allowed.
         // Meanwhile, disable the PreSharp warning
-        #pragma warning disable 7008
+#pragma warning disable 7008
 
         /// <summary>
         /// The XmlNamespaceManager to use to perform Namespace aware XPath queries in XmlData bindings
         /// </summary>
-        public static readonly DependencyProperty XmlNamespaceManagerProperty=
+        public static readonly DependencyProperty XmlNamespaceManagerProperty =
                 DependencyProperty.RegisterAttached("XmlNamespaceManager", typeof(object), typeof(Binding),
                                             new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits),
                                             new ValidateValueCallback(IsValidXmlNamespaceManager));
@@ -191,8 +191,8 @@ namespace System.Windows.Data
             return (value == null) || SystemXmlHelper.IsXmlNamespaceManager(value);
         }
 
-        #pragma warning restore 7008
-        #pragma warning restore 1634, 1691
+#pragma warning restore 7008
+#pragma warning restore 1634, 1691
 
 
         //------------------------------------------------------
@@ -204,7 +204,7 @@ namespace System.Windows.Data
         /// <summary>
         /// Default constructor.
         /// </summary>
-        public Binding() {}
+        public Binding() { }
 
         /// <summary>
         /// Convenience constructor.  Sets most fields to default values.
@@ -326,7 +326,7 @@ namespace System.Windows.Data
                 if (_ppath != null && _ppath.StartsWithStaticProperty)
                 {
                     if (_sourceInUse == SourceProperties.None || _sourceInUse == SourceProperties.StaticSource ||
-                        FrameworkCompatibilityPreferences.TargetsDesktop_V4_0) 
+                        FrameworkCompatibilityPreferences.TargetsDesktop_V4_0)
                     {
                         // net 4.5 breaks static bindings - this is for compat
                         SourceReference = StaticSourceRef;
@@ -363,11 +363,16 @@ namespace System.Windows.Data
             {
                 switch (GetFlagsWithinMask(BindingFlags.PropagationMask))
                 {
-                    case BindingFlags.OneWay:           return BindingMode.OneWay;
-                    case BindingFlags.TwoWay:           return BindingMode.TwoWay;
-                    case BindingFlags.OneWayToSource:   return BindingMode.OneWayToSource;
-                    case BindingFlags.OneTime:          return BindingMode.OneTime;
-                    case BindingFlags.PropDefault:      return BindingMode.Default;
+                    case BindingFlags.OneWay:
+                        return BindingMode.OneWay;
+                    case BindingFlags.TwoWay:
+                        return BindingMode.TwoWay;
+                    case BindingFlags.OneWayToSource:
+                        return BindingMode.OneWayToSource;
+                    case BindingFlags.OneTime:
+                        return BindingMode.OneTime;
+                    case BindingFlags.PropDefault:
+                        return BindingMode.Default;
                 }
                 Invariant.Assert(false, "Unexpected BindingMode value");
                 return 0;
@@ -378,7 +383,7 @@ namespace System.Windows.Data
 
                 BindingFlags flags = FlagsFrom(value);
                 if (flags == BindingFlags.IllegalInput)
-                    throw new InvalidEnumArgumentException("value", (int) value, typeof(BindingMode));
+                    throw new InvalidEnumArgumentException("value", (int)value, typeof(BindingMode));
 
                 ChangeFlagsWithinMask(BindingFlags.PropagationMask, flags);
             }
@@ -392,10 +397,14 @@ namespace System.Windows.Data
             {
                 switch (GetFlagsWithinMask(BindingFlags.UpdateMask))
                 {
-                    case BindingFlags.UpdateOnPropertyChanged: return UpdateSourceTrigger.PropertyChanged;
-                    case BindingFlags.UpdateOnLostFocus:    return UpdateSourceTrigger.LostFocus;
-                    case BindingFlags.UpdateExplicitly:     return UpdateSourceTrigger.Explicit;
-                    case BindingFlags.UpdateDefault:        return UpdateSourceTrigger.Default;
+                    case BindingFlags.UpdateOnPropertyChanged:
+                        return UpdateSourceTrigger.PropertyChanged;
+                    case BindingFlags.UpdateOnLostFocus:
+                        return UpdateSourceTrigger.LostFocus;
+                    case BindingFlags.UpdateExplicitly:
+                        return UpdateSourceTrigger.Explicit;
+                    case BindingFlags.UpdateDefault:
+                        return UpdateSourceTrigger.Default;
                 }
                 Invariant.Assert(false, "Unexpected UpdateSourceTrigger value");
                 return 0;
@@ -406,7 +415,7 @@ namespace System.Windows.Data
 
                 BindingFlags flags = FlagsFrom(value);
                 if (flags == BindingFlags.IllegalInput)
-                    throw new InvalidEnumArgumentException("value", (int) value, typeof(UpdateSourceTrigger));
+                    throw new InvalidEnumArgumentException("value", (int)value, typeof(UpdateSourceTrigger));
 
                 ChangeFlagsWithinMask(BindingFlags.UpdateMask, flags);
             }
@@ -593,7 +602,7 @@ namespace System.Windows.Data
         public bool IsAsync
         {
             get { return _isAsync; }
-            set { CheckSealed();  _isAsync = value; }
+            set { CheckSealed(); _isAsync = value; }
         }
 
         /// <summary> Opaque data passed to the asynchronous data dispatcher </summary>
@@ -620,7 +629,7 @@ namespace System.Windows.Data
         public bool BindsDirectlyToSource
         {
             get { return _bindsDirectlyToSource; }
-            set { CheckSealed();  _bindsDirectlyToSource = value; }
+            set { CheckSealed(); _bindsDirectlyToSource = value; }
         }
 
         /// <summary>
@@ -743,7 +752,7 @@ namespace System.Windows.Data
         internal ObjectRef SourceReference
         {
             get { return (_source == UnsetSource) ? null : _source; }
-            set { CheckSealed();  _source = value;  DetermineSource(); }
+            set { CheckSealed(); _source = value; DetermineSource(); }
         }
 
         internal bool TreeContextIsRequired
@@ -794,7 +803,7 @@ namespace System.Windows.Data
         internal bool TransfersDefaultValue
         {
             get { return !_doesNotTransferDefaultValue; }
-            set { CheckSealed();  _doesNotTransferDefaultValue = !value; }
+            set { CheckSealed(); _doesNotTransferDefaultValue = !value; }
         }
 
         internal override bool ValidatesOnNotifyDataErrorsInternal
@@ -813,11 +822,11 @@ namespace System.Windows.Data
         void DetermineSource()
         {
             _sourceInUse =
-                (_source == UnsetSource)                ? SourceProperties.None :
-                (HasValue(Feature.RelativeSource))      ? SourceProperties.RelativeSource :
-                (HasValue(Feature.ElementSource))       ? SourceProperties.ElementName :
-                (HasValue(Feature.ObjectSource))        ? SourceProperties.Source :
-                (_source == StaticSourceRef)            ? SourceProperties.StaticSource :
+                (_source == UnsetSource) ? SourceProperties.None :
+                (HasValue(Feature.RelativeSource)) ? SourceProperties.RelativeSource :
+                (HasValue(Feature.ElementSource)) ? SourceProperties.ElementName :
+                (HasValue(Feature.ObjectSource)) ? SourceProperties.Source :
+                (_source == StaticSourceRef) ? SourceProperties.StaticSource :
                                                           SourceProperties.InternalSource;
         }
 
@@ -827,16 +836,16 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        SourceProperties    _sourceInUse;
+        SourceProperties _sourceInUse;
 
-        PropertyPath        _ppath;
-        ObjectRef           _source = UnsetSource;
+        PropertyPath _ppath;
+        ObjectRef _source = UnsetSource;
 
-        bool                _isAsync;
-        bool                _bindsDirectlyToSource;
-        bool                _doesNotTransferDefaultValue;   // initially = false
+        bool _isAsync;
+        bool _bindsDirectlyToSource;
+        bool _doesNotTransferDefaultValue;   // initially = false
 
-        int                 _attachedPropertiesInPath;
+        int _attachedPropertiesInPath;
 
         static readonly ObjectRef UnsetSource = new ExplicitObjectRef(null);
         static readonly ObjectRef StaticSourceRef = new ExplicitObjectRef(BindingExpression.StaticSource);

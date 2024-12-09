@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.IO;
 using System.ComponentModel;
+using System.IO;
+using System.Net.Cache;
+using System.Windows.Markup;
 using MS.Internal;
 using MS.Internal.PresentationCore;
-using System.Windows.Markup;
-using System.Net.Cache;
 
 namespace System.Windows.Media.Imaging
 {
@@ -50,7 +50,7 @@ namespace System.Windows.Media.Imaging
             UriCachePolicy = uriCachePolicy;
             EndInit();
         }
-        
+
         #region ISupportInitialize
 
         /// <summary>
@@ -432,8 +432,8 @@ namespace System.Windows.Media.Imaging
 
                     transformGroup.Children.Add(
                         new ScaleTransform(
-                            (1.0*finalWidth)/ oldWidth,
-                            (1.0*finalHeight)/oldHeight));
+                            (1.0 * finalWidth) / oldWidth,
+                            (1.0 * finalHeight) / oldHeight));
                 }
 
                 if (Rotation != Rotation.Rotate0)
@@ -500,7 +500,7 @@ namespace System.Windows.Media.Imaging
             if ((CreateOptions & BitmapCreateOptions.IgnoreColorProfile) == 0 &&
                 frame.ColorContexts != null &&
                 frame.ColorContexts[0] != null &&
-                frame.ColorContexts[0].IsValid && 
+                frame.ColorContexts[0].IsValid &&
                 source.Format.Format != PixelFormatEnum.Extended
                 )
             {
@@ -516,7 +516,7 @@ namespace System.Windows.Media.Imaging
                 // create the ColorConvertedBitmap
                 try
                 {
-                    destinationColorContext= new ColorContext(duceFormat);
+                    destinationColorContext = new ColorContext(duceFormat);
                 }
                 catch (NotSupportedException)
                 {
@@ -851,7 +851,7 @@ namespace System.Windows.Media.Imaging
             _decoder.DownloadProgress -= OnDownloadProgress;
             _decoder.DownloadCompleted -= OnDownloadCompleted;
             _decoder.DownloadFailed -= OnDownloadFailed;
-            
+
             if ((CreateOptions & BitmapCreateOptions.DelayCreation) != 0)
             {
                 DelayCreation = true;
@@ -886,7 +886,7 @@ namespace System.Windows.Media.Imaging
             _decoder.DownloadProgress -= OnDownloadProgress;
             _decoder.DownloadCompleted -= OnDownloadCompleted;
             _decoder.DownloadFailed -= OnDownloadFailed;
-            
+
             _failedEvent.InvokeEvents(this, e);
         }
 

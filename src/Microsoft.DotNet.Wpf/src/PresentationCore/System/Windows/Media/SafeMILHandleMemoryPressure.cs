@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows.Media
             _gcPressure = gcPressure;
             _refCount = 0;
 
-            
+
             // Removed WPF specific GC algorithm and all bitmap allocations/deallocations
             // are now tracked with GC.Add/RemoveMemoryPressure.
             GC.AddMemoryPressure(_gcPressure);
@@ -34,7 +34,7 @@ namespace System.Windows.Media
         {
             if (Interlocked.Decrement(ref _refCount) == 0)
             {
-                
+
                 // Removed WPF specific GC algorithm and all bitmap allocations/deallocations
                 // are now tracked with GC.Add/RemoveMemoryPressure.
                 GC.RemoveMemoryPressure(_gcPressure);

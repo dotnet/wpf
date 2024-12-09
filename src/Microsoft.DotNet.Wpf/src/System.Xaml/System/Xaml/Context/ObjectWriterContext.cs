@@ -38,39 +38,39 @@ namespace MS.Internal.Xaml.Context
             BaseUri = savedContext.BaseUri;
             // If the bottom of the stack is a (no XamlType) Value (reparse) then back-up onto it.
             // Otherwise add a blank frame to isolate template use from the saved context.
-            switch(savedContext.SaveContextType)
+            switch (savedContext.SaveContextType)
             {
-            case SavedContextType.Template:
-                // Templates always need a root namescope, to isolate them from the rest of the doc
-                XAML3.INameScopeDictionary rootNameScopeDictionary = null;
-                if (rootNameScope == null)
-                {
-                    rootNameScopeDictionary = new NameScope();
-                }
-                else
-                {
-                    rootNameScopeDictionary = rootNameScope as XAML3.INameScopeDictionary;
-
-                    if (rootNameScopeDictionary == null)
+                case SavedContextType.Template:
+                    // Templates always need a root namescope, to isolate them from the rest of the doc
+                    XAML3.INameScopeDictionary rootNameScopeDictionary = null;
+                    if (rootNameScope == null)
                     {
-                        rootNameScopeDictionary = new NameScopeDictionary(rootNameScope);
+                        rootNameScopeDictionary = new NameScope();
                     }
-                }
+                    else
+                    {
+                        rootNameScopeDictionary = rootNameScope as XAML3.INameScopeDictionary;
 
-                // Push an extra frame to ensure that the template NameScope is
-                // not part of the saved context.  Otherwise, the namescope
-                // will hold things alive as long as the template is alive
-                _stack.PushScope();
-                _savedDepth = _stack.Depth;
-                _stack.CurrentFrame.NameScopeDictionary = rootNameScopeDictionary;
-                _stack.PushScope();
-                break;
+                        if (rootNameScopeDictionary == null)
+                        {
+                            rootNameScopeDictionary = new NameScopeDictionary(rootNameScope);
+                        }
+                    }
 
-            case SavedContextType.ReparseValue:
-            case SavedContextType.ReparseMarkupExtension:
-                Debug.Assert(rootNameScope == null, "Cannot pass a new namescope in to a reparse context");
-                _savedDepth = _stack.Depth - 1;
-                break;
+                    // Push an extra frame to ensure that the template NameScope is
+                    // not part of the saved context.  Otherwise, the namescope
+                    // will hold things alive as long as the template is alive
+                    _stack.PushScope();
+                    _savedDepth = _stack.Depth;
+                    _stack.CurrentFrame.NameScopeDictionary = rootNameScopeDictionary;
+                    _stack.PushScope();
+                    break;
+
+                case SavedContextType.ReparseValue:
+                case SavedContextType.ReparseMarkupExtension:
+                    Debug.Assert(rootNameScope == null, "Cannot pass a new namescope in to a reparse context");
+                    _savedDepth = _stack.Depth - 1;
+                    break;
             }
         }
 
@@ -205,7 +205,7 @@ namespace MS.Internal.Xaml.Context
             return _settings;
         }
 
-       #endregion
+        #endregion
 
         // -----  abstracts overriden from XamlContext.
 

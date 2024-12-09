@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,10 +10,10 @@ namespace MS.Internal.Security.RightsManagement
 {
     internal class RightNameExpirationInfoPair
     {
-        internal RightNameExpirationInfoPair (string rightName, DateTime validFrom, DateTime validUntil)
+        internal RightNameExpirationInfoPair(string rightName, DateTime validFrom, DateTime validUntil)
         {
             Debug.Assert(rightName != null);
-            
+
             _rightName = rightName;
             _validFrom = validFrom;
             _validUntil = validUntil;
@@ -24,7 +24,7 @@ namespace MS.Internal.Security.RightsManagement
         /// rights get invented we would like be able to encrypt decrypt using them,
         /// although without ability to enumerate them 
         /// </summary>
-        internal  string  RightName
+        internal string RightName
         {
             get
             {
@@ -35,22 +35,22 @@ namespace MS.Internal.Security.RightsManagement
         /// <summary>
         /// The starting validity time, in UTC time 
         /// </summary>
-        internal  DateTime  ValidFrom
+        internal DateTime ValidFrom
         {
-            get 
+            get
             {
-                return _validFrom; 
+                return _validFrom;
             }
         }
 
         /// <summary>
         /// The ending validity time, in UTC time 
         /// </summary>
-        internal  DateTime  ValidUntil 
+        internal DateTime ValidUntil
         {
-            get 
+            get
             {
-                 return _validUntil; 
+                return _validUntil;
             }
         }
 

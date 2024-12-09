@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,9 +29,9 @@ namespace System.Windows
         /// <returns>true if conversion is possible</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            return (sourceType == typeof(string) 
-                || sourceType == typeof(int) 
-                || sourceType == typeof(float) 
+            return (sourceType == typeof(string)
+                || sourceType == typeof(int)
+                || sourceType == typeof(float)
                 || sourceType == typeof(double));
         }
 
@@ -71,7 +71,7 @@ namespace System.Windows
 
             if (text != null)
             {
-                double       amount;
+                double amount;
 
                 FromString(text, culture,
                     out amount);
@@ -83,7 +83,7 @@ namespace System.Windows
                 return (double)value;
             }
 
-         // Can't convert, wrong type
+            // Can't convert, wrong type
             return null;
         }
 
@@ -131,9 +131,9 @@ namespace System.Windows
         /// a baml stream.
         ///</summary>
         internal static void FromString(
-                string       text, 
-                CultureInfo  culture,
-            out double       amount)
+                string text,
+                CultureInfo culture,
+            out double amount)
         {
             amount = LengthConverter.FromString(text, culture);
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 //
 //
 
-using MS.Internal;
 using System.ComponentModel;
 using System.Globalization;
+using MS.Internal;
 
 namespace System.Windows
 {
@@ -22,7 +22,7 @@ namespace System.Windows
     /// </summary>
     [TypeConverter(typeof(CornerRadiusConverter))]
     public struct CornerRadius : IEquatable<CornerRadius>
-    {        
+    {
         //-------------------------------------------------------------------
         //
         //  Constructors
@@ -122,12 +122,12 @@ namespace System.Windows
         /// <param name="cr2">Second CornerRadius to compare</param>
         /// <returns>True if all sides of the CornerRadius are equal, false otherwise</returns>
         //  SEEALSO
-        public static bool operator==(CornerRadius cr1, CornerRadius cr2)
+        public static bool operator ==(CornerRadius cr1, CornerRadius cr2)
         {
-            return (    (cr1._topLeft     == cr2._topLeft     || (double.IsNaN(cr1._topLeft)     && double.IsNaN(cr2._topLeft)))
-                    &&  (cr1._topRight    == cr2._topRight    || (double.IsNaN(cr1._topRight)    && double.IsNaN(cr2._topRight)))
-                    &&  (cr1._bottomRight == cr2._bottomRight || (double.IsNaN(cr1._bottomRight) && double.IsNaN(cr2._bottomRight)))
-                    &&  (cr1._bottomLeft  == cr2._bottomLeft  || (double.IsNaN(cr1._bottomLeft)  && double.IsNaN(cr2._bottomLeft)))
+            return ((cr1._topLeft == cr2._topLeft || (double.IsNaN(cr1._topLeft) && double.IsNaN(cr2._topLeft)))
+                    && (cr1._topRight == cr2._topRight || (double.IsNaN(cr1._topRight) && double.IsNaN(cr2._topRight)))
+                    && (cr1._bottomRight == cr2._bottomRight || (double.IsNaN(cr1._bottomRight) && double.IsNaN(cr2._bottomRight)))
+                    && (cr1._bottomLeft == cr2._bottomLeft || (double.IsNaN(cr1._bottomLeft) && double.IsNaN(cr2._bottomLeft)))
                     );
         }
 
@@ -138,7 +138,7 @@ namespace System.Windows
         /// <param name="cr2">Second CornerRadius to compare</param>
         /// <returns>False if all sides of the CornerRadius are equal, true otherwise</returns>
         //  SEEALSO
-        public static bool operator!=(CornerRadius cr1, CornerRadius cr2)
+        public static bool operator !=(CornerRadius cr1, CornerRadius cr2)
         {
             return (!(cr1 == cr2));
         }
@@ -156,21 +156,21 @@ namespace System.Windows
 
         /// <summary>This property is the Length on the thickness' top left corner</summary>
         public double TopLeft
-        { 
+        {
             get { return _topLeft; }
             set { _topLeft = value; }
         }
 
         /// <summary>This property is the Length on the thickness' top right corner</summary>
         public double TopRight
-        { 
+        {
             get { return _topRight; }
             set { _topRight = value; }
         }
 
         /// <summary>This property is the Length on the thickness' bottom right corner</summary>
         public double BottomRight
-        { 
+        {
             get { return _bottomRight; }
             set { _bottomRight = value; }
         }
@@ -233,10 +233,10 @@ namespace System.Windows
         {
             get
             {
-                return (    DoubleUtil.IsZero(_topLeft)
-                        &&  DoubleUtil.IsZero(_topRight)
-                        &&  DoubleUtil.IsZero(_bottomRight)
-                        &&  DoubleUtil.IsZero(_bottomLeft)
+                return (DoubleUtil.IsZero(_topLeft)
+                        && DoubleUtil.IsZero(_topRight)
+                        && DoubleUtil.IsZero(_bottomRight)
+                        && DoubleUtil.IsZero(_bottomLeft)
                         );
             }
         }

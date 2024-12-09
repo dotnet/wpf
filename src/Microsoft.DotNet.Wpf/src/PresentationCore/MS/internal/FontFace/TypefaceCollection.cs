@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,11 +11,11 @@ namespace MS.Internal.FontFace
 {
     internal unsafe struct TypefaceCollection : ICollection<Typeface>
     {
-        private FontFamily                    _fontFamily;
+        private FontFamily _fontFamily;
 
         // setting _family and _familyTypefaceCollection are mutually exclusive.
         private Text.TextInterface.FontFamily _family;
-        private FamilyTypefaceCollection      _familyTypefaceCollection;
+        private FamilyTypefaceCollection _familyTypefaceCollection;
 
         public TypefaceCollection(FontFamily fontFamily, Text.TextInterface.FontFamily family)
         {
@@ -79,7 +79,7 @@ namespace MS.Internal.FontFace
         {
             get
             {
-                Debug.Assert((_family != null && _familyTypefaceCollection == null)|| (_familyTypefaceCollection != null && _family == null));
+                Debug.Assert((_family != null && _familyTypefaceCollection == null) || (_familyTypefaceCollection != null && _family == null));
                 if (_family != null)
                 {
                     return checked((int)_family.Count);
@@ -167,7 +167,7 @@ namespace MS.Internal.FontFace
 
             #region IDisposable Members
 
-            public void Dispose() {}
+            public void Dispose() { }
 
             #endregion
 
@@ -211,8 +211,8 @@ namespace MS.Internal.FontFace
 
             // setting _familyEnumerator and _familyTypefaceEnumerator are mutually exclusive.
             private IEnumerator<Text.TextInterface.Font> _familyEnumerator;
-            private IEnumerator<FamilyTypeface>          _familyTypefaceEnumerator;
-            private TypefaceCollection                   _typefaceCollection;
+            private IEnumerator<FamilyTypeface> _familyTypefaceEnumerator;
+            private TypefaceCollection _typefaceCollection;
         }
     }
 }

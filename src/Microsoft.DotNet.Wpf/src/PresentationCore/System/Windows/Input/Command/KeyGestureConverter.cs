@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,8 +18,8 @@ namespace System.Windows.Input
     /// </summary>
     public class KeyGestureConverter : TypeConverter
     {
-        private const char MODIFIERS_DELIMITER = '+' ;
-        internal const char DISPLAYSTRING_SEPARATOR = ',' ;
+        private const char MODIFIERS_DELIMITER = '+';
+        internal const char DISPLAYSTRING_SEPARATOR = ',';
 
         ///<summary>
         ///CanConvertFrom()
@@ -90,7 +90,7 @@ namespace System.Windows.Input
                 if (index >= 0)
                 {
                     displayString = fullName.Substring(index + 1).Trim();
-                    fullName      = fullName.Substring(0, index).Trim();
+                    fullName = fullName.Substring(0, index).Trim();
                 }
                 else
                 {
@@ -102,12 +102,12 @@ namespace System.Windows.Input
                 if (index >= 0)
                 {   // modifiers exists
                     modifiersToken = fullName.Substring(0, index);
-                    keyToken       = fullName.Substring(index + 1);
+                    keyToken = fullName.Substring(index + 1);
                 }
                 else
                 {
                     modifiersToken = String.Empty;
-                    keyToken       = fullName;
+                    keyToken = fullName;
                 }
 
                 ModifierKeys modifiers = ModifierKeys.None;
@@ -147,7 +147,7 @@ namespace System.Windows.Input
                         if (keyGesture.Key == Key.None)
                             return String.Empty;
 
-                        string strBinding = "" ;
+                        string strBinding = "";
                         string strKey = (string)keyConverter.ConvertTo(context, culture, keyGesture.Key, destinationType) as string;
                         if (strKey != String.Empty)
                         {
@@ -171,7 +171,7 @@ namespace System.Windows.Input
                     return String.Empty;
                 }
             }
-            throw GetConvertToException(value,destinationType);
+            throw GetConvertToException(value, destinationType);
         }
 
         // Check for Valid enum, as any int can be casted to the enum.

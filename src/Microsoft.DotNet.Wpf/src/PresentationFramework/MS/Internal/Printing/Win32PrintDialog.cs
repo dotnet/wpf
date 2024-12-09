@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #if !DONOTREFPRINTINGASMMETA
 
 
-using System.Printing.Interop;
 using System.Printing;
+using System.Printing.Interop;
 using System.Runtime.InteropServices;
 using System.Windows.Controls;
 
@@ -101,7 +101,7 @@ namespace MS.Internal.Printing
             // between ReachFramework.dll and PresentationFramework.dll. Instead, we now catch Exception, check its full type name
             // and rethrow if it doesn't match. Not perfect, but better than having a circular dependency.
             //
-            catch(Exception e)
+            catch (Exception e)
             {
                 if (String.Equals(e.GetType().FullName, "System.Printing.PrintingNotSupportedException", StringComparison.Ordinal))
                 {
@@ -112,18 +112,18 @@ namespace MS.Internal.Printing
                     System.Windows.MessageBoxOptions mbOptions = isRtlCaption ? System.Windows.MessageBoxOptions.RtlReading : System.Windows.MessageBoxOptions.None;
 
                     int type =
-                          (int) System.Windows.MessageBoxButton.OK
-                        | (int) System.Windows.MessageBoxImage.Information
-                        | (int) mbOptions;
+                          (int)System.Windows.MessageBoxButton.OK
+                        | (int)System.Windows.MessageBoxImage.Information
+                        | (int)mbOptions;
 
                     if (owner == IntPtr.Zero)
                     {
                         owner = MS.Win32.UnsafeNativeMethods.GetActiveWindow();
                     }
 
-                    if(0 != MS.Win32.UnsafeNativeMethods.MessageBox(new HandleRef(null, owner), message, caption, type))
+                    if (0 != MS.Win32.UnsafeNativeMethods.MessageBox(new HandleRef(null, owner), message, caption, type))
                     {
-                         result = NativeMethods.PD_RESULT_CANCEL;
+                        result = NativeMethods.PD_RESULT_CANCEL;
                     }
                 }
                 else
@@ -311,25 +311,25 @@ namespace MS.Internal.Printing
         PrintQueue _printQueue;
 
         private
-        PageRangeSelection  _pageRangeSelection;
+        PageRangeSelection _pageRangeSelection;
 
         private
-        PageRange           _pageRange;
+        PageRange _pageRange;
 
         private
-        bool                _pageRangeEnabled;
+        bool _pageRangeEnabled;
 
         private
-        bool                _selectedPagesEnabled;
+        bool _selectedPagesEnabled;
 
         private
-        bool                _currentPageEnabled;
-        
-        private
-        UInt32              _minPage;
+        bool _currentPageEnabled;
 
         private
-        UInt32              _maxPage;
+        UInt32 _minPage;
+
+        private
+        UInt32 _maxPage;
 
         private
         const char RightToLeftMark = '\u200F';

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,8 +18,8 @@ namespace MS.Internal.TextFormatting
     /// </summary>
     internal sealed class TextRunCacheImp
     {
-        private SpanVector      _textRunVector;         // text run vector indexed by cp
-        private SpanPosition    _latestPosition;
+        private SpanVector _textRunVector;         // text run vector indexed by cp
+        private SpanPosition _latestPosition;
 
 
         /// <summary>
@@ -48,9 +48,9 @@ namespace MS.Internal.TextFormatting
         /// on the state of the cache after the change. 
         /// </remarks>
         public void Change(
-            int     textSourceCharacterIndex,
-            int     addition,
-            int     removal
+            int textSourceCharacterIndex,
+            int addition,
+            int removal
             )
         {
             if (textSourceCharacterIndex < 0)
@@ -87,18 +87,18 @@ namespace MS.Internal.TextFormatting
         /// Fetch cached textrun
         /// </summary>
         internal TextRun FetchTextRun(
-            FormatSettings          settings,
-            int                     cpFetch,
-            int                     cpFirst,
-            out int                 offsetToFirstCp,
-            out int                 runLength
+            FormatSettings settings,
+            int cpFetch,
+            int cpFirst,
+            out int offsetToFirstCp,
+            out int runLength
             )
         {
             SpanRider textRunSpanRider = new SpanRider(_textRunVector, _latestPosition, cpFetch);
             _latestPosition = textRunSpanRider.SpanPosition;
             TextRun textRun = (TextRun)textRunSpanRider.CurrentElement;
 
-            if(textRun == null)
+            if (textRun == null)
             {
                 // run not already cached, fetch new run and cache it
 
@@ -151,8 +151,8 @@ namespace MS.Internal.TextFormatting
                     // The end overlaps with one or more cached runs, clear the range from the 
                     // begining of the current fetched run to the end of the last overlapped cached run. 
                     _latestPosition = _textRunVector.SetReference(
-                        cpFetch, 
-                        textRunSpanRider.CurrentPosition + textRunSpanRider.Length - cpFetch, 
+                        cpFetch,
+                        textRunSpanRider.CurrentPosition + textRunSpanRider.Length - cpFetch,
                         _textRunVector.Default,
                         _latestPosition
                         );
@@ -181,10 +181,10 @@ namespace MS.Internal.TextFormatting
             {
                 // Chop text run to optimal length so we dont spend forever analysing
                 // them all at once. 
-                
-                int looseCharLength = TextStore.TypicalCharactersPerLine - cpFetch + cpFirst;                
 
-                if(looseCharLength <= 0)
+                int looseCharLength = TextStore.TypicalCharactersPerLine - cpFetch + cpFirst;
+
+                if (looseCharLength <= 0)
                 {
                     // this line already exceeds typical line length, incremental fetch goes
                     // about a quarter of the typical length.
@@ -192,7 +192,7 @@ namespace MS.Internal.TextFormatting
                     looseCharLength = (int)Math.Round(TextStore.TypicalCharactersPerLine * 0.25);
                 }
 
-                if(runLength > looseCharLength)
+                if (runLength > looseCharLength)
                 {
                     if (TextRunInfo.GetRunType(textRun) == Plsrun.Text)
                     {
@@ -206,33 +206,33 @@ namespace MS.Internal.TextFormatting
                         // a limit in case the run consists of many combining mark & joiner. That is rare and doesn't make
                         // much sense in shaping already. 
                         // 
-                        
+
                         CharacterBufferReference charBufferRef = textRun.CharacterBufferReference;
 
                         // We look ahead by one more line at most. It is not normal to have
                         // so many combining mark or joiner characters in a row. It doesn't make sense to 
                         // look further if so.
                         int lookAheadLimit = Math.Min(runLength, looseCharLength + TextStore.TypicalCharactersPerLine);
-                        
-                        int sizeOfChar = 0; 
-                        int endOffset  = 0;                        
+
+                        int sizeOfChar = 0;
+                        int endOffset = 0;
                         bool canBreakAfterPrecedingChar = false;
-                        
+
                         for (endOffset = looseCharLength - 1; endOffset < lookAheadLimit; endOffset += sizeOfChar)
                         {
                             CharacterBufferRange charString = new CharacterBufferRange(
                                 charBufferRef.CharacterBuffer,
-                                charBufferRef.OffsetToFirstChar + offsetToFirstCp + endOffset, 
-                                runLength - endOffset 
-                                );                                
+                                charBufferRef.OffsetToFirstChar + offsetToFirstCp + endOffset,
+                                runLength - endOffset
+                                );
 
-                            int ch = Classification.UnicodeScalar(charString, out sizeOfChar);                            
+                            int ch = Classification.UnicodeScalar(charString, out sizeOfChar);
 
                             // We can only safely break if the preceding char is not a joiner character (i.e. can-break-after), 
                             // and the current char is not combining or joiner (i.e. can-break-before). 
-                            if (canBreakAfterPrecedingChar && !Classification.IsCombining(ch) && !Classification.IsJoiner(ch) )
+                            if (canBreakAfterPrecedingChar && !Classification.IsCombining(ch) && !Classification.IsJoiner(ch))
                             {
-                                break; 
+                                break;
                             }
 
                             canBreakAfterPrecedingChar = !Classification.IsJoiner(ch);
@@ -240,7 +240,7 @@ namespace MS.Internal.TextFormatting
 
                         looseCharLength = Math.Min(runLength, endOffset);
                     }
-                    
+
                     runLength = looseCharLength;
                 }
             }
@@ -252,11 +252,11 @@ namespace MS.Internal.TextFormatting
                 runLength > 0
 
                 // non-text run always fetched at run start
-                &&  (   isText
+                && (isText
                     || textRunSpanRider.CurrentSpanStart - textRunSpanRider.CurrentPosition == 0)
 
                 // span rider of both text and format point to valid position
-                &&  (textRunSpanRider.Length > 0 && textRunSpanRider.CurrentElement != null),
+                && (textRunSpanRider.Length > 0 && textRunSpanRider.CurrentElement != null),
 
                 "Text run fetching error!"
                 );
@@ -275,28 +275,28 @@ namespace MS.Internal.TextFormatting
                 SpanRider textRunSpanRider = new SpanRider(_textRunVector, _latestPosition);
                 if (textRunSpanRider.At(cpLimit - 1))
                 {
-                    CharacterBufferRange charString = CharacterBufferRange.Empty;                    
+                    CharacterBufferRange charString = CharacterBufferRange.Empty;
                     CultureInfo culture = null;
-                    
+
                     TextRun run = textRunSpanRider.CurrentElement as TextRun;
 
                     if (run != null)
                     {
                         // Only TextRun containing text would have non-empty Character buffer range.
-                        if ( TextRunInfo.GetRunType(run) == Plsrun.Text
+                        if (TextRunInfo.GetRunType(run) == Plsrun.Text
                           && run.CharacterBufferReference.CharacterBuffer != null)
-                        {   
+                        {
                             charString = new CharacterBufferRange(
                                 run.CharacterBufferReference,
                                 cpLimit - textRunSpanRider.CurrentSpanStart);
 
-                            culture = CultureMapper.GetSpecificCulture(run.Properties.CultureInfo);                                
+                            culture = CultureMapper.GetSpecificCulture(run.Properties.CultureInfo);
                         }
-                    
+
                         return new TextSpan<CultureSpecificCharacterBufferRange>(
                             cpLimit - textRunSpanRider.CurrentSpanStart, // cp length
-                            new CultureSpecificCharacterBufferRange(culture, charString)                                   
-                         );                                                    
+                            new CultureSpecificCharacterBufferRange(culture, charString)
+                         );
                     }
                 }
             }

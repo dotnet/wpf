@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -56,9 +56,9 @@ namespace MS.Internal.Telemetry
         /// The event source to which the activity events should be written.
         /// </param>
         internal EventSourceActivity(EventSource eventSource)
-            :this(eventSource, new EventSourceOptions())
+            : this(eventSource, new EventSourceOptions())
         {
-            
+
         }
 
         /// <summary>
@@ -76,9 +76,9 @@ namespace MS.Internal.Telemetry
         /// Note that the Opcode property will be ignored.
         /// </param>
         internal EventSourceActivity(EventSource eventSource, EventSourceOptions startStopOptions)
-            :this(eventSource, startStopOptions, Guid.Empty)
+            : this(eventSource, startStopOptions, Guid.Empty)
         {
-            
+
         }
 
         /// <summary>
@@ -120,9 +120,9 @@ namespace MS.Internal.Telemetry
         /// to the event source attached to this activity.
         /// </param>
         internal EventSourceActivity(EventSourceActivity parentActivity)
-            :this(parentActivity, new EventSourceOptions())
+            : this(parentActivity, new EventSourceOptions())
         {
-            
+
         }
 
         /// <summary>
@@ -175,7 +175,7 @@ namespace MS.Internal.Telemetry
         internal void Start(string eventName)
         {
             Contract.Requires<ArgumentNullException>(eventName != null, nameof(eventName));
-            
+
             var data = EmptyStruct.Instance;
             Start(eventName, ref data);
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace System.Windows.Media
     /// <summary>
     /// Serializer for a FontFamily
     /// </summary>
-    public class FontFamilyValueSerializer: ValueSerializer 
+    public class FontFamilyValueSerializer : ValueSerializer
     {
         /// <summary>
         /// Returns true. FontFamilyValueSerializer can always convert from a string.
@@ -52,7 +52,7 @@ namespace System.Windows.Media
             // Suppress PRESharp warning that fontFamily can be null; apparently PRESharp
             // doesn't understand short circuit evaluation of operator &&.
 #pragma warning suppress 56506
-            return fontFamily != null && fontFamily.Source != null && fontFamily.Source.Length != 0;           
+            return fontFamily != null && fontFamily.Source != null && fontFamily.Source.Length != 0;
         }
 
         /// <summary>

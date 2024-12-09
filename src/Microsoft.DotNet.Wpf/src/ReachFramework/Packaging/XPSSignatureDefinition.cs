@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,9 +16,9 @@
 
 
 --*/
-using System.Xml;
 using System.Globalization;
 using System.Windows.Markup;
+using System.Xml;
 
 namespace System.Windows.Xps.Packaging
 {
@@ -33,7 +33,7 @@ namespace System.Windows.Xps.Packaging
         /// Empty contructor
         /// </summary>
         public
-        SpotLocation(  )
+        SpotLocation()
         {
         }
 
@@ -94,16 +94,16 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        Uri         _pageUri;
-        double      _startX;
-        double      _startY;
+        Uri _pageUri;
+        double _startX;
+        double _startY;
     }
 
     /// <summary>
     /// This class provides de-serialization, access and serialization
     /// to the core properties of a Xps Document
     /// </summary>
-    public class    XpsSignatureDefinition
+    public class XpsSignatureDefinition
     {
         /// <summary>
         /// Default creator
@@ -117,7 +117,7 @@ namespace System.Windows.Xps.Packaging
             _signingLocale = null;
             _spotId = null;
             _hasBeenModified = false;
-}
+        }
         /// <summary>
         /// Any string representing the identity of the individual
         /// who is requested to sign this document
@@ -304,14 +304,14 @@ namespace System.Windows.Xps.Packaging
         }
 
 
-        private SpotLocation            _spotLocation;
-        private string                  _intent;
-        private DateTime?                _signBy;
-        private Guid?                    _spotId;
-        private string                  _requestedSigner;
-        private string                  _signingLocale;
-        private CultureInfo         _cultureInfo;
-        private bool                    _hasBeenModified;
+        private SpotLocation _spotLocation;
+        private string _intent;
+        private DateTime? _signBy;
+        private Guid? _spotId;
+        private string _requestedSigner;
+        private string _signingLocale;
+        private CultureInfo _cultureInfo;
+        private bool _hasBeenModified;
 
         #region Public methods
         /// <summary>
@@ -403,7 +403,7 @@ namespace System.Windows.Xps.Packaging
         /// </param>
         internal
         void
-        ReadXML( XmlReader reader )
+        ReadXML(XmlReader reader)
         {
             ArgumentNullException.ThrowIfNull(reader);
 
@@ -411,7 +411,7 @@ namespace System.Windows.Xps.Packaging
             // Assume the calling function has already read the
             // SignatureDefinition start element
             //
-            if( reader.NodeType != XmlNodeType.Element ||
+            if (reader.NodeType != XmlNodeType.Element ||
                 reader.Name != XpsS0Markup.SignatureDefinition
               )
             {
@@ -423,18 +423,18 @@ namespace System.Windows.Xps.Packaging
             //
             // Read the attributes off of SignatureDefinition
             //
-            ReadAttributes( reader );
+            ReadAttributes(reader);
 
-            while( !exitLoop && reader.Read() )
+            while (!exitLoop && reader.Read())
             {
-                switch( reader.NodeType )
+                switch (reader.NodeType)
                 {
                     case XmlNodeType.Element:
-                        ReadElement( reader );
+                        ReadElement(reader);
                         break;
 
                     case XmlNodeType.EndElement:
-                        if( ReadEndElement( reader ) )
+                        if (ReadEndElement(reader))
                         {
                             exitLoop = true;
                         }
@@ -448,7 +448,7 @@ namespace System.Windows.Xps.Packaging
         #region Private methods
         private
         void
-        ReadAttributes( XmlReader reader )
+        ReadAttributes(XmlReader reader)
         {
             if (reader.HasAttributes)
             {
@@ -471,7 +471,7 @@ namespace System.Windows.Xps.Packaging
 
         private
         void
-        ValidateSignatureDefinitionAttribute( string attributeName, string attributeValue )
+        ValidateSignatureDefinitionAttribute(string attributeName, string attributeValue)
         {
             if (attributeName == XpsS0Markup.RequestedSigner)
             {
@@ -504,7 +504,7 @@ namespace System.Windows.Xps.Packaging
 
         private
         void
-        ValidateSpotLocationAttribute( string attributeName, string attributeValue )
+        ValidateSpotLocationAttribute(string attributeName, string attributeValue)
         {
             ConfirmSpotLocation();
 
@@ -530,7 +530,7 @@ namespace System.Windows.Xps.Packaging
         void
         ConfirmSpotLocation()
         {
-            if( SpotLocation == null )
+            if (SpotLocation == null)
             {
                 SpotLocation = new SpotLocation();
             }
@@ -538,7 +538,7 @@ namespace System.Windows.Xps.Packaging
 
         private
         void
-        ReadElement( XmlReader reader )
+        ReadElement(XmlReader reader)
         {
             if (reader.Name == XpsS0Markup.SpotLocation)
             {
@@ -564,7 +564,7 @@ namespace System.Windows.Xps.Packaging
 
         private
         string
-        ReadData( XmlReader reader )
+        ReadData(XmlReader reader)
         {
             string data = null;
             if (!reader.IsEmptyElement)
@@ -597,12 +597,12 @@ namespace System.Windows.Xps.Packaging
         /// </returns>
         private
         bool
-        ReadEndElement( XmlReader reader )
+        ReadEndElement(XmlReader reader)
         {
             bool ret = false;
-            if( reader.Name == XpsS0Markup.SignatureDefinition )
+            if (reader.Name == XpsS0Markup.SignatureDefinition)
             {
-                ret =  true;
+                ret = true;
             }
             return ret;
         }

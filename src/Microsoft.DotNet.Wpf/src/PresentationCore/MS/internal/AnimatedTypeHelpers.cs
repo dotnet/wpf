@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,7 @@ namespace MS.Internal.PresentationCore
         {
             return (Byte)((Int32)from + (Int32)((((Double)(to - from)) + (Double)0.5) * progress));
         }
- 
+
         internal static Color InterpolateColor(Color from, Color to, Double progress)
         {
             return from + ((to - from) * (Single)progress);
@@ -114,15 +114,16 @@ namespace MS.Internal.PresentationCore
 
         internal static Rect InterpolateRect(Rect from, Rect to, Double progress)
         {
-            Rect temp = new Rect();
-
-            // from + ((from - to) * progress)
-            temp.Location = new Point(
+            Rect temp = new Rect
+            {
+                // from + ((from - to) * progress)
+                Location = new Point(
                 from.Location.X + ((to.Location.X - from.Location.X) * progress),
-                from.Location.Y + ((to.Location.Y - from.Location.Y) * progress));
-            temp.Size = new Size(
+                from.Location.Y + ((to.Location.Y - from.Location.Y) * progress)),
+                Size = new Size(
                 from.Size.Width + ((to.Size.Width - from.Size.Width) * progress),
-                from.Size.Height + ((to.Size.Height - from.Size.Height) * progress));
+                from.Size.Height + ((to.Size.Height - from.Size.Height) * progress))
+            };
 
             return temp;
         }
@@ -131,7 +132,7 @@ namespace MS.Internal.PresentationCore
         {
             return new QuaternionRotation3D(InterpolateQuaternion(from.InternalQuaternion, to.InternalQuaternion, progress, /* useShortestPath = */ true));
         }
-        
+
         internal static Single InterpolateSingle(Single from, Single to, Double progress)
         {
             return from + (Single)((to - from) * progress);
@@ -194,7 +195,7 @@ namespace MS.Internal.PresentationCore
         internal static Point AddPoint(Point value1, Point value2)
         {
             return new Point(
-                value1.X + value2.X, 
+                value1.X + value2.X,
                 value1.Y + value2.Y);
         }
 
@@ -311,7 +312,7 @@ namespace MS.Internal.PresentationCore
         internal static Quaternion SubtractQuaternion(Quaternion value1, Quaternion value2)
         {
             value2.Invert();
-            
+
             return value1 * value2;
         }
 
@@ -384,7 +385,7 @@ namespace MS.Internal.PresentationCore
 
         internal static Double GetSegmentLengthColor(Color from, Color to)
         {
-            return Math.Abs(to.ScA - from.ScA) 
+            return Math.Abs(to.ScA - from.ScA)
                  + Math.Abs(to.ScR - from.ScR)
                  + Math.Abs(to.ScG - from.ScG)
                  + Math.Abs(to.ScB - from.ScB);
@@ -510,7 +511,7 @@ namespace MS.Internal.PresentationCore
         {
             return (Byte)((Double)value * factor);
         }
- 
+
         internal static Color ScaleColor(Color value, Double factor)
         {
             return value * (Single)factor;
@@ -563,14 +564,15 @@ namespace MS.Internal.PresentationCore
 
         internal static Rect ScaleRect(Rect value, Double factor)
         {
-            Rect temp = new Rect();
-
-            temp.Location = new Point(
+            Rect temp = new Rect
+            {
+                Location = new Point(
                 value.Location.X * factor,
-                value.Location.Y * factor);
-            temp.Size = new Size(
+                value.Location.Y * factor),
+                Size = new Size(
                 value.Size.Width * factor,
-                value.Size.Height * factor);
+                value.Size.Height * factor)
+            };
 
             return temp;
         }
@@ -613,7 +615,7 @@ namespace MS.Internal.PresentationCore
         {
             return true;
         }
- 
+
         internal static bool IsValidAnimationValueChar(Char value)
         {
             return true;
@@ -681,7 +683,7 @@ namespace MS.Internal.PresentationCore
 
         internal static bool IsValidAnimationValueQuaternion(Quaternion value)
         {
-            if (   IsInvalidDouble(value.X) || IsInvalidDouble(value.Y)
+            if (IsInvalidDouble(value.X) || IsInvalidDouble(value.Y)
                 || IsInvalidDouble(value.Z) || IsInvalidDouble(value.W))
             {
                 return false;
@@ -692,7 +694,7 @@ namespace MS.Internal.PresentationCore
 
         internal static bool IsValidAnimationValueRect(Rect value)
         {
-            if (   IsInvalidDouble(value.Location.X) || IsInvalidDouble(value.Location.Y)
+            if (IsInvalidDouble(value.Location.X) || IsInvalidDouble(value.Location.Y)
                 || IsInvalidDouble(value.Size.Width) || IsInvalidDouble(value.Size.Height)
                 || value.IsEmpty)
             {

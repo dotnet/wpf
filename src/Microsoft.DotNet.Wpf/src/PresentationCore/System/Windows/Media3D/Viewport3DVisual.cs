@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using MS.Internal.Media3D;
 using System.ComponentModel;
 using System.Windows.Diagnostics;
-using System.Windows.Media.Composition;
 using System.Windows.Markup;
+using System.Windows.Media.Composition;
 using System.Windows.Media.Effects;
+using MS.Internal;
+using MS.Internal.Media3D;
 
 namespace System.Windows.Media.Media3D
 {
@@ -80,7 +80,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public Brush OpacityMask
         {
-            get { return base.VisualOpacityMask;  }
+            get { return base.VisualOpacityMask; }
             set { base.VisualOpacityMask = value; }
         }
 
@@ -196,11 +196,12 @@ namespace System.Windows.Media.Media3D
                     new PropertyMetadata(
                         FreezableOperations.GetAsFrozen(new PerspectiveCamera()),
                         CameraPropertyChanged),
-                    (ValidateValueCallback) delegate { return MediaContext.CurrentMediaContext.WriteAccessEnabled; });
+                    (ValidateValueCallback)delegate
+                    { return MediaContext.CurrentMediaContext.WriteAccessEnabled; });
 
         private static void CameraPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Viewport3DVisual owner = ((Viewport3DVisual) d);
+            Viewport3DVisual owner = ((Viewport3DVisual)d);
 
             if (!e.IsASubPropertyChange)
             {
@@ -208,7 +209,7 @@ namespace System.Windows.Media.Media3D
                 {
                     owner.DisconnectAttachedResource(
                         VisualProxyFlags.Viewport3DVisual_IsCameraDirty,
-                        ((DUCE.IResource) e.OldValue));
+                        ((DUCE.IResource)e.OldValue));
                 }
 
                 owner.SetFlagsOnAllChannels(true, VisualProxyFlags.Viewport3DVisual_IsCameraDirty | VisualProxyFlags.IsContentDirty);
@@ -224,7 +225,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Camera) GetValue(CameraProperty);
+                return (Camera)GetValue(CameraProperty);
             }
 
             set
@@ -242,11 +243,12 @@ namespace System.Windows.Media.Media3D
                     /* propertyType = */ typeof(Rect),
                     /* ownerType = */ typeof(Viewport3DVisual),
                     new PropertyMetadata(Rect.Empty, ViewportPropertyChanged),
-                    (ValidateValueCallback) delegate { return MediaContext.CurrentMediaContext.WriteAccessEnabled; });
+                    (ValidateValueCallback)delegate
+                    { return MediaContext.CurrentMediaContext.WriteAccessEnabled; });
 
         private static void ViewportPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Viewport3DVisual owner = ((Viewport3DVisual) d);
+            Viewport3DVisual owner = ((Viewport3DVisual)d);
 
             Debug.Assert(!e.IsASubPropertyChange,
                 "How are we receiving sub property changes from a struct?");
@@ -262,7 +264,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Rect) GetValue(ViewportProperty);
+                return (Rect)GetValue(ViewportProperty);
             }
 
             set
@@ -382,7 +384,7 @@ namespace System.Windows.Media.Media3D
 
             VisualDiagnostics.OnVisualChildChanged(this, child, false);
 
-            child.SetParent(/* newParent = */ (Visual) null);  // CS0121: Call is ambigious without casting null to Visual.
+            child.SetParent(/* newParent = */ (Visual)null);  // CS0121: Call is ambigious without casting null to Visual.
 
             // remove the inheritance context
             if (_inheritanceContextForChildren != null)
@@ -423,7 +425,7 @@ namespace System.Windows.Media.Media3D
 
             child.FireOnVisualParentChanged(this);
 
-            OnVisualChildrenChanged(/* visualAdded = */ null , child);
+            OnVisualChildrenChanged(/* visualAdded = */ null, child);
         }
 
         /// <summary>
@@ -512,14 +514,14 @@ namespace System.Windows.Media.Media3D
                 Matrix3D viewProjMatrix = camera.GetViewMatrix() * camera.GetProjectionMatrix(aspectRatio);
                 point *= viewProjMatrix;
 
-                Point point2D = new Point(point.X/point.W, point.Y/point.W);
+                Point point2D = new Point(point.X / point.W, point.Y / point.W);
                 point2D *= M3DUtil.GetHomogeneousToViewportTransform(Viewport);
 
                 return point2D;
             }
             else
             {
-                return new Point(0,0);
+                return new Point(0, 0);
             }
         }
 
@@ -769,7 +771,7 @@ namespace System.Windows.Media.Media3D
             {
                 for (uint i = 0; i < _children.InternalCount; i++)
                 {
-                    Visual3D child = _children.InternalGetItem((int) i);
+                    Visual3D child = _children.InternalGetItem((int)i);
 
                     if (child != null)
                     {

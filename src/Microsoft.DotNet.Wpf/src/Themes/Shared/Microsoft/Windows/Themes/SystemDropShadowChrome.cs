@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -356,11 +356,13 @@ namespace Microsoft.Windows.Themes
             else
                 topLeftStops = CreateStops(c, cornerRadius.TopLeft);
 
-            RadialGradientBrush topLeft = new RadialGradientBrush(topLeftStops);
-            topLeft.RadiusX = 1;
-            topLeft.RadiusY = 1;
-            topLeft.Center = new Point(1, 1);
-            topLeft.GradientOrigin = new Point(1, 1);
+            RadialGradientBrush topLeft = new RadialGradientBrush(topLeftStops)
+            {
+                RadiusX = 1,
+                RadiusY = 1,
+                Center = new Point(1, 1),
+                GradientOrigin = new Point(1, 1)
+            };
             topLeft.Freeze();
             brushes[TopLeft] = topLeft;
 
@@ -373,11 +375,13 @@ namespace Microsoft.Windows.Themes
             else
                 topRightStops = CreateStops(c, cornerRadius.TopRight);
 
-            RadialGradientBrush topRight = new RadialGradientBrush(topRightStops);
-            topRight.RadiusX = 1;
-            topRight.RadiusY = 1;
-            topRight.Center = new Point(0, 1);
-            topRight.GradientOrigin = new Point(0, 1);
+            RadialGradientBrush topRight = new RadialGradientBrush(topRightStops)
+            {
+                RadiusX = 1,
+                RadiusY = 1,
+                Center = new Point(0, 1),
+                GradientOrigin = new Point(0, 1)
+            };
             topRight.Freeze();
             brushes[TopRight] = topRight;
 
@@ -392,11 +396,13 @@ namespace Microsoft.Windows.Themes
             else
                 bottomLeftStops = CreateStops(c, cornerRadius.BottomLeft);
 
-            RadialGradientBrush bottomLeft = new RadialGradientBrush(bottomLeftStops);
-            bottomLeft.RadiusX = 1;
-            bottomLeft.RadiusY = 1;
-            bottomLeft.Center = new Point(1, 0);
-            bottomLeft.GradientOrigin = new Point(1, 0);
+            RadialGradientBrush bottomLeft = new RadialGradientBrush(bottomLeftStops)
+            {
+                RadiusX = 1,
+                RadiusY = 1,
+                Center = new Point(1, 0),
+                GradientOrigin = new Point(1, 0)
+            };
             bottomLeft.Freeze();
             brushes[BottomLeft] = bottomLeft;
 
@@ -413,11 +419,13 @@ namespace Microsoft.Windows.Themes
             else
                 bottomRightStops = CreateStops(c, cornerRadius.BottomRight);
 
-            RadialGradientBrush bottomRight = new RadialGradientBrush(bottomRightStops);
-            bottomRight.RadiusX = 1;
-            bottomRight.RadiusY = 1;
-            bottomRight.Center = new Point(0, 0);
-            bottomRight.GradientOrigin = new Point(0, 0);
+            RadialGradientBrush bottomRight = new RadialGradientBrush(bottomRightStops)
+            {
+                RadiusX = 1,
+                RadiusY = 1,
+                Center = new Point(0, 0),
+                GradientOrigin = new Point(0, 0)
+            };
             bottomRight.Freeze();
             brushes[BottomRight] = bottomRight;
 

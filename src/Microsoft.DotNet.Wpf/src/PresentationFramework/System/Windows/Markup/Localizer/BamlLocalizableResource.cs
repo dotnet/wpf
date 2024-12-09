@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace System.Windows.Markup.Localizer
         /// <summary>
         /// Constructor of LocalizableResource
         /// </summary>
-        public BamlLocalizableResource() : this (
+        public BamlLocalizableResource() : this(
             null,
             null,
             LocalizationCategory.None,
@@ -34,19 +34,19 @@ namespace System.Windows.Markup.Localizer
         /// Constructor of LocalizableResource
         /// </summary>
         public BamlLocalizableResource(
-            string               content,
-            string               comments,
+            string content,
+            string comments,
             LocalizationCategory category,
-            bool                 modifiable,
-            bool                 readable
+            bool modifiable,
+            bool readable
             )
         {
-            _content   = content;
-            _comments  = comments;
-            _category  = category;
+            _content = content;
+            _comments = comments;
+            _category = category;
             Modifiable = modifiable;
-            Readable   = readable;
-        }        
+            Readable = readable;
+        }
 
         /// <summary>
         /// constructor that creates a deep copy of the other localizable resource
@@ -54,11 +54,11 @@ namespace System.Windows.Markup.Localizer
         /// <param name="other"> the other localizale resource </param>
         internal BamlLocalizableResource(BamlLocalizableResource other)
         {
-            Debug.Assert(other != null);            
-            _content        = other._content;
-            _comments       = other._comments;
-            _flags          = other._flags;            
-            _category       = other._category;
+            Debug.Assert(other != null);
+            _content = other._content;
+            _comments = other._comments;
+            _flags = other._flags;
+            _category = other._category;
         }
 
         //---------------------------------
@@ -70,12 +70,12 @@ namespace System.Windows.Markup.Localizer
         /// </summary>
         public string Content
         {
-            get 
+            get
             {
                 return _content;
             }
 
-            set 
+            set
             {
                 _content = value;
             }
@@ -86,13 +86,13 @@ namespace System.Windows.Markup.Localizer
         /// </summary>
         public string Comments
         {
-            get 
+            get
             {
                 return _comments;
             }
 
             set
-            {             
+            {
                 _comments = value;
             }
         }
@@ -100,15 +100,15 @@ namespace System.Windows.Markup.Localizer
         /// <summary>
         /// Localization Lock by developer
         /// </summary>
-        public bool Modifiable 
+        public bool Modifiable
         {
-            get 
+            get
             {
                 return (_flags & LocalizationFlags.Modifiable) > 0;
             }
 
-            set 
-            {             
+            set
+            {
                 if (value)
                 {
                     _flags |= LocalizationFlags.Modifiable;
@@ -125,13 +125,13 @@ namespace System.Windows.Markup.Localizer
         /// </summary>
         public bool Readable
         {
-            get 
+            get
             {
                 return (_flags & LocalizationFlags.Readable) > 0;
             }
 
-            set 
-            {             
+            set
+            {
                 if (value)
                 {
                     _flags |= LocalizationFlags.Readable;
@@ -148,16 +148,16 @@ namespace System.Windows.Markup.Localizer
         /// </summary>
         public LocalizationCategory Category
         {
-            get 
+            get
             {
                 return _category;
             }
 
             set
-            {             
+            {
                 _category = value;
             }
-        }        
+        }
 
         /// <summary>
         /// compare equality
@@ -167,11 +167,11 @@ namespace System.Windows.Markup.Localizer
             BamlLocalizableResource otherResource = other as BamlLocalizableResource;
             if (otherResource == null)
                 return false;
-                    
-            return (_content     == otherResource._content 
-                 && _comments    == otherResource._comments 
-                 && _flags       == otherResource._flags 
-                 && _category    == otherResource._category);
+
+            return (_content == otherResource._content
+                 && _comments == otherResource._comments
+                 && _flags == otherResource._flags
+                 && _category == otherResource._category);
         }
 
         ///<summary>
@@ -179,19 +179,19 @@ namespace System.Windows.Markup.Localizer
         ///</summary>
         public override int GetHashCode()
         {
-            return (_content == null ? 0 : _content.GetHashCode()) 
-                  ^(_comments == null ? 0 : _comments.GetHashCode())
-                  ^ (int) _flags
-                  ^ (int) _category;
-        }        
-        
+            return (_content == null ? 0 : _content.GetHashCode())
+                  ^ (_comments == null ? 0 : _comments.GetHashCode())
+                  ^ (int)_flags
+                  ^ (int)_category;
+        }
+
         //---------------------------------
         // private members
         //---------------------------------
-        private string               _content;
-        private string               _comments;
-        private LocalizationFlags    _flags;        
-        private LocalizationCategory _category;     
+        private string _content;
+        private string _comments;
+        private LocalizationFlags _flags;
+        private LocalizationCategory _category;
 
 
         //---------------------------------
@@ -200,8 +200,8 @@ namespace System.Windows.Markup.Localizer
         [Flags]
         private enum LocalizationFlags : byte
         {
-            Readable        = 1,
-            Modifiable      = 2,            
+            Readable = 1,
+            Modifiable = 2,
         }
     }
 }

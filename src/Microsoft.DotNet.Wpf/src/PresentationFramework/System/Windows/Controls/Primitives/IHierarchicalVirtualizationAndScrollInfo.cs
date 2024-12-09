@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@ namespace System.Windows.Controls.Primitives
     ///     This is used for hierarchial virtualization where an element may contain a Header
     ///     and and an ItemsHost to layout its child elements.
     /// </summary>
-    public interface IHierarchicalVirtualizationAndScrollInfo 
+    public interface IHierarchicalVirtualizationAndScrollInfo
     {
         /// <summary>
         /// Returns the constraints for the control.

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         internal WindowInteractionStateTracker()
@@ -38,7 +38,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal override void WinEventProc(int eventId, IntPtr hwnd, int idObject, int idChild, uint eventTime)
@@ -127,7 +127,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private WindowInteractionState _lastState;      // keep track of last interaction state

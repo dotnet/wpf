@@ -90,25 +90,25 @@ namespace MS.Internal.Xaml.Parser
 
             switch (nodeType)
             {
-            case ScannerNodeType.EMPTYELEMENT:
-                foreach (XamlNode node in P_EmptyElement())
-                {
-                    yield return node;
-                }
-                break;
+                case ScannerNodeType.EMPTYELEMENT:
+                    foreach (XamlNode node in P_EmptyElement())
+                    {
+                        yield return node;
+                    }
+                    break;
 
-            case ScannerNodeType.ELEMENT:
-                foreach (XamlNode node in P_StartElement())
-                {
-                    yield return node;
-                }
-                foreach (XamlNode node in P_ElementBody())
-                {
-                    yield return node;
-                }
-                break;
-            default:
-                throw new XamlUnexpectedParseException(_xamlScanner, nodeType, ElementRuleException);
+                case ScannerNodeType.ELEMENT:
+                    foreach (XamlNode node in P_StartElement())
+                    {
+                        yield return node;
+                    }
+                    foreach (XamlNode node in P_ElementBody())
+                    {
+                        yield return node;
+                    }
+                    break;
+                default:
+                    throw new XamlUnexpectedParseException(_xamlScanner, nodeType, ElementRuleException);
             }
         }
 
@@ -218,67 +218,67 @@ namespace MS.Internal.Xaml.Parser
                 ScannerNodeType nodeType = _xamlScanner.NodeType;
                 switch (nodeType)
                 {
-                case ScannerNodeType.PROPERTYELEMENT:
-                case ScannerNodeType.EMPTYPROPERTYELEMENT:
-                    hasContent = true;
-                    foreach (XamlNode node in P_PropertyElement())
-                    {
-                        yield return node;
-                    }
-                    break;
-
-                case ScannerNodeType.PREFIXDEFINITION:
-                case ScannerNodeType.ELEMENT:
-                case ScannerNodeType.EMPTYELEMENT:
-                case ScannerNodeType.TEXT:
-                    hasContent = true;
-                    do
-                    {
-                        foreach (XamlNode node in P_ElementContent())
+                    case ScannerNodeType.PROPERTYELEMENT:
+                    case ScannerNodeType.EMPTYPROPERTYELEMENT:
+                        hasContent = true;
+                        foreach (XamlNode node in P_PropertyElement())
                         {
                             yield return node;
                         }
-                        nodeType = _xamlScanner.NodeType;
-                    } while (nodeType == ScannerNodeType.PREFIXDEFINITION
-                            || nodeType == ScannerNodeType.ELEMENT
-                            || nodeType == ScannerNodeType.EMPTYELEMENT
-                            || nodeType == ScannerNodeType.TEXT);
+                        break;
 
-                    // If the above started a container directive or an unknown content property, then end the collection.
-                    if (_context.CurrentInItemsProperty || _context.CurrentInInitProperty || _context.CurrentInUnknownContent)
-                    {
-                        yield return Logic_EndMember(); // Container or unknown content property.
-
-                        if (_context.CurrentInCollectionFromMember)
+                    case ScannerNodeType.PREFIXDEFINITION:
+                    case ScannerNodeType.ELEMENT:
+                    case ScannerNodeType.EMPTYELEMENT:
+                    case ScannerNodeType.TEXT:
+                        hasContent = true;
+                        do
                         {
-                            yield return Logic_EndObject();    // Getter pseudo Object
-                            yield return Logic_EndMember();   // Content Property
-                            _context.CurrentInCollectionFromMember = false;
-                            if (_context.CurrentInImplicitArray)
+                            foreach (XamlNode node in P_ElementContent())
                             {
-                                _context.CurrentInImplicitArray = false;
-                                yield return Logic_EndObject();
-                                yield return Logic_EndMember();
+                                yield return node;
+                            }
+                            nodeType = _xamlScanner.NodeType;
+                        } while (nodeType == ScannerNodeType.PREFIXDEFINITION
+                                || nodeType == ScannerNodeType.ELEMENT
+                                || nodeType == ScannerNodeType.EMPTYELEMENT
+                                || nodeType == ScannerNodeType.TEXT);
+
+                        // If the above started a container directive or an unknown content property, then end the collection.
+                        if (_context.CurrentInItemsProperty || _context.CurrentInInitProperty || _context.CurrentInUnknownContent)
+                        {
+                            yield return Logic_EndMember(); // Container or unknown content property.
+
+                            if (_context.CurrentInCollectionFromMember)
+                            {
+                                yield return Logic_EndObject();    // Getter pseudo Object
+                                yield return Logic_EndMember();   // Content Property
+                                _context.CurrentInCollectionFromMember = false;
+                                if (_context.CurrentInImplicitArray)
+                                {
+                                    _context.CurrentInImplicitArray = false;
+                                    yield return Logic_EndObject();
+                                    yield return Logic_EndMember();
+                                }
                             }
                         }
-                    }
-                    break;
-                case ScannerNodeType.ENDTAG:
-                    // <Foo></Foo> if foo has no default constructor we need to output SM _Initialization V "" EM
-                    XamlType currentType = _context.CurrentType;
-                    bool hasTypeConverter = currentType.TypeConverter != null;
-                    bool isConstructable = currentType.IsConstructible && !currentType.ConstructionRequiresArguments;
-                    if (!hasContent && hasTypeConverter && !isConstructable)
-                    {
-                        yield return Logic_StartInitProperty(currentType);
-                        yield return new XamlNode(XamlNodeType.Value, string.Empty);
-                        yield return Logic_EndMember();
-                    }
-                    doneWithElementContent = true;
-                    break;
-                default:
-                    doneWithElementContent = true;
-                    break;
+                        break;
+                    case ScannerNodeType.ENDTAG:
+                        // <Foo></Foo> if foo has no default constructor we need to output SM _Initialization V "" EM
+                        XamlType currentType = _context.CurrentType;
+                        bool hasTypeConverter = currentType.TypeConverter != null;
+                        bool isConstructable = currentType.IsConstructible && !currentType.ConstructionRequiresArguments;
+                        if (!hasContent && hasTypeConverter && !isConstructable)
+                        {
+                            yield return Logic_StartInitProperty(currentType);
+                            yield return new XamlNode(XamlNodeType.Value, string.Empty);
+                            yield return Logic_EndMember();
+                        }
+                        doneWithElementContent = true;
+                        break;
+                    default:
+                        doneWithElementContent = true;
+                        break;
                 }
             } while (!doneWithElementContent);
 
@@ -364,42 +364,42 @@ namespace MS.Internal.Xaml.Parser
                 ScannerNodeType nodeType = _xamlScanner.NodeType;
                 switch (nodeType)
                 {
-                case ScannerNodeType.PREFIXDEFINITION:
-                case ScannerNodeType.ELEMENT:
-                case ScannerNodeType.EMPTYELEMENT:
-                case ScannerNodeType.TEXT:
-                    do
-                    {
-                        foreach (XamlNode node in P_PropertyContent())
+                    case ScannerNodeType.PREFIXDEFINITION:
+                    case ScannerNodeType.ELEMENT:
+                    case ScannerNodeType.EMPTYELEMENT:
+                    case ScannerNodeType.TEXT:
+                        do
                         {
-                            yield return node;
-                        }
-                        nodeType = _xamlScanner.NodeType;
-                    } while (nodeType == ScannerNodeType.PREFIXDEFINITION
-                            || nodeType == ScannerNodeType.ELEMENT
-                            || nodeType == ScannerNodeType.EMPTYELEMENT
-                            || nodeType == ScannerNodeType.TEXT);
-                    // If the above started a container directive, end the collection.
-                    if (_context.CurrentInItemsProperty || _context.CurrentInInitProperty)
-                    {
-                        yield return Logic_EndMember();   // Pseudo container property.
-
-                        if (_context.CurrentInCollectionFromMember)
-                        {
-                            yield return Logic_EndObject();    // Getter pseudo Object
-                            _context.CurrentInCollectionFromMember = false;
-                            if (_context.CurrentInImplicitArray)
+                            foreach (XamlNode node in P_PropertyContent())
                             {
-                                _context.CurrentInImplicitArray = false;
-                                yield return Logic_EndMember();
-                                yield return Logic_EndObject();
+                                yield return node;
+                            }
+                            nodeType = _xamlScanner.NodeType;
+                        } while (nodeType == ScannerNodeType.PREFIXDEFINITION
+                                || nodeType == ScannerNodeType.ELEMENT
+                                || nodeType == ScannerNodeType.EMPTYELEMENT
+                                || nodeType == ScannerNodeType.TEXT);
+                        // If the above started a container directive, end the collection.
+                        if (_context.CurrentInItemsProperty || _context.CurrentInInitProperty)
+                        {
+                            yield return Logic_EndMember();   // Pseudo container property.
+
+                            if (_context.CurrentInCollectionFromMember)
+                            {
+                                yield return Logic_EndObject();    // Getter pseudo Object
+                                _context.CurrentInCollectionFromMember = false;
+                                if (_context.CurrentInImplicitArray)
+                                {
+                                    _context.CurrentInImplicitArray = false;
+                                    yield return Logic_EndMember();
+                                    yield return Logic_EndObject();
+                                }
                             }
                         }
-                    }
-                    break;
-                default:
-                    doingPropertyContent = false;
-                    break;
+                        break;
+                    default:
+                        doingPropertyContent = false;
+                        break;
                 }
             } while (doingPropertyContent);
 
@@ -428,182 +428,182 @@ namespace MS.Internal.Xaml.Parser
             ScannerNodeType nodeType = _xamlScanner.NodeType;
             switch (nodeType)
             {
-            case ScannerNodeType.PREFIXDEFINITION:
-            case ScannerNodeType.ELEMENT:
-            case ScannerNodeType.EMPTYELEMENT:
-            case ScannerNodeType.TEXT:
-                if (nodeType == ScannerNodeType.TEXT)
-                {
-                    XamlText text = _xamlScanner.TextContent;
-
-                    if (Logic_IsDiscardableWhitespace(text))
+                case ScannerNodeType.PREFIXDEFINITION:
+                case ScannerNodeType.ELEMENT:
+                case ScannerNodeType.EMPTYELEMENT:
+                case ScannerNodeType.TEXT:
+                    if (nodeType == ScannerNodeType.TEXT)
                     {
+                        XamlText text = _xamlScanner.TextContent;
+
+                        if (Logic_IsDiscardableWhitespace(text))
+                        {
+                            _xamlScanner.Read();
+                            if (ProvideLineInfo)
+                            {
+                                yield return Logic_LineInfo();
+                            }
+                            break;
+                        }
+                    }
+
+                    // Don't immediately emit the prefix Definitions.
+                    // buffer them for moment because if this is the first object
+                    // in a collection, we may need to jam an implicit _Items property
+                    // on Content Property in before the PrefixDef's and then the ObjectType.
+                    while (nodeType == ScannerNodeType.PREFIXDEFINITION)
+                    {
+                        if (savedPrefixDefinitions == null)
+                        {
+                            savedPrefixDefinitions = new List<XamlNode>();
+                        }
+                        if (ProvideLineInfo)
+                        {
+                            savedPrefixDefinitions.Add(Logic_LineInfo());
+                        }
+                        savedPrefixDefinitions.Add(Logic_PrefixDefinition());
                         _xamlScanner.Read();
                         if (ProvideLineInfo)
                         {
                             yield return Logic_LineInfo();
                         }
-                        break;
+                        nodeType = _xamlScanner.NodeType;
                     }
-                }
 
-                // Don't immediately emit the prefix Definitions.
-                // buffer them for moment because if this is the first object
-                // in a collection, we may need to jam an implicit _Items property
-                // on Content Property in before the PrefixDef's and then the ObjectType.
-                while (nodeType == ScannerNodeType.PREFIXDEFINITION)
-                {
-                    if (savedPrefixDefinitions == null)
+                    // Check for any preambles we need to emit before the
+                    // emitting the actual element or Text.
+                    bool isTextInitialization = false;
+                    if (!_context.CurrentInItemsProperty && !_context.CurrentInUnknownContent)
                     {
-                        savedPrefixDefinitions = new List<XamlNode>();
-                    }
-                    if (ProvideLineInfo)
-                    {
-                        savedPrefixDefinitions.Add(Logic_LineInfo());
-                    }
-                    savedPrefixDefinitions.Add(Logic_PrefixDefinition());
-                    _xamlScanner.Read();
-                    if (ProvideLineInfo)
-                    {
-                        yield return Logic_LineInfo();
-                    }
-                    nodeType = _xamlScanner.NodeType;
-                }
-
-                // Check for any preambles we need to emit before the
-                // emitting the actual element or Text.
-                bool isTextInitialization = false;
-                if (!_context.CurrentInItemsProperty && !_context.CurrentInUnknownContent)
-                {
-                    bool isContentProperty = false;
-                    // In case of text, we look first for a string or object content property,
-                    // then a TypeConverter
-                    if (nodeType == ScannerNodeType.TEXT)
-                    {
-                        if (currentType.ContentProperty != null && CanAcceptString(currentType.ContentProperty))
+                        bool isContentProperty = false;
+                        // In case of text, we look first for a string or object content property,
+                        // then a TypeConverter
+                        if (nodeType == ScannerNodeType.TEXT)
                         {
-                            isContentProperty = true;
-                        }
-                        // If there have been "real" properties then we are forced to use the
-                        // Constructor.  Otherwise we can consider a TypeConverter on the TEXT.
-                        else if (!_context.CurrentForcedToUseConstructor
-                                && !_xamlScanner.TextContent.IsEmpty
-                                && currentType.TypeConverter != null)
-                        {
-                            isTextInitialization = true;
-                        }
-                    }
-                    // Otherwise, we look first for a collection, and then fall back to content property
-                    if (!isTextInitialization && !isContentProperty)
-                    {
-                        // If we are first in a collection
-                        if (currentType.IsCollection || currentType.IsDictionary)
-                        {
-                            yield return Logic_StartItemsProperty(currentType);
-                        }
-                        else  // Back to ContentProperty (either element or unknown content)
-                        {
-                            isContentProperty = true;
-                        }
-                    }
-                    // Don't yield more than one unknown content property for multiple,
-                    // contiguous content objects and values.
-                    if (isContentProperty && !_context.CurrentInUnknownContent)
-                    {
-                        XamlMember contentProperty = currentType.ContentProperty;
-                        if (contentProperty != null)
-                        {
-                            bool isVisible = _context.IsVisible(
-                                contentProperty, _context.CurrentTypeIsRoot ? _context.CurrentType : null);
-                            // Visible content properties produce known members.
-                            // Invisible content properties produce unknown members.
-                            // Protected content properties of root instances and internal
-                            // content properties can be visible, depending on the reader settings.
-                            if (!isVisible)
+                            if (currentType.ContentProperty != null && CanAcceptString(currentType.ContentProperty))
                             {
-                                // We use the current type, not the actual declaring type of the non-visible property,
-                                // for consistency with how non-visible PEs and Attribute Properties are handled.
-                                contentProperty = new XamlMember(contentProperty.Name, currentType, false);
+                                isContentProperty = true;
+                            }
+                            // If there have been "real" properties then we are forced to use the
+                            // Constructor.  Otherwise we can consider a TypeConverter on the TEXT.
+                            else if (!_context.CurrentForcedToUseConstructor
+                                    && !_xamlScanner.TextContent.IsEmpty
+                                    && currentType.TypeConverter != null)
+                            {
+                                isTextInitialization = true;
                             }
                         }
-                        // A null argument produces an unknown content member.
-                        yield return Logic_StartContentProperty(contentProperty);
+                        // Otherwise, we look first for a collection, and then fall back to content property
+                        if (!isTextInitialization && !isContentProperty)
+                        {
+                            // If we are first in a collection
+                            if (currentType.IsCollection || currentType.IsDictionary)
+                            {
+                                yield return Logic_StartItemsProperty(currentType);
+                            }
+                            else  // Back to ContentProperty (either element or unknown content)
+                            {
+                                isContentProperty = true;
+                            }
+                        }
+                        // Don't yield more than one unknown content property for multiple,
+                        // contiguous content objects and values.
+                        if (isContentProperty && !_context.CurrentInUnknownContent)
+                        {
+                            XamlMember contentProperty = currentType.ContentProperty;
+                            if (contentProperty != null)
+                            {
+                                bool isVisible = _context.IsVisible(
+                                    contentProperty, _context.CurrentTypeIsRoot ? _context.CurrentType : null);
+                                // Visible content properties produce known members.
+                                // Invisible content properties produce unknown members.
+                                // Protected content properties of root instances and internal
+                                // content properties can be visible, depending on the reader settings.
+                                if (!isVisible)
+                                {
+                                    // We use the current type, not the actual declaring type of the non-visible property,
+                                    // for consistency with how non-visible PEs and Attribute Properties are handled.
+                                    contentProperty = new XamlMember(contentProperty.Name, currentType, false);
+                                }
+                            }
+                            // A null argument produces an unknown content member.
+                            yield return Logic_StartContentProperty(contentProperty);
 
-                        // Check for and emit the get collection from member.
-                        foreach (XamlNode node in LogicStream_CheckForStartGetCollectionFromMember())
+                            // Check for and emit the get collection from member.
+                            foreach (XamlNode node in LogicStream_CheckForStartGetCollectionFromMember())
+                            {
+                                yield return node;
+                            }
+                        }
+                    }
+
+                    // Now we are ready for the given element.
+                    // so now emit the saved prefix definitions.
+                    if (savedPrefixDefinitions != null)
+                    {
+                        for (int i = 0; i < savedPrefixDefinitions.Count; i++)
+                        {
+                            yield return savedPrefixDefinitions[i];
+                        }
+                        if (ProvideLineInfo)
+                        {
+                            yield return Logic_LineInfo();
+                        }
+                    }
+
+                    if (nodeType == ScannerNodeType.TEXT)
+                    {
+                        XamlText text = _xamlScanner.TextContent;
+                        string trimmed = Logic_ApplyFinalTextTrimming(text);
+                        bool isXDataText = _xamlScanner.IsXDataText;
+                        _xamlScanner.Read();
+                        if (ProvideLineInfo)
+                        {
+                            yield return Logic_LineInfo();
+                        }
+
+                        if (string.IsNullOrEmpty(trimmed))
+                        {
+                            break;
+                        }
+
+                        if (isTextInitialization)
+                        {
+                            yield return Logic_StartInitProperty(currentType);
+                        }
+
+                        if (isXDataText)
+                        {
+                            yield return Logic_StartObject(XamlLanguage.XData, null);
+                            XamlMember xDataTextProperty = XamlLanguage.XData.GetMember("Text");
+                            yield return Logic_EndOfAttributes();
+                            yield return Logic_StartMember(xDataTextProperty);
+                        }
+
+                        yield return new XamlNode(XamlNodeType.Value, trimmed);
+
+                        if (isXDataText)
+                        {
+                            yield return Logic_EndMember();
+                            yield return Logic_EndObject();
+                        }
+                    }
+                    else
+                    {
+                        foreach (XamlNode node in P_Element())
                         {
                             yield return node;
                         }
                     }
-                }
 
-                // Now we are ready for the given element.
-                // so now emit the saved prefix definitions.
-                if (savedPrefixDefinitions != null)
-                {
-                    for (int i = 0; i < savedPrefixDefinitions.Count; i++)
-                    {
-                        yield return savedPrefixDefinitions[i];
-                    }
-                    if (ProvideLineInfo)
-                    {
-                        yield return Logic_LineInfo();
-                    }
-                }
-
-                if (nodeType == ScannerNodeType.TEXT)
-                {
-                    XamlText text = _xamlScanner.TextContent;
-                    string trimmed = Logic_ApplyFinalTextTrimming(text);
-                    bool isXDataText = _xamlScanner.IsXDataText;
-                    _xamlScanner.Read();
-                    if (ProvideLineInfo)
-                    {
-                        yield return Logic_LineInfo();
-                    }
-
-                    if (string.IsNullOrEmpty(trimmed))
-                    {
-                        break;
-                    }
-
-                    if (isTextInitialization)
-                    {
-                        yield return Logic_StartInitProperty(currentType);
-                    }
-
-                    if (isXDataText)
-                    {
-                        yield return Logic_StartObject(XamlLanguage.XData, null);
-                        XamlMember xDataTextProperty = XamlLanguage.XData.GetMember("Text");
-                        yield return Logic_EndOfAttributes();
-                        yield return Logic_StartMember(xDataTextProperty);
-                    }
-
-                    yield return new XamlNode(XamlNodeType.Value, trimmed);
-
-                    if (isXDataText)
+                    // If we are not in an items or unknown content property, then
+                    // there cannot be more objects or values that follow this content
+                    // (a singular property), and thus we can end this property now.
+                    if (!_context.CurrentInItemsProperty && !_context.CurrentInUnknownContent)
                     {
                         yield return Logic_EndMember();
-                        yield return Logic_EndObject();
                     }
-                }
-                else
-                {
-                    foreach (XamlNode node in P_Element())
-                    {
-                        yield return node;
-                    }
-                }
-
-                // If we are not in an items or unknown content property, then
-                // there cannot be more objects or values that follow this content
-                // (a singular property), and thus we can end this property now.
-                if (!_context.CurrentInItemsProperty && !_context.CurrentInUnknownContent)
-                {
-                    yield return Logic_EndMember();
-                }
-                break;
+                    break;
             } // end switch
         }
 
@@ -619,121 +619,121 @@ namespace MS.Internal.Xaml.Parser
 
             switch (nodeType)
             {
-            case ScannerNodeType.PREFIXDEFINITION:
-            case ScannerNodeType.ELEMENT:
-            case ScannerNodeType.EMPTYELEMENT:
-            case ScannerNodeType.TEXT:
-                if (nodeType == ScannerNodeType.TEXT)
-                {
-                    XamlText text = _xamlScanner.TextContent;
-
-                    if (Logic_IsDiscardableWhitespace(text))
-                    {
-                        trimmed = string.Empty;
-                    }
-                    else
-                    {
-                        trimmed = Logic_ApplyFinalTextTrimming(text);
-                    }
-
-                    isTextXML = _xamlScanner.IsXDataText;
-                    _xamlScanner.Read();
-                    if (ProvideLineInfo)
-                    {
-                        yield return Logic_LineInfo();
-                    }
-                    if (string.IsNullOrEmpty(trimmed))
-                    {
-                        break;
-                    }
-                }
-
-                // Don't immediately emit the prefix Definitions.
-                // buffer them for moment because if this is the first object
-                // in a collection, we may need to jam an implicit _Items property
-                // in before the PrefixDef's and then the ObjectType.
-                while (nodeType == ScannerNodeType.PREFIXDEFINITION)
-                {
-                    if (_savedPrefixDefinitions == null)
-                    {
-                        _savedPrefixDefinitions = new List<XamlNode>();
-                    }
-                    _savedPrefixDefinitions.Add(Logic_PrefixDefinition());
-                    if (ProvideLineInfo)
-                    {
-                        _savedPrefixDefinitions.Add(Logic_LineInfo());
-                    }
-                    _xamlScanner.Read();
-                    if (ProvideLineInfo)
-                    {
-                        yield return Logic_LineInfo();
-                    }
-                    nodeType = _xamlScanner.NodeType;
-                }
-
-                // If this is TEXT and the current Property has a TypeConverter
-                // Then emit the TEXT now.
-                if (nodeType == ScannerNodeType.TEXT
-                    && _context.CurrentMember.TypeConverter != null)
-                {
-                    yield return new XamlNode(XamlNodeType.Value, trimmed);
-                }
-                else
-                {
-                    // Check for any preambles we need to emit before the
-                    // emitting the actual element or Text.
-                    if (!_context.CurrentInCollectionFromMember)
-                    {
-                        // Check for and emit the get collection from member.
-                        foreach (XamlNode node in LogicStream_CheckForStartGetCollectionFromMember())
-                        {
-                            yield return node;
-                        }
-                    }
-
-                    // We couldn't emit text in the code above (directly under the property).
-                    // We have now (possibly) started a get collection from member.  This TEXT might go
-                    // under the _items.
-                    // This might be <XDATA>.
-                    // It might still be an error, ie. Unknown Content.
-                    // This is the last chance to emit the TEXT.
+                case ScannerNodeType.PREFIXDEFINITION:
+                case ScannerNodeType.ELEMENT:
+                case ScannerNodeType.EMPTYELEMENT:
+                case ScannerNodeType.TEXT:
                     if (nodeType == ScannerNodeType.TEXT)
                     {
-                        if (isTextXML)
+                        XamlText text = _xamlScanner.TextContent;
+
+                        if (Logic_IsDiscardableWhitespace(text))
                         {
-                            yield return Logic_StartObject(XamlLanguage.XData, null);
-                            XamlMember xDataTextProperty = XamlLanguage.XData.GetMember("Text");
-                            yield return Logic_EndOfAttributes();
-                            yield return Logic_StartMember(xDataTextProperty);
+                            trimmed = string.Empty;
+                        }
+                        else
+                        {
+                            trimmed = Logic_ApplyFinalTextTrimming(text);
                         }
 
+                        isTextXML = _xamlScanner.IsXDataText;
+                        _xamlScanner.Read();
+                        if (ProvideLineInfo)
+                        {
+                            yield return Logic_LineInfo();
+                        }
+                        if (string.IsNullOrEmpty(trimmed))
+                        {
+                            break;
+                        }
+                    }
+
+                    // Don't immediately emit the prefix Definitions.
+                    // buffer them for moment because if this is the first object
+                    // in a collection, we may need to jam an implicit _Items property
+                    // in before the PrefixDef's and then the ObjectType.
+                    while (nodeType == ScannerNodeType.PREFIXDEFINITION)
+                    {
+                        if (_savedPrefixDefinitions == null)
+                        {
+                            _savedPrefixDefinitions = new List<XamlNode>();
+                        }
+                        _savedPrefixDefinitions.Add(Logic_PrefixDefinition());
+                        if (ProvideLineInfo)
+                        {
+                            _savedPrefixDefinitions.Add(Logic_LineInfo());
+                        }
+                        _xamlScanner.Read();
+                        if (ProvideLineInfo)
+                        {
+                            yield return Logic_LineInfo();
+                        }
+                        nodeType = _xamlScanner.NodeType;
+                    }
+
+                    // If this is TEXT and the current Property has a TypeConverter
+                    // Then emit the TEXT now.
+                    if (nodeType == ScannerNodeType.TEXT
+                        && _context.CurrentMember.TypeConverter != null)
+                    {
                         yield return new XamlNode(XamlNodeType.Value, trimmed);
-
-                        if (isTextXML)
-                        {
-                            yield return Logic_EndMember();
-                            yield return Logic_EndObject();
-                        }
                     }
                     else
                     {
-                        // Now we are ready for the given element.
-                        // now emit the saved prefix definitions.
-                        if (_savedPrefixDefinitions != null)
+                        // Check for any preambles we need to emit before the
+                        // emitting the actual element or Text.
+                        if (!_context.CurrentInCollectionFromMember)
                         {
-                            for (int i = 0; i < _savedPrefixDefinitions.Count; i++)
+                            // Check for and emit the get collection from member.
+                            foreach (XamlNode node in LogicStream_CheckForStartGetCollectionFromMember())
                             {
-                                yield return _savedPrefixDefinitions[i];
+                                yield return node;
                             }
                         }
 
-                        foreach (XamlNode node in P_Element())
+                        // We couldn't emit text in the code above (directly under the property).
+                        // We have now (possibly) started a get collection from member.  This TEXT might go
+                        // under the _items.
+                        // This might be <XDATA>.
+                        // It might still be an error, ie. Unknown Content.
+                        // This is the last chance to emit the TEXT.
+                        if (nodeType == ScannerNodeType.TEXT)
                         {
-                            yield return node;
+                            if (isTextXML)
+                            {
+                                yield return Logic_StartObject(XamlLanguage.XData, null);
+                                XamlMember xDataTextProperty = XamlLanguage.XData.GetMember("Text");
+                                yield return Logic_EndOfAttributes();
+                                yield return Logic_StartMember(xDataTextProperty);
+                            }
+
+                            yield return new XamlNode(XamlNodeType.Value, trimmed);
+
+                            if (isTextXML)
+                            {
+                                yield return Logic_EndMember();
+                                yield return Logic_EndObject();
+                            }
+                        }
+                        else
+                        {
+                            // Now we are ready for the given element.
+                            // now emit the saved prefix definitions.
+                            if (_savedPrefixDefinitions != null)
+                            {
+                                for (int i = 0; i < _savedPrefixDefinitions.Count; i++)
+                                {
+                                    yield return _savedPrefixDefinitions[i];
+                                }
+                            }
+
+                            foreach (XamlNode node in P_Element())
+                            {
+                                yield return node;
+                            }
                         }
                     }
-                }
-                break;
+                    break;
             }
         }
 

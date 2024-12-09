@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,13 +33,13 @@ namespace System.ComponentModel
         /// Identifies the DesignerProperties.IsInDesignMode dependency property.  
         /// This field is read only.    
         /// </summary>
-        public static readonly DependencyProperty IsInDesignModeProperty = 
+        public static readonly DependencyProperty IsInDesignModeProperty =
             DependencyProperty.RegisterAttached(
                  "IsInDesignMode",
                  typeof(bool), typeof(DesignerProperties),
-                 new FrameworkPropertyMetadata(BooleanBoxes.FalseBox, 
-                 FrameworkPropertyMetadataOptions.Inherits | 
-                 FrameworkPropertyMetadataOptions.OverridesInheritanceBehavior));        
+                 new FrameworkPropertyMetadata(BooleanBoxes.FalseBox,
+                 FrameworkPropertyMetadataOptions.Inherits |
+                 FrameworkPropertyMetadataOptions.OverridesInheritanceBehavior));
 
 
         //------------------------------------------------------
@@ -68,7 +68,7 @@ namespace System.ComponentModel
         {
             ArgumentNullException.ThrowIfNull(element);
             return (bool)element.GetValue(IsInDesignModeProperty);
-        }        
+        }
 
 
         /// <summary>
@@ -78,6 +78,6 @@ namespace System.ComponentModel
         {
             ArgumentNullException.ThrowIfNull(element);
             element.SetValue(IsInDesignModeProperty, value);
-        }        
+        }
     }
 }

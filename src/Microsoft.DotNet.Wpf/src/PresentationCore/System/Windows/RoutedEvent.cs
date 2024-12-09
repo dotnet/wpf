@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
-using System.Windows.Markup;
 using System.Globalization;
+using System.Windows.Markup;
 using MS.Internal.PresentationCore;
 
 namespace System.Windows
@@ -54,7 +54,7 @@ namespace System.Windows
         /// <ExternalAPI/>
         public string Name
         {
-            get {return _name;}
+            get { return _name; }
         }
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace System.Windows
         /// <ExternalAPI/>
         public RoutingStrategy RoutingStrategy
         {
-            get {return _routingStrategy;}
+            get { return _routingStrategy; }
         }
 
         /// <summary>
@@ -76,19 +76,19 @@ namespace System.Windows
         /// <ExternalAPI/>
         public Type HandlerType
         {
-            get {return _handlerType;}
+            get { return _handlerType; }
         }
 
         // Check to see if the given delegate is a legal handler for this type.
         //  It either needs to be a type that the registering class knows how to
         //  handle, or a RoutedEventHandler which we can handle without the help
         //  of the registering class.
-        internal bool IsLegalHandler( Delegate handler )
+        internal bool IsLegalHandler(Delegate handler)
         {
             Type handlerType = handler.GetType();
-            
-            return ( (handlerType == HandlerType) ||
-                     (handlerType == typeof(RoutedEventHandler) ) );
+
+            return ((handlerType == HandlerType) ||
+                     (handlerType == typeof(RoutedEventHandler)));
         }
 
         /// <summary>
@@ -100,7 +100,7 @@ namespace System.Windows
         /// <ExternalAPI/>
         public Type OwnerType
         {
-            get {return _ownerType;}
+            get { return _ownerType; }
         }
 
         /// <summary>
@@ -108,7 +108,7 @@ namespace System.Windows
         /// </summary>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, "{0}.{1}", _ownerType.Name, _name );
+            return string.Format(CultureInfo.InvariantCulture, "{0}.{1}", _ownerType.Name, _name);
         }
 
         #endregion External API

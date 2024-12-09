@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,18 +6,16 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
+using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Diagnostics;
 using System.Windows.Documents;
-
 using System.Windows.Input;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
 using System.Windows.Navigation;
-using System.Windows.Markup;
-using System.Windows.Controls;
-
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;    // SafeSecurityHelper
@@ -114,7 +112,7 @@ namespace System.Windows
             // Initialize the _styleCache to the default value for StyleProperty.
             // If the default value is non-null then wire it to the current instance.
             PropertyMetadata metadata = StyleProperty.GetMetadata(DependencyObjectType);
-            Style defaultValue = (Style) metadata.DefaultValue;
+            Style defaultValue = (Style)metadata.DefaultValue;
             if (defaultValue != null)
             {
                 OnStyleChanged(this, new DependencyPropertyChangedEventArgs(StyleProperty, metadata, null, defaultValue));
@@ -143,7 +141,7 @@ namespace System.Windows
                         typeof(Style),
                         _typeofThis,
                         new FrameworkPropertyMetadata(
-                                (Style) null,   // default value
+                                (Style)null,   // default value
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
                                 new PropertyChangedCallback(OnStyleChanged)));
 
@@ -170,9 +168,9 @@ namespace System.Windows
         // Invoked when the Style property is changed
         private static void OnStyleChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            FrameworkElement fe = (FrameworkElement) d;
+            FrameworkElement fe = (FrameworkElement)d;
             fe.HasLocalStyle = (e.NewEntry.BaseValueSourceInternal == BaseValueSourceInternal.Local);
-            StyleHelper.UpdateStyleCache(fe, null, (Style) e.OldValue, (Style) e.NewValue, ref fe._styleCache);
+            StyleHelper.UpdateStyleCache(fe, null, (Style)e.OldValue, (Style)e.NewValue, ref fe._styleCache);
         }
 
         /// <summary>
@@ -271,8 +269,8 @@ namespace System.Windows
         // Invoked when the ThemeStyle property is changed
         internal static void OnThemeStyleChanged(DependencyObject d, object oldValue, object newValue)
         {
-            FrameworkElement fe = (FrameworkElement) d;
-            StyleHelper.UpdateThemeStyleCache(fe, null, (Style) oldValue, (Style) newValue, ref fe._themeStyleCache);
+            FrameworkElement fe = (FrameworkElement)d;
+            StyleHelper.UpdateThemeStyleCache(fe, null, (Style)oldValue, (Style)newValue, ref fe._themeStyleCache);
         }
 
         // Internal helper so the FrameworkElement could see the
@@ -289,7 +287,7 @@ namespace System.Windows
         internal virtual FrameworkTemplate TemplateCache
         {
             get { return null; }
-            set {}
+            set { }
         }
 
         // Internal so that StyleHelper could uniformly call the TemplateChanged
@@ -348,8 +346,8 @@ namespace System.Windows
 
             bool visualsCreated = false;
 
-            UncommonField<HybridDictionary[]>  dataField = StyleHelper.TemplateDataField;
-            FrameworkTemplate           template = TemplateInternal;
+            UncommonField<HybridDictionary[]> dataField = StyleHelper.TemplateDataField;
+            FrameworkTemplate template = TemplateInternal;
 
             // The Template may change in OnApplyTemplate so we'll retry in this case.
             // We dont want to get stuck in a loop doing this, so limit the number of
@@ -367,7 +365,7 @@ namespace System.Windows
                     if (visualsCreated)
                     {
                         // This VisualTree was created via a Template
-                        HasTemplateGeneratedSubTree =  true;
+                        HasTemplateGeneratedSubTree = true;
 
                         // We may have had trigger actions that had to wait until the
                         //  template subtree has been created.  Invoke them now.
@@ -456,7 +454,7 @@ namespace System.Windows
 
             // Storyboard.Begin is a public API and needs to be validating handoffBehavior anyway.
 
-            storyboard.Begin( this, handoffBehavior, isControllable );
+            storyboard.Begin(this, handoffBehavior, isControllable);
         }
 
         // Given a FrameworkElement and a name string, this routine will try to find
@@ -466,11 +464,11 @@ namespace System.Windows
         //  is returned.
         // If the name is found on a FrameworkContentElement, an exception is thrown
         // If the name is not found attached to anything, an exception is thrown
-        internal static FrameworkElement FindNamedFrameworkElement( FrameworkElement startElement, string targetName )
+        internal static FrameworkElement FindNamedFrameworkElement(FrameworkElement startElement, string targetName)
         {
             FrameworkElement targetFE = null;
 
-            if( targetName == null || targetName.Length == 0 )
+            if (targetName == null || targetName.Length == 0)
             {
                 targetFE = startElement;
             }
@@ -478,15 +476,15 @@ namespace System.Windows
             {
                 DependencyObject targetObject = null;
 
-                targetObject = LogicalTreeHelper.FindLogicalNode( startElement, targetName );
+                targetObject = LogicalTreeHelper.FindLogicalNode(startElement, targetName);
 
-                if( targetObject == null )
+                if (targetObject == null)
                 {
-                    throw new ArgumentException( SR.Format(SR.TargetNameNotFound, targetName));
+                    throw new ArgumentException(SR.Format(SR.TargetNameNotFound, targetName));
                 }
 
                 FrameworkObject fo = new FrameworkObject(targetObject);
-                if( fo.IsFE )
+                if (fo.IsFE)
                 {
                     targetFE = fo.FE;
                 }
@@ -578,7 +576,7 @@ namespace System.Windows
         {
             get
             {
-                return (TemplateChildIndex==1);
+                return (TemplateChildIndex == 1);
             }
         }
 
@@ -680,13 +678,13 @@ namespace System.Windows
                     resources.AddOwner(this);
                     ResourcesField.SetValue(this, resources);
 
-                    if( TraceResourceDictionary.IsEnabled )
+                    if (TraceResourceDictionary.IsEnabled)
                     {
                         TraceResourceDictionary.TraceActivityItem(
                                 TraceResourceDictionary.NewResourceDictionary,
                                 this,
                                 0,
-                                resources );
+                                resources);
                     }
 
                 }
@@ -697,18 +695,18 @@ namespace System.Windows
             set
             {
                 bool invalidateResources = false;
-                
+
                 ResourceDictionary oldValue = ResourcesField.GetValue(this);
                 ResourcesField.SetValue(this, value);
 
-                if( TraceResourceDictionary.IsEnabled )
+                if (TraceResourceDictionary.IsEnabled)
                 {
                     TraceResourceDictionary.Trace(
                             TraceEventType.Start,
                             TraceResourceDictionary.NewResourceDictionary,
                             this,
                             oldValue,
-                            value );
+                            value);
                 }
 
 
@@ -718,7 +716,7 @@ namespace System.Windows
                     oldValue.RemoveOwner(this);
                 }
 
-                if(this is Window window)
+                if (this is Window window)
                 {
                     window.AddFluentDictionary(value, out invalidateResources);
                 }
@@ -745,14 +743,14 @@ namespace System.Windows
                 }
 
 
-                if( TraceResourceDictionary.IsEnabled )
+                if (TraceResourceDictionary.IsEnabled)
                 {
                     TraceResourceDictionary.Trace(
                             TraceEventType.Stop,
                             TraceResourceDictionary.NewResourceDictionary,
                             this,
                             oldValue,
-                            value );
+                            value);
                 }
 
 
@@ -1022,21 +1020,21 @@ namespace System.Windows
 
         // FindResourceInternal(fe/fce)  Defaults: none
         internal static object FindResourceInternal(
-            FrameworkElement        fe,
+            FrameworkElement fe,
             FrameworkContentElement fce,
-            DependencyProperty      dp,
-            object                  resourceKey,
-            object                  unlinkedParent,
-            bool                    allowDeferredResourceReference,
-            bool                    mustReturnDeferredResourceReference,
-            DependencyObject        boundaryElement,
-            bool                    isImplicitStyleLookup,
-            out object              source)
+            DependencyProperty dp,
+            object resourceKey,
+            object unlinkedParent,
+            bool allowDeferredResourceReference,
+            bool mustReturnDeferredResourceReference,
+            DependencyObject boundaryElement,
+            bool isImplicitStyleLookup,
+            out object source)
         {
             object value;
             InheritanceBehavior inheritanceBehavior = InheritanceBehavior.Default;
 
-            if( TraceResourceDictionary.IsEnabled )
+            if (TraceResourceDictionary.IsEnabled)
             {
                 FrameworkObject element = new FrameworkObject(fe, fce);
 
@@ -1044,7 +1042,7 @@ namespace System.Windows
                     TraceEventType.Start,
                     TraceResourceDictionary.FindResource,
                      element.DO,
-                     resourceKey );
+                     resourceKey);
             }
 
             try
@@ -1074,12 +1072,12 @@ namespace System.Windows
                     {
                         source = app;
 
-                        if( TraceResourceDictionary.IsEnabled )
+                        if (TraceResourceDictionary.IsEnabled)
                         {
                             TraceResourceDictionary.TraceActivityItem(
                                 TraceResourceDictionary.FoundResourceInApplication,
                                  resourceKey,
-                                value );
+                                value);
                         }
 
                         return value;
@@ -1097,13 +1095,13 @@ namespace System.Windows
                     {
                         source = SystemResourceHost.Instance;
 
-                        if( TraceResourceDictionary.IsEnabled )
+                        if (TraceResourceDictionary.IsEnabled)
                         {
                             TraceResourceDictionary.TraceActivityItem(
                                 TraceResourceDictionary.FoundResourceInTheme,
                                 source,
                                 resourceKey,
-                                value );
+                                value);
                         }
 
 
@@ -1113,7 +1111,7 @@ namespace System.Windows
             }
             finally
             {
-                if( TraceResourceDictionary.IsEnabled )
+                if (TraceResourceDictionary.IsEnabled)
                 {
                     FrameworkObject element = new FrameworkObject(fe, fce);
 
@@ -1121,7 +1119,7 @@ namespace System.Windows
                         TraceEventType.Stop,
                         TraceResourceDictionary.FindResource,
                          element.DO,
-                         resourceKey );
+                         resourceKey);
                 }
             }
 
@@ -1133,15 +1131,15 @@ namespace System.Windows
             {
                 if ((fe != null && fe.IsLoaded) || (fce != null && fce.IsLoaded))
                 {
-                    TraceResourceDictionary.Trace( TraceEventType.Warning,
+                    TraceResourceDictionary.Trace(TraceEventType.Warning,
                             TraceResourceDictionary.ResourceNotFound,
-                            resourceKey );
+                            resourceKey);
                 }
-                else if( TraceResourceDictionary.IsEnabled )
+                else if (TraceResourceDictionary.IsEnabled)
                 {
                     TraceResourceDictionary.TraceActivityItem(
                             TraceResourceDictionary.ResourceNotFound,
-                            resourceKey );
+                            resourceKey);
                 }
             }
 
@@ -1151,16 +1149,16 @@ namespace System.Windows
 
         // FindResourceInTree(fe/fce)  Defaults: none
         internal static object FindResourceInTree(
-            FrameworkElement        feStart,
+            FrameworkElement feStart,
             FrameworkContentElement fceStart,
-            DependencyProperty      dp,
-            object                  resourceKey,
-            object                  unlinkedParent,
-            bool                    allowDeferredResourceReference,
-            bool                    mustReturnDeferredResourceReference,
-            DependencyObject        boundaryElement,
+            DependencyProperty dp,
+            object resourceKey,
+            object unlinkedParent,
+            bool allowDeferredResourceReference,
+            bool mustReturnDeferredResourceReference,
+            DependencyObject boundaryElement,
             out InheritanceBehavior inheritanceBehavior,
-            out object              source)
+            out object source)
         {
             FrameworkObject startNode = new FrameworkObject(feStart, fceStart);
             FrameworkObject fo = startNode;
@@ -1205,13 +1203,13 @@ namespace System.Windows
                     {
                         source = fe;
 
-                        if( TraceResourceDictionary.IsEnabled )
+                        if (TraceResourceDictionary.IsEnabled)
                         {
                             TraceResourceDictionary.TraceActivityItem(
                                 TraceResourceDictionary.FoundResourceOnElement,
                                 source,
                                 resourceKey,
-                                value );
+                                value);
                         }
 
                         return value;
@@ -1241,13 +1239,13 @@ namespace System.Windows
                     {
                         source = fce;
 
-                        if( TraceResourceDictionary.IsEnabled )
+                        if (TraceResourceDictionary.IsEnabled)
                         {
                             TraceResourceDictionary.TraceActivityItem(
                                 TraceResourceDictionary.FoundResourceOnElement,
                                 source,
                                 resourceKey,
-                                value );
+                                value);
                         }
 
                         return value;
@@ -1271,7 +1269,7 @@ namespace System.Windows
                     {
                         source = style;
 
-                        if( TraceResourceDictionary.IsEnabled )
+                        if (TraceResourceDictionary.IsEnabled)
                         {
                             TraceResourceDictionary.TraceActivityItem(
                                 TraceResourceDictionary.FoundResourceInStyle,
@@ -1279,7 +1277,7 @@ namespace System.Windows
                                 resourceKey,
                                 style,
                                 fo.DO,
-                                value );
+                                value);
                         }
 
                         return value;
@@ -1292,7 +1290,7 @@ namespace System.Windows
                     {
                         source = frameworkTemplate;
 
-                        if( TraceResourceDictionary.IsEnabled )
+                        if (TraceResourceDictionary.IsEnabled)
                         {
                             TraceResourceDictionary.TraceActivityItem(
                                 TraceResourceDictionary.FoundResourceInTemplate,
@@ -1300,7 +1298,7 @@ namespace System.Windows
                                 resourceKey,
                                 frameworkTemplate,
                                 fo.DO,
-                                value );
+                                value);
                         }
 
                         return value;
@@ -1314,7 +1312,7 @@ namespace System.Windows
                     {
                         source = themeStyle;
 
-                        if( TraceResourceDictionary.IsEnabled )
+                        if (TraceResourceDictionary.IsEnabled)
                         {
                             TraceResourceDictionary.TraceActivityItem(
                                 TraceResourceDictionary.FoundResourceInThemeStyle,
@@ -1322,7 +1320,7 @@ namespace System.Windows
                                 resourceKey,
                                 themeStyle,
                                 fo.DO,
-                                value );
+                                value);
                         }
 
                         return value;
@@ -1493,9 +1491,9 @@ namespace System.Windows
                 // Fetch the ResourceDictionary
                 // for the given target element
                 table = GetInstanceResourceDictionary(fo.FE, fo.FCE);
-                if( table != null )
+                if (table != null)
                 {
-                    candidate = FindBestMatchInResourceDictionary( table, keys, exactMatch, ref bestMatch );
+                    candidate = FindBestMatchInResourceDictionary(table, keys, exactMatch, ref bestMatch);
                     if (candidate != null)
                     {
                         resource = candidate;
@@ -1512,9 +1510,9 @@ namespace System.Windows
                 // -------------------------------------------
 
                 table = GetStyleResourceDictionary(fo.FE, fo.FCE);
-                if( table != null )
+                if (table != null)
                 {
-                    candidate = FindBestMatchInResourceDictionary( table, keys, exactMatch, ref bestMatch );
+                    candidate = FindBestMatchInResourceDictionary(table, keys, exactMatch, ref bestMatch);
                     if (candidate != null)
                     {
                         resource = candidate;
@@ -1531,9 +1529,9 @@ namespace System.Windows
                 // -------------------------------------------
 
                 table = GetThemeStyleResourceDictionary(fo.FE, fo.FCE);
-                if( table != null )
+                if (table != null)
                 {
-                    candidate = FindBestMatchInResourceDictionary( table, keys, exactMatch, ref bestMatch );
+                    candidate = FindBestMatchInResourceDictionary(table, keys, exactMatch, ref bestMatch);
                     if (candidate != null)
                     {
                         resource = candidate;
@@ -1550,9 +1548,9 @@ namespace System.Windows
                 // -------------------------------------------
 
                 table = GetTemplateResourceDictionary(fo.FE, fo.FCE);
-                if( table != null )
+                if (table != null)
                 {
-                    candidate = FindBestMatchInResourceDictionary( table, keys, exactMatch, ref bestMatch );
+                    candidate = FindBestMatchInResourceDictionary(table, keys, exactMatch, ref bestMatch);
                     if (candidate != null)
                     {
                         resource = candidate;
@@ -1600,7 +1598,7 @@ namespace System.Windows
             // Search target element's ResourceDictionary for the resource
             if (table != null)
             {
-                for (k = 0;  k < bestMatch;  ++k)
+                for (k = 0; k < bestMatch; ++k)
                 {
                     object candidate = table[keys[k]];
                     if (candidate != null)
@@ -1651,11 +1649,11 @@ namespace System.Windows
             if (fe != null)
             {
 #if DEBUG
-                if( !fe.IsStyleUpdateInProgress )
+                if (!fe.IsStyleUpdateInProgress)
                 {
 #endif
-                    if( fe.Style != null &&
-                        fe.Style._resources != null )
+                    if (fe.Style != null &&
+                        fe.Style._resources != null)
                     {
                         table = fe.Style._resources;
                     }
@@ -1666,11 +1664,11 @@ namespace System.Windows
             else // (fce != null)
             {
 #if DEBUG
-                if( !fce.IsStyleUpdateInProgress )
+                if (!fce.IsStyleUpdateInProgress)
                 {
 #endif
-                    if( fce.Style != null &&
-                        fce.Style._resources != null )
+                    if (fce.Style != null &&
+                        fce.Style._resources != null)
                     {
                         table = fce.Style._resources;
                     }
@@ -1691,11 +1689,11 @@ namespace System.Windows
             if (fe != null)
             {
 #if DEBUG
-                if( !fe.IsThemeStyleUpdateInProgress )
+                if (!fe.IsThemeStyleUpdateInProgress)
                 {
 #endif
-                    if( fe.ThemeStyle != null &&
-                        fe.ThemeStyle._resources != null )
+                    if (fe.ThemeStyle != null &&
+                        fe.ThemeStyle._resources != null)
                     {
                         table = fe.ThemeStyle._resources;
                     }
@@ -1706,11 +1704,11 @@ namespace System.Windows
             else // (fce != null)
             {
 #if DEBUG
-                if( !fce.IsThemeStyleUpdateInProgress )
+                if (!fce.IsThemeStyleUpdateInProgress)
                 {
 #endif
-                    if( fce.ThemeStyle != null &&
-                        fce.ThemeStyle._resources != null )
+                    if (fce.ThemeStyle != null &&
+                        fce.ThemeStyle._resources != null)
                     {
                         table = fce.ThemeStyle._resources;
                     }
@@ -1730,8 +1728,8 @@ namespace System.Windows
 
             if (fe != null)
             {
-                if( fe.TemplateInternal != null &&
-                    fe.TemplateInternal._resources != null )
+                if (fe.TemplateInternal != null &&
+                    fe.TemplateInternal._resources != null)
                 {
                     table = fe.TemplateInternal._resources;
                 }
@@ -1782,7 +1780,7 @@ namespace System.Windows
         /// <param name="name">Name of the resource</param>
         public void SetResourceReference(
             DependencyProperty dp,
-            object             name)
+            object name)
         {
             // Set the value of the property to a ResourceReferenceExpression
             SetValue(dp, new ResourceReferenceExpression(name));
@@ -1801,8 +1799,8 @@ namespace System.Windows
         /// <param name="metadata">Type metadata of the property for the type</param>
         /// <param name="newEntry">entry computed by base</param>
         internal sealed override void EvaluateBaseValueCore(
-            DependencyProperty  dp,
-            PropertyMetadata    metadata,
+            DependencyProperty dp,
+            PropertyMetadata metadata,
             ref EffectiveValueEntry newEntry)
         {
             if (dp == StyleProperty)
@@ -1908,7 +1906,7 @@ namespace System.Windows
                 {
                     object value = GetInheritableValue(dp, fmetadata);
 
-                    if( value != DependencyProperty.UnsetValue)
+                    if (value != DependencyProperty.UnsetValue)
                     {
                         entry.BaseValueSourceInternal = BaseValueSourceInternal.Inherited;
                         entry.Value = value;
@@ -1918,7 +1916,7 @@ namespace System.Windows
             }
 
             // No value found.
-            Debug.Assert(entry.Value == DependencyProperty.UnsetValue,"FrameworkElement.GetRawValue should never fall through with a value != DependencyProperty.UnsetValue.  We're supposed to return as soon as we found something.");
+            Debug.Assert(entry.Value == DependencyProperty.UnsetValue, "FrameworkElement.GetRawValue should never fall through with a value != DependencyProperty.UnsetValue.  We're supposed to return as soon as we found something.");
         }
 
 
@@ -1930,7 +1928,7 @@ namespace System.Windows
         private bool GetValueFromTemplatedParent(DependencyProperty dp, ref EffectiveValueEntry entry)
         {
             FrameworkTemplate frameworkTemplate = null;
-            Debug.Assert( IsTemplatedParentAnFE );
+            Debug.Assert(IsTemplatedParentAnFE);
 
             FrameworkElement feTemplatedParent = (FrameworkElement)_templatedParent;
             frameworkTemplate = feTemplatedParent.TemplateInternal;
@@ -1988,15 +1986,15 @@ namespace System.Windows
                     // Check if node is an inheritance node, if so, query it
                     if (inheritanceNode)
                     {
-#region EventTracing
+                        #region EventTracing
                         if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose))
                         {
                             string TypeAndName = string.Create(CultureInfo.InvariantCulture, $"[{GetType().Name}]{dp.Name}({base.GetHashCode()})");
                             EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientPropParentCheck,
                                                                 EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Verbose,
-                                                                base.GetHashCode(), TypeAndName ); // base.GetHashCode() to avoid calling a virtual, which FxCop doesn't like.
+                                                                base.GetHashCode(), TypeAndName); // base.GetHashCode() to avoid calling a virtual, which FxCop doesn't like.
                         }
-#endregion EventTracing
+                        #endregion EventTracing
 
                         DependencyObject parentDO = parentFE;
                         if (parentDO == null)
@@ -2041,8 +2039,10 @@ namespace System.Windows
         internal Expression GetExpressionCore(DependencyProperty dp, PropertyMetadata metadata)
         {
             this.IsRequestingExpression = true;
-            EffectiveValueEntry entry = new EffectiveValueEntry(dp);
-            entry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry entry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             this.EvaluateBaseValueCore(dp, metadata, ref entry);
             this.IsRequestingExpression = false;
 
@@ -2200,7 +2200,7 @@ namespace System.Windows
 
                     // Skip if we're traversing an Visibility=Collapsed subtree while
                     //  in the middle of an invalidation storm due to ancestor change
-                    if( !(AncestorChangeInProgress && InVisibilityCollapsedTree) )
+                    if (!(AncestorChangeInProgress && InVisibilityCollapsedTree))
                     {
                         UIElement layoutParent = null;
 
@@ -2220,7 +2220,7 @@ namespace System.Windows
                                 {
                                     //let incrementally-updating FrameworkElements to mark the vicinity of the affected child
                                     //to perform partial update.
-                                    if(layoutParent is FrameworkElement fe)
+                                    if (layoutParent is FrameworkElement fe)
                                     {
                                         fe.ParentLayoutInvalidated(this);
                                     }
@@ -2340,14 +2340,14 @@ namespace System.Windows
             {
                 FrameworkObject foTemplatedParent = new FrameworkObject(templatedParent, true);
 
-                Debug.Assert( foTemplatedParent.IsFE );
+                Debug.Assert(foTemplatedParent.IsFE);
 
                 // This node is the result of a style expansion
 
                 // Pick the owner for the VisualTree that generated this node
                 templatedParentTemplate = foTemplatedParent.FE.TemplateInternal;
 
-                Debug.Assert(templatedParentTemplate != null ,
+                Debug.Assert(templatedParentTemplate != null,
                     "If this node is the result of a VisualTree expansion then it should have a parent template");
 
                 // Check if this Child Index is represented in FrameworkTemplate
@@ -2413,7 +2413,7 @@ namespace System.Windows
 
         private static void TextRenderingMode_Changed(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            FrameworkElement fe = (FrameworkElement) d;
+            FrameworkElement fe = (FrameworkElement)d;
             fe.pushTextRenderingMode();
         }
 
@@ -2537,13 +2537,13 @@ namespace System.Windows
             FrameworkElement.GetContainingFrameworkElement(VisualTreeHelper.GetParent(this), out feParent, out fceParent);
             Debug.Assert(fceParent == null, "Nearest framework parent via the visual tree has to be an FE. It cannot be an FCE");
 
-            if(e.OldParent == null)
+            if (e.OldParent == null)
             {
                 // We were plugged into something.
 
                 // See if this parent is a child of the ancestor who's parent changed.
                 // If so, we don't care about changes that happen above us.
-                if(feParent == null || !VisualTreeHelper.IsAncestorOf(e.Ancestor, feParent))
+                if (feParent == null || !VisualTreeHelper.IsAncestorOf(e.Ancestor, feParent))
                 {
                     // Update HasLoadedChangeHandler Flag
                     BroadcastEventHelper.AddOrRemoveHasLoadedChangeHandlerFlag(this, null, VisualTreeHelper.GetParent(e.Ancestor));
@@ -2560,14 +2560,14 @@ namespace System.Windows
                 // break in the visual tree must have been above it,
                 // so we don't need to respond.
 
-                if(feParent == null)
+                if (feParent == null)
                 {
                     // There was no FrameworkElement parent in our subtree, so we
                     // may be detaching from some FrameworkElement parent above
                     // the break point in the tree.
                     FrameworkElement.GetContainingFrameworkElement(e.OldParent, out feParent, out fceParent);
 
-                    if(feParent != null)
+                    if (feParent != null)
                     {
                         // Update HasLoadedChangeHandler Flag
                         BroadcastEventHelper.AddOrRemoveHasLoadedChangeHandlerFlag(this, feParent, null);
@@ -2669,8 +2669,8 @@ namespace System.Windows
         /// </summary>
         public event EventHandler<DataTransferEventArgs> TargetUpdated
         {
-            add     { AddHandler(Binding.TargetUpdatedEvent, value); }
-            remove  { RemoveHandler(Binding.TargetUpdatedEvent, value); }
+            add { AddHandler(Binding.TargetUpdatedEvent, value); }
+            remove { RemoveHandler(Binding.TargetUpdatedEvent, value); }
         }
 
 
@@ -2679,8 +2679,8 @@ namespace System.Windows
         /// </summary>
         public event EventHandler<DataTransferEventArgs> SourceUpdated
         {
-            add     { AddHandler(Binding.SourceUpdatedEvent, value); }
-            remove  { RemoveHandler(Binding.SourceUpdatedEvent, value); }
+            add { AddHandler(Binding.SourceUpdatedEvent, value); }
+            remove { RemoveHandler(Binding.SourceUpdatedEvent, value); }
         }
 
         /// <summary>
@@ -2734,7 +2734,7 @@ namespace System.Windows
             if (e.NewValue == BindingExpressionBase.DisconnectedItem)
                 return;
 
-            ((FrameworkElement) d).RaiseDependencyPropertyChanged(DataContextChangedKey, e);
+            ((FrameworkElement)d).RaiseDependencyPropertyChanged(DataContextChangedKey, e);
         }
 
 
@@ -2837,12 +2837,12 @@ namespace System.Windows
             //
             // BUGBUG: this misses "trees" that have only one logical node.  No parents, no children.
 
-            if(_parent != null || HasLogicalChildren)
+            if (_parent != null || HasLogicalChildren)
             {
                 DependencyObject logicalSource = args.Source as DependencyObject;
-                if(logicalSource == null || !IsLogicalDescendent(logicalSource))
+                if (logicalSource == null || !IsLogicalDescendent(logicalSource))
                 {
-                    args.Source=this;
+                    args.Source = this;
                     source = this;
                 }
             }
@@ -2906,7 +2906,7 @@ namespace System.Windows
                 // We keep the most recent source in the event args.  Note that
                 // this is only for our consumption.  Once the event is raised,
                 // it will use the source information in the route.
-                args.Source=route.PeekBranchSource();
+                args.Source = route.PeekBranchSource();
 
                 AdjustBranchSource(args);
 
@@ -2934,7 +2934,7 @@ namespace System.Windows
                 {
                     continuePastCoreTree = modelParent != null;
                 }
-                else if(modelParent != null)
+                else if (modelParent != null)
                 {
                     Visual visualParentAsVisual = visualParent as Visual;
                     if (visualParentAsVisual != null)
@@ -2957,7 +2957,7 @@ namespace System.Windows
 
                     // The source is going to be the visual parent, which
                     // could live in a different logical tree.
-                    args.Source=visualParent;
+                    args.Source = visualParent;
                 }
             }
 
@@ -3021,7 +3021,7 @@ namespace System.Windows
                 FrameworkTemplate templatedParentTemplate = null;
 
                 FrameworkElement feTemplatedParent = templatedParent as FrameworkElement;
-                Debug.Assert( feTemplatedParent != null );
+                Debug.Assert(feTemplatedParent != null);
 
                 templatedParentTemplate = feTemplatedParent.TemplateInternal;
 
@@ -3045,7 +3045,7 @@ namespace System.Windows
         {
             if (handlers != null)
             {
-                for (int i=0; i<handlers.Length; i++)
+                for (int i = 0; i < handlers.Length; i++)
                 {
                     route.Add(source, handlers[i].Handler, handlers[i].InvokeHandledEventsToo);
                 }
@@ -3122,7 +3122,7 @@ namespace System.Windows
             {
                 continuePastCoreTree = modelParent != null;
             }
-            else if(modelParent != null)
+            else if (modelParent != null)
             {
                 Visual visualParentAsVisual = visualParent as Visual;
                 if (visualParentAsVisual != null)
@@ -3190,7 +3190,7 @@ namespace System.Windows
         /// </summary>
         public XmlLanguage Language
         {
-            get { return (XmlLanguage) GetValue(LanguageProperty); }
+            get { return (XmlLanguage)GetValue(LanguageProperty); }
             set { SetValue(LanguageProperty, value); }
         }
         #endregion Language
@@ -3220,8 +3220,8 @@ namespace System.Windows
         [DesignerSerializationOptions(DesignerSerializationOptions.SerializeAsAttribute)]
         public string Name
         {
-            get { return (string) GetValue(NameProperty); }
-            set { SetValue(NameProperty, value);  }
+            get { return (string)GetValue(NameProperty); }
+            set { SetValue(NameProperty, value); }
         }
 
         /// <summary>
@@ -3232,7 +3232,7 @@ namespace System.Windows
                                 "Tag",
                                 typeof(object),
                                 _typeofThis,
-                                new FrameworkPropertyMetadata((object) null));
+                                new FrameworkPropertyMetadata((object)null));
 
         /// <summary>
         ///     Tag property.
@@ -3260,7 +3260,7 @@ namespace System.Windows
         /// </summary>
         public InputScope InputScope
         {
-            get { return (InputScope) GetValue(InputScopeProperty); }
+            get { return (InputScope)GetValue(InputScopeProperty); }
             set { SetValue(InputScopeProperty, value); }
         }
 
@@ -3297,8 +3297,10 @@ namespace System.Windows
         /// </summary>
         public void BringIntoView(Rect targetRectangle)
         {
-            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, targetRectangle);
-            args.RoutedEvent=RequestBringIntoViewEvent;
+            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, targetRectangle)
+            {
+                RoutedEvent = RequestBringIntoViewEvent
+            };
             RaiseEvent(args);
         }
 
@@ -3319,8 +3321,8 @@ namespace System.Windows
         /// </summary>
         public event SizeChangedEventHandler SizeChanged
         {
-            add {AddHandler(SizeChangedEvent, value, false);}
-            remove {RemoveHandler(SizeChangedEvent, value);}
+            add { AddHandler(SizeChangedEvent, value, false); }
+            remove { RemoveHandler(SizeChangedEvent, value); }
         }
 
         private static PropertyMetadata _actualWidthMetadata = new ReadOnlyFrameworkPropertyMetadata(0d, new GetReadOnlyValueCallback(GetActualWidth));
@@ -3337,7 +3339,7 @@ namespace System.Windows
 
         private static object GetActualWidth(DependencyObject d, out BaseValueSourceInternal source)
         {
-            FrameworkElement fe = (FrameworkElement) d;
+            FrameworkElement fe = (FrameworkElement)d;
             if (fe.HasWidthEverChanged)
             {
                 source = BaseValueSourceInternal.Local;
@@ -3382,7 +3384,7 @@ namespace System.Windows
 
         private static object GetActualHeight(DependencyObject d, out BaseValueSourceInternal source)
         {
-            FrameworkElement fe = (FrameworkElement) d;
+            FrameworkElement fe = (FrameworkElement)d;
             if (fe.HasHeightEverChanged)
             {
                 source = BaseValueSourceInternal.Local;
@@ -3434,7 +3436,7 @@ namespace System.Windows
         /// </summary>
         public Transform LayoutTransform
         {
-            get { return (Transform) GetValue(LayoutTransformProperty); }
+            get { return (Transform)GetValue(LayoutTransformProperty); }
             set { SetValue(LayoutTransformProperty, value); }
         }
 
@@ -3491,7 +3493,7 @@ namespace System.Windows
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public double Width
         {
-            get { return (double) GetValue(WidthProperty); }
+            get { return (double)GetValue(WidthProperty); }
             set { SetValue(WidthProperty, value); }
         }
 
@@ -3517,7 +3519,7 @@ namespace System.Windows
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public double MinWidth
         {
-            get { return (double) GetValue(MinWidthProperty); }
+            get { return (double)GetValue(MinWidthProperty); }
             set { SetValue(MinWidthProperty, value); }
         }
 
@@ -3544,7 +3546,7 @@ namespace System.Windows
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public double MaxWidth
         {
-            get { return (double) GetValue(MaxWidthProperty); }
+            get { return (double)GetValue(MaxWidthProperty); }
             set { SetValue(MaxWidthProperty, value); }
         }
 
@@ -3570,7 +3572,7 @@ namespace System.Windows
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public double Height
         {
-            get { return (double) GetValue(HeightProperty); }
+            get { return (double)GetValue(HeightProperty); }
             set { SetValue(HeightProperty, value); }
         }
 
@@ -3596,7 +3598,7 @@ namespace System.Windows
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public double MinHeight
         {
-            get { return (double) GetValue(MinHeightProperty); }
+            get { return (double)GetValue(MinHeightProperty); }
             set { SetValue(MinHeightProperty, value); }
         }
 
@@ -3622,7 +3624,7 @@ namespace System.Windows
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
         public double MaxHeight
         {
-            get { return (double) GetValue(MaxHeightProperty); }
+            get { return (double)GetValue(MaxHeightProperty); }
             set { SetValue(MaxHeightProperty, value); }
         }
 
@@ -3677,7 +3679,7 @@ namespace System.Windows
         /// <summary>
         /// FlowDirection Property
         /// </summary>
-    [Localizability(LocalizationCategory.None)]
+        [Localizability(LocalizationCategory.None)]
         public FlowDirection FlowDirection
         {
             get { return IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight; }
@@ -3736,7 +3738,7 @@ namespace System.Windows
         /// </summary>
         public Thickness Margin
         {
-            get { return (Thickness) GetValue(MarginProperty); }
+            get { return (Thickness)GetValue(MarginProperty); }
             set { SetValue(MarginProperty, value); }
         }
 
@@ -3761,10 +3763,10 @@ namespace System.Windows
         internal static bool ValidateHorizontalAlignmentValue(object value)
         {
             HorizontalAlignment ha = (HorizontalAlignment)value;
-            return (    ha == HorizontalAlignment.Left
-                    ||  ha == HorizontalAlignment.Center
-                    ||  ha == HorizontalAlignment.Right
-                    ||  ha == HorizontalAlignment.Stretch   );
+            return (ha == HorizontalAlignment.Left
+                    || ha == HorizontalAlignment.Center
+                    || ha == HorizontalAlignment.Right
+                    || ha == HorizontalAlignment.Stretch);
         }
 
         /// <summary>
@@ -3772,7 +3774,7 @@ namespace System.Windows
         /// </summary>
         public HorizontalAlignment HorizontalAlignment
         {
-            get { return (HorizontalAlignment) GetValue(HorizontalAlignmentProperty); }
+            get { return (HorizontalAlignment)GetValue(HorizontalAlignmentProperty); }
             set { SetValue(HorizontalAlignmentProperty, value); }
         }
 
@@ -3793,10 +3795,10 @@ namespace System.Windows
         internal static bool ValidateVerticalAlignmentValue(object value)
         {
             VerticalAlignment va = (VerticalAlignment)value;
-            return (    va == VerticalAlignment.Top
-                    ||  va == VerticalAlignment.Center
-                    ||  va == VerticalAlignment.Bottom
-                    ||  va == VerticalAlignment.Stretch);
+            return (va == VerticalAlignment.Top
+                    || va == VerticalAlignment.Center
+                    || va == VerticalAlignment.Bottom
+                    || va == VerticalAlignment.Stretch);
         }
 
         /// <summary>
@@ -3804,7 +3806,7 @@ namespace System.Windows
         /// </summary>
         public VerticalAlignment VerticalAlignment
         {
-            get { return (VerticalAlignment) GetValue(VerticalAlignmentProperty); }
+            get { return (VerticalAlignment)GetValue(VerticalAlignmentProperty); }
             set { SetValue(VerticalAlignmentProperty, value); }
         }
 
@@ -3844,7 +3846,7 @@ namespace System.Windows
         /// </summary>
         public Style FocusVisualStyle
         {
-            get { return (Style) GetValue(FocusVisualStyleProperty); }
+            get { return (Style)GetValue(FocusVisualStyleProperty); }
             set { SetValue(FocusVisualStyleProperty, value); }
         }
 
@@ -3857,7 +3859,7 @@ namespace System.Windows
                                 typeof(Cursor),
                                 _typeofThis,
                                 new FrameworkPropertyMetadata(
-                                            (object) null, // default value
+                                            (object)null, // default value
                                             0,
                                             new PropertyChangedCallback(OnCursorChanged)));
 
@@ -3866,7 +3868,7 @@ namespace System.Windows
         /// </summary>
         public System.Windows.Input.Cursor Cursor
         {
-            get { return (System.Windows.Input.Cursor) GetValue(CursorProperty); }
+            get { return (System.Windows.Input.Cursor)GetValue(CursorProperty); }
             set { SetValue(CursorProperty, value); }
         }
 
@@ -3875,7 +3877,7 @@ namespace System.Windows
         {
             FrameworkElement fe = ((FrameworkElement)d);
 
-            if(fe.IsMouseOver)
+            if (fe.IsMouseOver)
             {
                 Mouse.UpdateCursor();
             }
@@ -3901,7 +3903,7 @@ namespace System.Windows
         /// </summary>
         public bool ForceCursor
         {
-            get { return (bool) GetValue(ForceCursorProperty); }
+            get { return (bool)GetValue(ForceCursorProperty); }
             set { SetValue(ForceCursorProperty, BooleanBoxes.Box(value)); }
         }
 
@@ -3910,7 +3912,7 @@ namespace System.Windows
         {
             FrameworkElement fe = ((FrameworkElement)d);
 
-            if(fe.IsMouseOver)
+            if (fe.IsMouseOver)
             {
                 Mouse.UpdateCursor();
             }
@@ -3918,20 +3920,20 @@ namespace System.Windows
 
         private static void OnQueryCursorOverride(object sender, QueryCursorEventArgs e)
         {
-            FrameworkElement fe = (FrameworkElement) sender;
+            FrameworkElement fe = (FrameworkElement)sender;
 
             // We respond to querying the cursor by specifying the cursor set
             // as a property on this element.
             Cursor cursor = fe.Cursor;
 
-            if(cursor != null)
+            if (cursor != null)
             {
                 // We specify the cursor if the QueryCursor event is not
                 // handled by the time it gets to us, or if we are configured
                 // to force our cursor anyways.  Since the QueryCursor event
                 // bubbles, this has the effect of overriding whatever cursor
                 // a child of ours specified.
-                if(!e.Handled || fe.ForceCursor)
+                if (!e.Handled || fe.ForceCursor)
                 {
                     e.Cursor = cursor;
                     e.Handled = true;
@@ -4049,7 +4051,7 @@ namespace System.Windows
             {
                 maxHeight = e.MaxHeight;
                 minHeight = e.MinHeight;
-                double l  = e.Height;
+                double l = e.Height;
 
                 double height = (double.IsNaN(l) ? Double.PositiveInfinity : l);
                 maxHeight = Math.Max(Math.Min(height, maxHeight), minHeight);
@@ -4059,7 +4061,7 @@ namespace System.Windows
 
                 maxWidth = e.MaxWidth;
                 minWidth = e.MinWidth;
-                l        = e.Width;
+                l = e.Width;
 
                 double width = (double.IsNaN(l) ? Double.PositiveInfinity : l);
                 maxWidth = Math.Max(Math.Min(width, maxWidth), minWidth);
@@ -4086,7 +4088,7 @@ namespace System.Windows
             // may cause a mismatch.
             internal Size TransformedUnroundedDS;
 
-            private  Transform  _transform;
+            private Transform _transform;
 
             internal void CreateTransformSnapshot(Transform sourceTransform)
             {
@@ -4124,8 +4126,8 @@ namespace System.Windows
             Double yConstr = transformSpaceBounds.Height;
 
             //if either of the sizes is 0, return 0,0 to avoid doing math on an empty rect (bug 963569)
-            if(DoubleUtil.IsZero(xConstr) || DoubleUtil.IsZero(yConstr))
-                return new Size(0,0);
+            if (DoubleUtil.IsZero(xConstr) || DoubleUtil.IsZero(yConstr))
+                return new Size(0, 0);
 
             bool xConstrInfinite = Double.IsInfinity(xConstr);
             bool yConstrInfinite = Double.IsInfinity(yConstr);
@@ -4134,7 +4136,7 @@ namespace System.Windows
             {
                 return new Size(Double.PositiveInfinity, Double.PositiveInfinity);
             }
-            else if(xConstrInfinite) //assume square for one-dimensional constraint
+            else if (xConstrInfinite) //assume square for one-dimensional constraint
             {
                 xConstr = yConstr;
             }
@@ -4149,8 +4151,8 @@ namespace System.Windows
 
             // We only deal with nonsingular matrices here. The nonsingular matrix is the one
             // that has inverse (determinant != 0).
-            if(!trMatrix.HasInverse)
-                return new Size(0,0);
+            if (!trMatrix.HasInverse)
+                return new Size(0, 0);
 
             Double a = trMatrix.M11;
             Double b = trMatrix.M12;
@@ -4158,7 +4160,7 @@ namespace System.Windows
             Double d = trMatrix.M22;
 
             // Result width and height (in child/local space)
-            Double w=0, h=0;
+            Double w = 0, h = 0;
 
             // because we are dealing with nonsingular transform matrices,
             // we have (b==0 || c==0) XOR (a==0 || d==0)
@@ -4167,8 +4169,8 @@ namespace System.Windows
             {
                 // (b==0 || c==0) ==> a!=0 && d!=0
 
-                Double yCoverD = (yConstrInfinite ? Double.PositiveInfinity : Math.Abs(yConstr/d));
-                Double xCoverA = (xConstrInfinite ? Double.PositiveInfinity : Math.Abs(xConstr/a));
+                Double yCoverD = (yConstrInfinite ? Double.PositiveInfinity : Math.Abs(yConstr / d));
+                Double xCoverA = (xConstrInfinite ? Double.PositiveInfinity : Math.Abs(xConstr / a));
 
                 if (DoubleUtil.IsZero(b))
                 {
@@ -4188,7 +4190,7 @@ namespace System.Windows
                         // Maximizing under line (hIntercept=xConstr/c, wIntercept=xConstr/a)
                         // BUT we still have constraint: h <= yConstr/d
 
-                        h = Math.Min(0.5*Math.Abs(xConstr/c), yCoverD);
+                        h = Math.Min(0.5 * Math.Abs(xConstr / c), yCoverD);
                         w = xCoverA - ((c * h) / a);
                     }
                 }
@@ -4199,7 +4201,7 @@ namespace System.Windows
                     // Maximizing under line (hIntercept=yConstr/d, wIntercept=yConstr/b)
                     // BUT we still have constraint: w <= xConstr/a
 
-                    w = Math.Min( 0.5*Math.Abs(yConstr/b), xCoverA);
+                    w = Math.Min(0.5 * Math.Abs(yConstr / b), xCoverA);
                     h = yCoverD - ((b * w) / d);
                 }
             }
@@ -4207,8 +4209,8 @@ namespace System.Windows
             {
                 // (a==0 || d==0) ==> b!=0 && c!=0
 
-                Double yCoverB = Math.Abs(yConstr/b);
-                Double xCoverC = Math.Abs(xConstr/c);
+                Double yCoverB = Math.Abs(yConstr / b);
+                Double xCoverC = Math.Abs(xConstr / c);
 
                 if (DoubleUtil.IsZero(a))
                 {
@@ -4228,7 +4230,7 @@ namespace System.Windows
                         // Maximizing under line (hIntercept=yConstr/d, wIntercept=yConstr/b)
                         // BUT we still have constraint: h <= xConstr/c
 
-                        h = Math.Min(0.5*Math.Abs(yConstr/d), xCoverC);
+                        h = Math.Min(0.5 * Math.Abs(yConstr / d), xCoverC);
                         w = yCoverB - ((d * h) / b);
                     }
                 }
@@ -4239,7 +4241,7 @@ namespace System.Windows
                     // Maximizing under line (hIntercept=xConstr/c, wIntercept=xConstr/a)
                     // BUT we still have constraint: w <= yConstr/b
 
-                    w = Math.Min( 0.5*Math.Abs(xConstr/a), yCoverB);
+                    w = Math.Min(0.5 * Math.Abs(xConstr / a), yCoverB);
                     h = xCoverC - ((a * w) / c);
                 }
             }
@@ -4259,10 +4261,10 @@ namespace System.Windows
                 w = Math.Min(yCoverB, xCoverA) * 0.5;
                 h = Math.Min(xCoverC, yCoverD) * 0.5;
 
-                if ( (DoubleUtil.GreaterThanOrClose(xCoverA, yCoverB) &&
+                if ((DoubleUtil.GreaterThanOrClose(xCoverA, yCoverB) &&
                     DoubleUtil.LessThanOrClose(xCoverC, yCoverD)) ||
                     (DoubleUtil.LessThanOrClose(xCoverA, yCoverB) &&
-                    DoubleUtil.GreaterThanOrClose(xCoverC, yCoverD))  )
+                    DoubleUtil.GreaterThanOrClose(xCoverC, yCoverD)))
                 {
                     // Constraint lines cross; since the most restrictive constraint wins,
                     // we have to maximize under two line segments, which together are discontinuous.
@@ -4276,7 +4278,7 @@ namespace System.Windows
                                                         layoutTransform.Value);
                     Double expandFactor = Math.Min(xConstr / childBoundsTr.Width,
                                                    yConstr / childBoundsTr.Height);
-                    if(    !Double.IsNaN(expandFactor)
+                    if (!Double.IsNaN(expandFactor)
                         && !Double.IsInfinity(expandFactor))
                     {
                         w *= expandFactor;
@@ -4285,7 +4287,7 @@ namespace System.Windows
                 }
             }
 
-            return new Size(w,h);
+            return new Size(w, h);
         }
 
         /// <summary>
@@ -4567,7 +4569,7 @@ namespace System.Windows
                 Thickness margin = Margin;
                 double marginWidth = margin.Left + margin.Right;
                 double marginHeight = margin.Top + margin.Bottom;
-                if(useLayoutRounding && !FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness)
+                if (useLayoutRounding && !FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness)
                 {
                     marginWidth = UIElement.RoundLayoutValue(marginWidth, dpi.DpiScaleX);
                     marginHeight = UIElement.RoundLayoutValue(marginHeight, dpi.DpiScaleY);
@@ -4583,7 +4585,7 @@ namespace System.Windows
                     {
                         transformedUnroundedDS = ltd.TransformedUnroundedDS;
                         transformedUnroundedDS.Width = Math.Max(0, transformedUnroundedDS.Width - marginWidth);
-                        transformedUnroundedDS.Height = Math.Max(0, transformedUnroundedDS.Height- marginHeight);
+                        transformedUnroundedDS.Height = Math.Max(0, transformedUnroundedDS.Height - marginHeight);
                     }
                 }
 
@@ -4675,7 +4677,7 @@ namespace System.Windows
                 }
 
                 MinMax mm = new MinMax(this);
-                if(useLayoutRounding && !FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness)
+                if (useLayoutRounding && !FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness)
                 {
                     mm.maxHeight = UIElement.RoundLayoutValue(mm.maxHeight, dpi.DpiScaleY);
                     mm.maxWidth = UIElement.RoundLayoutValue(mm.maxWidth, dpi.DpiScaleX);
@@ -4791,20 +4793,22 @@ namespace System.Windows
         /// </summary>
         protected internal override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
-            SizeChangedEventArgs localArgs = new SizeChangedEventArgs(this, sizeInfo);
-            localArgs.RoutedEvent = SizeChangedEvent;
+            SizeChangedEventArgs localArgs = new SizeChangedEventArgs(this, sizeInfo)
+            {
+                RoutedEvent = SizeChangedEvent
+            };
 
             //first, invalidate ActualWidth and/or ActualHeight
             //Note: if any handler of invalidation will dirtyfy layout,
             //subsequent handlers will run on effectively dirty layouts
             //we only guarantee cleaning between elements, not between handlers here
-            if(sizeInfo.WidthChanged)
+            if (sizeInfo.WidthChanged)
             {
                 HasWidthEverChanged = true;
                 NotifyPropertyChange(new DependencyPropertyChangedEventArgs(ActualWidthProperty, _actualWidthMetadata, sizeInfo.PreviousSize.Width, sizeInfo.NewSize.Width));
             }
 
-            if(sizeInfo.HeightChanged)
+            if (sizeInfo.HeightChanged)
             {
                 HasHeightEverChanged = true;
                 NotifyPropertyChange(new DependencyPropertyChangedEventArgs(ActualHeightProperty, _actualHeightMetadata, sizeInfo.PreviousSize.Height, sizeInfo.NewSize.Height));
@@ -4822,21 +4826,21 @@ namespace System.Windows
 
             //this is to degenerate Stretch to Top-Left in case when clipping is about to occur
             //if we need it to be Center instead, simply remove these 2 ifs
-            if(    ha == HorizontalAlignment.Stretch
+            if (ha == HorizontalAlignment.Stretch
                 && inkSize.Width > clientSize.Width)
             {
                 ha = HorizontalAlignment.Left;
             }
 
-            if(    va == VerticalAlignment.Stretch
+            if (va == VerticalAlignment.Stretch
                 && inkSize.Height > clientSize.Height)
             {
                 va = VerticalAlignment.Top;
             }
             //end of degeneration of Stretch to Top-Left
 
-            if (    ha == HorizontalAlignment.Center
-                ||  ha == HorizontalAlignment.Stretch  )
+            if (ha == HorizontalAlignment.Center
+                || ha == HorizontalAlignment.Stretch)
             {
                 offset.X = (clientSize.Width - inkSize.Width) * 0.5;
             }
@@ -4849,8 +4853,8 @@ namespace System.Windows
                 offset.X = 0;
             }
 
-            if (    va == VerticalAlignment.Center
-                ||  va == VerticalAlignment.Stretch  )
+            if (va == VerticalAlignment.Center
+                || va == VerticalAlignment.Stretch)
             {
                 offset.Y = (clientSize.Height - inkSize.Height) * 0.5;
             }
@@ -4886,7 +4890,7 @@ namespace System.Windows
             {
                 // see if  MaxWidth/MaxHeight limit the element
                 MinMax mm = new MinMax(this);
-                if(useLayoutRounding && !FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness)
+                if (useLayoutRounding && !FrameworkAppContextSwitches.DoNotApplyLayoutRoundingToMarginsAndBorderThickness)
                 {
                     mm.maxHeight = UIElement.RoundLayoutValue(mm.maxHeight, dpi.DpiScaleY);
                     mm.maxWidth = UIElement.RoundLayoutValue(mm.maxWidth, dpi.DpiScaleX);
@@ -4945,7 +4949,8 @@ namespace System.Windows
                     }
 
                     RectangleGeometry localClip = new RectangleGeometry(clipRect);
-                    if (rtlMirror != null) localClip.Transform = rtlMirror;
+                    if (rtlMirror != null)
+                        localClip.Transform = rtlMirror;
                     return localClip;
                 }
 
@@ -4984,7 +4989,8 @@ namespace System.Windows
 
                             RectangleGeometry localClip = new RectangleGeometry(localClipRect);
                             PathGeometry combinedClip = Geometry.Combine(localClip, slotClip, GeometryCombineMode.Intersect, null);
-                            if (rtlMirror != null) combinedClip.Transform = rtlMirror;
+                            if (rtlMirror != null)
+                                combinedClip.Transform = rtlMirror;
                             return combinedClip;
                         }
                         else
@@ -5024,7 +5030,8 @@ namespace System.Windows
                         }
 
                         RectangleGeometry combinedClip = new RectangleGeometry(slotRect);
-                        if (rtlMirror != null) combinedClip.Transform = rtlMirror;
+                        if (rtlMirror != null)
+                            combinedClip.Transform = rtlMirror;
                         return combinedClip;
                     }
                 }
@@ -5037,7 +5044,7 @@ namespace System.Windows
         // see LayoutInformation
         internal Geometry GetLayoutClipInternal()
         {
-            if(IsMeasureValid && IsArrangeValid)
+            if (IsMeasureValid && IsArrangeValid)
                 return GetLayoutClip(PreviousArrangeRect.Size);
             else
                 return null;
@@ -5087,7 +5094,7 @@ namespace System.Windows
         /// <returns>Desired Size of the control, given available size passed as parameter.</returns>
         protected virtual Size MeasureOverride(Size availableSize)
         {
-            return new Size(0,0);
+            return new Size(0, 0);
         }
 
         /// <summary>
@@ -5146,24 +5153,28 @@ namespace System.Windows
             Transform additionalTransform = (fe == null ? null : fe.GetFlowDirectionTransform()); //rtl
 
             Transform renderTransform = element.RenderTransform;
-            if(renderTransform == Transform.Identity)
+            if (renderTransform == Transform.Identity)
                 renderTransform = null;
 
             // Create a TransformCollection and make sure it does not participate
             // in the InheritanceContext treeness because it is internal operation only.
-            TransformCollection ts = new TransformCollection();
-            ts.CanBeInheritanceContext = false;
+            TransformCollection ts = new TransformCollection
+            {
+                CanBeInheritanceContext = false
+            };
 
-            if(additionalTransform != null)
+            if (additionalTransform != null)
                 ts.Add(additionalTransform);
 
-            if(renderTransform != null)
+            if (renderTransform != null)
                 ts.Add(renderTransform);
 
             ts.Add(layoutTransform);
 
-            TransformGroup group = new TransformGroup();
-            group.Children = ts;
+            TransformGroup group = new TransformGroup
+            {
+                Children = ts
+            };
 
             element.InternalSetTransformWorkaround(group);
         }
@@ -5204,7 +5215,8 @@ namespace System.Windows
                 Transform additionalTransform = GetFlowDirectionTransform(); //rtl
 
                 Transform renderTransform = this.RenderTransform;
-                if(renderTransform == Transform.Identity) renderTransform = null;
+                if (renderTransform == Transform.Identity)
+                    renderTransform = null;
 
                 LayoutTransformData ltd = LayoutTransformDataField.GetValue(this);
 
@@ -5217,14 +5229,16 @@ namespace System.Windows
                 {
                     // Create a TransformGroup and make sure it does not participate
                     // in the InheritanceContext treeness because it is internal operation only.
-                    t = new TransformGroup();
-                    t.CanBeInheritanceContext = false;
+                    t = new TransformGroup
+                    {
+                        CanBeInheritanceContext = false
+                    };
                     t.Children.CanBeInheritanceContext = false;
 
                     if (additionalTransform != null)
                         t.Children.Add(additionalTransform);
 
-                    if(ltd != null)
+                    if (ltd != null)
                     {
                         t.Children.Add(ltd.Transform);
 
@@ -5275,7 +5289,7 @@ namespace System.Windows
             }
 
             Vector oldOffset = this.VisualOffset;
-            if(!DoubleUtil.AreClose(oldOffset.X, offset.X) ||
+            if (!DoubleUtil.AreClose(oldOffset.X, offset.X) ||
                !DoubleUtil.AreClose(oldOffset.Y, offset.Y))
             {
                 this.VisualOffset = offset;
@@ -5521,7 +5535,7 @@ namespace System.Windows
 
         private static void NumberSubstitutionChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
-            ((FrameworkElement) o).HasNumberSubstitutionChanged = true;
+            ((FrameworkElement)o).HasNumberSubstitutionChanged = true;
         }
 
         // Returns true when the coerce callback should return the current system metric
@@ -5531,7 +5545,7 @@ namespace System.Windows
 
             // Return the current system font when (changing the system theme OR creating an element and the default is outdated)
             // AND the element is a root AND the element has not had a value set on it by the user
-            return  (SystemResources.SystemResourcesAreChanging || (fe.ReadInternalFlag(InternalFlags.CreatingRoot) && SystemResources.SystemResourcesHaveChanged)) &&
+            return (SystemResources.SystemResourcesAreChanging || (fe.ReadInternalFlag(InternalFlags.CreatingRoot) && SystemResources.SystemResourcesHaveChanged)) &&
                      fe._parent == null && VisualTreeHelper.GetParent(fe) == null &&
                      fe.GetValueSource(dp, null, out hasModifiers) == BaseValueSourceInternal.Default;
         }
@@ -5860,7 +5874,7 @@ namespace System.Windows
             if ((_frameworkServices == null))
             {
                 // Enable KeyboardNavigation, ContextMenu, and ToolTip services.
-                 _frameworkServices = new FrameworkServices();
+                _frameworkServices = new FrameworkServices();
             }
 
             return _frameworkServices;
@@ -5901,7 +5915,7 @@ namespace System.Windows
         public static readonly DependencyProperty ContextMenuProperty =
             ContextMenuService.ContextMenuProperty.AddOwner(
                         _typeofThis,
-                        new FrameworkPropertyMetadata((ContextMenu) null));
+                        new FrameworkPropertyMetadata((ContextMenu)null));
 
         /// <summary>
         /// The ContextMenu data set on this element. Can be any type that can be converted to a UIElement.
@@ -6077,7 +6091,7 @@ namespace System.Windows
                 ContentElement contentElement = modelTreeNode as ContentElement;
                 UIElement3D uiElement3D = modelTreeNode as UIElement3D;
 
-                if(uiElement != null)
+                if (uiElement != null)
                 {
                     uiElement.AddToEventRoute(route, args);
 
@@ -6377,7 +6391,7 @@ namespace System.Windows
         private static readonly UncommonField<LayoutTransformData> LayoutTransformDataField = new UncommonField<LayoutTransformData>();
 
         // Style/Template state (internals maintained by Style, per-instance data in StyleDataField)
-        private  Style       _styleCache;
+        private Style _styleCache;
 
         // Resources dictionary
         internal static readonly UncommonField<ResourceDictionary> ResourcesField = new UncommonField<ResourceDictionary>();
@@ -6385,8 +6399,8 @@ namespace System.Windows
         internal DependencyObject _templatedParent;    // Non-null if this object was created as a result of a Template.VisualTree
         private UIElement _templateChild;                // Non-null if this FE has a child that was created as part of a template.
 
-        private InternalFlags       _flags     = 0; // Stores Flags (see Flags enum)
-        private InternalFlags2      _flags2    = InternalFlags2.Default; // Stores Flags (see Flags enum)
+        private InternalFlags _flags = 0; // Stores Flags (see Flags enum)
+        private InternalFlags2 _flags2 = InternalFlags2.Default; // Stores Flags (see Flags enum)
 
         // Optimization, to avoid calling FromSystemType too often
         internal static DependencyObjectType UIElementDType = DependencyObjectType.FromSystemTypeInternal(typeof(UIElement));
@@ -6421,7 +6435,8 @@ namespace System.Windows
 
         internal static bool AreClose(double value1, double value2)
         {
-            if(value1 == value2) return true;
+            if (value1 == value2)
+                return true;
 
             double diff = value1 - value2;
             return (diff < eps) && (diff > -eps);
@@ -6436,123 +6451,123 @@ namespace System.Windows
     internal enum InternalFlags : uint
     {
         // Does the instance have ResourceReference properties
-        HasResourceReferences       = 0x00000001,
+        HasResourceReferences = 0x00000001,
 
         HasNumberSubstitutionChanged = 0x00000002,
 
         // Is the style for this instance obtained from a
         // typed-style declared in the Resources
-        HasImplicitStyleFromResources   = 0x00000004,
-        InheritanceBehavior0            = 0x00000008,
-        InheritanceBehavior1            = 0x00000010,
-        InheritanceBehavior2            = 0x00000020,
+        HasImplicitStyleFromResources = 0x00000004,
+        InheritanceBehavior0 = 0x00000008,
+        InheritanceBehavior1 = 0x00000010,
+        InheritanceBehavior2 = 0x00000020,
 
-        IsStyleUpdateInProgress         = 0x00000040,
-        IsThemeStyleUpdateInProgress    = 0x00000080,
-        StoresParentTemplateValues     = 0x00000100,
+        IsStyleUpdateInProgress = 0x00000040,
+        IsThemeStyleUpdateInProgress = 0x00000080,
+        StoresParentTemplateValues = 0x00000100,
 
         // free bit = 0x00000200,
-        NeedsClipBounds             = 0x00000400,
+        NeedsClipBounds = 0x00000400,
 
-        HasWidthEverChanged        = 0x00000800,
-        HasHeightEverChanged        = 0x00001000,
+        HasWidthEverChanged = 0x00000800,
+        HasHeightEverChanged = 0x00001000,
         // free bit = 0x00002000,
         // free bit = 0x00004000,
 
         // Has this instance been initialized
-        IsInitialized               = 0x00008000,
+        IsInitialized = 0x00008000,
 
         // Set on BeginInit and reset on EndInit
-        InitPending                 = 0x00010000,
+        InitPending = 0x00010000,
 
-        IsResourceParentValid       = 0x00020000,
+        IsResourceParentValid = 0x00020000,
         // free bit                     0x00040000,
 
         // This flag is set to true when this FrameworkElement is in the middle
         //  of an invalidation storm caused by InvalidateTree for ancestor change,
         //  so we know not to trigger another one.
-        AncestorChangeInProgress    = 0x00080000,
+        AncestorChangeInProgress = 0x00080000,
 
         // This is used when we know that we're in a subtree whose visibility
         //  is collapsed.  A false here does not indicate otherwise.  A false
         //  merely indicates "we don't know".
-        InVisibilityCollapsedTree   = 0x00100000,
+        InVisibilityCollapsedTree = 0x00100000,
 
-        HasStyleEverBeenFetched         = 0x00200000,
-        HasThemeStyleEverBeenFetched    = 0x00400000,
+        HasStyleEverBeenFetched = 0x00200000,
+        HasThemeStyleEverBeenFetched = 0x00400000,
 
-        HasLocalStyle                    = 0x00800000,
+        HasLocalStyle = 0x00800000,
 
         // This instance's Visual or logical Tree was generated by a Template
-        HasTemplateGeneratedSubTree    = 0x01000000,
+        HasTemplateGeneratedSubTree = 0x01000000,
 
         // free bit   = 0x02000000,
 
-        HasLogicalChildren                    = 0x04000000,
+        HasLogicalChildren = 0x04000000,
 
         // Are we in the process of iterating the logical children.
         // This flag is set during a descendents walk, for property invalidation.
-        IsLogicalChildrenIterationInProgress   = 0x08000000,
+        IsLogicalChildrenIterationInProgress = 0x08000000,
 
         //Are we creating a new root after system metrics have changed?
-        CreatingRoot                 = 0x10000000,
+        CreatingRoot = 0x10000000,
 
         // FlowDirection is set to RightToLeft (0 == LeftToRight, 1 == RightToLeft)
         // This is an optimization to speed reading the FlowDirection property
-        IsRightToLeft               = 0x20000000,
+        IsRightToLeft = 0x20000000,
 
-        ShouldLookupImplicitStyles  = 0x40000000,
+        ShouldLookupImplicitStyles = 0x40000000,
 
         // This flag is set to true there are mentees listening to either the
         // InheritedPropertyChanged event or the ResourcesChanged event. Once
         // this flag is set to true it does not get reset after that.
 
-        PotentiallyHasMentees        = 0x80000000,
+        PotentiallyHasMentees = 0x80000000,
     }
 
     [Flags]
     internal enum InternalFlags2 : uint
     {
         // RESERVED: Bits 0-15  (0x0000FFFF): TemplateChildIndex
-        R0                          = 0x00000001,
-        R1                          = 0x00000002,
-        R2                          = 0x00000004,
-        R3                          = 0x00000008,
-        R4                          = 0x00000010,
-        R5                          = 0x00000020,
-        R6                          = 0x00000040,
-        R7                          = 0x00000080,
-        R8                          = 0x00000100,
-        R9                          = 0x00000200,
-        RA                          = 0x00000400,
-        RB                          = 0x00000800,
-        RC                          = 0x00001000,
-        RD                          = 0x00002000,
-        RE                          = 0x00004000,
-        RF                          = 0x00008000,
+        R0 = 0x00000001,
+        R1 = 0x00000002,
+        R2 = 0x00000004,
+        R3 = 0x00000008,
+        R4 = 0x00000010,
+        R5 = 0x00000020,
+        R6 = 0x00000040,
+        R7 = 0x00000080,
+        R8 = 0x00000100,
+        R9 = 0x00000200,
+        RA = 0x00000400,
+        RB = 0x00000800,
+        RC = 0x00001000,
+        RD = 0x00002000,
+        RE = 0x00004000,
+        RF = 0x00008000,
 
         // free bit                 = 0x00010000,
         // free bit                 = 0x00020000,
         // free bit                 = 0x00040000,
         // free bit                 = 0x00080000,
 
-        TreeHasLoadedChangeHandler  = 0x00100000,
-        IsLoadedCache               = 0x00200000,
-        IsStyleSetFromGenerator     = 0x00400000,
-        IsParentAnFE                = 0x00800000,
-        IsTemplatedParentAnFE       = 0x01000000,
-        HasStyleChanged             = 0x02000000,
-        HasTemplateChanged          = 0x04000000,
-        HasStyleInvalidated         = 0x08000000,
-        IsRequestingExpression      = 0x10000000,
+        TreeHasLoadedChangeHandler = 0x00100000,
+        IsLoadedCache = 0x00200000,
+        IsStyleSetFromGenerator = 0x00400000,
+        IsParentAnFE = 0x00800000,
+        IsTemplatedParentAnFE = 0x01000000,
+        HasStyleChanged = 0x02000000,
+        HasTemplateChanged = 0x04000000,
+        HasStyleInvalidated = 0x08000000,
+        IsRequestingExpression = 0x10000000,
         HasMultipleInheritanceContexts = 0x20000000,
 
         // free bit                 = 0x40000000,
-        BypassLayoutPolicies        = 0x80000000,
+        BypassLayoutPolicies = 0x80000000,
 
         // Default is so that the default value of TemplateChildIndex
         // (which is stored in the low 16 bits) can be 0xFFFF (interpreted to be -1).
-        Default                     = 0x0000FFFF,
+        Default = 0x0000FFFF,
 
     }
 }

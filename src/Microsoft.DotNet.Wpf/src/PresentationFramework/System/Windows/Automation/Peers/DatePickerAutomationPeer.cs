@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -88,7 +88,7 @@ namespace System.Windows.Automation.Peers
         protected override List<AutomationPeer> GetChildrenCore()
         {
             List<AutomationPeer> children = base.GetChildrenCore();
-            
+
             if (OwningDatePicker.IsDropDownOpen && OwningDatePicker.Calendar != null)
             {
                 CalendarAutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(OwningDatePicker.Calendar) as CalendarAutomationPeer;
@@ -152,14 +152,14 @@ namespace System.Windows.Automation.Peers
 
         #region IValueProvider
 
-        bool IValueProvider.IsReadOnly 
-        { 
-            get { return false; } 
+        bool IValueProvider.IsReadOnly
+        {
+            get { return false; }
         }
 
-        string IValueProvider.Value 
+        string IValueProvider.Value
         {
-            get { return this.OwningDatePicker.ToString(); } 
+            get { return this.OwningDatePicker.ToString(); }
         }
 
         void IValueProvider.SetValue(string value)

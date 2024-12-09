@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,12 +6,12 @@
 
 using System.Collections;
 using System.ComponentModel;
-using System.Xml;
 using System.Printing;
-using System.Windows.Xps.Packaging;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Xps.Packaging;
+using System.Xml;
 using MS.Utility;
 
 #pragma warning disable 1634, 1691 //Allows suppression of certain PreSharp messages
@@ -38,15 +38,15 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         XpsSerializationManager(
-            BasePackagingPolicy  packagingPolicy,
-            bool                 batchMode
-             ):
+            BasePackagingPolicy packagingPolicy,
+            bool batchMode
+             ) :
         base()
         {
-            this._packagingPolicy    = packagingPolicy;
-            this._isBatchMode        = batchMode;
-            this._isSimulating       = false;
-            this._simulator          = null;
+            this._packagingPolicy = packagingPolicy;
+            this._isBatchMode = batchMode;
+            this._isSimulating = false;
+            this._simulator = null;
 
             _reachSerializationServices = new ReachSerializationServices();
             _visualSerializationService = new VisualSerializationService(this);
@@ -55,11 +55,11 @@ namespace System.Windows.Xps.Serialization
             _reachSerializationServices.RegisterSerializableDependencyPropertiesForReachTypes();
             _reachSerializationServices.RegisterNoneSerializableClrPropertiesForReachTypes();
 
-            XpsResourcePolicy resourcePolicy = new XpsResourcePolicy( XpsResourceSharing.NoResourceSharing );
+            XpsResourcePolicy resourcePolicy = new XpsResourcePolicy(XpsResourceSharing.NoResourceSharing);
             resourcePolicy.RegisterService(new XpsImageSerializationService(), typeof(XpsImageSerializationService));
             resourcePolicy.RegisterService(new XpsFontSerializationService(packagingPolicy), typeof(XpsFontSerializationService));
 
-            this._resourcePolicy     = resourcePolicy;
+            this._resourcePolicy = resourcePolicy;
             _documentNumber = 0;
             _pageNumber = 0;
             _documentStartState = false;
@@ -74,7 +74,7 @@ namespace System.Windows.Xps.Serialization
 
                 this.XpsSerializationPrintTicketRequiredOnXpsDriverDocEvent += new XpsSerializationPrintTicketRequiredEventHandler(_xpsDocEventManager.ForwardUserPrintTicket);
             }
-         }
+        }
 
         #endregion Constructor
 
@@ -87,12 +87,12 @@ namespace System.Windows.Xps.Serialization
         override
         void
         SaveAsXaml(
-             Object  serializedObject
+             Object serializedObject
             )
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXSaveXpsBegin);
 
-            XmlWriter pageXmlWriter             = null;
+            XmlWriter pageXmlWriter = null;
 
             ArgumentNullException.ThrowIfNull(serializedObject);
 
@@ -101,45 +101,45 @@ namespace System.Windows.Xps.Serialization
                 throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
             }
 
-            if( serializedObject is DocumentPaginator )
+            if (serializedObject is DocumentPaginator)
             {
                 // Prefast complains that serializedObject is not tested for null
                 // It is tested a few lines up
-                #pragma warning suppress 56506
-                if((serializedObject as DocumentPaginator).Source is FixedDocument &&
-                    serializedObject.GetType().ToString().Contains( "FixedDocumentPaginator") )
+#pragma warning suppress 56506
+                if ((serializedObject as DocumentPaginator).Source is FixedDocument &&
+                    serializedObject.GetType().ToString().Contains("FixedDocumentPaginator"))
                 {
                     serializedObject = (serializedObject as DocumentPaginator).Source;
                 }
                 else
-                if( (serializedObject as DocumentPaginator).Source is FixedDocumentSequence&&
-                    serializedObject.GetType().ToString().Contains( "FixedDocumentSequencePaginator")  )
+                if ((serializedObject as DocumentPaginator).Source is FixedDocumentSequence &&
+                    serializedObject.GetType().ToString().Contains("FixedDocumentSequencePaginator"))
                 {
                     serializedObject = (serializedObject as DocumentPaginator).Source;
                 }
             }
 
-            if(_simulator == null)
+            if (_simulator == null)
             {
                 _simulator = new ReachHierarchySimulator(this,
                                                          serializedObject);
 
             }
 
-            if(!_isSimulating)
+            if (!_isSimulating)
             {
                 _simulator.BeginConfirmToXPSStructure(_isBatchMode);
                 _isSimulating = true;
             }
 
-            if(_isBatchMode)
+            if (_isBatchMode)
             {
                 pageXmlWriter = _simulator.SimulateBeginFixedPage();
             }
 
             ReachSerializer reachSerializer = GetSerializer(serializedObject);
 
-            if(reachSerializer != null)
+            if (reachSerializer != null)
             {
                 //
                 // Things that need to be done at this stage
@@ -148,7 +148,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 reachSerializer.SerializeObject(serializedObject);
 
-                if(_isBatchMode)
+                if (_isBatchMode)
                 {
                     _simulator.SimulateEndFixedPage(pageXmlWriter);
                 }
@@ -174,7 +174,7 @@ namespace System.Windows.Xps.Serialization
         Commit(
             )
         {
-            if(_isBatchMode && _isSimulating)
+            if (_isBatchMode && _isSimulating)
             {
                 _simulator.EndConfirmToXPSStructure(_isBatchMode);
             }
@@ -227,14 +227,14 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         event
-        XpsSerializationPrintTicketRequiredEventHandler     XpsSerializationPrintTicketRequired;
+        XpsSerializationPrintTicketRequiredEventHandler XpsSerializationPrintTicketRequired;
 
         /// <summary>
         ///
         /// </summary>
         public
         event
-        XpsSerializationProgressChangedEventHandler         XpsSerializationProgressChanged;
+        XpsSerializationProgressChangedEventHandler XpsSerializationProgressChanged;
 
         /// <summary>
         /// XpsDriverDocEventManager subscribes for this event to take the PT that the app supplied and
@@ -252,7 +252,7 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         internal
         event
-        XpsSerializationXpsDriverDocEventHandler            XpsSerializationXpsDriverDocEvent;
+        XpsSerializationXpsDriverDocEventHandler XpsSerializationXpsDriverDocEvent;
 
 
 
@@ -263,7 +263,7 @@ namespace System.Windows.Xps.Serialization
         override
         String
         GetXmlNSForType(
-            Type    objectType
+            Type objectType
             )
         {
             return (String)_reachSerializationServices.TypesXmlNSMapping[objectType];
@@ -281,7 +281,7 @@ namespace System.Windows.Xps.Serialization
         {
             ReachSerializer reachSerializer = null;
 
-            if((reachSerializer = base.GetSerializer(serializedObject)) == null)
+            if ((reachSerializer = base.GetSerializer(serializedObject)) == null)
             {
                 reachSerializer = this.SerializersCacheManager.GetSerializer(serializedObject);
             }
@@ -302,7 +302,7 @@ namespace System.Windows.Xps.Serialization
             Type serializerType = null;
 
 
-            if((serializerType = base.GetSerializerType(objectType)) == null)
+            if ((serializerType = base.GetSerializerType(objectType)) == null)
             {
                 if (typeof(System.Windows.Documents.FixedDocument).IsAssignableFrom(objectType))
                 {
@@ -312,15 +312,15 @@ namespace System.Windows.Xps.Serialization
                 {
                     serializerType = typeof(ReachPageContentCollectionSerializer);
                 }
-                else if(typeof(System.Windows.Documents.PageContent).IsAssignableFrom(objectType))
+                else if (typeof(System.Windows.Documents.PageContent).IsAssignableFrom(objectType))
                 {
                     serializerType = typeof(ReachPageContentSerializer);
                 }
-                else if(typeof(System.Windows.Controls.UIElementCollection).IsAssignableFrom(objectType))
+                else if (typeof(System.Windows.Controls.UIElementCollection).IsAssignableFrom(objectType))
                 {
                     serializerType = typeof(ReachUIElementCollectionSerializer);
                 }
-                else if(typeof(System.Windows.Documents.FixedPage).IsAssignableFrom(objectType))
+                else if (typeof(System.Windows.Documents.FixedPage).IsAssignableFrom(objectType))
                 {
                     serializerType = typeof(FixedPageSerializer);
                 }
@@ -363,7 +363,7 @@ namespace System.Windows.Xps.Serialization
         internal
         override
         TypeConverter
-        GetTypeConverter (
+        GetTypeConverter(
             Object serializedObject
             )
         {
@@ -395,7 +395,7 @@ namespace System.Windows.Xps.Serialization
         internal
         override
         TypeConverter
-        GetTypeConverter (
+        GetTypeConverter(
             Type serializedObjectType
             )
         {
@@ -427,12 +427,12 @@ namespace System.Windows.Xps.Serialization
         override
         XmlWriter
         AcquireXmlWriter(
-            Type    writerType
+            Type writerType
             )
         {
             XmlWriter xmlWriter = null;
 
-            if(_packagingPolicy != null)
+            if (_packagingPolicy != null)
             {
                 if (writerType == typeof(FixedDocumentSequence))
                 {
@@ -465,20 +465,20 @@ namespace System.Windows.Xps.Serialization
 
         private
         int
-        GetTypeRefCnt(Type    writerType)
+        GetTypeRefCnt(Type writerType)
         {
             int refCnt = 0;
-            if( writerType == typeof(FixedDocumentSequence) )
+            if (writerType == typeof(FixedDocumentSequence))
             {
                 refCnt = _currentDocumentSequenceWriterRef;
             }
             else
-            if( writerType == typeof(FixedDocument) )
+            if (writerType == typeof(FixedDocument))
             {
                 refCnt = _currentFixedDocumentWriterRef;
             }
             else
-            if( writerType == typeof(FixedPage) )
+            if (writerType == typeof(FixedPage))
             {
                 refCnt = _currentFixedPageWriterRef;
             }
@@ -491,20 +491,20 @@ namespace System.Windows.Xps.Serialization
 
         private
         int
-        DecrementRefCntByType(Type    writerType)
+        DecrementRefCntByType(Type writerType)
         {
             int refCnt = 0;
-            if( writerType == typeof(FixedDocumentSequence) )
+            if (writerType == typeof(FixedDocumentSequence))
             {
                 refCnt = --_currentDocumentSequenceWriterRef;
             }
             else
-            if( writerType == typeof(FixedDocument) )
+            if (writerType == typeof(FixedDocument))
             {
                 refCnt = --_currentFixedDocumentWriterRef;
             }
             else
-            if( writerType == typeof(FixedPage) )
+            if (writerType == typeof(FixedPage))
             {
                 refCnt = --_currentFixedPageWriterRef;
             }
@@ -519,7 +519,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         ReleaseXmlWriter(
-            Type    writerType
+            Type writerType
             )
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXReleaseWriterStart);
@@ -529,14 +529,14 @@ namespace System.Windows.Xps.Serialization
 
             //
             // signal the font sub-setter that we completed a node
-             if( _resourcePolicy != null )
+            if (_resourcePolicy != null)
             {
                 XpsFontSerializationService fontService = (XpsFontSerializationService)_resourcePolicy.GetService(typeof(XpsFontSerializationService));
                 //
                 // The font subsetter will determine if based on this
                 // signal we have completed a subset
                 //
-                if( fontService != null && refCnt == 0 )
+                if (fontService != null && refCnt == 0)
                 {
                     subsetComplete = fontService.SignalCommit(writerType);
                 }
@@ -546,7 +546,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Allow the packaging policy to release the stream
             //
-            if(_packagingPolicy != null)
+            if (_packagingPolicy != null)
             {
                 if (writerType == typeof(FixedDocumentSequence))
                 {
@@ -574,10 +574,10 @@ namespace System.Windows.Xps.Serialization
             // If the subsetting is complete we need to notify the interleaving policy
             // so it can flush.
             //
-            if( subsetComplete && refCnt == 0 )
+            if (subsetComplete && refCnt == 0)
             {
-                XpsPackagingPolicy xpsPackagingPolicy = _packagingPolicy as  XpsPackagingPolicy;
-                if(xpsPackagingPolicy != null )
+                XpsPackagingPolicy xpsPackagingPolicy = _packagingPolicy as XpsPackagingPolicy;
+                if (xpsPackagingPolicy != null)
                 {
                     xpsPackagingPolicy.InterleavingPolicy.SignalSubsetComplete();
                 }
@@ -590,12 +590,12 @@ namespace System.Windows.Xps.Serialization
         override
         XpsResourceStream
         AcquireResourceStream(
-            Type    resourceType
+            Type resourceType
             )
         {
             XpsResourceStream resourceStream = null;
 
-            if(_packagingPolicy != null)
+            if (_packagingPolicy != null)
             {
                 if (resourceType == typeof(GlyphRun))
                 {
@@ -626,13 +626,13 @@ namespace System.Windows.Xps.Serialization
         override
         XpsResourceStream
         AcquireResourceStream(
-            Type    resourceType,
-            String  resourceID
+            Type resourceType,
+            String resourceID
             )
         {
             XpsResourceStream resourceStream = null;
 
-            if(_packagingPolicy != null)
+            if (_packagingPolicy != null)
             {
                 if (resourceType == typeof(GlyphRun))
                 {
@@ -663,31 +663,31 @@ namespace System.Windows.Xps.Serialization
         override
         void
         ReleaseResourceStream(
-            Type    resourceType
+            Type resourceType
             )
         {
-            if(_packagingPolicy != null)
+            if (_packagingPolicy != null)
             {
-               if (resourceType == typeof(GlyphRun))
-               {
+                if (resourceType == typeof(GlyphRun))
+                {
                     _packagingPolicy.ReleaseResourceStreamForXpsFont();
-               }
-               else if (resourceType == typeof(BitmapSource))
-               {
+                }
+                else if (resourceType == typeof(BitmapSource))
+                {
                     _packagingPolicy.ReleaseResourceStreamForXpsImage();
-               }
-               else if (resourceType == typeof(ColorContext))
-               {
+                }
+                else if (resourceType == typeof(ColorContext))
+                {
                     _packagingPolicy.ReleaseResourceStreamForXpsColorContext();
-               }
-               else if (resourceType == typeof(ResourceDictionary))
-               {
+                }
+                else if (resourceType == typeof(ResourceDictionary))
+                {
                     _packagingPolicy.ReleaseResourceStreamForXpsResourceDictionary();
-               }
-               else
-               {
+                }
+                else
+                {
                     throw new XpsSerializationException(SR.ReachSerialization_NotSupported);
-               }
+                }
             }
         }
 
@@ -695,11 +695,11 @@ namespace System.Windows.Xps.Serialization
         override
         void
         ReleaseResourceStream(
-            Type    resourceType,
-            String  resourceID
+            Type resourceType,
+            String resourceID
             )
         {
-            if(_packagingPolicy != null)
+            if (_packagingPolicy != null)
             {
                 if (resourceType == typeof(GlyphRun))
                 {
@@ -728,7 +728,7 @@ namespace System.Windows.Xps.Serialization
         override
         bool
         CanSerializeDependencyProperty(
-            Object                      serializableObject,
+            Object serializableObject,
             TypeDependencyPropertyCache dependencyProperty
             )
         {
@@ -739,14 +739,14 @@ namespace System.Windows.Xps.Serialization
         static
         bool
         CanSerializeDependencyProperty(
-            Object                      serializableObject,
+            Object serializableObject,
             TypeDependencyPropertyCache dependencyProperty,
-            ReachSerializationServices  reachSerializationServices
+            ReachSerializationServices reachSerializationServices
             )
         {
             bool canSerialize = false;
 
-            if(serializableObject != null &&
+            if (serializableObject != null &&
                dependencyProperty != null &&
                ((dependencyProperty.PropertyInfo != null) ||
                 (((DependencyProperty)(dependencyProperty.DependencyProperty)).Name != null)))
@@ -758,9 +758,9 @@ namespace System.Windows.Xps.Serialization
                 Hashtable dependencyPropertiesTable = (Hashtable)reachSerializationServices.
                                                       TypeSerializableDependencyProperties[serializableObject.GetType()];
 
-                if(dependencyPropertiesTable != null)
+                if (dependencyPropertiesTable != null)
                 {
-                    if(dependencyPropertiesTable.Contains(name))
+                    if (dependencyPropertiesTable.Contains(name))
                     {
                         canSerialize = true;
                     }
@@ -782,8 +782,8 @@ namespace System.Windows.Xps.Serialization
         override
         bool
         CanSerializeClrProperty(
-            Object              serializableObject,
-            TypePropertyCache   property
+            Object serializableObject,
+            TypePropertyCache property
             )
         {
             return CanSerializeClrProperty(serializableObject, property, _reachSerializationServices);
@@ -793,9 +793,9 @@ namespace System.Windows.Xps.Serialization
         static
         bool
         CanSerializeClrProperty(
-            Object                      serializableObject,
-            TypePropertyCache           property,
-            ReachSerializationServices  reachSerializationServices
+            Object serializableObject,
+            TypePropertyCache property,
+            ReachSerializationServices reachSerializationServices
             )
         {
             bool canSerialize = true;
@@ -849,11 +849,11 @@ namespace System.Windows.Xps.Serialization
         void
         RegisterDocumentStart()
         {
-            if( _documentStartState )
+            if (_documentStartState)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_FixedDocumentInDocument);
             }
-            if( _pageStartState)
+            if (_pageStartState)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_FixedDocumentInPage);
             }
@@ -880,7 +880,7 @@ namespace System.Windows.Xps.Serialization
             // It is invalid to have a document with no fixed pages
             // If no fixed pages have been searialzed throw
             //
-            if( _pageNumber <= 0 )
+            if (_pageNumber <= 0)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_NoFixedPages);
             }
@@ -893,7 +893,7 @@ namespace System.Windows.Xps.Serialization
         void
         IXpsSerializationManager.RegisterPageStart()
         {
-            if( _pageStartState )
+            if (_pageStartState)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_FixedPageInPage);
             }
@@ -933,7 +933,7 @@ namespace System.Windows.Xps.Serialization
             // It is invalid to have a document sequence with no fixed documents
             // If no fixed documents have been searialzed throw
             //
-            if( _pageNumber <= 0 )
+            if (_pageNumber <= 0)
             {
                 throw new XpsSerializationException(SR.ReachSerialization_NoFixedDocuments);
             }
@@ -1005,7 +1005,7 @@ namespace System.Windows.Xps.Serialization
             }
         }
 
-        
+
         VisualSerializationService
         IXpsSerializationManager.VisualSerializationService
         {
@@ -1049,14 +1049,14 @@ namespace System.Windows.Xps.Serialization
             Object serializedObject
             )
         {
-            return IsSerializedObjectTypeSupported(serializedObject,_isBatchMode);
+            return IsSerializedObjectTypeSupported(serializedObject, _isBatchMode);
         }
 
         internal
         static
         bool
         IsSerializedObjectTypeSupported(
-            Object  serializedObject,
+            Object serializedObject,
             bool isBatchMode
             )
         {
@@ -1064,9 +1064,9 @@ namespace System.Windows.Xps.Serialization
 
             Type serializedObjectType = serializedObject.GetType();
 
-            if(isBatchMode)
+            if (isBatchMode)
             {
-                if((typeof(System.Windows.Media.Visual).IsAssignableFrom(serializedObjectType)) &&
+                if ((typeof(System.Windows.Media.Visual).IsAssignableFrom(serializedObjectType)) &&
                     (serializedObjectType != typeof(System.Windows.Documents.FixedPage)))
                 {
                     isSupported = true;
@@ -1074,11 +1074,11 @@ namespace System.Windows.Xps.Serialization
             }
             else
             {
-                if ( (serializedObjectType == typeof(System.Windows.Documents.FixedDocumentSequence)) ||
-                     (serializedObjectType == typeof(System.Windows.Documents.FixedDocument))         ||
-                     (serializedObjectType == typeof(System.Windows.Documents.FixedPage))             ||
-                     (typeof(System.Windows.Media.Visual).IsAssignableFrom(serializedObjectType))     ||
-                     (typeof(System.Windows.Documents.DocumentPaginator).IsAssignableFrom(serializedObjectType)) )
+                if ((serializedObjectType == typeof(System.Windows.Documents.FixedDocumentSequence)) ||
+                     (serializedObjectType == typeof(System.Windows.Documents.FixedDocument)) ||
+                     (serializedObjectType == typeof(System.Windows.Documents.FixedPage)) ||
+                     (typeof(System.Windows.Media.Visual).IsAssignableFrom(serializedObjectType)) ||
+                     (typeof(System.Windows.Documents.DocumentPaginator).IsAssignableFrom(serializedObjectType)))
                 {
                     isSupported = true;
                 }
@@ -1102,11 +1102,11 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationPrintTicketRequiredEventArgs e = operationState as XpsSerializationPrintTicketRequiredEventArgs;
 
-            if(XpsSerializationPrintTicketRequired != null)
+            if (XpsSerializationPrintTicketRequired != null)
             {
                 e.Modified = true;
 
-                XpsSerializationPrintTicketRequired(this,e);
+                XpsSerializationPrintTicketRequired(this, e);
 
                 if (XpsSerializationPrintTicketRequiredOnXpsDriverDocEvent != null)
                 {
@@ -1122,9 +1122,9 @@ namespace System.Windows.Xps.Serialization
         {
             XpsSerializationProgressChangedEventArgs e = operationState as XpsSerializationProgressChangedEventArgs;
 
-            if(XpsSerializationProgressChanged != null)
+            if (XpsSerializationProgressChanged != null)
             {
-                XpsSerializationProgressChanged(this,e);
+                XpsSerializationProgressChanged(this, e);
             }
         }
 
@@ -1141,76 +1141,76 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        BasePackagingPolicy         _packagingPolicy;
+        BasePackagingPolicy _packagingPolicy;
 
         private
-        XpsResourcePolicy           _resourcePolicy;
+        XpsResourcePolicy _resourcePolicy;
 
         private
-        ReachSerializationServices  _reachSerializationServices;
+        ReachSerializationServices _reachSerializationServices;
 
         private
-        VisualSerializationService  _visualSerializationService;
+        VisualSerializationService _visualSerializationService;
 
         private
-        bool                        _isBatchMode;
+        bool _isBatchMode;
 
         private
-        bool                        _isSimulating;
+        bool _isSimulating;
 
         private
-        ReachHierarchySimulator     _simulator;
+        ReachHierarchySimulator _simulator;
 
         private
-        int                         _currentDocumentSequenceWriterRef;
+        int _currentDocumentSequenceWriterRef;
 
         private
-        int                         _currentFixedDocumentWriterRef;
+        int _currentFixedDocumentWriterRef;
 
         private
-        int                         _currentFixedPageWriterRef;
+        int _currentFixedPageWriterRef;
 
         //
         //  This counter is used to ensure at least one document is added
         //
         private
-        int                         _documentNumber;
+        int _documentNumber;
 
         //
         //  This counter is used to ensure at least one page is added
         //  This is reset by a document completing
         //
         private
-        int                         _pageNumber;
+        int _pageNumber;
 
         //
         //  This flag is used to test if in document serialization
         //  This is to prevent writing of a document in a document
         //
         private
-        bool                        _documentStartState;
+        bool _documentStartState;
 
         //
         //  This flag is used to test if in page serialization
         //  This is to prevent writing of a page in a page
         //
         private
-        bool                        _pageStartState;
+        bool _pageStartState;
 
         //
         // This print ticket is cached when we get it inside of the Page Content Serializer
         // and we need to retrieve it inside of the FixedPage Serializer
         //
         private
-        PrintTicket        _fixedPagePrintTicket;
+        PrintTicket _fixedPagePrintTicket;
 
         private
-        Size                _fixedPageSize = new Size(816,1056);
+        Size _fixedPageSize = new Size(816, 1056);
 
         private
-        XpsDriverDocEventManager    _xpsDocEventManager;
+        XpsDriverDocEventManager _xpsDocEventManager;
 
-        internal const string NullString   = "*null";
+        internal const string NullString = "*null";
         internal const string TypeOfString = "{x:Type ";
     };
 
@@ -1218,7 +1218,7 @@ namespace System.Windows.Xps.Serialization
     {
         public
         VisualSerializationService(
-            PackageSerializationManager   serializationManager
+            PackageSerializationManager serializationManager
             )
         {
             _serializationManager = serializationManager;
@@ -1234,7 +1234,7 @@ namespace System.Windows.Xps.Serialization
             Size pageSize
             )
         {
-            if(_visualTreeFlattener == null)
+            if (_visualTreeFlattener == null)
             {
                 _visualTreeFlattener = new VisualTreeFlattener(resWriter,
                                                                bodyWriter,
@@ -1255,10 +1255,10 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        VisualTreeFlattener         _visualTreeFlattener;
+        VisualTreeFlattener _visualTreeFlattener;
 
         private
-        PackageSerializationManager   _serializationManager;
+        PackageSerializationManager _serializationManager;
     };
 
 
@@ -1270,9 +1270,9 @@ namespace System.Windows.Xps.Serialization
         ReachSerializationServices(
             )
         {
-            _typesXmlNSMapping                    = null;
+            _typesXmlNSMapping = null;
             _typeSerializableDependencyProperties = null;
-            _typeNoneSerializableClrProperties    = null;
+            _typeNoneSerializableClrProperties = null;
         }
 
         #endregion Constructor
@@ -1284,11 +1284,11 @@ namespace System.Windows.Xps.Serialization
         RegisterNameSpacesForTypes(
             )
         {
-            if(_typesXmlNSMapping == null)
+            if (_typesXmlNSMapping == null)
             {
                 _typesXmlNSMapping = new Hashtable(11);
 
-                for(int IndexInTypes = 0;
+                for (int IndexInTypes = 0;
                     IndexInTypes < ReachSerializationServices._xpsTypesRequiringXMLNS.Length;
                     IndexInTypes++)
                 {
@@ -1303,7 +1303,7 @@ namespace System.Windows.Xps.Serialization
         RegisterSerializableDependencyPropertiesForReachTypes(
             )
         {
-            if(_typeSerializableDependencyProperties == null)
+            if (_typeSerializableDependencyProperties == null)
             {
                 _typeSerializableDependencyProperties = new Hashtable(11);
                 //
@@ -1314,7 +1314,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 Hashtable fixedPageDependencyProperties = new Hashtable(11);
 
-                for(int numberOfDependencyPropertiesInFixedPage = 0;
+                for (int numberOfDependencyPropertiesInFixedPage = 0;
                     numberOfDependencyPropertiesInFixedPage < _fixedPageDependencyProperties.Length;
                     numberOfDependencyPropertiesInFixedPage++)
                 {
@@ -1331,7 +1331,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 Hashtable fixedDocumentDependencyProperties = new Hashtable(11);
 
-                for(int numberOfDependencyPropertiesInFixedDocument = 0;
+                for (int numberOfDependencyPropertiesInFixedDocument = 0;
                     numberOfDependencyPropertiesInFixedDocument < _fixedDocumentDependencyProperties.Length;
                     numberOfDependencyPropertiesInFixedDocument++)
                 {
@@ -1348,7 +1348,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 Hashtable fixedDocumentSequenceDependencyProperties = new Hashtable(11);
 
-                for(int numberOfDependencyPropertiesInFixedDS = 0;
+                for (int numberOfDependencyPropertiesInFixedDS = 0;
                     numberOfDependencyPropertiesInFixedDS < _fixedDocumentSequenceDependencyProperties.Length;
                     numberOfDependencyPropertiesInFixedDS++)
                 {
@@ -1367,7 +1367,7 @@ namespace System.Windows.Xps.Serialization
         RegisterNoneSerializableClrPropertiesForReachTypes(
             )
         {
-            if(_typeNoneSerializableClrProperties == null)
+            if (_typeNoneSerializableClrProperties == null)
             {
                 _typeNoneSerializableClrProperties = new Hashtable(11);
                 //
@@ -1378,7 +1378,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 Hashtable fixedDocumentExcludedClrProperties = new Hashtable(11);
 
-                for(int numberOfClrPropertiesInFixedDocument = 0;
+                for (int numberOfClrPropertiesInFixedDocument = 0;
                     numberOfClrPropertiesInFixedDocument < _fixedDocumentExcludedClrProperties.Length;
                     numberOfClrPropertiesInFixedDocument++)
                 {
@@ -1395,7 +1395,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 Hashtable fixedDocumentSequenceExcludedClrProperties = new Hashtable(11);
 
-                for(int numberOfClrPropertiesInFixedDS = 0;
+                for (int numberOfClrPropertiesInFixedDS = 0;
                     numberOfClrPropertiesInFixedDS < _fixedDocumentSequenceExcludedClrProperties.Length;
                     numberOfClrPropertiesInFixedDS++)
                 {
@@ -1450,17 +1450,17 @@ namespace System.Windows.Xps.Serialization
         #region Private Data
 
         private
-        Hashtable       _typesXmlNSMapping;
+        Hashtable _typesXmlNSMapping;
 
         private
-        IDictionary     _typeSerializableDependencyProperties;
+        IDictionary _typeSerializableDependencyProperties;
 
         private
-        IDictionary     _typeNoneSerializableClrProperties;
+        IDictionary _typeNoneSerializableClrProperties;
 
         static
         private
-        Type[]          _xpsTypesRequiringXMLNS =
+        Type[] _xpsTypesRequiringXMLNS =
         {
             typeof(FixedDocumentSequence),
             typeof(FixedDocument),
@@ -1468,7 +1468,7 @@ namespace System.Windows.Xps.Serialization
         };
 
         private
-        string[]        _fixedPageDependencyProperties =
+        string[] _fixedPageDependencyProperties =
         {
             "Width",
             "Height",
@@ -1480,28 +1480,28 @@ namespace System.Windows.Xps.Serialization
 
 
         private
-        string[]        _fixedDocumentDependencyProperties =
+        string[] _fixedDocumentDependencyProperties =
         {
             "PageWidth",
             "PageHeight"
         };
 
         private
-        string[]        _fixedDocumentSequenceDependencyProperties =
+        string[] _fixedDocumentSequenceDependencyProperties =
         {
             "PageWidth",
             "PageHeight"
         };
 
         private
-        string[]        _fixedDocumentExcludedClrProperties =
+        string[] _fixedDocumentExcludedClrProperties =
         {
             "IsBackgroundPaginationEnabled",
             "PageSize"
         };
 
         private
-        string[]        _fixedDocumentSequenceExcludedClrProperties =
+        string[] _fixedDocumentSequenceExcludedClrProperties =
         {
             "IsBackgroundPaginationEnabled",
             "PageSize"

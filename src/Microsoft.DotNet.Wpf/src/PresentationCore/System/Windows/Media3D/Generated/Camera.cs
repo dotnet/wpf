@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -64,18 +64,18 @@ namespace System.Windows.Media.Media3D
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            Camera target = ((Camera) d);
+            Camera target = ((Camera)d);
 
 
-            Transform3D oldV = (Transform3D) e.OldValue;
-            Transform3D newV = (Transform3D) e.NewValue;
+            Transform3D oldV = (Transform3D)e.OldValue;
+            Transform3D newV = (Transform3D)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -90,8 +90,8 @@ namespace System.Windows.Media.Media3D
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -109,7 +109,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Transform3D) GetValue(TransformProperty);
+                return (Transform3D)GetValue(TransformProperty);
             }
             set
             {

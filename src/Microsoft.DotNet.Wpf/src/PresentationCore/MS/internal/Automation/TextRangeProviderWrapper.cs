@@ -1,28 +1,28 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: TextRange provider wrapper for WCP
 
-using System.Windows.Threading;
+using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Text;
-using System.Windows.Automation.Peers;
+using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
     // see comment on InvokeProviderWrapper class for explanation of purpose and organization of these wrapper classes.
-    internal class TextRangeProviderWrapper: MarshalByRefObject, ITextRangeProvider
+    internal class TextRangeProviderWrapper : MarshalByRefObject, ITextRangeProvider
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        internal TextRangeProviderWrapper( AutomationPeer peer, ITextRangeProvider iface )
+        internal TextRangeProviderWrapper(AutomationPeer peer, ITextRangeProvider iface)
         {
             _peer = peer;
             _iface = iface;
@@ -36,7 +36,7 @@ namespace MS.Internal.Automation
         //  Interface ITextRangeProvider
         //
         //------------------------------------------------------
- 
+
         #region Interface ITextRangeProvider
 
         public ITextRangeProvider Clone()
@@ -89,9 +89,9 @@ namespace MS.Internal.Automation
             return ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetAttributeValue), args);
         }
 
-        public double [] GetBoundingRectangles()
+        public double[] GetBoundingRectangles()
         {
-            return (double [])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetBoundingRectangles), null);
+            return (double[])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetBoundingRectangles), null);
         }
 
         public IRawElementProviderSimple GetEnclosingElement()
@@ -101,7 +101,7 @@ namespace MS.Internal.Automation
 
         public string GetText(int maxLength)
         {
-            object[] args = new object[] {maxLength};
+            object[] args = new object[] { maxLength };
             return (string)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetText), args);
         }
 
@@ -150,7 +150,7 @@ namespace MS.Internal.Automation
 
         public IRawElementProviderSimple[] GetChildren()
         {
-                return (IRawElementProviderSimple[])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetChildren), null);
+            return (IRawElementProviderSimple[])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetChildren), null);
         }
 
 
@@ -162,7 +162,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         // Wrap arguments that are being returned, assuming they're not null or already wrapped.
@@ -177,12 +177,12 @@ namespace MS.Internal.Automation
             return new TextRangeProviderWrapper(peer, argument);
         }
 
-        static internal ITextRangeProvider [] WrapArgument(ITextRangeProvider [] argument, AutomationPeer peer)
+        static internal ITextRangeProvider[] WrapArgument(ITextRangeProvider[] argument, AutomationPeer peer)
         {
             if (argument == null)
                 return null;
 
-            if (argument is TextRangeProviderWrapper [])
+            if (argument is TextRangeProviderWrapper[])
                 return argument;
 
             ITextRangeProvider[] outArray = new ITextRangeProvider[argument.Length];
@@ -198,7 +198,7 @@ namespace MS.Internal.Automation
         {
             if (argument is TextRangeProviderWrapper)
             {
-                 return ((TextRangeProviderWrapper)argument)._iface;
+                return ((TextRangeProviderWrapper)argument)._iface;
             }
 
             return argument;
@@ -211,18 +211,18 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         private object Clone(object unused)
         {
-            return TextRangeProviderWrapper.WrapArgument( _iface.Clone(), _peer );
+            return TextRangeProviderWrapper.WrapArgument(_iface.Clone(), _peer);
         }
 
         private object Compare(object arg)
         {
             ITextRangeProvider range = (ITextRangeProvider)arg;
-            return _iface.Compare( TextRangeProviderWrapper.UnwrapArgument( range ) );
+            return _iface.Compare(TextRangeProviderWrapper.UnwrapArgument(range));
         }
 
         private object CompareEndpoints(object arg)
@@ -231,7 +231,7 @@ namespace MS.Internal.Automation
             TextPatternRangeEndpoint endpoint = (TextPatternRangeEndpoint)args[0];
             ITextRangeProvider targetRange = (ITextRangeProvider)args[1];
             TextPatternRangeEndpoint targetEndpoint = (TextPatternRangeEndpoint)args[2];
-            return _iface.CompareEndpoints(endpoint, TextRangeProviderWrapper.UnwrapArgument( targetRange ), targetEndpoint);
+            return _iface.CompareEndpoints(endpoint, TextRangeProviderWrapper.UnwrapArgument(targetRange), targetEndpoint);
         }
 
         private object ExpandToEnclosingUnit(object arg)
@@ -248,7 +248,7 @@ namespace MS.Internal.Automation
             int attribute = (int)args[0];
             object val = args[1];
             bool backward = (bool)args[2];
-            return TextRangeProviderWrapper.WrapArgument( _iface.FindAttribute(attribute, val, backward), _peer );
+            return TextRangeProviderWrapper.WrapArgument(_iface.FindAttribute(attribute, val, backward), _peer);
         }
 
         private object FindText(object arg)
@@ -257,7 +257,7 @@ namespace MS.Internal.Automation
             string text = (string)args[0];
             bool backward = (bool)args[1];
             bool ignoreCase = (bool)args[2];
-            return TextRangeProviderWrapper.WrapArgument( _iface.FindText(text, backward, ignoreCase), _peer );
+            return TextRangeProviderWrapper.WrapArgument(_iface.FindText(text, backward, ignoreCase), _peer);
         }
 
         private object GetAttributeValue(object arg)
@@ -308,7 +308,7 @@ namespace MS.Internal.Automation
             TextPatternRangeEndpoint endpoint = (TextPatternRangeEndpoint)args[0];
             ITextRangeProvider targetRange = (ITextRangeProvider)args[1];
             TextPatternRangeEndpoint targetEndpoint = (TextPatternRangeEndpoint)args[2];
-            _iface.MoveEndpointByRange(endpoint, TextRangeProviderWrapper.UnwrapArgument( targetRange ), targetEndpoint);
+            _iface.MoveEndpointByRange(endpoint, TextRangeProviderWrapper.UnwrapArgument(targetRange), targetEndpoint);
             return null;
         }
 
@@ -350,7 +350,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;

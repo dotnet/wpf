@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,25 +23,25 @@ namespace MS.Internal
     internal enum TraceDataLevel
     {
         // Binding and friends
-        CreateExpression    = PresentationTraceLevel.High, // 10,
-        ShowPath            = PresentationTraceLevel.High, // 11,
-        ResolveDefaults     = PresentationTraceLevel.High, // 13,
-        Attach              = PresentationTraceLevel.Low, // 1,
-        AttachToContext     = PresentationTraceLevel.Low, // 2,
-        SourceLookup        = PresentationTraceLevel.Low, // 4,
-        Activate            = PresentationTraceLevel.Low, // 3,
-        Transfer            = PresentationTraceLevel.Medium, // 5,
-        Update              = PresentationTraceLevel.Medium, // 6,
-        Validation          = PresentationTraceLevel.High, // 12,
-        Events              = PresentationTraceLevel.Medium, // 7,
-        GetValue            = PresentationTraceLevel.High, // 12,
-        ReplaceItem         = PresentationTraceLevel.Medium, // 8,
-        GetInfo             = PresentationTraceLevel.Medium, // 9,
+        CreateExpression = PresentationTraceLevel.High, // 10,
+        ShowPath = PresentationTraceLevel.High, // 11,
+        ResolveDefaults = PresentationTraceLevel.High, // 13,
+        Attach = PresentationTraceLevel.Low, // 1,
+        AttachToContext = PresentationTraceLevel.Low, // 2,
+        SourceLookup = PresentationTraceLevel.Low, // 4,
+        Activate = PresentationTraceLevel.Low, // 3,
+        Transfer = PresentationTraceLevel.Medium, // 5,
+        Update = PresentationTraceLevel.Medium, // 6,
+        Validation = PresentationTraceLevel.High, // 12,
+        Events = PresentationTraceLevel.Medium, // 7,
+        GetValue = PresentationTraceLevel.High, // 12,
+        ReplaceItem = PresentationTraceLevel.Medium, // 8,
+        GetInfo = PresentationTraceLevel.Medium, // 9,
 
         // Data providers
-        ProviderQuery       = PresentationTraceLevel.Low, // 1,
-        XmlProvider         = PresentationTraceLevel.Medium, // 2,
-        XmlBuildCollection  = PresentationTraceLevel.High, // 3,
+        ProviderQuery = PresentationTraceLevel.Low, // 1,
+        XmlProvider = PresentationTraceLevel.Medium, // 2,
+        XmlBuildCollection = PresentationTraceLevel.High, // 3,
     }
 
     /// <summary>
@@ -88,9 +88,9 @@ namespace MS.Internal
         }
 
         // report/describe any additional parameters passed to TraceData.Trace()
-        static public void OnTrace( AvTraceBuilder traceBuilder, object[] parameters, int start )
+        static public void OnTrace(AvTraceBuilder traceBuilder, object[] parameters, int start)
         {
-            for( int i = start; i < parameters.Length; i++ )
+            for (int i = start; i < parameters.Length; i++)
             {
                 object o = parameters[i];
                 string s = o as string;
@@ -147,9 +147,9 @@ namespace MS.Internal
             {
                 Binding binding = o as Binding;
                 if (binding.Path != null)
-                    traceBuilder.AppendFormat("Path={0}", binding.Path.Path );
+                    traceBuilder.AppendFormat("Path={0}", binding.Path.Path);
                 else if (binding.XPath != null)
-                    traceBuilder.AppendFormat("XPath={0}", binding.XPath );
+                    traceBuilder.AppendFormat("XPath={0}", binding.XPath);
                 else
                     traceBuilder.Append("(no path)");
             }
@@ -162,7 +162,7 @@ namespace MS.Internal
 
             else if (o is DependencyObject)
             {
-               DescribeSourceObject(traceBuilder, o);
+                DescribeSourceObject(traceBuilder, o);
             }
 
             else

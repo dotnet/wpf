@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -116,9 +116,9 @@ namespace MS.Internal.PtsHost
                 // PTS may decide to swith to full format when in update mode.
                 // In this case UpdGetFirstChangeInSegment will not be called.
                 // Hence there is need to destroy all existing paragraphs.
-                if (StructuralCache.CurrentFormatContext.IncrementalUpdate && 
-                    _ur == null && 
-                    NeedsUpdate() && 
+                if (StructuralCache.CurrentFormatContext.IncrementalUpdate &&
+                    _ur == null &&
+                    NeedsUpdate() &&
                     !_firstParaValidInUpdateMode)
                 {
                     // But in finite page scenarios the NameTable has been already cleared, 
@@ -232,7 +232,7 @@ namespace MS.Internal.PtsHost
                         prevParagraph.Next.SetUpdateInfo(PTS.FSKCHANGE.fskchInside, false);
                     }
                 }
-}
+            }
 
             BaseParagraph nextParagraph = prevParagraph.Next;
 #if TEXTPANELLAYOUTDEBUG
@@ -389,7 +389,7 @@ namespace MS.Internal.PtsHost
                             // not affecting current. For textpara, <Paragraph>|abcde|</Paragraph>, 
                             // insertion at edge points is a change inside for that text paragraph.
                             if (
-                                dcpPara + para.LastFormatCch > dtr.StartIndex || 
+                                dcpPara + para.LastFormatCch > dtr.StartIndex ||
                                 ((dcpPara + para.LastFormatCch == dtr.StartIndex) && para is TextParagraph)
                                )
                             {
@@ -446,7 +446,7 @@ namespace MS.Internal.PtsHost
             // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and 
             // calls DestroyParaclient to get rid of it. DestroyParaclient will call Dispose() on the object
             // and remove it from HandleMapper.
-            ContainerParaClient paraClient =  new ContainerParaClient(this);
+            ContainerParaClient paraClient = new ContainerParaClient(this);
             paraClientHandle = paraClient.Handle;
 #pragma warning restore 6518
         }
@@ -468,7 +468,7 @@ namespace MS.Internal.PtsHost
             MarginCollapsingState mcs,          // IN:  input margin collapsing state
             PTS.FSKCLEAR fskclearIn,            // IN:  clear property that must be satisfied
             PTS.FSKSUPPRESSHARDBREAKBEFOREFIRSTPARA fsksuppresshardbreakbeforefirstparaIn,
-                                                // IN: suppress breaks at track start?
+            // IN: suppress breaks at track start?
             out PTS.FSFMTR fsfmtr,              // OUT: result of formatting the paragraph
             out IntPtr pfspara,                 // OUT: pointer to the para data
             out IntPtr pbrkrecOut,              // OUT: pointer to the para break record
@@ -509,7 +509,7 @@ namespace MS.Internal.PtsHost
             PTS.FSRECT fsrcToFillSubtrack = fsrcToFill;
             MbpInfo mbp = MbpInfo.FromElement(Element, StructuralCache.TextFormatterHost.PixelsPerDip);
 
-            if(fswdirSubtrack != fswdir)
+            if (fswdirSubtrack != fswdir)
             {
                 PTS.FSRECT pageRect = StructuralCache.CurrentFormatContext.PageRect;
 
@@ -518,9 +518,9 @@ namespace MS.Internal.PtsHost
                 mbp.MirrorMargin();
             }
 
-            fsrcToFillSubtrack.u  += mbp.MBPLeft;
+            fsrcToFillSubtrack.u += mbp.MBPLeft;
             fsrcToFillSubtrack.du -= mbp.MBPLeft + mbp.MBPRight;
-            fsrcToFillSubtrack.u  = Math.Max(Math.Min(fsrcToFillSubtrack.u, fsrcToFill.u + fsrcToFill.du - 1), fsrcToFill.u);
+            fsrcToFillSubtrack.u = Math.Max(Math.Min(fsrcToFillSubtrack.u, fsrcToFill.u + fsrcToFill.du - 1), fsrcToFill.u);
             fsrcToFillSubtrack.du = Math.Max(fsrcToFillSubtrack.du, 0);
 
             if (pbrkrecIn == IntPtr.Zero)
@@ -532,7 +532,7 @@ namespace MS.Internal.PtsHost
                     marginTop = 0;
                 }
 
-                fsrcToFillSubtrack.v  += marginTop + mbp.BPTop;
+                fsrcToFillSubtrack.v += marginTop + mbp.BPTop;
                 fsrcToFillSubtrack.dv -= marginTop + mbp.BPTop;
                 fsrcToFillSubtrack.v = Math.Max(Math.Min(fsrcToFillSubtrack.v, fsrcToFill.v + fsrcToFill.dv - 1), fsrcToFill.v);
                 fsrcToFillSubtrack.dv = Math.Max(fsrcToFillSubtrack.dv, 0);
@@ -542,11 +542,11 @@ namespace MS.Internal.PtsHost
             int dvrSubTrackTopSpace = 0;
             try
             {
-                PTS.Validate(PTS.FsFormatSubtrackFinite(PtsContext.Context, pbrkrecIn, fBRFromPreviousPage, this.Handle, iArea, 
-                    footnoteRejector, geometry, fEmptyOk, fSuppressTopSpace, fswdirSubtrack, ref fsrcToFillSubtrack, 
-                    (mcsContainer != null) ? mcsContainer.Handle : IntPtr.Zero, fskclearIn, 
-                    fsksuppresshardbreakbeforefirstparaIn, 
-                    out fsfmtr, out pfspara, out pbrkrecOut, out dvrUsed, out fsbbox, out pmcsclientOut, out fskclearOut, 
+                PTS.Validate(PTS.FsFormatSubtrackFinite(PtsContext.Context, pbrkrecIn, fBRFromPreviousPage, this.Handle, iArea,
+                    footnoteRejector, geometry, fEmptyOk, fSuppressTopSpace, fswdirSubtrack, ref fsrcToFillSubtrack,
+                    (mcsContainer != null) ? mcsContainer.Handle : IntPtr.Zero, fskclearIn,
+                    fsksuppresshardbreakbeforefirstparaIn,
+                    out fsfmtr, out pfspara, out pbrkrecOut, out dvrUsed, out fsbbox, out pmcsclientOut, out fskclearOut,
                     out dvrSubTrackTopSpace), PtsContext);
             }
             finally
@@ -610,7 +610,7 @@ namespace MS.Internal.PtsHost
             fsbbox.fsrc.u -= mbp.MBPLeft;
             fsbbox.fsrc.du += mbp.MBPLeft + mbp.MBPRight;
 
-            if(fswdirSubtrack != fswdir)
+            if (fswdirSubtrack != fswdir)
             {
                 PTS.FSRECT pageRect = StructuralCache.CurrentFormatContext.PageRect;
                 PTS.Validate(PTS.FsTransformBbox(fswdirSubtrack, ref pageRect, ref fsbbox, fswdir, out fsbbox));
@@ -663,7 +663,7 @@ namespace MS.Internal.PtsHost
             Invariant.Assert(Element is Block || Element is ListItem);
             fskclearIn = PTS.WrapDirectionToFskclear((WrapDirection)Element.GetValue(Block.ClearFloatersProperty));
 
-            if(fswdirSubtrack != fswdir)
+            if (fswdirSubtrack != fswdir)
             {
                 PTS.FSRECT fsrcToFillSubtrack = new PTS.FSRECT(urTrack, 0, durTrack, 0);
                 PTS.FSRECT pageRect = StructuralCache.CurrentFormatContext.PageRect;
@@ -678,17 +678,17 @@ namespace MS.Internal.PtsHost
             // and make sure that subtrack is at least 1 unit wide (cannot measure at width <= 0)
             int urSubtrack, durSubtrack, vrSubtrack;
             int dvrSubTrackTopSpace = 0;
-            urSubtrack  = Math.Max(Math.Min(urTrack + mbp.MBPLeft, urTrack + durTrack - 1), urTrack);
+            urSubtrack = Math.Max(Math.Min(urTrack + mbp.MBPLeft, urTrack + durTrack - 1), urTrack);
             durSubtrack = Math.Max(durTrack - (mbp.MBPLeft + mbp.MBPRight), 0);
-            vrSubtrack  = vrTrack + (marginTop + mbp.BPTop);
+            vrSubtrack = vrTrack + (marginTop + mbp.BPTop);
 
             // Format subtrack
             try
             {
-                PTS.Validate(PTS.FsFormatSubtrackBottomless(PtsContext.Context, this.Handle, iArea, 
-                    geometry, fSuppressTopSpace, fswdirSubtrack, urSubtrack, durSubtrack, vrSubtrack, 
-                    (mcsContainer != null) ? mcsContainer.Handle : IntPtr.Zero, fskclearIn, fInterruptable, 
-                    out fsfmtrbl, out pfspara, out dvrUsed, out fsbbox, out pmcsclientOut, 
+                PTS.Validate(PTS.FsFormatSubtrackBottomless(PtsContext.Context, this.Handle, iArea,
+                    geometry, fSuppressTopSpace, fswdirSubtrack, urSubtrack, durSubtrack, vrSubtrack,
+                    (mcsContainer != null) ? mcsContainer.Handle : IntPtr.Zero, fskclearIn, fInterruptable,
+                    out fsfmtrbl, out pfspara, out dvrUsed, out fsbbox, out pmcsclientOut,
                     out fskclearOut, out dvrSubTrackTopSpace, out fPageBecomesUninterruptable), PtsContext);
             }
             finally
@@ -739,7 +739,7 @@ namespace MS.Internal.PtsHost
             // Adjust fsbbox to account for margins
             fsbbox.fsrc.u -= mbp.MBPLeft;
             fsbbox.fsrc.du += mbp.MBPLeft + mbp.MBPRight;
-            if(fswdirSubtrack != fswdir)
+            if (fswdirSubtrack != fswdir)
             {
                 PTS.FSRECT pageRect = StructuralCache.CurrentFormatContext.PageRect;
                 PTS.Validate(PTS.FsTransformBbox(fswdirSubtrack, ref pageRect, ref fsbbox, fswdir, out fsbbox));
@@ -793,7 +793,7 @@ namespace MS.Internal.PtsHost
             Invariant.Assert(Element is Block || Element is ListItem);
             fskclearIn = PTS.WrapDirectionToFskclear((WrapDirection)Element.GetValue(Block.ClearFloatersProperty));
 
-            if(fswdirSubtrack != fswdir)
+            if (fswdirSubtrack != fswdir)
             {
                 PTS.FSRECT fsrcToFillSubtrack = new PTS.FSRECT(urTrack, 0, durTrack, 0);
                 PTS.FSRECT pageRect = StructuralCache.CurrentFormatContext.PageRect;
@@ -808,17 +808,17 @@ namespace MS.Internal.PtsHost
             // and make sure that subtrack is at least 1 unit wide (cannot measure at width <= 0)
             int urSubtrack, durSubtrack, vrSubtrack;
             int dvrSubTrackTopSpace = 0;
-            urSubtrack  = Math.Max(Math.Min(urTrack + mbp.MBPLeft, urTrack + durTrack - 1), urTrack);
+            urSubtrack = Math.Max(Math.Min(urTrack + mbp.MBPLeft, urTrack + durTrack - 1), urTrack);
             durSubtrack = Math.Max(durTrack - (mbp.MBPLeft + mbp.MBPRight), 0);
-            vrSubtrack  = vrTrack + (marginTop + mbp.BPTop);
+            vrSubtrack = vrTrack + (marginTop + mbp.BPTop);
 
             // Format subtrack
             try
             {
                 PTS.Validate(PTS.FsUpdateBottomlessSubtrack(PtsContext.Context, pfspara, this.Handle, iArea,
-                    pfsgeom, fSuppressTopSpace, fswdirSubtrack, urSubtrack, durSubtrack, vrSubtrack, 
-                    (mcsContainer != null) ? mcsContainer.Handle : IntPtr.Zero, fskclearIn, fInterruptable, 
-                    out fsfmtrbl, out dvrUsed, out fsbbox, out pmcsclientOut, 
+                    pfsgeom, fSuppressTopSpace, fswdirSubtrack, urSubtrack, durSubtrack, vrSubtrack,
+                    (mcsContainer != null) ? mcsContainer.Handle : IntPtr.Zero, fskclearIn, fInterruptable,
+                    out fsfmtrbl, out dvrUsed, out fsbbox, out pmcsclientOut,
                     out fskclearOut, out dvrSubTrackTopSpace, out fPageBecomesUninterruptable), PtsContext);
             }
             finally
@@ -869,7 +869,7 @@ namespace MS.Internal.PtsHost
             // Adjust fsbbox to account for margins
             fsbbox.fsrc.u -= mbp.MBPLeft;
             fsbbox.fsrc.du += mbp.MBPLeft + mbp.MBPRight;
-            if(fswdirSubtrack != fswdir)
+            if (fswdirSubtrack != fswdir)
             {
                 PTS.FSRECT pageRect = StructuralCache.CurrentFormatContext.PageRect;
                 PTS.Validate(PTS.FsTransformBbox(fswdirSubtrack, ref pageRect, ref fsbbox, fswdir, out fsbbox));
@@ -879,7 +879,7 @@ namespace MS.Internal.PtsHost
             // paragraph is not broken, so there is only one chunk.
             paraClient.SetChunkInfo(true, true);
         }
-        
+
         #endregion PTS callbacks
 
         // ------------------------------------------------------------------
@@ -980,7 +980,7 @@ namespace MS.Internal.PtsHost
             }
             return (startPosition < openEdgeCp + TextContainerHelper.ElementEdgeCharacterLength);
         }
-        
+
         // ------------------------------------------------------------------
         // Invalidate accumulated format caches.
         // ------------------------------------------------------------------
@@ -1030,9 +1030,9 @@ namespace MS.Internal.PtsHost
                     // Text paragraph
 
                     // WORKAROUND FOR SCHEMA VALIDATION
-                    if(textPointer.TextContainer.Start.CompareTo(textPointer) > 0)
+                    if (textPointer.TextContainer.Start.CompareTo(textPointer) > 0)
                     {
-                        if(!(Element is TextElement) || ((TextElement)Element).ContentStart != textPointer)
+                        if (!(Element is TextElement) || ((TextElement)Element).ContentStart != textPointer)
                         {
                             throw new InvalidOperationException(SR.Format(SR.TextSchema_TextIsNotAllowedInThisContext, Element.GetType().Name));
                         }
@@ -1046,7 +1046,7 @@ namespace MS.Internal.PtsHost
                     Invariant.Assert(textPointer is TextPointer);
                     Invariant.Assert(Element == ((TextPointer)textPointer).Parent);
 
-                    if(!fEmptyOk)
+                    if (!fEmptyOk)
                     {
                         paragraph = new TextParagraph(Element, StructuralCache);
                     }
@@ -1105,12 +1105,12 @@ namespace MS.Internal.PtsHost
 
             if (paragraph != null)
             {
-                StructuralCache.CurrentFormatContext.DependentMax = (TextPointer) textPointer;
+                StructuralCache.CurrentFormatContext.DependentMax = (TextPointer)textPointer;
             }
 
             return paragraph;
         }
-        
+
         // ------------------------------------------------------------------
         // Does this paragraph needs update?
         // ------------------------------------------------------------------
@@ -1243,10 +1243,11 @@ namespace MS.Internal.PtsHost
             DirtyTextRange dtr,
             int dcpContent)
         {
-            UpdateRecord ur = new UpdateRecord();
-
-            // (1) Initialize DTR
-            ur.Dtr = dtr;
+            UpdateRecord ur = new UpdateRecord
+            {
+                // (1) Initialize DTR
+                Dtr = dtr
+            };
 
             // (2) Find first paragraph affected by DTR
             BaseParagraph para = _firstChild;
@@ -1298,7 +1299,7 @@ namespace MS.Internal.PtsHost
             ur.SyncPara = null;
             while (para != null)
             {
-                if (   (dcpPara + para.LastFormatCch > ur.Dtr.StartIndex + ur.Dtr.PositionsRemoved)
+                if ((dcpPara + para.LastFormatCch > ur.Dtr.StartIndex + ur.Dtr.PositionsRemoved)
                     || (dcpPara + para.LastFormatCch == ur.Dtr.StartIndex + ur.Dtr.PositionsRemoved && ur.ChangeType != PTS.FSKCHANGE.fskchNew))
                 {
                     ur.SyncPara = para.Next;

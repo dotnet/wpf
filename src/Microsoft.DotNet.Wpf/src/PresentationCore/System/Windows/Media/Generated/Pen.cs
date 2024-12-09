@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -64,18 +64,18 @@ namespace System.Windows.Media
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            Pen target = ((Pen) d);
+            Pen target = ((Pen)d);
 
 
-            Brush oldV = (Brush) e.OldValue;
-            Brush newV = (Brush) e.NewValue;
+            Brush oldV = (Brush)e.OldValue;
+            Brush newV = (Brush)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -90,8 +90,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -100,42 +100,42 @@ namespace System.Windows.Media
         }
         private static void ThicknessPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Pen target = ((Pen) d);
+            Pen target = ((Pen)d);
 
 
             target.PropertyChanged(ThicknessProperty);
         }
         private static void StartLineCapPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Pen target = ((Pen) d);
+            Pen target = ((Pen)d);
 
 
             target.PropertyChanged(StartLineCapProperty);
         }
         private static void EndLineCapPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Pen target = ((Pen) d);
+            Pen target = ((Pen)d);
 
 
             target.PropertyChanged(EndLineCapProperty);
         }
         private static void DashCapPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Pen target = ((Pen) d);
+            Pen target = ((Pen)d);
 
 
             target.PropertyChanged(DashCapProperty);
         }
         private static void LineJoinPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Pen target = ((Pen) d);
+            Pen target = ((Pen)d);
 
 
             target.PropertyChanged(LineJoinProperty);
         }
         private static void MiterLimitPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Pen target = ((Pen) d);
+            Pen target = ((Pen)d);
 
 
             target.PropertyChanged(MiterLimitProperty);
@@ -150,18 +150,18 @@ namespace System.Windows.Media
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            Pen target = ((Pen) d);
+            Pen target = ((Pen)d);
 
 
-            DashStyle oldV = (DashStyle) e.OldValue;
-            DashStyle newV = (DashStyle) e.NewValue;
+            DashStyle oldV = (DashStyle)e.OldValue;
+            DashStyle newV = (DashStyle)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -176,8 +176,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -195,7 +195,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Brush) GetValue(BrushProperty);
+                return (Brush)GetValue(BrushProperty);
             }
             set
             {
@@ -210,7 +210,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(ThicknessProperty);
+                return (double)GetValue(ThicknessProperty);
             }
             set
             {
@@ -225,7 +225,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PenLineCap) GetValue(StartLineCapProperty);
+                return (PenLineCap)GetValue(StartLineCapProperty);
             }
             set
             {
@@ -240,7 +240,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PenLineCap) GetValue(EndLineCapProperty);
+                return (PenLineCap)GetValue(EndLineCapProperty);
             }
             set
             {
@@ -255,7 +255,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PenLineCap) GetValue(DashCapProperty);
+                return (PenLineCap)GetValue(DashCapProperty);
             }
             set
             {
@@ -270,7 +270,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (PenLineJoin) GetValue(LineJoinProperty);
+                return (PenLineJoin)GetValue(LineJoinProperty);
             }
             set
             {
@@ -285,7 +285,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(MiterLimitProperty);
+                return (double)GetValue(MiterLimitProperty);
             }
             set
             {
@@ -300,7 +300,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (DashStyle) GetValue(DashStyleProperty);
+                return (DashStyle)GetValue(DashStyleProperty);
             }
             set
             {
@@ -387,14 +387,16 @@ namespace System.Windows.Media
         }
         DUCE.ResourceHandle DUCE.IResource.AddRefOnChannel(DUCE.Channel channel)
         {
-            using (CompositionEngineLock.Acquire()) 
+            using (CompositionEngineLock.Acquire())
             {
                 if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_PEN))
                 {
                     Brush vBrush = Brush;
-                    if (vBrush != null) ((DUCE.IResource)vBrush).AddRefOnChannel(channel);
+                    if (vBrush != null)
+                        ((DUCE.IResource)vBrush).AddRefOnChannel(channel);
                     DashStyle vDashStyle = DashStyle;
-                    if (vDashStyle != null) ((DUCE.IResource)vDashStyle).AddRefOnChannel(channel);
+                    if (vDashStyle != null)
+                        ((DUCE.IResource)vDashStyle).AddRefOnChannel(channel);
 
                     AddRefOnChannelAnimations(channel);
 
@@ -407,19 +409,21 @@ namespace System.Windows.Media
         }
         void DUCE.IResource.ReleaseOnChannel(DUCE.Channel channel)
         {
-            using (CompositionEngineLock.Acquire()) 
+            using (CompositionEngineLock.Acquire())
             {
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 if (_duceResource.ReleaseOnChannel(channel))
                 {
                     Brush vBrush = Brush;
-                    if (vBrush != null) ((DUCE.IResource)vBrush).ReleaseOnChannel(channel);
+                    if (vBrush != null)
+                        ((DUCE.IResource)vBrush).ReleaseOnChannel(channel);
                     DashStyle vDashStyle = DashStyle;
-                    if (vDashStyle != null) ((DUCE.IResource)vDashStyle).ReleaseOnChannel(channel);
+                    if (vDashStyle != null)
+                        ((DUCE.IResource)vDashStyle).ReleaseOnChannel(channel);
 
                     ReleaseOnChannelAnimations(channel);
-}
+                }
             }
         }
         DUCE.ResourceHandle DUCE.IResource.GetHandle(DUCE.Channel channel)

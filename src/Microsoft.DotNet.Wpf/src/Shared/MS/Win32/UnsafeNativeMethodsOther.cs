@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ namespace MS.Win32
 {
     internal partial class UnsafeNativeMethods
     {
-        [DllImport(ExternDll.Kernel32, CharSet=CharSet.Unicode, SetLastError=true, EntryPoint="GetTempFileName")]
+        [DllImport(ExternDll.Kernel32, CharSet = CharSet.Unicode, SetLastError = true, EntryPoint = "GetTempFileName")]
         internal static extern uint _GetTempFileName(string tmpPath, string prefix, uint uniqueIdOrZero, StringBuilder tmpFileName);
 
         internal static uint GetTempFileName(string tmpPath, string prefix, uint uniqueIdOrZero, StringBuilder tmpFileName)
@@ -37,7 +37,7 @@ namespace MS.Win32
                                         out NativeMethods.IconHandle phiconSmall,
                                         int nIcons);
 
-        [DllImport(ExternDll.User32, CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError=true)]
+        [DllImport(ExternDll.User32, CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
         internal static extern NativeMethods.IconHandle CreateIcon(IntPtr hInstance, int nWidth, int nHeight, byte cPlanes, byte cBitsPixel, byte[] lpbANDbits, byte[] lpbXORbits);
 
         [DllImport(ExternDll.User32, SetLastError = true)]
@@ -52,10 +52,10 @@ namespace MS.Win32
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
         public static extern bool ShowWindowAsync(HandleRef hWnd, int nCmdShow);
 
-        [DllImport(ExternDll.User32, EntryPoint="LoadImage", CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(ExternDll.User32, EntryPoint = "LoadImage", CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern NativeMethods.IconHandle LoadImageIcon(IntPtr hinst, string stName, int nType, int cxDesired, int cyDesired, int nFlags);
 
-        [DllImport(ExternDll.User32, EntryPoint="LoadImage", CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(ExternDll.User32, EntryPoint = "LoadImage", CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern NativeMethods.CursorHandle LoadImageCursor(IntPtr hinst, string stName, int nType, int cxDesired, int cyDesired, int nFlags);
         // uncomment this if you plan to use LoadImage to load anything other than Icons/Cursors.
         /*
@@ -69,13 +69,13 @@ namespace MS.Win32
                     IntPtr hinst, string stName, int nType, int cxDesired, int cyDesired, int nFlags);
         */
 
-        [DllImport( ExternDll.Urlmon, ExactSpelling=true)]
-        internal static extern int CoInternetIsFeatureEnabled( int featureEntry , int dwFlags );
+        [DllImport(ExternDll.Urlmon, ExactSpelling = true)]
+        internal static extern int CoInternetIsFeatureEnabled(int featureEntry, int dwFlags);
 
-        [DllImport( ExternDll.Urlmon, ExactSpelling=true)]
-        internal static extern int CoInternetSetFeatureEnabled( int featureEntry , int dwFlags, bool fEnable );
+        [DllImport(ExternDll.Urlmon, ExactSpelling = true)]
+        internal static extern int CoInternetSetFeatureEnabled(int featureEntry, int dwFlags, bool fEnable);
 
-        [DllImport( ExternDll.Urlmon, ExactSpelling=true)]
+        [DllImport(ExternDll.Urlmon, ExactSpelling = true)]
         internal static extern int CoInternetIsFeatureZoneElevationEnabled(
                                                             [MarshalAs(UnmanagedType.LPWStr)] string szFromURL,
                                                             [MarshalAs(UnmanagedType.LPWStr)] string szToURL,
@@ -87,13 +87,13 @@ namespace MS.Win32
         [DllImport(ExternDll.PresentationHostDll, EntryPoint = "ProcessUnhandledException")]
         internal static extern void ProcessUnhandledException_DLL([MarshalAs(UnmanagedType.BStr)] string errMsg);
 
-        [DllImport(ExternDll.Kernel32, CharSet=CharSet.Unicode)]
+        [DllImport(ExternDll.Kernel32, CharSet = CharSet.Unicode)]
         internal static extern bool GetVersionEx([In, Out] NativeMethods.OSVERSIONINFOEX ver);
-        [DllImport( ExternDll.Urlmon, ExactSpelling=true)]
+        [DllImport(ExternDll.Urlmon, ExactSpelling = true)]
         internal static extern int CoInternetCreateSecurityManager(
                                                                     [MarshalAs(UnmanagedType.Interface)] object pIServiceProvider,
-                                                                    [MarshalAs(UnmanagedType.Interface)] out object ppISecurityManager ,
-                                                                    int dwReserved ) ;
+                                                                    [MarshalAs(UnmanagedType.Interface)] out object ppISecurityManager,
+                                                                    int dwReserved);
 
 
 
@@ -101,43 +101,43 @@ namespace MS.Win32
         [ComImport, ComVisible(false), Guid("79eac9ee-baf9-11ce-8c82-00aa004ba90b"), System.Runtime.InteropServices.InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface IInternetSecurityManager
         {
-            void SetSecuritySite( NativeMethods.IInternetSecurityMgrSite pSite);
+            void SetSecuritySite(NativeMethods.IInternetSecurityMgrSite pSite);
 
-            unsafe void GetSecuritySite( /* [out] */ void **ppSite);
+            unsafe void GetSecuritySite( /* [out] */ void** ppSite);
 
             void MapUrlToZone(
                                 [In, MarshalAs(UnmanagedType.BStr)]
                                         string pwszUrl,
-                                [Out]   out int pdwZone,
-                                [In]    int     dwFlags);
+                                [Out] out int pdwZone,
+                                [In] int dwFlags);
 
             unsafe void GetSecurityId(  /* [in] */ string pwszUrl,
-                                /* [size_is][out] */ byte *pbSecurityId,
-                                /* [out][in] */ int *pcbSecurityId,
+                                /* [size_is][out] */ byte* pbSecurityId,
+                                /* [out][in] */ int* pcbSecurityId,
                                 /* [in] */ int dwReserved);
 
             unsafe void ProcessUrlAction(
                                 /* [in] */ string pwszUrl,
                                 /* [in] */ int dwAction,
-                                /* [size_is][out] */ byte *pPolicy,
+                                /* [size_is][out] */ byte* pPolicy,
                                 /* [in] */ int cbPolicy,
-                                /* [in] */ byte *pContext,
+                                /* [in] */ byte* pContext,
                                 /* [in] */ int cbContext,
                                 /* [in] */ int dwFlags,
                                 /* [in] */ int dwReserved);
 
             unsafe void QueryCustomPolicy(
                                 /* [in] */ string pwszUrl,
-                                /* [in] */ /*REFGUID*/ void *guidKey,
-                                /* [size_is][size_is][out] */ byte **ppPolicy,
-                                /* [out] */ int *pcbPolicy,
-                                /* [in] */ byte *pContext,
+                                /* [in] */ /*REFGUID*/ void* guidKey,
+                                /* [size_is][size_is][out] */ byte** ppPolicy,
+                                /* [out] */ int* pcbPolicy,
+                                /* [in] */ byte* pContext,
                                 /* [in] */ int cbContext,
                                 /* [in] */ int dwReserved);
 
             unsafe void SetZoneMapping( /* [in] */ int dwZone, /* [in] */ string lpszPattern, /* [in] */ int dwFlags);
 
-            unsafe void GetZoneMappings( /* [in] */ int dwZone, /* [out] */ /*IEnumString*/ void **ppenumString, /* [in] */ int dwFlags);
+            unsafe void GetZoneMappings( /* [in] */ int dwZone, /* [out] */ /*IEnumString*/ void** ppenumString, /* [in] */ int dwFlags);
         }
 
         /// <summary>
@@ -170,7 +170,7 @@ namespace MS.Win32
 #endif
 
 #if BASE_NATIVEMETHODS
-        [DllImport(ExternDll.Kernel32, EntryPoint="WaitForMultipleObjectsEx", SetLastError = true, CharSet = CharSet.Auto)]
+        [DllImport(ExternDll.Kernel32, EntryPoint = "WaitForMultipleObjectsEx", SetLastError = true, CharSet = CharSet.Auto)]
         private static extern int IntWaitForMultipleObjectsEx(int nCount, IntPtr[] pHandles, bool bWaitAll, int dwMilliseconds, bool bAlertable);
 
         public const int WAIT_FAILED = unchecked((int)0xFFFFFFFF);
@@ -178,7 +178,7 @@ namespace MS.Win32
         internal static int WaitForMultipleObjectsEx(int nCount, IntPtr[] pHandles, bool bWaitAll, int dwMilliseconds, bool bAlertable)
         {
             int result = IntWaitForMultipleObjectsEx(nCount, pHandles, bWaitAll, dwMilliseconds, bAlertable);
-            if(result ==  UnsafeNativeMethods.WAIT_FAILED)
+            if (result == UnsafeNativeMethods.WAIT_FAILED)
             {
                 throw new Win32Exception();
             }
@@ -186,13 +186,13 @@ namespace MS.Win32
             return result;
         }
 
-        [DllImport(ExternDll.User32, EntryPoint="MsgWaitForMultipleObjectsEx", SetLastError=true, ExactSpelling = true, CharSet = CharSet.Auto)]
+        [DllImport(ExternDll.User32, EntryPoint = "MsgWaitForMultipleObjectsEx", SetLastError = true, ExactSpelling = true, CharSet = CharSet.Auto)]
         private static extern int IntMsgWaitForMultipleObjectsEx(int nCount, IntPtr[] pHandles, int dwMilliseconds, int dwWakeMask, int dwFlags);
 
         internal static int MsgWaitForMultipleObjectsEx(int nCount, IntPtr[] pHandles, int dwMilliseconds, int dwWakeMask, int dwFlags)
         {
             int result = IntMsgWaitForMultipleObjectsEx(nCount, pHandles, dwMilliseconds, dwWakeMask, dwFlags);
-            if(result == -1)
+            if (result == -1)
             {
                 throw new Win32Exception();
             }
@@ -201,13 +201,13 @@ namespace MS.Win32
         }
 #endif
 
-        [DllImport(ExternDll.User32, EntryPoint="RegisterClassEx", CharSet=CharSet.Unicode, SetLastError=true, BestFitMapping=false)]
+        [DllImport(ExternDll.User32, EntryPoint = "RegisterClassEx", CharSet = CharSet.Unicode, SetLastError = true, BestFitMapping = false)]
         internal static extern UInt16 IntRegisterClassEx(NativeMethods.WNDCLASSEX_D wc_d);
 
         internal static UInt16 RegisterClassEx(NativeMethods.WNDCLASSEX_D wc_d)
         {
             UInt16 result = IntRegisterClassEx(wc_d);
-            if(result == 0)
+            if (result == 0)
             {
                 throw new Win32Exception();
             }
@@ -215,7 +215,7 @@ namespace MS.Win32
             return result;
         }
 
-        [DllImport(ExternDll.User32, EntryPoint="UnregisterClass",CharSet = CharSet.Auto, SetLastError = true, BestFitMapping=false)]
+        [DllImport(ExternDll.User32, EntryPoint = "UnregisterClass", CharSet = CharSet.Auto, SetLastError = true, BestFitMapping = false)]
         internal static extern int IntUnregisterClass(IntPtr atomString /*lpClassName*/ , IntPtr hInstance);
 
         internal static void UnregisterClass(IntPtr atomString /*lpClassName*/ , IntPtr hInstance)
@@ -229,7 +229,7 @@ namespace MS.Win32
 
 #if !DRT
 
-        [DllImport("user32.dll", EntryPoint="ChangeWindowMessageFilter", SetLastError=true)]
+        [DllImport("user32.dll", EntryPoint = "ChangeWindowMessageFilter", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool IntChangeWindowMessageFilter(WindowMessage message, MSGFLT dwFlag);
 
@@ -306,26 +306,26 @@ namespace MS.Win32
 
         // note that this method exists in UnsafeNativeMethodsCLR.cs but with a different signature
         // using a HandleRef for the hWnd instead of an IntPtr, and not using an IntPtr for lParam
-        [DllImport(ExternDll.User32,EntryPoint="SendMessage", CharSet = CharSet.Auto)]
+        [DllImport(ExternDll.User32, EntryPoint = "SendMessage", CharSet = CharSet.Auto)]
         internal static extern IntPtr UnsafeSendMessage(IntPtr hWnd, WindowMessage msg, IntPtr wParam, IntPtr lParam);
 
-        [DllImport(ExternDll.User32,EntryPoint="RegisterPowerSettingNotification")]
-        unsafe internal static extern IntPtr RegisterPowerSettingNotification(IntPtr hRecipient, Guid *pGuid, int Flags);
+        [DllImport(ExternDll.User32, EntryPoint = "RegisterPowerSettingNotification")]
+        unsafe internal static extern IntPtr RegisterPowerSettingNotification(IntPtr hRecipient, Guid* pGuid, int Flags);
 
-        [DllImport(ExternDll.User32,EntryPoint="UnregisterPowerSettingNotification")]
+        [DllImport(ExternDll.User32, EntryPoint = "UnregisterPowerSettingNotification")]
         unsafe internal static extern IntPtr UnregisterPowerSettingNotification(IntPtr hPowerNotify);
 
-/*
-        //
-        // SendMessage taking a SafeHandle for wParam. Needed by some Win32 messages. e.g. WM_PRINT
-        //
-        [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
-        internal static extern IntPtr SendMessage(HandleRef hWnd, WindowMessage msg, SafeHandle wParam, IntPtr lParam);
-*/
+        /*
+                //
+                // SendMessage taking a SafeHandle for wParam. Needed by some Win32 messages. e.g. WM_PRINT
+                //
+                [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
+                internal static extern IntPtr SendMessage(HandleRef hWnd, WindowMessage msg, SafeHandle wParam, IntPtr lParam);
+        */
 
         // private  DllImport - that takes an IconHandle.
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto, SetLastError = true)]
-        internal static extern IntPtr SendMessage( HandleRef hWnd, WindowMessage msg, IntPtr wParam, NativeMethods.IconHandle iconHandle );
+        internal static extern IntPtr SendMessage(HandleRef hWnd, WindowMessage msg, IntPtr wParam, NativeMethods.IconHandle iconHandle);
 #endif
 
         [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = CharSet.Auto)]
@@ -460,7 +460,7 @@ namespace MS.Win32
             return retVal;
         }
 
-        internal static IntPtr GetWindowLongPtr(HandleRef hWnd, int nIndex )
+        internal static IntPtr GetWindowLongPtr(HandleRef hWnd, int nIndex)
         {
             IntPtr result = IntPtr.Zero;
             int error = 0;
@@ -492,7 +492,7 @@ namespace MS.Win32
             return result;
         }
 
-        internal static Int32 GetWindowLong(HandleRef hWnd, int nIndex )
+        internal static Int32 GetWindowLong(HandleRef hWnd, int nIndex)
         {
             int iResult = 0;
             IntPtr result = IntPtr.Zero;
@@ -553,13 +553,13 @@ namespace MS.Win32
         }
 
         [DllImport("winmm.dll", CharSet = CharSet.Unicode)]
-        internal static extern bool PlaySound([In]string soundName, IntPtr hmod, SafeNativeMethods.PlaySoundFlags soundFlags);
+        internal static extern bool PlaySound([In] string soundName, IntPtr hmod, SafeNativeMethods.PlaySoundFlags soundFlags);
 
         internal const uint
-            INTERNET_COOKIE_THIRD_PARTY     = 0x10,
-            INTERNET_COOKIE_EVALUATE_P3P    = 0x40,
-            INTERNET_COOKIE_IS_RESTRICTED   = 0x200,
-            COOKIE_STATE_REJECT             = 5;
+            INTERNET_COOKIE_THIRD_PARTY = 0x10,
+            INTERNET_COOKIE_EVALUATE_P3P = 0x40,
+            INTERNET_COOKIE_IS_RESTRICTED = 0x200,
+            COOKIE_STATE_REJECT = 5;
 
         //!!! CAUTION
         // PresentationHost intercepts calls to InternetGetCookieEx & InternetSetCookieEx and delegates them
@@ -567,12 +567,12 @@ namespace MS.Win32
         // See also Application.Get/SetCookie().
         //!!!
 
-        [DllImport(ExternDll.Wininet, SetLastError=true, ExactSpelling=true, EntryPoint="InternetGetCookieExW", CharSet=CharSet.Unicode)]
-        internal static extern bool InternetGetCookieEx([In]string Url, [In]string cookieName,
+        [DllImport(ExternDll.Wininet, SetLastError = true, ExactSpelling = true, EntryPoint = "InternetGetCookieExW", CharSet = CharSet.Unicode)]
+        internal static extern bool InternetGetCookieEx([In] string Url, [In] string cookieName,
             [Out] StringBuilder cookieData, [In, Out] ref UInt32 pchCookieData, uint flags, IntPtr reserved);
 
         [DllImport(ExternDll.Wininet, SetLastError = true, ExactSpelling = true, EntryPoint = "InternetSetCookieExW", CharSet = CharSet.Unicode)]
-        internal static extern uint InternetSetCookieEx([In]string Url, [In]string CookieName, [In]string cookieData, uint flags, [In] string p3pHeader);
+        internal static extern uint InternetSetCookieEx([In] string Url, [In] string CookieName, [In] string cookieData, uint flags, [In] string p3pHeader);
 
 #if DRT_NATIVEMETHODS
 
@@ -587,7 +587,7 @@ namespace MS.Win32
         internal static extern int GetLocaleInfoW(int locale, int type, string data, int dataSize);
 
         [DllImport(ExternDll.Kernel32, ExactSpelling = true, SetLastError = true)]
-        internal static extern int FindNLSString(int locale, uint flags, [MarshalAs(UnmanagedType.LPWStr)]string sourceString, int sourceCount, [MarshalAs(UnmanagedType.LPWStr)]string findString, int findCount, out int found);
+        internal static extern int FindNLSString(int locale, uint flags, [MarshalAs(UnmanagedType.LPWStr)] string sourceString, int sourceCount, [MarshalAs(UnmanagedType.LPWStr)] string findString, int findCount, out int found);
 
 
         //[DllImport(ExternDll.Psapi, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false)]
@@ -657,7 +657,7 @@ namespace MS.Win32
                 }
             }
 
-            if(!success)
+            if (!success)
             {
                 Debug.WriteLine("GetIconInfo failed.  Error = " + error);
 
@@ -829,7 +829,7 @@ namespace MS.Win32
 
         [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern int GetMouseMovePointsEx(
-                                        uint  cbSize,
+                                        uint cbSize,
                                         [In] ref NativeMethods.MOUSEMOVEPOINT pointsIn,
                                         [Out] NativeMethods.MOUSEMOVEPOINT[] pointsBufferOut,
                                         int nBufPoints,
@@ -1079,7 +1079,7 @@ namespace MS.Win32
         }
 
 #if WINDOWS_BASE
-        [DllImport(DllImport.Wininet, EntryPoint = "GetUrlCacheConfigInfoW", SetLastError=true)]
+        [DllImport(DllImport.Wininet, EntryPoint = "GetUrlCacheConfigInfoW", SetLastError = true)]
         internal static extern bool GetUrlCacheConfigInfo(
             ref NativeMethods.InternetCacheConfigInfo pInternetCacheConfigInfo,
             ref UInt32 cbCacheConfigInfo,
@@ -1148,8 +1148,8 @@ namespace MS.Win32
         {
             public NativeMethods.ProfileType dwType; // profile type
 
-            public void*       pProfileData;         // either the filename of the profile or buffer containing profile depending upon dwtype
-            public uint        cbDataSize;           // size in bytes of pProfileData
+            public void* pProfileData;         // either the filename of the profile or buffer containing profile depending upon dwtype
+            public uint cbDataSize;           // size in bytes of pProfileData
         };
 
         /// <summary>The IsIconic function determines whether the specified window is minimized (iconic).</summary>
@@ -1181,7 +1181,7 @@ namespace MS.Win32
         {
             public NativeMethods.POINT pt;
             public IntPtr hwnd;
-            public uint   wHitTestCode;
+            public uint wHitTestCode;
             public IntPtr dwExtraInfo;
         }
 

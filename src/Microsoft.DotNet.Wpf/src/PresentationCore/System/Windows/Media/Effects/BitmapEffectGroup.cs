@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace System.Windows.Media.Effects
         public BitmapEffectGroup()
         {
         }
-        
+
         /// <summary>
         /// 1. Updates (propagates) the properties to the unmanaged handle of all
         /// the child effects
@@ -34,7 +34,7 @@ namespace System.Windows.Media.Effects
         protected override void UpdateUnmanagedPropertyState(SafeHandle unmanagedEffect)
         {
         }
-        
+
         /// <summary>
         /// Create an unmanaged handle for the group effect
         /// </summary>

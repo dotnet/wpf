@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -46,7 +46,7 @@ namespace System.Windows.Xps.Packaging
         /// </summary>
         ImagesLast
     }
-        
+
     /// <summary>
     /// Types of events that occur on the package
     /// </summary>
@@ -63,39 +63,39 @@ namespace System.Windows.Xps.Packaging
         /// <summary>
         /// A Document Sequence has been completed
         /// </summary>
-        DocumentSequenceCompleted  = 2,
+        DocumentSequenceCompleted = 2,
         /// <summary>
         /// A Document has been added
         /// </summary>
-        AddingFixedDocument    = 3,
+        AddingFixedDocument = 3,
         /// <summary>
         ///
         /// </summary>
-        FixedDocumentCompleted     = 4,
+        FixedDocumentCompleted = 4,
         /// <summary>
         /// A Page has been added
         /// </summary>
-        AddingFixedPage        = 5,
+        AddingFixedPage = 5,
         /// <summary>
         ///
         /// </summary>
-        FixedPageCompleted     = 6,
+        FixedPageCompleted = 6,
         /// <summary>
         /// A resource has been added
         /// </summary>
-        ResourceAdded          = 7,
+        ResourceAdded = 7,
         /// <summary>
         /// A font has been added
         /// </summary>
-        FontAdded              = 8,
+        FontAdded = 8,
         /// <summary>
         /// A Image has been added
         /// </summary>
-        ImageAdded             = 9,
+        ImageAdded = 9,
         /// <summary>
         /// The Xps Document has been commited
         /// </summary>
-        XpsDocumentCommitted   = 10
+        XpsDocumentCommitted = 10
     };
     /// <summary>
     ///
@@ -109,7 +109,7 @@ namespace System.Windows.Xps.Packaging
         public
         PackagingProgressEventArgs(
             PackagingAction action,
-            int             numberCompleted
+            int numberCompleted
             )
         {
             _numberCompleted = numberCompleted;
@@ -128,7 +128,7 @@ namespace System.Windows.Xps.Packaging
                 return _numberCompleted;
             }
         }
-        
+
         /// <summary>
         /// Number of Pages Completed
         /// </summary>
@@ -143,7 +143,7 @@ namespace System.Windows.Xps.Packaging
         }
 
         private PackagingAction _action;
-        private int             _numberCompleted;
+        private int _numberCompleted;
     };
     /// <summary>
     /// </summary>
@@ -151,8 +151,8 @@ namespace System.Windows.Xps.Packaging
     delegate
     void
     PackagingProgressEventHandler(
-        object                     sender,
-        PackagingProgressEventArgs     e
+        object sender,
+        PackagingProgressEventArgs e
         );
 
     /// <summary>
@@ -179,34 +179,34 @@ namespace System.Windows.Xps.Packaging
         {
             _flushOrderItems = new Hashtable(11);
             _interleavingType = type;
-            switch( type)
+            switch (type)
             {
-            case PackageInterleavingOrder.None:
-            break;
-            
-            case PackageInterleavingOrder.ResourceFirst:
-            {
-                InitializeResourceFirst();
-                break;
+                case PackageInterleavingOrder.None:
+                    break;
+
+                case PackageInterleavingOrder.ResourceFirst:
+                    {
+                        InitializeResourceFirst();
+                        break;
+                    }
+
+                case PackageInterleavingOrder.ResourceLast:
+                    {
+                        InitializeResourceLast();
+                        break;
+                    }
+
+                case PackageInterleavingOrder.ImagesLast:
+                    {
+                        InitializeImagesLast();
+                        break;
+                    }
+
+                default:
+                    break;
             }
-            
-            case PackageInterleavingOrder.ResourceLast:
-            {
-                InitializeResourceLast();
-                break;
-            }
-            
-            case PackageInterleavingOrder.ImagesLast:
-            {
-                InitializeImagesLast();
-                break;
-            }
-            
-            default:
-            break;
-            }
-           
-           _flushOnSubsetComplete = flushOnSubsetComplete;
+
+            _flushOnSubsetComplete = flushOnSubsetComplete;
         }
 
         #endregion Constructors
@@ -227,8 +227,8 @@ namespace System.Windows.Xps.Packaging
         public
         void
         RegisterFlushOrder(
-            FlushOrder      flushOrder,
-            Type            classType
+            FlushOrder flushOrder,
+            Type classType
             )
         {
             _flushOrderItems.Add(classType, new FlushItem(flushOrder, classType));
@@ -240,7 +240,7 @@ namespace System.Windows.Xps.Packaging
         internal
         event
         PackagingProgressEventHandler PackagingProgressEvent;
-        
+
         #endregion Public methods
 
         #region Internal methods
@@ -254,11 +254,12 @@ namespace System.Windows.Xps.Packaging
         void
         SignalSubsetComplete()
         {
-            if( _flushOnSubsetComplete )
+            if (_flushOnSubsetComplete)
             {
-                Flush();            }
+                Flush();
+            }
         }
-        
+
         /// <summary>
         /// This method flushes all nodes in the tree using
         /// the supplied node to walk up and down the tree.
@@ -271,7 +272,7 @@ namespace System.Windows.Xps.Packaging
         internal
         void
         Commit(
-            INode       node
+            INode node
             )
         {
             ArgumentNullException.ThrowIfNull(node);
@@ -288,9 +289,9 @@ namespace System.Windows.Xps.Packaging
             }
             else
             {
-                MarkNodeCommited( node );
-                
-                if( !_flushOnSubsetComplete )
+                MarkNodeCommited(node);
+
+                if (!_flushOnSubsetComplete)
                 {
                     Flush();
                 }
@@ -299,53 +300,53 @@ namespace System.Windows.Xps.Packaging
 
         internal
         void
-        AddItem( INode n, int number, INode parent )
+        AddItem(INode n, int number, INode parent)
         {
-            _interleavingNodes.Add( new InterleavingNode( n, number, parent ) );
+            _interleavingNodes.Add(new InterleavingNode(n, number, parent));
             PackagingAction action = GetAddType(n);
-            if (PackagingProgressEvent != null && action != PackagingAction.None )
+            if (PackagingProgressEvent != null && action != PackagingAction.None)
             {
-                PackagingProgressEvent( this, new PackagingProgressEventArgs( action, 1 ) );
+                PackagingProgressEvent(this, new PackagingProgressEventArgs(action, 1));
             }
         }
 
         internal
         PackagingAction
-        GetAddType( INode n )
+        GetAddType(INode n)
         {
             PackagingAction action = PackagingAction.None;
-            
-            if( n is IXpsFixedDocumentSequenceWriter )
+
+            if (n is IXpsFixedDocumentSequenceWriter)
             {
                 action = PackagingAction.AddingDocumentSequence;
             }
             else
-            if( n is IXpsFixedDocumentWriter )
+            if (n is IXpsFixedDocumentWriter)
             {
                 action = PackagingAction.AddingFixedDocument;
             }
             else
-            if( n is IXpsFixedPageWriter )
+            if (n is IXpsFixedPageWriter)
             {
                 action = PackagingAction.AddingFixedPage;
             }
             else
-            if( n is XpsImage)
+            if (n is XpsImage)
             {
                 action = PackagingAction.ImageAdded;
             }
             else
-            if( n is XpsFont)
+            if (n is XpsFont)
             {
                 action = PackagingAction.FontAdded;
             }
             else
-            if( n is XpsResource)
+            if (n is XpsResource)
             {
                 action = PackagingAction.ResourceAdded;
             }
             return action;
-}
+        }
         #endregion Internal methods
 
         #region Private methods
@@ -353,48 +354,48 @@ namespace System.Windows.Xps.Packaging
         void
         InitializeResourceFirst()
         {
-           RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsResource));
-           RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsImage));
-           RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsFont));
-           RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsColorContext));
-           RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsResourceDictionary));
-           RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsThumbnail));
-           RegisterFlushOrder(FlushOrder.SecondOrder, typeof(XpsFixedPageReaderWriter));
-           RegisterFlushOrder(FlushOrder.ThirdOrder, typeof(XpsFixedDocumentReaderWriter));
-           RegisterFlushOrder(FlushOrder.FourthOrder, typeof(XpsFixedDocumentSequenceReaderWriter));
-           RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsDocument));
+            RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsResource));
+            RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsImage));
+            RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsFont));
+            RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsColorContext));
+            RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsResourceDictionary));
+            RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsThumbnail));
+            RegisterFlushOrder(FlushOrder.SecondOrder, typeof(XpsFixedPageReaderWriter));
+            RegisterFlushOrder(FlushOrder.ThirdOrder, typeof(XpsFixedDocumentReaderWriter));
+            RegisterFlushOrder(FlushOrder.FourthOrder, typeof(XpsFixedDocumentSequenceReaderWriter));
+            RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsDocument));
         }
 
         private
         void
         InitializeResourceLast()
         {
-           RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsDocument));
-           RegisterFlushOrder(FlushOrder.SecondOrder, typeof(XpsFixedDocumentSequenceReaderWriter));
-           RegisterFlushOrder(FlushOrder.ThirdOrder,  typeof(XpsFixedDocumentReaderWriter));
-           RegisterFlushOrder(FlushOrder.FourthOrder, typeof(XpsFixedPageReaderWriter));
-           RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsResource));
-           RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsImage));
-           RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsFont));
-           RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsColorContext));
-           RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsResourceDictionary));
-           RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsThumbnail));
+            RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsDocument));
+            RegisterFlushOrder(FlushOrder.SecondOrder, typeof(XpsFixedDocumentSequenceReaderWriter));
+            RegisterFlushOrder(FlushOrder.ThirdOrder, typeof(XpsFixedDocumentReaderWriter));
+            RegisterFlushOrder(FlushOrder.FourthOrder, typeof(XpsFixedPageReaderWriter));
+            RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsResource));
+            RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsImage));
+            RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsFont));
+            RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsColorContext));
+            RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsResourceDictionary));
+            RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsThumbnail));
         }
-        
+
         private
         void
         InitializeImagesLast()
         {
-           RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsResource));
-           RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsFont));
-           RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsColorContext));
-           RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsResourceDictionary));
-           RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsThumbnail));
-           RegisterFlushOrder(FlushOrder.SecondOrder, typeof(XpsDocument));
-           RegisterFlushOrder(FlushOrder.ThirdOrder, typeof(XpsFixedDocumentSequenceReaderWriter));
-           RegisterFlushOrder(FlushOrder.FourthOrder,  typeof(XpsFixedDocumentReaderWriter));
-           RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsFixedPageReaderWriter));
-           RegisterFlushOrder(FlushOrder.SixthOrder, typeof(XpsImage));
+            RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsResource));
+            RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsFont));
+            RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsColorContext));
+            RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsResourceDictionary));
+            RegisterFlushOrder(FlushOrder.FirstOrder, typeof(XpsThumbnail));
+            RegisterFlushOrder(FlushOrder.SecondOrder, typeof(XpsDocument));
+            RegisterFlushOrder(FlushOrder.ThirdOrder, typeof(XpsFixedDocumentSequenceReaderWriter));
+            RegisterFlushOrder(FlushOrder.FourthOrder, typeof(XpsFixedDocumentReaderWriter));
+            RegisterFlushOrder(FlushOrder.FifthOrder, typeof(XpsFixedPageReaderWriter));
+            RegisterFlushOrder(FlushOrder.SixthOrder, typeof(XpsImage));
         }
 
         private
@@ -424,25 +425,25 @@ namespace System.Windows.Xps.Packaging
                 bool docSeqCommited = false;
                 bool xpsDocCommited = false;
                 foreach (InterleavingNode n in _interleavingNodes)
-                {                    
+                {
                     if (n.Commited)
                     {
-                        if( n.Node is XpsFixedPageReaderWriter )
-                        {                            
+                        if (n.Node is XpsFixedPageReaderWriter)
+                        {
                             pageCnt++;
                         }
                         else
-                        if( n.Node is XpsFixedDocumentReaderWriter )
+                        if (n.Node is XpsFixedDocumentReaderWriter)
                         {
                             documentCnt++;
                         }
                         else
-                        if( n.Node is XpsFixedDocumentSequenceReaderWriter )
+                        if (n.Node is XpsFixedDocumentSequenceReaderWriter)
                         {
                             docSeqCommited = true;
                         }
                         else
-                        if( n.Node is XpsDocument )
+                        if (n.Node is XpsDocument)
                         {
                             xpsDocCommited = true;
                         }
@@ -458,36 +459,36 @@ namespace System.Windows.Xps.Packaging
                 {
                     _interleavingNodes.Remove(n);
                 }
-                if (PackagingProgressEvent != null )
+                if (PackagingProgressEvent != null)
                 {
-                    if( pageCnt != 0 )
+                    if (pageCnt != 0)
                     {
-                        PackagingProgressEvent( this, new PackagingProgressEventArgs( PackagingAction.FixedPageCompleted, pageCnt ) );
+                        PackagingProgressEvent(this, new PackagingProgressEventArgs(PackagingAction.FixedPageCompleted, pageCnt));
                     }
-                    if( documentCnt != 0 )
+                    if (documentCnt != 0)
                     {
-                        PackagingProgressEvent( this, new PackagingProgressEventArgs( PackagingAction.FixedDocumentCompleted, documentCnt ) );
+                        PackagingProgressEvent(this, new PackagingProgressEventArgs(PackagingAction.FixedDocumentCompleted, documentCnt));
                     }
-                    if( docSeqCommited )
+                    if (docSeqCommited)
                     {
-                        PackagingProgressEvent( this, new PackagingProgressEventArgs( PackagingAction.DocumentSequenceCompleted, 1 ) );
+                        PackagingProgressEvent(this, new PackagingProgressEventArgs(PackagingAction.DocumentSequenceCompleted, 1));
                     }
-                    if( xpsDocCommited )
+                    if (xpsDocCommited)
                     {
-                        PackagingProgressEvent( this, new PackagingProgressEventArgs( PackagingAction.XpsDocumentCommitted, 1 ) );
+                        PackagingProgressEvent(this, new PackagingProgressEventArgs(PackagingAction.XpsDocumentCommitted, 1));
                     }
-}
+                }
             }
         }
 
 
         private
-        void 
-        MarkNodeCommited(INode node )
+        void
+        MarkNodeCommited(INode node)
         {
-            foreach( InterleavingNode n in _interleavingNodes )
+            foreach (InterleavingNode n in _interleavingNodes)
             {
-                if( Object.ReferenceEquals(node, n.Node))
+                if (Object.ReferenceEquals(node, n.Node))
                 {
                     n.Commited = true;
                 }
@@ -517,13 +518,13 @@ namespace System.Windows.Xps.Packaging
         void
         ConfirmCommited()
         {
-            foreach( InterleavingNode n in _interleavingNodes )
+            foreach (InterleavingNode n in _interleavingNodes)
             {
-                if(IsPartialFlushAllowed(n))
+                if (IsPartialFlushAllowed(n))
                 {
                     continue;
                 }
-                if( !n.Commited )
+                if (!n.Commited)
                 {
                     throw new XpsPackagingException(SR.ReachPackaging_DependantsNotCommitted);
                 }
@@ -535,10 +536,10 @@ namespace System.Windows.Xps.Packaging
         /// </summary>       
         private
         bool
-        IsPartialFlushAllowed( InterleavingNode n )
+        IsPartialFlushAllowed(InterleavingNode n)
         {
             bool ret = false;
-            if(  n.Node is IXpsFixedDocumentWriter ||
+            if (n.Node is IXpsFixedDocumentWriter ||
                  n.Node is IXpsFixedDocumentSequenceWriter ||
                  n.Node is XpsDocument
                 )
@@ -547,15 +548,15 @@ namespace System.Windows.Xps.Packaging
             }
             return ret;
         }
-             
-         #endregion Private methods
+
+        #endregion Private methods
 
         #region Private data
 
-        private Hashtable                   _flushOrderItems;
-        private List<InterleavingNode>      _interleavingNodes = new List<InterleavingNode>();
-        private bool                        _flushOnSubsetComplete;
-        private PackageInterleavingOrder    _interleavingType;
+        private Hashtable _flushOrderItems;
+        private List<InterleavingNode> _interleavingNodes = new List<InterleavingNode>();
+        private bool _flushOnSubsetComplete;
+        private PackageInterleavingOrder _interleavingType;
 
         #endregion Private data
     }
@@ -566,7 +567,7 @@ namespace System.Windows.Xps.Packaging
 
         public
         NodeComparer(
-            Hashtable       flushOrderTable
+            Hashtable flushOrderTable
             )
         {
             _orderTable = flushOrderTable;
@@ -578,20 +579,20 @@ namespace System.Windows.Xps.Packaging
 
         int
         IComparer<InterleavingNode>.Compare(
-            InterleavingNode       x,
-            InterleavingNode       y
+            InterleavingNode x,
+            InterleavingNode y
             )
         {
-           FlushItem xOrder = (FlushItem)_orderTable[x.Node.GetType()];
-           FlushItem yOrder = (FlushItem)_orderTable[y.Node.GetType()];
-           return xOrder.FlushOrder.CompareTo(yOrder.FlushOrder);
+            FlushItem xOrder = (FlushItem)_orderTable[x.Node.GetType()];
+            FlushItem yOrder = (FlushItem)_orderTable[y.Node.GetType()];
+            return xOrder.FlushOrder.CompareTo(yOrder.FlushOrder);
         }
 
 
-#endregion
-        
+        #endregion
+
         #region Object Members
-        
+
         #endregion
 
         #region Private data
@@ -636,8 +637,8 @@ namespace System.Windows.Xps.Packaging
 
         internal
         FlushItem(
-            FlushOrder      flushOrder,
-            Type            classType
+            FlushOrder flushOrder,
+            Type classType
             )
         {
             _flushOrder = flushOrder;
@@ -680,8 +681,8 @@ namespace System.Windows.Xps.Packaging
 
         #region Private data
 
-        private FlushOrder  _flushOrder;
-        private Type        _classType;
+        private FlushOrder _flushOrder;
+        private Type _classType;
 
         #endregion Private data
     }
@@ -693,7 +694,7 @@ namespace System.Windows.Xps.Packaging
         internal
         InterleavingNode(
             INode node,
-            int   number,
+            int number,
             INode parent
         )
         {
@@ -704,7 +705,7 @@ namespace System.Windows.Xps.Packaging
         }
 
         public
-        bool 
+        bool
         Commited
         {
             get
@@ -718,7 +719,7 @@ namespace System.Windows.Xps.Packaging
         }
 
         public
-        INode 
+        INode
         Node
         {
             get
@@ -728,7 +729,7 @@ namespace System.Windows.Xps.Packaging
         }
 
         public
-        int 
+        int
         Number
         {
             get
@@ -738,19 +739,19 @@ namespace System.Windows.Xps.Packaging
         }
 
         public
-        INode 
+        INode
         Parent
         {
             get
             {
                 return _parent;
             }
-}
-        private INode   _node;
-        private int     _number;
-        private INode   _parent;
-        private bool    _commited;
-}
+        }
+        private INode _node;
+        private int _number;
+        private INode _parent;
+        private bool _commited;
+    }
     /// <summary>
     ///
     /// </summary>
@@ -763,26 +764,26 @@ namespace System.Windows.Xps.Packaging
         /// <summary>
         ///
         /// </summary>
-        FirstOrder      = 1,
+        FirstOrder = 1,
         /// <summary>
         ///
         /// </summary>
-        SecondOrder     = 2,
+        SecondOrder = 2,
         /// <summary>
         ///
         /// </summary>
-        ThirdOrder      = 3,
+        ThirdOrder = 3,
         /// <summary>
         ///
         /// </summary>
-        FourthOrder     = 4,
+        FourthOrder = 4,
         /// <summary>
         ///
         /// </summary>
-        FifthOrder      = 5,
+        FifthOrder = 5,
         /// <summary>
         ///
         /// </summary>
-        SixthOrder      = 6
+        SixthOrder = 6
     }
 }

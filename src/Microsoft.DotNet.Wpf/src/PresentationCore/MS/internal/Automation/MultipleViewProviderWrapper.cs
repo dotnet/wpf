@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 //
 //
 
-using System.Windows.Threading;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -28,17 +28,17 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class MultipleViewProviderWrapper: MarshalByRefObject, IMultipleViewProvider
+    internal class MultipleViewProviderWrapper : MarshalByRefObject, IMultipleViewProvider
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        private MultipleViewProviderWrapper( AutomationPeer peer, IMultipleViewProvider iface )
+        private MultipleViewProviderWrapper(AutomationPeer peer, IMultipleViewProvider iface)
         {
             _peer = peer;
             _iface = iface;
@@ -52,30 +52,30 @@ namespace MS.Internal.Automation
         //  Interface IMultipleViewProvider
         //
         //------------------------------------------------------
- 
+
         #region Interface IMultipleViewProvider
 
-        public string GetViewName( int viewID )
+        public string GetViewName(int viewID)
         {
-            return (string) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetViewName ), viewID );
+            return (string)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetViewName), viewID);
         }
 
-        public void SetCurrentView( int viewID )
+        public void SetCurrentView(int viewID)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( SetCurrentView ), viewID );
-        }    
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(SetCurrentView), viewID);
+        }
 
         public int CurrentView
         {
             get
             {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetCurrentView ), null );
+                return (int)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetCurrentView), null);
             }
         }
 
-        public int [] GetSupportedViews()
+        public int[] GetSupportedViews()
         {
-            return (int []) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetSupportedViews ), null );
+            return (int[])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetSupportedViews), null);
         }
 
         #endregion Interface IMultipleViewProvider
@@ -86,12 +86,12 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new MultipleViewProviderWrapper( peer, (IMultipleViewProvider) iface );
+            return new MultipleViewProviderWrapper(peer, (IMultipleViewProvider)iface);
         }
 
         #endregion Internal Methods
@@ -101,26 +101,26 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
-        private object GetViewName( object arg )
+        private object GetViewName(object arg)
         {
-            return _iface.GetViewName( (int) arg );
+            return _iface.GetViewName((int)arg);
         }
 
-        private object SetCurrentView( object arg )
+        private object SetCurrentView(object arg)
         {
-            _iface.SetCurrentView( (int) arg );
+            _iface.SetCurrentView((int)arg);
             return null;
-        }    
+        }
 
-        private object GetCurrentView( object unused )
+        private object GetCurrentView(object unused)
         {
             return _iface.CurrentView;
         }
 
-        private object GetSupportedViews( object unused )
+        private object GetSupportedViews(object unused)
         {
             return _iface.GetSupportedViews();
         }
@@ -133,7 +133,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;

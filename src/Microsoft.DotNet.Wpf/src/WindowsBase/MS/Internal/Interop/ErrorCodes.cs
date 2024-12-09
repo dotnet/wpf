@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -48,7 +48,7 @@ namespace MS.Internal.Interop
         /// <summary>Cannot nest calls to LoadModule.</summary>
         public static readonly Win32Error ERROR_NESTING_NOT_ALLOWED = new Win32Error(215);
         /// <summary>Illegal operation attempted on a registry key that has been marked for deletion.</summary>
-        public static readonly Win32Error ERROR_KEY_DELETED = new Win32Error(1018); 
+        public static readonly Win32Error ERROR_KEY_DELETED = new Win32Error(1018);
         /// <summary>There was no match for the specified key in the index.</summary>
         public static readonly Win32Error ERROR_NO_MATCH = new Win32Error(1169);
         /// <summary>An invalid device was specified.</summary>
@@ -162,7 +162,7 @@ namespace MS.Internal.Interop
         /// <summary>MSDN doced facility code for ESE errors.</summary>
         Ese = 0xE5E,
     }
-    
+
     /// <summary>Wrapper for HRESULT status codes.</summary>
     [StructLayout(LayoutKind.Explicit)]
     internal struct HRESULT
@@ -241,7 +241,7 @@ namespace MS.Internal.Interop
             //    ((HRESULT) (((unsigned long)(sev)<<31) | ((unsigned long)(fac)<<16) | ((unsigned long)(code))) )
             return new HRESULT((uint)((severe ? (1 << 31) : 0) | ((int)facility << 16) | code));
         }
-        
+
         /// <summary>
         /// retrieve HRESULT_FACILITY
         /// </summary>
@@ -275,7 +275,7 @@ namespace MS.Internal.Interop
             // #define HRESULT_CODE(hr)    ((hr) & 0xFFFF)
             return (int)(error & 0xFFFF);
         }
-        
+
         #region Object class override members
 
         /// <summary>

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -59,10 +59,10 @@ namespace System.Windows.Media
             Matrix matrix,          // The transformation matrix
             PathFigure figure,      // The figure to add to
             ref Point current)      // Out: Segment endpoint, not transformed
-        {            
+        {
             PointCollection points = Points;
 
-            if (points != null  && points.Count >= 3)
+            if (points != null && points.Count >= 3)
             {
                 if (matrix.IsIdentity)
                 {
@@ -72,9 +72,9 @@ namespace System.Windows.Media
                 {
                     PointCollection copy = new PointCollection();
                     Point pt = new Point();
-                    int count = points.Count;             
+                    int count = points.Count;
 
-                    for (int i=0; i<count; i++)
+                    for (int i = 0; i < count; i++)
                     {
                         pt = points.Internal_GetItem(i);
                         pt *= matrix;
@@ -105,7 +105,7 @@ namespace System.Windows.Media
         internal override void SerializeData(StreamGeometryContext ctx)
         {
             ctx.PolyBezierTo(Points, IsStroked, IsSmoothJoin);
-        }                                    
+        }
         #endregion
     }
     #endregion

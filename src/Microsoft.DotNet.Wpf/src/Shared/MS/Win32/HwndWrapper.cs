@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,11 +38,11 @@ namespace MS.Win32
 
             // First, add the set of hooks.  This allows the hooks to receive the
             // messages sent to the window very early in the process.
-            if(hooks != null)
+            if (hooks != null)
             {
-                for(int i = 0, iEnd = hooks.Length; i < iEnd; i++)
+                for (int i = 0, iEnd = hooks.Length; i < iEnd; i++)
                 {
-                    if(null != hooks[i])
+                    if (null != hooks[i])
                         AddHook(hooks[i]);
                 }
             }
@@ -54,7 +54,7 @@ namespace MS.Win32
             // window proc directly.  We will not be "subclassing" the
             // window we create.
             HwndSubclass hwndSubclass = new(_wndProc);
-            
+
             // Register a unique window class for this instance.
             NativeMethods.WNDCLASSEX_D wc_d = new NativeMethods.WNDCLASSEX_D();
 
@@ -65,7 +65,7 @@ namespace MS.Win32
                 throw new System.ComponentModel.Win32Exception(Marshal.GetLastWin32Error());
             }
 
-            IntPtr hInstance = UnsafeNativeMethods.GetModuleHandle( null );
+            IntPtr hInstance = UnsafeNativeMethods.GetModuleHandle(null);
 
             // We need to keep the Delegate object alive through the call to CreateWindowEx().
             // Subclass.WndProc will install a better delegate (to the same function) when it
@@ -84,7 +84,7 @@ namespace MS.Win32
                 appName = currentDomainFriendlyName;
 
             string threadName;
-            if(null != Thread.CurrentThread.Name && 64 <= Thread.CurrentThread.Name.Length)
+            if (null != Thread.CurrentThread.Name && 64 <= Thread.CurrentThread.Name.Length)
                 threadName = Thread.CurrentThread.Name.Substring(0, 64);
             else
                 threadName = Thread.CurrentThread.Name;
@@ -94,18 +94,18 @@ namespace MS.Win32
             string randomName = Guid.NewGuid().ToString();
             string className = String.Format(CultureInfo.InvariantCulture, "HwndWrapper[{0};{1};{2}]", appName, threadName, randomName);
 
-            wc_d.cbSize        = Marshal.SizeOf(typeof(NativeMethods.WNDCLASSEX_D));
-            wc_d.style         = classStyle;
-            wc_d.lpfnWndProc   = initialWndProc;
-            wc_d.cbClsExtra    = 0;
-            wc_d.cbWndExtra    = 0;
-            wc_d.hInstance     = hInstance;
-            wc_d.hIcon         = IntPtr.Zero;
-            wc_d.hCursor       = IntPtr.Zero;
+            wc_d.cbSize = Marshal.SizeOf(typeof(NativeMethods.WNDCLASSEX_D));
+            wc_d.style = classStyle;
+            wc_d.lpfnWndProc = initialWndProc;
+            wc_d.cbClsExtra = 0;
+            wc_d.cbWndExtra = 0;
+            wc_d.hInstance = hInstance;
+            wc_d.hIcon = IntPtr.Zero;
+            wc_d.hCursor = IntPtr.Zero;
             wc_d.hbrBackground = hNullBrush;
-            wc_d.lpszMenuName  = "";
+            wc_d.lpszMenuName = "";
             wc_d.lpszClassName = className;
-            wc_d.hIconSm       = IntPtr.Zero;
+            wc_d.hIconSm = IntPtr.Zero;
 
             // Register the unique class for this instance.
             // Note we use a GUID in the name so we are confident that
@@ -115,7 +115,8 @@ namespace MS.Win32
 
             // call CreateWindow
             _isInCreateWindow = true;
-            try {
+            try
+            {
                 _handle = UnsafeNativeMethods.CreateWindowEx(exStyle,
                     className,
                     name,
@@ -124,15 +125,15 @@ namespace MS.Win32
                     y,
                     width,
                     height,
-                    new HandleRef(null,parent),
-                    new HandleRef(null,IntPtr.Zero),
-                    new HandleRef(null,IntPtr.Zero),
+                    new HandleRef(null, parent),
+                    new HandleRef(null, IntPtr.Zero),
+                    new HandleRef(null, IntPtr.Zero),
                     null);
             }
             finally
             {
                 _isInCreateWindow = false;
-                if(_handle == 0)
+                if (_handle == 0)
                 {
                     // Because the HwndSubclass is pinned, but the HWND creation failed,
                     // we need to manually clean it up.
@@ -145,18 +146,18 @@ namespace MS.Win32
 
         ~HwndWrapper()
         {
-            Dispose(/*disposing = */ false, 
+            Dispose(/*disposing = */ false,
                     /*isHwndBeingDestroyed = */ false);
         }
-        
+
         public virtual void Dispose()
         {
             //             VerifyAccess();
 
-            Dispose(/*disposing = */ true, 
+            Dispose(/*disposing = */ true,
                     /*isHwndBeingDestroyed = */ false);
             GC.SuppressFinalize(this);
-        }            
+        }
 
         // internal Dispose(bool, bool)
         private void Dispose(bool disposing, bool isHwndBeingDestroyed)
@@ -168,14 +169,14 @@ namespace MS.Win32
                 return;
             }
 
-            if(disposing)
+            if (disposing)
             {
                 // diposing == false means we're being called from the finalizer
                 // and can't follow any reference types that may themselves be
                 // finalizable - thus don't call the Disposed callback.
 
                 // Notify listeners that we are being disposed.
-                if(Disposed != null)
+                if (Disposed != null)
                 {
                     Disposed(this, EventArgs.Empty);
                 }
@@ -184,7 +185,7 @@ namespace MS.Win32
             // We are now considered disposed.
             _isDisposed = true;
 
-            
+
             if (isHwndBeingDestroyed)
             {
                 // The window is in the process of being destroyed.  We can't call UnregisterClass yet
@@ -197,7 +198,7 @@ namespace MS.Win32
                 // (we know this since we're listening for WM_NCDESTROY).  Since we're being disposed
                 // we destroy it now.
 
-                if(Environment.CurrentManagedThreadId == _ownerThreadID)
+                if (Environment.CurrentManagedThreadId == _ownerThreadID)
                 {
                     // We are the owner thread, we can safely destroy the window and unregister
                     // the class
@@ -213,7 +214,7 @@ namespace MS.Win32
                 }
             }
 
-         
+
             _classAtom = 0;
             _handle = default;
         }
@@ -241,17 +242,17 @@ namespace MS.Win32
             // The default result for messages we handle is 0.
             IntPtr result = IntPtr.Zero;
             WindowMessage message = (WindowMessage)msg;
-        
+
             // Call all of the hooks
-            if(_hooks is not null)
+            if (_hooks is not null)
             {
-                foreach(HwndWrapperHook hook in _hooks)
+                foreach (HwndWrapperHook hook in _hooks)
                 {
                     result = hook(hwnd, msg, wParam, lParam, ref handled);
 
                     CheckForCreateWindowFailure(result, handled);
 
-                    if(handled)
+                    if (handled)
                     {
                         break;
                     }
@@ -260,7 +261,7 @@ namespace MS.Win32
 
             if (message == WindowMessage.WM_NCDESTROY)
             {
-                Dispose(/*disposing = */ true, 
+                Dispose(/*disposing = */ true,
                         /*isHwndBeingDestroyed = */ true);
                 GC.SuppressFinalize(this);
 
@@ -272,8 +273,8 @@ namespace MS.Win32
             {
                 // This is a special message we respond to by forcing a GC Collect.  This
                 // is used by test apps and such.
-                IntPtr lHeap = (IntPtr)GC.GetTotalMemory((wParam == new IntPtr(1) )? true : false);
-                result =  lHeap;
+                IntPtr lHeap = (IntPtr)GC.GetTotalMemory((wParam == new IntPtr(1)) ? true : false);
+                result = lHeap;
                 handled = true;
             }
 
@@ -283,17 +284,17 @@ namespace MS.Win32
             return result;
         }
 
-        private void CheckForCreateWindowFailure( IntPtr result, bool handled )
+        private void CheckForCreateWindowFailure(IntPtr result, bool handled)
         {
-            if( ! _isInCreateWindow )
+            if (!_isInCreateWindow)
                 return;
-            
-            if( IntPtr.Zero != result )
+
+            if (IntPtr.Zero != result)
             {
                 System.Diagnostics.Debug.WriteLine("Non-zero WndProc result=" + result);
-                if( handled )
+                if (handled)
                 {
-                    if( System.Diagnostics.Debugger.IsAttached )
+                    if (System.Diagnostics.Debugger.IsAttached)
                         System.Diagnostics.Debugger.Break();
                     else
                         throw new InvalidOperationException();
@@ -357,13 +358,13 @@ namespace MS.Win32
             private readonly IntPtr _handle;
             private readonly ushort _classAtom;
         }
-        
+
 
         private IntPtr _handle;
         private UInt16 _classAtom;
         private WeakReferenceList _hooks;
         private int _ownerThreadID;
-        
+
         private HwndWrapperHook _wndProc;
         private bool _isDisposed;
 

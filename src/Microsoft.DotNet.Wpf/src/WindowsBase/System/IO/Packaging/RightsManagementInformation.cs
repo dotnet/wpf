@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -102,7 +102,7 @@ namespace System.IO.Packaging
         /// If the RM information in this file cannot be read by the current version of
         /// this class.
         /// </exception>
-        public UseLicense LoadUseLicense(ContentUser userKey) 
+        public UseLicense LoadUseLicense(ContentUser userKey)
         {
             return _rmet.LoadUseLicense(userKey);
         }

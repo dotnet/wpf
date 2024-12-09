@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,10 +13,9 @@
 
 
 using System.Windows.Threading;
-
 using MS.Internal;
-using MS.Internal.TextFormatting;
 using MS.Internal.PresentationCore;
+using MS.Internal.TextFormatting;
 
 
 namespace System.Windows.Media.TextFormatting
@@ -45,7 +44,7 @@ namespace System.Windows.Media.TextFormatting
             {
                 throw new System.ComponentModel.InvalidEnumArgumentException("textFormattingMode", (int)textFormattingMode, typeof(TextFormattingMode));
             }
-            
+
             // create a new instance of TextFormatter which allows the use of multiple contexts.
             return new TextFormatterImp(textFormattingMode);
         }
@@ -131,7 +130,7 @@ namespace System.Windows.Media.TextFormatting
             {
                 defaultTextFormatter = (TextFormatterImp)dispatcher.Reserved1;
             }
-                        
+
             if (defaultTextFormatter == null)
             {
                 lock (_staticLock)
@@ -161,7 +160,7 @@ namespace System.Windows.Media.TextFormatting
         /// <summary>
         /// Clean up text formatter internal resource
         /// </summary>
-        public virtual void Dispose() {}
+        public virtual void Dispose() { }
 
 
 
@@ -177,11 +176,11 @@ namespace System.Windows.Media.TextFormatting
         /// line; this parameter can be null, and will always be null for the first line in a paragraph.</param>
         /// <returns>object representing a line of text that client interacts with. </returns>
         public abstract TextLine FormatLine(
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            double                      paragraphWidth,
-            TextParagraphProperties     paragraphProperties,
-            TextLineBreak               previousLineBreak
+            TextSource textSource,
+            int firstCharIndex,
+            double paragraphWidth,
+            TextParagraphProperties paragraphProperties,
+            TextLineBreak previousLineBreak
             );
 
 
@@ -199,12 +198,12 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="textRunCache">an object representing content cache of the client.</param>
         /// <returns>object representing a line of text that client interacts with. </returns>
         public abstract TextLine FormatLine(
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            double                      paragraphWidth,
-            TextParagraphProperties     paragraphProperties,
-            TextLineBreak               previousLineBreak,
-            TextRunCache                textRunCache
+            TextSource textSource,
+            int firstCharIndex,
+            double paragraphWidth,
+            TextParagraphProperties paragraphProperties,
+            TextLineBreak previousLineBreak,
+            TextRunCache textRunCache
             );
 
 
@@ -225,13 +224,13 @@ namespace System.Windows.Media.TextFormatting
 #else
         internal abstract TextLine RecreateLine(
 #endif
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            int                         lineLength,
-            double                      paragraphWidth,
-            TextParagraphProperties     paragraphProperties,
-            TextLineBreak               previousLineBreak,
-            TextRunCache                textRunCache
+            TextSource textSource,
+            int firstCharIndex,
+            int lineLength,
+            double paragraphWidth,
+            TextParagraphProperties paragraphProperties,
+            TextLineBreak previousLineBreak,
+            TextRunCache textRunCache
             );
 
 
@@ -253,12 +252,12 @@ namespace System.Windows.Media.TextFormatting
 #else
         internal abstract TextParagraphCache CreateParagraphCache(
 #endif
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            double                      paragraphWidth,
-            TextParagraphProperties     paragraphProperties,
-            TextLineBreak               previousLineBreak,
-            TextRunCache                textRunCache
+            TextSource textSource,
+            int firstCharIndex,
+            double paragraphWidth,
+            TextParagraphProperties paragraphProperties,
+            TextLineBreak previousLineBreak,
+            TextRunCache textRunCache
             );
 
 
@@ -271,9 +270,9 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="paragraphProperties">properties that can change from one paragraph to the next, such as text flow direction, text alignment, or indentation.</param>
         /// <returns>min max paragraph width</returns>
         public abstract MinMaxParagraphWidth FormatMinMaxParagraphWidth(
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            TextParagraphProperties     paragraphProperties
+            TextSource textSource,
+            int firstCharIndex,
+            TextParagraphProperties paragraphProperties
             );
 
 
@@ -287,10 +286,10 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="textRunCache">an object representing content cache of the client.</param>
         /// <returns>min max paragraph width</returns>
         public abstract MinMaxParagraphWidth FormatMinMaxParagraphWidth(
-            TextSource                  textSource,
-            int                         firstCharIndex,
-            TextParagraphProperties     paragraphProperties,
-            TextRunCache                textRunCache
+            TextSource textSource,
+            int firstCharIndex,
+            TextParagraphProperties paragraphProperties,
+            TextRunCache textRunCache
             );
     }
 }

@@ -1,17 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
-using MS.Internal.KnownBoxes;
-using MS.Win32;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
+using MS.Internal;
+using MS.Internal.KnownBoxes;
+using MS.Win32;
 
 namespace System.Windows.Controls
 {
@@ -26,7 +26,7 @@ namespace System.Windows.Controls
         {
             InputManager.Current.PostProcessInput += new ProcessInputEventHandler(OnPostProcessInput);
         }
-        
+
         #endregion
 
         #region Input Handling
@@ -201,7 +201,7 @@ namespace System.Windows.Controls
                     if (directlyOver != null)
                     {
                         Point pt = Mouse.PrimaryDevice.GetPosition(directlyOver);
-                        if (RaiseContextMenuOpeningEvent(directlyOver, pt.X, pt.Y,e.UserInitiated))
+                        if (RaiseContextMenuOpeningEvent(directlyOver, pt.X, pt.Y, e.UserInitiated))
                         {
                             e.Handled = true;
                         }
@@ -384,8 +384,10 @@ namespace System.Windows.Controls
             }
             else
             {
-                PendingToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                PendingToolTipTimer.Interval = TimeSpan.FromMilliseconds(showDelay);
+                PendingToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal)
+                {
+                    Interval = TimeSpan.FromMilliseconds(showDelay)
+                };
                 PendingToolTipTimer.Tick += new EventHandler((s, e) => { PromotePendingToolTipToCurrent(triggerAction); });
                 PendingToolTipTimer.Tag = BooleanBoxes.Box(useShortDelay);
                 PendingToolTipTimer.Start();
@@ -421,7 +423,7 @@ namespace System.Windows.Controls
             IInputElement element = o as IInputElement;
             if (element != null)
             {
-                ToolTipEventArgs args = new ToolTipEventArgs(opening:true);
+                ToolTipEventArgs args = new ToolTipEventArgs(opening: true);
                 // ** Public callout - re-entrancy is possible **//
                 element.RaiseEvent(args);
 
@@ -443,10 +445,12 @@ namespace System.Windows.Controls
                     _currentToolTip.SetValue(ServiceOwnedProperty, BooleanBoxes.TrueBox);
 
                     // Bind the content of the tooltip to the ToolTip attached property
-                    Binding binding = new Binding();
-                    binding.Path = new PropertyPath(ToolTipService.ToolTipProperty);
-                    binding.Mode = BindingMode.OneWay;
-                    binding.Source = o;
+                    Binding binding = new Binding
+                    {
+                        Path = new PropertyPath(ToolTipService.ToolTipProperty),
+                        Mode = BindingMode.OneWay,
+                        Source = o
+                    };
                     _currentToolTip.SetBinding(ToolTip.ContentProperty, binding);
                 }
 
@@ -474,8 +478,10 @@ namespace System.Windows.Controls
                     SetSafeArea(_currentToolTip);
                 }
 
-                CurrentToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                CurrentToolTipTimer.Interval = TimeSpan.FromMilliseconds(ToolTipService.GetShowDuration(o));
+                CurrentToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal)
+                {
+                    Interval = TimeSpan.FromMilliseconds(ToolTipService.GetShowDuration(o))
+                };
                 CurrentToolTipTimer.Tick += new EventHandler(OnShowDurationTimerExpired);
                 CurrentToolTipTimer.Start();
             }
@@ -578,7 +584,7 @@ namespace System.Windows.Controls
                     if (element != null)
                     {
                         // ** Public callout - re-entrancy is possible **//
-                        element.RaiseEvent(new ToolTipEventArgs(opening:false));
+                        element.RaiseEvent(new ToolTipEventArgs(opening: false));
                     }
                 }
             }
@@ -592,8 +598,10 @@ namespace System.Windows.Controls
                     tooltip.IsOpen = false;
 
                     // allow time for the popup's fade-out or slide animation
-                    _forceCloseTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                    _forceCloseTimer.Interval = Popup.AnimationDelayTime;
+                    _forceCloseTimer = new DispatcherTimer(DispatcherPriority.Normal)
+                    {
+                        Interval = Popup.AnimationDelayTime
+                    };
                     _forceCloseTimer.Tick += new EventHandler(OnForceClose);
                     _forceCloseTimer.Tag = tooltip;
                     _forceCloseTimer.Start();
@@ -604,8 +612,10 @@ namespace System.Windows.Controls
                     _quickShow = (betweenShowDelay > 0);
                     if (_quickShow)
                     {
-                        CurrentToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal);
-                        CurrentToolTipTimer.Interval = TimeSpan.FromMilliseconds(betweenShowDelay);
+                        CurrentToolTipTimer = new DispatcherTimer(DispatcherPriority.Normal)
+                        {
+                            Interval = TimeSpan.FromMilliseconds(betweenShowDelay)
+                        };
                         CurrentToolTipTimer.Tick += new EventHandler(OnBetweenShowDelay);
                         CurrentToolTipTimer.Start();
                     }
@@ -949,14 +959,14 @@ namespace System.Windows.Controls
             IInputElement source = e.OriginalSource as IInputElement;
             if (source != null)
             {
-                if (RaiseContextMenuOpeningEvent(source, -1.0, -1.0,e.UserInitiated))
+                if (RaiseContextMenuOpeningEvent(source, -1.0, -1.0, e.UserInitiated))
                 {
                     e.Handled = true;
                 }
             }
         }
 
-        private bool RaiseContextMenuOpeningEvent(IInputElement source, double x, double y,bool userInitiated)
+        private bool RaiseContextMenuOpeningEvent(IInputElement source, double x, double y, bool userInitiated)
         {
             // Fire the event
             ContextMenuEventArgs args = new ContextMenuEventArgs(source, true /* opening */, x, y);
@@ -1376,18 +1386,19 @@ namespace System.Windows.Controls
             {
                 // insertion sort is good enough.  We're dealing with a small
                 // set of points that are nearly in the right order already.
-                for (int i=1, N=points.Count; i<N; ++i)
+                for (int i = 1, N = points.Count; i < N; ++i)
                 {
                     Point p = points[i];
                     int j;
-                    for (j=i-1; j>=0; --j)
+                    for (j = i - 1; j >= 0; --j)
                     {
                         int d = points[j].Y - p.Y;
                         if (d > 0 || (d == 0 && (points[j].X > p.X)))
                         {
                             points[j + 1] = points[j];
                         }
-                        else break;
+                        else
+                            break;
                     }
                     points[j + 1] = p;
                 }
@@ -1422,7 +1433,7 @@ namespace System.Windows.Controls
                     // first and last points whose y == Y)
                     Point leftmost = points[currentIndex];
                     int next = currentIndex + 1;
-                    while (next<N && points[next].Y == Y)
+                    while (next < N && points[next].Y == Y)
                     {
                         ++next;
                     }
@@ -1481,7 +1492,8 @@ namespace System.Windows.Controls
                         for (; maxIndex < hullCount; ++maxIndex)
                         {
                             int wrapIndex = maxIndex + 1;
-                            if (wrapIndex == hullCount) wrapIndex = 0;
+                            if (wrapIndex == hullCount)
+                                wrapIndex = 0;
                             if (Cross(rightmost, points[maxIndex], points[wrapIndex]) < 0)
                                 break;
                         }
@@ -1497,14 +1509,14 @@ namespace System.Windows.Controls
                         // always in bounds).
                         if (delta < 0)
                         {
-                            for (int i=maxIndex; i<hullCount; ++i)
+                            for (int i = maxIndex; i < hullCount; ++i)
                             {
                                 points[i + delta] = points[i];
                             }
                         }
                         else if (delta > 0)
                         {
-                            for (int i=hullCount-1; i>=maxIndex; --i)
+                            for (int i = hullCount - 1; i >= maxIndex; --i)
                             {
                                 points[i + delta] = points[i];
                             }
@@ -1535,10 +1547,11 @@ namespace System.Windows.Controls
             // ContainsPoint.
             private void SetDirections()
             {
-                for (int i=0, N=_points.Length; i<N; ++i)
+                for (int i = 0, N = _points.Length; i < N; ++i)
                 {
                     int next = i + 1;
-                    if (next == N) next = 0;
+                    if (next == N)
+                        next = 0;
 
                     if (_points[i].X == _points[next].X)
                     {
@@ -1555,7 +1568,7 @@ namespace System.Windows.Controls
                 }
             }
 
-            private void AddPoints(PointList points, in NativeMethods.RECT rect, bool rectIsHull=false)
+            private void AddPoints(PointList points, in NativeMethods.RECT rect, bool rectIsHull = false)
             {
                 if (rectIsHull)
                 {
@@ -1592,7 +1605,7 @@ namespace System.Windows.Controls
                     pt = PointUtil.ScreenToClient(ptScreen, _source);
                 }
 
-                #if DEBUG
+#if DEBUG
                 // NonRelativePosition returns the mouse point in unscaled screen coords, relative
                 // to the active window's client area (despite the name).
                 // Compute the point a different way, and check that it agrees.  The second
@@ -1603,7 +1616,7 @@ namespace System.Windows.Controls
                 Debug.Assert(hwndSource != null && rootElement != null, "expect non-null hwndSource and rootElement");
                 System.Windows.Point pt2 = hwndSource.TransformToDevice(Mouse.PrimaryDevice.GetPosition(rootElement));
                 Debug.Assert(((int)pt.X == (int)Math.Round(pt2.X)) && ((int)pt.Y == (int)Math.Round(pt2.Y)), "got incorrect mouse point");
-                #endif
+#endif
 
                 // check whether the point lies within the hull
                 return ContainsPoint(_source, (int)pt.X, (int)pt.Y);
@@ -1650,16 +1663,20 @@ namespace System.Windows.Controls
                     switch (_points[i].Direction)
                     {
                         case Direction.Left:
-                            if (y < _points[i].Y) return false;
+                            if (y < _points[i].Y)
+                                return false;
                             break;
                         case Direction.Right:
-                            if (y >= _points[i].Y) return false;
+                            if (y >= _points[i].Y)
+                                return false;
                             break;
                         case Direction.Up:
-                            if (x >= _points[i].X) return false;
+                            if (x >= _points[i].X)
+                                return false;
                             break;
                         case Direction.Down:
-                            if (x < _points[i].X) return false;
+                            if (x < _points[i].X)
+                                return false;
                             break;
                     }
                 }
@@ -1671,7 +1688,8 @@ namespace System.Windows.Controls
                     {
                         case Direction.Skew:
                             int next = i + 1;
-                            if (next == N) next = 0;
+                            if (next == N)
+                                next = 0;
                             Point p = new Point(x, y);
 
                             if (Cross(_points[i], _points[next], p) > 0)
@@ -1702,7 +1720,7 @@ namespace System.Windows.Controls
                 public int Y { get; set; }
                 public Direction Direction { get; set; }
 
-                public Point(int x, int y, Direction d=Direction.Skew)
+                public Point(int x, int y, Direction d = Direction.Skew)
                 {
                     X = x;
                     Y = y;

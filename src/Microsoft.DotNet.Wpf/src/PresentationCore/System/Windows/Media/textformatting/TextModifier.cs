@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,13 +41,13 @@ namespace System.Windows.Media.TextFormatting
         /// TextFormatter to ask whether directional embedding is
         /// represented by this modifier.
         /// </Summary>
-        public abstract bool HasDirectionalEmbedding {get; }
+        public abstract bool HasDirectionalEmbedding { get; }
 
         /// <Summary>
         /// TextFormatter to get the flow direction value for directional
         /// embedding. The value is ignored unless the property 
         /// HasDirectionalEmbedding returns true.
         /// </Summary>
-        public abstract FlowDirection FlowDirection  {get; }
+        public abstract FlowDirection FlowDirection { get; }
     }
 }

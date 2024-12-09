@@ -1,10 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #nullable disable
 
 using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 using System.Reflection;
 using System.Text;
@@ -12,7 +13,6 @@ using System.Threading;
 using System.Xaml.MS.Impl;
 using System.Xaml.Schema;
 using MS.Internal.Xaml.Parser;
-using System.Collections.Concurrent;
 
 namespace System.Xaml
 {
@@ -465,7 +465,7 @@ namespace System.Xaml
         private ConcurrentDictionary<Type, XamlType> _masterTypeList;
         private ConcurrentDictionary<ReferenceEqualityTuple<Type, XamlType, Type>, object> _masterValueConverterList;
         private ConcurrentDictionary<ReferenceEqualityTuple<MemberInfo, MemberInfo>, XamlMember> _masterMemberList;
-        private ConcurrentDictionary<XamlType, Dictionary<string,SpecialBracketCharacters> > _masterBracketCharacterCache;
+        private ConcurrentDictionary<XamlType, Dictionary<string, SpecialBracketCharacters>> _masterBracketCharacterCache;
 
         // Security note: all of these ConcurrentDictionaries use Reference Equality to prevent spoofing of
         // RuntimeTypes/Members by other custom derived descendants of System.Type/MemberInfo.
@@ -474,7 +474,7 @@ namespace System.Xaml
         // type, we would get the spoofed one instead. Using reference equality avoids that.
 
         // Thread-safe cache - always use TryAdd or TryUpdate to write
-        private ConcurrentDictionary<XamlType, Dictionary<string, SpecialBracketCharacters> > MasterBracketCharacterCache
+        private ConcurrentDictionary<XamlType, Dictionary<string, SpecialBracketCharacters>> MasterBracketCharacterCache
         {
             get
             {
@@ -570,7 +570,7 @@ namespace System.Xaml
             {
                 string constructorArgumentName = member.ConstructorArgument;
                 string propertyName = member.Name;
-                IReadOnlyDictionary<char,char> markupExtensionBracketCharactersList = member.MarkupExtensionBracketCharacters;
+                IReadOnlyDictionary<char, char> markupExtensionBracketCharactersList = member.MarkupExtensionBracketCharacters;
                 SpecialBracketCharacters splBracketCharacters = markupExtensionBracketCharactersList != null && markupExtensionBracketCharactersList.Count > 0
                     ? new SpecialBracketCharacters(markupExtensionBracketCharactersList)
                     : null;
@@ -724,7 +724,7 @@ namespace System.Xaml
             get
             {
                 if (_namespaceByUriList == null)
-                    Interlocked.CompareExchange(ref _namespaceByUriList,  CreateDictionary<string, XamlNamespace>(), null);
+                    Interlocked.CompareExchange(ref _namespaceByUriList, CreateDictionary<string, XamlNamespace>(), null);
                 return _namespaceByUriList;
             }
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,8 +8,8 @@
 
 using System.Collections;
 using System.ComponentModel;
-using System.Reflection;
 using System.Globalization;
+using System.Reflection;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;                      // Validation
@@ -1146,8 +1146,8 @@ namespace MS.Internal.Data
                         if (IsDynamic)
                         {
 #if DEBUG
-                        if (checkCacheResult)
-                            Debug.Assert(_dependencySourcesChanged, "Cached accessor didn't change sources");
+                            if (checkCacheResult)
+                                Debug.Assert(_dependencySourcesChanged, "Cached accessor didn't change sources");
 #endif
                             _dependencySourcesChanged = true;
                         }
@@ -1165,7 +1165,7 @@ namespace MS.Internal.Data
                     {
                         sourceType = doa.PropertyType;
 #if DEBUG
-                    checkCacheResult = false;      // not relevant for dynamic objects
+                        checkCacheResult = false;      // not relevant for dynamic objects
 #endif
                     }
                     break;
@@ -1276,7 +1276,7 @@ namespace MS.Internal.Data
                 int len2 = (svs.args != null) ? svs.args.Length : 0;
                 if (len1 == len2)
                 {
-                    for (int i=0; i<len1; ++i)
+                    for (int i = 0; i < len1; ++i)
                     {
                         if (!Object.Equals(args[i], svs.args[i]))
                         {

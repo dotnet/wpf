@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,19 +30,19 @@ namespace System.Windows.Xps.Serialization.RCW
         IXpsOMColorProfileResource GetAt([In] uint index);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void InsertAt([In] uint index, [MarshalAs(UnmanagedType.Interface)] [In] IXpsOMColorProfileResource @object);
+        void InsertAt([In] uint index, [MarshalAs(UnmanagedType.Interface)][In] IXpsOMColorProfileResource @object);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         void RemoveAt([In] uint index);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetAt([In] uint index, [MarshalAs(UnmanagedType.Interface)] [In] IXpsOMColorProfileResource @object);
+        void SetAt([In] uint index, [MarshalAs(UnmanagedType.Interface)][In] IXpsOMColorProfileResource @object);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void Append([MarshalAs(UnmanagedType.Interface)] [In] IXpsOMColorProfileResource @object);
+        void Append([MarshalAs(UnmanagedType.Interface)][In] IXpsOMColorProfileResource @object);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.Interface)]
-        IXpsOMColorProfileResource GetByPartName([MarshalAs(UnmanagedType.Interface)] [In] IOpcPartUri partName);
+        IXpsOMColorProfileResource GetByPartName([MarshalAs(UnmanagedType.Interface)][In] IOpcPartUri partName);
     }
 }

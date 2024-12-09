@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -63,18 +63,18 @@ namespace System.Windows.Media
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            GeometryDrawing target = ((GeometryDrawing) d);
+            GeometryDrawing target = ((GeometryDrawing)d);
 
 
-            Brush oldV = (Brush) e.OldValue;
-            Brush newV = (Brush) e.NewValue;
+            Brush oldV = (Brush)e.OldValue;
+            Brush newV = (Brush)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -89,8 +89,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -107,18 +107,18 @@ namespace System.Windows.Media
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            GeometryDrawing target = ((GeometryDrawing) d);
+            GeometryDrawing target = ((GeometryDrawing)d);
 
 
-            Pen oldV = (Pen) e.OldValue;
-            Pen newV = (Pen) e.NewValue;
+            Pen oldV = (Pen)e.OldValue;
+            Pen newV = (Pen)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -133,8 +133,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -151,18 +151,18 @@ namespace System.Windows.Media
             // needs to be marshalled to the compositor. We detect this scenario with the second condition 
             // e.OldValueSource != e.NewValueSource. Specifically in this scenario the OldValueSource will be 
             // Default and the NewValueSource will be Local.
-            if (e.IsASubPropertyChange && 
+            if (e.IsASubPropertyChange &&
                (e.OldValueSource == e.NewValueSource))
             {
                 return;
             }
 
 
-            GeometryDrawing target = ((GeometryDrawing) d);
+            GeometryDrawing target = ((GeometryDrawing)d);
 
 
-            Geometry oldV = (Geometry) e.OldValue;
-            Geometry newV = (Geometry) e.NewValue;
+            Geometry oldV = (Geometry)e.OldValue;
+            Geometry newV = (Geometry)e.NewValue;
             System.Windows.Threading.Dispatcher dispatcher = target.Dispatcher;
 
             if (dispatcher != null)
@@ -177,8 +177,8 @@ namespace System.Windows.Media
                         DUCE.Channel channel = targetResource.GetChannel(channelIndex);
                         Debug.Assert(!channel.IsOutOfBandChannel);
                         Debug.Assert(!targetResource.GetHandle(channel).IsNull);
-                        target.ReleaseResource(oldV,channel);
-                        target.AddRefResource(newV,channel);
+                        target.ReleaseResource(oldV, channel);
+                        target.AddRefResource(newV, channel);
                     }
                 }
             }
@@ -196,7 +196,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Brush) GetValue(BrushProperty);
+                return (Brush)GetValue(BrushProperty);
             }
             set
             {
@@ -211,7 +211,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Pen) GetValue(PenProperty);
+                return (Pen)GetValue(PenProperty);
             }
             set
             {
@@ -226,7 +226,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Geometry) GetValue(GeometryProperty);
+                return (Geometry)GetValue(GeometryProperty);
             }
             set
             {
@@ -303,39 +303,45 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_GEOMETRYDRAWING))
-                {
-                    Brush vBrush = Brush;
-                    if (vBrush != null) ((DUCE.IResource)vBrush).AddRefOnChannel(channel);
-                    Pen vPen = Pen;
-                    if (vPen != null) ((DUCE.IResource)vPen).AddRefOnChannel(channel);
-                    Geometry vGeometry = Geometry;
-                    if (vGeometry != null) ((DUCE.IResource)vGeometry).AddRefOnChannel(channel);
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_GEOMETRYDRAWING))
+            {
+                Brush vBrush = Brush;
+                if (vBrush != null)
+                    ((DUCE.IResource)vBrush).AddRefOnChannel(channel);
+                Pen vPen = Pen;
+                if (vPen != null)
+                    ((DUCE.IResource)vPen).AddRefOnChannel(channel);
+                Geometry vGeometry = Geometry;
+                if (vGeometry != null)
+                    ((DUCE.IResource)vGeometry).AddRefOnChannel(channel);
 
-                    AddRefOnChannelAnimations(channel);
+                AddRefOnChannelAnimations(channel);
 
 
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                }
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
 
-                return _duceResource.GetHandle(channel);
-}
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
-                {
-                    Brush vBrush = Brush;
-                    if (vBrush != null) ((DUCE.IResource)vBrush).ReleaseOnChannel(channel);
-                    Pen vPen = Pen;
-                    if (vPen != null) ((DUCE.IResource)vPen).ReleaseOnChannel(channel);
-                    Geometry vGeometry = Geometry;
-                    if (vGeometry != null) ((DUCE.IResource)vGeometry).ReleaseOnChannel(channel);
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                Brush vBrush = Brush;
+                if (vBrush != null)
+                    ((DUCE.IResource)vBrush).ReleaseOnChannel(channel);
+                Pen vPen = Pen;
+                if (vPen != null)
+                    ((DUCE.IResource)vPen).ReleaseOnChannel(channel);
+                Geometry vGeometry = Geometry;
+                if (vGeometry != null)
+                    ((DUCE.IResource)vGeometry).ReleaseOnChannel(channel);
 
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,11 +6,11 @@
 //
 
 
-using MS.Internal;
-using MS.Win32.PresentationCore;
 using System.Windows.Media;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
+using MS.Internal;
+using MS.Win32.PresentationCore;
 
 namespace System.Windows.Interop
 {
@@ -48,7 +48,7 @@ namespace System.Windows.Interop
                         hpalette,
                         alphaOptions,
                         out _unmanagedSource));
-                Debug.Assert (_unmanagedSource != null && !_unmanagedSource.IsInvalid);
+                Debug.Assert(_unmanagedSource != null && !_unmanagedSource.IsInvalid);
             }
 
             _unmanagedSource.CalculateSize();
@@ -60,7 +60,7 @@ namespace System.Windows.Interop
 
             FinalizeCreation();
         }
-        
+
         /// <summary>
         /// Construct a BitmapSource from an HICON.
         /// </summary>
@@ -79,7 +79,7 @@ namespace System.Windows.Interop
                     myFactory.ImagingFactoryPtr,
                     hicon,
                     out _unmanagedSource));
-                Debug.Assert (_unmanagedSource != null && !_unmanagedSource.IsInvalid);
+                Debug.Assert(_unmanagedSource != null && !_unmanagedSource.IsInvalid);
             }
 
             _unmanagedSource.CalculateSize();
@@ -126,7 +126,7 @@ namespace System.Windows.Interop
                     (uint)offset,
                     out _unmanagedSource
                     ));
-            Debug.Assert (_unmanagedSource != null && !_unmanagedSource.IsInvalid);
+            Debug.Assert(_unmanagedSource != null && !_unmanagedSource.IsInvalid);
 
             _unmanagedSource.CalculateSize();
             _sourceRect = Int32Rect.Empty;
@@ -252,7 +252,7 @@ namespace System.Windows.Interop
         {
             Invalidate(null);
         }
-        
+
         /// <summary>
         /// Invalidates the bitmap source.
         /// </summary>
@@ -265,7 +265,7 @@ namespace System.Windows.Interop
             if (dirtyRect.HasValue)
             {
                 dirtyRect.Value.ValidateForDirtyRect("dirtyRect", _pixelWidth, _pixelHeight);
-            
+
                 if (!dirtyRect.Value.HasArea)
                 {
                     // Nothing needs done.
@@ -277,7 +277,7 @@ namespace System.Windows.Interop
 
             if (_unmanagedSource != null)
             {
-                if(UsableWithoutCache)
+                if (UsableWithoutCache)
                 {
                     // For bitmap sources that do not require caching on the
                     // UI thread, we can just add a dirty rect to the
@@ -290,22 +290,22 @@ namespace System.Windows.Interop
                         for (int i = 0, numChannels = _duceResource.GetChannelCount(); i < numChannels; ++i)
                         {
                             DUCE.Channel channel = _duceResource.GetChannel(i);
-                    
+
                             DUCE.MILCMD_BITMAP_INVALIDATE data;
                             data.Type = MILCMD.MilCmdBitmapInvalidate;
                             data.Handle = _duceResource.GetHandle(channel);
 
                             bool useDirtyRect = dirtyRect.HasValue;
-                            if(useDirtyRect)
+                            if (useDirtyRect)
                             {
                                 data.DirtyRect.left = dirtyRect.Value.X;
                                 data.DirtyRect.top = dirtyRect.Value.Y;
                                 data.DirtyRect.right = dirtyRect.Value.X + dirtyRect.Value.Width;
                                 data.DirtyRect.bottom = dirtyRect.Value.Y + dirtyRect.Value.Height;
                             }
-                            
+
                             data.UseDirtyRect = (uint)(useDirtyRect ? 1 : 0);
-                    
+
                             channel.SendCommand((byte*)&data, sizeof(DUCE.MILCMD_BITMAP_INVALIDATE));
                         }
                     }
@@ -329,11 +329,11 @@ namespace System.Windows.Interop
                     _needsUpdate = true;
                     RegisterForAsyncUpdateResource();
                 }
-            } 
+            }
 
             WritePostscript();
         }
-        
+
         // ISupportInitialize
 
         ///
@@ -431,7 +431,7 @@ namespace System.Windows.Interop
 
         private Int32Rect _sourceRect = Int32Rect.Empty;
         private BitmapSizeOptions _sizeOptions = null;
-}
+    }
 
     #endregion // InteropBitmap
 }

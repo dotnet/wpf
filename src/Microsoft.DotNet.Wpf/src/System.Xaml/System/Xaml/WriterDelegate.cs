@@ -74,10 +74,12 @@ namespace System.Xaml
                 if (disposing && !IsDisposed)
                 {
                     _addDelegate(XamlNodeType.None, XamlNode.InternalNodeType.EndOfStream);
-                    _addDelegate = delegate { throw new XamlException(SR.WriterIsClosed); };
+                    _addDelegate = delegate
+                    { throw new XamlException(SR.WriterIsClosed); };
                     if (_addLineInfoDelegate != null)
                     {
-                        _addLineInfoDelegate = delegate { throw new XamlException(SR.WriterIsClosed); };
+                        _addLineInfoDelegate = delegate
+                        { throw new XamlException(SR.WriterIsClosed); };
                     }
                 }
             }

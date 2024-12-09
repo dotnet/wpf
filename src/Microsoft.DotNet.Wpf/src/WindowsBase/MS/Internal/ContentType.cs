@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -48,7 +48,7 @@ namespace MS.Internal
     /// Content Type class
     /// </summary>
     internal sealed class ContentType
-    {       
+    {
         //------------------------------------------------------
         //
         //  Internal Constructors
@@ -171,9 +171,9 @@ namespace MS.Internal
         internal static ContentType Empty
         {
             get
-            {                
+            {
                 return _emptyContentType;
-            }           
+            }
         }
 
         /// <summary>
@@ -205,7 +205,7 @@ namespace MS.Internal
         /// <returns></returns>
         internal bool AreTypeAndSubTypeEqual(ContentType contentType)
         {
-            return AreTypeAndSubTypeEqual(contentType, false);     
+            return AreTypeAndSubTypeEqual(contentType, false);
         }
 
         /// <summary>
@@ -248,7 +248,7 @@ namespace MS.Internal
                 // for the broader set of strings that have not been restricted in the same way.
                 result = string.Equals(_type, contentType.TypeComponent, StringComparison.OrdinalIgnoreCase) &&
                          string.Equals(_subType, contentType.SubTypeComponent, StringComparison.OrdinalIgnoreCase);
-            }           
+            }
             return result;
         }
 
@@ -257,7 +257,7 @@ namespace MS.Internal
         /// </summary>
         /// <returns></returns>
         public override string ToString()
-        {   
+        {
             if (_contentType == null)
             {
                 //This is needed so that while debugging we get the correct 
@@ -267,13 +267,13 @@ namespace MS.Internal
 
                 Debug.Assert(!string.IsNullOrEmpty(_type)
                              || !string.IsNullOrEmpty(_subType));
-            
+
                 StringBuilder stringBuilder = new StringBuilder(_type);
                 stringBuilder.Append('/');
                 stringBuilder.Append(_subType);
 
                 if (_parameterDictionary != null && _parameterDictionary.Count > 0)
-                {   
+                {
                     foreach (string paramterKey in _parameterDictionary.Keys)
                     {
                         stringBuilder.Append(_linearWhiteSpaceChars[0]);
@@ -287,7 +287,7 @@ namespace MS.Internal
 
                 _contentType = stringBuilder.ToString();
             }
-            
+
             return _contentType;
         }
 
@@ -322,7 +322,7 @@ namespace MS.Internal
                 {
                     return x.AreTypeAndSubTypeEqual(y);
                 }
-            }            
+            }
 
             /// <summary>
             /// We lower case the results of ToString() because it returns the original
@@ -336,7 +336,7 @@ namespace MS.Internal
         }
 
         internal class WeakComparer : IEqualityComparer<ContentType>
-        {            
+        {
             /// <summary>            
             /// This method does a weak comparison of the content types. 
             /// Parameter and value pairs are not used for the comparison. 
@@ -345,7 +345,7 @@ namespace MS.Internal
             {
                 if (x == null)
                 {
-                    return (y == null); 
+                    return (y == null);
                 }
                 else
                 {
@@ -389,7 +389,7 @@ namespace MS.Internal
             //assume that the index will be greater than 0 and less that length-2.
 
             int index = contentType.IndexOf(_linearWhiteSpaceChars[2]);
-            
+
             while (index != -1)
             {
                 if (contentType[index - 1] == _linearWhiteSpaceChars[1] || contentType[index + 1] == _linearWhiteSpaceChars[1])
@@ -419,7 +419,7 @@ namespace MS.Internal
                 throw new ArgumentException(SR.InvalidTypeSubType);
             }
 
-            _type    = ValidateToken(typeAndSubType.Slice(0, forwardSlashPos).ToString());
+            _type = ValidateToken(typeAndSubType.Slice(0, forwardSlashPos).ToString());
             _subType = ValidateToken(typeAndSubType.Slice(forwardSlashPos + 1).ToString());
         }
 
@@ -480,7 +480,7 @@ namespace MS.Internal
         private static int GetLengthOfParameterValue(ReadOnlySpan<char> s, int startIndex)
         {
             int length;
-            
+
             //if the parameter value does not start with a '"' then,
             //we expect a valid token. So we look for Linear White Spaces or
             //a ';' as the terminator for the token value.
@@ -547,9 +547,9 @@ namespace MS.Internal
                     continue;
                 else
                     if (IsAllowedCharacter(token[i]))
-                        continue;
-                    else
-                        throw new ArgumentException(SR.InvalidToken);
+                    continue;
+                else
+                    throw new ArgumentException(SR.InvalidToken);
             }
 
             return token;
@@ -567,10 +567,10 @@ namespace MS.Internal
             if (string.IsNullOrEmpty(parameterValue))
                 throw new ArgumentException(SR.InvalidParameterValue);
 
-            if (parameterValue.Length >= 2 && 
-                parameterValue.StartsWith(_quote, StringComparison.Ordinal) && 
+            if (parameterValue.Length >= 2 &&
+                parameterValue.StartsWith(_quote, StringComparison.Ordinal) &&
                 parameterValue.EndsWith(_quote, StringComparison.Ordinal))
-                ValidateQuotedText(parameterValue.AsSpan(1, parameterValue.Length-2));
+                ValidateQuotedText(parameterValue.AsSpan(1, parameterValue.Length - 2));
             else
                 ValidateToken(parameterValue);
 
@@ -593,9 +593,9 @@ namespace MS.Internal
                 if (quotedText[i] <= ' ' || quotedText[i] >= 0xFF)
                     throw new ArgumentException(SR.InvalidParameterValue);
                 else
-                    if (quotedText[i] == '"' && 
-                        (i==0 || quotedText[i-1] != '\\'))
-                        throw new ArgumentException(SR.InvalidParameterValue);
+                    if (quotedText[i] == '"' &&
+                        (i == 0 || quotedText[i - 1] != '\\'))
+                    throw new ArgumentException(SR.InvalidParameterValue);
             }
         }
 
@@ -616,7 +616,7 @@ namespace MS.Internal
         private static bool IsAsciiLetterOrDigit(char character) =>
             ((((uint)character - 'A') & ~0x20) < 26) ||
             (((uint)character - '0') < 10);
- 
+
         /// <summary>
         /// Returns true if the input character is one of the Linear White Space characters - 
         /// ' ', '\t', '\n', '\r'
@@ -635,8 +635,8 @@ namespace MS.Internal
             {
                 _parameterDictionary = new Dictionary<string, string>(); //initial size 0
             }
-        }        
-       
+        }
+
         #endregion Private Methods
 
         //------------------------------------------------------
@@ -645,17 +645,17 @@ namespace MS.Internal
         //
         //------------------------------------------------------
         #region Private Members
- 
+
         private string _contentType = null;
-        private string _type    = String.Empty;
+        private string _type = String.Empty;
         private string _subType = String.Empty;
         private string _originalString;
         private Dictionary<string, string> _parameterDictionary = null;
-        private bool   _isInitialized = false;
+        private bool _isInitialized = false;
 
-        private const string     _quote              = "\"";
-        private const char       _semicolonSeparator = ';';
-        private const char       _equalSeparator     = '=';
+        private const string _quote = "\"";
+        private const char _semicolonSeparator = ';';
+        private const char _equalSeparator = '=';
 
         //This array is sorted by the ascii value of these characters.
         private static ReadOnlySpan<char> AllowedCharacters => [
@@ -663,9 +663,9 @@ namespace MS.Internal
            '%' /*37*/, '&' /*38*/ , '\'' /*39*/,
            '*' /*42*/, '+' /*43*/ , '-'  /*45*/,
            '.' /*46*/, '^' /*94*/ , '_'  /*95*/,
-           '`' /*96*/, '|' /*124*/, '~'  /*126*/, 
+           '`' /*96*/, '|' /*124*/, '~'  /*126*/,
          ];
-        
+
         //Linear White Space characters
         private static readonly char[] _linearWhiteSpaceChars = [
            ' ',  // space           - \x20

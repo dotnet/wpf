@@ -22,10 +22,10 @@
 
 using System;
 using System.IO;
-using Microsoft.Build.Utilities;
-using Microsoft.Build.Tasks.Windows;
-using System.Text;
 using System.Security.Cryptography;
+using System.Text;
+using Microsoft.Build.Tasks.Windows;
+using Microsoft.Build.Utilities;
 
 namespace MS.Internal
 {
@@ -83,7 +83,7 @@ namespace MS.Internal
         // Determines if this is a real build operation or an
         // intellisense build operation
         //
-        bool IsRealBuild {get;}
+        bool IsRealBuild { get; }
 
         //
         // Determines if this is running in VS or MsBuild
@@ -157,7 +157,7 @@ namespace MS.Internal
 
         public byte[] GetChecksum(string fileName, Guid hashGuid)
         {
-            byte[] hashData=null;
+            byte[] hashData = null;
 
             if (HostFileManager != null)
             {
@@ -389,7 +389,7 @@ namespace MS.Internal
             {
                 MarkupCompilePass1 pass1;
                 return (HostFileManager != null) ||
-                    (   (pass1 = _buildTask as MarkupCompilePass1) != null &&
+                    ((pass1 = _buildTask as MarkupCompilePass1) != null &&
                         pass1.IsRunningInVisualStudio);
             }
         }

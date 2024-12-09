@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
     /// the developer freedom to create the reference in the absence of the container, or to have the reference
     /// refer to any one of multiple containers having a similar format.
     /// </remarks>
-    internal abstract class CompoundFileReference: IComparable
+    internal abstract class CompoundFileReference : IComparable
     {
         #region Enums
         /// <summary>
@@ -32,7 +32,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// These are only used for serialization
         /// </remarks>
         private enum RefComponentType : int
-        { 
+        {
             /// <summary>
             /// Stream component
             /// </summary>
@@ -49,7 +49,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <summary>
         /// Full name of the stream or storage this reference refers to (see StreamInfo and StorageInfo)
         /// </summary>
-        abstract public string FullName {get;}
+        abstract public string FullName { get; }
 
         #endregion
 
@@ -111,7 +111,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             // write the count
             if (!calcOnly)
-                writer.Write( entries );
+                writer.Write(entries);
 
             bytes += ContainerUtilities.Int32Size;
 
@@ -121,7 +121,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 if (!calcOnly)
                 {
-                    writer.Write( (Int32)RefComponentType.Storage );
+                    writer.Write((Int32)RefComponentType.Storage);
                 }
                 bytes += ContainerUtilities.Int32Size;
                 bytes += ContainerUtilities.WriteByteLengthPrefixedDWordPaddedUnicodeString(writer, segments[i]);
@@ -132,7 +132,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 // we are responsible for the prefix
                 if (!calcOnly)
                 {
-                    writer.Write( (Int32)RefComponentType.Stream );
+                    writer.Write((Int32)RefComponentType.Stream);
                 }
                 bytes += ContainerUtilities.Int32Size;
 
@@ -154,13 +154,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <exception cref="FileFormatException">Throws a FileFormatException if any formatting errors are encountered</exception>
         internal static CompoundFileReference Load(BinaryReader reader, out int bytesRead)
         {
-            ContainerUtilities.CheckAgainstNull( reader, "reader" );
+            ContainerUtilities.CheckAgainstNull(reader, "reader");
 
             bytesRead = 0;  // running count of how much we've read - sanity check
 
             // create the TypeMap
             // reconstitute ourselves from the given BinaryReader
-            
+
             // in this version, the next Int32 is the number of entries
             Int32 entryCount = reader.ReadInt32();
             bytesRead += ContainerUtilities.Int32Size;
@@ -186,27 +186,29 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 switch (refType)
                 {
                     case RefComponentType.Storage:
-                    {
-                        if (streamName != null)
-                            throw new FileFormatException(
-                                SR.CFRCorruptStgFollowStm);
+                        {
+                            if (streamName != null)
+                                throw new FileFormatException(
+                                    SR.CFRCorruptStgFollowStm);
 
-                        if (storageList == null)
-                            storageList = new StringCollection();
+                            if (storageList == null)
+                                storageList = new StringCollection();
 
-                        String str = ContainerUtilities.ReadByteLengthPrefixedDWordPaddedUnicodeString(reader, out byteLength);
-                        bytesRead += byteLength;
-                        storageList.Add(str);
-} break;
+                            String str = ContainerUtilities.ReadByteLengthPrefixedDWordPaddedUnicodeString(reader, out byteLength);
+                            bytesRead += byteLength;
+                            storageList.Add(str);
+                        }
+                        break;
                     case RefComponentType.Stream:
-                    {
-                        if (streamName != null)
-                            throw new FileFormatException(
-                                SR.CFRCorruptMultiStream);
+                        {
+                            if (streamName != null)
+                                throw new FileFormatException(
+                                    SR.CFRCorruptMultiStream);
 
-                        streamName = ContainerUtilities.ReadByteLengthPrefixedDWordPaddedUnicodeString(reader, out byteLength);
-                        bytesRead += byteLength;
-                    } break;
+                            streamName = ContainerUtilities.ReadByteLengthPrefixedDWordPaddedUnicodeString(reader, out byteLength);
+                            bytesRead += byteLength;
+                        }
+                        break;
 
                     // we don't handle these types yet
                     default:

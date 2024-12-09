@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Windows.Input
         public InputEventArgs(InputDevice inputDevice, int timestamp)
         {
             /* inputDevice parameter being null is valid*/
-	    /* timestamp parameter is valuetype, need not be checked */
+            /* timestamp parameter is valuetype, need not be checked */
             _inputDevice = inputDevice;
             _timestamp = timestamp;
         }
@@ -34,8 +34,8 @@ namespace System.Windows.Input
         /// </summary>
         public InputDevice Device
         {
-            get {return _inputDevice;}
-            internal set {_inputDevice = value;}
+            get { return _inputDevice; }
+            internal set { _inputDevice = value; }
         }
 
         /// <summary>
@@ -43,10 +43,10 @@ namespace System.Windows.Input
         /// </summary>
         public int Timestamp
         {
-            get {return _timestamp;}
+            get { return _timestamp; }
         }
 
-  
+
         /// <summary>
         ///     The mechanism used to call the type-specific handler on the
         ///     target.
@@ -59,12 +59,12 @@ namespace System.Windows.Input
         /// </param>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            InputEventHandler handler = (InputEventHandler) genericHandler;
+            InputEventHandler handler = (InputEventHandler)genericHandler;
             handler(genericTarget, this);
         }
 
         private InputDevice _inputDevice;
         private int _timestamp;
-     }
+    }
 }
 

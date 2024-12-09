@@ -1,16 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Manage Input Methods (EA-IME, TextServicesFramework).
 
-using System.Runtime.InteropServices;
 using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Threading;
-using System.Windows.Threading;
 using System.Windows.Interop;
-using MS.Win32;
+using System.Windows.Threading;
 using MS.Internal;
+using MS.Win32;
 
 namespace System.Windows.Input
 {
@@ -33,12 +33,12 @@ namespace System.Windows.Input
         /// <summary>
         /// InputMethod state is on.
         /// </summary>
-        On  = 1,
+        On = 1,
 
         /// <summary>
         /// InputMethod state is not set. It does not care.
         /// </summary>
-        DoNotCare  = 2,
+        DoNotCare = 2,
     }
 
     //------------------------------------------------------
@@ -66,7 +66,7 @@ namespace System.Windows.Input
         /// Speech mode is indeterminate.
         /// </summary>
         Indeterminate,
-}
+    }
 
     //------------------------------------------------------
     //
@@ -83,48 +83,48 @@ namespace System.Windows.Input
         /// <summary>
         /// Native Mode (Hiragana, Hangul, Chinese)
         /// </summary>
-        Native            = 0x00000001,
+        Native = 0x00000001,
         /// <summary>
         /// Japanese Katakana Mode
         /// </summary>
-        Katakana          = 0x00000002,
+        Katakana = 0x00000002,
         /// <summary>
         /// Full Shape mode
         /// </summary>
-        FullShape         = 0x00000004,
+        FullShape = 0x00000004,
         /// <summary>
         /// Roman Input Mode
         /// </summary>
-        Roman             = 0x00000008,
+        Roman = 0x00000008,
         /// <summary>
         /// Roman Input Mode
         /// </summary>
-        CharCode          = 0x00000010,
+        CharCode = 0x00000010,
         /// <summary>
         /// No conversion
         /// </summary>
-        NoConversion      = 0x00000020,
+        NoConversion = 0x00000020,
         /// <summary>
         /// EUDC symbol(bopomofo) Mode
         /// </summary>
-        Eudc              = 0x00000040,
+        Eudc = 0x00000040,
         /// <summary>
         /// Symbol Input Mode
         /// </summary>
-        Symbol            = 0x00000080, 
+        Symbol = 0x00000080,
         /// <summary>
         /// Fixed Input Mode
         /// </summary>
-        Fixed             = 0x00000100,
+        Fixed = 0x00000100,
         /// <summary>
         /// Alphanumeric mode (Alphanumeric mode was 0x0 in Win32 IMM/Cicero).
         /// </summary>
-        Alphanumeric      = 0x00000200,
+        Alphanumeric = 0x00000200,
 
         /// <summary>
         /// Mode is not set. It does not care.
         /// </summary>
-        DoNotCare         = unchecked((int)0x80000000),
+        DoNotCare = unchecked((int)0x80000000),
     }
 
     //------------------------------------------------------
@@ -142,35 +142,35 @@ namespace System.Windows.Input
         /// <summary>
         /// Non Sentence conversion
         /// </summary>
-        None               = 0x00000000,   
+        None = 0x00000000,
         /// <summary>
         /// PluralClause conversion
         /// </summary>
-        PluralClause       = 0x00000001,      
+        PluralClause = 0x00000001,
         /// <summary>
         /// Single Kanji/Hanja conversion
         /// </summary>
-        SingleConversion   = 0x00000002,   
+        SingleConversion = 0x00000002,
         /// <summary>
         /// automatic conversion mode
         /// </summary>
-        Automatic          = 0x00000004,    
+        Automatic = 0x00000004,
         /// <summary>
         /// phrase prediction mode
         /// </summary>
-        PhrasePrediction   = 0x00000008,   
+        PhrasePrediction = 0x00000008,
         /// <summary>
         /// conversation style conversion mode
         /// </summary>
-        Conversation       = 0x00000010, 
+        Conversation = 0x00000010,
 
         /// <summary>
         /// Mode is not set. It does not care.
         /// </summary>
-        DoNotCare          = unchecked((int)0x80000000),
+        DoNotCare = unchecked((int)0x80000000),
     }
- 
-   
+
+
     //------------------------------------------------------
     //
     //  InputMethod class
@@ -214,7 +214,7 @@ namespace System.Windows.Input
                         typeof(bool),
                         typeof(InputMethod),
                         new PropertyMetadata(
-                                true, 
+                                true,
                                 new PropertyChangedCallback(IsInputMethodEnabled_Changed)));
 
         /// <summary>
@@ -304,7 +304,7 @@ namespace System.Windows.Input
 
             return (InputMethodState)(target.GetValue(PreferredImeStateProperty));
         }
-         
+
         /// <summary>
         /// This is a property for UIElements such as TextBox. 
         /// When the element gets the focus, the IME conversion mode is changed to
@@ -337,7 +337,7 @@ namespace System.Windows.Input
 
             return (ImeConversionModeValues)(target.GetValue(PreferredImeConversionModeProperty));
         }
-         
+
         /// <summary>
         /// This is a property for UIElements such as TextBox. 
         /// When the element gets the focus, the IME sentence mode is changed to
@@ -380,7 +380,7 @@ namespace System.Windows.Input
                         "InputScope",
                         typeof(InputScope),
                         typeof(InputMethod),
-                        new PropertyMetadata((InputScope) null));
+                        new PropertyMetadata((InputScope)null));
 
         /// <summary>
         /// Setter for InputScope DependencyProperty
@@ -412,13 +412,13 @@ namespace System.Windows.Input
             get
             {
                 InputMethod inputMethod = null;
-            
+
                 // Do not auto-create the dispatcher.
                 Dispatcher dispatcher = Dispatcher.FromThread(Thread.CurrentThread);
-                if(dispatcher != null)
+                if (dispatcher != null)
                 {
                     inputMethod = dispatcher.InputMethod as InputMethod;
-                
+
                     if (inputMethod == null)
                     {
                         inputMethod = new InputMethod();
@@ -434,7 +434,7 @@ namespace System.Windows.Input
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
@@ -494,14 +494,14 @@ namespace System.Windows.Input
         }
 
         #endregion Public Methods        
- 
+
         //------------------------------------------------------
         //
         //  Public Operators
         //
         //------------------------------------------------------
- 
- 
+
+
         //------------------------------------------------------
         //
         //  Public Properties
@@ -580,7 +580,7 @@ namespace System.Windows.Input
                         // we don't have to call IMM unless the value is changed.
                         if (fOpen != (value == InputMethodState.On))
                         {
-                           UnsafeNativeMethods.ImmSetOpenStatus(new HandleRef(this, himc), (value == InputMethodState.On));
+                            UnsafeNativeMethods.ImmSetOpenStatus(new HandleRef(this, himc), (value == InputMethodState.On));
                         }
 
                         UnsafeNativeMethods.ImmReleaseContext(new HandleRef(this, hwnd), new HandleRef(this, himc));
@@ -1000,11 +1000,11 @@ namespace System.Windows.Input
                     {
                         UnsafeNativeMethods.SentenceModeFlags convmode = (UnsafeNativeMethods.SentenceModeFlags)compartment.IntValue;
                         ImeSentenceModeValues ret = 0;
-    
+
                         // TF_SENTENCEMODE_ALPHANUMERIC is 0. 
                         if (convmode == UnsafeNativeMethods.SentenceModeFlags.TF_SENTENCEMODE_NONE)
                             return ImeSentenceModeValues.None;
-    
+
                         if ((convmode & UnsafeNativeMethods.SentenceModeFlags.TF_SENTENCEMODE_PLAURALCLAUSE) != 0)
                             ret |= ImeSentenceModeValues.PluralClause;
                         if ((convmode & UnsafeNativeMethods.SentenceModeFlags.TF_SENTENCEMODE_SINGLECONVERT) != 0)
@@ -1015,7 +1015,7 @@ namespace System.Windows.Input
                             ret |= ImeSentenceModeValues.PhrasePrediction;
                         if ((convmode & UnsafeNativeMethods.SentenceModeFlags.TF_SENTENCEMODE_CONVERSATION) != 0)
                             ret |= ImeSentenceModeValues.Conversation;
-    
+
                         return ret;
                     }
                 }
@@ -1038,7 +1038,7 @@ namespace System.Windows.Input
                         // TF_SENTENCEMODE_ALPHANUMERIC is 0. 
                         if (sentence == NativeMethods.IME_SMODE_NONE)
                             return ImeSentenceModeValues.None;
-    
+
                         if ((sentence & NativeMethods.IME_SMODE_PLAURALCLAUSE) != 0)
                             ret |= ImeSentenceModeValues.PluralClause;
                         if ((sentence & NativeMethods.IME_SMODE_SINGLECONVERT) != 0)
@@ -1049,7 +1049,7 @@ namespace System.Windows.Input
                             ret |= ImeSentenceModeValues.PhrasePrediction;
                         if ((sentence & NativeMethods.IME_SMODE_CONVERSATION) != 0)
                             ret |= ImeSentenceModeValues.Conversation;
-    
+
                         return ret;
                     }
                 }
@@ -1127,7 +1127,7 @@ namespace System.Windows.Input
                         UnsafeNativeMethods.ImmReleaseContext(new HandleRef(this, hwnd), new HandleRef(this, himc));
                     }
                 }
-}
+            }
         }
 
         /// <summary> 
@@ -1204,7 +1204,7 @@ namespace System.Windows.Input
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         /// <summary>
@@ -1292,7 +1292,7 @@ namespace System.Windows.Input
             IInputElement inputElement = (IInputElement)d;
             if (inputElement == Keyboard.FocusedElement)
             {
-                InputMethod.Current.EnableOrDisableInputMethod((bool) e.NewValue);
+                InputMethod.Current.EnableOrDisableInputMethod((bool)e.NewValue);
             }
         }
 
@@ -1325,7 +1325,7 @@ namespace System.Windows.Input
             {
                 IntPtr hwnd;
                 hwnd = HwndFromInputElement(Keyboard.FocusedElement);
- 
+
                 if (bEnabled)
                 {
                     //
@@ -1336,57 +1336,57 @@ namespace System.Windows.Input
                         UnsafeNativeMethods.ImmAssociateContext(new HandleRef(this, hwnd), new HandleRef(this, _defaultImc));
                     }
                 }
-                else 
+                else
                 {
                     //
                     // Disable. Use null hIMC.
                     //
                     UnsafeNativeMethods.ImmAssociateContext(new HandleRef(this, hwnd), new HandleRef(this, IntPtr.Zero));
                 }
-}
+            }
         }
- 
+
         #endregion Internal methods
-        
+
         //------------------------------------------------------
         //
         //  Internal Properties
         //
         //------------------------------------------------------
-        
+
         #region Internal Properties
 
         // Set and get the referrence of TextServicesCompartmentContext for
         // the Dispatcher's dispatcher thread.
         internal TextServicesContext TextServicesContext
         {
-            get {return _textservicesContext;}
-            set {_textservicesContext = value;}
+            get { return _textservicesContext; }
+            set { _textservicesContext = value; }
         }
 
         // Set and get the per Dispatcher cache of TextServicesCompartmentContext
         internal TextServicesCompartmentContext TextServicesCompartmentContext
         {
-            get {return _textservicesCompartmentContext;}
-            set {_textservicesCompartmentContext = value;}
+            get { return _textservicesCompartmentContext; }
+            set { _textservicesCompartmentContext = value; }
         }
 
         // Set and get the per Dispatcher cache of InputLanguageManager
         internal InputLanguageManager InputLanguageManager
         {
-            get {return _inputlanguagemanager;}
-            set {_inputlanguagemanager = value;}
+            get { return _inputlanguagemanager; }
+            set { _inputlanguagemanager = value; }
         }
 
         // Set and get the per Dispatcher cache of DefaultTextStore
         internal DefaultTextStore DefaultTextStore
         {
-            get {return _defaulttextstore;}
-            set {_defaulttextstore = value;}
+            get { return _defaulttextstore; }
+            set { _defaulttextstore = value; }
         }
 
         #endregion Internal Properties
- 
+
         //------------------------------------------------------
         //
         //  Private Methods
@@ -1426,7 +1426,7 @@ namespace System.Windows.Input
                     convMode |= UnsafeNativeMethods.ConversionModeFlags.TF_CONVERSIONMODE_SYMBOL;
                 if ((immConvMode & NativeMethods.IME_CMODE_FIXED) != 0)
                     convMode |= UnsafeNativeMethods.ConversionModeFlags.TF_CONVERSIONMODE_FIXED;
-            }            
+            }
             return convMode;
         }
 
@@ -1470,7 +1470,7 @@ namespace System.Windows.Input
                 else if (iminfo.Scope == CompartmentScope.Global)
                     compartment = TextServicesCompartmentContext.Current.GetGlobalCompartment(iminfo.Guid);
                 if (compartment != null)
-                   compartment.UnadviseNotifySink();
+                    compartment.UnadviseNotifySink();
             }
         }
 
@@ -1504,21 +1504,21 @@ namespace System.Windows.Input
                     if (fnConfigure != null)
                     {
                         // We could get ITfFnConfigure, we can say the configure UI can be shown.
-                        bCanShown  = true;
+                        bCanShown = true;
                         if (fShow)
                         {
                             fnConfigure.Show(HwndFromInputElement(element), tf_profile.langid, ref tf_profile.guidProfile);
                         }
                         Marshal.ReleaseComObject(fnConfigure);
                     }
-                
+
                     Marshal.ReleaseComObject(funcPrv);
                 }
             }
             else
             {
                 // There is no API to test if IMM32-IME can show the configure UI. We assume they can do.
-                bCanShown  = true;
+                bCanShown = true;
                 if (fShow)
                 {
                     UnsafeNativeMethods.ImmConfigureIME(new HandleRef(this, hkl), new HandleRef(this, HwndFromInputElement(element)), NativeMethods.IME_CONFIG_GENERAL, IntPtr.Zero);
@@ -1557,26 +1557,28 @@ namespace System.Windows.Input
                     if (fnConfigure != null)
                     {
                         // We could get ITfFnConfigureRegisterWord, we can say the configure UI can be shown.
-                        bCanShown  = true;
+                        bCanShown = true;
                         if (fShow)
                         {
                             fnConfigure.Show(HwndFromInputElement(element), tf_profile.langid, ref tf_profile.guidProfile, strRegister);
                         }
                         Marshal.ReleaseComObject(fnConfigure);
                     }
-                
+
                     Marshal.ReleaseComObject(funcPrv);
                 }
             }
             else
             {
                 // There is no API to test if IMM32-IME can show the configure UI. We assume they can do.
-                bCanShown  = true;
+                bCanShown = true;
                 if (fShow)
                 {
-                    NativeMethods.REGISTERWORD regWord = new NativeMethods.REGISTERWORD();
-                    regWord.lpReading = null;
-                    regWord.lpWord = strRegister;
+                    NativeMethods.REGISTERWORD regWord = new NativeMethods.REGISTERWORD
+                    {
+                        lpReading = null,
+                        lpWord = strRegister
+                    };
                     UnsafeNativeMethods.ImmConfigureIME(new HandleRef(this, hkl), new HandleRef(this, HwndFromInputElement(element)), NativeMethods.IME_CONFIG_REGISTERWORD, ref regWord);
                 }
             }
@@ -1596,7 +1598,7 @@ namespace System.Windows.Input
                 if (o != null)
                 {
                     DependencyObject containingVisual = InputElement.GetContainingVisual(o);
-                    if(containingVisual != null)
+                    if (containingVisual != null)
                     {
                         IWin32Window win32Window = null;
                         PresentationSource source = PresentationSource.CriticalFromVisual(containingVisual);
@@ -1608,7 +1610,7 @@ namespace System.Windows.Input
                                 hwnd = win32Window.Handle;
                             }
                         }
-}
+                    }
                 }
             }
 
@@ -1657,7 +1659,7 @@ namespace System.Windows.Input
                 UnsafeNativeMethods.TF_LANGUAGEPROFILE[] tf_profiles = new UnsafeNativeMethods.TF_LANGUAGEPROFILE[1];
 
                 int fetched;
-                while(enumIpp.Next(1, tf_profiles,  out fetched) == NativeMethods.S_OK)
+                while (enumIpp.Next(1, tf_profiles, out fetched) == NativeMethods.S_OK)
                 {
                     // Check if this profile is active.
                     if (tf_profiles[0].fActive == true)
@@ -1681,38 +1683,38 @@ namespace System.Windows.Input
         private bool IsValidConversionMode(ImeConversionModeValues mode)
         {
             int mask = (int)(ImeConversionModeValues.Alphanumeric |
-                             ImeConversionModeValues.Native       |
-                             ImeConversionModeValues.Katakana     |
-                             ImeConversionModeValues.FullShape    |
-                             ImeConversionModeValues.Roman        |
-                             ImeConversionModeValues.CharCode     |
+                             ImeConversionModeValues.Native |
+                             ImeConversionModeValues.Katakana |
+                             ImeConversionModeValues.FullShape |
+                             ImeConversionModeValues.Roman |
+                             ImeConversionModeValues.CharCode |
                              ImeConversionModeValues.NoConversion |
-                             ImeConversionModeValues.Eudc         |
-                             ImeConversionModeValues.Symbol       |
-                             ImeConversionModeValues.Fixed        |
+                             ImeConversionModeValues.Eudc |
+                             ImeConversionModeValues.Symbol |
+                             ImeConversionModeValues.Fixed |
                              ImeConversionModeValues.DoNotCare);
 
-           if (((int)mode & ~mask) != 0)
-               return false;
+            if (((int)mode & ~mask) != 0)
+                return false;
 
-           return true;
+            return true;
         }
 
         // This validates the ImeSentenceMode value.
         private bool IsValidSentenceMode(ImeSentenceModeValues mode)
         {
-            int mask = (int)(ImeSentenceModeValues.None              |
-                             ImeSentenceModeValues.PluralClause      |
-                             ImeSentenceModeValues.SingleConversion  |
-                             ImeSentenceModeValues.Automatic         |
-                             ImeSentenceModeValues.PhrasePrediction  |
-                             ImeSentenceModeValues.Conversation      |
+            int mask = (int)(ImeSentenceModeValues.None |
+                             ImeSentenceModeValues.PluralClause |
+                             ImeSentenceModeValues.SingleConversion |
+                             ImeSentenceModeValues.Automatic |
+                             ImeSentenceModeValues.PhrasePrediction |
+                             ImeSentenceModeValues.Conversation |
                              ImeSentenceModeValues.DoNotCare);
 
-           if (((int)mode & ~mask) != 0)
-               return false;
+            if (((int)mode & ~mask) != 0)
+                return false;
 
-           return true;
+            return true;
         }
 
 
@@ -1721,7 +1723,7 @@ namespace System.Windows.Input
         //  Private Event
         //
         //------------------------------------------------------
-                
+
         private event InputMethodStateChangedEventHandler _StateChanged;
 
         //------------------------------------------------------
@@ -1757,7 +1759,7 @@ namespace System.Windows.Input
         //  Private Fields
         //
         //------------------------------------------------------
-                
+
         #region Private Fields
 
         // This is a slot to keep the implementaion of ITfCompartmentEventSink.
@@ -1778,7 +1780,7 @@ namespace System.Windows.Input
         private DefaultTextStore _defaulttextstore;
 
         // If the system is IMM enabled, this is true.
-        private static bool _immEnabled = SafeSystemMetrics.IsImmEnabled ; 
+        private static bool _immEnabled = SafeSystemMetrics.IsImmEnabled;
 
         // the default imc. The default imc is per thread and we cache it in ThreadStatic.
         [ThreadStatic]
@@ -1793,7 +1795,7 @@ namespace System.Windows.Input
     //  InputMethodStateChangedEventHandler delegate
     //
     //------------------------------------------------------
- 
+
     /// <summary>
     ///     The delegate to use for handlers that receive
     ///     input method state changed event.

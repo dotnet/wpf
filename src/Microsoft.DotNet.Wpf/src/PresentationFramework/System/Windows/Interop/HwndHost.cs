@@ -1,17 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections;
+using System.Runtime.InteropServices;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
 using System.Windows.Input;
-using System.Collections;
-using MS.Win32;
+using System.Windows.Media;
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Interop;
-using System.Windows.Media;
-using System.Runtime.InteropServices;
-using System.Windows.Threading;
+using MS.Win32;
 
 // Disable pragma warnings to enable PREsharp pragmas
 #pragma warning disable 1634, 1691
@@ -37,12 +37,12 @@ namespace System.Windows.Interop
         ///<remarks> Not available in Internet zone</remarks>
         protected HwndHost()
         {
-            Initialize( false ) ;
+            Initialize(false);
         }
 
-        internal HwndHost(bool fTrusted )
+        internal HwndHost(bool fTrusted)
         {
-            Initialize( fTrusted ) ;
+            Initialize(fTrusted);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace System.Windows.Interop
             add
             {
 
-                if(_hooks == null)
+                if (_hooks == null)
                 {
                     _hooks = new ArrayList(8);
                 }
@@ -97,11 +97,11 @@ namespace System.Windows.Interop
             remove
             {
 
-                if(_hooks != null)
+                if (_hooks != null)
                 {
                     _hooks.Remove(value);
 
-                    if(_hooks.Count == 0)
+                    if (_hooks.Count == 0)
                     {
                         _hooks = null;
                     }
@@ -142,7 +142,7 @@ namespace System.Windows.Interop
 
             bool handled = ((IKeyboardInputSink)this).TranslateAccelerator(ref msg, modifiers);
 
-            if(handled)
+            if (handled)
                 e.Handled = handled;
 
             base.OnKeyUp(e);
@@ -177,14 +177,14 @@ namespace System.Windows.Interop
 
             bool handled = ((IKeyboardInputSink)this).TranslateAccelerator(ref msg, modifiers);
 
-            if(handled)
+            if (handled)
                 e.Handled = handled;
 
             base.OnKeyDown(e);
         }
 
 
-#region IKeyboardInputSink
+        #region IKeyboardInputSink
 
         // General security note on the implementation pattern of this interface. In Dev10 it was chosen
         // to expose the interface implementation for overriding to customers. We did so by keeping the
@@ -254,7 +254,7 @@ namespace System.Windows.Interop
         ///     any other methods are called.  It may be set multiple times,
         ///     and should be set to null before disposal.
         /// </summary>
-        IKeyboardInputSite IKeyboardInputSink.KeyboardInputSite { get;  set; }
+        IKeyboardInputSite IKeyboardInputSink.KeyboardInputSite { get; set; }
 
         /// <summary>
         ///     This method is called whenever one of the component's
@@ -310,7 +310,7 @@ namespace System.Windows.Interop
             return HasFocusWithinCore();
         }
 
-#endregion IKeyboardInputSink
+        #endregion IKeyboardInputSink
 
         /// <summary>
         ///     Updates the child window to reflect the state of this element.
@@ -335,16 +335,16 @@ namespace System.Windows.Interop
 
             PresentationSource source = null;
             CompositionTarget vt = null;
-            if (( CriticalHandle != IntPtr.Zero) && IsVisible)
+            if ((CriticalHandle != IntPtr.Zero) && IsVisible)
             {
                 source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */);
-                if(source != null)
+                if (source != null)
                 {
                     vt = source.CompositionTarget;
                 }
             }
 
-            if(vt != null && vt.RootVisual != null)
+            if (vt != null && vt.RootVisual != null)
             {
                 // Translate the layout information assigned to us from the co-ordinate
                 // space of this element, through the root visual, to the Win32 client
@@ -412,7 +412,8 @@ namespace System.Windows.Interop
         {
             get
             {
-                if (!_hasDpiAwarenessContextTransition) return 1;
+                if (!_hasDpiAwarenessContextTransition)
+                    return 1;
                 DpiScale2 dpi = DpiUtil.GetWindowDpi(Handle, fallbackToNearestMonitorHeuristic: false);
                 DpiScale2 dpiParent = DpiUtil.GetWindowDpi(UnsafeNativeMethods.GetParent(_hwnd), fallbackToNearestMonitorHeuristic: false);
 
@@ -446,7 +447,7 @@ namespace System.Windows.Interop
 
             return rcRect;
         }
-        
+
         /// <summary>
         ///     Disposes this object.
         /// </summary>
@@ -468,11 +469,11 @@ namespace System.Windows.Interop
             }
 
 
-            if(disposing)
+            if (disposing)
             {
                 // Verify the thread has access to the context.
 #pragma warning suppress 6519
-                 VerifyAccess();
+                VerifyAccess();
 
 
                 // Remove our subclass.  Even if this fails, it will be forcably removed
@@ -565,7 +566,7 @@ namespace System.Windows.Interop
                     {
                         // Get the rect assigned by layout to us.
                         NativeMethods.RECT assignedRC = CalculateAssignedRC(source);
-                        
+
                         // The lParam is a pointer to a WINDOWPOS structure
                         // that contains information about the size and
                         // position that the window is changing to.  Note that
@@ -573,7 +574,7 @@ namespace System.Windows.Interop
                         // will change what happens to the window.
                         unsafe
                         {
-                            NativeMethods.WINDOWPOS * windowPos = (NativeMethods.WINDOWPOS *)lParam;
+                            NativeMethods.WINDOWPOS* windowPos = (NativeMethods.WINDOWPOS*)lParam;
 
                             // Always force the size of the window to be the
                             // size of our assigned rectangle.  Note that we
@@ -610,7 +611,7 @@ namespace System.Windows.Interop
                     return OnWmGetObject(wParam, lParam);
             }
 
-            return IntPtr.Zero ;
+            return IntPtr.Zero;
         }
 
         #region Automation
@@ -688,11 +689,11 @@ namespace System.Windows.Interop
         {
             DemandIfUntrusted();
 
-            Size desiredSize = new Size(0,0);
+            Size desiredSize = new Size(0, 0);
 
             // Measure to our desired size.  If we have a 0-length dimension,
             // the system will assume we don't care about that dimension.
-            if(CriticalHandle != IntPtr.Zero)
+            if (CriticalHandle != IntPtr.Zero)
             {
                 desiredSize.Width = Math.Min(_desiredSize.Width, constraint.Width);
                 desiredSize.Height = Math.Min(_desiredSize.Height, constraint.Height);
@@ -724,7 +725,7 @@ namespace System.Windows.Interop
         {
             DrawingGroup drawingGroup = null;
 
-            if(Handle != IntPtr.Zero)
+            if (Handle != IntPtr.Zero)
             {
                 NativeMethods.RECT rc = new NativeMethods.RECT();
                 SafeNativeMethods.GetWindowRect(_hwnd, ref rc);
@@ -732,7 +733,7 @@ namespace System.Windows.Interop
                 int height = rc.bottom - rc.top;
 
                 HandleRef hdcScreen = new HandleRef(this, UnsafeNativeMethods.GetDC(new HandleRef(this, IntPtr.Zero)));
-                if(hdcScreen.Handle != IntPtr.Zero)
+                if (hdcScreen.Handle != IntPtr.Zero)
                 {
                     HandleRef hdcBitmap = new HandleRef(this, IntPtr.Zero);
                     HandleRef hBitmap = new HandleRef(this, IntPtr.Zero);
@@ -740,24 +741,24 @@ namespace System.Windows.Interop
                     try
                     {
                         hdcBitmap = new HandleRef(this, UnsafeNativeMethods.CriticalCreateCompatibleDC(hdcScreen));
-                        if(hdcBitmap.Handle != IntPtr.Zero)
+                        if (hdcBitmap.Handle != IntPtr.Zero)
                         {
                             hBitmap = new HandleRef(this, UnsafeNativeMethods.CriticalCreateCompatibleBitmap(hdcScreen, width, height));
 
-                            if(hBitmap.Handle != IntPtr.Zero)
+                            if (hBitmap.Handle != IntPtr.Zero)
                             {
                                 // Select the bitmap into the DC so that we draw to it.
                                 IntPtr hOldBitmap = UnsafeNativeMethods.CriticalSelectObject(hdcBitmap, hBitmap.Handle);
                                 try
                                 {
                                     // Clear the bitmap to white (so we don't waste toner printing a black bitmap something fails).
-                                    NativeMethods.RECT rcPaint = new NativeMethods.RECT(0,0,width, height);
+                                    NativeMethods.RECT rcPaint = new NativeMethods.RECT(0, 0, width, height);
                                     IntPtr hbrWhite = UnsafeNativeMethods.CriticalGetStockObject(NativeMethods.WHITE_BRUSH);
                                     UnsafeNativeMethods.CriticalFillRect(hdcBitmap.Handle, ref rcPaint, hbrWhite);
 
                                     // First try to use the PrintWindow API.
                                     bool result = UnsafeNativeMethods.CriticalPrintWindow(_hwnd, hdcBitmap, 0);
-                                    if(result == false)
+                                    if (result == false)
                                     {
                                         // Fall back to sending a WM_PRINT message to the window.
                                         //
@@ -765,7 +766,7 @@ namespace System.Windows.Interop
                                         // to provide visual parity with WM_PAINT.  However, since the
                                         // GetDrawing method is virtual, the derived class can override
                                         // this default implementation and provide a better implementation.
-                                        UnsafeNativeMethods.SendMessage(_hwnd.Handle, WindowMessage.WM_PRINT, hdcBitmap.Handle, (IntPtr) (NativeMethods.PRF_CHILDREN | NativeMethods.PRF_CLIENT | NativeMethods.PRF_ERASEBKGND | NativeMethods.PRF_NONCLIENT));
+                                        UnsafeNativeMethods.SendMessage(_hwnd.Handle, WindowMessage.WM_PRINT, hdcBitmap.Handle, (IntPtr)(NativeMethods.PRF_CHILDREN | NativeMethods.PRF_CLIENT | NativeMethods.PRF_ERASEBKGND | NativeMethods.PRF_NONCLIENT));
                                     }
                                     else
                                     {
@@ -782,7 +783,7 @@ namespace System.Windows.Interop
                                     // Create a DrawingGroup that only contains an ImageDrawing that wraps the bitmap.
                                     drawingGroup = new DrawingGroup();
                                     System.Windows.Media.Imaging.BitmapSource bitmapSource = Imaging.CriticalCreateBitmapSourceFromHBitmap(hBitmap.Handle, IntPtr.Zero, Int32Rect.Empty, null, WICBitmapAlphaChannelOption.WICBitmapIgnoreAlpha);
-                                    Rect rectElement    = new Rect(RenderSize);
+                                    Rect rectElement = new Rect(RenderSize);
                                     drawingGroup.Children.Add(new ImageDrawing(bitmapSource, rectElement));
                                     drawingGroup.Freeze();
                                 }
@@ -799,13 +800,13 @@ namespace System.Windows.Interop
                         UnsafeNativeMethods.ReleaseDC(new HandleRef(this, IntPtr.Zero), hdcScreen);
                         hdcScreen = new HandleRef(null, IntPtr.Zero);
 
-                        if(hBitmap.Handle != IntPtr.Zero)
+                        if (hBitmap.Handle != IntPtr.Zero)
                         {
                             UnsafeNativeMethods.DeleteObject(hBitmap);
                             hBitmap = new HandleRef(this, IntPtr.Zero);
                         }
 
-                        if(hdcBitmap.Handle != IntPtr.Zero)
+                        if (hdcBitmap.Handle != IntPtr.Zero)
                         {
                             UnsafeNativeMethods.CriticalDeleteDC(hdcBitmap);
                             hdcBitmap = new HandleRef(this, IntPtr.Zero);
@@ -817,7 +818,7 @@ namespace System.Windows.Interop
             return drawingGroup;
         }
 
-        private void Initialize( bool fTrusted )
+        private void Initialize(bool fTrusted)
         {
             _fTrusted = fTrusted;
 
@@ -835,7 +836,7 @@ namespace System.Windows.Interop
         ///</summary>
         private void DemandIfUntrusted()
         {
-            if ( ! _fTrusted )
+            if (!_fTrusted)
             {
             }
         }
@@ -855,7 +856,7 @@ namespace System.Windows.Interop
 
             // Add ourselves as an IKeyboardInputSinks child of our containing window.
             IKeyboardInputSink source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */) as IKeyboardInputSink;
-            if(source != null)
+            if (source != null)
             {
                 ((IKeyboardInputSink)this).KeyboardInputSite = source.RegisterKeyboardInputSink(this);
             }
@@ -894,7 +895,7 @@ namespace System.Windows.Interop
             // There was recollection from Dwayne that ShowWindow sync might cause rereentrancy issues.
             // So change here to show async to be consistent with everywhere else (instead of changing everywhere else
             // to show window sync).            
-            if(vis)
+            if (vis)
                 UnsafeNativeMethods.ShowWindowAsync(_hwnd, NativeMethods.SW_SHOWNA);
             else
                 UnsafeNativeMethods.ShowWindowAsync(_hwnd, NativeMethods.SW_HIDE);
@@ -913,7 +914,7 @@ namespace System.Windows.Interop
 
             // Prevent reentry while building a child window,
             // also prevent the reconstruction of Disposed objects.
-            if(_isBuildingWindow || _isDisposed)
+            if (_isBuildingWindow || _isDisposed)
             {
                 return;
             }
@@ -924,10 +925,10 @@ namespace System.Windows.Interop
             // the child window.
             IntPtr hwndParent = IntPtr.Zero;
             PresentationSource source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */);
-            if(source != null)
+            if (source != null)
             {
-                HwndSource hwndSource = source as HwndSource ;
-                if(hwndSource != null)
+                HwndSource hwndSource = source as HwndSource;
+                if (hwndSource != null)
                 {
                     hwndParent = hwndSource.CriticalHandle;
                 }
@@ -948,9 +949,9 @@ namespace System.Windows.Interop
 
             try
             {
-                if(hwndParent != IntPtr.Zero)
+                if (hwndParent != IntPtr.Zero)
                 {
-                    if(_hwnd.Handle == IntPtr.Zero)
+                    if (_hwnd.Handle == IntPtr.Zero)
                     {
                         // We now have a parent window, so we can create the child
                         // window.
@@ -959,11 +960,11 @@ namespace System.Windows.Interop
                         this.IsEnabledChanged += _handlerEnabledChanged;
                         this.IsVisibleChanged += _handlerVisibleChanged;
                     }
-                    else if(hwndParent != UnsafeNativeMethods.GetParent(_hwnd))
+                    else if (hwndParent != UnsafeNativeMethods.GetParent(_hwnd))
                     {
                         // We have a different parent window.  Just reparent the
                         // child window under the new parent window.
-                        UnsafeNativeMethods.SetParent(_hwnd, new HandleRef(null,hwndParent));
+                        UnsafeNativeMethods.SetParent(_hwnd, new HandleRef(null, hwndParent));
                     }
                 }
                 else if (Handle != IntPtr.Zero)
@@ -1009,20 +1010,20 @@ namespace System.Windows.Interop
             // Allow the derived class to build our HWND.
             _hwnd = BuildWindowCore(hwndParent);
 
-            if(_hwnd.Handle == IntPtr.Zero || !UnsafeNativeMethods.IsWindow(_hwnd))
+            if (_hwnd.Handle == IntPtr.Zero || !UnsafeNativeMethods.IsWindow(_hwnd))
             {
                 throw new InvalidOperationException(SR.ChildWindowNotCreated);
             }
 
             // Make sure that the window that was created is indeed a child window.
-            int windowStyle = UnsafeNativeMethods.GetWindowLong(new HandleRef(this,_hwnd.Handle), NativeMethods.GWL_STYLE);
-            if((windowStyle & NativeMethods.WS_CHILD) == 0)
+            int windowStyle = UnsafeNativeMethods.GetWindowLong(new HandleRef(this, _hwnd.Handle), NativeMethods.GWL_STYLE);
+            if ((windowStyle & NativeMethods.WS_CHILD) == 0)
             {
                 throw new InvalidOperationException(SR.HostedWindowMustBeAChildWindow);
             }
 
             // Make sure the child window is the child of the expected parent window.
-            if(hwndParent.Handle != UnsafeNativeMethods.GetParent(_hwnd))
+            if (hwndParent.Handle != UnsafeNativeMethods.GetParent(_hwnd))
             {
                 throw new InvalidOperationException(SR.ChildWindowMustHaveCorrectParent);
             }
@@ -1075,10 +1076,10 @@ namespace System.Windows.Interop
         private void DestroyWindow()
         {
             // Destroy the window if we are hosting one.
-            if( CriticalHandle == IntPtr.Zero)
+            if (CriticalHandle == IntPtr.Zero)
                 return;
 
-            if(!CheckAccess())
+            if (!CheckAccess())
             {
                 // I understand we can get in here on the finalizer thread.  And
                 // touching other GC'ed objects in the finalizer is typically bad.
@@ -1106,9 +1107,9 @@ namespace System.Windows.Interop
         {
             get
             {
-                if(_hwnd.Handle != IntPtr.Zero)
+                if (_hwnd.Handle != IntPtr.Zero)
                 {
-                    if(!UnsafeNativeMethods.IsWindow(_hwnd))
+                    if (!UnsafeNativeMethods.IsWindow(_hwnd))
                     {
                         _hwnd = new HandleRef(null, IntPtr.Zero);
                     }
@@ -1120,18 +1121,18 @@ namespace System.Windows.Interop
 
         private IntPtr SubclassWndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
-            IntPtr result = IntPtr.Zero ;
+            IntPtr result = IntPtr.Zero;
 
             // Call the virtual first.
             result = WndProc(hwnd, msg, wParam, lParam, ref handled);
 
             // Call the handlers for the MessageHook event.
-            if(!handled && _hooks != null)
+            if (!handled && _hooks != null)
             {
-                for(int i = 0, nCount = _hooks.Count; i < nCount; i++)
+                for (int i = 0, nCount = _hooks.Count; i < nCount; i++)
                 {
                     result = ((HwndSourceHook)_hooks[i])(hwnd, msg, wParam, lParam, ref handled);
-                    if(handled)
+                    if (handled)
                     {
                         break;
                     }
@@ -1167,9 +1168,9 @@ namespace System.Windows.Interop
 
         private bool _isDisposed = false;
 
-        private class WeakEventDispatcherShutdown: WeakReference
+        private class WeakEventDispatcherShutdown : WeakReference
         {
-            public WeakEventDispatcherShutdown(HwndHost hwndHost, Dispatcher that): base(hwndHost)
+            public WeakEventDispatcherShutdown(HwndHost hwndHost, Dispatcher that) : base(hwndHost)
             {
                 _that = that;
                 _that.ShutdownFinished += new EventHandler(this.OnShutdownFinished);
@@ -1178,7 +1179,7 @@ namespace System.Windows.Interop
             public void OnShutdownFinished(object sender, EventArgs e)
             {
                 HwndHost hwndHost = this.Target as HwndHost;
-                if(null != hwndHost)
+                if (null != hwndHost)
                 {
                     hwndHost.OnDispatcherShutdown(sender, e);
                 }
@@ -1190,9 +1191,9 @@ namespace System.Windows.Interop
 
             public void Dispose()
             {
-                if(null != _that)
+                if (null != _that)
                 {
-                    _that.ShutdownFinished-= new EventHandler(this.OnShutdownFinished);
+                    _that.ShutdownFinished -= new EventHandler(this.OnShutdownFinished);
                 }
             }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,17 +24,17 @@ namespace MS.Internal.Utility
 {
     // A BindUriHelper class
     // See also WpfWebRequestHelper.
-    internal  static partial  class BindUriHelper
+    internal static partial class BindUriHelper
     {
         private const string PLACEBOURI = "http://microsoft.com/";
         static private Uri placeboBase = new Uri(PLACEBOURI);
         private const string FRAGMENTMARKER = "#";
-        
+
         static internal Uri GetResolvedUri(Uri originalUri)
         {
             return GetResolvedUri(null, originalUri);
-        }                
-       
+        }
+
         /// <summary>
         /// 
         /// </summary>
@@ -102,7 +102,7 @@ namespace MS.Internal.Utility
             }
             else // we're in here when baseUri is not set i.e. it's null 
             {
-                Uri currentSource = null;                                               
+                Uri currentSource = null;
 
                 // if the it is an INavigator (Frame, NavWin), we should use its CurrentSource property.
                 // Otherwise we need to get NavigationService of the container that this element is hosted in,
@@ -171,7 +171,7 @@ namespace MS.Internal.Utility
 
             return fragment;
         }
-        
+
         // In NavigationService we do not want to show users pack://application,,,/ with the
         // Source property or any event arguments.
         static internal Uri GetUriRelativeToPackAppBase(Uri original)
@@ -184,14 +184,14 @@ namespace MS.Internal.Utility
             Uri resolved = GetResolvedUri(original);
             Uri packUri = BaseUriHelper.PackAppBaseUri;
             Uri relative = packUri.MakeRelativeUri(resolved);
-            
+
             return relative;
         }
 
         static internal bool IsXamlMimeType(ContentType mimeType)
         {
             if (MimeTypeMapper.XamlMime.AreTypeAndSubTypeEqual(mimeType)
-                || MimeTypeMapper.FixedDocumentSequenceMime.AreTypeAndSubTypeEqual(mimeType) 
+                || MimeTypeMapper.FixedDocumentSequenceMime.AreTypeAndSubTypeEqual(mimeType)
                 || MimeTypeMapper.FixedDocumentMime.AreTypeAndSubTypeEqual(mimeType)
                 || MimeTypeMapper.FixedPageMime.AreTypeAndSubTypeEqual(mimeType))
             {

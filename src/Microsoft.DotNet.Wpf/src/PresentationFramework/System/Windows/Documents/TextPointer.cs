@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,8 +6,8 @@
 // Description: TextPointer object representing a location in formatted text.
 //
 
-using MS.Internal;
 using System.Windows.Controls; // doc comments
+using MS.Internal;
 
 namespace System.Windows.Documents
 {
@@ -2728,7 +2728,7 @@ namespace System.Windows.Documents
             position = (TextPointer)_tree.TextView.GetNextCaretUnitPosition(this, direction);
             moved = false;
 
-            if (this.CompareTo(position)  != 0)
+            if (this.CompareTo(position) != 0)
             {
                 MoveToPosition(position);
                 moved = true;
@@ -4330,10 +4330,10 @@ namespace System.Windows.Documents
         [Flags]
         private enum Flags
         {
-            EdgeMask                      = 15, // 4 low-order bis are an ElementEdge.
-            IsFrozen                      = 16,
+            EdgeMask = 15, // 4 low-order bis are an ElementEdge.
+            IsFrozen = 16,
             IsCaretUnitBoundaryCacheValid = 32,
-            CaretUnitBoundaryCache        = 64,
+            CaretUnitBoundaryCache = 64,
         }
 
         #endregion Private Types

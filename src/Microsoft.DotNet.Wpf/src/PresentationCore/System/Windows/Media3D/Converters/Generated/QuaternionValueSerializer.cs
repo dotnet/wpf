@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows.Media.Media3D.Converters
     /// QuaternionValueSerializer - ValueSerializer class for converting instances of strings to and from Quaternion instances
     /// This is used by the MarkupWriter class.
     /// </summary>
-    public class QuaternionValueSerializer : ValueSerializer 
+    public class QuaternionValueSerializer : ValueSerializer
     {
         /// <summary>
         /// Returns true.
@@ -41,7 +41,7 @@ namespace System.Windows.Media.Media3D.Converters
             }
 
             return true;
-}
+        }
 
         /// <summary>
         /// Converts a string into a Quaternion.
@@ -50,13 +50,13 @@ namespace System.Windows.Media.Media3D.Converters
         {
             if (value != null)
             {
-                return Quaternion.Parse(value );
+                return Quaternion.Parse(value);
             }
             else
             {
-                return base.ConvertFromString( value, context );
+                return base.ConvertFromString(value, context);
             }
-}
+        }
 
         /// <summary>
         /// Converts the value into a string.
@@ -65,10 +65,10 @@ namespace System.Windows.Media.Media3D.Converters
         {
             if (value is Quaternion)
             {
-                Quaternion instance = (Quaternion) value;
+                Quaternion instance = (Quaternion)value;
 
 
-                #pragma warning suppress 6506 // instance is obviously not null
+#pragma warning suppress 6506 // instance is obviously not null
                 return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
             }
 

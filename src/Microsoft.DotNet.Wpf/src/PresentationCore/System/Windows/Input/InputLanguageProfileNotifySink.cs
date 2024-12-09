@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,7 +29,7 @@ namespace System.Windows.Input
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         internal InputLanguageProfileNotifySink(InputLanguageSource target)
         {
             _target = target;
@@ -40,7 +40,7 @@ namespace System.Windows.Input
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         /// <summary>
         ///     OnLanguageChange call back of the interface.
         /// </summary>
@@ -62,7 +62,7 @@ namespace System.Windows.Input
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         // the owner of this sink.
         private InputLanguageSource _target;
     }

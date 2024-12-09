@@ -872,11 +872,11 @@ namespace System.Xaml
         {
             ThrowIfDisposed();
             ArgumentNullException.ThrowIfNull(namespaceDeclaration);
-            if(namespaceDeclaration.Prefix == null)
+            if (namespaceDeclaration.Prefix == null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationPrefixCannotBeNull);
             }
-            if(namespaceDeclaration.Namespace == null)
+            if (namespaceDeclaration.Namespace == null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationNamespaceCannotBeNull);
             }
@@ -1337,7 +1337,7 @@ namespace System.Xaml
                 {
                     converter = grandParentXamlType.KeyType.TypeConverter;
                 }
-                if (converter!= null && converter.ConverterType != null && converter != BuiltInValueConverter.String)
+                if (converter != null && converter.ConverterType != null && converter != BuiltInValueConverter.String)
                 {
                     TypeConverter typeConverter = Runtime.GetConverterInstance(converter);
                     if (typeConverter != null)
@@ -1346,9 +1346,10 @@ namespace System.Xaml
                         {
                             var eventArgs = new XAML3.XamlSetTypeConverterEventArgs(property, typeConverter, value, ctx.ServiceProviderContext,
                                     TypeConverterHelper.InvariantEnglishUS,
-                                    ctx.ParentInstance);
-
-                            eventArgs.CurrentType = declaringType;
+                                    ctx.ParentInstance)
+                            {
+                                CurrentType = declaringType
+                            };
 
                             declaringType.SetTypeConverterHandler(ctx.ParentInstance, eventArgs);
                             if (eventArgs.Handled)
@@ -1667,8 +1668,10 @@ namespace System.Xaml
                 {
                     if (declaringType.SetMarkupExtensionHandler != null)
                     {
-                        var eventArgs = new XAML3.XamlSetMarkupExtensionEventArgs(parentProperty, me, ctx.ServiceProviderContext, parentInstance);
-                        eventArgs.CurrentType = declaringType;
+                        var eventArgs = new XAML3.XamlSetMarkupExtensionEventArgs(parentProperty, me, ctx.ServiceProviderContext, parentInstance)
+                        {
+                            CurrentType = declaringType
+                        };
                         declaringType.SetMarkupExtensionHandler(parentInstance, eventArgs);
                         if (eventArgs.Handled)
                         {
@@ -1762,7 +1765,7 @@ namespace System.Xaml
                     // If Value is a Markup Extention then check the collection item type
                     // if it can hold the ME then don't call ProvideValue().
                     XAML3.MarkupExtension me = value as XAML3.MarkupExtension;
-                    if(me != null && !Logic_WillParentCollectionAdd(ctx, value.GetType(), true))
+                    if (me != null && !Logic_WillParentCollectionAdd(ctx, value.GetType(), true))
                     {
                         // We don't need to call Logic_ProvideValue() with the extra handler
                         // interfaces, because this is collection not a scalar property.
@@ -2489,7 +2492,7 @@ namespace System.Xaml
             }
 
 #if DEBUG
-            if(token.Target.Property != token.TargetContext.ParentProperty)
+            if (token.Target.Property != token.TargetContext.ParentProperty)
             {
                 throw new XamlInternalException("Token's Target Property '{0}' != '{1}' the Token's Context parent Property");
             }

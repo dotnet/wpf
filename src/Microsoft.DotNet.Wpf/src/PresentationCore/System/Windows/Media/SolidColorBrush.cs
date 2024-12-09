@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using System.IO;
 using System.ComponentModel;
+using System.IO;
+using MS.Internal;
 
 namespace System.Windows.Media
 {
@@ -16,7 +16,7 @@ namespace System.Windows.Media
     public sealed partial class SolidColorBrush : Brush
     {
         #region Constructors
-        
+
         /// <summary>
         /// Default constructor for SolidColorBrush.
         /// </summary>
@@ -46,7 +46,7 @@ namespace System.Windows.Media
             KnownSolidColor = 1,
             OtherColor = 2,
         }
-        
+
         ///<summary>
         /// Serialize this object using the passed writer in compact BAML binary format.
         ///</summary>
@@ -160,7 +160,7 @@ namespace System.Windows.Media
         #endregion Serialization
 
         #region ToString
-        
+
         /// <summary>
         /// CanSerializeToString - an internal helper method which determines whether this object
         /// can fully serialize to a string with no data loss.
@@ -177,7 +177,7 @@ namespace System.Windows.Media
             {
                 return false;
             }
-            
+
             return true;
         }
 
@@ -209,7 +209,7 @@ namespace System.Windows.Media
             {
                 lock (s_knownSolidColorBrushStringCache)
                 {
-                    string strCachedBrush = null; 
+                    string strCachedBrush = null;
                     if (s_knownSolidColorBrushStringCache.TryGetValue(this, out strCachedBrush))
                     {
                         strBrush = strCachedBrush;
@@ -230,19 +230,19 @@ namespace System.Windows.Media
         // A simple Two-way Dictionary implementation - only a few useful methods are
         // defined. This class is used to maintain a cache of well-known SolidColorBrush 
         // string values, and allow for fast lookup of those string values by reference. 
-        internal class TwoWayDictionary<TKey,TValue>
+        internal class TwoWayDictionary<TKey, TValue>
         {
-            public TwoWayDictionary(): this(null, null)
+            public TwoWayDictionary() : this(null, null)
             {
                 // Forward to TwoWayDictionary(IEqualityComparer<TKey>, IEqualityComparer<TValue>)
             }
 
-            public TwoWayDictionary(IEqualityComparer<TKey> keyComparer): this (keyComparer, null)
+            public TwoWayDictionary(IEqualityComparer<TKey> keyComparer) : this(keyComparer, null)
             {
                 // Forward to TwoWayDictionary(IEqualityComparer<TKey>, IEqualityComparer<TValue>)
             }
 
-            public TwoWayDictionary(IEqualityComparer<TValue> valueComparer) : this (null, valueComparer)
+            public TwoWayDictionary(IEqualityComparer<TValue> valueComparer) : this(null, valueComparer)
             {
                 // Forward to TwoWayDictionary(IEqualityComparer<TKey>, IEqualityComparer<TValue>)
             }
@@ -250,7 +250,7 @@ namespace System.Windows.Media
             public TwoWayDictionary(IEqualityComparer<TKey> keyComparer, IEqualityComparer<TValue> valueComparer)
             {
                 fwdDictionary = new Dictionary<TKey, TValue>(keyComparer);
-                revDictionary = new Dictionary<TValue, List<TKey>>(valueComparer); 
+                revDictionary = new Dictionary<TValue, List<TKey>>(valueComparer);
             }
 
             public bool TryGetValue(TKey key, out TValue value)
@@ -260,17 +260,17 @@ namespace System.Windows.Media
 
             public bool TryGetKeys(TValue value, out List<TKey> keys)
             {
-                return revDictionary.TryGetValue(value, out keys); 
+                return revDictionary.TryGetValue(value, out keys);
             }
 
             public bool ContainsValue(TValue value)
             {
-                return revDictionary.ContainsKey(value); 
+                return revDictionary.ContainsKey(value);
             }
 
             public bool ContainsKey(TKey key)
             {
-                return fwdDictionary.ContainsKey(key); 
+                return fwdDictionary.ContainsKey(key);
             }
 
             public TValue this[TKey key]
@@ -284,13 +284,13 @@ namespace System.Windows.Media
                 {
                     fwdDictionary[key] = value;
 
-                    List<TKey> keys; 
+                    List<TKey> keys;
                     if (!revDictionary.TryGetValue(value, out keys))
                     {
                         keys = new List<TKey>();
-                        revDictionary[value] = keys; 
+                        revDictionary[value] = keys;
                     }
-                    keys.Add(key); 
+                    keys.Add(key);
                 }
             }
 
@@ -303,7 +303,7 @@ namespace System.Windows.Media
             // the forward dictionary would have unique keys but potentially
             // repeating values for different keys. 
             private Dictionary<TKey, TValue> fwdDictionary;
-            private Dictionary<TValue, List<TKey>> revDictionary; 
+            private Dictionary<TValue, List<TKey>> revDictionary;
         }
 
         private static TwoWayDictionary<SolidColorBrush, string> s_knownSolidColorBrushStringCache = new TwoWayDictionary<SolidColorBrush, string>(keyComparer: ReferenceEqualityComparer.Instance);

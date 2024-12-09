@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -442,7 +442,7 @@ namespace System.Windows.Media
         public
         void
         Open(
-            Uri      source
+            Uri source
             )
         {
             WritePreamble();
@@ -654,11 +654,11 @@ namespace System.Windows.Media
         protected override
         void
         CloneCore(
-            Freezable       sourceFreezable
+            Freezable sourceFreezable
             )
         {
             base.CloneCore(sourceFreezable);
-            
+
             CloneCommon(sourceFreezable);
         }
 
@@ -669,11 +669,11 @@ namespace System.Windows.Media
         protected override
         void
         CloneCurrentValueCore(
-            Freezable       sourceFreezable
+            Freezable sourceFreezable
             )
         {
             base.CloneCurrentValueCore(sourceFreezable);
-            
+
             CloneCommon(sourceFreezable);
         }
 
@@ -684,11 +684,11 @@ namespace System.Windows.Media
         protected override
         void
         GetAsFrozenCore(
-            Freezable       sourceFreezable
+            Freezable sourceFreezable
             )
         {
             base.GetAsFrozenCore(sourceFreezable);
-            
+
             CloneCommon(sourceFreezable);
         }
 
@@ -699,7 +699,7 @@ namespace System.Windows.Media
         private
         void
         CloneCommon(
-            Freezable       sourceFreezable
+            Freezable sourceFreezable
             )
         {
             MediaPlayer player = (MediaPlayer)sourceFreezable;
@@ -761,8 +761,8 @@ namespace System.Windows.Media
         private
         void
         OnNewFrame(
-            object      sender,
-            EventArgs   args
+            object sender,
+            EventArgs args
             )
         {
             _needsUpdate = true;
@@ -785,16 +785,16 @@ namespace System.Windows.Media
         private
         void
         UpdateResourceInternal(
-            DUCE.Channel        channel
+            DUCE.Channel channel
             )
         {
-            bool    notifyUceDirectly = false;
+            bool notifyUceDirectly = false;
 
             //
             // Check what sort of channel type we have, we do quite different
             // things depending on what the channel type is.
             //
-            switch(channel.MarshalType)
+            switch (channel.MarshalType)
             {
                 case ChannelMarshalType.ChannelMarshalTypeSameThread:
                     break;
@@ -865,7 +865,7 @@ namespace System.Windows.Media
         internal
         void
         SetSource(
-            Uri      source
+            Uri source
             )
         {
             _mediaPlayerState.SetSource(source);
@@ -884,7 +884,7 @@ namespace System.Windows.Media
 
         #region Data Members
 
-        private MediaPlayerState      _mediaPlayerState = null;
+        private MediaPlayerState _mediaPlayerState = null;
 
         /// <summary>
         /// DUCE resource handle - we need to use ShareableDUCEMultiChannelResource, because clones
@@ -892,9 +892,9 @@ namespace System.Windows.Media
         /// </summary>
         internal DUCE.ShareableDUCEMultiChannelResource _duceResource = new DUCE.ShareableDUCEMultiChannelResource();
 
-        private EventHandler    _newFrameHandler = null;
+        private EventHandler _newFrameHandler = null;
 
-        private bool            _needsUpdate = false;
+        private bool _needsUpdate = false;
 
         #endregion
     }

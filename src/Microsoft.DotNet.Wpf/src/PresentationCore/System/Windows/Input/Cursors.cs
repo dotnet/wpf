@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace System.Windows.Input
                 return EnsureCursor(CursorType.None);
             }
         }
-        
+
         /// <summary>
         ///     Standard "no" cursor.
         /// </summary>
@@ -30,7 +30,7 @@ namespace System.Windows.Input
                 return EnsureCursor(CursorType.No);
             }
         }
-        
+
         /// <summary>
         ///     Standard "arrow" cursor.
         /// </summary>
@@ -52,7 +52,7 @@ namespace System.Windows.Input
                 return EnsureCursor(CursorType.AppStarting);
             }
         }
-        
+
         /// <summary>
         ///     Standard "crosshair arrow" cursor.
         /// </summary>
@@ -63,7 +63,7 @@ namespace System.Windows.Input
                 return EnsureCursor(CursorType.Cross);
             }
         }
-        
+
         /// <summary>
         ///     Standard "help" cursor.
         /// </summary>
@@ -74,7 +74,7 @@ namespace System.Windows.Input
                 return EnsureCursor(CursorType.Help);
             }
         }
-        
+
         /// <summary>
         ///     Standard "text I-beam" cursor.
         /// </summary>
@@ -85,7 +85,7 @@ namespace System.Windows.Input
                 return EnsureCursor(CursorType.IBeam);
             }
         }
-        
+
         /// <summary>
         ///     Standard "four-way arrow" cursor.
         /// </summary>
@@ -140,7 +140,7 @@ namespace System.Windows.Input
                 return EnsureCursor(CursorType.SizeWE);
             }
         }
-        
+
         /// <summary>
         ///     Standard "vertical up arrow" cursor.
         /// </summary>
@@ -151,7 +151,7 @@ namespace System.Windows.Input
                 return EnsureCursor(CursorType.UpArrow);
             }
         }
-        
+
         /// <summary>
         ///     Standard "hourglass" cursor.
         /// </summary>
@@ -326,7 +326,7 @@ namespace System.Windows.Input
             return _stockCursors[(int)cursorType];
         }
 
-        private static int  _cursorTypeCount = ((int)CursorType.ArrowCD) + 1 ;
+        private static int _cursorTypeCount = ((int)CursorType.ArrowCD) + 1;
 
         private static Cursor[] _stockCursors = new Cursor[_cursorTypeCount];  //CursorType.ArrowCD = 27
     }

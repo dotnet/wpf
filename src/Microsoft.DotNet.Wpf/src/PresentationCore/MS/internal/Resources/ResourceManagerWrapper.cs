@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,11 +12,11 @@
 //     B.  Main assembly for non-localizable resource.
 // 
 
-using System.IO;
 using System.Collections;
-using System.Resources;
-using System.Reflection;
 using System.Globalization;
+using System.IO;
+using System.Reflection;
+using System.Resources;
 using MS.Internal.PresentationCore;                   // SafeSecurityHelper
 
 namespace MS.Internal.Resources
@@ -34,7 +34,7 @@ namespace MS.Internal.Resources
         {
             _assembly = assembly;
         }
- 
+
         #region Internal methods        
 
         internal Stream GetStream(string name)
@@ -92,7 +92,7 @@ namespace MS.Internal.Resources
             }
 
             return stream;
-        }        
+        }
 
         #endregion Internal methods
 
@@ -106,9 +106,9 @@ namespace MS.Internal.Resources
             }
             set
             {
-                _assembly = value;                
+                _assembly = value;
                 _resourceManager = null;
-                _resourceSet = null;      
+                _resourceSet = null;
                 _resourceList = null;
             }
         }
@@ -120,7 +120,7 @@ namespace MS.Internal.Resources
         //
         internal IList ResourceList
         {
-            get 
+            get
             {
                 if (_resourceList == null)
                 {
@@ -179,7 +179,7 @@ namespace MS.Internal.Resources
         //
         // Get Neutral Resource language for the assembly of this ResourceManagerWrapper
         //
-        private CultureInfo GetNeutralResourcesLanguage( )
+        private CultureInfo GetNeutralResourcesLanguage()
         {
             //
             // If NeutralResourceLanguageAttribute is not set, the resource must be
@@ -263,7 +263,7 @@ namespace MS.Internal.Resources
 
                 return _resourceManager;
             }
-        } 
+        }
 
         #endregion private properties
 
@@ -271,9 +271,9 @@ namespace MS.Internal.Resources
         #region private field
 
         private ResourceManager _resourceManager = null;  // For localizable resources.
-        private ResourceSet     _resourceSet = null;      // For non-localizable resources.
-        private Assembly        _assembly = null;
-        private ArrayList       _resourceList = null;
+        private ResourceSet _resourceSet = null;      // For non-localizable resources.
+        private Assembly _assembly = null;
+        private ArrayList _resourceList = null;
 
         private const string LocalizableResourceNameSuffix = ".g";
         private const string UnLocalizableResourceNameSuffix = ".unlocalizable.g";

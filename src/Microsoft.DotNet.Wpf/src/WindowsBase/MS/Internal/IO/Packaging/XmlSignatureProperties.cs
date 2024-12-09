@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -74,8 +74,8 @@ namespace MS.Internal.IO.Packaging
         /// </Object>
         /// </example>
         internal static XmlElement AssembleSignatureProperties(
-            XmlDocument xDoc, 
-            DateTime dateTime, 
+            XmlDocument xDoc,
+            DateTime dateTime,
             String xmlDateTimeFormat,
             String signatureId)
         {
@@ -95,9 +95,9 @@ namespace MS.Internal.IO.Packaging
                 SignedXml.XmlDsigNamespaceUrl);
 
             // <SignatureProperty Id="idSignatureTime" Target="#signatureId">
-            XmlElement signatureProperty = xDoc.CreateElement(XTable.Get(XTable.ID.SignaturePropertyTagName), 
+            XmlElement signatureProperty = xDoc.CreateElement(XTable.Get(XTable.ID.SignaturePropertyTagName),
                 SignedXml.XmlDsigNamespaceUrl);
-            signatureProperties.AppendChild(signatureProperty);            
+            signatureProperties.AppendChild(signatureProperty);
             XmlAttribute idAttr = xDoc.CreateAttribute(XTable.Get(XTable.ID.SignaturePropertyIdAttrName));
             idAttr.Value = XTable.Get(XTable.ID.SignaturePropertyIdAttrValue);
             signatureProperty.Attributes.Append(idAttr);
@@ -147,7 +147,7 @@ namespace MS.Internal.IO.Packaging
             //initializing to a dummy value
             DateTime signingTime = DateTime.Now;
             timeFormat = null;
-            
+
             while (reader.Read())
             {
                 //Looking for <SignatureProperty> tag
@@ -166,10 +166,10 @@ namespace MS.Internal.IO.Packaging
                             throw new XmlException(SR.PackageSignatureCorruption);
                         else
                             signatureTimeIdFound = true;
-                        
+
                         //VerifyTargetAttribute will return false, if the Target attribute is missing
                         //or contains an incorrect value.
-                        if(VerifyTargetAttribute(reader, signatureId))
+                        if (VerifyTargetAttribute(reader, signatureId))
                         {
                             signingTime = ParseSignatureTimeTag(reader, out timeFormat);
                             signatureTimePropertyFound = true;
@@ -184,25 +184,25 @@ namespace MS.Internal.IO.Packaging
                     if (((string.Equals(signaturePropertyTag, reader.LocalName, StringComparison.Ordinal)
                         && (reader.NodeType == XmlNodeType.EndElement)))
                         || reader.Depth > 2)
-                        continue;
-                    else
+                    continue;
+                else
                         //If we find the end tag for </SignatureProperties> then we can stop parsing
                         if ((string.Equals(signaturePropertiesTag, reader.LocalName, StringComparison.Ordinal)
                         && (reader.NodeType == XmlNodeType.EndElement)))
-                            break;
-                        else
-                            throw new XmlException(SR.Format(SR.RequiredTagNotFound, signaturePropertyTag));
+                    break;
+                else
+                    throw new XmlException(SR.Format(SR.RequiredTagNotFound, signaturePropertyTag));
             }
 
             //We did find one or more <SignatureProperty> tags but there were none that
             //defined the id attribute and target attribute and <SignatureTime> element tag correctly.
-            if(!signatureTimePropertyFound)
+            if (!signatureTimePropertyFound)
                 throw new XmlException(SR.PackageSignatureCorruption);
 
             return signingTime;
         }
 
-       
+
         //-----------------------------------------------------------------------------
         //
         // Private Methods
@@ -266,7 +266,7 @@ namespace MS.Internal.IO.Packaging
                                 //This would happen if we found more than one Value tags or if there
                                 //are other nested elements of if they are of a different XmlNodeType type
                                 throw new XmlException(SR.PackageSignatureCorruption);
-}
+                        }
                         else if ((string.Equals(reader.LocalName, timeFormatTagName, StringComparison.Ordinal))
                                  && PackagingUtilities.GetNonXmlnsAttributeCount(reader) == expectedAttributeCount)
                         {
@@ -296,20 +296,20 @@ namespace MS.Internal.IO.Packaging
                         //then we are done parsing the tag, and we can stop the parsing.
                         if (string.Equals(signatureTimeTag, reader.LocalName, StringComparison.Ordinal)
                         && (reader.NodeType == XmlNodeType.EndElement))
-                        {
-                            //We must find a  </SignatureProperty> tag at this point, 
-                            //else it could be that there are more SignatureTime or  
-                            //other tags nested here and that is an error.
-                            if (reader.Read()
-                                && reader.MoveToContent() == XmlNodeType.EndElement
-                                && string.Equals(signaturePropertyTag, reader.LocalName, StringComparison.Ordinal))
-                                break;
-                            else
-                                throw new XmlException(SR.PackageSignatureCorruption);
-                        }
+                    {
+                        //We must find a  </SignatureProperty> tag at this point, 
+                        //else it could be that there are more SignatureTime or  
+                        //other tags nested here and that is an error.
+                        if (reader.Read()
+                            && reader.MoveToContent() == XmlNodeType.EndElement
+                            && string.Equals(signaturePropertyTag, reader.LocalName, StringComparison.Ordinal))
+                            break;
                         else
-                            // if we do not find the nested elements as expected
                             throw new XmlException(SR.PackageSignatureCorruption);
+                    }
+                    else
+                        // if we do not find the nested elements as expected
+                        throw new XmlException(SR.PackageSignatureCorruption);
                 }
             }
             else
@@ -322,7 +322,7 @@ namespace MS.Internal.IO.Packaging
             else
                 throw new XmlException(SR.PackageSignatureCorruption);
         }
-        
+
         /// <summary>
         /// DateTime to XML Format
         /// </summary>
@@ -331,8 +331,10 @@ namespace MS.Internal.IO.Packaging
         /// <returns>opc-legal string suitable for embedding in XML digital signatures</returns>
         private static String DateTimeToXmlFormattedTime(DateTime dt, string format)
         {
-            DateTimeFormatInfo formatter = new DateTimeFormatInfo();
-            formatter.FullDateTimePattern = format;
+            DateTimeFormatInfo formatter = new DateTimeFormatInfo
+            {
+                FullDateTimePattern = format
+            };
             return dt.ToString(format, formatter);
         }
 
@@ -349,11 +351,13 @@ namespace MS.Internal.IO.Packaging
             string[] legalFormats = ConvertXmlFormatStringToDateTimeFormatString(format);
 
             // the default formatter is culture-invariant (which is what we want)
-            DateTimeFormatInfo formatter = new DateTimeFormatInfo();
-            formatter.FullDateTimePattern = format;
-            return DateTime.ParseExact(s, legalFormats, formatter, 
-                DateTimeStyles.NoCurrentDateDefault 
-                | DateTimeStyles.AllowLeadingWhite 
+            DateTimeFormatInfo formatter = new DateTimeFormatInfo
+            {
+                FullDateTimePattern = format
+            };
+            return DateTime.ParseExact(s, legalFormats, formatter,
+                DateTimeStyles.NoCurrentDateDefault
+                | DateTimeStyles.AllowLeadingWhite
                 | DateTimeStyles.AllowTrailingWhite);
         }
 
@@ -381,9 +385,9 @@ namespace MS.Internal.IO.Packaging
         /// <returns></returns>
         private static string[] ConvertXmlFormatStringToDateTimeFormatString(String format)
         {
-            return _dateTimePatternMap[GetIndex(format)].Patterns; 
+            return _dateTimePatternMap[GetIndex(format)].Patterns;
         }
-                
+
         /// <summary>
         /// Verify if the SignatureProperty tag has a valid Id attribute
         /// </summary>
@@ -393,7 +397,7 @@ namespace MS.Internal.IO.Packaging
         {
             string idAttrValue = reader.GetAttribute(XTable.Get(XTable.ID.SignaturePropertyIdAttrName));
 
-            if(idAttrValue!=null 
+            if (idAttrValue != null
                 && (string.Equals(idAttrValue, XTable.Get(XTable.ID.SignaturePropertyIdAttrValue), StringComparison.Ordinal)))
                 return true;
             else
@@ -448,14 +452,14 @@ namespace MS.Internal.IO.Packaging
                 _dateTimePatterns = dateTimePatterns;
             }
 
-            public string   Format { get { return _xmlFormatString; }}
-            public string[] Patterns { get { return _dateTimePatterns; }}
+            public string Format { get { return _xmlFormatString; } }
+            public string[] Patterns { get { return _dateTimePatterns; } }
 
-            private string      _xmlFormatString;
-            private string[]    _dateTimePatterns;
+            private string _xmlFormatString;
+            private string[] _dateTimePatterns;
         };
 
-        private static readonly TimeFormatMapEntry[] _dateTimePatternMap = 
+        private static readonly TimeFormatMapEntry[] _dateTimePatternMap =
         {
             // Opc Spec value                                   Equivalent DateTimePattern(s)
             new TimeFormatMapEntry("YYYY-MM-DDThh:mm:ss.sTZD",  new string[] {"yyyy-MM-ddTHH:mm:ss.fzzz",   "yyyy-MM-ddTHH:mm:ss.fZ"}),
@@ -466,4 +470,4 @@ namespace MS.Internal.IO.Packaging
             new TimeFormatMapEntry("YYYY",                      new string[] {"yyyy"}),
         };
     }
-  }
+}

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -214,7 +214,7 @@ namespace System.Windows.Media.Media3D
         public void RotatePrepend(Quaternion quaternion)
         {
             Point3D center = new Point3D();
-            
+
             this = CreateRotationMatrix(ref quaternion, ref center) * this;
         }
 
@@ -261,10 +261,18 @@ namespace System.Windows.Media.Media3D
             }
             else
             {
-                _m11     *= scale.X; _m12     *= scale.Y; _m13     *= scale.Z;
-                _m21     *= scale.X; _m22     *= scale.Y; _m23     *= scale.Z;
-                _m31     *= scale.X; _m32     *= scale.Y; _m33     *= scale.Z;
-                _offsetX *= scale.X; _offsetY *= scale.Y; _offsetZ *= scale.Z;              
+                _m11 *= scale.X;
+                _m12 *= scale.Y;
+                _m13 *= scale.Z;
+                _m21 *= scale.X;
+                _m22 *= scale.Y;
+                _m23 *= scale.Z;
+                _m31 *= scale.X;
+                _m32 *= scale.Y;
+                _m33 *= scale.Z;
+                _offsetX *= scale.X;
+                _offsetY *= scale.Y;
+                _offsetZ *= scale.Z;
             }
         }
 
@@ -280,9 +288,18 @@ namespace System.Windows.Media.Media3D
             }
             else
             {
-                _m11 *= scale.X; _m12 *= scale.X; _m13 *= scale.X; _m14 *= scale.X;
-                _m21 *= scale.Y; _m22 *= scale.Y; _m23 *= scale.Y; _m24 *= scale.Y;           
-                _m31 *= scale.Z; _m32 *= scale.Z; _m33 *= scale.Z; _m34 *= scale.Z;
+                _m11 *= scale.X;
+                _m12 *= scale.X;
+                _m13 *= scale.X;
+                _m14 *= scale.X;
+                _m21 *= scale.Y;
+                _m22 *= scale.Y;
+                _m23 *= scale.Y;
+                _m24 *= scale.Y;
+                _m31 *= scale.Z;
+                _m32 *= scale.Z;
+                _m33 *= scale.Z;
+                _m34 *= scale.Z;
             }
         }
 
@@ -348,19 +365,28 @@ namespace System.Windows.Media.Media3D
 
                 // We have to set the bottom row first because it depends
                 // on values that will change
-                _offsetX += _m11 * csx + _m21 * csy + _m31 * csz; 
-                _offsetY += _m12 * csx + _m22 * csy + _m32 * csz; 
-                _offsetZ += _m13 * csx + _m23 * csy + _m33 * csz; 
-                _m44     += _m14 * csx + _m24 * csy + _m34 * csz; 
-                
-                _m11 *= scale.X; _m12 *= scale.X; _m13 *= scale.X; _m14 *= scale.X;
-                _m21 *= scale.Y; _m22 *= scale.Y; _m23 *= scale.Y; _m24 *= scale.Y;           
-                _m31 *= scale.Z; _m32 *= scale.Z; _m33 *= scale.Z; _m34 *= scale.Z;
+                _offsetX += _m11 * csx + _m21 * csy + _m31 * csz;
+                _offsetY += _m12 * csx + _m22 * csy + _m32 * csz;
+                _offsetZ += _m13 * csx + _m23 * csy + _m33 * csz;
+                _m44 += _m14 * csx + _m24 * csy + _m34 * csz;
+
+                _m11 *= scale.X;
+                _m12 *= scale.X;
+                _m13 *= scale.X;
+                _m14 *= scale.X;
+                _m21 *= scale.Y;
+                _m22 *= scale.Y;
+                _m23 *= scale.Y;
+                _m24 *= scale.Y;
+                _m31 *= scale.Z;
+                _m32 *= scale.Z;
+                _m33 *= scale.Z;
+                _m34 *= scale.Z;
             }
         }
 
         #endregion Scale
-            
+
         //------------------------------------------------------
         //
         //  Translate
@@ -380,10 +406,18 @@ namespace System.Windows.Media.Media3D
             }
             else
             {
-                _m11     += _m14 * offset.X; _m12     += _m14 * offset.Y; _m13     += _m14 * offset.Z;
-                _m21     += _m24 * offset.X; _m22     += _m24 * offset.Y; _m23     += _m24 * offset.Z;
-                _m31     += _m34 * offset.X; _m32     += _m34 * offset.Y; _m33     += _m34 * offset.Z;
-                _offsetX += _m44 * offset.X; _offsetY += _m44 * offset.Y; _offsetZ += _m44 * offset.Z;
+                _m11 += _m14 * offset.X;
+                _m12 += _m14 * offset.Y;
+                _m13 += _m14 * offset.Z;
+                _m21 += _m24 * offset.X;
+                _m22 += _m24 * offset.Y;
+                _m23 += _m24 * offset.Z;
+                _m31 += _m34 * offset.X;
+                _m32 += _m34 * offset.Y;
+                _m33 += _m34 * offset.Z;
+                _offsetX += _m44 * offset.X;
+                _offsetY += _m44 * offset.Y;
+                _offsetZ += _m44 * offset.Z;
             }
         }
 
@@ -402,7 +436,7 @@ namespace System.Windows.Media.Media3D
                 _offsetX += _m11 * offset.X + _m21 * offset.Y + _m31 * offset.Z;
                 _offsetY += _m12 * offset.X + _m22 * offset.Y + _m32 * offset.Z;
                 _offsetZ += _m13 * offset.X + _m23 * offset.Y + _m33 * offset.Z;
-                _m44     += _m14 * offset.X + _m24 * offset.Y + _m34 * offset.Z;
+                _m44 += _m14 * offset.X + _m24 * offset.Y + _m34 * offset.Z;
             }
         }
 
@@ -422,7 +456,7 @@ namespace System.Windows.Media.Media3D
         /// <param name="matrix1">Matrix to multiply.</param>
         /// <param name="matrix2">Matrix by which the first matrix is multiplied.</param>
         /// <returns>Result of multiplication.</returns>
-        public static Matrix3D operator * (Matrix3D matrix1, Matrix3D matrix2)
+        public static Matrix3D operator *(Matrix3D matrix1, Matrix3D matrix2)
         {
             // Check if multiplying by identity.
             if (matrix1.IsDistinguishedIdentity)
@@ -476,7 +510,7 @@ namespace System.Windows.Media.Media3D
         /// <returns>Result of multiplication.</returns>
         public static Matrix3D Multiply(Matrix3D matrix1, Matrix3D matrix2)
         {
-            return (matrix1*matrix2);
+            return (matrix1 * matrix2);
         }
 
         #endregion Multiplication
@@ -510,7 +544,7 @@ namespace System.Windows.Media.Media3D
         {
             if (points != null)
             {
-                for(int i = 0; i < points.Length; i++)
+                for (int i = 0; i < points.Length; i++)
                 {
                     MultiplyPoint(ref points[i]);
                 }
@@ -536,7 +570,7 @@ namespace System.Windows.Media.Media3D
         {
             if (points != null)
             {
-                for(int i = 0; i < points.Length; i++)
+                for (int i = 0; i < points.Length; i++)
                 {
                     MultiplyPoint(ref points[i]);
                 }
@@ -562,7 +596,7 @@ namespace System.Windows.Media.Media3D
         {
             if (vectors != null)
             {
-                for(int i = 0; i < vectors.Length; i++)
+                for (int i = 0; i < vectors.Length; i++)
                 {
                     MultiplyVector(ref vectors[i]);
                 }
@@ -604,10 +638,10 @@ namespace System.Windows.Media.Media3D
                     return 1.0;
                 if (IsAffine)
                     return GetNormalizedAffineDeterminant();
-                
+
                 // NOTE: The beginning of this code is duplicated between
                 //       the Invert method and the Determinant property.
-                
+
                 // compute all six 2x2 determinants of 2nd two columns
                 double y01 = _m13 * _m24 - _m23 * _m14;
                 double y02 = _m13 * _m34 - _m33 * _m14;
@@ -615,13 +649,13 @@ namespace System.Windows.Media.Media3D
                 double y12 = _m23 * _m34 - _m33 * _m24;
                 double y13 = _m23 * _m44 - _offsetZ * _m24;
                 double y23 = _m33 * _m44 - _offsetZ * _m34;
-        
+
                 // Compute 3x3 cofactors for 1st the column
                 double z30 = _m22 * y02 - _m32 * y01 - _m12 * y12;
                 double z20 = _m12 * y13 - _m22 * y03 + _offsetY * y01;
                 double z10 = _m32 * y03 - _offsetY * y02 - _m12 * y23;
                 double z00 = _m22 * y23 - _m32 * y13 + _offsetY * y12;
-        
+
                 return _offsetX * z30 + _m31 * z20 + _m21 * z10 + _m11 * z00;
             }
         }
@@ -1029,7 +1063,7 @@ namespace System.Windows.Media.Media3D
         internal void SetScaleMatrix(ref Vector3D scale)
         {
             Debug.Assert(IsDistinguishedIdentity);
-            
+
             _m11 = scale.X;
             _m22 = scale.Y;
             _m33 = scale.Z;
@@ -1041,7 +1075,7 @@ namespace System.Windows.Media.Media3D
         internal void SetScaleMatrix(ref Vector3D scale, ref Point3D center)
         {
             Debug.Assert(IsDistinguishedIdentity);
-            
+
             _m11 = scale.X;
             _m22 = scale.Y;
             _m33 = scale.Z;
@@ -1059,7 +1093,7 @@ namespace System.Windows.Media.Media3D
             Debug.Assert(IsDistinguishedIdentity);
 
             _m11 = _m22 = _m33 = _m44 = 1.0;
-            
+
             _offsetX = offset.X;
             _offsetY = offset.Y;
             _offsetZ = offset.Z;
@@ -1103,11 +1137,11 @@ namespace System.Windows.Media.Media3D
 
             if (center.X != 0 || center.Y != 0 || center.Z != 0)
             {
-                matrix._offsetX = -center.X*matrix._m11 - center.Y*matrix._m21 - center.Z*matrix._m31 + center.X;
-                matrix._offsetY = -center.X*matrix._m12 - center.Y*matrix._m22 - center.Z*matrix._m32 + center.Y;
-                matrix._offsetZ = -center.X*matrix._m13 - center.Y*matrix._m23 - center.Z*matrix._m33 + center.Z;
+                matrix._offsetX = -center.X * matrix._m11 - center.Y * matrix._m21 - center.Z * matrix._m31 + center.X;
+                matrix._offsetY = -center.X * matrix._m12 - center.Y * matrix._m22 - center.Z * matrix._m32 + center.Y;
+                matrix._offsetZ = -center.X * matrix._m13 - center.Y * matrix._m23 - center.Z * matrix._m33 + center.Z;
             }
-            
+
             return matrix;
         }
 
@@ -1125,13 +1159,13 @@ namespace System.Windows.Media.Media3D
             double y = point.Y;
             double z = point.Z;
 
-            point.X = x*_m11 + y*_m21 + z*_m31 + _offsetX;
-            point.Y = x*_m12 + y*_m22 + z*_m32 + _offsetY;
-            point.Z = x*_m13 + y*_m23 + z*_m33 + _offsetZ;
+            point.X = x * _m11 + y * _m21 + z * _m31 + _offsetX;
+            point.Y = x * _m12 + y * _m22 + z * _m32 + _offsetY;
+            point.Z = x * _m13 + y * _m23 + z * _m33 + _offsetZ;
 
             if (!IsAffine)
             {
-                double w = x*_m14 + y*_m24 + z*_m34 + _m44;
+                double w = x * _m14 + y * _m24 + z * _m34 + _m44;
 
                 point.X /= w;
                 point.Y /= w;
@@ -1153,10 +1187,10 @@ namespace System.Windows.Media.Media3D
             double z = point.Z;
             double w = point.W;
 
-            point.X = x*_m11 + y*_m21 + z*_m31 + w*_offsetX;
-            point.Y = x*_m12 + y*_m22 + z*_m32 + w*_offsetY;
-            point.Z = x*_m13 + y*_m23 + z*_m33 + w*_offsetZ;
-            point.W = x*_m14 + y*_m24 + z*_m34 + w*_m44;
+            point.X = x * _m11 + y * _m21 + z * _m31 + w * _offsetX;
+            point.Y = x * _m12 + y * _m22 + z * _m32 + w * _offsetY;
+            point.Z = x * _m13 + y * _m23 + z * _m33 + w * _offsetZ;
+            point.W = x * _m14 + y * _m24 + z * _m34 + w * _m44;
         }
 
         //  Multiplies the given Vector3D by this matrix.
@@ -1173,9 +1207,9 @@ namespace System.Windows.Media.Media3D
             double z = vector.Z;
 
             // Do not apply _offset to vectors.
-            vector.X = x*_m11 + y*_m21 + z*_m31;
-            vector.Y = x*_m12 + y*_m22 + z*_m32;
-            vector.Z = x*_m13 + y*_m23 + z*_m33;
+            vector.X = x * _m11 + y * _m21 + z * _m31;
+            vector.Y = x * _m12 + y * _m22 + z * _m32;
+            vector.Z = x * _m13 + y * _m23 + z * _m33;
         }
 
         //  Computes the determinant of the matrix assuming that it's
@@ -1187,11 +1221,11 @@ namespace System.Windows.Media.Media3D
 
             // NOTE: The beginning of this code is duplicated between
             //       GetNormalizedAffineDeterminant() and NormalizedAffineInvert()
-            
+
             double z20 = _m12 * _m23 - _m22 * _m13;
             double z10 = _m32 * _m13 - _m12 * _m33;
             double z00 = _m22 * _m33 - _m32 * _m23;
-        
+
             return _m31 * z20 + _m21 * z10 + _m11 * z00;
         }
 
@@ -1204,7 +1238,7 @@ namespace System.Windows.Media.Media3D
 
             // NOTE: The beginning of this code is duplicated between
             //       GetNormalizedAffineDeterminant() and NormalizedAffineInvert()
-            
+
             double z20 = _m12 * _m23 - _m22 * _m13;
             double z10 = _m32 * _m13 - _m12 * _m33;
             double z00 = _m22 * _m33 - _m32 * _m23;
@@ -1213,17 +1247,17 @@ namespace System.Windows.Media.Media3D
             // Fancy logic here avoids using equality with possible nan values.
             Debug.Assert(!(det < Determinant || det > Determinant),
                          "Matrix3D.Inverse: Determinant property does not match value computed in Inverse.");
-        
+
             if (DoubleUtil.IsZero(det))
             {
                 return false;
             }
-            
+
             // Compute 3x3 non-zero cofactors for the 2nd column
             double z21 = _m21 * _m13 - _m11 * _m23;
             double z11 = _m11 * _m33 - _m31 * _m13;
             double z01 = _m31 * _m23 - _m21 * _m33;
-        
+
             // Compute all six 2x2 determinants of 1st two columns
             double y01 = _m11 * _m22 - _m21 * _m12;
             double y02 = _m11 * _m32 - _m31 * _m12;
@@ -1231,7 +1265,7 @@ namespace System.Windows.Media.Media3D
             double y12 = _m21 * _m32 - _m31 * _m22;
             double y13 = _m21 * _offsetY - _offsetX * _m22;
             double y23 = _m31 * _offsetY - _offsetX * _m32;
-        
+
             // Compute all non-zero and non-one 3x3 cofactors for 2nd
             // two columns
             double z23 = _m23 * y03 - _offsetZ * y01 - _m13 * y13;
@@ -1240,9 +1274,9 @@ namespace System.Windows.Media.Media3D
             double z22 = y01;
             double z12 = -y02;
             double z02 = y12;
-        
+
             double rcp = 1.0 / det;
-        
+
             // Multiply all 3x3 cofactors by reciprocal & transpose
             _m11 = z00 * rcp;
             _m12 = z10 * rcp;
@@ -1276,7 +1310,7 @@ namespace System.Windows.Media.Media3D
 
             // NOTE: The beginning of this code is duplicated between
             //       the Invert method and the Determinant property.
-                
+
             // compute all six 2x2 determinants of 2nd two columns
             double y01 = _m13 * _m24 - _m23 * _m14;
             double y02 = _m13 * _m34 - _m33 * _m14;
@@ -1284,13 +1318,13 @@ namespace System.Windows.Media.Media3D
             double y12 = _m23 * _m34 - _m33 * _m24;
             double y13 = _m23 * _m44 - _offsetZ * _m24;
             double y23 = _m33 * _m44 - _offsetZ * _m34;
-        
+
             // Compute 3x3 cofactors for 1st the column
             double z30 = _m22 * y02 - _m32 * y01 - _m12 * y12;
             double z20 = _m12 * y13 - _m22 * y03 + _offsetY * y01;
             double z10 = _m32 * y03 - _offsetY * y02 - _m12 * y23;
             double z00 = _m22 * y23 - _m32 * y13 + _offsetY * y12;
-        
+
             // Compute 4x4 determinant
             double det = _offsetX * z30 + _m31 * z20 + _m21 * z10 + _m11 * z00;
 
@@ -1300,18 +1334,18 @@ namespace System.Windows.Media.Media3D
             // The strange logic below is equivalent to "det == Determinant", but NaN safe.
             Debug.Assert(!(det < Determinant || det > Determinant),
                 "Matrix3D.Inverse: Determinant property does not match value computed in Inverse.");
-        
+
             if (DoubleUtil.IsZero(det))
             {
                 return false;
             }
-        
+
             // Compute 3x3 cofactors for the 2nd column
             double z31 = _m11 * y12 - _m21 * y02 + _m31 * y01;
             double z21 = _m21 * y03 - _offsetX * y01 - _m11 * y13;
             double z11 = _m11 * y23 - _m31 * y03 + _offsetX * y02;
             double z01 = _m31 * y13 - _offsetX * y12 - _m21 * y23;
-        
+
             // Compute all six 2x2 determinants of 1st two columns
             y01 = _m11 * _m22 - _m21 * _m12;
             y02 = _m11 * _m32 - _m31 * _m12;
@@ -1319,7 +1353,7 @@ namespace System.Windows.Media.Media3D
             y12 = _m21 * _m32 - _m31 * _m22;
             y13 = _m21 * _offsetY - _offsetX * _m22;
             y23 = _m31 * _offsetY - _offsetX * _m32;
-        
+
             // Compute all 3x3 cofactors for 2nd two columns
             double z33 = _m13 * y12 - _m23 * y02 + _m33 * y01;
             double z23 = _m23 * y03 - _offsetZ * y01 - _m13 * y13;
@@ -1329,9 +1363,9 @@ namespace System.Windows.Media.Media3D
             double z22 = _m14 * y13 - _m24 * y03 + _m44 * y01;
             double z12 = _m34 * y03 - _m44 * y02 - _m14 * y23;
             double z02 = _m24 * y23 - _m34 * y13 + _m44 * y12;
-        
+
             double rcp = 1.0 / det;
-        
+
             // Multiply all 3x3 cofactors by reciprocal & transpose
             _m11 = z00 * rcp;
             _m12 = z10 * rcp;
@@ -1363,11 +1397,13 @@ namespace System.Windows.Media.Media3D
         private static Matrix3D CreateIdentity()
         {
             // Don't call this function, use s_identity.
-            Matrix3D matrix = new Matrix3D(1,0,0,0, 0,1,0,0, 0,0,1,0, 0,0,0,1);
-            matrix.IsDistinguishedIdentity = true;
+            Matrix3D matrix = new Matrix3D(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)
+            {
+                IsDistinguishedIdentity = true
+            };
             return matrix;
         }
-        
+
         #endregion Private Methods
 
         #region Private Properties
@@ -1399,7 +1435,7 @@ namespace System.Windows.Media.Media3D
                             (_m31 == 0.0) && (_m32 == 0.0) && (_m33 == 0.0 || _m33 == 1.0) && (_m34 == 0.0) &&
                             (_offsetX == 0.0) && (_offsetY == 0.0) && (_offsetZ == 0.0) && (_m44 == 0.0 || _m44 == 1.0)),
                     "Matrix3D.IsDistinguishedIdentity - _isNotKnownToBeIdentity flag is inconsistent with matrix state.");
-                
+
                 return !_isNotKnownToBeIdentity;
             }
 
@@ -1413,7 +1449,7 @@ namespace System.Windows.Media.Media3D
                     "Matrix3D.IsDistinguishedIdentity - Error detected setting IsDistinguishedIdentity.");
             }
         }
-        
+
         #endregion Private Properties
 
         private double _m11;

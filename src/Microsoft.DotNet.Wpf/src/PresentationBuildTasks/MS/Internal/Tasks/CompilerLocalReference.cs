@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,11 +11,10 @@
 //---------------------------------------------------------------------------------------
 
 using System;
-using System.IO;
 using System.Collections;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
-
 using Microsoft.Build.Tasks.Windows;
 
 namespace MS.Internal.Tasks
@@ -26,19 +25,19 @@ namespace MS.Internal.Tasks
     // </summary>
     internal class LocalReferenceFile
     {
-        private bool   _localizable;
+        private bool _localizable;
         private string _filePath;
         private string _linkAlias;
         private string _logicalName;
         private static LocalReferenceFile _empty = new LocalReferenceFile(String.Empty, false, String.Empty, String.Empty);
-        private const char trueChar  = 'T';
+        private const char trueChar = 'T';
         private const char falseChar = 'F';
         private const char semiColonChar = ';';
 
         internal LocalReferenceFile(string filepath, bool localizable, string linkAlias, string logicalName)
         {
             _localizable = localizable;
-            _filePath   = filepath;
+            _filePath = filepath;
             _linkAlias = linkAlias;
             _logicalName = logicalName;
         }
@@ -111,7 +110,7 @@ namespace MS.Internal.Tasks
 
             if (!String.IsNullOrEmpty(cacheInfo))
             {
-                bool  localizable;
+                bool localizable;
                 string filePath;
                 string linkAlias;
                 string logicalName;
@@ -136,7 +135,7 @@ namespace MS.Internal.Tasks
     // <summary>
     // CompilerLocalReference
     // </summary>
-    internal class CompilerLocalReference  
+    internal class CompilerLocalReference
     {
         // <summary>
         // ctor of CompilerLocalReference
@@ -187,7 +186,7 @@ namespace MS.Internal.Tasks
             // Save the cache information to the cache file.
 
             MemoryStream memStream = new MemoryStream();
-            
+
             // using Disposes the StreamWriter when it ends.  Disposing the StreamWriter 
             // also closes the underlying MemoryStream.  Furthermore, don't add BOM here
             // since TaskFileService.WriteFile adds it.
@@ -217,7 +216,7 @@ namespace MS.Internal.Tasks
                 {
                     for (int i = 0; i < LocalMarkupPages.Length; i++)
                     {
-                        sw.WriteLine(LocalMarkupPages[i].Serialize( ));
+                        sw.WriteLine(LocalMarkupPages[i].Serialize());
                     }
                 }
 
@@ -229,7 +228,7 @@ namespace MS.Internal.Tasks
 
             return bSuccess;
         }
-        
+
         //
         // Read the Local Reference cache file, load the cached information
         // to the corresponding data fields in this class.
@@ -275,7 +274,7 @@ namespace MS.Internal.Tasks
 
                 if (alMarkupPages.Count > 0)
                 {
-                    LocalMarkupPages = (LocalReferenceFile []) alMarkupPages.ToArray(typeof(LocalReferenceFile));
+                    LocalMarkupPages = (LocalReferenceFile[])alMarkupPages.ToArray(typeof(LocalReferenceFile));
                 }
 
                 loadSuccess = true;
@@ -294,7 +293,7 @@ namespace MS.Internal.Tasks
             get { return _localCacheFile; }
         }
 
-        internal  LocalReferenceFile LocalApplicationFile
+        internal LocalReferenceFile LocalApplicationFile
         {
             get { return _localApplicationFile; }
             set { _localApplicationFile = value; }
@@ -330,12 +329,12 @@ namespace MS.Internal.Tasks
 
         #region private data
 
-        private LocalReferenceFile    _localApplicationFile;
-        private LocalReferenceFile[]  _localMarkupPages;
+        private LocalReferenceFile _localApplicationFile;
+        private LocalReferenceFile[] _localMarkupPages;
 
-        private string                _localCacheFile;
-        private string                _internalTypeHelperFile = String.Empty;
-        private ITaskFileService      _taskFileService = null;
+        private string _localCacheFile;
+        private string _internalTypeHelperFile = String.Empty;
+        private ITaskFileService _taskFileService = null;
 
         #endregion
 

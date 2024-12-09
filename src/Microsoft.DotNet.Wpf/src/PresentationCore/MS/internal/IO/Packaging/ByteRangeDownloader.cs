@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,7 +34,7 @@ namespace MS.Internal.IO.Packaging
     /// </remarks>
     internal class ByteRangeDownloader : IDisposable
     {
-         //------------------------------------------------------
+        //------------------------------------------------------
         //
         //  Constructors
         //
@@ -218,8 +218,8 @@ namespace MS.Internal.IO.Packaging
                     for (int i = 0; i < byteRanges.GetLength(0); ++i)
                     {
                         // Add requests to the wait queue
-                        _requestsOnWait.Add((int) byteRanges[i, Offset_Index]);
-                        _requestsOnWait.Add((int) byteRanges[i, Length_Index]);
+                        _requestsOnWait.Add((int)byteRanges[i, Offset_Index]);
+                        _requestsOnWait.Add((int)byteRanges[i, Length_Index]);
                     }
                 }
             }
@@ -235,12 +235,12 @@ namespace MS.Internal.IO.Packaging
         {
             CheckOneDimensionalByteRanges(inByteRanges);
 
-            int[,] outByteRanges = new int[(inByteRanges.Length / 2),2];
+            int[,] outByteRanges = new int[(inByteRanges.Length / 2), 2];
 
-            for (int i=0, j=0; i < inByteRanges.Length; ++i, ++j)
+            for (int i = 0, j = 0; i < inByteRanges.Length; ++i, ++j)
             {
-                outByteRanges[j,Offset_Index] = inByteRanges[i];
-                outByteRanges[j,Length_Index] = inByteRanges[i+1];
+                outByteRanges[j, Offset_Index] = inByteRanges[i];
+                outByteRanges[j, Length_Index] = inByteRanges[i + 1];
 
                 ++i;
             }
@@ -265,7 +265,7 @@ namespace MS.Internal.IO.Packaging
 
             int[] outByteRanges = new int[inByteRanges.Length];
 
-            for (int i=0, j=0; i < inByteRanges.GetLength(0); ++i, ++j)
+            for (int i = 0, j = 0; i < inByteRanges.GetLength(0); ++i, ++j)
             {
                 outByteRanges[j] = inByteRanges[i, Offset_Index];
                 outByteRanges[++j] = inByteRanges[i, Length_Index];
@@ -456,8 +456,8 @@ namespace MS.Internal.IO.Packaging
             // Add byte ranges (to header)
             for (int i = 0; i < byteRanges.GetLength(0); ++i)
             {
-                request.AddRange(byteRanges[i,Offset_Index],
-                                 byteRanges[i,Offset_Index] + byteRanges[i,Length_Index] - 1);
+                request.AddRange(byteRanges[i, Offset_Index],
+                                 byteRanges[i, Offset_Index] + byteRanges[i, Length_Index] - 1);
             }
 
             return request;
@@ -514,7 +514,7 @@ namespace MS.Internal.IO.Packaging
 
                         // Get the header and make sure that it was indeed the byte range response
                         int beginOffset = _byteRangesInProgress[0, Offset_Index];
-                        int endOffset = beginOffset+ _byteRangesInProgress[0,Length_Index] - 1;
+                        int endOffset = beginOffset + _byteRangesInProgress[0, Length_Index] - 1;
 
                         // HttpWebRequest in the current CLR does not allow multiple byte range requests.
                         // At this point, none of the callers of this class will make more than one range at a time
@@ -560,7 +560,7 @@ namespace MS.Internal.IO.Packaging
                 catch   // catch (and re-throw) all kinds of exceptions so we can inform the other thread
                 {
                     // inform other thread of error condition
-                    _erroredOut= true;
+                    _erroredOut = true;
                     _erroredOutException = null;
 
                     throw;
@@ -582,7 +582,7 @@ namespace MS.Internal.IO.Packaging
                 {
                     ProcessWaitQueue();
                 }
-           }
+            }
         }
 
         /// <summary>
@@ -667,8 +667,8 @@ namespace MS.Internal.IO.Packaging
             if (_requestsOnWait != null && _requestsOnWait.Count > 0)
             {
                 // _byteRangesInProgress is already allocated and can be reused
-                _byteRangesInProgress[0,Offset_Index] = (int) _requestsOnWait[Offset_Index];
-                _byteRangesInProgress[0,Length_Index] = (int) _requestsOnWait[Length_Index];
+                _byteRangesInProgress[0, Offset_Index] = (int)_requestsOnWait[Offset_Index];
+                _byteRangesInProgress[0, Length_Index] = (int)_requestsOnWait[Length_Index];
                 _requestsOnWait.RemoveRange(0, 2);
 
                 _webRequest = CreateHttpWebRequest(_byteRangesInProgress);
@@ -701,7 +701,7 @@ namespace MS.Internal.IO.Packaging
 
             for (int i = 0; i < byteRanges.Length; i++)
             {
-                if (byteRanges[i] < 0 || byteRanges[i+1] <= 0)
+                if (byteRanges[i] < 0 || byteRanges[i + 1] <= 0)
                 {
                     throw new ArgumentException(SR.Format(SR.InvalidByteRanges, "byteRanges"));
                 }
@@ -726,7 +726,7 @@ namespace MS.Internal.IO.Packaging
 
             for (int i = 0; i < byteRanges.GetLength(0); ++i)
             {
-                if (byteRanges[i,Offset_Index] < 0 || byteRanges[i,Length_Index] <= 0)
+                if (byteRanges[i, Offset_Index] < 0 || byteRanges[i, Length_Index] <= 0)
                 {
                     throw new ArgumentException(SR.Format(SR.InvalidByteRanges, "byteRanges"));
                 }
@@ -852,7 +852,7 @@ namespace MS.Internal.IO.Packaging
         private CookieContainer _cookieContainer = new CookieContainer(1);
 
         private SafeWaitHandle _eventHandle;    // event handle which needs to be raised to inform the caller that
-                                         //  the requested bytes are available
+                                                //  the requested bytes are available
         private Mutex _fileMutex;       // object controlling synchronization on the temp file - if this is null, we own the stream
         private System.IO.Stream _tempFileStream;   // stream to write to
 

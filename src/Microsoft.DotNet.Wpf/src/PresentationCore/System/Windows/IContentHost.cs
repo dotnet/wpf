@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,7 +10,7 @@ namespace System.Windows
     /// <summary>
     /// This interface is implemented by layouts which host ContentElements.
     /// </summary>
-    public interface IContentHost 
+    public interface IContentHost
     {
         /// <summary>
         /// Performs hit-testing for child elements.
@@ -48,14 +48,14 @@ namespace System.Windows
         /// representation (ContentElement-derived classes) or whose layout is driven 
         /// by the IContentHost (the first-level descendant UIElement-derived classes).
         /// </summary>
-        IEnumerator<IInputElement> HostedElements 
-        { 
-            get; 
+        IEnumerator<IInputElement> HostedElements
+        {
+            get;
         }
-    
+
         /// <summary>
         /// Called when a UIElement-derived class which is hosted by a IContentHost 
-        /// changes it�s DesiredSize.
+        /// changes it’s DesiredSize.
         /// </summary>
         /// <param name="child">
         /// Child element whose DesiredSize has changed.
@@ -69,5 +69,5 @@ namespace System.Windows
         /// of the IContentHost).
         /// </exception>
         void OnChildDesiredSizeChanged(UIElement child);
-    }    
+    }
 }

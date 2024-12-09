@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,9 +34,9 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(inputSource);
 
-            Validate_InputType( type );
-            Validate_InputMode( mode );
-            _inputSource= inputSource;
+            Validate_InputType(type);
+            Validate_InputMode(mode);
+            _inputSource = inputSource;
             _type = type;
             _mode = mode;
             _timestamp = timestamp;
@@ -50,31 +50,31 @@ namespace System.Windows.Input
         /// <summary>
         ///     Read-only access to the type of input that was reported.
         /// </summary>
-        public InputType Type {get {return _type;}}
+        public InputType Type { get { return _type; } }
 
         /// <summary>
         ///     Read-only access to the mode in which the input was reported.
         /// </summary>
-        public InputMode Mode {get {return _mode;}}
+        public InputMode Mode { get { return _mode; } }
 
         /// <summary>
         ///     Read-only access to the time when the input occurred.
         /// </summary>
-        public int Timestamp {get {return _timestamp;}}
+        public int Timestamp { get { return _timestamp; } }
 
         /// <summary>
         /// There is a proscription against using Enum.IsDefined().  (it is slow)
         /// so we write these PRIVATE validate routines instead.
         /// </summary>
-        private void Validate_InputMode( InputMode mode )
+        private void Validate_InputMode(InputMode mode)
         {
-            switch( mode )
+            switch (mode)
             {
                 case InputMode.Foreground:
                 case InputMode.Sink:
                     break;
                 default:
-                    throw new  System.ComponentModel.InvalidEnumArgumentException("mode", (int)mode, typeof(InputMode));
+                    throw new System.ComponentModel.InvalidEnumArgumentException("mode", (int)mode, typeof(InputMode));
             }
         }
 
@@ -82,9 +82,9 @@ namespace System.Windows.Input
         /// There is a proscription against using Enum.IsDefined().  (it is slow)
         /// so we write these PRIVATE validate routines instead.
         /// </summary>
-        private void Validate_InputType( InputType type )
+        private void Validate_InputType(InputType type)
         {
-            switch( type )
+            switch (type)
             {
                 case InputType.Keyboard:
                 case InputType.Mouse:
@@ -94,7 +94,7 @@ namespace System.Windows.Input
                 case InputType.Command:
                     break;
                 default:
-                    throw new  System.ComponentModel.InvalidEnumArgumentException("type", (int)type, typeof(InputType));
+                    throw new System.ComponentModel.InvalidEnumArgumentException("type", (int)type, typeof(InputType));
             }
         }
 

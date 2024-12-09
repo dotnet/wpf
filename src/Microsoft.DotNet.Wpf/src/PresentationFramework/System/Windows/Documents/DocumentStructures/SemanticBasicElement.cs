@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -55,25 +55,25 @@ namespace System.Windows.Documents.DocumentStructures
         public void Add(BlockElement element)
         {
             ArgumentNullException.ThrowIfNull(element);
-            ((IAddChild) this).AddChild(element);
+            ((IAddChild)this).AddChild(element);
         }
-        
+
         void IAddChild.AddChild(object value)
         {
             if (value is ParagraphStructure || value is FigureStructure
-                || value is ListStructure || value is TableStructure )
+                || value is ListStructure || value is TableStructure)
             {
                 _elementList.Add((BlockElement)value);
                 return;
             }
 
             throw new ArgumentException(SR.Format(SR.DocumentStructureUnexpectedParameterType4, value.GetType(),
-                typeof(ParagraphStructure), typeof(FigureStructure), typeof(ListStructure), typeof(TableStructure)), 
+                typeof(ParagraphStructure), typeof(FigureStructure), typeof(ListStructure), typeof(TableStructure)),
                 "value");
         }
 
         void IAddChild.AddText(string text) { }
-        
+
         IEnumerator<BlockElement> IEnumerable<BlockElement>.GetEnumerator()
         {
             throw new NotSupportedException();
@@ -101,9 +101,9 @@ namespace System.Windows.Documents.DocumentStructures
         public void Add(NamedElement element)
         {
             ArgumentNullException.ThrowIfNull(element);
-            ((IAddChild) this).AddChild(element);
+            ((IAddChild)this).AddChild(element);
         }
-        
+
         void IAddChild.AddChild(object value)
         {
             if (value is NamedElement)
@@ -116,7 +116,7 @@ namespace System.Windows.Documents.DocumentStructures
                 typeof(NamedElement)),
                 "value");
         }
-        
+
         void IAddChild.AddText(string text) { }
 
         IEnumerator<NamedElement> IEnumerable<NamedElement>.GetEnumerator()
@@ -152,15 +152,15 @@ namespace System.Windows.Documents.DocumentStructures
             }
             throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(NamedElement)), "value");
         }
-        
+
         void IAddChild.AddText(string text) { }
-        
+
         public void Add(NamedElement element)
         {
             ArgumentNullException.ThrowIfNull(element);
-            ((IAddChild) this).AddChild(element);
+            ((IAddChild)this).AddChild(element);
         }
-        
+
         IEnumerator<NamedElement> IEnumerable<NamedElement>.GetEnumerator()
         {
             throw new NotSupportedException();
@@ -171,7 +171,7 @@ namespace System.Windows.Documents.DocumentStructures
             return ((IEnumerable<NamedElement>)this).GetEnumerator();
         }
     }
-    
+
     /// <summary>
     ///
     /// </summary>
@@ -188,9 +188,9 @@ namespace System.Windows.Documents.DocumentStructures
         public void Add(ListItemStructure listItem)
         {
             ArgumentNullException.ThrowIfNull(listItem);
-            ((IAddChild) this).AddChild(listItem);
+            ((IAddChild)this).AddChild(listItem);
         }
-        
+
         void IAddChild.AddChild(object value)
         {
             if (value is ListItemStructure)
@@ -201,7 +201,7 @@ namespace System.Windows.Documents.DocumentStructures
 
             throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(ListItemStructure)), nameof(value));
         }
-        
+
         void IAddChild.AddText(string text) { }
 
         IEnumerator<ListItemStructure> IEnumerable<ListItemStructure>.GetEnumerator()
@@ -230,7 +230,7 @@ namespace System.Windows.Documents.DocumentStructures
         public void Add(BlockElement element)
         {
             ArgumentNullException.ThrowIfNull(element);
-            ((IAddChild) this).AddChild(element);
+            ((IAddChild)this).AddChild(element);
         }
 
         void IAddChild.AddChild(object value)
@@ -255,7 +255,7 @@ namespace System.Windows.Documents.DocumentStructures
         {
             return ((IEnumerable<BlockElement>)this).GetEnumerator();
         }
-        
+
         /// <summary>
         ///
         /// </summary>
@@ -284,9 +284,9 @@ namespace System.Windows.Documents.DocumentStructures
         public void Add(TableRowGroupStructure tableRowGroup)
         {
             ArgumentNullException.ThrowIfNull(tableRowGroup);
-            ((IAddChild) this).AddChild(tableRowGroup);
+            ((IAddChild)this).AddChild(tableRowGroup);
         }
-        
+
         void IAddChild.AddChild(object value)
         {
             if (value is TableRowGroupStructure)
@@ -296,9 +296,9 @@ namespace System.Windows.Documents.DocumentStructures
             }
             throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableRowGroupStructure)), "value");
         }
-        
+
         void IAddChild.AddText(string text) { }
-        
+
         IEnumerator<TableRowGroupStructure> IEnumerable<TableRowGroupStructure>.GetEnumerator()
         {
             throw new NotSupportedException();
@@ -326,9 +326,9 @@ namespace System.Windows.Documents.DocumentStructures
         public void Add(TableRowStructure tableRow)
         {
             ArgumentNullException.ThrowIfNull(tableRow);
-            ((IAddChild) this).AddChild(tableRow);
+            ((IAddChild)this).AddChild(tableRow);
         }
-        
+
         void IAddChild.AddChild(object value)
         {
             if (value is TableRowStructure)
@@ -341,7 +341,7 @@ namespace System.Windows.Documents.DocumentStructures
 
         void IAddChild.AddText(string text) { }
 
-        
+
         IEnumerator<TableRowStructure> IEnumerable<TableRowStructure>.GetEnumerator()
         {
             throw new NotSupportedException();
@@ -369,9 +369,9 @@ namespace System.Windows.Documents.DocumentStructures
         public void Add(TableCellStructure tableCell)
         {
             ArgumentNullException.ThrowIfNull(tableCell);
-            ((IAddChild) this).AddChild(tableCell);
+            ((IAddChild)this).AddChild(tableCell);
         }
-    
+
         void IAddChild.AddChild(object value)
         {
             if (value is TableCellStructure)
@@ -381,9 +381,9 @@ namespace System.Windows.Documents.DocumentStructures
             }
             throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(TableCellStructure)), nameof(value));
         }
-        
+
         void IAddChild.AddText(string text) { }
-        
+
         IEnumerator<TableCellStructure> IEnumerable<TableCellStructure>.GetEnumerator()
         {
             throw new NotSupportedException();
@@ -413,9 +413,9 @@ namespace System.Windows.Documents.DocumentStructures
         public void Add(BlockElement element)
         {
             ArgumentNullException.ThrowIfNull(element);
-            ((IAddChild) this).AddChild(element);
+            ((IAddChild)this).AddChild(element);
         }
-        
+
         void IAddChild.AddChild(object value)
         {
             if (value is ParagraphStructure || value is TableStructure || value is ListStructure || value is FigureStructure)
@@ -426,7 +426,7 @@ namespace System.Windows.Documents.DocumentStructures
             throw new ArgumentException(SR.Format(SR.DocumentStructureUnexpectedParameterType4, value.GetType(),
                 typeof(ParagraphStructure), typeof(TableStructure), typeof(ListStructure), typeof(FigureStructure)), nameof(value));
         }
-        
+
         void IAddChild.AddText(string text) { }
 
         IEnumerator<BlockElement> IEnumerable<BlockElement>.GetEnumerator()
@@ -438,14 +438,14 @@ namespace System.Windows.Documents.DocumentStructures
         {
             return ((IEnumerable<BlockElement>)this).GetEnumerator();
         }
-        
+
         /// <summary>
         ///
         /// </summary>
         public int RowSpan
         {
             get { return _rowSpan; }
-            set {_rowSpan = value; }
+            set { _rowSpan = value; }
         }
 
         /// <summary>
@@ -454,11 +454,11 @@ namespace System.Windows.Documents.DocumentStructures
         public int ColumnSpan
         {
             get { return _columnSpan; }
-            set {_columnSpan = value; }
+            set { _columnSpan = value; }
         }
 
         private int _rowSpan;
         private int _columnSpan;
     }
- }
+}
 

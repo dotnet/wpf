@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,12 +33,12 @@ namespace System.Windows.Ink
         /// <summary>Constructor</summary>
         public StrokeCollectionChangedEventArgs(StrokeCollection added, StrokeCollection removed)
         {
-            if ( added == null && removed == null )
+            if (added == null && removed == null)
             {
                 throw new ArgumentException(SR.Format(SR.CannotBothBeNull, "added", "removed"));
             }
-            _added = ( added == null ) ? null : new StrokeCollection.ReadOnlyStrokeCollection(added);
-            _removed = ( removed == null ) ? null : new StrokeCollection.ReadOnlyStrokeCollection(removed);
+            _added = (added == null) ? null : new StrokeCollection.ReadOnlyStrokeCollection(added);
+            _removed = (removed == null) ? null : new StrokeCollection.ReadOnlyStrokeCollection(removed);
         }
 
         /// <summary>Set of strokes that where added, result may be an empty collection</summary>
@@ -46,7 +46,7 @@ namespace System.Windows.Ink
         {
             get
             {
-                if ( _added == null )
+                if (_added == null)
                 {
                     _added = new StrokeCollection.ReadOnlyStrokeCollection(new StrokeCollection());
                 }
@@ -59,7 +59,7 @@ namespace System.Windows.Ink
         {
             get
             {
-                if ( _removed == null )
+                if (_removed == null)
                 {
                     _removed = new StrokeCollection.ReadOnlyStrokeCollection(new StrokeCollection());
                 }
@@ -99,7 +99,7 @@ namespace System.Windows.Ink
                                             object newValue,
                                             object previousValue)
         {
-            if ( newValue == null && previousValue == null )
+            if (newValue == null && previousValue == null)
             {
                 throw new ArgumentException(SR.Format(SR.CannotBothBeNull, "newValue", "previousValue"));
             }
@@ -154,7 +154,7 @@ namespace System.Windows.Ink
         internal ExtendedPropertiesChangedEventArgs(ExtendedProperty oldProperty,
                                                     ExtendedProperty newProperty)
         {
-            if ( oldProperty == null && newProperty == null )
+            if (oldProperty == null && newProperty == null)
             {
                 throw new ArgumentNullException("oldProperty");
             }
@@ -223,7 +223,7 @@ namespace System.Windows.Ink
 
         private DrawingAttributes _newDrawingAttributes;
         private DrawingAttributes _previousDrawingAttributes;
-}
+    }
 
     /// <summary>
     /// The delegate to use for the StylusPointsReplaced event
@@ -267,7 +267,7 @@ namespace System.Windows.Ink
 
         private StylusPointCollection _newStylusPoints;
         private StylusPointCollection _previousStylusPoints;
-}
+    }
 
     #endregion
 }

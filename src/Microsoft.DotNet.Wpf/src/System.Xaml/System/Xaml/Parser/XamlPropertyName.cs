@@ -24,7 +24,7 @@ namespace MS.Internal.Xaml.Parser
 
         public static XamlPropertyName Parse(string longName)
         {
-            if(String.IsNullOrEmpty(longName))
+            if (String.IsNullOrEmpty(longName))
             {
                 return null;
             }

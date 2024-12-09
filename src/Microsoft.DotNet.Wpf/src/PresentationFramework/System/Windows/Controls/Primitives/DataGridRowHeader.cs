@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
+using System.Windows.Automation;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Automation;
 
 namespace System.Windows.Controls.Primitives
 {
@@ -299,8 +299,8 @@ namespace System.Windows.Controls.Primitives
                     parent.InvalidateArrange();
                 }
             }
-            else if (e.Property == DataGrid.CurrentItemProperty    ||
-                     e.Property == DataGridRow.IsEditingProperty   ||
+            else if (e.Property == DataGrid.CurrentItemProperty ||
+                     e.Property == DataGridRow.IsEditingProperty ||
                      e.Property == DataGridRow.IsMouseOverProperty ||
                      e.Property == DataGrid.IsKeyboardFocusWithinProperty)
             {
@@ -394,7 +394,7 @@ namespace System.Windows.Controls.Primitives
 
         #endregion
 
-                #region Visual State
+        #region Visual State
 
         private bool IsRowCurrent
         {

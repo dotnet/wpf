@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,7 +30,7 @@ namespace System.Windows.Documents.DocumentStructures
         {
             ArgumentNullException.ThrowIfNull(storyFragment);
 
-            ((IAddChild) this).AddChild(storyFragment);
+            ((IAddChild)this).AddChild(storyFragment);
         }
 
         void IAddChild.AddChild(object value)
@@ -40,15 +40,15 @@ namespace System.Windows.Documents.DocumentStructures
             //
             if (value is StoryFragment)
             {
-                _elementList.Add( (StoryFragment) value);
+                _elementList.Add((StoryFragment)value);
                 return;
             }
 
             throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(StoryFragment)), "value");
         }
-        
-        void IAddChild.AddText(string text) { } 
-        
+
+        void IAddChild.AddText(string text) { }
+
         IEnumerator<StoryFragment> IEnumerable<StoryFragment>.GetEnumerator()
         {
             throw new NotSupportedException();
@@ -58,7 +58,7 @@ namespace System.Windows.Documents.DocumentStructures
         {
             return ((IEnumerable<StoryFragment>)this).GetEnumerator();
         }
-        
+
         internal List<StoryFragment> StoryFragmentList
         {
             get
@@ -69,7 +69,7 @@ namespace System.Windows.Documents.DocumentStructures
 
         private List<StoryFragment> _elementList;
     }
-    
+
     /// <summary>
     ///
     /// </summary>
@@ -87,9 +87,9 @@ namespace System.Windows.Documents.DocumentStructures
         public void Add(BlockElement element)
         {
             ArgumentNullException.ThrowIfNull(element);
-            ((IAddChild) this).AddChild(element);
+            ((IAddChild)this).AddChild(element);
         }
-        
+
         void IAddChild.AddChild(object value)
         {
             //
@@ -97,10 +97,10 @@ namespace System.Windows.Documents.DocumentStructures
             // Section|Paragraph|Inline(Bold|Italic|Underline)|Floater|Figure|List
             // |Table|StoryBreak
             //
-            if (value is SectionStructure || value is ParagraphStructure || value is FigureStructure 
+            if (value is SectionStructure || value is ParagraphStructure || value is FigureStructure
                 || value is ListStructure || value is TableStructure || value is StoryBreak)
             {
-                _elementList.Add( (BlockElement) value);
+                _elementList.Add((BlockElement)value);
                 return;
             }
 
@@ -172,7 +172,7 @@ namespace System.Windows.Documents.DocumentStructures
                 return _elementList;
             }
         }
-        
+
         private List<BlockElement> _elementList;
         private String _storyName;
         private String _fragmentName;

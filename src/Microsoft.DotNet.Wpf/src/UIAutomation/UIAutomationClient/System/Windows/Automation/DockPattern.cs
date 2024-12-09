@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class DockPattern: BasePattern
 #else
-    public class DockPattern: BasePattern
+    public class DockPattern : BasePattern
 #endif
     {
         //------------------------------------------------------
@@ -22,7 +22,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         private DockPattern(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -40,7 +40,7 @@ namespace System.Windows.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>Dock pattern</summary>
@@ -57,13 +57,13 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
         /// Moves the window to be docked at the requested location.
         /// </summary>
-        public void SetDockPosition( DockPosition dockPosition )
+        public void SetDockPosition(DockPosition dockPosition)
         {
             UiaCoreApi.DockPattern_SetDockPosition(_hPattern, dockPosition);
         }
@@ -76,7 +76,7 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
         /// <summary>
         /// This member allows access to previously requested
@@ -135,7 +135,7 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -151,7 +151,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private SafePatternHandle _hPattern;

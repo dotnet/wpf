@@ -1,19 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.Collections;
-using System.Globalization;
-using System.Text;
-using System.IO;
-using System.Xml;
 using System.ComponentModel;
+using System.Globalization;
+using System.IO;
+using System.Text;
 using System.Windows.Automation;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Xps.Packaging;
+using System.Xml;
 using Microsoft.Internal.AlphaFlattener;
 using MS.Utility;
 
@@ -23,7 +23,7 @@ namespace System.Windows.Xps.Serialization
     /// <summary>
     /// Visual Serializer
     /// </summary>
-    internal class VisualSerializer: IMetroDrawingContext
+    internal class VisualSerializer : IMetroDrawingContext
     {
         public const double PrecisionDPI = 9600; // Numeric values generated should be at least precise to that resolution
 
@@ -31,18 +31,18 @@ namespace System.Windows.Xps.Serialization
         // 11.2 Implementation Limits
         // Producers SHOULD produce only XPS Documents that stay within these implementation limits
 
-        public const double PositiveLargestFloat  =  1e38;
-        public const double NegativeLargestFloat  = -1e38;
+        public const double PositiveLargestFloat = 1e38;
+        public const double NegativeLargestFloat = -1e38;
 
-        public const double PositiveSmallestFloat =  2e-38; // spec says 1e-38, but it's not representable in float
+        public const double PositiveSmallestFloat = 2e-38; // spec says 1e-38, but it's not representable in float
         public const double NegativeSmallestFloat = -2e-38;
 
-        public const int    MaxElementCount       = 1000 * 1000;
-        public const int    MaxPointCount         =  100 * 1000;
-        public const int    MaxResourceCount      =   10 * 1000;
-        public const int    MaxGlyphCount         =    5 * 1000;
+        public const int MaxElementCount = 1000 * 1000;
+        public const int MaxPointCount = 100 * 1000;
+        public const int MaxResourceCount = 10 * 1000;
+        public const int MaxGlyphCount = 5 * 1000;
 
-        public const int    MaxGradientStops      = 100;
+        public const int MaxGradientStops = 100;
 
         #region Constructor
         /// <summary>
@@ -57,17 +57,17 @@ namespace System.Windows.Xps.Serialization
             _objects = new ArrayList();
             _objnams = new ArrayList();
 
-            _resWriter  = resWriter;
+            _resWriter = resWriter;
             _bodyWriter = bodyWriter;
-            _manager    = manager;
+            _manager = manager;
 
             if (_manager != null)
             {
                 _context = new XpsTokenContext(_manager, null, null);
             }
 
-            _writer     = _bodyWriter;
-            _tcoStack   = new Stack();
+            _writer = _bodyWriter;
+            _tcoStack = new Stack();
 
             SetCoordinateFormat(1);
         }
@@ -223,7 +223,7 @@ namespace System.Windows.Xps.Serialization
                 }
                 else if (obj is double)
                 {
-                    Double d = CheckFloat((double) obj);
+                    Double d = CheckFloat((double)obj);
 
                     rslt.Append(d.ToString(CultureInfo.InvariantCulture));
                 }
@@ -273,7 +273,7 @@ namespace System.Windows.Xps.Serialization
 
             for (int i = 0; i < _objects.Count; i++)
             {
-                if ((string) _objects[i] == sBrush)
+                if ((string)_objects[i] == sBrush)
                 {
                     return _objnams[i] as string;
                 }
@@ -360,7 +360,7 @@ namespace System.Windows.Xps.Serialization
                 // Sort gradientstops according to offsets, without changing order of stops with the same offset
                 for (int i = 0; i < count; i++)
                 {
-                    int    pos = -1;
+                    int pos = -1;
                     double val = double.MaxValue;
 
                     // Find the first, free, smallest offset
@@ -429,16 +429,16 @@ namespace System.Windows.Xps.Serialization
             mapmode = BrushMappingMode.Absolute;
 
             WriteAttr("ViewportUnits", mapmode);
-            WriteAttr("TileMode",      brush.TileMode);
+            WriteAttr("TileMode", brush.TileMode);
 
             // Remove AlignmentX/AlignmentY.
             // Or more precisely, change Viewbox/ViewPort so center alignment would replace current setting
-            double dstwidth  = brush.Viewport.Width  * bounds.Width;
+            double dstwidth = brush.Viewport.Width * bounds.Width;
             double dstheight = brush.Viewport.Height * bounds.Height;
 
             Rect vb = Utility.GetTileAbsoluteViewbox(brush);
 
-            double srcwidth  = vb.Width;
+            double srcwidth = vb.Width;
             double srcheight = vb.Height;
 
             double scalex;
@@ -480,12 +480,12 @@ namespace System.Windows.Xps.Serialization
 
                 case Stretch.Fill:
                 default:
-                    scalex = dstwidth  / srcwidth;
+                    scalex = dstwidth / srcwidth;
                     scaley = dstheight / srcheight;
                     break;
             }
 
-            double width  = srcwidth  * scalex;
+            double width = srcwidth * scalex;
             double height = srcheight * scaley;
 
             double dx, dy;
@@ -495,7 +495,7 @@ namespace System.Windows.Xps.Serialization
             switch (brush.AlignmentX)
             {
                 case AlignmentX.Left:
-                    dx = - (dstwidth - width) / 2;
+                    dx = -(dstwidth - width) / 2;
                     break;
 
                 case AlignmentX.Right:
@@ -511,7 +511,7 @@ namespace System.Windows.Xps.Serialization
             switch (brush.AlignmentY)
             {
                 case AlignmentY.Top:
-                    dy = - (dstheight - height) / 2;
+                    dy = -(dstheight - height) / 2;
                     break;
 
                 case AlignmentY.Bottom:
@@ -532,7 +532,7 @@ namespace System.Windows.Xps.Serialization
 
             vp = new Rect(bounds.X + vp.X * bounds.Width,
                           bounds.Y + vp.Y * bounds.Height,
-                          vp.Width  * bounds.Width,
+                          vp.Width * bounds.Width,
                           vp.Height * bounds.Height);
 
             if (adjustViewport)
@@ -548,15 +548,15 @@ namespace System.Windows.Xps.Serialization
             // Adjusting Viewbox so that Stretch can be changed to "Fill"
 
             // Calculate real width/height being used in stretching
-            double w1 = vp.Width  / scalex;
+            double w1 = vp.Width / scalex;
             double h1 = vp.Height / scaley;
 
-            vb = new Rect(vb.Left + (vb.Width  - w1) / 2,   // center alignment, could be negative
-                          vb.Top  + (vb.Height - h1) / 2,   // center alignment, could be negative
+            vb = new Rect(vb.Left + (vb.Width - w1) / 2,   // center alignment, could be negative
+                          vb.Top + (vb.Height - h1) / 2,   // center alignment, could be negative
                           w1,
                           h1);
 
-            WriteAttr("Viewbox",  vb.ToString(CultureInfo.InvariantCulture));
+            WriteAttr("Viewbox", vb.ToString(CultureInfo.InvariantCulture));
             WriteAttr("Viewport", vp.ToString(CultureInfo.InvariantCulture));
         }
 
@@ -569,19 +569,19 @@ namespace System.Windows.Xps.Serialization
             _tcoStack.Push(_clip);
 
             // Reset critical state info
-            _opacity     = 1;
+            _opacity = 1;
             _opacityMask = null;
-            _transform   = null;
-            _clip        = null;
+            _transform = null;
+            _clip = null;
         }
 
         void RestoreState()
         {
             // Restore critical state info
-            _clip        = _tcoStack.Pop() as Geometry;
-            _transform   = _tcoStack.Pop() as Transform;
+            _clip = _tcoStack.Pop() as Geometry;
+            _transform = _tcoStack.Pop() as Transform;
             _opacityMask = _tcoStack.Pop() as Brush;
-            _opacity     = (double)_tcoStack.Pop();
+            _opacity = (double)_tcoStack.Pop();
         }
 
         // Output primitives in drawing
@@ -612,7 +612,7 @@ namespace System.Windows.Xps.Serialization
                 {
                     ColorConvertedBitmap colorConvertedBitmap = imageSource as ColorConvertedBitmap;
 
-                    if ( colorConvertedBitmap!=null )
+                    if (colorConvertedBitmap != null)
                     {
                         if (colorConvertedBitmap.Source is FormatConvertedBitmap)
                         {
@@ -651,7 +651,7 @@ namespace System.Windows.Xps.Serialization
 
                     if (colorConvertedBitmap != null)
                     {
-                        string sourceProfile = ColorTypeConverter.SerializeColorContext(_context,colorConvertedBitmap.SourceColorContext);
+                        string sourceProfile = ColorTypeConverter.SerializeColorContext(_context, colorConvertedBitmap.SourceColorContext);
 
                         bitmapUri = "{ColorConvertedBitmap " + bitmapUri + " " + sourceProfile;
 
@@ -673,10 +673,11 @@ namespace System.Windows.Xps.Serialization
         protected StringBuilder BrushToString(Brush brush, Rect bounds)
         {
             StringWriter swriter = new StringWriter(CultureInfo.InvariantCulture);
-            XmlTextWriter xwriter = new XmlTextWriter(swriter);
-
-            xwriter.Formatting  = System.Xml.Formatting.Indented;
-            xwriter.Indentation = 4;
+            XmlTextWriter xwriter = new XmlTextWriter(swriter)
+            {
+                Formatting = System.Xml.Formatting.Indented,
+                Indentation = 4
+            };
 
             XmlWriter oldwriter = _writer;
 
@@ -833,7 +834,7 @@ namespace System.Windows.Xps.Serialization
         }
 
 
-#endregion
+        #endregion
 
         #region Protected Fields
 
@@ -844,35 +845,35 @@ namespace System.Windows.Xps.Serialization
         protected int _brushId;  // = 0;
         protected int _bitmapId; // = 0;
 
-        protected PackageSerializationManager  _manager;
-        protected XpsTokenContext              _context;
+        protected PackageSerializationManager _manager;
+        protected XpsTokenContext _context;
 
-        protected Stack     _tcoStack;     // Transform, Clip, Opacity stack
+        protected Stack _tcoStack;     // Transform, Clip, Opacity stack
 
         // resource dictionary objects
         protected ArrayList _objects;
         protected ArrayList _objnams;
 
         // common properties to apply to next element write
-        protected double    _opacity         = 1.0;
-        protected Brush     _opacityMask; // = null;
+        protected double _opacity = 1.0;
+        protected Brush _opacityMask; // = null;
         protected Transform _transform;   // = null;
-        protected Geometry  _clip;        // = null;
+        protected Geometry _clip;        // = null;
 
-        protected string    _coordFormat     = "#0.##";
-        protected Matrix    _worldTransform  = Matrix.Identity;
-        protected int       _forceGeneral; //= 0;
+        protected string _coordFormat = "#0.##";
+        protected Matrix _worldTransform = Matrix.Identity;
+        protected int _forceGeneral; //= 0;
 
         // preserve serialization attributes
-        protected String    _nameAttr;    // = null;
-        protected Visual    _node;
-        protected Uri       _navigateUri;
+        protected String _nameAttr;    // = null;
+        protected Visual _node;
+        protected Uri _navigateUri;
 
-        protected Size      _pageSize;
+        protected Size _pageSize;
 
-        protected bool      _exceedFloatLimit;
-        protected bool      _exceedPointLimit;
-        protected int       _totalElementCount;
+        protected bool _exceedFloatLimit;
+        protected bool _exceedPointLimit;
+        protected int _totalElementCount;
 
         #endregion Protected Fields
 
@@ -894,7 +895,7 @@ namespace System.Windows.Xps.Serialization
                 {
                     string ob = FindBrush(brush, bounds);
 
-                    if ((_manager != null) || (_forceGeneral >= 1) ) // to container | within resource dictionary
+                    if ((_manager != null) || (_forceGeneral >= 1)) // to container | within resource dictionary
                     {
                         _writer.WriteAttributeString(attribute, "{StaticResource " + ob + "}");
                     }                     // to loose files
@@ -943,18 +944,18 @@ namespace System.Windows.Xps.Serialization
                     // demonstrated by odd elements in pen.
                     //
                     DoubleCollection dashes = new DoubleCollection();
-                    foreach( double d in pen.DashStyle.Dashes )
+                    foreach (double d in pen.DashStyle.Dashes)
                     {
                         dashes.Add(Math.Abs(d));
                     }
-                    if( pen.DashStyle.Dashes.Count%2 == 0 )
+                    if (pen.DashStyle.Dashes.Count % 2 == 0)
                     {
                         WriteAttr("StrokeDashArray", dashes);
                     }
                     else
                     {
-                        string doubleString = GetString(dashes)+" "+GetString(dashes);
-                        _writer.WriteAttributeString("StrokeDashArray",doubleString );
+                        string doubleString = GetString(dashes) + " " + GetString(dashes);
+                        _writer.WriteAttributeString("StrokeDashArray", doubleString);
                     }
                 }
             }
@@ -979,11 +980,16 @@ namespace System.Windows.Xps.Serialization
         {
             if (!Utility.IsIdentity(mat))
             {
-                rslt.Append(CheckFloat(mat.M11).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
-                rslt.Append(CheckFloat(mat.M12).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
-                rslt.Append(CheckFloat(mat.M21).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
-                rslt.Append(CheckFloat(mat.M22).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
-                rslt.Append(CheckFloat(mat.OffsetX).ToString(CultureInfo.InvariantCulture)); rslt.Append(',');
+                rslt.Append(CheckFloat(mat.M11).ToString(CultureInfo.InvariantCulture));
+                rslt.Append(',');
+                rslt.Append(CheckFloat(mat.M12).ToString(CultureInfo.InvariantCulture));
+                rslt.Append(',');
+                rslt.Append(CheckFloat(mat.M21).ToString(CultureInfo.InvariantCulture));
+                rslt.Append(',');
+                rslt.Append(CheckFloat(mat.M22).ToString(CultureInfo.InvariantCulture));
+                rslt.Append(',');
+                rslt.Append(CheckFloat(mat.OffsetX).ToString(CultureInfo.InvariantCulture));
+                rslt.Append(',');
                 rslt.Append(CheckFloat(mat.OffsetY).ToString(CultureInfo.InvariantCulture));
             }
         }
@@ -1002,7 +1008,7 @@ namespace System.Windows.Xps.Serialization
 
                 _writer.WriteStartElement("PathFigure");
 
-                pc ++;
+                pc++;
 
                 WriteAttr("StartPoint", p.StartPoint);
                 WriteBool("IsClosed", p.IsClosed);
@@ -1016,7 +1022,7 @@ namespace System.Windows.Xps.Serialization
 
                 int count = segments.Count;
 
-                for (int i = 0; i < count; i ++)
+                for (int i = 0; i < count; i++)
                 {
                     PathSegment ps = segments[i];
 
@@ -1053,7 +1059,7 @@ namespace System.Windows.Xps.Serialization
 
                         _writer.WriteStartElement("PolyLineSegment");
                         WriteAttr("Points", l.Point);
-                        pc ++;
+                        pc++;
                     }
                     else if (ps is BezierSegment)
                     {
@@ -1081,7 +1087,7 @@ namespace System.Windows.Xps.Serialization
                             // empty size results in line segment
                             _writer.WriteStartElement("PolyLineSegment");
                             WriteAttr("Points", a.Point);
-                            pc ++;
+                            pc++;
                         }
                         else
                         {
@@ -1239,7 +1245,7 @@ namespace System.Windows.Xps.Serialization
                 rslt.Append('M');
 
                 AppendPoint(rslt, p.StartPoint, map);
-                pc ++;
+                pc++;
 
                 // Segments
                 foreach (PathSegment ps in segments)
@@ -1273,7 +1279,7 @@ namespace System.Windows.Xps.Serialization
 
                         rslt.Append('L');
                         AppendPoint(rslt, l.Point, map);
-                        pc ++;
+                        pc++;
                     }
                     else if (ps is BezierSegment)
                     {
@@ -1300,7 +1306,7 @@ namespace System.Windows.Xps.Serialization
                                 // empty size results in line segment
                                 rslt.Append('L');
                                 AppendPoint(rslt, a.Point, map);
-                                pc ++;
+                                pc++;
                             }
                             else
                             {
@@ -1433,8 +1439,8 @@ namespace System.Windows.Xps.Serialization
         {
             Debug.Assert(forFill || forStroke, "Either forFill or forStoke should be true");
 
-            PathGeometry     pg = null;
-            string           p = null;
+            PathGeometry pg = null;
+            string p = null;
 
             pg = Utility.GetAsPathGeometry(geo);
 
@@ -1682,18 +1688,18 @@ namespace System.Windows.Xps.Serialization
 
             if (_node != null)
             {
-                if( bWriteAutomation )
+                if (bWriteAutomation)
                 {
                     string apName = AutomationProperties.GetName(_node);
 
-                    if (! String.IsNullOrEmpty(apName))
+                    if (!String.IsNullOrEmpty(apName))
                     {
                         WriteAttr("AutomationProperties.Name", apName);
                     }
 
                     string apHelpText = AutomationProperties.GetHelpText(_node);
 
-                    if (! String.IsNullOrEmpty(apHelpText))
+                    if (!String.IsNullOrEmpty(apHelpText))
                     {
                         WriteAttr("AutomationProperties.HelpText", apHelpText);
                     }
@@ -1922,7 +1928,7 @@ namespace System.Windows.Xps.Serialization
 
             _transform = _tcoStack.Pop() as Transform;
 
-            _totalElementCount ++;
+            _totalElementCount++;
             ReportLimitViolation();
         }
 
@@ -2196,7 +2202,7 @@ namespace System.Windows.Xps.Serialization
                 _writer.WriteComment("XPSLimit:GlyphCount");
             }
 
-            _totalElementCount ++;
+            _totalElementCount++;
             ReportLimitViolation();
         }
 
@@ -2205,9 +2211,9 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         void IMetroDrawingContext.Pop()
         {
-            _transform   = null;
-            _clip        = null;
-            _opacity     = 1.0;
+            _transform = null;
+            _clip = null;
+            _opacity = 1.0;
             _opacityMask = null;
 
             int level = (int)_tcoStack.Pop();
@@ -2217,7 +2223,7 @@ namespace System.Windows.Xps.Serialization
             while (level > 0)
             {
                 _writer.WriteEndElement();
-                level --;
+                level--;
             }
 
             if (_tcoStack.Count == 0) // end of page
@@ -2255,7 +2261,7 @@ namespace System.Windows.Xps.Serialization
 
             if (!Utility.IsOne(opacity))
             {
-                WriteAttr("Opacity", Math.Min(Math.Max( opacity, 0.0),1.0));
+                WriteAttr("Opacity", Math.Min(Math.Max(opacity, 0.0), 1.0));
             }
 
             if (opacityMask != null && !BrushProxy.IsEmpty(opacityMask))
@@ -2324,7 +2330,7 @@ namespace System.Windows.Xps.Serialization
 
         void PopCoordinateScope()
         {
-            _coordFormat    = _tcoStack.Pop() as string;
+            _coordFormat = _tcoStack.Pop() as string;
             _worldTransform = (Matrix)_tcoStack.Pop();
         }
 
@@ -2371,9 +2377,9 @@ namespace System.Windows.Xps.Serialization
             else if (onePrimitive &&
                 edgeMode == EdgeMode.Unspecified)   // EdgeMode only valid on Canvas
             {
-                _transform   = transform;
-                _clip        = clip;
-                _opacity     = opacity;
+                _transform = transform;
+                _clip = clip;
+                _opacity = opacity;
                 _opacityMask = opacityMask;
 
                 if (nameAttr != null)

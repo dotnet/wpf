@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,10 +26,10 @@ namespace MS.Internal
                 Uri uri = uriSource;
                 if (uri.IsAbsoluteUri == false)
                 {
-                      uri = new Uri("http://foo/bar/");
-                      uri = new Uri(uri, uriSource);
+                    uri = new Uri("http://foo/bar/");
+                    uri = new Uri(uri, uriSource);
                 }
-               
+
                 string completeExt = GetFileExtension(uri);
 
                 lock (((ICollection)_fileExtensionToMimeType).SyncRoot)
@@ -83,14 +83,14 @@ namespace MS.Internal
                 string mimeTypeString;
 
                 retValue = MS.Win32.Compile.UnsafeNativeMethods.FindMimeFromData(null,
-                                                BindUriHelper.UriToString( uriSource ) ,
+                                                BindUriHelper.UriToString(uriSource),
                                                 IntPtr.Zero,
                                                 0,
                                                 null,
                                                 0,
                                                 out mimeTypeString,
                                                 0);
-          
+
                 // For PreSharp 56031, 
                 // This return value must be checked as the function 
                 // will not throw an exception on failure.
@@ -140,7 +140,7 @@ namespace MS.Internal
             {
                 extension = extensionWithDot.Substring(1).ToLower(CultureInfo.InvariantCulture);
             }
-            
+
             return extension;
         }
 
@@ -160,10 +160,10 @@ namespace MS.Internal
         internal static readonly ContentType TextPlainMime = new ContentType("text/plain");
 
         // Known file extensions
-        internal const string XamlExtension      = "xaml";
-        internal const string BamlExtension      = "baml";
-        internal const string XbapExtension      = "xbap";
-        internal const string JpgExtension       = "jpg";
+        internal const string XamlExtension = "xaml";
+        internal const string BamlExtension = "baml";
+        internal const string XbapExtension = "xbap";
+        internal const string JpgExtension = "jpg";
 
         // Supported MIME types:
         internal static readonly ContentType XamlMime = new ContentType("application/xaml+xml");

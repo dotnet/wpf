@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,8 +10,8 @@
 *
 *
 \***************************************************************************/
-using System.Windows.Markup;
 using System.ComponentModel;
+using System.Windows.Markup;
 
 namespace System.Windows
 {
@@ -34,7 +34,7 @@ namespace System.Windows
         /// <summary>
         ///     Build an instance of EventTrigger associated with the given event
         /// </summary>
-        public EventTrigger( RoutedEvent routedEvent )
+        public EventTrigger(RoutedEvent routedEvent)
         {
             RoutedEvent = routedEvent;
         }
@@ -77,7 +77,7 @@ namespace System.Windows
         {
             XamlSerializerUtil.ThrowIfNonWhiteSpaceInAddText(text, this);
         }
-        
+
         /// <summary>
         ///     The Event that will activate this trigger - one must be specified
         /// before an event trigger is meaningful.
@@ -92,7 +92,7 @@ namespace System.Windows
             {
                 ArgumentNullException.ThrowIfNull(value);
 
-                if ( IsSealed )
+                if (IsSealed)
                 {
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "EventTrigger"));
                 }
@@ -100,7 +100,7 @@ namespace System.Windows
                 // When used as an element trigger, we don't actually need to seal
                 //  to ensure cross-thread usability.  However, if we *are* fixed on
                 //  listening to an event already, don't allow this change.
-                if( _routedEventHandler != null )
+                if (_routedEventHandler != null)
                 {
                     // Recycle the Seal error message.
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "EventTrigger"));
@@ -124,7 +124,7 @@ namespace System.Windows
             }
             set
             {
-                if( IsSealed )
+                if (IsSealed)
                 {
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "EventTrigger"));
                 }
@@ -153,17 +153,18 @@ namespace System.Windows
         ///     The collection of actions to activate when the Event occurs.
         /// At least one action is required for the trigger to be meaningful.
         /// </summary>
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]        
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public TriggerActionCollection Actions
         {
             get
             {
-                if( _actions == null )
+                if (_actions == null)
                 {
-                    _actions = new TriggerActionCollection();
-
-                    // Give the collection a back-link, this is used for the inheritance context
-                    _actions.Owner = this;
+                    _actions = new TriggerActionCollection
+                    {
+                        // Give the collection a back-link, this is used for the inheritance context
+                        Owner = this
+                    };
                 }
                 return _actions;
             }
@@ -183,7 +184,7 @@ namespace System.Windows
                 return;
             }
 
-            for (int i=0; i<_actions.Count; i++)
+            for (int i = 0; i < _actions.Count; i++)
             {
                 DependencyObject action = _actions[i] as DependencyObject;
                 if (action != null && action.InheritanceContext == this)
@@ -200,21 +201,21 @@ namespace System.Windows
         [EditorBrowsable(EditorBrowsableState.Never)]
         public bool ShouldSerializeActions()
         {
-            return ( _actions != null && _actions.Count > 0 );
+            return (_actions != null && _actions.Count > 0);
         }
 
         ///////////////////////////////////////////////////////////////////////
         // Internal members
-        
+
         internal sealed override void Seal()
         {
-            if( PropertyValues.Count > 0 )
+            if (PropertyValues.Count > 0)
             {
                 throw new InvalidOperationException(SR.EventTriggerDoNotSetProperties);
             }
 
             // EnterActions/ExitActions aren't meaningful on event triggers.
-            if( HasEnterActions || HasExitActions )
+            if (HasEnterActions || HasExitActions)
             {
                 throw new InvalidOperationException(SR.EventTriggerDoesNotEnterExit);
             }
@@ -256,7 +257,7 @@ namespace System.Windows
 
         // This is the SourceId-ed element.
         FrameworkElement _source;
-        
+
 
 
         ///////////////////////////////////////////////////////////////////////
@@ -267,17 +268,17 @@ namespace System.Windows
         //  built up.  This is the earliest point we can resolve all the child 
         //  node identification that may exist in a Trigger object.
         // This should be moved to base class if PropertyTrigger support is added.
-        internal static void ProcessTriggerCollection( FrameworkElement triggersHost )
+        internal static void ProcessTriggerCollection(FrameworkElement triggersHost)
         {
             TriggerCollection triggerCollection = TriggerCollectionField.GetValue(triggersHost);
-            if( triggerCollection != null )
+            if (triggerCollection != null)
             {
                 // Don't seal the collection, because we allow it to change.  We will,
                 // however, seal each of the triggers.
-                
-                for( int i = 0; i < triggerCollection.Count; i++ )
+
+                for (int i = 0; i < triggerCollection.Count; i++)
                 {
-                    ProcessOneTrigger( triggersHost, triggerCollection[i] );
+                    ProcessOneTrigger(triggersHost, triggerCollection[i]);
                 }
             }
         }
@@ -288,8 +289,8 @@ namespace System.Windows
         //
         // Find the target element for this trigger, and set a listener for 
         // the event into (pointing back to the trigger).
-        
-        internal static void ProcessOneTrigger( FrameworkElement triggersHost, TriggerBase triggerBase )
+
+        internal static void ProcessOneTrigger(FrameworkElement triggersHost, TriggerBase triggerBase)
         {
             // This code path is used in the element trigger case.  We don't actually
             //  need these guys to be usable cross-thread, so we don't really need
@@ -298,22 +299,22 @@ namespace System.Windows
             //  Seal(), the RoutedEvent setter will check to see if the handler has
             //  already been created and refuse an update if so.
             // triggerBase.Seal();
-            
+
             EventTrigger eventTrigger = triggerBase as EventTrigger;
-            if( eventTrigger != null )
+            if (eventTrigger != null)
             {
-                Debug.Assert( eventTrigger._routedEventHandler == null && eventTrigger._source == null);
-                
+                Debug.Assert(eventTrigger._routedEventHandler == null && eventTrigger._source == null);
+
                 // PERF: Cache this result if it turns out we're doing a lot of lookups on the same name.
-                eventTrigger._source = FrameworkElement.FindNamedFrameworkElement( triggersHost, eventTrigger.SourceName );
+                eventTrigger._source = FrameworkElement.FindNamedFrameworkElement(triggersHost, eventTrigger.SourceName);
 
                 // Create a statefull event delegate (which keeps a ref to the FE).
-                EventTriggerSourceListener listener = new EventTriggerSourceListener( eventTrigger, triggersHost );
+                EventTriggerSourceListener listener = new EventTriggerSourceListener(eventTrigger, triggersHost);
 
 
                 // Store the RoutedEventHandler & target for use in DisconnectOneTrigger
                 eventTrigger._routedEventHandler = new RoutedEventHandler(listener.Handler);
-                eventTrigger._source.AddHandler( eventTrigger.RoutedEvent, eventTrigger._routedEventHandler,
+                eventTrigger._source.AddHandler(eventTrigger.RoutedEvent, eventTrigger._routedEventHandler,
                                                  false /* HandledEventsToo */ );
             }
             else
@@ -328,20 +329,20 @@ namespace System.Windows
         //
         // Call DisconnectOneTrigger for each trigger in the Triggers collection.
 
-        internal static void DisconnectAllTriggers( FrameworkElement triggersHost )
+        internal static void DisconnectAllTriggers(FrameworkElement triggersHost)
         {
             TriggerCollection triggerCollection = TriggerCollectionField.GetValue(triggersHost);
 
-            if( triggerCollection != null )
+            if (triggerCollection != null)
             {
-                for( int i = 0; i < triggerCollection.Count; i++ )
+                for (int i = 0; i < triggerCollection.Count; i++)
                 {
-                    DisconnectOneTrigger( triggersHost, triggerCollection[i] );
+                    DisconnectOneTrigger(triggersHost, triggerCollection[i]);
                 }
 
             }
         }
-        
+
         ////////////////////////////////////////////////////////////////////////
         //
         // DisconnectOneTrigger
@@ -349,13 +350,13 @@ namespace System.Windows
         // In ProcessOneTrigger, we connect an event trigger to the element
         // which it targets.  Here, we remove the event listener to clean up.
 
-        internal static void DisconnectOneTrigger( FrameworkElement triggersHost, TriggerBase triggerBase )
+        internal static void DisconnectOneTrigger(FrameworkElement triggersHost, TriggerBase triggerBase)
         {
             EventTrigger eventTrigger = triggerBase as EventTrigger;
-            
-            if( eventTrigger != null )
+
+            if (eventTrigger != null)
             {
-                eventTrigger._source.RemoveHandler( eventTrigger.RoutedEvent, eventTrigger._routedEventHandler);
+                eventTrigger._source.RemoveHandler(eventTrigger.RoutedEvent, eventTrigger._routedEventHandler);
                 eventTrigger._routedEventHandler = null;
             }
             else
@@ -368,7 +369,7 @@ namespace System.Windows
 
         internal class EventTriggerSourceListener
         {
-            internal EventTriggerSourceListener( EventTrigger trigger, FrameworkElement host )
+            internal EventTriggerSourceListener(EventTrigger trigger, FrameworkElement host)
             {
                 _owningTrigger = trigger;
                 _owningTriggerHost = host;
@@ -378,15 +379,15 @@ namespace System.Windows
             {
                 // Invoke all actions of the associated EventTrigger object.
                 TriggerActionCollection actions = _owningTrigger.Actions;
-                for( int j = 0; j < actions.Count; j++ )
+                for (int j = 0; j < actions.Count; j++)
                 {
                     actions[j].Invoke(_owningTriggerHost);
                 }
             }
 
-            private EventTrigger     _owningTrigger;
+            private EventTrigger _owningTrigger;
             private FrameworkElement _owningTriggerHost;
         }
-        
+
     }
 }

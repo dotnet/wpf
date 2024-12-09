@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal.Documents;
 using System.Collections;
 using System.Globalization;
 using System.Windows.Controls;
+using MS.Internal.Documents;
 
 //
 // Description:
@@ -36,9 +36,9 @@ namespace System.Windows.Documents
         internal FlowPosition(FixedTextContainer container, FlowNode node, int offset)
         {
             Debug.Assert(!FlowNode.IsNull(node));
-            _container  = container;
-            _flowNode   = node;
-            _offset     = offset;
+            _container = container;
+            _flowNode = node;
+            _offset = offset;
         }
         #endregion Constructors
 
@@ -81,7 +81,7 @@ namespace System.Windows.Documents
         /// <returns>int - hash code</returns>
         public override int GetHashCode()
         {
-            return _flowNode.GetHashCode()^_offset.GetHashCode();
+            return _flowNode.GetHashCode() ^ _offset.GetHashCode();
         }
 
 
@@ -140,13 +140,13 @@ namespace System.Windows.Documents
             {
                 // scan forward
                 flowScan = (FlowPosition)this.Clone();
-                flowEnd  = flow;
+                flowEnd = flow;
             }
             else
             {
                 // scan backward
                 flowScan = (FlowPosition)flow.Clone();
-                flowEnd  = this;
+                flowEnd = this;
             }
 
             // scan from low to high and accumulate counts
@@ -282,7 +282,7 @@ namespace System.Windows.Documents
             TextPointerContext tst;
 
             while (flowScan.FlowNode.Fp > 0 && !IsVirtual(_FixedFlowMap[flowScan.FlowNode.Fp - 1]) && // do not de-virtualize nodes
-                (tst = flowScan.GetPointerContext(LogicalDirection.Backward))!= TextPointerContext.None)
+                (tst = flowScan.GetPointerContext(LogicalDirection.Backward)) != TextPointerContext.None)
             {
                 if (tst == TextPointerContext.ElementStart)
                 {
@@ -342,8 +342,8 @@ namespace System.Windows.Documents
         // Move to next FlowPosition
         internal void MoveTo(FlowPosition flow)
         {
-            _flowNode   = flow._flowNode;
-            _offset     = flow._offset;
+            _flowNode = flow._flowNode;
+            _offset = flow._offset;
         }
 
         #endregion Text OM Helper
@@ -390,7 +390,7 @@ namespace System.Windows.Documents
                     offsetEnd = flowScan._offset;
                 }
             }
-            flowNodes = (FlowNode [])ar.ToArray(typeof(FlowNode));
+            flowNodes = (FlowNode[])ar.ToArray(typeof(FlowNode));
         }
 
         // A canonical position is one that clings to a FlowNode
@@ -573,7 +573,7 @@ namespace System.Windows.Documents
                 if (limit > 0 && scanned > limit)
                 {
                     int back = scanned - limit;
-                    scanned  = limit;
+                    scanned = limit;
                     _offset -= back;
                 }
             }
@@ -602,7 +602,7 @@ namespace System.Windows.Documents
                 if (limit > 0 && scanned > limit)
                 {
                     int back = scanned - limit;
-                    scanned  = limit;
+                    scanned = limit;
                     _offset += back;
                 }
             }
@@ -828,9 +828,9 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Private Fields
-        private FixedTextContainer  _container;         // the container has the backing store for flow nodes
-        private FlowNode            _flowNode;          // flow node
-        private int                 _offset;            // offset into flow
+        private FixedTextContainer _container;         // the container has the backing store for flow nodes
+        private FlowNode _flowNode;          // flow node
+        private int _offset;            // offset into flow
         #endregion Private Fields
     }
 }

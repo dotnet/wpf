@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -47,7 +47,7 @@ namespace System.Windows.Media.Animation
         /// <ExternalAPI/>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (   destinationType == typeof(InstanceDescriptor)
+            if (destinationType == typeof(InstanceDescriptor)
                 || destinationType == typeof(string))
             {
                 return true;
@@ -63,8 +63,8 @@ namespace System.Windows.Media.Animation
         /// </summary>
         /// <ExternalAPI/>
         public override object ConvertFrom(
-            ITypeDescriptorContext td, 
-            CultureInfo cultureInfo, 
+            ITypeDescriptorContext td,
+            CultureInfo cultureInfo,
             object value)
         {
             string stringValue = value as string;
@@ -77,7 +77,7 @@ namespace System.Windows.Media.Animation
                 {
                     return RepeatBehavior.Forever;
                 }
-                else if (   stringValue.Length > 0
+                else if (stringValue.Length > 0
                          && stringValue[stringValue.Length - 1] == _iterationCharacter)
                 {
                     string stringDoubleValue = stringValue.TrimEnd(_iterationCharacter);
@@ -106,12 +106,12 @@ namespace System.Windows.Media.Animation
         /// <returns>converted value</returns>
         /// <ExternalAPI/>
         public override object ConvertTo(
-            ITypeDescriptorContext context, 
-            CultureInfo cultureInfo, 
-            object value, 
+            ITypeDescriptorContext context,
+            CultureInfo cultureInfo,
+            object value,
             Type destinationType)
         {
-            if (   value is RepeatBehavior
+            if (value is RepeatBehavior
                 && destinationType != null)
             {
                 RepeatBehavior repeatBehavior = (RepeatBehavior)value;

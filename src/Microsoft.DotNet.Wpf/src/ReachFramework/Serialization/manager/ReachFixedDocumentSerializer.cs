@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,8 +8,8 @@
         the common functionality required to serialize a FixedDocument                                                                    
 --*/
 using System.ComponentModel;
-using System.Xml;
 using System.Windows.Documents;
+using System.Xml;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -31,17 +31,17 @@ namespace System.Windows.Xps.Serialization
         /// </param>
         public
         FixedDocumentSerializer(
-            PackageSerializationManager   manager
-            ):
+            PackageSerializationManager manager
+            ) :
         base(manager)
         {
-            
+
         }
 
         #endregion Constructor
 
         #region Public Methods
-        
+
         /// <summary>
         /// The main method that is called to serialize a FixedDocument.
         /// </summary>
@@ -61,7 +61,7 @@ namespace System.Windows.Xps.Serialization
             //
             ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageCrcTable = new Dictionary<UInt32, Uri>();
 
-            ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageUriHashTable = new Dictionary<int,Uri>();
+            ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageUriHashTable = new Dictionary<int, Uri>();
             //
             // Create the ColorContextTable required by the Type Converters
             // The Image table at this time is shared / document
@@ -74,7 +74,7 @@ namespace System.Windows.Xps.Serialization
         #endregion Public Methods
 
         #region Internal Methods
-        
+
         /// <summary>
         /// The main method that is called to serialize the FixedDocument
         /// and that is usually called from within the serialization manager 
@@ -98,7 +98,7 @@ namespace System.Windows.Xps.Serialization
             //
             ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageCrcTable = new Dictionary<UInt32, Uri>();
 
-            ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageUriHashTable = new Dictionary<int,Uri>();
+            ((XpsSerializationManager)SerializationManager).ResourcePolicy.ImageUriHashTable = new Dictionary<int, Uri>();
             //
             // Create the ColorContextTable required by the Type Converters
             // The Image table at this time is shared / document
@@ -119,19 +119,19 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
             String xmlnsForType = SerializationManager.GetXmlNSForType(typeof(FixedDocument));
 
-            if( SerializationManager is XpsSerializationManager)
+            if (SerializationManager is XpsSerializationManager)
             {
-               (SerializationManager as XpsSerializationManager).RegisterDocumentStart();
+                (SerializationManager as XpsSerializationManager).RegisterDocumentStart();
             }
-            
-            if(xmlnsForType == null)
+
+            if (xmlnsForType == null)
             {
                 XmlWriter.WriteStartElement(serializableObjectContext.Name);
             }
@@ -142,9 +142,9 @@ namespace System.Windows.Xps.Serialization
             }
 
             {
-                if(serializableObjectContext.IsComplexValue)
+                if (serializableObjectContext.IsComplexValue)
                 {
-                    XpsSerializationPrintTicketRequiredEventArgs e = 
+                    XpsSerializationPrintTicketRequiredEventArgs e =
                     new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedDocumentPrintTicket,
                                                                      0);
 
@@ -153,9 +153,9 @@ namespace System.Windows.Xps.Serialization
                     //
                     // Serialize the data for the PrintTicket
                     //
-                    if(e.Modified)
+                    if (e.Modified)
                     {
-                        if(e.PrintTicket != null)
+                        if (e.PrintTicket != null)
                         {
                             PrintTicketSerializer serializer = new PrintTicketSerializer(SerializationManager);
                             serializer.SerializeObject(e.PrintTicket);
@@ -183,7 +183,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Signal to any registered callers that the Document has been serialized
             //
-            XpsSerializationProgressChangedEventArgs progressEvent = 
+            XpsSerializationProgressChangedEventArgs progressEvent =
             new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedDocumentWritingProgress,
                                                          0,
                                                          0,
@@ -191,12 +191,12 @@ namespace System.Windows.Xps.Serialization
 
             ((IXpsSerializationManager)SerializationManager).OnXPSSerializationProgressChanged(progressEvent);
 
-            if( SerializationManager is XpsSerializationManager)
+            if (SerializationManager is XpsSerializationManager)
             {
-               (SerializationManager as XpsSerializationManager).RegisterDocumentEnd();
+                (SerializationManager as XpsSerializationManager).RegisterDocumentEnd();
             }
         }
-    
+
         /// <summary>
         /// This method is the one that writed out the attribute within
         /// the xml stream when serializing simple properties.
@@ -217,8 +217,8 @@ namespace System.Windows.Xps.Serialization
 
             attributeValue = GetValueOfAttributeAsString(serializablePropertyContext);
 
-            if ( (attributeValue != null) && 
-                 (attributeValue.Length > 0) )
+            if ((attributeValue != null) &&
+                 (attributeValue.Length > 0))
             {
                 //
                 // Emit name="value" attribute
@@ -243,11 +243,11 @@ namespace System.Windows.Xps.Serialization
         {
             ArgumentNullException.ThrowIfNull(serializablePropertyContext);
 
-            String valueAsString                  = null;
+            String valueAsString = null;
             Object targetObjectContainingProperty = serializablePropertyContext.TargetObject;
-            Object propertyValue                  = serializablePropertyContext.Value;
+            Object propertyValue = serializablePropertyContext.Value;
 
-            if(propertyValue != null)
+            if (propertyValue != null)
             {
                 TypeConverter typeConverter = serializablePropertyContext.TypeConverter;
 
@@ -276,7 +276,7 @@ namespace System.Windows.Xps.Serialization
         #endregion Internal Methods
 
         #region Public Properties
-        
+
         /// <summary>
         /// Queries / Set the XmlWriter for a FixedDocument
         /// </summary>
@@ -287,7 +287,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if(base.XmlWriter == null)
+                if (base.XmlWriter == null)
                 {
                     base.XmlWriter = SerializationManager.AcquireXmlWriter(typeof(FixedDocument));
                 }
@@ -306,5 +306,5 @@ namespace System.Windows.Xps.Serialization
 
     };
 }
-    
+
 

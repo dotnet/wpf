@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,9 +20,9 @@ namespace MS.Internal.Xaml.Context
         public Func<string, string> XmlNamespaceResolver { get; set; }
 
         public XamlParserContext(XamlSchemaContext schemaContext, Assembly localAssembly)
-            :base(schemaContext)
+            : base(schemaContext)
         {
-            _stack = new XamlContextStack<XamlParserFrame>(()=>new XamlParserFrame());
+            _stack = new XamlContextStack<XamlParserFrame>(() => new XamlParserFrame());
             _prescopeNamespaces = new Dictionary<string, string>();
             base._localAssembly = localAssembly;
         }

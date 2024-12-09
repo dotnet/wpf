@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
 using System.Collections;
 using System.Globalization;
-using System.Text;
-using System.Xml;
 using System.IO;
+using System.Text;
 using System.Windows.Controls; // TextBlock
+using System.Xml;
+using MS.Internal;
 
 //
 // Description: Provides an abstract level of TextRange implementation
@@ -346,7 +346,7 @@ namespace System.Windows.Documents
             {
                 if (nextContext == TextPointerContext.None //
                     || //
-                    // Entering non-inline content
+                       // Entering non-inline content
                     (nextContext == TextPointerContext.ElementStart && direction == LogicalDirection.Forward || //
                     nextContext == TextPointerContext.ElementEnd && direction == LogicalDirection.Backward) && //
                     !typeof(Inline).IsAssignableFrom(navigator.GetElementType(direction)) //
@@ -469,7 +469,8 @@ namespace System.Windows.Documents
 
                 // Find position scoped by paragraph - in backward direction - to get start value
                 while (!typeof(Paragraph).IsAssignableFrom(position.ParentType) &&
-                    position.MoveToNextContextPosition(LogicalDirection.Backward)) ;
+                    position.MoveToNextContextPosition(LogicalDirection.Backward))
+                    ;
 
                 // Traverse the segment to find all other paragraph positions
                 bool moved = true;
@@ -704,11 +705,11 @@ namespace System.Windows.Documents
                             navigator.MoveToNextContextPosition(LogicalDirection.Forward);
                         }
                         break;
-                    case TextPointerContext.EmbeddedElement :
+                    case TextPointerContext.EmbeddedElement:
                         textBuffer.Append('\u0020'); // Substitute SPACE for embedded objects.
                         navigator.MoveToNextContextPosition(LogicalDirection.Forward);
                         break;
-                    case TextPointerContext.ElementStart :
+                    case TextPointerContext.ElementStart:
                         elementType = navigator.GetElementType(LogicalDirection.Forward);
                         if (typeof(AnchoredBlock).IsAssignableFrom(elementType))
                         {
@@ -892,19 +893,19 @@ namespace System.Windows.Documents
 
             switch (listMarkerStyle)
             {
-                case TextMarkerStyle.None :
+                case TextMarkerStyle.None:
                     markerText = "";
                     break;
-                case TextMarkerStyle.Disc :
+                case TextMarkerStyle.Disc:
                     markerText = "\x2022"; // Bullet // not a "\x9f"; 
                     break;
-                case TextMarkerStyle.Circle :
+                case TextMarkerStyle.Circle:
                     markerText = "\x25CB"; // White Circle // not a "\xa1"; 
                     break;
-                case TextMarkerStyle.Square :
+                case TextMarkerStyle.Square:
                     markerText = "\x25A1"; // White Box // not a "\x71"; 
                     break;
-                case TextMarkerStyle.Box :
+                case TextMarkerStyle.Box:
                     markerText = "\x25A0"; // Black Box // not a "\xa7"; 
                     break;
 
@@ -948,7 +949,7 @@ namespace System.Windows.Documents
 
         private static string[][] RomanNumerics = new string[][]
         {
-            new string[] { "m??", "cdm", "xlc", "ivx" }, 
+            new string[] { "m??", "cdm", "xlc", "ivx" },
             new string[] { "M??", "CDM", "XLC", "IVX" }
         };
 
@@ -1213,7 +1214,7 @@ namespace System.Windows.Documents
                 (thisRange.Start.CompareTo(thisRange.End) == 0),
                 "Range emptiness assumes using one instance of TextPointer for both start and end");
 
-            return (thisRange._TextSegments.Count == 1 && 
+            return (thisRange._TextSegments.Count == 1 &&
                  (object)thisRange._TextSegments[0].Start == (object)thisRange._TextSegments[0].End);
         }
 
@@ -1292,9 +1293,9 @@ namespace System.Windows.Documents
                 // Delete content covered by this range
                 if (!thisRange.IsEmpty)
                 {
-                    if (thisRange.Start is TextPointer && 
-                        ((TextPointer)thisRange.Start).Parent == ((TextPointer)thisRange.End).Parent && 
-                        ((TextPointer)thisRange.Start).Parent is Run && 
+                    if (thisRange.Start is TextPointer &&
+                        ((TextPointer)thisRange.Start).Parent == ((TextPointer)thisRange.End).Parent &&
+                        ((TextPointer)thisRange.Start).Parent is Run &&
                         textData.Length > 0)
                     {
                         // When textrange start/end are parented by the same Run, we can optimize 
@@ -1708,7 +1709,7 @@ namespace System.Windows.Documents
                 {
                     start = GetNormalizedPosition(thisRange, start, start.LogicalDirection);
                     end = start;
-                } 
+                }
             }
             else
             {
@@ -1990,9 +1991,9 @@ namespace System.Windows.Documents
             if (position1 is TextPointer)
             {
                 textSegments = TextRangeEditTables.BuildTableRange(
-                    /*anchorPosition:*/(TextPointer)position1, 
-                    /*movingPosition:*/(TextPointer)position2, 
-                    includeCellAtMovingPosition, 
+                    /*anchorPosition:*/(TextPointer)position1,
+                    /*movingPosition:*/(TextPointer)position2,
+                    includeCellAtMovingPosition,
                     out isTableCellRange);
             }
             else
@@ -2047,9 +2048,9 @@ namespace System.Windows.Documents
                         // position1/position2.
                         // Note: we use includeCellAtMovingPosition=false here because the movingPosition is taken from a constructed table range, not from input
                         textSegments = TextRangeEditTables.BuildTableRange(
-                            /*anchorPosition:*/(TextPointer)finalStart, 
-                            /*movingPosition:*/(TextPointer)finalEnd, 
-                            /*includeCellAtMovingPosition:*/false, 
+                            /*anchorPosition:*/(TextPointer)finalStart,
+                            /*movingPosition:*/(TextPointer)finalEnd,
+                            /*includeCellAtMovingPosition:*/false,
                             out isTableCellRange);
                         if (textSegments != null)
                         {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,9 +8,8 @@
 
 using System.Windows.Controls;
 using System.Windows.Media;
-using MS.Internal.PtsHost.UnsafeNativeMethods; // PTS restrictions
-
 using MS.Internal.Documents;
+using MS.Internal.PtsHost.UnsafeNativeMethods; // PTS restrictions
 
 namespace System.Windows.Documents
 {
@@ -31,7 +30,7 @@ namespace System.Windows.Documents
         /// Creates an instance of a Column
         /// </summary>
         public TableColumn()
-        { 
+        {
             _parentIndex = -1;
         }
 
@@ -59,16 +58,16 @@ namespace System.Windows.Documents
         /// </summary>
         public GridLength Width
         {
-            get { return (GridLength) GetValue(WidthProperty); }
+            get { return (GridLength)GetValue(WidthProperty); }
             set { SetValue(WidthProperty, value); }
         }
-        
+
         /// <summary>
         /// Background property.
         /// </summary>
         public Brush Background
         {
-            get { return (Brush) GetValue(BackgroundProperty); }
+            get { return (Brush)GetValue(BackgroundProperty); }
             set { SetValue(BackgroundProperty, value); }
         }
 
@@ -162,7 +161,7 @@ namespace System.Windows.Documents
             }
             set
             {
-                Debug.Assert (value >= -1 && _parentIndex != value);
+                Debug.Assert(value >= -1 && _parentIndex != value);
                 _parentIndex = value;
             }
         }
@@ -187,7 +186,7 @@ namespace System.Windows.Documents
         /// </summary>
         private static bool IsValidWidth(object value)
         {
-            GridLength gridLength = (GridLength) value;
+            GridLength gridLength = (GridLength)value;
             if ((gridLength.GridUnitType == GridUnitType.Pixel || gridLength.GridUnitType == GridUnitType.Star) &&
                 (gridLength.Value < 0.0))
             {
@@ -213,7 +212,7 @@ namespace System.Windows.Documents
         #region Private Fields 
         private int _parentIndex;                       //  column's index in parent's children collection
         #endregion Private Fields 
-        
+
         //------------------------------------------------------
         //
         //  Properties
@@ -225,14 +224,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// Width property.
         /// </summary>
-        public static readonly DependencyProperty WidthProperty = 
+        public static readonly DependencyProperty WidthProperty =
                 DependencyProperty.Register(
-                        "Width", 
-                        typeof(GridLength), 
+                        "Width",
+                        typeof(GridLength),
                         typeof(TableColumn),
                         new FrameworkPropertyMetadata(
-                                new GridLength(0, GridUnitType.Auto), 
-                                FrameworkPropertyMetadataOptions.AffectsMeasure, 
+                                new GridLength(0, GridUnitType.Auto),
+                                FrameworkPropertyMetadataOptions.AffectsMeasure,
                                 new PropertyChangedCallback(OnWidthChanged)),
                         new ValidateValueCallback(IsValidWidth));
 
@@ -262,8 +261,8 @@ namespace System.Windows.Documents
         /// </summary>
         private static void OnWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Table table = ((TableColumn) d).Table;
-            if(table != null)
+            Table table = ((TableColumn)d).Table;
+            if (table != null)
             {
                 table.InvalidateColumns();
             }
@@ -274,8 +273,8 @@ namespace System.Windows.Documents
         /// </summary>
         private static void OnBackgroundChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Table table = ((TableColumn) d).Table;
-            if(table != null)
+            Table table = ((TableColumn)d).Table;
+            if (table != null)
             {
                 table.InvalidateColumns();
             }

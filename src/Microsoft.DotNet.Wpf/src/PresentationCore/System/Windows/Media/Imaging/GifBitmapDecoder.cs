@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,8 +6,8 @@
 //
 
 using System.IO;
-using MS.Internal;
 using Microsoft.Win32.SafeHandles;
+using MS.Internal;
 
 namespace System.Windows.Media.Imaging
 {
@@ -67,7 +67,7 @@ namespace System.Windows.Media.Imaging
             bool insertInDecoderCache,
             bool originalWritable,
             Stream uriStream,
-            UnmanagedMemoryStream unmanagedMemoryStream ,
+            UnmanagedMemoryStream unmanagedMemoryStream,
             SafeFileHandle safeFilehandle
             ) : base(decoderHandle, decoder, baseUri, uri, stream, createOptions, cacheOption, insertInDecoderCache, originalWritable, uriStream, unmanagedMemoryStream, safeFilehandle)
         {

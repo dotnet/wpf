@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -755,14 +755,14 @@ namespace System.Windows.Controls
             Cursor cursor = null;
             System.IO.Stream stream = null;
             System.Reflection.Assembly assembly = this.GetType().Assembly;
- 
+
             if (cursorID == c_SPLIT)
             {
-                stream = assembly.GetManifestResourceStream("split.cur"); 
+                stream = assembly.GetManifestResourceStream("split.cur");
             }
             else if (cursorID == c_SPLITOPEN)
             {
-                stream = assembly.GetManifestResourceStream("splitopen.cur"); 
+                stream = assembly.GetManifestResourceStream("splitopen.cur");
             }
 
             Debug.Assert(stream != null, "stream is null");
@@ -843,11 +843,12 @@ namespace System.Windows.Controls
                 // map the appropriate area(viewbox) in the source header to visual brush
                 // to avoid a distorded image on the floating header.
                 Vector offsetVector = VisualTreeHelper.GetOffset(FloatSourceHeader);
-                VisualBrush visualBrush = new VisualBrush(FloatSourceHeader);
-
-                // set visual brush's mapping
-                visualBrush.ViewboxUnits = BrushMappingMode.Absolute;
-                visualBrush.Viewbox = new Rect(offsetVector.X, offsetVector.Y, FloatSourceHeader.ActualWidth, FloatSourceHeader.ActualHeight);
+                VisualBrush visualBrush = new VisualBrush(FloatSourceHeader)
+                {
+                    // set visual brush's mapping
+                    ViewboxUnits = BrushMappingMode.Absolute,
+                    Viewbox = new Rect(offsetVector.X, offsetVector.Y, FloatSourceHeader.ActualWidth, FloatSourceHeader.ActualHeight)
+                };
 
                 _floatingHeaderCanvas.Background = visualBrush;
                 FloatSourceHeader = null;
@@ -976,24 +977,24 @@ namespace System.Windows.Controls
             // The first call is for ContentTemplate property. In this call, IgnoreContentTemplate is false.
             // The second call is for Style property. In this call, IgnoreStyle is true.
             // One flag cant distinguish them.
-            None                                = 0,
-            StyleSetByUser                      = 0x00000001,
-            IgnoreStyle                         = 0x00000002,
-            ContentTemplateSetByUser            = 0x00000004,
-            IgnoreContentTemplate               = 0x00000008,
-            ContentTemplateSelectorSetByUser    = 0x00000010,
-            IgnoreContentTemplateSelector       = 0x00000020,
-            ContextMenuSetByUser                = 0x00000040,
-            IgnoreContextMenu                   = 0x00000080,
-            ToolTipSetByUser                    = 0x00000100,
-            IgnoreToolTip                       = 0x00000200,
+            None = 0,
+            StyleSetByUser = 0x00000001,
+            IgnoreStyle = 0x00000002,
+            ContentTemplateSetByUser = 0x00000004,
+            IgnoreContentTemplate = 0x00000008,
+            ContentTemplateSelectorSetByUser = 0x00000010,
+            IgnoreContentTemplateSelector = 0x00000020,
+            ContextMenuSetByUser = 0x00000040,
+            IgnoreContextMenu = 0x00000080,
+            ToolTipSetByUser = 0x00000100,
+            IgnoreToolTip = 0x00000200,
 
-            SuppressClickEvent                  = 0x00000400,
-            IsInternalGenerated                 = 0x00000800,
-            IsAccessKeyOrAutomation             = 0x00001000,
+            SuppressClickEvent = 0x00000400,
+            IsInternalGenerated = 0x00000800,
+            IsAccessKeyOrAutomation = 0x00001000,
 
-            ContentStringFormatSetByUser        = 0x00002000,
-            IgnoreContentStringFormat           = 0x00004000,
+            ContentStringFormatSetByUser = 0x00002000,
+            IgnoreContentStringFormat = 0x00004000,
         }
 
         private Flags _flags;

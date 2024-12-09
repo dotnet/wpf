@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -149,18 +149,19 @@ namespace MS.Internal.PtsHost
             uint fswdirTrack,                       // IN:  direction of Track
             out PTS.FSTABLEOBJPROPS fstableobjprops)// OUT: properties of the table
         {
-            fstableobjprops = new PTS.FSTABLEOBJPROPS();
-
-            fstableobjprops.fskclear = PTS.FSKCLEAR.fskclearNone;
-            fstableobjprops.ktablealignment = PTS.FSKTABLEOBJALIGNMENT.fsktableobjAlignLeft;
-            fstableobjprops.fFloat = PTS.False;
-            fstableobjprops.fskwr = PTS.FSKWRAP.fskwrBoth;
-            fstableobjprops.fDelayNoProgress = PTS.False;
-            fstableobjprops.dvrCaptionTop = 0;
-            fstableobjprops.dvrCaptionBottom = 0;
-            fstableobjprops.durCaptionLeft = 0;
-            fstableobjprops.durCaptionRight = 0;
-            fstableobjprops.fswdirTable = PTS.FlowDirectionToFswdir((FlowDirection)Element.GetValue(FrameworkElement.FlowDirectionProperty));
+            fstableobjprops = new PTS.FSTABLEOBJPROPS
+            {
+                fskclear = PTS.FSKCLEAR.fskclearNone,
+                ktablealignment = PTS.FSKTABLEOBJALIGNMENT.fsktableobjAlignLeft,
+                fFloat = PTS.False,
+                fskwr = PTS.FSKWRAP.fskwrBoth,
+                fDelayNoProgress = PTS.False,
+                dvrCaptionTop = 0,
+                dvrCaptionBottom = 0,
+                durCaptionLeft = 0,
+                durCaptionRight = 0,
+                fswdirTable = PTS.FlowDirectionToFswdir((FlowDirection)Element.GetValue(FrameworkElement.FlowDirectionProperty))
+            };
         }
 
         /// <summary>
@@ -169,7 +170,7 @@ namespace MS.Internal.PtsHost
         /// <param name="fswdirTrack">Direction of Track</param>
         /// <param name="pmcsclientIn">Margin collapsing state</param>
         /// <param name="ppmcsclientOut">Margin collapsing state</param>
-        internal void GetMCSClientAfterTable( 
+        internal void GetMCSClientAfterTable(
             uint fswdirTrack,
             IntPtr pmcsclientIn,
             out IntPtr ppmcsclientOut)
@@ -177,7 +178,7 @@ namespace MS.Internal.PtsHost
             ppmcsclientOut = IntPtr.Zero;
             MbpInfo mbp = MbpInfo.FromElement(Table, StructuralCache.TextFormatterHost.PixelsPerDip);
             MarginCollapsingState mcs = null;
-            
+
             if (pmcsclientIn != IntPtr.Zero)
                 mcs = PtsContext.HandleToObject(pmcsclientIn) as MarginCollapsingState;
 
@@ -212,7 +213,7 @@ namespace MS.Internal.PtsHost
         /// <param name="pnmNextHeaderRow">Header row name</param>
         internal void GetNextHeaderRow(
             int fRepeatedHeader,
-            IntPtr nmHeaderRow, 
+            IntPtr nmHeaderRow,
             out int fFound,
             out IntPtr pnmNextHeaderRow)
         {
@@ -260,21 +261,21 @@ namespace MS.Internal.PtsHost
         internal void GetFirstRow(
             out int fFound,
             out IntPtr pnmFirstRow)
-        {            
-            if(_firstChild == null)
+        {
+            if (_firstChild == null)
             {
                 TableRow tableRow = null;
-                for(int rowGroupIndex = 0; rowGroupIndex < Table.RowGroups.Count && tableRow == null; rowGroupIndex++)
+                for (int rowGroupIndex = 0; rowGroupIndex < Table.RowGroups.Count && tableRow == null; rowGroupIndex++)
                 {
                     TableRowGroup rowGroup = Table.RowGroups[rowGroupIndex];
-                    if(rowGroup.Rows.Count > 0)
+                    if (rowGroup.Rows.Count > 0)
                     {
                         tableRow = rowGroup.Rows[0];
                         Invariant.Assert(tableRow.Index != -1);
                     }
                 }
 
-                if(tableRow != null)
+                if (tableRow != null)
                 {
                     _firstChild = new RowParagraph(tableRow, StructuralCache);
 
@@ -282,7 +283,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(_firstChild != null)
+            if (_firstChild != null)
             {
                 fFound = PTS.True;
                 pnmFirstRow = _firstChild.Handle;
@@ -301,7 +302,7 @@ namespace MS.Internal.PtsHost
         /// <param name="fFound">Indication that body row is found</param>
         /// <param name="pnmNextRow">Body row name</param>
         internal void GetNextRow(
-            IntPtr nmRow,  
+            IntPtr nmRow,
             out int fFound,
             out IntPtr pnmNextRow)
         {
@@ -310,7 +311,7 @@ namespace MS.Internal.PtsHost
             BaseParagraph prevParagraph = ((RowParagraph)PtsContext.HandleToObject(nmRow));
             BaseParagraph nextParagraph = prevParagraph.Next;
 
-            if(nextParagraph == null)
+            if (nextParagraph == null)
             {
                 TableRow currentRow = ((RowParagraph)prevParagraph).Row;
                 TableRowGroup currentRowGroup = currentRow.RowGroup;
@@ -321,15 +322,15 @@ namespace MS.Internal.PtsHost
 
                 if (nextRowIndex < currentRowGroup.Rows.Count)
                 {
-                    Debug.Assert(currentRowGroup.Rows[nextRowIndex].Index != -1, 
+                    Debug.Assert(currentRowGroup.Rows[nextRowIndex].Index != -1,
                         "Row is not in a table");
 
                     tableRow = currentRowGroup.Rows[nextRowIndex];
                 }
 
-                while(tableRow == null)
+                while (tableRow == null)
                 {
-                    if(nextRowGroupIndex == Table.RowGroups.Count)
+                    if (nextRowGroupIndex == Table.RowGroups.Count)
                     {
                         break;
                     }
@@ -347,7 +348,7 @@ namespace MS.Internal.PtsHost
                     nextRowGroupIndex++;
                 }
 
-                if(tableRow != null)
+                if (tableRow != null)
                 {
                     nextParagraph = new RowParagraph(tableRow, StructuralCache);
                     prevParagraph.Next = nextParagraph;
@@ -357,7 +358,7 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(nextParagraph != null)
+            if (nextParagraph != null)
             {
                 fFound = PTS.True;
                 pnmNextRow = nextParagraph.Handle;
@@ -441,9 +442,9 @@ namespace MS.Internal.PtsHost
             bool isEntireTableInvalid = true;
             RowParagraph currentParagraph = _firstChild as RowParagraph;
 
-            while(currentParagraph != null)
+            while (currentParagraph != null)
             {
-                if(!InvalidateRowStructure(currentParagraph, startPosition))
+                if (!InvalidateRowStructure(currentParagraph, startPosition))
                 {
                     isEntireTableInvalid = false;
                 }
@@ -461,14 +462,14 @@ namespace MS.Internal.PtsHost
         {
             RowParagraph currentParagraph = _firstChild as RowParagraph;
 
-            while(currentParagraph != null)
+            while (currentParagraph != null)
             {
                 InvalidateRowFormatCache(currentParagraph);
 
                 currentParagraph = currentParagraph.Next as RowParagraph;
             }
         }
-       
+
 
         #endregion Internal Methods 
 
@@ -483,9 +484,9 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Table owner accessor
         /// </summary>
-        internal Table Table 
-        { 
-            get 
+        internal Table Table
+        {
+            get
             {
                 return (Table)Element;
             }
@@ -507,11 +508,11 @@ namespace MS.Internal.PtsHost
         {
             bool isEntireTableInvalid = true;
 
-            for(int iCell = 0; iCell < rowParagraph.Cells.Length; iCell++)
+            for (int iCell = 0; iCell < rowParagraph.Cells.Length; iCell++)
             {
                 CellParagraph cellParagraph = rowParagraph.Cells[iCell];
 
-                if(cellParagraph.ParagraphEndCharacterPosition < startPosition || 
+                if (cellParagraph.ParagraphEndCharacterPosition < startPosition ||
                    !cellParagraph.InvalidateStructure(startPosition))
                 {
                     isEntireTableInvalid = false;
@@ -525,7 +526,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         private void InvalidateRowFormatCache(RowParagraph rowParagraph)
         {
-            for(int iCell = 0; iCell < rowParagraph.Cells.Length; iCell++)
+            for (int iCell = 0; iCell < rowParagraph.Cells.Length; iCell++)
             {
                 rowParagraph.Cells[iCell].InvalidateFormatCache();
             }
@@ -550,7 +551,7 @@ namespace MS.Internal.PtsHost
             // - to create dirty text range corresponding to the Table content
             // - notify formatter that Table's content is changed.
             //
-            int charCount = Table.SymbolCount - 2;// This is equivalent to (ContentEndOffset � ContentStartOffset) but is more performant.
+            int charCount = Table.SymbolCount - 2;// This is equivalent to (ContentEndOffset – ContentStartOffset) but is more performant.
             if (charCount > 0)
             {
                 DirtyTextRange dtr = new DirtyTextRange(Table.ContentStartOffset, charCount, charCount);

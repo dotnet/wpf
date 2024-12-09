@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,7 @@ namespace System.Windows.Xps.Serialization
         public
         ReachDocumentReferenceCollectionSerializerAsync(
             PackageSerializationManager manager
-            ):
+            ) :
         base(manager)
         {
 
@@ -34,33 +34,33 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            switch (context.Action) 
+            switch (context.Action)
             {
                 case SerializerAction.endPersistObjectData:
-                {
-                    EndPersistObjectData();
-                    break;
-                }
-
-                case SerializerAction.serializeNextDocumentReference:
-                {
-                    DocumentReferenceCollectionSerializerContext thisContext = 
-                    context as DocumentReferenceCollectionSerializerContext;
-
-                    if(thisContext != null)
                     {
-                        SerializeNextDocumentReference(thisContext.Enumerator,
-                                                       thisContext.ObjectContext);
+                        EndPersistObjectData();
+                        break;
                     }
 
-                    break;
-                }
-                
+                case SerializerAction.serializeNextDocumentReference:
+                    {
+                        DocumentReferenceCollectionSerializerContext thisContext =
+                        context as DocumentReferenceCollectionSerializerContext;
+
+                        if (thisContext != null)
+                        {
+                            SerializeNextDocumentReference(thisContext.Enumerator,
+                                                           thisContext.ObjectContext);
+                        }
+
+                        break;
+                    }
+
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
 
@@ -71,7 +71,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
@@ -105,10 +105,10 @@ namespace System.Windows.Xps.Serialization
         private
         void
         SerializeDocumentReferences(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
-            IEnumerator enumerator = 
+            IEnumerator enumerator =
             ((System.Collections.Generic.IEnumerable<DocumentReference>)serializableObjectContext.TargetObject).
             GetEnumerator();
 
@@ -126,11 +126,11 @@ namespace System.Windows.Xps.Serialization
         private
         void
         SerializeNextDocumentReference(
-            IEnumerator                 enumerator,
-            SerializableObjectContext   serializableObjectContext
+            IEnumerator enumerator,
+            SerializableObjectContext serializableObjectContext
             )
         {
-            if(enumerator.MoveNext())
+            if (enumerator.MoveNext())
             {
 
                 DocumentReferenceCollectionSerializerContext
@@ -152,7 +152,7 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         ///     Called to serialize a single DocumentReference
         /// </summary>
-        private 
+        private
         void
         SerializeDocumentReference(
             object documentReference
@@ -160,7 +160,7 @@ namespace System.Windows.Xps.Serialization
         {
             ReachSerializer serializer = SerializationManager.GetSerializer(documentReference);
 
-            if(serializer!=null)
+            if (serializer != null)
             {
                 serializer.SerializeObject(documentReference);
             }
@@ -178,12 +178,12 @@ namespace System.Windows.Xps.Serialization
     {
         public
         DocumentReferenceCollectionSerializerContext(
-            ReachSerializerAsync        serializer,
-            SerializableObjectContext   objectContext,
-            IEnumerator                 enumerator,
-            SerializerAction            action
-            ):
-            base(serializer,objectContext,action)
+            ReachSerializerAsync serializer,
+            SerializableObjectContext objectContext,
+            IEnumerator enumerator,
+            SerializerAction action
+            ) :
+            base(serializer, objectContext, action)
         {
             this._enumerator = enumerator;
         }
@@ -200,6 +200,6 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        IEnumerator     _enumerator;
+        IEnumerator _enumerator;
     };
 }

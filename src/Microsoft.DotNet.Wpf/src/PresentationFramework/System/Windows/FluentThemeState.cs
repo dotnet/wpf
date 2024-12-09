@@ -1,4 +1,4 @@
-using System.Windows.Media;
+﻿using System.Windows.Media;
 
 namespace System.Windows
 {
@@ -11,8 +11,8 @@ namespace System.Windows
             AccentColor = SystemColors.AccentColor;
         }
 
-        public string ThemeName {get; init;}
-        public bool UseLightColors {get; init;}
-        public Color AccentColor {get; init;}
+        public string ThemeName { get; init; }
+        public bool UseLightColors { get; init; }
+        public Color AccentColor { get; init; }
     }
 }

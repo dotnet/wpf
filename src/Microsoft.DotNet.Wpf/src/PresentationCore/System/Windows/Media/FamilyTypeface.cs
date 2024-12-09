@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace System.Windows.Media
         /// Construct a default family typeface
         /// </summary>
         public FamilyTypeface()
-        {}
+        { }
 
 
         /// <summary>
@@ -44,7 +44,7 @@ namespace System.Windows.Media
         /// </summary>
         public FontStyle Style
         {
-            get { return _style;  }
+            get { return _style; }
             set
             {
                 VerifyChangeable();
@@ -72,7 +72,7 @@ namespace System.Windows.Media
         /// </summary>
         public FontStretch Stretch
         {
-            get { return _stretch;  }
+            get { return _stretch; }
             set
             {
                 VerifyChangeable();
@@ -86,7 +86,7 @@ namespace System.Windows.Media
         /// </summary>
         public double UnderlinePosition
         {
-            get { return _underlinePosition ; }
+            get { return _underlinePosition; }
             set
             {
                 CompositeFontParser.VerifyMultiplierOfEm("UnderlinePosition", ref value);
@@ -99,7 +99,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Typeface underline thickness in EM
         /// </summary>
-        public  double UnderlineThickness
+        public double UnderlineThickness
         {
             get { return _underlineThickness; }
             set
@@ -116,7 +116,7 @@ namespace System.Windows.Media
         /// </summary>
         public double StrikethroughPosition
         {
-            get { return _strikeThroughPosition;  }
+            get { return _strikeThroughPosition; }
             set
             {
                 CompositeFontParser.VerifyMultiplierOfEm("StrikethroughPosition", ref value);
@@ -131,7 +131,7 @@ namespace System.Windows.Media
         /// </summary>
         public double StrikethroughThickness
         {
-            get { return _strikeThroughThickness;  }
+            get { return _strikeThroughThickness; }
             set
             {
                 CompositeFontParser.VerifyPositiveMultiplierOfEm("StrikethroughThickness", ref value);
@@ -146,7 +146,7 @@ namespace System.Windows.Media
         /// </summary>
         public double CapsHeight
         {
-            get { return _capsHeight;  }
+            get { return _capsHeight; }
             set
             {
                 CompositeFontParser.VerifyPositiveMultiplierOfEm("CapsHeight", ref value);
@@ -160,7 +160,7 @@ namespace System.Windows.Media
         /// </summary>
         public double XHeight
         {
-            get { return _xHeight;  }
+            get { return _xHeight; }
             set
             {
                 CompositeFontParser.VerifyPositiveMultiplierOfEm("XHeight", ref value);
@@ -209,8 +209,8 @@ namespace System.Windows.Media
                 return false;
 
             return (
-                 Style   == typeface.Style
-              && Weight  == typeface.Weight
+                 Style == typeface.Style
+              && Weight == typeface.Weight
               && Stretch == typeface.Stretch
               );
         }
@@ -260,7 +260,7 @@ namespace System.Windows.Media
         /// </summary>
         public override int GetHashCode()
         {
-            return  _style.GetHashCode()
+            return _style.GetHashCode()
                   ^ _weight.GetHashCode()
                   ^ _stretch.GetHashCode();
         }
@@ -283,10 +283,10 @@ namespace System.Windows.Media
 
 
         unsafe void IDeviceFont.GetAdvanceWidths(
-            char*   characterString,
-            int     characterLength,
-            double  emSize,
-            int*    pAdvances
+            char* characterString,
+            int characterLength,
+            double emSize,
+            int* pAdvances
         )
         {
             unsafe
@@ -310,17 +310,17 @@ namespace System.Windows.Media
 
 
 
-        private bool            _readOnly;
-        private FontStyle       _style;
-        private FontWeight      _weight;
-        private FontStretch     _stretch;
-        private double          _underlinePosition;
-        private double          _underlineThickness;
-        private double          _strikeThroughPosition;
-        private double          _strikeThroughThickness;
-        private double          _capsHeight;
-        private double          _xHeight;
-        private string          _deviceFontName;
+        private bool _readOnly;
+        private FontStyle _style;
+        private FontWeight _weight;
+        private FontStretch _stretch;
+        private double _underlinePosition;
+        private double _underlineThickness;
+        private double _strikeThroughPosition;
+        private double _strikeThroughThickness;
+        private double _capsHeight;
+        private double _xHeight;
+        private string _deviceFontName;
         private CharacterMetricsDictionary _characterMetrics;
     }
 }

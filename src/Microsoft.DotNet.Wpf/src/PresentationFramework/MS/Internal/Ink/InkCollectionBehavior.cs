@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,10 +12,10 @@
 
 
 using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Ink;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MS.Internal.Ink
 {
@@ -63,9 +63,9 @@ namespace MS.Internal.Ink
         /// Overrides SwitchToMode 
         /// As the following expected results
         ///  1. From Ink To InkAndGesture
-        ///     Packets between StylusDown and StylusUp are sent to the gesture reco. On StylusUp gesture event fires. If it’s not a gesture, StrokeCollected event fires.
+        ///     Packets between StylusDown and StylusUp are sent to the gesture reco. On StylusUp gesture event fires. If itâ€™s not a gesture, StrokeCollected event fires.
         ///  2. From Ink To GestureOnly
-        ///     Packets between StylusDown and StylusUp are send to the gesture reco. On StylusUp gesture event fires. Stroke gets removed on StylusUp even if it’s not a gesture.
+        ///     Packets between StylusDown and StylusUp are send to the gesture reco. On StylusUp gesture event fires. Stroke gets removed on StylusUp even if itâ€™s not a gesture.
         ///  3. From Ink To EraseByPoint
         ///     Stroke is discarded. PointErasing is performed after changing the mode.
         ///  4. From Ink To EraseByStroke
@@ -77,7 +77,7 @@ namespace MS.Internal.Ink
         ///  7. From InkAndGesture To Ink
         ///     Stroke is collected for all packets between StylusDown and StylusUp. Gesture event does not fire.
         ///  8. From InkAndGesture To GestureOnly
-        ///     Packets between StylusDown and StylusUp are sent to the gesture reco. Stroke gets removed on StylusUp even if it’s not a gesture.
+        ///     Packets between StylusDown and StylusUp are sent to the gesture reco. Stroke gets removed on StylusUp even if itâ€™s not a gesture.
         ///  9. From InkAndGesture To EraseByPoint
         ///     Stroke is discarded. PointErasing is performed after changing the mode, gesture event does not fire.
         /// 10. From InkAndGesture To EraseByStroke
@@ -87,7 +87,7 @@ namespace MS.Internal.Ink
         /// 12. From InkAndGesture To None
         ///     Stroke is discarded, no gesture is recognized.
         /// 13. From GestureOnly To InkAndGesture
-        ///     Packets between StylusDown and StylusUp are sent to the gesture reco. On StylusUp gesture event fires. If it’s not a gesture, StrokeCollected event fires.
+        ///     Packets between StylusDown and StylusUp are sent to the gesture reco. On StylusUp gesture event fires. If itâ€™s not a gesture, StrokeCollected event fires.
         /// 14. From GestureOnly To Ink
         ///     Stroke is collected. Gesture event does not fire.
         /// 15. From GestureOnly To EraseByPoint
@@ -104,7 +104,7 @@ namespace MS.Internal.Ink
         {
             Debug.Assert(EditingCoordinator.IsInMidStroke, "SwitchToMode should only be called in a mid-stroke");
 
-            switch ( mode )
+            switch (mode)
             {
                 case InkCanvasEditingMode.Ink:
                 case InkCanvasEditingMode.InkAndGesture:
@@ -127,7 +127,7 @@ namespace MS.Internal.Ink
                 case InkCanvasEditingMode.Select:
                     {
                         // Make a copy of the current cached points.
-                        StylusPointCollection cachedPoints = _stylusPoints != null ? 
+                        StylusPointCollection cachedPoints = _stylusPoints != null ?
                                                                 _stylusPoints.Clone() : null;
 
                         // Discard the collected ink.
@@ -136,7 +136,7 @@ namespace MS.Internal.Ink
                         // Change the Select mode
                         IStylusEditing newBehavior = EditingCoordinator.ChangeStylusEditingMode(this, mode);
 
-                        if ( cachedPoints != null 
+                        if (cachedPoints != null
                             // NOTICE-2006/04/27-WAYNEZEN,
                             // EditingCoordinator.ChangeStylusEditingMode raises external event.
                             // The user code could take any arbitrary action for instance calling InkCanvas.ReleaseMouseCapture()
@@ -206,7 +206,7 @@ namespace MS.Internal.Ink
         /// <returns></returns>
         protected override Cursor GetCurrentCursor()
         {
-            if ( EditingCoordinator.UserIsEditing == true )
+            if (EditingCoordinator.UserIsEditing == true)
             {
                 return Cursors.None;
             }
@@ -238,10 +238,10 @@ namespace MS.Internal.Ink
             _strokeDrawingAttributes = this.InkCanvas.DefaultDrawingAttributes.Clone();
 
             // Reset the dynamic renderer if it's been flagged.
-            if ( _resetDynamicRenderer )
+            if (_resetDynamicRenderer)
             {
                 InputDevice inputDevice = EditingCoordinator.GetInputDeviceForReset();
-                if ( InkCanvas.InternalDynamicRenderer != null && inputDevice != null )
+                if (InkCanvas.InternalDynamicRenderer != null && inputDevice != null)
                 {
                     StylusDevice stylusDevice = inputDevice as StylusDevice;
                     // If the input device is MouseDevice, null will be passed in Reset Method.
@@ -282,12 +282,12 @@ namespace MS.Internal.Ink
             // The out-side code could throw exception in the their handlers. We use try/finally block to protect our status.
             try
             {
-                if ( commit )
+                if (commit)
                 {
                     // 
                     // It's possible that the input may end up without any StylusPoint being collected since the behavior can be deactivated by
                     // the user code in the any event handler.
-                    if ( _stylusPoints != null )
+                    if (_stylusPoints != null)
                     {
                         Debug.Assert(_strokeDrawingAttributes != null, "_strokeDrawingAttributes can not be null, did we not see a down?");
 
@@ -335,19 +335,19 @@ namespace MS.Internal.Ink
             {
                 // We only update our cache cursor when DefaultDrawingAttributes has changed or 
                 // there are animated transforms being applied to InkCanvas.
-                if ( _cachedPenCursor == null || _cursorDrawingAttributes != InkCanvas.DefaultDrawingAttributes )
+                if (_cachedPenCursor == null || _cursorDrawingAttributes != InkCanvas.DefaultDrawingAttributes)
                 {
                     //adjust the DA for any Layout/Render transforms.
                     Matrix xf = GetElementTransformMatrix();
 
                     DrawingAttributes da = this.InkCanvas.DefaultDrawingAttributes;
-                    if ( !xf.IsIdentity )
+                    if (!xf.IsIdentity)
                     {
                         //scale the DA, zero the offsets.
                         xf *= da.StylusTipTransform;
                         xf.OffsetX = 0;
                         xf.OffsetY = 0;
-                        if ( xf.HasInverse )
+                        if (xf.HasInverse)
                         {
                             da = da.Clone();
                             da.StylusTipTransform = xf;
@@ -375,23 +375,23 @@ namespace MS.Internal.Ink
         #region Private Fields
 
         // A flag indicates that the dynamic renderer needs to be reset when StylusInputs begins.
-        private bool                                           _resetDynamicRenderer;
+        private bool _resetDynamicRenderer;
 
-        private StylusPointCollection                           _stylusPoints;
+        private StylusPointCollection _stylusPoints;
 
-        private bool                                            _userInitiated;
+        private bool _userInitiated;
 
         /// <summary>
         /// We clone the InkCanvas.DefaultDrawingAttributes on down, in case they are
         /// changed mid-stroke
         /// </summary>
-        private DrawingAttributes                               _strokeDrawingAttributes;
+        private DrawingAttributes _strokeDrawingAttributes;
 
         /// <summary>
         /// The cached DrawingAttributes and Cursor instances for rendering the pen cursor.
         /// </summary>
-        private DrawingAttributes                               _cursorDrawingAttributes;
-        private Cursor                                          _cachedPenCursor;
+        private DrawingAttributes _cursorDrawingAttributes;
+        private Cursor _cachedPenCursor;
 
         #endregion Private Fields
     }

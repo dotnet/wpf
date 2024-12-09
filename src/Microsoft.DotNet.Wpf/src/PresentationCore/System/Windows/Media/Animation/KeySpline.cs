@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,7 +17,7 @@ namespace System.Windows.Media.Animation
     /// Example of a key frame animation class: <see cref="System.Windows.Media.Animation.DoubleAnimationUsingKeyFrames">DoubleAnimationUsingKeyFrames</see>.
     /// </remarks>
     [TypeConverter(typeof(KeySplineConverter))]
-    [Localizability(LocalizationCategory.None, Readability=Readability.Unreadable)]
+    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
     public class KeySpline : Freezable, IFormattable
     {
         #region Constructors
@@ -97,7 +97,7 @@ namespace System.Windows.Media.Animation
         /// <param name="sourceFreezable">The KeySpline to copy.</param>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            KeySpline sourceKeySpline = (KeySpline) sourceFreezable;
+            KeySpline sourceKeySpline = (KeySpline)sourceFreezable;
             base.CloneCore(sourceFreezable);
             CloneCommon(sourceKeySpline);
         }
@@ -108,7 +108,7 @@ namespace System.Windows.Media.Animation
         /// <param name="sourceFreezable">The KeySpline to copy.</param>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            KeySpline sourceKeySpline = (KeySpline) sourceFreezable;
+            KeySpline sourceKeySpline = (KeySpline)sourceFreezable;
             base.CloneCurrentValueCore(sourceFreezable);
             CloneCommon(sourceKeySpline);
         }
@@ -119,7 +119,7 @@ namespace System.Windows.Media.Animation
         /// <param name="sourceFreezable">The KeySpline to copy.</param>
         protected override void GetAsFrozenCore(Freezable sourceFreezable)
         {
-            KeySpline sourceKeySpline = (KeySpline) sourceFreezable;
+            KeySpline sourceKeySpline = (KeySpline)sourceFreezable;
             base.GetAsFrozenCore(sourceFreezable);
             CloneCommon(sourceKeySpline);
         }
@@ -139,9 +139,9 @@ namespace System.Windows.Media.Animation
         /// Implementation of <see cref="System.Windows.Freezable.OnChanged">Freezable.OnChanged</see>.
         /// </summary>
         protected override void OnChanged()
-        {            
+        {
             _isDirty = true;
-            
+
             base.OnChanged();
         }
 
@@ -245,7 +245,7 @@ namespace System.Windows.Media.Animation
 
         private bool IsValidControlPoint(Point point)
         {
-            return point.X >= 0.0 
+            return point.X >= 0.0
                 && point.X <= 1.0;
         }
 
@@ -256,7 +256,7 @@ namespace System.Windows.Media.Animation
         {
             Debug.Assert(_isDirty);
 
-            if (   _controlPoint1 == new Point(0, 0)
+            if (_controlPoint1 == new Point(0, 0)
                 && _controlPoint2 == new Point(1, 1))
             {
                 // This KeySpline would have no effect on the progress.
@@ -292,8 +292,8 @@ namespace System.Windows.Media.Animation
         /// <returns>the value of the Bezier function at the given parameter</returns>
         static private double GetBezierValue(double b, double c, double t)
         {
-            double s  = 1.0 - t;
-            double t2 = t * t;       
+            double s = 1.0 - t;
+            double t2 = t * t;
 
             return b * t * s * s + c * t2 * s + t2 * t;
         }
@@ -308,12 +308,12 @@ namespace System.Windows.Media.Animation
         {
             Debug.Assert(_isSpecified);
 
-            double s  = 1.0 - t;
+            double s = 1.0 - t;
             double t2 = t * t;
             double s2 = s * s;
 
-            x = _Bx * t * s2  +  _Cx * t2 * s  +  t2 * t;
-            dx = _Bx * s2  +  _Cx_Bx * s * t  +  _three_Cx * t2;
+            x = _Bx * t * s2 + _Cx * t2 * s + t2 * t;
+            dx = _Bx * s2 + _Cx_Bx * s * t + _three_Cx * t2;
         }
 
         /// <summary>
@@ -401,7 +401,7 @@ namespace System.Windows.Media.Animation
 
 
         /// <summary>
-         /// Copy the common fields for the various Clone methods
+        /// Copy the common fields for the various Clone methods
         /// </summary>
         /// <param name="sourceKeySpline">The KeySpline to copy.</param>
         private void CloneCommon(KeySpline sourceKeySpline)
@@ -484,7 +484,7 @@ namespace System.Windows.Media.Animation
             char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(formatProvider);
 
             return String.Format(
-                formatProvider, 
+                formatProvider,
                 "{1}{0}{2}",
                 separator,
                 _controlPoint1,
@@ -507,7 +507,7 @@ namespace System.Windows.Media.Animation
         private bool _isDirty;
 
         // The parameter that corresponds to the most recent time
-        private    double     _parameter;
+        private double _parameter;
 
         // Cached coefficients
         private double _Bx;        // 3*points[0].X

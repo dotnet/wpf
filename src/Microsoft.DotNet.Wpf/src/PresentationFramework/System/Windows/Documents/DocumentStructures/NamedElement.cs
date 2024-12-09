@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,10 +18,10 @@ namespace System.Windows.Documents.DocumentStructures
     {
         internal FixedElement.ElementType ElementType
         {
-            get { return _elementType;}
+            get { return _elementType; }
         }
 
-        internal  FixedElement.ElementType _elementType;
+        internal FixedElement.ElementType _elementType;
     }
 
     /// <summary>
@@ -59,5 +59,5 @@ namespace System.Windows.Documents.DocumentStructures
 
         private string _reference;
     }
-  }
+}
 

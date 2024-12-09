@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -240,7 +240,7 @@ namespace System.Windows.Controls.Primitives
         [Browsable(false), Category("Appearance"), ReadOnly(true)]
         public bool IsPressed
         {
-            get { return (bool) GetValue(IsPressedProperty); }
+            get { return (bool)GetValue(IsPressedProperty); }
             protected set { SetValue(IsPressedPropertyKey, BooleanBoxes.Box(value)); }
         }
 
@@ -265,7 +265,7 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                return (ICommand) GetValue(CommandProperty);
+                return (ICommand)GetValue(CommandProperty);
             }
             set
             {
@@ -396,7 +396,7 @@ namespace System.Windows.Controls.Primitives
         {
             get
             {
-                return (ClickMode) GetValue(ClickModeProperty);
+                return (ClickMode)GetValue(ClickModeProperty);
             }
             set
             {

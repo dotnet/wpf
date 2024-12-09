@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -56,7 +56,7 @@ namespace System.Windows.Media
         private static bool ValidatePositionStartValue(object value)
         {
             // This resource needs to be notified on new values being set.
-            if (!OnPositionStartChanging((int) value))
+            if (!OnPositionStartChanging((int)value))
             {
                 return false;
             }
@@ -65,7 +65,7 @@ namespace System.Windows.Media
         private static bool ValidatePositionCountValue(object value)
         {
             // This resource needs to be notified on new values being set.
-            if (!OnPositionCountChanging((int) value))
+            if (!OnPositionCountChanging((int)value))
             {
                 return false;
             }
@@ -83,7 +83,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Transform) GetValue(TransformProperty);
+                return (Transform)GetValue(TransformProperty);
             }
             set
             {
@@ -99,7 +99,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Geometry) GetValue(ClipProperty);
+                return (Geometry)GetValue(ClipProperty);
             }
             set
             {
@@ -115,7 +115,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (Brush) GetValue(ForegroundProperty);
+                return (Brush)GetValue(ForegroundProperty);
             }
             set
             {
@@ -131,7 +131,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (int) GetValue(PositionStartProperty);
+                return (int)GetValue(PositionStartProperty);
             }
             set
             {
@@ -147,7 +147,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (int) GetValue(PositionCountProperty);
+                return (int)GetValue(PositionCountProperty);
             }
             set
             {

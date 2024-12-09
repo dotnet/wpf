@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,19 +6,19 @@
 // Description: Control for displaying paginated content.
 //
 
-using MS.Internal;                                      // For Invariant.Assert
-using MS.Internal.Commands;
-using MS.Internal.Documents;
-using MS.Internal.Telemetry.PresentationFramework;
-using MS.Utility;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Markup;
+using System.Windows.Media;
+using MS.Internal;                                      // For Invariant.Assert
+using MS.Internal.Commands;
+using MS.Internal.Documents;
+using MS.Internal.Telemetry.PresentationFramework;
+using MS.Utility;
 
 
 namespace System.Windows.Controls
@@ -300,10 +300,10 @@ namespace System.Windows.Controls
         /// </summary>
         public static RoutedUICommand ViewThumbnailsCommand
         {
-             get
-             {
-                 return _viewThumbnailsCommand;
-             }
+            get
+            {
+                return _viewThumbnailsCommand;
+            }
         }
 
         /// <summary>
@@ -371,7 +371,7 @@ namespace System.Windows.Controls
         /// </summary>
         public double HorizontalOffset
         {
-            get { return (double) GetValue(HorizontalOffsetProperty); }
+            get { return (double)GetValue(HorizontalOffsetProperty); }
             set
             {
                 SetValue(HorizontalOffsetProperty, value);
@@ -401,7 +401,7 @@ namespace System.Windows.Controls
         /// </summary>
         public double VerticalOffset
         {
-            get { return (double) GetValue(VerticalOffsetProperty); }
+            get { return (double)GetValue(VerticalOffsetProperty); }
             set
             {
                 SetValue(VerticalOffsetProperty, value);
@@ -433,7 +433,7 @@ namespace System.Windows.Controls
         /// </summary>
         public double ExtentWidth
         {
-            get { return (double) GetValue(ExtentWidthProperty); }
+            get { return (double)GetValue(ExtentWidthProperty); }
         }
         #endregion ExtentWidth
 
@@ -461,7 +461,7 @@ namespace System.Windows.Controls
         /// </summary>
         public double ExtentHeight
         {
-            get { return (double) GetValue(ExtentHeightProperty); }
+            get { return (double)GetValue(ExtentHeightProperty); }
         }
         #endregion ExtentHeight
 
@@ -490,7 +490,7 @@ namespace System.Windows.Controls
         /// </summary>
         public double ViewportWidth
         {
-            get { return (double) GetValue(ViewportWidthProperty); }
+            get { return (double)GetValue(ViewportWidthProperty); }
         }
         #endregion ViewportWidth
 
@@ -518,7 +518,7 @@ namespace System.Windows.Controls
         /// </summary>
         public double ViewportHeight
         {
-            get { return (double) GetValue(ViewportHeightProperty);  }
+            get { return (double)GetValue(ViewportHeightProperty); }
         }
         #endregion ViewportHeight
 
@@ -541,7 +541,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool ShowPageBorders
         {
-            get { return (bool) GetValue(ShowPageBordersProperty); }
+            get { return (bool)GetValue(ShowPageBordersProperty); }
             set { SetValue(ShowPageBordersProperty, value); }
         }
         #endregion ShowPageBorders
@@ -582,7 +582,7 @@ namespace System.Windows.Controls
         /// </summary>
         public double Zoom
         {
-            get { return (double) GetValue(ZoomProperty); }
+            get { return (double)GetValue(ZoomProperty); }
             set { SetValue(ZoomProperty, value); }
         }
         #endregion Zoom
@@ -612,7 +612,7 @@ namespace System.Windows.Controls
         /// </summary>
         public int MaxPagesAcross
         {
-            get { return (int) GetValue(MaxPagesAcrossProperty); }
+            get { return (int)GetValue(MaxPagesAcrossProperty); }
             set { SetValue(MaxPagesAcrossProperty, value); }
         }
         #endregion MaxPagesAcross
@@ -636,7 +636,7 @@ namespace System.Windows.Controls
         /// </summary>
         public double VerticalPageSpacing
         {
-            get { return (double) GetValue(VerticalPageSpacingProperty); }
+            get { return (double)GetValue(VerticalPageSpacingProperty); }
             set { SetValue(VerticalPageSpacingProperty, value); }
         }
         #endregion VerticalPageSpacing
@@ -660,7 +660,7 @@ namespace System.Windows.Controls
         /// </summary>
         public double HorizontalPageSpacing
         {
-            get { return (double) GetValue(HorizontalPageSpacingProperty); }
+            get { return (double)GetValue(HorizontalPageSpacingProperty); }
             set { SetValue(HorizontalPageSpacingProperty, value); }
         }
         #endregion HorizontalPageSpacing
@@ -687,7 +687,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool CanMoveUp
         {
-            get { return (bool) GetValue(CanMoveUpProperty); }
+            get { return (bool)GetValue(CanMoveUpProperty); }
         }
         #endregion CanMoveUp
 
@@ -713,7 +713,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool CanMoveDown
         {
-            get { return (bool) GetValue(CanMoveDownProperty); }
+            get { return (bool)GetValue(CanMoveDownProperty); }
         }
         #endregion CanMoveDown
 
@@ -739,7 +739,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool CanMoveLeft
         {
-            get { return (bool) GetValue(CanMoveLeftProperty); }
+            get { return (bool)GetValue(CanMoveLeftProperty); }
         }
         #endregion CanMoveLeft
 
@@ -765,7 +765,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool CanMoveRight
         {
-            get { return (bool) GetValue(CanMoveRightProperty); }
+            get { return (bool)GetValue(CanMoveRightProperty); }
         }
         #endregion CanMoveRight
 
@@ -794,7 +794,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool CanIncreaseZoom
         {
-            get { return (bool) GetValue(CanIncreaseZoomProperty); }
+            get { return (bool)GetValue(CanIncreaseZoomProperty); }
         }
         #endregion CanIncreaseZoom
 
@@ -823,7 +823,7 @@ namespace System.Windows.Controls
         /// </summary>
         public bool CanDecreaseZoom
         {
-            get { return (bool) GetValue(CanDecreaseZoomProperty); }
+            get { return (bool)GetValue(CanDecreaseZoomProperty); }
         }
         #endregion CanDecreaseZoom
 
@@ -946,7 +946,7 @@ namespace System.Windows.Controls
             //Scroll to the top of the document.
             if (_documentScrollInfo != null)
             {
-                _documentScrollInfo.MakePageVisible( 0 );
+                _documentScrollInfo.MakePageVisible(0);
             }
         }
 
@@ -958,7 +958,7 @@ namespace System.Windows.Controls
             //Scroll to the bottom of the document.
             if (_documentScrollInfo != null)
             {
-                _documentScrollInfo.MakePageVisible( PageCount - 1 );
+                _documentScrollInfo.MakePageVisible(PageCount - 1);
             }
         }
 
@@ -1193,7 +1193,7 @@ namespace System.Windows.Controls
                 //   still be zoomed out, then zoom out another level.
                 if ((oldZoom == ZoomLevelCollection[_zoomLevelIndex]) &&
                     (_zoomLevelIndex < ZoomLevelCollection.Length - 1))
-               {
+                {
                     _zoomLevelIndex++;
                 }
 
@@ -1481,11 +1481,11 @@ namespace System.Windows.Controls
                 typeof(DocumentViewer),
                 null);
 
-            CommandHelpers.RegisterCommandHandler( typeof(DocumentViewer),
+            CommandHelpers.RegisterCommandHandler(typeof(DocumentViewer),
                 _viewThumbnailsCommand,
                 executeHandler,
                 queryEnabledHandler);
-                //no key gesture
+            //no key gesture
 
             //
             // Command: FitToWidth
@@ -1515,7 +1515,7 @@ namespace System.Windows.Controls
                 _fitToHeightCommand,
                 executeHandler,
                 queryEnabledHandler);
-                //no key gesture
+            //no key gesture
 
             //
             // Command: MaxPagesAcross
@@ -1530,7 +1530,7 @@ namespace System.Windows.Controls
                 _fitToMaxPagesAcrossCommand,
                 executeHandler,
                 queryEnabledHandler);
-                //no key gesture
+            //no key gesture
 
             #region Library Commands
 
@@ -1566,7 +1566,7 @@ namespace System.Windows.Controls
                 ComponentCommands.ScrollPageLeft,
                 executeHandler,
                 queryEnabledHandler);
-                //no key gesture
+            //no key gesture
 
             //
             // Command: ComponentCommands.ScrollPageRight
@@ -1575,7 +1575,7 @@ namespace System.Windows.Controls
                 ComponentCommands.ScrollPageRight,
                 executeHandler,
                 queryEnabledHandler);
-                //no key gesture
+            //no key gesture
 
             //
             // Command: ComponentCommands.MoveUp - Up
@@ -1620,7 +1620,7 @@ namespace System.Windows.Controls
                 NavigationCommands.Zoom,
                 executeHandler,
                 queryEnabledHandler);
-                //no key gesture
+            //no key gesture
 
             //
             // Command: NavigationCommands.IncreaseZoom
@@ -1691,8 +1691,10 @@ namespace System.Windows.Controls
             //Bound to Ctrl+1.
             InputBinding zoom100InputBinding =
                 new InputBinding(NavigationCommands.Zoom,
-                new KeyGesture(Key.D1, ModifierKeys.Control));
-            zoom100InputBinding.CommandParameter = 100.0;
+                new KeyGesture(Key.D1, ModifierKeys.Control))
+                {
+                    CommandParameter = 100.0
+                };
 
             CommandManager.RegisterClassInputBinding(typeof(DocumentViewer),
                 zoom100InputBinding);
@@ -1701,8 +1703,10 @@ namespace System.Windows.Controls
             //Bound to Ctrl+3.
             InputBinding wholePageInputBinding =
                             new InputBinding(DocumentViewer.FitToMaxPagesAcrossCommand,
-                            new KeyGesture(Key.D3, ModifierKeys.Control));
-            wholePageInputBinding.CommandParameter = 1;
+                            new KeyGesture(Key.D3, ModifierKeys.Control))
+                            {
+                                CommandParameter = 1
+                            };
 
             CommandManager.RegisterClassInputBinding(typeof(DocumentViewer),
                 wholePageInputBinding);
@@ -1711,8 +1715,10 @@ namespace System.Windows.Controls
             //Bound to Ctrl+4.
             InputBinding twoPagesInputBinding =
                             new InputBinding(DocumentViewer.FitToMaxPagesAcrossCommand,
-                            new KeyGesture(Key.D4, ModifierKeys.Control));
-            twoPagesInputBinding.CommandParameter = 2;
+                            new KeyGesture(Key.D4, ModifierKeys.Control))
+                            {
+                                CommandParameter = 2
+                            };
 
             CommandManager.RegisterClassInputBinding(typeof(DocumentViewer),
                 twoPagesInputBinding);
@@ -2051,8 +2057,10 @@ namespace System.Windows.Controls
             if (_documentScrollInfo == null)
             {
                 // Construct IDocumentScrollInfo (DocumentGrid).
-                _documentScrollInfo = new DocumentGrid();
-                _documentScrollInfo.DocumentViewerOwner = this;
+                _documentScrollInfo = new DocumentGrid
+                {
+                    DocumentViewerOwner = this
+                };
 
                 //If IDocumentScrollInfo is a FrameworkElement we can give it a
                 //Name for automation.
@@ -2139,8 +2147,8 @@ namespace System.Windows.Controls
             // Only create and hook up the toolbar, if we found a place to put it.
             if (findHost != null)
             {
-               if( _findToolbar == null )
-               {
+                if (_findToolbar == null)
+                {
                     // create the new object
                     _findToolbar = new FindToolBar();
 
@@ -2388,7 +2396,7 @@ namespace System.Windows.Controls
         private static void OnHorizontalOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DocumentViewer dv = (DocumentViewer)d;
-            double newOffset = (double) e.NewValue;
+            double newOffset = (double)e.NewValue;
 
             // If the HorizontalOffset has changed and it isn't due to a change that originated
             // from our IDocumentScrollInfo object, then set the new offset value on the IDocumentScrollInfo.
@@ -2408,11 +2416,11 @@ namespace System.Windows.Controls
         private static void OnVerticalOffsetChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DocumentViewer dv = (DocumentViewer)d;
-            double newOffset = (double) e.NewValue;
+            double newOffset = (double)e.NewValue;
 
             // If the VerticalOffset has changed and it isn't due to a change that originated
             // from our IDocumentScrollInfo object, then set the new offset value on the IDocumentScrollInfo.
-            if ( !dv._internalIDSIChange && (dv._documentScrollInfo != null))
+            if (!dv._internalIDSIChange && (dv._documentScrollInfo != null))
             {
                 dv._documentScrollInfo.SetVerticalOffset(newOffset);
             }
@@ -2425,7 +2433,7 @@ namespace System.Windows.Controls
         private static void OnExtentWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DocumentViewer dv = (DocumentViewer)d;
-            dv.SetValue(CanMoveRightPropertyKey, dv.HorizontalOffset < ((double) e.NewValue - dv.ViewportWidth));
+            dv.SetValue(CanMoveRightPropertyKey, dv.HorizontalOffset < ((double)e.NewValue - dv.ViewportWidth));
         }
         #endregion ExtentWidth
 
@@ -2433,7 +2441,7 @@ namespace System.Windows.Controls
         private static void OnExtentHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DocumentViewer dv = (DocumentViewer)d;
-            dv.SetValue(CanMoveDownPropertyKey, dv.VerticalOffset < ((double) e.NewValue - dv.ViewportHeight));
+            dv.SetValue(CanMoveDownPropertyKey, dv.VerticalOffset < ((double)e.NewValue - dv.ViewportHeight));
         }
         #endregion ExtentHeight
 
@@ -2441,8 +2449,8 @@ namespace System.Windows.Controls
         private static void OnViewportWidthChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DocumentViewer dv = (DocumentViewer)d;
-            double newWidth = (double) e.NewValue;
-            dv.SetValue(CanMoveRightPropertyKey, dv.HorizontalOffset < (dv.ExtentWidth - (double) e.NewValue));
+            double newWidth = (double)e.NewValue;
+            dv.SetValue(CanMoveRightPropertyKey, dv.HorizontalOffset < (dv.ExtentWidth - (double)e.NewValue));
         }
         #endregion ViewportWidth
 
@@ -2450,7 +2458,7 @@ namespace System.Windows.Controls
         private static void OnViewportHeightChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             DocumentViewer dv = (DocumentViewer)d;
-            double newHeight = (double) e.NewValue;
+            double newHeight = (double)e.NewValue;
             dv.SetValue(CanMoveDownPropertyKey, dv.VerticalOffset < (dv.ExtentHeight - newHeight));
         }
         #endregion ViewportHeight
@@ -2461,12 +2469,12 @@ namespace System.Windows.Controls
         /// </summary>
         private static void OnShowPageBordersChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DocumentViewer dv = (DocumentViewer) d;
+            DocumentViewer dv = (DocumentViewer)d;
 
             // If the ShowPageBorders has changed, then set the new value on the IDocumentScrollInfo.
             if (dv._documentScrollInfo != null)
             {
-                dv._documentScrollInfo.ShowPageBorders = (bool) e.NewValue;
+                dv._documentScrollInfo.ShowPageBorders = (bool)e.NewValue;
             }
         }
         #endregion ShowPageBorders
@@ -2474,7 +2482,7 @@ namespace System.Windows.Controls
         #region Zoom
         private static object CoerceZoom(DependencyObject d, object value)
         {
-            double checkValue = (double) value;
+            double checkValue = (double)value;
             if (checkValue < DocumentViewerConstants.MinimumZoom)
             {
                 return DocumentViewerConstants.MinimumZoom;
@@ -2498,7 +2506,7 @@ namespace System.Windows.Controls
             // If the ZoomPercentage has changed, then update the IDocumentScrollInfo.
             if (dv._documentScrollInfo != null)
             {
-                double newZoom = (double) e.NewValue;
+                double newZoom = (double)e.NewValue;
                 if (!dv._internalIDSIChange)
                 {
                     //Perf Tracing - Mark Zoom Change Start
@@ -2549,7 +2557,7 @@ namespace System.Windows.Controls
             //cause the Zoom to change to show precisely one column.
             if (!dv._internalIDSIChange)
             {
-                dv._documentScrollInfo.SetColumns((int) e.NewValue);
+                dv._documentScrollInfo.SetColumns((int)e.NewValue);
             }
         }
         #endregion GridColumnCount
@@ -2575,7 +2583,7 @@ namespace System.Windows.Controls
             // If the VerticalPageSpacing has changed, then set the new value on IDocumentScrollInfo.
             if (dv._documentScrollInfo != null)
             {
-                dv._documentScrollInfo.VerticalPageSpacing = (double) e.NewValue;
+                dv._documentScrollInfo.VerticalPageSpacing = (double)e.NewValue;
             }
         }
         #endregion VerticalPageSpacing
@@ -2591,7 +2599,7 @@ namespace System.Windows.Controls
             // If the HorizontalPageSpacing has changed, then set the new value on IDocumentScrollInfo.
             if (dv._documentScrollInfo != null)
             {
-                dv._documentScrollInfo.HorizontalPageSpacing = (double) e.NewValue;
+                dv._documentScrollInfo.HorizontalPageSpacing = (double)e.NewValue;
             }
         }
         #endregion HorizontalPageSpacing
@@ -2608,52 +2616,52 @@ namespace System.Windows.Controls
         #region Private Fields
 
         // UI Elements
-        private IDocumentScrollInfo             _documentScrollInfo;
-        private ScrollViewer                    _scrollViewer;
-        private ZoomPercentageConverter         _zoomPercentageConverter;
+        private IDocumentScrollInfo _documentScrollInfo;
+        private ScrollViewer _scrollViewer;
+        private ZoomPercentageConverter _zoomPercentageConverter;
 
         //Find ToolBar
         private FindToolBar _findToolbar;                           // The FindToolbar UI
 
         // Default values for DPs
-        private const double                    _horizontalOffsetDefault = 0.0;
-        private const double                    _verticalOffsetDefault = 0.0;
-        private const double                    _extentWidthDefault = 0.0;
-        private const double                    _extentHeightDefault = 0.0;
-        private const double                    _viewportWidthDefault = 0.0;
-        private const double                    _viewportHeightDefault = 0.0;
-        private const bool                      _showPageBordersDefault = true;
-        private const double                    _zoomPercentageDefault = 100.0;
-        private const int                       _maxPagesAcrossDefault = 1;
-        private const double                    _verticalPageSpacingDefault = 10.0;
-        private const double                    _horizontalPageSpacingDefault = 10.0;
-        private const bool                      _canMoveUpDefault = false;
-        private const bool                      _canMoveDownDefault = false;
-        private const bool                      _canMoveLeftDefault = false;
-        private const bool                      _canMoveRightDefault = false;
-        private const bool                      _canIncreaseZoomDefault = true;
-        private const bool                      _canDecreaseZoomDefault = true;
- //       private const bool                      _isToolbarMaximizedDefault = true;
+        private const double _horizontalOffsetDefault = 0.0;
+        private const double _verticalOffsetDefault = 0.0;
+        private const double _extentWidthDefault = 0.0;
+        private const double _extentHeightDefault = 0.0;
+        private const double _viewportWidthDefault = 0.0;
+        private const double _viewportHeightDefault = 0.0;
+        private const bool _showPageBordersDefault = true;
+        private const double _zoomPercentageDefault = 100.0;
+        private const int _maxPagesAcrossDefault = 1;
+        private const double _verticalPageSpacingDefault = 10.0;
+        private const double _horizontalPageSpacingDefault = 10.0;
+        private const bool _canMoveUpDefault = false;
+        private const bool _canMoveDownDefault = false;
+        private const bool _canMoveLeftDefault = false;
+        private const bool _canMoveRightDefault = false;
+        private const bool _canIncreaseZoomDefault = true;
+        private const bool _canDecreaseZoomDefault = true;
+        //       private const bool                      _isToolbarMaximizedDefault = true;
 
         // Our Commands, instantiated on a pay-for-play basis
-        private static RoutedUICommand            _viewThumbnailsCommand;
-        private static RoutedUICommand            _fitToWidthCommand;
-        private static RoutedUICommand            _fitToHeightCommand;
-        private static RoutedUICommand            _fitToMaxPagesAcrossCommand;
+        private static RoutedUICommand _viewThumbnailsCommand;
+        private static RoutedUICommand _fitToWidthCommand;
+        private static RoutedUICommand _fitToHeightCommand;
+        private static RoutedUICommand _fitToMaxPagesAcrossCommand;
 
         // This list is assumed to be in decreasing order.
         private static ReadOnlySpan<double> ZoomLevelCollection => [5000.0, 4000.0, 3200.0, 2400.0, 2000.0, 1600.0,
                                                                     1200.0, 800.0, 400.0, 300.0, 200.0, 175.0, 150.0,
                                                                     125.0, 100.0, 75.0, 66.0, 50.0, 33.0, 25.0, 10.0, 5.0];
-        private int                             _zoomLevelIndex; // = 0
-        private bool                            _zoomLevelIndexValid; // = false
-        private bool                            _updatingInternalZoomLevel; // = false
-        private bool                            _internalIDSIChange; // = false
-        private bool                            _pageViewCollectionChanged; // = false
-        private bool                            _firstDocumentAssignment = true;
+        private int _zoomLevelIndex; // = 0
+        private bool _zoomLevelIndexValid; // = false
+        private bool _updatingInternalZoomLevel; // = false
+        private bool _internalIDSIChange; // = false
+        private bool _pageViewCollectionChanged; // = false
+        private bool _firstDocumentAssignment = true;
 
-        private const string                    _findToolBarHostName  = "PART_FindToolBarHost";
-        private const string                    _contentHostName = "PART_ContentHost";
+        private const string _findToolBarHostName = "PART_FindToolBarHost";
+        private const string _contentHostName = "PART_ContentHost";
 
         #endregion
 

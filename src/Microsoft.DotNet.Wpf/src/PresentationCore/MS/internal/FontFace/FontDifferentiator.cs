@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -40,10 +40,10 @@ namespace MS.Internal.FontFace
             FontStretch fontStretch
             )
         {
-            string parsedStyleName   = null;
-            string parsedWeightName  = null;
+            string parsedStyleName = null;
+            string parsedWeightName = null;
             string parsedStretchName = null;
-            string regularFaceName   = "Regular";
+            string regularFaceName = "Regular";
             if (fontWeight != FontWeights.Normal)
                 parsedWeightName = ((IFormattable)fontWeight).ToString(null, CultureInfo.InvariantCulture);
 
@@ -86,6 +86,6 @@ namespace MS.Internal.FontFace
             }
 
             return faceNameBuilder.ToString();
-        }         
+        }
     }
 }

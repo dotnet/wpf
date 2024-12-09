@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,22 +9,21 @@
 *
 *
 \***************************************************************************/
-using System.IO;
-using System.Net;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Windows.Threading;
-using System.Windows.Media;
-using System.Windows.Diagnostics;
-
-using MS.Internal;
-using MS.Internal.Utility;
-using MS.Internal.AppModel;
-using System.Xaml;
+using System.IO;
+using System.Net;
 using System.Windows.Baml2006;
+using System.Windows.Diagnostics;
 using System.Windows.Markup;
+using System.Windows.Media;
+using System.Windows.Threading;
+using System.Xaml;
+using MS.Internal;
+using MS.Internal.AppModel;
+using MS.Internal.Utility;
 
 namespace System.Windows
 {
@@ -72,7 +71,7 @@ namespace System.Windows
         {
             if (CanBeAccessedAcrossThreads)
             {
-                lock(((ICollection)this).SyncRoot)
+                lock (((ICollection)this).SyncRoot)
                 {
                     CopyToWithoutLock(array, arrayIndex);
                 }
@@ -172,7 +171,7 @@ namespace System.Windows
 
                 try
                 {
-                     s = WpfWebRequestHelper.GetResponseStream(request, out contentType);
+                    s = WpfWebRequestHelper.GetResponseStream(request, out contentType);
                 }
                 catch (System.IO.IOException)
                 {
@@ -311,7 +310,7 @@ namespace System.Windows
         {
             get
             {
-                return  _baseUri;
+                return _baseUri;
             }
             set
             {
@@ -395,7 +394,7 @@ namespace System.Windows
 
                 if (CanBeAccessedAcrossThreads)
                 {
-                    lock(((ICollection)this).SyncRoot)
+                    lock (((ICollection)this).SyncRoot)
                     {
                         SetValueWithoutLock(key, value);
                     }
@@ -440,13 +439,13 @@ namespace System.Windows
                 // to the old resource before we overwrite it.
                 ValidateDeferredResourceReferences(key);
 
-                if( TraceResourceDictionary.IsEnabled )
+                if (TraceResourceDictionary.IsEnabled)
                 {
-                    TraceResourceDictionary.Trace( TraceEventType.Start,
+                    TraceResourceDictionary.Trace(TraceEventType.Start,
                                                    TraceResourceDictionary.AddResource,
                                                    this,
                                                    key,
-                                                   value );
+                                                   value);
                 }
 
 
@@ -461,14 +460,14 @@ namespace System.Windows
                 // Notify owners of the change and fire invalidate if already initialized
                 NotifyOwners(new ResourcesChangeInfo(key));
 
-                if( TraceResourceDictionary.IsEnabled )
+                if (TraceResourceDictionary.IsEnabled)
                 {
                     TraceResourceDictionary.Trace(
                                                   TraceEventType.Stop,
                                                   TraceResourceDictionary.AddResource,
                                                   this,
                                                   key,
-                                                  value );
+                                                  value);
                 }
 
 
@@ -479,7 +478,7 @@ namespace System.Windows
         {
             if (CanBeAccessedAcrossThreads)
             {
-                lock(((ICollection)this).SyncRoot)
+                lock (((ICollection)this).SyncRoot)
                 {
                     return GetValueWithoutLock(key, out canCache);
                 }
@@ -608,7 +607,7 @@ namespace System.Windows
 
             if (CanBeAccessedAcrossThreads)
             {
-                lock(((ICollection)this).SyncRoot)
+                lock (((ICollection)this).SyncRoot)
                 {
                     AddWithoutLock(key, value);
                 }
@@ -630,13 +629,13 @@ namespace System.Windows
             // invalid during a VisualTreeChanged event
             System.Windows.Diagnostics.VisualDiagnostics.VerifyVisualTreeChange(InheritanceContext);
 
-            if( TraceResourceDictionary.IsEnabled )
+            if (TraceResourceDictionary.IsEnabled)
             {
-                TraceResourceDictionary.Trace( TraceEventType.Start,
+                TraceResourceDictionary.Trace(TraceEventType.Start,
                                                TraceResourceDictionary.AddResource,
                                                this,
                                                key,
-                                               value );
+                                               value);
             }
 
 
@@ -651,13 +650,13 @@ namespace System.Windows
             // Notify owners of the change and fire invalidate if already initialized
             NotifyOwners(new ResourcesChangeInfo(key));
 
-            if( TraceResourceDictionary.IsEnabled )
+            if (TraceResourceDictionary.IsEnabled)
             {
-                TraceResourceDictionary.Trace( TraceEventType.Stop,
+                TraceResourceDictionary.Trace(TraceEventType.Stop,
                                                TraceResourceDictionary.AddResource,
                                                this,
                                                key,
-                                               value );
+                                               value);
             }
 
         }
@@ -669,7 +668,7 @@ namespace System.Windows
         {
             if (CanBeAccessedAcrossThreads)
             {
-                lock(((ICollection)this).SyncRoot)
+                lock (((ICollection)this).SyncRoot)
                 {
                     ClearWithoutLock();
                 }
@@ -800,7 +799,7 @@ namespace System.Windows
         {
             if (CanBeAccessedAcrossThreads)
             {
-                lock(((ICollection)this).SyncRoot)
+                lock (((ICollection)this).SyncRoot)
                 {
                     RemoveWithoutLock(key);
                 }
@@ -1067,7 +1066,7 @@ namespace System.Windows
 
                     if (_numDefer == 0)
                     {
-                            CloseReader();
+                        CloseReader();
                     }
                 }
             }
@@ -1088,10 +1087,12 @@ namespace System.Windows
             Debug.Assert(deferrableContent.ServiceProvider != null);
             Debug.Assert(deferrableContent.RootObject != null);
 
-            Baml2006ReaderSettings settings = new Baml2006ReaderSettings(deferrableContent.SchemaContext.Settings);
-            settings.IsBamlFragment = true;
-            settings.OwnsStream = true;
-            settings.BaseUri = null;    // Base URI can only be set on the root object, not on deferred content.
+            Baml2006ReaderSettings settings = new Baml2006ReaderSettings(deferrableContent.SchemaContext.Settings)
+            {
+                IsBamlFragment = true,
+                OwnsStream = true,
+                BaseUri = null    // Base URI can only be set on the root object, not on deferred content.
+            };
 
             Baml2006Reader reader = new Baml2006Reader(deferrableContent.Stream,
                 deferrableContent.SchemaContext, settings);
@@ -1612,8 +1613,8 @@ namespace System.Windows
         // Call FrameworkElement.InvalidateTree with the right data
         private void NotifyOwners(ResourcesChangeInfo info)
         {
-            bool shouldInvalidate   = IsInitialized;
-            bool hasImplicitStyles  = info.IsResourceAddOperation && HasImplicitStyles;
+            bool shouldInvalidate = IsInitialized;
+            bool hasImplicitStyles = info.IsResourceAddOperation && HasImplicitStyles;
 
             if (shouldInvalidate && InvalidatesImplicitDataTemplateResources)
             {
@@ -1689,10 +1690,10 @@ namespace System.Windows
         /// Returns a DeferredResourceReference if the object has not been inflated yet.
         /// </summary>
         internal object FetchResource(
-            object      resourceKey,
-            bool        allowDeferredResourceReference,
-            bool        mustReturnDeferredResourceReference,
-            out bool    canCache)
+            object resourceKey,
+            bool allowDeferredResourceReference,
+            bool mustReturnDeferredResourceReference,
+            out bool canCache)
         {
             return FetchResource(
                 resourceKey,
@@ -1707,11 +1708,11 @@ namespace System.Windows
         /// Returns a DeferredResourceReference if the object has not been inflated yet.
         /// </summary>
         private object FetchResource(
-            object      resourceKey,
-            bool        allowDeferredResourceReference,
-            bool        mustReturnDeferredResourceReference,
-            bool        canCacheAsThemeResource,
-            out bool    canCache)
+            object resourceKey,
+            bool allowDeferredResourceReference,
+            bool mustReturnDeferredResourceReference,
+            bool canCacheAsThemeResource,
+            out bool canCache)
         {
             Debug.Assert(resourceKey != null, "ResourceKey cannot be null");
 
@@ -2066,7 +2067,7 @@ namespace System.Windows
 
         private bool ContainsCycle(ResourceDictionary origin)
         {
-            for (int i=0; i<MergedDictionaries.Count; i++)
+            for (int i = 0; i < MergedDictionaries.Count; i++)
             {
                 ResourceDictionary mergedDictionary = MergedDictionaries[i];
                 if (mergedDictionary == origin || mergedDictionary.ContainsCycle(origin))
@@ -2456,7 +2457,7 @@ namespace System.Windows
                     }
                     if (_mergedDictionaries != null)
                     {
-                        for (int i=0; i<_mergedDictionaries.Count; i++)
+                        for (int i = 0; i < _mergedDictionaries.Count; i++)
                         {
                             _mergedDictionaries[i].IsThemeDictionary = value;
                         }
@@ -2521,7 +2522,7 @@ namespace System.Windows
             IsUnsafe = loadedRD.IsUnsafe;
         }
 
-        private void  MoveDeferredResourceReferencesFrom(ResourceDictionary loadedRD)
+        private void MoveDeferredResourceReferencesFrom(ResourceDictionary loadedRD)
         {
             if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
             {
@@ -2556,14 +2557,14 @@ namespace System.Windows
 
         private enum PrivateFlags : byte
         {
-            IsInitialized               = 0x01,
-            IsInitializePending         = 0x02,
-            IsReadOnly                  = 0x04,
-            IsThemeDictionary           = 0x08,
-            HasImplicitStyles           = 0x10,
-            CanBeAccessedAcrossThreads  = 0x20,
+            IsInitialized = 0x01,
+            IsInitializePending = 0x02,
+            IsReadOnly = 0x04,
+            IsThemeDictionary = 0x08,
+            HasImplicitStyles = 0x10,
+            CanBeAccessedAcrossThreads = 0x20,
             InvalidatesImplicitDataTemplateResources = 0x40,
-            HasImplicitDataTemplates    = 0x80,
+            HasImplicitDataTemplates = 0x80,
         }
 
         /// <summary>
@@ -2609,49 +2610,49 @@ namespace System.Windows
 
         #region Data
 
-        private Hashtable                                 _baseDictionary = null;
-        private WeakReferenceList                         _ownerFEs = null;
-        private WeakReferenceList                         _ownerFCEs = null;
-        private WeakReferenceList                         _ownerApps = null;
-        private WeakReferenceList                         _weakDeferredResourceReferences = null;
-        private DeferredResourceReferenceList             _deferredResourceReferencesList = null;
-        private ObservableCollection<ResourceDictionary>  _mergedDictionaries = null;
-        private Uri                                       _source = null;
-        private Uri                                       _baseUri = null;
-        private PrivateFlags                              _flags = 0;
-        private List<KeyRecord>                           _deferredLocationList = null;
+        private Hashtable _baseDictionary = null;
+        private WeakReferenceList _ownerFEs = null;
+        private WeakReferenceList _ownerFCEs = null;
+        private WeakReferenceList _ownerApps = null;
+        private WeakReferenceList _weakDeferredResourceReferences = null;
+        private DeferredResourceReferenceList _deferredResourceReferencesList = null;
+        private ObservableCollection<ResourceDictionary> _mergedDictionaries = null;
+        private Uri _source = null;
+        private Uri _baseUri = null;
+        private PrivateFlags _flags = 0;
+        private List<KeyRecord> _deferredLocationList = null;
 
         // Buffer that contains deferable content.  This may be null if a stream was passed
         // instead of a buffer.  If a buffer was passed, then a memory stream is made on the buffer
-        private byte[]          _buffer;
+        private byte[] _buffer;
 
         // Persistent Stream that contains values.
-        private Stream          _bamlStream;
+        private Stream _bamlStream;
 
         // Start position in the stream where the first value record is located.  All offsets for
         // the keys are relative to this position.
-        private Int64           _startPosition;
+        private Int64 _startPosition;
 
         // Size of the delay loaded content, which only includes the value section and not the keys.
-        private Int32           _contentSize;
+        private Int32 _contentSize;
 
         // The root element at the time the deferred content information was given to the dictionary.
-        private object          _rootElement;
+        private object _rootElement;
 
         // The number of keys that correspond to deferred content. When this reaches 0,
         // the stream can be closed.
-        private int             _numDefer;
+        private int _numDefer;
 
         // The object that becomes the InheritanceContext of all eligible
         // values in the dictionary - typically the principal owner of the dictionary.
         // We store a weak reference so that the dictionary does not leak the owner.
-        private WeakReference   _inheritanceContext;
+        private WeakReference _inheritanceContext;
 
         // a dummy DO, used as the InheritanceContext when the dictionary's owner is
         // not itself a DO
         private static readonly DependencyObject DummyInheritanceContext = new DependencyObject();
 
-        XamlObjectIds _contextXamlObjectIds  = new XamlObjectIds();
+        XamlObjectIds _contextXamlObjectIds = new XamlObjectIds();
 
         private IXamlObjectWriterFactory _objectWriterFactory;
         private XamlObjectWriterSettings _objectWriterSettings;

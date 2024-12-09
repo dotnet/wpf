@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -39,14 +39,14 @@ namespace System.Windows.Xps.Serialization.RCW
         IXpsOMMatrixTransform GetTransformLocal();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetTransformLocal([MarshalAs(UnmanagedType.Interface)] [In] IXpsOMMatrixTransform matrixTransform);
+        void SetTransformLocal([MarshalAs(UnmanagedType.Interface)][In] IXpsOMMatrixTransform matrixTransform);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.LPWStr)]
         string GetTransformLookup();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetTransformLookup([MarshalAs(UnmanagedType.LPWStr)] [In] string key);
+        void SetTransformLookup([MarshalAs(UnmanagedType.LPWStr)][In] string key);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.Interface)]
@@ -57,14 +57,14 @@ namespace System.Windows.Xps.Serialization.RCW
         IXpsOMGeometry GetClipGeometryLocal();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetClipGeometryLocal([MarshalAs(UnmanagedType.Interface)] [In] IXpsOMGeometry clipGeometry);
+        void SetClipGeometryLocal([MarshalAs(UnmanagedType.Interface)][In] IXpsOMGeometry clipGeometry);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.LPWStr)]
         string GetClipGeometryLookup();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetClipGeometryLookup([MarshalAs(UnmanagedType.LPWStr)] [In] string key);
+        void SetClipGeometryLookup([MarshalAs(UnmanagedType.LPWStr)][In] string key);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         float GetOpacity();
@@ -81,21 +81,21 @@ namespace System.Windows.Xps.Serialization.RCW
         IXpsOMBrush GetOpacityMaskBrushLocal();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetOpacityMaskBrushLocal([MarshalAs(UnmanagedType.Interface)] [In] IXpsOMBrush opacityMaskBrush);
+        void SetOpacityMaskBrushLocal([MarshalAs(UnmanagedType.Interface)][In] IXpsOMBrush opacityMaskBrush);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.LPWStr)]
         string GetOpacityMaskBrushLookup();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetOpacityMaskBrushLookup([MarshalAs(UnmanagedType.LPWStr)] [In] string key);
+        void SetOpacityMaskBrushLookup([MarshalAs(UnmanagedType.LPWStr)][In] string key);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.LPWStr)]
         string GetName();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetName([MarshalAs(UnmanagedType.LPWStr)] [In] string name);
+        void SetName([MarshalAs(UnmanagedType.LPWStr)][In] string name);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         int GetIsHyperlinkTarget();
@@ -108,13 +108,13 @@ namespace System.Windows.Xps.Serialization.RCW
         IUri GetHyperlinkNavigateUri();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetHyperlinkNavigateUri([MarshalAs(UnmanagedType.Interface)] [In] IUri hyperlinkUri);
+        void SetHyperlinkNavigateUri([MarshalAs(UnmanagedType.Interface)][In] IUri hyperlinkUri);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.LPWStr)]
         string GetLanguage();
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetLanguage([MarshalAs(UnmanagedType.LPWStr)] [In] string language);
+        void SetLanguage([MarshalAs(UnmanagedType.LPWStr)][In] string language);
     }
 }

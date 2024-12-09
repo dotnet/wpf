@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -49,9 +49,9 @@ namespace MS.Internal.PtsTable
             _entries[0].Ttl = int.MaxValue;
             _size = 1;
 
-            #if DEBUG
+#if DEBUG
             _index = -1;
-            #endif // DEBUG
+#endif // DEBUG
         }
 
         #endregion Constructors
@@ -73,17 +73,17 @@ namespace MS.Internal.PtsTable
         {
             int start = cell.ColumnIndex;
 
-            #if DEBUG
+#if DEBUG
             Debug.Assert(cell != null
-                        &&  cell.ColumnIndex != -1
-                        &&  cell.RowSpan > 1
-                        &&  _index != -1    );
+                        && cell.ColumnIndex != -1
+                        && cell.RowSpan > 1
+                        && _index != -1);
 
             // assert there is no register record with this index
             for (int i = _size - 2; i >= 0; --i)
             {
-                Debug.Assert(   start < _entries[i].Cell.ColumnIndex
-                            ||  start >= _entries[i].Cell.ColumnIndex + _entries[i].Cell.ColumnSpan);
+                Debug.Assert(start < _entries[i].Cell.ColumnIndex
+                            || start >= _entries[i].Cell.ColumnIndex + _entries[i].Cell.ColumnSpan);
             }
 
             //  assert that the position for the element being inserted 
@@ -138,10 +138,10 @@ namespace MS.Internal.PtsTable
             //  calculate first available index
             Debug.Assert(0 <= _index && _index < _size);
             firstAvailableIndex = _entries[_index].Start + _entries[_index].Range;
-            
+
             //  update ttl counter
             _entries[_index].Ttl--;
-            
+
             //  calculate first occupied index
             _index++;
             Debug.Assert(0 <= _index && _index < _size);
@@ -179,35 +179,35 @@ namespace MS.Internal.PtsTable
                 {
                     Debug.Assert(_entries[i].Cell != null);
                     Debug.Assert(i >= j);
-                    
+
                     cells[i] = _entries[i].Cell;
-                    
+
                     if (_entries[i].Ttl > 0)
                     {
                         if (i != j)
                         {
                             _entries[j] = _entries[i];
                         }
-                    
+
                         j++;
                     }
-                    
+
                     i++;
                 } while (i < _size - 1);
-                
+
                 //  take care of the barrier entry
                 if (i != j)
                 {
                     _entries[j] = _entries[i];
                     isLastRowOfAnySpan = true;
                 }
-                
+
                 _size = j + 1;
             }
 
-            #if DEBUG
+#if DEBUG
             _index = -1;
-            #endif // DEBUG
+#endif // DEBUG
         }
 
         #endregion Internal Methods 
@@ -244,8 +244,8 @@ namespace MS.Internal.PtsTable
         /// </summary>
         private void InflateCapacity()
         {
-            Debug.Assert(   _entries.Length > 0
-                        &&  _size <= _entries.Length    );
+            Debug.Assert(_entries.Length > 0
+                        && _size <= _entries.Length);
 
             Entry[] newEntries = new Entry[_entries.Length * 2];
             Array.Copy(_entries, newEntries, _entries.Length);
@@ -266,7 +266,7 @@ namespace MS.Internal.PtsTable
         private int _index;                             //  index used for iteration (GetFirst / GetNext)
         private const int c_defaultCapacity = 8;        //  default capacity
         private static TableCell[] s_noCells = Array.Empty<TableCell>();  //  empty array RowSpanVector returns to rows that do not 
-                                                        //  have row spanned cells
+                                                                          //  have row spanned cells
         #endregion Private Fields 
 
         //------------------------------------------------------

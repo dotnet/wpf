@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,28 +19,30 @@ namespace System.Windows
 
         internal static EffectiveValueEntry CreateDefaultValueEntry(DependencyProperty dp, object value)
         {
-            EffectiveValueEntry entry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Default);
-            entry.Value = value;
+            EffectiveValueEntry entry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Default)
+            {
+                Value = value
+            };
             return entry;
-}
+        }
 
         internal EffectiveValueEntry(DependencyProperty dp)
         {
-            _propertyIndex = (short) dp.GlobalIndex;
+            _propertyIndex = (short)dp.GlobalIndex;
             _value = null;
-            _source = (FullValueSource) BaseValueSourceInternal.Unknown;
+            _source = (FullValueSource)BaseValueSourceInternal.Unknown;
         }
 
         internal EffectiveValueEntry(DependencyProperty dp, BaseValueSourceInternal valueSource)
         {
-            _propertyIndex = (short) dp.GlobalIndex;
+            _propertyIndex = (short)dp.GlobalIndex;
             _value = DependencyProperty.UnsetValue;
-            _source = (FullValueSource) valueSource;
+            _source = (FullValueSource)valueSource;
         }
 
         internal EffectiveValueEntry(DependencyProperty dp, FullValueSource fullValueSource)
         {
-            _propertyIndex = (short) dp.GlobalIndex;
+            _propertyIndex = (short)dp.GlobalIndex;
             _value = DependencyProperty.UnsetValue;
             _source = fullValueSource;
         }
@@ -75,8 +77,8 @@ namespace System.Windows
             Debug.Assert(Object.Equals(modifiedValue.BaseValue, baseValue) ||
                          Object.Equals(modifiedValue.ExpressionValue, baseValue));
             Debug.Assert(!(baseValue is DeferredReference) &&
-                         ! (modifiedValue.BaseValue is DeferredReference) &&
-                         ! (modifiedValue.ExpressionValue is DeferredReference));
+                         !(modifiedValue.BaseValue is DeferredReference) &&
+                         !(modifiedValue.ExpressionValue is DeferredReference));
         }
 
         internal void SetCoercedValue(object value, object baseValue, bool skipBaseValueChecks, bool coerceWithCurrentValue)
@@ -114,9 +116,9 @@ namespace System.Windows
                          Object.Equals(modifiedValue.ExpressionValue, baseValue) ||
                          Object.Equals(modifiedValue.AnimatedValue, baseValue));
             Debug.Assert(!(baseValue is DeferredReference) &&
-                         ! (modifiedValue.BaseValue is DeferredReference) &&
-                         ! (modifiedValue.ExpressionValue is DeferredReference) &&
-                         ! (modifiedValue.AnimatedValue is DeferredReference));
+                         !(modifiedValue.BaseValue is DeferredReference) &&
+                         !(modifiedValue.ExpressionValue is DeferredReference) &&
+                         !(modifiedValue.AnimatedValue is DeferredReference));
         }
 
         internal void ResetAnimatedValue()
@@ -194,7 +196,7 @@ namespace System.Windows
                 SetExpressionValue(value, DependencyObject.ExpressionInAlternativeStore);
                 _source |= FullValueSource.HasExpressionMarker;
             }
-}
+        }
 
         // Computes and set the IsDeferred hint flag.
         // This take into account all flags and should only be used sparingly.
@@ -240,7 +242,8 @@ namespace System.Windows
         internal object Value
         {
             get { return _value; }
-            set {
+            set
+            {
                 _value = value;
                 IsDeferredReference = value is DeferredReference;
                 Debug.Assert(value is DeferredReference == IsDeferredReference);
@@ -334,17 +337,21 @@ namespace System.Windows
                 // new value for the expression has not been evaluated yet.
                 // In the intermediate we need to return the default value
                 // for the property. This problem was manifested in DRTDocumentViewer.
-                EffectiveValueEntry unsetEntry = new EffectiveValueEntry();
-                unsetEntry.BaseValueSourceInternal = BaseValueSourceInternal;
-                unsetEntry.PropertyIndex = PropertyIndex;
+                EffectiveValueEntry unsetEntry = new EffectiveValueEntry
+                {
+                    BaseValueSourceInternal = BaseValueSourceInternal,
+                    PropertyIndex = PropertyIndex
+                };
                 return unsetEntry;
             }
 
             // else entry has modifiers
-            EffectiveValueEntry entry = new EffectiveValueEntry();
-            entry.BaseValueSourceInternal = BaseValueSourceInternal;
-            entry.PropertyIndex = PropertyIndex;
-            entry.IsDeferredReference = IsDeferredReference;
+            EffectiveValueEntry entry = new EffectiveValueEntry
+            {
+                BaseValueSourceInternal = BaseValueSourceInternal,
+                PropertyIndex = PropertyIndex,
+                IsDeferredReference = IsDeferredReference
+            };
 
             // If the property has a modifier return the modified value
             Debug.Assert(ModifiedValue != null);
@@ -403,7 +410,7 @@ namespace System.Windows
                     else
                     {
                         entry.Value = modifiedValue.BaseValue;
-                     }
+                    }
                 }
             }
             else
@@ -523,7 +530,7 @@ namespace System.Windows
             }
         }
 
-        private ModifiedValue EnsureModifiedValue(bool useWeakReferenceForBaseValue=false)
+        private ModifiedValue EnsureModifiedValue(bool useWeakReferenceForBaseValue = false)
         {
             ModifiedValue modifiedValue = null;
             if (_value == null)
@@ -575,9 +582,9 @@ namespace System.Windows
 
         #region Data
 
-        private object                      _value;
-        private short                       _propertyIndex;
-        private FullValueSource             _source;
+        private object _value;
+        private short _propertyIndex;
+        private FullValueSource _source;
 
         #endregion Data
     }
@@ -590,11 +597,11 @@ namespace System.Windows
         // Bit used to store BaseValueSourceInternal = 0x04
         // Bit used to store BaseValueSourceInternal = 0x08
 
-        ValueSourceMask     = 0x000F,
-        ModifiersMask       = 0x0070,
-        IsExpression        = 0x0010,
-        IsAnimated          = 0x0020,
-        IsCoerced           = 0x0040,
+        ValueSourceMask = 0x000F,
+        ModifiersMask = 0x0070,
+        IsExpression = 0x0010,
+        IsAnimated = 0x0020,
+        IsCoerced = 0x0040,
         IsPotentiallyADeferredReference = 0x0080,
         HasExpressionMarker = 0x0100,
         IsCoercedWithCurrentValue = 0x0200,
@@ -607,18 +614,18 @@ namespace System.Windows
     // being coerced/animated.
     internal enum BaseValueSourceInternal : short
     {
-        Unknown                 = 0,
-        Default                 = 1,
-        Inherited               = 2,
-        ThemeStyle              = 3,
-        ThemeStyleTrigger       = 4,
-        Style                   = 5,
-        TemplateTrigger         = 6,
-        StyleTrigger            = 7,
-        ImplicitReference       = 8,
-        ParentTemplate          = 9,
-        ParentTemplateTrigger   = 10,
-        Local                   = 11,
+        Unknown = 0,
+        Default = 1,
+        Inherited = 2,
+        ThemeStyle = 3,
+        ThemeStyleTrigger = 4,
+        Style = 5,
+        TemplateTrigger = 6,
+        StyleTrigger = 7,
+        ImplicitReference = 8,
+        ParentTemplate = 9,
+        ParentTemplateTrigger = 10,
+        Local = 11,
     }
 
     internal class ModifiedValue
@@ -671,7 +678,7 @@ namespace System.Windows
 
         class BaseValueWeakReference : WeakReference
         {
-            public BaseValueWeakReference(object target) : base(target) {}
+            public BaseValueWeakReference(object target) : base(target) { }
         }
 
         #endregion Data

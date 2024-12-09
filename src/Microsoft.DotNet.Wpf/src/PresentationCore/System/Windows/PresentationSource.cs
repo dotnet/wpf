@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections;
-using System.Windows.Threading;
-using System.Windows.Media;
 using System.Windows.Input;
-using MS.Utility;
+using System.Windows.Media;
+using System.Windows.Threading;
 using MS.Internal;
+using MS.Utility;
 
 namespace System.Windows
 {
@@ -55,9 +55,9 @@ namespace System.Windows
         /// <summary>
         ///     InputProvider given the Device type.
         /// </summary>
-        internal virtual IInputProvider GetInputProvider(Type inputDevice) 
-        { 
-            return null; 
+        internal virtual IInputProvider GetInputProvider(Type inputDevice)
+        {
+            return null;
         }
 
         #endregion
@@ -161,7 +161,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType())); 
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType()));
                 }
             }
         }
@@ -242,7 +242,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType())); 
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType()));
                 }
             }
         }
@@ -303,7 +303,7 @@ namespace System.Windows
         internal void PushMenuMode()
         {
             _menuModeCount += 1;
-            if(1 == _menuModeCount)
+            if (1 == _menuModeCount)
             {
                 OnEnterMenuMode();
             }
@@ -314,13 +314,13 @@ namespace System.Windows
         /// </summary>
         internal void PopMenuMode()
         {
-            if(_menuModeCount <= 0)
+            if (_menuModeCount <= 0)
             {
                 throw new InvalidOperationException();
             }
-            
+
             _menuModeCount -= 1;
-            if(0 == _menuModeCount)
+            if (0 == _menuModeCount)
             {
                 OnLeaveMenuMode();
             }
@@ -339,7 +339,7 @@ namespace System.Windows
         internal virtual void OnLeaveMenuMode()
         {
         }
-        
+
         private int _menuModeCount;
 
         /// <summary>
@@ -405,7 +405,7 @@ namespace System.Windows
         /// </summary>
         protected abstract CompositionTarget GetCompositionTargetCore();
 
-        
+
         /// <summary>
         ///     Called by derived classes to indicate that the root visual has changed.
         /// </summary>
@@ -429,7 +429,7 @@ namespace System.Windows
                 oldSource = (PresentationSource)oldRoot.GetValue(RootSourceProperty);
                 oldRoot.ClearValue(RootSourceProperty);
             }
-            
+
             // Always set the SourceProperty on the new root.
             if (newRoot != null)
             {
@@ -441,11 +441,11 @@ namespace System.Windows
 
             // The IsVisible property can only be true if root visual is connected to a presentation source.
             // For Read-Only force-inherited properties, use a private update method.
-            if(oldRootUIElement != null)
+            if (oldRootUIElement != null)
             {
                 oldRootUIElement.UpdateIsVisibleCache();
             }
-            if(newRootUIElement != null)
+            if (newRootUIElement != null)
             {
                 newRootUIElement.UpdateIsVisibleCache();
             }
@@ -484,7 +484,7 @@ namespace System.Windows
             }
         }
 
-            
+
 
         /// <summary>
         ///     Called by derived classes to indicate that they need to be tracked.
@@ -534,7 +534,7 @@ namespace System.Windows
         internal static void OnVisualAncestorChanged(DependencyObject uie, AncestorChangedEventArgs e)
         {
             Debug.Assert(uie is UIElement3D or UIElement);
-            
+
             if (true == (bool)uie.GetValue(GetsSourceChangedEventProperty))
             {
                 UpdateSourceOfElement(uie, e.Ancestor, e.OldParent);
@@ -643,7 +643,7 @@ namespace System.Windows
 
         private static void AddElementToWatchList(DependencyObject element)
         {
-            if(_watchers.Add(element))
+            if (_watchers.Add(element))
             {
                 element.SetValue(CachedSourceProperty, PresentationSource.FindSource(element));
                 element.SetValue(GetsSourceChangedEventProperty, true);
@@ -653,7 +653,7 @@ namespace System.Windows
 
         private static void RemoveElementFromWatchList(DependencyObject element)
         {
-            if(_watchers.Remove(element))
+            if (_watchers.Remove(element))
             {
                 element.ClearValue(CachedSourceProperty);
                 element.ClearValue(GetsSourceChangedEventProperty);
@@ -681,7 +681,7 @@ namespace System.Windows
             DependencyObject v = InputElement.GetRootVisual(o, enable2DTo3DTransition);
             if (v != null)
             {
-               source = (PresentationSource)v.GetValue(RootSourceProperty);
+                source = (PresentationSource)v.GetValue(RootSourceProperty);
             }
             return source;
         }
@@ -691,20 +691,21 @@ namespace System.Windows
                                                   DependencyObject doOldParent)
         {
             bool calledOut = false;
-            
+
             PresentationSource realSource = FindSource(doTarget);
             PresentationSource cachedSource = (PresentationSource)doTarget.GetValue(CachedSourceProperty);
             if (cachedSource != realSource)
             {
                 doTarget.SetValue(CachedSourceProperty, realSource);
 
-                SourceChangedEventArgs args = new SourceChangedEventArgs(cachedSource, realSource);
-
-                args.RoutedEvent=SourceChangedEvent;
+                SourceChangedEventArgs args = new SourceChangedEventArgs(cachedSource, realSource)
+                {
+                    RoutedEvent = SourceChangedEvent
+                };
                 if (doTarget is UIElement uiElement)
                 {
                     uiElement.RaiseEvent(args);
-                }                
+                }
                 else if (doTarget is ContentElement contentElement)
                 {
                     contentElement.RaiseEvent(args);
@@ -715,7 +716,7 @@ namespace System.Windows
                 }
                 else
                 {
-                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, doTarget.GetType())); 
+                    throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, doTarget.GetType()));
                 }
 
                 calledOut = true;
@@ -736,7 +737,7 @@ namespace System.Windows
         // We use a private DP for the RootSource (the connection from the root
         // element in a tree to the source it is displayed in).  Use the public
         // API FromVisual to get the source that a visual is displayed in.
-        private static readonly DependencyProperty RootSourceProperty   
+        private static readonly DependencyProperty RootSourceProperty
             = DependencyProperty.RegisterAttached("RootSource", typeof(PresentationSource), typeof(PresentationSource),
                                           new PropertyMetadata((PresentationSource)null));
 

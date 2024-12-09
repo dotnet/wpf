@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -64,7 +64,7 @@ namespace System.Windows.Controls.Primitives
         /// <summary>
         /// The Paginator from which this DocumentPageView retrieves pages.
         /// </summary>
-        public DocumentPaginator DocumentPaginator 
+        public DocumentPaginator DocumentPaginator
         {
             get { return _documentPaginator; }
             set
@@ -112,7 +112,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public int PageNumber
         {
-            get { return (int) GetValue(PageNumberProperty); }
+            get { return (int)GetValue(PageNumberProperty); }
             set { SetValue(PageNumberProperty, value); }
         }
 
@@ -139,14 +139,14 @@ namespace System.Windows.Controls.Primitives
         /// <summary>
         /// <see cref="PageNumber"/>
         /// </summary>
-        public static readonly DependencyProperty PageNumberProperty = 
+        public static readonly DependencyProperty PageNumberProperty =
                 DependencyProperty.Register(
-                        "PageNumber", 
-                        typeof(int), 
+                        "PageNumber",
+                        typeof(int),
                         typeof(DocumentPageView),
                         new FrameworkPropertyMetadata(
-                                0, 
-                                FrameworkPropertyMetadataOptions.AffectsMeasure, 
+                                0,
+                                FrameworkPropertyMetadataOptions.AffectsMeasure,
                                 new PropertyChangedCallback(OnPageNumberChanged)));
 
         /// <summary>
@@ -156,17 +156,17 @@ namespace System.Windows.Controls.Primitives
                 Viewbox.StretchProperty.AddOwner(
                         typeof(DocumentPageView),
                         new FrameworkPropertyMetadata(
-                                Stretch.Uniform, 
+                                Stretch.Uniform,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         /// <summary>
         /// <see cref="StretchDirection" />
         /// </summary>
-        public static readonly DependencyProperty StretchDirectionProperty = 
+        public static readonly DependencyProperty StretchDirectionProperty =
                 Viewbox.StretchDirectionProperty.AddOwner(
                         typeof(DocumentPageView),
                         new FrameworkPropertyMetadata(
-                                StretchDirection.DownOnly, 
+                                StretchDirection.DownOnly,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure));
 
         #endregion Public Dynamic Properties
@@ -237,14 +237,18 @@ namespace System.Windows.Controls.Primitives
                         pageSize = _documentPaginator.PageSize;
                         if (Double.IsInfinity(availableSize.Width))
                         {
-                            newPageSize = new Size();
-                            newPageSize.Height = availableSize.Height / _pageZoom;
+                            newPageSize = new Size
+                            {
+                                Height = availableSize.Height / _pageZoom
+                            };
                             newPageSize.Width = newPageSize.Height * (pageSize.Width / pageSize.Height); // Keep aspect ratio.
                         }
                         else if (Double.IsInfinity(availableSize.Height))
                         {
-                            newPageSize = new Size();
-                            newPageSize.Width = availableSize.Width / _pageZoom;
+                            newPageSize = new Size
+                            {
+                                Width = availableSize.Width / _pageZoom
+                            };
                             newPageSize.Height = newPageSize.Width * (pageSize.Height / pageSize.Width); // Keep aspect ratio.
                         }
                         else
@@ -265,7 +269,7 @@ namespace System.Windows.Controls.Primitives
                     if (PageNumber >= 0)
                     {
                         if (_useAsynchronous)
-                        {                            
+                        {
                             _documentPaginator.GetPageAsync(PageNumber, this);
                         }
                         else
@@ -331,7 +335,7 @@ namespace System.Windows.Controls.Primitives
 
             return desiredSize;
         }
-        
+
         /// <summary>
         /// Content arrangement.
         /// </summary>
@@ -342,7 +346,7 @@ namespace System.Windows.Controls.Primitives
             ScaleTransform pageScaleTransform;
             Visual pageVisual;
             Size pageSize, pageZoom;
-            
+
             CheckDisposed();
 
             if (_pageVisualClone == null)
@@ -381,7 +385,7 @@ namespace System.Windows.Controls.Primitives
 
                         _pageHost.PageVisual = pageVisual;
                     }
-                
+
                     // Compute transform to be applied to the page visual. First take into account
                     // mirroring transform, if necessary. Apply also scaling transform.
                     pageSize = _documentPage.Size;
@@ -438,7 +442,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     OnPageConnected();
                 }
-                
+
                 // Transform for the page has been changed, need to notify TextView about the changes.
                 OnTransformChangedAsync();
             }
@@ -487,7 +491,7 @@ namespace System.Windows.Controls.Primitives
                     _documentPaginator.PagesChanged -= new PagesChangedEventHandler(HandlePagesChanged);
                     _documentPaginator.CancelAsync(this);
                     DisposeCurrentPage();
-                    DisposeAsyncPage();                                        
+                    DisposeAsyncPage();
                 }
                 Invariant.Assert(_documentPage == null);
                 Invariant.Assert(_documentPageAsync == null);
@@ -730,9 +734,9 @@ namespace System.Windows.Controls.Primitives
                     }
                     if (_documentPageAsync != DocumentPage.Missing)
                     {
-                        _documentPageAsync.PageDestroyed += new EventHandler(HandleAsyncPageDestroyed);                            
+                        _documentPageAsync.PageDestroyed += new EventHandler(HandleAsyncPageDestroyed);
                     }
-                    InvalidateMeasure();                        
+                    InvalidateMeasure();
                 }
                 // else; the page is not ours
             }
@@ -747,7 +751,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (!_disposed && (e != null))
             {
-                if (this.PageNumber >= e.Start && 
+                if (this.PageNumber >= e.Start &&
                     (e.Count == int.MaxValue || this.PageNumber <= e.Start + e.Count))
                 {
                     OnPageContentChanged();
@@ -838,16 +842,16 @@ namespace System.Windows.Controls.Primitives
                 // Clear TextView & DocumentPage
                 if (_documentPage != DocumentPage.Missing)
                 {
-                    _documentPage.PageDestroyed -= new EventHandler(HandlePageDestroyed);                    
+                    _documentPage.PageDestroyed -= new EventHandler(HandlePageDestroyed);
                 }
                 if (_documentPage is IDisposable)
                 {
                     ((IDisposable)_documentPage).Dispose();
                 }
-                _documentPage = null;               
+                _documentPage = null;
 
                 OnPageDisconnected();
-            }          
+            }
         }
 
         /// <summary>
@@ -860,12 +864,12 @@ namespace System.Windows.Controls.Primitives
             {
                 if (_documentPageAsync != DocumentPage.Missing)
                 {
-                    _documentPageAsync.PageDestroyed -= new EventHandler(HandleAsyncPageDestroyed);                    
+                    _documentPageAsync.PageDestroyed -= new EventHandler(HandleAsyncPageDestroyed);
                 }
                 if (_documentPageAsync is IDisposable)
                 {
                     ((IDisposable)_documentPageAsync).Dispose();
-                }                
+                }
                 _documentPageAsync = null;
             }
         }
@@ -962,7 +966,7 @@ namespace System.Windows.Controls.Primitives
 
                 try
                 {
-                    if(pageVisualRect.Width > 1.0 && pageVisualRect.Height > 1.0)
+                    if (pageVisualRect.Width > 1.0 && pageVisualRect.Height > 1.0)
                     {
                         RenderTargetBitmap renderTargetBitmap = new RenderTargetBitmap((int)pageVisualRect.Width, (int)pageVisualRect.Height, 96.0, 96.0, PixelFormats.Pbgra32);
                         renderTargetBitmap.Render(_pageHost.PageVisual);
@@ -975,7 +979,7 @@ namespace System.Windows.Controls.Primitives
                         }
                     }
                 }
-                catch(System.OverflowException)
+                catch (System.OverflowException)
                 {
                     // Ignore overflow exception - caused by render target creation not possible under current memory conditions.
                 }
@@ -1004,7 +1008,7 @@ namespace System.Windows.Controls.Primitives
         private bool _useAsynchronous = true;
         private bool _suspendLayout;
         private bool _disposed;
-        private bool _newPageConnected;        
+        private bool _newPageConnected;
 
         #endregion Private Fields
 

@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+using System.Linq.Expressions;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Linq.Expressions;
 using WinRT.Interop;
 
 #pragma warning disable 0169 // The field 'xxx' is never used
@@ -42,7 +42,8 @@ namespace WinRT
 
         public static unsafe MarshalString CreateMarshaler(string value)
         {
-            if (value == null) return null;
+            if (value == null)
+                return null;
 
             var m = new MarshalString();
             Func<bool> dispose = () => { m.Dispose(); return false; };
@@ -262,7 +263,8 @@ namespace WinRT
 
         public static unsafe void DisposeAbiArray(object box)
         {
-            if (box == null) return;
+            if (box == null)
+                return;
             var abi = ((int length, IntPtr data))box;
             DisposeAbiArrayElements(abi);
             Marshal.FreeCoTaskMem(abi.data);
@@ -333,7 +335,8 @@ namespace WinRT
 
         public static void DisposeAbiArray(object box)
         {
-            if (box == null) return;
+            if (box == null)
+                return;
             var abi = ((int length, IntPtr data))box;
             Marshal.FreeCoTaskMem(abi.data);
         }
@@ -379,7 +382,8 @@ namespace WinRT
         private static Action<object, IntPtr> BindCopyAbi()
         {
             var copyAbi = HelperType.GetMethod("CopyAbi", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
-            if (copyAbi == null) return null;
+            if (copyAbi == null)
+                return null;
             var parms = new[] { Expression.Parameter(typeof(object), "arg"), Expression.Parameter(typeof(IntPtr), "dest") };
             return Expression.Lambda<Action<object, IntPtr>>(
                 Expression.Call(copyAbi,
@@ -408,7 +412,8 @@ namespace WinRT
         private static Action<T, IntPtr> BindCopyManaged()
         {
             var copyManaged = HelperType.GetMethod("CopyManaged", BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static);
-            if (copyManaged == null) return null;
+            if (copyManaged == null)
+                return null;
             var parms = new[] { Expression.Parameter(typeof(T), "arg"), Expression.Parameter(typeof(IntPtr), "dest") };
             return Expression.Lambda<Action<T, IntPtr>>(
                 Expression.Call(copyManaged, parms), parms).Compile();
@@ -598,9 +603,11 @@ namespace WinRT
 
         public static unsafe void DisposeAbiArray(object box)
         {
-            if (box == null) return;
+            if (box == null)
+                return;
             var abi = ((int length, IntPtr data))box;
-            if (abi.data == IntPtr.Zero) return;
+            if (abi.data == IntPtr.Zero)
+                return;
             DisposeAbiArrayElements(abi);
             Marshal.FreeCoTaskMem(abi.data);
         }
@@ -752,9 +759,11 @@ namespace WinRT
 
         public static unsafe void DisposeAbiArray(object box)
         {
-            if (box == null) return;
+            if (box == null)
+                return;
             var abi = ((int length, IntPtr data))box;
-            if (abi.data == IntPtr.Zero) return;
+            if (abi.data == IntPtr.Zero)
+                return;
             DisposeAbiArrayElements(abi);
             Marshal.FreeCoTaskMem(abi.data);
         }
@@ -771,7 +780,8 @@ namespace WinRT
 
         public static void DisposeAbi(IntPtr ptr)
         {
-            if (ptr == IntPtr.Zero) return;
+            if (ptr == IntPtr.Zero)
+                return;
             // TODO: this should be a direct v-table call when function pointers are a thing
             ObjectReference<WinRT.Interop.IUnknownVftbl>.Attach(ref ptr).Dispose();
         }
@@ -834,7 +844,7 @@ namespace WinRT
             return _As(inspectable);
         }
 
-        public static IntPtr GetAbi(IObjectReference value) => 
+        public static IntPtr GetAbi(IObjectReference value) =>
             value is null ? IntPtr.Zero : MarshalInterfaceHelper<T>.GetAbi(value);
 
         public static void DisposeAbi(IntPtr thisPtr) => MarshalInterfaceHelper<T>.DisposeAbi(thisPtr);
@@ -917,7 +927,7 @@ namespace WinRT
             return ComWrappersSupport.CreateCCWForObject(o);
         }
 
-        public static IntPtr GetAbi(IObjectReference objRef) => 
+        public static IntPtr GetAbi(IObjectReference objRef) =>
             objRef is null ? IntPtr.Zero : MarshalInterfaceHelper<object>.GetAbi(objRef);
 
         public static object FromAbi(IntPtr ptr)

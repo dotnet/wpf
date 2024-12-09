@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,9 +14,9 @@ using System.Windows.Automation;            // TextPatternIdentifiers
 using System.Windows.Automation.Peers;      // AutomationPeer
 using System.Windows.Automation.Provider;   // ITextRangeProvider
 using System.Windows.Automation.Text;       // TextUnit
+using System.Windows.Documents;             // ITextPointer
 using System.Windows.Markup;                // XmlLanguage
 using System.Windows.Media;                 // FontFamily, Brush
-using System.Windows.Documents;             // ITextPointer
 using MS.Internal.Documents;                // TextContainerHelper
 
 namespace MS.Internal.Automation
@@ -45,28 +45,30 @@ namespace MS.Internal.Automation
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.AnimationStyleAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         TextEffectCollection effects = tp.GetValue(TextElement.TextEffectsProperty) as TextEffectCollection;
                         return (effects != null && effects.Count > 0) ? AnimationStyle.Other : AnimationStyle.None;
                     },
-                    delegate(object val1, object val2) { return (AnimationStyle)val1 == (AnimationStyle)val2; })
+                    delegate (object val1, object val2)
+                    { return (AnimationStyle)val1 == (AnimationStyle)val2; })
                 );
             // BackgroundColor
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.BackgroundColorAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         return ColorFromBrush(tp.GetValue(TextElement.BackgroundProperty));
                     },
-                    delegate(object val1, object val2) { return (int)val1 == (int)val2; })
+                    delegate (object val1, object val2)
+                    { return (int)val1 == (int)val2; })
                 );
             // BulletStyle
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.BulletStyleAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         object val = tp.GetValue(List.MarkerStyleProperty);
                         if (val is TextMarkerStyle)
@@ -99,13 +101,14 @@ namespace MS.Internal.Automation
                         }
                         return val;
                     },
-                    delegate(object val1, object val2) { return (BulletStyle)val1 == (BulletStyle)val2; })
+                    delegate (object val1, object val2)
+                    { return (BulletStyle)val1 == (BulletStyle)val2; })
                 );
             // CapStyle
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.CapStyleAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         FontCapitals capsWCP = (FontCapitals)tp.GetValue(Typography.CapitalsProperty);
                         CapStyle capsUIA;
@@ -138,66 +141,72 @@ namespace MS.Internal.Automation
                         }
                         return capsUIA;
                     },
-                    delegate(object val1, object val2) { return (CapStyle)val1 == (CapStyle)val2; })
+                    delegate (object val1, object val2)
+                    { return (CapStyle)val1 == (CapStyle)val2; })
                 );
             // Culture
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.CultureAttribute,
                 new TextAttributeHelper(
-                // UIAutomation expects an LCID on the provider side
-                    delegate(ITextPointer tp)
+                    // UIAutomation expects an LCID on the provider side
+                    delegate (ITextPointer tp)
                     {
                         object val = tp.GetValue(FrameworkElement.LanguageProperty);
                         return (val is XmlLanguage) ? ((XmlLanguage)val).GetEquivalentCulture().LCID : CultureInfo.InvariantCulture.LCID;
                     },
-                    delegate(object val1, object val2) { return (int)val1 == (int)val2; })
+                    delegate (object val1, object val2)
+                    { return (int)val1 == (int)val2; })
                 );
             // FontName
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.FontNameAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         return GetFontFamilyName((FontFamily)tp.GetValue(TextElement.FontFamilyProperty), tp);
                     },
-                    delegate(object val1, object val2) { return (val1 as string) == (val2 as string); })
+                    delegate (object val1, object val2)
+                    { return (val1 as string) == (val2 as string); })
                 );
             // FontSize
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.FontSizeAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         return NativeObjectLengthToPoints((double)tp.GetValue(TextElement.FontSizeProperty));
                     },
-                    delegate(object val1, object val2) { return (double)val1 == (double)val2; })
+                    delegate (object val1, object val2)
+                    { return (double)val1 == (double)val2; })
                 );
             // FontWeight
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.FontWeightAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         FontWeight fontWeight = (FontWeight)tp.GetValue(TextElement.FontWeightProperty);
                         return fontWeight.ToOpenTypeWeight();
                     },
-                    delegate(object val1, object val2) { return (int)val1 == (int)val2; })
+                    delegate (object val1, object val2)
+                    { return (int)val1 == (int)val2; })
                 );
             // ForegroundColor
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.ForegroundColorAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         return ColorFromBrush(tp.GetValue(TextElement.ForegroundProperty));
                     },
-                    delegate(object val1, object val2) { return (int)val1 == (int)val2; })
+                    delegate (object val1, object val2)
+                    { return (int)val1 == (int)val2; })
                 );
             // HorizontalTextAlignment
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.HorizontalTextAlignmentAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         TextAlignment alignmentWCP = (TextAlignment)tp.GetValue(Block.TextAlignmentProperty);
                         HorizontalTextAlignment alignmentUIA;
@@ -219,64 +228,71 @@ namespace MS.Internal.Automation
                         }
                         return alignmentUIA;
                     },
-                    delegate(object val1, object val2) { return (HorizontalTextAlignment)val1 == (HorizontalTextAlignment)val2; })
+                    delegate (object val1, object val2)
+                    { return (HorizontalTextAlignment)val1 == (HorizontalTextAlignment)val2; })
                 );
             // IndentationFirstLine
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.IndentationFirstLineAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         return NativeObjectLengthToPoints((double)tp.GetValue(Paragraph.TextIndentProperty));
                     },
-                    delegate(object val1, object val2) { return (double)val1 == (double)val2; })
+                    delegate (object val1, object val2)
+                    { return (double)val1 == (double)val2; })
                 );
             // IndentationLeading
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.IndentationLeadingAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         Thickness padding = (Thickness)tp.GetValue(Block.PaddingProperty);
                         return padding.IsValid(true, false, false, false) ? NativeObjectLengthToPoints(padding.Left) : 0;
                     },
-                    delegate(object val1, object val2) { return (double)val1 == (double)val2; })
+                    delegate (object val1, object val2)
+                    { return (double)val1 == (double)val2; })
                 );
             // IndentationTrailing
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.IndentationTrailingAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         Thickness padding = (Thickness)tp.GetValue(Block.PaddingProperty);
                         return padding.IsValid(true, false, false, false) ? NativeObjectLengthToPoints(padding.Right) : 0;
                     },
-                    delegate(object val1, object val2) { return (double)val1 == (double)val2; })
+                    delegate (object val1, object val2)
+                    { return (double)val1 == (double)val2; })
                 );
             // IsHidden
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.IsHiddenAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp) { return false; },
-                    delegate(object val1, object val2) { return (bool)val1 == (bool)val2; })
+                    delegate (ITextPointer tp)
+                    { return false; },
+                    delegate (object val1, object val2)
+                    { return (bool)val1 == (bool)val2; })
                 );
             // IsItalic
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.IsItalicAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         FontStyle style = (FontStyle)tp.GetValue(TextElement.FontStyleProperty);
                         // FontStyles.Oblique is assumed a sort of Italic (#1053181).
                         return (style == FontStyles.Italic || style == FontStyles.Oblique);
                     },
-                    delegate(object val1, object val2) { return (bool)val1 == (bool)val2; })
+                    delegate (object val1, object val2)
+                    { return (bool)val1 == (bool)val2; })
                 );
             // IsReadOnly
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.IsReadOnlyAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         bool readOnly = false;
                         if (tp.TextContainer.TextSelection != null)
@@ -285,130 +301,143 @@ namespace MS.Internal.Automation
                         }
                         return readOnly;
                     },
-                    delegate(object val1, object val2) { return (bool)val1 == (bool)val2; })
+                    delegate (object val1, object val2)
+                    { return (bool)val1 == (bool)val2; })
                 );
             // IsSubscript
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.IsSubscriptAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         FontVariants fontVariants = (FontVariants)tp.GetValue(Typography.VariantsProperty);
                         return (fontVariants == FontVariants.Subscript);
                     },
-                    delegate(object val1, object val2) { return (bool)val1 == (bool)val2; })
+                    delegate (object val1, object val2)
+                    { return (bool)val1 == (bool)val2; })
                 );
             // IsSuperscript
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.IsSuperscriptAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         FontVariants fontVariants = (FontVariants)tp.GetValue(Typography.VariantsProperty);
                         return (fontVariants == FontVariants.Superscript);
                     },
-                    delegate(object val1, object val2) { return (bool)val1 == (bool)val2; })
+                    delegate (object val1, object val2)
+                    { return (bool)val1 == (bool)val2; })
                 );
             // MarginBottom
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.MarginBottomAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         Thickness margin = (Thickness)tp.GetValue(FrameworkElement.MarginProperty);
                         return margin.IsValid(true, false, false, false) ? NativeObjectLengthToPoints(margin.Bottom) : 0;
                     },
-                    delegate(object val1, object val2) { return (double)val1 == (double)val2; })
+                    delegate (object val1, object val2)
+                    { return (double)val1 == (double)val2; })
                 );
             // MarginLeading
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.MarginLeadingAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         Thickness margin = (Thickness)tp.GetValue(FrameworkElement.MarginProperty);
                         return margin.IsValid(true, false, false, false) ? NativeObjectLengthToPoints(margin.Left) : 0;
                     },
-                    delegate(object val1, object val2) { return (double)val1 == (double)val2; })
+                    delegate (object val1, object val2)
+                    { return (double)val1 == (double)val2; })
                 );
             // MarginTop
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.MarginTopAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         Thickness margin = (Thickness)tp.GetValue(FrameworkElement.MarginProperty);
                         return margin.IsValid(true, false, false, false) ? NativeObjectLengthToPoints(margin.Top) : 0;
                     },
-                    delegate(object val1, object val2) { return (double)val1 == (double)val2; })
+                    delegate (object val1, object val2)
+                    { return (double)val1 == (double)val2; })
                 );
             // MarginTrailing
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.MarginTrailingAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         Thickness margin = (Thickness)tp.GetValue(FrameworkElement.MarginProperty);
                         return margin.IsValid(true, false, false, false) ? NativeObjectLengthToPoints(margin.Right) : 0;
                     },
-                    delegate(object val1, object val2) { return (double)val1 == (double)val2; })
+                    delegate (object val1, object val2)
+                    { return (double)val1 == (double)val2; })
                 );
             // OutlineStyles 
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.OutlineStylesAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp) { return OutlineStyles.None; },
-                    delegate(object val1, object val2) { return (OutlineStyles)val1 == (OutlineStyles)val2; })
+                    delegate (ITextPointer tp)
+                    { return OutlineStyles.None; },
+                    delegate (object val1, object val2)
+                    { return (OutlineStyles)val1 == (OutlineStyles)val2; })
                 );
             // OverlineColor
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.OverlineColorAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         object decors = tp.GetValue(Inline.TextDecorationsProperty);
                         return GetTextDecorationColor(decors as TextDecorationCollection, TextDecorationLocation.OverLine);
                     },
-                    delegate(object val1, object val2) { return (int)val1 == (int)val2; })
+                    delegate (object val1, object val2)
+                    { return (int)val1 == (int)val2; })
                 );
             // OverlineStyle
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.OverlineStyleAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         object decors = tp.GetValue(Inline.TextDecorationsProperty);
                         return GetTextDecorationLineStyle(decors as TextDecorationCollection, TextDecorationLocation.OverLine);
                     },
-                    delegate(object val1, object val2) { return (TextDecorationLineStyle)val1 == (TextDecorationLineStyle)val2; })
+                    delegate (object val1, object val2)
+                    { return (TextDecorationLineStyle)val1 == (TextDecorationLineStyle)val2; })
                 );
             // StrikeThroughColor
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.StrikethroughColorAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         object decors = tp.GetValue(Inline.TextDecorationsProperty);
                         return GetTextDecorationColor(decors as TextDecorationCollection, TextDecorationLocation.Strikethrough);
                     },
-                    delegate(object val1, object val2) { return (int)val1 == (int)val2; })
+                    delegate (object val1, object val2)
+                    { return (int)val1 == (int)val2; })
                 );
             // StrikeThroughStyle
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.StrikethroughStyleAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         object decors = tp.GetValue(Inline.TextDecorationsProperty);
                         return GetTextDecorationLineStyle(decors as TextDecorationCollection, TextDecorationLocation.Strikethrough);
                     },
-                    delegate(object val1, object val2) { return (TextDecorationLineStyle)val1 == (TextDecorationLineStyle)val2; })
+                    delegate (object val1, object val2)
+                    { return (TextDecorationLineStyle)val1 == (TextDecorationLineStyle)val2; })
                 );
             // TextFlowDirections
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.TextFlowDirectionsAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         FlowDirection flowWCP = (FlowDirection)tp.GetValue(FrameworkElement.FlowDirectionProperty);
                         FlowDirections flowUIA;
@@ -424,29 +453,32 @@ namespace MS.Internal.Automation
                         }
                         return flowUIA;
                     },
-                    delegate(object val1, object val2) { return (FlowDirections)val1 == (FlowDirections)val2; })
+                    delegate (object val1, object val2)
+                    { return (FlowDirections)val1 == (FlowDirections)val2; })
                 );
             // UnderlineColor
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.UnderlineColorAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         object decors = tp.GetValue(Inline.TextDecorationsProperty);
                         return GetTextDecorationColor(decors as TextDecorationCollection, TextDecorationLocation.Underline);
                     },
-                    delegate(object val1, object val2) { return (int)val1 == (int)val2; })
+                    delegate (object val1, object val2)
+                    { return (int)val1 == (int)val2; })
                 );
             // UnderlineStyle
             _textPatternAttributes.Add(
                 TextPatternIdentifiers.UnderlineStyleAttribute,
                 new TextAttributeHelper(
-                    delegate(ITextPointer tp)
+                    delegate (ITextPointer tp)
                     {
                         object decors = tp.GetValue(Inline.TextDecorationsProperty);
                         return GetTextDecorationLineStyle(decors as TextDecorationCollection, TextDecorationLocation.Underline);
                     },
-                    delegate(object val1, object val2) { return (TextDecorationLineStyle)val1 == (TextDecorationLineStyle)val2; })
+                    delegate (object val1, object val2)
+                    { return (TextDecorationLineStyle)val1 == (TextDecorationLineStyle)val2; })
                 );
             // TextPatternIdentifiers.TabsAttribute
         }
@@ -469,7 +501,7 @@ namespace MS.Internal.Automation
         #endregion Constructors        
 
         #region Internal methods
-        
+
         /// <summary>
         /// This wrapper is to cover up a shortcoming in MoveToInsertionPosition code. 
         /// If the position is inside a Hyperlink, it is being moved out of the hyperlink and to the previous
@@ -487,7 +519,7 @@ namespace MS.Internal.Automation
             return false;
         }
         #endregion Internal methods
-        
+
 
 
 
@@ -917,7 +949,7 @@ namespace MS.Internal.Automation
                         {
                             //When comparing, we need to take into account if the pointer is not right at 
                             //the end of the page (or beginning) because of normalization
-                            
+
                             if (direction == LogicalDirection.Forward)
                             {
                                 while (position.CompareTo(textSegments[textSegments.Count - 1].End) != 0)
@@ -1093,7 +1125,7 @@ namespace MS.Internal.Automation
                         }
 
                         moved = position.MoveToLineBoundary(count);
-                        
+
                         MoveToInsertionPosition(position, LogicalDirection.Forward);
 
                         if (moved < 0)
@@ -1101,7 +1133,7 @@ namespace MS.Internal.Automation
                             moved = -moved; // Will be reversed below.
                         }
                     }
-                    break; 
+                    break;
 
                 case TextUnit.Paragraph:
                     // Utilize TextRange logic to determine paragraph boundaries.
@@ -1490,7 +1522,7 @@ namespace MS.Internal.Automation
         {
             MoveToInsertionPosition(_start, _start.LogicalDirection);
             MoveToInsertionPosition(_end, _end.LogicalDirection);
-            
+
             // If start passes end, move the entire range to the start position.
             if (_start.CompareTo(_end) > 0)
             {
@@ -1788,7 +1820,7 @@ namespace MS.Internal.Automation
         {
             AutomationTextAttribute attribute = AutomationTextAttribute.LookupById(attributeId);
 
-            
+
             // In Windows 8, a new text attribute was introduced that WPF does not have any reference for
             // this caused WPF to throw an ArgumentException.  This code path was strange as we already can
             // return NotSupported, which is a valid response.  So change this to no longer throw.
@@ -1895,7 +1927,7 @@ namespace MS.Internal.Automation
 
                 // If endpoint has been moved at least by one unit or its direction has changed, snap it to TextUnit boundary,
                 // because movement done by MovePositionByUnits does not guarantee position snapping.
-                if ((position.CompareTo(_start)==0 && position.LogicalDirection != _start.LogicalDirection) ||
+                if ((position.CompareTo(_start) == 0 && position.LogicalDirection != _start.LogicalDirection) ||
                     (count > 0 && position.CompareTo(_start) > 0) ||
                     (count < 0 && position.CompareTo(_start) < 0))
                 {
@@ -1908,7 +1940,7 @@ namespace MS.Internal.Automation
                     {
                         _end.MoveToNextInsertionPosition(LogicalDirection.Forward);
                     }
-                    
+
                     ExpandToEnclosingUnit(unit, true, true);
                     // If endpoint has been moved, but 'movedCount' is 0, it means that we snapped to neariest
                     // unit boundary. Treat this situation as actual move.
@@ -1955,7 +1987,7 @@ namespace MS.Internal.Automation
 
                 // If endpoint has been moved at least by one unit, snap it to TextUnit boundary,
                 // because movement done by MovePositionByUnits does not guarantee position snapping.
-                if ((count > 0 && position.CompareTo(positionRef) > 0) || 
+                if ((count > 0 && position.CompareTo(positionRef) > 0) ||
                     (count < 0 && position.CompareTo(positionRef) < 0) ||
                     (position.CompareTo(positionRef) == 0 && position.LogicalDirection != positionRef.LogicalDirection))
                 {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,8 +23,8 @@ namespace System.Windows
 
         internal InheritablePropertyChangeInfo(
             DependencyObject rootElement,
-            DependencyProperty  property, 
-            EffectiveValueEntry oldEntry, 
+            DependencyProperty property,
+            EffectiveValueEntry oldEntry,
             EffectiveValueEntry newEntry)
         {
             _rootElement = rootElement;
@@ -62,7 +62,7 @@ namespace System.Windows
         #region Data
 
         private DependencyObject _rootElement;
-        private DependencyProperty  _property;
+        private DependencyProperty _property;
         private EffectiveValueEntry _oldEntry;
         private EffectiveValueEntry _newEntry;
 

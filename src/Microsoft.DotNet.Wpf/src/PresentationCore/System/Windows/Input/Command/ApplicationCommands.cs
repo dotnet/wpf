@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace System.Windows.Input
         //  Public Methods
         //
         //------------------------------------------------------
-#region Public Methods
+        #region Public Methods
         /// <summary>
         /// CutCommand - action to cut selection
         /// </summary>
@@ -212,14 +212,14 @@ namespace System.Windows.Input
         {
             get { return _EnsureCommand(CommandId.NotACommand); }
         }
-#endregion Public Methods
+        #endregion Public Methods
 
         //------------------------------------------------------
         //
         //  Private Methods
         //
         //------------------------------------------------------
-#region Private Methods
+        #region Private Methods
 
 
         private static string GetPropertyName(CommandId commandId)
@@ -228,29 +228,75 @@ namespace System.Windows.Input
 
             switch (commandId)
             {
-                case CommandId.Cut: propertyName = "Cut"; break;
-                case CommandId.Copy: propertyName = "Copy"; break;
-                case CommandId.Paste: propertyName = "Paste"; break;
-                case CommandId.Undo: propertyName = "Undo"; break;
-                case CommandId.Redo: propertyName = "Redo"; break;
-                case CommandId.Delete: propertyName = "Delete"; break;
-                case CommandId.Find: propertyName = "Find"; break;
-                case CommandId.Replace: propertyName = "Replace"; break;
-                case CommandId.Help: propertyName = "Help"; break;
-                case CommandId.New: propertyName = "New"; break;
-                case CommandId.Open: propertyName = "Open"; break;
-                case CommandId.Save: propertyName = "Save"; break;
-                case CommandId.SaveAs: propertyName = "SaveAs"; break;
-                case CommandId.Close: propertyName = "Close"; break;
-                case CommandId.Print: propertyName = "Print"; break;
-                case CommandId.CancelPrint: propertyName = "CancelPrint"; break;
-                case CommandId.PrintPreview: propertyName = "PrintPreview"; break;
-                case CommandId.Properties: propertyName = "Properties"; break;
-                case CommandId.ContextMenu: propertyName = "ContextMenu"; break;
-                case CommandId.CorrectionList: propertyName = "CorrectionList"; break;
-                case CommandId.SelectAll: propertyName = "SelectAll"; break;
-                case CommandId.Stop: propertyName = "Stop"; break;
-                case CommandId.NotACommand: propertyName = "NotACommand"; break;
+                case CommandId.Cut:
+                    propertyName = "Cut";
+                    break;
+                case CommandId.Copy:
+                    propertyName = "Copy";
+                    break;
+                case CommandId.Paste:
+                    propertyName = "Paste";
+                    break;
+                case CommandId.Undo:
+                    propertyName = "Undo";
+                    break;
+                case CommandId.Redo:
+                    propertyName = "Redo";
+                    break;
+                case CommandId.Delete:
+                    propertyName = "Delete";
+                    break;
+                case CommandId.Find:
+                    propertyName = "Find";
+                    break;
+                case CommandId.Replace:
+                    propertyName = "Replace";
+                    break;
+                case CommandId.Help:
+                    propertyName = "Help";
+                    break;
+                case CommandId.New:
+                    propertyName = "New";
+                    break;
+                case CommandId.Open:
+                    propertyName = "Open";
+                    break;
+                case CommandId.Save:
+                    propertyName = "Save";
+                    break;
+                case CommandId.SaveAs:
+                    propertyName = "SaveAs";
+                    break;
+                case CommandId.Close:
+                    propertyName = "Close";
+                    break;
+                case CommandId.Print:
+                    propertyName = "Print";
+                    break;
+                case CommandId.CancelPrint:
+                    propertyName = "CancelPrint";
+                    break;
+                case CommandId.PrintPreview:
+                    propertyName = "PrintPreview";
+                    break;
+                case CommandId.Properties:
+                    propertyName = "Properties";
+                    break;
+                case CommandId.ContextMenu:
+                    propertyName = "ContextMenu";
+                    break;
+                case CommandId.CorrectionList:
+                    propertyName = "CorrectionList";
+                    break;
+                case CommandId.SelectAll:
+                    propertyName = "SelectAll";
+                    break;
+                case CommandId.Stop:
+                    propertyName = "Stop";
+                    break;
+                case CommandId.NotACommand:
+                    propertyName = "NotACommand";
+                    break;
             }
             return propertyName;
         }
@@ -261,29 +307,75 @@ namespace System.Windows.Input
 
             switch ((CommandId)commandId)
             {
-                case  CommandId.Cut: uiText = SR.CutText; break;
-                case  CommandId.Copy: uiText = SR.CopyText;break;
-                case  CommandId.Paste: uiText = SR.PasteText;break;
-                case  CommandId.Undo: uiText = SR.UndoText;break;
-                case  CommandId.Redo: uiText =  SR.RedoText; break;
-                case  CommandId.Delete: uiText =  SR.DeleteText; break;
-                case  CommandId.Find: uiText =  SR.FindText; break;
-                case  CommandId.Replace: uiText =  SR.ReplaceText; break;
-                case  CommandId.SelectAll: uiText =  SR.SelectAllText; break;
-                case  CommandId.Help: uiText =  SR.HelpText; break;
-                case  CommandId.New: uiText =  SR.NewText; break;
-                case  CommandId.Open: uiText =  SR.OpenText; break;
-                case  CommandId.Save: uiText =  SR.SaveText; break;
-                case  CommandId.SaveAs: uiText =  SR.SaveAsText; break;
-                case  CommandId.Print: uiText =  SR.PrintText; break;
-                case  CommandId.CancelPrint: uiText =  SR.CancelPrintText; break;
-                case  CommandId.PrintPreview: uiText =  SR.PrintPreviewText; break;
-                case  CommandId.Close: uiText =  SR.CloseText; break;
-                case  CommandId.ContextMenu: uiText =  SR.ContextMenuText; break;
-                case  CommandId.CorrectionList: uiText =  SR.CorrectionListText; break;
-                case  CommandId.Properties: uiText =  SR.PropertiesText; break;
-                case  CommandId.Stop: uiText =  SR.StopText; break;
-                case  CommandId.NotACommand: uiText =  SR.NotACommandText; break;
+                case CommandId.Cut:
+                    uiText = SR.CutText;
+                    break;
+                case CommandId.Copy:
+                    uiText = SR.CopyText;
+                    break;
+                case CommandId.Paste:
+                    uiText = SR.PasteText;
+                    break;
+                case CommandId.Undo:
+                    uiText = SR.UndoText;
+                    break;
+                case CommandId.Redo:
+                    uiText = SR.RedoText;
+                    break;
+                case CommandId.Delete:
+                    uiText = SR.DeleteText;
+                    break;
+                case CommandId.Find:
+                    uiText = SR.FindText;
+                    break;
+                case CommandId.Replace:
+                    uiText = SR.ReplaceText;
+                    break;
+                case CommandId.SelectAll:
+                    uiText = SR.SelectAllText;
+                    break;
+                case CommandId.Help:
+                    uiText = SR.HelpText;
+                    break;
+                case CommandId.New:
+                    uiText = SR.NewText;
+                    break;
+                case CommandId.Open:
+                    uiText = SR.OpenText;
+                    break;
+                case CommandId.Save:
+                    uiText = SR.SaveText;
+                    break;
+                case CommandId.SaveAs:
+                    uiText = SR.SaveAsText;
+                    break;
+                case CommandId.Print:
+                    uiText = SR.PrintText;
+                    break;
+                case CommandId.CancelPrint:
+                    uiText = SR.CancelPrintText;
+                    break;
+                case CommandId.PrintPreview:
+                    uiText = SR.PrintPreviewText;
+                    break;
+                case CommandId.Close:
+                    uiText = SR.CloseText;
+                    break;
+                case CommandId.ContextMenu:
+                    uiText = SR.ContextMenuText;
+                    break;
+                case CommandId.CorrectionList:
+                    uiText = SR.CorrectionListText;
+                    break;
+                case CommandId.Properties:
+                    uiText = SR.PropertiesText;
+                    break;
+                case CommandId.Stop:
+                    uiText = SR.StopText;
+                    break;
+                case CommandId.NotACommand:
+                    uiText = SR.NotACommandText;
+                    break;
             }
 
             return uiText;
@@ -296,134 +388,134 @@ namespace System.Windows.Input
             //Standard Commands
             switch ((CommandId)commandId)
             {
-                case  CommandId.Cut:
+                case CommandId.Cut:
                     KeyGesture.AddGesturesFromResourceStrings(
                         CutKey,
                         SR.CutKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Copy:
+                case CommandId.Copy:
                     KeyGesture.AddGesturesFromResourceStrings(
                         CopyKey,
                         SR.CopyKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Paste:
+                case CommandId.Paste:
                     KeyGesture.AddGesturesFromResourceStrings(
                         PasteKey,
                         SR.PasteKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Undo:
+                case CommandId.Undo:
                     KeyGesture.AddGesturesFromResourceStrings(
                         UndoKey,
                         SR.UndoKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Redo:
+                case CommandId.Redo:
                     KeyGesture.AddGesturesFromResourceStrings(
                         RedoKey,
                         SR.RedoKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Delete:
+                case CommandId.Delete:
                     KeyGesture.AddGesturesFromResourceStrings(
                         DeleteKey,
                         SR.DeleteKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Find:
+                case CommandId.Find:
                     KeyGesture.AddGesturesFromResourceStrings(
                         FindKey,
                         SR.FindKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Replace:
+                case CommandId.Replace:
                     KeyGesture.AddGesturesFromResourceStrings(
                         ReplaceKey,
                         SR.ReplaceKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.SelectAll:
+                case CommandId.SelectAll:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SelectAllKey,
                         SR.SelectAllKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Help:
+                case CommandId.Help:
                     KeyGesture.AddGesturesFromResourceStrings(
                         HelpKey,
                         SR.HelpKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.New:
+                case CommandId.New:
                     KeyGesture.AddGesturesFromResourceStrings(
                         NewKey,
                         SR.NewKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Open:
+                case CommandId.Open:
                     KeyGesture.AddGesturesFromResourceStrings(
                         OpenKey,
                         SR.OpenKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Save:
+                case CommandId.Save:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SaveKey,
                         SR.SaveKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.SaveAs:
+                case CommandId.SaveAs:
                     break; // there are no default bindings for  CommandId.SaveAs
-                case  CommandId.Print:
+                case CommandId.Print:
                     KeyGesture.AddGesturesFromResourceStrings(
                         PrintKey,
                         SR.PrintKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.CancelPrint:
+                case CommandId.CancelPrint:
                     break; // there are no default bindings for  CommandId.CancelPrint
-                case  CommandId.PrintPreview:
+                case CommandId.PrintPreview:
                     KeyGesture.AddGesturesFromResourceStrings(
                         PrintPreviewKey,
                         SR.PrintPreviewKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Close:
+                case CommandId.Close:
                     break; // there are no default bindings for  CommandId.Close
-                case  CommandId.ContextMenu:
+                case CommandId.ContextMenu:
                     KeyGesture.AddGesturesFromResourceStrings(
                         ContextMenuKey,
                         SR.ContextMenuKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.CorrectionList:
+                case CommandId.CorrectionList:
                     KeyGesture.AddGesturesFromResourceStrings(
                         SR.CorrectionListKey,
                         SR.CorrectionListKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Properties:
+                case CommandId.Properties:
                     KeyGesture.AddGesturesFromResourceStrings(
                         PropertiesKey,
                         SR.PropertiesKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.Stop:
+                case CommandId.Stop:
                     KeyGesture.AddGesturesFromResourceStrings(
                         StopKey,
                         SR.StopKeyDisplayString,
                         gestures);
                     break;
-                case  CommandId.NotACommand:
+                case CommandId.NotACommand:
                     break; // there are no default bindings for  CommandId.NotACommand
             }
             return gestures;
         }
 
 
-      private static RoutedUICommand _EnsureCommand(CommandId idCommand)
+        private static RoutedUICommand _EnsureCommand(CommandId idCommand)
         {
             if (idCommand >= 0 && idCommand < CommandId.Last)
             {
@@ -442,47 +534,47 @@ namespace System.Windows.Input
             }
             return null;
         }
-#endregion Private Methods
+        #endregion Private Methods
 
         //------------------------------------------------------
         //
         //  Private Fields
         //
         //------------------------------------------------------
-#region Private Fields
+        #region Private Fields
         // these constants will go away in future, its just to index into the right one.
         private enum CommandId : byte
         {
-            Cut=0,
-            Copy=1,
-            Paste=2,
-            Undo=3,
-            Redo=4,
-            Delete=5,
-            Find=6,
-            Replace=7,
-            Help=8,
-            SelectAll=9,
-            New=10,
-            Open=11,
-            Save=12,
-            SaveAs=13,
+            Cut = 0,
+            Copy = 1,
+            Paste = 2,
+            Undo = 3,
+            Redo = 4,
+            Delete = 5,
+            Find = 6,
+            Replace = 7,
+            Help = 8,
+            SelectAll = 9,
+            New = 10,
+            Open = 11,
+            Save = 12,
+            SaveAs = 13,
             Print = 14,
             CancelPrint = 15,
             PrintPreview = 16,
             Close = 17,
-            Properties=18,
-            ContextMenu=19,
-            CorrectionList=20,
-            Stop=21,
-            NotACommand=22,
+            Properties = 18,
+            ContextMenu = 19,
+            CorrectionList = 20,
+            Stop = 21,
+            NotACommand = 22,
 
             // Last
-            Last=23
+            Last = 23
         }
 
         private static RoutedUICommand[] _internalCommands = new RoutedUICommand[(int)CommandId.Last];
-#endregion Private Fields
+        #endregion Private Fields
 
         private const string ContextMenuKey = "Shift+F10;Apps";
         private const string CopyKey = "Ctrl+C;Ctrl+Insert";

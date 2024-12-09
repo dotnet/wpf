@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,7 +11,7 @@ namespace System.Windows
     public static class EventManager
     {
         #region External API
-        
+
         /// <summary>
         ///     Registers a <see cref="RoutedEvent"/> 
         ///     with the given parameters
@@ -55,9 +55,9 @@ namespace System.Windows
         {
             ArgumentNullException.ThrowIfNull(name);
 
-            if (routingStrategy != RoutingStrategy.Tunnel && 
+            if (routingStrategy != RoutingStrategy.Tunnel &&
                 routingStrategy != RoutingStrategy.Bubble &&
-                routingStrategy != RoutingStrategy.Direct) 
+                routingStrategy != RoutingStrategy.Direct)
             {
                 throw new System.ComponentModel.InvalidEnumArgumentException("routingStrategy", (int)routingStrategy, typeof(RoutingStrategy));
             }
@@ -68,7 +68,7 @@ namespace System.Windows
 
             if (GlobalEventManager.GetRoutedEventFromName(name, ownerType, false) != null)
             {
-                throw new ArgumentException(SR.Format(SR.DuplicateEventName, name, ownerType)); 
+                throw new ArgumentException(SR.Format(SR.DuplicateEventName, name, ownerType));
             }
 
             return GlobalEventManager.RegisterRoutedEvent(name, routingStrategy, handlerType, ownerType);
@@ -94,7 +94,7 @@ namespace System.Windows
             // Call forwarded
             RegisterClassHandler(classType, routedEvent, handler, false);
         }
-        
+
         /// <summary>
         ///     Add a routed event handler to all instances of a
         ///     particular type inclusive of its sub-class types
@@ -159,12 +159,12 @@ namespace System.Windows
             {
                 throw new ArgumentException(SR.ClassTypeIllegal);
             }
-            
+
             if (!routedEvent.IsLegalHandler(handler))
             {
                 throw new ArgumentException(SR.HandlerTypeIllegal);
             }
-            
+
             GlobalEventManager.RegisterClassHandler(classType, routedEvent, handler, handledEventsToo);
         }
 

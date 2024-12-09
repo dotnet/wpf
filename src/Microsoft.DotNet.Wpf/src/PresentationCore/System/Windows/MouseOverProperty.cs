@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,7 +27,7 @@ namespace System.Windows
             // This is because it is possible that the mouse state has changed during the previous 
             // property engine callout. Example: Consider a MessageBox being displayed during the 
             // IsMouseOver OnPropertyChanged override.
-            
+
             bool shouldFireNotification = false;
             if (uie != null)
             {
@@ -44,8 +44,10 @@ namespace System.Windows
 
             if (shouldFireNotification)
             {
-                MouseEventArgs mouseEventArgs = new MouseEventArgs(Mouse.PrimaryDevice, Environment.TickCount, Mouse.PrimaryDevice.StylusDevice);
-                mouseEventArgs.RoutedEvent = oldValue ? Mouse.MouseLeaveEvent : Mouse.MouseEnterEvent;
+                MouseEventArgs mouseEventArgs = new MouseEventArgs(Mouse.PrimaryDevice, Environment.TickCount, Mouse.PrimaryDevice.StylusDevice)
+                {
+                    RoutedEvent = oldValue ? Mouse.MouseLeaveEvent : Mouse.MouseEnterEvent
+                };
 
                 if (uie != null)
                 {

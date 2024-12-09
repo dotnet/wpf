@@ -125,7 +125,7 @@ namespace System.Xaml.Schema
             }
         }
 
-        public IReadOnlyDictionary<char,char> GetBracketCharacterAttributes(Type attributeType)
+        public IReadOnlyDictionary<char, char> GetBracketCharacterAttributes(Type attributeType)
         {
             if (CustomAttributeProvider != null)
             {
@@ -396,8 +396,8 @@ namespace System.Xaml.Schema
                 Dictionary<char, char> bracketCharacterList = new Dictionary<char, char>();
                 foreach (CustomAttributeData attributeData in attrDataList)
                 {
-                    char openingBracket = (char) (attributeData.ConstructorArguments[0].Value);
-                    char closingBracket = (char) (attributeData.ConstructorArguments[1].Value);
+                    char openingBracket = (char)(attributeData.ConstructorArguments[0].Value);
+                    char closingBracket = (char)(attributeData.ConstructorArguments[1].Value);
                     bracketCharacterList.Add(openingBracket, closingBracket);
                 }
 

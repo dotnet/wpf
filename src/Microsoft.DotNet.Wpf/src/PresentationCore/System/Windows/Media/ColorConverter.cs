@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
+using System.Globalization;
 using System.Reflection;
 using MS.Internal;
-using System.Globalization;
 
 namespace System.Windows.Media
 {
@@ -36,26 +36,26 @@ namespace System.Windows.Media
         /// <param name="context">ITypeDescriptorContext</param>
         /// <param name="destinationType">Type to convert to</param>
         /// <returns>true if conversion is possible</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (destinationType == typeof(InstanceDescriptor)) 
+            if (destinationType == typeof(InstanceDescriptor))
             {
                 return true;
             }
 
             return base.CanConvertTo(context, destinationType);
         }
-        
+
         ///<summary>
         /// ConvertFromString
         ///</summary>
         public static new object ConvertFromString(string value)
         {
-            if ( null == value)
+            if (null == value)
             {
                 return null;
             }
-            
+
             return Parsers.ParseColor(value, null);
         }
 
@@ -79,8 +79,8 @@ namespace System.Windows.Media
             {
                 throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "value");
             }
-            
-            return Parsers.ParseColor(value as string, ci, td);        
+
+            return Parsers.ParseColor(value as string, ci, td);
         }
 
         /// <summary>
@@ -101,9 +101,9 @@ namespace System.Windows.Media
             {
                 if (destinationType == typeof(InstanceDescriptor))
                 {
-                    MethodInfo mi = typeof(Color).GetMethod("FromArgb", new Type[]{typeof(byte), typeof(byte), typeof(byte), typeof(byte)});
+                    MethodInfo mi = typeof(Color).GetMethod("FromArgb", new Type[] { typeof(byte), typeof(byte), typeof(byte), typeof(byte) });
                     Color c = (Color)value;
-                    return new InstanceDescriptor(mi, new object[]{c.A, c.R, c.G, c.B});
+                    return new InstanceDescriptor(mi, new object[] { c.A, c.R, c.G, c.B });
                 }
                 else if (destinationType == typeof(string))
                 {

@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // #define NESTED_OPERATIONS_CHECK
 
 using System.Windows.Threading;
-using MS.Utility;
 using MS.Internal;
+using MS.Utility;
 
 namespace System.Windows
 {
@@ -177,10 +177,10 @@ namespace System.Windows
         ///     the default value from the parent.
         /// </summary>
         internal EffectiveValueEntry GetValueEntry(
-            EntryIndex          entryIndex,
-            DependencyProperty  dp,
-            PropertyMetadata    metadata,
-            RequestFlags        requests)
+            EntryIndex entryIndex,
+            DependencyProperty dp,
+            PropertyMetadata metadata,
+            RequestFlags requests)
         {
             EffectiveValueEntry entry;
 
@@ -195,9 +195,11 @@ namespace System.Windows
                 if (getValueCallback != null)
                 {
                     BaseValueSourceInternal valueSource;
-                    entry = new EffectiveValueEntry(dp);
-                    entry.Value = getValueCallback(this, out valueSource);
-                    entry.BaseValueSourceInternal = valueSource;
+                    entry = new EffectiveValueEntry(dp)
+                    {
+                        Value = getValueCallback(this, out valueSource),
+                        BaseValueSourceInternal = valueSource
+                    };
                     return entry;
                 }
             }
@@ -292,9 +294,9 @@ namespace System.Windows
         ///      It also does not do the check storage on the InheritanceParent.
         /// </summary>
         private EffectiveValueEntry GetEffectiveValue(
-            EntryIndex          entryIndex,
-            DependencyProperty  dp,
-            RequestFlags        requests)
+            EntryIndex entryIndex,
+            DependencyProperty dp,
+            RequestFlags requests)
         {
             EffectiveValueEntry entry = _effectiveValues[entryIndex.Index];
             EffectiveValueEntry effectiveEntry = entry.GetFlattenedEntry(requests);
@@ -360,7 +362,7 @@ namespace System.Windows
                 {
                     if (!entry.IsAnimated && !entry.IsCoerced)
                     {
-                        reference = (DeferredReference) modifiedValue.ExpressionValue;
+                        reference = (DeferredReference)modifiedValue.ExpressionValue;
                         referenceFromExpression = true;
                     }
                 }
@@ -613,13 +615,13 @@ namespace System.Windows
         // Takes metadata from caller because most of them have already retrieved it
         //  for their own purposes, avoiding the duplicate GetMetadata call.
         private void SetValueCommon(
-            DependencyProperty  dp,
-            object              value,
-            PropertyMetadata    metadata,
-            bool                coerceWithDeferredReference,
-            bool                coerceWithCurrentValue,
-            OperationType       operationType,
-            bool                isInternal)
+            DependencyProperty dp,
+            object value,
+            PropertyMetadata metadata,
+            bool coerceWithDeferredReference,
+            bool coerceWithCurrentValue,
+            OperationType operationType,
+            bool isInternal)
         {
             if (IsSealed)
             {
@@ -632,7 +634,7 @@ namespace System.Windows
             EntryIndex entryIndex = LookupEntry(dp.GlobalIndex);
 
             // Treat Unset as a Clear
-            if( value == DependencyProperty.UnsetValue )
+            if (value == DependencyProperty.UnsetValue)
             {
                 Debug.Assert(!coerceWithCurrentValue, "Don't call SetCurrentValue with UnsetValue");
                 // Parameters should have already been validated, so we call
@@ -690,8 +692,10 @@ namespace System.Windows
             EffectiveValueEntry oldEntry;
             if (operationType == OperationType.ChangeMutableDefaultValue)
             {
-                oldEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Default);
-                oldEntry.Value = value;
+                oldEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Default)
+                {
+                    Value = value
+                };
             }
             else
             {
@@ -700,9 +704,9 @@ namespace System.Windows
 
             // if there's an expression in some other store, fetch it now
             Expression currentExpr =
-                    (oldEntry.HasExpressionMarker)  ? _getExpressionCore(this, dp, metadata)
-                  : (oldEntry.IsExpression)         ? (oldEntry.LocalValue as Expression)
-                  :                                   null;
+                    (oldEntry.HasExpressionMarker) ? _getExpressionCore(this, dp, metadata)
+                  : (oldEntry.IsExpression) ? (oldEntry.LocalValue as Expression)
+                  : null;
 
             // Allow expression to store value if new value is
             // not an Expression, if applicable
@@ -714,7 +718,7 @@ namespace System.Windows
                 // the expression code to work with DeferredReference yet.
                 if (isDeferredReference)
                 {
-                    value = ((DeferredReference) value).GetValue(BaseValueSourceInternal.Local);
+                    value = ((DeferredReference)value).GetValue(BaseValueSourceInternal.Local);
                 }
 
                 // CALLBACK
@@ -822,7 +826,7 @@ namespace System.Windows
         //  This is a helper routine to set this DO as the inheritance context of another,
         //  which has been set as a DP value here.
         //
-        internal bool ProvideSelfAsInheritanceContext( object value, DependencyProperty dp )
+        internal bool ProvideSelfAsInheritanceContext(object value, DependencyProperty dp)
         {
             DependencyObject doValue = value as DependencyObject;
             if (doValue != null)
@@ -835,7 +839,7 @@ namespace System.Windows
             }
         }
 
-        internal bool ProvideSelfAsInheritanceContext( DependencyObject doValue, DependencyProperty dp )
+        internal bool ProvideSelfAsInheritanceContext(DependencyObject doValue, DependencyProperty dp)
         {
             // We have to call Freezable.AddInheritanceContext even if the request
             // for a new InheritanceContext is not allowed, because Freezable depends
@@ -867,7 +871,7 @@ namespace System.Windows
         //
         //  This is a helper routine to remove this DO as the inheritance context of another.
         //
-        internal bool RemoveSelfAsInheritanceContext( object value, DependencyProperty dp )
+        internal bool RemoveSelfAsInheritanceContext(object value, DependencyProperty dp)
         {
             DependencyObject doValue = value as DependencyObject;
             if (doValue != null)
@@ -880,7 +884,7 @@ namespace System.Windows
             }
         }
 
-        internal bool RemoveSelfAsInheritanceContext( DependencyObject doValue, DependencyProperty dp )
+        internal bool RemoveSelfAsInheritanceContext(DependencyObject doValue, DependencyProperty dp)
         {
             // We have to call Freezable.RemoveInheritanceContext even if the request
             // for a new InheritanceContext is not allowed, because Freezable depends
@@ -1151,7 +1155,7 @@ namespace System.Windows
         /// <param name="dp">Dependency property</param>
         public void InvalidateProperty(DependencyProperty dp)
         {
-            InvalidateProperty(dp, preserveCurrentValue:false);
+            InvalidateProperty(dp, preserveCurrentValue: false);
         }
 
         // Invalidation, optionally preserving the current value if the base
@@ -1179,8 +1183,10 @@ namespace System.Windows
 
             ArgumentNullException.ThrowIfNull(dp);
 
-            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Unknown);
-            newEntry.IsCoercedWithCurrentValue = preserveCurrentValue;
+            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Unknown)
+            {
+                IsCoercedWithCurrentValue = preserveCurrentValue
+            };
 
             UpdateEffectiveValue(
                     LookupEntry(dp.GlobalIndex),
@@ -1200,14 +1206,14 @@ namespace System.Windows
         //     coerce and will not try to re-evaluate the base value for the property
         //
         internal UpdateResult UpdateEffectiveValue(
-                EntryIndex          entryIndex,
-                DependencyProperty  dp,
-                PropertyMetadata    metadata,
+                EntryIndex entryIndex,
+                DependencyProperty dp,
+                PropertyMetadata metadata,
                 EffectiveValueEntry oldEntry,
             ref EffectiveValueEntry newEntry,
-                bool                coerceWithDeferredReference,
-                bool                coerceWithCurrentValue,
-                OperationType       operationType)
+                bool coerceWithDeferredReference,
+                bool coerceWithCurrentValue,
+                OperationType operationType)
         {
             ArgumentNullException.ThrowIfNull(dp);
 
@@ -1460,7 +1466,7 @@ namespace System.Windows
 
             UpdateResult result = 0;
 
-            if (newEntry.FullValueSource != (FullValueSource) BaseValueSourceInternal.Default)
+            if (newEntry.FullValueSource != (FullValueSource)BaseValueSourceInternal.Default)
             {
                 Debug.Assert(newEntry.BaseValueSourceInternal != BaseValueSourceInternal.Unknown, "Value source should be known at this point");
                 bool unsetValue = false;
@@ -1540,7 +1546,7 @@ namespace System.Windows
                 }
             }
 
-#region EventTracing
+            #region EventTracing
 #if VERBOSE_PROPERTY_EVENT
             if (isDynamicTracing)
             {
@@ -1550,7 +1556,7 @@ namespace System.Windows
                 }
             }
 #endif
-#endregion EventTracing
+            #endregion EventTracing
 
 
             /*
@@ -1584,8 +1590,8 @@ namespace System.Windows
             // BaseValueSource we are implicitly filtering out any sources which
             // have modifiers.  (e.g., IsExpression, IsAnimated, etc.)
 
-            bool oldEntryHadContext = oldEntry.FullValueSource == (FullValueSource) BaseValueSourceInternal.Local;
-            bool newEntryNeedsContext = newEntry.FullValueSource == (FullValueSource) BaseValueSourceInternal.Local;
+            bool oldEntryHadContext = oldEntry.FullValueSource == (FullValueSource)BaseValueSourceInternal.Local;
+            bool newEntryNeedsContext = newEntry.FullValueSource == (FullValueSource)BaseValueSourceInternal.Local;
 
             // NOTE:  We use result rather than isAValueChange below so that we
             //        pick up mutable default promotion, etc.
@@ -1651,7 +1657,7 @@ namespace System.Windows
                     // Resolve deferred references because we need the actual
                     // baseValue to evaluate the correct animated value. This is done
                     // by invoking GetValue for this property.
-                    DeferredReference dr = (DeferredReference) baseValue;
+                    DeferredReference dr = (DeferredReference)baseValue;
                     baseValue = dr.GetValue(newEntry.BaseValueSourceInternal);
 
                     // Set the baseValue back into the entry
@@ -1766,7 +1772,7 @@ namespace System.Windows
                 isDeferredReference = (value is DeferredReference);
                 if (!isDeferredReference && !dp.IsValidValue(value))
                 {
-#region EventTracing
+                    #region EventTracing
 #if VERBOSE_PROPERTY_EVENT
                     if (isDynamicTracing)
                     {
@@ -1778,7 +1784,7 @@ namespace System.Windows
                         }
                     }
 #endif
-#endregion EventTracing
+                    #endregion EventTracing
                     throw new InvalidOperationException(SR.Format(SR.InvalidPropertyValue, value, dp.Name));
                 }
             }
@@ -1823,7 +1829,7 @@ namespace System.Windows
             EffectiveValueEntry newEntry, // this is only used to recognize if this is a clear local value
             OperationType operationType)
         {
-#region EventTracing
+            #region EventTracing
 #if VERBOSE_PROPERTY_EVENT
             bool isDynamicTracing = EventTrace.IsEnabled(EventTrace.Flags.performance, EventTrace.Level.verbose); // This was under "normal"
             if (isDynamicTracing)
@@ -1843,7 +1849,7 @@ namespace System.Windows
                                                      base.GetHashCode(), TypeAndName ); // base.GetHashCode() to avoid calling a virtual, which FxCop doesn't like.
             }
 #endif
-#endregion EventTracing
+            #endregion EventTracing
 
 #if NESTED_OPERATIONS_CHECK
             // Are we validating out of control?
@@ -1902,8 +1908,10 @@ namespace System.Windows
                 // (If local storage not Unset and not an Expression, return)
                 if (value != DependencyProperty.UnsetValue)
                 {
-                    newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Local);
-                    newEntry.Value = value;
+                    newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Local)
+                    {
+                        Value = value
+                    };
 
                     // Check if an Expression is set
                     if (oldLocalIsExpression)
@@ -1912,7 +1920,7 @@ namespace System.Windows
                         newEntry = EvaluateExpression(
                             entryIndex,
                             dp,
-                            (Expression) value,
+                            (Expression)value,
                             metadata,
                             oldEntry,
                             newEntry);
@@ -1924,7 +1932,7 @@ namespace System.Windows
                 }
 
                 // Subclasses are not allowed to resolve/modify the value for read-only properties.
-                if( !dp.ReadOnly )
+                if (!dp.ReadOnly)
                 {
                     // Give subclasses a chance to resolve/modify the value
                     EvaluateBaseValueCore(dp, metadata, ref newEntry);
@@ -1945,7 +1953,7 @@ namespace System.Windows
                         Equals(dp, oldEntry.ModifiedValue.BaseValue, value))
                     {
                         object currentValue = oldEntry.ModifiedValue.CoercedValue;
-                        newEntry.SetCoercedValue(currentValue, value, skipBaseValueChecks:true, coerceWithCurrentValue:true);
+                        newEntry.SetCoercedValue(currentValue, value, skipBaseValueChecks: true, coerceWithCurrentValue: true);
                         value = currentValue;
                     }
 
@@ -1966,7 +1974,7 @@ namespace System.Windows
 #endif
             }
 
-#region EventTracing
+            #region EventTracing
 #if VERBOSE_PROPERTY_EVENT
             if (isDynamicTracing)
             {
@@ -1981,7 +1989,7 @@ namespace System.Windows
                 }
             }
 #endif
-#endregion EventTracing
+            #endregion EventTracing
 
             if (value == DependencyProperty.UnsetValue)
             {
@@ -1995,8 +2003,8 @@ namespace System.Windows
         ///     Allows subclasses to participate in property base value computation
         /// </summary>
         internal virtual void EvaluateBaseValueCore(
-                DependencyProperty  dp,
-                PropertyMetadata    metadata,
+                DependencyProperty dp,
+                PropertyMetadata metadata,
             ref EffectiveValueEntry newEntry)
         {
         }
@@ -2005,8 +2013,8 @@ namespace System.Windows
         ///     Allows subclasses to participate in property animated value computation
         /// </summary>
         internal virtual void EvaluateAnimatedValueCore(
-                DependencyProperty  dp,
-                PropertyMetadata    metadata,
+                DependencyProperty dp,
+                PropertyMetadata metadata,
             ref EffectiveValueEntry newEntry)
         {
         }
@@ -2019,7 +2027,7 @@ namespace System.Windows
         {
             // Do not call VerifyAccess because this is a virtual, and is used as a call-out.
 
-            if( e.Property == null )
+            if (e.Property == null)
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "e.Property"), "e");
             }
@@ -2039,9 +2047,9 @@ namespace System.Windows
         /// Override this method to control whether a DependencyProperty should be serialized.
         /// The base implementation returns true if the property is set (locally) on this object.
         /// </summary>
-        protected internal virtual bool ShouldSerializeProperty( DependencyProperty dp )
+        protected internal virtual bool ShouldSerializeProperty(DependencyProperty dp)
         {
-            return ContainsValue( dp );
+            return ContainsValue(dp);
         }
 
         internal BaseValueSourceInternal GetValueSource(DependencyProperty dp, PropertyMetadata metadata, out bool hasModifiers)
@@ -2192,7 +2200,7 @@ namespace System.Windows
             int count = 0;
 
             // Iterate through the sorted effectiveValues
-            for (uint i=0; i<effectiveValuesCount; i++)
+            for (uint i = 0; i < effectiveValuesCount; i++)
             {
                 DependencyProperty dp = DependencyProperty.RegisteredPropertyList.List[_effectiveValues[i].PropertyIndex];
                 if (dp != null)
@@ -2536,7 +2544,7 @@ namespace System.Windows
             // no expression marker -- check local value itself
             if (entry.IsExpression)
             {
-                return (Expression) entry.LocalValue;
+                return (Expression)entry.LocalValue;
             }
 
             return null;
@@ -2618,7 +2626,7 @@ namespace System.Windows
                 // change in the context. This is like a recursive tree walk.
                 // Iterate through the sorted effectiveValues
                 uint effectiveValuesCount = EffectiveValuesCount;
-                for (uint i=0; i<effectiveValuesCount; i++)
+                for (uint i = 0; i < effectiveValuesCount; i++)
                 {
                     DependencyProperty dp = DependencyProperty.RegisteredPropertyList.List[_effectiveValues[i].PropertyIndex];
                     if (dp != null)
@@ -2627,7 +2635,7 @@ namespace System.Windows
                         if (localValue != DependencyProperty.UnsetValue)
                         {
                             DependencyObject inheritanceChild = localValue as DependencyObject;
-                            if (inheritanceChild!= null && inheritanceChild.InheritanceContext == this)
+                            if (inheritanceChild != null && inheritanceChild.InheritanceContext == this)
                             {
                                 inheritanceChild.OnInheritanceContextChanged(args);
                             }
@@ -2735,7 +2743,7 @@ namespace System.Windows
 
         internal static bool IsTreeWalkOperation(OperationType operation)
         {
-            return   operation == OperationType.AddChild ||
+            return operation == OperationType.AddChild ||
                      operation == OperationType.RemoveChild ||
                      operation == OperationType.Inherit;
         }
@@ -2745,7 +2753,7 @@ namespace System.Windows
         /// listeners on its InheritanceContextChanged event. This is used by
         /// Freezable (frozen Freezables can't have listeners).
         /// </summary>
-        [Conditional ("DEBUG")]
+        [Conditional("DEBUG")]
         internal void Debug_AssertNoInheritanceContextListeners()
         {
             Debug.Assert(InheritanceContextChangedHandlersField.GetValue(this) == null,
@@ -2753,7 +2761,7 @@ namespace System.Windows
         }
 
         // This uncommon field is used to store the handlers for the InheritanceContextChanged event
-        private  static readonly UncommonField<EventHandler> InheritanceContextChangedHandlersField = new UncommonField<EventHandler>();
+        private static readonly UncommonField<EventHandler> InheritanceContextChangedHandlersField = new UncommonField<EventHandler>();
 
         #endregion InheritanceContext
 
@@ -2849,7 +2857,7 @@ namespace System.Windows
                 if (effectiveValuesCount != 0)
                 {
                     uint endLength = effectiveValuesCount;
-                    if (((float) endLength / (float) _effectiveValues.Length) < 0.8)
+                    if (((float)endLength / (float)_effectiveValues.Length) < 0.8)
                     {
                         // For thread-safety, sealed DOs can't modify _effectiveValues.
                         Debug.Assert(!DO_Sealed, "A Sealed DO cannot be modified");
@@ -2869,7 +2877,7 @@ namespace System.Windows
             {
                 if ((_packedData & 0x3E100000) == 0)
                 {
-                    return (DependencyObject) _contextStorage;
+                    return (DependencyObject)_contextStorage;
                 }
 
                 // return null if this DO has any of the following set:
@@ -2988,7 +2996,7 @@ namespace System.Windows
             EffectiveValueEntry[] parentEffectiveValues = inheritanceParent.EffectiveValues;
             uint parentEffectiveValuesCount = inheritanceParent.EffectiveValuesCount;
 
-            for (uint i=0; i<parentEffectiveValuesCount; i++)
+            for (uint i = 0; i < parentEffectiveValuesCount; i++)
             {
                 EffectiveValueEntry entry = parentEffectiveValues[i];
                 DependencyProperty dp = DependencyProperty.RegisteredPropertyList.List[entry.PropertyIndex];
@@ -3117,7 +3125,7 @@ namespace System.Windows
             {
                 if (_effectiveValues.Length == effectiveValuesCount)
                 {
-                    int newSize = (int) (effectiveValuesCount * (IsInPropertyInitialization ? 2.0 : 1.2));
+                    int newSize = (int)(effectiveValuesCount * (IsInPropertyInitialization ? 2.0 : 1.2));
                     if (newSize == effectiveValuesCount)
                     {
                         newSize++;
@@ -3282,8 +3290,10 @@ namespace System.Windows
             }
             else
             {
-                entry = new EffectiveValueEntry();
-                entry.PropertyIndex = targetIndex;
+                entry = new EffectiveValueEntry
+                {
+                    PropertyIndex = targetIndex
+                };
                 InsertEntry(entry, entryIndex.Index);
                 if (metadata != null && metadata.IsInherited)
                 {
@@ -3458,7 +3468,7 @@ namespace System.Windows
         private const int NestedOperationMaximum = 153;
 
         #endregion StaticData
-   }
+    }
 
     /// <summary> Callback used by the "alternative Expression storage" feature </summary>
     /// <remarks>

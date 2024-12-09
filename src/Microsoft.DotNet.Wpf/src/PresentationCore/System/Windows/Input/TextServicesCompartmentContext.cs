@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,7 +27,7 @@ namespace System.Windows.Input
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         /// <summary>
         ///  private constructer to avoid from creating instance outside.
         /// </summary>
@@ -40,7 +40,7 @@ namespace System.Windows.Input
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         /// <summary>
@@ -48,19 +48,19 @@ namespace System.Windows.Input
         /// </summary>
         internal TextServicesCompartment GetCompartment(InputMethodStateType statetype)
         {
-             for (int i = 0; i < InputMethodEventTypeInfo.InfoList.Length; i++)
-             {
-                 InputMethodEventTypeInfo iminfo = InputMethodEventTypeInfo.InfoList[i];
+            for (int i = 0; i < InputMethodEventTypeInfo.InfoList.Length; i++)
+            {
+                InputMethodEventTypeInfo iminfo = InputMethodEventTypeInfo.InfoList[i];
 
-                 if (iminfo.Type  == statetype)
-                 {
-                     if (iminfo.Scope == CompartmentScope.Thread)
-                         return GetThreadCompartment(iminfo.Guid);
-                     else if (iminfo.Scope == CompartmentScope.Global)
-                         return GetGlobalCompartment(iminfo.Guid);
-                 }
-             }
-             return null;
+                if (iminfo.Type == statetype)
+                {
+                    if (iminfo.Scope == CompartmentScope.Thread)
+                        return GetThreadCompartment(iminfo.Guid);
+                    else if (iminfo.Scope == CompartmentScope.Global)
+                        return GetGlobalCompartment(iminfo.Guid);
+                }
+            }
+            return null;
         }
 
         /// <summary>
@@ -85,7 +85,7 @@ namespace System.Windows.Input
             compartment = _compartmentTable[guid] as TextServicesCompartment;
             if (compartment == null)
             {
-                compartment = new TextServicesCompartment(guid, 
+                compartment = new TextServicesCompartment(guid,
                                                           threadmgr as UnsafeNativeMethods.ITfCompartmentMgr);
                 _compartmentTable[guid] = compartment;
             }
@@ -135,7 +135,7 @@ namespace System.Windows.Input
         //  Internal Properties
         //
         //------------------------------------------------------
- 
+
         /// <summary>
         ///  Create and get thread local compartment context.
         /// </summary>
@@ -158,12 +158,12 @@ namespace System.Windows.Input
         //  Private Fields
         //
         //------------------------------------------------------
-                
+
         // cache of ITfCompartments
         private Hashtable _compartmentTable;
         private Hashtable _globalcompartmentTable;
 
         // cache of the global compartment manager
-        private UnsafeNativeMethods.ITfCompartmentMgr  _globalcompartmentmanager;
-}
+        private UnsafeNativeMethods.ITfCompartmentMgr _globalcompartmentmanager;
+    }
 }

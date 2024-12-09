@@ -1,17 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using System.Threading;
-using System.Windows.Threading;
-using System.Globalization;
 using System.Collections;
-using System.Windows.Controls;
-using System.Windows.Markup; // XmlLanguage
-using System.Windows.Input;
+using System.Globalization;
 using System.IO;
+using System.Threading;
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Markup; // XmlLanguage
 using System.Windows.Navigation;
+using System.Windows.Threading;
+using MS.Internal;
 
 //
 // Description: Spell checking component for the TextEditor.
@@ -358,7 +358,7 @@ namespace System.Windows.Documents
             {
                 _spellerInterop.UnloadDictionary(info.Lexicon);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 System.Diagnostics.Trace.Write(string.Create(CultureInfo.InvariantCulture, $"Unloading dictionary failed. Original Uri:{uri}, file Uri:{info.PathUri}, exception:{e}"));
                 throw;
@@ -900,9 +900,9 @@ namespace System.Windows.Documents
                 if (textSegment.SubSegments.Count == 0)
                 {
                     List<string> suggestions = (List<string>)data.Data;
-                    if(textSegment.Suggestions.Count > 0)
+                    if (textSegment.Suggestions.Count > 0)
                     {
-                        foreach(string suggestion in textSegment.Suggestions)
+                        foreach (string suggestion in textSegment.Suggestions)
                         {
                             suggestions.Add(suggestion);
                         }
@@ -949,7 +949,7 @@ namespace System.Windows.Documents
 
                 if (!IsIgnoredWord(word))
                 {
-                    if(!textSegment.IsClean)
+                    if (!textSegment.IsClean)
                     {
                         if (textSegment.SubSegments.Count == 0)
                         {
@@ -1187,7 +1187,7 @@ namespace System.Windows.Documents
                 else
                 {
                     i += MinWordBreaksForContext;
-                    sTextRange = (SpellerInteropBase.ITextRange)segments[Math.Min(i, segments.Count-1)];
+                    sTextRange = (SpellerInteropBase.ITextRange)segments[Math.Min(i, segments.Count - 1)];
                     // We might actually preceed contentOffset if we're at the document edge.
                     // Don't let that happen.
                     contextOffset = Math.Max(sTextRange.Start + sTextRange.Length, contentOffset);
@@ -1661,7 +1661,7 @@ namespace System.Windows.Documents
                 maxChars = contextStart.GetOffsetToPosition(contextEnd);
 
                 _text = new char[maxChars];
-                _positionMap = new int[maxChars+1];
+                _positionMap = new int[maxChars + 1];
 
                 _textLength = 0;
                 inlineCount = 0;
@@ -1971,7 +1971,7 @@ namespace System.Windows.Documents
         // but with less responsiveness to user interruptions.
         private const int MaxIdleTimeSliceMs = 20;
         // Max time slice for speller background proofing, in 100 nanosecond intervals.
-        private const long MaxIdleTimeSliceNs = MaxIdleTimeSliceMs*10000;
+        private const long MaxIdleTimeSliceNs = MaxIdleTimeSliceMs * 10000;
 
         // Max number of characters to pass to engine in a single call.
         // Increasing this number will decrease the time to scan an entire

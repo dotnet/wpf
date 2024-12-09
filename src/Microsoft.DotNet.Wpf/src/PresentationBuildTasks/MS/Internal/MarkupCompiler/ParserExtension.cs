@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,14 +11,14 @@
 //---------------------------------------------------------------------------
 
 using System;
-using MS.Internal.Markup;
-using System.Xml;
-using System.IO;
+using System.CodeDom;
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Reflection;
-using System.CodeDom;
+using System.Xml;
+using MS.Internal.Markup;
 using MS.Utility;   // for SR
 
 namespace MS.Internal
@@ -59,33 +59,33 @@ namespace MS.Internal
             //        read so that it is forced to return at the end of the subtree.
             if (xamlObjectNode.SerializerType != null)
             {
-                 XamlSerializer serializer;
-                 if (xamlObjectNode.SerializerType == typeof(XamlStyleSerializer))
-                 {
-                     serializer = new XamlStyleSerializer(ParserHooks);
-                 }
-                 else if (xamlObjectNode.SerializerType == typeof(XamlTemplateSerializer))
-                 {
-                     serializer = new XamlTemplateSerializer(ParserHooks);
-                 }
-                 else
-                 {
-                     serializer = Activator.CreateInstance(
-                                         xamlObjectNode.SerializerType,
-                                         BindingFlags.Instance | BindingFlags.Public |
-                                         BindingFlags.NonPublic | BindingFlags.CreateInstance,
-                                         null, null, null) as XamlSerializer;
-                 }
+                XamlSerializer serializer;
+                if (xamlObjectNode.SerializerType == typeof(XamlStyleSerializer))
+                {
+                    serializer = new XamlStyleSerializer(ParserHooks);
+                }
+                else if (xamlObjectNode.SerializerType == typeof(XamlTemplateSerializer))
+                {
+                    serializer = new XamlTemplateSerializer(ParserHooks);
+                }
+                else
+                {
+                    serializer = Activator.CreateInstance(
+                                        xamlObjectNode.SerializerType,
+                                        BindingFlags.Instance | BindingFlags.Public |
+                                        BindingFlags.NonPublic | BindingFlags.CreateInstance,
+                                        null, null, null) as XamlSerializer;
+                }
 
-                 if (serializer == null)
-                 {
+                if (serializer == null)
+                {
                     ThrowException(nameof(SR.ParserNoSerializer),
                                    xamlObjectNode.TypeFullName,
                                    xamlObjectNode.LineNumber,
                                    xamlObjectNode.LinePosition);
-                 }
-                 else
-                 {
+                }
+                else
+                {
                     serializer.ConvertXamlToBaml(TokenReader,
                                        ParserContext, xamlObjectNode,
                                        BamlRecordWriter);
@@ -150,12 +150,12 @@ namespace MS.Internal
                     Debug.Assert(_name == null && _nameField == null, "Name has already been set");
                     _nameField = _compiler.AddNameField(attributeValue, xamlPropertyNode.LineNumber, xamlPropertyNode.LinePosition);
                     _name = attributeValue;
-                 }
+                }
 
-                 if (_nameField != null || _compiler.IsRootNameScope)
-                 {
-                     WriteConnectionId();
-                 }
+                if (_nameField != null || _compiler.IsRootNameScope)
+                {
+                    WriteConnectionId();
+                }
             }
 
             if (memberInfo != null &&
@@ -190,7 +190,7 @@ namespace MS.Internal
                 {
                     ns += MarkupCompiler.DOT;
                 }
-                localElementFullName =  ns + xamlUnknownTagStartNode.Value;
+                localElementFullName = ns + xamlUnknownTagStartNode.Value;
             }
 
             if (localElementFullName.Length > 0 && !_pass2)
@@ -289,7 +289,7 @@ namespace MS.Internal
 
                             // See if attached event first
                             miKnownEvent = ownerTagType.GetMethod(MarkupCompiler.ADD + localAttribName + MarkupCompiler.HANDLER,
-                                BindingFlags.Public | BindingFlags.Static  |
+                                BindingFlags.Public | BindingFlags.Static |
                                 BindingFlags.FlattenHierarchy);
 
                             if (miKnownEvent == null)
@@ -388,13 +388,13 @@ namespace MS.Internal
         /// override of GetElementType
         /// </summary>
         public override bool GetElementType(
-                XmlReader   xmlReader,
-                string      localName,
-                string      namespaceUri,
-            ref string      assemblyName,
-            ref string      typeFullName,
-            ref Type        baseType,
-            ref Type        serializerType)
+                XmlReader xmlReader,
+                string localName,
+                string namespaceUri,
+            ref string assemblyName,
+            ref string typeFullName,
+            ref Type baseType,
+            ref Type serializerType)
         {
             if (!ProcessedRootElement &&
                 namespaceUri.Equals(XamlReaderHelper.DefinitionNamespaceURI) &&
@@ -762,9 +762,10 @@ namespace MS.Internal
                 if (addMapping)
                 {
                     ClrNamespaceAssemblyPair namespaceMapping = new ClrNamespaceAssemblyPair(xamlPIMappingNode.ClrNamespace,
-                                                                                             xamlPIMappingNode.AssemblyName);
-
-                    namespaceMapping.LocalAssembly = true;
+                                                                                             xamlPIMappingNode.AssemblyName)
+                    {
+                        LocalAssembly = true
+                    };
                     XamlTypeMapper.PITable[xamlPIMappingNode.XmlNamespace] = namespaceMapping;
                     XamlTypeMapper.InvalidateMappingCache(xamlPIMappingNode.XmlNamespace);
                     if (!_pass2 && BamlRecordWriter != null)
@@ -886,14 +887,14 @@ namespace MS.Internal
             }
         }
 
-/*
-        // NOTE: Enable when Parser is ready to handle multiple errors w/o bailing out.
-        internal override SerializationErrorAction ParseError(XamlParseException e)
-        {
-            _compiler.OnError(e);
-            return SerializationErrorAction.Ignore;
-        }
-*/
+        /*
+                // NOTE: Enable when Parser is ready to handle multiple errors w/o bailing out.
+                internal override SerializationErrorAction ParseError(XamlParseException e)
+                {
+                    _compiler.OnError(e);
+                    return SerializationErrorAction.Ignore;
+                }
+        */
         /// <summary>
         /// override of Write End Document
         /// </summary>
@@ -923,21 +924,21 @@ namespace MS.Internal
 
         #region Data
 
-        private MarkupCompiler      _compiler;
-        private string              _name = null;
-        private string              _class = string.Empty;
-        private string              _subClass = string.Empty;
-        private int                 _connectionId = 0;
-        private bool                _pass2 = false;
-        private bool                _isRootTag = false;
-        private bool                _processedRootElement = false;
-        private bool                _isSameScope = false;
-        private bool                _isInternalRoot = false;
-        private ArrayList           _events = null;
-        private bool                _isFieldModifierSet = false;
-        private CodeMemberField     _nameField = null;
-        private string              _classModifier = string.Empty;
-        private MemberAttributes    _fieldModifier = MemberAttributes.Assembly;
+        private MarkupCompiler _compiler;
+        private string _name = null;
+        private string _class = string.Empty;
+        private string _subClass = string.Empty;
+        private int _connectionId = 0;
+        private bool _pass2 = false;
+        private bool _isRootTag = false;
+        private bool _processedRootElement = false;
+        private bool _isSameScope = false;
+        private bool _isInternalRoot = false;
+        private ArrayList _events = null;
+        private bool _isFieldModifierSet = false;
+        private CodeMemberField _nameField = null;
+        private string _classModifier = string.Empty;
+        private MemberAttributes _fieldModifier = MemberAttributes.Assembly;
 
         private const string CLASS = "Class";
         private const string SUBCLASS = "Subclass";

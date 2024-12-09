@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,7 +34,7 @@ namespace System.Windows.Media
         public VisualCollection Children
         {
             get
-            { 
+            {
                 VerifyAPIReadOnly();
 
                 return _children;
@@ -72,7 +72,7 @@ namespace System.Windows.Media
         /// </summary>
         public Brush OpacityMask
         {
-            get { return base.VisualOpacityMask;  }
+            get { return base.VisualOpacityMask; }
             set { base.VisualOpacityMask = value; }
         }
 
@@ -84,7 +84,7 @@ namespace System.Windows.Media
             get { return base.VisualCacheMode; }
             set { base.VisualCacheMode = value; }
         }
-        
+
         /// <summary>
         /// Re-exposes the Visual base class's corresponding VisualTreeHelper implementation as public method.
         /// </summary>
@@ -134,7 +134,7 @@ namespace System.Windows.Media
         {
             get { return base.VisualYSnappingGuidelines; }
             set { base.VisualYSnappingGuidelines = value; }
-        }        
+        }
 
         /// <summary>
         /// Re-exposes the Visual base class's corresponding VisualTreeHelper implementation as public method.
@@ -175,7 +175,7 @@ namespace System.Windows.Media
             set
             {
                 base.VisualTransform = value;
-            }            
+            }
         }
 
 
@@ -192,7 +192,7 @@ namespace System.Windows.Media
             {
                 base.VisualOffset = value;
             }
-        }       
+        }
 
         /// <summary>
         /// DescendantBounds returns the union of all of the content bounding
@@ -221,11 +221,11 @@ namespace System.Windows.Media
         ///       During this virtual call it is not valid to modify the Visual tree. 
         /// </summary>
         protected sealed override Visual GetVisualChild(int index)
-        {            
+        {
             //VisualCollection does the range check for index
             return _children[index];
         }
-        
+
         /// <summary>
         ///  Derived classes override this property to enable the Visual code to enumerate 
         ///  the Visual children. Derived classes need to return the number of children
@@ -236,10 +236,10 @@ namespace System.Windows.Media
         ///  Remark: During this virtual method the Visual tree must not be modified.
         /// </summary>        
         protected sealed override int VisualChildrenCount
-        {           
-            get 
-            { 
-                return _children.Count; 
+        {
+            get
+            {
+                return _children.Count;
             }
         }
 

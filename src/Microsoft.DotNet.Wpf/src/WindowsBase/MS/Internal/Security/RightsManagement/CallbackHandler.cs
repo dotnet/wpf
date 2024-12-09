@@ -1,20 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description:
 //  These are the internal helpers that used to process callbacks from RM SDK 
 
-using System.Threading;
 using System.Runtime.InteropServices;
+using System.Threading;
 
 // Enable presharp pragma warning suppress directives.
 #pragma warning disable 1634, 1691
 
 namespace MS.Internal.Security.RightsManagement
 {
-    internal delegate int CallbackDelegate(StatusMessage status, 
-                                                            int hr, 
+    internal delegate int CallbackDelegate(StatusMessage status,
+                                                            int hr,
                                                             IntPtr pvParam,         // in the unmanaged SDK these 2 declared as void *
                                                             IntPtr pvContext);     // so the IntPtr is the right equivalent for both 64 and 32 bits
 
@@ -30,7 +30,7 @@ namespace MS.Internal.Security.RightsManagement
             _callbackDelegate = new CallbackDelegate(OnStatus);
         }
 
-        internal CallbackDelegate CallbackDelegate 
+        internal CallbackDelegate CallbackDelegate
         {
             get
             {
@@ -59,7 +59,7 @@ namespace MS.Internal.Security.RightsManagement
                 throw _exception;
             }
 
-            Errors.ThrowOnErrorCode(_hr);             
+            Errors.ThrowOnErrorCode(_hr);
         }
 
         public void Dispose()
@@ -67,26 +67,26 @@ namespace MS.Internal.Security.RightsManagement
             Dispose(true);
             GC.SuppressFinalize(this);
         }
- 
+
         // this is the callback from the RM thread
-        private int OnStatus(StatusMessage status, int hr, IntPtr pvParam, IntPtr pvContext)        
+        private int OnStatus(StatusMessage status, int hr, IntPtr pvParam, IntPtr pvContext)
         {
             if (hr == S_DRM_COMPLETED || hr < 0)
             {
                 _exception = null; // we are resetting this variable, so that the instance of this class will be reusable even after exception 
-                
+
                 try
                 {
                     _hr = hr; // we are assigning hr first as the next command can potentially throw, and we would like to have hr value preserved 
-                    
+
                     if (pvParam != IntPtr.Zero)
                     {
                         _callbackData = Marshal.PtrToStringUni(pvParam);
                     }
                 }
-// disabling PreSharp false positive. In this case we are actually re-throwing the same exception 
-// on the application thread inside WaitForCompletion() function
-#pragma warning disable 56500                  
+                // disabling PreSharp false positive. In this case we are actually re-throwing the same exception 
+                // on the application thread inside WaitForCompletion() function
+#pragma warning disable 56500
                 catch (Exception e)
                 {
                     // We catch all exceptions of the second worker thread (created by the unmanaged RM SDK)
@@ -107,7 +107,7 @@ namespace MS.Internal.Security.RightsManagement
         private void Dispose(bool disposing)
         {
             if (disposing)
-            {   
+            {
                 if (_resetEvent != null)
                 {
                     _resetEvent.Set();
@@ -124,6 +124,6 @@ namespace MS.Internal.Security.RightsManagement
         private int _hr;
         private Exception _exception;
 
-        private const uint S_DRM_COMPLETED                 = 0x0004CF04;  //success code 
+        private const uint S_DRM_COMPLETED = 0x0004CF04;  //success code 
     }
 }

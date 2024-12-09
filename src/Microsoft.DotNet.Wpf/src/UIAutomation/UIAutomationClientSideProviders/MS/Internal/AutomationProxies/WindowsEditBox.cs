@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -702,9 +702,11 @@ namespace MS.Internal.AutomationProxies
             if (Misc.IsBitSet(WindowStyle, NativeMethods.WS_VSCROLL))
             {
                 // we call GetScrollInfo and return the size of the "page"
-                NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo();
-                si.cbSize = System.Runtime.InteropServices.Marshal.SizeOf(typeof(NativeMethods.ScrollInfo));
-                si.fMask = NativeMethods.SIF_ALL;
+                NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo
+                {
+                    cbSize = System.Runtime.InteropServices.Marshal.SizeOf(typeof(NativeMethods.ScrollInfo)),
+                    fMask = NativeMethods.SIF_ALL
+                };
                 bool ok = Misc.GetScrollInfo(WindowHandle, NativeMethods.SB_VERT, ref si);
                 linePerPage = ok ? si.nPage : 0;
                 if (IsMultiline && linePerPage <= 0)

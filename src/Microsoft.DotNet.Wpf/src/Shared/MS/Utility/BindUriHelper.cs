@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,12 +33,12 @@ namespace MS.Internal.Utility
     // Methods in this partial class are shared by PresentationFramework and PresentationBuildTasks.
     // See also WpfWebRequestHelper.
     //
-    internal static  partial class BindUriHelper
-   {
-        private const int MAX_PATH_LENGTH = 2048 ;
+    internal static partial class BindUriHelper
+    {
+        private const int MAX_PATH_LENGTH = 2048;
         private const int MAX_SCHEME_LENGTH = 32;
         public const int MAX_URL_LENGTH = MAX_PATH_LENGTH + MAX_SCHEME_LENGTH + 3; /*=sizeof("://")*/
- 
+
         //
         // Uri-toString does 3 things over the standard .toString()
         //
@@ -57,11 +57,11 @@ namespace MS.Internal.Utility
 
             return new StringBuilder(
                 uri.GetComponents(
-                    uri.IsAbsoluteUri ? UriComponents.AbsoluteUri : UriComponents.SerializationInfoString, 
-                    UriFormat.SafeUnescaped), 
+                    uri.IsAbsoluteUri ? UriComponents.AbsoluteUri : UriComponents.SerializationInfoString,
+                    UriFormat.SafeUnescaped),
                 MAX_URL_LENGTH).ToString();
-        }        
-        
+        }
+
 #if PRESENTATION_CORE || PRESENTATIONFRAMEWORK
         // Base Uri.
         static internal Uri BaseUri
@@ -72,7 +72,7 @@ namespace MS.Internal.Utility
             }
             set
             {
-                 BaseUriHelper.BaseUri = BaseUriHelper.FixFileUri(value);
+                BaseUriHelper.BaseUri = BaseUriHelper.FixFileUri(value);
             }
         }
 
@@ -85,7 +85,7 @@ namespace MS.Internal.Utility
         static internal Uri GetResolvedUri(Uri baseUri, Uri orgUri)
         {
             Uri newUri;
-            
+
             if (orgUri == null)
             {
                 newUri = null;
@@ -93,7 +93,7 @@ namespace MS.Internal.Utility
             else if (orgUri.IsAbsoluteUri == false)
             {
                 // if the orgUri is an absolute Uri, don't need to resolve it again.
-                
+
                 Uri baseuri = baseUri ?? BindUriHelper.BaseUri;
 
 #if CF_Envelope_Activation_Enabled
@@ -125,7 +125,7 @@ namespace MS.Internal.Utility
                 else
                 {
 #endif
-                    newUri = new Uri(baseuri, orgUri);
+                newUri = new Uri(baseuri, orgUri);
 #if CF_Envelope_Activation_Enabled
                 }
 #endif
@@ -136,7 +136,7 @@ namespace MS.Internal.Utility
             }
 
             return newUri;
-        }        
+        }
 
         /// <summary>
         /// Gets the referer to set as a header on the HTTP request.
@@ -166,7 +166,7 @@ namespace MS.Internal.Utility
             }
 
             return referer;
-        }       
+        }
 
 
 #endif // PRESENTATION_CORE || PRESENTATIONFRAMEWORK

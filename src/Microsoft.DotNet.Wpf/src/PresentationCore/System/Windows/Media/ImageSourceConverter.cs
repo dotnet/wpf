@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.IO;
 using System.ComponentModel;
-using MS.Internal;
 using System.Globalization;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Markup;
 using System.Windows.Media.Imaging;
+using MS.Internal;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -58,10 +58,10 @@ namespace System.Windows.Media
                         throw new ArgumentException(SR.Format(SR.General_Expected_Type, "ImageSource"), "context");
                     }
 
-                    #pragma warning suppress 6506 // context is obviously not null
+#pragma warning suppress 6506 // context is obviously not null
                     ImageSource value = (ImageSource)context.Instance;
 
-                    #pragma warning suppress 6506 // value is obviously not null
+#pragma warning suppress 6506 // value is obviously not null
                     return value.CanSerializeToString();
                 }
 
@@ -201,12 +201,12 @@ namespace System.Windows.Media
                     // When invoked by the serialization engine we can convert to string only for some instances
                     if (context != null && context.Instance != null)
                     {
-                        #pragma warning disable 6506
+#pragma warning disable 6506
                         if (!instance.CanSerializeToString())
                         {
                             throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
                         }
-                        #pragma warning restore 6506
+#pragma warning restore 6506
                     }
 
                     // Delegate to the formatting/culture-aware ConvertToString method.
@@ -270,14 +270,14 @@ namespace System.Windows.Media
                 for (int i = pHeader.headersize + 18; i < pHeader.headersize + 510; i++)
                 {
                     if (searchArray[0] == pByte[i] &&
-                        searchArray[1] == pByte[i+1])
+                        searchArray[1] == pByte[i + 1])
                     {
                         //
                         // found the bitmap data.
                         //
                         return new MemoryStream(rawData, i, rawData.Length - i);
                     }
-}
+                }
             }
 
             return null;
@@ -287,7 +287,8 @@ namespace System.Windows.Media
         // For pulling encoded IPictures out of Access Databases
         //
         [StructLayout(LayoutKind.Sequential)]
-        private struct OBJECTHEADER {
+        private struct OBJECTHEADER
+        {
             public short signature; // this looks like it's always 0x1c15
             public short headersize; // how big all this goo ends up being.  after this is the actual object data.
             public short objectType; // we don't care about anything else...they don't seem to be meaningful anyway.

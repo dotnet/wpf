@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,8 +25,10 @@ namespace MS.Internal.Data
             {
                 if (_placeholderBlock == null)
                 {
-                    _placeholderBlock = new LiveShapingBlock(false);
-                    _placeholderBlock.Parent = this;
+                    _placeholderBlock = new LiveShapingBlock(false)
+                    {
+                        Parent = this
+                    };
                 }
                 return _placeholderBlock;
             }
@@ -128,16 +130,16 @@ namespace MS.Internal.Data
             {
                 --finger;
                 result = result &&
-                    !(  Comparison(finger.Item, lsi) > 0 &&
+                    !(Comparison(finger.Item, lsi) > 0 &&
                         !lsi.IsSortDirty && !finger.Item.IsSortDirty);
                 ++finger;
             }
 
-            if (finger.Index < Count-1)
+            if (finger.Index < Count - 1)
             {
                 ++finger;
                 result = result &&
-                    !(  Comparison(lsi, finger.Item) > 0 &&
+                    !(Comparison(lsi, finger.Item) > 0 &&
                         !lsi.IsSortDirty && !finger.Item.IsSortDirty);
             }
 

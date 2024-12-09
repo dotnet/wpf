@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,10 +6,10 @@
 #define TRACE
 #endif // DEBUG
 
-using MS.Internal;
 using System.Collections;
 using System.ComponentModel;
 using System.Windows.Markup;
+using MS.Internal;
 
 namespace System.Windows.Media.Animation
 {
@@ -23,7 +23,7 @@ namespace System.Windows.Media.Animation
     /// created, its structure follows that of the tree of Timeline objects.
     /// </remarks>
     [RuntimeNameProperty("Name")]
-    [Localizability(LocalizationCategory.None, Readability=Readability.Unreadable)] // cannnot be read & localized as string    
+    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)] // cannnot be read & localized as string    
     public abstract partial class Timeline : Animatable
     {
         #region External interface
@@ -114,7 +114,7 @@ namespace System.Windows.Media.Animation
         // Timeline does not need to overide CloneCore and CloneCurrentValueCore
         // See the comment in CopyCommon
         //
-        
+
         /// <summary>
         /// Creates a frozen base value clone of another Timeline.
         /// </summary>
@@ -156,7 +156,7 @@ namespace System.Windows.Media.Animation
 
         #region Properties
 
-        private static void Timeline_PropertyChangedFunction(DependencyObject d, 
+        private static void Timeline_PropertyChangedFunction(DependencyObject d,
                                                               DependencyPropertyChangedEventArgs e)
         {
             ((Timeline)d).PropertyChanged(e.Property);
@@ -363,7 +363,7 @@ namespace System.Windows.Media.Animation
         {
             Int32? desiredFrameRate = (Int32?)value;
 
-            return  (!desiredFrameRate.HasValue || desiredFrameRate.Value > 0);
+            return (!desiredFrameRate.HasValue || desiredFrameRate.Value > 0);
         }
 
         /// <summary>
@@ -424,7 +424,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-               return (Duration)GetValue(DurationProperty);
+                return (Duration)GetValue(DurationProperty);
             }
             set
             {
@@ -448,8 +448,8 @@ namespace System.Windows.Media.Animation
                     FillBehavior.HoldEnd,
                     new PropertyChangedCallback(Timeline_PropertyChangedFunction)),
                 new ValidateValueCallback(ValidateFillBehavior));
-        
-       
+
+
         private static bool ValidateFillBehavior(object value)
         {
             return TimeEnumHelper.IsValidFillBehavior((FillBehavior)value);
@@ -518,7 +518,7 @@ namespace System.Windows.Media.Animation
         #endregion // Name Property
 
         #region RepeatBehavior Property
-        
+
         /// <summary>
         /// RepeatBehaviorProperty
         /// </summary>
@@ -530,7 +530,7 @@ namespace System.Windows.Media.Animation
                 new PropertyMetadata(
                     new RepeatBehavior(1.0),
                     new PropertyChangedCallback(Timeline_PropertyChangedFunction)));
-         
+
 
         /// <summary>
         /// Gets or sets the a RepeatBehavior structure which specifies the way this Timeline will
@@ -962,8 +962,10 @@ namespace System.Windows.Media.Animation
         /// </summary>
         internal void Dump()
         {
-            System.Text.StringBuilder builder = new System.Text.StringBuilder();
-            builder.Capacity = 1024;
+            System.Text.StringBuilder builder = new System.Text.StringBuilder
+            {
+                Capacity = 1024
+            };
             builder.Append("========================================\n");
             builder.Append("Timelines rooted at Timeline ");
             builder.Append(_debugIdentity);
@@ -1110,7 +1112,7 @@ namespace System.Windows.Media.Animation
                 builder.Append(SpeedRatio);
             }
             builder.Append(")\n");
-        
+
         }
 
         /// <summary>
@@ -1157,7 +1159,7 @@ namespace System.Windows.Media.Animation
                 // Identify dead references
                 foreach (DictionaryEntry e in _objectTable)
                 {
-                    WeakReference weakRef = (WeakReference) e.Value;
+                    WeakReference weakRef = (WeakReference)e.Value;
                     if (weakRef.Target == null)
                     {
                         removeTable[e.Key] = weakRef;
@@ -1181,7 +1183,7 @@ namespace System.Windows.Media.Animation
         #region Event Handler Storage
 
         internal static readonly UncommonField<EventHandlersStore> EventHandlersStoreField = new UncommonField<EventHandlersStore>();
-        
+
         // Unique identifiers for each of the events defined on Timeline.  
         // This is used as a key in the EventHandlerStore
         internal static readonly EventPrivateKey CurrentGlobalSpeedInvalidatedKey = new EventPrivateKey();
@@ -1196,11 +1198,11 @@ namespace System.Windows.Media.Animation
 
 #if DEBUG
 
-        internal int                _debugIdentity;
+        internal int _debugIdentity;
 
-        internal static int         _nextIdentity;
-        internal static Hashtable   _objectTable = new Hashtable();
-        internal static object      _debugLockObject = new object();
+        internal static int _nextIdentity;
+        internal static Hashtable _objectTable = new Hashtable();
+        internal static object _debugLockObject = new object();
 
 #endif // DEBUG
 

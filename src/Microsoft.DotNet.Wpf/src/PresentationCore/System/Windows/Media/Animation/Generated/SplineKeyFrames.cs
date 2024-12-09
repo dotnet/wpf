@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -77,7 +77,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineByteKeyFrame();
+            return new SplineByteKeyFrame();
         }
 
         #endregion
@@ -204,7 +204,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineColorKeyFrame();
+            return new SplineColorKeyFrame();
         }
 
         #endregion
@@ -331,7 +331,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineDecimalKeyFrame();
+            return new SplineDecimalKeyFrame();
         }
 
         #endregion
@@ -458,7 +458,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineDoubleKeyFrame();
+            return new SplineDoubleKeyFrame();
         }
 
         #endregion
@@ -585,7 +585,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineInt16KeyFrame();
+            return new SplineInt16KeyFrame();
         }
 
         #endregion
@@ -712,7 +712,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineInt32KeyFrame();
+            return new SplineInt32KeyFrame();
         }
 
         #endregion
@@ -839,7 +839,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineInt64KeyFrame();
+            return new SplineInt64KeyFrame();
         }
 
         #endregion
@@ -966,7 +966,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplinePointKeyFrame();
+            return new SplinePointKeyFrame();
         }
 
         #endregion
@@ -1093,7 +1093,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplinePoint3DKeyFrame();
+            return new SplinePoint3DKeyFrame();
         }
 
         #endregion
@@ -1220,7 +1220,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineQuaternionKeyFrame();
+            return new SplineQuaternionKeyFrame();
         }
 
         #endregion
@@ -1347,7 +1347,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineRotation3DKeyFrame();
+            return new SplineRotation3DKeyFrame();
         }
 
         #endregion
@@ -1474,7 +1474,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineRectKeyFrame();
+            return new SplineRectKeyFrame();
         }
 
         #endregion
@@ -1601,7 +1601,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineSingleKeyFrame();
+            return new SplineSingleKeyFrame();
         }
 
         #endregion
@@ -1728,7 +1728,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineSizeKeyFrame();
+            return new SplineSizeKeyFrame();
         }
 
         #endregion
@@ -1855,7 +1855,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineVectorKeyFrame();
+            return new SplineVectorKeyFrame();
         }
 
         #endregion
@@ -1982,7 +1982,7 @@ namespace System.Windows.Media.Animation
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
         {
-            return new  SplineVector3DKeyFrame();
+            return new SplineVector3DKeyFrame();
         }
 
         #endregion

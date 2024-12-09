@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,15 +8,15 @@
 #pragma warning disable 1634, 1691
 
 using System;
+using System.Collections;
+using System.Diagnostics;
+using System.Globalization;
+using System.Runtime.InteropServices;
+using System.Text;
+using System.Threading;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Text;
-using System.Threading;
-using System.Globalization;
-using System.Collections;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClient.NativeMethodsSetLastError;
 
@@ -27,7 +27,7 @@ namespace MS.Internal.Automation
 #pragma warning disable 0618
 
     // Base proxy for HWNDs. Provides HWND-based children, HWND properties such as Enabled, Visible etc.
-    internal class HwndProxyElementProvider:
+    internal class HwndProxyElementProvider :
         IRawElementProviderSimple,
         IRawElementProviderFragmentRoot,
         IRawElementProviderFragment,
@@ -42,13 +42,13 @@ namespace MS.Internal.Automation
 
         #region Constructors
 
-        internal HwndProxyElementProvider( NativeMethods.HWND hwnd )
+        internal HwndProxyElementProvider(NativeMethods.HWND hwnd)
         {
-            Debug.Assert( hwnd != NativeMethods.HWND.NULL );
+            Debug.Assert(hwnd != NativeMethods.HWND.NULL);
 
-            if( hwnd == NativeMethods.HWND.NULL )
+            if (hwnd == NativeMethods.HWND.NULL)
             {
-                throw new ArgumentNullException( "hwnd" );
+                throw new ArgumentNullException("hwnd");
             }
 
             _hwnd = hwnd;
@@ -76,14 +76,14 @@ namespace MS.Internal.Automation
         {
             AutomationPattern pattern = AutomationPattern.LookupById(patternId);
             // expose the Window pattern for things we know are windows
-            if ( pattern == WindowPattern.Pattern )
+            if (pattern == WindowPattern.Pattern)
             {
-                if ( SupportsWindowPattern )
+                if (SupportsWindowPattern)
                     return this;
             }
-            else if ( pattern == TransformPattern.Pattern )
+            else if (pattern == TransformPattern.Pattern)
             {
-                if ( SupportsTransformPattern )
+                if (SupportsTransformPattern)
                     return this;
             }
 
@@ -97,14 +97,14 @@ namespace MS.Internal.Automation
             {
                 // Only child windows have control ids - top-level windows have HMENUs instead
                 // So first check that this is not top-level
-                if(IsTopLevelWindow(_hwnd))
+                if (IsTopLevelWindow(_hwnd))
                 {
                     return null;
                 }
 
                 int id = Misc.GetWindowLong(_hwnd, SafeNativeMethods.GWL_ID);
                 // Ignore controls with no id, or generic static text (-1)
-                if( id == 0 || id == -1 )
+                if (id == 0 || id == -1)
                 {
                     return null;
                 }
@@ -114,14 +114,14 @@ namespace MS.Internal.Automation
             }
             else if (idProp == AutomationElement.ClassNameProperty)
             {
-                return ProxyManager.GetClassName( _hwnd );
+                return ProxyManager.GetClassName(_hwnd);
             }
             else if (idProp == AutomationElement.NameProperty)
             {
                 // For now, assume window text is same as name.
                 // Not true for edits, combos, and other controls that use labels,
                 // but will deal with that later.
-                IntPtr len = Misc.SendMessageTimeout( _hwnd, UnsafeNativeMethods.WM_GETTEXTLENGTH, IntPtr.Zero, IntPtr.Zero );
+                IntPtr len = Misc.SendMessageTimeout(_hwnd, UnsafeNativeMethods.WM_GETTEXTLENGTH, IntPtr.Zero, IntPtr.Zero);
                 int ilen = len.ToInt32();
 
                 if (ilen == 0)
@@ -130,7 +130,7 @@ namespace MS.Internal.Automation
                 }
 
                 // Length passes to SendMessage includes terminating NUL
-                StringBuilder str = new StringBuilder( ilen + 1 );
+                StringBuilder str = new StringBuilder(ilen + 1);
                 if (Misc.SendMessageTimeout(_hwnd, UnsafeNativeMethods.WM_GETTEXT, new IntPtr(ilen + 1), str) == IntPtr.Zero)
                 {
                     str[0] = '\0';
@@ -141,7 +141,7 @@ namespace MS.Internal.Automation
             }
             else if (idProp == AutomationElement.IsEnabledProperty)
             {
-                return IsWindowReallyEnabled( _hwnd );
+                return IsWindowReallyEnabled(_hwnd);
             }
             else if (idProp == AutomationElement.ProcessIdProperty)
             {
@@ -158,21 +158,21 @@ namespace MS.Internal.Automation
 
                 return pid;
             }
-            else if( idProp == AutomationElement.NativeWindowHandleProperty )
+            else if (idProp == AutomationElement.NativeWindowHandleProperty)
             {
                 // Need to downcast to Int32, since IntPtr's are not remotable.
-                return ((IntPtr) _hwnd).ToInt32();
+                return ((IntPtr)_hwnd).ToInt32();
             }
             else if (idProp == AutomationElement.HasKeyboardFocusProperty)
             {
-                SafeNativeMethods.GUITHREADINFO gti = new SafeNativeMethods.GUITHREADINFO ();
+                SafeNativeMethods.GUITHREADINFO gti = new SafeNativeMethods.GUITHREADINFO();
 
                 if (!Misc.GetGUIThreadInfo(0, ref gti))
                 {
                     return false;
                 }
 
-                return  (gti.hwndFocus == _hwnd) || (SafeNativeMethods.IsChild(_hwnd, gti.hwndFocus));
+                return (gti.hwndFocus == _hwnd) || (SafeNativeMethods.IsChild(_hwnd, gti.hwndFocus));
             }
             else if (idProp == AutomationElement.FrameworkIdProperty)
             {
@@ -212,11 +212,21 @@ namespace MS.Internal.Automation
             HwndProxyElementProvider dest = null;
             switch (direction)
             {
-                case NavigateDirection.Parent:          dest = GetParent(); break;
-                case NavigateDirection.FirstChild:      dest = GetFirstChild(); break;
-                case NavigateDirection.LastChild:       dest = GetLastChild(); break;
-                case NavigateDirection.NextSibling:     dest = GetNextSibling(); break;
-                case NavigateDirection.PreviousSibling: dest = GetPreviousSibling(); break;
+                case NavigateDirection.Parent:
+                    dest = GetParent();
+                    break;
+                case NavigateDirection.FirstChild:
+                    dest = GetFirstChild();
+                    break;
+                case NavigateDirection.LastChild:
+                    dest = GetLastChild();
+                    break;
+                case NavigateDirection.NextSibling:
+                    dest = GetNextSibling();
+                    break;
+                case NavigateDirection.PreviousSibling:
+                    dest = GetPreviousSibling();
+                    break;
             }
             return dest;
         }
@@ -295,95 +305,96 @@ namespace MS.Internal.Automation
 
         #region Interface IWindowProvider
 
-        void IWindowProvider.SetVisualState( WindowVisualState state )
+        void IWindowProvider.SetVisualState(WindowVisualState state)
         {
-            if ( !SafeNativeMethods.IsWindow( _hwnd ) )
+            if (!SafeNativeMethods.IsWindow(_hwnd))
                 throw new ElementNotAvailableException();
 
-            switch ( state )
+            switch (state)
             {
                 case WindowVisualState.Normal:
-                {
-                    // you can't really do anything to a disabled window
-                    if ( IsBitSet(GetWindowStyle(), SafeNativeMethods.WS_DISABLED) )
-                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
-
-                    // If already in the normal state, do not need to do anything.
-                    if (((IWindowProvider)this).VisualState == WindowVisualState.Normal)
                     {
+                        // you can't really do anything to a disabled window
+                        if (IsBitSet(GetWindowStyle(), SafeNativeMethods.WS_DISABLED))
+                            throw new InvalidOperationException(SR.OperationCannotBePerformed);
+
+                        // If already in the normal state, do not need to do anything.
+                        if (((IWindowProvider)this).VisualState == WindowVisualState.Normal)
+                        {
+                            return;
+                        }
+
+                        ClearMenuMode();
+                        UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT
+                        {
+                            length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT))
+                        };
+
+                        // get the WINDOWPLACEMENT information
+                        if (!Misc.GetWindowPlacement(_hwnd, ref wp))
+                        {
+                            throw new InvalidOperationException(SR.OperationCannotBePerformed);
+                        }
+
+                        wp.showCmd = UnsafeNativeMethods.SW_RESTORE;
+
+                        // Use SetWindowPlacement to set state to normal because if the window is maximized then minimized
+                        // sending SC_RESTORE puts it back to maximized instead of normal.
+                        if (!Misc.SetWindowPlacement(_hwnd, ref wp))
+                        {
+                            throw new InvalidOperationException(SR.OperationCannotBePerformed);
+                        }
+
                         return;
                     }
-
-                    ClearMenuMode();
-                    UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT();
-
-                    wp.length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT));
-
-                    // get the WINDOWPLACEMENT information
-                    if (!Misc.GetWindowPlacement(_hwnd, ref wp))
-                    {
-                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
-                    }
-
-                    wp.showCmd = UnsafeNativeMethods.SW_RESTORE;
-
-                    // Use SetWindowPlacement to set state to normal because if the window is maximized then minimized
-                    // sending SC_RESTORE puts it back to maximized instead of normal.
-                    if (!Misc.SetWindowPlacement(_hwnd, ref wp))
-                    {
-                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
-                    }
-
-                    return;
-                }
 
                 case WindowVisualState.Minimized:
-                {
-                    if (!((IWindowProvider)this).Minimizable)
-                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
-
-                    // If already minimzed, do not need to do anything.
-                    if (((IWindowProvider)this).VisualState == WindowVisualState.Minimized)
                     {
+                        if (!((IWindowProvider)this).Minimizable)
+                            throw new InvalidOperationException(SR.OperationCannotBePerformed);
+
+                        // If already minimzed, do not need to do anything.
+                        if (((IWindowProvider)this).VisualState == WindowVisualState.Minimized)
+                        {
+                            return;
+                        }
+
+                        ClearMenuMode();
+
+                        if (!Misc.PostMessage(_hwnd, UnsafeNativeMethods.WM_SYSCOMMAND, (IntPtr)UnsafeNativeMethods.SC_MINIMIZE, IntPtr.Zero))
+                        {
+                            throw new InvalidOperationException(SR.OperationCannotBePerformed);
+                        }
+
                         return;
                     }
-
-                    ClearMenuMode();
-
-                    if (!Misc.PostMessage(_hwnd, UnsafeNativeMethods.WM_SYSCOMMAND, (IntPtr)UnsafeNativeMethods.SC_MINIMIZE, IntPtr.Zero))
-                    {
-                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
-                    }
-
-                    return;
-                }
 
                 case WindowVisualState.Maximized:
-                {
-                    if ( ! ((IWindowProvider)this).Maximizable )
-                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
-
-                    // If already maximized, do not need to do anything.
-                    if (((IWindowProvider)this).VisualState == WindowVisualState.Maximized)
                     {
+                        if (!((IWindowProvider)this).Maximizable)
+                            throw new InvalidOperationException(SR.OperationCannotBePerformed);
+
+                        // If already maximized, do not need to do anything.
+                        if (((IWindowProvider)this).VisualState == WindowVisualState.Maximized)
+                        {
+                            return;
+                        }
+
+                        ClearMenuMode();
+
+                        if (!Misc.PostMessage(_hwnd, UnsafeNativeMethods.WM_SYSCOMMAND, (IntPtr)UnsafeNativeMethods.SC_MAXIMIZE, IntPtr.Zero))
+                        {
+                            throw new InvalidOperationException(SR.OperationCannotBePerformed);
+                        }
+
                         return;
                     }
 
-                    ClearMenuMode();
-
-                    if (!Misc.PostMessage(_hwnd, UnsafeNativeMethods.WM_SYSCOMMAND, (IntPtr)UnsafeNativeMethods.SC_MAXIMIZE, IntPtr.Zero))
-                    {
-                        throw new InvalidOperationException(SR.OperationCannotBePerformed);
-                    }
-
-                    return;
-                }
-
                 default:
-                {
-                    Debug.Assert(false,"unexpected switch() case:");
-                    throw new ArgumentException(SR.UnexpectedWindowState,"state");
-                }
+                    {
+                        Debug.Assert(false, "unexpected switch() case:");
+                        throw new ArgumentException(SR.UnexpectedWindowState, "state");
+                    }
 
             }
 
@@ -399,7 +410,7 @@ namespace MS.Internal.Automation
             }
         }
 
-        bool IWindowProvider.WaitForInputIdle( int milliseconds )
+        bool IWindowProvider.WaitForInputIdle(int milliseconds)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(milliseconds);
 
@@ -422,7 +433,7 @@ namespace MS.Internal.Automation
             // Disabling the PreSharp warning.
 #pragma warning suppress 6523
             int guiThreadId = SafeNativeMethods.GetWindowThreadProcessId(_hwnd, out pid);
-            if ( guiThreadId == 0 )
+            if (guiThreadId == 0)
             {
                 throw new ElementNotAvailableException();
             }
@@ -440,9 +451,9 @@ namespace MS.Internal.Automation
                 System.Diagnostics.Process targetProcess = null;
                 try
                 {
-                    targetProcess = System.Diagnostics.Process.GetProcessById( pid );
+                    targetProcess = System.Diagnostics.Process.GetProcessById(pid);
                 }
-                catch ( SystemException /*err*/ )
+                catch (SystemException /*err*/ )
                 {
                     // Process.GetProcessById may throw if the process has exited
                     // Maybe pass err in as inner exception once that ctor is available?
@@ -455,9 +466,9 @@ namespace MS.Internal.Automation
                 ProcessThread procThread = null;
                 try
                 {
-                    foreach ( ProcessThread thread in targetProcess.Threads )
+                    foreach (ProcessThread thread in targetProcess.Threads)
                     {
-                        if ( thread.Id == guiThreadId )
+                        if (thread.Id == guiThreadId)
                         {
                             procThread = thread;
                             break;
@@ -474,17 +485,17 @@ namespace MS.Internal.Automation
                 //
                 // If the thread wasn't found then this element isn't valid anymore
                 //
-                if ( procThread == null )
+                if (procThread == null)
                     throw new ElementNotAvailableException();
 
-                if ( procThread.ThreadState == System.Diagnostics.ThreadState.Wait &&
-                     procThread.WaitReason == ThreadWaitReason.UserRequest )
+                if (procThread.ThreadState == System.Diagnostics.ThreadState.Wait &&
+                     procThread.WaitReason == ThreadWaitReason.UserRequest)
                 {
                     return true;
                 }
                 //Console.WriteLine( "Waiting {0} ThreadState {1} WaitReason {2}...", i, procThread.ThreadState,
                 //            procThread.ThreadState == System.Diagnostics.ThreadState.Wait?procThread.WaitReason.ToString():"N/A");
-                Thread.Sleep( 100 );
+                Thread.Sleep(100);
             }
             return false;
         }
@@ -540,8 +551,8 @@ namespace MS.Internal.Automation
                     throw new ElementNotAvailableException();
                 }
 
-                NativeMethods.HWND hwndOwner = GetRealOwner( _hwnd );
-                if ( hwndOwner != NativeMethods.HWND.NULL )
+                NativeMethods.HWND hwndOwner = GetRealOwner(_hwnd);
+                if (hwndOwner != NativeMethods.HWND.NULL)
                 {
                     return IsBitSet(GetWindowStyle(hwndOwner), SafeNativeMethods.WS_DISABLED);
                 }
@@ -555,11 +566,11 @@ namespace MS.Internal.Automation
             get
             {
                 int style = GetWindowStyle();
-                if ( IsBitSet(style, SafeNativeMethods.WS_MAXIMIZE) )
+                if (IsBitSet(style, SafeNativeMethods.WS_MAXIMIZE))
                 {
                     return WindowVisualState.Maximized;
                 }
-                else if ( IsBitSet(style, SafeNativeMethods.WS_MINIMIZE) )
+                else if (IsBitSet(style, SafeNativeMethods.WS_MINIMIZE))
                 {
                     return WindowVisualState.Minimized;
                 }
@@ -586,12 +597,12 @@ namespace MS.Internal.Automation
                 // Call 'Marshal.GetLastWin32Error' or 'Marshal.GetHRForLastWin32Error' before any other interop call.
 #pragma warning suppress 56523
                 IntPtr ret = UnsafeNativeMethods.SendMessageTimeout(_hwnd, UnsafeNativeMethods.WM_NULL, IntPtr.Zero, IntPtr.Zero, UnsafeNativeMethods.SMTO_ABORTIFHUNG, 0, out dwResult);
-                if ( ret == IntPtr.Zero )
+                if (ret == IntPtr.Zero)
                 {
                     // If this is a valid window that is not responding just return NotResponding.
                     // If the window is not valid than assume when the user asked it was valid but
                     // in the mean time has gone away or been closed.  So then we return closing.
-                    if ( SafeNativeMethods.IsWindow( _hwnd ) )
+                    if (SafeNativeMethods.IsWindow(_hwnd))
                         return WindowInteractionState.NotResponding;
                     else
                         return WindowInteractionState.Closing;
@@ -607,7 +618,7 @@ namespace MS.Internal.Automation
                 // modal dialog so check to see if that is the case if not make it Running.
                 if (IsBitSet(style, SafeNativeMethods.WS_DISABLED))
                 {
-                    if ( FindModalWindow() )
+                    if (FindModalWindow())
                         return WindowInteractionState.BlockedByModalWindow;
                     else
                         return WindowInteractionState.Running;
@@ -635,13 +646,13 @@ namespace MS.Internal.Automation
 
         #region Interface ITransformProvider
 
-        void ITransformProvider.Move( double x, double y )
+        void ITransformProvider.Move(double x, double y)
         {
-            if ( ! ((ITransformProvider)this).CanMove )
+            if (!((ITransformProvider)this).CanMove)
                 throw new InvalidOperationException(SR.OperationCannotBePerformed);
 
             int extendedStyle = GetWindowExStyle();
-            if ( IsBitSet(extendedStyle, SafeNativeMethods.WS_EX_MDICHILD) )
+            if (IsBitSet(extendedStyle, SafeNativeMethods.WS_EX_MDICHILD))
             {
                 // we always deal in screen pixels.  But if its an MDI window it interprets these as
                 // client pixels so convert them to get the expected results.
@@ -707,8 +718,10 @@ namespace MS.Internal.Automation
                 throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
-            UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT();
-            wp.length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT));
+            UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT
+            {
+                length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT))
+            };
 
             // get the WINDOWPLACEMENT information.  This includes the coordinates in
             // terms of the workarea.
@@ -722,11 +735,11 @@ namespace MS.Internal.Automation
             {
                 throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
-            if ( IsBitSet(style, SafeNativeMethods.WS_MINIMIZE) )
+            if (IsBitSet(style, SafeNativeMethods.WS_MINIMIZE))
             {
                 // If the window is minimized the parameters have to be setup differently
-                wp.ptMinPosition.y = (int) y;
-                wp.ptMinPosition.x = (int) x;
+                wp.ptMinPosition.y = (int)y;
+                wp.ptMinPosition.x = (int)x;
                 wp.flags = UnsafeNativeMethods.WPF_SETMINPOSITION;
 
                 // Use SetWindowPlacement to move the window because it handles the case where the
@@ -764,9 +777,9 @@ namespace MS.Internal.Automation
                 }
 
                 int newHeight = wp.rcNormalPosition.bottom - wp.rcNormalPosition.top;
-                int newWidth = wp.rcNormalPosition.right -wp.rcNormalPosition.left;
+                int newWidth = wp.rcNormalPosition.right - wp.rcNormalPosition.left;
 
-                if ( currentHeight != newHeight || currentWidth != newWidth )
+                if (currentHeight != newHeight || currentWidth != newWidth)
                 {
                     wp.rcNormalPosition.bottom = wp.rcNormalPosition.top + currentHeight;
                     wp.rcNormalPosition.right = wp.rcNormalPosition.left + currentWidth;
@@ -779,15 +792,15 @@ namespace MS.Internal.Automation
             }
         }
 
-        void ITransformProvider.Resize( double width, double height )
+        void ITransformProvider.Resize(double width, double height)
         {
-            if ( !SafeNativeMethods.IsWindow( _hwnd ) )
+            if (!SafeNativeMethods.IsWindow(_hwnd))
                 throw new ElementNotAvailableException();
 
-            int widthInt = (int) width;
-            int heightInt = (int) height;
+            int widthInt = (int)width;
+            int heightInt = (int)height;
 
-            if ( ! ((ITransformProvider)this).CanResize )
+            if (!((ITransformProvider)this).CanResize)
                 throw new InvalidOperationException(SR.OperationCannotBePerformed);
 
             UnsafeNativeMethods.MINMAXINFO minMaxInfo = default;
@@ -796,10 +809,10 @@ namespace MS.Internal.Automation
             int x = SafeNativeMethods.GetSystemMetrics(SafeNativeMethods.SM_CXMAXTRACK);
             int y = SafeNativeMethods.GetSystemMetrics(SafeNativeMethods.SM_CYMAXTRACK);
 
-            minMaxInfo.ptMaxSize = new NativeMethods.POINT( x, y );
+            minMaxInfo.ptMaxSize = new NativeMethods.POINT(x, y);
             minMaxInfo.ptMaxPosition = new NativeMethods.POINT(0, 0);
             minMaxInfo.ptMinTrackSize = new NativeMethods.POINT(1, 1);
-            minMaxInfo.ptMaxTrackSize = new NativeMethods.POINT( x, y );
+            minMaxInfo.ptMaxTrackSize = new NativeMethods.POINT(x, y);
 
             // if the window stopped responding there is a chance that resizing will not work
             // Don't check the return from SendMessageTimeout and go ahead
@@ -807,20 +820,22 @@ namespace MS.Internal.Automation
             // values even if this fails.
             Misc.SendMessageTimeout(_hwnd, UnsafeNativeMethods.WM_GETMINMAXINFO, IntPtr.Zero, ref minMaxInfo);
 
-            if ( widthInt < minMaxInfo.ptMinTrackSize.x )
+            if (widthInt < minMaxInfo.ptMinTrackSize.x)
                 widthInt = minMaxInfo.ptMinTrackSize.x;
 
-            if ( heightInt < minMaxInfo.ptMinTrackSize.y )
+            if (heightInt < minMaxInfo.ptMinTrackSize.y)
                 heightInt = minMaxInfo.ptMinTrackSize.y;
 
-            if ( widthInt > minMaxInfo.ptMaxTrackSize.x )
+            if (widthInt > minMaxInfo.ptMaxTrackSize.x)
                 widthInt = minMaxInfo.ptMaxTrackSize.x;
 
-            if ( heightInt > minMaxInfo.ptMaxTrackSize.y )
+            if (heightInt > minMaxInfo.ptMaxTrackSize.y)
                 heightInt = minMaxInfo.ptMaxTrackSize.y;
 
-            UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT();
-            wp.length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT));
+            UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT
+            {
+                length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT))
+            };
 
             // get the WINDOWPLACEMENT information
             if (!Misc.GetWindowPlacement(_hwnd, ref wp))
@@ -841,7 +856,7 @@ namespace MS.Internal.Automation
             }
         }
 
-        void ITransformProvider.Rotate( double degrees )
+        void ITransformProvider.Rotate(double degrees)
         {
             if (!SafeNativeMethods.IsWindow(_hwnd))
                 throw new ElementNotAvailableException();
@@ -885,7 +900,7 @@ namespace MS.Internal.Automation
                 int extendedStyle = GetWindowExStyle();
 
                 // minimized windows can't be move with the exception of minimized MDI children
-                if ( IsBitSet(style, SafeNativeMethods.WS_MINIMIZE) && !IsBitSet(extendedStyle, SafeNativeMethods.WS_EX_MDICHILD) )
+                if (IsBitSet(style, SafeNativeMethods.WS_MINIMIZE) && !IsBitSet(extendedStyle, SafeNativeMethods.WS_EX_MDICHILD))
                     return false;
 
                 // WS_BORDER | WS_DLGFRAME is WS_CAPTION.  A moveable window has a caption.
@@ -922,7 +937,7 @@ namespace MS.Internal.Automation
                 }
 
                 // if something is mimimized or maximized it can't be resized
-                if ( IsBitSet(style, SafeNativeMethods.WS_MAXIMIZE) || IsBitSet(style, SafeNativeMethods.WS_MINIMIZE) )
+                if (IsBitSet(style, SafeNativeMethods.WS_MAXIMIZE) || IsBitSet(style, SafeNativeMethods.WS_MINIMIZE))
                 {
                     return false;
                 }
@@ -979,8 +994,10 @@ namespace MS.Internal.Automation
         // wrapper for GetMenuBarInfo
         unsafe private static bool GetMenuBarInfo(NativeMethods.HWND hwnd, int idObject, uint idItem, out UnsafeNativeMethods.MENUBARINFO mbi)
         {
-            mbi = new UnsafeNativeMethods.MENUBARINFO();
-            mbi.cbSize = sizeof(UnsafeNativeMethods.MENUBARINFO);
+            mbi = new UnsafeNativeMethods.MENUBARINFO
+            {
+                cbSize = sizeof(UnsafeNativeMethods.MENUBARINFO)
+            };
             bool result = Misc.GetMenuBarInfo(hwnd, idObject, idItem, ref mbi);
 
 #if _NEED_DEBUG_OUTPUT
@@ -1013,17 +1030,17 @@ namespace MS.Internal.Automation
 
         private static HwndProxyElementProvider Wrap(NativeMethods.HWND hwnd)
         {
-            if( hwnd == NativeMethods.HWND.NULL )
+            if (hwnd == NativeMethods.HWND.NULL)
             {
                 return null;
             }
 
-            return new HwndProxyElementProvider( hwnd );
+            return new HwndProxyElementProvider(hwnd);
         }
 
         // Called to test is the specified hwnd should implement WindowPattern
         // Also used by ClientEventManager
-        internal static bool IsWindowPatternWindow( NativeMethods.HWND hwnd )
+        internal static bool IsWindowPatternWindow(NativeMethods.HWND hwnd)
         {
             // Note: This method shouldn't test if the window is visible; events needs to call this
             // for hwnds that are being hidden.
@@ -1043,20 +1060,20 @@ namespace MS.Internal.Automation
             }
 
             // WS_BORDER and WS_DLGFRAME together mean there is a caption or titlebar
-            bool hasTitleBar = IsBitSet( style, SafeNativeMethods.WS_BORDER ) && IsBitSet( style, SafeNativeMethods.WS_DLGFRAME );
+            bool hasTitleBar = IsBitSet(style, SafeNativeMethods.WS_BORDER) && IsBitSet(style, SafeNativeMethods.WS_DLGFRAME);
 
             // WS_EX_TOOLWINDOW is the style that keeps a window from appearing in the taskbar.
             // This test says if hwnd is not on the taskbar and doesn't have a title bar the
             // user is probably not going to consider this a window.  This stops us from putting
             // the WindowPattern on comboboxes, for instance.
-            if (IsBitSet( extendedStyle, SafeNativeMethods.WS_EX_TOOLWINDOW ) && !hasTitleBar )
+            if (IsBitSet(extendedStyle, SafeNativeMethods.WS_EX_TOOLWINDOW) && !hasTitleBar)
                 return false;
             // Similarly for popups...
             if (IsBitSet(style, SafeNativeMethods.WS_POPUP) && !hasTitleBar)
                 return false;
 
             // If it is not a child of the desktop nor an MDI child it can't support WindowPattern
-            if (!IsTopLevelWindow(hwnd) && !IsBitSet( extendedStyle, SafeNativeMethods.WS_EX_MDICHILD ) )
+            if (!IsTopLevelWindow(hwnd) && !IsBitSet(extendedStyle, SafeNativeMethods.WS_EX_MDICHILD))
                 return false;
 
             return true;
@@ -1068,7 +1085,7 @@ namespace MS.Internal.Automation
         // regular minimized windows.
         // The CanMove and CanResize properties do other checks to make sure that the element really can move
         // or resize but those checks are not done here so the pattern will not come and go based on a transeint state.
-        private static bool IsTransformPatternWindow( NativeMethods.HWND hwnd )
+        private static bool IsTransformPatternWindow(NativeMethods.HWND hwnd)
         {
             int style = GetWindowStyle(hwnd);
 
@@ -1078,18 +1095,18 @@ namespace MS.Internal.Automation
             }
 
             // WS_THICKFRAME is the stretchy border so it's resizable
-            if ( IsBitSet(style, SafeNativeMethods.WS_THICKFRAME) )
+            if (IsBitSet(style, SafeNativeMethods.WS_THICKFRAME))
                 return true;
 
             // These two styles together are WS_CAPTION, so this is affectively a test for WS_CAPTION.
-            if ( IsBitSet(style, SafeNativeMethods.WS_BORDER) && IsBitSet(style, SafeNativeMethods.WS_DLGFRAME) )
+            if (IsBitSet(style, SafeNativeMethods.WS_BORDER) && IsBitSet(style, SafeNativeMethods.WS_DLGFRAME))
                 return true;
 
             return false;
         }
 
         // Also used by WindowHideOrCloseTracker.cs
-        internal static int[] MakeRuntimeId( NativeMethods.HWND hwnd )
+        internal static int[] MakeRuntimeId(NativeMethods.HWND hwnd)
         {
             // Called from event code to guarantee getting a RuntimeId w/o exceptions
             int[] id = new int[2];
@@ -1142,25 +1159,25 @@ namespace MS.Internal.Automation
         // Helper method to find next or previous visible window in specified direction.
         // Passes through NULL
         // includeSelf indicates whether the start hwnd should be considered a candidate, or always skipped over
-        private static NativeMethods.HWND ScanVisible( NativeMethods.HWND hwnd, int dir, bool includeSelf, NativeMethods.HWND hwndOwnedBy )
+        private static NativeMethods.HWND ScanVisible(NativeMethods.HWND hwnd, int dir, bool includeSelf, NativeMethods.HWND hwndOwnedBy)
         {
-            if( hwnd == NativeMethods.HWND.NULL )
+            if (hwnd == NativeMethods.HWND.NULL)
                 return hwnd;
 
-            if( ! includeSelf )
+            if (!includeSelf)
             {
-                hwnd = Misc.GetWindow( hwnd, dir );
+                hwnd = Misc.GetWindow(hwnd, dir);
             }
 
-            for( ; hwnd != NativeMethods.HWND.NULL ; hwnd = Misc.GetWindow( hwnd, dir ) )
+            for (; hwnd != NativeMethods.HWND.NULL; hwnd = Misc.GetWindow(hwnd, dir))
             {
-                if( ! IsWindowReallyVisible( hwnd ) )
+                if (!IsWindowReallyVisible(hwnd))
                 {
                     continue;
                 }
 
-                NativeMethods.HWND hwndOwner = GetRealOwner( hwnd );
-                if( hwndOwner != hwndOwnedBy )
+                NativeMethods.HWND hwndOwner = GetRealOwner(hwnd);
+                if (hwndOwner != hwndOwnedBy)
                 {
                     continue;
                 }
@@ -1172,23 +1189,23 @@ namespace MS.Internal.Automation
         }
 
         // For given parent window, return first or last owned window
-        private NativeMethods.HWND GetFirstOrLastOwnedWindow( NativeMethods.HWND parent, bool wantFirst )
+        private NativeMethods.HWND GetFirstOrLastOwnedWindow(NativeMethods.HWND parent, bool wantFirst)
         {
-            if( ! IsTopLevelWindow( parent ) )
+            if (!IsTopLevelWindow(parent))
             {
                 return NativeMethods.HWND.NULL;
             }
 
             NativeMethods.HWND desktop = SafeNativeMethods.GetDesktopWindow();
             NativeMethods.HWND scan = Misc.GetWindow(desktop, SafeNativeMethods.GW_CHILD);
-            if( ! wantFirst )
+            if (!wantFirst)
             {
                 // Want last owned window, so jump to last sibling and work back from there...
                 scan = Misc.GetWindow(scan, SafeNativeMethods.GW_HWNDLAST);
             }
 
             // Look in appropriate direction for a top-level window with same owner...
-            return ScanVisible( scan, wantFirst? ScanNext : ScanPrev, IncludeSelf, parent );
+            return ScanVisible(scan, wantFirst ? ScanNext : ScanPrev, IncludeSelf, parent);
         }
 
         private HwndProxyElementProvider GetParent()
@@ -1419,7 +1436,7 @@ namespace MS.Internal.Automation
                     }
                 }
             }
-// PRESHARP: Warning - Catch statements should not have empty bodies
+            // PRESHARP: Warning - Catch statements should not have empty bodies
 #pragma warning disable 6502
             catch (ElementNotAvailableException)
             {
@@ -1435,25 +1452,25 @@ namespace MS.Internal.Automation
         }
 
         // Check if window is really enabled, taking parent state into account.
-        private static bool IsWindowReallyEnabled( NativeMethods.HWND hwnd )
+        private static bool IsWindowReallyEnabled(NativeMethods.HWND hwnd)
         {
 
             // Navigate up parent chain. If any ancestor window is
             // not enabled, then that has the effect of disabling this window.
             // All ancestor windows must be enabled for this window to be enabled.
-            for( ; ; )
+            for (; ; )
             {
-                if( ! SafeNativeMethods.IsWindowEnabled( hwnd ) )
+                if (!SafeNativeMethods.IsWindowEnabled(hwnd))
                     return false;
 
-                hwnd = SafeNativeMethods.GetAncestor( hwnd, SafeNativeMethods.GA_PARENT );
-                if( hwnd == NativeMethods.HWND.NULL )
+                hwnd = SafeNativeMethods.GetAncestor(hwnd, SafeNativeMethods.GA_PARENT);
+                if (hwnd == NativeMethods.HWND.NULL)
                     return true;
             }
         }
 
         // Check that a window is visible, and has a non-empty rect
-        private static bool IsWindowReallyVisible( NativeMethods.HWND hwnd )
+        private static bool IsWindowReallyVisible(NativeMethods.HWND hwnd)
         {
             // check for visibility overrides
             // The UIA team says:
@@ -1470,7 +1487,7 @@ namespace MS.Internal.Automation
                 return false;
             }
 
-            if(!SafeNativeMethods.IsWindowVisible(hwnd))
+            if (!SafeNativeMethods.IsWindowVisible(hwnd))
             {
                 return false;
             }
@@ -1481,7 +1498,7 @@ namespace MS.Internal.Automation
             {
                 return false;
             }
-            if( (rcW32.right - rcW32.left) <= 0 || (rcW32.bottom - rcW32.top) <= 0)
+            if ((rcW32.right - rcW32.left) <= 0 || (rcW32.bottom - rcW32.top) <= 0)
             {
                 return false;
             }
@@ -1513,22 +1530,22 @@ namespace MS.Internal.Automation
             return false;
         }
 
-        private static bool IsTopLevelWindow( NativeMethods.HWND hwnd )
+        private static bool IsTopLevelWindow(NativeMethods.HWND hwnd)
         {
-            return SafeNativeMethods.GetAncestor( hwnd, SafeNativeMethods.GA_PARENT ) == SafeNativeMethods.GetDesktopWindow();
+            return SafeNativeMethods.GetAncestor(hwnd, SafeNativeMethods.GA_PARENT) == SafeNativeMethods.GetDesktopWindow();
         }
 
-        private static NativeMethods.HWND GetRealOwner( NativeMethods.HWND hwnd )
+        private static NativeMethods.HWND GetRealOwner(NativeMethods.HWND hwnd)
         {
             NativeMethods.HWND hwndOwner = Misc.GetWindow(hwnd, SafeNativeMethods.GW_OWNER);
-            if( hwndOwner == NativeMethods.HWND.NULL )
+            if (hwndOwner == NativeMethods.HWND.NULL)
             {
                 return NativeMethods.HWND.NULL;
             }
 
             // Ignore owners that are invisible - having an invisible owner is a common trick for
             // staying off the running apps list. (eg. Start/Run dialog uses this)
-            if( ! IsWindowReallyVisible( hwndOwner ) )
+            if (!IsWindowReallyVisible(hwndOwner))
             {
                 return NativeMethods.HWND.NULL;
             }
@@ -1541,7 +1558,7 @@ namespace MS.Internal.Automation
             get
             {
                 // if we already know this hwnd is a Window return what we figured out before
-                if ( _windowPatternChecked )
+                if (_windowPatternChecked)
                     return _windowPattern;
 
                 _windowPatternChecked = true;
@@ -1563,16 +1580,16 @@ namespace MS.Internal.Automation
             get
             {
                 // if we already know this hwnd is a Transform return what we figured out before
-                if ( _transformPatternChecked )
+                if (_transformPatternChecked)
                     return _transformPattern;
 
                 _transformPatternChecked = true;
-                _transformPattern = IsTransformPatternWindow( _hwnd );
+                _transformPattern = IsTransformPatternWindow(_hwnd);
                 return _transformPattern;
             }
         }
 
-        private static bool IsBitSet( int flags, int bit )
+        private static bool IsBitSet(int flags, int bit)
         {
             return (flags & bit) != 0;
         }
@@ -1601,13 +1618,13 @@ namespace MS.Internal.Automation
             return !noModalWindow;
         }
 
-        private bool EnumWindows( NativeMethods.HWND hwnd, NativeMethods.HWND possibleOwner )
+        private bool EnumWindows(NativeMethods.HWND hwnd, NativeMethods.HWND possibleOwner)
         {
             int extendedStyle = GetWindowExStyle(hwnd);
-            if ( IsBitSet(extendedStyle, SafeNativeMethods.WS_EX_DLGMODALFRAME) )
+            if (IsBitSet(extendedStyle, SafeNativeMethods.WS_EX_DLGMODALFRAME))
             {
                 NativeMethods.HWND owner = Misc.GetWindow(hwnd, SafeNativeMethods.GW_OWNER);
-                if ( owner.h == possibleOwner.h )
+                if (owner.h == possibleOwner.h)
                 {
                     return false;
                 }
@@ -1703,13 +1720,13 @@ namespace MS.Internal.Automation
             return Wrap(child);
         }
 
-        private static bool PtInRect( NativeMethods.RECT rc, double x, double y )
+        private static bool PtInRect(NativeMethods.RECT rc, double x, double y)
         {
             return x >= rc.left && x < rc.right
                 && y >= rc.top && y < rc.bottom;
         }
 
-        private static bool Rect1InRect2( NativeMethods.RECT rc1, NativeMethods.RECT rc2 )
+        private static bool Rect1InRect2(NativeMethods.RECT rc1, NativeMethods.RECT rc2)
         {
             return rc1.left >= rc2.left
                 && rc1.top >= rc2.top
@@ -1717,7 +1734,7 @@ namespace MS.Internal.Automation
                 && rc1.bottom <= rc2.bottom;
         }
 
-        private static IntPtr MAKELPARAM( int low, int high )
+        private static IntPtr MAKELPARAM(int low, int high)
         {
             return (IntPtr)((high << 16) | (low & 0xffff));
         }
@@ -1727,7 +1744,7 @@ namespace MS.Internal.Automation
         // on any child window.
         // When the returned window is a child, the out param isClientArea indicates
         // whether the returned point is on the client area of the returned HWND.
-        private static NativeMethods.HWND ChildWindowFromPoint( NativeMethods.HWND hwnd, double x, double y, out bool isClientArea )
+        private static NativeMethods.HWND ChildWindowFromPoint(NativeMethods.HWND hwnd, double x, double y, out bool isClientArea)
         {
             NativeMethods.HWND hBestFitTransparent = NativeMethods.HWND.NULL;
             NativeMethods.RECT rcBest = new NativeMethods.RECT();
@@ -1743,11 +1760,11 @@ namespace MS.Internal.Automation
             // using GetWindow(...NEXT), so we counter-limit this loop...
             int SanityLoopCount = 1024;
             for (NativeMethods.HWND hChild = Misc.GetWindow(hwnd, SafeNativeMethods.GW_CHILD);
-                hChild != NativeMethods.HWND.NULL && --SanityLoopCount > 0 ;
+                hChild != NativeMethods.HWND.NULL && --SanityLoopCount > 0;
                 hChild = Misc.GetWindow(hChild, SafeNativeMethods.GW_HWNDNEXT))
             {
                 // Skip invisible...
-                if( ! IsWindowReallyVisible( hChild ) )
+                if (!IsWindowReallyVisible(hChild))
                     continue;
 
                 // Check for rect...
@@ -1777,7 +1794,7 @@ namespace MS.Internal.Automation
                     }
                 }
 
-                if(!PtInRect(rc, xLogical, yLogical))
+                if (!PtInRect(rc, xLogical, yLogical))
                 {
                     continue;
                 }
@@ -1812,8 +1829,8 @@ namespace MS.Internal.Automation
                 // that is different then when it is used alone, so we must check both flags
                 // together.)
                 int exStyle = GetWindowExStyle(hChild);
-                if( ( exStyle & SafeNativeMethods.WS_EX_LAYERED ) != 0
-                  && ( exStyle & SafeNativeMethods.WS_EX_TRANSPARENT ) != 0 )
+                if ((exStyle & SafeNativeMethods.WS_EX_LAYERED) != 0
+                  && (exStyle & SafeNativeMethods.WS_EX_TRANSPARENT) != 0)
                 {
                     continue;
                 }
@@ -1830,8 +1847,8 @@ namespace MS.Internal.Automation
                 }
 
                 // Try for transparency and/or non-client areas:
-                IntPtr lr = Misc.SendMessageTimeout( hChild, UnsafeNativeMethods.WM_NCHITTEST, IntPtr.Zero, MAKELPARAM( (int)x, (int)y ) );
-                if( lr == UnsafeNativeMethods.HTTRANSPARENT )
+                IntPtr lr = Misc.SendMessageTimeout(hChild, UnsafeNativeMethods.WM_NCHITTEST, IntPtr.Zero, MAKELPARAM((int)x, (int)y));
+                if (lr == UnsafeNativeMethods.HTTRANSPARENT)
                 {
                     // For reasons best known to the writers of USER, statics - used
                     // as labels - claim to be transparent. So that we do hit-test
@@ -1843,7 +1860,7 @@ namespace MS.Internal.Automation
                     // we hit-test to siblings 'within' siblings - eg. statics in
                     // a groupbox.
 
-                    if( hBestFitTransparent == NativeMethods.HWND.NULL )
+                    if (hBestFitTransparent == NativeMethods.HWND.NULL)
                     {
                         hBestFitTransparent = hChild;
                         if (!Misc.GetWindowRect(hChild, out rcBest))
@@ -1860,7 +1877,7 @@ namespace MS.Internal.Automation
                         {
                             continue;
                         }
-                        if( Rect1InRect2( rcChild, rcBest ) )
+                        if (Rect1InRect2(rcChild, rcBest))
                         {
                             hBestFitTransparent = hChild;
                             rcBest = rcChild;
@@ -1888,7 +1905,7 @@ namespace MS.Internal.Automation
 
             Misc.DeleteObject(hrgn); // finished with region
 
-            if( SanityLoopCount == 0 )
+            if (SanityLoopCount == 0)
             {
                 Debug.Assert(false, "too many children or inf loop?");
                 return NativeMethods.HWND.NULL;
@@ -1896,7 +1913,7 @@ namespace MS.Internal.Automation
 
             // Did we find a transparent (eg. a static) on our travels? If so, since
             // we couldn't find anything better, may as well use it.
-            if( hBestFitTransparent != NativeMethods.HWND.NULL )
+            if (hBestFitTransparent != NativeMethods.HWND.NULL)
             {
                 return hBestFitTransparent;
             }
@@ -1993,11 +2010,11 @@ namespace MS.Internal.Automation
         #region Set/Get Focus
 
         // Set focus to specified HWND
-        private static bool SetFocus( NativeMethods.HWND hwnd )
+        private static bool SetFocus(NativeMethods.HWND hwnd)
         {
             // If already focused, leave as-is. Calling SetForegroundWindow
             // on an already focused HWND will remove focus!
-            if( GetFocusedWindow() == hwnd )
+            if (GetFocusedWindow() == hwnd)
             {
                 return true;
             }
@@ -2026,9 +2043,9 @@ namespace MS.Internal.Automation
 
             byte vk = 0xB9;
             bool gotHotkey = false;
-            for( int tries = 0 ; tries < 10 ; tries++ )
+            for (int tries = 0; tries < 10; tries++)
             {
-                if( Misc.RegisterHotKey( NativeMethods.HWND.NULL, atom, 0, vk ) )
+                if (Misc.RegisterHotKey(NativeMethods.HWND.NULL, atom, 0, vk))
                 {
                     gotHotkey = true;
                     break;
@@ -2036,30 +2053,30 @@ namespace MS.Internal.Automation
                 vk++; // try another key
             }
 
-            if( gotHotkey )
+            if (gotHotkey)
             {
                 // Get state of modifiers - and temporarilly release them...
-                bool fShiftDown = ( UnsafeNativeMethods.GetAsyncKeyState( UnsafeNativeMethods.VK_SHIFT ) & unchecked((int)0x80000000) ) != 0;
-                bool fAltDown = ( UnsafeNativeMethods.GetAsyncKeyState( UnsafeNativeMethods.VK_MENU ) & unchecked((int)0x80000000) ) != 0;
-                bool fCtrlDown = ( UnsafeNativeMethods.GetAsyncKeyState( UnsafeNativeMethods.VK_CONTROL ) & unchecked((int)0x80000000) ) != 0;
+                bool fShiftDown = (UnsafeNativeMethods.GetAsyncKeyState(UnsafeNativeMethods.VK_SHIFT) & unchecked((int)0x80000000)) != 0;
+                bool fAltDown = (UnsafeNativeMethods.GetAsyncKeyState(UnsafeNativeMethods.VK_MENU) & unchecked((int)0x80000000)) != 0;
+                bool fCtrlDown = (UnsafeNativeMethods.GetAsyncKeyState(UnsafeNativeMethods.VK_CONTROL) & unchecked((int)0x80000000)) != 0;
 
-                if( fShiftDown )
-                    Input.SendKeyboardInputVK( UnsafeNativeMethods.VK_SHIFT, false );
-                if( fAltDown )
-                    Input.SendKeyboardInputVK( UnsafeNativeMethods.VK_MENU, false );
-                if( fCtrlDown )
-                    Input.SendKeyboardInputVK( UnsafeNativeMethods.VK_CONTROL, false );
+                if (fShiftDown)
+                    Input.SendKeyboardInputVK(UnsafeNativeMethods.VK_SHIFT, false);
+                if (fAltDown)
+                    Input.SendKeyboardInputVK(UnsafeNativeMethods.VK_MENU, false);
+                if (fCtrlDown)
+                    Input.SendKeyboardInputVK(UnsafeNativeMethods.VK_CONTROL, false);
 
-                Input.SendKeyboardInputVK( vk, true );
-                Input.SendKeyboardInputVK( vk, false );
+                Input.SendKeyboardInputVK(vk, true);
+                Input.SendKeyboardInputVK(vk, false);
 
                 // Restore release modifier keys...
-                if( fShiftDown )
-                    Input.SendKeyboardInputVK( UnsafeNativeMethods.VK_SHIFT, true );
-                if( fAltDown )
-                    Input.SendKeyboardInputVK( UnsafeNativeMethods.VK_MENU, true );
-                if( fCtrlDown )
-                    Input.SendKeyboardInputVK( UnsafeNativeMethods.VK_CONTROL, true );
+                if (fShiftDown)
+                    Input.SendKeyboardInputVK(UnsafeNativeMethods.VK_SHIFT, true);
+                if (fAltDown)
+                    Input.SendKeyboardInputVK(UnsafeNativeMethods.VK_MENU, true);
+                if (fCtrlDown)
+                    Input.SendKeyboardInputVK(UnsafeNativeMethods.VK_CONTROL, true);
 
                 // Spin in this message loop until we get the hot key
                 while (true)
@@ -2087,7 +2104,7 @@ namespace MS.Internal.Automation
                     UnsafeNativeMethods.DispatchMessage(ref msg);
 
                     if (msg.message == UnsafeNativeMethods.WM_HOTKEY
-                        && msg.wParam == (IntPtr) atom)
+                        && msg.wParam == (IntPtr)atom)
                     {
                         break;
                     }

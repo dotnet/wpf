@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,8 +6,8 @@ using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 using System.Windows.Media; // TypeConverterHelper, UriHolder
-using MS.Internal.PresentationCore;
 using MS.Internal; // BindUriHelper
+using MS.Internal.PresentationCore;
 
 namespace System.Windows.Input
 {
@@ -25,22 +25,22 @@ namespace System.Windows.Input
         /// <returns>true if conversion is possible</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            if(sourceType == typeof(string))
+            if (sourceType == typeof(string))
             {
                 return true;
             }
             return false;
         }
-    
+
         /// <summary>
         /// TypeConverter method override.
         /// </summary>
         /// <param name="context">ITypeDescriptorContext</param>
         /// <param name="destinationType">Type to convert to</param>
         /// <returns>true if conversion is possible</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (destinationType == typeof(string)) 
+            if (destinationType == typeof(string))
             {
                 return true;
             }
@@ -55,7 +55,7 @@ namespace System.Windows.Input
         /// <returns>TypeConverter.StandardValuesCollection</returns>
         public override TypeConverter.StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
-            if(_standardValues is null)
+            if (_standardValues is null)
             {
                 PropertyInfo[] properties = typeof(Cursors).GetProperties(BindingFlags.Public | BindingFlags.Static);
                 object[] values = new object[properties.Length]; //Could use Cursor but its wrapped in ICollection anyways
@@ -97,7 +97,7 @@ namespace System.Windows.Input
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
             if (value is string)
-            {                
+            {
                 string text = ((string)value).Trim();
 
                 if (text != String.Empty)
@@ -166,7 +166,7 @@ namespace System.Windows.Input
                                 return Cursors.ArrowCD;
                         }
                     }
-                    else 
+                    else
                     {
                         if (text.EndsWith(".cur", StringComparison.OrdinalIgnoreCase) || text.EndsWith(".ani", StringComparison.OrdinalIgnoreCase))
                         {
@@ -223,11 +223,11 @@ namespace System.Windows.Input
             }
             throw GetConvertToException(value, destinationType);
         }
-        
+
         /// <summary>
         /// Cached value for GetStandardValues
         /// </summary>
         private TypeConverter.StandardValuesCollection _standardValues;
-}
+    }
 }
 

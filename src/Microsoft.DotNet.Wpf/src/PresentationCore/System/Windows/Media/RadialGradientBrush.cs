@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -49,11 +49,11 @@ namespace System.Windows.Media
         /// collection.
         /// </summary>
         /// <param name="gradientStopCollection"> GradientStopCollection to set on this brush. </param>
-        public RadialGradientBrush(GradientStopCollection gradientStopCollection) 
+        public RadialGradientBrush(GradientStopCollection gradientStopCollection)
                                                    : base(gradientStopCollection)
-        {            
+        {
         }
-            
+
 
         #endregion Constructors
 
@@ -73,7 +73,7 @@ namespace System.Windows.Media
                     Object.ReferenceEquals(vTransform, Transform.Identity)
                     )
                 {
-                    hTransform = DUCE.ResourceHandle.Null;                                        
+                    hTransform = DUCE.ResourceHandle.Null;
                 }
                 else
                 {
@@ -84,7 +84,7 @@ namespace System.Windows.Media
                     Object.ReferenceEquals(vRelativeTransform, Transform.Identity)
                     )
                 {
-                    hRelativeTransform = DUCE.ResourceHandle.Null;                                        
+                    hRelativeTransform = DUCE.ResourceHandle.Null;
                 }
                 else
                 {
@@ -126,29 +126,29 @@ namespace System.Windows.Media
                     // GradientStopCollection:  Need to enforce upper-limit of gradient stop capacity
 
                     int count = (vGradientStops == null) ? 0 : vGradientStops.Count;
-                    data.GradientStopsSize = (UInt32)(sizeof(DUCE.MIL_GRADIENTSTOP)*count);
+                    data.GradientStopsSize = (UInt32)(sizeof(DUCE.MIL_GRADIENTSTOP) * count);
 
                     channel.BeginCommand(
                         (byte*)&data,
                         sizeof(DUCE.MILCMD_RADIALGRADIENTBRUSH),
-                        sizeof(DUCE.MIL_GRADIENTSTOP)*count
+                        sizeof(DUCE.MIL_GRADIENTSTOP) * count
                         );
-                    
-                    for (int i=0; i<count; i++)
+
+                    for (int i = 0; i < count; i++)
                     {
                         DUCE.MIL_GRADIENTSTOP stopCmd;
                         GradientStop gradStop = vGradientStops.Internal_GetItem(i);
 
                         double temp = gradStop.Offset;
-                        DUCE.CopyBytes((byte*)&stopCmd.Position,(byte*)&temp, sizeof(double));
+                        DUCE.CopyBytes((byte*)&stopCmd.Position, (byte*)&temp, sizeof(double));
                         stopCmd.Color = CompositionResourceManager.ColorToMilColorF(gradStop.Color);
-                        
+
                         channel.AppendCommandData(
                             (byte*)&stopCmd,
                             sizeof(DUCE.MIL_GRADIENTSTOP)
                             );
                     }
-                    
+
                     channel.EndCommand();
                 }
             }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,14 +23,14 @@ namespace System.Windows.Xps.Serialization
         /// </param>
         public
         NGCSerializerAsync(
-            PackageSerializationManager   manager
+            PackageSerializationManager manager
             )
         {
             ArgumentNullException.ThrowIfNull(manager);
 
             _serializationManager = manager as NgcSerializationManagerAsync;
 
-            if(_serializationManager == null)
+            if (_serializationManager == null)
             {
                 throw new XpsSerializationException(SR.ReachSerializationAsync_NoNgcType);
             }
@@ -48,7 +48,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
@@ -56,16 +56,16 @@ namespace System.Windows.Xps.Serialization
             switch (context.Action)
             {
                 case SerializerAction.endSerializeObject:
-                {
-                    EndSerializeObject(context.ObjectContext);
-                    break;
-                }
+                    {
+                        EndSerializeObject(context.ObjectContext);
+                        break;
+                    }
 
                 case SerializerAction.serializeNextProperty:
-                {
-                    SerializeNextProperty(context.ObjectContext);
-                    break;
-                }
+                    {
+                        SerializeNextProperty(context.ObjectContext);
+                        break;
+                    }
             }
         }
 
@@ -132,7 +132,7 @@ namespace System.Windows.Xps.Serialization
             SerializableObjectContext serializableObjectContext = DiscoverObjectData(serializedProperty.Value,
                                                                                      serializedProperty);
 
-            if(serializableObjectContext!=null)
+            if (serializableObjectContext != null)
             {
                 //
                 // Push the object at hand on the context stack
@@ -175,7 +175,7 @@ namespace System.Windows.Xps.Serialization
             SerializableObjectContext serializableObjectContext = DiscoverObjectData(serializedObject,
                                                                                      null);
 
-            if(serializableObjectContext!=null)
+            if (serializableObjectContext != null)
             {
                 //
                 // Push the object at hand on the context stack
@@ -192,14 +192,14 @@ namespace System.Windows.Xps.Serialization
                 // object graph to the corresponding destination
                 //
                 PersistObjectData(serializableObjectContext);
-                }
+            }
         }
 
         internal
         virtual
         void
         EndSerializeObject(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             //
@@ -265,7 +265,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         SerializeObjectCore(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
@@ -315,7 +315,7 @@ namespace System.Windows.Xps.Serialization
         private
         SerializableObjectContext
         DiscoverObjectData(
-            Object                      serializedObject,
+            Object serializedObject,
             SerializablePropertyContext serializedProperty
             )
         {
@@ -339,7 +339,7 @@ namespace System.Windows.Xps.Serialization
             //
             // Set the root object to be serialized at the level of the SerializationManager
             //
-            if(SerializationManager.RootSerializableObjectContext == null)
+            if (SerializationManager.RootSerializableObjectContext == null)
             {
                 SerializationManager.RootSerializableObjectContext = serializableObjectContext;
             }
@@ -353,14 +353,14 @@ namespace System.Windows.Xps.Serialization
         private
         void
         SerializeProperties(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
 
             SerializablePropertyCollection propertyCollection = serializableObjectContext.PropertiesCollection;
 
-            if(propertyCollection!=null)
+            if (propertyCollection != null)
             {
                 //for(propertyCollection.Reset();
                 //    propertyCollection.MoveNext();)
@@ -385,17 +385,17 @@ namespace System.Windows.Xps.Serialization
         private
         void
         SerializeNextProperty(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             SerializablePropertyCollection propertyCollection = serializableObjectContext.PropertiesCollection;
 
-            if(propertyCollection.MoveNext())
+            if (propertyCollection.MoveNext())
             {
                 SerializablePropertyContext serializablePropertyContext =
                 (SerializablePropertyContext)propertyCollection.Current;
 
-                if(serializablePropertyContext!=null)
+                if (serializablePropertyContext != null)
                 {
 
                     NGCSerializerContext context = new NGCSerializerContext(this,
@@ -438,7 +438,7 @@ namespace System.Windows.Xps.Serialization
                 ReachSerializer serializer = SerializationManager.GetSerializer(serializablePropertyContext.Value);
 
                 // If there is no serializer for this type, we won't serialize this property
-                if(serializer!=null)
+                if (serializer != null)
                 {
                     serializer.SerializeObject(serializablePropertyContext);
                 }
@@ -478,7 +478,7 @@ namespace System.Windows.Xps.Serialization
         #region Private Data members
 
         private
-        NgcSerializationManagerAsync   _serializationManager;
+        NgcSerializationManagerAsync _serializationManager;
 
         #endregion Private Data members
     };
@@ -494,8 +494,8 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         NgcFixedDocumentSerializerAsync(
-            PackageSerializationManager   manager
-            ):
+            PackageSerializationManager manager
+            ) :
         base(manager)
         {
             ArgumentNullException.ThrowIfNull(manager);
@@ -508,7 +508,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
@@ -516,16 +516,16 @@ namespace System.Windows.Xps.Serialization
             switch (context.Action)
             {
                 case SerializerAction.endPersistObjectData:
-                {
-                    EndPersistObjectData();
-                    break;
-                }
+                    {
+                        EndPersistObjectData();
+                        break;
+                    }
 
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
 
@@ -539,13 +539,13 @@ namespace System.Windows.Xps.Serialization
             Object serializedObject
             )
         {
-            FixedDocument fd =  serializedObject as FixedDocument;
-            if(!NgcSerializationManager.IsPrintTicketEventHandlerEnabled)
+            FixedDocument fd = serializedObject as FixedDocument;
+            if (!NgcSerializationManager.IsPrintTicketEventHandlerEnabled)
             {
                 //NgcSerializationManager.FdPrintTicket = fd.PrintTicket as PrintTicket;
             }
 
-            NgcSerializationManager.StartDocument(fd,true);
+            NgcSerializationManager.StartDocument(fd, true);
 
             //
             // Create the context for the current object
@@ -560,7 +560,7 @@ namespace System.Windows.Xps.Serialization
             ReachSerializer serializer = NgcSerializationManager.GetSerializer(fd.Pages);
             serializer.SerializeObject(fd.Pages);
         }
-       
+
         /// <summary>
         ///
         /// </summary>
@@ -568,7 +568,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
@@ -612,7 +612,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
@@ -620,22 +620,22 @@ namespace System.Windows.Xps.Serialization
             switch (context.Action)
             {
                 case SerializerAction.endPersistObjectData:
-                {
-                    EndPersistObjectData();
-                    break;
-                }
+                    {
+                        EndPersistObjectData();
+                        break;
+                    }
 
                 case SerializerAction.serializeNextDocumentPage:
-                {
-                    SerializeNextDocumentPage(context);
-                    break;
-                }
+                    {
+                        SerializeNextDocumentPage(context);
+                        break;
+                    }
 
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
 
@@ -651,7 +651,7 @@ namespace System.Windows.Xps.Serialization
         {
             DocumentPaginator paginator = (DocumentPaginator)serializedObject;
 
-            NgcSerializationManager.StartDocument(paginator,true);
+            NgcSerializationManager.StartDocument(paginator, true);
 
             NGCSerializerContext context = new NGCSerializerContext(this,
                                                                     null,
@@ -672,7 +672,7 @@ namespace System.Windows.Xps.Serialization
                 NgcSerializationManager.OperationStack.Push(paginatorContext);
             }
         }
-        
+
         /// <summary>
         ///
         /// </summary>
@@ -700,18 +700,18 @@ namespace System.Windows.Xps.Serialization
         private
         void
         SerializeNextDocumentPage(
-            NGCSerializerContext  context
+            NGCSerializerContext context
             )
         {
 
             NGCDocumentPaginatorSerializerContext paginatorContext = context as NGCDocumentPaginatorSerializerContext;
 
-            if(paginatorContext != null)
+            if (paginatorContext != null)
             {
-                DocumentPaginator  paginator = paginatorContext.Paginator;
-                int                index     = paginatorContext.Index;
+                DocumentPaginator paginator = paginatorContext.Paginator;
+                int index = paginatorContext.Index;
 
-                if(!paginator.IsPageCountValid||
+                if (!paginator.IsPageCountValid ||
                    (index < paginator.PageCount))
                 {
                     index++;
@@ -726,8 +726,8 @@ namespace System.Windows.Xps.Serialization
 
                     NgcSerializationManager.OperationStack.Push(nextContext);
 
-                    DocumentPage page = Toolbox.GetPage(paginator, index-1);
-                    
+                    DocumentPage page = Toolbox.GetPage(paginator, index - 1);
+
                     ReachSerializer serializer = SerializationManager.GetSerializer(page);
 
                     if (serializer != null)
@@ -755,8 +755,8 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         NgcFixedPageSerializerAsync(
-            PackageSerializationManager   manager
-            ):
+            PackageSerializationManager manager
+            ) :
         base(manager)
         {
             ArgumentNullException.ThrowIfNull(manager);
@@ -769,7 +769,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
@@ -777,17 +777,17 @@ namespace System.Windows.Xps.Serialization
             switch (context.Action)
             {
                 case SerializerAction.endPersistObjectData:
-                {
-                    NGCPageSerializerContext ngcPageSerializerContext = context as NGCPageSerializerContext;
-                    EndPersistObjectData(ngcPageSerializerContext.IsManualStartDoc);
-                    break;
-                }
+                    {
+                        NGCPageSerializerContext ngcPageSerializerContext = context as NGCPageSerializerContext;
+                        EndPersistObjectData(ngcPageSerializerContext.IsManualStartDoc);
+                        break;
+                    }
 
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
 
@@ -810,10 +810,10 @@ namespace System.Windows.Xps.Serialization
                                                     serializedObject,
                                                     null,
                                                     null);
-             NGCPageSerializerContext context = new NGCPageSerializerContext(this,
-                                                                            serializableObjectContext,
-                                                                            SerializerAction.endPersistObjectData,
-                                                                            bManualStartDoc);
+            NGCPageSerializerContext context = new NGCPageSerializerContext(this,
+                                                                           serializableObjectContext,
+                                                                           SerializerAction.endPersistObjectData,
+                                                                           bManualStartDoc);
 
             NgcSerializationManager.OperationStack.Push(context);
 
@@ -821,13 +821,13 @@ namespace System.Windows.Xps.Serialization
 
             Size pageSize = new Size(fp.Width, fp.Height);
             NgcSerializationManager.PageSize = pageSize;
-            
+
             if (visual != null)
             {
                 NgcSerializationManager.WalkVisual(visual);
             }
         }
-        
+
         /// <summary>
         ///
         /// </summary>
@@ -835,7 +835,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
@@ -869,8 +869,8 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         NgcDocumentPageSerializerAsync(
-            PackageSerializationManager   manager
-            ):
+            PackageSerializationManager manager
+            ) :
         base(manager)
         {
             ArgumentNullException.ThrowIfNull(manager);
@@ -883,7 +883,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
@@ -891,17 +891,17 @@ namespace System.Windows.Xps.Serialization
             switch (context.Action)
             {
                 case SerializerAction.endPersistObjectData:
-                {
-                    NGCPageSerializerContext ngcPageSerializerContext = context as NGCPageSerializerContext;
-                    EndPersistObjectData(ngcPageSerializerContext.IsManualStartDoc);
-                    break;
-                }
+                    {
+                        NGCPageSerializerContext ngcPageSerializerContext = context as NGCPageSerializerContext;
+                        EndPersistObjectData(ngcPageSerializerContext.IsManualStartDoc);
+                        break;
+                    }
 
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
 
@@ -927,10 +927,10 @@ namespace System.Windows.Xps.Serialization
                                                         serializedObject,
                                                         null,
                                                         null);
-                 NGCPageSerializerContext context = new NGCPageSerializerContext(this,
-                                                                                serializableObjectContext,
-                                                                                SerializerAction.endPersistObjectData,
-                                                                                bManualStartDoc);
+                NGCPageSerializerContext context = new NGCPageSerializerContext(this,
+                                                                               serializableObjectContext,
+                                                                               SerializerAction.endPersistObjectData,
+                                                                               bManualStartDoc);
 
                 NgcSerializationManager.OperationStack.Push(context);
 
@@ -939,7 +939,7 @@ namespace System.Windows.Xps.Serialization
                 serializer.SerializeObject(pageRootVisual);
             }
         }
-            
+
         /// <summary>
         ///
         /// </summary>
@@ -947,7 +947,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
@@ -955,7 +955,7 @@ namespace System.Windows.Xps.Serialization
             //
             // A DocumentPage is persisted as a FixedPage
             //
-            BeginSerializeObject( serializableObjectContext.TargetObject );
+            BeginSerializeObject(serializableObjectContext.TargetObject);
         }
 
         internal
@@ -984,8 +984,8 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         NgcReachVisualSerializerAsync(
-            PackageSerializationManager   manager
-            ):
+            PackageSerializationManager manager
+            ) :
         base(manager)
         {
             ArgumentNullException.ThrowIfNull(manager);
@@ -1032,7 +1032,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
@@ -1073,7 +1073,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
@@ -1081,24 +1081,24 @@ namespace System.Windows.Xps.Serialization
             switch (context.Action)
             {
                 case SerializerAction.endPersistObjectData:
-                {
-                    EndPersistObjectData();
+                    {
+                        EndPersistObjectData();
 
-                    XpsSerializationProgressChangedEventArgs e = 
-                    new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedDocumentSequenceWritingProgress,
-                                                                 0,
-                                                                 0,
-                                                                 null);
-                    NgcSerializationManager.OnNGCSerializationProgressChanged(e);            
+                        XpsSerializationProgressChangedEventArgs e =
+                        new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedDocumentSequenceWritingProgress,
+                                                                     0,
+                                                                     0,
+                                                                     null);
+                        NgcSerializationManager.OnNGCSerializationProgressChanged(e);
 
-                    break;
-                }
+                        break;
+                    }
 
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
 
@@ -1114,7 +1114,7 @@ namespace System.Windows.Xps.Serialization
         {
             FixedDocumentSequence fds = serializedObject as FixedDocumentSequence;
 
-            if(!NgcSerializationManager.IsPrintTicketEventHandlerEnabled)
+            if (!NgcSerializationManager.IsPrintTicketEventHandlerEnabled)
             {
                 //NgcSerializationManager.FdsPrintTicket = fds.PrintTicket as PrintTicket;
             }
@@ -1126,7 +1126,7 @@ namespace System.Windows.Xps.Serialization
                 NgcSerializationManager.OnNGCSerializationPrintTicketRequired(e);
             }
 
-            NgcSerializationManager.StartDocument(fds,false);
+            NgcSerializationManager.StartDocument(fds, false);
 
             NGCSerializerContext context = new NGCSerializerContext(this,
                                                                     null,
@@ -1149,7 +1149,7 @@ namespace System.Windows.Xps.Serialization
             )
         {
             ArgumentNullException.ThrowIfNull(serializableObjectContext);
-            BeginSerializeObject( serializableObjectContext.TargetObject );
+            BeginSerializeObject(serializableObjectContext.TargetObject);
         }
 
         internal
@@ -1160,7 +1160,7 @@ namespace System.Windows.Xps.Serialization
         {
             NgcSerializationManager.EndDocument();
         }
-     };
+    };
 
     /// <summary>
     ///
@@ -1174,7 +1174,7 @@ namespace System.Windows.Xps.Serialization
         public
         NgcDocumentReferenceCollectionSerializerAsync(
             PackageSerializationManager manager
-            ):
+            ) :
         base(manager)
         {
 
@@ -1187,7 +1187,7 @@ namespace System.Windows.Xps.Serialization
             NGCSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
@@ -1195,24 +1195,24 @@ namespace System.Windows.Xps.Serialization
             switch (context.Action)
             {
                 case SerializerAction.serializeNextDocumentReference:
-                {
-                    NgcDocumentReferenceCollectionSerializerContext thisContext =
-                    context as NgcDocumentReferenceCollectionSerializerContext;
-
-                    if(thisContext != null)
                     {
-                        SerializeNextDocumentReference(thisContext.Enumerator,
-                                                       thisContext.ObjectContext);
+                        NgcDocumentReferenceCollectionSerializerContext thisContext =
+                        context as NgcDocumentReferenceCollectionSerializerContext;
+
+                        if (thisContext != null)
+                        {
+                            SerializeNextDocumentReference(thisContext.Enumerator,
+                                                           thisContext.ObjectContext);
+                        }
+
+                        break;
                     }
 
-                    break;
-                }
-
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
 
@@ -1246,7 +1246,7 @@ namespace System.Windows.Xps.Serialization
 
             NgcSerializationManager.OperationStack.Push(context);
         }
-        
+
         /// <summary>
         ///
         /// </summary>
@@ -1268,11 +1268,11 @@ namespace System.Windows.Xps.Serialization
         private
         void
         SerializeNextDocumentReference(
-            IEnumerator                 enumerator,
-            SerializableObjectContext   serializableObjectContext
+            IEnumerator enumerator,
+            SerializableObjectContext serializableObjectContext
             )
         {
-            if(enumerator.MoveNext())
+            if (enumerator.MoveNext())
             {
 
                 NgcDocumentReferenceCollectionSerializerContext
@@ -1301,7 +1301,7 @@ namespace System.Windows.Xps.Serialization
             )
         {
             IDocumentPaginatorSource idp = ((DocumentReference)documentReference).GetDocument(false);
-            
+
             if (idp != null)
             {
                 FixedDocument fixedDoc = idp as FixedDocument;
@@ -1331,24 +1331,24 @@ namespace System.Windows.Xps.Serialization
 
         public
         NGCSerializerContext(
-            NGCSerializerAsync          serializer,
-            SerializerAction            action
+            NGCSerializerAsync serializer,
+            SerializerAction action
             )
         {
-            this._action        = action;
-            this._serializer    = serializer;
+            this._action = action;
+            this._serializer = serializer;
             this._objectContext = null;
         }
 
         public
         NGCSerializerContext(
-            NGCSerializerAsync          serializer,
-            SerializableObjectContext   objectContext,
-            SerializerAction            action
+            NGCSerializerAsync serializer,
+            SerializableObjectContext objectContext,
+            SerializerAction action
             )
         {
-            this._action        = action;
-            this._serializer    = serializer;
+            this._action = action;
+            this._serializer = serializer;
             this._objectContext = objectContext;
         }
 
@@ -1386,13 +1386,13 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        SerializerAction            _action;
+        SerializerAction _action;
 
         private
-        NGCSerializerAsync          _serializer;
+        NGCSerializerAsync _serializer;
 
         private
-        SerializableObjectContext   _objectContext;
+        SerializableObjectContext _objectContext;
     };
 
     internal class NgcDocumentReferenceCollectionSerializerContext :
@@ -1400,12 +1400,12 @@ namespace System.Windows.Xps.Serialization
     {
         public
         NgcDocumentReferenceCollectionSerializerContext(
-            NGCSerializerAsync          serializer,
-            SerializableObjectContext   objectContext,
-            IEnumerator                 enumerator,
-            SerializerAction            action
-            ):
-            base(serializer,objectContext,action)
+            NGCSerializerAsync serializer,
+            SerializableObjectContext objectContext,
+            IEnumerator enumerator,
+            SerializerAction action
+            ) :
+            base(serializer, objectContext, action)
         {
             this._enumerator = enumerator;
         }
@@ -1422,20 +1422,20 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        IEnumerator     _enumerator;
+        IEnumerator _enumerator;
     };
 
-    internal class NGCPageSerializerContext:
+    internal class NGCPageSerializerContext :
                    NGCSerializerContext
     {
         public
         NGCPageSerializerContext(
-            NGCSerializerAsync          serializer,
-            SerializableObjectContext   objectContext,
-            SerializerAction            action,
-            bool                        isManualStartDoc
-            ):
-        base(serializer,objectContext,action)
+            NGCSerializerAsync serializer,
+            SerializableObjectContext objectContext,
+            SerializerAction action,
+            bool isManualStartDoc
+            ) :
+        base(serializer, objectContext, action)
         {
             _isManualStartDoc = isManualStartDoc;
         }
@@ -1451,7 +1451,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        bool    _isManualStartDoc;
+        bool _isManualStartDoc;
     };
 
 
@@ -1460,15 +1460,15 @@ namespace System.Windows.Xps.Serialization
     {
         public
         NGCDocumentPaginatorSerializerContext(
-            NGCSerializerAsync          serializer,
-            DocumentPaginator           paginator,
-            int                         index,
-            SerializerAction            action
-            ):
-            base(serializer,action)
+            NGCSerializerAsync serializer,
+            DocumentPaginator paginator,
+            int index,
+            SerializerAction action
+            ) :
+            base(serializer, action)
         {
             this._paginator = paginator;
-            this._index     = index;
+            this._index = index;
         }
 
 
@@ -1495,10 +1495,10 @@ namespace System.Windows.Xps.Serialization
 
 
         private
-        DocumentPaginator   _paginator;
+        DocumentPaginator _paginator;
 
         private
-        int                 _index;
+        int _index;
     };
 }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,9 +21,11 @@ namespace MS.Internal.Data
         public static RBFinger<T> operator +(RBFinger<T> finger, int delta)
         {
             if (delta >= 0)
-                for (; delta > 0 && finger.IsValid; --delta) ++finger;
+                for (; delta > 0 && finger.IsValid; --delta)
+                    ++finger;
             else
-                for (; delta < 0 && finger.IsValid; ++delta) --finger;
+                for (; delta < 0 && finger.IsValid; ++delta)
+                    --finger;
             return finger;
         }
 

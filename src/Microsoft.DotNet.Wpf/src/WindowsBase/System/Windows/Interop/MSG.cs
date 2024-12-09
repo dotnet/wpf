@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Runtime.InteropServices;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace System.Windows.Interop
 {
@@ -47,11 +47,11 @@ namespace System.Windows.Interop
             _pt_x = pt_x;
             _pt_y = pt_y;
         }
-        
+
         //
         // Public Properties:
         //
-        
+
         /// <summary> 
         ///     The handle of the window to which the message was sent. 
         /// </summary>
@@ -65,13 +65,13 @@ namespace System.Windows.Interop
             }
             set
             {
-                _hwnd = value;   
+                _hwnd = value;
             }
-}
-        
-         /// <summary> 
-         ///    The Value of the window message. 
-         /// </summary>
+        }
+
+        /// <summary> 
+        ///    The Value of the window message. 
+        /// </summary>
         public int message
         {
             get
@@ -80,9 +80,9 @@ namespace System.Windows.Interop
             }
             set
             {
-                _message = value;   
+                _message = value;
             }
-}
+        }
 
         /// <summary> 
         ///     The wParam of the window message. 
@@ -97,9 +97,9 @@ namespace System.Windows.Interop
             }
             set
             {
-                _wParam = value;   
+                _wParam = value;
             }
-}
+        }
 
         /// <summary> 
         ///     The lParam of the window message. 
@@ -114,9 +114,9 @@ namespace System.Windows.Interop
             }
             set
             {
-                _lParam = value;   
+                _lParam = value;
             }
-}
+        }
 
         /// <summary>
         ///     The time the window message was sent.
@@ -129,9 +129,9 @@ namespace System.Windows.Interop
             }
             set
             {
-                _time = value;   
+                _time = value;
             }
-}
+        }
 
         // In the original Win32, pt was a by-Value POINT structure
         /// <summary> 
@@ -147,9 +147,9 @@ namespace System.Windows.Interop
             }
             set
             {
-                _pt_x = value;   
+                _pt_x = value;
             }
-}
+        }
 
         /// <summary> 
         ///     The Y coordinate of the message POINT struct. 
@@ -164,9 +164,9 @@ namespace System.Windows.Interop
             }
             set
             {
-                _pt_y = value;   
+                _pt_y = value;
             }
-}
+        }
 
         //
         // Internal data:
@@ -207,5 +207,5 @@ namespace System.Windows.Interop
         ///     The Y coordinate of the message POINT struct. 
         /// </summary>
         private int _pt_y;
-}
+    }
 }

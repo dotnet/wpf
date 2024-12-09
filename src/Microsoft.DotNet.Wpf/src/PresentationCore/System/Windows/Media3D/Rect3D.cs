@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,7 +9,7 @@ namespace System.Windows.Media.Media3D
     /// location (Point3D) and rectangle's size (Size3D). As a result, Rect3D cannot have 
     /// negative sizes.
     /// </summary>
-    public partial struct Rect3D: IFormattable
+    public partial struct Rect3D : IFormattable
     {
         //------------------------------------------------------
         //
@@ -88,7 +88,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         /// <param name="point">Location of the rectangle.</param>
         /// <param name="vector">Vector extending the rectangle from the location.</param>
-        internal Rect3D(Point3D point, Vector3D vector): this(point, point+vector)
+        internal Rect3D(Point3D point, Vector3D vector) : this(point, point + vector)
         {
         }
 
@@ -157,7 +157,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                if( IsEmpty )
+                if (IsEmpty)
                     return Size3D.Empty;
                 else
                     return new Size3D(_sizeX, _sizeY, _sizeZ);
@@ -197,7 +197,7 @@ namespace System.Windows.Media.Media3D
                 {
                     throw new System.InvalidOperationException(SR.Rect3D_CannotModifyEmptyRect);
                 }
-                
+
                 if (value < 0)
                 {
                     throw new System.ArgumentException(SR.Size3D_DimensionCannotBeNegative);
@@ -227,7 +227,7 @@ namespace System.Windows.Media.Media3D
                 {
                     throw new System.ArgumentException(SR.Size3D_DimensionCannotBeNegative);
                 }
-                
+
                 _sizeY = value;
             }
         }
@@ -247,7 +247,7 @@ namespace System.Windows.Media.Media3D
                 {
                     throw new System.InvalidOperationException(SR.Rect3D_CannotModifyEmptyRect);
                 }
-                
+
                 if (value < 0)
                 {
                     throw new System.ArgumentException(SR.Size3D_DimensionCannotBeNegative);
@@ -374,9 +374,9 @@ namespace System.Windows.Media.Media3D
             return (_x <= rect._x &&
                     _y <= rect._y &&
                     _z <= rect._z &&
-                    _x+_sizeX >= rect._x+rect._sizeX &&
-                    _y+_sizeY >= rect._y+rect._sizeY &&
-                    _z+_sizeZ >= rect._z+rect._sizeZ);
+                    _x + _sizeX >= rect._x + rect._sizeX &&
+                    _y + _sizeY >= rect._y + rect._sizeY &&
+                    _z + _sizeZ >= rect._z + rect._sizeZ);
         }
 
         /// <summary>
@@ -394,11 +394,11 @@ namespace System.Windows.Media.Media3D
                 return false;
             }
 
-            return (rect._x                 <= (_x + _sizeX)) &&
-                   ((rect._x + rect._sizeX) >= _x)            &&
-                   (rect._y                 <= (_y + _sizeY)) &&
-                   ((rect._y + rect._sizeY) >= _y)            &&
-                   (rect._z                 <= (_z + _sizeZ)) &&
+            return (rect._x <= (_x + _sizeX)) &&
+                   ((rect._x + rect._sizeX) >= _x) &&
+                   (rect._y <= (_y + _sizeY)) &&
+                   ((rect._y + rect._sizeY) >= _y) &&
+                   (rect._z <= (_z + _sizeZ)) &&
                    ((rect._z + rect._sizeZ) >= _z);
         }
 
@@ -521,7 +521,7 @@ namespace System.Windows.Media.Media3D
             {
                 throw new System.InvalidOperationException(SR.Rect3D_CannotCallMethod);
             }
-            
+
             _x += offsetX;
             _y += offsetY;
             _z += offsetZ;
@@ -562,19 +562,19 @@ namespace System.Windows.Media.Media3D
         //  Internal Fields
         //
         //------------------------------------------------------
-        
+
         #region Internal Fields
 
         internal readonly static Rect3D Infinite = CreateInfiniteRect3D();
-        
+
         #endregion Internal Fields
-        
+
         //------------------------------------------------------
         //
         //  Private Methods
         //
         //------------------------------------------------------
-        
+
         #region Private Methods
 
         /// <summary>
@@ -594,14 +594,16 @@ namespace System.Windows.Media.Media3D
 
         private static Rect3D CreateEmptyRect3D()
         {
-            Rect3D empty = new Rect3D();
-            empty._x = Double.PositiveInfinity;
-            empty._y = Double.PositiveInfinity;
-            empty._z = Double.PositiveInfinity;
-            // Can't use setters because they throw on negative values
-            empty._sizeX = Double.NegativeInfinity;
-            empty._sizeY = Double.NegativeInfinity;
-            empty._sizeZ = Double.NegativeInfinity;
+            Rect3D empty = new Rect3D
+            {
+                _x = Double.PositiveInfinity,
+                _y = Double.PositiveInfinity,
+                _z = Double.PositiveInfinity,
+                // Can't use setters because they throw on negative values
+                _sizeX = Double.NegativeInfinity,
+                _sizeY = Double.NegativeInfinity,
+                _sizeZ = Double.NegativeInfinity
+            };
             return empty;
         }
 
@@ -630,13 +632,15 @@ namespace System.Windows.Media.Media3D
             //         leaves us ample space to account for transforms, etc.
             //
 
-            Rect3D infinite = new Rect3D();
-            infinite._x = -float.MaxValue;
-            infinite._y = -float.MaxValue;
-            infinite._z = -float.MaxValue;
-            infinite._sizeX = float.MaxValue*2.0;
-            infinite._sizeY = float.MaxValue*2.0;
-            infinite._sizeZ = float.MaxValue*2.0;
+            Rect3D infinite = new Rect3D
+            {
+                _x = -float.MaxValue,
+                _y = -float.MaxValue,
+                _z = -float.MaxValue,
+                _sizeX = float.MaxValue * 2.0,
+                _sizeY = float.MaxValue * 2.0,
+                _sizeZ = float.MaxValue * 2.0
+            };
             return infinite;
         }
 

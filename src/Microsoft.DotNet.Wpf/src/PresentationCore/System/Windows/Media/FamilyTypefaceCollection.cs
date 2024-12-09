@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -428,14 +428,14 @@ namespace System.Windows.Media
 
             object SC.IEnumerator.Current
             {
-                get 
+                get
                 {
                     // If there is no current item a non-generic IEnumerator should throw an exception,
                     // but a generic IEnumerator<T> is not required to.
                     if (_current == null)
                         throw new InvalidOperationException(SR.Enumerator_VerifyContext);
 
-                    return _current; 
+                    return _current;
                 }
             }
 

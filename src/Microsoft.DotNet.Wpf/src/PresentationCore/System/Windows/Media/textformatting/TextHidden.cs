@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     public class TextHidden : TextRun
     {
-        private int     _length;
+        private int _length;
 
         #region Constructors
 
@@ -28,7 +28,7 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         /// <param name="length">number of characters</param>
         public TextHidden(
-            int     length
+            int length
             )
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
@@ -47,7 +47,7 @@ namespace System.Windows.Media.TextFormatting
             get { return new CharacterBufferReference(); }
         }
 
-        
+
         /// <summary>
         /// Character length
         /// </summary>

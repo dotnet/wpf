@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,72 +13,72 @@ namespace System.Windows.Xps.Serialization
     {
         internal
         TypeDependencyPropertiesCacheItem(
-            Type                           type,
-            TypeDependencyPropertyCache[]  properties
+            Type type,
+            TypeDependencyPropertyCache[] properties
             )
         {
             this.objectType = type;
             this.serializableDependencyProperties = properties;
         }
 
-        internal 
-        TypeDependencyPropertyCache[] 
+        internal
+        TypeDependencyPropertyCache[]
         GetSerializableDependencyProperties(
             )
         {
-            return  serializableDependencyProperties;
+            return serializableDependencyProperties;
         }
 
         private
-        Type                           objectType;
+        Type objectType;
 
         private
-        TypeDependencyPropertyCache[]  serializableDependencyProperties;
+        TypeDependencyPropertyCache[] serializableDependencyProperties;
 
     };
 
     internal class TypeCacheItem
     {
-        internal 
+        internal
         TypeCacheItem(
-            Type    type
+            Type type
             )
         {
 
-            this.type                   = type;
-            this.serializerType         = null;
-            this.typeConverter          = null;
-            clrSerializableProperties   = null;
+            this.type = type;
+            this.serializerType = null;
+            this.typeConverter = null;
+            clrSerializableProperties = null;
         }
 
-        internal 
+        internal
         TypeCacheItem(
-            Type    type,
-            Type    serializerType
+            Type type,
+            Type serializerType
             )
         {
 
-            this.type                   = type;
-            this.serializerType         = serializerType;
-            this.typeConverter          = null;
-            clrSerializableProperties   = null;
+            this.type = type;
+            this.serializerType = serializerType;
+            this.typeConverter = null;
+            clrSerializableProperties = null;
         }
 
-        internal 
+        internal
         TypeCacheItem(
-            Type            type,
-            TypeConverter   typeConverter
+            Type type,
+            TypeConverter typeConverter
             )
         {
 
-            this.type                   = type;
-            this.serializerType         = null;
-            this.typeConverter          = typeConverter;
-            clrSerializableProperties   = null;
+            this.type = type;
+            this.serializerType = null;
+            this.typeConverter = typeConverter;
+            clrSerializableProperties = null;
         }
 
-        internal 
-        TypePropertyCache[] 
+        internal
+        TypePropertyCache[]
         GetClrSerializableProperties(
             SerializersCacheManager serializersCacheManager
             )
@@ -90,25 +90,25 @@ namespace System.Windows.Xps.Serialization
                 //
                 // Separate out the serializable Clr properties
                 //
-                int                 IndexOfSerializableProperties  = 0;
-                int[]               propertiesIndex                = new int[properties.Length];
-                TypePropertyCache[] cachedProperties               = new TypePropertyCache[properties.Length];
+                int IndexOfSerializableProperties = 0;
+                int[] propertiesIndex = new int[properties.Length];
+                TypePropertyCache[] cachedProperties = new TypePropertyCache[properties.Length];
 
 
-                for(int indexInProperties = 0;
+                for (int indexInProperties = 0;
                     indexInProperties < properties.Length;
                     indexInProperties++)
                 {
                     PropertyInfo propertyInfo = properties[indexInProperties];
 
-                    DesignerSerializationVisibility visibility                  = DesignerSerializationVisibility.Visible;
-                    Type                            serializerTypeForProperty   = null;
-                    TypeConverter                   typeConverterForProperty    = null;
-                    DefaultValueAttribute           defaultValueAttr            = null;
-                    DesignerSerializationOptionsAttribute         
-                    designerSerializationFlagsAttr                              = null;
+                    DesignerSerializationVisibility visibility = DesignerSerializationVisibility.Visible;
+                    Type serializerTypeForProperty = null;
+                    TypeConverter typeConverterForProperty = null;
+                    DefaultValueAttribute defaultValueAttr = null;
+                    DesignerSerializationOptionsAttribute
+                    designerSerializationFlagsAttr = null;
 
-                    if(CanSerializeProperty(propertyInfo,
+                    if (CanSerializeProperty(propertyInfo,
                                             serializersCacheManager,
                                             out visibility,
                                             out serializerTypeForProperty,
@@ -126,7 +126,7 @@ namespace System.Windows.Xps.Serialization
                         TypeCacheItem typeCacheItem = serializersCacheManager.GetTypeCacheItem(propertyInfo.PropertyType);
 
                         serializerTypeForProperty = typeCacheItem.SerializerType;
-                        typeConverterForProperty  = typeCacheItem.TypeConverter;
+                        typeConverterForProperty = typeCacheItem.TypeConverter;
 
                         //
                         // We create a cache of this property and all the information we
@@ -139,21 +139,21 @@ namespace System.Windows.Xps.Serialization
                                                                                 defaultValueAttr,
                                                                                 designerSerializationFlagsAttr);
 
-                        propertiesIndex[IndexOfSerializableProperties]    = indexInProperties;
+                        propertiesIndex[IndexOfSerializableProperties] = indexInProperties;
                         cachedProperties[IndexOfSerializableProperties++] = propertyCache;
                     }
                 }
 
                 clrSerializableProperties = new TypePropertyCache[IndexOfSerializableProperties];
 
-                for(int indexInClrProperties=0;
+                for (int indexInClrProperties = 0;
                     indexInClrProperties < IndexOfSerializableProperties;
                     indexInClrProperties++)
                 {
                     clrSerializableProperties[indexInClrProperties] = cachedProperties[indexInClrProperties];
                 }
             }
-            
+
             return clrSerializableProperties;
         }
 
@@ -180,21 +180,21 @@ namespace System.Windows.Xps.Serialization
         private
         bool
         CanSerializeProperty(
-                PropertyInfo                        propertyInfo,
-                SerializersCacheManager             serializersCacheManager,
-            out DesignerSerializationVisibility     visibility,                  
-            out Type                                serializerTypeForProperty,   
-            out TypeConverter                       typeConverterForProperty,    
-            out DefaultValueAttribute               defaultValueAttr,            
+                PropertyInfo propertyInfo,
+                SerializersCacheManager serializersCacheManager,
+            out DesignerSerializationVisibility visibility,
+            out Type serializerTypeForProperty,
+            out TypeConverter typeConverterForProperty,
+            out DefaultValueAttribute defaultValueAttr,
             out DesignerSerializationOptionsAttribute designerSerializationFlagsAttr
             )
         {
 
-            bool canSerializeProperty      = false;
-            visibility                     = DesignerSerializationVisibility.Visible;
-            serializerTypeForProperty      = null;
-            typeConverterForProperty       = null;
-            defaultValueAttr               = null;
+            bool canSerializeProperty = false;
+            visibility = DesignerSerializationVisibility.Visible;
+            serializerTypeForProperty = null;
+            typeConverterForProperty = null;
+            defaultValueAttr = null;
             designerSerializationFlagsAttr = null;
 
             // The conditions that we care about in those properties are as follows
@@ -206,14 +206,14 @@ namespace System.Windows.Xps.Serialization
             // 4. Properties that are decorated with the DesignerSerializationVisibility
             //    and that are not hidden
             //
-            if (propertyInfo.CanRead && 
+            if (propertyInfo.CanRead &&
                 propertyInfo.GetIndexParameters().Length == 0)
             {
-                MemberInfo memberInfo          = (MemberInfo) propertyInfo;
+                MemberInfo memberInfo = (MemberInfo)propertyInfo;
 
                 Attribute[] attributes = Attribute.GetCustomAttributes(memberInfo);
 
-                for(int numberOfAttributes = 0;
+                for (int numberOfAttributes = 0;
                      numberOfAttributes < attributes.Length;
                      numberOfAttributes++)
                 {
@@ -237,14 +237,14 @@ namespace System.Windows.Xps.Serialization
                     }
                 }
 
-                object DependencyPropertyORPropertyInfo = 
+                object DependencyPropertyORPropertyInfo =
                        DependencyProperty.FromName(propertyInfo.Name, propertyInfo.DeclaringType);
 
-                if(DependencyPropertyORPropertyInfo == null             &&
-                   visibility != DesignerSerializationVisibility.Hidden && 
-                   (propertyInfo.CanWrite ||  visibility == DesignerSerializationVisibility.Content))
+                if (DependencyPropertyORPropertyInfo == null &&
+                   visibility != DesignerSerializationVisibility.Hidden &&
+                   (propertyInfo.CanWrite || visibility == DesignerSerializationVisibility.Content))
                 {
-                    if(visibility != DesignerSerializationVisibility.Hidden)
+                    if (visibility != DesignerSerializationVisibility.Hidden)
                     {
                         canSerializeProperty = true;
                     }
@@ -255,16 +255,16 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        Type                            type;
-
-        private 
-        Type                            serializerType;
+        Type type;
 
         private
-        TypeConverter                   typeConverter;
+        Type serializerType;
 
         private
-        TypePropertyCache[]             clrSerializableProperties;
+        TypeConverter typeConverter;
+
+        private
+        TypePropertyCache[] clrSerializableProperties;
     };
 
     internal class TypePropertyCache
@@ -272,7 +272,7 @@ namespace System.Windows.Xps.Serialization
         internal
         TypePropertyCache(
             )
-        {  
+        {
         }
 
         internal
@@ -281,33 +281,33 @@ namespace System.Windows.Xps.Serialization
             )
         {
             ArgumentNullException.ThrowIfNull(propertyInfo);
-            this.propertyInfo                   = propertyInfo;
-            this.visibility                     = DesignerSerializationVisibility.Visible;
-            this.serializerTypeForProperty      = null;
-            this.typeConverterForProperty       = null;
-            this.defaultValueAttr               = null;
+            this.propertyInfo = propertyInfo;
+            this.visibility = DesignerSerializationVisibility.Visible;
+            this.serializerTypeForProperty = null;
+            this.typeConverterForProperty = null;
+            this.defaultValueAttr = null;
             this.designerSerializationFlagsAttr = null;
-            this.propertyValue                  = null;
+            this.propertyValue = null;
         }
 
         internal
         TypePropertyCache(
-            PropertyInfo                            propertyInfo,
-            DesignerSerializationVisibility         visibility,
-            Type                                    serializerTypeForProperty,
-            TypeConverter                           typeConverterForProperty,
-            DefaultValueAttribute                   defaultValueAttr,
-            DesignerSerializationOptionsAttribute     designerSerializationFlagsAttr
+            PropertyInfo propertyInfo,
+            DesignerSerializationVisibility visibility,
+            Type serializerTypeForProperty,
+            TypeConverter typeConverterForProperty,
+            DefaultValueAttribute defaultValueAttr,
+            DesignerSerializationOptionsAttribute designerSerializationFlagsAttr
             )
         {
             ArgumentNullException.ThrowIfNull(propertyInfo);
-            this.propertyInfo                   = propertyInfo;
-            this.visibility                     = visibility;
-            this.serializerTypeForProperty      = serializerTypeForProperty;
-            this.typeConverterForProperty       = typeConverterForProperty;
-            this.defaultValueAttr               = defaultValueAttr;
+            this.propertyInfo = propertyInfo;
+            this.visibility = visibility;
+            this.serializerTypeForProperty = serializerTypeForProperty;
+            this.typeConverterForProperty = typeConverterForProperty;
+            this.defaultValueAttr = defaultValueAttr;
             this.designerSerializationFlagsAttr = designerSerializationFlagsAttr;
-            this.propertyValue                  = null;
+            this.propertyValue = null;
         }
 
 
@@ -364,7 +364,7 @@ namespace System.Windows.Xps.Serialization
             {
                 return defaultValueAttr;
             }
-            
+
             set
             {
                 defaultValueAttr = value;
@@ -379,7 +379,7 @@ namespace System.Windows.Xps.Serialization
             {
                 return designerSerializationFlagsAttr;
             }
-            
+
             set
             {
                 designerSerializationFlagsAttr = value;
@@ -395,7 +395,7 @@ namespace System.Windows.Xps.Serialization
             {
                 return propertyInfo;
             }
-            
+
             set
             {
                 propertyInfo = value;
@@ -418,57 +418,57 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        DesignerSerializationVisibility         visibility;
+        DesignerSerializationVisibility visibility;
         private
-        Type                                    serializerTypeForProperty;
+        Type serializerTypeForProperty;
         private
-        TypeConverter                           typeConverterForProperty;
+        TypeConverter typeConverterForProperty;
         private
-        DefaultValueAttribute                   defaultValueAttr;
+        DefaultValueAttribute defaultValueAttr;
         private
-        DesignerSerializationOptionsAttribute     designerSerializationFlagsAttr;
+        DesignerSerializationOptionsAttribute designerSerializationFlagsAttr;
         private
-        PropertyInfo                            propertyInfo;
+        PropertyInfo propertyInfo;
         private
-        object                                  propertyValue;
+        object propertyValue;
     };
 
-    internal class TypeDependencyPropertyCache:
+    internal class TypeDependencyPropertyCache :
                    TypePropertyCache
     {
         internal
         TypeDependencyPropertyCache(
-            MemberInfo                              memberInfo,
-            Object                                  dependencyProperty,
-            DesignerSerializationVisibility         visibility,
-            Type                                    serializerTypeForProperty,
-            TypeConverter                           typeConverterForProperty,
-            DefaultValueAttribute                   defaultValueAttr,
-            DesignerSerializationOptionsAttribute     designerSerializationFlagsAttr
-            ):
+            MemberInfo memberInfo,
+            Object dependencyProperty,
+            DesignerSerializationVisibility visibility,
+            Type serializerTypeForProperty,
+            TypeConverter typeConverterForProperty,
+            DefaultValueAttribute defaultValueAttr,
+            DesignerSerializationOptionsAttribute designerSerializationFlagsAttr
+            ) :
         base()
         {
-            this.MemberInfo                        = memberInfo;
-            this.DependencyProperty                = dependencyProperty;
-            this.PropertyInfo                      = memberInfo as PropertyInfo;
-            this.Visibility                        = visibility;
-            this.SerializerTypeForProperty         = serializerTypeForProperty;
-            this.TypeConverterForProperty          = typeConverterForProperty;
-            this.DefaultValueAttr                  = defaultValueAttr;
-            this.DesignerSerializationOptionsAttr  = designerSerializationFlagsAttr;
-            this.PropertyValue                     = null;
+            this.MemberInfo = memberInfo;
+            this.DependencyProperty = dependencyProperty;
+            this.PropertyInfo = memberInfo as PropertyInfo;
+            this.Visibility = visibility;
+            this.SerializerTypeForProperty = serializerTypeForProperty;
+            this.TypeConverterForProperty = typeConverterForProperty;
+            this.DefaultValueAttr = defaultValueAttr;
+            this.DesignerSerializationOptionsAttr = designerSerializationFlagsAttr;
+            this.PropertyValue = null;
         }
 
         internal
         static
         bool
         CanSerializeProperty(
-                MemberInfo                          memberInfo,
-                SerializersCacheManager             serializersCacheManager,
-            out DesignerSerializationVisibility     visibility,                  
-            out Type                                serializerTypeForProperty,   
-            out TypeConverter                       typeConverterForProperty,    
-            out DefaultValueAttribute               defaultValueAttr,            
+                MemberInfo memberInfo,
+                SerializersCacheManager serializersCacheManager,
+            out DesignerSerializationVisibility visibility,
+            out Type serializerTypeForProperty,
+            out TypeConverter typeConverterForProperty,
+            out DefaultValueAttribute defaultValueAttr,
             out DesignerSerializationOptionsAttribute designerSerializationFlagsAttr
             )
         {
@@ -479,15 +479,15 @@ namespace System.Windows.Xps.Serialization
             // 1. Properties that are decorated with the DesignerSerializationVisibility
             //    and that are not hidden
             //
-            visibility                     = DesignerSerializationVisibility.Visible;
-            serializerTypeForProperty      = null;
-            typeConverterForProperty       = null;
-            defaultValueAttr               = null;
+            visibility = DesignerSerializationVisibility.Visible;
+            serializerTypeForProperty = null;
+            typeConverterForProperty = null;
+            defaultValueAttr = null;
             designerSerializationFlagsAttr = null;
 
             Attribute[] attributes = Attribute.GetCustomAttributes(memberInfo);
 
-            for(int numberOfAttributes = 0;
+            for (int numberOfAttributes = 0;
                 numberOfAttributes < attributes.Length;
                 numberOfAttributes++)
             {
@@ -511,7 +511,7 @@ namespace System.Windows.Xps.Serialization
                 }
             }
 
-            if(visibility != DesignerSerializationVisibility.Hidden)
+            if (visibility != DesignerSerializationVisibility.Hidden)
             {
                 canSerializeProperty = true;
             }
@@ -521,10 +521,10 @@ namespace System.Windows.Xps.Serialization
 
         internal
         static
-        bool 
+        bool
         CanSerializeValue(
-            object                       serializableObject,
-            TypeDependencyPropertyCache  propertyCache
+            object serializableObject,
+            TypeDependencyPropertyCache propertyCache
             )
         {
 
@@ -535,7 +535,7 @@ namespace System.Windows.Xps.Serialization
             bool isReadOnly = ((DependencyProperty)propertyCache.DependencyProperty).ReadOnly;
 
 
-            if (isReadOnly && 
+            if (isReadOnly &&
                 propertyCache.Visibility == DesignerSerializationVisibility.Content)
             {
                 //
@@ -543,7 +543,7 @@ namespace System.Windows.Xps.Serialization
                 // populate the property value in this data structure
                 //
                 //
-                DependencyObject targetDO   = serializableObject as DependencyObject;
+                DependencyObject targetDO = serializableObject as DependencyObject;
                 propertyCache.PropertyValue = targetDO.ReadLocalValue((DependencyProperty)propertyCache.DependencyProperty);
 
                 canSerializeValue = true;
@@ -553,7 +553,7 @@ namespace System.Windows.Xps.Serialization
                 //
                 // Populate the property value in this data structure
                 //
-                DependencyObject targetDO   = serializableObject as DependencyObject;
+                DependencyObject targetDO = serializableObject as DependencyObject;
                 propertyCache.PropertyValue = targetDO.ReadLocalValue((DependencyProperty)propertyCache.DependencyProperty);
 
                 canSerializeValue = true;
@@ -564,22 +564,22 @@ namespace System.Windows.Xps.Serialization
                 // Populate the property value in this data structure 
                 // as it is required to evaluate the default value
                 //
-                DependencyObject targetDO   = serializableObject as DependencyObject;
+                DependencyObject targetDO = serializableObject as DependencyObject;
                 propertyCache.PropertyValue = targetDO.ReadLocalValue((DependencyProperty)propertyCache.DependencyProperty);
                 //
                 // For Clr properties with a DefaultValueAttribute 
                 // check if the current value equals the default
                 //
-                canSerializeValue = !object.Equals(propertyCache.DefaultValueAttr.Value, 
+                canSerializeValue = !object.Equals(propertyCache.DefaultValueAttr.Value,
                                                    propertyCache.PropertyValue);
 
-                if(!canSerializeValue)
+                if (!canSerializeValue)
                 {
                     propertyCache.PropertyValue = null;
                 }
             }
 
-            if(canSerializeValue)
+            if (canSerializeValue)
             {
                 if ((propertyCache.PropertyValue == null) ||
                     (propertyCache.PropertyValue == System.Windows.DependencyProperty.UnsetValue))
@@ -590,7 +590,7 @@ namespace System.Windows.Xps.Serialization
 
             return canSerializeValue;
         }
-        
+
         internal
         MemberInfo
         MemberInfo
@@ -599,7 +599,7 @@ namespace System.Windows.Xps.Serialization
             {
                 return memberInfo;
             }
-            
+
             set
             {
                 memberInfo = value;
@@ -614,7 +614,7 @@ namespace System.Windows.Xps.Serialization
             {
                 return dependencyProperty;
             }
-            
+
             set
             {
                 dependencyProperty = value;
@@ -622,8 +622,8 @@ namespace System.Windows.Xps.Serialization
         }
 
         private
-        MemberInfo          memberInfo;
+        MemberInfo memberInfo;
         private
-        object              dependencyProperty;
+        object dependencyProperty;
     };
 }

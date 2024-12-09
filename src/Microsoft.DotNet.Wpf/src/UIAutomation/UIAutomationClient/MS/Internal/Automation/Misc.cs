@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,8 +7,6 @@
 // PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
 
-using Microsoft.Win32.SafeHandles;
-using MS.Win32;
 using System;
 using System.Collections;
 using System.ComponentModel;
@@ -16,6 +14,8 @@ using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Automation;
+using Microsoft.Win32.SafeHandles;
+using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClient.NativeMethodsSetLastError;
 
 namespace MS.Internal.Automation
@@ -210,7 +210,7 @@ namespace MS.Internal.Automation
         //              throw;
         //          // ignore non-critical errors from external code
         //      }
-        internal static bool IsCriticalException( Exception e )
+        internal static bool IsCriticalException(Exception e)
         {
             return e is NullReferenceException || e is StackOverflowException || e is OutOfMemoryException || e is System.Threading.ThreadAbortException;
         }
@@ -527,7 +527,7 @@ namespace MS.Internal.Automation
                     processHandle = UnsafeNativeMethods.GetProcessHandleFromHwnd(hwnd.h);
                     lastWin32Error = Marshal.GetLastWin32Error();
                 }
-                catch(EntryPointNotFoundException)
+                catch (EntryPointNotFoundException)
                 {
                     // Ignore; until OLEACC propogates into Vista builds, the entry point may not be present.
                 }

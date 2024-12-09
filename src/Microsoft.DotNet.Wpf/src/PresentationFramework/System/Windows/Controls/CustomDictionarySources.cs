@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -95,7 +95,7 @@ namespace System.Windows.Controls
 
             ValidateUri(item);
             _uriList.Insert(index, item);
-            
+
             if (Speller != null)
             {
                 Speller.OnDictionaryUriAdded(item);
@@ -106,7 +106,7 @@ namespace System.Windows.Controls
         {
             Uri uri = _uriList[index];
             _uriList.RemoveAt(index);
-            
+
             if (Speller != null)
             {
                 Speller.OnDictionaryUriRemoved(uri);
@@ -133,7 +133,7 @@ namespace System.Windows.Controls
                 if (Speller != null)
                 {
                     Speller.OnDictionaryUriRemoved(oldUri);
-                }                
+                }
                 _uriList[index] = value;
                 if (Speller != null)
                 {
@@ -194,7 +194,7 @@ namespace System.Windows.Controls
 
         bool ICollection<Uri>.IsReadOnly
         {
-            get 
+            get
             {
                 return ((ICollection<Uri>)_uriList).IsReadOnly;
             }
@@ -247,17 +247,17 @@ namespace System.Windows.Controls
 
         bool IList.IsFixedSize
         {
-            get 
+            get
             {
-                return ((IList)_uriList).IsFixedSize; 
+                return ((IList)_uriList).IsFixedSize;
             }
         }
 
         bool IList.IsReadOnly
         {
             get
-            { 
-                return ((IList)_uriList).IsReadOnly; 
+            {
+                return ((IList)_uriList).IsReadOnly;
             }
         }
 
@@ -365,7 +365,7 @@ namespace System.Windows.Controls
             }
         }
         #endregion Private Methods
-        
+
         //------------------------------------------------------
         //
         //  Private Fields

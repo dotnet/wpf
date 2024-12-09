@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Xaml.Schema;
 using System.Reflection;
+using System.Xaml.Schema;
 
 namespace System.Windows.Baml2006
 {
@@ -20,26 +20,26 @@ namespace System.Windows.Baml2006
 
         public override void SetValue(object instance, object value)
         {
-             DependencyObject dObject = instance as DependencyObject;
-             if (dObject != null)
-             {
-                 if (_member.DependencyProperty != null)
-                 {
-                     dObject.SetValue(_member.DependencyProperty, value);
-                     return;
-                 }
-                 else if (_member.RoutedEvent != null)
-                 {
-                     Delegate handler = value as Delegate;
-                     if (handler != null)
-                     {
-                         UIElement.AddHandler(dObject, _member.RoutedEvent, handler);
-                         return;
-                     }
-                 }
-             }
+            DependencyObject dObject = instance as DependencyObject;
+            if (dObject != null)
+            {
+                if (_member.DependencyProperty != null)
+                {
+                    dObject.SetValue(_member.DependencyProperty, value);
+                    return;
+                }
+                else if (_member.RoutedEvent != null)
+                {
+                    Delegate handler = value as Delegate;
+                    if (handler != null)
+                    {
+                        UIElement.AddHandler(dObject, _member.RoutedEvent, handler);
+                        return;
+                    }
+                }
+            }
 
-             base.SetValue(instance, value);
+            base.SetValue(instance, value);
         }
 
         public override object GetValue(object instance)
@@ -82,7 +82,7 @@ namespace System.Windows.Baml2006
                 }
 
                 _hasShouldSerializeMethodBeenLookedup = true;
-            }        
+            }
 
             // Invoke the method if we found one
             if (_shouldSerializeMethod != null)
@@ -111,7 +111,7 @@ namespace System.Windows.Baml2006
                 if (!isPropertySet)
                 {
                     return ShouldSerializeResult.False;
-                }               
+                }
             }
 
             return base.ShouldSerializeValue(instance);

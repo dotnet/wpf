@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,15 +6,14 @@
 // Description:
 //     Managed exports from MIL core.
 
-using System.Windows.Media.Imaging;
 using System.Runtime.InteropServices;
+using System.Windows.Media.Imaging;
 using MS.Internal;
 using MS.Internal.Interop;
 using MS.Utility;
 using MS.Win32;
-
-using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using HRESULT = MS.Internal.HRESULT;
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 /*
  *
@@ -150,41 +149,41 @@ namespace System.Windows.Media.Composition
             [DllImport(DllImport.MilCore, EntryPoint = "MilChannel_GetMarshalType")]
             internal static extern int MilChannel_GetMarshalType(IntPtr channelHandle, out ChannelMarshalType marshalType);
 
-            [DllImport (DllImport.MilCore, EntryPoint = "MilResource_SendCommand")]//CASRemoval:
+            [DllImport(DllImport.MilCore, EntryPoint = "MilResource_SendCommand")]//CASRemoval:
             unsafe internal static extern int MilResource_SendCommand(
-                byte *pbData,
+                byte* pbData,
                 uint cbSize,
                 bool sendInSeparateBatch,
                 IntPtr pChannel);
 
-            [DllImport (DllImport.MilCore, EntryPoint = "MilChannel_BeginCommand")]//CASRemoval:
+            [DllImport(DllImport.MilCore, EntryPoint = "MilChannel_BeginCommand")]//CASRemoval:
             unsafe internal static extern int MilChannel_BeginCommand(
                 IntPtr pChannel,
-                byte *pbData,
+                byte* pbData,
                 uint cbSize,
                 uint cbExtra
                 );
 
-            [DllImport (DllImport.MilCore, EntryPoint = "MilChannel_AppendCommandData")]//CASRemoval:
+            [DllImport(DllImport.MilCore, EntryPoint = "MilChannel_AppendCommandData")]//CASRemoval:
             unsafe internal static extern int MilChannel_AppendCommandData(
                 IntPtr pChannel,
-                byte *pbData,
+                byte* pbData,
                 uint cbSize
                 );
 
-            [DllImport (DllImport.MilCore, EntryPoint = "MilChannel_EndCommand")]//CASRemoval:
+            [DllImport(DllImport.MilCore, EntryPoint = "MilChannel_EndCommand")]//CASRemoval:
             unsafe internal static extern int MilChannel_EndCommand(
                 IntPtr pChannel);
 
-            [DllImport (DllImport.MilCore, EntryPoint = "MilResource_SendCommandMedia")]//CASRemoval:
+            [DllImport(DllImport.MilCore, EntryPoint = "MilResource_SendCommandMedia")]//CASRemoval:
             unsafe internal static extern int MilResource_SendCommandMedia(
                 ResourceHandle handle,
                 SafeMediaHandle pMedia,
                 IntPtr pChannel,
-                bool  notifyUceDirect
+                bool notifyUceDirect
                 );
 
-            [DllImport (DllImport.MilCore, EntryPoint = "MilResource_SendCommandBitmapSource")]//CASRemoval:
+            [DllImport(DllImport.MilCore, EntryPoint = "MilResource_SendCommandBitmapSource")]//CASRemoval:
             unsafe internal static extern int MilResource_SendCommandBitmapSource(
                 ResourceHandle handle,
                 BitmapSourceSafeMILHandle /* IWICBitmapSource */ pBitmapSource,
@@ -242,16 +241,16 @@ namespace System.Windows.Media.Composition
             /// </summary>
             internal enum Type
             {
-                Invalid             = 0x00,
+                Invalid = 0x00,
 
-                SyncFlushReply      = 0x01,
-                Caps                = 0x04,
-                PartitionIsZombie   = 0x06,
-                SyncModeStatus      = 0x09,
-                Presented           = 0x0A,
-                BadPixelShader      = 0x10,
+                SyncFlushReply = 0x01,
+                Caps = 0x04,
+                PartitionIsZombie = 0x06,
+                SyncModeStatus = 0x09,
+                Presented = 0x0A,
+                BadPixelShader = 0x10,
 
-                ForceDWORD          = unchecked((int)0xffffffff)
+                ForceDWORD = unchecked((int)0xffffffff)
             };
 
             [StructLayout(LayoutKind.Explicit, Pack = 1)]
@@ -354,7 +353,7 @@ namespace System.Windows.Media.Composition
                     _pConnection,
                     referenceChannelHandle,
                     out _hChannel));
-}
+            }
 
 
             /// <summary>
@@ -418,7 +417,7 @@ namespace System.Windows.Media.Composition
                 }
 
                 HRESULT.Check(MilCoreApi.MilComposition_SyncFlush(_hChannel));
-}
+            }
 
             /// <summary>
             /// Commits the channel and then closes it.
@@ -471,7 +470,7 @@ namespace System.Windows.Media.Composition
 
                 if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW))
                 {
-                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.CreateOrAddResourceOnChannel, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW, PerfService.GetPerfElementID(instance), _hChannel, (uint) handle, (uint) resourceType);
+                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.CreateOrAddResourceOnChannel, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW, PerfService.GetPerfElementID(instance), _hChannel, (uint)handle, (uint)resourceType);
                 }
 
                 return handleNeedsCreation;
@@ -535,7 +534,7 @@ namespace System.Windows.Media.Composition
 
                 if ((releasedOnChannel != 0) && EventTrace.IsEnabled(EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW))
                 {
-                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.ReleaseOnChannel, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW, _hChannel, (uint) handle);
+                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.ReleaseOnChannel, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW, _hChannel, (uint)handle);
                 }
 
                 return (releasedOnChannel != 0);
@@ -621,7 +620,7 @@ namespace System.Windows.Media.Composition
             /// SendCommand sends a command struct through the composition thread.
             /// </summary>
             unsafe internal void SendCommand(
-                byte *pCommandData,
+                byte* pCommandData,
                 int cSize)
             {
                 SendCommand(pCommandData, cSize, false);
@@ -634,7 +633,7 @@ namespace System.Windows.Media.Composition
             /// which is then immediately closed, leaving the current batch untouched.
             /// </summary>
             unsafe internal void SendCommand(
-                byte *pCommandData,
+                byte* pCommandData,
                 int cSize,
                 bool sendInSeparateBatch)
             {
@@ -670,7 +669,7 @@ namespace System.Windows.Media.Composition
             /// BeginCommand opens a command on a channel
             /// </summary>
             unsafe internal void BeginCommand(
-                byte *pbCommandData,
+                byte* pbCommandData,
                 int cbSize,
                 int cbExtra)
             {
@@ -707,7 +706,7 @@ namespace System.Windows.Media.Composition
             /// AppendCommandData appends data to an open command on a channel
             /// </summary>
             unsafe internal void AppendCommandData(
-                byte *pbCommandData,
+                byte* pbCommandData,
                 int cbSize)
             {
                 checked
@@ -1125,7 +1124,7 @@ namespace System.Windows.Media.Composition
                     if (_others != null)
                     {
                         Debug.Assert(_others.Count > 0);
-                        int j = _others.Count-1;
+                        int j = _others.Count - 1;
                         _first = _others[j];
                         if (j == 0) // Only one entry in the array.
                         {
@@ -1138,8 +1137,8 @@ namespace System.Windows.Media.Composition
                     }
                     else
                     {
-                    _first = new Entry();
-}
+                        _first = new Entry();
+                    }
 
                     return true;
                 }
@@ -1228,7 +1227,7 @@ namespace System.Windows.Media.Composition
 
                 return _others[index - 1]._key;
             }
-}
+        }
 
         /// <summary>
         /// This is a generic map that maps a key to a value. It is heavily optimized
@@ -1332,17 +1331,18 @@ namespace System.Windows.Media.Composition
                             if (!_head._value.IsNull)
                             {
                                 // There's 1 entry - allocate a list...
-                                List<Entry> others = new List<Entry>(2); // by default we have two entries in the extra storage.
-
-                                // ...move the old single entry into the List...
-                                others.Add(_head);
-                                // ...add the new entry...
-                                others.Add(new Entry(key, value));
+                                List<Entry> others =
+                                [
+                                    // ...move the old single entry into the List...
+                                    _head,
+                                    // ...add the new entry...
+                                    new Entry(key, value),
+                                ]; // by default we have two entries in the extra storage.
 
                                 // ... and replace the single entry
                                 _head._key = others;
                                 _head._value = DUCE.ResourceHandle.Null;
-}
+                            }
                             else
                             {
                                 // There's already a List - simply add the new entry to the list.
@@ -1467,7 +1467,7 @@ namespace System.Windows.Media.Composition
 
                 return ((List<Entry>)_head._key)[index]._key;
             }
-}
+        }
 
         /// <summary>
         /// ShareableDUCEMultiChannelResource class - this class simply wraps a MultiChannelResource,
@@ -1798,7 +1798,7 @@ namespace System.Windows.Media.Composition
 
                 command.Type = MILCMD.MilCmdVisualSetScrollableAreaClip;
                 command.Handle = hCompositionNode;
-                command.IsEnabled = (uint) (clip.HasValue ? 1 : 0);
+                command.IsEnabled = (uint)(clip.HasValue ? 1 : 0);
 
                 if (clip.HasValue)
                 {
@@ -1856,7 +1856,7 @@ namespace System.Windows.Media.Composition
                         sizeof(DUCE.MILCMD_VISUAL_SETRENDEROPTIONS)
                         );
                 }
-}
+            }
 
             internal static void RemoveChild(
                 DUCE.ResourceHandle hCompositionNode,
@@ -2231,7 +2231,7 @@ namespace System.Windows.Media.Composition
 
                     if (!enableMultiMonitorDisplayClipping.Value)
                     {
-                        command.flags |= (UInt32) MILRTInitializationFlags.MIL_RT_DISABLE_MULTIMON_DISPLAY_CLIPPING;
+                        command.flags |= (UInt32)MILRTInitializationFlags.MIL_RT_DISABLE_MULTIMON_DISPLAY_CLIPPING;
                     }
                 }
 
@@ -2400,7 +2400,7 @@ namespace System.Windows.Media.Composition
                 command.Handle = hCompositionTarget;
 
                 command.renderingEnabled = (uint)(renderingEnabled ? 1 : 0);
-                command.disableCookie = (uint) disableCookie;
+                command.disableCookie = (uint)disableCookie;
 
                 command.windowRect = windowRect;
 

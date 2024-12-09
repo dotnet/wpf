@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,12 +8,12 @@
 
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Navigation;
-using System.Windows.Media;
-using System.Windows.Markup;
 using System.Windows.Documents;
-using MS.Internal.KnownBoxes;
+using System.Windows.Markup;
+using System.Windows.Media;
+using System.Windows.Navigation;
 using MS.Internal;
+using MS.Internal.KnownBoxes;
 
 //In order to avoid generating warnings about unknown message numbers and 
 //unknown pragmas when compiling your C# source code with the actual C# compiler, 
@@ -40,7 +40,7 @@ namespace System.Windows.Controls
         {
             // We use IWindowService change notifications to propagate the cached values to the Window
             Window.IWindowServiceProperty.OverrideMetadata(
-                    typeof(Page), 
+                    typeof(Page),
                     new FrameworkPropertyMetadata(new PropertyChangedCallback(_OnWindowServiceChanged)));
 
             // (Window/NavigationWindow and Page should not be focusable)
@@ -48,7 +48,7 @@ namespace System.Windows.Controls
             // go to that element, otherwise, it will be null.  Page taking focus doesn't make 
             // sense, instead, it should be forwared to some more meaningful element in the tree.
             FocusableProperty.OverrideMetadata(typeof(Page), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
-            
+
             DefaultStyleKeyProperty.OverrideMetadata(typeof(Page), new FrameworkPropertyMetadata(typeof(Page)));
             _dType = DependencyObjectType.FromSystemTypeInternal(typeof(Page));
         }
@@ -61,14 +61,14 @@ namespace System.Windows.Controls
             // Initialize the _templateCache to the default value for TemplateProperty. 
             // If the default value is non-null then wire it to the current instance.
             PropertyMetadata metadata = TemplateProperty.GetMetadata(DependencyObjectType);
-            ControlTemplate defaultValue = (ControlTemplate) metadata.DefaultValue;
+            ControlTemplate defaultValue = (ControlTemplate)metadata.DefaultValue;
             if (defaultValue != null)
             {
                 OnTemplateChanged(this, new DependencyPropertyChangedEventArgs(TemplateProperty, metadata, null, defaultValue));
             }
         }
         #endregion Constructors
-           
+
         #region IAddChild
         /// <summary>
         ///     Adds a child. This is called by the parser
@@ -76,17 +76,17 @@ namespace System.Windows.Controls
         /// <param name="obj"></param>
         void IAddChild.AddChild(Object obj)
         {
-             VerifyAccess();
+            VerifyAccess();
 
-             // if content is the first child or being cleared, set directly
-             if (Content == null || obj == null)
-             {
-                 Content = obj;
-             }
-             else
-             {
-                 throw new InvalidOperationException(SR.PageCannotHaveMultipleContent);
-             }             
+            // if content is the first child or being cleared, set directly
+            if (Content == null || obj == null)
+            {
+                Content = obj;
+            }
+            else
+            {
+                throw new InvalidOperationException(SR.PageCannotHaveMultipleContent);
+            }
         }
 
         ///<summary>
@@ -96,8 +96,8 @@ namespace System.Windows.Controls
         ///<param name="str">
         ///     Text to add as a child.
         ///</param>
-        void IAddChild.AddText (string str)
-        {            
+        void IAddChild.AddText(string str)
+        {
             XamlSerializerUtil.ThrowIfNonWhiteSpaceInAddText(str, this);
         }
         #endregion IAddChild
@@ -123,9 +123,9 @@ namespace System.Windows.Controls
         ///     Flags:              None
         ///     Default Value:      null
         /// </summary>
-        public static readonly DependencyProperty ContentProperty = 
+        public static readonly DependencyProperty ContentProperty =
                 ContentControl.ContentProperty.AddOwner(
-                        typeof(Page), 
+                        typeof(Page),
                         new FrameworkPropertyMetadata(new PropertyChangedCallback(OnContentChanged)));
 
         /// <summary>
@@ -153,9 +153,9 @@ namespace System.Windows.Controls
         // example, getting WindowTitle will return Window.Title,
         // setting WindowTitle will set Window.Title. 
         //
-       
+
         string IWindowService.Title
-        { 
+        {
             get
             {
                 VerifyAccess();
@@ -167,7 +167,7 @@ namespace System.Windows.Controls
                 }
                 return WindowService.Title;
             }
-            
+
             set
             {
                 VerifyAccess();
@@ -221,7 +221,7 @@ namespace System.Windows.Controls
 #pragma warning disable 6503
                     throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
 #pragma warning restore 6503
-                }                
+                }
                 return WindowService.Height;
             }
 
@@ -237,7 +237,7 @@ namespace System.Windows.Controls
                 {
                     if (!WindowService.UserResized)
                     {
-                      WindowService.Height = value;
+                        WindowService.Height = value;
                     }
                     PropertyIsSet(SetPropertyFlags.WindowHeight);
                 }
@@ -261,7 +261,7 @@ namespace System.Windows.Controls
                 ((IWindowService)this).Height = value;
             }
         }
-        
+
         /// <summary>
         ///     Proxy to Window.Width property
         /// </summary>
@@ -275,7 +275,7 @@ namespace System.Windows.Controls
 #pragma warning disable 6503
                     throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
 #pragma warning restore 6503
-                }                
+                }
                 return WindowService.Width;
             }
 
@@ -291,7 +291,7 @@ namespace System.Windows.Controls
                 {
                     if (!WindowService.UserResized)
                     {
-                      WindowService.Width = value;
+                        WindowService.Width = value;
                     }
                     PropertyIsSet(SetPropertyFlags.WindowWidth);
                 }
@@ -332,10 +332,10 @@ namespace System.Windows.Controls
         [Category("Appearance")]
         public Brush Background
         {
-            get { return (Brush) GetValue(BackgroundProperty); }
+            get { return (Brush)GetValue(BackgroundProperty); }
             set { SetValue(BackgroundProperty, value); }
         }
-        
+
 
         /// <summary>
         ///     The DependencyProperty for the Title property.
@@ -430,7 +430,7 @@ namespace System.Windows.Controls
         /// </summary>
         public NavigationService NavigationService
         {
-            get 
+            get
             {
                 return NavigationService.GetNavigationService(this);
             }
@@ -451,7 +451,7 @@ namespace System.Windows.Controls
         [Bindable(true), Category("Appearance")]
         public Brush Foreground
         {
-            get { return (Brush) GetValue(ForegroundProperty); }
+            get { return (Brush)GetValue(ForegroundProperty); }
             set { SetValue(ForegroundProperty, value); }
         }
 
@@ -473,7 +473,7 @@ namespace System.Windows.Controls
         )]
         public FontFamily FontFamily
         {
-            get { return (FontFamily) GetValue(FontFamilyProperty); }
+            get { return (FontFamily)GetValue(FontFamilyProperty); }
             set { SetValue(FontFamilyProperty, value); }
         }
 
@@ -493,7 +493,7 @@ namespace System.Windows.Controls
         [Localizability(LocalizationCategory.None)] // FontSize is localizable        
         public double FontSize
         {
-            get { return (double) GetValue(FontSizeProperty); }
+            get { return (double)GetValue(FontSizeProperty); }
             set { SetValue(FontSizeProperty, value); }
         }
 
@@ -502,9 +502,9 @@ namespace System.Windows.Controls
         /// </summary>
         public static readonly DependencyProperty TemplateProperty =
                 Control.TemplateProperty.AddOwner(
-                        typeof(Page), 
+                        typeof(Page),
                         new FrameworkPropertyMetadata(
-                                (ControlTemplate) null,  // default value
+                                (ControlTemplate)null,  // default value
                                 FrameworkPropertyMetadataOptions.AffectsMeasure,
                                 new PropertyChangedCallback(OnTemplateChanged)));
 
@@ -523,7 +523,7 @@ namespace System.Windows.Controls
         {
             get { return Template; }
         }
-        
+
         // Internal Helper so the FrameworkElement could see the template cache
         internal override FrameworkTemplate TemplateCache
         {
@@ -540,8 +540,8 @@ namespace System.Windows.Controls
         // Property invalidation callback invoked when TemplateProperty is changed
         private static void OnTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Page p = (Page) d;
-            StyleHelper.UpdateTemplateCache(p, (FrameworkTemplate) e.OldValue, (FrameworkTemplate) e.NewValue, TemplateProperty);
+            Page p = (Page)d;
+            StyleHelper.UpdateTemplateCache(p, (FrameworkTemplate)e.OldValue, (FrameworkTemplate)e.NewValue, TemplateProperty);
         }
 
         /// <summary>
@@ -557,7 +557,7 @@ namespace System.Windows.Controls
             ControlTemplate oldTemplate, ControlTemplate newTemplate)
         {
         }
-        
+
         #endregion Public Properties
 
         //---------------------------------------------------
@@ -584,7 +584,7 @@ namespace System.Windows.Controls
             VerifyAccess();
             int count = this.VisualChildrenCount;
 
-            
+
             if (count > 0)
             {
                 UIElement child = this.GetVisualChild(0) as UIElement;
@@ -609,7 +609,7 @@ namespace System.Windows.Controls
         {
             VerifyAccess();
             int count = this.VisualChildrenCount;
-          
+
             if (count > 0)
             {
                 UIElement child = this.GetVisualChild(0) as UIElement;
@@ -650,15 +650,15 @@ namespace System.Windows.Controls
             // As a result when OnVisualParentChanged is fired, visualParent is null while the logical Parent is still the old one; Parent getter
             // here will return the illegal one. 
 
-            if ((visualParent == null) || 
-                (Parent is Window) || 
+            if ((visualParent == null) ||
+                (Parent is Window) ||
                 ((NavigationService != null) && (NavigationService.Content == this)))
             {
                 return;
             }
 
             // NOTE (Huwang 03/09/2007): The code below walks up the TemplatedParent chain until it finds the first Frame or Window. It does not 
-            // check whether Window.Content or Frame.Content is Page. So it allows the scenario where Page can be in any element�s template and 
+            // check whether Window.Content or Frame.Content is Page. So it allows the scenario where Page can be in any element’s template and 
             // be parented by any element as long as the template is nested inside a Window or Frame, as demoed below
             //
             // <Window>
@@ -716,7 +716,7 @@ namespace System.Windows.Controls
         }
 
         #endregion Protected Methods
-                
+
         //---------------------------------------------------
         //
         // Private Methods
@@ -726,7 +726,7 @@ namespace System.Windows.Controls
 
         private static void OnContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            Page page = (Page) d;
+            Page page = (Page)d;
             page.OnContentChanged(e.OldValue, e.NewValue);
         }
 
@@ -735,15 +735,15 @@ namespace System.Windows.Controls
             RemoveLogicalChild(oldContent);
             AddLogicalChild(newContent);
         }
-                
+
         private static void _OnWindowServiceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Page p = d as Page;
-            Debug.Assert( p != null, "DependencyObject must be of type Page." );
+            Debug.Assert(p != null, "DependencyObject must be of type Page.");
 
             p.OnWindowServiceChanged(e.NewValue as IWindowService);
         }
-        
+
         /// <summary>
         ///     When IWindowService is changed, it means that this control is either placed into
         ///     a window's visual tree or taken out.  If we are in a new Window's visual tree and this
@@ -755,7 +755,7 @@ namespace System.Windows.Controls
         ///     subsequent windows these properties are not propagated.
         /// </summary>
         private void OnWindowServiceChanged(IWindowService iws)
-        {            
+        {
             _currentIws = iws;
             DetermineTopLevel();
 
@@ -765,7 +765,7 @@ namespace System.Windows.Controls
                 {
                     PropagateProperties();
                 }
-            }            
+            }
         }
 
         private void DetermineTopLevel()
@@ -781,7 +781,7 @@ namespace System.Windows.Controls
                 _isTopLevel = false;
             }
         }
-               
+
         private void PropagateProperties()
         {
             Debug.Assert(_currentIws != null, "_currentIws cannot be null here. Caller should always verify it");
@@ -795,12 +795,12 @@ namespace System.Windows.Controls
             {
                 _currentIws.Title = PageHelperObject._windowTitle;
             }
-            if (IsPropertySet(SetPropertyFlags.WindowHeight) && (! _currentIws.UserResized))
+            if (IsPropertySet(SetPropertyFlags.WindowHeight) && (!_currentIws.UserResized))
             {
                 _currentIws.Height = PageHelperObject._windowHeight;
             }
 
-            if (IsPropertySet(SetPropertyFlags.WindowWidth) && (! _currentIws.UserResized))
+            if (IsPropertySet(SetPropertyFlags.WindowWidth) && (!_currentIws.UserResized))
             {
                 _currentIws.Width = PageHelperObject._windowWidth;
             }
@@ -813,10 +813,10 @@ namespace System.Windows.Controls
 
         bool IWindowService.UserResized
         {
-            get 
+            get
             {
                 Invariant.Assert(_currentIws != null, "_currentIws cannot be null here.");
-                return _currentIws.UserResized; 
+                return _currentIws.UserResized;
             }
         }
 
@@ -865,7 +865,7 @@ namespace System.Windows.Controls
         /// be serialized.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public  bool ShouldSerializeWindowWidth()
+        public bool ShouldSerializeWindowWidth()
         {
             return IsPropertySet(SetPropertyFlags.WindowWidth);
         }
@@ -875,7 +875,7 @@ namespace System.Windows.Controls
         /// be serialized.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public  bool ShouldSerializeTitle()
+        public bool ShouldSerializeTitle()
         {
             return IsPropertySet(SetPropertyFlags.Title);
         }
@@ -885,7 +885,7 @@ namespace System.Windows.Controls
         /// be serialized.
         /// </summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
-        public  bool ShouldSerializeShowsNavigationUI()
+        public bool ShouldSerializeShowsNavigationUI()
         {
             return IsPropertySet(SetPropertyFlags.ShowsNavigationUI);
         }
@@ -921,7 +921,7 @@ namespace System.Windows.Controls
                 return _pho;
             }
         }
-        
+
         //
         //  This property
         //  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject
@@ -940,13 +940,13 @@ namespace System.Windows.Controls
         //
         //----------------------------------------------
         #region Private Fields
-        private IWindowService              _currentIws;
-        private PageHelperObject            _pho;
-        private SetPropertyFlags            _setPropertyFlags = SetPropertyFlags.None;
-        private bool                        _isTopLevel;
-        private ControlTemplate             _templateCache;
+        private IWindowService _currentIws;
+        private PageHelperObject _pho;
+        private SetPropertyFlags _setPropertyFlags = SetPropertyFlags.None;
+        private bool _isTopLevel;
+        private ControlTemplate _templateCache;
         #endregion Private Fields
-        
+
         #region DTypeThemeStyleKey
 
         // Returns the DependencyObjectType for the registered ThemeStyleKey's default 
@@ -971,29 +971,29 @@ namespace System.Windows.Controls
         //
         //----------------------------------------------
         #region Internal Fields
-        
+
         //we start to cache these properties because the window is not necessarly available 
         //when the values are set. Also we need to be able to tell whether a property has been
         //set per property so that we will know which one is set. We have a bool variable per property 
         //for that purpose. 
-        internal String                         _text;
-        internal String                         _windowTitle;
-        internal double                         _windowHeight;
-        internal double                         _windowWidth;
-        internal bool                           _showsNavigationUI;
+        internal String _text;
+        internal String _windowTitle;
+        internal double _windowHeight;
+        internal double _windowWidth;
+        internal bool _showsNavigationUI;
         #endregion Internal Fields
     }
 
     [Flags]
     internal enum SetPropertyFlags : byte
     {
-        WindowTitle         = 0x01,
-        WindowHeight        = 0x02,
-        WindowWidth         = 0x04,
-        Title               = 0x08,
-        ShowsNavigationUI   = 0x10,
+        WindowTitle = 0x01,
+        WindowHeight = 0x02,
+        WindowWidth = 0x04,
+        Title = 0x08,
+        ShowsNavigationUI = 0x10,
 
-        None                = 0x00,
+        None = 0x00,
     }
 }
 

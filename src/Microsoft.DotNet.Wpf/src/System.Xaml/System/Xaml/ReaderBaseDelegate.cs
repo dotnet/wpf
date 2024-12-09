@@ -12,7 +12,7 @@ namespace System.Xaml
     // Advancing to the next node with Read() is left to be defined
     // in the deriving class.
     //
-    abstract internal class ReaderBaseDelegate: XamlReader, IXamlLineInfo
+    abstract internal class ReaderBaseDelegate : XamlReader, IXamlLineInfo
     {
         protected XamlSchemaContext _schemaContext;
         protected XamlNode _currentNode;
@@ -34,7 +34,7 @@ namespace System.Xaml
             get { return _currentNode.IsEof; }
         }
 
-        public override NamespaceDeclaration  Namespace
+        public override NamespaceDeclaration Namespace
         {
             get { return _currentNode.NamespaceDeclaration; }
         }

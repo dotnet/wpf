@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,17 +9,17 @@
 *
 \***************************************************************************/
 
-using System.Xml;
-using System.Xml.Serialization;
-using System.IO;
 using System.Collections;
 using System.ComponentModel;
-using System.Reflection;
 using System.Globalization;
-using MS.Utility;
+using System.IO;
+using System.Reflection;
+using System.Windows.Navigation;
+using System.Xml;
+using System.Xml.Serialization;
 using MS.Internal;
 using MS.Internal.Utility;
-using System.Windows.Navigation;
+using MS.Utility;
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and
@@ -36,39 +36,39 @@ namespace System.Windows.Markup
     internal enum ReaderFlags : ushort
     {
         // Context types
-        Unknown                   = 0x0000,
+        Unknown = 0x0000,
 
-        DependencyObject          = 0x1000,
-        ClrObject                 = 0x2000,
+        DependencyObject = 0x1000,
+        ClrObject = 0x2000,
 
-        PropertyComplexClr        = 0x3000,
-        PropertyComplexDP         = 0x4000,
+        PropertyComplexClr = 0x3000,
+        PropertyComplexDP = 0x4000,
 
-        PropertyArray             = 0x5000,
-        PropertyIList             = 0x6000,
-        PropertyIDictionary       = 0x7000,
-        PropertyIAddChild         = 0x8000,
+        PropertyArray = 0x5000,
+        PropertyIList = 0x6000,
+        PropertyIDictionary = 0x7000,
+        PropertyIAddChild = 0x8000,
 
-        RealizeDeferContent       = 0x9000,
+        RealizeDeferContent = 0x9000,
 
-        ConstructorParams         = 0xA000,
+        ConstructorParams = 0xA000,
 
-        ContextTypeMask           = 0xF000,
+        ContextTypeMask = 0xF000,
 
-        StyleObject               = 0x0100,
-        FrameworkTemplateObject   = 0x0200,
-        TableTemplateObject       = 0x0400,
+        StyleObject = 0x0100,
+        FrameworkTemplateObject = 0x0200,
+        TableTemplateObject = 0x0400,
         SingletonConstructorParam = 0x0800,
 
         // Element flags
-        NeedToAddToTree           = 0x0001,    // Need to add to element tree, but haven't yet
-        AddedToTree               = 0x0002,    // Has already been added to element tree, so don't do it again
-        InjectedElement           = 0x0004,    // Context was an injected element, so skip over it
-        CollectionHolder          = 0x0008,
-        IDictionary               = 0x0010,
-        IList                     = 0x0020,
-        ArrayExt                  = 0x0040,
-        IAddChild                 = 0x0080,
+        NeedToAddToTree = 0x0001,    // Need to add to element tree, but haven't yet
+        AddedToTree = 0x0002,    // Has already been added to element tree, so don't do it again
+        InjectedElement = 0x0004,    // Context was an injected element, so skip over it
+        CollectionHolder = 0x0008,
+        IDictionary = 0x0010,
+        IList = 0x0020,
+        ArrayExt = 0x0040,
+        IAddChild = 0x0080,
     }
 
     /// <summary>
@@ -77,23 +77,23 @@ namespace System.Windows.Markup
     /// </summary>
     internal class BamlRecordReader
     {
-#region Constructor
+        #region Constructor
         /// <summary>
         /// Eventually should need xamltypemapper when finish compiler integration
         /// and namespaceMaps are written to Baml.
         /// </summary>summary>
         internal BamlRecordReader(
-            Stream        bamlStream,
+            Stream bamlStream,
             ParserContext parserContext)
-            : this(bamlStream,parserContext,true)
+            : this(bamlStream, parserContext, true)
         {
             XamlParseMode = XamlParseMode.Synchronous;
         }
 
         internal BamlRecordReader(
-            Stream           bamlStream,
-            ParserContext    parserContext,
-            object           root)
+            Stream bamlStream,
+            ParserContext parserContext,
+            object root)
         {
             Debug.Assert(null != bamlStream);
             Debug.Assert(null != parserContext && null != parserContext.XamlTypeMapper);
@@ -117,9 +117,9 @@ namespace System.Windows.Markup
         /// <param name="loadMapper">Ensure parser context has same XamlTypeMapper and
         ///                            map table as this reader</param>
         internal BamlRecordReader(
-            Stream           bamlStream,
-            ParserContext    parserContext,
-            bool             loadMapper)
+            Stream bamlStream,
+            ParserContext parserContext,
+            bool loadMapper)
         {
             Debug.Assert(null != parserContext && null != parserContext.XamlTypeMapper);
 
@@ -140,9 +140,9 @@ namespace System.Windows.Markup
         {
         }
 
-#endregion Constructor
+        #endregion Constructor
 
-#region Methods
+        #region Methods
 
         /// <summary>
         /// Set up the XamlTypeMapper and baml map table prior to starting to read.
@@ -233,12 +233,12 @@ namespace System.Windows.Markup
                         Debug.Assert(false == XamlReaderStream.IsWriteComplete,
                                 "not enough bytes for RecordSize but write is complete");
 #endif
-                        stream.Seek(currentPosition,SeekOrigin.Begin);
+                        stream.Seek(currentPosition, SeekOrigin.Begin);
                         return null;
                     }
 
                     // tell stream we are done with these file bits.
-                    XamlReaderStream.ReaderDoneWithFileUpToPosition(stream.Position -1);
+                    XamlReaderStream.ReaderDoneWithFileUpToPosition(stream.Position - 1);
                 }
                 else
                 {
@@ -282,7 +282,7 @@ namespace System.Windows.Markup
         }
 
         internal BamlRecord ReadNextRecordWithDebugExtension(
-            long           bytesAvailable,
+            long bytesAvailable,
             BamlRecordType recordType)
         {
             BamlRecord bamlRecord = BamlRecordManager.ReadNextRecord(BinaryReader, bytesAvailable, recordType);
@@ -301,7 +301,7 @@ namespace System.Windows.Markup
         {
             Stream stream = BinaryReader.BaseStream;
             long bytesAvailable = stream.Length - stream.Position;
-            if(bytesAvailable == 0)
+            if (bytesAvailable == 0)
                 return null;
 
             BamlRecordType nextRecordType = (BamlRecordType)BinaryReader.ReadByte();
@@ -315,14 +315,14 @@ namespace System.Windows.Markup
             else
             {
                 // if it wasn't a debug record then backup.
-                stream.Seek( -1, SeekOrigin.Current);
+                stream.Seek(-1, SeekOrigin.Current);
                 return null;
             }
         }
 
         internal void ProcessDebugBamlRecord(BamlRecord bamlRecord)
         {
-            if(bamlRecord.RecordType == BamlRecordType.LineNumberAndPosition)
+            if (bamlRecord.RecordType == BamlRecordType.LineNumberAndPosition)
             {
                 BamlLineAndPositionRecord bamlLineAndPositionRecord = (BamlLineAndPositionRecord)bamlRecord;
                 LineNumber = (int)bamlLineAndPositionRecord.LineNumber;
@@ -376,7 +376,7 @@ namespace System.Windows.Markup
             bool moreData = true;
 
             // loop through the records until the end building the Tree.
-            while ( (true == moreData)
+            while ((true == moreData)
                 && null != (bamlRecord = GetNextRecord()))
             {
                 moreData = ReadRecord(bamlRecord);
@@ -418,8 +418,8 @@ namespace System.Windows.Markup
         /// </summary>
         internal bool Read(
             BamlRecord bamlRecord,
-            int        lineNumber,
-            int        linePosition)
+            int lineNumber,
+            int linePosition)
         {
             LineNumber = lineNumber;
             LinePosition = linePosition;
@@ -447,7 +447,7 @@ namespace System.Windows.Markup
         /// </remarks>
         internal object ReadElement(Int64 startPosition,
                                     XamlObjectIds contextXamlObjectIds,
-                                    object dictionaryKey )
+                                    object dictionaryKey)
         {
             BamlRecord bamlRecord = null;
             bool moreData = true;
@@ -464,12 +464,12 @@ namespace System.Windows.Markup
             CurrentContext.Uid = contextXamlObjectIds.Uid;
             CurrentContext.Key = dictionaryKey;
 
-            #if DEBUG
+#if DEBUG
             int stackDepth = ReaderContextStack.Count;
-            #endif
+#endif
 
             // Loop through the records until the matching end record is reached.
-            while ( moreData
+            while (moreData
                 && null != (bamlRecord = GetNextRecord()))
             {
                 // Count start and end records and stop when we've reached the end
@@ -496,7 +496,7 @@ namespace System.Windows.Markup
                 // the context, as would happen in the non-deferred case, so that it is available to
                 // make a good exception message.
 
-                if( !isKeySetInContext )
+                if (!isKeySetInContext)
                 {
                     CurrentContext.Key = dictionaryKey;
                     isKeySetInContext = true;
@@ -515,9 +515,9 @@ namespace System.Windows.Markup
             data = CurrentContext.ObjectData;
             CurrentContext.ObjectData = null;
 
-            #if DEBUG  // ifdef's around Debug.Assert are necessary because stackDepth is only DEBUG defined
-            Debug.Assert( stackDepth == ReaderContextStack.Count );
-            #endif
+#if DEBUG  // ifdef's around Debug.Assert are necessary because stackDepth is only DEBUG defined
+            Debug.Assert(stackDepth == ReaderContextStack.Count);
+#endif
 
             PopContext();
 
@@ -780,16 +780,16 @@ namespace System.Windows.Markup
             catch (Exception e)
             {
                 // Don't wrap critical exceptions or already-wrapped exceptions.
-                if (CriticalExceptions.IsCriticalException(e) || e is XamlParseException )
+                if (CriticalExceptions.IsCriticalException(e) || e is XamlParseException)
                 {
                     throw;
                 }
 
-                XamlParseException.ThrowException( ParserContext,
+                XamlParseException.ThrowException(ParserContext,
                                                LineNumber,
                                                LinePosition,
                                                String.Empty /*message*/,
-                                               e );
+                                               e);
             }
 #endif
             return moreData;
@@ -820,7 +820,7 @@ namespace System.Windows.Markup
                 //  available later for XamlTypeMapper.GetTypeFromName() which gets it
                 //  as value of XmlAttributeProperties.XmlNamespaceMapsProperty.
 
-         // XamlTypeMapper.GetNamespaceMapEntries(xmlnsRecord);
+                // XamlTypeMapper.GetNamespaceMapEntries(xmlnsRecord);
 
                 if (ReaderFlags.DependencyObject == CurrentContext.ContextType)
                 {
@@ -972,14 +972,14 @@ namespace System.Windows.Markup
             {
                 returnValue = markupExtension.ProvideValue(serviceProvider);
 
-                if( TraceMarkup.IsEnabled )
+                if (TraceMarkup.IsEnabled)
                 {
                     TraceMarkup.TraceActivityItem(
                                           TraceMarkup.ProvideValue,
                                           markupExtension,
                                           obj,
                                           member,
-                                          returnValue );
+                                          returnValue);
                 }
             }
             finally
@@ -996,10 +996,10 @@ namespace System.Windows.Markup
         internal void BaseReadElementStartRecord(
             BamlElementStartRecord bamlElementRecord)
         {
-            object        element = null;
-            Type          delayCreatedType = null;
-            short         delayCreatedTypeId = 0;
-            ReaderFlags   flags = ReaderFlags.Unknown;
+            object element = null;
+            Type delayCreatedType = null;
+            short delayCreatedTypeId = 0;
+            ReaderFlags flags = ReaderFlags.Unknown;
             ReaderContextStackData currentContext = CurrentContext;
 
             if (_bamlAsForest && currentContext == null)
@@ -1221,8 +1221,8 @@ namespace System.Windows.Markup
             if ((flags & (ReaderFlags.AddedToTree)) == 0 &&
                 CurrentContext != null)
             {
-                Debug.Assert( CurrentContext.ContextType != ReaderFlags.PropertyComplexClr );
-                Debug.Assert( CurrentContext.ContextType != ReaderFlags.PropertyComplexDP );
+                Debug.Assert(CurrentContext.ContextType != ReaderFlags.PropertyComplexClr);
+                Debug.Assert(CurrentContext.ContextType != ReaderFlags.PropertyComplexDP);
 
                 switch (CurrentContext.ContextType)
                 {
@@ -1246,7 +1246,7 @@ namespace System.Windows.Markup
         {
             Type elementType = MapTable.GetTypeFromId(bamlElementRecord.TypeId);
 
-            ReaderFlags flags  = (elementType.IsAssignableFrom(typeof(DependencyObject)) ?
+            ReaderFlags flags = (elementType.IsAssignableFrom(typeof(DependencyObject)) ?
                                                ReaderFlags.DependencyObject :
                                                ReaderFlags.ClrObject) |
                                                ReaderFlags.NeedToAddToTree;
@@ -1387,8 +1387,8 @@ namespace System.Windows.Markup
         // all of the objects held on the stack.
         internal virtual void ReadConstructorParametersEndRecord()
         {
-            Type   elementType = ParentContext.ExpectedType;
-            short  positiveElementTypeId = (short)-ParentContext.ExpectedTypeId;
+            Type elementType = ParentContext.ExpectedType;
+            short positiveElementTypeId = (short)-ParentContext.ExpectedTypeId;
 
             object param = null;
             ArrayList paramList = null;
@@ -1396,11 +1396,11 @@ namespace System.Windows.Markup
             object instance = null;
             bool foundInstance = false;
 
-            if( TraceMarkup.IsEnabled )
+            if (TraceMarkup.IsEnabled)
             {
-                TraceMarkup.Trace( TraceEventType.Start,
+                TraceMarkup.Trace(TraceEventType.Start,
                                  TraceMarkup.CreateMarkupExtension,
-                                 elementType );
+                                 elementType);
             }
 
             if (CurrentContext.CheckFlag(ReaderFlags.SingletonConstructorParam))
@@ -1494,7 +1494,7 @@ namespace System.Windows.Markup
                 // Find the constructor based on the number of parameters stored in paramList
                 XamlTypeMapper.ConstructorData data = XamlTypeMapper.GetConstructors(elementType);
                 ConstructorInfo[] infos = data.Constructors;
-                for (int i=0; i<infos.Length; i++)
+                for (int i = 0; i < infos.Length; i++)
                 {
                     ConstructorInfo info = infos[i];
                     ParameterInfo[] paramInfos = data.GetParameters(i);
@@ -1522,7 +1522,7 @@ namespace System.Windows.Markup
 
                             // Check each type and attempt to convert the paramList using
                             // the type converter associated with each parameter type.
-                            for (int j=0; j<paramInfos.Length; j++)
+                            for (int j = 0; j < paramInfos.Length; j++)
                             {
                                 ProcessConstructorParameter(paramInfos[j], paramList[j], ref paramArray[j]);
                             }
@@ -1548,12 +1548,12 @@ namespace System.Windows.Markup
                                 }
 
                                 TargetInvocationException tie = e as TargetInvocationException;
-                                if( tie != null )
+                                if (tie != null)
                                 {
                                     e = tie.InnerException;
                                 }
 
-                                ThrowExceptionWithLine(SR.Format(SR.ParserFailedToCreateFromConstructor, info.DeclaringType.Name),  e);
+                                ThrowExceptionWithLine(SR.Format(SR.ParserFailedToCreateFromConstructor, info.DeclaringType.Name), e);
                             }
 #endif
                         }
@@ -1573,12 +1573,12 @@ namespace System.Windows.Markup
                 ThrowException(nameof(SR.ParserBadConstructorParams), elementType.Name, paramCount.ToString(CultureInfo.CurrentCulture));
             }
 
-            if( TraceMarkup.IsEnabled )
+            if (TraceMarkup.IsEnabled)
             {
-                TraceMarkup.Trace( TraceEventType.Stop,
+                TraceMarkup.Trace(TraceEventType.Stop,
                                  TraceMarkup.CreateMarkupExtension,
                                  elementType,
-                                 instance );
+                                 instance);
             }
         }
 
@@ -1603,13 +1603,13 @@ namespace System.Windows.Markup
                 TypeConverter converter = XamlTypeMapper.GetTypeConverter(paramInfo.ParameterType);
 
 
-                if( TraceMarkup.IsEnabled )
+                if (TraceMarkup.IsEnabled)
                 {
-                    TraceMarkup.Trace( TraceEventType.Start,
+                    TraceMarkup.Trace(TraceEventType.Start,
                                      TraceMarkup.ProcessConstructorParameter,
                                      paramInfo.ParameterType,
                                      converter.GetType(),
-                                     param );
+                                     param);
                 }
 
 #if !STRESS
@@ -1642,9 +1642,9 @@ namespace System.Windows.Markup
 #if !STRESS
                 }
 
-                catch( Exception e )
+                catch (Exception e)
                 {
-                    if( CriticalExceptions.IsCriticalException(e) || e is XamlParseException )
+                    if (CriticalExceptions.IsCriticalException(e) || e is XamlParseException)
                     {
                         throw;
                     }
@@ -1657,13 +1657,13 @@ namespace System.Windows.Markup
                 }
 #endif
 
-                if( TraceMarkup.IsEnabled )
+                if (TraceMarkup.IsEnabled)
                 {
-                    TraceMarkup.Trace( TraceEventType.Stop,
+                    TraceMarkup.Trace(TraceEventType.Stop,
                                      TraceMarkup.ProcessConstructorParameter,
                                      paramInfo.ParameterType,
                                      converter.GetType(),
-                                     param );
+                                     param);
                 }
             }
 
@@ -1694,8 +1694,8 @@ namespace System.Windows.Markup
                 }
 
                 // Read through all the key records and the static resource records
-                ArrayList       defKeyList;
-                List<object[]>  staticResourceValuesList;
+                ArrayList defKeyList;
+                List<object[]> staticResourceValuesList;
                 BaseReadDeferableContentStart(bamlRecord, out defKeyList, out staticResourceValuesList);
 
                 // If we don't own the stream, someone might close it when the parse is complete,
@@ -1732,15 +1732,15 @@ namespace System.Windows.Markup
 
         internal void BaseReadDeferableContentStart(
             BamlDeferableContentStartRecord bamlRecord,
-            out ArrayList                   defKeyList,
-            out List<object[]>              staticResourceValuesList)
+            out ArrayList defKeyList,
+            out List<object[]> staticResourceValuesList)
         {
             // Check for DefAttributeKeys and create a key table, if some are
             // present.  Peek ahead in the stream looking for IBamlDictionaryKey types
             // and just process those without touching anything else.
             // NOTE:  The typical shell theme file is roughly 450 bytes per value, so presize
             //        the arraylist to be optimal for these scenarios.
-            defKeyList = new ArrayList(Math.Max (5, (int)(bamlRecord.ContentSize/400)));
+            defKeyList = new ArrayList(Math.Max(5, (int)(bamlRecord.ContentSize / 400)));
             staticResourceValuesList = new List<object[]>(defKeyList.Capacity);
             ArrayList staticResources = new ArrayList();
             BamlRecordType nextType = GetNextRecordType();
@@ -1804,11 +1804,11 @@ namespace System.Windows.Markup
                         else
                         {
                             // Enum.ToString(culture) is [Obsolete]
-                            #pragma warning disable 0618
+#pragma warning disable 0618
 
                             ThrowException(nameof(SR.ParserUnexpInBAML), keyRecord.RecordType.ToString(CultureInfo.CurrentCulture));
 
-                            #pragma warning restore 0618
+#pragma warning restore 0618
                         }
                     }
                 }
@@ -1885,7 +1885,7 @@ namespace System.Windows.Markup
                     // content then its front loaded section will have StaticResourceId records that
                     // index into the pre-fetched values on the template.
 
-                    object[] staticResourceValues = ParserContext.StaticResourcesStack[ParserContext.StaticResourcesStack.Count-1];
+                    object[] staticResourceValues = ParserContext.StaticResourcesStack[ParserContext.StaticResourcesStack.Count - 1];
 
                     while (nextType == BamlRecordType.StaticResourceId)
                     {
@@ -1964,7 +1964,7 @@ namespace System.Windows.Markup
         internal StaticResourceHolder GetStaticResourceFromId(short staticResourceId)
         {
             // Get the value of the property
-            object[] staticResourceValues = ParserContext.StaticResourcesStack[ParserContext.StaticResourcesStack.Count-1];
+            object[] staticResourceValues = ParserContext.StaticResourcesStack[ParserContext.StaticResourcesStack.Count - 1];
             Debug.Assert(staticResourceValues != null, "Must have a list of StaticResourceValues for lookup");
 
             // Find the StaticResourceValue for the given Id
@@ -1981,19 +1981,19 @@ namespace System.Windows.Markup
         {
             if (CurrentContext != null)
             {
-                 object dpOrPi = null;
-                 object parent = null;
-                 if (CurrentContext.ContentProperty != null)
-                 {
+                object dpOrPi = null;
+                object parent = null;
+                if (CurrentContext.ContentProperty != null)
+                {
                     dpOrPi = CurrentContext.ContentProperty;
                     parent = CurrentContext.ObjectData;
-                 }
-                 else if (   (CurrentContext.ContextType == ReaderFlags.PropertyComplexClr)
-                           || (CurrentContext.ContextType == ReaderFlags.PropertyComplexDP) )
-                 {
+                }
+                else if ((CurrentContext.ContextType == ReaderFlags.PropertyComplexClr)
+                          || (CurrentContext.ContextType == ReaderFlags.PropertyComplexDP))
+                {
                     dpOrPi = CurrentContext.ObjectData;
                     parent = ParentContext.ObjectData;
-                 }
+                }
 
                 IXmlSerializable xmlSerializable = null;
                 PropertyInfo pi = dpOrPi as PropertyInfo;
@@ -2027,7 +2027,7 @@ namespace System.Windows.Markup
                     return;
                 }
             }
-            ThrowException(nameof(SR.ParserUnexpInBAML), "BamlLiteralContent" );
+            ThrowException(nameof(SR.ParserUnexpInBAML), "BamlLiteralContent");
         }
 
         // Read the start of a complex property section.  Determine the property to set
@@ -2157,7 +2157,7 @@ namespace System.Windows.Markup
                 }
                 catch (Exception e)
                 {
-                    if( CriticalExceptions.IsCriticalException(e) || e is XamlParseException )
+                    if (CriticalExceptions.IsCriticalException(e) || e is XamlParseException)
                     {
                         throw;
                     }
@@ -2214,7 +2214,7 @@ namespace System.Windows.Markup
                 }
                 catch (Exception e)
                 {
-                    if( CriticalExceptions.IsCriticalException(e) || e is XamlParseException )
+                    if (CriticalExceptions.IsCriticalException(e) || e is XamlParseException)
                     {
                         throw;
                     }
@@ -2345,7 +2345,7 @@ namespace System.Windows.Markup
             if (memberId < 0)
             {
                 short keyId = (short)-memberId;
-                
+
                 // if keyId is more than the range it is the actual resource, else it is the key.
 
                 bool isKey;
@@ -2365,9 +2365,11 @@ namespace System.Windows.Markup
                 BamlAttributeInfoRecord attribInfo = MapTable.GetAttributeInfoFromId(memberId);
                 if (attribInfo != null)
                 {
-                    StaticExtension se = new StaticExtension();
-                    se.MemberType = MapTable.GetTypeFromId(attribInfo.OwnerTypeId);
-                    se.Member = attribInfo.Name;
+                    StaticExtension se = new StaticExtension
+                    {
+                        MemberType = MapTable.GetTypeFromId(attribInfo.OwnerTypeId),
+                        Member = attribInfo.Name
+                    };
                     valueObject = se.ProvideValue(null);
                 }
             }
@@ -2377,7 +2379,7 @@ namespace System.Windows.Markup
 
         internal virtual object GetExtensionValue(
             IOptimizedMarkupExtension optimizedMarkupExtensionRecord,
-            string                    propertyName)
+            string propertyName)
         {
             object innerExtensionValue = null;
             object valueObject = null;
@@ -2450,10 +2452,10 @@ namespace System.Windows.Markup
         }
 
         private void BaseReadOptimizedMarkupExtension(
-            object             element,
-            short              attributeId,
+            object element,
+            short attributeId,
             WpfPropertyDefinition propertyDefinition,
-            object             value)
+            object value)
         {
 #if !STRESS
             try
@@ -2465,25 +2467,25 @@ namespace System.Windows.Markup
                 {
                     value = ProvideValueFromMarkupExtension(me, element, propertyDefinition.DpOrPiOrMi);
 
-                    if( TraceMarkup.IsEnabled )
+                    if (TraceMarkup.IsEnabled)
                     {
                         TraceMarkup.TraceActivityItem(
                                               TraceMarkup.ProvideValue,
                                               me,
                                               element,
                                               propertyDefinition.DpOrPiOrMi,
-                                              value );
+                                              value);
                     }
                 }
 
-                if( !SetPropertyValue( element, propertyDefinition, value ))
+                if (!SetPropertyValue(element, propertyDefinition, value))
                 {
                     ThrowException(nameof(SR.ParserCantGetDPOrPi), GetPropertyNameFromAttributeId(attributeId));
                 }
 
 #if !STRESS
             }
-            catch( Exception e )
+            catch (Exception e)
             {
                 if (CriticalExceptions.IsCriticalException(e) || e is XamlParseException)
                 {
@@ -2491,7 +2493,7 @@ namespace System.Windows.Markup
                 }
 
                 TargetInvocationException tie = e as TargetInvocationException;
-                if( tie != null )
+                if (tie != null)
                 {
                     e = tie.InnerException;
                 }
@@ -2508,7 +2510,7 @@ namespace System.Windows.Markup
         // or a CLR property (figure out from the PropertyDefinition).
         //
 
-        private bool SetPropertyValue( Object o, WpfPropertyDefinition propertyDefinition, object value )
+        private bool SetPropertyValue(Object o, WpfPropertyDefinition propertyDefinition, object value)
         {
             bool succeeded = true;
 
@@ -2518,9 +2520,9 @@ namespace System.Windows.Markup
 
             if (propertyDefinition.DependencyProperty != null)
             {
-                if( TraceMarkup.IsEnabled )
+                if (TraceMarkup.IsEnabled)
                 {
-                    TraceMarkup.Trace( TraceEventType.Start,
+                    TraceMarkup.Trace(TraceEventType.Start,
                                      TraceMarkup.SetPropertyValue,
                                      o,
                                      propertyDefinition.DependencyProperty.Name,
@@ -2530,9 +2532,9 @@ namespace System.Windows.Markup
                 Debug.Assert(o is DependencyObject);
                 SetDependencyValue((DependencyObject)o, propertyDefinition.DependencyProperty, value);
 
-                if( TraceMarkup.IsEnabled )
+                if (TraceMarkup.IsEnabled)
                 {
-                    TraceMarkup.Trace( TraceEventType.Stop,
+                    TraceMarkup.Trace(TraceEventType.Stop,
                                      TraceMarkup.SetPropertyValue,
                                      o,
                                      propertyDefinition.DependencyProperty.Name,
@@ -2546,9 +2548,9 @@ namespace System.Windows.Markup
 
             else if (propertyDefinition.PropertyInfo != null)
             {
-                if( TraceMarkup.IsEnabled )
+                if (TraceMarkup.IsEnabled)
                 {
-                    TraceMarkup.Trace( TraceEventType.Start,
+                    TraceMarkup.Trace(TraceEventType.Start,
                                      TraceMarkup.SetPropertyValue,
                                      o,
                                      propertyDefinition.PropertyInfo.Name,
@@ -2572,9 +2574,9 @@ namespace System.Windows.Markup
                     propertyDefinition.PropertyInfo.SetValue(o, value, BindingFlags.Default, null, null, TypeConverterHelper.InvariantEnglishUS);
                 }
 
-                if( TraceMarkup.IsEnabled )
+                if (TraceMarkup.IsEnabled)
                 {
-                    TraceMarkup.Trace( TraceEventType.Stop,
+                    TraceMarkup.Trace(TraceEventType.Stop,
                                      TraceMarkup.SetPropertyValue,
                                      o,
                                      propertyDefinition.PropertyInfo.Name,
@@ -2588,9 +2590,9 @@ namespace System.Windows.Markup
 
             else if (propertyDefinition.AttachedPropertySetter != null)
             {
-                if( TraceMarkup.IsEnabled )
+                if (TraceMarkup.IsEnabled)
                 {
-                    TraceMarkup.Trace( TraceEventType.Start,
+                    TraceMarkup.Trace(TraceEventType.Start,
                                      TraceMarkup.SetPropertyValue,
                                      o,
                                      propertyDefinition.AttachedPropertySetter.Name,
@@ -2599,9 +2601,9 @@ namespace System.Windows.Markup
 
                 propertyDefinition.AttachedPropertySetter.Invoke(null, new object[] { o, value });
 
-                if( TraceMarkup.IsEnabled )
+                if (TraceMarkup.IsEnabled)
                 {
-                    TraceMarkup.Trace( TraceEventType.Stop,
+                    TraceMarkup.Trace(TraceEventType.Stop,
                                      TraceMarkup.SetPropertyValue,
                                      o,
                                      propertyDefinition.AttachedPropertySetter.Name,
@@ -2650,7 +2652,7 @@ namespace System.Windows.Markup
             try
             {
 #endif
-                if( !SetPropertyValue( element, propertyDefinition, valueType ))
+                if (!SetPropertyValue(element, propertyDefinition, valueType))
                 {
                     ThrowException(nameof(SR.ParserCantGetDPOrPi), GetPropertyNameFromAttributeId(attributeId));
                 }
@@ -2664,7 +2666,7 @@ namespace System.Windows.Markup
                 }
 
                 TargetInvocationException tie = e as TargetInvocationException;
-                if( tie != null )
+                if (tie != null)
                 {
                     e = tie.InnerException;
                 }
@@ -2676,11 +2678,11 @@ namespace System.Windows.Markup
 
         // Common section for setting a property defined by an attributeId to a value.
         private void ReadPropertyRecordBase(
-            string   attribValue,
-            short    attributeId,
-            short    converterTypeId)
+            string attribValue,
+            short attributeId,
+            short converterTypeId)
         {
-            if( CurrentContext.CreateUsingTypeConverter )
+            if (CurrentContext.CreateUsingTypeConverter)
             {
                 // TypeConverter syntax rules state that there shall be no specifying
                 //  property values on the TypeConverter object specification.
@@ -2701,7 +2703,7 @@ namespace System.Windows.Markup
                 BamlAttributeUsage attributeUsage;
                 MapTable.GetAttributeInfoFromId(attributeId, out ownerTypeId, out name, out attributeUsage);
 
-                Debug.Assert( attributeUsage == BamlAttributeUsage.XmlSpace,
+                Debug.Assert(attributeUsage == BamlAttributeUsage.XmlSpace,
                     "The xml:space attribute is the only one deemed compatible with TypeConverter syntax, but we've encountered something else.  How did this slip by the XamlReaderHelper TypeConverter syntax check?");
 #endif
 
@@ -2758,7 +2760,7 @@ namespace System.Windows.Markup
                     // up the value is done in ParseProperty.
                     if (propertyValue != DependencyProperty.UnsetValue)
                     {
-                        SetPropertyValue( element, propertyDefinition, propertyValue );
+                        SetPropertyValue(element, propertyDefinition, propertyValue);
                     }
                 }
                 else if (propertyDefinition.PropertyInfo != null)
@@ -2779,7 +2781,7 @@ namespace System.Windows.Markup
                     if (propertyValue != DependencyProperty.UnsetValue)
                     {
                         // Assign the value to the property
-                        SetPropertyValue( element, propertyDefinition, propertyValue );
+                        SetPropertyValue(element, propertyDefinition, propertyValue);
                     }
                 }
                 else if (propertyDefinition.AttachedPropertySetter != null)
@@ -2801,7 +2803,7 @@ namespace System.Windows.Markup
                     if (propertyValue != DependencyProperty.UnsetValue)
                     {
                         // Attached Property accessible via SetFoo/GetFoo static methods
-                        SetPropertyValue( element, propertyDefinition, propertyValue );
+                        SetPropertyValue(element, propertyDefinition, propertyValue);
                     }
                 }
                 else
@@ -2906,7 +2908,7 @@ namespace System.Windows.Markup
                 }
 
                 TargetInvocationException tie = e as TargetInvocationException;
-                if( tie != null )
+                if (tie != null)
                 {
                     e = tie.InnerException;
                 }
@@ -2925,10 +2927,10 @@ namespace System.Windows.Markup
         //
         //+-----------------------------------------------------------------------------------------------------
 
-        private void DoRegisterName( string name, object element )
+        private void DoRegisterName(string name, object element)
         {
             // Store this name in the context (used by XamlParseException).
-            if( CurrentContext != null )
+            if (CurrentContext != null)
             {
                 CurrentContext.ElementNameOrPropertyName = name;
             }
@@ -2973,7 +2975,7 @@ namespace System.Windows.Markup
         // hold array contents.
         protected void ReadPropertyArrayStartRecord(BamlPropertyArrayStartRecord bamlPropertyArrayStartRecord)
         {
-            short  attributeId = bamlPropertyArrayStartRecord.AttributeId;
+            short attributeId = bamlPropertyArrayStartRecord.AttributeId;
             object parent = GetCurrentObjectData();
             BamlCollectionHolder holder = new BamlCollectionHolder(this, parent, attributeId, false /*needDefault*/);
 
@@ -3077,7 +3079,7 @@ namespace System.Windows.Markup
         protected virtual void ReadPropertyIDictionaryStartRecord(
             BamlPropertyIDictionaryStartRecord bamlPropertyIDictionaryStartRecord)
         {
-            short  attributeId = bamlPropertyIDictionaryStartRecord.AttributeId;
+            short attributeId = bamlPropertyIDictionaryStartRecord.AttributeId;
             object parent = GetCurrentObjectData();
             BamlCollectionHolder holder = new BamlCollectionHolder(this, parent, attributeId);
 
@@ -3126,15 +3128,17 @@ namespace System.Windows.Markup
         private void InitPropertyCollection(BamlCollectionHolder holder, ReaderContextStackData context)
         {
             // this method should only be called to initialize the collection
-            Debug.Assert (holder.Collection == null);
+            Debug.Assert(holder.Collection == null);
 
             if (context.ContextType == ReaderFlags.PropertyArray)
             {
                 // arrays are a little different than other collections, because we wrap them in an array extension.
                 // Here we create an array extension and assign the element type based on the property.
 
-                ArrayExtension arrayExt = new ArrayExtension();
-                arrayExt.Type = context.ExpectedType.GetElementType();
+                ArrayExtension arrayExt = new ArrayExtension
+                {
+                    Type = context.ExpectedType.GetElementType()
+                };
                 holder.Collection = arrayExt;
             }
             else if (holder.DefaultCollection != null)
@@ -3290,7 +3294,7 @@ namespace System.Windows.Markup
                 SetKeyOnContext(key, bamlDefAttributeRecord.Value, CurrentContext, ParentContext);
             }
 
-            else if(bamlDefAttributeRecord.Name == XamlReaderHelper.DefinitionUid ||
+            else if (bamlDefAttributeRecord.Name == XamlReaderHelper.DefinitionUid ||
                     bamlDefAttributeRecord.NameId == BamlMapTable.UidStringId)
             {
                 // The x:Uid attribute is added to all elements in the markup.
@@ -3298,7 +3302,7 @@ namespace System.Windows.Markup
                 //  most of which are meaningless.  Just ignore the useless parts.
 
                 // If we don't have an object to set to - bail.
-                if( CurrentContext == null )
+                if (CurrentContext == null)
                     return;
 
                 CurrentContext.Uid = bamlDefAttributeRecord.Value;
@@ -3309,7 +3313,7 @@ namespace System.Windows.Markup
                 //  created objects are never UIElements. Instantiating non-UIElements here
                 //  will cause delay creation of value types to fail.
                 UIElement element = CurrentContext.ObjectData as UIElement;
-                if( element != null )
+                if (element != null)
                 {
                     SetDependencyValue(element, UIElement.UidProperty, bamlDefAttributeRecord.Value);
                 }
@@ -3326,7 +3330,7 @@ namespace System.Windows.Markup
             {
                 object element = GetCurrentObjectData();
 
-                if( element != null )
+                if (element != null)
                 {
                     DoRegisterName(bamlDefAttributeRecord.Value, element);
                 }
@@ -3443,158 +3447,158 @@ namespace System.Windows.Markup
                 // Typical case of text content under an object
                 case ReaderFlags.DependencyObject:
                 case ReaderFlags.ClrObject:
-                {
-                    if (CurrentContext.CreateUsingTypeConverter)
                     {
-                        Debug.Assert( CurrentContext.ObjectData == null && CurrentContext.ExpectedType != null,
-                            "We had expected to create this object using a TypeConverter - but there's already an instance here.  Who created the instance and broke our ability to use a TypeConverter?");
-
-                        // Use a TypeConverter to create an object instance from text.
-                        object o = GetObjectFromString(CurrentContext.ExpectedType, bamlTextRecord.Value, converterTypeId);
-                        if (DependencyProperty.UnsetValue != o)
+                        if (CurrentContext.CreateUsingTypeConverter)
                         {
-                            CurrentContext.ObjectData = o;
-                            CurrentContext.ExpectedType = null;
+                            Debug.Assert(CurrentContext.ObjectData == null && CurrentContext.ExpectedType != null,
+                                "We had expected to create this object using a TypeConverter - but there's already an instance here.  Who created the instance and broke our ability to use a TypeConverter?");
+
+                            // Use a TypeConverter to create an object instance from text.
+                            object o = GetObjectFromString(CurrentContext.ExpectedType, bamlTextRecord.Value, converterTypeId);
+                            if (DependencyProperty.UnsetValue != o)
+                            {
+                                CurrentContext.ObjectData = o;
+                                CurrentContext.ExpectedType = null;
+                            }
+                            else
+                            {
+                                ThrowException(nameof(SR.ParserCannotConvertString), bamlTextRecord.Value,
+                                               CurrentContext.ExpectedType.FullName);
+                            }
                         }
                         else
                         {
-                            ThrowException(nameof(SR.ParserCannotConvertString), bamlTextRecord.Value,
-                                           CurrentContext.ExpectedType.FullName);
-                        }
-                    }
-                    else
-                    {
-                        // Should not use a TypeConverter - the text is to be
-                        //  treated as content of object.  GetCurrentObjectData will
-                        //  create an instance if one doesn't already exist.
-                        object parent = GetCurrentObjectData();
-                        if (parent == null)
-                        {
-                            // GetCurrentObjectData failed to create an object for us to add content to.
-                            ThrowException(nameof(SR.ParserCantCreateInstanceType), CurrentContext.ExpectedType.FullName);
+                            // Should not use a TypeConverter - the text is to be
+                            //  treated as content of object.  GetCurrentObjectData will
+                            //  create an instance if one doesn't already exist.
+                            object parent = GetCurrentObjectData();
+                            if (parent == null)
+                            {
+                                // GetCurrentObjectData failed to create an object for us to add content to.
+                                ThrowException(nameof(SR.ParserCantCreateInstanceType), CurrentContext.ExpectedType.FullName);
+                            }
+
+                            // We have object instance, and we have several ways to put
+                            //  text into that object.
+                            IAddChild iacParent = GetIAddChildFromContext(CurrentContext);
+                            if (iacParent != null)
+                            {
+                                iacParent.AddText(bamlTextRecord.Value);
+                            }
+                            else if (CurrentContext.ContentProperty != null)
+                            {
+                                AddToContentProperty(parent, CurrentContext.ContentProperty, bamlTextRecord.Value);
+                            }
+                            else
+                            {
+                                // All of the above attempts to deal with the text has failed.
+                                ThrowException(nameof(SR.ParserIAddChildText),
+                                        parent.GetType().FullName,
+                                        bamlTextRecord.Value);
+                            }
                         }
 
-                        // We have object instance, and we have several ways to put
-                        //  text into that object.
-                        IAddChild iacParent = GetIAddChildFromContext(CurrentContext);
-                        if (iacParent != null)
-                        {
-                            iacParent.AddText(bamlTextRecord.Value);
-                        }
-                        else if (CurrentContext.ContentProperty != null)
-                        {
-                            AddToContentProperty(parent, CurrentContext.ContentProperty, bamlTextRecord.Value);
-                        }
-                        else
-                        {
-                            // All of the above attempts to deal with the text has failed.
-                            ThrowException(nameof(SR.ParserIAddChildText),
-                                    parent.GetType().FullName,
-                                    bamlTextRecord.Value);
-                        }
+                        break;
                     }
-
-                    break;
-                }
 
                 case ReaderFlags.PropertyComplexDP:
-                {
-                    if (null == CurrentContext.ExpectedType)
                     {
-                        ThrowException(nameof(SR.ParserNoComplexMulti),
-                                       GetPropNameFrom(CurrentContext.ObjectData));
-                    }
+                        if (null == CurrentContext.ExpectedType)
+                        {
+                            ThrowException(nameof(SR.ParserNoComplexMulti),
+                                           GetPropNameFrom(CurrentContext.ObjectData));
+                        }
 
-                    // If we get here, the complex property tag's first child is a text element.
-                    // The only way text is legal as the child of a complex property is if there are no
-                    // other tags under the property, so we assume this is the case and try to convert
-                    // from text. If we're wrong, the next tag will throw an error.
-                    BamlAttributeInfoRecord attribInfo = CurrentContext.ObjectData as BamlAttributeInfoRecord;
-                    object o = ParseProperty(
-                                        (DependencyObject)GetParentObjectData(),
-                                        attribInfo.DP.PropertyType,
-                                        attribInfo.DP.Name,
-                                        attribInfo.DP,
-                                        bamlTextRecord.Value, converterTypeId);
+                        // If we get here, the complex property tag's first child is a text element.
+                        // The only way text is legal as the child of a complex property is if there are no
+                        // other tags under the property, so we assume this is the case and try to convert
+                        // from text. If we're wrong, the next tag will throw an error.
+                        BamlAttributeInfoRecord attribInfo = CurrentContext.ObjectData as BamlAttributeInfoRecord;
+                        object o = ParseProperty(
+                                            (DependencyObject)GetParentObjectData(),
+                                            attribInfo.DP.PropertyType,
+                                            attribInfo.DP.Name,
+                                            attribInfo.DP,
+                                            bamlTextRecord.Value, converterTypeId);
 
-                    if (DependencyProperty.UnsetValue != o)
-                    {
-                        SetDependencyComplexProperty(o);
+                        if (DependencyProperty.UnsetValue != o)
+                        {
+                            SetDependencyComplexProperty(o);
+                        }
+                        else
+                        {
+                            ThrowException(nameof(SR.ParserCantCreateTextComplexProp),
+                                  attribInfo.OwnerType.FullName,
+                                  bamlTextRecord.Value);
+                        }
+                        break;
                     }
-                    else
-                    {
-                        ThrowException(nameof(SR.ParserCantCreateTextComplexProp),
-                              attribInfo.OwnerType.FullName,
-                              bamlTextRecord.Value);
-                    }
-                    break;
-                }
 
                 case ReaderFlags.PropertyComplexClr:
-                {
-                    if (null == CurrentContext.ExpectedType)
                     {
-                        ThrowException(nameof(SR.ParserNoComplexMulti),
-                                       GetPropNameFrom(CurrentContext.ObjectData));
-                    }
+                        if (null == CurrentContext.ExpectedType)
+                        {
+                            ThrowException(nameof(SR.ParserNoComplexMulti),
+                                           GetPropNameFrom(CurrentContext.ObjectData));
+                        }
 
-                    // Following same logic as above...
-                    object o = GetObjectFromString(CurrentContext.ExpectedType, bamlTextRecord.Value, converterTypeId);
+                        // Following same logic as above...
+                        object o = GetObjectFromString(CurrentContext.ExpectedType, bamlTextRecord.Value, converterTypeId);
 
-                    if (DependencyProperty.UnsetValue != o)
-                    {
-                        SetClrComplexProperty(o);
-                    }
-                    else
-                    {
-                        ThrowException(nameof(SR.ParserCantCreateTextComplexProp),
-                            CurrentContext.ExpectedType.FullName, bamlTextRecord.Value);
-                    }
+                        if (DependencyProperty.UnsetValue != o)
+                        {
+                            SetClrComplexProperty(o);
+                        }
+                        else
+                        {
+                            ThrowException(nameof(SR.ParserCantCreateTextComplexProp),
+                                CurrentContext.ExpectedType.FullName, bamlTextRecord.Value);
+                        }
 
-                    break;
-                }
+                        break;
+                    }
 
                 case ReaderFlags.PropertyIAddChild:
-                {
-                    BamlCollectionHolder holder = GetCollectionHolderFromContext(CurrentContext, true);
-                    IAddChild iaddchild = BamlRecordManager.AsIAddChild(holder.Collection);
-
-                    if (iaddchild == null)
                     {
-                        ThrowException(nameof(SR.ParserNoMatchingIList), "?");
-                    }
+                        BamlCollectionHolder holder = GetCollectionHolderFromContext(CurrentContext, true);
+                        IAddChild iaddchild = BamlRecordManager.AsIAddChild(holder.Collection);
 
-                    iaddchild.AddText(bamlTextRecord.Value);
-                    break;
-                }
+                        if (iaddchild == null)
+                        {
+                            ThrowException(nameof(SR.ParserNoMatchingIList), "?");
+                        }
+
+                        iaddchild.AddText(bamlTextRecord.Value);
+                        break;
+                    }
 
                 case ReaderFlags.PropertyIList:
-                {
-                    BamlCollectionHolder holder = GetCollectionHolderFromContext(CurrentContext, true);
-
-                    if (holder.List == null)
                     {
-                        ThrowException(nameof(SR.ParserNoMatchingIList), "?");
+                        BamlCollectionHolder holder = GetCollectionHolderFromContext(CurrentContext, true);
+
+                        if (holder.List == null)
+                        {
+                            ThrowException(nameof(SR.ParserNoMatchingIList), "?");
+                        }
+
+                        holder.List.Add(bamlTextRecord.Value);
+                        break;
                     }
 
-                    holder.List.Add(bamlTextRecord.Value);
-                    break;
-                }
-
                 case ReaderFlags.ConstructorParams:
-                {
-                    // Store the text parameter in the list of constructor
-                    // parameters.  This will be resolved later into the correct
-                    // object type once we determine which constructor to use.
-                    SetConstructorParameter(bamlTextRecord.Value);
-                    break;
-                }
+                    {
+                        // Store the text parameter in the list of constructor
+                        // parameters.  This will be resolved later into the correct
+                        // object type once we determine which constructor to use.
+                        SetConstructorParameter(bamlTextRecord.Value);
+                        break;
+                    }
 
                 default:
-                {
-                    ThrowException(nameof(SR.ParserUnexpInBAML), "Text");
-                    break;
-                }
+                    {
+                        ThrowException(nameof(SR.ParserUnexpInBAML), "Text");
+                        break;
+                    }
             }
         }
 
@@ -3638,7 +3642,7 @@ namespace System.Windows.Markup
             object parent = GetParentObjectData();
             BamlAttributeInfoRecord attribInfo = (BamlAttributeInfoRecord)GetCurrentObjectData();
 
-            SetDependencyComplexProperty( parent, attribInfo, o );
+            SetDependencyComplexProperty(parent, attribInfo, o);
         }
 
         //
@@ -3691,7 +3695,7 @@ namespace System.Windows.Markup
                     }
                     else
                     {
-                        Debug.Assert(false); 
+                        Debug.Assert(false);
                     }
                 }
                 o = OptionallyMakeNullable(propertyType, o, attribInfo.Name);
@@ -3705,7 +3709,7 @@ namespace System.Windows.Markup
                 }
                 else if (propertyInfo != null)
                 {
-                    propertyInfo.SetValue(currentTarget,o,BindingFlags.Default,null,null,
+                    propertyInfo.SetValue(currentTarget, o, BindingFlags.Default, null, null,
                                     TypeConverterHelper.InvariantEnglishUS);
                 }
                 else if (attachedPropertySetter != null)
@@ -3728,7 +3732,7 @@ namespace System.Windows.Markup
                 }
 
                 TargetInvocationException tie = e as TargetInvocationException;
-                if( tie != null )
+                if (tie != null)
                 {
                     e = tie.InnerException;
                 }
@@ -3754,7 +3758,7 @@ namespace System.Windows.Markup
         internal object OptionallyMakeNullable(Type propertyType, object o, string propName)
         {
             object toReturn = o;
-            if( !TryOptionallyMakeNullable( propertyType, propName, ref toReturn ))
+            if (!TryOptionallyMakeNullable(propertyType, propName, ref toReturn))
             {
                 ThrowException(nameof(SR.ParserBadNullableType),
                                propName,
@@ -3769,11 +3773,11 @@ namespace System.Windows.Markup
         // This is a form of OptionallyMakeNullable that doesn't throw.  We split it out so that the different callers
         // can throw their own exception (StyleHelper uses this too).
 
-        static internal bool TryOptionallyMakeNullable( Type propertyType, string propName, ref object o  )
+        static internal bool TryOptionallyMakeNullable(Type propertyType, string propName, ref object o)
         {
             // if o was nullable, it has been unwrapped and boxed when it was passed into this function
 
-            if ((o != null) && IsNullable(propertyType) && !(o is Expression) && !(o is MarkupExtension) )
+            if ((o != null) && IsNullable(propertyType) && !(o is Expression) && !(o is MarkupExtension))
             {
                 Type genericType = (Type)propertyType.GetGenericArguments()[0];
                 Debug.Assert(genericType != null);
@@ -3843,7 +3847,7 @@ namespace System.Windows.Markup
             MemberInfo memberInfo = (MemberInfo)GetCurrentObjectData();
             object parentObject = GetParentObjectData();
 
-            SetClrComplexProperty( parentObject, memberInfo, o );
+            SetClrComplexProperty(parentObject, memberInfo, o);
         }
 
 
@@ -3867,7 +3871,7 @@ namespace System.Windows.Markup
                 }
 
                 TargetInvocationException tie = e as TargetInvocationException;
-                if( tie != null )
+                if (tie != null)
                 {
                     e = tie.InnerException;
                 }
@@ -3911,7 +3915,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                ArrayList paramList = (ArrayList) CurrentContext.ObjectData;
+                ArrayList paramList = (ArrayList)CurrentContext.ObjectData;
                 paramList.Add(o);
             }
         }
@@ -3950,12 +3954,12 @@ namespace System.Windows.Markup
         // Get a property value object given the property's type, name and value string.
         // Throw an exception of the property could not be resolved.
         internal object ParseProperty(
-            object    element,
-            Type      propertyType,
-            string    propertyName,
-            object    dpOrPi,
-            string    attribValue,
-            short     converterTypeId)
+            object element,
+            Type propertyType,
+            string propertyName,
+            object dpOrPi,
+            string attribValue,
+            short converterTypeId)
         {
             Object propValue = null;
 #if !STRESS
@@ -3971,7 +3975,7 @@ namespace System.Windows.Markup
             }
             catch (Exception e)
             {
-                if( CriticalExceptions.IsCriticalException(e) || e is XamlParseException )
+                if (CriticalExceptions.IsCriticalException(e) || e is XamlParseException)
                 {
                     throw;
                 }
@@ -3989,11 +3993,11 @@ namespace System.Windows.Markup
         }
 
         private void ThrowPropertyParseError(
-            Exception  e,
-            string     propertyName,
-            string     attribValue,
-            object     element,
-            Type       propertyType)
+            Exception e,
+            string propertyName,
+            string attribValue,
+            object element,
+            Type propertyType)
 
         {
             // Property parses can fail if the user mistakenly specified a resource key
@@ -4020,7 +4024,7 @@ namespace System.Windows.Markup
             }
 
 
-            ThrowExceptionWithLine( message, e );
+            ThrowExceptionWithLine(message, e);
         }
 
         // Name is self-explanatory -- this is used to create CLR objects and such that aren't
@@ -4028,16 +4032,16 @@ namespace System.Windows.Markup
         object GetObjectFromString(Type type, string s, short converterTypeId)
         {
             object o = DependencyProperty.UnsetValue;
-            o = ParserContext.XamlTypeMapper.ParseProperty(null, type,string.Empty, null,
-                                       TypeConvertContext,ParserContext,s, converterTypeId);
+            o = ParserContext.XamlTypeMapper.ParseProperty(null, type, string.Empty, null,
+                                       TypeConvertContext, ParserContext, s, converterTypeId);
             return o;
         }
 
         private static object Lookup(
-            IDictionary     dictionary,
-            object          key,
-            bool            allowDeferredResourceReference,
-            bool            mustReturnDeferredResourceReference)
+            IDictionary dictionary,
+            object key,
+            bool allowDeferredResourceReference,
+            bool mustReturnDeferredResourceReference)
         {
             ResourceDictionary resourceDictionary;
             if (allowDeferredResourceReference && (resourceDictionary = dictionary as ResourceDictionary) != null)
@@ -4062,9 +4066,9 @@ namespace System.Windows.Markup
         // Given a key, find object in the parser stack that may hold a
         // ResourceDictionary and search for an object keyed by that key.
         internal object FindResourceInParserStack(
-            object  resourceNameObject,
-            bool    allowDeferredResourceReference,
-            bool    mustReturnDeferredResourceReference)
+            object resourceNameObject,
+            bool allowDeferredResourceReference,
+            bool mustReturnDeferredResourceReference)
         {
             object value = DependencyProperty.UnsetValue;
 
@@ -4075,11 +4079,11 @@ namespace System.Windows.Markup
             ParserStack contextStack = ReaderContextStack;
             BamlRecordReader reader = this;
 
-            while( contextStack != null )
+            while (contextStack != null)
             {
-                for (int i = contextStack.Count-1; i >= 0; i--)
+                for (int i = contextStack.Count - 1; i >= 0; i--)
                 {
-                    ReaderContextStackData stackData = (ReaderContextStackData) contextStack[i];
+                    ReaderContextStackData stackData = (ReaderContextStackData)contextStack[i];
                     IDictionary dictionary = GetDictionaryFromContext(stackData, false /*toInsert*/);
 
                     if (dictionary != null && dictionary.Contains(resourceNameObject))
@@ -4139,7 +4143,7 @@ namespace System.Windows.Markup
                     }
                 }
 
-                if( !newContextStackFound )
+                if (!newContextStackFound)
                 {
                     // Terminate the loop
                     contextStack = null;
@@ -4157,9 +4161,9 @@ namespace System.Windows.Markup
         ///  The resource value, if found.  Otherwise DependencyProperty.UnsetValue.
         /// </returns>
         private object FindResourceInRootOrAppOrTheme(
-            object  resourceNameObject,
-            bool    allowDeferredResourceReference,
-            bool    mustReturnDeferredResourceReference)
+            object resourceNameObject,
+            bool allowDeferredResourceReference,
+            bool mustReturnDeferredResourceReference)
         {
             // This method should not exist since resource references should be references
             // and not looked up at this point.
@@ -4188,9 +4192,9 @@ namespace System.Windows.Markup
         // Given a key, find object in the parser stack that may hold a
         // ResourceDictionary and search for an object keyed by that key.
         internal object FindResourceInParentChain(
-            object  resourceNameObject,
-            bool    allowDeferredResourceReference,
-            bool    mustReturnDeferredResourceReference)
+            object resourceNameObject,
+            bool allowDeferredResourceReference,
+            bool mustReturnDeferredResourceReference)
         {
             // Try the parser stack first.
             object resource = FindResourceInParserStack(resourceNameObject, allowDeferredResourceReference, mustReturnDeferredResourceReference);
@@ -4217,17 +4221,17 @@ namespace System.Windows.Markup
         // those objects.
         internal object LoadResource(string resourceNameString)
         {
-            string  resourceName = resourceNameString.Substring(1, resourceNameString.Length-2);
-            object  resourceNameObject = XamlTypeMapper.GetDictionaryKey(resourceName, ParserContext);
+            string resourceName = resourceNameString.Substring(1, resourceNameString.Length - 2);
+            object resourceNameObject = XamlTypeMapper.GetDictionaryKey(resourceName, ParserContext);
             if (resourceNameObject == null)
             {
-               ThrowException(nameof(SR.ParserNoResource), resourceNameString);
+                ThrowException(nameof(SR.ParserNoResource), resourceNameString);
             }
 
             object value = FindResourceInParentChain(resourceNameObject, false /*allowDeferredResourceReference*/, false /*mustReturnDeferredResourceReference*/);
             if (value == DependencyProperty.UnsetValue)
             {
-                ThrowException(nameof(SR.ParserNoResource) , $"{{{resourceNameObject}}}");
+                ThrowException(nameof(SR.ParserNoResource), $"{{{resourceNameObject}}}");
             }
 
             return value;
@@ -4278,24 +4282,24 @@ namespace System.Windows.Markup
         // Push context data onto the reader context stack
         internal void PushContext(
             ReaderFlags contextFlags,
-            object      contextData,
-            Type        expectedType,
-            short       expectedTypeId)
+            object contextData,
+            Type expectedType,
+            short expectedTypeId)
         {
-            PushContext( contextFlags, contextData, expectedType, expectedTypeId, false );
+            PushContext(contextFlags, contextData, expectedType, expectedTypeId, false);
         }
 
         // Push context data onto the reader context stack
         internal void PushContext(
             ReaderFlags contextFlags,
-            object      contextData,
-            Type        expectedType,
-            short       expectedTypeId,
-            bool        createUsingTypeConverter)
+            object contextData,
+            Type expectedType,
+            short expectedTypeId,
+            bool createUsingTypeConverter)
         {
             ReaderContextStackData d;
 
-            lock(_stackDataFactoryCache)
+            lock (_stackDataFactoryCache)
             {
                 if (_stackDataFactoryCache.Count == 0)
                 {
@@ -4304,8 +4308,8 @@ namespace System.Windows.Markup
                 else
                 {
                     // Get StackData from the factory cache
-                    d = _stackDataFactoryCache[_stackDataFactoryCache.Count-1];
-                    _stackDataFactoryCache.RemoveAt(_stackDataFactoryCache.Count-1);
+                    d = _stackDataFactoryCache[_stackDataFactoryCache.Count - 1];
+                    _stackDataFactoryCache.RemoveAt(_stackDataFactoryCache.Count - 1);
                 }
             }
 
@@ -4331,7 +4335,7 @@ namespace System.Windows.Markup
         // Pos the reader context stack.
         internal void PopContext()
         {
-            ReaderContextStackData stackData = (ReaderContextStackData) ReaderContextStack.Pop();
+            ReaderContextStackData stackData = (ReaderContextStackData)ReaderContextStack.Pop();
 
             // If we're through with an Name scoping point, take it off the stack.
             INameScope nameScope = NameScope.NameScopeFromObject(stackData.ObjectData);
@@ -4346,14 +4350,14 @@ namespace System.Windows.Markup
             // Clear the stack data and then add it to the factory cache for reuse
             stackData.ClearData();
 
-            lock(_stackDataFactoryCache)
+            lock (_stackDataFactoryCache)
             {
                 _stackDataFactoryCache.Add(stackData);
             }
         }
 
         // Get BaseUri for the right elements.
-        Uri GetBaseUri( )
+        Uri GetBaseUri()
         {
             Uri baseuri = ParserContext.BaseUri;
 
@@ -4385,21 +4389,21 @@ namespace System.Windows.Markup
             ISupportInitialize supportInitializeElement = element as ISupportInitialize;
             if (supportInitializeElement != null)
             {
-                if( TraceMarkup.IsEnabled )
+                if (TraceMarkup.IsEnabled)
                 {
-                    TraceMarkup.Trace( TraceEventType.Start,
+                    TraceMarkup.Trace(TraceEventType.Start,
                                      TraceMarkup.BeginInit,
-                                     supportInitializeElement );
+                                     supportInitializeElement);
                 }
 
                 supportInitializeElement.BeginInit();
                 result = true;
 
-                if( TraceMarkup.IsEnabled )
+                if (TraceMarkup.IsEnabled)
                 {
-                    TraceMarkup.Trace( TraceEventType.Stop,
+                    TraceMarkup.Trace(TraceEventType.Stop,
                                      TraceMarkup.BeginInit,
-                                     supportInitializeElement );
+                                     supportInitializeElement);
                 }
             }
 
@@ -4492,26 +4496,26 @@ namespace System.Windows.Markup
                 ISupportInitialize supportInitializeElement = element as ISupportInitialize;
                 if (supportInitializeElement != null)
                 {
-                    if( TraceMarkup.IsEnabled )
+                    if (TraceMarkup.IsEnabled)
                     {
-                        TraceMarkup.Trace( TraceEventType.Start,
+                        TraceMarkup.Trace(TraceEventType.Start,
                                          TraceMarkup.EndInit,
-                                         supportInitializeElement );
+                                         supportInitializeElement);
                     }
 
                     supportInitializeElement.EndInit();
 
-                    if( TraceMarkup.IsEnabled )
+                    if (TraceMarkup.IsEnabled)
                     {
-                        TraceMarkup.Trace( TraceEventType.Stop,
+                        TraceMarkup.Trace(TraceEventType.Stop,
                                          TraceMarkup.EndInit,
-                                         supportInitializeElement );
+                                         supportInitializeElement);
                     }
                 }
             }
-            catch( Exception e )
+            catch (Exception e)
             {
-                if( CriticalExceptions.IsCriticalException(e) || e is XamlParseException )
+                if (CriticalExceptions.IsCriticalException(e) || e is XamlParseException)
                 {
                     throw;
                 }
@@ -4551,7 +4555,7 @@ namespace System.Windows.Markup
                     }
                 }
 
-                ThrowExceptionWithLine( SR.ParserFailedEndInit, e );
+                ThrowExceptionWithLine(SR.ParserFailedEndInit, e);
             }
         }
 
@@ -4681,13 +4685,13 @@ namespace System.Windows.Markup
 
                     arrayExt.AddChild(currentObject);
 
-                    if( TraceMarkup.IsEnabled )
+                    if (TraceMarkup.IsEnabled)
                     {
-                        TraceMarkup.Trace( TraceEventType.Stop,
+                        TraceMarkup.Trace(TraceEventType.Stop,
                                          TraceMarkup.AddValueToArray,
                                          traceCurrentObject,
                                          parentContext.ElementNameOrPropertyName,
-                                         currentObject );
+                                         currentObject);
                     }
 
                     currentContext.MarkAddedToTree();
@@ -4715,12 +4719,12 @@ namespace System.Windows.Markup
                         iac.AddChild(currentObject);
                     }
 
-                    if( TraceMarkup.IsEnabled )
+                    if (TraceMarkup.IsEnabled)
                     {
-                        TraceMarkup.Trace( TraceEventType.Stop,
+                        TraceMarkup.Trace(TraceEventType.Stop,
                                          TraceMarkup.AddValueToAddChild,
                                          traceCurrentObject,
-                                         currentObject );
+                                         currentObject);
                     }
 
                     currentContext.MarkAddedToTree();
@@ -4741,7 +4745,7 @@ namespace System.Windows.Markup
 
                 // Handle parent as a singleton property:
 
-                if( parentContext.ContextType == ReaderFlags.PropertyComplexClr )
+                if (parentContext.ContextType == ReaderFlags.PropertyComplexClr)
                 {
                     object parentObject = GetObjectDataFromContext(GrandParentContext);
                     MemberInfo memberInfo = (MemberInfo)GetParentObjectData();
@@ -4751,7 +4755,7 @@ namespace System.Windows.Markup
                     return;
                 }
 
-                if( parentContext.ContextType == ReaderFlags.PropertyComplexDP )
+                if (parentContext.ContextType == ReaderFlags.PropertyComplexDP)
                 {
                     object parentObject = GetObjectDataFromContext(GrandParentContext);
                     BamlAttributeInfoRecord attribInfo = (BamlAttributeInfoRecord)GetParentObjectData();
@@ -4766,17 +4770,17 @@ namespace System.Windows.Markup
                 Type parentType = GetParentType();
                 string typeName = parentType == null ? String.Empty : parentType.FullName;
 
-                if( currentObject == null )
-                    ThrowException( nameof(SR.ParserCannotAddAnyChildren), typeName );
+                if (currentObject == null)
+                    ThrowException(nameof(SR.ParserCannotAddAnyChildren), typeName);
                 else
-                    ThrowException( nameof(SR.ParserCannotAddAnyChildren2), typeName, currentObject.GetType().FullName );
+                    ThrowException(nameof(SR.ParserCannotAddAnyChildren2), typeName, currentObject.GetType().FullName);
 
 #if !STRESS
             }
 
-            catch( Exception e )
+            catch (Exception e)
             {
-                if( CriticalExceptions.IsCriticalException(e) || e is XamlParseException )
+                if (CriticalExceptions.IsCriticalException(e) || e is XamlParseException)
                 {
                     throw;
                 }
@@ -4784,10 +4788,10 @@ namespace System.Windows.Markup
                 Type parentType = GetParentType();
                 string typeName = parentType == null ? String.Empty : parentType.FullName;
 
-                if( currentObject == null )
-                    ThrowException( nameof(SR.ParserCannotAddAnyChildren), typeName );
+                if (currentObject == null)
+                    ThrowException(nameof(SR.ParserCannotAddAnyChildren), typeName);
                 else
-                    ThrowException( nameof(SR.ParserCannotAddAnyChildren2), typeName, currentObject.GetType().FullName );
+                    ThrowException(nameof(SR.ParserCannotAddAnyChildren2), typeName, currentObject.GetType().FullName);
             }
 #endif
 
@@ -4904,9 +4908,9 @@ namespace System.Windows.Markup
 
                 if (contentList != null)
                 {
-                    if( TraceMarkup.IsEnabled )
+                    if (TraceMarkup.IsEnabled)
                     {
-                        TraceMarkup.Trace( TraceEventType.Start,
+                        TraceMarkup.Trace(TraceEventType.Start,
                                          TraceMarkup.AddValueToList,
                                          traceCurrentObject,
                                          String.Empty,
@@ -4915,9 +4919,9 @@ namespace System.Windows.Markup
 
                     contentList.Add(value);
 
-                    if( TraceMarkup.IsEnabled )
+                    if (TraceMarkup.IsEnabled)
                     {
-                        TraceMarkup.Trace( TraceEventType.Stop,
+                        TraceMarkup.Trace(TraceEventType.Stop,
                                          TraceMarkup.AddValueToList,
                                          traceCurrentObject,
                                          String.Empty,
@@ -4938,9 +4942,9 @@ namespace System.Windows.Markup
                             ThrowException(nameof(SR.ParserParentDO), value.ToString());
                         }
 
-                        if( TraceMarkup.IsEnabled )
+                        if (TraceMarkup.IsEnabled)
                         {
-                            TraceMarkup.Trace( TraceEventType.Start,
+                            TraceMarkup.Trace(TraceEventType.Start,
                                              TraceMarkup.SetPropertyValue,
                                              traceCurrentObject,
                                              dp.Name,
@@ -4949,9 +4953,9 @@ namespace System.Windows.Markup
 
                         SetDependencyValue(dpo, dp, value);
 
-                        if( TraceMarkup.IsEnabled )
+                        if (TraceMarkup.IsEnabled)
                         {
-                            TraceMarkup.Trace( TraceEventType.Stop,
+                            TraceMarkup.Trace(TraceEventType.Stop,
                                              TraceMarkup.SetPropertyValue,
                                              traceCurrentObject,
                                              dp.Name,
@@ -4965,9 +4969,9 @@ namespace System.Windows.Markup
                         PropertyInfo pi = contentProperty as PropertyInfo;
                         if (pi != null)
                         {
-                            if( TraceMarkup.IsEnabled )
+                            if (TraceMarkup.IsEnabled)
                             {
-                                TraceMarkup.Trace( TraceEventType.Start,
+                                TraceMarkup.Trace(TraceEventType.Start,
                                                  TraceMarkup.SetPropertyValue,
                                                  traceCurrentObject,
                                                  pi.Name,
@@ -4985,9 +4989,9 @@ namespace System.Windows.Markup
                                 ThrowException(nameof(SR.ParserCantSetContentProperty), pi.Name, pi.ReflectedType.Name);
                             }
 
-                            if( TraceMarkup.IsEnabled )
+                            if (TraceMarkup.IsEnabled)
                             {
-                                TraceMarkup.Trace( TraceEventType.Stop,
+                                TraceMarkup.Trace(TraceEventType.Stop,
                                                  TraceMarkup.SetPropertyValue,
                                                  traceCurrentObject,
                                                  pi.Name,
@@ -5004,7 +5008,7 @@ namespace System.Windows.Markup
             }
             catch (Exception e)
             {
-                if( CriticalExceptions.IsCriticalException(e) || e is XamlParseException )
+                if (CriticalExceptions.IsCriticalException(e) || e is XamlParseException)
                 {
                     throw;
                 }
@@ -5017,9 +5021,9 @@ namespace System.Windows.Markup
             }
 #endif
 
-            if( TraceMarkup.IsEnabled )
+            if (TraceMarkup.IsEnabled)
             {
-                TraceMarkup.Trace( TraceEventType.Stop,
+                TraceMarkup.Trace(TraceEventType.Stop,
                                  TraceMarkup.SetCPA,
                                  traceCurrentObject,
                                  value);
@@ -5103,7 +5107,7 @@ namespace System.Windows.Markup
                             if (info == null)
                             {
                                 Object currentParent = GetCurrentObjectData();
-                                Type   currentParentType;
+                                Type currentParentType;
                                 currentParentType = currentParent.GetType();
 
                                 if (ReflectionHelper.IsPublicType(currentParentType))
@@ -5172,31 +5176,31 @@ namespace System.Windows.Markup
         //
 
         protected void ThrowException(
-             string    id)
+             string id)
         {
             ThrowExceptionWithLine(SR.GetResourceString(id), null);
         }
 
         protected internal void ThrowException(
-            string     id,
-            string     parameter)
+            string id,
+            string parameter)
         {
             ThrowExceptionWithLine(SR.Format(SR.GetResourceString(id), parameter), null);
         }
 
         protected void ThrowException(
-            string     id,
-            string     parameter1,
-            string     parameter2)
+            string id,
+            string parameter1,
+            string parameter2)
         {
             ThrowExceptionWithLine(SR.Format(SR.GetResourceString(id), parameter1, parameter2), null);
         }
 
         protected void ThrowException(
-            string     id,
-            string     parameter1,
-            string     parameter2,
-            string     parameter3)
+            string id,
+            string parameter1,
+            string parameter2,
+            string parameter3)
         {
             ThrowExceptionWithLine(SR.Format(SR.GetResourceString(id), parameter1, parameter2, parameter3), null);
         }
@@ -5209,9 +5213,9 @@ namespace System.Windows.Markup
 
         // Helper method to creates an instance of the specified type
         internal object CreateInstanceFromType(
-            Type  type,
+            Type type,
             short typeId,
-            bool  throwOnFail)
+            bool throwOnFail)
         {
             bool publicOnly = true;
             BamlTypeInfoRecord typeInfo = null;
@@ -5297,37 +5301,37 @@ namespace System.Windows.Markup
 
             catch (System.MissingMethodException e)
             {
-               if (throwOnFail)
-               {
-                   // If we are setting a complex property, it may be that we have
-                   // inserted an element tag that the user is not aware of, so
-                   // give a more detailed error message.  Otherwise just complain
-                   // that the type cannot be created.
-                   if (ParentContext != null &&
-                       ParentContext.ContextType == ReaderFlags.PropertyComplexDP)
-                   {
-                       BamlAttributeInfoRecord attribInfo = GetParentObjectData() as BamlAttributeInfoRecord;
-                       ThrowException(nameof(SR.ParserNoDefaultPropConstructor),
-                                      type.Name, attribInfo.DP.Name);
-                   }
-                   else
-                   {
-                       ThrowExceptionWithLine(SR.Format(SR.ParserNoDefaultConstructor, type.Name), e );
-                   }
-               }
+                if (throwOnFail)
+                {
+                    // If we are setting a complex property, it may be that we have
+                    // inserted an element tag that the user is not aware of, so
+                    // give a more detailed error message.  Otherwise just complain
+                    // that the type cannot be created.
+                    if (ParentContext != null &&
+                        ParentContext.ContextType == ReaderFlags.PropertyComplexDP)
+                    {
+                        BamlAttributeInfoRecord attribInfo = GetParentObjectData() as BamlAttributeInfoRecord;
+                        ThrowException(nameof(SR.ParserNoDefaultPropConstructor),
+                                       type.Name, attribInfo.DP.Name);
+                    }
+                    else
+                    {
+                        ThrowExceptionWithLine(SR.Format(SR.ParserNoDefaultConstructor, type.Name), e);
+                    }
+                }
 
-               // No zero parameter constructor.  Return null.
-               return null;
+                // No zero parameter constructor.  Return null.
+                return null;
             }
 
             catch (Exception e)
             {
-                if( CriticalExceptions.IsCriticalException(e) || e is XamlParseException )
+                if (CriticalExceptions.IsCriticalException(e) || e is XamlParseException)
                 {
                     throw;
                 }
 
-                ThrowExceptionWithLine( SR.Format(SR.ParserErrorCreatingInstance, type.Name, type.Assembly.FullName), e);
+                ThrowExceptionWithLine(SR.Format(SR.ParserErrorCreatingInstance, type.Name, type.Assembly.FullName), e);
                 return null;
             }
 #endif
@@ -5361,7 +5365,7 @@ namespace System.Windows.Markup
         //
         //+--------------------------------------------------------------------------------------------------------------
 
-        protected internal void SetPreviousBamlRecordReader( BamlRecordReader previousBamlRecordReader )
+        protected internal void SetPreviousBamlRecordReader(BamlRecordReader previousBamlRecordReader)
         {
             _previousBamlRecordReader = previousBamlRecordReader;
         }
@@ -5384,7 +5388,7 @@ namespace System.Windows.Markup
         internal BamlRecord PreParsedCurrentRecord
         {
             get { return _preParsedIndexRecord; }
-            set { _preParsedIndexRecord= value; }
+            set { _preParsedIndexRecord = value; }
         }
 
         // Stream that contains baml records in binary form.  This is used when
@@ -5395,13 +5399,13 @@ namespace System.Windows.Markup
 
             set
             {
-                _bamlStream =  value;
+                _bamlStream = value;
 
                 // if this is one of our Readers streams
                 // setup the XAMLReaderStream property.
                 if (_bamlStream is ReaderStream)
                 {
-                    _xamlReaderStream = (ReaderStream) _bamlStream;
+                    _xamlReaderStream = (ReaderStream)_bamlStream;
                 }
                 else
                 {
@@ -5484,12 +5488,12 @@ namespace System.Windows.Markup
 
         internal ReaderContextStackData CurrentContext
         {
-            get { return (ReaderContextStackData) ReaderContextStack.CurrentContext; }
+            get { return (ReaderContextStackData)ReaderContextStack.CurrentContext; }
         }
 
         internal ReaderContextStackData ParentContext
         {
-            get { return (ReaderContextStackData) ReaderContextStack.ParentContext; }
+            get { return (ReaderContextStackData)ReaderContextStack.ParentContext; }
         }
 
         internal object ParentObjectData
@@ -5503,7 +5507,7 @@ namespace System.Windows.Markup
 
         internal ReaderContextStackData GrandParentContext
         {
-            get { return (ReaderContextStackData) ReaderContextStack.GrandParentContext; }
+            get { return (ReaderContextStackData)ReaderContextStack.GrandParentContext; }
         }
 
         internal object GrandParentObjectData
@@ -5517,7 +5521,7 @@ namespace System.Windows.Markup
 
         internal ReaderContextStackData GreatGrandParentContext
         {
-            get { return (ReaderContextStackData) ReaderContextStack.GreatGrandParentContext; }
+            get { return (ReaderContextStackData)ReaderContextStack.GreatGrandParentContext; }
         }
 
         internal ParserStack ReaderContextStack
@@ -5529,7 +5533,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if( _bamlRecordManager == null )
+                if (_bamlRecordManager == null)
                 {
                     _bamlRecordManager = new BamlRecordManager();
                 }
@@ -5540,7 +5544,7 @@ namespace System.Windows.Markup
 
         internal bool EndOfDocument
         {
-            get { return _endOfDocument;}
+            get { return _endOfDocument; }
             set { _endOfDocument = value; }
         }
 
@@ -5614,39 +5618,39 @@ namespace System.Windows.Markup
             get { return _previousBamlRecordReader; }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         // state vars
-        IComponentConnector          _componentConnector;
-        object                       _rootElement;
-        bool                         _bamlAsForest;
-        bool                         _isRootAlreadyLoaded;
-        ArrayList                    _rootList;
-        ParserContext                _parserContext;   // XamlTypeMapper, namespace state, lang/space values
-        TypeConvertContext           _typeConvertContext;
-        int                          _persistId;
-        ParserStack                  _contextStack = new ParserStack();
-        XamlParseMode                _parseMode = XamlParseMode.Synchronous;
-        int                          _maxAsyncRecords;
+        IComponentConnector _componentConnector;
+        object _rootElement;
+        bool _bamlAsForest;
+        bool _isRootAlreadyLoaded;
+        ArrayList _rootList;
+        ParserContext _parserContext;   // XamlTypeMapper, namespace state, lang/space values
+        TypeConvertContext _typeConvertContext;
+        int _persistId;
+        ParserStack _contextStack = new ParserStack();
+        XamlParseMode _parseMode = XamlParseMode.Synchronous;
+        int _maxAsyncRecords;
         // end of state vars
 
-        Stream                       _bamlStream;
-        ReaderStream                 _xamlReaderStream;
-        BamlBinaryReader             _binaryReader;
-        BamlRecordManager            _bamlRecordManager;
-        BamlRecord                   _preParsedBamlRecordsStart = null;
-        BamlRecord                   _preParsedIndexRecord = null;
-        bool                         _endOfDocument = false;
-        bool                         _buildTopDown = true;
+        Stream _bamlStream;
+        ReaderStream _xamlReaderStream;
+        BamlBinaryReader _binaryReader;
+        BamlRecordManager _bamlRecordManager;
+        BamlRecord _preParsedBamlRecordsStart = null;
+        BamlRecord _preParsedIndexRecord = null;
+        bool _endOfDocument = false;
+        bool _buildTopDown = true;
 
         // The outer BRR, when this one is nested.
-        BamlRecordReader             _previousBamlRecordReader;
+        BamlRecordReader _previousBamlRecordReader;
 
         static List<ReaderContextStackData> _stackDataFactoryCache = new List<ReaderContextStackData>();
 
-#endregion Data
+        #endregion Data
     }
 
     /// <summary>
@@ -5869,7 +5873,7 @@ namespace System.Windows.Markup
                     //  failed, then something has gone wrong.  But we still need
                     //  to be able to provide *something* because a name is
                     //  needed for the exception message.
-                    if( _attributeInfo != null )
+                    if (_attributeInfo != null)
                     {
                         return _attributeInfo.Name;
                     }

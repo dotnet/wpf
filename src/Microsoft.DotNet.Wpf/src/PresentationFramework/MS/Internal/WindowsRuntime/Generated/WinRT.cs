@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -126,11 +126,11 @@ namespace WinRT
 #if !NETSTANDARD2_0 && !NETCOREAPP2_0
             if (_moduleHandle == IntPtr.Zero)
             {
-                try 
-	            {	        
+                try
+                {
                     // Allow runtime to find module in RID-specific relative subfolder
                     _moduleHandle = NativeLibrary.Load(fileName, Assembly.GetExecutingAssembly(), null);
-	            }
+                }
                 catch (Exception) { }
             }
 #endif
@@ -231,7 +231,8 @@ namespace WinRT
             // Prefer the RoGetActivationFactory HRESULT failure over the LoadLibrary/etc. failure
             int hr;
             (_IActivationFactory, hr) = WinrtModule.GetActivationFactory(runtimeClassId);
-            if (_IActivationFactory != null) { return; }
+            if (_IActivationFactory != null)
+            { return; }
 
             var moduleName = typeNamespace;
             while (true)
@@ -239,7 +240,8 @@ namespace WinRT
                 try
                 {
                     (_IActivationFactory, _) = DllModule.Load($"{moduleName}.dll").GetActivationFactory(runtimeClassId);
-                    if (_IActivationFactory != null) { return; }
+                    if (_IActivationFactory != null)
+                    { return; }
                 }
                 catch (Exception) { }
 

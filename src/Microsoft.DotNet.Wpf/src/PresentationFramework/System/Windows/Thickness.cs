@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,9 +6,9 @@
 // Description: Contains the Thickness (double x4) value type. 
 //
 
-using MS.Internal;
 using System.ComponentModel;
 using System.Globalization;
+using MS.Internal;
 
 namespace System.Windows
 {
@@ -120,10 +120,10 @@ namespace System.Windows
         {
             get
             {
-                return      DoubleUtil.IsZero(Left) 
-                        &&  DoubleUtil.IsZero(Top) 
-                        &&  DoubleUtil.IsZero(Right) 
-                        &&  DoubleUtil.IsZero(Bottom);
+                return DoubleUtil.IsZero(Left)
+                        && DoubleUtil.IsZero(Top)
+                        && DoubleUtil.IsZero(Right)
+                        && DoubleUtil.IsZero(Bottom);
             }
         }
 
@@ -131,7 +131,7 @@ namespace System.Windows
         {
             get
             {
-                return     DoubleUtil.AreClose(Left, Top)
+                return DoubleUtil.AreClose(Left, Top)
                         && DoubleUtil.AreClose(Left, Right)
                         && DoubleUtil.AreClose(Left, Bottom);
             }
@@ -148,35 +148,35 @@ namespace System.Windows
         /// <returns>Whether or not the thickness complies to the range specified</returns>
         internal bool IsValid(bool allowNegative, bool allowNaN, bool allowPositiveInfinity, bool allowNegativeInfinity)
         {
-            if(!allowNegative)
+            if (!allowNegative)
             {
-                if(Left < 0d || Right < 0d || Top < 0d || Bottom < 0d)
+                if (Left < 0d || Right < 0d || Top < 0d || Bottom < 0d)
                     return false;
             }
 
-            if(!allowNaN)
+            if (!allowNaN)
             {
-                if(double.IsNaN(Left) || double.IsNaN(Right) || double.IsNaN(Top) || double.IsNaN(Bottom))
+                if (double.IsNaN(Left) || double.IsNaN(Right) || double.IsNaN(Top) || double.IsNaN(Bottom))
                     return false;
             }
 
-            if(!allowPositiveInfinity)
+            if (!allowPositiveInfinity)
             {
-                if(Double.IsPositiveInfinity(Left) || Double.IsPositiveInfinity(Right) || Double.IsPositiveInfinity(Top) || Double.IsPositiveInfinity(Bottom))
+                if (Double.IsPositiveInfinity(Left) || Double.IsPositiveInfinity(Right) || Double.IsPositiveInfinity(Top) || Double.IsPositiveInfinity(Bottom))
                 {
                     return false;
                 }
             }
 
-            if(!allowNegativeInfinity)
+            if (!allowNegativeInfinity)
             {
-                if(Double.IsNegativeInfinity(Left) || Double.IsNegativeInfinity(Right) || Double.IsNegativeInfinity(Top) || Double.IsNegativeInfinity(Bottom))
+                if (Double.IsNegativeInfinity(Left) || Double.IsNegativeInfinity(Right) || Double.IsNegativeInfinity(Top) || Double.IsNegativeInfinity(Bottom))
                 {
                     return false;
                 }
             }
 
-            return true;            
+            return true;
         }
 
         /// <summary>
@@ -188,10 +188,10 @@ namespace System.Windows
         /// <returns>Whether or not the two points are equal</returns>
         internal bool IsClose(Thickness thickness)
         {
-            return (    DoubleUtil.AreClose(Left, thickness.Left)
-                    &&  DoubleUtil.AreClose(Top, thickness.Top)
-                    &&  DoubleUtil.AreClose(Right, thickness.Right)
-                    &&  DoubleUtil.AreClose(Bottom, thickness.Bottom));
+            return (DoubleUtil.AreClose(Left, thickness.Left)
+                    && DoubleUtil.AreClose(Top, thickness.Top)
+                    && DoubleUtil.AreClose(Right, thickness.Right)
+                    && DoubleUtil.AreClose(Bottom, thickness.Bottom));
         }
 
         /// <summary>
@@ -225,12 +225,12 @@ namespace System.Windows
         /// <param name="t2">second Thickness to compare</param>
         /// <returns>True if all sides of the Thickness are equal, false otherwise</returns>
         //  SEEALSO
-        public static bool operator==(Thickness t1, Thickness t2)
+        public static bool operator ==(Thickness t1, Thickness t2)
         {
-            return (    (t1._Left   == t2._Left   || (double.IsNaN(t1._Left)   && double.IsNaN(t2._Left)))
-                    &&  (t1._Top    == t2._Top    || (double.IsNaN(t1._Top)    && double.IsNaN(t2._Top)))
-                    &&  (t1._Right  == t2._Right  || (double.IsNaN(t1._Right)  && double.IsNaN(t2._Right)))
-                    &&  (t1._Bottom == t2._Bottom || (double.IsNaN(t1._Bottom) && double.IsNaN(t2._Bottom)))
+            return ((t1._Left == t2._Left || (double.IsNaN(t1._Left) && double.IsNaN(t2._Left)))
+                    && (t1._Top == t2._Top || (double.IsNaN(t1._Top) && double.IsNaN(t2._Top)))
+                    && (t1._Right == t2._Right || (double.IsNaN(t1._Right) && double.IsNaN(t2._Right)))
+                    && (t1._Bottom == t2._Bottom || (double.IsNaN(t1._Bottom) && double.IsNaN(t2._Bottom)))
                     );
         }
 
@@ -241,7 +241,7 @@ namespace System.Windows
         /// <param name="t2">second Thickness to compare</param>
         /// <returns>False if all sides of the Thickness are equal, true otherwise</returns>
         //  SEEALSO
-        public static bool operator!=(Thickness t1, Thickness t2)
+        public static bool operator !=(Thickness t1, Thickness t2)
         {
             return (!(t1 == t2));
         }
@@ -259,28 +259,28 @@ namespace System.Windows
 
         /// <summary>This property is the Length on the thickness' left side</summary>
         public double Left
-        { 
+        {
             get { return _Left; }
             set { _Left = value; }
         }
 
         /// <summary>This property is the Length on the thickness' top side</summary>
         public double Top
-        { 
+        {
             get { return _Top; }
             set { _Top = value; }
         }
 
         /// <summary>This property is the Length on the thickness' right side</summary>
         public double Right
-        { 
+        {
             get { return _Right; }
             set { _Right = value; }
         }
 
         /// <summary>This property is the Length on the thickness' bottom side</summary>
         public double Bottom
-        { 
+        {
             get { return _Bottom; }
             set { _Bottom = value; }
         }

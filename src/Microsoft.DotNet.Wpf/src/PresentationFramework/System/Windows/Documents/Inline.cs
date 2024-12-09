@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,7 +8,7 @@
 
 using MS.Internal;
 
-namespace System.Windows.Documents 
+namespace System.Windows.Documents
 {
     /// <summary>
     /// Inline element.
@@ -27,7 +27,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// Public constructor.
         /// </summary>
-        protected Inline() 
+        protected Inline()
             : base()
         {
         }
@@ -86,14 +86,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="BaselineAlignment" /> property.
         /// </summary>
-        public static readonly DependencyProperty BaselineAlignmentProperty = 
+        public static readonly DependencyProperty BaselineAlignmentProperty =
                 DependencyProperty.Register(
-                        "BaselineAlignment", 
-                        typeof(BaselineAlignment), 
-                        typeof(Inline), 
+                        "BaselineAlignment",
+                        typeof(BaselineAlignment),
+                        typeof(Inline),
                         new FrameworkPropertyMetadata(
-                                BaselineAlignment.Baseline, 
-                                FrameworkPropertyMetadataOptions.AffectsParentMeasure), 
+                                BaselineAlignment.Baseline,
+                                FrameworkPropertyMetadataOptions.AffectsParentMeasure),
                         new ValidateValueCallback(IsValidBaselineAlignment));
 
         /// <summary>
@@ -101,21 +101,21 @@ namespace System.Windows.Documents
         /// </summary>
         public BaselineAlignment BaselineAlignment
         {
-            get { return (BaselineAlignment) GetValue(BaselineAlignmentProperty); }
+            get { return (BaselineAlignment)GetValue(BaselineAlignmentProperty); }
             set { SetValue(BaselineAlignmentProperty, value); }
         }
 
         /// <summary>
         /// DependencyProperty for <see cref="TextDecorations" /> property.
         /// </summary>
-        public static readonly DependencyProperty TextDecorationsProperty = 
+        public static readonly DependencyProperty TextDecorationsProperty =
                 DependencyProperty.Register(
-                        "TextDecorations", 
-                        typeof(TextDecorationCollection), 
+                        "TextDecorations",
+                        typeof(TextDecorationCollection),
                         typeof(Inline),
                         new FrameworkPropertyMetadata(
-                                new FreezableDefaultValueFactory(TextDecorationCollection.Empty), 
-                                FrameworkPropertyMetadataOptions.AffectsRender 
+                                new FreezableDefaultValueFactory(TextDecorationCollection.Empty),
+                                FrameworkPropertyMetadataOptions.AffectsRender
                                 ));
 
         /// <summary>
@@ -123,7 +123,7 @@ namespace System.Windows.Documents
         /// </summary>
         public TextDecorationCollection TextDecorations
         {
-            get { return (TextDecorationCollection) GetValue(TextDecorationsProperty); }
+            get { return (TextDecorationCollection)GetValue(TextDecorationsProperty); }
             set { SetValue(TextDecorationsProperty, value); }
         }
 

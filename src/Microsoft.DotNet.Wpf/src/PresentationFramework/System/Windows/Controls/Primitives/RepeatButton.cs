@@ -1,14 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 
 using System.ComponentModel;
-using System.Windows.Threading;
 using System.Windows.Automation.Peers;
-
 using System.Windows.Input;
+using System.Windows.Threading;
 
 namespace System.Windows.Controls.Primitives
 {
@@ -46,7 +45,7 @@ namespace System.Windows.Controls.Primitives
         ///     Flags:              Can be used in style rules
         ///     Default Value:      Depend on SPI_GETKEYBOARDDELAY from SystemMetrics
         /// </summary>
-        public static readonly DependencyProperty DelayProperty 
+        public static readonly DependencyProperty DelayProperty
             = DependencyProperty.Register("Delay", typeof(int), typeof(RepeatButton),
                                           new FrameworkPropertyMetadata(GetKeyboardDelay()),
                                           new ValidateValueCallback(IsDelayValid));
@@ -73,9 +72,9 @@ namespace System.Windows.Controls.Primitives
         ///     Flags:              Can be used in style rules
         ///     Default Value:      Depend on SPI_GETKEYBOARDSPEED from SystemMetrics
         /// </summary>
-        public static readonly DependencyProperty IntervalProperty 
+        public static readonly DependencyProperty IntervalProperty
             = DependencyProperty.Register("Interval", typeof(int), typeof(RepeatButton),
-                                          new FrameworkPropertyMetadata(GetKeyboardSpeed()), 
+                                          new FrameworkPropertyMetadata(GetKeyboardSpeed()),
                                           new ValidateValueCallback(IsIntervalValid));
 
         /// <summary>
@@ -102,7 +101,7 @@ namespace System.Windows.Controls.Primitives
         private static bool IsDelayValid(object value) { return ((int)value) >= 0; }
         private static bool IsIntervalValid(object value) { return ((int)value) > 0; }
 
-         /// <summary>
+        /// <summary>
         /// Starts a _timer ticking
         /// </summary>
         private void StartTimer()
@@ -175,7 +174,7 @@ namespace System.Windows.Controls.Primitives
             // SPI_GETKEYBOARDSPEED 0,...,31 correspond to 1000/2.5=400,...,1000/30 ms
             if (speed < 0 || speed > 31)
                 speed = 31;
-            return (31 - speed) * (400 - 1000/30) / 31 + 1000/30;
+            return (31 - speed) * (400 - 1000 / 30) / 31 + 1000 / 30;
         }
 
         #endregion Private helpers
@@ -317,7 +316,7 @@ namespace System.Windows.Controls.Primitives
             }
             base.OnKeyUp(e);
         }
-        
+
         //
         //  This property
         //  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject

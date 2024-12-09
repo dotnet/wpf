@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,8 @@ namespace System.Windows.Automation.Peers
     public class ExpanderAutomationPeer : FrameworkElementAutomationPeer, IExpandCollapseProvider
     {
         ///
-        public ExpanderAutomationPeer(Expander owner): base(owner)
-        {}
+        public ExpanderAutomationPeer(Expander owner) : base(owner)
+        { }
 
         ///
         override protected string GetClassNameCore()
@@ -26,7 +26,7 @@ namespace System.Windows.Automation.Peers
         {
             return AutomationControlType.Group;
         }
-        
+
         /// Go through the children and if we find the templated toggle button set its event source to this AutomationPeer
         protected override List<AutomationPeer> GetChildrenCore()
         {
@@ -51,16 +51,16 @@ namespace System.Windows.Automation.Peers
         /// The expander should have Automation Keyboard focus whenever the actual focus is set in the toggle button
         override protected bool HasKeyboardFocusCore()
         {
-            return ((!AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures && ((Expander)Owner).IsExpanderToggleButtonFocused) 
+            return ((!AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures && ((Expander)Owner).IsExpanderToggleButtonFocused)
                     || base.HasKeyboardFocusCore());
         }
-        
+
         ///
         override public object GetPattern(PatternInterface pattern)
         {
             object iface = null;
-            
-            if(pattern == PatternInterface.ExpandCollapse)
+
+            if (pattern == PatternInterface.ExpandCollapse)
             {
                 iface = this;
             }
@@ -73,7 +73,7 @@ namespace System.Windows.Automation.Peers
         }
 
         #region ExpandCollapse
-        
+
         /// <summary>
         /// Blocking method that returns after the element has been expanded.
         /// </summary>

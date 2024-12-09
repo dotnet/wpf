@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class ValuePattern: BasePattern
 #else
-    public class ValuePattern: BasePattern
+    public class ValuePattern : BasePattern
 #endif
     {
         //------------------------------------------------------
@@ -22,7 +22,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // internal so that RangeValue can derive from this
@@ -41,7 +41,7 @@ namespace System.Windows.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>Value pattern</summary>
@@ -61,14 +61,14 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
         /// Request to set the value that this UI element is representing
         /// </summary>
         /// <param name="value">Value to set the UI to, the provider is responsible for converting from a string into the appropriate data type</param>
-        public void SetValue( string value )
+        public void SetValue(string value)
         {
             ArgumentNullException.ThrowIfNull(value);
 
@@ -86,7 +86,7 @@ namespace System.Windows.Automation
                 throw new InvalidOperationException(SR.ValueReadonly);
             }
 
-            UiaCoreApi.ValuePattern_SetValue(_hPattern,  value);
+            UiaCoreApi.ValuePattern_SetValue(_hPattern, value);
         }
 
         #endregion Public Methods
@@ -97,7 +97,7 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         static internal object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -174,7 +174,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private SafePatternHandle _hPattern;
@@ -220,7 +220,7 @@ namespace System.Windows.Automation
             //  Public Properties
             //
             //------------------------------------------------------
- 
+
             #region Public Properties
 
             ///<summary>Value of a value control, as a a string.</summary>

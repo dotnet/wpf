@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -94,7 +94,7 @@ namespace MS.Internal.IO.Packaging
             CheckDisposed();
 
             throw new NotSupportedException(SR.SetLengthNotSupported);
-       }
+        }
 
         /// <summary>
         /// Flush
@@ -287,9 +287,9 @@ namespace MS.Internal.IO.Packaging
             //          ObfuscatedLength
             //      The result of (Math.Min(ObfuscatedLength, readPosition + (long) count) - readPosition) can be safely cast to int
             //          since it cannot be bigger than ObfuscatedLength which is 32
-            int bytesToXor = (int) (Math.Min(ObfuscatedLength, unchecked (readPosition + (long) count)) - readPosition);
+            int bytesToXor = (int)(Math.Min(ObfuscatedLength, unchecked(readPosition + (long)count)) - readPosition);
 
-            int guidBytePosition = _guid.Length - ((int) readPosition % _guid.Length) - 1;
+            int guidBytePosition = _guid.Length - ((int)readPosition % _guid.Length) - 1;
 
             for (int i = offset; bytesToXor > 0; --bytesToXor, ++i, --guidBytePosition)
             {
@@ -325,7 +325,7 @@ namespace MS.Internal.IO.Packaging
             {
                 throw new ArgumentException(SR.InvalidPartName);
             }
-            
+
             // Use Guid constructor to do error checking in parsing
             Guid guid = new Guid(guidString);
 
@@ -343,17 +343,17 @@ namespace MS.Internal.IO.Packaging
 
             return guidBytes;
         }
-        
+
         //------------------------------------------------------
         //
         //  Private Variables
         //
         //------------------------------------------------------
 
-        private Stream  _obfuscatedStream;        // stream we ultimately decompress from and to in the container
+        private Stream _obfuscatedStream;        // stream we ultimately decompress from and to in the container
         private byte[] _guid;
         private bool _ownObfuscatedStream;      // Does this class own the underlying stream?
-                                                                    //  if it does, it should dispose the underlying stream when this class is disposed
+                                                //  if it does, it should dispose the underlying stream when this class is disposed
         private const long ObfuscatedLength = 32;
         #endregion
     }

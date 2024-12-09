@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -74,18 +74,21 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     break;
 
                 case SeekOrigin.Current:
-                    checked { temp = Position + offset; }
+                    checked
+                    { temp = Position + offset; }
                     break;
 
                 case SeekOrigin.End:
-                    checked { temp = Length + offset; }
+                    checked
+                    { temp = Length + offset; }
                     break;
             }
 
             if (temp < 0)
                 throw new ArgumentException(SR.SeekNegative);
 
-            checked { BaseStream.Position = temp + _dataOffset; }
+            checked
+            { BaseStream.Position = temp + _dataOffset; }
             return temp;
         }
 
@@ -97,7 +100,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             ArgumentOutOfRangeException.ThrowIfNegative(newLength);
 
             WriteAttempt();
-            checked { BaseStream.SetLength(newLength + _dataOffset); }
+            checked
+            { BaseStream.SetLength(newLength + _dataOffset); }
         }
 
         /// <summary>
@@ -357,7 +361,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             _dataOffset = offset;
 
             // restore and shift
-            checked { BaseStream.Position = tempPos + _dataOffset; }
+            checked
+            { BaseStream.Position = tempPos + _dataOffset; }
         }
 
         /// <summary>
@@ -416,10 +421,10 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         //  Private Fields
         //
         //------------------------------------------------------
-        private bool            _writeOccurred;     // did one of our streams get written to?
-        private bool            _readOccurred;      // did one of our streams get read from?
-        private FormatVersion   _codeVersion;       // code version
-        private FormatVersion   _fileVersion;       // current file version (null if not read or created yet)
-        private long            _dataOffset = 0;    // where FormatVersion ends and data begins
+        private bool _writeOccurred;     // did one of our streams get written to?
+        private bool _readOccurred;      // did one of our streams get read from?
+        private FormatVersion _codeVersion;       // code version
+        private FormatVersion _fileVersion;       // current file version (null if not read or created yet)
+        private long _dataOffset = 0;    // where FormatVersion ends and data begins
     }
 }

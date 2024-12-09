@@ -1,19 +1,19 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: D3DImage class
 //                  An ImageSource that displays a user created D3D surface
 
-using MS.Internal;
-using MS.Internal.KnownBoxes;
-using MS.Win32.PresentationCore;
 using System.ComponentModel;
+using System.Threading;
 using System.Windows.Media;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
-using System.Threading;
+using MS.Internal;
+using MS.Internal.KnownBoxes;
+using MS.Win32.PresentationCore;
 
 namespace System.Windows.Interop
 {
@@ -28,7 +28,7 @@ namespace System.Windows.Interop
     public class D3DImage : ImageSource, IAppDomainShutdownListener
     {
         static D3DImage()
-        {            
+        {
             IsFrontBufferAvailablePropertyKey =
                 DependencyProperty.RegisterReadOnly(
                     "IsFrontBufferAvailable",
@@ -124,7 +124,7 @@ namespace System.Windows.Interop
         {
 
             WritePreamble();
-            
+
             if (_lockCount == 0)
             {
                 throw new InvalidOperationException(SR.Image_MustBeLocked);
@@ -144,7 +144,7 @@ namespace System.Windows.Interop
             {
                 return;
             }
-            
+
             SafeMILHandle newBitmap = null;
             uint newPixelWidth = 0;
             uint newPixelHeight = 0;
@@ -181,7 +181,7 @@ namespace System.Windows.Interop
 
                 // 2. If we were waiting for a present, unhook from commit
                 UnsubscribeFromCommittingBatch();
-                
+
                 // 3. We are no longer dirty
                 _isDirty = false;
 
@@ -253,7 +253,7 @@ namespace System.Windows.Interop
         public void Unlock()
         {
             WritePreamble();
-            
+
             if (_lockCount == 0)
             {
                 throw new InvalidOperationException(SR.Image_MustBeLocked);
@@ -269,7 +269,7 @@ namespace System.Windows.Interop
             if (_isChangePending)
             {
                 _isChangePending = false;
-                
+
                 WritePostscript();
             }
         }
@@ -304,13 +304,13 @@ namespace System.Windows.Interop
             {
                 // Unmanaged code will make sure that the rect is well-formed
                 HRESULT.Check(UnsafeNativeMethods.InteropDeviceBitmap.AddDirtyRect(
-                    dirtyRect.X, 
-                    dirtyRect.Y, 
-                    dirtyRect.Width, 
-                    dirtyRect.Height, 
+                    dirtyRect.X,
+                    dirtyRect.Y,
+                    dirtyRect.Width,
+                    dirtyRect.Height,
                     _pInteropDeviceBitmap
                     ));
-                    
+
                 // We're now dirty, but we won't consider it a change until Unlock
                 _isDirty = true;
                 _isChangePending = true;
@@ -354,7 +354,7 @@ namespace System.Windows.Interop
             remove
             {
                 WritePreamble();
-    
+
                 if (value != null)
                 {
                     _isFrontBufferAvailableChangedHandlers -= value;
@@ -371,7 +371,7 @@ namespace System.Windows.Interop
             get
             {
                 ReadPreamble();
-                
+
                 return (int)_pixelWidth;
             }
         }
@@ -384,7 +384,7 @@ namespace System.Windows.Interop
             get
             {
                 ReadPreamble();
-                
+
                 return (int)_pixelHeight;
             }
         }
@@ -396,8 +396,8 @@ namespace System.Windows.Interop
         /// </summary>
         public sealed override double Width
         {
-            get 
-            { 
+            get
+            {
                 ReadPreamble();
 
                 return ImageSource.PixelsToDIPs(_dpiX, (int)_pixelWidth);
@@ -411,10 +411,10 @@ namespace System.Windows.Interop
         /// </summary>
         public sealed override double Height
         {
-            get 
-            { 
+            get
+            {
                 ReadPreamble();
-                
+
                 return ImageSource.PixelsToDIPs(_dpiY, (int)_pixelHeight);
             }
         }
@@ -426,10 +426,10 @@ namespace System.Windows.Interop
         /// </summary>
         public sealed override ImageMetadata Metadata
         {
-            get 
-            { 
+            get
+            {
                 ReadPreamble();
-                
+
                 return null;
             }
         }
@@ -485,7 +485,7 @@ namespace System.Windows.Interop
 
             CloneCommon(sourceFreezable);
         }
-  
+
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
             base.CloneCurrentValueCore(sourceFreezable);
@@ -505,7 +505,7 @@ namespace System.Windows.Interop
             base.GetCurrentValueAsFrozenCore(sourceFreezable);
 
             CloneCommon(sourceFreezable);
-        } 
+        }
 
         /// <Summary>
         ///     Gets a software copy of D3DImage. Called by printing, RTB, and BMEs. The
@@ -514,13 +514,13 @@ namespace System.Windows.Interop
         /// </Summary>
         protected internal virtual BitmapSource CopyBackBuffer()
         {
-            
+
             BitmapSource copy = null;
-            
+
             if (_pInteropDeviceBitmap != null)
             {
                 BitmapSourceSafeMILHandle pIWICBitmapSource;
-                
+
                 if (HRESULT.Succeeded(UnsafeNativeMethods.InteropDeviceBitmap.GetAsSoftwareBitmap(
                     _pInteropDeviceBitmap,
                     out pIWICBitmapSource
@@ -531,16 +531,16 @@ namespace System.Windows.Interop
                 }
             }
 
-            return copy;         
+            return copy;
         }
 
         private void CloneCommon(Freezable sourceFreezable)
-        {           
+        {
             D3DImage source = (D3DImage)sourceFreezable;
 
             _dpiX = source._dpiX;
             _dpiY = source._dpiY;
-            
+
             Lock();
             // If we've lost the front buffer, _pUserSurface unsafe will be null
             SetBackBuffer(D3DResourceType.IDirect3DSurface9, source._pUserSurfaceUnsafe);
@@ -550,7 +550,7 @@ namespace System.Windows.Interop
         private void SubscribeToCommittingBatch()
         {
             if (!_isWaitingForPresent)
-            {             
+            {
                 // Suppose this D3DImage is not on the main UI thread. This thread will
                 // never commit a batch so we don't want to add an event handler to it
                 // since it will never get removed
@@ -580,14 +580,14 @@ namespace System.Windows.Interop
         private bool LockImpl(Duration timeout)
         {
             Debug.Assert(timeout != Duration.Automatic);
-            
+
             bool lockObtained = false;
 
             if (_lockCount == UInt32.MaxValue)
             {
                 throw new InvalidOperationException(SR.Image_LockCountLimit);
             }
-            
+
             if (_lockCount == 0)
             {
                 if (timeout == Duration.Forever)
@@ -598,13 +598,13 @@ namespace System.Windows.Interop
                 {
                     lockObtained = _canWriteEvent.WaitOne(timeout.TimeSpan, false);
                 }
-                
+
                 // Consider the situation: Lock(); AddDirtyRect(); Unlock(); Lock(); return;
                 // The Unlock will have set us up to send a present packet but since
                 // the user re-locked the buffer we shouldn't copy forward
                 UnsubscribeFromCommittingBatch();
             }
-            
+
             ++_lockCount;
 
             // no WritePostscript because this isn't a "change" yet
@@ -624,7 +624,7 @@ namespace System.Windows.Interop
 
             bool isFrontBufferAvailable = (bool)e.NewValue;
             D3DImage img = (D3DImage)d;
-            
+
             if (!isFrontBufferAvailable)
             {
                 //
@@ -644,7 +644,7 @@ namespace System.Windows.Interop
                     img._pUserSurfaceUnsafe = IntPtr.Zero;
                 }
             }
-        
+
             if (img._isFrontBufferAvailableChangedHandlers != null)
             {
                 img._isFrontBufferAvailableChangedHandlers(img, e);
@@ -674,12 +674,12 @@ namespace System.Windows.Interop
             }
 
             UnsubscribeFromCommittingBatch();
-            
+
             unsafe
             {
                 DUCE.MILCMD_D3DIMAGE_PRESENT data;
                 DUCE.Channel channel = sender as DUCE.Channel;
-                
+
                 Debug.Assert(_duceResource.IsOnChannel(channel));
 
                 data.Type = MILCMD.MilCmdD3DImagePresent;
@@ -701,7 +701,7 @@ namespace System.Windows.Interop
                 {
                     throw new Win32Exception();
                 }
-                
+
                 data.hEvent = (ulong)hDuplicate.ToPointer();
 
                 // Send packed command structure
@@ -785,24 +785,24 @@ namespace System.Windows.Interop
                     if (_pInteropDeviceBitmap != null)
                     {
                         UnsafeNativeMethods.MILUnknown.AddRef(_pInteropDeviceBitmap);
-                        
+
                         data.pInteropDeviceBitmap = (ulong)_pInteropDeviceBitmap.DangerousGetHandle().ToPointer();
                     }
                     else
                     {
                         data.pInteropDeviceBitmap = 0;
                     }
-                    
+
                     data.pSoftwareBitmap = 0;
 
                     if (isSynchronous)
                     {
                         _softwareCopy = CopyBackBuffer();
-                        
+
                         if (_softwareCopy != null)
                         {
                             UnsafeNativeMethods.MILUnknown.AddRef(_softwareCopy.WicSourceHandle);
-                            
+
                             data.pSoftwareBitmap = (ulong)_softwareCopy.WicSourceHandle.DangerousGetHandle().ToPointer();
                         }
                     }
@@ -831,7 +831,7 @@ namespace System.Windows.Interop
                 AddRefOnChannelAnimations(channel);
 
                 UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                
+
                 // If we are being put onto the asynchronous compositor channel in
                 // a dirty state, we need to subscribe to the commit batch event.
                 if (!channel.IsSynchronous && _isDirty)
@@ -849,7 +849,7 @@ namespace System.Windows.Interop
             if (_duceResource.ReleaseOnChannel(channel))
             {
                 ReleaseOnChannelAnimations(channel);
-                
+
                 // If we are being pulled off the asynchronous compositor channel
                 // while we still have a handler hooked to the commit batch event,
                 // remove the handler to avoid situations where would leak the D3DImage
@@ -859,7 +859,7 @@ namespace System.Windows.Interop
                 }
             }
         }
-        
+
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.
@@ -888,7 +888,7 @@ namespace System.Windows.Interop
             // The finalizer does the same thing, so it's no longer necessary
             GC.SuppressFinalize(this);
         }
-        
+
 
         internal System.Windows.Media.Composition.DUCE.MultiChannelResource _duceResource = new System.Windows.Media.Composition.DUCE.MultiChannelResource();
 

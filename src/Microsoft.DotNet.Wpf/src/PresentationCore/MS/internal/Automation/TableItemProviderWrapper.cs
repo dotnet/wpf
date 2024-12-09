@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 //
 //
 
-using System.Windows.Threading;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -28,17 +28,17 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class TableItemProviderWrapper: MarshalByRefObject, ITableItemProvider
+    internal class TableItemProviderWrapper : MarshalByRefObject, ITableItemProvider
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        private TableItemProviderWrapper( AutomationPeer peer, ITableItemProvider iface )
+        private TableItemProviderWrapper(AutomationPeer peer, ITableItemProvider iface)
         {
             _peer = peer;
             _iface = iface;
@@ -52,14 +52,14 @@ namespace MS.Internal.Automation
         //  Interface ITableItemProvider
         //
         //------------------------------------------------------
- 
+
         #region Interface ITableItemProvider
 
         public int Row
         {
             get
             {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetRow ), null );
+                return (int)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetRow), null);
             }
         }
 
@@ -67,7 +67,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetColumn ), null );
+                return (int)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetColumn), null);
             }
         }
 
@@ -75,7 +75,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetRowSpan ), null );
+                return (int)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetRowSpan), null);
             }
         }
 
@@ -83,7 +83,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (int) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetColumnSpan ), null );
+                return (int)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetColumnSpan), null);
             }
         }
 
@@ -91,18 +91,18 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (IRawElementProviderSimple) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetContainingGrid ), null );
+                return (IRawElementProviderSimple)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetContainingGrid), null);
             }
         }
 
-        public IRawElementProviderSimple [] GetRowHeaderItems()
+        public IRawElementProviderSimple[] GetRowHeaderItems()
         {
-            return (IRawElementProviderSimple []) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetRowHeaderItems ), null );
+            return (IRawElementProviderSimple[])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetRowHeaderItems), null);
         }
 
-        public IRawElementProviderSimple [] GetColumnHeaderItems()
+        public IRawElementProviderSimple[] GetColumnHeaderItems()
         {
-            return (IRawElementProviderSimple []) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetColumnHeaderItems ), null );
+            return (IRawElementProviderSimple[])ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetColumnHeaderItems), null);
         }
 
         #endregion Interface ITableItemProvider
@@ -113,12 +113,12 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new TableItemProviderWrapper( peer, (ITableItemProvider) iface );
+            return new TableItemProviderWrapper(peer, (ITableItemProvider)iface);
         }
 
         #endregion Internal Methods
@@ -128,40 +128,40 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
-        private object GetRow( object unused )
+        private object GetRow(object unused)
         {
             return _iface.Row;
         }
 
-        private object GetColumn( object unused )
+        private object GetColumn(object unused)
         {
             return _iface.Column;
         }
 
-        private object GetRowSpan( object unused )
+        private object GetRowSpan(object unused)
         {
             return _iface.RowSpan;
         }
 
-        private object GetColumnSpan( object unused )
+        private object GetColumnSpan(object unused)
         {
             return _iface.ColumnSpan;
         }
 
-        private object GetContainingGrid( object unused )
+        private object GetContainingGrid(object unused)
         {
             return _iface.ContainingGrid;
         }
 
-        private object GetRowHeaderItems( object unused )
+        private object GetRowHeaderItems(object unused)
         {
             return _iface.GetRowHeaderItems();
         }
 
-        private object GetColumnHeaderItems( object unused )
+        private object GetColumnHeaderItems(object unused)
         {
             return _iface.GetColumnHeaderItems();
         }
@@ -174,7 +174,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;

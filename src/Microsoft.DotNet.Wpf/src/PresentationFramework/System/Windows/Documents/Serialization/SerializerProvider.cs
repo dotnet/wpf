@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -40,7 +40,7 @@ namespace System.Windows.Documents.Serialization
 
             SerializerDescriptor sd = null;
 
-            List<SerializerDescriptor>  installedSerializers = new List<SerializerDescriptor>();
+            List<SerializerDescriptor> installedSerializers = new List<SerializerDescriptor>();
 
             sd = CreateSystemSerializerDescriptor();
 
@@ -51,9 +51,9 @@ namespace System.Windows.Documents.Serialization
 
             RegistryKey plugIns = _rootKey.CreateSubKey(_registryPath);
 
-            if ( plugIns != null )
+            if (plugIns != null)
             {
-                foreach ( string keyName in plugIns.GetSubKeyNames())
+                foreach (string keyName in plugIns.GetSubKeyNames())
                 {
                     sd = SerializerDescriptor.CreateFromRegistry(plugIns, keyName);
                     if (sd != null)
@@ -226,8 +226,8 @@ namespace System.Windows.Documents.Serialization
 
         #region Data
 
-        private const string _registryPath =            @"SOFTWARE\Microsoft\WinFX Serializers";
-        private static readonly RegistryKey _rootKey =  Registry.LocalMachine;
+        private const string _registryPath = @"SOFTWARE\Microsoft\WinFX Serializers";
+        private static readonly RegistryKey _rootKey = Registry.LocalMachine;
 
         private ReadOnlyCollection<SerializerDescriptor> _installedSerializers;
 

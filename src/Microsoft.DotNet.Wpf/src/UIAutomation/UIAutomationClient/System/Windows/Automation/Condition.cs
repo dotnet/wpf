@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,8 +6,8 @@
 // PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
 
-using MS.Internal.Automation;
 using System.Runtime.InteropServices;
+using MS.Internal.Automation;
 
 namespace System.Windows.Automation
 {
@@ -42,7 +42,8 @@ namespace System.Windows.Automation
             SafeConditionMemoryHandle sh = new SafeConditionMemoryHandle();
             int size = Marshal.SizeOf(uiaCondition);
 
-            try { }
+            try
+            { }
             finally
             {
                 IntPtr mem = Marshal.AllocCoTaskMem(size);
@@ -59,7 +60,8 @@ namespace System.Windows.Automation
             // Allocate SafeHandle first to avoid failure later.
             SafeConditionMemoryHandle sh = new SafeConditionMemoryHandle();
 
-            try { }
+            try
+            { }
             finally
             {
                 IntPtr mem = Marshal.AllocCoTaskMem(conditions.Length * IntPtr.Size);
@@ -101,7 +103,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // Internal ctor to prevent others from deriving from this class
@@ -116,7 +118,7 @@ namespace System.Windows.Automation
         //  Public readonly fields & constants
         //
         //------------------------------------------------------
- 
+
         #region Public readonly fields & constants
 
         /// <summary>Condition object that always evaluates to true</summary>
@@ -131,7 +133,7 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal void SetMarshalData<T>(T uiaCondition)
@@ -162,7 +164,7 @@ namespace System.Windows.Automation
         //  Nested Classes
         //
         //------------------------------------------------------
-        private class BoolCondition: Condition
+        private class BoolCondition : Condition
         {
             internal BoolCondition(bool b)
             {

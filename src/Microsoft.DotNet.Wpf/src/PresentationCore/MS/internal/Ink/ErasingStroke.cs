@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -146,7 +146,7 @@ namespace MS.Internal.Ink
 
             Rect inkSegmentBounds = Rect.Empty;
             for (int x = 0; x < iterator.Count; x++)
-            {   
+            {
                 StrokeNode inkStrokeNode = iterator[x];
                 Rect inkNodeBounds = inkStrokeNode.GetBounds();
                 inkSegmentBounds.Union(inkNodeBounds);
@@ -221,7 +221,7 @@ namespace MS.Internal.Ink
                     if ((index > 0) && (index < eraseAt.Count))
                     {
                         StrokeFIndices lastFragment = eraseAt[index - 1];
-                        if (DoubleUtil.AreClose(lastFragment.EndFIndex, StrokeFIndices.AfterLast) )
+                        if (DoubleUtil.AreClose(lastFragment.EndFIndex, StrokeFIndices.AfterLast))
                         {
                             if (DoubleUtil.AreClose(eraseAt[index].BeginFIndex, StrokeFIndices.BeforeFirst))
                             {
@@ -323,9 +323,9 @@ namespace MS.Internal.Ink
 
         #region Fields
 
-        private StrokeNodeIterator      _nodeIterator;
-        private List<StrokeNode>        _erasingStrokeNodes = null;
-        private Rect                    _bounds = Rect.Empty;
+        private StrokeNodeIterator _nodeIterator;
+        private List<StrokeNode> _erasingStrokeNodes = null;
+        private Rect _bounds = Rect.Empty;
 
 #if POINTS_FILTER_TRACE
         private int                     _totalPointsAdded = 0;

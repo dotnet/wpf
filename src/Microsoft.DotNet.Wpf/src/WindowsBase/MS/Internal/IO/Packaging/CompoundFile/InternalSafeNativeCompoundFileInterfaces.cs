@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,26 +15,26 @@ namespace MS.Internal.IO.Packaging.CompoundFile
     // Partial interface definition for existing IStorage
     internal interface IStorage
     {
-        int CreateStream( 
+        int CreateStream(
             string pwcsName,
-            int grfMode, 
-            int reserved1, 
+            int grfMode,
+            int reserved1,
             int reserved2,
-            out IStream ppstm );
+            out IStream ppstm);
 
         int OpenStream(
             string pwcsName,
             int reserved1,
             int grfMode,
             int reserved2,
-            out IStream ppstm );
+            out IStream ppstm);
 
         int CreateStorage(
             string pwcsName,
             int grfMode,
             int reserved1,
             int reserved2,
-            out IStorage ppstg );
+            out IStorage ppstg);
 
         int OpenStorage(
             string pwcsName,
@@ -42,22 +42,22 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             int grfMode,
             IntPtr snbExclude,// Not properly translated, must be NULL anyway
             int reserved,
-            out IStorage ppstg );
+            out IStorage ppstg);
 
         void CopyTo(
             int ciidExclude,
             Guid[] rgiidExclude,
             IntPtr snbExclude,// Not properly translated, use NULL to avoid blow-up
-            IStorage ppstg );
+            IStorage ppstg);
 
         void MoveElementTo(
             string pwcsName,
             IStorage pstgDest,
             string pwcsNewName,
-            int grfFlags );
+            int grfFlags);
 
         void Commit(
-            int grfCommitFlags );
+            int grfCommitFlags);
 
         void Revert();
 
@@ -65,31 +65,31 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             int reserved1,
             IntPtr reserved2,
             int reserved3,
-            out IEnumSTATSTG ppEnum );
+            out IEnumSTATSTG ppEnum);
 
         void DestroyElement(
-            string pwcsName );
+            string pwcsName);
 
         void RenameElement(
             string pwcsOldName,
-            string pwcsNewName );
+            string pwcsNewName);
 
         void SetElementTimes(
             string pwcsName,
             System.Runtime.InteropServices.ComTypes.FILETIME pctime,
             System.Runtime.InteropServices.ComTypes.FILETIME patime,
-            System.Runtime.InteropServices.ComTypes.FILETIME pmtime );
+            System.Runtime.InteropServices.ComTypes.FILETIME pmtime);
 
         void SetClass(
-            ref Guid clsid ); // Hopefully "ref" is how I tell it to use a pointer 
+            ref Guid clsid); // Hopefully "ref" is how I tell it to use a pointer 
 
         void SetStateBits(
             int grfStateBits,
-            int grfMask );
+            int grfMask);
 
         void Stat(
             out System.Runtime.InteropServices.ComTypes.STATSTG pstatstg,
-            int grfStatFlag );
+            int grfStatFlag);
     }
 
     internal interface IStream
@@ -255,11 +255,11 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         void Next(
             UInt32 celt,
             out System.Runtime.InteropServices.ComTypes.STATSTG rgelt, // This should really be array, but we're OK if we stick with one item at a time.
-                // Because marshalling an array of structs that have pointers to strings are troublesome.
-            out UInt32 pceltFetched );
+                                                                       // Because marshalling an array of structs that have pointers to strings are troublesome.
+            out UInt32 pceltFetched);
 
         void Skip(
-            UInt32 celt );
+            UInt32 celt);
 
         void Reset();
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,7 +29,7 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         ///     Default constructor.
         /// </summary>
-        public RotateTransform3D() {}
+        public RotateTransform3D() { }
 
         /// <summary>
         ///     Constructor from Rotation3D.
@@ -103,7 +103,7 @@ namespace System.Windows.Media.Media3D
 
                 Quaternion quaternion = rotation.InternalQuaternion;
                 Point3D center = new Point3D(_cachedCenterXValue, _cachedCenterYValue, _cachedCenterZValue);
-                
+
                 return Matrix3D.CreateRotationMatrix(ref quaternion, ref center);
             }
         }
@@ -114,6 +114,6 @@ namespace System.Windows.Media.Media3D
         {
             matrix = matrix * Value;
         }
-}
+    }
 }
 

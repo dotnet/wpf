@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -47,8 +47,8 @@ namespace System.Windows.Xps.Serialization
         override
         bool
         CanConvertFrom(
-            ITypeDescriptorContext      context,
-            Type                        sourceType
+            ITypeDescriptorContext context,
+            Type sourceType
             )
         {
             return IsSupportedType(sourceType);
@@ -72,8 +72,8 @@ namespace System.Windows.Xps.Serialization
         override
         bool
         CanConvertTo(
-            ITypeDescriptorContext      context,
-            Type                        destinationType
+            ITypeDescriptorContext context,
+            Type destinationType
             )
         {
             return IsSupportedType(destinationType);
@@ -98,9 +98,9 @@ namespace System.Windows.Xps.Serialization
         override
         object
         ConvertFrom(
-            ITypeDescriptorContext              context,
-            System.Globalization.CultureInfo    culture,
-            object                              value
+            ITypeDescriptorContext context,
+            System.Globalization.CultureInfo culture,
+            object value
             )
         {
             ArgumentNullException.ThrowIfNull(value);
@@ -136,10 +136,10 @@ namespace System.Windows.Xps.Serialization
         override
         object
         ConvertTo(
-            ITypeDescriptorContext              context,
-            System.Globalization.CultureInfo    culture,
-            object                              value,
-            Type                                destinationType
+            ITypeDescriptorContext context,
+            System.Globalization.CultureInfo culture,
+            object value,
+            Type destinationType
             )
         {
             if (!IsSupportedType(destinationType))
@@ -173,7 +173,7 @@ namespace System.Windows.Xps.Serialization
             else
             {
                 string uriString = SerializeColorContext(context, color.ColorContext);
-        
+
                 StringBuilder sb = new StringBuilder();
                 IFormatProvider provider = culture;
                 char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
@@ -217,9 +217,9 @@ namespace System.Windows.Xps.Serialization
         override
         PropertyDescriptorCollection
         GetProperties(
-            ITypeDescriptorContext      context,
-            object                      value,
-            Attribute[]                 attributes
+            ITypeDescriptorContext context,
+            object value,
+            Attribute[] attributes
             )
         {
             throw new NotImplementedException();
@@ -244,7 +244,7 @@ namespace System.Windows.Xps.Serialization
         static
         bool
         IsSupportedType(
-            Type            type
+            Type type
             )
         {
             return typeof(string).Equals(type);
@@ -270,27 +270,27 @@ namespace System.Windows.Xps.Serialization
         static
         string
         SerializeColorContext(
-            IServiceProvider                    context,
-            ColorContext                        colorContext
+            IServiceProvider context,
+            ColorContext colorContext
             )
         {
             Uri profileUri = null;
 
             ArgumentNullException.ThrowIfNull(colorContext);
-            if ( context!= null )
+            if (context != null)
             {
                 PackageSerializationManager manager = (PackageSerializationManager)context.GetService(typeof(XpsSerializationManager));
                 Dictionary<int, Uri> colorContextTable = manager.ResourcePolicy.ColorContextTable;
                 Dictionary<int, Uri> currentPageColorContextTable = manager.ResourcePolicy.CurrentPageColorContextTable;
-    
-                if(currentPageColorContextTable==null)
+
+                if (currentPageColorContextTable == null)
                 {
                     //
                     // throw the appropriae exception
                     //
                 }
-                
-                if(colorContextTable==null)
+
+                if (colorContextTable == null)
                 {
                     //
                     // throw the appropriae exception
@@ -310,32 +310,32 @@ namespace System.Windows.Xps.Serialization
 
                     if (!currentPageColorContextTable.ContainsKey(colorContext.GetHashCode()))
                     {
-                       //
-                       // Also, add a relationship for the current page to this Color Context
-                       // resource.  This is needed to conform with Xps specification.
-                       //
-                       manager.AddRelationshipToCurrentPage(profileUri, XpsS0Markup.ResourceRelationshipName);
-                       currentPageColorContextTable.Add(colorContext.GetHashCode(), profileUri);
+                        //
+                        // Also, add a relationship for the current page to this Color Context
+                        // resource.  This is needed to conform with Xps specification.
+                        //
+                        manager.AddRelationshipToCurrentPage(profileUri, XpsS0Markup.ResourceRelationshipName);
+                        currentPageColorContextTable.Add(colorContext.GetHashCode(), profileUri);
                     }
                 }
                 else
                 {
                     MS.Internal.ContentType colorContextMimeType = XpsS0Markup.ColorContextContentType;
-                        
+
                     XpsResourceStream resourceStream = manager.AcquireResourceStream(typeof(ColorContext), colorContextMimeType.ToString());
 
                     byte[] buffer = new byte[512];
 
                     Stream profileStream = colorContext.OpenProfileStream();
                     int count;
-                    
-                    while ( (count = profileStream.Read( buffer, 0, buffer.Length) ) > 0 )
+
+                    while ((count = profileStream.Read(buffer, 0, buffer.Length)) > 0)
                     {
-                        resourceStream.Stream.Write(buffer,0,count);
+                        resourceStream.Stream.Write(buffer, 0, count);
                     }
-                    
+
                     profileStream.Close();
-    
+
                     //
                     // Make sure to commit the resource stream by releasing it.
                     //

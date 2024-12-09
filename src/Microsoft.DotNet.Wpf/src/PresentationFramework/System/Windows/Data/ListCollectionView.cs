@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -97,7 +97,7 @@ namespace System.Windows.Data
                 BindingOperations.AccessCollection(SourceCollection,
                     () =>
                     {
-                        lock(SyncRoot)
+                        lock (SyncRoot)
                         {
                             ClearPendingChanges();
                             ShadowCollection = new ArrayList((ICollection)SourceCollection);
@@ -549,7 +549,7 @@ namespace System.Windows.Data
                 }
 
                 NotifyCollectionChangedEventArgs args = null;
-                int oldIndex=-1, newIndex=-1;
+                int oldIndex = -1, newIndex = -1;
 
                 // we're adding, removing, or moving the placeholder.
                 // Determine the appropriate events.
@@ -1249,17 +1249,17 @@ namespace System.Windows.Data
                     {
                         // the item may have moved within the view
                         int localIndex = fromIndex - delta;
-                        if (localIndex > 0 && ActiveComparer.Compare(list[localIndex-1], editItem) > 0)
+                        if (localIndex > 0 && ActiveComparer.Compare(list[localIndex - 1], editItem) > 0)
                         {
                             // the item has moved toward the front of the list
                             toIndex = list.Search(0, localIndex, editItem, ActiveComparer);
                             if (toIndex < 0)
                                 toIndex = ~toIndex;
                         }
-                        else if (localIndex < list.Count - 1 && ActiveComparer.Compare(editItem, list[localIndex+1]) > 0)
+                        else if (localIndex < list.Count - 1 && ActiveComparer.Compare(editItem, list[localIndex + 1]) > 0)
                         {
                             // the item has moved toward the back of the list
-                            toIndex = list.Search(localIndex+1, list.Count-localIndex-1, editItem, ActiveComparer);
+                            toIndex = list.Search(localIndex + 1, list.Count - localIndex - 1, editItem, ActiveComparer);
                             if (toIndex < 0)
                                 toIndex = ~toIndex;
                             --toIndex;      // because the item is leaving its old position
@@ -1272,8 +1272,8 @@ namespace System.Windows.Data
                                         new NotifyCollectionChangedEventArgs(
                                                             NotifyCollectionChangedAction.Move,
                                                             editItem,
-                                                            toIndex+delta, fromIndex),
-                                        fromIndex, toIndex+delta);
+                                                            toIndex + delta, fromIndex),
+                                        fromIndex, toIndex + delta);
                         }
                     }
                 }
@@ -1285,8 +1285,8 @@ namespace System.Windows.Data
                                 new NotifyCollectionChangedEventArgs(
                                             NotifyCollectionChangedAction.Add,
                                             editItem,
-                                            toIndex+delta),
-                                -1, toIndex+delta);
+                                            toIndex + delta),
+                                -1, toIndex + delta);
                 }
             }
         }
@@ -1470,7 +1470,7 @@ namespace System.Windows.Data
 
         bool IsLiveShaping
         {
-            get { return (IsLiveSorting==true) || (IsLiveFiltering==true) || (IsLiveGrouping==true); }
+            get { return (IsLiveSorting == true) || (IsLiveFiltering == true) || (IsLiveGrouping == true); }
         }
 
         ///<summary>
@@ -1549,7 +1549,7 @@ namespace System.Windows.Data
             }
         }
 
-        #if LiveShapingInstrumentation
+#if LiveShapingInstrumentation
 
         public void ResetComparisons()
         {
@@ -1596,7 +1596,7 @@ namespace System.Windows.Data
             return (lsList != null) ? lsList.GetAverageCopy() : 0.0;
         }
 
-        #endif // LiveShapingInstrumentation
+#endif // LiveShapingInstrumentation
 
         #endregion ICollectionViewLiveShaping
 
@@ -1632,7 +1632,7 @@ namespace System.Windows.Data
                 BindingOperations.AccessCollection(SourceCollection,
                     () =>
                     {
-                        lock(SyncRoot)
+                        lock (SyncRoot)
                         {
                             ClearPendingChanges();
                             ShadowCollection = new ArrayList((ICollection)SourceCollection);
@@ -1759,7 +1759,7 @@ namespace System.Windows.Data
                 // something before it
                 if (UsesLocalArray && adjustedOldIndex >= 0 && adjustedOldIndex < adjustedNewIndex)
                 {
-                    -- adjustedNewIndex;
+                    --adjustedNewIndex;
                 }
             }
 
@@ -1769,14 +1769,14 @@ namespace System.Windows.Data
                 case NotifyCollectionChangedAction.Add:
                     if (IsAddingNew && args.NewStartingIndex <= _newItemIndex)
                     {
-                        ++ _newItemIndex;
+                        ++_newItemIndex;
                     }
                     break;
 
                 case NotifyCollectionChangedAction.Remove:
                     if (IsAddingNew && args.OldStartingIndex < _newItemIndex)
                     {
-                        -- _newItemIndex;
+                        --_newItemIndex;
                     }
 
                     // implicitly cancel AddNew and/or EditItem transactions if the relevant item is removed
@@ -1801,11 +1801,11 @@ namespace System.Windows.Data
                         }
                         else if (args.OldStartingIndex < _newItemIndex && _newItemIndex <= args.NewStartingIndex)
                         {
-                            -- _newItemIndex;
+                            --_newItemIndex;
                         }
                         else if (args.NewStartingIndex <= _newItemIndex && _newItemIndex < args.OldStartingIndex)
                         {
-                            ++ _newItemIndex;
+                            ++_newItemIndex;
                         }
                     }
 
@@ -2253,7 +2253,7 @@ namespace System.Windows.Data
                         return NewItemPlaceholder;
                     if (IsAddingNew)
                     {
-                        if (index == InternalCount-2)
+                        if (index == InternalCount - 2)
                             return _newItem;
                         if (!UsesLocalArray && index >= _newItemIndex)
                             ++index;
@@ -2455,7 +2455,7 @@ namespace System.Windows.Data
                 if (view.SourceCollection != null)
                 {
                     IComparer xmlComparer = SystemXmlHelper.PrepareXmlComparer(view.SourceCollection, sort, view.Culture);
-                    if (xmlComparer!= null)
+                    if (xmlComparer != null)
                     {
                         return xmlComparer;
                     }
@@ -2652,7 +2652,7 @@ namespace System.Windows.Data
         // Convert the collection's index to an index into the view.
         // Return -1 if the index is unknown or moot (Reset events).
         // Return -2 if the event doesn't apply to this view.
-        private int AdjustBefore (NotifyCollectionChangedAction action, object item, int index)
+        private int AdjustBefore(NotifyCollectionChangedAction action, object item, int index)
         {
             // index is not relevant to Reset events
             if (action == NotifyCollectionChangedAction.Reset)
@@ -2786,7 +2786,7 @@ namespace System.Windows.Data
             // localIndex is now the desired index.
             // One small wrinkle:  we have to ignore the target item in
             // the local array (this arises in a Move event).
-            int fullIndex=0, localIndex=0;
+            int fullIndex = 0, localIndex = 0;
 
             while (fullIndex < index && localIndex < InternalList.Count)
             {
@@ -2978,7 +2978,7 @@ namespace System.Windows.Data
             bool isLiveGrouping = (IsLiveGrouping == true);
             LiveShapingList lsList = InternalList as LiveShapingList;
 
-            for (int k=0, n=InternalList.Count;  k<n;  ++k)
+            for (int k = 0, n = InternalList.Count; k < n; ++k)
             {
                 object item = InternalList[k];
                 LiveShapingItem lsi = (lsList != null) ? lsList.ItemAt(k) : null;
@@ -3200,7 +3200,7 @@ namespace System.Windows.Data
                                 }
 
                                 // record the index, for use by the next duplicate
-                                list.SetStartingIndexForFilteredItem(item, index+1);
+                                list.SetStartingIndexForFilteredItem(item, index + 1);
 
                                 // now do a linear search in the partial list
                                 index = MatchingSearch(item, index, ilFull, list);
@@ -3247,8 +3247,10 @@ namespace System.Windows.Data
         {
             if (!IsGrouping && (NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning))
             {
-                if (oldIndex >= 0)  ++oldIndex;
-                if (newIndex >= 0)  ++newIndex;
+                if (oldIndex >= 0)
+                    ++oldIndex;
+                if (newIndex >= 0)
+                    ++newIndex;
             }
 
             ProcessCollectionChangedWithAdjustedIndex(args, oldIndex, newIndex);
@@ -3306,7 +3308,7 @@ namespace System.Windows.Data
                 List<Action> deferredActions = _deferredActions;
                 _deferredActions = null;
 
-                foreach(Action action in deferredActions)
+                foreach (Action action in deferredActions)
                 {
                     action();
                 }
@@ -3327,32 +3329,32 @@ namespace System.Windows.Data
 
         #region Private Fields
 
-        private IList               _internalList;
+        private IList _internalList;
         private CollectionViewGroupRoot _group;
-        private bool                _isGrouping;
-        private IComparer           _activeComparer;
-        private Predicate<object>   _activeFilter;
-        private SortDescriptionCollection  _sort;
-        private IComparer           _customSort;
-        private ArrayList           _shadowCollection;
-        private bool                _currentElementWasRemoved;  // true if we need to MoveCurrencyOffDeletedElement
-        private object              _newItem = NoNewItem;
-        private object              _editItem;
-        private int                 _newItemIndex;  // position _newItem in the source collection
+        private bool _isGrouping;
+        private IComparer _activeComparer;
+        private Predicate<object> _activeFilter;
+        private SortDescriptionCollection _sort;
+        private IComparer _customSort;
+        private ArrayList _shadowCollection;
+        private bool _currentElementWasRemoved;  // true if we need to MoveCurrencyOffDeletedElement
+        private object _newItem = NoNewItem;
+        private object _editItem;
+        private int _newItemIndex;  // position _newItem in the source collection
         private NewItemPlaceholderPosition _newItemPlaceholderPosition;
-        private bool                _isItemConstructorValid;
-        private ConstructorInfo     _itemConstructor;
-        private List<Action>        _deferredActions;
-        private ObservableCollection<string>    _liveSortingProperties;
-        private ObservableCollection<string>    _liveFilteringProperties;
-        private ObservableCollection<string>    _liveGroupingProperties;
-        bool?                       _isLiveSorting = false;
-        bool?                       _isLiveFiltering = false;
-        bool?                       _isLiveGrouping = false;
-        bool                        _isLiveShapingDirty;
-        bool                        _isRemoving;
+        private bool _isItemConstructorValid;
+        private ConstructorInfo _itemConstructor;
+        private List<Action> _deferredActions;
+        private ObservableCollection<string> _liveSortingProperties;
+        private ObservableCollection<string> _liveFilteringProperties;
+        private ObservableCollection<string> _liveGroupingProperties;
+        bool? _isLiveSorting = false;
+        bool? _isLiveFiltering = false;
+        bool? _isLiveGrouping = false;
+        bool _isLiveShapingDirty;
+        bool _isRemoving;
 
-        private const int           _unknownIndex = -1;
+        private const int _unknownIndex = -1;
 
         #endregion Private Fields
     }

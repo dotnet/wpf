@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,16 +11,12 @@
 
 using System;
 using System.Collections.Generic;
-
 using System.Globalization;
 using System.Runtime.InteropServices;
-
-
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-
-using MS.Utility;
 using MS.Internal.Tasks;
+using MS.Utility;
 
 // Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
 // We first need to disable warnings about unknown message numbers and unknown pragmas.
@@ -86,7 +82,7 @@ namespace Microsoft.Build.Tasks.Windows
                 {
                     // Do the real work to classify input files.
                     Classify(SourceFiles, mainEmbeddedList, satelliteEmbeddedList);
-                    
+
                     if (CLRResourceFiles != null)
                     {
                         // Generate the output CLR embedded resource list.
@@ -151,7 +147,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// SourceFiles: List of Items thatare to be classified
         /// </summary>
         [Required]
-        public ITaskItem [] SourceFiles { get; set; }
+        public ITaskItem[] SourceFiles { get; set; }
 
         /// <summary>
         /// Can have values (exe, or dll)
@@ -199,7 +195,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// Non-localizable resources which will be embedded into the Main assembly.
         /// </summary>
         [Output]
-        public ITaskItem [] MainEmbeddedFiles { get; set; }
+        public ITaskItem[] MainEmbeddedFiles { get; set; }
 
         /// <summary>
         /// SatelliteEmbeddedFiles
@@ -208,7 +204,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// culture which is set in Culture property..
         /// </summary>
         [Output]
-        public ITaskItem [] SatelliteEmbeddedFiles { get; set; }
+        public ITaskItem[] SatelliteEmbeddedFiles { get; set; }
 
         #endregion Public Properties
 
@@ -267,15 +263,15 @@ namespace Microsoft.Build.Tasks.Windows
             // OutputType is marked as Required, it should never be null or emtpy.
             // otherwise, the task should have been failed before the code goes here.
 
-            string targetType = OutputType.ToLowerInvariant( );
+            string targetType = OutputType.ToLowerInvariant();
             switch (targetType)
             {
-                case SharedStrings.Library :
-                case SharedStrings.Module  :
-                case SharedStrings.WinExe  :
-                case SharedStrings.Exe     :
+                case SharedStrings.Library:
+                case SharedStrings.Module:
+                case SharedStrings.WinExe:
+                case SharedStrings.Exe:
                     break;
-                default :
+                default:
                     Log.LogErrorWithCodeFromResources(nameof(SR.TargetIsNotSupported), targetType);
                     bValidInput = false;
                     break;

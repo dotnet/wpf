@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         /// Prevent 3rd parties from extending this abstract base class.
         /// </summary>
-        internal ProjectionCamera() 
+        internal ProjectionCamera()
         {
         }
 
@@ -54,11 +54,11 @@ namespace System.Windows.Media.Media3D
         #region Internal Methods
 
         internal override Matrix3D GetViewMatrix()
-        { 
+        {
             Point3D position = Position;
             Vector3D lookDirection = LookDirection;
             Vector3D upDirection = UpDirection;
-            
+
             return CreateViewMatrix(Transform, ref position, ref lookDirection, ref upDirection);
         }
 
@@ -78,11 +78,11 @@ namespace System.Windows.Media.Media3D
 
             Vector3D yaxis = Vector3D.CrossProduct(zaxis, xaxis);
 
-            Vector3D positionVec = (Vector3D) position;
+            Vector3D positionVec = (Vector3D)position;
             double cx = -Vector3D.DotProduct(xaxis, positionVec);
             double cy = -Vector3D.DotProduct(yaxis, positionVec);
             double cz = -Vector3D.DotProduct(zaxis, positionVec);
-            
+
             Matrix3D viewMatrix = new Matrix3D(
                 xaxis.X, yaxis.X, zaxis.X, 0,
                 xaxis.Y, yaxis.Y, zaxis.Y, 0,

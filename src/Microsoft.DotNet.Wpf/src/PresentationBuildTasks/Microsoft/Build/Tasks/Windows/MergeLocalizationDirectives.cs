@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,12 +11,10 @@
 
 using System;
 using System.IO;
-using System.Text;
 using System.Runtime.InteropServices;
-
+using System.Text;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-
 using MS.Internal.Globalization;
 using MS.Internal.Tasks;
 using MS.Utility;                   // For SR
@@ -56,7 +54,8 @@ namespace Microsoft.Build.Tasks.Windows
             TaskHelper.DisplayLogo(Log, nameof(MergeLocalizationDirectives));
             if (GeneratedLocalizationFiles.Length > 0)
             {
-                try {
+                try
+                {
 
                     string absoluteFilePath = Path.Combine(
                         Directory.GetCurrentDirectory(),
@@ -143,7 +142,7 @@ namespace Microsoft.Build.Tasks.Windows
         // Private members
         //---------------------------------
         private ITaskItem[] _generatedLocalizationFiles;
-        private string      _outputFile;
+        private string _outputFile;
     }
 }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,16 +27,16 @@ namespace System.Windows.Media.Media3D
         //------------------------------------------------------
 
         #region Constructors
-        
+
         /// <summary>
         ///     Default ctor
         /// </summary>
         public ModelUIElement3D()
         {
         }
-        
+
         #endregion Constructors
-                
+
         /// <summary>
         ///    DependencyProperty which backs the ModelUIElement3D.Content property.
         /// </summary>
@@ -46,11 +46,12 @@ namespace System.Windows.Media.Media3D
                     /* propertyType = */ typeof(Model3D),
                     /* ownerType = */ typeof(ModelUIElement3D),
                     new PropertyMetadata(ModelPropertyChanged),
-                    (ValidateValueCallback) delegate { return MediaContext.CurrentMediaContext.WriteAccessEnabled; });
+                    (ValidateValueCallback)delegate
+                    { return MediaContext.CurrentMediaContext.WriteAccessEnabled; });
 
         private static void ModelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ModelUIElement3D owner = ((ModelUIElement3D) d);
+            ModelUIElement3D owner = ((ModelUIElement3D)d);
 
             // if it's not a subproperty change, then we need to change the protected Model property of Visual3D
             if (!e.IsASubPropertyChange)
@@ -58,7 +59,7 @@ namespace System.Windows.Media.Media3D
                 owner.Visual3DModel = (Model3D)e.NewValue;
             }
         }
-        
+
         /// <summary>
         ///     The Model3D to render
         /// </summary>
@@ -66,14 +67,14 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Model3D) GetValue(ModelProperty);
+                return (Model3D)GetValue(ModelProperty);
             }
 
             set
             {
                 SetValue(ModelProperty, value);
             }
-        }        
+        }
 
         /// <summary>
         /// Called by the Automation infrastructure when AutomationPeer

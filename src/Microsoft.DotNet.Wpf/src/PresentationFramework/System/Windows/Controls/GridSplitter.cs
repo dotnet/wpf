@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.Collections;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Automation.Peers;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 
@@ -24,7 +24,7 @@ namespace System.Windows.Controls
         /// width compared to height
         /// </summary>
         Auto,
- 
+
         /// <summary>
         /// Resize columns when dragging Splitter.
         /// </summary>
@@ -90,7 +90,7 @@ namespace System.Windows.Controls
 
             FocusableProperty.OverrideMetadata(typeof(GridSplitter), new FrameworkPropertyMetadata(MS.Internal.KnownBoxes.BooleanBoxes.TrueBox));
             FrameworkElement.HorizontalAlignmentProperty.OverrideMetadata(typeof(GridSplitter), new FrameworkPropertyMetadata(HorizontalAlignment.Right));
-            
+
             // Cursor depends on ResizeDirection, ActualWidth, and ActualHeight 
             CursorProperty.OverrideMetadata(typeof(GridSplitter), new FrameworkPropertyMetadata(null, new CoerceValueCallback(CoerceCursor)));
 
@@ -306,19 +306,19 @@ namespace System.Windows.Controls
                 // When HorizontalAlignment is Left, Right or Center, resize Columns
                 if (HorizontalAlignment != HorizontalAlignment.Stretch)
                 {
-                   direction = GridResizeDirection.Columns;
+                    direction = GridResizeDirection.Columns;
                 }
                 else if (VerticalAlignment != VerticalAlignment.Stretch)
                 {
-                   direction = GridResizeDirection.Rows;
+                    direction = GridResizeDirection.Rows;
                 }
                 else if (ActualWidth <= ActualHeight)// Fall back to Width vs Height
                 {
-                   direction = GridResizeDirection.Columns;
+                    direction = GridResizeDirection.Columns;
                 }
                 else
                 {
-                   direction = GridResizeDirection.Rows;
+                    direction = GridResizeDirection.Rows;
                 }
             }
             return direction;
@@ -333,33 +333,33 @@ namespace System.Windows.Controls
             {
                 if (direction == GridResizeDirection.Columns)
                 {
-                   switch (HorizontalAlignment)
-                   {
-                       case HorizontalAlignment.Left:
-                           resizeBehavior = GridResizeBehavior.PreviousAndCurrent;
-                           break;
-                       case HorizontalAlignment.Right:
-                           resizeBehavior = GridResizeBehavior.CurrentAndNext;
-                           break;
-                       default:
-                           resizeBehavior = GridResizeBehavior.PreviousAndNext;
-                           break;
-                   }
+                    switch (HorizontalAlignment)
+                    {
+                        case HorizontalAlignment.Left:
+                            resizeBehavior = GridResizeBehavior.PreviousAndCurrent;
+                            break;
+                        case HorizontalAlignment.Right:
+                            resizeBehavior = GridResizeBehavior.CurrentAndNext;
+                            break;
+                        default:
+                            resizeBehavior = GridResizeBehavior.PreviousAndNext;
+                            break;
+                    }
                 }
                 else
                 {
-                   switch (VerticalAlignment)
-                   {
-                       case VerticalAlignment.Top:
-                           resizeBehavior = GridResizeBehavior.PreviousAndCurrent;
-                           break;
-                       case VerticalAlignment.Bottom:
-                           resizeBehavior = GridResizeBehavior.CurrentAndNext;
-                           break;
-                       default:
-                           resizeBehavior = GridResizeBehavior.PreviousAndNext;
-                           break;
-                   }
+                    switch (VerticalAlignment)
+                    {
+                        case VerticalAlignment.Top:
+                            resizeBehavior = GridResizeBehavior.PreviousAndCurrent;
+                            break;
+                        case VerticalAlignment.Bottom:
+                            resizeBehavior = GridResizeBehavior.CurrentAndNext;
+                            break;
+                        default:
+                            resizeBehavior = GridResizeBehavior.PreviousAndNext;
+                            break;
+                    }
                 }
             }
             return resizeBehavior;
@@ -389,17 +389,21 @@ namespace System.Windows.Controls
                 : base(gridSplitter)
             {
                 // Create a preview control to overlay on top of the GridSplitter
-                Control previewControl = new Control();
-                previewControl.Style = previewStyle;
-                previewControl.IsEnabled = false;
+                Control previewControl = new Control
+                {
+                    Style = previewStyle,
+                    IsEnabled = false
+                };
 
                 // Add a decorator to perform translations
-                Translation = new TranslateTransform();                
-                _decorator = new Decorator();
-                _decorator.Child = previewControl;
-                _decorator.RenderTransform = Translation;
- 
-                this.AddVisualChild(_decorator);  
+                Translation = new TranslateTransform();
+                _decorator = new Decorator
+                {
+                    Child = previewControl,
+                    RenderTransform = Translation
+                };
+
+                this.AddVisualChild(_decorator);
             }
 
             /// <summary>
@@ -415,14 +419,14 @@ namespace System.Windows.Controls
             {
                 // it is initialized in the constructor
                 Debug.Assert(_decorator != null);
-                if(index != 0)
+                if (index != 0)
                 {
                     throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
                 }
 
                 return _decorator;
             }
-            
+
             /// <summary>
             ///  Derived classes override this property to enable the Visual code to enumerate 
             ///  the Visual children. Derived classes need to return the number of children
@@ -433,12 +437,12 @@ namespace System.Windows.Controls
             ///  Remark: During this virtual method the Visual tree must not be modified.
             /// </summary>        
             protected override int VisualChildrenCount
-            {        
-                get 
+            {
+                get
                 {
                     // it is initialized in the constructor
                     Debug.Assert(_decorator != null);
-                    return 1; 
+                    return 1;
                 }
             }
 
@@ -490,10 +494,12 @@ namespace System.Windows.Controls
             if (grid != null)
             {
                 // Setup data used for resizing
-                _resizeData = new ResizeData();
-                _resizeData.Grid = grid;
-                _resizeData.ShowsPreview = ShowsPreview;
-                _resizeData.ResizeDirection = GetEffectiveResizeDirection();
+                _resizeData = new ResizeData
+                {
+                    Grid = grid,
+                    ShowsPreview = ShowsPreview,
+                    ResizeDirection = GetEffectiveResizeDirection()
+                };
                 _resizeData.ResizeBehavior = GetEffectiveResizeBehavior(_resizeData.ResizeDirection);
                 _resizeData.SplitterLength = Math.Min(ActualWidth, ActualHeight);
 
@@ -520,7 +526,7 @@ namespace System.Windows.Controls
             if (gridSpan == 1)
             {
                 splitterIndex = (int)GetValue(_resizeData.ResizeDirection == GridResizeDirection.Columns ? Grid.ColumnProperty : Grid.RowProperty);
-                
+
                 // Select the columns based on Behavior
                 switch (_resizeData.ResizeBehavior)
                 {
@@ -564,10 +570,10 @@ namespace System.Windows.Controls
                     if (isStar1 && isStar2)
                     {
                         // If they are both stars, resize both
-                        _resizeData.SplitBehavior = SplitBehavior.Split;  
+                        _resizeData.SplitBehavior = SplitBehavior.Split;
                     }
                     else
-                    {   
+                    {
                         // One column is fixed width, resize the first one that is fixed
                         _resizeData.SplitBehavior = !isStar1 ? SplitBehavior.Resize1 : SplitBehavior.Resize2;
                     }
@@ -837,13 +843,13 @@ namespace System.Windows.Controls
                     }
                     else if (i == _resizeData.Definition2Index)
                     {
-                        SetDefinitionLength(definition, new GridLength(definition2Pixels, GridUnitType.Star ));
+                        SetDefinitionLength(definition, new GridLength(definition2Pixels, GridUnitType.Star));
                     }
                     else if (IsStar(definition))
                     {
                         SetDefinitionLength(definition, new GridLength(GetActualLength(definition), GridUnitType.Star));
                     }
-               
+
                     i++;
                 }
             }
@@ -897,7 +903,7 @@ namespace System.Windows.Controls
 
                 // When splitting, Check to see if the total pixels spanned by the definitions 
                 // is the same asbefore starting resize. If not cancel the drag
-                if (_resizeData.SplitBehavior == SplitBehavior.Split && 
+                if (_resizeData.SplitBehavior == SplitBehavior.Split &&
                     !LayoutDoubleUtil.AreClose(actualLength1 + actualLength2, _resizeData.OriginalDefinition1ActualLength + _resizeData.OriginalDefinition2ActualLength))
                 {
                     CancelResize();
@@ -924,7 +930,7 @@ namespace System.Windows.Controls
                 // this will be interpreted as the cancellation of the resize operation. To avoid this imprecision we use 
                 // make definition2LengthNew be a function of definition1LengthNew so that the precision or the loss 
                 // thereof can be counterbalanced. See DevDiv bug#140228 for a manifestation of this problem.
-                
+
                 double definition1LengthNew = actualLength1 + delta;
                 //double definition2LengthNew = actualLength2 - delta;
                 double definition2LengthNew = actualLength1 + actualLength2 - definition1LengthNew;
@@ -987,7 +993,7 @@ namespace System.Windows.Controls
             // The constraints to keep the Preview within valid ranges
             public double MinChange;
             public double MaxChange;
-            
+
             // The grid to Resize
             public Grid Grid;
 
@@ -1004,7 +1010,7 @@ namespace System.Windows.Controls
 
             // The index of the splitter
             public int SplitterIndex;
-            
+
             // The indices of the columns/rows
             public int Definition1Index;
             public int Definition2Index;

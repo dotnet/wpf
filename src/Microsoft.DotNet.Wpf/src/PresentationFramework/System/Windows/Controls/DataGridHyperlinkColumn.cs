@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -247,7 +247,7 @@ namespace System.Windows.Controls
         protected override void CancelCellEdit(FrameworkElement editingElement, object uneditedValue)
         {
             DataGridHelper.CacheFlowDirection(editingElement, editingElement != null ? editingElement.Parent as DataGridCell : null);
-            
+
             base.CancelCellEdit(editingElement, uneditedValue);
         }
 
@@ -281,11 +281,11 @@ namespace System.Windows.Controls
             {
                 if (DataGridOwner != null)
                 {
-                    DataGridCell cell = DataGridOwner.CurrentCellContainer; 
+                    DataGridCell cell = DataGridOwner.CurrentCellContainer;
                     if (cell != null && !cell.IsEditing)
                     {
                         Debug.Assert(e.RoutedEvent == Keyboard.PreviewKeyDownEvent, "We should only reach here on the PreviewKeyDown event because the TextBox within is expected to handle the preview event and hence trump the successive KeyDown event.");
-                        
+
                         BeginEdit(e, false);
 
                         //
@@ -296,7 +296,8 @@ namespace System.Windows.Controls
                         // recorded in the TextBox. Hence the call to synchronously drain 
                         // the Dispatcher queue.
                         //
-                        Dispatcher.Invoke((Action)delegate(){}, System.Windows.Threading.DispatcherPriority.Background);
+                        Dispatcher.Invoke((Action)delegate ()
+                        { }, System.Windows.Threading.DispatcherPriority.Background);
                     }
                 }
             }

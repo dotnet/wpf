@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,14 +37,14 @@ namespace MS.Internal.TextFormatting
         /// <param name="sideways">flag indicating whether run is drawn with its side parallel to baseline</param>
         /// <returns>shaped glyph run object</returns>
         internal abstract GlyphRun ComputeShapedGlyphRun(
-            Point                   origin,
-            char[]                   characterString,
-            ushort[]                 clusterMap,
-            ushort[]                 glyphIndices,
-            IList<double>            glyphAdvances,
-            IList<Point>             glyphOffsets,
-            bool                     rightToLeft,
-            bool                     sideways
+            Point origin,
+            char[] characterString,
+            ushort[] clusterMap,
+            ushort[] glyphIndices,
+            IList<double> glyphAdvances,
+            IList<Point> glyphOffsets,
+            bool rightToLeft,
+            bool sideways
             );
 
 
@@ -53,7 +53,7 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         /// <param name="shapeable">another run</param>
         internal abstract bool CanShapeTogether(
-            TextShapeableSymbols    shapeable
+            TextShapeableSymbols shapeable
             );
 
 
@@ -107,10 +107,10 @@ namespace MS.Internal.TextFormatting
         /// <param name="advanceWidthsUnshaped">unshaped glyph advance widths</param>
         /// <remarks>The method gets glyph advances and glyph offsets in ideal values </remarks>        
         internal abstract unsafe void GetAdvanceWidthsUnshaped(
-            char*         characterString,
-            int           characterLength,
-            double        scalingFactor,
-            int*          advanceWidthsUnshaped
+            char* characterString,
+            int characterLength,
+            double scalingFactor,
+            int* advanceWidthsUnshaped
             );
 
 
@@ -127,8 +127,8 @@ namespace MS.Internal.TextFormatting
         /// <returns>display bounding box</returns> 
         /// <remarks>The method constructs glyph run with real values</remarks>
         internal abstract GlyphRun ComputeUnshapedGlyphRun(
-            Point         origin,       
-            char[]        characterString,
+            Point origin,
+            char[] characterString,
             IList<double> characterAdvances
             );
 
@@ -143,9 +143,9 @@ namespace MS.Internal.TextFormatting
         /// </param>
         /// <param name="glyphRun">glyph run object to be drawn</param>
         internal abstract void Draw(
-            DrawingContext      drawingContext,
-            Brush               foregroundBrush,
-            GlyphRun            glyphRun
+            DrawingContext drawingContext,
+            Brush foregroundBrush,
+            GlyphRun glyphRun
             );
 
 

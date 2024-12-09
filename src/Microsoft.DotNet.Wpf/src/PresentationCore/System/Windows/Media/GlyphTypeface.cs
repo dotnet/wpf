@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,15 +13,14 @@ using System.ComponentModel;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Windows.Markup;
 using System.Windows.Media.Composition;
 using System.Windows.Media.TextFormatting;
-using System.Windows.Markup;
-
 using MS.Internal;
-using MS.Internal.TextFormatting;
 using MS.Internal.FontCache;
 using MS.Internal.FontFace;
 using MS.Internal.PresentationCore;
+using MS.Internal.TextFormatting;
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 
@@ -54,7 +53,7 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="typefaceSource">Specifies the URI of a font file used by the newly created GlyphTypeface.</param>
         public GlyphTypeface(Uri typefaceSource) : this(typefaceSource, StyleSimulations.None)
-        {}
+        { }
 
         /// <summary>
         /// Creates a new GlyphTypeface object from a .otf, .ttf or .ttc font face specified by typefaceSource.
@@ -72,7 +71,7 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="font">The DWrite.Font object.</param>
         internal GlyphTypeface(MS.Internal.Text.TextInterface.Font font)
-        {        
+        {
             StyleSimulations styleSimulations = (StyleSimulations)font.SimulationFlags;
             _font = font;
 
@@ -95,16 +94,16 @@ namespace System.Windows.Media
             }
 
             Uri typefaceSource = new Uri(uriPath);
-           
+
             _fontFace = new FontFaceLayoutInfo(font);
             // We skip permission demands for FontSource because the above line already demands them for the right callers.
             _fontSource = new FontSource(typefaceSource, true);
 
-            Invariant.Assert(  styleSimulations == StyleSimulations.None 
-                            || styleSimulations == StyleSimulations.ItalicSimulation 
+            Invariant.Assert(styleSimulations == StyleSimulations.None
+                            || styleSimulations == StyleSimulations.ItalicSimulation
                             || styleSimulations == StyleSimulations.BoldSimulation
                             || styleSimulations == StyleSimulations.BoldItalicSimulation);
-            
+
             _styleSimulations = styleSimulations;
 
             _initializationState = InitializationState.IsInitialized; // fully initialized
@@ -125,8 +124,8 @@ namespace System.Windows.Media
             int faceIndex;
             Util.SplitFontFaceIndex(typefaceSource, out fontSourceUri, out faceIndex);
 
-            if (   styleSimulations != StyleSimulations.None 
-                && styleSimulations != StyleSimulations.ItalicSimulation 
+            if (styleSimulations != StyleSimulations.None
+                && styleSimulations != StyleSimulations.ItalicSimulation
                 && styleSimulations != StyleSimulations.BoldSimulation
                 && styleSimulations != StyleSimulations.BoldItalicSimulation)
             {
@@ -144,7 +143,7 @@ namespace System.Windows.Media
                 // FileFormatException will be thrown!
                 if (fontFaceDWrite == null)
                 {
-                    throw new System.IO.FileFormatException(typefaceSource);             
+                    throw new System.IO.FileFormatException(typefaceSource);
                 }
                 _font = fontCollection.GetFontFromFontFace(fontFaceDWrite);
             }
@@ -156,7 +155,7 @@ namespace System.Windows.Media
 
 
             _initializationState = InitializationState.IsInitialized; // fully initialized
-        }        
+        }
 
         #endregion Constructors
 
@@ -204,7 +203,7 @@ namespace System.Windows.Media
         /// <param name="hintingEmSize">Size to hint for in points.</param>
         /// <returns></returns>
         [CLSCompliant(false)]
-        public Geometry GetGlyphOutline(ushort glyphIndex, double renderingEmSize, double hintingEmSize)        
+        public Geometry GetGlyphOutline(ushort glyphIndex, double renderingEmSize, double hintingEmSize)
         {
             CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
             // NOTE: This parameter is unused, and should be deleted. Not worth a breaking change just for this though.
@@ -306,7 +305,7 @@ namespace System.Windows.Media
         /// it returns the family name in English.
         /// The family name excludes weight, style and stretch.
         /// </summary>
-        public IDictionary<CultureInfo,string> FamilyNames
+        public IDictionary<CultureInfo, string> FamilyNames
         {
             get
             {
@@ -930,7 +929,7 @@ namespace System.Windows.Media
             }
         }
 
-        #pragma warning restore 3003
+#pragma warning restore 3003
 
         /// <summary>
         /// Returns algorithmic font style simulations to be applied to the GlyphTypeface.
@@ -988,11 +987,11 @@ namespace System.Windows.Media
         {
             return FontDWrite.HasCharacter(unicodeValue);
         }
-        
+
         internal MS.Internal.Text.TextInterface.Font FontDWrite
         {
             get
-            {                
+            {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
                 return _font;
             }
@@ -1008,10 +1007,10 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="glyph">Glyph index in the font.</param>
         /// <returns>The nominal advance width for the glyph relative to the em size of the font.</returns>
-        internal double GetAdvanceWidth(ushort             glyph,
-                                        float              pixelsPerDip,
+        internal double GetAdvanceWidth(ushort glyph,
+                                        float pixelsPerDip,
                                         TextFormattingMode textFormattingMode,
-                                        bool               isSideways)
+                                        bool isSideways)
         {
             CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
 
@@ -1049,11 +1048,11 @@ namespace System.Windows.Media
             return ah;
         }
 
-        private unsafe MS.Internal.Text.TextInterface.GlyphMetrics GlyphMetrics(ushort             glyphIndex,
-                                                                                double             emSize,
-                                                                                float              pixelsPerDip,
+        private unsafe MS.Internal.Text.TextInterface.GlyphMetrics GlyphMetrics(ushort glyphIndex,
+                                                                                double emSize,
+                                                                                float pixelsPerDip,
                                                                                 TextFormattingMode textFormattingMode,
-                                                                                bool               isSideways)
+                                                                                bool isSideways)
         {
             MS.Internal.Text.TextInterface.GlyphMetrics glyphMetrics;
 
@@ -1085,7 +1084,7 @@ namespace System.Windows.Media
             return glyphMetrics;
         }
 
-        private unsafe void GlyphMetrics(ushort* pGlyphIndices, int characterCount, MS.Internal.Text.TextInterface.GlyphMetrics* pGlyphMetrics, double emSize, 
+        private unsafe void GlyphMetrics(ushort* pGlyphIndices, int characterCount, MS.Internal.Text.TextInterface.GlyphMetrics* pGlyphMetrics, double emSize,
             float pixelsPerDip, TextFormattingMode textFormattingMode, bool isSideways)
         {
             MS.Internal.Text.TextInterface.FontFace fontFaceDWrite = _font.GetFontFace();
@@ -1097,7 +1096,7 @@ namespace System.Windows.Media
                 }
                 else
                 {
-                    fontFaceDWrite.GetDisplayGlyphMetrics(pGlyphIndices, checked((uint)characterCount), pGlyphMetrics, 
+                    fontFaceDWrite.GetDisplayGlyphMetrics(pGlyphIndices, checked((uint)characterCount), pGlyphMetrics,
                         checked((float)emSize), textFormattingMode != TextFormattingMode.Display, isSideways, pixelsPerDip);
                 }
             }
@@ -1107,34 +1106,34 @@ namespace System.Windows.Media
             }
         }
 
-        private double GetLeftSidebearing(ushort         glyph,
-                                          float          pixelsPerDip,
+        private double GetLeftSidebearing(ushort glyph,
+                                          float pixelsPerDip,
                                           TextFormattingMode textFormattingMode,
-                                          bool           isSideways)
+                                          bool isSideways)
         {
             return ((double)GlyphMetrics(glyph, DesignEmHeight, pixelsPerDip, textFormattingMode, isSideways).LeftSideBearing) / DesignEmHeight;
         }
 
-        private double GetRightSidebearing(ushort         glyph,
-                                           float          pixelsPerDip,
+        private double GetRightSidebearing(ushort glyph,
+                                           float pixelsPerDip,
                                            TextFormattingMode textFormattingMode,
-                                           bool           isSideways)
+                                           bool isSideways)
         {
             return ((double)GlyphMetrics(glyph, DesignEmHeight, pixelsPerDip, textFormattingMode, isSideways).RightSideBearing) / DesignEmHeight;
         }
 
-        private double GetTopSidebearing(ushort         glyph,
-                                         float          pixelsPerDip,
+        private double GetTopSidebearing(ushort glyph,
+                                         float pixelsPerDip,
                                          TextFormattingMode textFormattingMode,
-                                         bool           isSideways)
+                                         bool isSideways)
         {
             return ((double)GlyphMetrics(glyph, DesignEmHeight, pixelsPerDip, textFormattingMode, isSideways).TopSideBearing) / DesignEmHeight;
         }
 
-        private double GetBottomSidebearing(ushort         glyph,
-                                            float          pixelsPerDip,
+        private double GetBottomSidebearing(ushort glyph,
+                                            float pixelsPerDip,
                                             TextFormattingMode textFormattingMode,
-                                            bool           isSideways)
+                                            bool isSideways)
         {
             return ((double)GlyphMetrics(glyph, DesignEmHeight, pixelsPerDip, textFormattingMode, isSideways).BottomSideBearing) / DesignEmHeight;
         }
@@ -1150,7 +1149,7 @@ namespace System.Windows.Media
 
         internal static double BaselineHelper(MS.Internal.Text.TextInterface.GlyphMetrics metrics)
         {
-            return  -1 * ((double)metrics.BottomSideBearing + metrics.VerticalOriginY - metrics.AdvanceHeight);
+            return -1 * ((double)metrics.BottomSideBearing + metrics.VerticalOriginY - metrics.AdvanceHeight);
         }
 
         /// <summary>
@@ -1224,7 +1223,7 @@ namespace System.Windows.Media
             )
         {
             CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-            
+
             Invariant.Assert(glyphsLength <= glyphs.Length);
 
             unsafe
@@ -1237,7 +1236,7 @@ namespace System.Windows.Media
                     }
                 }
             }
-        }        
+        }
 
         /// <summary>
         /// Returns a geometry describing the path for a single glyph in the font.
@@ -1281,19 +1280,19 @@ namespace System.Windows.Media
                 Geometry.PathGeometryData pathGeoData = new Geometry.PathGeometryData();
                 byte[] data = new byte[size];
                 Marshal.Copy(new IntPtr(pMilPathGeometry), data, 0, checked((int)size));
-                
+
                 // Delete the memory we allocated in native code.
                 HRESULT.Check(UnsafeNativeMethods.MilCoreApi.MilGlyphRun_ReleasePathGeometryData(
                     pMilPathGeometry
                     ));
-                
+
                 pathGeoData.SerializedData = data;
                 pathGeoData.FillRule = fillRule;
                 pathGeoData.Matrix = CompositionResourceManager.MatrixToMilMatrix3x2D(Matrix.Identity);
 
                 PathStreamGeometryContext ctx = new PathStreamGeometryContext(fillRule, null);
                 PathGeometry.ParsePathGeometryData(pathGeoData, ctx);
-    
+
                 return ctx.GetPathGeometry();
             }
         }
@@ -1311,15 +1310,15 @@ namespace System.Windows.Media
         /// <param name="nullFont">true if all characters map to missing glyph</param>
         /// <returns>array of character advance widths</returns>
         internal unsafe void GetAdvanceWidthsUnshaped(
-            char*              unsafeCharString,
-            int                stringLength,
-            double             emSize,
-            float              pixelsPerDip,
-            double             scalingFactor,
-            int*               advanceWidthsUnshaped,
-            bool               nullFont,
+            char* unsafeCharString,
+            int stringLength,
+            double emSize,
+            float pixelsPerDip,
+            double scalingFactor,
+            int* advanceWidthsUnshaped,
+            bool nullFont,
             TextFormattingMode textFormattingMode,
-            bool               isSideways
+            bool isSideways
             )
         {
             CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
@@ -1402,7 +1401,7 @@ namespace System.Windows.Media
             {
                 GetGlyphIndicesOptimized(charBufferRange, nominalGlyphs, pixelsPerDip);
             }
-            
+
             return GlyphRun.TryCreate(
                 this,
                 0,      // bidiLevel
@@ -1464,7 +1463,7 @@ namespace System.Windows.Media
             {
                 unsafe
                 {
-                    uint *pCodepoints = stackalloc uint[characters.Length];
+                    uint* pCodepoints = stackalloc uint[characters.Length];
                     for (int i = 0; i < characters.Length; i++)
                     {
                         pCodepoints[i] = characters[i];
@@ -1481,21 +1480,21 @@ namespace System.Windows.Media
                 }
                 unsafe
                 {
-                    fixed (uint *pCodepoints = &codepoints[0])
+                    fixed (uint* pCodepoints = &codepoints[0])
                     {
                         GetGlyphMetricsAndIndicesOptimized(pCodepoints, characters.Length, emSize, pixelsPerDip, glyphIndices, glyphMetrics, textFormattingMode, isSideways);
                     }
-                }                
+                }
             }
         }
 
-        private unsafe void GetGlyphMetricsAndIndicesOptimized(uint *pCodepoints, 
-                                                               int characterCount, 
+        private unsafe void GetGlyphMetricsAndIndicesOptimized(uint* pCodepoints,
+                                                               int characterCount,
                                                                double emSize,
                                                                float pixelsPerDip,
                                                                ushort[] glyphIndices,
                                                                MS.Internal.Text.TextInterface.GlyphMetrics[] glyphMetrics,
-                                                               TextFormattingMode textFormattingMode, 
+                                                               TextFormattingMode textFormattingMode,
                                                                bool isSideways)
         {
             bool releaseIndices = false;
@@ -1506,7 +1505,7 @@ namespace System.Windows.Media
                 releaseIndices = true;
             }
 
-            fixed (ushort *pGlyphIndices = &glyphIndices[0])
+            fixed (ushort* pGlyphIndices = &glyphIndices[0])
             {
                 _fontFace.CharacterMap.TryGetValues(pCodepoints, checked((uint)characterCount), pGlyphIndices);
 
@@ -1523,7 +1522,7 @@ namespace System.Windows.Media
             {
                 BufferCache.ReleaseUShorts(glyphIndices);
             }
-        }            
+        }
 
         #endregion Internal Methods
 
@@ -1617,7 +1616,7 @@ namespace System.Windows.Media
                 return _font.DWriteFontAddRef;
             }
         }
-        
+
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -1640,7 +1639,7 @@ namespace System.Windows.Media
                 return new MS.Internal.Text.TextInterface.LocalizedStrings();
             }
         }
- 
+
         #endregion Private Methods
 
         #region ISupportInitialize interface
@@ -1965,13 +1964,13 @@ namespace System.Windows.Media
 
         #region Private Fields
 
-        private FontFaceLayoutInfo          _fontFace;
+        private FontFaceLayoutInfo _fontFace;
 
-        private StyleSimulations            _styleSimulations;
+        private StyleSimulations _styleSimulations;
 
-        private MS.Internal.Text.TextInterface.Font     _font;
+        private MS.Internal.Text.TextInterface.Font _font;
 
-        private FontSource                  _fontSource;
+        private FontSource _fontSource;
 
 
         /// <summary>

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,7 +30,7 @@ namespace System.Windows
             // return false for any other target type. Don't call base.CanConvertTo() because it would be confusing 
             // in some cases. For example, for destination typeof(String), base convertor just converts the TDC to the 
             // string full name of the type. 
-            return false; 
+            return false;
         }
 
         /// <summary>
@@ -63,14 +63,14 @@ namespace System.Windows
                 throw GetConvertFromException(input);
             }
 
-            string value = input as string; 
-            
+            string value = input as string;
+
             if (null == value)
             {
                 throw new ArgumentException(SR.Format(SR.General_BadType, "ConvertFrom"), "input");
-            }                       
-                        
-            return ConvertFromString(value);            
+            }
+
+            return ConvertFromString(value);
         }
 
         /// <summary>
@@ -85,41 +85,42 @@ namespace System.Windows
         /// string. The operation is case-insensitive. 
         /// </remarks>
         public static new TextDecorationCollection ConvertFromString(string text)
-        {   
+        {
             if (text == null)
             {
-               return null;
+                return null;
             }
 
             TextDecorationCollection textDecorations = new TextDecorationCollection();
 
             // Flags indicating which Predefined textDecoration has alrady been added.
             byte MatchedTextDecorationFlags = 0;
-            
+
             // Start from the 1st non-whitespace character
             // Negative index means error is encountered
-            int index = AdvanceToNextNonWhiteSpace(text, 0);                 
+            int index = AdvanceToNextNonWhiteSpace(text, 0);
             while (index >= 0 && index < text.Length)
             {
                 if (Match(None, text, index))
                 {
                     // Matched "None" in the input
-                    index = AdvanceToNextNonWhiteSpace(text, index + None.Length);                    
+                    index = AdvanceToNextNonWhiteSpace(text, index + None.Length);
                     if (textDecorations.Count > 0 || index < text.Length)
-                    {                        
+                    {
                         // Error: "None" can only be specified by its own
-                        index = -1;                        
+                        index = -1;
                     }
                 }
                 else
                 {
                     // Match the input with one of the predefined text decoration names
                     int i;
-                    for(i = 0; 
-                           i < TextDecorationNames.Length 
+                    for (i = 0;
+                           i < TextDecorationNames.Length
                         && !Match(TextDecorationNames[i], text, index);
                        i++
-                    );
+                    )
+                        ;
 
                     if (i < TextDecorationNames.Length)
                     {
@@ -137,7 +138,7 @@ namespace System.Windows
                             MatchedTextDecorationFlags |= (byte)(1 << i);
 
                             // Advance to the start of next name
-                            index = AdvanceToNextNameStart(text, index + TextDecorationNames[i].Length);                            
+                            index = AdvanceToNextNameStart(text, index + TextDecorationNames[i].Length);
                         }
                     }
                     else
@@ -152,9 +153,9 @@ namespace System.Windows
             {
                 throw new ArgumentException(SR.Format(SR.InvalidTextDecorationCollectionString, text));
             }
-            
-            return textDecorations;            
-        }        
+
+            return textDecorations;
+        }
 
         /// <summary>
         /// ConvertTo
@@ -169,14 +170,14 @@ namespace System.Windows
             if (destinationType == typeof(InstanceDescriptor) && value is IEnumerable<TextDecoration>)
             {
                 ConstructorInfo ci = typeof(TextDecorationCollection).GetConstructor(
-                    new Type[]{typeof(IEnumerable<TextDecoration>)}
+                    new Type[] { typeof(IEnumerable<TextDecoration>) }
                     );
-                    
-                return new InstanceDescriptor(ci, new object[]{value});                
+
+                return new InstanceDescriptor(ci, new object[] { value });
             }
 
             // Pass unhandled cases to base class (which will throw exceptions for null value or destinationType.)
-            return base.ConvertTo(context, culture, value, destinationType);              
+            return base.ConvertTo(context, culture, value, destinationType);
         }
 
         //---------------------------------
@@ -192,7 +193,8 @@ namespace System.Windows
                     i < pattern.Length
                  && index + i < input.Length
                  && pattern[i] == Char.ToUpperInvariant(input[index + i]);
-                 i++) ;
+                 i++)
+                ;
 
             return (i == pattern.Length);
         }
@@ -214,7 +216,7 @@ namespace System.Windows
             else
             {
                 if (input[separator] == Separator)
-                {                    
+                {
                     nextNameStart = AdvanceToNextNonWhiteSpace(input, separator + 1);
                     if (nextNameStart >= input.Length)
                     {
@@ -238,7 +240,8 @@ namespace System.Windows
         /// </summary>
         private static int AdvanceToNextNonWhiteSpace(string input, int index)
         {
-            for (; index < input.Length && Char.IsWhiteSpace(input[index]); index++) ;
+            for (; index < input.Length && Char.IsWhiteSpace(input[index]); index++)
+                ;
             return (index > input.Length) ? input.Length : index;
         }
 
@@ -250,11 +253,11 @@ namespace System.Windows
         // Predefined valid names for TextDecorations
         // Names should be normalized to be upper case
         //
-        private const string None    = "NONE";
-        private const char Separator = ',';        
-        
-        private static readonly string[] TextDecorationNames = new string[] {            
-            "OVERLINE",  
+        private const string None = "NONE";
+        private const char Separator = ',';
+
+        private static readonly string[] TextDecorationNames = new string[] {
+            "OVERLINE",
             "BASELINE",
             "UNDERLINE",
             "STRIKETHROUGH"
@@ -262,12 +265,12 @@ namespace System.Windows
 
         // Predefined TextDecorationCollection values. It should match 
         // the TextDecorationNames array
-        private static readonly TextDecorationCollection[] PredefinedTextDecorations = 
+        private static readonly TextDecorationCollection[] PredefinedTextDecorations =
             new TextDecorationCollection[] {
                 TextDecorations.OverLine,
                 TextDecorations.Baseline,
                 TextDecorations.Underline,
-                TextDecorations.Strikethrough           
-                };       
-}             
+                TextDecorations.Strikethrough
+                };
+    }
 }

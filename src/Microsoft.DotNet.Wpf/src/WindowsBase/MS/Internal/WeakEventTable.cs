@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -205,7 +205,7 @@ namespace MS.Internal
             }
             else
             {
-                return CurrentWeakEventTable._cleanupHelper.DoCleanup(forceCleanup:true);
+                return CurrentWeakEventTable._cleanupHelper.DoCleanup(forceCleanup: true);
             }
         }
 
@@ -289,7 +289,7 @@ namespace MS.Internal
                     EventKey[] keys = new EventKey[ic.Count];
                     ic.CopyTo(keys, 0);
 
-                    for (int i=keys.Length-1; i>=0; --i)
+                    for (int i = keys.Length - 1; i >= 0; --i)
                     {
                         object data = _dataTable[keys[i]];
                         // a purge earlier in the loop may have removed keys[i],
@@ -441,12 +441,12 @@ namespace MS.Internal
         private Hashtable _dataTable = new Hashtable();     // maps EventKey -> data
         private Hashtable _eventNameTable = new Hashtable(); // maps <Type,name> -> manager
 
-        ReaderWriterLockWrapper     _lock = new ReaderWriterLockWrapper();
-        private int                 _cleanupRequests;
-        private bool                _cleanupEnabled = true;
-        private CleanupHelper       _cleanupHelper;
-        private bool                _inPurge;
-        private List<EventKey>      _toRemove = new List<EventKey>();
+        ReaderWriterLockWrapper _lock = new ReaderWriterLockWrapper();
+        private int _cleanupRequests;
+        private bool _cleanupEnabled = true;
+        private CleanupHelper _cleanupHelper;
+        private bool _inPurge;
+        private List<EventKey> _toRemove = new List<EventKey>();
 
 #if WeakEventTelemetry
         const int LOH_Threshold = 85000;    // per LOH docs
@@ -463,7 +463,7 @@ namespace MS.Internal
 #endif
 
         [ThreadStatic]
-        private static WeakEventTable   _currentTable;  // one table per thread
+        private static WeakEventTable _currentTable;  // one table per thread
 
         #endregion Private Fields
 
@@ -543,7 +543,7 @@ namespace MS.Internal
                     wr = ek._source as WeakReference;
                     object s2 = (wr != null) ? wr.Target : ek._source;
 
-                    if (s1!=null && s2!=null)
+                    if (s1 != null && s2 != null)
                         return (s1 == s2);
                     else
                         return (_source == ek._source);
@@ -554,12 +554,12 @@ namespace MS.Internal
                 }
             }
 
-            public static bool operator==(EventKey key1, EventKey key2)
+            public static bool operator ==(EventKey key1, EventKey key2)
             {
                 return key1.Equals(key2);
             }
 
-            public static bool operator!=(EventKey key1, EventKey key2)
+            public static bool operator !=(EventKey key1, EventKey key2)
             {
                 return !key1.Equals(key2);
             }
@@ -594,12 +594,12 @@ namespace MS.Internal
                     return false;
             }
 
-            public static bool operator==(EventNameKey key1, EventNameKey key2)
+            public static bool operator ==(EventNameKey key1, EventNameKey key2)
             {
                 return key1.Equals(key2);
             }
 
-            public static bool operator!=(EventNameKey key1, EventNameKey key2)
+            public static bool operator !=(EventNameKey key1, EventNameKey key2)
             {
                 return !key1.Equals(key2);
             }
@@ -610,7 +610,7 @@ namespace MS.Internal
 
         #endregion Table Keys
 
-        #if WeakEventTelemetry
+#if WeakEventTelemetry
         #region Telemetry
 
         static class WeakEventLogger
@@ -718,6 +718,6 @@ namespace MS.Internal
             }
         }
         #endregion Telemetry
-        #endif
+#endif
     }
 }

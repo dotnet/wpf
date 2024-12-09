@@ -25,39 +25,39 @@ namespace System.Xaml
 
             switch (reader.NodeType)
             {
-            case XamlNodeType.NamespaceDeclaration:
-                WriteNamespace(reader.Namespace);
-                break;
+                case XamlNodeType.NamespaceDeclaration:
+                    WriteNamespace(reader.Namespace);
+                    break;
 
-            case XamlNodeType.StartObject:
-                WriteStartObject(reader.Type);
-                break;
+                case XamlNodeType.StartObject:
+                    WriteStartObject(reader.Type);
+                    break;
 
-            case XamlNodeType.GetObject:
-                WriteGetObject();
-                break;
+                case XamlNodeType.GetObject:
+                    WriteGetObject();
+                    break;
 
-            case XamlNodeType.EndObject:
-                WriteEndObject();
-                break;
+                case XamlNodeType.EndObject:
+                    WriteEndObject();
+                    break;
 
-            case XamlNodeType.StartMember:
-                WriteStartMember(reader.Member);
-                break;
+                case XamlNodeType.StartMember:
+                    WriteStartMember(reader.Member);
+                    break;
 
-            case XamlNodeType.EndMember:
-                WriteEndMember();
-                break;
+                case XamlNodeType.EndMember:
+                    WriteEndMember();
+                    break;
 
-            case XamlNodeType.Value:
-                WriteValue(reader.Value);
-                break;
+                case XamlNodeType.Value:
+                    WriteValue(reader.Value);
+                    break;
 
-            case XamlNodeType.None:
-                break;
+                case XamlNodeType.None:
+                    break;
 
-            default:
-                throw new NotImplementedException(SR.MissingCaseXamlNodes);
+                default:
+                    throw new NotImplementedException(SR.MissingCaseXamlNodes);
             }
         }
 

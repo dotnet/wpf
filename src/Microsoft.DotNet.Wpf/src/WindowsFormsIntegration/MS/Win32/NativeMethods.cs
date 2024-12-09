@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -56,6 +56,6 @@ namespace MS.Win32
         public const int WM_INPUTLANGCHANGE = 0x0051;
         public const int WM_IME_NOTIFY = 0x0282;
         public const int IMN_SETCONVERSIONMODE = 0x0006;
-        public const int IMN_SETOPENSTATUS     = 0x0008;
+        public const int IMN_SETOPENSTATUS = 0x0008;
     }
 }

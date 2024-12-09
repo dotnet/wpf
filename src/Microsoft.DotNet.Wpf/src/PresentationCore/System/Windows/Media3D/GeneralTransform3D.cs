@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,7 +25,7 @@ namespace System.Windows.Media.Media3D
         internal GeneralTransform3D()
         {
         }
-        
+
         /// <summary>
         /// Transform a point
         /// </summary>
@@ -33,7 +33,7 @@ namespace System.Windows.Media.Media3D
         /// <param name="result">Output point</param>
         /// <returns>True if the point was transformed successfuly, false otherwise</returns>
         public abstract bool TryTransform(Point3D inPoint, out Point3D result);
-                
+
         /// <summary>
         /// Transform a point
         /// 
@@ -55,7 +55,7 @@ namespace System.Windows.Media.Media3D
 
             return transformedPoint;
         }
-        
+
         /// <summary>
         /// Transforms the bounding box to the smallest axis aligned bounding box
         /// that contains all the points in the original bounding box

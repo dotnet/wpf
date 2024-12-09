@@ -1,16 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description:
 //      Defines a node in the composition scene graph.
 
-using System.Windows.Threading;
 using System.Windows.Diagnostics;
-using System.Windows.Media.Media3D;
+using System.Windows.Interop;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Effects;
-using System.Windows.Interop;
+using System.Windows.Media.Media3D;
+using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Media;
 using MS.Internal.Media3D;
@@ -145,17 +145,17 @@ namespace System.Windows.Media
 
             switch (resourceType)
             {
-            case DUCE.ResourceType.TYPE_VISUAL:
-                // Default setting
-                break;
+                case DUCE.ResourceType.TYPE_VISUAL:
+                    // Default setting
+                    break;
 
-            case DUCE.ResourceType.TYPE_VIEWPORT3DVISUAL:
-                SetFlags(true, VisualFlags.IsViewport3DVisual);
-                break;
+                case DUCE.ResourceType.TYPE_VIEWPORT3DVISUAL:
+                    SetFlags(true, VisualFlags.IsViewport3DVisual);
+                    break;
 
-            default:
-                Debug.Assert(false, "TYPE_VISUAL or TYPE_VIEWPORT3DVISUAL expected.");
-                break;
+                default:
+                    Debug.Assert(false, "TYPE_VISUAL or TYPE_VIEWPORT3DVISUAL expected.");
+                    break;
             }
         }
 
@@ -550,7 +550,7 @@ namespace System.Windows.Media
                     // unit rect and then map back into the world space bounds
                     // defined by bboxSubgraph.
 
-                    Rect unitBounds = new Rect(0,0,1,1);
+                    Rect unitBounds = new Rect(0, 0, 1, 1);
                     Rect unitTransformedBounds = effect.EffectMapping.TransformBounds(unitBounds);
                     effectBounds = Effect.UnitToWorld(unitTransformedBounds, bboxSubgraph);
 
@@ -714,19 +714,19 @@ namespace System.Windows.Media
                 //
 
 
-                if (   !CheckFlagsOr(VisualFlags.NodeIsCyclicBrushRoot)
-                            // If we aren't a root of a CyclicBrush, then we aren't referenced
-                            // at all and we can go away
+                if (!CheckFlagsOr(VisualFlags.NodeIsCyclicBrushRoot)
+                    // If we aren't a root of a CyclicBrush, then we aren't referenced
+                    // at all and we can go away
                     || !channel.IsConnected
-                            // If the channel isn't connected, there's no reason to keep things alive
+                    // If the channel isn't connected, there's no reason to keep things alive
                     || channel.IsSynchronous
-                            // If the channel is synchronous, the node isn't going to stick around
-                            // so just delete it. *** THIS IS DANGEROUS ***. See above for
-                            // more comments.
+                    // If the channel is synchronous, the node isn't going to stick around
+                    // so just delete it. *** THIS IS DANGEROUS ***. See above for
+                    // more comments.
                     || !IsCyclicBrushRootOnChannel(channel)
-                            // If we got to here, we are the root of a VisualBrush. We can go away
-                            // only if the VB is on a different channel. This check is more expensive
-                            // and not very common so we put it last.
+                       // If we got to here, we are the root of a VisualBrush. We can go away
+                       // only if the VB is on a different channel. This check is more expensive
+                       // and not very common so we put it last.
                        )
                 {
                     FreeContent(channel);
@@ -772,7 +772,7 @@ namespace System.Windows.Media
 
                     CacheMode cacheMode = CacheModeField.GetValue(this);
                     if ((cacheMode != null)
-                        && (! CheckFlagsAnd(channel, VisualProxyFlags.IsCacheModeDirty)))
+                        && (!CheckFlagsAnd(channel, VisualProxyFlags.IsCacheModeDirty)))
                     {
                         ((DUCE.IResource)cacheMode).ReleaseOnChannel(channel);
                     }
@@ -942,7 +942,7 @@ namespace System.Windows.Media
                 // the parent and we are also not the root then we need to clear out
                 // the tree.
                 //
-                if ( (_parent == null
+                if ((_parent == null
                       || !CheckFlagsAnd(channel, VisualProxyFlags.IsConnectedToParent))
                     && !IsRootElement)
                 {
@@ -1021,7 +1021,7 @@ namespace System.Windows.Media
             if (CheckFlagsAnd(VisualFlags.IsSubtreeDirtyForPrecompute))
             {
                 // Disable processing of the queue during blocking operations to prevent unrelated reentrancy.
-                using(Dispatcher.DisableProcessing())
+                using (Dispatcher.DisableProcessing())
                 {
                     MediaContext mediaContext = MediaContext.From(Dispatcher);
 
@@ -1367,7 +1367,7 @@ namespace System.Windows.Media
                 }
                 SetFlags(channel, false, VisualProxyFlags.IsOpacityMaskDirty);
             }
-}
+        }
 
         /// <summary>
         /// Update transform
@@ -1559,7 +1559,7 @@ namespace System.Windows.Media
                         handle,
                         scrollableArea,
                         channel);
-}
+                }
                 SetFlags(channel, false, VisualProxyFlags.IsScrollableAreaClipDirty);
             }
         }
@@ -1630,7 +1630,7 @@ namespace System.Windows.Media
                 }
                 SetFlags(channel, false, VisualProxyFlags.IsGuidelineCollectionDirty);
             }
-}
+        }
 
         /// <summary>
         /// Update EdgeMode
@@ -1644,9 +1644,9 @@ namespace System.Windows.Media
                                     VisualProxyFlags flags,
                                     bool isOnChannel)
         {
-            if (((flags & VisualProxyFlags.IsEdgeModeDirty) != 0)          ||
+            if (((flags & VisualProxyFlags.IsEdgeModeDirty) != 0) ||
                 ((flags & VisualProxyFlags.IsBitmapScalingModeDirty) != 0) ||
-                ((flags & VisualProxyFlags.IsClearTypeHintDirty) != 0)     ||
+                ((flags & VisualProxyFlags.IsClearTypeHintDirty) != 0) ||
                 ((flags & VisualProxyFlags.IsTextRenderingModeDirty) != 0) ||
                 ((flags & VisualProxyFlags.IsTextHintingModeDirty) != 0))
             {
@@ -1898,7 +1898,7 @@ namespace System.Windows.Media
 
             VisualTreeHelper.HitTest(
                 this,
-                include2DOn3D? null : new HitTestFilterCallback(result.NoNested2DFilter),
+                include2DOn3D ? null : new HitTestFilterCallback(result.NoNested2DFilter),
                 new HitTestResultCallback(result.HitTestResult),
                 new PointHitTestParameters(point));
 
@@ -2082,7 +2082,7 @@ namespace System.Windows.Media
                 if (filter != HitTestFilterBehavior.ContinueSkipChildren)
                 {
                     int childCount = VisualChildrenCount;
-                    for (int i=childCount-1; i>=0; i--)
+                    for (int i = childCount - 1; i >= 0; i--)
                     {
                         Visual child = GetVisualChild(i);
                         if (child != null)
@@ -2283,7 +2283,7 @@ namespace System.Windows.Media
 
                 if (filter != HitTestFilterBehavior.ContinueSkipChildren)
                 {
-                    for (int i=childCount-1; i>=0; i--)
+                    for (int i = childCount - 1; i >= 0; i--)
                     {
                         Visual child = GetVisualChild(i);
                         if (child != null)
@@ -2319,7 +2319,7 @@ namespace System.Windows.Media
                                 // Skipping the child by continuing the loop.
                                 if (!m.HasInverse)
                                 {
-                                   continue;
+                                    continue;
                                 }
 
                                 // Inverse the transform.
@@ -2514,7 +2514,7 @@ namespace System.Windows.Media
         /// </summary>
         protected virtual Visual GetVisualChild(int index)
         {
-           throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+            throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
         }
 
         /// <summary>
@@ -2731,7 +2731,7 @@ namespace System.Windows.Media
             }
             set
             {
-                if(value > TreeLevelLimit)
+                if (value > TreeLevelLimit)
                 {
                     throw new InvalidOperationException(SR.Format(SR.LayoutManager_DeepRecursion, TreeLevelLimit));
                 }
@@ -2887,7 +2887,7 @@ namespace System.Windows.Media
                 }
 
                 VisualEffectInternal = value;
-}
+            }
         }
 
         /// <summary>
@@ -3000,7 +3000,7 @@ namespace System.Windows.Media
 
                 Effect imageEffect = EffectField.GetValue(this);
                 BitmapEffectState bed = UserProvidedBitmapEffectData.GetValue(this);
-                if (   (bed == null)
+                if ((bed == null)
                     && (imageEffect != null))
 
                 {
@@ -3206,7 +3206,7 @@ namespace System.Windows.Media
                 VisualBitmapEffectInputInternal = null;
                 VisualBitmapEffectInternal = currentBitmapEffect;
             }
-}
+        }
 
         /// <summary>
         /// Used by the test team to disable bitmap effect emulation for testing purposes.
@@ -3951,11 +3951,11 @@ namespace System.Windows.Media
 
             // If we are attaching to a tree then
             // send the bit up if we need to.
-            if(oldParent == null)
+            if (oldParent == null)
             {
                 Debug.Assert(_parent != null, "If oldParent is null, current parent should != null.");
 
-                if(CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
+                if (CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
                 {
                     SetTreeBits(
                         _parent,
@@ -3967,7 +3967,7 @@ namespace System.Windows.Media
             // clear the bit in the main tree above if we need to.
             else
             {
-                if(CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
+                if (CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
                 {
                     ClearTreeBits(
                         oldParent,
@@ -4041,7 +4041,7 @@ namespace System.Windows.Media
             remove
             {
                 // check that we are Disabling a node that was previously Enabled
-                if(CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
+                if (CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
                 {
                     ClearTreeBits(
                         this,
@@ -4057,7 +4057,7 @@ namespace System.Windows.Media
                 {
                     newHandler -= value;
 
-                    if(newHandler == null)
+                    if (newHandler == null)
                     {
                         AncestorChangedEventField.ClearValue(this);
                     }
@@ -4087,7 +4087,7 @@ namespace System.Windows.Media
                 Visual eAsVisual = e as Visual;
 
                 // If the flag is not set, then we are Done.
-                if(!eAsVisual.CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
+                if (!eAsVisual.CheckFlagsAnd(VisualFlags.SubTreeHoldsAncestorChanged))
                 {
                     return;
                 }
@@ -4095,7 +4095,7 @@ namespace System.Windows.Media
                 // If there is a handler on this node, then fire it.
                 AncestorChangedEventHandler handler = AncestorChangedEventField.GetValue(eAsVisual);
 
-                if(handler != null)
+                if (handler != null)
                 {
                     handler(eAsVisual, args);
                 }
@@ -4127,7 +4127,7 @@ namespace System.Windows.Media
             VisualTreeUtils.AsNonNullVisual(descendant, out visual, out visual3D);
 
             // x86 branch prediction skips the branch on first encounter.  We favor 2D.
-            if(visual3D != null)
+            if (visual3D != null)
             {
                 return visual3D.IsDescendantOf(this);
             }
@@ -5072,13 +5072,13 @@ namespace System.Windows.Media
                 }
             }
 
-            while (null!=e)
+            while (null != e)
             {
                 eAsVisual = e as Visual;
                 if (eAsVisual != null)
                 {
                     // if the bit is already set, then we're done.
-                    if(eAsVisual.CheckFlagsAnd(treeFlag))
+                    if (eAsVisual.CheckFlagsAnd(treeFlag))
                         return;
 
                     eAsVisual.SetFlags(true, treeFlag);
@@ -5088,7 +5088,7 @@ namespace System.Windows.Media
                     eAsVisual3D = e as Visual3D;
 
                     // if the bit is already set, then we're done.
-                    if(eAsVisual3D.CheckFlagsAnd(treeFlag))
+                    if (eAsVisual3D.CheckFlagsAnd(treeFlag))
                         return;
 
                     eAsVisual3D.SetFlags(true, treeFlag);
@@ -5134,12 +5134,12 @@ namespace System.Windows.Media
                 eAsVisual = e as Visual;
                 if (eAsVisual != null)
                 {
-                    if(eAsVisual.CheckFlagsAnd(nodeFlag))
+                    if (eAsVisual.CheckFlagsAnd(nodeFlag))
                     {
                         return;  // Done;   if a parent also has the Node bit set.
                     }
 
-                    if(DoAnyChildrenHaveABitSet(eAsVisual, treeFlag))
+                    if (DoAnyChildrenHaveABitSet(eAsVisual, treeFlag))
                     {
                         return;  // Done;   if a other subtrees are set.
                     }
@@ -5150,12 +5150,12 @@ namespace System.Windows.Media
                 {
                     eAsVisual3D = e as Visual3D;
 
-                    if(eAsVisual3D.CheckFlagsAnd(nodeFlag))
+                    if (eAsVisual3D.CheckFlagsAnd(nodeFlag))
                     {
                         return;  // Done;   if a parent also has the Node bit set.
                     }
 
-                    if(Visual3D.DoAnyChildrenHaveABitSet(eAsVisual3D, treeFlag))
+                    if (Visual3D.DoAnyChildrenHaveABitSet(eAsVisual3D, treeFlag))
                     {
                         return;  // Done;   if a other subtrees are set.
                     }

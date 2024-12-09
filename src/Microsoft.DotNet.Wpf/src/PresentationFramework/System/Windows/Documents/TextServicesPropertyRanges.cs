@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -43,7 +43,7 @@ namespace System.Windows.Documents
         ///    OnRange virtual method.
         /// </summary>
         internal virtual void OnRange(UnsafeNativeMethods.ITfProperty property,
-                                      int ecReadonly, 
+                                      int ecReadonly,
                                       UnsafeNativeMethods.ITfRange range)
         {
         }
@@ -53,8 +53,8 @@ namespace System.Windows.Documents
         ///    we track the property change here.
         /// </summary>
         internal virtual void OnEndEdit(UnsafeNativeMethods.ITfContext context,
-                                        int ecReadOnly, 
-                                        UnsafeNativeMethods.ITfEditRecord editRecord) 
+                                        int ecReadOnly,
+                                        UnsafeNativeMethods.ITfEditRecord editRecord)
         {
             int fetched;
             UnsafeNativeMethods.IEnumTfRanges ranges;
@@ -62,7 +62,7 @@ namespace System.Windows.Documents
 
             ranges = GetPropertyUpdate(editRecord);
 
-            UnsafeNativeMethods.ITfRange [] outRanges;
+            UnsafeNativeMethods.ITfRange[] outRanges;
             outRanges = new UnsafeNativeMethods.ITfRange[1];
             while (ranges.Next(1, outRanges, out fetched) == 0)
             {
@@ -81,7 +81,7 @@ namespace System.Windows.Documents
 
                 if (prop.EnumRanges(ecReadOnly, out rangesProp, outRanges[0]) == 0)
                 {
-                    UnsafeNativeMethods.ITfRange [] outRangesProp;
+                    UnsafeNativeMethods.ITfRange[] outRangesProp;
                     outRangesProp = new UnsafeNativeMethods.ITfRange[1];
                     while (rangesProp.Next(1, outRangesProp, out fetched) == 0)
                     {
@@ -108,7 +108,7 @@ namespace System.Windows.Documents
         ///    Convert ITfRange to two TextPositions.
         /// </summary>
         protected void ConvertToTextPosition(UnsafeNativeMethods.ITfRange range,
-                                               out ITextPointer start, 
+                                               out ITextPointer start,
                                                out ITextPointer end)
         {
             UnsafeNativeMethods.ITfRangeACP rangeACP;
@@ -141,7 +141,7 @@ namespace System.Windows.Documents
 
             Object obj;
             property.GetValue(ecReadOnly, range, out obj);
- 
+
             return obj;
         }
 
@@ -149,13 +149,13 @@ namespace System.Windows.Documents
         ///    Get ranges that the property is changed.
         /// </summary>
         private UnsafeNativeMethods.IEnumTfRanges GetPropertyUpdate(
-                                UnsafeNativeMethods.ITfEditRecord editRecord) 
+                                UnsafeNativeMethods.ITfEditRecord editRecord)
         {
             UnsafeNativeMethods.IEnumTfRanges ranges;
 
-            unsafe 
+            unsafe
             {
-                fixed (Guid *pguid = &_guid)
+                fixed (Guid* pguid = &_guid)
                 {
                     //
                     // 
@@ -187,7 +187,7 @@ namespace System.Windows.Documents
         /// <summary>
         ///    GUID of ITfProperty
         /// </summary>
-        protected Guid Guid 
+        protected Guid Guid
         {
             get
             {
@@ -198,7 +198,7 @@ namespace System.Windows.Documents
         /// <summary>
         ///    Return TextStore that is associated to this property.
         /// </summary>
-        protected TextStore TextStore 
+        protected TextStore TextStore
         {
             get
             {

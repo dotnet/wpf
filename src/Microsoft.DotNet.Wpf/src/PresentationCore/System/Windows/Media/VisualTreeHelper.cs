@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //
 
-using System.Windows.Media.Media3D;
 using System.Windows.Media.Effects;
+using System.Windows.Media.Media3D;
 using MS.Internal;
 using MS.Internal.Media;
 
@@ -173,7 +173,8 @@ namespace System.Windows.Media
             {
                 visual = reference as Visual;
 
-                if (visual != null) break;
+                if (visual != null)
+                    break;
 
                 reference = VisualTreeHelper.GetParent(reference);
             }
@@ -192,7 +193,8 @@ namespace System.Windows.Media
             {
                 visual3D = reference as Visual3D;
 
-                if (visual3D != null) break;
+                if (visual3D != null)
+                    break;
 
                 reference = VisualTreeHelper.GetParent(reference);
             }
@@ -301,7 +303,7 @@ namespace System.Windows.Media
             return reference.VisualOffset;
         }
 
-         /// <summary>
+        /// <summary>
         /// Returns the Visual transform.
         /// </summary>
         public static Transform GetTransform(Visual reference)
@@ -319,7 +321,7 @@ namespace System.Windows.Media
             return reference.VisualXSnappingGuidelines;
         }
 
-         /// <summary>
+        /// <summary>
         /// Returns Y-coordinate (horizontal) guideline collection.
         /// </summary>
         public static DoubleCollection GetYSnappingGuidelines(Visual reference)

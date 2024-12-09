@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Media.Animation;
 using System.Windows.Markup;
+using System.Windows.Media.Animation;
 
 namespace System.Windows.Media
 {
@@ -125,7 +125,7 @@ namespace System.Windows.Media
             if (segments != null)
             {
                 int count = segments.Count;
-                for (int i=0; i<count; i++)
+                for (int i = 0; i < count; i++)
                 {
                     segments.Internal_GetItem(i).AddToFigure(matrix, result, ref current);
                 }
@@ -204,12 +204,12 @@ namespace System.Windows.Media
         internal string ConvertToString(string format, IFormatProvider provider)
         {
             PathSegmentCollection segments = Segments;
-            return "M" + 
-                ((IFormattable)StartPoint).ToString(format, provider) + 
+            return "M" +
+                ((IFormattable)StartPoint).ToString(format, provider) +
                 (segments != null ? segments.ConvertToString(format, provider) : "") +
                 (IsClosed ? "z" : "");
         }
- 
+
         /// <summary>
         /// SerializeData - Serialize the contents of this Figure to the provided context.
         /// </summary>

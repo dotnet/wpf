@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,8 +11,8 @@
 
 using System.Windows;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
 using System.Windows.Input;
 using System.Windows.Threading;
 
@@ -26,20 +26,20 @@ namespace MS.Internal.Automation
     //
     // Currently exposes just BoundingRectangle, ClassName, IsEnabled
     // and IsKeyboardFocused properties.
-    internal class ElementProxy: IRawElementProviderFragmentRoot, IRawElementProviderAdviseEvents
+    internal class ElementProxy : IRawElementProviderFragmentRoot, IRawElementProviderAdviseEvents
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // private ctor - the Wrap() pseudo-ctor is used instead.
         private ElementProxy(AutomationPeer peer)
         {
-            if ((AutomationInteropReferenceType == ReferenceType.Weak) && 
+            if ((AutomationInteropReferenceType == ReferenceType.Weak) &&
                 (peer is UIElementAutomationPeer || peer is ContentElementAutomationPeer || peer is UIElement3DAutomationPeer))
             {
                 _peer = new WeakReference(peer);
@@ -73,14 +73,14 @@ namespace MS.Internal.Automation
 
         // IRawElementProviderSimple methods...
 
-        public object GetPatternProvider ( int pattern )
+        public object GetPatternProvider(int pattern)
         {
             AutomationPeer peer = Peer;
             if (peer == null)
             {
                 throw new ElementNotAvailableException();
             }
-            return ElementUtil.Invoke(peer, new DispatcherOperationCallback( InContextGetPatternProvider ), pattern);
+            return ElementUtil.Invoke(peer, new DispatcherOperationCallback(InContextGetPatternProvider), pattern);
         }
 
         public object GetPropertyValue(int property)
@@ -95,22 +95,22 @@ namespace MS.Internal.Automation
 
         public ProviderOptions ProviderOptions
         {
-            get 
+            get
             {
                 AutomationPeer peer = Peer;
                 if (peer == null)
                 {
                     return ProviderOptions.ServerSideProvider;
                 }
-                return (ProviderOptions)ElementUtil.Invoke(peer, state => ((ElementProxy)state).InContextGetProviderOptions(), this); 
+                return (ProviderOptions)ElementUtil.Invoke(peer, state => ((ElementProxy)state).InContextGetProviderOptions(), this);
             }
-        }  
+        }
 
         public IRawElementProviderSimple HostRawElementProvider
         {
             get
             {
-                IRawElementProviderSimple host  = null;
+                IRawElementProviderSimple host = null;
                 HostedWindowWrapper hwndWrapper = null;
                 AutomationPeer peer = Peer;
                 if (peer == null)
@@ -118,13 +118,13 @@ namespace MS.Internal.Automation
                     return null;
                 }
                 hwndWrapper = (HostedWindowWrapper)ElementUtil.Invoke(
-                    peer, 
-                    new DispatcherOperationCallback(InContextGetHostRawElementProvider), 
+                    peer,
+                    new DispatcherOperationCallback(InContextGetHostRawElementProvider),
                     null);
 
-                if(hwndWrapper != null)
+                if (hwndWrapper != null)
                     host = GetHostHelper(hwndWrapper);
-                
+
                 return host;
             }
         }
@@ -136,7 +136,7 @@ namespace MS.Internal.Automation
 
         // IRawElementProviderFragment methods...
 
-        public IRawElementProviderFragment Navigate( NavigateDirection direction )
+        public IRawElementProviderFragment Navigate(NavigateDirection direction)
         {
             AutomationPeer peer = Peer;
             if (peer == null)
@@ -146,34 +146,34 @@ namespace MS.Internal.Automation
             return (IRawElementProviderFragment)ElementUtil.Invoke(peer, new DispatcherOperationCallback(InContextNavigate), direction);
         }
 
-        public int [ ] GetRuntimeId()
+        public int[] GetRuntimeId()
         {
             AutomationPeer peer = Peer;
             if (peer == null)
             {
                 throw new ElementNotAvailableException();
             }
-            return (int []) ElementUtil.Invoke( peer, state => ((ElementProxy)state).InContextGetRuntimeId(), this);
+            return (int[])ElementUtil.Invoke(peer, state => ((ElementProxy)state).InContextGetRuntimeId(), this);
         }
 
         public Rect BoundingRectangle
         {
-            get 
+            get
             {
                 AutomationPeer peer = Peer;
                 if (peer == null)
                 {
                     throw new ElementNotAvailableException();
                 }
-                return (Rect)ElementUtil.Invoke(peer, state => ((ElementProxy)state).InContextBoundingRectangle(), this); 
+                return (Rect)ElementUtil.Invoke(peer, state => ((ElementProxy)state).InContextBoundingRectangle(), this);
             }
         }
-        
-        public IRawElementProviderSimple [] GetEmbeddedFragmentRoots()
+
+        public IRawElementProviderSimple[] GetEmbeddedFragmentRoots()
         {
             return null;
         }
-        
+
         public void SetFocus()
         {
             AutomationPeer peer = Peer;
@@ -186,26 +186,26 @@ namespace MS.Internal.Automation
 
         public IRawElementProviderFragmentRoot FragmentRoot
         {
-            get 
+            get
             {
                 AutomationPeer peer = Peer;
                 if (peer == null)
                 {
                     return null;
                 }
-                return (IRawElementProviderFragmentRoot) ElementUtil.Invoke( peer, state => ((ElementProxy)state).InContextFragmentRoot(), this); 
+                return (IRawElementProviderFragmentRoot)ElementUtil.Invoke(peer, state => ((ElementProxy)state).InContextFragmentRoot(), this);
             }
         }
 
         // IRawElementProviderFragmentRoot methods..
-        public IRawElementProviderFragment ElementProviderFromPoint( double x, double y )
+        public IRawElementProviderFragment ElementProviderFromPoint(double x, double y)
         {
             AutomationPeer peer = Peer;
             if (peer == null)
             {
                 return null;
             }
-            return (IRawElementProviderFragment) ElementUtil.Invoke( peer, new DispatcherOperationCallback( InContextElementProviderFromPoint ), new Point( x, y ) );
+            return (IRawElementProviderFragment)ElementUtil.Invoke(peer, new DispatcherOperationCallback(InContextElementProviderFromPoint), new Point(x, y));
         }
 
         public IRawElementProviderFragment GetFocus()
@@ -215,7 +215,7 @@ namespace MS.Internal.Automation
             {
                 return null;
             }
-            return (IRawElementProviderFragment) ElementUtil.Invoke( peer, state => ((ElementProxy)state).InContextGetFocus(), this);
+            return (IRawElementProviderFragment)ElementUtil.Invoke(peer, state => ((ElementProxy)state).InContextGetFocus(), this);
         }
 
         // Event support: EventMap is a static class and access is synchronized, so no need to access it in UI thread context.
@@ -240,7 +240,7 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         // Wrap the found peer before shipping it over process boundary - static version for use outside ElementProxy.
@@ -259,11 +259,11 @@ namespace MS.Internal.Automation
                 if (peer != null)
                 {
                     // Use the already created Wrapper proxy for peer if it is still alive
-                    if(peer.ElementProxyWeakReference != null)
+                    if (peer.ElementProxyWeakReference != null)
                     {
                         result = peer.ElementProxyWeakReference.Target as ElementProxy;
                     }
-                    if(result == null)
+                    if (result == null)
                     {
                         result = new ElementProxy(peer);
                         peer.ElementProxyWeakReference = new WeakReference(result);
@@ -271,9 +271,9 @@ namespace MS.Internal.Automation
 
                     // If the peer corresponds to DataItem notify peer to add to storage to 
                     // keep reference of peers going to the UIA Client
-                    if(result != null)
+                    if (result != null)
                     {
-                        if(peer.IsDataItemAutomationPeer())
+                        if (peer.IsDataItemAutomationPeer())
                         {
                             peer.AddToParentProxyWeakRefCache();
                         }
@@ -310,13 +310,13 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
         // The signature of most of the folling methods is "object func( object arg )",
         // since that's what the Conmtext.Invoke delegate requires.
         // Return the element at specified coords.
-        private object InContextElementProviderFromPoint( object arg )
+        private object InContextElementProviderFromPoint(object arg)
         {
             Point point = (Point)arg;
             AutomationPeer peer = Peer;
@@ -356,9 +356,9 @@ namespace MS.Internal.Automation
         }
 
         // Return proxy representing element in specified direction (parent/next/firstchild/etc.)
-        private object InContextNavigate( object arg )
+        private object InContextNavigate(object arg)
         {
-            NavigateDirection direction = (NavigateDirection) arg;
+            NavigateDirection direction = (NavigateDirection)arg;
             AutomationPeer dest;
             AutomationPeer peer = Peer;
             if (peer == null)
@@ -366,51 +366,51 @@ namespace MS.Internal.Automation
                 return null;
             }
 
-            switch( direction )
+            switch (direction)
             {
                 case NavigateDirection.Parent:
-                    dest = peer.GetParent(); 
+                    dest = peer.GetParent();
                     break;
-                    
+
                 case NavigateDirection.FirstChild:
                     if (!peer.IsInteropPeer)
                     {
-                        dest = peer.GetFirstChild(); 
+                        dest = peer.GetFirstChild();
                     }
                     else
                     {
                         return peer.GetInteropChild();
                     }
                     break;
-                    
+
                 case NavigateDirection.LastChild:
                     if (!peer.IsInteropPeer)
                     {
-                        dest = peer.GetLastChild(); 
+                        dest = peer.GetLastChild();
                     }
                     else
                     {
                         return peer.GetInteropChild();
                     }
                     break;
-                    
+
                 case NavigateDirection.NextSibling:
-                    dest = peer.GetNextSibling(); 
+                    dest = peer.GetNextSibling();
                     break;
-                    
+
                 case NavigateDirection.PreviousSibling:
-                    dest = peer.GetPreviousSibling(); 
+                    dest = peer.GetPreviousSibling();
                     break;
-                    
-                default: 
-                    dest = null; 
+
+                default:
+                    dest = null;
                     break;
             }
 
             return StaticWrap(dest, peer);
         }
 
-    
+
         // Return value for specified property; or null if not supported
         private object InContextGetProviderOptions()
         {
@@ -420,14 +420,14 @@ namespace MS.Internal.Automation
             {
                 return options;
             }
-            if (peer.IsHwndHost) 
+            if (peer.IsHwndHost)
                 options |= ProviderOptions.OverrideProvider;
-            
+
             return options;
         }
 
         // Return value for specified property; or null if not supported
-        private object InContextGetPropertyValue ( object arg )
+        private object InContextGetPropertyValue(object arg)
         {
             AutomationPeer peer = Peer;
             if (peer == null)
@@ -438,7 +438,7 @@ namespace MS.Internal.Automation
         }
 
         /// Returns whether this is the Root of the WCP tree or not
-        private object InContextGetHostRawElementProvider( object unused )
+        private object InContextGetHostRawElementProvider(object unused)
         {
             AutomationPeer peer = Peer;
             if (peer == null)
@@ -491,10 +491,11 @@ namespace MS.Internal.Automation
             {
                 return null;
             }
-            while(true)
+            while (true)
             {
                 AutomationPeer parent = root.GetParent();
-                if(parent == null) break;
+                if (parent == null)
+                    break;
                 root = parent;
             }
 
@@ -527,11 +528,11 @@ namespace MS.Internal.Automation
                 return _automationInteropReferenceType;
             }
         }
-        
+
         private static ReferenceType _automationInteropReferenceType = ReferenceType.Weak;
         private static bool _shouldCheckInTheRegistry = true;
 
-        #endregion 
+        #endregion
 
         #endregion Private Methods
 
@@ -540,7 +541,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private readonly object _peer;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace System.Windows.Documents
         // Constructors
         //
         //---------------------------------------------------------------------
-        
+
         #region Constructors
         public FixedSOMTable(FixedSOMPage page) : base(page)
         {
@@ -38,21 +38,21 @@ namespace System.Windows.Documents
         {
             Pen pen = new Pen(Brushes.Green, 5);
             Rect rect = _boundingRect;
-            dc.DrawRectangle(null, pen , rect);
+            dc.DrawRectangle(null, pen, rect);
 
-            FormattedText ft = new FormattedText(label, 
+            FormattedText ft = new FormattedText(label,
                                         System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS,
                                         FlowDirection.LeftToRight,
-                                        new Typeface("Courier New"), 
+                                        new Typeface("Courier New"),
                                         20,
                                         Brushes.Blue,
                                         MS.Internal.FontCache.Util.PixelsPerDip);
-            Point labelLocation = new Point(rect.Left-25, (rect.Bottom + rect.Top)/2 - 10);
-          //  dc.DrawText(ft, labelLocation);            
-            
+            Point labelLocation = new Point(rect.Left - 25, (rect.Bottom + rect.Top) / 2 - 10);
+            //  dc.DrawText(ft, labelLocation);            
+
             for (int i = 0; i < _semanticBoxes.Count; i++)
             {
-                _semanticBoxes[i].Render(dc, $"{label} {i}",debugVisual);
+                _semanticBoxes[i].Render(dc, $"{label} {i}", debugVisual);
             }
         }
 #endif
@@ -70,11 +70,11 @@ namespace System.Windows.Documents
         {
             Rect bounds = container.BoundingRect;
 
-            
+
             //Allow couple pixels margin
             double verticalOverlap = bounds.Height * 0.2;
             double horizontalOverlap = bounds.Width * 0.2;
-            bounds.Inflate(-horizontalOverlap,-verticalOverlap);
+            bounds.Inflate(-horizontalOverlap, -verticalOverlap);
 
             if (this.BoundingRect.Contains(bounds))
             {
@@ -117,7 +117,7 @@ namespace System.Windows.Documents
             }
         }
 
-        
+
         #endregion Public Methods
 
         #region Public Properties
@@ -174,7 +174,7 @@ namespace System.Windows.Documents
         #region Internal methods
         internal void DeleteEmptyRows()
         {
-            for (int i=0; i<this.SemanticBoxes.Count;)
+            for (int i = 0; i < this.SemanticBoxes.Count;)
             {
                 FixedSOMTableRow row = this.SemanticBoxes[i] as FixedSOMTableRow;
                 Debug.Assert(row != null);
@@ -219,7 +219,7 @@ namespace System.Windows.Documents
                     // where does next column start?
                     if (idx + 1 < row.SemanticBoxes.Count)
                     {
-                        cell = (FixedSOMTableCell)row.SemanticBoxes[idx+1];
+                        cell = (FixedSOMTableCell)row.SemanticBoxes[idx + 1];
                         double cellStart = cell.BoundingRect.Left;
 
                         if (cellStart < nextCol)
@@ -277,7 +277,7 @@ namespace System.Windows.Documents
             }
         }
 
-          
+
 
         #endregion Internal methods
 

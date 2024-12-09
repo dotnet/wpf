@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -126,10 +126,12 @@ namespace MS.Internal.AutomationProxies
                         {
                             return boundingRectangle;
                         }
-                        
-                        NativeMethods.LVITEMINDEX ii = new NativeMethods.LVITEMINDEX();
-                        ii.iGroup = index;
-                        ii.iItem = _item;
+
+                        NativeMethods.LVITEMINDEX ii = new NativeMethods.LVITEMINDEX
+                        {
+                            iGroup = index,
+                            iItem = _item
+                        };
 
                         unsafe
                         {
@@ -703,11 +705,12 @@ namespace MS.Internal.AutomationProxies
         // retrieves listview item/subitem text
         internal static string GetText (IntPtr hwnd, int item, int subitem)
         {
-            NativeMethods.LVITEM lvitem = new NativeMethods.LVITEM ();
-
-            lvitem.mask = NativeMethods.LVIF_TEXT;
-            lvitem.iItem = item;
-            lvitem.iSubItem = subitem;
+            NativeMethods.LVITEM lvitem = new NativeMethods.LVITEM
+            {
+                mask = NativeMethods.LVIF_TEXT,
+                iItem = item,
+                iSubItem = subitem
+            };
             return WindowsListView.GetItemText (hwnd, lvitem);
         }
 
@@ -730,9 +733,11 @@ namespace MS.Internal.AutomationProxies
         {
             System.Diagnostics.Debug.Assert (WindowsListView.IsGroupViewEnabled (hwnd), "GetGroupID: called when lv does not have groups");
 
-            NativeMethods.LVITEM_V6 item = new NativeMethods.LVITEM_V6 ();
-            item.mask = NativeMethods.LVIF_GROUPID;
-            item.iItem = lvItem;
+            NativeMethods.LVITEM_V6 item = new NativeMethods.LVITEM_V6
+            {
+                mask = NativeMethods.LVIF_GROUPID,
+                iItem = lvItem
+            };
 
             if (XSendMessage.GetItem(hwnd, ref item))
             {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,12 +32,12 @@ namespace System.Windows.Media.Imaging
         /// <returns> 'true' if the enumeration contains a valid value, 'false' otherwise. </returns>
         public static bool IsRotationValid(object valueObject)
         {
-            Rotation value = (Rotation) valueObject;
+            Rotation value = (Rotation)valueObject;
 
-            return (value == Rotation.Rotate0) || 
-                   (value == Rotation.Rotate90) || 
-                   (value == Rotation.Rotate180) || 
+            return (value == Rotation.Rotate0) ||
+                   (value == Rotation.Rotate90) ||
+                   (value == Rotation.Rotate180) ||
                    (value == Rotation.Rotate270);
-        }                                
+        }
     }
 }

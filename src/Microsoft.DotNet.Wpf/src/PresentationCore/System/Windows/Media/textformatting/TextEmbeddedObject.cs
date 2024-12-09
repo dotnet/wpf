@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -49,7 +49,7 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="remainingParagraphWidth">remaining paragraph width</param>
         /// <returns>text object metrics</returns>
         public abstract TextEmbeddedObjectMetrics Format(
-            double  remainingParagraphWidth
+            double remainingParagraphWidth
             );
 
 
@@ -60,8 +60,8 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="sideways">run is drawn with its side parallel to baseline</param>
         /// <returns>computed bounding box size of text object</returns>
         public abstract Rect ComputeBoundingBox(
-            bool    rightToLeft,
-            bool    sideways
+            bool rightToLeft,
+            bool sideways
             );
 
 
@@ -73,10 +73,10 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="rightToLeft">run is drawn from right to left</param>
         /// <param name="sideways">run is drawn with its side parallel to baseline</param>
         public abstract void Draw(
-            DrawingContext      drawingContext,
-            Point               origin,
-            bool                rightToLeft,
-            bool                sideways
+            DrawingContext drawingContext,
+            Point origin,
+            bool rightToLeft,
+            bool sideways
             );
     }
 
@@ -87,9 +87,9 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     public class TextEmbeddedObjectMetrics
     {
-        private double          _width;
-        private double          _height;
-        private double          _baseline;
+        private double _width;
+        private double _height;
+        private double _baseline;
 
 
         /// <summary>
@@ -99,9 +99,9 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="height">object height</param>
         /// <param name="baseline">object baseline in ratio relative to run height</param>
         public TextEmbeddedObjectMetrics(
-            double          width,
-            double          height,
-            double          baseline
+            double width,
+            double height,
+            double baseline
             )
         {
             _width = width;

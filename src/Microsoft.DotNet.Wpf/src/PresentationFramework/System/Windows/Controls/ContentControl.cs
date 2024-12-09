@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -69,15 +69,15 @@ namespace System.Windows.Controls
                 DependencyObject templatedParent = this.TemplatedParent;
                 if (templatedParent != null)
                 {
-                   DependencyObject d = content as DependencyObject;
-                   if (d != null)
-                   {
-                       DependencyObject logicalParent =  LogicalTreeHelper.GetParent(d);
-                       if (logicalParent != null && logicalParent != this)
-                       {
-                           return EmptyEnumerator.Instance;
-                       }
-                   }
+                    DependencyObject d = content as DependencyObject;
+                    if (d != null)
+                    {
+                        DependencyObject logicalParent = LogicalTreeHelper.GetParent(d);
+                        if (logicalParent != null && logicalParent != this)
+                        {
+                            return EmptyEnumerator.Instance;
+                        }
+                    }
                 }
 
                 return new ContentModelTreeEnumerator(this, content);
@@ -246,7 +246,7 @@ namespace System.Windows.Controls
         /// </summary>
         private static void OnContentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ContentControl ctrl = (ContentControl) d;
+            ContentControl ctrl = (ContentControl)d;
             ctrl.SetValue(HasContentPropertyKey, (e.NewValue != null) ? BooleanBoxes.TrueBox : BooleanBoxes.FalseBox);
 
             ctrl.OnContentChanged(e.OldValue, e.NewValue);
@@ -321,7 +321,7 @@ namespace System.Windows.Controls
         [Browsable(false), ReadOnly(true)]
         public bool HasContent
         {
-            get { return (bool) GetValue(HasContentProperty); }
+            get { return (bool)GetValue(HasContentProperty); }
         }
 
         /// <summary>
@@ -336,7 +336,7 @@ namespace System.Windows.Controls
                         typeof(DataTemplate),
                         typeof(ContentControl),
                         new FrameworkPropertyMetadata(
-                                (DataTemplate) null,
+                                (DataTemplate)null,
                               new PropertyChangedCallback(OnContentTemplateChanged)));
 
 
@@ -346,7 +346,7 @@ namespace System.Windows.Controls
         [Bindable(true), CustomCategory("Content")]
         public DataTemplate ContentTemplate
         {
-            get { return (DataTemplate) GetValue(ContentTemplateProperty); }
+            get { return (DataTemplate)GetValue(ContentTemplateProperty); }
             set { SetValue(ContentTemplateProperty, value); }
         }
 
@@ -356,7 +356,7 @@ namespace System.Windows.Controls
         private static void OnContentTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ContentControl ctrl = (ContentControl)d;
-            ctrl.OnContentTemplateChanged((DataTemplate) e.OldValue, (DataTemplate) e.NewValue);
+            ctrl.OnContentTemplateChanged((DataTemplate)e.OldValue, (DataTemplate)e.NewValue);
         }
 
         /// <summary>
@@ -381,7 +381,7 @@ namespace System.Windows.Controls
                         typeof(DataTemplateSelector),
                         typeof(ContentControl),
                         new FrameworkPropertyMetadata(
-                                (DataTemplateSelector) null,
+                                (DataTemplateSelector)null,
                                 new PropertyChangedCallback(OnContentTemplateSelectorChanged)));
 
         /// <summary>
@@ -395,7 +395,7 @@ namespace System.Windows.Controls
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public DataTemplateSelector ContentTemplateSelector
         {
-            get { return (DataTemplateSelector) GetValue(ContentTemplateSelectorProperty); }
+            get { return (DataTemplateSelector)GetValue(ContentTemplateSelectorProperty); }
             set { SetValue(ContentTemplateSelectorProperty, value); }
         }
 
@@ -404,8 +404,8 @@ namespace System.Windows.Controls
         /// </summary>
         private static void OnContentTemplateSelectorChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ContentControl ctrl = (ContentControl) d;
-            ctrl.OnContentTemplateSelectorChanged((DataTemplateSelector) e.NewValue, (DataTemplateSelector) e.NewValue);
+            ContentControl ctrl = (ContentControl)d;
+            ctrl.OnContentTemplateSelectorChanged((DataTemplateSelector)e.NewValue, (DataTemplateSelector)e.NewValue);
         }
 
         /// <summary>
@@ -430,7 +430,7 @@ namespace System.Windows.Controls
                         typeof(String),
                         typeof(ContentControl),
                         new FrameworkPropertyMetadata(
-                                (String) null,
+                                (String)null,
                               new PropertyChangedCallback(OnContentStringFormatChanged)));
 
 
@@ -442,7 +442,7 @@ namespace System.Windows.Controls
         [Bindable(true), CustomCategory("Content")]
         public String ContentStringFormat
         {
-            get { return (String) GetValue(ContentStringFormatProperty); }
+            get { return (String)GetValue(ContentStringFormatProperty); }
             set { SetValue(ContentStringFormatProperty, value); }
         }
 
@@ -452,7 +452,7 @@ namespace System.Windows.Controls
         private static void OnContentStringFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ContentControl ctrl = (ContentControl)d;
-            ctrl.OnContentStringFormatChanged((String) e.OldValue, (String) e.NewValue);
+            ctrl.OnContentStringFormatChanged((String)e.OldValue, (String)e.NewValue);
         }
 
         /// <summary>

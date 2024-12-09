@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,8 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal.KnownBoxes;
 using System.Windows.Media.Animation;
+using MS.Internal.KnownBoxes;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows.Media
@@ -66,7 +66,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(IsStrokedProperty);
+                return (bool)GetValue(IsStrokedProperty);
             }
             set
             {
@@ -81,7 +81,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (bool) GetValue(IsSmoothJoinProperty);
+                return (bool)GetValue(IsSmoothJoinProperty);
             }
             set
             {

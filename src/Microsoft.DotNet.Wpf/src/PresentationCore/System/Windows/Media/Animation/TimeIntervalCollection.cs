@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -115,7 +115,7 @@ namespace System.Windows.Media.Animation
             _nodeIsPoint = null;
             _nodeIsInterval = null;
         }
-        
+
         /// <summary>
         /// Creates a collection containing a single time point.
         /// </summary>
@@ -267,7 +267,7 @@ namespace System.Windows.Media.Animation
             if (slipTime == TimeSpan.Zero)  // The no-op case
             {
                 return this;
-            }            
+            }
 
             TimeIntervalCollection slippedCollection;
             if (_count < 2 || slipTime > _nodeTime[1] - _nodeTime[0])
@@ -280,7 +280,7 @@ namespace System.Windows.Media.Animation
             {
                 // Just shift the first node by slipAmount; the constructor handles the a==b case.
                 slippedCollection = new TimeIntervalCollection(_nodeTime[0] + slipTime, _nodeIsPoint[0],
-                                                               _nodeTime[1]           , _nodeIsPoint[1]);
+                                                               _nodeTime[1], _nodeIsPoint[1]);
             }
 
             if (this.ContainsNullPoint)
@@ -301,12 +301,12 @@ namespace System.Windows.Media.Animation
             if (_count == 1)
             {
                 return new TimeIntervalCollection(_nodeTime[0], _nodeIsPoint[0],
-                                                  beginTime,    true);
+                                                  beginTime, true);
             }
             else  // _count == 2
             {
                 Debug.Assert(beginTime <= _nodeTime[1]);
-                return new TimeIntervalCollection(beginTime,    false,
+                return new TimeIntervalCollection(beginTime, false,
                                                   _nodeTime[1], _nodeIsPoint[1]);
             }
         }
@@ -539,7 +539,7 @@ namespace System.Windows.Media.Animation
             }
 
             int fromIndex = Locate(from);  // Find the nearest indices for to and from
-            int   toIndex = Locate(to);
+            int toIndex = Locate(to);
 
             Debug.Assert(fromIndex <= toIndex);
 
@@ -850,13 +850,13 @@ namespace System.Windows.Media.Animation
         /// <param name="accelRatio">Ratio of the length of the accelerating portion of the iteration.</param>
         /// <param name="decelRatio">Ratio of the length of the decelerating portion of the iteration.</param>
         /// <param name="isAutoReversed">Indicates whether reversed arcs should follow after forward arcs.</param>
-        internal bool IntersectsPeriodicCollection(TimeSpan beginTime,  Duration period, double appliedSpeedRatio,
+        internal bool IntersectsPeriodicCollection(TimeSpan beginTime, Duration period, double appliedSpeedRatio,
                                                    double accelRatio, double decelRatio,
                                                    bool isAutoReversed)
         {
             Debug.Assert(!_invertCollection);  // Make sure we never leave inverted mode enabled
 
-            if ( IsEmptyOfRealPoints                                      // If we have no real points, no intersection with the PTIC is possible
+            if (IsEmptyOfRealPoints                                      // If we have no real points, no intersection with the PTIC is possible
               || (period == TimeSpan.Zero)                                // The PTIC has no nonzero period, we define such intersections nonexistent
               || (accelRatio == 0 && decelRatio == 0 && !isAutoReversed)  // The PTIC has no non-linear points, no intersection possible
               || !period.HasTimeSpan                                      // We have an indefinite period, e.g. we are not periodic
@@ -877,7 +877,7 @@ namespace System.Windows.Media.Animation
             Debug.Assert(CurrentIsAtLastNode || beginTime < NextNodeTime);
 
             long beginTimeInTicks = beginTime.Ticks;
-            
+
             long periodInTicks = (long)((double)period.TimeSpan.Ticks / appliedSpeedRatio);
 
             // PeriodInTicks may overflow if appliedSpeedRatio is sufficiently small.
@@ -953,7 +953,7 @@ namespace System.Windows.Media.Animation
 
                         if (CurrentIsAtLastNode
                           || (NextNodeTime.Ticks - CurrentNodeTime.Ticks >= projectedTimeUntilIntersection))
-                          // We have an intersection, so long as we aren't clipped by endTime
+                        // We have an intersection, so long as we aren't clipped by endTime
                         {
                             return true;
                         }
@@ -990,7 +990,7 @@ namespace System.Windows.Media.Animation
             {
                 return false;
             }
-            
+
             long periodInTicks = (long)((double)period.TimeSpan.Ticks / appliedSpeedRatio);
 
             // PeriodInTicks may overflow if appliedSpeedRatio is sufficiently small;
@@ -1237,7 +1237,7 @@ namespace System.Windows.Media.Animation
         {
             Debug.Assert(!IsEmptyOfRealPoints);
             Debug.Assert(projection.IsEmpty);
-            
+
             projection.EnsureAllocatedCapacity(this._nodeTime.Length);
 
             this.MoveFirst();
@@ -1262,10 +1262,10 @@ namespace System.Windows.Media.Animation
                 this.MoveNext();
             }
 
-            while(_current < _count && (!endTime.HasValue || CurrentNodeTime < endTime))  // Copy the main set of segments, transforming them
+            while (_current < _count && (!endTime.HasValue || CurrentNodeTime < endTime))  // Copy the main set of segments, transforming them
             {
                 double timeOffset = (double)((this.CurrentNodeTime - beginTime).Ticks);
-                
+
                 projection._count++;
                 projection.CurrentNodeTime = TimeSpan.FromTicks((long)(speedRatio * timeOffset));
                 projection.CurrentNodeIsPoint = this.CurrentNodeIsPoint;
@@ -1331,7 +1331,7 @@ namespace System.Windows.Media.Animation
                     ProjectionFoldPoint(ref projection, activeDuration, periodInTicks, isAutoReversed, includeMaxPoint);
                     _current++;
                 }
-} while (!quitFlag && (_current < _count));
+            } while (!quitFlag && (_current < _count));
             // While we haven't run out of indices, and haven't moved past endTime
         }
 
@@ -1426,7 +1426,7 @@ namespace System.Windows.Media.Animation
                 if (timeAfterNextPeriod > 0)  // Case 1 or 2: we reach into the next period but don't know if we completely cover it
                 {
                     bool collectionIsSaturated;
-                        
+
                     if (timeBeforeNextPeriod >= timeAfterNextPeriod)  // Before "dominates"
                     {
                         bool includeTime = CurrentNodeIsPoint;
@@ -1438,14 +1438,14 @@ namespace System.Windows.Media.Animation
 
                         if (beginOnReversingArc)
                         {
-                            projection.MergeInterval(TimeSpan.Zero,                         true,
+                            projection.MergeInterval(TimeSpan.Zero, true,
                                                      TimeSpan.FromTicks(currentProjection), includeTime);
                             collectionIsSaturated = includeTime && (currentProjection == periodInTicks);
                         }
                         else
                         {
                             projection.MergeInterval(TimeSpan.FromTicks(currentProjection), includeTime,
-                                                     TimeSpan.FromTicks(periodInTicks),     true);
+                                                     TimeSpan.FromTicks(periodInTicks), true);
                             collectionIsSaturated = includeTime && (currentProjection == 0);
                         }
                     }
@@ -1454,8 +1454,8 @@ namespace System.Windows.Media.Animation
                         if (beginOnReversingArc)
                         {
                             long clippedTime = timeAfterNextPeriod < periodInTicks ? timeAfterNextPeriod : periodInTicks;
-                            
-                            projection.MergeInterval(TimeSpan.Zero,                   true,
+
+                            projection.MergeInterval(TimeSpan.Zero, true,
                                                      TimeSpan.FromTicks(clippedTime), NextNodeIsPoint);
                             collectionIsSaturated = NextNodeIsPoint && (clippedTime == periodInTicks);
                         }
@@ -1463,7 +1463,7 @@ namespace System.Windows.Media.Animation
                         {
                             long clippedTime = timeAfterNextPeriod < periodInTicks ? periodInTicks - timeAfterNextPeriod : 0;
 
-                            projection.MergeInterval(TimeSpan.FromTicks(clippedTime),   NextNodeIsPoint,
+                            projection.MergeInterval(TimeSpan.FromTicks(clippedTime), NextNodeIsPoint,
                                                      TimeSpan.FromTicks(periodInTicks), true);
                             collectionIsSaturated = NextNodeIsPoint && (clippedTime == 0);
                         }
@@ -1476,18 +1476,18 @@ namespace System.Windows.Media.Animation
                     if (beginOnReversingArc)  // Here the nodes are reversed
                     {
                         projection.MergeInterval(TimeSpan.FromTicks(currentProjection - intervalLength), NextNodeIsPoint,
-                                                 TimeSpan.FromTicks(currentProjection),                  CurrentNodeIsPoint);
+                                                 TimeSpan.FromTicks(currentProjection), CurrentNodeIsPoint);
                     }
                     else
                     {
-                        projection.MergeInterval(TimeSpan.FromTicks(currentProjection),                  CurrentNodeIsPoint,
+                        projection.MergeInterval(TimeSpan.FromTicks(currentProjection), CurrentNodeIsPoint,
                                                  TimeSpan.FromTicks(currentProjection + intervalLength), NextNodeIsPoint);
                     }
                     return false;  // Keep computing the projection
                 }
             }
             else  // No AutoReversing
-            {                
+            {
                 currentProjection = CurrentNodeTime.Ticks % periodInTicks;
                 timeBeforeNextPeriod = periodInTicks - currentProjection;
 
@@ -1511,11 +1511,11 @@ namespace System.Windows.Media.Animation
                 else if (intervalLength >= timeBeforeNextPeriod)  // Case 2. We stretch until the next period begins (but not long enough to cover the length of a full period)
                 {
                     // Split the segment into two projected segments by wrapping around the period boundary
-                    projection.MergeInterval(TimeSpan.FromTicks(currentProjection),                     CurrentNodeIsPoint,
-                                             TimeSpan.FromTicks(periodInTicks),                         false);
+                    projection.MergeInterval(TimeSpan.FromTicks(currentProjection), CurrentNodeIsPoint,
+                                             TimeSpan.FromTicks(periodInTicks), false);
                     if (intervalLength > timeBeforeNextPeriod)  // See if we have a legitimate interval in the second clipped part
                     {
-                        projection.MergeInterval(TimeSpan.Zero,                                             true,
+                        projection.MergeInterval(TimeSpan.Zero, true,
                                                  TimeSpan.FromTicks(intervalLength - timeBeforeNextPeriod), NextNodeIsPoint);
                     }
                     else if (NextNodeIsPoint)  // We only seem to have a point, wrapped around at zero (or in the exceptional case, at the max)
@@ -1534,8 +1534,8 @@ namespace System.Windows.Media.Animation
                 else  // Case 3: We fall within a single period
                 {
                     // No need to split anything, insert the interval directly
-                    projection.MergeInterval(TimeSpan.FromTicks(currentProjection),                    CurrentNodeIsPoint,
-                                             TimeSpan.FromTicks(currentProjection + intervalLength),   NextNodeIsPoint);
+                    projection.MergeInterval(TimeSpan.FromTicks(currentProjection), CurrentNodeIsPoint,
+                                             TimeSpan.FromTicks(currentProjection + intervalLength), NextNodeIsPoint);
                     return false;  // Keep computing the projection
                 }
             }
@@ -1554,7 +1554,7 @@ namespace System.Windows.Media.Animation
 
             if (index >= 0 && _nodeTime[index] == point)  // Point coincides with an existing node 
             {
-                if(!_nodeIsPoint[index])  // The node is not already in the TIC
+                if (!_nodeIsPoint[index])  // The node is not already in the TIC
                 {
                     // See if we need to insert the node, or cancel out the node when it "saturates" an interval-point-interval segment
                     if (index == 0 || !_nodeIsInterval[index - 1] || !_nodeIsInterval[index])
@@ -1565,8 +1565,8 @@ namespace System.Windows.Media.Animation
                     {
                         for (int n = index; n + 1 < _count; n++)  // Shift over the contents
                         {
-                            _nodeTime[n]       = _nodeTime[n + 1];
-                            _nodeIsPoint[n]    = _nodeIsPoint[n + 1];
+                            _nodeTime[n] = _nodeTime[n + 1];
+                            _nodeIsPoint[n] = _nodeIsPoint[n + 1];
                             _nodeIsInterval[n] = _nodeIsInterval[n + 1];
                         }
                         _count--;
@@ -1582,12 +1582,12 @@ namespace System.Windows.Media.Animation
 
                 for (int n = _count - 1; n > index; n--)  // Shift over the contents
                 {
-                    _nodeTime[n + 1]       = _nodeTime[n];
-                    _nodeIsPoint[n + 1]    = _nodeIsPoint[n];
+                    _nodeTime[n + 1] = _nodeTime[n];
+                    _nodeIsPoint[n + 1] = _nodeIsPoint[n];
                     _nodeIsInterval[n + 1] = _nodeIsInterval[n];
                 }
-                _nodeTime[index + 1]       = point;  // Insert the node
-                _nodeIsPoint[index + 1]    = true;
+                _nodeTime[index + 1] = point;  // Insert the node
+                _nodeIsPoint[index + 1] = true;
                 _nodeIsInterval[index + 1] = false;
 
                 _count++;
@@ -1604,7 +1604,7 @@ namespace System.Windows.Media.Animation
         /// <param name="to">End of the interval.</param>
         /// <param name="includeTo">Whether the end point is included.</param>
         private void MergeInterval(TimeSpan from, bool includeFrom,
-                                   TimeSpan to,   bool includeTo)
+                                   TimeSpan to, bool includeTo)
         {
             Debug.Assert(from < to);  // Our code should never call MergeInterval for a point or reversed interval
 
@@ -1625,7 +1625,7 @@ namespace System.Windows.Media.Animation
                 Debug.Assert(_nodeTime.Length >= _minimumCapacity);  // Assert that we indeed have memory allocated
 
                 int fromIndex = Locate(from);  // Find the nearest nodes to the left of from and to (possibly equal)
-                int toIndex   = Locate(to);
+                int toIndex = Locate(to);
 
                 // From a structural standpoint, we do the following:
                 //  before  ----o---o----?----o---o---?----o----  (? means there may or may not be a node here)
@@ -1637,11 +1637,11 @@ namespace System.Windows.Media.Animation
                 // 2) Perform in-place blitting depending whether we contract or expand the array
 
                 bool insertNodeAtFrom = false;
-                bool insertNodeAtTo   = false;
+                bool insertNodeAtTo = false;
 
                 int netIncreaseInNodes = fromIndex - toIndex;  // The default is we remove all the "intermediate" nodes
                 int nextInsertionIndex = fromIndex + 1;  // Place to begin inserting new nodes if needed; by default start from [fromIndex+1]
-                int lastNodeToDelete   = toIndex;  // By default, delete nodes up through [toIndex]
+                int lastNodeToDelete = toIndex;  // By default, delete nodes up through [toIndex]
 
                 // If FROM falls within an interval, and we don't have IntervalIncluded, create a node here.
                 //   Otherwise don't create that node.
@@ -1730,8 +1730,8 @@ namespace System.Windows.Media.Animation
                     EnsureAllocatedCapacity(_count + netIncreaseInNodes);  // Make sure we have enough space allocated
                     for (int n = _count - 1; n > lastNodeToDelete; n--)
                     {
-                        _nodeTime[n + netIncreaseInNodes]       = _nodeTime[n];
-                        _nodeIsPoint[n + netIncreaseInNodes]    = _nodeIsPoint[n];
+                        _nodeTime[n + netIncreaseInNodes] = _nodeTime[n];
+                        _nodeIsPoint[n + netIncreaseInNodes] = _nodeIsPoint[n];
                         _nodeIsInterval[n + netIncreaseInNodes] = _nodeIsInterval[n];
                     }
                 }
@@ -1740,8 +1740,8 @@ namespace System.Windows.Media.Animation
                     // Copy the elements
                     for (int n = lastNodeToDelete + 1; n < _count; n++)
                     {
-                        _nodeTime[n + netIncreaseInNodes]       = _nodeTime[n];  // Note that netIncreaseInNodes is negative here
-                        _nodeIsPoint[n + netIncreaseInNodes]    = _nodeIsPoint[n];
+                        _nodeTime[n + netIncreaseInNodes] = _nodeTime[n];  // Note that netIncreaseInNodes is negative here
+                        _nodeIsPoint[n + netIncreaseInNodes] = _nodeIsPoint[n];
                         _nodeIsInterval[n + netIncreaseInNodes] = _nodeIsInterval[n];
                     }
                 }
@@ -1750,8 +1750,8 @@ namespace System.Windows.Media.Animation
 
                 if (insertNodeAtFrom)
                 {
-                    _nodeTime[nextInsertionIndex]       = from;
-                    _nodeIsPoint[nextInsertionIndex]    = includeFrom;
+                    _nodeTime[nextInsertionIndex] = from;
+                    _nodeIsPoint[nextInsertionIndex] = includeFrom;
                     _nodeIsInterval[nextInsertionIndex] = true;  // We are inserting an interval, so this is true
 
                     nextInsertionIndex++;
@@ -1759,8 +1759,8 @@ namespace System.Windows.Media.Animation
 
                 if (insertNodeAtTo)
                 {
-                    _nodeTime[nextInsertionIndex]       = to;
-                    _nodeIsPoint[nextInsertionIndex]    = includeTo;
+                    _nodeTime[nextInsertionIndex] = to;
+                    _nodeIsPoint[nextInsertionIndex] = includeTo;
                     _nodeIsInterval[nextInsertionIndex] = false;  // We are terminating an interval, so this is false
                 }
             }
@@ -1785,19 +1785,19 @@ namespace System.Windows.Media.Animation
 
                 int newCapacity = _nodeTime.Length << 1;  // Dynamically grow by a factor of 2
 
-                TimeSpan[] newNodeTime   = new TimeSpan[newCapacity];
-                bool[] newNodeIsPoint    = new bool[newCapacity];
+                TimeSpan[] newNodeTime = new TimeSpan[newCapacity];
+                bool[] newNodeIsPoint = new bool[newCapacity];
                 bool[] newNodeIsInterval = new bool[newCapacity];
 
                 for (int n = 0; n < _count; n++)
                 {
-                    newNodeTime[n]       = _nodeTime[n];
-                    newNodeIsPoint[n]    = _nodeIsPoint[n];
+                    newNodeTime[n] = _nodeTime[n];
+                    newNodeIsPoint[n] = _nodeIsPoint[n];
                     newNodeIsInterval[n] = _nodeIsInterval[n];
                 }
 
-                _nodeTime       = newNodeTime;
-                _nodeIsPoint    = newNodeIsPoint;
+                _nodeTime = newNodeTime;
+                _nodeIsPoint = newNodeIsPoint;
                 _nodeIsInterval = newNodeIsInterval;
             }
         }
@@ -2281,8 +2281,8 @@ namespace System.Windows.Media.Animation
 
         #region Data
 
-        private TimeSpan[]   _nodeTime;   // An interval's begin time
-        private bool[]    _nodeIsPoint;   // Whether [begin time] is included in the interval
+        private TimeSpan[] _nodeTime;   // An interval's begin time
+        private bool[] _nodeIsPoint;   // Whether [begin time] is included in the interval
         private bool[] _nodeIsInterval;   // Whether the open interval (begin time)--(next begin time, or infinity) is included
 
         private bool _containsNullPoint;  // The point representing off-domain (Stopped) state

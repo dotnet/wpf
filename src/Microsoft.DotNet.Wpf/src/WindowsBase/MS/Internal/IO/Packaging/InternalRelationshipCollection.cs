@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,8 +11,8 @@
 //   and offers methods to create, delete and enumerate relationships. This code was
 //   moved from the PackageRelationshipCollection class.
 
-using System.Xml;
 using System.IO.Packaging;
+using System.Xml;
 
 namespace MS.Internal.IO.Packaging
 {
@@ -21,7 +21,7 @@ namespace MS.Internal.IO.Packaging
     /// </summary>
     internal static class InternalRelationshipCollection
     {
-               /// <summary>
+        /// <summary>
         /// Write one Relationship element for each member of relationships.
         /// This method is used by XmlDigitalSignatureProcessor code as well
         /// </summary>
@@ -63,11 +63,11 @@ namespace MS.Internal.IO.Packaging
         //------------------------------------------------------
 
 
-        private static readonly string RelationshipTagName      = "Relationship";
-        private static readonly string TargetAttributeName      = "Target";
-        private static readonly string TypeAttributeName        = "Type";
-        private static readonly string IdAttributeName          = "Id";
-        private static readonly string TargetModeAttributeName  = "TargetMode";
+        private static readonly string RelationshipTagName = "Relationship";
+        private static readonly string TargetAttributeName = "Target";
+        private static readonly string TypeAttributeName = "Type";
+        private static readonly string IdAttributeName = "Id";
+        private static readonly string TargetModeAttributeName = "TargetMode";
     }
 }
 

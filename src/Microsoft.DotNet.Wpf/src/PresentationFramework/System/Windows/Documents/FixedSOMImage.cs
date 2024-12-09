@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Windows.Documents
         // Constructors
         //
         //---------------------------------------------------------------------
-        
+
         #region Constructors
         private FixedSOMImage(Rect imageRect, GeneralTransform trans, Uri sourceUri, FixedNode node, DependencyObject o) : base(node, trans)
         {
@@ -59,7 +59,7 @@ namespace System.Windows.Documents
             }
             Rect sourceRect = new Rect(image.RenderSize);
 
-            GeneralTransform transform = image.TransformToAncestor(page);            
+            GeneralTransform transform = image.TransformToAncestor(page);
             return new FixedSOMImage(sourceRect, transform, imageUri, fixedNode, image);
         }
 
@@ -85,13 +85,13 @@ namespace System.Windows.Documents
         }
 
 #if DEBUG
-       
+
         public override void Render(DrawingContext dc, string label, DrawDebugVisual debugVisual)
         {
             Pen pen = new Pen(Brushes.Yellow, 1);
             Rect rect = _boundingRect;
-            rect.Inflate(5,5);
-            dc.DrawRectangle(null, pen , rect);
+            rect.Inflate(5, 5);
+            dc.DrawRectangle(null, pen, rect);
 
             if (label != null && debugVisual == DrawDebugVisual.Paragraphs)
             {
@@ -136,7 +136,7 @@ namespace System.Windows.Documents
         private String _name;
         private String _helpText;
         #endregion Interanl Fields
-        
+
     }
 }
 

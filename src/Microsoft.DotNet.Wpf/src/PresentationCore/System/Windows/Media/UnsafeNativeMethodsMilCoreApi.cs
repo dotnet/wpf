@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,12 +10,12 @@
 //   -- Put methods in here when a stack walk is innappropriate due to performance concerns
 
 using System.Runtime.InteropServices;
-using MS.Internal;
 using System.Text;
-using System.Windows.Media.Composition;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Composition;
+using System.Windows.Media.Imaging;
+using MS.Internal;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -41,14 +41,14 @@ namespace MS.Win32.PresentationCore
             internal static extern int MilVersionCheck(
                 uint uiCallerMilSdkVersion
              );
- 
+
             [DllImport(DllImport.MilCore)]
             internal static extern bool WgxConnection_ShouldForceSoftwareForGraphicsStreamClient();
 
             [DllImport(DllImport.MilCore)]
             internal static extern int WgxConnection_Create(
-            	bool requestSynchronousTransport,
-				out IntPtr ppConnection);
+                bool requestSynchronousTransport,
+                out IntPtr ppConnection);
 
             [DllImport(DllImport.MilCore)]
             internal static extern int WgxConnection_Disconnect(IntPtr pTranspManager);
@@ -75,8 +75,8 @@ namespace MS.Win32.PresentationCore
 
             [DllImport(DllImport.MilCore)]
             internal unsafe static extern int MilUtility_PathGeometryBounds(
-                MIL_PEN_DATA *pPenData,
-                double *pDashArray,
+                MIL_PEN_DATA* pPenData,
+                double* pDashArray,
                 MilMatrix3x2D* pWorldMatrix,
                 FillRule fillRule,
                 byte* pPathData,
@@ -106,8 +106,8 @@ namespace MS.Win32.PresentationCore
 
             [DllImport(DllImport.MilCore)]
             internal unsafe static extern int MilUtility_PathGeometryWiden(
-                MIL_PEN_DATA *pPenData,
-                double *pDashArray,
+                MIL_PEN_DATA* pPenData,
+                double* pDashArray,
                 MilMatrix3x2D* pMatrix,
                 FillRule fillRule,
                 byte* pPathData,
@@ -169,8 +169,8 @@ namespace MS.Win32.PresentationCore
             [DllImport(DllImport.MilCore)]
             internal unsafe static extern int MilGlyphRun_GetGlyphOutline(
                 IntPtr pFontFace,
-                ushort glyphIndex, 
-                bool sideways, 
+                ushort glyphIndex,
+                bool sideways,
                 double renderingEmSize,
                 out byte* pPathGeometryData,
                 out UInt32 pSize,
@@ -184,7 +184,7 @@ namespace MS.Win32.PresentationCore
 
             [DllImport(DllImport.MilCore, EntryPoint = "MilCreateReversePInvokeWrapper")]
             internal unsafe static extern /*HRESULT*/ int MilCreateReversePInvokeWrapper(
-                IntPtr pFcn, 
+                IntPtr pFcn,
                 out IntPtr reversePInvokeWrapper);
 
             [DllImport(DllImport.MilCore, EntryPoint = "MilReleasePInvokePtrBlocking")]
@@ -199,7 +199,7 @@ namespace MS.Win32.PresentationCore
             internal unsafe static extern bool RenderOptions_IsSoftwareRenderingForcedForProcess();
 
             [DllImport(DllImport.MilCore, EntryPoint = "RenderOptions_EnableHardwareAccelerationInRdp")]
-            internal unsafe static extern void RenderOptions_EnableHardwareAccelerationInRdp(bool value);                 
+            internal unsafe static extern void RenderOptions_EnableHardwareAccelerationInRdp(bool value);
 
             [DllImport(DllImport.MilCore, EntryPoint = "MilResource_CreateCWICWrapperBitmap")]
             internal unsafe static extern int /* HRESULT */ CreateCWICWrapperBitmap(
@@ -299,7 +299,7 @@ namespace MS.Win32.PresentationCore
                 System.Windows.Media.SafeMILHandle /* IWICBitmapCodecInfo */ THIS_PTR,
                 out bool pfSupportMultiframe
                 );
-}
+        }
 
         internal static class WICMetadataQueryReader
         {
@@ -500,7 +500,7 @@ namespace MS.Win32.PresentationCore
                 IntPtr[] /* IWICColorContext */ ppIColorContext,
                 out uint pActualCount
                 );
-}
+        }
 
         internal static class MILUnknown
         {
@@ -518,7 +518,7 @@ namespace MS.Win32.PresentationCore
             {
                 if (ptr != IntPtr.Zero)
                 {
-                    #pragma warning suppress 6031 // Return value ignored on purpose.
+#pragma warning suppress 6031 // Return value ignored on purpose.
                     UnsafeNativeMethods.MILUnknown.Release(ptr);
                     ptr = IntPtr.Zero;
                 }
@@ -566,24 +566,24 @@ namespace MS.Win32.PresentationCore
 
         internal static class WICBitmapFrameEncode
         {
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapFrameEncode_Initialize_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapFrameEncode_Initialize_Proxy")]
             internal static extern int /* HRESULT */ Initialize(SafeMILHandle /* IWICBitmapFrameEncode*  */ THIS_PTR,
                 SafeMILHandle /* IPropertyBag2* */ pIEncoderOptions);
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapFrameEncode_Commit_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapFrameEncode_Commit_Proxy")]
             internal static extern int /* HRESULT */ Commit(SafeMILHandle /* IWICBitmapFrameEncode*  */ THIS_PTR);
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapFrameEncode_SetSize_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapFrameEncode_SetSize_Proxy")]
             internal static extern int /* HRESULT */ SetSize(SafeMILHandle /* IWICBitmapFrameEncode*  */ THIS_PTR,
                 int width,
                 int height);
 
-           [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapFrameEncode_SetResolution_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapFrameEncode_SetResolution_Proxy")]
             internal static extern int /* HRESULT */ SetResolution(SafeMILHandle /* IWICBitmapFrameEncode*  */ THIS_PTR,
-                double dpiX,
-                double dpiY);
+                 double dpiX,
+                 double dpiY);
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapFrameEncode_WriteSource_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapFrameEncode_WriteSource_Proxy")]
             internal static extern int /* HRESULT */ WriteSource(SafeMILHandle /* IWICBitmapFrameEncode*  */ THIS_PTR,
                 SafeMILHandle /* IWICBitmapSource* */ pIBitmapSource,
                 ref Int32Rect /* MILRect* */ r);
@@ -603,31 +603,31 @@ namespace MS.Win32.PresentationCore
                     uint nIndex,
                     IntPtr[] /* IWICColorContext */ ppIColorContext
                     );
-}
+        }
 
         internal static class WICBitmapEncoder
         {
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapEncoder_Initialize_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapEncoder_Initialize_Proxy")]
             internal static extern int /* HRESULT */ Initialize(SafeMILHandle /* IWICBitmapEncoder* */ THIS_PTR,
                 IntPtr /* IStream */ pStream,
                 WICBitmapEncodeCacheOption option);
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapEncoder_GetEncoderInfo_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapEncoder_GetEncoderInfo_Proxy")]
             internal static extern int /* HRESULT */ GetEncoderInfo(SafeMILHandle /* IWICBitmapEncoder* */ THIS_PTR,
                 out SafeMILHandle /* IWICBitmapEncoderInfo ** */ ppIEncoderInfo
                 );
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapEncoder_CreateNewFrame_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapEncoder_CreateNewFrame_Proxy")]
             internal static extern int /* HRESULT */ CreateNewFrame(SafeMILHandle /* IWICBitmapEncoder* */ THIS_PTR,
                 out SafeMILHandle /* IWICBitmapFrameEncode ** */ ppIFramEncode,
                 out SafeMILHandle /* IPropertyBag2 ** */ ppIEncoderOptions
             );
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapEncoder_SetThumbnail_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapEncoder_SetThumbnail_Proxy")]
             internal static extern int /* HRESULT */ SetThumbnail(SafeMILHandle /* IWICBitmapEncoder*  */ THIS_PTR,
                 System.Windows.Media.SafeMILHandle /* IWICBitmapSource* */ pIThumbnail);
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapEncoder_SetPalette_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapEncoder_SetPalette_Proxy")]
             internal static extern int /* HRESULT */ SetPalette(SafeMILHandle /* IWICBitmapEncoder*  */ THIS_PTR,
                 System.Windows.Media.SafeMILHandle /* IWICPalette* */ pIPalette);
 
@@ -637,47 +637,47 @@ namespace MS.Win32.PresentationCore
                 out SafeMILHandle /* IWICMetadataQueryWriter */ ppIQueryWriter
                 );
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICBitmapEncoder_Commit_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICBitmapEncoder_Commit_Proxy")]
             internal static extern int /* HRESULT */ Commit(SafeMILHandle /* IWICBitmapEncoder* */ THIS_PTR);
         }
 
         internal static class WICPalette
         {
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICPalette_InitializePredefined_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICPalette_InitializePredefined_Proxy")]
             internal static extern int /* HRESULT */ InitializePredefined(System.Windows.Media.SafeMILHandle /* IWICPalette */ THIS_PTR,
                 WICPaletteType ePaletteType,
                 bool fAddTransparentColor);
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICPalette_InitializeCustom_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICPalette_InitializeCustom_Proxy")]
             internal static extern int /* HRESULT */ InitializeCustom(System.Windows.Media.SafeMILHandle /* IWICPalette */ THIS_PTR,
                 IntPtr /* MILColor* */ pColors,
                 int colorCount);
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICPalette_InitializeFromBitmap_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICPalette_InitializeFromBitmap_Proxy")]
             internal static extern int /* HRESULT */ InitializeFromBitmap(System.Windows.Media.SafeMILHandle /* IWICPalette */ THIS_PTR,
                 System.Windows.Media.SafeMILHandle /* IWICBitmapSource* */ pISurface,
                 int colorCount,
                 bool fAddTransparentColor);
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICPalette_InitializeFromPalette_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICPalette_InitializeFromPalette_Proxy")]
             internal static extern int /* HRESULT */ InitializeFromPalette(IntPtr /* IWICPalette */ THIS_PTR,
                 System.Windows.Media.SafeMILHandle /* IWICPalette */ pIWICPalette);
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICPalette_GetType_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICPalette_GetType_Proxy")]
             internal static extern int /* HRESULT */ GetType(System.Windows.Media.SafeMILHandle /* IWICPalette */ THIS_PTR,
                 out WICPaletteType pePaletteType);
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICPalette_GetColorCount_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICPalette_GetColorCount_Proxy")]
             internal static extern int /* HRESULT */ GetColorCount(System.Windows.Media.SafeMILHandle /* IWICPalette */ THIS_PTR,
                 out int pColorCount);
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICPalette_GetColors_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICPalette_GetColors_Proxy")]
             internal static extern int /* HRESULT */ GetColors(System.Windows.Media.SafeMILHandle /* IWICPalette */ THIS_PTR,
                 int colorCount,
                 IntPtr /* MILColor* */ pColors,
                 out int pcActualCount);
 
-            [DllImport(DllImport.WindowsCodecs, EntryPoint="IWICPalette_HasAlpha_Proxy")]
+            [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICPalette_HasAlpha_Proxy")]
             internal static extern int /* HRESULT */ HasAlpha(System.Windows.Media.SafeMILHandle /* IWICPalette */ THIS_PTR,
                    out bool pfHasAlpha);
         }
@@ -866,7 +866,7 @@ namespace MS.Win32.PresentationCore
                 IntPtr /* IWICPixelFormatInfo */ pIPixelFormatInfo,
                 UInt32 uiChannelIndex,
                 UInt32 cbMaskBuffer,
-                byte *pbMaskBuffer,
+                byte* pbMaskBuffer,
                 out UInt32 cbActual
             );
         }
@@ -915,13 +915,13 @@ namespace MS.Win32.PresentationCore
         }
         internal static class IWICColorContext
         {
-            internal enum WICColorContextType : uint 
+            internal enum WICColorContextType : uint
             {
-                WICColorContextUninitialized  = 0,
-                WICColorContextProfile        = 1,
+                WICColorContextUninitialized = 0,
+                WICColorContextProfile = 1,
                 WICColorContextExifColorSpace = 2
             };
-            
+
             [DllImport(DllImport.WindowsCodecs, EntryPoint = "IWICColorContext_InitializeFromMemory_Proxy")]
             internal static extern int /* HRESULT */ InitializeFromMemory(
                 SafeMILHandle THIS_PTR,
@@ -1053,7 +1053,7 @@ namespace MS.Win32.PresentationCore
 
             [DllImport("ole32.dll")]
             internal static extern void CoUninitialize();
-}
+        }
 
         internal static class Mscms
         {
@@ -1121,7 +1121,7 @@ namespace MS.Win32.PresentationCore
         internal static class InteropDeviceBitmap
         {
             internal delegate void FrontBufferAvailableCallback(bool lost, uint version);
-            
+
             [DllImport(DllImport.MilCore, EntryPoint = "InteropDeviceBitmap_Create")]
             internal static extern int Create(
                 IntPtr d3dResource,
@@ -1143,9 +1143,9 @@ namespace MS.Win32.PresentationCore
             [DllImport(DllImport.MilCore, EntryPoint = "InteropDeviceBitmap_AddDirtyRect")]
             internal static extern int AddDirtyRect(
 
-                int x, 
-                int y, 
-                int w, 
+                int x,
+                int y,
+                int w,
                 int h,
                 SafeMILHandle pInteropDeviceBitmap
                 );

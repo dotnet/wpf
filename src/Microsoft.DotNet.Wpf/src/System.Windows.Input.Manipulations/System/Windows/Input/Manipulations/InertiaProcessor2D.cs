@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
-using System.Text;
 using System.Diagnostics;
+using System.Text;
 
 namespace System.Windows.Input.Manipulations
 {
@@ -629,7 +629,7 @@ namespace System.Windows.Input.Manipulations
                 initialTranslationX.AbsoluteDeceleration = Math.Abs(desiredDecelerationXY.X);
                 initialTranslationY.AbsoluteDeceleration = Math.Abs(desiredDecelerationXY.Y);
                 initialTranslationX.AbsoluteOffset = double.NaN;
-                
+
                 initialTranslationY.AbsoluteOffset = double.NaN;
             }
 

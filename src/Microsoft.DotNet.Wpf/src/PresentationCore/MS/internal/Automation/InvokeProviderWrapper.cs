@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 //
 //
 
-using System.Windows.Threading;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -28,17 +28,17 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class InvokeProviderWrapper: MarshalByRefObject, IInvokeProvider
+    internal class InvokeProviderWrapper : MarshalByRefObject, IInvokeProvider
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        private InvokeProviderWrapper( AutomationPeer peer, IInvokeProvider iface )
+        private InvokeProviderWrapper(AutomationPeer peer, IInvokeProvider iface)
         {
             _peer = peer;
             _iface = iface;
@@ -52,12 +52,12 @@ namespace MS.Internal.Automation
         //  Interface IInvokeProvider
         //
         //------------------------------------------------------
- 
+
         #region Interface IInvokeProvider
 
         public void Invoke()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Invoke ), null );
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(Invoke), null);
         }
 
         #endregion Interface IInvokeProvider
@@ -68,12 +68,12 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new InvokeProviderWrapper( peer, (IInvokeProvider) iface );
+            return new InvokeProviderWrapper(peer, (IInvokeProvider)iface);
         }
 
         #endregion Internal Methods
@@ -83,10 +83,10 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
-        private object Invoke( object unused )
+        private object Invoke(object unused)
         {
             _iface.Invoke();
             return null;
@@ -100,7 +100,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;

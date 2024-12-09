@@ -1,8 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Win32;
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -12,11 +11,11 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Text;
 using System.Windows.Interop;
 using System.Windows.Media.Imaging;
-using System.Text;
 using MS.Internal;
-
+using MS.Win32;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 // Description: Top-level class for data transfer for drag-drop and clipboard.
@@ -68,7 +67,7 @@ namespace System.Windows
             }
             else
             {
-                IComDataObject oleDataObject= data as IComDataObject;
+                IComDataObject oleDataObject = data as IComDataObject;
 
                 if (oleDataObject != null)
                 {
@@ -656,20 +655,20 @@ namespace System.Windows
                         Win32GlobalFree(new HandleRef(this, medium.unionmember));
                     }
                 }
-                else if ( ( formatetc.tymed & TYMED.TYMED_ISTREAM ) != 0 )
+                else if ((formatetc.tymed & TYMED.TYMED_ISTREAM) != 0)
                 {
                     medium.tymed = TYMED.TYMED_ISTREAM;
 
                     IStream istream = null;
                     hr = Win32CreateStreamOnHGlobal(IntPtr.Zero, true /*deleteOnRelease*/, ref istream);
-                    if ( NativeMethods.Succeeded(hr) )
+                    if (NativeMethods.Succeeded(hr))
                     {
                         medium.unionmember = Marshal.GetComInterfaceForObject(istream, typeof(IStream));
                         Marshal.ReleaseComObject(istream);
 
                         hr = OleGetDataUnrestricted(ref formatetc, ref medium, false /* doNotReallocate */);
 
-                        if ( NativeMethods.Failed(hr) )
+                        if (NativeMethods.Failed(hr))
                         {
                             Marshal.Release(medium.unionmember);
                         }
@@ -985,7 +984,7 @@ namespace System.Windows
         private static int Win32CreateStreamOnHGlobal(IntPtr hGlobal, bool fDeleteOnRelease, ref IStream istream)
         {
             int hr = UnsafeNativeMethods.CreateStreamOnHGlobal(hGlobal, fDeleteOnRelease, ref istream);
-            if ( NativeMethods.Failed(hr) )
+            if (NativeMethods.Failed(hr))
             {
                 Marshal.ThrowExceptionForHR(hr);
             }
@@ -1259,7 +1258,7 @@ namespace System.Windows
             string[] distinctStrings;
 
             distinct = new ArrayList();
-            for (int i=0; i<formats.Length; i++)
+            for (int i = 0; i < formats.Length; i++)
             {
                 string formatString;
 
@@ -1281,7 +1280,7 @@ namespace System.Windows
         /// </summary>
         private bool GetTymedUseable(TYMED tymed)
         {
-            for (int i=0; i<ALLOWED_TYMEDS.Length; i++)
+            for (int i = 0; i < ALLOWED_TYMEDS.Length; i++)
             {
                 if ((tymed & ALLOWED_TYMEDS[i]) != 0)
                 {
@@ -1435,15 +1434,15 @@ namespace System.Windows
                     {
                         hr = GetDataIntoOleStructsByTypeMedimHGlobal(format, data, ref medium, doNotReallocate);
                     }
-                    else if ( ( formatetc.tymed & TYMED.TYMED_GDI ) != 0 )
+                    else if ((formatetc.tymed & TYMED.TYMED_GDI) != 0)
                     {
                         hr = GetDataIntoOleStructsByTypeMediumGDI(format, data, ref medium);
                     }
-                    else if ( ( formatetc.tymed & TYMED.TYMED_ENHMF ) != 0 )
+                    else if ((formatetc.tymed & TYMED.TYMED_ENHMF) != 0)
                     {
                         hr = GetDataIntoOleStructsByTypeMediumEnhancedMetaFile(format, data, ref medium);
                     }
-                    else if ( ( formatetc.tymed & TYMED.TYMED_ISTREAM ) != 0 )
+                    else if ((formatetc.tymed & TYMED.TYMED_ISTREAM) != 0)
                     {
                         hr = GetDataIntoOleStructsByTypeMedimIStream(format, data, ref medium);
                     }
@@ -1479,7 +1478,7 @@ namespace System.Windows
             {
                 hr = SaveStringToHandle(medium.unionmember, data.ToString(), false /* unicode */, doNotReallocate);
             }
-            else if (IsFormatEqual(format, DataFormats.UnicodeText)||
+            else if (IsFormatEqual(format, DataFormats.UnicodeText) ||
                      IsFormatEqual(format, DataFormats.ApplicationTrust))
             {
                 hr = SaveStringToHandle(medium.unionmember, data.ToString(), true /* unicode */, doNotReallocate);
@@ -1555,8 +1554,8 @@ namespace System.Windows
         /// </summary>
         private int GetDataIntoOleStructsByTypeMedimIStream(string format, object data, ref STGMEDIUM medium)
         {
-            IStream istream = (IStream)( Marshal.GetObjectForIUnknown(medium.unionmember) );
-            if ( istream == null )
+            IStream istream = (IStream)(Marshal.GetObjectForIUnknown(medium.unionmember));
+            if (istream == null)
             {
                 return NativeMethods.E_INVALIDARG;
             }
@@ -1566,11 +1565,11 @@ namespace System.Windows
             try
             {
                 // If the format is ISF, we should copy the data from the managed stream to the COM IStream object.
-                if ( format == System.Windows.Ink.StrokeCollection.InkSerializedFormat )
+                if (format == System.Windows.Ink.StrokeCollection.InkSerializedFormat)
                 {
                     Stream inkStream = data as Stream;
 
-                    if ( inkStream != null )
+                    if (inkStream != null)
                     {
                         IntPtr size = (IntPtr)inkStream.Length;
 
@@ -1588,7 +1587,7 @@ namespace System.Windows
                 Marshal.ReleaseComObject(istream);
             }
 
-            if ( NativeMethods.Succeeded(hr) )
+            if (NativeMethods.Succeeded(hr))
             {
                 medium.tymed = TYMED.TYMED_ISTREAM;
             }
@@ -1677,7 +1676,7 @@ namespace System.Windows
                     bool success = false;
                     try
                     {
-                        success = BinaryFormatWriter.TryWriteFrameworkObject(stream,data);
+                        success = BinaryFormatWriter.TryWriteFrameworkObject(stream, data);
                     }
                     catch (Exception ex) when (!ex.IsCriticalException())
                     {
@@ -1685,13 +1684,13 @@ namespace System.Windows
                         Debug.Fail($"Unexpected exception writing binary formatted data. {ex.Message}");
                     }
 
-                    if(!success)
+                    if (!success)
                     {
                         //Using Binary formatter
                         formatter = new BinaryFormatter();
-                        #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+#pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
                         formatter.Serialize(stream, data);
-                        #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
+#pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
                     }
                     return SaveStreamToHandle(handle, stream, doNotReallocate);
                 }
@@ -1904,7 +1903,7 @@ namespace System.Windows
                 IntPtr ptr;
                 char[] chars;
 
-                byteSize = (str.Length*2 + 2);
+                byteSize = (str.Length * 2 + 2);
 
                 int hr = EnsureMemoryCapacity(ref handle, byteSize, doNotReallocate);
                 if (NativeMethods.Failed(hr))
@@ -2209,17 +2208,17 @@ namespace System.Windows
         private const string SystemBitmapSourceFormat = "System.Windows.Media.Imaging.BitmapSource";
         private const string SystemDrawingImagingMetafileFormat = "System.Drawing.Imaging.Metafile";
 
-        private const int DV_E_FORMATETC     =       unchecked((int)0x80040064);
-        private const int DV_E_LINDEX        =       unchecked((int)0x80040068);
-        private const int DV_E_TYMED         =       unchecked((int)0x80040069);
-        private const int DV_E_DVASPECT      =       unchecked((int)0x8004006B);
-        private const int OLE_E_NOTRUNNING   =       unchecked((int)0x80040005);
+        private const int DV_E_FORMATETC = unchecked((int)0x80040064);
+        private const int DV_E_LINDEX = unchecked((int)0x80040068);
+        private const int DV_E_TYMED = unchecked((int)0x80040069);
+        private const int DV_E_DVASPECT = unchecked((int)0x8004006B);
+        private const int OLE_E_NOTRUNNING = unchecked((int)0x80040005);
         private const int OLE_E_ADVISENOTSUPPORTED = unchecked((int)0x80040003);
-        private const int DATA_S_SAMEFORMATETC =     unchecked((int)0x00040130);
-        private const int STG_E_MEDIUMFULL   =       unchecked((int)0x80030070);
+        private const int DATA_S_SAMEFORMATETC = unchecked((int)0x00040130);
+        private const int STG_E_MEDIUMFULL = unchecked((int)0x80030070);
 
         // Const integer base size of the file drop list: "4 + 8 + 4 + 4"
-        private const int FILEDROPBASESIZE   = 20;
+        private const int FILEDROPBASESIZE = 20;
 
         // Allowed type medium.
         private static readonly TYMED[] ALLOWED_TYMEDS = new TYMED[]
@@ -2278,11 +2277,13 @@ namespace System.Windows
                         string format;
 
                         format = formats[i];
-                        temp = new FORMATETC();
-                        temp.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                        temp.dwAspect = DVASPECT.DVASPECT_CONTENT;
-                        temp.ptd = IntPtr.Zero;
-                        temp.lindex = -1;
+                        temp = new FORMATETC
+                        {
+                            cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                            dwAspect = DVASPECT.DVASPECT_CONTENT,
+                            ptd = IntPtr.Zero,
+                            lindex = -1
+                        };
 
                         if (IsFormatEqual(format, DataFormats.Bitmap))
                         {
@@ -2482,13 +2483,13 @@ namespace System.Windows
 
                 if (enumFORMATETC != null)
                 {
-                    FORMATETC []formatetc;
+                    FORMATETC[] formatetc;
                     int[] retrieved;
 
                     enumFORMATETC.Reset();
 
                     formatetc = new FORMATETC[] { new FORMATETC() };
-                    retrieved = new int[] {1};
+                    retrieved = new int[] { 1 };
 
                     while (retrieved[0] > 0)
                     {
@@ -2504,7 +2505,7 @@ namespace System.Windows
                                 string[] mappedFormats;
 
                                 mappedFormats = GetMappedFormats(name);
-                                for (int i=0; i<mappedFormats.Length; i++)
+                                for (int i = 0; i < mappedFormats.Length; i++)
                                 {
                                     formats.Add(mappedFormats[i]);
                                 }
@@ -2685,12 +2686,13 @@ namespace System.Windows
                 FORMATETC formatetc;
                 STGMEDIUM medium;
 
-                formatetc = new FORMATETC();
-
-                formatetc.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                formatetc.dwAspect = aspect;
-                formatetc.lindex = index;
-                formatetc.tymed = TYMED.TYMED_ISTREAM;
+                formatetc = new FORMATETC
+                {
+                    cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                    dwAspect = aspect,
+                    lindex = index,
+                    tymed = TYMED.TYMED_ISTREAM
+                };
 
                 object outData = null;
 
@@ -2857,12 +2859,13 @@ namespace System.Windows
                 STGMEDIUM medium;
                 Object data;
 
-                formatetc = new FORMATETC();
-
-                formatetc.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                formatetc.dwAspect = aspect;
-                formatetc.lindex = index;
-                formatetc.tymed = TYMED.TYMED_HGLOBAL;
+                formatetc = new FORMATETC
+                {
+                    cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                    dwAspect = aspect,
+                    lindex = index,
+                    tymed = TYMED.TYMED_HGLOBAL
+                };
 
                 data = null;
 
@@ -3003,7 +3006,7 @@ namespace System.Windows
                     if (size > _serializedObjectID.Length)
                     {
                         isSerializedObject = true;
-                        for(int i = 0; i < _serializedObjectID.Length; i++)
+                        for (int i = 0; i < _serializedObjectID.Length; i++)
                         {
                             if (_serializedObjectID[i] != bytes[i])
                             {
@@ -3058,10 +3061,10 @@ namespace System.Windows
                             return val;
                         }
                     }
-                    catch (Exception ex) when (!ex.IsCriticalException()) 
+                    catch (Exception ex) when (!ex.IsCriticalException())
                     {
                         // Couldn't parse for some reason, let the BinaryFormatter try to handle it.
-                        
+
                     }
 
                     // Using Binary formatter
@@ -3074,9 +3077,9 @@ namespace System.Windows
                     }
                     try
                     {
-                        #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+#pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
                         value = formatter.Deserialize(stream);
-                        #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
+#pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                     }
                     catch (RestrictedTypeDeserializationException)
                     {
@@ -3134,7 +3137,7 @@ namespace System.Windows
                 {
                     files = new string[count];
 
-                    for (int i=0; i<count; i++)
+                    for (int i = 0; i < count; i++)
                     {
                         if (UnsafeNativeMethods.DragQueryFile(new HandleRef(this, hdrop), i, sb, sb.Capacity) != 0)
                         {
@@ -3234,12 +3237,14 @@ namespace System.Windows
                 FORMATETC formatetc;
                 int hr;
 
-                formatetc = new FORMATETC();
-                formatetc.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                formatetc.dwAspect = aspect;
-                formatetc.lindex = index;
+                formatetc = new FORMATETC
+                {
+                    cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                    dwAspect = aspect,
+                    lindex = index
+                };
 
-                for (int i=0; i<ALLOWED_TYMEDS.Length; i++)
+                for (int i = 0; i < ALLOWED_TYMEDS.Length; i++)
                 {
                     formatetc.tymed |= ALLOWED_TYMEDS[i];
                 }
@@ -3281,7 +3286,7 @@ namespace System.Windows
             }
 
             #endregion Private Methods
-            
+
             /// <summary>
             /// This class is meant to restrict deserialization of managed objects during Ole conversion to only strings and arrays of primitives. 
             /// A RestrictedTypeDeserializationException is thrown upon calling BinaryFormatter.Deserialized if a binder of this type is provided to the BinaryFormatter.
@@ -3439,11 +3444,11 @@ namespace System.Windows
                                 {
                                     formats.Add(cur[mappedFormatIndex]);
                                 }
-}
+                            }
                         }
                         else
                         {
-                             if (!serializationCheckFailedForThisFunction)
+                            if (!serializationCheckFailedForThisFunction)
                             {
                                 formats.Add(baseVar[baseFormatIndex]);
                             }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,7 +32,7 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         ///     Default constructor.
         /// </summary>
-        public Model3DGroup() {}
+        public Model3DGroup() { }
 
         #endregion Constructors
 
@@ -46,14 +46,14 @@ namespace System.Windows.Media.Media3D
 
         internal override void RayHitTestCore(
             RayHitTestParameters rayParams)
-        {    
+        {
             Model3DCollection children = Children;
 
             if (children == null)
             {
                 return;
             }
-            
+
             for (int i = children.Count - 1; i >= 0; i--)
             {
                 Model3D child = children.Internal_GetItem(i);
@@ -62,7 +62,7 @@ namespace System.Windows.Media.Media3D
                 child.RayHitTest(rayParams);
             }
         }
-        
+
         internal override Rect3D CalculateSubgraphBoundsInnerSpace()
         {
             Model3DCollection children = Children;
@@ -71,13 +71,13 @@ namespace System.Windows.Media.Media3D
             {
                 return Rect3D.Empty;
             }
-            
+
             Rect3D bounds = Rect3D.Empty;
 
             for (int i = 0, count = children.Count; i < count; i++)
             {
                 Model3D child = children.Internal_GetItem(i);
-                
+
                 // Calls CSBOS rather than Bounds to avoid ReadPreamble.
                 bounds.Union(child.CalculateSubgraphBoundsOuterSpace());
             }

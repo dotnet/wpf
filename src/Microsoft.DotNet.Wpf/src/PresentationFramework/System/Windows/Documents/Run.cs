@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,12 +6,12 @@
 // Description: Run class - Text node in Flow content (text run)
 //
 
-using MS.Internal;                  // Invariant.Assert
-using System.Windows.Markup; // ContentProperty
 using System.Windows.Controls;
+using System.Windows.Markup; // ContentProperty
+using MS.Internal;                  // Invariant.Assert
 using MS.Internal.Documents;
 
-namespace System.Windows.Documents 
+namespace System.Windows.Documents
 {
     /// <summary>
     /// A terminal element in text flow hierarchy - contains a uniformatted run of unicode characters
@@ -103,7 +103,7 @@ namespace System.Windows.Documents
         /// and then insert when setting the content of a TextRange.
         /// </remarks>
         public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(Run),
-            new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, 
+            new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault,
                 new PropertyChangedCallback(OnTextPropertyChanged), new CoerceValueCallback(CoerceText)));
 
         /// <summary>
@@ -201,7 +201,7 @@ namespace System.Windows.Documents
         /// be serialized.
         /// </summary>
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
-        public bool ShouldSerializeText(XamlDesignerSerializationManager manager) 
+        public bool ShouldSerializeText(XamlDesignerSerializationManager manager)
         {
             return manager != null && manager.XmlWriter == null;
         }

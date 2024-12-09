@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,17 +10,16 @@
 //
 
 
-using System.ComponentModel;
-using System.Globalization;
-using System.Reflection;
-
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Globalization;
+using System.Reflection;
 using System.Threading;
 using System.Windows.Threading;
-using MS.Internal.Data;
 using MS.Internal;              // Invariant.Assert
+using MS.Internal.Data;
 using MS.Internal.Hashing.PresentationFramework;    // HashHelper
 
 namespace System.Windows.Data
@@ -133,8 +132,8 @@ namespace System.Windows.Data
 
             _currentItem = currentItem;
             _currentPosition = currentPosition;
-            SetFlag(CollectionViewFlags.IsCurrentBeforeFirst,  _currentPosition < 0);
-            SetFlag(CollectionViewFlags.IsCurrentAfterLast,  _currentPosition < 0);
+            SetFlag(CollectionViewFlags.IsCurrentBeforeFirst, _currentPosition < 0);
+            SetFlag(CollectionViewFlags.IsCurrentAfterLast, _currentPosition < 0);
             SetFlag(CollectionViewFlags.CachedIsEmpty, _currentPosition < 0);
         }
 
@@ -330,7 +329,7 @@ namespace System.Windows.Data
             if (ecv != null && (ecv.IsAddingNew || ecv.IsEditingItem))
                 throw new InvalidOperationException(SR.Format(SR.MemberNotAllowedDuringAddOrEdit, "DeferRefresh"));
 
-            ++ _deferLevel;
+            ++_deferLevel;
             return new DeferHelper(this);
         }
 
@@ -455,7 +454,7 @@ namespace System.Windows.Data
             {
                 index = 1;
             }
-            if (ecv != null && index == count-1 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtEnd)
+            if (ecv != null && index == count - 1 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtEnd)
             {
                 index = count;
             }
@@ -482,9 +481,9 @@ namespace System.Windows.Data
             int count = Count;
             IEditableCollectionView ecv = this as IEditableCollectionView;
 
-            if (ecv != null && index == count-1 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtEnd)
+            if (ecv != null && index == count - 1 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtEnd)
             {
-                index = count-2;
+                index = count - 2;
             }
             if (ecv != null && index == 0 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning)
             {
@@ -548,7 +547,7 @@ namespace System.Windows.Data
             IEditableCollectionView ecv = this as IEditableCollectionView;
             if (ecv != null &&
                     ((position == 0 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtBeginning) ||
-                     (position == Count-1 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtEnd)))
+                     (position == Count - 1 && ecv.NewItemPlaceholderPosition == NewItemPlaceholderPosition.AtEnd)))
             {
                 return IsCurrentInView;
             }
@@ -583,7 +582,7 @@ namespace System.Windows.Data
         ///<summary>
         ///Raise this event after changing currency.
         ///</summary>
-        public virtual event EventHandler  CurrentChanged;
+        public virtual event EventHandler CurrentChanged;
 
         #endregion ICollectionView
 
@@ -745,8 +744,11 @@ namespace System.Windows.Data
         /// </summary>
         public virtual bool IsInUse
         {
-            get { return CollectionChanged != null || PropertyChanged != null ||
-                        CurrentChanged != null || CurrentChanging != null; }
+            get
+            {
+                return CollectionChanged != null || PropertyChanged != null ||
+                        CurrentChanged != null || CurrentChanging != null;
+            }
         }
 
         public static object NewItemPlaceholder
@@ -861,9 +863,9 @@ namespace System.Windows.Data
             else if (oldCurrentItem != null) // set currency back to old current item, or first if not found
             {
                 int index = EnumerableWrapper.IndexOf(oldCurrentItem);
-                if (index  < 0)
+                if (index < 0)
                 {
-                    index  = 0;
+                    index = 0;
                 }
                 _MoveCurrentToPosition(index);
             }
@@ -913,7 +915,8 @@ namespace System.Windows.Data
         {
             ArgumentNullException.ThrowIfNull(args);
 
-            unchecked { ++ _timestamp; }    // invalidate enumerators because of a change
+            unchecked
+            { ++_timestamp; }    // invalidate enumerators because of a change
 
             if (CollectionChanged != null)
                 CollectionChanged(this, args);
@@ -1208,7 +1211,7 @@ namespace System.Windows.Data
         /// </notes>
         protected void ClearPendingChanges()
         {
-            lock(_changeLog.SyncRoot)
+            lock (_changeLog.SyncRoot)
             {
                 _changeLog.Clear();
                 _tempChangeLog.Clear();
@@ -1227,7 +1230,7 @@ namespace System.Windows.Data
         /// </notes>
         protected void ProcessPendingChanges()
         {
-            lock(_changeLog.SyncRoot)
+            lock (_changeLog.SyncRoot)
             {
                 ProcessChangeLog(_changeLog, true);
                 _changeLog.Clear();
@@ -1389,7 +1392,7 @@ namespace System.Windows.Data
             {
                 // BindingListCollectionView appears in the table for both
                 // DataTable and DataView - keep both references (bug 1745899)
-                _vmData = new object[]{_vmData, value};
+                _vmData = new object[] { _vmData, value };
             }
             else
             {
@@ -1415,8 +1418,8 @@ namespace System.Windows.Data
         // and throw if that is the case.
         internal void VerifyRefreshNotDeferred()
         {
-            #pragma warning disable 1634, 1691 // about to use PreSharp message numbers - unknown to C#
-            #pragma warning disable 6503
+#pragma warning disable 1634, 1691 // about to use PreSharp message numbers - unknown to C#
+#pragma warning disable 6503
 
             if (AllowsCrossThreadChanges)
                 VerifyAccess();
@@ -1428,13 +1431,13 @@ namespace System.Windows.Data
             if (IsRefreshDeferred)
                 throw new InvalidOperationException(SR.NoCheckOrChangeWhenDeferred);
 
-            #pragma warning restore 6503
-            #pragma warning restore 1634, 1691
+#pragma warning restore 6503
+#pragma warning restore 1634, 1691
         }
 
         internal void InvalidateEnumerableWrapper()
         {
-            IndexedEnumerable wrapper = (IndexedEnumerable) Interlocked.Exchange(ref _enumerableWrapper, null);
+            IndexedEnumerable wrapper = (IndexedEnumerable)Interlocked.Exchange(ref _enumerableWrapper, null);
             if (wrapper != null)
             {
                 wrapper.Invalidate();
@@ -1515,7 +1518,7 @@ namespace System.Windows.Data
             // this.  We loop through the interface list, rather than call
             // GetInterface(IEnumerableT), so that we handle an ambiguous match
             // (by using the first match) without an exception.
-            for (int i=0; i<interfaces.Length; ++i)
+            for (int i = 0; i < interfaces.Length; ++i)
             {
                 Type interfaceType = interfaces[i];
 
@@ -1589,7 +1592,7 @@ namespace System.Windows.Data
             format(level, this, null, sources);
             if (_sourceCollection != null)
             {
-                format(level+1, _sourceCollection, null, sources);
+                format(level + 1, _sourceCollection, null, sources);
             }
         }
 
@@ -1629,7 +1632,7 @@ namespace System.Windows.Data
 
         internal class PlaceholderAwareEnumerator : IEnumerator
         {
-            enum Position { BeforePlaceholder, OnPlaceholder, OnNewItem, AfterPlaceholder}
+            enum Position { BeforePlaceholder, OnPlaceholder, OnNewItem, AfterPlaceholder }
 
             public PlaceholderAwareEnumerator(CollectionView collectionView, IEnumerator baseEnumerator, NewItemPlaceholderPosition placeholderPosition, object newItem)
             {
@@ -1704,9 +1707,9 @@ namespace System.Windows.Data
             {
                 get
                 {
-                    return  (_position == Position.OnPlaceholder) ? CollectionView.NewItemPlaceholder
-                        :   (_position == Position.OnNewItem)   ?   _newItem
-                        :                                           _baseEnumerator.Current;
+                    return (_position == Position.OnPlaceholder) ? CollectionView.NewItemPlaceholder
+                        : (_position == Position.OnNewItem) ? _newItem
+                        : _baseEnumerator.Current;
                 }
             }
 
@@ -1801,7 +1804,7 @@ namespace System.Windows.Data
 
         private void EndDefer()
         {
-            -- _deferLevel;
+            --_deferLevel;
 
             if (_deferLevel == 0 && CheckFlag(CollectionViewFlags.NeedsRefresh))
             {
@@ -1821,9 +1824,9 @@ namespace System.Windows.Data
         {
             Debug.Assert(changeLog != null && changeLog.Count > 0, "don't defer when there's no work");
 
-            lock(SyncRoot)
+            lock (SyncRoot)
             {
-                lock(_changeLog.SyncRoot)
+                lock (_changeLog.SyncRoot)
                 {
                     if (_changeLog == null)
                     {
@@ -1854,14 +1857,14 @@ namespace System.Windows.Data
         /// <param name="changeLog">
         ///     List of NotifyCollectionChangedEventArgs that is to be processed.
         /// </param>
-        private ICollection ProcessChangeLog(ArrayList changeLog, bool processAll=false)
+        private ICollection ProcessChangeLog(ArrayList changeLog, bool processAll = false)
         {
             int currentIndex = 0;
             bool mustDeferProcessing = false;
             long beginTime = DateTime.Now.Ticks;
             int startCount = changeLog.Count;
 
-            for ( ; currentIndex < changeLog.Count && !(mustDeferProcessing); currentIndex++)
+            for (; currentIndex < changeLog.Count && !(mustDeferProcessing); currentIndex++)
             {
                 NotifyCollectionChangedEventArgs args = changeLog[currentIndex] as NotifyCollectionChangedEventArgs;
 
@@ -1879,7 +1882,7 @@ namespace System.Windows.Data
             if (mustDeferProcessing && currentIndex < changeLog.Count)
             {
                 // create an unprocessed subset of changeLog
-                changeLog.RemoveRange(0,currentIndex);
+                changeLog.RemoveRange(0, currentIndex);
                 return changeLog;
             }
 
@@ -1907,9 +1910,9 @@ namespace System.Windows.Data
         // Post a change on the UI thread Dispatcher and updated the _changeLog.
         private void PostChange(NotifyCollectionChangedEventArgs args)
         {
-            lock(SyncRoot)
+            lock (SyncRoot)
             {
-                lock(_changeLog.SyncRoot)
+                lock (_changeLog.SyncRoot)
                 {
                     // we can ignore everything before a Reset
                     if (args.Action == NotifyCollectionChangedAction.Reset)
@@ -1932,7 +1935,7 @@ namespace System.Windows.Data
                         // wrong thread.  Marshal it to the UI thread.
                         _changeLog.Add(args);
 
-                        if(_databindOperation == null)
+                        if (_databindOperation == null)
                         {
                             _databindOperation = _engine.Marshal(
                                 new DispatcherOperationCallback(ProcessInvoke),
@@ -1948,9 +1951,9 @@ namespace System.Windows.Data
         {
             // work on a private copy of the change log, so that other threads
             // can add to the main change log
-            lock(SyncRoot)
+            lock (SyncRoot)
             {
-                lock(_changeLog.SyncRoot)
+                lock (_changeLog.SyncRoot)
                 {
                     _databindOperation = null;
                     _tempChangeLog = _changeLog;
@@ -2133,15 +2136,15 @@ namespace System.Windows.Data
         [Flags]
         private enum CollectionViewFlags
         {
-            UpdatedOutsideDispatcher        =   0x2,
-            ShouldProcessCollectionChanged  =   0x4,
-            IsCurrentBeforeFirst            =   0x8,
-            IsCurrentAfterLast              =   0x10,
-            IsDynamic                       =   0x20,
-            IsDataInGroupOrder              =   0x40,
-            NeedsRefresh                    =   0x80,
-            AllowsCrossThreadChanges        =   0x100,
-            CachedIsEmpty                   =   0x200,
+            UpdatedOutsideDispatcher = 0x2,
+            ShouldProcessCollectionChanged = 0x4,
+            IsCurrentBeforeFirst = 0x8,
+            IsCurrentAfterLast = 0x10,
+            IsDynamic = 0x20,
+            IsDataInGroupOrder = 0x40,
+            NeedsRefresh = 0x80,
+            AllowsCrossThreadChanges = 0x100,
+            CachedIsEmpty = 0x200,
         }
 
 
@@ -2154,25 +2157,25 @@ namespace System.Windows.Data
         //------------------------------------------------------
         #region Private Fields
 
-        ArrayList               _changeLog = new ArrayList();
-        ArrayList               _tempChangeLog = EmptyArrayList;
-        DataBindOperation       _databindOperation;
-        object                  _vmData;            // view manager's private data
-        IEnumerable             _sourceCollection;  // the underlying collection
-        CultureInfo             _culture;           // culture to use when sorting
-        SimpleMonitor           _currentChangedMonitor = new SimpleMonitor();
-        int                     _deferLevel;
-        IndexedEnumerable       _enumerableWrapper;
-        Predicate<object>       _filter;
-        object                  _currentItem;
-        int                     _currentPosition;
-        CollectionViewFlags     _flags = CollectionViewFlags.ShouldProcessCollectionChanged |
+        ArrayList _changeLog = new ArrayList();
+        ArrayList _tempChangeLog = EmptyArrayList;
+        DataBindOperation _databindOperation;
+        object _vmData;            // view manager's private data
+        IEnumerable _sourceCollection;  // the underlying collection
+        CultureInfo _culture;           // culture to use when sorting
+        SimpleMonitor _currentChangedMonitor = new SimpleMonitor();
+        int _deferLevel;
+        IndexedEnumerable _enumerableWrapper;
+        Predicate<object> _filter;
+        object _currentItem;
+        int _currentPosition;
+        CollectionViewFlags _flags = CollectionViewFlags.ShouldProcessCollectionChanged |
                                         CollectionViewFlags.NeedsRefresh;
-        bool                    _currentElementWasRemovedOrReplaced;
-        static object           _newItemPlaceholder = new NamedObject("NewItemPlaceholder");
-        object                  _syncObject = new object();
-        DataBindEngine          _engine;
-        int                     _timestamp;
+        bool _currentElementWasRemovedOrReplaced;
+        static object _newItemPlaceholder = new NamedObject("NewItemPlaceholder");
+        object _syncObject = new object();
+        DataBindEngine _engine;
+        int _timestamp;
         static readonly ArrayList EmptyArrayList = new ArrayList();
         static readonly string IEnumerableT = typeof(IEnumerable<>).Name;
         internal static readonly object NoNewItem = new NamedObject("NoNewItem");

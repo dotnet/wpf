@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -39,15 +39,15 @@ namespace MS.Internal.TextFormatting
         /// <param name="textModifierScope">specifies the text modifier currently in scope, if any; can be null</param>
         /// <returns>list of TextShapeableSymbols objects</returns>
         IList<TextShapeableSymbols> GetTextShapeableSymbols(
-            GlyphingCache               glyphingCache,
-            CharacterBufferReference    characterBufferReference,
-            int                         characterLength,
-            bool                        rightToLeft,
-            bool                        isRightToLeftParagraph,
-            CultureInfo                 digitCulture,
-            TextModifierScope           textModifierScope,
-            TextFormattingMode          textFormattingMode,
-            bool                        isSideways
+            GlyphingCache glyphingCache,
+            CharacterBufferReference characterBufferReference,
+            int characterLength,
+            bool rightToLeft,
+            bool isRightToLeftParagraph,
+            CultureInfo digitCulture,
+            TextModifierScope textModifierScope,
+            TextFormattingMode textFormattingMode,
+            bool isSideways
             );
     }
 }

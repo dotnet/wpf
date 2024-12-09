@@ -1,15 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
+using System.Runtime.CompilerServices;
 using System.Windows;                  // for Rect                        WindowsBase.dll
 using System.Windows.Media;            // for Geometry, Brush, ImageData. PresentationCore.dll
 using System.Windows.Media.Imaging;
-using System.Runtime.CompilerServices;
 using System.Windows.Xps.Serialization;
 using MS.Utility;
-
 using BuildInfo = MS.Internal.ReachFramework.BuildInfo;
 
 [assembly: InternalsVisibleTo("System.Printing, PublicKey=" + BuildInfo.WCP_PUBLIC_KEY_STRING)]
@@ -22,36 +21,36 @@ namespace Microsoft.Internal.AlphaFlattener
 {
 #if DEBUG
     internal static class StopWatch
-	{
-		static double   s_total; // = 0;
-		static DateTime s_startTime;
-		static int      s_count; // = 0;
+    {
+        static double s_total; // = 0;
+        static DateTime s_startTime;
+        static int s_count; // = 0;
 
-		internal static void Start()
-		{
-			s_startTime = DateTime.Now;
-		}
+        internal static void Start()
+        {
+            s_startTime = DateTime.Now;
+        }
 
-		internal static void Stop()
-		{
-			TimeSpan elapsed = DateTime.Now - s_startTime;
+        internal static void Stop()
+        {
+            TimeSpan elapsed = DateTime.Now - s_startTime;
 
-			s_total += elapsed.TotalSeconds;
-			s_count++;
+            s_total += elapsed.TotalSeconds;
+            s_count++;
 
             if (Configuration.Verbose >= 2)
             {
                 Console.WriteLine("{0} {1} {2}", s_count, elapsed.TotalSeconds, s_total);
             }
         }
-	}
+    }
 #endif
 
-	internal static class Utility
+    internal static class Utility
     {
         #region Constants
 
-        private const double OpaqueEnough      = 250.0 / 255; // 0.98
+        private const double OpaqueEnough = 250.0 / 255; // 0.98
         private const double AlmostTransparent = 5.0 / 255; // 0.02
 
         // Espilon for detecting two doubles as the same. It's a pretty large epsilon due to
@@ -632,7 +631,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             if (sg != null)
             {
-                int  pointCount;
+                int pointCount;
                 bool isRectangle;
                 bool isLineSegment;
 
@@ -987,7 +986,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
             }
 
-			StopWatch.Stop();
+            StopWatch.Stop();
 #endif
 
             if (IsEmpty(rslt, mat))
@@ -1061,7 +1060,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 return 1;
             }
-            else if  (Double.IsNaN(opacity) || (opacity < 0))
+            else if (Double.IsNaN(opacity) || (opacity < 0))
             {
                 return 0;
             }
@@ -1158,10 +1157,10 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else
             {
-                Byte red   = (Byte)((x.R * c + y.R * b * 255) / d);
+                Byte red = (Byte)((x.R * c + y.R * b * 255) / d);
                 Byte green = (Byte)((x.G * c + y.G * b * 255) / d);
-                Byte blue  = (Byte)((x.B * c + y.B * b * 255) / d);
-                Color ret  = Color.FromArgb((Byte)(d / 255), red, green, blue);
+                Byte blue = (Byte)((x.B * c + y.B * b * 255) / d);
+                Color ret = Color.FromArgb((Byte)(d / 255), red, green, blue);
 
                 return ret;
             }
@@ -1208,7 +1207,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
             else
             {
-                return (Byte) (val / 255);
+                return (Byte)(val / 255);
             }
         }
 
@@ -1222,16 +1221,16 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="opacityOnly">Only use the alpha channel in the image</param>
         static public void BlendOverColor(byte[] pixels, int count, Color colorX, double opacity, bool opacityOnly)
         {
-/*          if (Configuration.ForceAlphaOpaque)
-            {
-                for (int q = 3; q < count * 4; q += 4)
-                {
-                    pixels[q] = 255; // Force opaque
-                }
+            /*          if (Configuration.ForceAlphaOpaque)
+                        {
+                            for (int q = 3; q < count * 4; q += 4)
+                            {
+                                pixels[q] = 255; // Force opaque
+                            }
 
-                return;
-            }
-*/
+                            return;
+                        }
+            */
 
             Byte xA = colorX.A;
             Byte xR = colorX.R;
@@ -1248,25 +1247,25 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 if (opacityOnly)
                 {
-                    Byte pa       = (Byte) (b  * xA / 255);   // pixel.Opacity * opacity * colorX.A;
+                    Byte pa = (Byte)(b * xA / 255);   // pixel.Opacity * opacity * colorX.A;
 
-                    pixels[p]     = (Byte) (xB * pa / 255);
-                    pixels[p + 1] = (Byte) (xG * pa / 255);
-                    pixels[p + 2] = (Byte) (xR * pa / 255);
+                    pixels[p] = (Byte)(xB * pa / 255);
+                    pixels[p + 1] = (Byte)(xG * pa / 255);
+                    pixels[p + 2] = (Byte)(xR * pa / 255);
                     pixels[p + 3] = pa;
                 }
                 else
                 {
                     int c = xA * (255 - b) / 255;             // colorX.A * (1  - pixel.Opacity * opacity)
 
-                    pixels[p]     = Div255(xB * c + pixels[p    ] * op);
+                    pixels[p] = Div255(xB * c + pixels[p] * op);
                     pixels[p + 1] = Div255(xG * c + pixels[p + 1] * op);
                     pixels[p + 2] = Div255(xR * c + pixels[p + 2] * op);
                     pixels[p + 3] = Div255((xA + b) * 255 - xA * b);
                 }
 
                 p += 4;
-                count --;
+                count--;
             }
         }
 
@@ -1280,7 +1279,7 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <param name="opacityOnly">Only use the alpha channel in the image</param>
         static public void BlendUnderColor(byte[] pixels, int count, Color colorY, double opacity, bool opacityOnly)
         {
-            Byte b  = colorY.A;
+            Byte b = colorY.A;
             Byte yR = colorY.R;
             Byte yG = colorY.G;
             Byte yB = colorY.B;
@@ -1293,7 +1292,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
             int op = OpacityToByte(opacity);
 
-            int op1_b = op * (255 -b ) / 255;
+            int op1_b = op * (255 - b) / 255;
 
             while (count > 0)
             {
@@ -1301,23 +1300,23 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 if (opacityOnly)
                 {
-                    Byte pa       = (Byte)(b * a / 255);
+                    Byte pa = (Byte)(b * a / 255);
 
-                    pixels[p]     = (Byte)(yB * pa / 255);
+                    pixels[p] = (Byte)(yB * pa / 255);
                     pixels[p + 1] = (Byte)(yG * pa / 255);
                     pixels[p + 2] = (Byte)(yR * pa / 255);
                     pixels[p + 3] = pa;
                 }
                 else
                 {
-                    pixels[p    ] = Div255(pixels[p]     * op1_b + yBb);
+                    pixels[p] = Div255(pixels[p] * op1_b + yBb);
                     pixels[p + 1] = Div255(pixels[p + 1] * op1_b + yGb);
                     pixels[p + 2] = Div255(pixels[p + 2] * op1_b + yRb);
                     pixels[p + 3] = Div255((a + b) * 255 - a * b);
                 }
 
                 p += 4;
-                count --;
+                count--;
             }
         }
 
@@ -1336,35 +1335,44 @@ namespace Microsoft.Internal.AlphaFlattener
 
             while (count > 0)
             {
-                count --;
+                count--;
 
                 Byte a = pixelsA[p + 3]; // alpha for A
                 Byte b = pixelsB[p + 3]; // alpha for B
 
                 if (opacityOnlyA)
                 {
-                    pixelsC[p] = (Byte)(pixelsB[p] * a / 255); p++;
-                    pixelsC[p] = (Byte)(pixelsB[p] * a / 255); p++;
-                    pixelsC[p] = (Byte)(pixelsB[p] * a / 255); p++;
+                    pixelsC[p] = (Byte)(pixelsB[p] * a / 255);
+                    p++;
+                    pixelsC[p] = (Byte)(pixelsB[p] * a / 255);
+                    p++;
+                    pixelsC[p] = (Byte)(pixelsB[p] * a / 255);
+                    p++;
                     pixelsC[p] = (Byte)(a * b / 255);
                 }
                 else if (opacityOnlyB)
                 {
-                    pixelsC[p] = (Byte)(pixelsA[p] * b / 255); p++;
-                    pixelsC[p] = (Byte)(pixelsA[p] * b / 255); p++;
-                    pixelsC[p] = (Byte)(pixelsA[p] * b / 255); p++;
+                    pixelsC[p] = (Byte)(pixelsA[p] * b / 255);
+                    p++;
+                    pixelsC[p] = (Byte)(pixelsA[p] * b / 255);
+                    p++;
+                    pixelsC[p] = (Byte)(pixelsA[p] * b / 255);
+                    p++;
                     pixelsC[p] = (Byte)(a * b / 255);
                 }
                 else
                 {
-                    pixelsC[p] = Div255(pixelsA[p] * (255 - b) + pixelsB[p] * 255); p++;
-                    pixelsC[p] = Div255(pixelsA[p] * (255 - b) + pixelsB[p] * 255); p++;
-                    pixelsC[p] = Div255(pixelsA[p] * (255 - b) + pixelsB[p] * 255); p++;
+                    pixelsC[p] = Div255(pixelsA[p] * (255 - b) + pixelsB[p] * 255);
+                    p++;
+                    pixelsC[p] = Div255(pixelsA[p] * (255 - b) + pixelsB[p] * 255);
+                    p++;
+                    pixelsC[p] = Div255(pixelsA[p] * (255 - b) + pixelsB[p] * 255);
+                    p++;
 
                     pixelsC[p] = Div255((a + b) * 255 - a * b);
                 }
 
-                p ++;
+                p++;
             }
         }
 
@@ -1423,9 +1431,9 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns></returns>
         internal static bool NeedPremultiplyAlpha(BitmapSource bitmapSource)
         {
-            if ((bitmapSource != null) && (bitmapSource.Format ==  PixelFormats.Pbgra32))
+            if ((bitmapSource != null) && (bitmapSource.Format == PixelFormats.Pbgra32))
             {
-                int width  = bitmapSource.PixelWidth;
+                int width = bitmapSource.PixelWidth;
                 int height = bitmapSource.PixelHeight;
 
                 int stride = width * 4;
@@ -1433,15 +1441,15 @@ namespace Microsoft.Internal.AlphaFlattener
                 Int32Rect rect = new Int32Rect(0, 0, width, 1);
                 byte[] pixels = new byte[stride];
 
-                for (int y = 0; y < height; y ++)
+                for (int y = 0; y < height; y++)
                 {
                     bitmapSource.CriticalCopyPixels(rect, pixels, stride, 0);
 
                     int p = 0;
 
-                    for (int x = 0; x < width; x ++)
+                    for (int x = 0; x < width; x++)
                     {
-                        if ((pixels[p    ] > pixels[p + 3]) ||
+                        if ((pixels[p] > pixels[p + 3]) ||
                             (pixels[p + 1] > pixels[p + 3]) ||
                             (pixels[p + 2] > pixels[p + 3]))
                         {
@@ -1451,7 +1459,7 @@ namespace Microsoft.Internal.AlphaFlattener
                         p += 4;
                     }
 
-                    rect.Y ++;
+                    rect.Y++;
                 }
             }
 
@@ -1486,9 +1494,9 @@ namespace Microsoft.Internal.AlphaFlattener
                         // rectangle or region to BrushProxy.IsOpaque later.
                         if (ib.TileMode == TileMode.None)
                         {
-                            if (! (bp.Brush as TileBrush).Viewport.Contains(maskBounds))
+                            if (!(bp.Brush as TileBrush).Viewport.Contains(maskBounds))
                             {
-                                 return false;
+                                return false;
                             }
                         }
 
@@ -1518,11 +1526,12 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns></returns>
         public static DrawingBrush CreateNonInheritingDrawingBrush(Drawing drawing)
         {
-            DrawingBrush db = new DrawingBrush();
-
-            // Opt-out of inheritance through the new Freezable.
-            db.CanBeInheritanceContext = false;
-            db.Drawing = drawing;
+            DrawingBrush db = new DrawingBrush
+            {
+                // Opt-out of inheritance through the new Freezable.
+                CanBeInheritanceContext = false,
+                Drawing = drawing
+            };
 
             return db;
         }
@@ -1572,15 +1581,15 @@ namespace Microsoft.Internal.AlphaFlattener
                 {
                     UIElement uiElement = visualBrush.Visual as UIElement;
                     if (uiElement != null)
-	            {
+                    {
                         if ((!uiElement.IsArrangeValid || uiElement.NeverMeasured) && visualBrush.AutoLayoutContent)
                         {
                             // VisualBrush.Visual needs to be arranged in order to correctly report it's bounds
                             uiElement.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
                             uiElement.Arrange(new Rect(uiElement.DesiredSize));
                         }
-		    }
-		    
+                    }
+
                     bounds = VisualTreeHelper.GetDescendantBounds(visualBrush.Visual);
 
                     Geometry clip = VisualTreeHelper.GetClip(visualBrush.Visual);
@@ -1703,15 +1712,27 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 switch (brush.AlignmentX)
                 {
-                    case AlignmentX.Left: dx = viewport.Left - stretchedViewbox.Left; break;
-                    case AlignmentX.Center: dx = viewport.Left - stretchedViewbox.Left + (viewport.Width - stretchedViewbox.Width) / 2; break;
-                    case AlignmentX.Right: dx = viewport.Right - stretchedViewbox.Right; break;
+                    case AlignmentX.Left:
+                        dx = viewport.Left - stretchedViewbox.Left;
+                        break;
+                    case AlignmentX.Center:
+                        dx = viewport.Left - stretchedViewbox.Left + (viewport.Width - stretchedViewbox.Width) / 2;
+                        break;
+                    case AlignmentX.Right:
+                        dx = viewport.Right - stretchedViewbox.Right;
+                        break;
                 }
                 switch (brush.AlignmentY)
                 {
-                    case AlignmentY.Top: dy = viewport.Top - stretchedViewbox.Top; break;
-                    case AlignmentY.Center: dy = viewport.Top - stretchedViewbox.Top + (viewport.Height - stretchedViewbox.Height) / 2; break;
-                    case AlignmentY.Bottom: dy = viewport.Bottom - stretchedViewbox.Bottom; break;
+                    case AlignmentY.Top:
+                        dy = viewport.Top - stretchedViewbox.Top;
+                        break;
+                    case AlignmentY.Center:
+                        dy = viewport.Top - stretchedViewbox.Top + (viewport.Height - stretchedViewbox.Height) / 2;
+                        break;
+                    case AlignmentY.Bottom:
+                        dy = viewport.Bottom - stretchedViewbox.Bottom;
+                        break;
                 }
 
                 transform.Translate(dx, dy);
@@ -1863,7 +1884,7 @@ namespace Microsoft.Internal.AlphaFlattener
             Rect approxWorldBounds = visualBounds;
             approxWorldBounds.Transform(visualToWorldTransformHint);
 
-            bitmapDpiX = approxWorldBounds.Width / visualBounds.Width   * Configuration.RasterizationDPI;
+            bitmapDpiX = approxWorldBounds.Width / visualBounds.Width * Configuration.RasterizationDPI;
             bitmapDpiY = approxWorldBounds.Height / visualBounds.Height * Configuration.RasterizationDPI;
 
             // render only if pixel dimensions are > 0

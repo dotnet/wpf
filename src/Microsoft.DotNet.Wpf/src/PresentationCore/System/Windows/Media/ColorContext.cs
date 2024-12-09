@@ -1,21 +1,20 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
+using System.Globalization;
+using System.IO;
+using System.Net;
+using System.Reflection;
+using System.Resources;
+using System.Runtime.InteropServices;
+using System.Text;
 using MS.Internal;
 using MS.Win32;
-using System.IO;
-using System.Runtime.InteropServices;
-using System.Resources;
-using System.Reflection;
-using System.Globalization;
-using System.Net;
-using System.Text;
-
-using UnsafeNativeMethodsMilCoreApi = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using IWICCC = MS.Win32.PresentationCore.UnsafeNativeMethods.IWICColorContext;
+using UnsafeNativeMethodsMilCoreApi = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
 {
@@ -39,7 +38,7 @@ namespace System.Windows.Media
             // will be invalid and we'll emulate the old failure behavior later in
             // OpenProfileStream()
             //
-            
+
             IWICCC.WICColorContextType type;
             if (HRESULT.Failed(IWICCC.GetType(_colorContextHandle, out type)))
             {
@@ -60,7 +59,7 @@ namespace System.Windows.Media
                         {
                             return;
                         }
-                        
+
                         FromRawBytes(profileData, (int)cbProfileActual, /* dontThrowException = */ true);
                     }
 
@@ -101,7 +100,7 @@ namespace System.Windows.Media
                     // If anything other than 1 or 65535 happens, _colorContextHelper will remain invalid and we will emulate
                     // the old crash behavior in OpenProfileStream().
                     //
-                    
+
                     if (colorSpace == 1 || colorSpace == 65535)
                     {
                         ResourceManager resourceManager = new ResourceManager(
@@ -114,7 +113,7 @@ namespace System.Windows.Media
                         {
                             _colorContextHandle.Dispose();
                             _colorContextHandle = null;
-                            
+
                             if (HRESULT.Failed(UnsafeNativeMethodsMilCoreApi.WICCodec.CreateColorContext(
                                 factoryMaker.ImagingFactoryPtr, out _colorContextHandle))
                                 )
@@ -217,10 +216,10 @@ namespace System.Windows.Media
             {
                 throw new NullReferenceException();
             }
-            
+
             uint profileSize = 0;
             _colorContextHelper.GetColorProfileFromHandle(null, ref profileSize);
-            
+
             byte[] profile = new byte[profileSize];
             _colorContextHelper.GetColorProfileFromHandle(profile, ref profileSize);
 
@@ -350,13 +349,13 @@ namespace System.Windows.Media
             {
                 HRESULT.Check(hr);
             }
-            
+
             if (numContexts > 0)
             {
                 // GetColorContexts does not create new IWICColorContexts. Instead, it initializes existing
                 // ones so we must create them beforehand.
                 SafeMILHandle[] colorContextHandles = new SafeMILHandle[numContexts];
-                
+
                 using (FactoryMaker factoryMaker = new FactoryMaker())
                 {
                     for (uint i = 0; i < numContexts; ++i)
@@ -368,7 +367,7 @@ namespace System.Windows.Media
                 // The Marshal is unable to handle SafeMILHandle[] so we will convert it to an IntPtr[] ourselves.
                 {
                     IntPtr[] colorContextPtrs = new IntPtr[numContexts];
-                    
+
                     for (uint i = 0; i < numContexts; ++i)
                     {
                         colorContextPtrs[i] = colorContextHandles[i].DangerousGetHandle();
@@ -423,7 +422,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Operator==
         /// </summary>
-        public static bool operator==(ColorContext context1, ColorContext context2)
+        public static bool operator ==(ColorContext context1, ColorContext context2)
         {
             object obj1 = context1;
             object obj2 = context2;
@@ -434,7 +433,7 @@ namespace System.Windows.Media
             }
             else if (obj1 != null && obj2 != null)
             {
-                #pragma warning disable 6506
+#pragma warning disable 6506
                 return (
                     (context1._profileHeader.phSize == context2._profileHeader.phSize) &&
                     (context1._profileHeader.phCMMType == context2._profileHeader.phCMMType) &&
@@ -458,7 +457,7 @@ namespace System.Windows.Media
                     (context1._profileHeader.phIlluminant_2 == context2._profileHeader.phIlluminant_2) &&
                     (context1._profileHeader.phCreator == context2._profileHeader.phCreator)
                     );
-                #pragma warning restore 6506
+#pragma warning restore 6506
             }
             else
             {
@@ -469,7 +468,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Operator!=
         /// </summary>
-        public static bool operator!=(ColorContext context1, ColorContext context2)
+        public static bool operator !=(ColorContext context1, ColorContext context2)
         {
             return !(context1 == context2);
         }
@@ -544,7 +543,7 @@ namespace System.Windows.Media
         private static Uri GetStandardColorSpaceProfile()
         {
             const int SIZE = NativeMethods.MAX_PATH;
-            
+
             uint dwProfileID = (uint)NativeMethods.ColorSpace.SPACE_sRGB;
             uint bufferSize = SIZE;
             StringBuilder buffer = new StringBuilder(SIZE);
@@ -584,8 +583,8 @@ namespace System.Windows.Media
             if (stm.CanSeek)
             {
                 bufferSize = (int)stm.Length + 1; // If this stream is seekable (most cases), we will only have one buffer alloc and read below
-                                                // otherwise, we will incrementally grow the buffer and read until end of profile.
-                                                // profiles are typcially small, so usually one allocation will suffice
+                                                  // otherwise, we will incrementally grow the buffer and read until end of profile.
+                                                  // profiles are typcially small, so usually one allocation will suffice
             }
 
             byte[] rawBytes = new byte[bufferSize];
@@ -622,17 +621,17 @@ namespace System.Windows.Media
         ///
         /// dontThrowException is for preserving the 3.* behavior of ColorContext(SafeMILHandle)
         ///
-        private void FromRawBytes(byte[] data, int dataLength, bool dontThrowException) 
+        private void FromRawBytes(byte[] data, int dataLength, bool dontThrowException)
         {
             Invariant.Assert(dataLength <= data.Length);
             Invariant.Assert(dataLength >= 0);
-            
+
             UnsafeNativeMethods.PROFILEHEADER header;
             UnsafeNativeMethods.PROFILE profile;
 
             unsafe
             {
-                fixed (void *dataPtr = data)
+                fixed (void* dataPtr = data)
                 {
                     profile.dwType = NativeMethods.ProfileType.PROFILE_MEMBUFFER;
                     profile.pProfileData = dataPtr;
@@ -647,7 +646,7 @@ namespace System.Windows.Media
                             return;
                         }
                         else
-                        {                
+                        {
                             HRESULT.Check(Marshal.GetHRForLastWin32Error());
                         }
                     }
@@ -661,33 +660,33 @@ namespace System.Windows.Media
                     return;
                 }
                 else
-                {                
+                {
                     HRESULT.Check(Marshal.GetHRForLastWin32Error());
                 }
             }
-            
+
             // Copy the important stuff from the header into our smaller cache
-            _profileHeader.phSize            = header.phSize;
-            _profileHeader.phCMMType         = header.phCMMType;
-            _profileHeader.phVersion         = header.phVersion;
-            _profileHeader.phClass           = header.phClass;
-            _profileHeader.phDataColorSpace  = header.phDataColorSpace;
+            _profileHeader.phSize = header.phSize;
+            _profileHeader.phCMMType = header.phCMMType;
+            _profileHeader.phVersion = header.phVersion;
+            _profileHeader.phClass = header.phClass;
+            _profileHeader.phDataColorSpace = header.phDataColorSpace;
             _profileHeader.phConnectionSpace = header.phConnectionSpace;
-            _profileHeader.phDateTime_0      = header.phDateTime_0;
-            _profileHeader.phDateTime_1      = header.phDateTime_1;
-            _profileHeader.phDateTime_2      = header.phDateTime_2;
-            _profileHeader.phSignature       = header.phSignature;
-            _profileHeader.phPlatform        = header.phPlatform;
-            _profileHeader.phProfileFlags    = header.phProfileFlags;
-            _profileHeader.phManufacturer    = header.phManufacturer;
-            _profileHeader.phModel           = header.phModel;
-            _profileHeader.phAttributes_0    = header.phAttributes_0;
-            _profileHeader.phAttributes_1    = header.phAttributes_1;
+            _profileHeader.phDateTime_0 = header.phDateTime_0;
+            _profileHeader.phDateTime_1 = header.phDateTime_1;
+            _profileHeader.phDateTime_2 = header.phDateTime_2;
+            _profileHeader.phSignature = header.phSignature;
+            _profileHeader.phPlatform = header.phPlatform;
+            _profileHeader.phProfileFlags = header.phProfileFlags;
+            _profileHeader.phManufacturer = header.phManufacturer;
+            _profileHeader.phModel = header.phModel;
+            _profileHeader.phAttributes_0 = header.phAttributes_0;
+            _profileHeader.phAttributes_1 = header.phAttributes_1;
             _profileHeader.phRenderingIntent = header.phRenderingIntent;
-            _profileHeader.phIlluminant_0    = header.phIlluminant_0;
-            _profileHeader.phIlluminant_1    = header.phIlluminant_1;
-            _profileHeader.phIlluminant_2    = header.phIlluminant_2;
-            _profileHeader.phCreator         = header.phCreator;
+            _profileHeader.phIlluminant_0 = header.phIlluminant_0;
+            _profileHeader.phIlluminant_1 = header.phIlluminant_1;
+            _profileHeader.phIlluminant_2 = header.phIlluminant_2;
+            _profileHeader.phCreator = header.phCreator;
 
             switch (_profileHeader.phDataColorSpace)
             {
@@ -788,7 +787,7 @@ namespace System.Windows.Media
         private int _numChannels;
 
         private Uri _profileUri;
-        
+
         private bool _isProfileUriNotFromUser;
 
         private AbbreviatedPROFILEHEADER _profileHeader;

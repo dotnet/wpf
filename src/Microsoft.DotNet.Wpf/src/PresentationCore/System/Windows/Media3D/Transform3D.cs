@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,7 +31,7 @@ namespace System.Windows.Media.Media3D
         #region Constructors
 
         // Prevent 3rd parties from extending this abstract base class.
-        internal Transform3D() {}
+        internal Transform3D() { }
 
         #endregion Constructors
 
@@ -188,7 +188,7 @@ namespace System.Windows.Media.Media3D
         /// <summary>
         ///     Determines whether the matrix is affine.
         /// </summary>
-        public abstract bool IsAffine {get;}
+        public abstract bool IsAffine { get; }
 
 
         /// <summary>
@@ -199,7 +199,7 @@ namespace System.Windows.Media.Media3D
         #endregion Public Properties
 
         internal abstract void Append(ref Matrix3D matrix);
-        
+
         //------------------------------------------------------
         //
         //  Private Fields

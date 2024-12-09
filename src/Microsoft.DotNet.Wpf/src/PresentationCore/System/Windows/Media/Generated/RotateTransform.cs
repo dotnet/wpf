@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -55,21 +55,21 @@ namespace System.Windows.Media
 
         private static void AnglePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RotateTransform target = ((RotateTransform) d);
+            RotateTransform target = ((RotateTransform)d);
 
 
             target.PropertyChanged(AngleProperty);
         }
         private static void CenterXPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RotateTransform target = ((RotateTransform) d);
+            RotateTransform target = ((RotateTransform)d);
 
 
             target.PropertyChanged(CenterXProperty);
         }
         private static void CenterYPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            RotateTransform target = ((RotateTransform) d);
+            RotateTransform target = ((RotateTransform)d);
 
 
             target.PropertyChanged(CenterYProperty);
@@ -85,7 +85,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(AngleProperty);
+                return (double)GetValue(AngleProperty);
             }
             set
             {
@@ -100,7 +100,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(CenterXProperty);
+                return (double)GetValue(CenterXProperty);
             }
             set
             {
@@ -115,7 +115,7 @@ namespace System.Windows.Media
         {
             get
             {
-                return (double) GetValue(CenterYProperty);
+                return (double)GetValue(CenterYProperty);
             }
             set
             {
@@ -199,25 +199,25 @@ namespace System.Windows.Media
         }
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-                if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_ROTATETRANSFORM))
-                {
-                    AddRefOnChannelAnimations(channel);
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_ROTATETRANSFORM))
+            {
+                AddRefOnChannelAnimations(channel);
 
 
-                    UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
-                }
+                UpdateResource(channel, true /* skip "on channel" check - we already know that we're on channel */ );
+            }
 
-                return _duceResource.GetHandle(channel);
-}
+            return _duceResource.GetHandle(channel);
+        }
         internal override void ReleaseOnChannelCore(DUCE.Channel channel)
         {
-                Debug.Assert(_duceResource.IsOnChannel(channel));
+            Debug.Assert(_duceResource.IsOnChannel(channel));
 
-                if (_duceResource.ReleaseOnChannel(channel))
-                {
-                    ReleaseOnChannelAnimations(channel);
-}
-}
+            if (_duceResource.ReleaseOnChannel(channel))
+            {
+                ReleaseOnChannelAnimations(channel);
+            }
+        }
         internal override DUCE.ResourceHandle GetHandleCore(DUCE.Channel channel)
         {
             // Note that we are in a lock here already.

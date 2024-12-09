@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,7 +33,7 @@ namespace System.Windows.Media.Animation
         /// <remarks>
         /// There is no default PathGeometry so the user must specify one.
         /// </remarks>
-        public DoubleAnimationUsingPath() 
+        public DoubleAnimationUsingPath()
             : base()
         {
         }
@@ -123,7 +123,7 @@ namespace System.Windows.Media.Animation
         protected override void OnChanged()
         {
             _isValid = false;
-            
+
             base.OnChanged();
         }
 
@@ -198,13 +198,13 @@ namespace System.Windows.Media.Animation
 
             double currentRepeat = (double)(animationClock.CurrentIteration - 1);
 
-            if (   IsCumulative
+            if (IsCumulative
                 && currentRepeat > 0)
             {
                 pathValue += (_accumulatingValue * currentRepeat);
             }
 
-            if (IsAdditive) 
+            if (IsAdditive)
             {
                 return defaultOriginValue + pathValue;
             }
@@ -217,8 +217,8 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// IsAdditive
         /// </summary>
-        public bool IsAdditive         
-        { 
+        public bool IsAdditive
+        {
             get
             {
                 return (bool)GetValue(IsAdditiveProperty);
@@ -232,8 +232,8 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// IsCumulative
         /// </summary>
-        public bool IsCumulative      
-        { 
+        public bool IsCumulative
+        {
             get
             {
                 return (bool)GetValue(IsCumulativeProperty);

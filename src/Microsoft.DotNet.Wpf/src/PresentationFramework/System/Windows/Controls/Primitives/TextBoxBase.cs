@@ -1,15 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
 using System.Collections.ObjectModel;
 using System.Windows.Documents; // TextEditor
 using System.Windows.Input; // MouseButtonEventArgs
-
-using MS.Internal.Documents;    // Undo
-
 using System.Windows.Media; // VisualTreeHelper
+using MS.Internal;
+using MS.Internal.Documents;    // Undo
 
 //
 // Description: The base class for TextBox and RichTextBox.
@@ -105,8 +103,10 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            TextRange range = new TextRange(_textContainer.End, _textContainer.End);
-            range.Text = textData; // Note that in RichTextBox this assignment will convert NewLines into Paragraphs
+            TextRange range = new TextRange(_textContainer.End, _textContainer.End)
+            {
+                Text = textData // Note that in RichTextBox this assignment will convert NewLines into Paragraphs
+            };
         }
 
         /// <summary>
@@ -434,7 +434,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public bool IsReadOnly
         {
-            get { return (bool) GetValue(TextEditor.IsReadOnlyProperty); }
+            get { return (bool)GetValue(TextEditor.IsReadOnlyProperty); }
             set { SetValue(TextEditor.IsReadOnlyProperty, value); }
         }
 
@@ -472,7 +472,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public bool AcceptsReturn
         {
-            get { return (bool) GetValue(AcceptsReturnProperty); }
+            get { return (bool)GetValue(AcceptsReturnProperty); }
             set { SetValue(AcceptsReturnProperty, value); }
         }
 
@@ -496,7 +496,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public bool AcceptsTab
         {
-            get { return (bool) GetValue(AcceptsTabProperty); }
+            get { return (bool)GetValue(AcceptsTabProperty); }
             set { SetValue(AcceptsTabProperty, value); }
         }
 
@@ -527,7 +527,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public ScrollBarVisibility HorizontalScrollBarVisibility
         {
-            get { return (ScrollBarVisibility) GetValue(HorizontalScrollBarVisibilityProperty); }
+            get { return (ScrollBarVisibility)GetValue(HorizontalScrollBarVisibilityProperty); }
             set { SetValue(HorizontalScrollBarVisibilityProperty, value); }
         }
 
@@ -546,7 +546,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public ScrollBarVisibility VerticalScrollBarVisibility
         {
-            get { return (ScrollBarVisibility) GetValue(VerticalScrollBarVisibilityProperty); }
+            get { return (ScrollBarVisibility)GetValue(VerticalScrollBarVisibilityProperty); }
             set { SetValue(VerticalScrollBarVisibilityProperty, value); }
         }
 
@@ -1022,7 +1022,7 @@ namespace System.Windows.Controls.Primitives
         {
             base.OnTemplateChanged(oldTemplate, newTemplate);
 
-            if (oldTemplate!=null && newTemplate!= null && oldTemplate.VisualTree != newTemplate.VisualTree)
+            if (oldTemplate != null && newTemplate != null && oldTemplate.VisualTree != newTemplate.VisualTree)
             {
                 DetachFromVisualTree();
             }
@@ -2171,8 +2171,8 @@ namespace System.Windows.Controls.Primitives
                 {
                     if (Keyboard.FocusedElement == textBox)
                     {
-                         // Call TextStore.OnGotFocus() to set up the focus dim correctly.
-                         textBox.TextEditor.TextStore.OnGotFocus();
+                        // Call TextStore.OnGotFocus() to set up the focus dim correctly.
+                        textBox.TextEditor.TextStore.OnGotFocus();
                     }
                 }
             }
@@ -2198,7 +2198,7 @@ namespace System.Windows.Controls.Primitives
                     caretElement.InvalidateVisual();
                 }
 
-                
+
                 // If the TextBox is rendering its own selection we need to invalidate arrange here
                 // in order to ensure the selection is updated.
                 var textBoxView = textBoxBase?.RenderScope as TextBoxView;

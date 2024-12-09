@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -56,7 +56,8 @@ namespace MS.Internal.Annotations.Component
             Debug.Assert(attachedAnnotation != null, "AttachedAnnotation should not be null");
 
             IAnnotationComponent component = FindComponent(attachedAnnotation);
-            if (component == null) return;
+            if (component == null)
+                return;
             AddComponent(attachedAnnotation, component, reorder);
         }
 
@@ -164,7 +165,8 @@ namespace MS.Internal.Annotations.Component
             Debug.Assert(annotatedElement != null, "the annotatedElement should inherit from UIElement");
 
             // if annotation component is already in presentation context, nothing else to do
-            if (component.PresentationContext != null) return;
+            if (component.PresentationContext != null)
+                return;
 
             // otherwise host in the appropriate adorner layer
             AdornerLayer layer = AdornerLayer.GetAdornerLayer(annotatedElement); // note, GetAdornerLayer requires UIElement

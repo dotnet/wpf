@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -736,7 +736,8 @@ namespace MS.Internal.Data
                 }
             }
 
-            unchecked { ++_version; }     // this invalidates enumerators
+            unchecked
+            { ++_version; }     // this invalidates enumerators
         }
 
         void OnGroupByChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -29,9 +29,9 @@ namespace System.Windows.Documents
             _embeddedElement = embeddedElement;
             _symbolOffsetCache = -1;
         }
- 
+
         #endregion Constructors
- 
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -92,7 +92,7 @@ namespace System.Windows.Documents
             {
                 return _parentNode;
             }
-            
+
             set
             {
                 _parentNode = (TextTreeNode)value;
@@ -106,7 +106,7 @@ namespace System.Windows.Documents
             {
                 return null;
             }
-            
+
             set
             {
                 Invariant.Assert(false, "Can't set contained node on a TextTreeObjectNode!");
@@ -148,7 +148,7 @@ namespace System.Windows.Documents
             {
                 return _leftChildNode;
             }
-            
+
             set
             {
                 _leftChildNode = (TextTreeNode)value;
@@ -162,7 +162,7 @@ namespace System.Windows.Documents
             {
                 return _rightChildNode;
             }
-            
+
             set
             {
                 _rightChildNode = (TextTreeNode)value;
@@ -178,7 +178,7 @@ namespace System.Windows.Documents
             {
                 return _generation;
             }
-            
+
             set
             {
                 _generation = value;
@@ -192,7 +192,7 @@ namespace System.Windows.Documents
             {
                 return _symbolOffsetCache;
             }
-            
+
             set
             {
                 _symbolOffsetCache = value;
@@ -206,7 +206,7 @@ namespace System.Windows.Documents
             {
                 return 1;
             }
-            
+
             set
             {
                 Invariant.Assert(false, "Can't set SymbolCount on TextTreeObjectNode!");

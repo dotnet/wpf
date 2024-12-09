@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,9 +11,9 @@ namespace System.Windows.Automation.Peers
     public class ToggleButtonAutomationPeer : ButtonBaseAutomationPeer, IToggleProvider
     {
         ///
-        public ToggleButtonAutomationPeer(ToggleButton owner): base(owner)
-        {}
-    
+        public ToggleButtonAutomationPeer(ToggleButton owner) : base(owner)
+        { }
+
         ///
         override protected string GetClassNameCore()
         {
@@ -38,10 +38,10 @@ namespace System.Windows.Automation.Peers
                 return base.GetPattern(patternInterface);
             }
         }
-        
+
         void IToggleProvider.Toggle()
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             ToggleButton owner = (ToggleButton)Owner;
@@ -50,10 +50,10 @@ namespace System.Windows.Automation.Peers
 
         ToggleState IToggleProvider.ToggleState
         {
-            get 
-            { 
+            get
+            {
                 ToggleButton owner = (ToggleButton)Owner;
-                return ConvertToToggleState(owner.IsChecked); 
+                return ConvertToToggleState(owner.IsChecked);
             }
         }
 
@@ -71,9 +71,12 @@ namespace System.Windows.Automation.Peers
         {
             switch (value)
             {
-                case (true):    return ToggleState.On;
-                case (false):   return ToggleState.Off;
-                default:        return ToggleState.Indeterminate;
+                case (true):
+                    return ToggleState.On;
+                case (false):
+                    return ToggleState.Off;
+                default:
+                    return ToggleState.Indeterminate;
             }
         }
     }

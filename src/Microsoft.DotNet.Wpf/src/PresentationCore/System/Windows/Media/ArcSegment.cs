@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,8 +8,8 @@
 //
 //
 
-using MS.Internal;
 using System.Windows.Media.Composition;
+using MS.Internal;
 
 namespace System.Windows.Media
 {
@@ -23,7 +23,7 @@ namespace System.Windows.Media
         /// <summary>
         ///
         /// </summary>
-        public ArcSegment() 
+        public ArcSegment()
         {
         }
 
@@ -67,8 +67,8 @@ namespace System.Windows.Media
                 {
                     int count;
                     Point* points = stackalloc Point[12];
-                    Size    size = Size;
-                    Double  rotation = RotationAngle;
+                    Size size = Size;
+                    Double rotation = RotationAngle;
                     MilMatrix3x2D mat3X2 = CompositionResourceManager.MatrixToMilMatrix3x2D(ref matrix);
 
                     Composition.MilCoreApi.MilUtility_ArcToBezier(
@@ -96,10 +96,10 @@ namespace System.Windows.Media
                         for (int i = 0; i < count; i++)
                         {
                             figure.Segments.Add(new BezierSegment(
-                                    points[3*i], 
-                                    points[3*i + 1], 
-                                    points[3*i + 2], 
-                                    isStroked, 
+                                    points[3 * i],
+                                    points[3 * i + 1],
+                                    points[3 * i + 2],
+                                    isStroked,
                                     (i < count - 1) || isSmoothJoin));    // Smooth join between arc pieces
                         }
                     }
@@ -150,7 +150,7 @@ namespace System.Windows.Media
                                  SweepDirection == SweepDirection.Clockwise ? "1" : "0",
                                  Point);
         }
-        
+
         //
         //  This property
         //  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject
@@ -168,7 +168,7 @@ namespace System.Windows.Media
         {
             if (((Size)value).IsEmpty)
             {
-                return new Size(0,0);
+                return new Size(0, 0);
             }
             else
             {

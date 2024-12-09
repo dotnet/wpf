@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -68,7 +68,7 @@ namespace System.Windows.Controls.Primitives
                         typeof(UniformGrid),
                         new FrameworkPropertyMetadata(
                                 (int)0,
-                                FrameworkPropertyMetadataOptions.AffectsMeasure), 
+                                FrameworkPropertyMetadataOptions.AffectsMeasure),
                         new ValidateValueCallback(ValidateFirstColumn));
 
         private static bool ValidateFirstColumn(object o)
@@ -187,7 +187,7 @@ namespace System.Windows.Controls.Primitives
                 }
             }
 
-            return new Size((maxChildDesiredWidth * _columns),(maxChildDesiredHeight * _rows));
+            return new Size((maxChildDesiredWidth * _columns), (maxChildDesiredHeight * _rows));
         }
 
         /// <summary>

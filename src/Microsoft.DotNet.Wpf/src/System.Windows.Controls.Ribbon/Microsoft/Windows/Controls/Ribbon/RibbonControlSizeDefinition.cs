@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -180,9 +180,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 if (_largeImageWithLabel == null)
                 {
-                    _largeImageWithLabel = new RibbonControlSizeDefinition();
-                    _largeImageWithLabel.ImageSize = RibbonImageSize.Large;
-                    _largeImageWithLabel.IsLabelVisible = true;
+                    _largeImageWithLabel = new RibbonControlSizeDefinition
+                    {
+                        ImageSize = RibbonImageSize.Large,
+                        IsLabelVisible = true
+                    };
                     _largeImageWithLabel.Freeze();
                 }
                 return _largeImageWithLabel;
@@ -195,9 +197,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 if (_smallImageWithLabel == null)
                 {
-                    _smallImageWithLabel = new RibbonControlSizeDefinition();
-                    _smallImageWithLabel.ImageSize = RibbonImageSize.Small;
-                    _smallImageWithLabel.IsLabelVisible = true;
+                    _smallImageWithLabel = new RibbonControlSizeDefinition
+                    {
+                        ImageSize = RibbonImageSize.Small,
+                        IsLabelVisible = true
+                    };
                     _smallImageWithLabel.Freeze();
                 }
                 return _smallImageWithLabel;
@@ -210,9 +214,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 if (_noImageWithLabel == null)
                 {
-                    _noImageWithLabel = new RibbonControlSizeDefinition();
-                    _noImageWithLabel.ImageSize = RibbonImageSize.Collapsed;
-                    _noImageWithLabel.IsLabelVisible = true;
+                    _noImageWithLabel = new RibbonControlSizeDefinition
+                    {
+                        ImageSize = RibbonImageSize.Collapsed,
+                        IsLabelVisible = true
+                    };
                     _noImageWithLabel.Freeze();
                 }
                 return _noImageWithLabel;
@@ -225,9 +231,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 if (_largeImageWithoutLabel == null)
                 {
-                    _largeImageWithoutLabel = new RibbonControlSizeDefinition();
-                    _largeImageWithoutLabel.ImageSize = RibbonImageSize.Large;
-                    _largeImageWithoutLabel.IsLabelVisible = false;
+                    _largeImageWithoutLabel = new RibbonControlSizeDefinition
+                    {
+                        ImageSize = RibbonImageSize.Large,
+                        IsLabelVisible = false
+                    };
                     _largeImageWithoutLabel.Freeze();
                 }
                 return _largeImageWithoutLabel;
@@ -240,9 +248,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 if (_smallImageWithoutLabel == null)
                 {
-                    _smallImageWithoutLabel = new RibbonControlSizeDefinition();
-                    _smallImageWithoutLabel.ImageSize = RibbonImageSize.Small;
-                    _smallImageWithoutLabel.IsLabelVisible = false;
+                    _smallImageWithoutLabel = new RibbonControlSizeDefinition
+                    {
+                        ImageSize = RibbonImageSize.Small,
+                        IsLabelVisible = false
+                    };
                     _smallImageWithoutLabel.Freeze();
                 }
                 return _smallImageWithoutLabel;
@@ -255,9 +265,11 @@ namespace Microsoft.Windows.Controls.Ribbon
             {
                 if (_noImageWithoutLabel == null)
                 {
-                    _noImageWithoutLabel = new RibbonControlSizeDefinition();
-                    _noImageWithoutLabel.ImageSize = RibbonImageSize.Collapsed;
-                    _noImageWithoutLabel.IsLabelVisible = false;
+                    _noImageWithoutLabel = new RibbonControlSizeDefinition
+                    {
+                        ImageSize = RibbonImageSize.Collapsed,
+                        IsLabelVisible = false
+                    };
                     _noImageWithoutLabel.Freeze();
                 }
                 return _noImageWithoutLabel;

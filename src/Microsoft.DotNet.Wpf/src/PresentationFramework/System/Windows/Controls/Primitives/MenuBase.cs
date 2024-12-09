@@ -1,15 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal.KnownBoxes;
 using System.Collections.Specialized;
 using System.Windows.Automation.Peers;
-using System.Windows.Threading;
+using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Input;
+using System.Windows.Threading;
+using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls.Primitives
 {
@@ -213,7 +213,7 @@ namespace System.Windows.Controls.Primitives
         // need to actually enter menu mode before focus changes.
         private static void OnPreviewKeyboardInputProviderAcquireFocus(object sender, KeyboardInputProviderAcquireFocusEventArgs e)
         {
-            MenuBase menu = (MenuBase) sender;
+            MenuBase menu = (MenuBase)sender;
 
             // If we haven't already pushed menu mode, we need to do it before
             // focus enters the menu for the first time
@@ -229,7 +229,7 @@ namespace System.Windows.Controls.Primitives
         // corresponding PopMenu is performed.
         private static void OnKeyboardInputProviderAcquireFocus(object sender, KeyboardInputProviderAcquireFocusEventArgs e)
         {
-            MenuBase menu = (MenuBase) sender;
+            MenuBase menu = (MenuBase)sender;
             if (!menu.IsKeyboardFocusWithin && !e.FocusAcquired && menu.IsAcquireFocusMenuMode)
             {
                 Debug.Assert(menu.HasPushedMenuMode);
@@ -306,7 +306,7 @@ namespace System.Windows.Controls.Primitives
                     if (open)
                     {
                         // We raise the event async to allow PopupRoot to hookup
-                        Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate(object param)
+                        Dispatcher.BeginInvoke(DispatcherPriority.Input, new DispatcherOperationCallback(delegate (object param)
                         {
                             peer.RaiseAutomationEvent(automationEvent);
                             return null;
@@ -610,7 +610,7 @@ namespace System.Windows.Controls.Primitives
                 // windows to retain focus when menus are dismissed.
                 IntPtr hwndWithFocus = MS.Win32.UnsafeNativeMethods.GetFocus();
                 HwndSource hwndSourceWithFocus = hwndWithFocus != IntPtr.Zero ? HwndSource.CriticalFromHwnd(hwndWithFocus) : null;
-                if(hwndSourceWithFocus != null)
+                if (hwndSourceWithFocus != null)
                 {
                     // We restore focus by setting focus to the parent's focus
                     // scope.  This may not seem correct, because it presumes
@@ -636,10 +636,10 @@ namespace System.Windows.Controls.Primitives
                     // appropriately for the scenario of restoring focus to
                     // an element in a different top-level window.
 
-					// DependencyObject parent = Parent;
+                    // DependencyObject parent = Parent;
                     // if (parent == null)
                     // {
-                        // If there is no logical parent, use the visual parent.
+                    // If there is no logical parent, use the visual parent.
                     //     parent = VisualTreeHelper.GetParent(this);
                     // }
 
@@ -652,15 +652,15 @@ namespace System.Windows.Controls.Primitives
                     //     }
                     // }
 
-					// Unfortunately setting focus to the parent focusscope tripped up VS in the scenario where 
-					// Menus are contained within ToolBars. In this case when the Menu is dismissed they want 
-					// focus to be restored to the element in the main window that previously had focus. However 
-					// since ToolBar is  the parent focusscope for the Menu we end up restoring focus to its 
-					// focusedelment. It is also noted that this implementation is a behavioral change from .Net 3.5. 
-					// Hence we are putting back the old behavior which is to set Keyboard.Focus to null which will 
-					// delegate focus through the main window to its focusedelement. 
+                    // Unfortunately setting focus to the parent focusscope tripped up VS in the scenario where 
+                    // Menus are contained within ToolBars. In this case when the Menu is dismissed they want 
+                    // focus to be restored to the element in the main window that previously had focus. However 
+                    // since ToolBar is  the parent focusscope for the Menu we end up restoring focus to its 
+                    // focusedelment. It is also noted that this implementation is a behavioral change from .Net 3.5. 
+                    // Hence we are putting back the old behavior which is to set Keyboard.Focus to null which will 
+                    // delegate focus through the main window to its focusedelement. 
 
-					Keyboard.Focus(null);
+                    Keyboard.Focus(null);
                 }
                 else
                 {
@@ -819,7 +819,7 @@ namespace System.Windows.Controls.Primitives
                             {
                                 PushMenuMode(/*isAcquireFocusMenuMode*/ false);
                             }
-                            
+
                             RaiseClrEvent(InternalMenuModeChangedKey, EventArgs.Empty);
                         }
                     }
@@ -933,10 +933,10 @@ namespace System.Windows.Controls.Primitives
 
         private enum MenuBaseFlags
         {
-            IgnoreNextLeftRelease  = 0x01,
+            IgnoreNextLeftRelease = 0x01,
             IgnoreNextRightRelease = 0x02,
-            IsMenuMode             = 0x04,
-            OpenOnMouseEnter       = 0x08,
+            IsMenuMode = 0x04,
+            OpenOnMouseEnter = 0x08,
             IsAcquireFocusMenuMode = 0x10,
         }
 

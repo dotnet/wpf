@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,15 +14,15 @@ namespace System.Windows.Media.Media3D
         internal GeneralTransform2DTo3D()
         {
         }
-        
-        internal GeneralTransform2DTo3D(GeneralTransform transform2D, 
-                                        Viewport2DVisual3D containingVisual3D, 
+
+        internal GeneralTransform2DTo3D(GeneralTransform transform2D,
+                                        Viewport2DVisual3D containingVisual3D,
                                         GeneralTransform3D transform3D)
-        {            
+        {
             Visual child = containingVisual3D.Visual;
 
             Debug.Assert(child != null, "Going from 2D to 3D containingVisual3D.Visual should not be null");
-            
+
             _transform3D = (GeneralTransform3D)transform3D.GetCurrentValueAsFrozen();
 
             // we also need to go one more level up to handle a transform being placed
@@ -39,7 +39,7 @@ namespace System.Windows.Media.Media3D
 
             _childBounds = child.CalculateSubgraphRenderBoundsOuterSpace();
         }
-        
+
         /// <summary>
         /// Transform a point
         /// </summary>
@@ -52,30 +52,31 @@ namespace System.Windows.Media.Media3D
 
             // assign this now so that we can return false if needed
             result = new Point3D();
-            
+
             if (!_transform2D.TryTransform(inPoint, out final2DPoint))
             {
                 return false;
             }
-                       
+
             Point texCoord = Viewport2DVisual3D.VisualCoordsToTextureCoords(final2DPoint, _childBounds);
 
             // need to walk the texture coordinates on the Viewport2DVisual3D
             // and look for where this point intersects one of them
             Point3D coordPoint;
-            if (!Viewport2DVisual3D.Get3DPointFor2DCoordinate(texCoord, 
+            if (!Viewport2DVisual3D.Get3DPointFor2DCoordinate(texCoord,
                                                             out coordPoint,
                                                             _positions,
                                                             _textureCoords,
                                                             _triIndices))
             {
-                return false;}
+                return false;
+            }
 
             if (!_transform3D.TryTransform(coordPoint, out result))
             {
                 return false;
             }
-            
+
             return true;
         }
 
@@ -109,7 +110,7 @@ namespace System.Windows.Media.Media3D
         {
             return new GeneralTransform2DTo3D();
         }
-        
+
 
         /// <summary>
         /// Implementation of <see cref="System.Windows.Freezable.CloneCore(Freezable)">Freezable.CloneCore</see>.
@@ -180,6 +181,6 @@ namespace System.Windows.Media.Media3D
         private Int32Collection _triIndices;
 
         private Rect _childBounds;
-    } 
+    }
 }
 

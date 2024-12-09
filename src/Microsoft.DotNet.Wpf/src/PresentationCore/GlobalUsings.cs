@@ -5,7 +5,5 @@
 global using System;
 global using System.Collections.Generic;
 global using System.Diagnostics;
-
-global using SR = MS.Internal.PresentationCore.SR;
-
 global using DllImport = MS.Internal.PresentationCore.DllImport;
+global using SR = MS.Internal.PresentationCore.SR;

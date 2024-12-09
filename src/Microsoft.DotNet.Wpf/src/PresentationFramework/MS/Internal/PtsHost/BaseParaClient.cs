@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,8 @@
 
 using System.Windows;
 using MS.Internal.Documents; // ParagraphResult
-using MS.Internal.Text;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -104,7 +103,7 @@ namespace MS.Internal.PtsHost
             _visual = oldParaClient._visual;
             oldParaClient._visual = null;
         }
-    
+
         // ------------------------------------------------------------------
         // Hit tests to the correct IInputElement within the paragraph
         // that the mouse is over.
@@ -208,7 +207,7 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Rect of para client
         // ------------------------------------------------------------------
-        internal PTS.FSRECT Rect { get { return _rect; } } 
+        internal PTS.FSRECT Rect { get { return _rect; } }
 
         internal FlowDirection ThisFlowDirection { get { return _flowDirection; } }
         internal FlowDirection ParentFlowDirection { get { return _flowDirectionParent; } }
@@ -227,8 +226,8 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         // Arrange paragraph.
         // ------------------------------------------------------------------
-        protected virtual void OnArrange() 
-        { 
+        protected virtual void OnArrange()
+        {
             Paragraph.UpdateLastFormatPositions();
         }
 

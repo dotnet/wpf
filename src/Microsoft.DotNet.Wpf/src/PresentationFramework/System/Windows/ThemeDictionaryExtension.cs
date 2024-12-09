@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -70,11 +70,11 @@ namespace System.Windows
             }
 
             IProvideValueTarget provideValueTarget = serviceProvider.GetService(typeof(IProvideValueTarget)) as IProvideValueTarget;
-            if( provideValueTarget == null )
+            if (provideValueTarget == null)
             {
-                throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IProvideValueTarget" ));
+                throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IProvideValueTarget"));
             }
-                
+
             object targetObject = provideValueTarget.TargetObject;
             object targetProperty = provideValueTarget.TargetProperty;
 
@@ -189,7 +189,7 @@ namespace System.Windows
                 _themeDictionaryInfos = new List<ThemeDictionaryInfo>();
             }
             ThemeDictionaryInfo info;
-            
+
             for (int i = 0; i < _themeDictionaryInfos.Count; i++)
             {
                 info = _themeDictionaryInfos[i];
@@ -210,12 +210,14 @@ namespace System.Windows
             }
 
             // Not present, add to list
-            info = new ThemeDictionaryInfo();
-            info.DictionaryReference = new WeakReference(dictionary);
-            info.AssemblyName = assemblyName;
+            info = new ThemeDictionaryInfo
+            {
+                DictionaryReference = new WeakReference(dictionary),
+                AssemblyName = assemblyName
+            };
 
             _themeDictionaryInfos.Add(info);
-            
+
         }
 
         internal static void OnThemeChanged()

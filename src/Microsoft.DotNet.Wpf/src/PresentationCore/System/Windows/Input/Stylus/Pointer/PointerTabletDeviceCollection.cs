@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Win32.Pointer;
 using System.ComponentModel;
 using System.Windows.Input.Tracing;
+using MS.Win32.Pointer;
 
 namespace System.Windows.Input.StylusPointer
 {
@@ -104,7 +104,7 @@ namespace System.Windows.Input.StylusPointer
 
                             PointerTabletDeviceInfo ptdi = new PointerTabletDeviceInfo(id, deviceInfo);
 
-                            
+
                             // Don't add a device that fails initialization.  This means we will try a refresh
                             // next time around if we receive stylus input and the device is not available.
                             // <see cref="HwndPointerInputProvider.UpdateCurrentTabletAndStylus">
@@ -112,7 +112,7 @@ namespace System.Windows.Input.StylusPointer
                             {
                                 PointerTabletDevice tablet = new PointerTabletDevice(ptdi);
 
-                                if(!oldTablets.Remove(tablet.Device))
+                                if (!oldTablets.Remove(tablet.Device))
                                 {
                                     // We only create a TabletDevice when one is connected (physically or virtually).
                                     // As such we have to log when there is no corresponding old tablet being refreshed.

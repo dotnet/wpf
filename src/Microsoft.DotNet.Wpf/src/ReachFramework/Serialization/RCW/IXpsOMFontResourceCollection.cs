@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,19 +30,19 @@ namespace System.Windows.Xps.Serialization.RCW
         IXpsOMFontResource GetAt([In] uint index);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void SetAt([In] uint index, [MarshalAs(UnmanagedType.Interface)] [In] IXpsOMFontResource value);
+        void SetAt([In] uint index, [MarshalAs(UnmanagedType.Interface)][In] IXpsOMFontResource value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void InsertAt([In] uint index, [MarshalAs(UnmanagedType.Interface)] [In] IXpsOMFontResource value);
+        void InsertAt([In] uint index, [MarshalAs(UnmanagedType.Interface)][In] IXpsOMFontResource value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
-        void Append([MarshalAs(UnmanagedType.Interface)] [In] IXpsOMFontResource value);
+        void Append([MarshalAs(UnmanagedType.Interface)][In] IXpsOMFontResource value);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         void RemoveAt([In] uint index);
 
         [MethodImpl(MethodImplOptions.InternalCall)]
         [return: MarshalAs(UnmanagedType.Interface)]
-        IXpsOMFontResource GetByPartName([MarshalAs(UnmanagedType.Interface)] [In] IOpcPartUri partName);
+        IXpsOMFontResource GetByPartName([MarshalAs(UnmanagedType.Interface)][In] IOpcPartUri partName);
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -62,9 +62,9 @@ namespace System.Windows.Input
 
         #region Public Methods
 
-#region Implementation of IList
+        #region Implementation of IList
 
-#region Implementation of ICollection
+        #region Implementation of ICollection
         /// <summary>
         /// CopyTo - to copy the entire collection into an array
         /// </summary>
@@ -77,7 +77,7 @@ namespace System.Windows.Input
                 ((ICollection)_innerBindingList).CopyTo(array, index);
             }
         }
-#endregion Implementation of ICollection
+        #endregion Implementation of ICollection
 
         /// <summary>
         /// IList.Contains
@@ -142,13 +142,13 @@ namespace System.Windows.Input
             {
                 InputBinding inputBinding = value as InputBinding;
                 if (inputBinding == null)
-                   throw new NotSupportedException(SR.CollectionOnlyAcceptsInputBindings);
+                    throw new NotSupportedException(SR.CollectionOnlyAcceptsInputBindings);
 
                 this[index] = inputBinding;
             }
         }
 
-#endregion Implementation of IList
+        #endregion Implementation of IList
         /// <summary>
         /// Indexing operator
         /// </summary>
@@ -159,8 +159,8 @@ namespace System.Windows.Input
                 // disable PreSharp warning about throwing exceptions in getter;
                 // this is allowed in an indexed property.  (First disable C#
                 // warning about unknown warning numbers.)
-                #pragma warning disable 1634, 1691
-                #pragma warning disable 6503
+#pragma warning disable 1634, 1691
+#pragma warning disable 6503
 
                 if (_innerBindingList != null)
                 {
@@ -171,8 +171,8 @@ namespace System.Windows.Input
                     throw new ArgumentOutOfRangeException("index");
                 }
 
-                #pragma warning restore 6503
-                #pragma warning restore 1634, 1691
+#pragma warning restore 6503
+#pragma warning restore 1634, 1691
             }
             set
             {
@@ -252,13 +252,13 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(collection);
 
-            if ( collection.Count > 0)
+            if (collection.Count > 0)
             {
                 if (_innerBindingList == null)
                     _innerBindingList = new System.Collections.Generic.List<InputBinding>(collection.Count);
 
                 IEnumerator collectionEnum = collection.GetEnumerator();
-                while(collectionEnum.MoveNext())
+                while (collectionEnum.MoveNext())
                 {
                     InputBinding inputBinding = collectionEnum.Current as InputBinding;
                     if (inputBinding != null)
@@ -376,7 +376,7 @@ namespace System.Windows.Input
             }
         }
 
-#region Implementation of Enumerable
+        #region Implementation of Enumerable
         /// <summary>
         /// IEnumerable.GetEnumerator - For Enumeration purposes
         /// </summary>
@@ -389,7 +389,7 @@ namespace System.Windows.Input
             System.Collections.Generic.List<InputBinding> list = new System.Collections.Generic.List<InputBinding>(0);
             return list.GetEnumerator();
         }
-#endregion Implementation of IEnumberable
+        #endregion Implementation of IEnumberable
 
         /// <summary>
         /// IList.IsReadOnly - Tells whether this is readonly Collection.
@@ -426,9 +426,9 @@ namespace System.Windows.Input
                 _innerBindingList.CopyTo(inputBindings, index);
             }
         }
-#endregion Public
+        #endregion Public
 
-#region internal
+        #region internal
 
         internal InputBinding FindMatch(object targetElement, InputEventArgs inputEventArgs)
         {
@@ -445,7 +445,7 @@ namespace System.Windows.Input
             return null;
         }
 
-#endregion internal
+        #endregion internal
         //------------------------------------------------------
         //
         //  Protected Methods
@@ -461,10 +461,10 @@ namespace System.Windows.Input
         //  Private Fields
         //
         //------------------------------------------------------
-#region Private Fields
+        #region Private Fields
         private List<InputBinding> _innerBindingList;
-        private bool  _isReadOnly = false;
+        private bool _isReadOnly = false;
         private DependencyObject _owner = null;
-#endregion Private Fields
+        #endregion Private Fields
     }
 }

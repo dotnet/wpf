@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,18 +10,18 @@
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows.Threading;
+using System.Windows.Automation.Peers;
 using System.Windows.Documents;
+using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using System.Windows.Markup;
+using System.Windows.Threading;
 using MS.Internal;                  // Invariant.Assert
-using System.Windows.Automation.Peers;
-using MS.Internal.Text;
-using MS.Internal.Documents;
 using MS.Internal.Controls;
+using MS.Internal.Documents;
 using MS.Internal.PresentationFramework;
 using MS.Internal.Telemetry.PresentationFramework;
+using MS.Internal.Text;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -387,7 +387,7 @@ namespace System.Windows.Controls
         {
             TextPointer position;
 
-            if(CheckFlags(Flags.ContentChangeInProgress))
+            if (CheckFlags(Flags.ContentChangeInProgress))
             {
                 throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
             }
@@ -577,7 +577,7 @@ namespace System.Windows.Controls
         [Localizability(LocalizationCategory.Text)]
         public string Text
         {
-            get { return (string) GetValue(TextProperty); }
+            get { return (string)GetValue(TextProperty); }
             set { SetValue(TextProperty, value); }
         }
 
@@ -628,7 +628,7 @@ namespace System.Windows.Controls
         [Localizability(LocalizationCategory.Font)]
         public FontFamily FontFamily
         {
-            get { return (FontFamily) GetValue(FontFamilyProperty); }
+            get { return (FontFamily)GetValue(FontFamilyProperty); }
             set { SetValue(FontFamilyProperty, value); }
         }
 
@@ -667,7 +667,7 @@ namespace System.Windows.Controls
         /// </summary>
         public FontStyle FontStyle
         {
-            get { return (FontStyle) GetValue(FontStyleProperty); }
+            get { return (FontStyle)GetValue(FontStyleProperty); }
             set { SetValue(FontStyleProperty, value); }
         }
 
@@ -706,7 +706,7 @@ namespace System.Windows.Controls
         /// </summary>
         public FontWeight FontWeight
         {
-            get { return (FontWeight) GetValue(FontWeightProperty); }
+            get { return (FontWeight)GetValue(FontWeightProperty); }
             set { SetValue(FontWeightProperty, value); }
         }
 
@@ -745,7 +745,7 @@ namespace System.Windows.Controls
         /// </summary>
         public FontStretch FontStretch
         {
-            get { return (FontStretch) GetValue(FontStretchProperty); }
+            get { return (FontStretch)GetValue(FontStretchProperty); }
             set { SetValue(FontStretchProperty, value); }
         }
 
@@ -787,7 +787,7 @@ namespace System.Windows.Controls
         [Localizability(LocalizationCategory.None)]
         public double FontSize
         {
-            get { return (double) GetValue(FontSizeProperty); }
+            get { return (double)GetValue(FontSizeProperty); }
             set { SetValue(FontSizeProperty, value); }
         }
 
@@ -828,7 +828,7 @@ namespace System.Windows.Controls
         /// </summary>
         public Brush Foreground
         {
-            get { return (Brush) GetValue(ForegroundProperty); }
+            get { return (Brush)GetValue(ForegroundProperty); }
             set { SetValue(ForegroundProperty, value); }
         }
 
@@ -871,7 +871,7 @@ namespace System.Windows.Controls
         /// </summary>
         public Brush Background
         {
-            get { return (Brush) GetValue(BackgroundProperty); }
+            get { return (Brush)GetValue(BackgroundProperty); }
             set { SetValue(BackgroundProperty, value); }
         }
 
@@ -892,7 +892,7 @@ namespace System.Windows.Controls
         /// </summary>
         public TextDecorationCollection TextDecorations
         {
-            get { return (TextDecorationCollection) GetValue(TextDecorationsProperty); }
+            get { return (TextDecorationCollection)GetValue(TextDecorationsProperty); }
             set { SetValue(TextDecorationsProperty, value); }
         }
 
@@ -911,7 +911,7 @@ namespace System.Windows.Controls
         /// </summary>
         public TextEffectCollection TextEffects
         {
-            get { return (TextEffectCollection) GetValue(TextEffectsProperty); }
+            get { return (TextEffectCollection)GetValue(TextEffectsProperty); }
             set { SetValue(TextEffectsProperty, value); }
         }
 
@@ -1270,7 +1270,7 @@ namespace System.Windows.Controls
 
                 while (!endOfParagraph)
                 {
-                    using(line)
+                    using (line)
                     {
                         // Format line. Set showParagraphEllipsis flag to false because we do not know whether or not the line will have
                         // paragraph ellipsis at this time. Since TextBlock is auto-sized we do not know the RenderSize until we finish Measure
@@ -1278,11 +1278,11 @@ namespace System.Windows.Controls
 
                         double lineHeight = CalcLineAdvance(line.Height, lineProperties);
 
-    #if DEBUG
+#if DEBUG
                         LineMetrics metrics = new LineMetrics(contentSize.Width, line.Length, line.Width, lineHeight, line.BaselineOffset, line.HasInlineObjects(), textLineBreakIn);
-    #else
+#else
                         LineMetrics metrics = new LineMetrics(line.Length, line.Width, lineHeight, line.BaselineOffset, line.HasInlineObjects(), textLineBreakIn);
-    #endif
+#endif
 
                         if (!CheckFlags(Flags.HasFirstLine))
                         {
@@ -1347,7 +1347,7 @@ namespace System.Windows.Controls
                 lineProperties.IgnoreTextAlignment = false;
                 SetFlags(false, Flags.MeasureInProgress | Flags.TreeInReadOnlyMode);
 
-                if(exceptionThrown)
+                if (exceptionThrown)
                 {
                     _textBlockCache._textRunCache = null;
                     ClearLineMetrics();
@@ -1413,7 +1413,7 @@ namespace System.Windows.Controls
 
                     for (int i = 0; i < lineCount; i++)
                     {
-Debug.Assert(lineCount == LineCount);
+                        Debug.Assert(lineCount == LineCount);
                         LineMetrics lineMetrics = GetLine(i);
 
                         if (lineMetrics.HasInlineObjects)
@@ -1455,10 +1455,10 @@ Debug.Assert(lineCount == LineCount);
                 {
                     SetFlags(false, Flags.TreeInReadOnlyMode);
                     SetFlags(false, Flags.ArrangeInProgress);
-                    if(exceptionThrown)
+                    if (exceptionThrown)
                     {
-                       _textBlockCache._textRunCache = null;
-                       ClearLineMetrics();
+                        _textBlockCache._textRunCache = null;
+                        ClearLineMetrics();
                     }
                 }
             }
@@ -1488,7 +1488,8 @@ Debug.Assert(lineCount == LineCount);
             ArgumentNullException.ThrowIfNull(ctx);
 
             // If layout data is not updated do not render the content.
-            if (!IsLayoutDataValid) { return; }
+            if (!IsLayoutDataValid)
+            { return; }
 
             // Draw background in rectangle.
             Brush background = this.Background;
@@ -1526,7 +1527,7 @@ Debug.Assert(lineCount == LineCount);
                 int lineCount = LineCount;
                 for (int i = 0; i < lineCount; i++)
                 {
-Debug.Assert(lineCount == LineCount);
+                    Debug.Assert(lineCount == LineCount);
                     LineMetrics lineMetrics = GetLine(i);
                     double contentBottom = Math.Max(0.0, RenderSize.Height - Padding.Bottom);
 
@@ -1618,7 +1619,7 @@ Debug.Assert(lineCount == LineCount);
                             // If there are any property changes, which affect measure, arrange or
                             // render, invalidate TextRunCache. It will force TextFormatter to refetch
                             // runs and properties.
-                           // _lineProperties = null;
+                            // _lineProperties = null;
                             _textBlockCache = null;
                         }
                     }
@@ -1652,7 +1653,8 @@ Debug.Assert(lineCount == LineCount);
         protected virtual IInputElement InputHitTestCore(Point point)
         {
             // If layout data is not updated return 'this'.
-            if (!IsLayoutDataValid) { return this; }
+            if (!IsLayoutDataValid)
+            { return this; }
 
             // Line props may be invalid, even if Measure/Arrange is valid - rendering only props are changing.
             LineProperties lineProperties = GetLineProperties();
@@ -1667,7 +1669,8 @@ Debug.Assert(lineCount == LineCount);
             Vector contentOffset = CalcContentOffset(RenderSize, wrappingWidth);
             point -= contentOffset; // // Take into account content offset.
 
-            if (point.X < 0 || point.Y < 0) return this;
+            if (point.X < 0 || point.Y < 0)
+                return this;
 
             ie = null;
             int dcp = 0;
@@ -1678,7 +1681,7 @@ Debug.Assert(lineCount == LineCount);
             int lineCount = LineCount;
             for (int i = 0; i < lineCount; i++)
             {
-Debug.Assert(lineCount == LineCount);
+                Debug.Assert(lineCount == LineCount);
                 LineMetrics lineMetrics = GetLine(i);
 
                 if (lineOffset + lineMetrics.Height > point.Y)
@@ -1782,7 +1785,7 @@ Debug.Assert(lineCount == LineCount);
             int lineCount = LineCount;
             while (startOffset >= (lineOffset + GetLine(lineIndex).Length) && lineIndex < lineCount)
             {
-Debug.Assert(lineCount == LineCount);
+                Debug.Assert(lineCount == LineCount);
                 lineOffset += GetLine(lineIndex).Length;
                 lineIndex++;
                 lineHeightOffset += GetLine(lineIndex).Height;
@@ -1798,7 +1801,7 @@ Debug.Assert(lineCount == LineCount);
             Vector contentOffset = CalcContentOffset(RenderSize, wrappingWidth);
             do
             {
-Debug.Assert(lineCount == LineCount);
+                Debug.Assert(lineCount == LineCount);
                 // Check that line index never exceeds line count
                 Debug.Assert(lineIndex < lineCount);
 
@@ -1849,9 +1852,9 @@ Debug.Assert(lineCount == LineCount);
         {
             get
             {
-                if(CheckFlags(Flags.ContentChangeInProgress))
+                if (CheckFlags(Flags.ContentChangeInProgress))
                 {
-                    #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
                 }
 
@@ -2050,7 +2053,7 @@ Debug.Assert(lineCount == LineCount);
             double lineOffset = 0;
             for (int lineIndex = 0; lineIndex < lineCount; lineIndex++)
             {
-Debug.Assert(lineCount == LineCount);
+                Debug.Assert(lineCount == LineCount);
                 LineMetrics lineMetrics = GetLine(lineIndex);
 
                 Rect layoutBox = new Rect(contentOffset.X + lineMetrics.Start, contentOffset.Y + lineOffset, lineMetrics.Width, lineMetrics.Height);
@@ -2131,7 +2134,7 @@ Debug.Assert(lineCount == LineCount);
             TextRunCache textRunCache = new TextRunCache();
             LineMetrics lineMetrics = GetLine(index);
             ITextPointer pos;
-            using(Line line = CreateLine(lineProperties))
+            using (Line line = CreateLine(lineProperties))
             {
                 MS.Internal.Invariant.Assert(index >= 0 && index < LineCount);
                 TextLineBreak textLineBreak = GetLine(index).TextLineBreak;
@@ -2194,7 +2197,7 @@ Debug.Assert(lineCount == LineCount);
             int lineCount = LineCount;
             for (int i = 0; i < lineCount; i++)
             {
-Debug.Assert(lineCount == LineCount);
+                Debug.Assert(lineCount == LineCount);
                 LineMetrics lineMetrics = GetLine(i);
 
                 // characterIndex needs to be within line range. If position points to
@@ -2205,7 +2208,7 @@ Debug.Assert(lineCount == LineCount);
                 if (dcp + lineMetrics.Length > characterIndex ||
                     ((dcp + lineMetrics.Length == characterIndex) && (i == lineCount - 1)))
                 {
-                    using(Line line = CreateLine(lineProperties))
+                    using (Line line = CreateLine(lineProperties))
                     {
                         bool ellipsis = ParagraphEllipsisShownOnLine(i, lineOffset);
                         Format(line, lineMetrics.Length, dcp, wrappingWidth, GetLineProperties(dcp == 0, lineProperties), lineMetrics.TextLineBreak, textRunCache, ellipsis);
@@ -2410,7 +2413,7 @@ Debug.Assert(lineCount == LineCount);
             LineMetrics lineMetrics = GetLine(lineIndex);
             double wrappingWidth = CalcWrappingWidth(RenderSize.Width);
 
-            using(Line line = CreateLine(lineProperties))
+            using (Line line = CreateLine(lineProperties))
             {
                 // Format line. Set showParagraphEllipsis flag to false since we are not using information about
                 // ellipsis to change line offsets in this case.
@@ -2498,7 +2501,7 @@ Debug.Assert(lineCount == LineCount);
             CharacterHit nextCharacterHit;
             LineMetrics lineMetrics = GetLine(lineIndex);
 
-            using(Line line = CreateLine(lineProperties))
+            using (Line line = CreateLine(lineProperties))
             {
                 // Format line. Set showParagraphEllipsis flag to false since we are not using information about
                 // ellipsis to change line offsets in this case.
@@ -2607,7 +2610,7 @@ Debug.Assert(lineCount == LineCount);
 
             TextRunCache textRunCache = new TextRunCache();
             // Create and Format line
-            using(Line line = CreateLine(lineProperties))
+            using (Line line = CreateLine(lineProperties))
             {
                 // Format line. Set showParagraphEllipsis flag to false since we are not using information about
                 // ellipsis to change line offsets in this case.
@@ -2738,7 +2741,7 @@ Debug.Assert(lineCount == LineCount);
         {
             get
             {
-                return  IsMeasureValid && IsArrangeValid &&         // Measure and Arrange are valid
+                return IsMeasureValid && IsArrangeValid &&         // Measure and Arrange are valid
                         CheckFlags(Flags.HasFirstLine) &&
                         !CheckFlags(Flags.ContentChangeInProgress) &&
                         !CheckFlags(Flags.MeasureInProgress) &&
@@ -2792,7 +2795,7 @@ Debug.Assert(lineCount == LineCount);
         //  typography properties changed, no cache for this, just reset the flag
         private static void OnTypographyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            ((TextBlock) d).SetFlags(true, Flags.IsTypographySet);
+            ((TextBlock)d).SetFlags(true, Flags.IsTypographySet);
         }
 
         #endregion Internal Properties
@@ -3022,9 +3025,11 @@ Debug.Assert(lineCount == LineCount);
         {
             if (null == _textBlockCache)
             {
-                _textBlockCache = new TextBlockCache();
-                _textBlockCache._lineProperties = GetLineProperties();
-                _textBlockCache._textRunCache = new TextRunCache();
+                _textBlockCache = new TextBlockCache
+                {
+                    _lineProperties = GetLineProperties(),
+                    _textRunCache = new TextRunCache()
+                };
             }
         }
 
@@ -3044,8 +3049,8 @@ Debug.Assert(lineCount == LineCount);
             // TextIndent or LineHeight
             LineProperties lineProperties = new LineProperties(this, this, defaultTextProperties, null);
 
-            bool isHyphenationEnabled = (bool) this.GetValue(IsHyphenationEnabledProperty);
-            if(isHyphenationEnabled)
+            bool isHyphenationEnabled = (bool)this.GetValue(IsHyphenationEnabledProperty);
+            if (isHyphenationEnabled)
             {
                 lineProperties.Hyphenator = EnsureHyphenator();
             }
@@ -3116,7 +3121,7 @@ Debug.Assert(lineCount == LineCount);
                     contentOffset.X = (contentSize.Width - wrappingWidth) / 2;
                     break;
 
-                // Default is Left alignment, in this case offset is 0.
+                    // Default is Left alignment, in this case offset is 0.
             }
 
             contentOffset.X += padding.Left;
@@ -3422,7 +3427,7 @@ Debug.Assert(lineCount == LineCount);
             int lineCount = LineCount;
             for (int i = 0; i < lineCount; i++)
             {
-Debug.Assert(lineCount == LineCount);
+                Debug.Assert(lineCount == LineCount);
                 LineMetrics lineMetrics = GetLine(i);
 
                 using (line)
@@ -3564,17 +3569,17 @@ Debug.Assert(lineCount == LineCount);
         // ------------------------------------------------------------------
         private void VerifyReentrancy()
         {
-            if(CheckFlags(Flags.MeasureInProgress))
+            if (CheckFlags(Flags.MeasureInProgress))
             {
                 throw new InvalidOperationException(SR.MeasureReentrancyInvalid);
             }
 
-            if(CheckFlags(Flags.ArrangeInProgress))
+            if (CheckFlags(Flags.ArrangeInProgress))
             {
                 throw new InvalidOperationException(SR.ArrangeReentrancyInvalid);
             }
 
-            if(CheckFlags(Flags.ContentChangeInProgress))
+            if (CheckFlags(Flags.ContentChangeInProgress))
             {
                 throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
             }
@@ -3596,7 +3601,7 @@ Debug.Assert(lineCount == LineCount);
             int lineCount = LineCount;
             while (lineIndex < lineCount)
             {
-Debug.Assert(lineCount == LineCount);
+                Debug.Assert(lineCount == LineCount);
                 if (lineStartOffset == dcpLine)
                 {
                     // Found line that starts at given dcp
@@ -3669,7 +3674,7 @@ Debug.Assert(lineCount == LineCount);
                         }
                         break;
                     default:
-                          break;
+                        break;
                 }
                 position.MoveByOffset(+1);
             }
@@ -3852,7 +3857,7 @@ Debug.Assert(lineCount == LineCount);
         //-------------------------------------------------------------------
         // Hyphenator -- uncommon field given usage
         //-------------------------------------------------------------------
-        private  static readonly UncommonField<NaturalLanguageHyphenator> HyphenatorField = new UncommonField<NaturalLanguageHyphenator>();
+        private static readonly UncommonField<NaturalLanguageHyphenator> HyphenatorField = new UncommonField<NaturalLanguageHyphenator>();
 
         //-------------------------------------------------------------------
         // Collection of metrics of each line. For performance reasons, we
@@ -3871,20 +3876,20 @@ Debug.Assert(lineCount == LineCount);
         [System.Flags]
         private enum Flags
         {
-            FormattedOnce           = 0x1,      // Element has been formatted at least once.
-            MeasureInProgress       = 0x2,      // Measure is in progress.
-            TreeInReadOnlyMode      = 0x4,      // Tree (content) is in read only mode.
-            RequiresAlignment       = 0x8,      // Content requires alignment process.
+            FormattedOnce = 0x1,      // Element has been formatted at least once.
+            MeasureInProgress = 0x2,      // Measure is in progress.
+            TreeInReadOnlyMode = 0x4,      // Tree (content) is in read only mode.
+            RequiresAlignment = 0x8,      // Content requires alignment process.
             ContentChangeInProgress = 0x10,     // Content change is in progress
                                                 //(it has been started, but is is not completed yet).
             IsContentPresenterContainer = 0x20, // Is this Text control being used by a ContentPresenter to host its content
-            HasParagraphEllipses    = 0x40,     // Has paragraph ellipses
+            HasParagraphEllipses = 0x40,     // Has paragraph ellipses
             PendingTextContainerEventInit = 0x80, // Needs TextContainer event hookup on next Measure call.
-            ArrangeInProgress       = 0x100,      // Arrange is in progress.
-            IsTypographySet         = 0x200,      // Typography properties are not at default values
-            TextContentChanging     = 0x400,    // TextProperty update in progress.
-            IsHyphenatorSet         = 0x800,   // used to indicate when HyphenatorField has been set
-            HasFirstLine            = 0x1000,
+            ArrangeInProgress = 0x100,      // Arrange is in progress.
+            IsTypographySet = 0x200,      // Typography properties are not at default values
+            TextContentChanging = 0x400,    // TextProperty update in progress.
+            IsHyphenatorSet = 0x800,   // used to indicate when HyphenatorField has been set
+            HasFirstLine = 0x1000,
         }
 
         #endregion Private Fields
@@ -4047,9 +4052,9 @@ Debug.Assert(lineCount == LineCount);
 
         private static object CoerceBaselineOffset(DependencyObject d, object value)
         {
-            TextBlock tb = (TextBlock) d;
+            TextBlock tb = (TextBlock)d;
 
-            if(double.IsNaN((double) value))
+            if (double.IsNaN((double)value))
             {
                 return tb._baselineOffset;
             }
@@ -4065,7 +4070,7 @@ Debug.Assert(lineCount == LineCount);
         public bool ShouldSerializeBaselineOffset()
         {
             object localBaseline = ReadLocalValue(BaselineOffsetProperty);
-            return (localBaseline != DependencyProperty.UnsetValue) && !double.IsNaN((double) localBaseline);
+            return (localBaseline != DependencyProperty.UnsetValue) && !double.IsNaN((double)localBaseline);
         }
 
         //-------------------------------------------------------------------
@@ -4079,7 +4084,7 @@ Debug.Assert(lineCount == LineCount);
 
         private static void OnTextChanged(DependencyObject d, string newText)
         {
-            TextBlock text = (TextBlock) d;
+            TextBlock text = (TextBlock)d;
 
             if (text.CheckFlags(Flags.TextContentChanging))
             {

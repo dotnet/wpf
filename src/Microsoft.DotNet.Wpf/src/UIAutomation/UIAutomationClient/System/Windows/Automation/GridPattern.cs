@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,7 +12,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class GridPattern: BasePattern
 #else
-    public class GridPattern: BasePattern
+    public class GridPattern : BasePattern
 #endif
     {
         //------------------------------------------------------
@@ -20,7 +20,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         internal GridPattern(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -38,7 +38,7 @@ namespace System.Windows.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>Grid pattern</summary>
@@ -58,7 +58,7 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
         /// <summary>
         /// Obtain the AutomationElement at an zero based absolute position in the grid.  
@@ -66,7 +66,7 @@ namespace System.Windows.Automation
         /// </summary>
         /// <param name="row">Row of item to get</param>
         /// <param name="column">Column of item to get</param>
-        public AutomationElement GetItem(int row, int column) 
+        public AutomationElement GetItem(int row, int column)
         {
             SafeNodeHandle hNode = UiaCoreApi.GridPattern_GetItem(_hPattern, row, column);
             return AutomationElement.Wrap(hNode);
@@ -80,7 +80,7 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
         /// <summary>
         /// This member allows access to previously requested
@@ -139,12 +139,12 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         internal static object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
         {
-            return new GridPattern( el, hPattern, cached );
+            return new GridPattern(el, hPattern, cached);
         }
 
         #endregion Internal Methods
@@ -155,7 +155,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         internal SafePatternHandle _hPattern;
@@ -201,7 +201,7 @@ namespace System.Windows.Automation
             //  Public Properties
             //
             //------------------------------------------------------
- 
+
             #region Public Properties
 
             /// <summary>

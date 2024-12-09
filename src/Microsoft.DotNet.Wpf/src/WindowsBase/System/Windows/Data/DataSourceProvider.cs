@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -198,7 +198,7 @@ namespace System.Windows.Data
         {
             get
             {
-                return (  (_deferLevel > 0)
+                return ((_deferLevel > 0)
                         || (!IsInitialLoadEnabled && !_initialLoadCalled));
             }
         }
@@ -257,7 +257,7 @@ namespace System.Windows.Data
         /// </remarks>
         protected void OnQueryFinished(object newData)
         {
-             OnQueryFinished(newData, null, null, null);
+            OnQueryFinished(newData, null, null, null);
         }
 
         /// <summary>
@@ -350,13 +350,13 @@ namespace System.Windows.Data
 
         private static object UpdateWithNewResult(object arg)
         {
-            object[] args = (object[]) arg;
+            object[] args = (object[])arg;
             Invariant.Assert(args.Length == 5);
-            DataSourceProvider provider = (DataSourceProvider) args[0];
-            Exception error = (Exception) args[1];
+            DataSourceProvider provider = (DataSourceProvider)args[0];
+            Exception error = (Exception)args[1];
             object newData = args[2];
             DispatcherOperationCallback completionWork
-                = (DispatcherOperationCallback) args[3];
+                = (DispatcherOperationCallback)args[3];
             object callbackArgs = args[4];
 
             provider.UpdateWithNewResult(error, newData, completionWork, callbackArgs);
@@ -434,7 +434,7 @@ namespace System.Windows.Data
         private Dispatcher _dispatcher;
 
         static readonly DispatcherOperationCallback UpdateWithNewResultCallback = new DispatcherOperationCallback(UpdateWithNewResult);
-}
+    }
 }
 
 

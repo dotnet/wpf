@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,47 +19,47 @@ namespace System.Windows.Media.Animation
     ///  it is triggered.
     /// </summary>
     public sealed class SetStoryboardSpeedRatio : ControllableStoryboardAction
-{
-    /// <summary>
-    ///     A speed ratio to use for this action.  If it is never explicitly
-    /// specified, it is 1.0.
-    /// </summary>
-    [DefaultValue(1.0)]
-    public double SpeedRatio
     {
-        get
+        /// <summary>
+        ///     A speed ratio to use for this action.  If it is never explicitly
+        /// specified, it is 1.0.
+        /// </summary>
+        [DefaultValue(1.0)]
+        public double SpeedRatio
         {
-            return _speedRatio;
-        }
-        set
-        {
-            if (IsSealed)
+            get
             {
-                throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "SetStoryboardSpeedRatio"));
+                return _speedRatio;
             }
+            set
+            {
+                if (IsSealed)
+                {
+                    throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "SetStoryboardSpeedRatio"));
+                }
 
-            _speedRatio = value;
+                _speedRatio = value;
+            }
         }
-    }
 
-    /// <summary>
-    ///     Called when it's time to execute this storyboard action
-    /// </summary>
-    internal override void Invoke( FrameworkElement containingFE, FrameworkContentElement containingFCE, Storyboard storyboard )
-    {
-        Debug.Assert( containingFE != null || containingFCE != null,
-            "Caller of internal function failed to verify that we have a FE or FCE - we have neither." );
-
-        if( containingFE != null )
+        /// <summary>
+        ///     Called when it's time to execute this storyboard action
+        /// </summary>
+        internal override void Invoke(FrameworkElement containingFE, FrameworkContentElement containingFCE, Storyboard storyboard)
         {
-            storyboard.SetSpeedRatio(containingFE, SpeedRatio);
-        }
-        else
-        {
-            storyboard.SetSpeedRatio(containingFCE, SpeedRatio);
-        }
-    }
+            Debug.Assert(containingFE != null || containingFCE != null,
+                "Caller of internal function failed to verify that we have a FE or FCE - we have neither.");
 
-    double          _speedRatio = 1.0;
-}
+            if (containingFE != null)
+            {
+                storyboard.SetSpeedRatio(containingFE, SpeedRatio);
+            }
+            else
+            {
+                storyboard.SetSpeedRatio(containingFCE, SpeedRatio);
+            }
+        }
+
+        double _speedRatio = 1.0;
+    }
 }

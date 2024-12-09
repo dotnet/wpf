@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,7 @@ namespace System.Windows.Media
         protected DrawingContextWalker()
         {
             // Nothing to do here
-        }       
+        }
 
         /// <summary>
         /// DrawingContextWalker implementations are never opened, so they shouldn't be closed.
@@ -68,7 +68,7 @@ namespace System.Windows.Media
             {
                 _stopWalking = value;
             }
-        }              
+        }
 
         #endregion Internal properties        
 

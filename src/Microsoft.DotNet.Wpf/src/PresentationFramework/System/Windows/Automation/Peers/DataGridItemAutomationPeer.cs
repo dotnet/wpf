@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Windows.Automation.Peers
         /// <summary>
         /// AutomationPeer for an item in a DataGrid
         /// </summary>
-        public DataGridItemAutomationPeer(object item, DataGridAutomationPeer dataGridPeer): base(item, dataGridPeer)
+        public DataGridItemAutomationPeer(object item, DataGridAutomationPeer dataGridPeer) : base(item, dataGridPeer)
         {
             ArgumentNullException.ThrowIfNull(item);
             ArgumentNullException.ThrowIfNull(dataGridPeer);
@@ -447,7 +447,7 @@ namespace System.Windows.Automation.Peers
 
                     if (column != null)
                     {
-                        DataGridCellItemAutomationPeer peer = GetOrCreateCellItemPeer(column,/*addParentInfo*/ false );
+                        DataGridCellItemAutomationPeer peer = GetOrCreateCellItemPeer(column,/*addParentInfo*/ false);
                         children.Add(peer);
                         newChildren[column] = peer;
                     }

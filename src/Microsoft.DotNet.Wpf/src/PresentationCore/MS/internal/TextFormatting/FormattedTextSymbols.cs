@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,8 +13,8 @@
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using MS.Internal.Text.TextInterface;
 using MS.Internal.Shaping;
+using MS.Internal.Text.TextInterface;
 
 
 namespace MS.Internal.TextFormatting
@@ -24,8 +24,8 @@ namespace MS.Internal.TextFormatting
     /// </summary>
     internal sealed class FormattedTextSymbols
     {
-        private Glyphs[]    _glyphs;
-        private bool        _rightToLeft;
+        private Glyphs[] _glyphs;
+        private bool _rightToLeft;
         private TextFormattingMode _textFormattingMode;
         private bool _isSideways;
 
@@ -34,9 +34,9 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         public FormattedTextSymbols(
             GlyphingCache glyphingCache,
-            TextRun       textSymbols,
-            bool          rightToLeft,
-            double        scalingFactor,
+            TextRun textSymbols,
+            bool rightToLeft,
+            double scalingFactor,
             float pixelsPerDip,
             TextFormattingMode textFormattingMode,
             bool isSideways
@@ -44,7 +44,7 @@ namespace MS.Internal.TextFormatting
         {
             _textFormattingMode = textFormattingMode;
             _isSideways = isSideways;
-            ITextSymbols  symbols = textSymbols as ITextSymbols;
+            ITextSymbols symbols = textSymbols as ITextSymbols;
 
             Debug.Assert(symbols != null);
 
@@ -117,7 +117,7 @@ namespace MS.Internal.TextFormatting
                             uint[] fontFeatureRanges;
                             uint unsignedCch = checked((uint)cch);
                             LSRun.CompileFeatureSet(current.Properties.TypographyProperties, unsignedCch, out fontFeatures, out fontFeatureRanges);
-                       
+
 
                             textAnalyzer.GetGlyphsAndTheirPlacements(
                                 fixedCharArray,
@@ -125,8 +125,8 @@ namespace MS.Internal.TextFormatting
                                 glyphTypeface.FontDWrite,
                                 glyphTypeface.BlankGlyphIndex,
                                 false,   // no sideway support yet
-                                         /************************************************************************************************/
-                                         // Should we break down the runs to know whats the Bidi for every range of characters?
+                                /************************************************************************************************/
+                                // Should we break down the runs to know whats the Bidi for every range of characters?
                                 rightToLeft,
                                 current.Properties.CultureInfo,
                                 /************************************************************************************************/
@@ -153,13 +153,13 @@ namespace MS.Internal.TextFormatting
                            scalingFactor
                            );
                     }
-}
+                }
                 else
                 {
                     // shaping not required, 
                     // bypass glyphing process altogether
                     int[] nominalAdvances = new int[charArray.Length];
-                    
+
                     unsafe
                     {
                         fixed (char* fixedCharArray = &charArray[0])
@@ -193,7 +193,7 @@ namespace MS.Internal.TextFormatting
         /// </summary>
         public double Width
         {
-            get 
+            get
             {
                 Debug.Assert(_glyphs != null);
 
@@ -213,7 +213,7 @@ namespace MS.Internal.TextFormatting
         /// <returns>drawing bounding box</returns>
         public Rect Draw(
             DrawingContext drawingContext,
-            Point          currentOrigin
+            Point currentOrigin
             )
         {
             Rect inkBoundingBox = Rect.Empty;
@@ -227,7 +227,7 @@ namespace MS.Internal.TextFormatting
 
                 if (glyphRun != null)
                 {
-                    boundingBox = glyphRun.ComputeInkBoundingBox();                    
+                    boundingBox = glyphRun.ComputeInkBoundingBox();
 
                     if (drawingContext != null)
                     {
@@ -235,11 +235,11 @@ namespace MS.Internal.TextFormatting
                         glyphRun.EmitBackground(drawingContext, glyphs.BackgroundBrush);
 
                         drawingContext.PushGuidelineY1(currentOrigin.Y);
-                        try 
+                        try
                         {
                             drawingContext.DrawGlyphRun(glyphs.ForegroundBrush, glyphRun);
                         }
-                        finally 
+                        finally
                         {
                             drawingContext.Pop();
                         }
@@ -284,23 +284,23 @@ namespace MS.Internal.TextFormatting
         /// </remarks>
         private sealed class Glyphs
         {
-            private TextShapeableSymbols     _shapeable;
-            private char[]                   _charArray;
-            private ushort[]                 _clusterMap;
-            private ushort[]                 _glyphIndices;
-            private double[]                 _glyphAdvances;
-            private IList<Point>             _glyphOffsets;
-            private double                   _width;
+            private TextShapeableSymbols _shapeable;
+            private char[] _charArray;
+            private ushort[] _clusterMap;
+            private ushort[] _glyphIndices;
+            private double[] _glyphAdvances;
+            private IList<Point> _glyphOffsets;
+            private double _width;
 
 
             /// <summary>
             /// Construct a nominal description of glyph data
             /// </summary>
             internal Glyphs(
-                TextShapeableSymbols    shapeable,
-                char[]                  charArray,
-                int[]                  nominalAdvances,
-                double                  scalingFactor
+                TextShapeableSymbols shapeable,
+                char[] charArray,
+                int[] nominalAdvances,
+                double scalingFactor
                 ) :
                 this(
                     shapeable,
@@ -311,20 +311,20 @@ namespace MS.Internal.TextFormatting
                     null,   // glyphOffsets
                     scalingFactor
                     )
-            {}
+            { }
 
 
             /// <summary>
             /// Construct a full description of glyph data
             /// </summary>
             internal Glyphs(
-                TextShapeableSymbols     shapeable,
-                char[]                   charArray,
-                int[]                   glyphAdvances,
-                ushort[]                 clusterMap,
-                ushort[]                 glyphIndices,
-                GlyphOffset[]            glyphOffsets,
-                double                   scalingFactor
+                TextShapeableSymbols shapeable,
+                char[] charArray,
+                int[] glyphAdvances,
+                ushort[] clusterMap,
+                ushort[] glyphIndices,
+                GlyphOffset[] glyphOffsets,
+                double scalingFactor
                 )
             {
                 _shapeable = shapeable;
@@ -337,12 +337,12 @@ namespace MS.Internal.TextFormatting
                 _glyphAdvances = new double[glyphAdvances.Length];
 
                 double ToReal = 1.0 / scalingFactor;
-                
+
                 for (int i = 0; i < glyphAdvances.Length; i++)
                 {
                     _glyphAdvances[i] = glyphAdvances[i] * ToReal;
-                    _width += _glyphAdvances[i];                
-}
+                    _width += _glyphAdvances[i];
+                }
 
                 if (glyphIndices != null)
                 {
@@ -350,8 +350,8 @@ namespace MS.Internal.TextFormatting
 
                     if (glyphOffsets != null)
                     {
-                        _glyphOffsets  = new PartialArray<Point>(new Point[glyphOffsets.Length]);                    
-                    
+                        _glyphOffsets = new PartialArray<Point>(new Point[glyphOffsets.Length]);
+
                         for (int i = 0; i < glyphOffsets.Length; i++)
                         {
                             _glyphOffsets[i] = new Point(
@@ -393,8 +393,8 @@ namespace MS.Internal.TextFormatting
             /// Construct a GlyphRun object given the specified drawing origin
             /// </summary>
             internal GlyphRun CreateGlyphRun(
-                Point       currentOrigin,
-                bool        rightToLeft
+                Point currentOrigin,
+                bool rightToLeft
                 )
             {
                 if (!_shapeable.IsShapingRequired)

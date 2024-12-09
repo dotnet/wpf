@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,8 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Packaging;
-using System.Text;
 using System.Security.RightsManagement;
-
+using System.Text;
 using CU = MS.Internal.IO.Packaging.CompoundFile.ContainerUtilities;
 
 namespace MS.Internal.IO.Packaging.CompoundFile
@@ -53,7 +52,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             )
         {
             Debug.Assert(transformEnvironment != null);
-            
+
             Stream instanceDataStream = transformEnvironment.GetPrimaryInstanceData();
 
             Debug.Assert(instanceDataStream != null, SR.NoPublishLicenseStream);
@@ -111,9 +110,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // does -not- close the underlying stream.
             //
 
-// Suppress 6518 Local IDisposable object not disposed: 
-// Reason: The stream is not owned by the BlockManager, therefore we cannot 
-// close the BinaryWriter, as that would Close the stream underneath.
+            // Suppress 6518 Local IDisposable object not disposed: 
+            // Reason: The stream is not owned by the BlockManager, therefore we cannot 
+            // close the BinaryWriter, as that would Close the stream underneath.
 #pragma warning disable 6518
             BinaryReader utf8Reader = new BinaryReader(_publishLicenseStream, Encoding.UTF8);
 #pragma warning restore 6518
@@ -149,7 +148,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             Int32 numPublishLicenseHeaderExtraBytes = headerLen - CU.Int32Size;
             if (numPublishLicenseHeaderExtraBytes > 0)
             {
-                _publishLicenseHeaderExtraBytes = new byte [numPublishLicenseHeaderExtraBytes];
+                _publishLicenseHeaderExtraBytes = new byte[numPublishLicenseHeaderExtraBytes];
                 if (PackagingUtilities.ReliableRead(_publishLicenseStream, _publishLicenseHeaderExtraBytes, 0, numPublishLicenseHeaderExtraBytes)
                         != numPublishLicenseHeaderExtraBytes)
                 {
@@ -171,7 +170,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             return _publishLicense;
         }
-        
+
         /// <summary>
         /// Save the publish license to the RM transform's instance data stream.
         /// </summary>
@@ -217,9 +216,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // does -not- close the underlying stream.
             //
 
-// Suppress 6518 Local IDisposable object not disposed: 
-// Reason: The stream is not owned by the BlockManager, therefore we cannot 
-// close the BinaryWriter, as that would Close the stream underneath.
+            // Suppress 6518 Local IDisposable object not disposed: 
+            // Reason: The stream is not owned by the BlockManager, therefore we cannot 
+            // close the BinaryWriter, as that would Close the stream underneath.
 #pragma warning disable 6518
             BinaryWriter utf8Writer = new BinaryWriter(_publishLicenseStream, Encoding.UTF8);
 #pragma warning restore 6518
@@ -239,7 +238,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             Int32 headerLen = CU.Int32Size;
             if (_publishLicenseHeaderExtraBytes != null)
             {
-                checked { headerLen += _publishLicenseHeaderExtraBytes.Length; }
+                checked
+                { headerLen += _publishLicenseHeaderExtraBytes.Length; }
             }
             utf8Writer.Write(headerLen);
 
@@ -247,7 +247,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 _publishLicenseStream.Write(
                     _publishLicenseHeaderExtraBytes,
-                    0, 
+                    0,
                     _publishLicenseHeaderExtraBytes.Length
                     );
             }
@@ -390,7 +390,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         internal IDictionary<ContentUser, UseLicense>
         GetEmbeddedUseLicenses()
         {
-            UserUseLicenseDictionaryLoader loader = new UserUseLicenseDictionaryLoader (this);
+            UserUseLicenseDictionaryLoader loader = new UserUseLicenseDictionaryLoader(this);
             return new ReadOnlyDictionary<ContentUser, UseLicense>(loader.LoadedDictionary);
         }
 
@@ -413,9 +413,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             get
             {
-                return      (_cryptoProvider != null) 
-                            && 
-                                (_cryptoProvider.CanDecrypt ||_cryptoProvider.CanEncrypt);
+                return (_cryptoProvider != null)
+                            &&
+                                (_cryptoProvider.CanDecrypt || _cryptoProvider.CanEncrypt);
             }
         }
 
@@ -423,21 +423,21 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <para>
         /// Returns true when the transform expects no further changes to its state.
         /// The contract is that if FixedSettings is false, an application can change
-        /// any of the transform’s properties with the promise that an exception will
+        /// any of the transformâ€™s properties with the promise that an exception will
         /// not be thrown.
         /// </para>
         /// <para>
         /// For the RightsManagementEncryptionTransform, FixedSettings becomes true the
-        /// first time the compound file code calls the object’s GetTransformedStream method.
+        /// first time the compound file code calls the objectâ€™s GetTransformedStream method.
         /// After that, any attempt to set the CryptoProvider property, or to call
         /// SavePublicLicense, throws InvalidOperationException.
         /// </para>
         /// </value>
-        public bool FixedSettings 
+        public bool FixedSettings
         {
             get
             {
-                return _fixedSettings; 
+                return _fixedSettings;
             }
         }
 
@@ -458,8 +458,8 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// Space Manager that the TransformIdentifier is one of a small number of well-
         /// known strings that identify the built-in transforms (compression and encryption).
         /// </remarks>
-        internal int TransformIdentifierType 
-        {   
+        internal int TransformIdentifierType
+        {
             get
             {
                 return DataSpaceManager.TransformIdentifierTypes_PredefinedTransformName;
@@ -469,7 +469,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <value>
         /// Returns a value that identifies the transform implemented by this object.
         /// </value>
-        public object TransformIdentifier 
+        public object TransformIdentifier
         {
             get
             {
@@ -478,7 +478,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         }
 
         #endregion IDataTransform Properties
-        
+
         #region RightsManagementEncryptionTransform Properties 
 
         /// <value>
@@ -777,7 +777,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     }
                 }
             }
-}
+        }
 
         /// <summary>
         /// Callback function used by SaveUseLicense. Called once for each use license
@@ -872,10 +872,10 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     // UnicodeEncoding ctor mean: "UTF-16 little-endian, no byte order mark".
                     // Then convert the Base64 characters to UTF-8 encoding.
                     //
-                    byte [] userNameBytes = _unicodeEncoding.GetBytes(typePrefixedUserName);
+                    byte[] userNameBytes = _unicodeEncoding.GetBytes(typePrefixedUserName);
                     string base64UserName = Convert.ToBase64String(userNameBytes);
 
-                    byte [] utf8Bytes = Encoding.UTF8.GetBytes(base64UserName);
+                    byte[] utf8Bytes = Encoding.UTF8.GetBytes(base64UserName);
                     Int32 utf8ByteLength = utf8Bytes.Length;
 
                     //
@@ -885,11 +885,11 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     //      Byte    userName[userNameLength]
                     //      Byte    paddings
                     Int32 headerLength =
-                            checked (
-                            2 * CU.Int32Size + 
+                            checked(
+                            2 * CU.Int32Size +
                             utf8ByteLength +
                             CU.CalculateDWordPadBytesLength(utf8ByteLength));
-                
+
                     utf8Writer.Write(headerLength);
                     utf8Writer.Write(utf8ByteLength);
                     utf8Writer.Write(utf8Bytes, 0, utf8ByteLength);
@@ -941,7 +941,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 get { return _user; }
             }
-            
+
             /// <value>
             /// The use license for the specified user.
             /// </value>
@@ -978,7 +978,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         private static ReadOnlySpan<char> Base32EncodeWithoutPadding(ReadOnlySpan<byte> bytes, Span<char> initialBuffer)
         {
             int numBytes = bytes.Length;
-            int numBits  = checked (numBytes * 8);
+            int numBits = checked(numBytes * 8);
             int numChars = numBits / 5;
 
             // No need to do checked{} since numChars = numBits / 5 where numBits is int.
@@ -1225,7 +1225,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 }
             }
         }
-        
+
         /// <summary>
         /// Write out the number of bytes needed to DWORD align a string of the specified
         /// length. Per the file format spec, the bytes must be 0s.
@@ -1282,7 +1282,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         //------------------------------------------------------
 
         #region Private Fields
-        
+
         private CryptoProvider _cryptoProvider;
         private PublishLicense _publishLicense;
         private bool _fixedSettings;
@@ -1347,9 +1347,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         // So the shortest possible header, when userNameLength is 1 byte, is 2 Int32s
         // plus a Byte.
         //
-        private static readonly  int UseLicenseStreamLengthMin = 2 * CU.Int32Size + SizeofByte;
-        
-        private static readonly VersionPair CurrentFeatureVersion = new VersionPair(1,0);
+        private static readonly int UseLicenseStreamLengthMin = 2 * CU.Int32Size + SizeofByte;
+
+        private static readonly VersionPair CurrentFeatureVersion = new VersionPair(1, 0);
 
         //
         // The minimum version number that can read the file format that this version of
@@ -1382,9 +1382,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         //
         private static ReadOnlySpan<byte> Padding => [0, 0, 0];
 
-        private const int SizeofByte  = 1;
+        private const int SizeofByte = 1;
 
         #endregion Private Fields
-    }  
-} 
+    }
+}
 

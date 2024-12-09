@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Windows.Markup;
 using System.Globalization;
+using System.Windows.Markup;
 
 namespace System.Windows
 {
@@ -13,7 +13,7 @@ namespace System.Windows
     ///     A single Style property conditional dependency driver
     /// </summary>
     [ContentProperty("Setters")]
-    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")] 
+    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")]
     public class Trigger : TriggerBase, IAddChild, ISupportInitialize
     {
         /// <summary>
@@ -112,7 +112,7 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if( IsSealed )
+                if (IsSealed)
                 {
                     throw new InvalidOperationException(SR.Format(SR.CannotChangeAfterSealed, "Trigger"));
                 }
@@ -133,7 +133,7 @@ namespace System.Windows
                 // Verify Context Access
                 VerifyAccess();
 
-                if( _setters == null )
+                if (_setters == null)
                 {
                     _setters = new SetterBaseCollection();
                 }
@@ -147,7 +147,7 @@ namespace System.Windows
         ///<param name="value">
         /// The object to add as a child; it must be a Setter or subclass.
         ///</param>
-        void IAddChild.AddChild (Object value)
+        void IAddChild.AddChild(Object value)
         {
             // Verify Context Access
             VerifyAccess();
@@ -162,7 +162,7 @@ namespace System.Windows
         ///<param name="text">
         /// Text to add as a child.
         ///</param>
-        void IAddChild.AddText (string text)
+        void IAddChild.AddText(string text)
         {
             // Verify Context Access
             VerifyAccess();
@@ -171,7 +171,7 @@ namespace System.Windows
         }
 
         // Shared by PropertyTrigger, MultiPropertyTrigger, DataTrigger, MultiDataTrigger
-        internal static Setter CheckChildIsSetter( object o )
+        internal static Setter CheckChildIsSetter(object o)
         {
             ArgumentNullException.ThrowIfNull(o);
 
@@ -197,7 +197,7 @@ namespace System.Windows
                 // Ensure valid condition
                 if (!_property.IsValidValue(_value))
                 {
-                    throw new InvalidOperationException(SR.Format(SR.InvalidPropertyValue, _value, _property.Name ));
+                    throw new InvalidOperationException(SR.Format(SR.InvalidPropertyValue, _value, _property.Name));
                 }
             }
 
@@ -230,11 +230,11 @@ namespace System.Windows
         // evaluate the current state of the trigger
         internal override bool GetCurrentState(DependencyObject container, UncommonField<HybridDictionary[]> dataField)
         {
-            Debug.Assert( TriggerConditions != null && TriggerConditions.Length == 1,
-                "This method assumes there is exactly one TriggerCondition." );
+            Debug.Assert(TriggerConditions != null && TriggerConditions.Length == 1,
+                "This method assumes there is exactly one TriggerCondition.");
 
-            Debug.Assert( TriggerConditions[0].SourceChildIndex == 0,
-                "This method was created to handle properties on the containing object, more work is needed to handle templated children too." );
+            Debug.Assert(TriggerConditions[0].SourceChildIndex == 0,
+                "This method was created to handle properties on the containing object, more work is needed to handle templated children too.");
 
             return TriggerConditions[0].Match(container.GetValue(TriggerConditions[0].Property));
         }

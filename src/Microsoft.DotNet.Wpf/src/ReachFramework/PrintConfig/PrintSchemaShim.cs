@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -225,16 +225,16 @@ namespace MS.Internal.Printing.Configuration
                     SetScale(baseTicket, deltaDevMode.Scale);
                 }
 
-                if (IsSet(DevModeFields.DM_PAPERSIZE, supportedFields) 
-                    && IsSet(DevModeFields.DM_PAPERWIDTH, supportedFields) 
-                    && IsSet(DevModeFields.DM_PAPERLENGTH, supportedFields) 
+                if (IsSet(DevModeFields.DM_PAPERSIZE, supportedFields)
+                    && IsSet(DevModeFields.DM_PAPERWIDTH, supportedFields)
+                    && IsSet(DevModeFields.DM_PAPERLENGTH, supportedFields)
                     && deltaDevMode.IsAnyFieldSet(DevModeFields.DM_PAPERSIZE | DevModeFields.DM_PAPERWIDTH | DevModeFields.DM_PAPERLENGTH))
                 {
                     SetPageMediaSize(baseTicket, deltaDevMode.Fields, deltaDevMode.PaperSize, deltaDevMode.PaperWidth, deltaDevMode.PaperLength, deltaDevMode.FormName);
                 }
 
-                if (IsSet(DevModeFields.DM_PRINTQUALITY, supportedFields) 
-                    && IsSet(DevModeFields.DM_YRESOLUTION, supportedFields) 
+                if (IsSet(DevModeFields.DM_PRINTQUALITY, supportedFields)
+                    && IsSet(DevModeFields.DM_YRESOLUTION, supportedFields)
                     && deltaDevMode.IsAnyFieldSet(DevModeFields.DM_PRINTQUALITY | DevModeFields.DM_YRESOLUTION))
                 {
                     SetPageResolution(baseTicket, deltaDevMode.Fields, deltaDevMode.PrintQuality, deltaDevMode.YResolution);
@@ -346,35 +346,35 @@ namespace MS.Internal.Printing.Configuration
                     switch (deltaTicket.PageScaling.Value)
                     {
                         case PageScaling.Custom:
-                        {
-                            SetScale(baseDevMode, deltaTicket.PageScaling.CustomScaleWidth);
-                            break;
-                        }
+                            {
+                                SetScale(baseDevMode, deltaTicket.PageScaling.CustomScaleWidth);
+                                break;
+                            }
 
                         case PageScaling.CustomSquare:
-                        {
-                            SetScale(baseDevMode, deltaTicket.PageScaling.CustomSquareScale);
-                            break;
-                        }
+                            {
+                                SetScale(baseDevMode, deltaTicket.PageScaling.CustomSquareScale);
+                                break;
+                            }
 
                         default:
-                        {
-                            SetScale(baseDevMode, 100);
-                            break;
-                        }
+                            {
+                                SetScale(baseDevMode, 100);
+                                break;
+                            }
                     }
                 }
             }
 
             if (scope >= PrintTicketScope.DocumentScope)
             {
-                if (IsSet(DevModeFields.DM_DEFAULTSOURCE, supportedFields) 
+                if (IsSet(DevModeFields.DM_DEFAULTSOURCE, supportedFields)
                     && deltaTicket.DocumentInputBin.Value != InputBin.Unknown)
                 {
                     SetDefaultSource(baseDevMode, deltaTicket.DocumentInputBin.Value);
                 }
 
-                if (IsSet(DevModeFields.DM_COLLATE, supportedFields) 
+                if (IsSet(DevModeFields.DM_COLLATE, supportedFields)
                     && deltaTicket.DocumentCollate.Value != Collation.Unknown)
                 {
                     SetCollate(baseDevMode, deltaTicket.DocumentCollate.Value);
@@ -383,19 +383,19 @@ namespace MS.Internal.Printing.Configuration
 
             if (scope >= PrintTicketScope.JobScope)
             {
-                if (IsSet(DevModeFields.DM_DEFAULTSOURCE, supportedFields) 
+                if (IsSet(DevModeFields.DM_DEFAULTSOURCE, supportedFields)
                     && deltaTicket.JobInputBin.Value != InputBin.Unknown)
                 {
                     SetDefaultSource(baseDevMode, deltaTicket.JobInputBin.Value);
                 }
 
-                if (IsSet(DevModeFields.DM_COPIES, supportedFields) 
+                if (IsSet(DevModeFields.DM_COPIES, supportedFields)
                     && deltaTicket.JobCopyCount.Value > 0)
                 {
                     SetCopies(baseDevMode, deltaTicket.JobCopyCount.Value);
                 }
 
-                if (IsSet(DevModeFields.DM_DUPLEX, supportedFields) 
+                if (IsSet(DevModeFields.DM_DUPLEX, supportedFields)
                     && deltaTicket.JobDuplex.Value != Duplexing.Unknown)
                 {
                     SetDuplex(baseDevMode, deltaTicket.JobDuplex.Value);
@@ -518,8 +518,8 @@ namespace MS.Internal.Printing.Configuration
         }
 
         private static readonly IDictionary<DevModeCollate, Collation> dmCollateToQResolution = new Dictionary<DevModeCollate, Collation>(2) {
-            {DevModeCollate.DMCOLLATE_FALSE, Collation.Uncollated},            
-            {DevModeCollate.DMCOLLATE_TRUE, Collation.Collated},            
+            {DevModeCollate.DMCOLLATE_FALSE, Collation.Uncollated},
+            {DevModeCollate.DMCOLLATE_TRUE, Collation.Collated},
         };
 
         #endregion
@@ -543,8 +543,8 @@ namespace MS.Internal.Printing.Configuration
         }
 
         private static readonly IDictionary<DevModeColor, OutputColor> dmColorToOutputColor = new Dictionary<DevModeColor, OutputColor>(2) {
-            {DevModeColor.DMCOLOR_COLOR, OutputColor.Color},            
-            {DevModeColor.DMCOLOR_MONOCHROME, OutputColor.Monochrome},            
+            {DevModeColor.DMCOLOR_COLOR, OutputColor.Color},
+            {DevModeColor.DMCOLOR_MONOCHROME, OutputColor.Monochrome},
         };
 
         #endregion
@@ -576,9 +576,9 @@ namespace MS.Internal.Printing.Configuration
         }
 
         private static readonly IDictionary<DevModeDuplex, Duplexing> dmDuplexToDuplexing = new Dictionary<DevModeDuplex, Duplexing>(3) {
-            {DevModeDuplex.DMDUP_SIMPLEX, Duplexing.OneSided},            
-            {DevModeDuplex.DMDUP_HORIZONTAL, Duplexing.TwoSidedShortEdge},            
-            {DevModeDuplex.DMDUP_VERTICAL, Duplexing.TwoSidedLongEdge},            
+            {DevModeDuplex.DMDUP_SIMPLEX, Duplexing.OneSided},
+            {DevModeDuplex.DMDUP_HORIZONTAL, Duplexing.TwoSidedShortEdge},
+            {DevModeDuplex.DMDUP_VERTICAL, Duplexing.TwoSidedLongEdge},
         };
 
         #endregion
@@ -637,28 +637,28 @@ namespace MS.Internal.Printing.Configuration
             switch (scope)
             {
                 case PrintTicketScope.JobScope:
-                {
-                    setting = ticket.JobInputBin;
-                    break;
-                }
+                    {
+                        setting = ticket.JobInputBin;
+                        break;
+                    }
 
                 case PrintTicketScope.DocumentScope:
-                {
-                    setting = ticket.DocumentInputBin;
-                    break;
-                }
+                    {
+                        setting = ticket.DocumentInputBin;
+                        break;
+                    }
 
                 case PrintTicketScope.PageScope:
-                {
-                    setting = ticket.PageInputBin;
-                    break;
-                }
+                    {
+                        setting = ticket.PageInputBin;
+                        break;
+                    }
 
                 default:
-                {
-                    Debug.Assert(false, "PrintTicketScope enum is out of range");
-                    break;
-                }
+                    {
+                        Debug.Assert(false, "PrintTicketScope enum is out of range");
+                        break;
+                    }
             }
 
             if (setting != null)
@@ -675,7 +675,7 @@ namespace MS.Internal.Printing.Configuration
         private static readonly IDictionary<short, InputBin> dmPaperSourceToInputBin = new Dictionary<short, InputBin>(4) {
             {DevModePaperSources.DMBIN_AUTO, InputBin.AutoSelect},
             {DevModePaperSources.DMBIN_CASSETTE, InputBin.Cassette },
-            {DevModePaperSources.DMBIN_MANUAL , InputBin.Manual},            
+            {DevModePaperSources.DMBIN_MANUAL , InputBin.Manual},
             {DevModePaperSources.DMBIN_TRACTOR , InputBin.Tractor}
         };
 
@@ -909,9 +909,9 @@ namespace MS.Internal.Printing.Configuration
         }
 
         private static readonly IDictionary<uint, PageMediaType> dmMediaTypeToMediaType = new Dictionary<uint, PageMediaType>(3) {
-            {DevModeMediaTypes.DMMEDIA_STANDARD, PageMediaType.Plain},            
-            {DevModeMediaTypes.DMMEDIA_TRANSPARENCY, PageMediaType.Transparency},            
-            {DevModeMediaTypes.DMMEDIA_GLOSSY, PageMediaType.PhotographicGlossy},            
+            {DevModeMediaTypes.DMMEDIA_STANDARD, PageMediaType.Plain},
+            {DevModeMediaTypes.DMMEDIA_TRANSPARENCY, PageMediaType.Transparency},
+            {DevModeMediaTypes.DMMEDIA_GLOSSY, PageMediaType.PhotographicGlossy},
         };
 
         private static IDictionary<uint, MediaTypeOption> mediaTypeOptions = new Dictionary<uint, MediaTypeOption>() {
@@ -959,8 +959,8 @@ namespace MS.Internal.Printing.Configuration
         }
 
         private static readonly IDictionary<DevModeOrientation, PageOrientation> dmOrientationToOrientation = new Dictionary<DevModeOrientation, PageOrientation>(2) {
-            {DevModeOrientation.DMORIENT_PORTRAIT, PageOrientation.Portrait},            
-            {DevModeOrientation.DMORIENT_LANDSCAPE, PageOrientation.Landscape}       
+            {DevModeOrientation.DMORIENT_PORTRAIT, PageOrientation.Portrait},
+            {DevModeOrientation.DMORIENT_LANDSCAPE, PageOrientation.Landscape}
         };
 
         #endregion
@@ -1027,10 +1027,10 @@ namespace MS.Internal.Printing.Configuration
         }
 
         private static readonly IDictionary<short, PageQualitativeResolution> dmResToQResolution = new Dictionary<short, PageQualitativeResolution>(4) {
-            {DevModeResolutions.DMRES_HIGH, PageQualitativeResolution.High},            
-            {DevModeResolutions.DMRES_MEDIUM, PageQualitativeResolution.Normal},            
-            {DevModeResolutions.DMRES_LOW, PageQualitativeResolution.Default},            
-            {DevModeResolutions.DMRES_DRAFT, PageQualitativeResolution.Draft},            
+            {DevModeResolutions.DMRES_HIGH, PageQualitativeResolution.High},
+            {DevModeResolutions.DMRES_MEDIUM, PageQualitativeResolution.Normal},
+            {DevModeResolutions.DMRES_LOW, PageQualitativeResolution.Default},
+            {DevModeResolutions.DMRES_DRAFT, PageQualitativeResolution.Draft},
         };
 
         private static IDictionary<short, OutputQualityOption> outputQualityOptions = new Dictionary<short, OutputQualityOption>() {
@@ -1082,38 +1082,38 @@ namespace MS.Internal.Printing.Configuration
             switch (devModeTrueTypeOption)
             {
                 case DevModeTrueTypeOption.DMTT_SUBDEV:
-                {
-                    ticket.PageTrueTypeFontMode.Value = TrueTypeFontMode.Automatic;
-                    ticket.PageDeviceFontSubstitution.Value = DeviceFontSubstitution.On;
-                    break;
-                }
+                    {
+                        ticket.PageTrueTypeFontMode.Value = TrueTypeFontMode.Automatic;
+                        ticket.PageDeviceFontSubstitution.Value = DeviceFontSubstitution.On;
+                        break;
+                    }
 
                 case DevModeTrueTypeOption.DMTT_BITMAP:
-                {
-                    ticket.PageTrueTypeFontMode.Value = TrueTypeFontMode.RenderAsBitmap;
-                    ticket.PageDeviceFontSubstitution.Value = DeviceFontSubstitution.Off;
-                    break;
-                }
+                    {
+                        ticket.PageTrueTypeFontMode.Value = TrueTypeFontMode.RenderAsBitmap;
+                        ticket.PageDeviceFontSubstitution.Value = DeviceFontSubstitution.Off;
+                        break;
+                    }
 
                 case DevModeTrueTypeOption.DMTT_DOWNLOAD:
-                {
-                    ticket.PageTrueTypeFontMode.Value = TrueTypeFontMode.DownloadAsNativeTrueTypeFont;
-                    ticket.PageDeviceFontSubstitution.Value = DeviceFontSubstitution.Off;
-                    break;
-                }
+                    {
+                        ticket.PageTrueTypeFontMode.Value = TrueTypeFontMode.DownloadAsNativeTrueTypeFont;
+                        ticket.PageDeviceFontSubstitution.Value = DeviceFontSubstitution.Off;
+                        break;
+                    }
 
                 case DevModeTrueTypeOption.DMTT_DOWNLOAD_OUTLINE:
-                {
-                    ticket.PageTrueTypeFontMode.Value = TrueTypeFontMode.DownloadAsOutlineFont;
-                    ticket.PageDeviceFontSubstitution.Value = DeviceFontSubstitution.Off;
-                    break;
-                }
+                    {
+                        ticket.PageTrueTypeFontMode.Value = TrueTypeFontMode.DownloadAsOutlineFont;
+                        ticket.PageDeviceFontSubstitution.Value = DeviceFontSubstitution.Off;
+                        break;
+                    }
             }
         }
 
         private static void SetTTOption(DevMode devMode, DeviceFontSubstitution fontSubstitution, TrueTypeFontMode trueTypeFontMode)
         {
-            if (fontSubstitution == DeviceFontSubstitution.On 
+            if (fontSubstitution == DeviceFontSubstitution.On
                 || trueTypeFontMode == TrueTypeFontMode.Automatic)
             {
                 devMode.TTOption = DevModeTrueTypeOption.DMTT_SUBDEV;
@@ -1123,20 +1123,20 @@ namespace MS.Internal.Printing.Configuration
                 switch (trueTypeFontMode)
                 {
                     case TrueTypeFontMode.DownloadAsNativeTrueTypeFont:
-                    {
-                        devMode.TTOption = DevModeTrueTypeOption.DMTT_DOWNLOAD;
-                        break;
-                    }
+                        {
+                            devMode.TTOption = DevModeTrueTypeOption.DMTT_DOWNLOAD;
+                            break;
+                        }
                     case TrueTypeFontMode.DownloadAsOutlineFont:
-                    {
-                        devMode.TTOption = DevModeTrueTypeOption.DMTT_DOWNLOAD_OUTLINE;
-                        break;
-                    }
+                        {
+                            devMode.TTOption = DevModeTrueTypeOption.DMTT_DOWNLOAD_OUTLINE;
+                            break;
+                        }
                     case TrueTypeFontMode.RenderAsBitmap:
-                    {
-                        devMode.TTOption = DevModeTrueTypeOption.DMTT_BITMAP;
-                        break;
-                    }
+                        {
+                            devMode.TTOption = DevModeTrueTypeOption.DMTT_BITMAP;
+                            break;
+                        }
                 }
             }
         }

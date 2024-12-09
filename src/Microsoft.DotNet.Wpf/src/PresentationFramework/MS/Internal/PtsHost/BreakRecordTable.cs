@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -162,7 +162,7 @@ namespace MS.Internal.PtsHost
                 // Raise PagesChanged event. Start with the first page and set 
                 // count to Int.Max/2, because somebody might want to display a page
                 // that wasn't available before, but will be right now.
-                _owner.OnPagesChanged(0, int.MaxValue/2);
+                _owner.OnPagesChanged(0, int.MaxValue / 2);
             }
         }
 
@@ -195,7 +195,7 @@ namespace MS.Internal.PtsHost
                     // Raise PagesChanged event. Start with the first affected page and set 
                     // count to Int.Max/2, because somebody might want to display a page
                     // that wasn't available before, but will be right now.
-                    _owner.OnPagesChanged(pageStart, int.MaxValue/2);
+                    _owner.OnPagesChanged(pageStart, int.MaxValue / 2);
                 }
             }
         }
@@ -255,7 +255,7 @@ namespace MS.Internal.PtsHost
 
             Invariant.Assert(pageNumber >= 0 && pageNumber <= _breakRecords.Count, "The previous BreakRecord does not exist.");
             Invariant.Assert(page != null && page != DocumentPage.Missing, "Cannot update BRT with an invalid document page.");
-            
+
             // Get TextView for DocumentPage. This TextView is used to access list of
             // content ranges. Those serve as optimalization in finding affeceted pages.
             textView = (ITextView)((IServiceProvider)page).GetService(typeof(ITextView));
@@ -265,11 +265,13 @@ namespace MS.Internal.PtsHost
             isClean = this.IsClean;
 
             // Add new entry into BreakRecordTable
-            entry = new BreakRecordTableEntry();
-            entry.BreakRecord = brOut;
-            entry.DocumentPage = new WeakReference(page);
-            entry.TextSegments = textView.TextSegments;
-            entry.DependentMax = dependentMax;
+            entry = new BreakRecordTableEntry
+            {
+                BreakRecord = brOut,
+                DocumentPage = new WeakReference(page),
+                TextSegments = textView.TextSegments,
+                DependentMax = dependentMax
+            };
             if (pageNumber == _breakRecords.Count)
             {
                 _breakRecords.Add(entry);
@@ -281,12 +283,12 @@ namespace MS.Internal.PtsHost
             else
             {
                 // If old Page and/or BreakRecord are not changing, do not dispose them.
-                if (_breakRecords[pageNumber].BreakRecord != null && 
+                if (_breakRecords[pageNumber].BreakRecord != null &&
                     _breakRecords[pageNumber].BreakRecord != entry.BreakRecord)
                 {
                     _breakRecords[pageNumber].BreakRecord.Dispose();
                 }
-                if (_breakRecords[pageNumber].DocumentPage != null && 
+                if (_breakRecords[pageNumber].DocumentPage != null &&
                     _breakRecords[pageNumber].DocumentPage.Target != null &&
                     _breakRecords[pageNumber].DocumentPage.Target != entry.DocumentPage.Target)
                 {

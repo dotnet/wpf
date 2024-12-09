@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,8 +7,8 @@
 // Implementation of Line shape element.
 //
 
-using System.Windows.Media;
 using System.ComponentModel;
+using System.Windows.Media;
 
 namespace System.Windows.Shapes
 {
@@ -36,7 +36,7 @@ namespace System.Windows.Shapes
         /// X1 property
         /// </summary>
         public static readonly DependencyProperty X1Property =
-            DependencyProperty.Register( "X1", typeof(double), typeof(Line), 
+            DependencyProperty.Register("X1", typeof(double), typeof(Line),
                 new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
                 new ValidateValueCallback(Shape.IsDoubleFinite));
 
@@ -60,7 +60,7 @@ namespace System.Windows.Shapes
         /// Y1 property
         /// </summary>
         public static readonly DependencyProperty Y1Property =
-            DependencyProperty.Register( "Y1", typeof(double), typeof(Line),
+            DependencyProperty.Register("Y1", typeof(double), typeof(Line),
                 new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
                 new ValidateValueCallback(Shape.IsDoubleFinite));
 
@@ -84,7 +84,7 @@ namespace System.Windows.Shapes
         /// X2 property
         /// </summary>
         public static readonly DependencyProperty X2Property =
-            DependencyProperty.Register( "X2", typeof(double), typeof(Line),
+            DependencyProperty.Register("X2", typeof(double), typeof(Line),
                 new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
                 new ValidateValueCallback(Shape.IsDoubleFinite));
 
@@ -108,7 +108,7 @@ namespace System.Windows.Shapes
         /// Y2 property
         /// </summary>
         public static readonly DependencyProperty Y2Property =
-            DependencyProperty.Register( "Y2", typeof(double), typeof(Line),
+            DependencyProperty.Register("Y2", typeof(double), typeof(Line),
                 new FrameworkPropertyMetadata(0d, FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender),
                 new ValidateValueCallback(Shape.IsDoubleFinite));
 
@@ -133,7 +133,7 @@ namespace System.Windows.Shapes
 
         #region Protected Methods and Properties
 
-        
+
         /// <summary>
         /// Get the line that defines this shape
         /// </summary>
@@ -163,5 +163,5 @@ namespace System.Windows.Shapes
         private LineGeometry _lineGeometry;
 
         #endregion
-   }
+    }
 }

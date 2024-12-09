@@ -1,15 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
 using System.Runtime.InteropServices;
-using System.Windows.Input;
-using System.Windows.Interop;  // WindowInteropHelper
 using System.Windows.Controls; // ScrollChangedEventArgs
 using System.Windows.Controls.Primitives;  // CharacterCasing, TextBoxBase
 using System.Windows.Data; // BindingExpression
+using System.Windows.Input;
+using System.Windows.Interop;  // WindowInteropHelper
 using System.Windows.Media;
+using MS.Internal;
 using MS.Win32;
 
 // 
@@ -37,7 +37,7 @@ namespace System.Windows.Documents
         {
             if (!readOnly)
             {
-                EventManager.RegisterClassHandler(controlType, DragDrop.DropEvent, new DragEventHandler(OnClearState),true);
+                EventManager.RegisterClassHandler(controlType, DragDrop.DropEvent, new DragEventHandler(OnClearState), true);
                 EventManager.RegisterClassHandler(controlType, DragDrop.DragLeaveEvent, new DragEventHandler(OnClearState), true);
             }
             if (registerEventListeners)
@@ -72,7 +72,7 @@ namespace System.Windows.Documents
                 Invariant.Assert(textEditor != null);
                 _textEditor = textEditor;
             }
-            
+
             /// <summary>
             /// Checks whether mouse down position belongs to selected portion of text,
             /// and initiates a drad-and-drop process in this case.
@@ -118,7 +118,7 @@ namespace System.Windows.Documents
             internal void DoMouseLeftButtonUp(MouseButtonEventArgs e)
             {
                 if (_dragStarted)
-                {   
+                {
                     // We get to this state when drag gesture ends within the selection,
                     // so we only need to set selection into mouse-releasing point.
                     if (this.TextView.IsValid)
@@ -228,7 +228,7 @@ namespace System.Windows.Documents
                 // if something unexpected happened during the drag and drop operation,
                 // e.g. the application receiving the drop failed. In this case we should
                 // not fail, we should catch the exception and act as if the drop wasn't allowed.
-                catch (COMException ex) when(ex.HResult == NativeMethods.E_UNEXPECTED)
+                catch (COMException ex) when (ex.HResult == NativeMethods.E_UNEXPECTED)
                 {
                 }
 
@@ -362,7 +362,7 @@ namespace System.Windows.Documents
                         // Takes care of scrolling mechanism when vertical scrollbar is available, it creates a virtual
                         // block within the viewport where if you position your mouse during drag leads to scrolling,here
                         // it is of 16pixels and within first 8pixels it does scrolling by line and for next it scrolls by page.
-                        
+
                         Point pointScroller = e.GetPosition((IInputElement)scroller);
                         double pageHeight = (double)_textEditor.UiScope.GetValue(TextEditor.PageHeightProperty);
                         double slowAreaHeight = ScrollViewer._scrollLineDelta;
@@ -442,11 +442,11 @@ namespace System.Windows.Documents
                 if (target != _textEditor.TextView.RenderScope && target != null && (_textEditor.TextView.RenderScope).IsAncestorOf(target))
                 {
                     GeneralTransform transform = target.TransformToAncestor(_textEditor.TextView.RenderScope);
-                    transform.TryTransform(point, out point); 
+                    transform.TryTransform(point, out point);
                 }
 
                 ITextPointer dropPosition = this.TextView.GetTextPositionFromPoint(point, /*snapToText:*/true);
-                
+
                 // For rich text content we adjust drop position to word boundary
                 if (dropPosition != null)
                 {
@@ -876,7 +876,7 @@ namespace System.Windows.Documents
                 return;
             }
         }
-       
+
         /// <summary>
         /// An event reporting that the drop happened.
         /// </summary>
@@ -917,7 +917,7 @@ namespace System.Windows.Documents
                 return;
             }
 
-           This._dragDropProcess.DeleteCaret();
+            This._dragDropProcess.DeleteCaret();
         }
 
         #endregion Class Internal Types

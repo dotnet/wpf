@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,8 +14,8 @@
 //              and RowDefinition.
 //
 
-using MS.Internal;
 using System.Collections;
+using MS.Internal;
 
 namespace System.Windows.Controls
 {
@@ -55,7 +55,7 @@ namespace System.Windows.Controls
         /// </summary>
         public string SharedSizeGroup
         {
-            get { return (string) GetValue(SharedSizeGroupProperty); }
+            get { return (string)GetValue(SharedSizeGroupProperty); }
             set { SetValue(SharedSizeGroupProperty, value); }
         }
 
@@ -114,7 +114,8 @@ namespace System.Windows.Controls
             LayoutWasUpdated = true;
 
             //  defer verification for shared definitions
-            if (_sharedState != null)   {   _sharedState.EnsureDeferredValidation(grid);    }
+            if (_sharedState != null)
+            { _sharedState.EnsureDeferredValidation(grid); }
         }
 
         /// <summary>
@@ -143,7 +144,7 @@ namespace System.Windows.Controls
         /// </remarks>
         internal static void OnUserSizePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DefinitionBase definition = (DefinitionBase) d;
+            DefinitionBase definition = (DefinitionBase)d;
 
             if (definition.InParentLogicalTree)
             {
@@ -153,9 +154,9 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    Grid parentGrid = (Grid) definition.Parent;
+                    Grid parentGrid = (Grid)definition.Parent;
 
-                    if (((GridLength) e.OldValue).GridUnitType != ((GridLength) e.NewValue).GridUnitType)
+                    if (((GridLength)e.OldValue).GridUnitType != ((GridLength)e.NewValue).GridUnitType)
                     {
                         parentGrid.Invalidate();
                     }
@@ -186,11 +187,11 @@ namespace System.Windows.Controls
         /// </remarks>
         internal static void OnUserMinSizePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DefinitionBase definition = (DefinitionBase) d;
+            DefinitionBase definition = (DefinitionBase)d;
 
             if (definition.InParentLogicalTree)
             {
-                Grid parentGrid = (Grid) definition.Parent;
+                Grid parentGrid = (Grid)definition.Parent;
                 parentGrid.InvalidateMeasure();
             }
         }
@@ -215,11 +216,11 @@ namespace System.Windows.Controls
         /// </remarks>
         internal static void OnUserMaxSizePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DefinitionBase definition = (DefinitionBase) d;
+            DefinitionBase definition = (DefinitionBase)d;
 
             if (definition.InParentLogicalTree)
             {
-                Grid parentGrid = (Grid) definition.Parent;
+                Grid parentGrid = (Grid)definition.Parent;
                 parentGrid.InvalidateMeasure();
             }
         }
@@ -252,7 +253,7 @@ namespace System.Windows.Controls
             //  is it possible to optimize here something like this:
             //  if ((bool)d.GetValue(Grid.IsSharedSizeScopeProperty) == (d.GetLocalValue(PrivateSharedSizeScopeProperty) != null)
             //  { /* do nothing */ }
-            if ((bool) e.NewValue)
+            if ((bool)e.NewValue)
             {
                 SharedSizeScope sharedStatesCollection = new SharedSizeScope();
                 d.SetValue(PrivateSharedSizeScopeProperty, sharedStatesCollection);
@@ -350,8 +351,8 @@ namespace System.Windows.Controls
             get
             {
                 double preferredSize = MinSize;
-                if (    _sizeType != Grid.LayoutTimeSizeType.Auto
-                    &&  preferredSize < _measureSize    )
+                if (_sizeType != Grid.LayoutTimeSizeType.Auto
+                    && preferredSize < _measureSize)
                 {
                     preferredSize = _measureSize;
                 }
@@ -376,9 +377,9 @@ namespace System.Windows.Controls
             get
             {
                 double minSize = _minSize;
-                if (    UseSharedMinimum
-                    &&  _sharedState != null
-                    &&  minSize < _sharedState.MinSize  )
+                if (UseSharedMinimum
+                    && _sharedState != null
+                    && minSize < _sharedState.MinSize)
                 {
                     minSize = _sharedState.MinSize;
                 }
@@ -394,9 +395,9 @@ namespace System.Windows.Controls
             get
             {
                 double minSize = _minSize;
-                if (    _sharedState != null
-                    &&  (UseSharedMinimum || !LayoutWasUpdated)
-                    &&  minSize < _sharedState.MinSize  )
+                if (_sharedState != null
+                    && (UseSharedMinimum || !LayoutWasUpdated)
+                    && minSize < _sharedState.MinSize)
                 {
                     minSize = _sharedState.MinSize;
                 }
@@ -428,7 +429,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (GridLength) GetValue(
+                return (GridLength)GetValue(
                         _isColumnDefinition ?
                         ColumnDefinition.WidthProperty :
                         RowDefinition.HeightProperty);
@@ -442,7 +443,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (double) GetValue(
+                return (double)GetValue(
                         _isColumnDefinition ?
                         ColumnDefinition.MinWidthProperty :
                         RowDefinition.MinHeightProperty);
@@ -456,7 +457,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (double) GetValue(
+                return (double)GetValue(
                         _isColumnDefinition ?
                         ColumnDefinition.MaxWidthProperty :
                         RowDefinition.MaxHeightProperty);
@@ -504,11 +505,11 @@ namespace System.Windows.Controls
         /// </summary>
         private static void OnSharedSizeGroupPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            DefinitionBase definition = (DefinitionBase) d;
+            DefinitionBase definition = (DefinitionBase)d;
 
             if (definition.InParentLogicalTree)
             {
-                string sharedSizeGroupId = (string) e.NewValue;
+                string sharedSizeGroupId = (string)e.NewValue;
 
                 if (definition._sharedState != null)
                 {
@@ -558,10 +559,10 @@ namespace System.Windows.Controls
                 {
                     bool isDigit = Char.IsDigit(id[i]);
 
-                    if (    (i == 0 && isDigit)
-                        ||  !(  isDigit
-                            ||  Char.IsLetter(id[i])
-                            ||  '_' == id[i]    )   )
+                    if ((i == 0 && isDigit)
+                        || !(isDigit
+                            || Char.IsLetter(id[i])
+                            || '_' == id[i]))
                     {
                         break;
                     }
@@ -590,7 +591,7 @@ namespace System.Windows.Controls
 
             if (definition.InParentLogicalTree)
             {
-                SharedSizeScope privateSharedSizeScope = (SharedSizeScope) e.NewValue;
+                SharedSizeScope privateSharedSizeScope = (SharedSizeScope)e.NewValue;
 
                 if (definition._sharedState != null)
                 {
@@ -629,7 +630,7 @@ namespace System.Windows.Controls
         /// </summary>
         private SharedSizeScope PrivateSharedSizeScope
         {
-            get { return (SharedSizeScope) GetValue(PrivateSharedSizeScopeProperty); }
+            get { return (SharedSizeScope)GetValue(PrivateSharedSizeScopeProperty); }
         }
 
         /// <summary>
@@ -691,8 +692,8 @@ namespace System.Windows.Controls
             //
             //  bool flags
             //
-            UseSharedMinimum                    =   0x00000020,     //  when "1", definition will take into account shared state's minimum
-            LayoutWasUpdated                    =   0x00000040,     //  set to "1" every time the parent grid is measured
+            UseSharedMinimum = 0x00000020,     //  when "1", definition will take into account shared state's minimum
+            LayoutWasUpdated = 0x00000040,     //  set to "1" every time the parent grid is measured
         }
 
         /// <summary>
@@ -814,7 +815,8 @@ namespace System.Windows.Controls
             {
                 get
                 {
-                    if (!_userSizeValid) { EnsureUserSizeValid(); }
+                    if (!_userSizeValid)
+                    { EnsureUserSizeValid(); }
                     return (_minSize);
                 }
             }
@@ -826,7 +828,8 @@ namespace System.Windows.Controls
             {
                 get
                 {
-                    if (!_userSizeValid) { EnsureUserSizeValid(); }
+                    if (!_userSizeValid)
+                    { EnsureUserSizeValid(); }
                     return (_userSize);
                 }
             }
@@ -837,8 +840,8 @@ namespace System.Windows.Controls
 
                 for (int i = 0, count = _registry.Count; i < count; ++i)
                 {
-                    Debug.Assert(   _userSize.GridUnitType == GridUnitType.Auto
-                                ||  _userSize.GridUnitType == GridUnitType.Pixel    );
+                    Debug.Assert(_userSize.GridUnitType == GridUnitType.Auto
+                                || _userSize.GridUnitType == GridUnitType.Pixel);
 
                     GridLength currentGridLength = _registry[i].UserSizeValueCache;
                     if (currentGridLength.GridUnitType == GridUnitType.Pixel)

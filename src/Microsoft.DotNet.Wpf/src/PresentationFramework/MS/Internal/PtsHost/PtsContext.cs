@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,10 +8,10 @@
 
 using System.Collections;                       // ArrayList
 using System.Threading;                         // Interlocked
+using System.Windows.Media;
 using System.Windows.Media.TextFormatting;      // TextFormatter
 using System.Windows.Threading;                 // DispatcherObject
 using MS.Internal.PtsHost.UnsafeNativeMethods;  // PTS
-using System.Windows.Media;
 
 namespace MS.Internal.PtsHost
 {
@@ -149,7 +149,8 @@ namespace MS.Internal.PtsHost
                                                 }
                                             }
                                         }
-                                        if (found) { break; }
+                                        if (found)
+                                        { break; }
                                     }
                                 }
                                 Invariant.Assert(found, "FigureParagraph is not properly disposed.");

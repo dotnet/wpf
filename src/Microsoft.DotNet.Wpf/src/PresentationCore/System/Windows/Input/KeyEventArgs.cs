@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -46,9 +46,9 @@ namespace System.Windows.Input
         /// </summary>
         public PresentationSource InputSource
         {
-            get 
+            get
             {
-                
+
                 return UnsafeInputSource;
             }
         }
@@ -59,7 +59,7 @@ namespace System.Windows.Input
         /// </summary>
         public Key Key
         {
-            get {return _key;}
+            get { return _key; }
         }
 
         /// <summary>
@@ -83,7 +83,7 @@ namespace System.Windows.Input
         /// </summary>
         public Key ImeProcessedKey
         {
-            get { return (_key == Key.ImeProcessed) ? _realKey : Key.None;}
+            get { return (_key == Key.ImeProcessed) ? _realKey : Key.None; }
         }
 
         /// <summary>
@@ -92,7 +92,7 @@ namespace System.Windows.Input
         /// </summary>
         public Key SystemKey
         {
-            get { return (_key == Key.System) ? _realKey : Key.None;}
+            get { return (_key == Key.System) ? _realKey : Key.None; }
         }
 
         /// <summary>
@@ -109,7 +109,7 @@ namespace System.Windows.Input
         /// </summary>
         public KeyStates KeyStates
         {
-            get {return this.KeyboardDevice.GetKeyStates(_realKey);}
+            get { return this.KeyboardDevice.GetKeyStates(_realKey); }
         }
 
         /// <summary>
@@ -117,7 +117,7 @@ namespace System.Windows.Input
         /// </summary>
         public bool IsRepeat
         {
-            get {return _isRepeat;}
+            get { return _isRepeat; }
         }
 
         /// <summary>
@@ -126,7 +126,7 @@ namespace System.Windows.Input
         /// <ExternalAPI Inherit="true"/>
         public bool IsDown
         {
-            get {return this.KeyboardDevice.IsKeyDown(_realKey);}
+            get { return this.KeyboardDevice.IsKeyDown(_realKey); }
         }
 
         /// <summary>
@@ -135,7 +135,7 @@ namespace System.Windows.Input
         /// <ExternalAPI Inherit="true"/>
         public bool IsUp
         {
-            get {return this.KeyboardDevice.IsKeyUp(_realKey);}
+            get { return this.KeyboardDevice.IsKeyUp(_realKey); }
         }
 
         /// <summary>
@@ -144,7 +144,7 @@ namespace System.Windows.Input
         /// <ExternalAPI Inherit="true"/>
         public bool IsToggled
         {
-            get {return this.KeyboardDevice.IsKeyToggled(_realKey);}
+            get { return this.KeyboardDevice.IsKeyToggled(_realKey); }
         }
 
         /// <summary>
@@ -160,12 +160,12 @@ namespace System.Windows.Input
         /// <ExternalAPI/> 
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            KeyEventHandler handler = (KeyEventHandler) genericHandler;
-            
+            KeyEventHandler handler = (KeyEventHandler)genericHandler;
+
             handler(genericTarget, this);
         }
 
-        internal void SetRepeat( bool newRepeatState )
+        internal void SetRepeat(bool newRepeatState)
         {
             _isRepeat = newRepeatState;
         }
@@ -179,7 +179,7 @@ namespace System.Windows.Input
         {
             _key = Key.System;
         }
-        
+
         internal void MarkImeProcessed()
         {
             _key = Key.ImeProcessed;
@@ -191,7 +191,7 @@ namespace System.Windows.Input
         }
         internal PresentationSource UnsafeInputSource
         {
-            get 
+            get
             {
                 return _inputSource;
             }
@@ -199,14 +199,14 @@ namespace System.Windows.Input
 
         internal int ScanCode
         {
-            get {return _scanCode;}
-            set {_scanCode = value;}
+            get { return _scanCode; }
+            set { _scanCode = value; }
         }
 
         internal bool IsExtendedKey
         {
-            get {return _isExtendedKey;}
-            set {_isExtendedKey = value;}
+            get { return _isExtendedKey; }
+            set { _isExtendedKey = value; }
         }
 
 
@@ -218,6 +218,6 @@ namespace System.Windows.Input
         private bool _isRepeat;
         private int _scanCode;
         private bool _isExtendedKey;
-}
+    }
 }
 

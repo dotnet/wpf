@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,14 +20,14 @@ namespace System.Windows.Media.TextFormatting
 {
     /// <summary>
     /// A specialized TextSymbols implemented by TextFormatter to produces 
-    /// a collection of TextCharacterShape � each represents a collection of 
+    /// a collection of TextCharacterShape – each represents a collection of 
     /// character glyphs from distinct physical typeface.
     /// </summary>
     public class TextCharacters : TextRun, ITextSymbols, IShapeableTextCollector
     {
-        private CharacterBufferReference    _characterBufferReference;
-        private int                         _length;
-        private TextRunProperties           _textRunProperties;
+        private CharacterBufferReference _characterBufferReference;
+        private int _length;
+        private TextRunProperties _textRunProperties;
 
         #region Constructors
 
@@ -35,50 +35,50 @@ namespace System.Windows.Media.TextFormatting
         /// Construct a run of text content from character array
         /// </summary>
         public TextCharacters(
-            char[]                      characterArray,
-            int                         offsetToFirstChar,
-            int                         length,
-            TextRunProperties           textRunProperties
-            ) : 
+            char[] characterArray,
+            int offsetToFirstChar,
+            int length,
+            TextRunProperties textRunProperties
+            ) :
             this(
                 new CharacterBufferReference(characterArray, offsetToFirstChar),
                 length,
                 textRunProperties
                 )
-        {}
+        { }
 
 
         /// <summary>
         /// Construct a run for text content from string 
         /// </summary>
         public TextCharacters(
-            string                      characterString,
-            TextRunProperties           textRunProperties
-            ) : 
+            string characterString,
+            TextRunProperties textRunProperties
+            ) :
             this(
                 characterString,
                 0,  // offserToFirstChar
                 (characterString == null) ? 0 : characterString.Length,
                 textRunProperties
                 )
-        {}
+        { }
 
 
         /// <summary>
         /// Construct a run for text content from string
         /// </summary>
         public TextCharacters(
-            string                      characterString,
-            int                         offsetToFirstChar,
-            int                         length,
-            TextRunProperties           textRunProperties
-            ) : 
+            string characterString,
+            int offsetToFirstChar,
+            int length,
+            TextRunProperties textRunProperties
+            ) :
             this(
                 new CharacterBufferReference(characterString, offsetToFirstChar),
                 length,
                 textRunProperties
                 )
-        {}
+        { }
 
 
         /// <summary>
@@ -86,25 +86,25 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         [CLSCompliant(false)]
         public unsafe TextCharacters(
-            char*                       unsafeCharacterString,
-            int                         length,
-            TextRunProperties           textRunProperties
-            ) : 
+            char* unsafeCharacterString,
+            int length,
+            TextRunProperties textRunProperties
+            ) :
             this(
                 new CharacterBufferReference(unsafeCharacterString, length),
                 length,
                 textRunProperties
                 )
-        {}
+        { }
 
 
         /// <summary>
         /// Internal constructor of TextContent
         /// </summary>
         private TextCharacters(
-            CharacterBufferReference    characterBufferReference,
-            int                         length,
-            TextRunProperties           textRunProperties
+            CharacterBufferReference characterBufferReference,
+            int length,
+            TextRunProperties textRunProperties
             )
         {
             ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
@@ -131,22 +131,22 @@ namespace System.Windows.Media.TextFormatting
 
 
         #region TextRun implementation
-        
+
         /// <summary>
         /// Character buffer
         /// </summary>
-        public sealed override CharacterBufferReference CharacterBufferReference 
-        { 
+        public sealed override CharacterBufferReference CharacterBufferReference
+        {
             get { return _characterBufferReference; }
         }
 
-        
+
         /// <summary>
         /// Character length of the run
         /// </summary>
         /// <value></value>
-        public sealed override int Length 
-        { 
+        public sealed override int Length
+        {
             get { return _length; }
         }
 
@@ -163,7 +163,7 @@ namespace System.Windows.Media.TextFormatting
 
 
         #region ITextSymbols implementation
-        
+
         /// <summary>
         /// Break a run of text into individually shape items.
         /// Shape items are delimited by 
@@ -171,29 +171,29 @@ namespace System.Windows.Media.TextFormatting
         ///     Change of glyph typeface
         /// </summary>
         IList<TextShapeableSymbols> ITextSymbols.GetTextShapeableSymbols(
-            GlyphingCache               glyphingCache,
-            CharacterBufferReference    characterBufferReference,
-            int                         length,
-            bool                        rightToLeft,
-            bool                        isRightToLeftParagraph,
-            CultureInfo                 digitCulture,
-            TextModifierScope           textModifierScope,
-            TextFormattingMode          textFormattingMode,
-            bool                        isSideways
+            GlyphingCache glyphingCache,
+            CharacterBufferReference characterBufferReference,
+            int length,
+            bool rightToLeft,
+            bool isRightToLeftParagraph,
+            CultureInfo digitCulture,
+            TextModifierScope textModifierScope,
+            TextFormattingMode textFormattingMode,
+            bool isSideways
             )
         {
             if (characterBufferReference.CharacterBuffer == null)
             {
                 throw new ArgumentNullException("characterBufferReference.CharacterBuffer");
             }
-            
+
             int offsetToFirstChar = characterBufferReference.OffsetToFirstChar - _characterBufferReference.OffsetToFirstChar;
 
             Debug.Assert(characterBufferReference.CharacterBuffer == _characterBufferReference.CharacterBuffer);
             Debug.Assert(offsetToFirstChar >= 0 && offsetToFirstChar < _length);
 
-            if (    length < 0 
-                ||  offsetToFirstChar + length > _length)
+            if (length < 0
+                || offsetToFirstChar + length > _length)
             {
                 length = _length - offsetToFirstChar;
             }
@@ -233,7 +233,7 @@ namespace System.Windows.Media.TextFormatting
                         new TextShapeableCharacters(
                             new CharacterBufferRange(characterBufferReference, nominalLength),
                             textRunProperties,
-                            textRunProperties.FontRenderingEmSize,                        
+                            textRunProperties.FontRenderingEmSize,
                             new MS.Internal.Text.TextInterface.ItemProps(),
                             null,   // shapeTypeface (no shaping required)
                             false,   // nullShape,
@@ -270,14 +270,14 @@ namespace System.Windows.Media.TextFormatting
         /// Add shapeable text object to the list
         /// </summary>
         void IShapeableTextCollector.Add(
-            IList<TextShapeableSymbols>  shapeables,
-            CharacterBufferRange         characterBufferRange,
-            TextRunProperties            textRunProperties,
+            IList<TextShapeableSymbols> shapeables,
+            CharacterBufferRange characterBufferRange,
+            TextRunProperties textRunProperties,
             MS.Internal.Text.TextInterface.ItemProps textItem,
-            ShapeTypeface                shapeTypeface,
-            double                       emScale,
-            bool                         nullShape,
-            TextFormattingMode               textFormattingMode
+            ShapeTypeface shapeTypeface,
+            double emScale,
+            bool nullShape,
+            TextFormattingMode textFormattingMode
             )
         {
             Debug.Assert(shapeables != null);

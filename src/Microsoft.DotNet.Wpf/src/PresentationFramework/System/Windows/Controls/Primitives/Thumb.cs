@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -85,10 +85,10 @@ namespace System.Windows.Controls.Primitives
         public event DragCompletedEventHandler DragCompleted { add { AddHandler(DragCompletedEvent, value); } remove { RemoveHandler(DragCompletedEvent, value); } }
 
 
-        private static readonly DependencyPropertyKey IsDraggingPropertyKey = 
+        private static readonly DependencyPropertyKey IsDraggingPropertyKey =
                 DependencyProperty.RegisterReadOnly(
-                        "IsDragging", 
-                        typeof(bool), 
+                        "IsDragging",
+                        typeof(bool),
                         typeof(Thumb),
                         new FrameworkPropertyMetadata(
                                 MS.Internal.KnownBoxes.BooleanBoxes.FalseBox,
@@ -107,7 +107,7 @@ namespace System.Windows.Controls.Primitives
         [Bindable(true), Browsable(false), Category("Appearance")]
         public bool IsDragging
         {
-            get { return (bool) GetValue(IsDraggingProperty); }
+            get { return (bool)GetValue(IsDraggingProperty); }
             protected set { SetValue(IsDraggingPropertyKey, MS.Internal.KnownBoxes.BooleanBoxes.Box(value)); }
         }
 
@@ -203,7 +203,7 @@ namespace System.Windows.Controls.Primitives
         /// <summary>
         /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>)
         /// </summary>
-        protected override AutomationPeer OnCreateAutomationPeer() 
+        protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new ThumbAutomationPeer(this);
         }
@@ -221,7 +221,7 @@ namespace System.Windows.Controls.Primitives
                 CaptureMouse();
                 SetValue(IsDraggingPropertyKey, true);
                 _originThumbPoint = e.GetPosition(this);
-                _previousScreenCoordPosition = _originScreenCoordPosition = SafeSecurityHelper.ClientToScreen(this,_originThumbPoint);
+                _previousScreenCoordPosition = _originScreenCoordPosition = SafeSecurityHelper.ClientToScreen(this, _originThumbPoint);
                 bool exceptionThrown = true;
                 try
                 {
@@ -241,7 +241,7 @@ namespace System.Windows.Controls.Primitives
                 // This is weird, Thumb shouldn't get MouseLeftButtonDown event while dragging.
                 // This may be the case that something ate MouseLeftButtonUp event, so Thumb never had a chance to
                 // reset IsDragging property
-                Debug.Assert(false,"Got MouseLeftButtonDown event while dragging!");
+                Debug.Assert(false, "Got MouseLeftButtonDown event while dragging!");
             }
             base.OnMouseLeftButtonDown(e);
         }
@@ -310,7 +310,7 @@ namespace System.Windows.Controls.Primitives
                 }
             }
         }
-        
+
         //
         //  This property
         //  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject

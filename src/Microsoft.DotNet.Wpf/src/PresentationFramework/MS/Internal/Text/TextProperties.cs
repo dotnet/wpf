@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,7 +33,7 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         // Typeface used to format and display text.
         // ------------------------------------------------------------------
-        public override Typeface Typeface { get { return _typeface; }  }
+        public override Typeface Typeface { get { return _typeface; } }
 
         // ------------------------------------------------------------------
         // Em size of font used to format and display text.
@@ -87,7 +87,7 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         // Typography properties
         // ------------------------------------------------------------------
-        public override TextRunTypographyProperties TypographyProperties{ get { return _typographyProperties; } }
+        public override TextRunTypographyProperties TypographyProperties { get { return _typographyProperties; } }
 
         // ------------------------------------------------------------------
         // TextEffects property
@@ -119,7 +119,7 @@ namespace MS.Internal.Text
             {
                 _typographyProperties = Typography.Default;
             }
-            
+
             _baselineAlignment = BaselineAlignment.Baseline;
         }
 
@@ -141,7 +141,7 @@ namespace MS.Internal.Text
                 if (fe != null && !fe.HasNumberSubstitutionChanged)
                 {
                     _numberSubstitution = FrameworkElement.DefaultNumberSubstitution;
-                }               
+                }
             }
 
             PixelsPerDip = pixelsPerDip;
@@ -202,7 +202,7 @@ namespace MS.Internal.Text
             _typeface = DynamicPropertyReader.GetTypeface(target);
 
             _fontSize = (double)target.GetValue(TextElement.FontSizeProperty);
-            _foreground = (Brush) target.GetValue(TextElement.ForegroundProperty);
+            _foreground = (Brush)target.GetValue(TextElement.ForegroundProperty);
             _textEffects = DynamicPropertyReader.GetTextEffects(target);
 
             _cultureInfo = DynamicPropertyReader.GetCultureInfo(target);
@@ -257,7 +257,7 @@ namespace MS.Internal.Text
             TextBlock tb = element as TextBlock;
             if (tb != null)
             {
-                if(!tb.IsTypographyDefaultValue)
+                if (!tb.IsTypographyDefaultValue)
                 {
                     return TextElement.GetTypographyProperties(element);
                 }
@@ -289,7 +289,7 @@ namespace MS.Internal.Text
             FlowDocument fd = element as FlowDocument;
             if (fd != null)
             {
-               return fd.TypographyPropertiesGroup;
+                return fd.TypographyPropertiesGroup;
             }
 
             // return default typography properties group
@@ -358,7 +358,7 @@ namespace MS.Internal.Text
         // Number Substitution
         // ------------------------------------------------------------------
         private NumberSubstitution _numberSubstitution;
-        
+
         // ------------------------------------------------------------------
         // Typography properties group.
         // ------------------------------------------------------------------

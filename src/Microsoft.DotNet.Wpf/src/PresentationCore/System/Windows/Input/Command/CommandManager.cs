@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,8 +26,8 @@ namespace System.Windows.Input
         /// </summary>
         public static event EventHandler RequerySuggested
         {
-            add     { RequerySuggestedEventManager.AddHandler(null, value); }
-            remove  { RequerySuggestedEventManager.RemoveHandler(null, value); }
+            add { RequerySuggestedEventManager.AddHandler(null, value); }
+            remove { RequerySuggestedEventManager.RemoveHandler(null, value); }
         }
 
         /// <summary>
@@ -506,16 +506,20 @@ namespace System.Windows.Input
         {
             if ((sender != null) && (e != null) && (e.Command != null))
             {
-                CanExecuteRoutedEventArgs canExecuteArgs = new CanExecuteRoutedEventArgs(e.Command, null /* parameter */);
-                canExecuteArgs.RoutedEvent = CommandManager.CanExecuteEvent;
-                canExecuteArgs.Source = sender;
+                CanExecuteRoutedEventArgs canExecuteArgs = new CanExecuteRoutedEventArgs(e.Command, null /* parameter */)
+                {
+                    RoutedEvent = CommandManager.CanExecuteEvent,
+                    Source = sender
+                };
                 OnCanExecute(sender, canExecuteArgs);
 
                 if (canExecuteArgs.CanExecute)
                 {
-                    ExecutedRoutedEventArgs executedArgs = new ExecutedRoutedEventArgs(e.Command, null /* parameter */);
-                    executedArgs.RoutedEvent = CommandManager.ExecutedEvent;
-                    executedArgs.Source = sender;
+                    ExecutedRoutedEventArgs executedArgs = new ExecutedRoutedEventArgs(e.Command, null /* parameter */)
+                    {
+                        RoutedEvent = CommandManager.ExecutedEvent,
+                        Source = sender
+                    };
                     OnExecuted(sender, executedArgs);
 
                     if (executedArgs.Handled)
@@ -549,7 +553,7 @@ namespace System.Windows.Input
             // the time there is only one.   Lazy-allocate with this in mind.
             ValueTuple<Type, CommandBinding>? tuple = default;       // zero or one binding
             List<ValueTuple<Type, CommandBinding>> list = default;   // more than one
-            
+
             lock (_classCommandBindings.SyncRoot)
             {
                 // Check from the current type to all the base types
@@ -597,7 +601,8 @@ namespace System.Windows.Input
                 {
                     // invoke the binding
                     if ((!execute || !ExecuteCommandBinding(sender, exArgs, list[i].Item2)) &&
-                        (execute || !CanExecuteCommandBinding(sender, canExArgs, list[i].Item2))) continue;
+                        (execute || !CanExecuteCommandBinding(sender, canExArgs, list[i].Item2)))
+                        continue;
                     // if it succeeds, advance past the remaining bindings for this type
                     Type classType = list[i].Item1;
                     while (++i < list.Count && list[i].Item1 == classType)

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace System.Windows.Media
     internal class PathStreamGeometryContext : CapacityStreamGeometryContext
     {
         #region Public Methods
-        
+
         static PathStreamGeometryContext()
         {
             // We grab the default values for these properties so that we can avoid setting 
@@ -54,7 +54,7 @@ namespace System.Windows.Media
             {
                 _pathGeometry.FillRule = fillRule;
             }
-           
+
             if ((transform != null) && !transform.IsIdentity)
             {
                 _pathGeometry.Transform = transform.Clone();
@@ -132,12 +132,12 @@ namespace System.Windows.Media
 
             if (isClosed != s_defaultValueForPathFigureIsClosed)
             {
-                _currentFigure.IsClosed  = isClosed;
+                _currentFigure.IsClosed = isClosed;
             }
 
             if (isFilled != s_defaultValueForPathFigureIsFilled)
             {
-                _currentFigure.IsFilled  = isFilled;
+                _currentFigure.IsFilled = isFilled;
             }
 
             _figures.Add(_currentFigure);
@@ -195,9 +195,9 @@ namespace System.Windows.Media
         /// </summary>
         public override void PolyLineTo(IList<Point> points, bool isStroked, bool isSmoothJoin)
         {
-            GenericPolyTo(points, 
-                          isStroked, 
-                          isSmoothJoin, 
+            GenericPolyTo(points,
+                          isStroked,
+                          isSmoothJoin,
                           MIL_SEGMENT_TYPE.MilSegmentPolyLine);
         }
 
@@ -206,9 +206,9 @@ namespace System.Windows.Media
         /// </summary>
         public override void PolyQuadraticBezierTo(IList<Point> points, bool isStroked, bool isSmoothJoin)
         {
-            GenericPolyTo(points, 
-                          isStroked, 
-                          isSmoothJoin, 
+            GenericPolyTo(points,
+                          isStroked,
+                          isSmoothJoin,
                           MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier);
         }
 
@@ -217,9 +217,9 @@ namespace System.Windows.Media
         /// </summary>
         public override void PolyBezierTo(IList<Point> points, bool isStroked, bool isSmoothJoin)
         {
-            GenericPolyTo(points, 
-                          isStroked, 
-                          isSmoothJoin, 
+            GenericPolyTo(points,
+                          isStroked,
+                          isSmoothJoin,
                           MIL_SEGMENT_TYPE.MilSegmentPolyBezier);
         }
 
@@ -243,10 +243,11 @@ namespace System.Windows.Media
                 _currentFigure.Segments = _segments;
             }
 
-            ArcSegment segment = new ArcSegment();
-
-            segment.Point = point;
-            segment.Size = size;
+            ArcSegment segment = new ArcSegment
+            {
+                Point = point,
+                Size = size
+            };
 
             if (isLargeArc != s_defaultValueForArcSegmentIsLargeArc)
             {
@@ -266,19 +267,19 @@ namespace System.Windows.Media
             // Handle common PathSegment properties.
             if (isStroked != s_defaultValueForPathSegmentIsStroked)
             {
-                segment.IsStroked  = isStroked;
+                segment.IsStroked = isStroked;
             }
 
             if (isSmoothJoin != s_defaultValueForPathSegmentIsSmoothJoin)
             {
-                segment.IsSmoothJoin  = isSmoothJoin;
+                segment.IsSmoothJoin = isSmoothJoin;
             }
 
             _segments.Add(segment);
 
             _currentSegmentType = MIL_SEGMENT_TYPE.MilSegmentArc;
         }
-        
+
 
         /// <summary>
         /// PathStreamGeometryContext is never opened, so it shouldn't be closed.
@@ -303,7 +304,7 @@ namespace System.Windows.Media
         }
 
         private void GenericPolyTo(IList<Point> points,
-                                   bool isStroked, 
+                                   bool isStroked,
                                    bool isSmoothJoin,
                                    MIL_SEGMENT_TYPE segmentType)
         {
@@ -358,7 +359,7 @@ namespace System.Windows.Media
                 int count = _currentSegmentPoints.Count;
 
                 Debug.Assert(count > 0);
-               
+
                 // Is this the first segment?
                 if (_segments == null)
                 {
@@ -376,49 +377,61 @@ namespace System.Windows.Media
                     case MIL_SEGMENT_TYPE.MilSegmentPolyLine:
                         if (count == 1)
                         {
-                            LineSegment lSegment = new LineSegment();
-                            lSegment.Point = _currentSegmentPoints[0];
+                            LineSegment lSegment = new LineSegment
+                            {
+                                Point = _currentSegmentPoints[0]
+                            };
                             segment = lSegment;
                         }
                         else
                         {
-                            PolyLineSegment pSegment = new PolyLineSegment();
-                            pSegment.Points = _currentSegmentPoints;
+                            PolyLineSegment pSegment = new PolyLineSegment
+                            {
+                                Points = _currentSegmentPoints
+                            };
                             segment = pSegment;
                         }
                         break;
                     case MIL_SEGMENT_TYPE.MilSegmentPolyBezier:
                         if (count == 3)
                         {
-                            BezierSegment bSegment = new BezierSegment();
-                            bSegment.Point1 = _currentSegmentPoints[0];
-                            bSegment.Point2 = _currentSegmentPoints[1];
-                            bSegment.Point3 = _currentSegmentPoints[2];
+                            BezierSegment bSegment = new BezierSegment
+                            {
+                                Point1 = _currentSegmentPoints[0],
+                                Point2 = _currentSegmentPoints[1],
+                                Point3 = _currentSegmentPoints[2]
+                            };
                             segment = bSegment;
                         }
                         else
                         {
                             Debug.Assert(count % 3 == 0);
 
-                            PolyBezierSegment pSegment = new PolyBezierSegment();
-                            pSegment.Points = _currentSegmentPoints;
+                            PolyBezierSegment pSegment = new PolyBezierSegment
+                            {
+                                Points = _currentSegmentPoints
+                            };
                             segment = pSegment;
                         }
                         break;
                     case MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier:
                         if (count == 2)
                         {
-                            QuadraticBezierSegment qSegment = new QuadraticBezierSegment();
-                            qSegment.Point1 = _currentSegmentPoints[0];
-                            qSegment.Point2 = _currentSegmentPoints[1];
+                            QuadraticBezierSegment qSegment = new QuadraticBezierSegment
+                            {
+                                Point1 = _currentSegmentPoints[0],
+                                Point2 = _currentSegmentPoints[1]
+                            };
                             segment = qSegment;
                         }
                         else
                         {
                             Debug.Assert(count % 2 == 0);
 
-                            PolyQuadraticBezierSegment pSegment = new PolyQuadraticBezierSegment();
-                            pSegment.Points = _currentSegmentPoints;
+                            PolyQuadraticBezierSegment pSegment = new PolyQuadraticBezierSegment
+                            {
+                                Points = _currentSegmentPoints
+                            };
                             segment = pSegment;
                         }
                         break;
@@ -431,12 +444,12 @@ namespace System.Windows.Media
                 // Handle common PathSegment properties.
                 if (_currentSegmentIsStroked != s_defaultValueForPathSegmentIsStroked)
                 {
-                    segment.IsStroked  = _currentSegmentIsStroked;
+                    segment.IsStroked = _currentSegmentIsStroked;
                 }
 
                 if (_currentSegmentIsSmoothJoin != s_defaultValueForPathSegmentIsSmoothJoin)
                 {
-                    segment.IsSmoothJoin  = _currentSegmentIsSmoothJoin;
+                    segment.IsSmoothJoin = _currentSegmentIsSmoothJoin;
                 }
 
                 _segments.Add(segment);
@@ -445,9 +458,9 @@ namespace System.Windows.Media
                 _currentSegmentType = MIL_SEGMENT_TYPE.MilSegmentNone;
             }
         }
-        
+
         #region Private Fields
-        
+
         private PathGeometry _pathGeometry;
         private PathFigureCollection _figures;
         private PathFigure _currentFigure;

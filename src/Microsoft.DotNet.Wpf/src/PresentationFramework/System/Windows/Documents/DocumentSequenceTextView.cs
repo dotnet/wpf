@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal.Documents;
-using MS.Internal;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
+using MS.Internal;
+using MS.Internal.Documents;
 
 //
 // Description:
@@ -124,7 +124,7 @@ namespace System.Windows.Documents
 
             if (position != null)
             {
-                 tp = _docPage.FixedDocumentSequence.TextContainer.VerifyPosition(position);
+                tp = _docPage.FixedDocumentSequence.TextContainer.VerifyPosition(position);
             }
 
             if (tp != null)
@@ -159,7 +159,8 @@ namespace System.Windows.Documents
                 }
             }
 
-            return (new PathGeometry());;
+            return (new PathGeometry());
+            ;
         }
 
         /// <summary>
@@ -201,7 +202,7 @@ namespace System.Windows.Documents
             linesMoved = count;
 
             DocumentsTrace.FixedDocumentSequence.TextOM.Trace($"GetPositionAtNextLine {position} {position.LogicalDirection} {suggestedX} {count} ");
-            DocumentSequenceTextPointer newTp  = null;
+            DocumentSequenceTextPointer newTp = null;
             LogicalDirection newEdge = LogicalDirection.Forward;
             DocumentSequenceTextPointer tp = null;
             if (position != null)
@@ -351,7 +352,7 @@ namespace System.Windows.Documents
         {
             DocumentsTrace.FixedDocumentSequence.TextOM.Trace($"GetLineRange {position} {position.LogicalDirection}");
             DocumentSequenceTextPointer tpStart = null;
-            DocumentSequenceTextPointer tpEnd   = null;
+            DocumentSequenceTextPointer tpEnd = null;
             DocumentSequenceTextPointer tpLine = null;
 
             if (position != null)
@@ -400,7 +401,7 @@ namespace System.Windows.Documents
         /// With this array, it's possible to enumerate the glpyh properties for
         /// each code point in the specified text run.
         /// </remarks>
-        internal override  ReadOnlyCollection<GlyphRun> GetGlyphRuns(ITextPointer start, ITextPointer end)
+        internal override ReadOnlyCollection<GlyphRun> GetGlyphRuns(ITextPointer start, ITextPointer end)
         {
             throw new NotImplementedException();
         }
@@ -558,7 +559,7 @@ namespace System.Windows.Documents
                             DocumentSequenceTextPointer ptpStart, ptpEnd;
                             ptpStart = this._docPage.FixedDocumentSequence.TextContainer.MapChildPositionToParent(segment.Start);
                             ptpEnd = this._docPage.FixedDocumentSequence.TextContainer.MapChildPositionToParent(segment.End);
-                            parentSegments.Add(new TextSegment(ptpStart, ptpEnd,true));
+                            parentSegments.Add(new TextSegment(ptpStart, ptpEnd, true));
                         }
                         _textSegments = new ReadOnlyCollection<TextSegment>(parentSegments);
                     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,8 +7,8 @@
 //
 
 using System.Windows.Documents;             // ITextContainer
-using System.Windows.Media;                 // Geometry
 using System.Windows.Interop;               // HwndSource
+using System.Windows.Media;                 // Geometry
 using MS.Internal;
 using MS.Internal.Documents;                // TextContainerHelper
 
@@ -138,10 +138,10 @@ namespace System.Windows.Automation.Peers
 
             switch (behavior)
             {
-                case IsOffscreenBehavior.Onscreen :
+                case IsOffscreenBehavior.Onscreen:
                     return false;
 
-                case IsOffscreenBehavior.Offscreen :
+                case IsOffscreenBehavior.Offscreen:
                     return true;
 
                 default:
@@ -152,12 +152,12 @@ namespace System.Windows.Automation.Peers
                         {
                             return true;
                         }
-                        
+
                         if (CalculateVisibleRect(textView, textElement, textElement.ContentStart, textElement.ContentEnd) == Rect.Empty)
                         {
                             return true;
                         }
-                        
+
                         return false;
                     }
             }

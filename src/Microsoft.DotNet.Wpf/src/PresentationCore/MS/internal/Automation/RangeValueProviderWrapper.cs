@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,9 @@
 //
 //
 
-using System.Windows.Threading;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -28,17 +28,17 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class RangeValueProviderWrapper: MarshalByRefObject, IRangeValueProvider
+    internal class RangeValueProviderWrapper : MarshalByRefObject, IRangeValueProvider
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        private RangeValueProviderWrapper( AutomationPeer peer, IRangeValueProvider iface )
+        private RangeValueProviderWrapper(AutomationPeer peer, IRangeValueProvider iface)
         {
             _peer = peer;
             _iface = iface;
@@ -52,19 +52,19 @@ namespace MS.Internal.Automation
         //  Interface IRangeValueProvider
         //
         //------------------------------------------------------
- 
+
         #region Interface IRangeValueProvider
 
-        public void SetValue( double val )
+        public void SetValue(double val)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( SetValueInternal ), val );
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(SetValueInternal), val);
         }
 
         public double Value
         {
             get
             {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetValue ), null );
+                return (double)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetValue), null);
             }
         }
 
@@ -72,7 +72,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetIsReadOnly ), null );
+                return (bool)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetIsReadOnly), null);
             }
         }
 
@@ -80,7 +80,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetMaximum ), null );
+                return (double)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetMaximum), null);
             }
         }
 
@@ -88,7 +88,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetMinimum ), null );
+                return (double)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetMinimum), null);
             }
         }
 
@@ -96,7 +96,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetLargeChange ), null );
+                return (double)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetLargeChange), null);
             }
         }
 
@@ -104,7 +104,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetSmallChange ), null );
+                return (double)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetSmallChange), null);
             }
         }
 
@@ -116,12 +116,12 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new RangeValueProviderWrapper( peer, (IRangeValueProvider) iface );
+            return new RangeValueProviderWrapper(peer, (IRangeValueProvider)iface);
         }
 
         #endregion Internal Methods
@@ -131,41 +131,41 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
-        private object SetValueInternal( object arg )
+        private object SetValueInternal(object arg)
         {
-            _iface.SetValue( (double)arg );
+            _iface.SetValue((double)arg);
             return null;
         }
 
-        private object GetValue( object unused )
+        private object GetValue(object unused)
         {
             return _iface.Value;
         }
 
-        private object GetIsReadOnly( object unused )
+        private object GetIsReadOnly(object unused)
         {
             return _iface.IsReadOnly;
         }
 
-        private object GetMaximum( object unused )
+        private object GetMaximum(object unused)
         {
             return _iface.Maximum;
         }
 
-        private object GetMinimum( object unused )
+        private object GetMinimum(object unused)
         {
             return _iface.Minimum;
         }
 
-        private object GetLargeChange( object unused )
+        private object GetLargeChange(object unused)
         {
             return _iface.LargeChange;
         }
 
-        private object GetSmallChange( object unused )
+        private object GetSmallChange(object unused)
         {
             return _iface.SmallChange;
         }
@@ -178,7 +178,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;

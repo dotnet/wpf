@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -68,7 +68,7 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="right">Second object to compare.</param>
         /// <returns>Returns true when the values of FirstCharacterIndex and TrailingLength are equal for both objects,
         /// and false otherwise.</returns>
-        public static bool operator==(CharacterHit left, CharacterHit right)
+        public static bool operator ==(CharacterHit left, CharacterHit right)
         {
             return left._firstCharacterIndex == right._firstCharacterIndex &&
                 left._trailingLength == right._trailingLength;
@@ -81,7 +81,7 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="right">Second object to compare.</param>
         /// <returns>Returns false when the values of FirstCharacterIndex and TrailingLength are equal for both objects,
         /// and true otherwise.</returns>
-        public static bool operator!=(CharacterHit left, CharacterHit right)
+        public static bool operator !=(CharacterHit left, CharacterHit right)
         {
             return !(left == right);
         }

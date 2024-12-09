@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System.Windows.Media;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace System.Windows.Controls.Primitives
 {
@@ -84,77 +84,77 @@ namespace System.Windows.Controls.Primitives
             _numRows = 1;
             _numHeaders = 0;
             _rowHeight = 0;
-            
-                // For top and bottom placement the panel flow its children to calculate the number of rows and
-                // desired vertical size
-                if (tabAlignment == Dock.Top || tabAlignment == Dock.Bottom)
+
+            // For top and bottom placement the panel flow its children to calculate the number of rows and
+            // desired vertical size
+            if (tabAlignment == Dock.Top || tabAlignment == Dock.Bottom)
+            {
+                int numInCurrentRow = 0;
+                double currentRowWidth = 0;
+                double maxRowWidth = 0;
+                foreach (UIElement child in InternalChildren)
                 {
-                    int numInCurrentRow = 0;
-                    double currentRowWidth = 0;
-                    double maxRowWidth = 0;
-                    foreach (UIElement child in InternalChildren)
-                    {
-                        if (child.Visibility == Visibility.Collapsed)
-                            continue;
+                    if (child.Visibility == Visibility.Collapsed)
+                        continue;
 
-                        _numHeaders++;
+                    _numHeaders++;
 
-                        // Helper measures child, and deals with Min, Max, and base Width & Height properties.
-                        // Helper returns the size a child needs to take up (DesiredSize or property specified size).
-                        child.Measure(constraint);
-                        Size childSize = GetDesiredSizeWithoutMargin(child);
+                    // Helper measures child, and deals with Min, Max, and base Width & Height properties.
+                    // Helper returns the size a child needs to take up (DesiredSize or property specified size).
+                    child.Measure(constraint);
+                    Size childSize = GetDesiredSizeWithoutMargin(child);
 
-                        if (_rowHeight < childSize.Height)
-                            _rowHeight = childSize.Height;
-    
-                        if (currentRowWidth + childSize.Width > constraint.Width && numInCurrentRow > 0)
-                        { // If child does not fit in the current row - create a new row
-                            if (maxRowWidth < currentRowWidth)
-                                maxRowWidth = currentRowWidth;
-    
-                            currentRowWidth = childSize.Width;
-                            numInCurrentRow = 1;
-                            _numRows++;
-                        }
-                        else
-                        {
-                            currentRowWidth += childSize.Width;
-                            numInCurrentRow++;
-                        }
+                    if (_rowHeight < childSize.Height)
+                        _rowHeight = childSize.Height;
+
+                    if (currentRowWidth + childSize.Width > constraint.Width && numInCurrentRow > 0)
+                    { // If child does not fit in the current row - create a new row
+                        if (maxRowWidth < currentRowWidth)
+                            maxRowWidth = currentRowWidth;
+
+                        currentRowWidth = childSize.Width;
+                        numInCurrentRow = 1;
+                        _numRows++;
                     }
-    
-                    if (maxRowWidth < currentRowWidth)
-                        maxRowWidth = currentRowWidth;
-    
-                    contentSize.Height = _rowHeight * _numRows;
-    
-                    // If we don't have constraint or content wisth is smaller than constraint width then size to content
-                    if (double.IsInfinity(contentSize.Width) || double.IsNaN(contentSize.Width) || maxRowWidth < constraint.Width)
-                        contentSize.Width = maxRowWidth;
                     else
-                        contentSize.Width = constraint.Width;
-                }
-                else if (tabAlignment == Dock.Left || tabAlignment == Dock.Right)
-                {
-                    foreach (UIElement child in InternalChildren)
                     {
-                        if (child.Visibility == Visibility.Collapsed)
-                            continue;
-
-                        _numHeaders++;
-
-                        // Helper measures child, and deals with Min, Max, and base Width & Height properties.
-                        // Helper returns the size a child needs to take up (DesiredSize or property specified size).
-                        child.Measure(constraint);
-
-                        Size childSize = GetDesiredSizeWithoutMargin(child);
-    
-                        if (contentSize.Width < childSize.Width)
-                            contentSize.Width = childSize.Width;
-    
-                        contentSize.Height += childSize.Height;
+                        currentRowWidth += childSize.Width;
+                        numInCurrentRow++;
                     }
                 }
+
+                if (maxRowWidth < currentRowWidth)
+                    maxRowWidth = currentRowWidth;
+
+                contentSize.Height = _rowHeight * _numRows;
+
+                // If we don't have constraint or content wisth is smaller than constraint width then size to content
+                if (double.IsInfinity(contentSize.Width) || double.IsNaN(contentSize.Width) || maxRowWidth < constraint.Width)
+                    contentSize.Width = maxRowWidth;
+                else
+                    contentSize.Width = constraint.Width;
+            }
+            else if (tabAlignment == Dock.Left || tabAlignment == Dock.Right)
+            {
+                foreach (UIElement child in InternalChildren)
+                {
+                    if (child.Visibility == Visibility.Collapsed)
+                        continue;
+
+                    _numHeaders++;
+
+                    // Helper measures child, and deals with Min, Max, and base Width & Height properties.
+                    // Helper returns the size a child needs to take up (DesiredSize or property specified size).
+                    child.Measure(constraint);
+
+                    Size childSize = GetDesiredSizeWithoutMargin(child);
+
+                    if (contentSize.Width < childSize.Width)
+                        contentSize.Width = childSize.Width;
+
+                    contentSize.Height += childSize.Height;
+                }
+            }
 
             // Returns our minimum size & sets DesiredSize.
             return contentSize;
@@ -200,9 +200,11 @@ namespace System.Windows.Controls.Primitives
         private Size GetDesiredSizeWithoutMargin(UIElement element)
         {
             Thickness margin = (Thickness)element.GetValue(MarginProperty);
-            Size desiredSizeWithoutMargin = new Size();
-            desiredSizeWithoutMargin.Height = Math.Max(0d, element.DesiredSize.Height - margin.Top - margin.Bottom);
-            desiredSizeWithoutMargin.Width = Math.Max(0d, element.DesiredSize.Width - margin.Left - margin.Right);
+            Size desiredSizeWithoutMargin = new Size
+            {
+                Height = Math.Max(0d, element.DesiredSize.Height - margin.Top - margin.Bottom),
+                Width = Math.Max(0d, element.DesiredSize.Width - margin.Left - margin.Right)
+            };
             return desiredSizeWithoutMargin;
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -123,7 +123,7 @@ namespace MS.Internal.Ink
         internal uint ReadUInt16Reverse(int countOfBits)
         {
             // we only support 1-8 bits currently, not multiple bytes, and not 0 bits
-            if (countOfBits > Native.BitsPerShort|| countOfBits <= 0)
+            if (countOfBits > Native.BitsPerShort || countOfBits <= 0)
             {
                 throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
             }
@@ -258,14 +258,14 @@ namespace MS.Internal.Ink
 
                 // reposition any unused portion of the cache in the most significant part of the bit cache
                 unchecked // disable overflow checking since we are intentionally throwing away
-                            //  the significant bits
+                          //  the significant bits
                 {
                     _partialByte <<= countOfBits;
                 }
                 // update the bit count in the cache
                 _cbitsInPartialByte -= countOfBits;
             }
-                // otherwise, we need to retrieve more full bytes from the stream
+            // otherwise, we need to retrieve more full bytes from the stream
             else
             {
                 // retrieve the next full byte from the stream
@@ -282,7 +282,7 @@ namespace MS.Internal.Ink
 
                 // update the partial bit cache with the remainder of the newly retrieved full byte
                 unchecked // disable overflow checking since we are intentionally throwing away
-                            //  the significant bits
+                          //  the significant bits
                 {
                     _partialByte = (byte)(nextByte << (countOfBits - _cbitsInPartialByte));
                 }
@@ -327,15 +327,15 @@ namespace MS.Internal.Ink
         // maximum length of buffer to read in bits
         private uint _bufferLengthInBits = 0;
 
-            // the index in the source buffer for the next byte to be read
+        // the index in the source buffer for the next byte to be read
         private int _byteArrayIndex = 0;
 
-            // since the bits from multiple inputs can be packed into a single byte
-            //  (e.g. 2 bits per input fits 4 per byte), we use this field as a cache
-            //  of the remaining partial bits.
+        // since the bits from multiple inputs can be packed into a single byte
+        //  (e.g. 2 bits per input fits 4 per byte), we use this field as a cache
+        //  of the remaining partial bits.
         private byte _partialByte = 0;
 
-            // the number of bits (partial byte) left to read in the overlapped byte field
+        // the number of bits (partial byte) left to read in the overlapped byte field
         private int _cbitsInPartialByte = 0;
     }
 
@@ -439,19 +439,19 @@ namespace MS.Internal.Ink
                 throw new ArgumentOutOfRangeException("countOfBits", countOfBits, SR.CountOfBitsOutOfRange);
 
             byte buffer;
-                // if there is remaining bits in the last byte in the stream
-                //      then use those first
+            // if there is remaining bits in the last byte in the stream
+            //      then use those first
             if (_remaining > 0)
             {
                 // retrieve the last byte from the stream, update it, and then replace it
                 buffer = _targetBuffer[_targetBuffer.Count - 1];
-                    // if the remaining bits aren't enough then just copy the significant bits
-                    //      of the input into the remainder
+                // if the remaining bits aren't enough then just copy the significant bits
+                //      of the input into the remainder
                 if (countOfBits > _remaining)
                 {
                     buffer |= (byte)((bits & (0xFF >> (Native.BitsPerByte - countOfBits))) >> (countOfBits - _remaining));
                 }
-                    // otherwise, copy the entire set of input bits into the remainder
+                // otherwise, copy the entire set of input bits into the remainder
                 else
                 {
                     buffer |= (byte)((bits & (0xFF >> (Native.BitsPerByte - countOfBits))) << (_remaining - countOfBits));
@@ -462,14 +462,14 @@ namespace MS.Internal.Ink
             // if the remainder wasn't large enough to hold the entire input set
             if (countOfBits > _remaining)
             {
-                  // then copy the uncontained portion of the input set into a temporary byte
+                // then copy the uncontained portion of the input set into a temporary byte
                 _remaining = Native.BitsPerByte - (countOfBits - _remaining);
                 unchecked // disable overflow checking since we are intentionally throwing away
-                            //  the significant bits
+                          //  the significant bits
                 {
                     buffer = (byte)(bits << _remaining);
                 }
-                    // and add it to the target buffer
+                // and add it to the target buffer
                 _targetBuffer.Add(buffer);
             }
             else

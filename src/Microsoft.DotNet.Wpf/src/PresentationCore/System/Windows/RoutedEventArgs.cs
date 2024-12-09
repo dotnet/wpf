@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -56,7 +56,7 @@ namespace System.Windows
         ///     Constructor for <see cref="RoutedEventArgs"/>
         /// </summary>
         /// <param name="routedEvent">The new value that the RoutedEvent Property is being set to </param>
-        public RoutedEventArgs(RoutedEvent routedEvent) : this( routedEvent, null)
+        public RoutedEventArgs(RoutedEvent routedEvent) : this(routedEvent, null)
         {
         }
 
@@ -84,7 +84,7 @@ namespace System.Windows
         /// </remarks>
         public RoutedEvent RoutedEvent
         {
-            get {return _routedEvent;}
+            get { return _routedEvent; }
             set
             {
                 if (UserInitiated && InvokingHandler)
@@ -104,7 +104,7 @@ namespace System.Windows
         /// <param name="newRoutedEvent">
         ///     The new RoutedEvent to associate with these RoutedEventArgs
         /// </param>
-        internal void OverrideRoutedEvent( RoutedEvent newRoutedEvent )
+        internal void OverrideRoutedEvent(RoutedEvent newRoutedEvent)
         {
             _routedEvent = newRoutedEvent;
         }
@@ -121,7 +121,7 @@ namespace System.Windows
         {
             get
             {
-                return _flags[ HandledIndex ] ;
+                return _flags[HandledIndex];
             }
 
             set
@@ -132,14 +132,14 @@ namespace System.Windows
                 }
 
 
-                if( TraceRoutedEvent.IsEnabled )
+                if (TraceRoutedEvent.IsEnabled)
                 {
                     TraceRoutedEvent.TraceActivityItem(
                                             TraceRoutedEvent.HandleEvent,
                                             value,
                                             RoutedEvent.OwnerType.Name,
                                             RoutedEvent.Name,
-                                            this );
+                                            this);
                 }
 
 
@@ -167,8 +167,8 @@ namespace System.Windows
                 // For more information see the following task:
                 // 20284: Input promotion breaks down when lower level input is intercepted
 
-                _flags[ HandledIndex ] = value;
-}
+                _flags[HandledIndex] = value;
+            }
         }
 
         /// <summary>
@@ -176,7 +176,7 @@ namespace System.Windows
         /// </summary>
         public object Source
         {
-            get {return _source;}
+            get { return _source; }
             set
             {
                 if (InvokingHandler && UserInitiated)
@@ -188,7 +188,7 @@ namespace System.Windows
                 }
 
 
-                object source = value ;
+                object source = value;
                 if (_source == null && _originalSource == null)
                 {
                     // Gets here when it is the first time that the source is set.
@@ -216,7 +216,7 @@ namespace System.Windows
         /// <param name="source">
         ///     The new object to associate as the source of these RoutedEventArgs
         /// </param>
-        internal void OverrideSource( object source )
+        internal void OverrideSource(object source)
         {
             _source = source;
         }
@@ -233,7 +233,7 @@ namespace System.Windows
         /// </remarks>
         public object OriginalSource
         {
-            get {return _originalSource;}
+            get { return _originalSource; }
         }
 
         /// <summary>
@@ -291,14 +291,14 @@ namespace System.Windows
                 else
                 {
                     // Restricted Action - reflection permission required
-                    genericHandler.DynamicInvoke(new object[] {genericTarget, this});
+                    genericHandler.DynamicInvoke(new object[] { genericTarget, this });
                 }
             }
             finally
             {
                 InvokingHandler = false;
             }
-}
+        }
 
         #endregion External API
 
@@ -331,7 +331,7 @@ namespace System.Windows
         {
             get
             {
-                if (_flags [UserInitiatedIndex])
+                if (_flags[UserInitiatedIndex])
                 {
                     return true;
                 }
@@ -341,12 +341,12 @@ namespace System.Windows
 
         internal void MarkAsUserInitiated()
         {
-            _flags [ UserInitiatedIndex ] = true;
+            _flags[UserInitiatedIndex] = true;
         }
 
         internal void ClearUserInitiated()
         {
-            _flags [ UserInitiatedIndex ] = false ;
+            _flags[UserInitiatedIndex] = false;
         }
 
         private bool InvokingHandler
@@ -370,11 +370,11 @@ namespace System.Windows
         private object _source;
         private object _originalSource;
 
-        private BitVector32          _flags;
+        private BitVector32 _flags;
 
-        private const int HandledIndex                          = 1;
-        private const int UserInitiatedIndex                    = 2;
-        private const int InvokingHandlerIndex                  = 4;
+        private const int HandledIndex = 1;
+        private const int UserInitiatedIndex = 2;
+        private const int InvokingHandlerIndex = 4;
 
         #endregion Data
     }

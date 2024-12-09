@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -60,7 +60,7 @@ namespace MS.Internal.Progressivity
         // array consisting pairs of offset and length</param>
         // <param name="size">number of elements in byteRanges</param>
         void RequestDownloadByteRanges(
-            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex=1)] int [] byteRanges,
+            [MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 1)] int[] byteRanges,
             int size);
 
         // <summary>
@@ -70,7 +70,7 @@ namespace MS.Internal.Progressivity
         // array consisting pairs of offset and length</param>
         // <param name="size">numbe of elements in byteRanges</param>
         void GetDownloadedByteRanges(
-            [MarshalAs(UnmanagedType.LPArray)] out int [] byteRanges,
+            [MarshalAs(UnmanagedType.LPArray)] out int[] byteRanges,
             [MarshalAs(UnmanagedType.I4)] out int size);
 
         // <summary>

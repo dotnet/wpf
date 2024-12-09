@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -44,7 +44,7 @@ namespace System.Windows.Controls
         public ValidationError(ValidationRule ruleInError, object bindingInError) : this(ruleInError, bindingInError, null, null)
         {
         }
-        
+
         /// <summary>
         /// If the validationError is as the result of an ValidationRule, 
         /// then this is the reference to that ValidationRule.
@@ -60,7 +60,7 @@ namespace System.Windows.Controls
                 _ruleInError = value;
             }
         }
-        
+
         /// <summary>
         /// Some additional context for the ValidationError, such as
         /// a string describing the error.
@@ -82,14 +82,14 @@ namespace System.Windows.Controls
         /// If the ValidationError is the result of some Exception,
         /// this will be a reference to that exception.
         /// </summary>
-        public Exception Exception 
+        public Exception Exception
         {
-            get 
+            get
             {
                 return _exception;
             }
 
-            set 
+            set
             {
                 _exception = value;
             }
@@ -99,19 +99,19 @@ namespace System.Windows.Controls
         /// The BindingExpression or MultiBindingExpression that was marked invalid
         /// either explicitly, or while validating the ValidationRules collection.
         /// </summary>
-        public object BindingInError 
+        public object BindingInError
         {
-            get 
+            get
             {
                 return _bindingInError;
             }
         }
 
-       
-        private ValidationRule     _ruleInError;
-        private object              _errorContent;
-        private Exception           _exception;
-        private object              _bindingInError;
+
+        private ValidationRule _ruleInError;
+        private object _errorContent;
+        private Exception _exception;
+        private object _bindingInError;
     }
 }
 

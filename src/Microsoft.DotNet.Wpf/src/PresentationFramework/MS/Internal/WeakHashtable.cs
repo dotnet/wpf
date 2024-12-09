@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -148,7 +148,7 @@ namespace MS.Internal
 
                     //Both WeakReferences are gc'd and they both had the same hash
                     //Since this is only used in Weak Hash table races are not really an issue.
-                    if (wX!= null && wY != null && !wY.IsAlive && !wX.IsAlive)
+                    if (wX != null && wY != null && !wY.IsAlive && !wX.IsAlive)
                     {
                         return true;
                     }

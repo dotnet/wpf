@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,7 +38,7 @@ namespace System.Windows.Input
         /// <summary>
         /// DevDiv: 652804 - Used show status in StylusInputQueue
         /// </summary>
-        bool _isQueued; 
+        bool _isQueued;
 
         /// <summary>
         /// The raw data for this input report
@@ -58,7 +58,7 @@ namespace System.Windows.Input
         /// <summary>
         /// Set from StylusDevice.Synchronize.
         /// </summary>
-        bool _isSynchronize; 
+        bool _isSynchronize;
 
         /// <summary>
         /// Function to return the StylusPointDescription for the device associated with

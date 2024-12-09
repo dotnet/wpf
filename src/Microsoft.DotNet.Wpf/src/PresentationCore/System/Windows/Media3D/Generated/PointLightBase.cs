@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,35 +53,35 @@ namespace System.Windows.Media.Media3D
 
         private static void PositionPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            PointLightBase target = ((PointLightBase) d);
+            PointLightBase target = ((PointLightBase)d);
 
 
             target.PropertyChanged(PositionProperty);
         }
         private static void RangePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            PointLightBase target = ((PointLightBase) d);
+            PointLightBase target = ((PointLightBase)d);
 
 
             target.PropertyChanged(RangeProperty);
         }
         private static void ConstantAttenuationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            PointLightBase target = ((PointLightBase) d);
+            PointLightBase target = ((PointLightBase)d);
 
 
             target.PropertyChanged(ConstantAttenuationProperty);
         }
         private static void LinearAttenuationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            PointLightBase target = ((PointLightBase) d);
+            PointLightBase target = ((PointLightBase)d);
 
 
             target.PropertyChanged(LinearAttenuationProperty);
         }
         private static void QuadraticAttenuationPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            PointLightBase target = ((PointLightBase) d);
+            PointLightBase target = ((PointLightBase)d);
 
 
             target.PropertyChanged(QuadraticAttenuationProperty);
@@ -97,7 +97,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (Point3D) GetValue(PositionProperty);
+                return (Point3D)GetValue(PositionProperty);
             }
             set
             {
@@ -112,7 +112,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(RangeProperty);
+                return (double)GetValue(RangeProperty);
             }
             set
             {
@@ -127,7 +127,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(ConstantAttenuationProperty);
+                return (double)GetValue(ConstantAttenuationProperty);
             }
             set
             {
@@ -142,7 +142,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(LinearAttenuationProperty);
+                return (double)GetValue(LinearAttenuationProperty);
             }
             set
             {
@@ -157,7 +157,7 @@ namespace System.Windows.Media.Media3D
         {
             get
             {
-                return (double) GetValue(QuadraticAttenuationProperty);
+                return (double)GetValue(QuadraticAttenuationProperty);
             }
             set
             {

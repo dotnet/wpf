@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace System.Windows.Input
         ///     Default Constructor - required to allow creation from markup
         /// </summary>
         public CommandBinding()
-        {   
+        {
         }
 
         /// <summary>
@@ -119,14 +119,17 @@ namespace System.Windows.Input
         /// <param name="e">Event arguments.</param>
         internal void OnCanExecute(object sender, CanExecuteRoutedEventArgs e)
         {
-            if (e.Handled) return;
+            if (e.Handled)
+                return;
             if (e.RoutedEvent == CommandManager.CanExecuteEvent)
             {
                 if (CanExecute is null)
                 {
-                    if (e.CanExecute) return;
+                    if (e.CanExecute)
+                        return;
                     // If there is an Executed handler, then the command can be executed.
-                    if (Executed is null) return;
+                    if (Executed is null)
+                        return;
                     e.CanExecute = true;
                     e.Handled = true;
                 }
@@ -141,7 +144,8 @@ namespace System.Windows.Input
             }
             else // e.RoutedEvent == CommandManager.PreviewCanExecuteEvent
             {
-                if (PreviewCanExecute is null) return;
+                if (PreviewCanExecute is null)
+                    return;
                 PreviewCanExecute(sender, e);
                 if (e.CanExecute)
                 {
@@ -160,7 +164,7 @@ namespace System.Windows.Input
             };
 
             canExecuteArgs.OverrideSource(e.Source);
-            
+
             OnCanExecute(sender, canExecuteArgs);
 
             return canExecuteArgs.CanExecute;
@@ -173,19 +177,24 @@ namespace System.Windows.Input
         /// <param name="e">Event arguments.</param>
         internal void OnExecuted(object sender, ExecutedRoutedEventArgs e)
         {
-            if (e.Handled) return;
+            if (e.Handled)
+                return;
             if (e.RoutedEvent == CommandManager.ExecutedEvent)
             {
-                if (Executed is null) return;
-                if (!CheckCanExecute(sender, e)) return;
+                if (Executed is null)
+                    return;
+                if (!CheckCanExecute(sender, e))
+                    return;
                 Debug.Assert(Executed != null, nameof(Executed) + " != null");
                 Executed(sender, e);
                 e.Handled = true;
             }
             else // e.RoutedEvent == CommandManager.PreviewExecutedEvent
             {
-                if (PreviewExecuted is null) return;
-                if (!CheckCanExecute(sender, e)) return;
+                if (PreviewExecuted is null)
+                    return;
+                if (!CheckCanExecute(sender, e))
+                    return;
                 Debug.Assert(PreviewExecuted != null, nameof(PreviewExecuted) + " != null");
                 PreviewExecuted(sender, e);
                 e.Handled = true;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,9 +16,8 @@ using System.IO;
 using System.IO.Packaging;
 using System.Runtime.InteropServices;           // For Marshal.ThrowExceptionForHR
 using System.Windows;                           // for ExceptionStringTable
-
-using MS.Win32;
 using MS.Internal.Interop;                      // For STAT_CHUNK, etc.
+using MS.Win32;
 
 namespace MS.Internal.IO.Packaging
 {
@@ -220,7 +219,7 @@ namespace MS.Internal.IO.Packaging
             // string more uniform, in which there is only one terminator always? We discussed this 
             // proposal. To achieve this, we must know the behavior of the underlying layer.
             // We need to call the underlying layer twice. 
-            
+
             // The first call is to request for one character to test the behavior. 
             // If the returned character is null, then the underlying
             // layer is a conforming filter, which will pad a null terminator for the string it 
@@ -435,7 +434,7 @@ namespace MS.Internal.IO.Packaging
                     // clean up
                     ReleaseResources();
                 }
-}
+            }
 
             _xpsFileName = pszFileName;
         }
@@ -668,8 +667,8 @@ namespace MS.Internal.IO.Packaging
         private static readonly Guid _filterClsid = new Guid(0x0B8732A6,
                                                     0xAF74,
                                                     0x498c,
-                                                    0xA2 , 0x51 ,
-                                                    0x9D , 0xC8 , 0x6B , 0x05 , 0x38 , 0xB0);
+                                                    0xA2, 0x51,
+                                                    0x9D, 0xC8, 0x6B, 0x05, 0x38, 0xB0);
 
         /// <summary>
         /// Internal IFilter implementation being used by XpsFilter.

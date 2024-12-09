@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -84,7 +84,7 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(element);
 
-            return (ReadOnlyObservableCollection<ValidationError>) element.GetValue(ErrorsProperty);
+            return (ReadOnlyObservableCollection<ValidationError>)element.GetValue(ErrorsProperty);
         }
 
         /// <summary>
@@ -115,7 +115,7 @@ namespace System.Windows.Controls
 
         internal static ValidationErrorCollection GetErrorsInternal(DependencyObject target)
         {
-            return (ValidationErrorCollection) target.GetValue(Validation.ValidationErrorsInternalProperty);
+            return (ValidationErrorCollection)target.GetValue(Validation.ValidationErrorsInternalProperty);
         }
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace System.Windows.Controls
         ///     HasError DependencyProperty is true if any binding on the target element
         ///     has a validation error.
         /// </summary>
-        public static readonly DependencyProperty HasErrorProperty=
+        public static readonly DependencyProperty HasErrorProperty =
             HasErrorPropertyKey.DependencyProperty;
 
         /// <summary> Static accessor for HasError property </summary>
@@ -155,7 +155,7 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(element);
 
-            return (bool) element.GetValue(HasErrorProperty);
+            return (bool)element.GetValue(HasErrorProperty);
         }
 
         /// <summary>

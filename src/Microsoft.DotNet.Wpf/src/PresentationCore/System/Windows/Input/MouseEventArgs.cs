@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -49,7 +49,7 @@ namespace System.Windows.Input
         /// </summary>
         public MouseDevice MouseDevice
         {
-            get {return (MouseDevice) this.Device;}
+            get { return (MouseDevice)this.Device; }
         }
 
         /// <summary>
@@ -57,7 +57,7 @@ namespace System.Windows.Input
         /// </summary>
         public StylusDevice StylusDevice
         {
-            get {return _stylusDevice;}
+            get { return _stylusDevice; }
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace System.Windows.Input
         ///     The state of the left button.
         /// </summary>
         public MouseButtonState LeftButton
-        { 
+        {
             get
             {
                 return this.MouseDevice.LeftButton;
@@ -84,7 +84,7 @@ namespace System.Windows.Input
         ///     The state of the right button.
         /// </summary>
         public MouseButtonState RightButton
-        { 
+        {
             get
             {
                 return this.MouseDevice.RightButton;
@@ -95,7 +95,7 @@ namespace System.Windows.Input
         ///     The state of the middle button.
         /// </summary>
         public MouseButtonState MiddleButton
-        { 
+        {
             get
             {
                 return this.MouseDevice.MiddleButton;
@@ -106,7 +106,7 @@ namespace System.Windows.Input
         ///     The state of the first extended button.
         /// </summary>
         public MouseButtonState XButton1
-        { 
+        {
             get
             {
                 return this.MouseDevice.XButton1;
@@ -117,13 +117,13 @@ namespace System.Windows.Input
         ///     The state of the second extended button.
         /// </summary>
         public MouseButtonState XButton2
-        { 
+        {
             get
             {
                 return this.MouseDevice.XButton2;
             }
         }
-        
+
         /// <summary>
         ///     The mechanism used to call the type-specific handler on the
         ///     target.
@@ -136,7 +136,7 @@ namespace System.Windows.Input
         /// </param>
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            MouseEventHandler handler = (MouseEventHandler) genericHandler;
+            MouseEventHandler handler = (MouseEventHandler)genericHandler;
             handler(genericTarget, this);
         }
 

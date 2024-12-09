@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -114,10 +114,10 @@ namespace System.Windows.Controls
     /// </summary>
     public class InkCanvasSelectionChangingEventArgs : CancelEventArgs
     {
-        private StrokeCollection        _strokes;
-        private List<UIElement>         _elements;
-        private bool                    _strokesChanged;
-        private bool                    _elementsChanged;
+        private StrokeCollection _strokes;
+        private List<UIElement> _elements;
+        private bool _strokesChanged;
+        private bool _elementsChanged;
 
         /// <summary>
         /// Constructor
@@ -134,7 +134,7 @@ namespace System.Windows.Controls
             _strokesChanged = false;
             _elementsChanged = false;
         }
-        
+
         /// <summary>
         /// An internal flag which indicates the Strokes has changed.
         /// </summary>
@@ -207,23 +207,23 @@ namespace System.Windows.Controls
         }
     }
 
-    
+
     /// <summary>
     ///     The delegate to use for the SelectionMoving, SelectionResizing events
     /// </summary>
-    public delegate void  InkCanvasSelectionEditingEventHandler(object sender,  InkCanvasSelectionEditingEventArgs e);
+    public delegate void InkCanvasSelectionEditingEventHandler(object sender, InkCanvasSelectionEditingEventArgs e);
 
     /// <summary>
     /// Event arguments sent when the SelectionChanging event is raised.
     /// </summary>
-    public class  InkCanvasSelectionEditingEventArgs : CancelEventArgs
+    public class InkCanvasSelectionEditingEventArgs : CancelEventArgs
     {
         private Rect _oldRectangle;
         private Rect _newRectangle;
         /// <summary>
         /// Constructor
         /// </summary>
-        internal  InkCanvasSelectionEditingEventArgs(Rect oldRectangle, Rect newRectangle) 
+        internal InkCanvasSelectionEditingEventArgs(Rect oldRectangle, Rect newRectangle)
         {
             _oldRectangle = oldRectangle;
             _newRectangle = newRectangle;
@@ -234,7 +234,7 @@ namespace System.Windows.Controls
         /// </summary>
         public Rect OldRectangle
         {
-            get { return _oldRectangle;}
+            get { return _oldRectangle; }
         }
 
         /// <summary>
@@ -242,8 +242,8 @@ namespace System.Windows.Controls
         /// </summary>
         public Rect NewRectangle
         {
-            get { return _newRectangle;}
-            set {_newRectangle = value;}
+            get { return _newRectangle; }
+            set { _newRectangle = value; }
         }
     }
 
@@ -261,7 +261,7 @@ namespace System.Windows.Controls
         /// <summary>
         /// Constructor
         /// </summary>
-        internal InkCanvasStrokeErasingEventArgs(Swi.Stroke stroke) 
+        internal InkCanvasStrokeErasingEventArgs(Swi.Stroke stroke)
         {
             ArgumentNullException.ThrowIfNull(stroke);
             _stroke = stroke;
@@ -272,7 +272,7 @@ namespace System.Windows.Controls
         /// </summary>
         public Stroke Stroke
         {
-            get { return _stroke;}
+            get { return _stroke; }
         }
     }
 
@@ -290,7 +290,7 @@ namespace System.Windows.Controls
     {
         private StrokeCollection _strokes;
         private List<GestureRecognitionResult> _gestureRecognitionResults;
-        private bool                _cancel;
+        private bool _cancel;
 
         /// <summary>
         /// TBD
@@ -306,7 +306,7 @@ namespace System.Windows.Controls
                 throw new ArgumentException(SR.InvalidEmptyStrokeCollection, "strokes");
             }
             ArgumentNullException.ThrowIfNull(gestureRecognitionResults);
-            List<GestureRecognitionResult> results = 
+            List<GestureRecognitionResult> results =
                 new List<GestureRecognitionResult>(gestureRecognitionResults);
             if (results.Count == 0)
             {

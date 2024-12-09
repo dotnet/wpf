@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -122,7 +122,7 @@ namespace System.IO.Packaging
         /// </param>
         internal
         EncryptedPackageEnvelope(
-            string envelopeFileName, 
+            string envelopeFileName,
             Stream packageStream,
             PublishLicense publishLicense,
             CryptoProvider cryptoProvider
@@ -165,7 +165,7 @@ namespace System.IO.Packaging
         /// </param>
         internal
         EncryptedPackageEnvelope(
-            Stream envelopeStream, 
+            Stream envelopeStream,
             Stream packageStream,
             PublishLicense publishLicense,
             CryptoProvider cryptoProvider
@@ -323,7 +323,7 @@ namespace System.IO.Packaging
         /// </param>
         public static EncryptedPackageEnvelope
         CreateFromPackage(
-            string envelopeFileName, 
+            string envelopeFileName,
             Stream packageStream,
             PublishLicense publishLicense,
             CryptoProvider cryptoProvider
@@ -356,7 +356,7 @@ namespace System.IO.Packaging
         /// </param>
         public static EncryptedPackageEnvelope
         CreateFromPackage(
-            Stream envelopeStream, 
+            Stream envelopeStream,
             Stream packageStream,
             PublishLicense publishLicense,
             CryptoProvider cryptoProvider
@@ -617,7 +617,7 @@ namespace System.IO.Packaging
         public void Dispose()
         {
             Dispose(true);
-            
+
             GC.SuppressFinalize(this);
         }
 
@@ -705,7 +705,7 @@ namespace System.IO.Packaging
                 //We will try to open the package with the max possible permissions based
                 //on the current EncryptedPackage access and the stream read/write properties.
 
-                FileAccess fileAccessForPackage = 0 ;
+                FileAccess fileAccessForPackage = 0;
 
                 //Convert CanRead to FileAccess.Read
                 if (_packageStream.CanRead)
@@ -717,10 +717,10 @@ namespace System.IO.Packaging
                 //check it against the mode of EncryptedPackage
                 fileAccessForPackage &= this.FileOpenAccess;
 
-                 _package = Package.Open(
-                    _packageStream,
-                    FileMode.Open,
-                    fileAccessForPackage);
+                _package = Package.Open(
+                   _packageStream,
+                   FileMode.Open,
+                   fileAccessForPackage);
             }
 
             _handedOutPackage = true;
@@ -753,7 +753,7 @@ namespace System.IO.Packaging
         /// <summary>
         /// Retrieve the package stream contained in the compound file.
         /// </summary>
-        internal Stream GetPackageStream() 
+        internal Stream GetPackageStream()
         {
             CheckDisposed();
 
@@ -818,7 +818,7 @@ namespace System.IO.Packaging
                 return _dataspaceLabelRMEncryptionNoCompression;
             }
         }
-        
+
         #endregion Internal Properties
 
         //------------------------------------------------------
@@ -887,7 +887,7 @@ namespace System.IO.Packaging
 
         private void
         InitForOpen()
-        {           
+        {
             StreamInfo siPackage = new StreamInfo(_root, PackageStreamName);
             if (!siPackage.InternalExists())
             {
@@ -930,7 +930,7 @@ namespace System.IO.Packaging
             //  scenarios where RM license are not relevant, for example indexing and 
             //  working with document properties            
             //
-            
+
             //
             // Make the rights management information stored in the compound file
             // available to the application through the RightsManagementInformation
@@ -1081,7 +1081,7 @@ namespace System.IO.Packaging
                 // to release it, so we never attempt to release any reference more
                 // than once.
                 //
-                _disposed = true;         
+                _disposed = true;
             }
         }
 
@@ -1115,11 +1115,11 @@ namespace System.IO.Packaging
             // to trigger the TransformInitializationEvent, which will allow us to
             // retrieve the transform object.
             //
-             _packageStream = siPackage.Create(
-                                                FileMode.Create,
-                                                _root.OpenAccess,
-                                                _dataSpaceName
-                                                );
+            _packageStream = siPackage.Create(
+                                               FileMode.Create,
+                                               _root.OpenAccess,
+                                               _dataSpaceName
+                                               );
 
             if (packageStream != null)
             {
@@ -1164,13 +1164,13 @@ namespace System.IO.Packaging
         private bool _handedOutPackageStream;
 
         // Resources managed by this class.
-        private StorageRoot                     _root;
-        private Package                         _package;
+        private StorageRoot _root;
+        private Package _package;
 
-        private string                          _dataSpaceName;
-        private Stream                          _packageStream;
-        private StorageBasedPackageProperties   _packageProperties;
-        private RightsManagementInformation     _rmi;
+        private string _dataSpaceName;
+        private Stream _packageStream;
+        private StorageBasedPackageProperties _packageProperties;
+        private RightsManagementInformation _rmi;
 
         //
         // Instance name for the encryption transform. This is used in StorageInfo as well.
@@ -1187,11 +1187,11 @@ namespace System.IO.Packaging
 
         private const int STG_E_FILEALREADYEXISTS = unchecked((int)0x80030050);
 
-        private const FileMode   _defaultFileModeForCreate   = FileMode.Create;
+        private const FileMode _defaultFileModeForCreate = FileMode.Create;
         private const FileAccess _defaultFileAccess = FileAccess.ReadWrite;
-        private const FileShare  _defaultFileShare  = FileShare.None;
+        private const FileShare _defaultFileShare = FileShare.None;
 
-        private const FileMode   _defaultFileModeForOpen   = FileMode.Open;
+        private const FileMode _defaultFileModeForOpen = FileMode.Open;
 
         #endregion Private Fields
     }

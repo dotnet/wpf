@@ -200,11 +200,16 @@ namespace System.IO.Compression
             {
                 switch (InitializationState)
                 {
-                    case State.NotInitialized: return true;
-                    case State.InitializedForDeflate: return (DeflateEnd() == ErrorCode.Ok);
-                    case State.InitializedForInflate: return (InflateEnd() == ErrorCode.Ok);
-                    case State.Disposed: return true;
-                    default: return false;  // This should never happen. Did we forget one of the State enum values in the switch?
+                    case State.NotInitialized:
+                        return true;
+                    case State.InitializedForDeflate:
+                        return (DeflateEnd() == ErrorCode.Ok);
+                    case State.InitializedForInflate:
+                        return (InflateEnd() == ErrorCode.Ok);
+                    case State.Disposed:
+                        return true;
+                    default:
+                        return false;  // This should never happen. Did we forget one of the State enum values in the switch?
                 }
             }
 

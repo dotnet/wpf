@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -174,8 +174,8 @@ namespace System.Windows.Navigation
             }
         }
 
-        private const uint  DefaultMaxMenuEntries = 9; // the maximum number of items in the dropdown menus
-        
+        private const uint DefaultMaxMenuEntries = 9; // the maximum number of items in the dropdown menus
+
         public event NotifyCollectionChangedEventHandler CollectionChanged;
 
         private IEnumerable _ieble;
@@ -205,7 +205,7 @@ namespace System.Windows.Navigation
             else
             {
                 success = _ienum.MoveNext();
-                if (success) 
+                if (success)
                 {
                     _itemsReturned++;
                 }
@@ -217,7 +217,7 @@ namespace System.Windows.Navigation
         {
             get { return _ienum.Current; }
         }
-        
+
         private uint _itemsReturned;
         private uint _viewLimit;
         private IEnumerator _ienum;

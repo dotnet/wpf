@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -239,7 +239,7 @@ namespace System.Windows.Controls
                         typeof(String),
                         typeof(GridViewColumn),
                         new FrameworkPropertyMetadata(
-                                (String) null,
+                                (String)null,
                               new PropertyChangedCallback(OnHeaderStringFormatChanged)));
 
 
@@ -249,7 +249,7 @@ namespace System.Windows.Controls
         /// </summary>
         public String HeaderStringFormat
         {
-            get { return (String) GetValue(HeaderStringFormatProperty); }
+            get { return (String)GetValue(HeaderStringFormatProperty); }
             set { SetValue(HeaderStringFormatProperty, value); }
         }
 
@@ -259,7 +259,7 @@ namespace System.Windows.Controls
         private static void OnHeaderStringFormatChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             GridViewColumn ctrl = (GridViewColumn)d;
-            ctrl.OnHeaderStringFormatChanged((String) e.OldValue, (String) e.NewValue);
+            ctrl.OnHeaderStringFormatChanged((String)e.OldValue, (String)e.NewValue);
         }
 
         /// <summary>

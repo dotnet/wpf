@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -109,7 +109,7 @@ namespace MS.Internal
         /// <returns>True if the two objects are equal, otherwise False</returns>
         public static bool operator ==(DpiScale2 dpiScaleA, DpiScale2 dpiScaleB)
         {
-            if (object.ReferenceEquals(dpiScaleA, null) && 
+            if (object.ReferenceEquals(dpiScaleA, null) &&
                 object.ReferenceEquals(dpiScaleB, null))
             {
                 return true;
@@ -128,7 +128,7 @@ namespace MS.Internal
             return
                 DoubleUtil.AreClose(this.DpiScaleX, dpiScale.DpiScaleX) &&
                 DoubleUtil.AreClose(this.DpiScaleY, dpiScale.DpiScaleY);
-}
+        }
 
         /// <summary>
         /// Equality test against a <see cref="DpiScale2"/> object.
@@ -200,7 +200,7 @@ namespace MS.Internal
         /// <returns>A new <see cref="DpiScale2"/> instance</returns>
         internal static DpiScale2 FromPixelsPerInch(double ppiX, double ppiY)
         {
-            if (DoubleUtil.LessThanOrClose(ppiX,0) || DoubleUtil.LessThanOrClose(ppiY, 0))
+            if (DoubleUtil.LessThanOrClose(ppiX, 0) || DoubleUtil.LessThanOrClose(ppiY, 0))
             {
                 return null;
             }

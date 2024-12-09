@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ namespace System.Windows
         //  Constructors
         //
         //------------------------------------------------------
-    
+
         #region Constructors
 
         /// <summary>
@@ -62,7 +62,7 @@ namespace System.Windows
         /// </summary>
         public DragDropKeyStates KeyStates
         {
-            get {return _dragDropKeyStates;}
+            get { return _dragDropKeyStates; }
         }
 
         /// <summary>
@@ -70,19 +70,19 @@ namespace System.Windows
         /// </summary>
         public DragAction Action
         {
-            get 
-            {   
+            get
+            {
                 return _action;
             }
 
-            set 
+            set
             {
                 if (!DragDrop.IsValidDragAction(value))
                 {
                     throw new ArgumentException(SR.Format(SR.DragDrop_DragActionInvalid, "value"));
                 }
 
-                _action = value; 
+                _action = value;
             }
         }
 

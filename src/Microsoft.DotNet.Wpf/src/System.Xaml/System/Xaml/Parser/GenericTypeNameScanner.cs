@@ -31,7 +31,7 @@ namespace MS.Internal.Xaml.Parser
         private char _lastChar;
 
         public GenericTypeNameScanner(string text)
-            :base(text)
+            : base(text)
         {
             _state = State.START;
             _pushedBackSymbol = GenericTypeNameScannerToken.NONE;
@@ -59,7 +59,7 @@ namespace MS.Internal.Xaml.Parser
 
             while (_token == GenericTypeNameScannerToken.NONE)
             {
-                if(IsAtEndOfInput)
+                if (IsAtEndOfInput)
                 {
                     if (_state == State.INNAME)
                     {
@@ -188,7 +188,7 @@ namespace MS.Internal.Xaml.Parser
                     break;
 
                 default:
-                    if(XamlName.IsValidNameStartChar(CurrentChar))
+                    if (XamlName.IsValidNameStartChar(CurrentChar))
                     {
                         StartMultiCharToken();
                         _state = State.INNAME;
@@ -206,14 +206,14 @@ namespace MS.Internal.Xaml.Parser
 
         private void State_InName()
         {
-            if(IsAtEndOfInput || IsWhitespaceChar(CurrentChar) || CurrentChar == OpenBracket)
+            if (IsAtEndOfInput || IsWhitespaceChar(CurrentChar) || CurrentChar == OpenBracket)
             {
                 _token = GenericTypeNameScannerToken.NAME;
                 _state = State.START;
                 return;
             }
 
-            switch(CurrentChar)
+            switch (CurrentChar)
             {
                 case OpenParen:
                     _pushedBackSymbol = GenericTypeNameScannerToken.OPEN;

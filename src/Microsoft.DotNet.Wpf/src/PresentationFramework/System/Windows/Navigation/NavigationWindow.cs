@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,15 +16,14 @@
 
 using System.Collections;
 using System.ComponentModel;
-
-using MS.Internal.AppModel;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Utility;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Markup;
+using System.Windows.Media;
+using MS.Internal.AppModel;
+using MS.Internal.KnownBoxes;
+using MS.Internal.Utility;
 
 namespace System.Windows.Navigation
 {
@@ -52,7 +51,7 @@ namespace System.Windows.Navigation
         /// </summary>
         public bool SandboxExternalContent
         {
-            get { return (bool) GetValue(SandboxExternalContentProperty); }
+            get { return (bool)GetValue(SandboxExternalContentProperty); }
             set
             {
                 bool fSandBox = (bool)value;
@@ -115,7 +114,7 @@ namespace System.Windows.Navigation
         public static readonly DependencyProperty CanGoBackProperty =
             JournalNavigationScope.CanGoBackProperty.AddOwner(typeof(NavigationWindow));
 
-         /// <summary>
+        /// <summary>
         ///     The DependencyProperty for the CanGoForward property.
         ///     Flags:              None
         ///     Default Value:      false
@@ -186,7 +185,7 @@ namespace System.Windows.Navigation
                             NavigationCommands.BrowseStop,
                             new ExecutedRoutedEventHandler(OnBrowseStop),
                             new CanExecuteRoutedEventHandler(OnQueryBrowseStop)));
-}
+        }
 
         /// <summary>
         /// Constructs a NavigationWindow object
@@ -202,7 +201,7 @@ namespace System.Windows.Navigation
             this.Initialize();
         }
 
-        internal NavigationWindow(bool inRbw): base(inRbw)
+        internal NavigationWindow(bool inRbw) : base(inRbw)
         {
             this.Initialize();
         }
@@ -278,7 +277,7 @@ namespace System.Windows.Navigation
             // Close/update PS844614 to investigate why we need to delay create WNC instead of
             // creating and calling Navigate immediately here
             return NavigationService.Navigate(content);
-}
+        }
 
         /// <summary>
         /// This method navigates this window to the
@@ -297,13 +296,13 @@ namespace System.Windows.Navigation
             // Close/update PS844614 to investigate why we need to delay create WNC instead of
             // creating and calling Navigate immediately here
             return NavigationService.Navigate(content, extraData);
-         }
+        }
 
-         JournalNavigationScope INavigator.GetJournal(bool create)
-         {
-             Debug.Assert(_JNS != null);
-             return _JNS;
-         }
+        JournalNavigationScope INavigator.GetJournal(bool create)
+        {
+            Debug.Assert(_JNS != null);
+            return _JNS;
+        }
 
         /// <summary>
         /// Navigates to the next entry in the Forward branch of the Journal, if one exists.
@@ -408,7 +407,7 @@ namespace System.Windows.Navigation
         /// </remarks>
         public override void OnApplyTemplate()
         {
-            VerifyContextAndObjectState( );
+            VerifyContextAndObjectState();
 
             base.OnApplyTemplate();
 
@@ -498,9 +497,9 @@ namespace System.Windows.Navigation
         /// </summary>
         public NavigationService NavigationService
         {
-            #if DEBUG
+#if DEBUG
             [DebuggerStepThrough]
-            #endif
+#endif
             get
             {
                 VerifyContextAndObjectState();
@@ -561,7 +560,7 @@ namespace System.Windows.Navigation
             NavigationWindow navWin = (NavigationWindow)d;
 
             // Don't navigate if the Source value change is from NavService as a result of a navigation happening.
-            if (! navWin._sourceUpdatedFromNavService )
+            if (!navWin._sourceUpdatedFromNavService)
             {
                 // We used not to need to resolve the Uri here because we did not allow navigating to a xaml rooted inside a NavWin.
                 // Now after we allow this, we will need to support navigating to the following xaml,
@@ -622,7 +621,7 @@ namespace System.Windows.Navigation
         {
             get
             {
-                VerifyContextAndObjectState( );
+                VerifyContextAndObjectState();
                 return (_navigationService == null ? null : _navigationService.CurrentSource);
             }
         }
@@ -678,12 +677,12 @@ namespace System.Windows.Navigation
         {
             add
             {
-                VerifyContextAndObjectState( );
+                VerifyContextAndObjectState();
                 NavigationService.Navigating += value;
             }
             remove
             {
-                VerifyContextAndObjectState( );
+                VerifyContextAndObjectState();
                 NavigationService.Navigating -= value;
             }
         }
@@ -698,12 +697,12 @@ namespace System.Windows.Navigation
         {
             add
             {
-                VerifyContextAndObjectState( );
+                VerifyContextAndObjectState();
                 NavigationService.NavigationProgress += value;
             }
             remove
             {
-                VerifyContextAndObjectState( );
+                VerifyContextAndObjectState();
                 NavigationService.NavigationProgress -= value;
             }
         }
@@ -745,12 +744,12 @@ namespace System.Windows.Navigation
         {
             add
             {
-                VerifyContextAndObjectState( );
+                VerifyContextAndObjectState();
                 NavigationService.Navigated += value;
             }
             remove
             {
-                VerifyContextAndObjectState( );
+                VerifyContextAndObjectState();
                 NavigationService.Navigated -= value;
             }
         }
@@ -770,12 +769,12 @@ namespace System.Windows.Navigation
         {
             add
             {
-                VerifyContextAndObjectState( );
+                VerifyContextAndObjectState();
                 NavigationService.LoadCompleted += value;
             }
             remove
             {
-                VerifyContextAndObjectState( );
+                VerifyContextAndObjectState();
                 NavigationService.LoadCompleted -= value;
             }
         }
@@ -790,12 +789,12 @@ namespace System.Windows.Navigation
         {
             add
             {
-                VerifyContextAndObjectState( );
+                VerifyContextAndObjectState();
                 NavigationService.NavigationStopped += value;
             }
             remove
             {
-                VerifyContextAndObjectState( );
+                VerifyContextAndObjectState();
                 NavigationService.NavigationStopped -= value;
             }
         }
@@ -862,12 +861,12 @@ namespace System.Windows.Navigation
         /// </remarks>
         protected override void OnClosed(EventArgs args)
         {
-            VerifyContextAndObjectState( );
+            VerifyContextAndObjectState();
             // We override OnClosed here to Dispose of the NCTree.
-            base.OnClosed( args ) ;
+            base.OnClosed(args);
 
             // detach the event handlers on the NC
-            if(_navigationService != null)
+            if (_navigationService != null)
                 _navigationService.Dispose();
         }
 
@@ -940,10 +939,10 @@ namespace System.Windows.Navigation
         /// <summary>
         /// Journal for the window. Maintains Back/Forward navigation history.
         /// </summary>
-        #if DEBUG
+#if DEBUG
         // to prevent creating the Journal instance prematurely while debugging
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
-        #endif
+#endif
         internal Journal Journal
         {
             get
@@ -954,9 +953,9 @@ namespace System.Windows.Navigation
 
         internal JournalNavigationScope JournalNavigationScope
         {
-            #if DEBUG
+#if DEBUG
             [DebuggerStepThrough]
-            #endif
+#endif
             get
             {
                 return _JNS;
@@ -977,7 +976,7 @@ namespace System.Windows.Navigation
         private static object CoerceContent(DependencyObject d, object value)
         {
             // whenever content changes, defer the change until the Navigate comes in
-            NavigationWindow w = (NavigationWindow) d;
+            NavigationWindow w = (NavigationWindow)d;
 
             if (w.NavigationService.Content == value)
             {
@@ -1084,7 +1083,7 @@ namespace System.Windows.Navigation
             {
                 return System.Windows.Application.IsShuttingDown;
             }
-}
+        }
 
         //
         //  This property
@@ -1106,13 +1105,13 @@ namespace System.Windows.Navigation
 
         #region Private Fields
 
-        private NavigationService       _navigationService;
-        private JournalNavigationScope  _JNS;
-        private bool                  _sourceUpdatedFromNavService;
+        private NavigationService _navigationService;
+        private JournalNavigationScope _JNS;
+        private bool _sourceUpdatedFromNavService;
 
         // Framelet stuff
 
-        private bool                    _fFramelet;
+        private bool _fFramelet;
 
         #endregion Private Fields
 
@@ -1131,5 +1130,5 @@ namespace System.Windows.Navigation
     }
 
     #endregion NavigationWindow Class
- }
+}
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,7 +41,7 @@ namespace System.Windows.Markup
             _parserHooks = parserHooks;
         }
 
-        private ParserHooks   _parserHooks = null;
+        private ParserHooks _parserHooks = null;
 
         #endregion Construction
 
@@ -49,15 +49,17 @@ namespace System.Windows.Markup
         ///   Convert from Xaml read by a token reader into baml being written
         ///   out by a record writer.  The context gives mapping information.
         /// </summary>
-        internal override void ConvertXamlToBaml (
-            XamlReaderHelper             tokenReader,
-            ParserContext          context,
-            XamlNode               xamlNode,
-            BamlRecordWriter       bamlWriter)
+        internal override void ConvertXamlToBaml(
+            XamlReaderHelper tokenReader,
+            ParserContext context,
+            XamlNode xamlNode,
+            BamlRecordWriter bamlWriter)
         {
-            StyleXamlParser styleParser = new StyleXamlParser(tokenReader, context);
-            styleParser.BamlRecordWriter = bamlWriter;
-            styleParser.ParserHooks = _parserHooks;
+            StyleXamlParser styleParser = new StyleXamlParser(tokenReader, context)
+            {
+                BamlRecordWriter = bamlWriter,
+                ParserHooks = _parserHooks
+            };
 
 
             // Process the xamlNode that is passed in so that the <Style> element is written to baml
@@ -65,7 +67,7 @@ namespace System.Windows.Markup
 
             // Parse the entire Style section now, writing everything out directly to BAML.
             styleParser.Parse();
-       }
+        }
 #else
 
 
@@ -75,14 +77,14 @@ namespace System.Windows.Markup
         ///   collection of baml records.  For Style, this is the type of the first element record
         ///   in the record collection, skipping over the Style element itself.
         /// </summary>
-        internal override object GetDictionaryKey(BamlRecord startRecord,  ParserContext parserContext)
+        internal override object GetDictionaryKey(BamlRecord startRecord, ParserContext parserContext)
         {
-            Type       styleTargetType = Style.DefaultTargetType;
-            bool       styleTargetTypeSet = false;
-            object     targetType = null;
-            int        numberOfElements = 0;
+            Type styleTargetType = Style.DefaultTargetType;
+            bool styleTargetTypeSet = false;
+            object targetType = null;
+            int numberOfElements = 0;
             BamlRecord record = startRecord;
-            short      ownerTypeId = 0;
+            short ownerTypeId = 0;
 
             while (record != null)
             {
@@ -134,11 +136,11 @@ namespace System.Windows.Markup
                 return targetType;
         }
 
-                // Helper to insert line and position numbers into message, if they are present
+        // Helper to insert line and position numbers into message, if they are present
         void ThrowException(
              string id,
-             int  lineNumber,
-             int  linePosition)
+             int lineNumber,
+             int linePosition)
         {
             string message = SR.GetResourceString(id);
             XamlParseException parseException;
@@ -169,31 +171,31 @@ namespace System.Windows.Markup
         #region Data
 
         // Constants used for emitting specific properties and attributes for a Style
-        internal const string StyleTagName                                  = "Style";
-        internal const string TargetTypePropertyName                        = "TargetType";
-        internal const string BasedOnPropertyName                           = "BasedOn";
-        internal const string VisualTriggersPropertyName                    = "Triggers";
-        internal const string ResourcesPropertyName                         = "Resources";
-        internal const string SettersPropertyName                           = "Setters";
-        internal const string VisualTriggersFullPropertyName    = $"{StyleTagName}.{VisualTriggersPropertyName}";
-        internal const string SettersFullPropertyName           = $"{StyleTagName}.{SettersPropertyName}";
-        internal const string ResourcesFullPropertyName         = $"{StyleTagName}.{ResourcesPropertyName}";
-        internal const string PropertyTriggerPropertyName                   = "Property";
-        internal const string PropertyTriggerValuePropertyName              = "Value";
-        internal const string PropertyTriggerSourceName                     = "SourceName";
-        internal const string PropertyTriggerEnterActions                   = "EnterActions";
-        internal const string PropertyTriggerExitActions                    = "ExitActions";
-        internal const string DataTriggerBindingPropertyName                = "Binding";
-        internal const string EventTriggerEventName                         = "RoutedEvent";
-        internal const string EventTriggerSourceName                          = "SourceName";
-        internal const string EventTriggerActions                           = "Actions";
-        internal const string MultiPropertyTriggerConditionsPropertyName    = "Conditions";
-        internal const string SetterTagName                                 = "Setter";
-        internal const string SetterPropertyAttributeName                   = "Property";
-        internal const string SetterValueAttributeName                      = "Value";
-        internal const string SetterTargetAttributeName                     = "TargetName";
-        internal const string SetterEventAttributeName                      = "Event";
-        internal const string SetterHandlerAttributeName                    = "Handler";
+        internal const string StyleTagName = "Style";
+        internal const string TargetTypePropertyName = "TargetType";
+        internal const string BasedOnPropertyName = "BasedOn";
+        internal const string VisualTriggersPropertyName = "Triggers";
+        internal const string ResourcesPropertyName = "Resources";
+        internal const string SettersPropertyName = "Setters";
+        internal const string VisualTriggersFullPropertyName = $"{StyleTagName}.{VisualTriggersPropertyName}";
+        internal const string SettersFullPropertyName = $"{StyleTagName}.{SettersPropertyName}";
+        internal const string ResourcesFullPropertyName = $"{StyleTagName}.{ResourcesPropertyName}";
+        internal const string PropertyTriggerPropertyName = "Property";
+        internal const string PropertyTriggerValuePropertyName = "Value";
+        internal const string PropertyTriggerSourceName = "SourceName";
+        internal const string PropertyTriggerEnterActions = "EnterActions";
+        internal const string PropertyTriggerExitActions = "ExitActions";
+        internal const string DataTriggerBindingPropertyName = "Binding";
+        internal const string EventTriggerEventName = "RoutedEvent";
+        internal const string EventTriggerSourceName = "SourceName";
+        internal const string EventTriggerActions = "Actions";
+        internal const string MultiPropertyTriggerConditionsPropertyName = "Conditions";
+        internal const string SetterTagName = "Setter";
+        internal const string SetterPropertyAttributeName = "Property";
+        internal const string SetterValueAttributeName = "Value";
+        internal const string SetterTargetAttributeName = "TargetName";
+        internal const string SetterEventAttributeName = "Event";
+        internal const string SetterHandlerAttributeName = "Handler";
 #if HANDLEDEVENTSTOO
         internal const string SetterHandledEventsTooAttributeName           = "HandledEventsToo";
 #endif

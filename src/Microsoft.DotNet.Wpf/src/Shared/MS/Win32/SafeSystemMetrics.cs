@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -71,7 +71,7 @@ namespace MS.Win32
             }
         }
 
-            
+
         /// <summary>
         ///     Maps to SM_CXDRAG
         /// </summary>
@@ -101,7 +101,7 @@ namespace MS.Win32
         {
             get
             {
-                return  (UnsafeNativeMethods.GetSystemMetrics(SM.IMMENABLED) != 0);
+                return (UnsafeNativeMethods.GetSystemMetrics(SM.IMMENABLED) != 0);
             }
 
         }

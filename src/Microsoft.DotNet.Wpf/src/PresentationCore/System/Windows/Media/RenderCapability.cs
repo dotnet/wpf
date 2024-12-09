@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -56,7 +56,7 @@ namespace System.Windows.Media
                 majorVersionRequested == 3 && minorVersionRequested == 0)
             {
                 // Now actually check.
-                
+
                 MediaContext mediaContext = MediaContext.CurrentMediaContext;
                 byte majorVersion = (byte)((mediaContext.PixelShaderVersion >> 8) & 0xFF);
                 byte minorVersion = (byte)((mediaContext.PixelShaderVersion >> 0) & 0xFF);
@@ -89,7 +89,7 @@ namespace System.Windows.Media
             if (majorVersionRequested == 2 && minorVersionRequested == 0)
             {
                 // Now actually check.
-                
+
                 MediaContext mediaContext = MediaContext.CurrentMediaContext;
                 isSupported = mediaContext.HasSSE2Support;
             }
@@ -138,7 +138,7 @@ namespace System.Windows.Media
         /// hardware device.  If there are multiple devices, this returns the minumum size
         /// among them.
         /// </summary>
-        public static Size MaxHardwareTextureSize 
+        public static Size MaxHardwareTextureSize
         {
             get
             {
@@ -146,7 +146,7 @@ namespace System.Windows.Media
                 return mediaContext.MaxTextureSize;
             }
         }
-        
+
         /// <summary>
         /// TierChanged event - 
         /// This event is raised when the Tier for a given Dispatcher changes.

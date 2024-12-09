@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -79,7 +79,7 @@ namespace System.Windows.Data
             get { return _parameterType; }
             set { _parameterType = value; }
         }
-        
+
         ///<summary>
         ///     Returns the unique identifier for this Attribute.
         ///</summary>
@@ -91,7 +91,7 @@ namespace System.Windows.Data
         // not for AllowMultiple = true;
         public override object TypeId
         {
-             // the attribute itself will be used as a key to the dictionary
+            // the attribute itself will be used as a key to the dictionary
             get { return this; }
         }
 

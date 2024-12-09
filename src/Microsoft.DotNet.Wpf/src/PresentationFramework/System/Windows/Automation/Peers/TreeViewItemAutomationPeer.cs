@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,7 +12,7 @@ namespace System.Windows.Automation.Peers
     public class TreeViewItemAutomationPeer : ItemsControlAutomationPeer, IExpandCollapseProvider, ISelectionItemProvider, IScrollItemProvider
     {
         ///
-        public TreeViewItemAutomationPeer(TreeViewItem owner): base(owner)
+        public TreeViewItemAutomationPeer(TreeViewItem owner) : base(owner)
         {
         }
 
@@ -58,7 +58,7 @@ namespace System.Windows.Automation.Peers
             if (owner != null)
             {
                 iterate(this, owner,
-                    (IteratorCallback)delegate(AutomationPeer peer)
+                    (IteratorCallback)delegate (AutomationPeer peer)
                     {
                         if (children == null)
                             children = new List<AutomationPeer>();
@@ -133,7 +133,7 @@ namespace System.Windows.Automation.Peers
                                 done = callback(peer);
                         }
 
-                        if(peer == null)
+                        if (peer == null)
                             done = iterate(logicalParentAp, child, callback, dataChildren, oldChildren);
                     }
                     else
@@ -159,7 +159,7 @@ namespace System.Windows.Automation.Peers
             AutomationPeer parentPeer = this;
             if (EventsSource as TreeViewDataItemAutomationPeer != null)
             {
-            	parentPeer = EventsSource as TreeViewDataItemAutomationPeer;
+                parentPeer = EventsSource as TreeViewDataItemAutomationPeer;
             }
 
             if (peer == null)
@@ -169,13 +169,13 @@ namespace System.Windows.Automation.Peers
             {
                 peer = CreateItemAutomationPeer(item);
 
-                if(peer != null)
+                if (peer != null)
                 {
                     peer.TrySetParentInfo(parentPeer);
                 }
             }
 
-            if(peer != null)
+            if (peer != null)
             {
                 AutomationPeer wrapperPeer = (peer as ItemAutomationPeer).GetWrapperPeer();
                 if (wrapperPeer != null)
@@ -229,7 +229,7 @@ namespace System.Windows.Automation.Peers
         {
             // To ensure that the Updation of children should be initiated from DataPeer so as to have the right parent value stored for children
             TreeViewDataItemAutomationPeer dataPeer = EventsSource as TreeViewDataItemAutomationPeer;
-            if(dataPeer != null)
+            if (dataPeer != null)
                 dataPeer.UpdateChildrenInternal(AutomationInteropProvider.ItemsInvalidateLimit);
             else
                 UpdateChildrenInternal(AutomationInteropProvider.ItemsInvalidateLimit);
@@ -248,11 +248,11 @@ namespace System.Windows.Automation.Peers
         internal void UpdateWeakRefStorageFromDataPeer()
         {
             // To use the already stored WeakRef collection of it's children Items which might be created when last time this item was realized.
-            if(EventsSource as TreeViewDataItemAutomationPeer != null)
+            if (EventsSource as TreeViewDataItemAutomationPeer != null)
             {
-                if((EventsSource as TreeViewDataItemAutomationPeer).WeakRefElementProxyStorageCache == null)
+                if ((EventsSource as TreeViewDataItemAutomationPeer).WeakRefElementProxyStorageCache == null)
                     (EventsSource as TreeViewDataItemAutomationPeer).WeakRefElementProxyStorageCache = WeakRefElementProxyStorage;
-                else if(WeakRefElementProxyStorage.Count == 0)
+                else if (WeakRefElementProxyStorage.Count == 0)
                 {
                     WeakRefElementProxyStorage = (EventsSource as TreeViewDataItemAutomationPeer).WeakRefElementProxyStorageCache;
                 }
@@ -262,7 +262,7 @@ namespace System.Windows.Automation.Peers
         ///
         void IExpandCollapseProvider.Expand()
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             TreeViewItem treeViewItem = (TreeViewItem)Owner;
@@ -278,7 +278,7 @@ namespace System.Windows.Automation.Peers
         ///
         void IExpandCollapseProvider.Collapse()
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             TreeViewItem treeViewItem = (TreeViewItem)Owner;

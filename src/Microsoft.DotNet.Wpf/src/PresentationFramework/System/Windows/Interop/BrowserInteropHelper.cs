@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,9 +7,9 @@
 //              interop with the browser. Deprecated as XBAP is not supported.
 //
 
-using MS.Win32;
 using MS.Internal;
 using MS.Internal.AppModel;
+using MS.Win32;
 
 namespace System.Windows.Interop
 {
@@ -46,7 +46,7 @@ namespace System.Windows.Interop
         /// That's why they are still separate. Also, this one is public.
         /// </remarks>
         public static bool IsBrowserHosted => false;
-        
+
         /// <summary>
         /// Returns the Uri used to launch the application.
         /// </summary>

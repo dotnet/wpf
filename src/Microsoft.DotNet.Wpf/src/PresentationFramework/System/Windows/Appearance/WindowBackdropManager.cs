@@ -1,4 +1,4 @@
-using System.Windows.Interop;
+﻿using System.Windows.Interop;
 using System.Windows.Media;
 using MS.Internal;
 using Standard;
@@ -32,7 +32,7 @@ internal static class WindowBackdropManager
             return false;
         }
 
-        if(!ThemeManager.IsFluentThemeEnabled && window.ThemeMode == ThemeMode.None)
+        if (!ThemeManager.IsFluentThemeEnabled && window.ThemeMode == ThemeMode.None)
         {
             return false;
         }
@@ -136,7 +136,7 @@ internal static class WindowBackdropManager
 
     #region Internal Properties
 
-    internal static bool IsBackdropEnabled => _isBackdropEnabled ??= Utility.IsWindows11_22H2OrNewer && 
+    internal static bool IsBackdropEnabled => _isBackdropEnabled ??= Utility.IsWindows11_22H2OrNewer &&
                                                                         !FrameworkAppContextSwitches.DisableFluentThemeWindowBackdrop;
 
     private static bool? _isBackdropEnabled = null;

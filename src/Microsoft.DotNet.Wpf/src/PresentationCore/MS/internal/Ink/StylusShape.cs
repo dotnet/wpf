@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,18 +21,18 @@ namespace System.Windows.Ink
     {
         #region Fields
 
-        private double    m_width;
-        private double    m_height;
-        private double    m_rotation;
-        private Point[]   m_vertices;
+        private double m_width;
+        private double m_height;
+        private double m_rotation;
+        private Point[] m_vertices;
         private StylusTip m_tip;
-        private Matrix    _transform = Matrix.Identity;
+        private Matrix _transform = Matrix.Identity;
 
         #endregion
 
         #region Constructors
 
-        internal StylusShape(){}
+        internal StylusShape() { }
 
         ///<summary>
         /// constructor for a StylusShape.
@@ -123,7 +123,7 @@ namespace System.Windows.Ink
                     // Fix it if this is the case.
                     FixCounterClockwiseVertices(vertices);
                 }
-}
+            }
             else
             {
                 // For ellipse
@@ -231,7 +231,7 @@ namespace System.Windows.Ink
 
             for (int i = 0; i < vertices.Length; i++)
             {
-                Point vertex = (Point) vertices[i];
+                Point vertex = (Point)vertices[i];
                 Vector edge = vertex - prevVertex;
 
                 // Verify that the next vertex is on the right side off the edge vector.
@@ -254,12 +254,12 @@ namespace System.Windows.Ink
             if (counterClockIndex == vertices.Length)
             {
                 // Make it Clockwise
-                int lastIndex = vertices.Length -1;
-                for (int j = 0; j < vertices.Length/2; j++)
+                int lastIndex = vertices.Length - 1;
+                for (int j = 0; j < vertices.Length / 2; j++)
                 {
                     Vector tmp = vertices[j];
                     vertices[j] = vertices[lastIndex - j];
-                    vertices[lastIndex-j] = tmp;
+                    vertices[lastIndex - j] = tmp;
                 }
             }
         }
@@ -329,7 +329,7 @@ namespace System.Windows.Ink
         /// <param name="width"></param>
         /// <param name="height"></param>
         public EllipseStylusShape(double width, double height)
-                :this(width, height, 0f)
+                : this(width, height, 0f)
         {
         }
 
@@ -343,7 +343,7 @@ namespace System.Windows.Ink
                             : base(StylusTip.Ellipse, width, height, rotation)
         {
         }
-}
+    }
 
     /// <summary>
     /// Class for a rectangle StylusShape
@@ -370,5 +370,5 @@ namespace System.Windows.Ink
                                     : base(StylusTip.Rectangle, width, height, rotation)
         {
         }
-}
+    }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,27 +7,27 @@
 // Description: Implements the Avalon basic Navigation unit class
 //
 
-using System.IO;
-using System.IO.Packaging;
-using System.Windows.Threading;
 using System.Collections;
 using System.ComponentModel;
-using System.Security;
+using System.IO;
+using System.IO.Packaging;
 using System.Net;
 using System.Net.Cache;
-using MS.Internal;
-using MS.Internal.Navigation;
-using MS.Internal.Utility;
-using MS.Internal.AppModel;
-using MS.Utility;
+using System.Security;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Markup;
+using System.Windows.Media;
+using System.Windows.Threading;
+using MS.Internal;
+using MS.Internal.AppModel;
+using MS.Internal.Navigation;
+using MS.Internal.Utility;
+using MS.Utility;
 
 //In order to avoid generating warnings about unknown message numbers and
 //unknown pragmas when compiling your C# source code with the actual C# compiler,
@@ -81,10 +81,10 @@ namespace System.Windows.Navigation
             _bytesRead = 0;
             _maxBytes = 0;
 
-        #if DEBUG
+#if DEBUG
             // We should only be replacing queue items that aren't already posted
             Debug.Assert(_navigateQueueItem == null || _navigateQueueItem.IsPosted == false);
-        #endif
+#endif
             _navigateQueueItem = null;
             _request = null;
         }
@@ -186,7 +186,7 @@ namespace System.Windows.Navigation
                 {
                     ((DispatcherObject)navigator).Dispatcher.BeginInvoke(
                                 DispatcherPriority.Send,
-                                (DispatcherOperationCallback)delegate(object unused)
+                                (DispatcherOperationCallback)delegate (object unused)
                                 {
                                     return navigator.Navigate(bpu);
                                 },
@@ -518,7 +518,7 @@ namespace System.Windows.Navigation
                     {
                         navigator = (INavigator)nw.Dispatcher.Invoke(
                             DispatcherPriority.Send,
-                            (DispatcherOperationCallback)delegate(object unused)
+                            (DispatcherOperationCallback)delegate (object unused)
                             {
                                 return FindTargetInNavigationWindow(nw, targetName);
                             },
@@ -754,7 +754,7 @@ namespace System.Windows.Navigation
         //
         private void SetBaseUri(DependencyObject dobj, Uri fullUri)
         {
-            Invariant.Assert((dobj != null) && (! dobj.IsSealed));
+            Invariant.Assert((dobj != null) && (!dobj.IsSealed));
 
             Uri curBaseUri;
 
@@ -785,7 +785,7 @@ namespace System.Windows.Navigation
             // Currently there is no public API to seal a DO other than Freezable. In other
             // words, you can only seal Freezable. You cannot seal Visual, UIElement, FrameworkElement.
             // Since we enable navigation to any element, we should not crash when the object is sealed.
-            if ((dobj != null) && (! dobj.IsSealed))
+            if ((dobj != null) && (!dobj.IsSealed))
             {
                 dobj.SetValue(NavigationServiceProperty, null);
             }
@@ -820,7 +820,7 @@ namespace System.Windows.Navigation
                     DependencyObject focusScope = (DependencyObject)INavigatorHost;
                     // If the NavigationHost is a focus scope, it is able to clear the FocusedElement.
                     // However, when it is not, we need to get the closest focus scope and clear the FocusedElement.
-                    if (!((bool) focusScope.GetValue(FocusManager.IsFocusScopeProperty)))
+                    if (!((bool)focusScope.GetValue(FocusManager.IsFocusScopeProperty)))
                     {
                         focusScope = FocusManager.GetFocusScope(focusScope);
                     }
@@ -960,7 +960,7 @@ namespace System.Windows.Navigation
             // Step 2: Set NavigationService property and WebBrowser
             //
             DependencyObject dobj = newTree as DependencyObject;
-            if ((dobj != null) && (! dobj.IsSealed))
+            if ((dobj != null) && (!dobj.IsSealed))
             {
                 // Note: setting NavigationService has a non-obvious side effect -
                 // if dobj has any data-bound properties that use ElementName binding,
@@ -2514,7 +2514,8 @@ namespace System.Windows.Navigation
             // If it was async parsing and  _asyncObjectConverter is not null here, it means
             // parser is not done with parsing the stream (async parsing). This is currently the only case that this could happen.
             // When parser is done, OnStreamClosed will be called where _asyncObjectConverter will be set to null.
-            if (_asyncObjectConverter != null) return;
+            if (_asyncObjectConverter != null)
+                return;
 
             // Not the right time to fire it
             // need to save navState if it is non null
@@ -2701,7 +2702,7 @@ namespace System.Windows.Navigation
             catch (WebException e)
             {
                 object extraData = navState is NavigateInfo ? null : navState;
-                if (! FireNavigationFailed(new NavigationFailedEventArgs(source, extraData, INavigatorHost, _request, response, e)))
+                if (!FireNavigationFailed(new NavigationFailedEventArgs(source, extraData, INavigatorHost, _request, response, e)))
                 {
                     throw;
                 }
@@ -2709,7 +2710,7 @@ namespace System.Windows.Navigation
             catch (IOException e)
             {
                 object extraData = navState is NavigateInfo ? null : navState;
-                if (! FireNavigationFailed(new NavigationFailedEventArgs(source, extraData, INavigatorHost, _request, response, e)))
+                if (!FireNavigationFailed(new NavigationFailedEventArgs(source, extraData, INavigatorHost, _request, response, e)))
                 {
                     throw;
                 }
@@ -2810,7 +2811,7 @@ namespace System.Windows.Navigation
             {
                 callbackDispatcher.BeginInvoke(
                     DispatcherPriority.Normal,
-                    (DispatcherOperationCallback)delegate(object unused)
+                    (DispatcherOperationCallback)delegate (object unused)
                 {
                     HandleWebResponse(ar);
                     return null;
@@ -2828,7 +2829,7 @@ namespace System.Windows.Navigation
                 //
                 callbackDispatcher.Invoke(
                      DispatcherPriority.Send,
-                     (DispatcherOperationCallback)delegate(object unused)
+                     (DispatcherOperationCallback)delegate (object unused)
                      {
                          HandleWebResponse(ar);
                          return null;
@@ -2879,7 +2880,7 @@ namespace System.Windows.Navigation
             catch (WebException e)
             {
                 object extraData = requestState.NavState is NavigateInfo ? null : requestState.NavState;
-                if (! FireNavigationFailed(new NavigationFailedEventArgs(requestState.Source, extraData, INavigatorHost, _request, response, e)))
+                if (!FireNavigationFailed(new NavigationFailedEventArgs(requestState.Source, extraData, INavigatorHost, _request, response, e)))
                 {
                     throw;
                 }
@@ -2887,7 +2888,7 @@ namespace System.Windows.Navigation
             catch (IOException e)
             {
                 object extraData = requestState.NavState is NavigateInfo ? null : requestState.NavState;
-                if (! FireNavigationFailed(new NavigationFailedEventArgs(requestState.Source, extraData, INavigatorHost, _request, response, e)))
+                if (!FireNavigationFailed(new NavigationFailedEventArgs(requestState.Source, extraData, INavigatorHost, _request, response, e)))
                 {
                     throw;
                 }
@@ -2917,7 +2918,7 @@ namespace System.Windows.Navigation
                 Uri cleanSource = BindUriHelper.GetUriRelativeToPackAppBase(destinationUri);
                 NavigateInfo navigateInfo = navState as NavigateInfo;
 
-                bool sandBoxContent = SandboxExternalContent && (! BaseUriHelper.IsPackApplicationUri(destinationUri)) && MimeTypeMapper.XamlMime.AreTypeAndSubTypeEqual(contentType);
+                bool sandBoxContent = SandboxExternalContent && (!BaseUriHelper.IsPackApplicationUri(destinationUri)) && MimeTypeMapper.XamlMime.AreTypeAndSubTypeEqual(contentType);
 
                 // BindStream overrides Read() and calls icc.OnNavigationProgress every 1k byte read
                 BindStream bindStream = new BindStream(s, contentLength, cleanSource, (IContentContainer)this, Dispatcher.CurrentDispatcher);
@@ -3233,7 +3234,7 @@ namespace System.Windows.Navigation
                         //
                         //   For all other cases, take whatever value of BaseUri in root element.
                         //
-                        if (_currentCleanSource != null && BindUriHelper.StartWithFragment(_currentCleanSource) == false )
+                        if (_currentCleanSource != null && BindUriHelper.StartWithFragment(_currentCleanSource) == false)
                         {
                             markupUri = _currentSource;
                         }
@@ -3384,7 +3385,8 @@ namespace System.Windows.Navigation
         /// </summary>
         internal void RequestCustomContentStateOnAppShutdown()
         {
-            _isNavInitiator = false; _isNavInitiatorValid = true; // prevent updating the brower's status
+            _isNavInitiator = false;
+            _isNavInitiatorValid = true; // prevent updating the brower's status
             FireNavigating(null, null, null, null); // sets _customContentStateToSave
         }
 
@@ -3511,7 +3513,7 @@ namespace System.Windows.Navigation
 
                 return (bool)navigator.GetValue(Frame.SandboxExternalContentProperty);
             }
-}
+        }
 
         internal INavigator INavigatorHost
         {
@@ -4389,7 +4391,7 @@ namespace System.Windows.Navigation
             _navigationMode = mode;
         }
 
-    #if DEBUG
+#if DEBUG
         internal bool IsPosted
         {
             get
@@ -4397,7 +4399,7 @@ namespace System.Windows.Navigation
                 return _postedOp != null;
             }
         }
-    #endif
+#endif
         internal void PostNavigation()
         {
             Debug.Assert(_postedOp == null);

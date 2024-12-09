@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -45,9 +45,9 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     public sealed class TextCollapsedRange
     {
-        private int         _cp;
-        private int         _length;
-        private double      _width;
+        private int _cp;
+        private int _length;
+        private double _width;
 
 
         /// <summary>
@@ -57,9 +57,9 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="length">number of characters collapsed</param>
         /// <param name="width">total width of collapsed characters</param>
         internal TextCollapsedRange(
-            int         cp,
-            int         length,
-            double      width
+            int cp,
+            int length,
+            double width
             )
         {
             _cp = cp;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,9 +26,9 @@ namespace System.Windows.Xps.Packaging
 
         internal
         XpsFont(
-            XpsManager    xpsManager,
-            INode           parent,
-            PackagePart     part
+            XpsManager xpsManager,
+            INode parent,
+            PackagePart part
             )
             : base(xpsManager, parent, part)
         {
@@ -36,7 +36,7 @@ namespace System.Windows.Xps.Packaging
         }
 
         #endregion Constructors
-        
+
         #region Public Properties
         /// <summary>
         /// Is true when font is obfuscated
@@ -67,7 +67,7 @@ namespace System.Windows.Xps.Packaging
             }
         }
         #endregion Public Properties
-        
+
         #region private members
         private bool _isObfuscated;
         private bool _isResticted;
@@ -86,9 +86,9 @@ namespace System.Windows.Xps.Packaging
         public
         static
         void
-        ObfuscateFontData( byte[] fontData, Guid guid )
+        ObfuscateFontData(byte[] fontData, Guid guid)
         {
-            System.Windows.Xps.Serialization.FEMCacheItem.ObfuscateData(fontData, guid );
+            System.Windows.Xps.Serialization.FEMCacheItem.ObfuscateData(fontData, guid);
         }
     }
 }

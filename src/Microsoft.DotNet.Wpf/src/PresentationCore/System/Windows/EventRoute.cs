@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Utility;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
+using MS.Utility;
 
 namespace System.Windows
 {
@@ -126,7 +126,7 @@ namespace System.Windows
 
             if (args.Source == null)
             {
-                throw new ArgumentException(SR.SourceNotSet); 
+                throw new ArgumentException(SR.SourceNotSet);
             }
 
             if (args.RoutedEvent != _routedEvent)
@@ -139,12 +139,12 @@ namespace System.Windows
                 args.RoutedEvent.RoutingStrategy == RoutingStrategy.Direct)
             {
                 int endSourceChangeIndex = 0;
-                
+
                 // If the RoutingStrategy of the associated is 
                 // Bubble the handlers for the last target 
                 // added are the last ones invoked
                 // Invoke class listeners
-                for (int i=0; i<_routeItemList.Count; i++)
+                for (int i = 0; i < _routeItemList.Count; i++)
                 {
                     // Query for new source only if we are 
                     // past the range of the previous source change
@@ -153,7 +153,7 @@ namespace System.Windows
                         // Get the source at this point in the bubble route and also 
                         // the index at which this source change seizes to apply
                         object newSource = GetBubbleSource(i, out endSourceChangeIndex);
-                        
+
                         // Set appropriate source
                         // The first call to setsource seems redundant 
                         // but is necessary because the source could have 
@@ -161,19 +161,19 @@ namespace System.Windows
                         // may need to be reset to the original source.
                         // Note: we skip this logic if reRaised is set, which is done when we're trying
                         //       to convert MouseDown/Up into a MouseLeft/RightButtonDown/Up
-                        if(!reRaised)
+                        if (!reRaised)
                         {
                             if (newSource == null)
-                                args.Source=source;
+                                args.Source = source;
                             else
-                                args.Source=newSource;
+                                args.Source = newSource;
                         }
                     }
-                    
+
                     // Invoke listeners
 
                     var traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
-                    if ( traceRoutedEventIsEnabled )
+                    if (traceRoutedEventIsEnabled)
                     {
                         _traceArguments ??= new object[3];
                         _traceArguments[0] = _routeItemList[i].Target;
@@ -184,10 +184,10 @@ namespace System.Windows
                             TraceRoutedEvent.InvokeHandlers,
                             _traceArguments);
                     }
-                    
+
                     _routeItemList[i].InvokeHandler(args);
 
-                    if( traceRoutedEventIsEnabled )
+                    if (traceRoutedEventIsEnabled)
                     {
                         _traceArguments[2] = BooleanBoxes.Box(args.Handled);
                         TraceRoutedEvent.Trace(
@@ -202,9 +202,9 @@ namespace System.Windows
             else
             {
                 int startSourceChangeIndex = _routeItemList.Count;
-                int endTargetIndex =_routeItemList.Count-1;
+                int endTargetIndex = _routeItemList.Count - 1;
                 int startTargetIndex;
-                
+
                 // If the RoutingStrategy of the associated is 
                 // Tunnel the handlers for the last target 
                 // added are the first ones invoked
@@ -214,15 +214,15 @@ namespace System.Windows
                     // However the handlers for that individual target must be fired in the right order. 
                     // Eg. Class Handlers must be fired before Instance Handlers.
                     object currTarget = _routeItemList[endTargetIndex].Target;
-                    for (startTargetIndex=endTargetIndex; startTargetIndex>=0; startTargetIndex--)
+                    for (startTargetIndex = endTargetIndex; startTargetIndex >= 0; startTargetIndex--)
                     {
                         if (_routeItemList[startTargetIndex].Target != currTarget)
                         {
                             break;
                         }
                     }
-                    
-                    for (int i=startTargetIndex+1; i<=endTargetIndex; i++)
+
+                    for (int i = startTargetIndex + 1; i <= endTargetIndex; i++)
                     {
                         // Query for new source only if we are 
                         // past the range of the previous source change
@@ -231,21 +231,21 @@ namespace System.Windows
                             // Get the source at this point in the tunnel route and also 
                             // the index at which this source change seizes to apply
                             object newSource = GetTunnelSource(i, out startSourceChangeIndex);
-                            
+
                             // Set appropriate source
                             // The first call to setsource seems redundant 
                             // but is necessary because the source could have 
                             // been modified during BuildRoute call and hence 
                             // may need to be reset to the original source.
                             if (newSource == null)
-                                args.Source=source;                            
+                                args.Source = source;
                             else
-                                args.Source=newSource;
+                                args.Source = newSource;
                         }
-                        
-                        
+
+
                         var traceRoutedEventIsEnabled = TraceRoutedEvent.IsEnabled;
-                        if ( traceRoutedEventIsEnabled )
+                        if (traceRoutedEventIsEnabled)
                         {
                             _traceArguments ??= new object[3];
                             _traceArguments[0] = _routeItemList[i].Target;
@@ -273,7 +273,7 @@ namespace System.Windows
 
                     endTargetIndex = startTargetIndex;
                 }
-            }            
+            }
         }
 
         /// <summary>
@@ -299,10 +299,12 @@ namespace System.Windows
         [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
         public void PushBranchNode(object node, object source)
         {
-            BranchNode branchNode = new BranchNode();
-            branchNode.Node = node;
-            branchNode.Source = source;
-            
+            BranchNode branchNode = new BranchNode
+            {
+                Node = node,
+                Source = source
+            };
+
             (_branchNodeStack ??= new Stack<BranchNode>(1)).Push(branchNode);
         }
 
@@ -386,15 +388,15 @@ namespace System.Windows
 
             return null;
         }
-        
+
         #endregion External API
-        
+
         #region Operations
 
         // Return associated RoutedEvent
         internal RoutedEvent RoutedEvent
         {
-            get {return _routedEvent;}
+            get { return _routedEvent; }
             set { _routedEvent = value; }
         }
 
@@ -433,7 +435,7 @@ namespace System.Windows
                 endIndex = _routeItemList.Count;
                 return null;
             }
-            
+
             // Similarly, if we're not to the point of the route of the first Source
             // change, simply return null.
             if (index < _sourceItemList[0].StartIndex)
@@ -441,15 +443,15 @@ namespace System.Windows
                 endIndex = _sourceItemList[0].StartIndex;
                 return null;
             }
-            
+
             // See if we should be using one of the intermediate
             // sources
-            for (int i=0; i<_sourceItemList.Count -1; i++)
+            for (int i = 0; i < _sourceItemList.Count - 1; i++)
             {
                 if (index >= _sourceItemList[i].StartIndex &&
-                    index < _sourceItemList[i+1].StartIndex)
+                    index < _sourceItemList[i + 1].StartIndex)
                 {
-                    endIndex = _sourceItemList[i+1].StartIndex;
+                    endIndex = _sourceItemList[i + 1].StartIndex;
                     return _sourceItemList[i].Source;
                 }
             }
@@ -457,7 +459,7 @@ namespace System.Windows
             // If we get here, we're on the last one,
             // so return that.            
             endIndex = _routeItemList.Count;
-            return _sourceItemList[_sourceItemList.Count -1].Source;
+            return _sourceItemList[_sourceItemList.Count - 1].Source;
         }
 
         // Determine what the RoutedEventArgs.Source should be, at this
@@ -473,7 +475,7 @@ namespace System.Windows
                 startIndex = 0;
                 return null;
             }
-            
+
             // Similarly, if we're past the point of the route of the first Source
             // change, simply return null.
             if (index < _sourceItemList[0].StartIndex)
@@ -481,22 +483,22 @@ namespace System.Windows
                 startIndex = 0;
                 return null;
             }
-            
+
             // See if we should be using one of the intermediate
             // sources
-            for (int i=0; i<_sourceItemList.Count -1; i++)
+            for (int i = 0; i < _sourceItemList.Count - 1; i++)
             {
                 if (index >= _sourceItemList[i].StartIndex &&
-                    index < _sourceItemList[i+1].StartIndex)
+                    index < _sourceItemList[i + 1].StartIndex)
                 {
                     startIndex = _sourceItemList[i].StartIndex;
                     return _sourceItemList[i].Source;
                 }
             }
-        
+
             // If we get here, we're on the last one, so return that.            
-            startIndex = _sourceItemList[_sourceItemList.Count -1].StartIndex;
-            return _sourceItemList[_sourceItemList.Count -1].Source;
+            startIndex = _sourceItemList[_sourceItemList.Count - 1].StartIndex;
+            return _sourceItemList[_sourceItemList.Count - 1].Source;
         }
 
         /// <summary>
@@ -505,7 +507,7 @@ namespace System.Windows
         internal void Clear()
         {
             _routedEvent = null;
-            
+
             _routeItemList.Clear();
 
             if (_branchNodeStack != null)
@@ -515,9 +517,9 @@ namespace System.Windows
 
             _sourceItemList.Clear();
         }
-        
+
         #endregion Operations
-        
+
         #region Data
 
         private RoutedEvent _routedEvent;

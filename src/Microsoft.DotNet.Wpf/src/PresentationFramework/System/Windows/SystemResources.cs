@@ -1,35 +1,35 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //
 //
 
-using System.IO;
-using System.Reflection;
-using System.Resources;
-using System.Runtime.InteropServices;
 using System.Collections;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.IO;
 using System.Linq;
-using System.Windows.Threading;
+using System.Reflection;
+using System.Resources;
+using System.Runtime.CompilerServices;
+using System.Runtime.InteropServices;
 using System.Text;
-using MS.Utility;
+using System.Windows.Baml2006;
 using System.Windows.Controls.Primitives;
-using System.Windows.Markup;
 using System.Windows.Diagnostics;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Interop;
-using MS.Win32;
+using System.Windows.Markup;
+using System.Windows.Threading;
+using System.Xaml.Permissions;
 using MS.Internal;
 using MS.Internal.Ink;
 using MS.Internal.Interop;
 using MS.Internal.PresentationFramework;                   // SafeSecurityHelper
-using System.Windows.Baml2006;
-using System.Xaml.Permissions;
-using System.Runtime.CompilerServices;
+using MS.Utility;
+using MS.Win32;
 
 // Disable pragma warnings to enable PREsharp pragmas
 #pragma warning disable 1634, 1691
@@ -344,13 +344,13 @@ namespace System.Windows
         /// <param name="canCache">Whether callers can cache the value.</param>
         /// <returns></returns>
         private static object FindDictionaryResource(
-            object      key,
-            Type        typeKey,
+            object key,
+            Type typeKey,
             ResourceKey resourceKey,
-            bool        isTraceEnabled,
-            bool        allowDeferredResourceReference,
-            bool        mustReturnDeferredResourceReference,
-            out bool    canCache)
+            bool isTraceEnabled,
+            bool allowDeferredResourceReference,
+            bool mustReturnDeferredResourceReference,
+            out bool canCache)
         {
             // Thread safety handled by FindResourceInternal. Be sure to have locked _resourceCache.SyncRoot.
 
@@ -409,11 +409,11 @@ namespace System.Windows
         /// <param name="canCache">Whether callers should cache the value.</param>
         /// <returns>The resource if found and successfully loaded, null otherwise.</returns>
         private static object LookupResourceInDictionary(
-            ResourceDictionary  dictionary,
-            object              key,
-            bool                allowDeferredResourceReference,
-            bool                mustReturnDeferredResourceReference,
-            out bool            canCache)
+            ResourceDictionary dictionary,
+            object key,
+            bool allowDeferredResourceReference,
+            bool mustReturnDeferredResourceReference,
+            out bool canCache)
         {
             object resource = null;
             IsSystemResourcesParsing = true;
@@ -936,9 +936,11 @@ namespace System.Windows
 
                 if (stream != null)
                 {
-                    Baml2006ReaderSettings settings = new Baml2006ReaderSettings();
-                    settings.OwnsStream = true;
-                    settings.LocalAssembly = assembly;
+                    Baml2006ReaderSettings settings = new Baml2006ReaderSettings
+                    {
+                        OwnsStream = true,
+                        LocalAssembly = assembly
+                    };
 
                     // For system themes, we don't seem to be passing the BAML Uri to the Baml2006Reader
                     Baml2006Reader bamlReader = new Baml2006ReaderInternal(stream, new Baml2006SchemaContext(settings.LocalAssembly), settings);
@@ -1127,7 +1129,7 @@ namespace System.Windows
                 // support (for e.g., not supported on Windows 7).
                 var hwndDpiInfo =
                     IsPerMonitorDpiScalingActive ?
-                    DpiUtil.GetExtendedDpiInfoForWindow(hwndNotify.Handle):
+                    DpiUtil.GetExtendedDpiInfoForWindow(hwndNotify.Handle) :
                     new DpiUtil.HwndDpiInfo(dpiContextValue, GetDpiScaleForUnawareOrSystemAwareContext(dpiContextValue));
 
                 Debug.Assert(!_hwndNotify.ContainsKey(hwndDpiInfo));
@@ -1187,7 +1189,7 @@ namespace System.Windows
 
 #pragma warning restore 6518
 
-    private static void OnThemeChanged()
+        private static void OnThemeChanged()
         {
             ResourceDictionaries.OnThemeChanged();
             UxThemeWrapper.OnThemeChanged();
@@ -1325,7 +1327,7 @@ namespace System.Windows
                     {
                         source.Dispatcher.BeginInvoke(DispatcherPriority.Normal,
                                                       new DispatcherOperationCallback(InvalidateTreeResources),
-                                                      new object[]{source, isSysColorsOrSettingsChange});
+                                                      new object[] { source, isSysColorsOrSettingsChange });
                     }
                 }
             }
@@ -1407,7 +1409,7 @@ namespace System.Windows
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
 
-                    if(ThemeManager.IsFluentThemeEnabled || ThemeManager.FluentEnabledWindows.Count > 0)
+                    if (ThemeManager.IsFluentThemeEnabled || ThemeManager.FluentEnabledWindows.Count > 0)
                     {
                         ThemeManager.OnSystemThemeChanged();
                     }
@@ -1429,7 +1431,7 @@ namespace System.Windows
                 case WindowMessage.WM_DWMCOLORIZATIONCOLORCHANGED:
                     SystemParameters.InvalidateWindowGlassColorizationProperties();
 
-                    if(SystemColors.InvalidateCache())
+                    if (SystemColors.InvalidateCache())
                     {
                         OnSystemValueChanged();
                         InvalidateResources(true);
@@ -1437,7 +1439,7 @@ namespace System.Windows
                     break;
             }
 
-            return IntPtr.Zero ;
+            return IntPtr.Zero;
 
         }
 
@@ -1679,7 +1681,7 @@ namespace System.Windows
         [ThreadStatic] private static List<DpiUtil.HwndDpiInfo> _dpiAwarenessContextAndDpis;
 
         [ThreadStatic] private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapper> _hwndNotify;
-        [ThreadStatic]  private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook> _hwndNotifyHook;
+        [ThreadStatic] private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook> _hwndNotifyHook;
 
         private static Hashtable _resourceCache = new Hashtable();
         private static DTypeMap _themeStyleCache = new DTypeMap(100); // This is based upon the max DType.ID found in MSN scenario
@@ -1733,7 +1735,7 @@ namespace System.Windows
             // the dictionary else just retun the cached value
             if (_dictionary != null)
             {
-                object value  = _dictionary.GetValue(_keyOrValue, out bool canCache);
+                object value = _dictionary.GetValue(_keyOrValue, out bool canCache);
                 if (canCache)
                 {
                     // Note that we are replacing the _keyorValue field
@@ -1921,7 +1923,7 @@ namespace System.Windows
         #region Constructor
 
         internal DeferredThemeResourceReference(ResourceDictionary dictionary, object resourceKey, bool canCacheAsThemeResource)
-            :base(dictionary, resourceKey)
+            : base(dictionary, resourceKey)
         {
             _canCacheAsThemeResource = canCacheAsThemeResource;
         }
@@ -2003,9 +2005,9 @@ namespace System.Windows
         #region Constructor
 
         internal DeferredResourceReferenceHolder(object resourceKey, object value)
-            :base(null, null)
+            : base(null, null)
         {
-            _keyOrValue = new object[]{resourceKey, value};
+            _keyOrValue = new object[] { resourceKey, value };
         }
 
         #endregion Constructor

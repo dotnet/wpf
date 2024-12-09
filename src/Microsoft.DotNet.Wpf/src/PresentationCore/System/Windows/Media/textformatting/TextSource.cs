@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,7 +22,7 @@ namespace System.Windows.Media.TextFormatting
     /// method which is designed to allow the client to virtualize text 
     /// in any way it chooses.
     /// </summary>
-    public abstract class TextSource 
+    public abstract class TextSource
     {
         /// <summary>
         /// TextFormatter to get a text run started at specified text source position
@@ -30,7 +30,7 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="textSourceCharacterIndex">character index to specify where in the source text the fetch is to start.</param>
         /// <returns>text run corresponding to textSourceCharacterIndex.</returns>
         public abstract TextRun GetTextRun(
-            int         textSourceCharacterIndex
+            int textSourceCharacterIndex
             );
 
 
@@ -45,7 +45,7 @@ namespace System.Windows.Media.TextFormatting
         /// Return a zero length TextSpan if there is nothing preceding the specified position.
         /// </remarks>
         public abstract TextSpan<CultureSpecificCharacterBufferRange> GetPrecedingText(
-            int         textSourceCharacterIndexLimit
+            int textSourceCharacterIndexLimit
             );
 
 
@@ -55,7 +55,7 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="textSourceCharacterIndex"> text source character index </param>
         /// <returns> the text effect index corresponding to the text source character index </returns>
         public abstract int GetTextEffectCharacterIndexFromTextSourceCharacterIndex(
-            int         textSourceCharacterIndex
+            int textSourceCharacterIndex
             );
 
         /// <summary>

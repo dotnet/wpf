@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,8 +7,8 @@
 #endif // DEBUG
 
 using System.ComponentModel;
-using MS.Utility;
 using System.Windows.Threading;
+using MS.Utility;
 
 namespace System.Windows.Media.Animation
 {
@@ -82,12 +82,12 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 return _systemClock;
             }
             set
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 if (value != null)
                 {
                     _systemClock = value;
@@ -113,7 +113,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
 
                 if (_timeState == TimeState.Stopped)
                 {
@@ -134,7 +134,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
 
                 return _isDirty;
             }
@@ -153,7 +153,7 @@ namespace System.Windows.Media.Animation
         /// </remarks>
         public void Pause()
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             if (_timeState == TimeState.Running)
             {
                 // Record the pause time
@@ -175,7 +175,7 @@ namespace System.Windows.Media.Animation
         /// <seealso cref="TimeManager.Stop"/>
         public void Restart()
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             // Remember the current state
             TimeState oldState = _timeState;
 
@@ -203,7 +203,7 @@ namespace System.Windows.Media.Animation
         /// </remarks>
         public void Resume()
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             if (_timeState == TimeState.Paused)
             {
                 // Adjust the starting time
@@ -273,7 +273,7 @@ namespace System.Windows.Media.Animation
                     _globalTime = offsetTime;
 
                     // Adjust the starting time for future ticks
-                    _startTime =_systemClock.CurrentTime - _globalTime;
+                    _startTime = _systemClock.CurrentTime - _globalTime;
 
                     // Update the timing tree accordingly
                     _timeManagerClock.ComputeTreeState();
@@ -290,14 +290,14 @@ namespace System.Windows.Media.Animation
         /// </remarks>
         public void Start()
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             if (_timeState == TimeState.Stopped)
             {
                 // Reset the state of the timing tree
                 _lastTickTime = TimeSpan.Zero;
 
                 // Start the tree
-                _startTime =_systemClock.CurrentTime;
+                _startTime = _systemClock.CurrentTime;
                 _globalTime = TimeSpan.Zero;
                 _timeState = TimeState.Running;
                 _timeManagerClock.RootActivate();
@@ -315,7 +315,7 @@ namespace System.Windows.Media.Animation
         /// <seealso cref="TimeManager.Stop"/>
         public void Stop()
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             if (_timeState >= TimeState.Paused)
             {
                 _timeManagerClock.RootDisable();
@@ -734,7 +734,7 @@ namespace System.Windows.Media.Animation
             set
             {
                 _currentTickInterval = value;  // This allows temporarily setting custom interval values
-        }
+            }
         }
 
         /// <summary>
@@ -753,7 +753,7 @@ namespace System.Windows.Media.Animation
         /// </remarks>
         internal TimeSpan GetNextTickNeeded()
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             _nextTickTimeQueried = true;
 
             if (_timeState == TimeState.Running)
@@ -823,7 +823,7 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 return _timeManagerClock;
             }
         }
@@ -851,12 +851,12 @@ namespace System.Windows.Media.Animation
         {
             add
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 _userNeedTickSooner += value;
             }
             remove
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
                 _userNeedTickSooner -= value;
             }
         }
@@ -883,30 +883,30 @@ namespace System.Windows.Media.Animation
 
         #region Timing data
 
-        private TimeState                   _timeState;
-        private TimeState                   _lastTimeState;
+        private TimeState _timeState;
+        private TimeState _lastTimeState;
 
-        private IClock                      _systemClock;
+        private IClock _systemClock;
 
-        private TimeSpan                    _globalTime;
-        private TimeSpan                    _startTime;
-        private TimeSpan                    _lastTickTime;
-        private TimeSpan                    _pauseTime;
+        private TimeSpan _globalTime;
+        private TimeSpan _startTime;
+        private TimeSpan _lastTickTime;
+        private TimeSpan _pauseTime;
 
-        private TimeIntervalCollection      _currentTickInterval;
-        private bool                        _nextTickTimeQueried,
+        private TimeIntervalCollection _currentTickInterval;
+        private bool _nextTickTimeQueried,
                                             _isDirty,
                                             _isInTick,
                                             _lockTickTime;
-        private EventHandler                _userNeedTickSooner;
-        private ClockGroup                  _timeManagerClock;
-        private Queue<WeakReference>        _eventQueue;
+        private EventHandler _userNeedTickSooner;
+        private ClockGroup _timeManagerClock;
+        private Queue<WeakReference> _eventQueue;
 
         #endregion // Timing data
 
         #region Linking data
 
-        private bool                        _needClockCleanup;
+        private bool _needClockCleanup;
 
         #endregion // Linking data
 
@@ -914,7 +914,7 @@ namespace System.Windows.Media.Animation
 
 #if DEBUG
 
-        private int                         _frameCount;
+        private int _frameCount;
 
 #endif // DEBUG
 

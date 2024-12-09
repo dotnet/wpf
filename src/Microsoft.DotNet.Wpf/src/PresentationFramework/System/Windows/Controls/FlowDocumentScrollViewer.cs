@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,21 +7,21 @@ using System.Collections;               // IEnumerator
 using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
 using System.Windows.Annotations;       // AnnotationService
 using System.Windows.Automation.Peers;  // AutomationPeer
-using System.Windows.Data;              // BindingOperations
 using System.Windows.Controls.Primitives;   // IScrollInfo
+using System.Windows.Data;              // BindingOperations
 using System.Windows.Documents;         // FlowDocument
 using System.Windows.Documents.Serialization;  // WritingCompletedEventArgs
 using System.Windows.Input;             // KeyEventArgs
-using System.Windows.Media;             // ScaleTransform, VisualTreeHelper
 using System.Windows.Markup;            // IAddChild
+using System.Windows.Media;             // ScaleTransform, VisualTreeHelper
 using System.Windows.Threading;         // Dispatcher
 using MS.Internal;                      // Invariant, DoubleUtil
 using MS.Internal.Annotations.Anchoring;
+using MS.Internal.AppModel;             // IJournalState
 using MS.Internal.Commands;             // CommandHelpers
 using MS.Internal.Controls;             // EmptyEnumerator
 using MS.Internal.Documents;            // FindToolBar
 using MS.Internal.KnownBoxes;           // BooleanBoxes
-using MS.Internal.AppModel;             // IJournalState
 
 namespace System.Windows.Controls
 {
@@ -556,12 +556,14 @@ namespace System.Windows.Controls
 
                     // Store the current state of the document in the PrintingState
                     paginator = ((IDocumentPaginatorSource)Document).DocumentPaginator as FlowDocumentPaginator;
-                    _printingState = new FlowDocumentPrintingState();
-                    _printingState.XpsDocumentWriter = docWriter;
-                    _printingState.PageSize = paginator.PageSize;
-                    _printingState.PagePadding = Document.PagePadding;
-                    _printingState.IsSelectionEnabled = IsSelectionEnabled;
-                    _printingState.ColumnWidth = Document.ColumnWidth;
+                    _printingState = new FlowDocumentPrintingState
+                    {
+                        XpsDocumentWriter = docWriter,
+                        PageSize = paginator.PageSize,
+                        PagePadding = Document.PagePadding,
+                        IsSelectionEnabled = IsSelectionEnabled,
+                        ColumnWidth = Document.ColumnWidth
+                    };
 
                     // Since _printingState value is used to determine CanExecute state, we must invalidate that state.
                     CommandManager.InvalidateRequerySuggested();
@@ -650,7 +652,8 @@ namespace System.Windows.Controls
         /// <param name="e">Event arguments</param>
         protected override void OnKeyDown(KeyEventArgs e)
         {
-            if (e.Handled) { return; }
+            if (e.Handled)
+            { return; }
 
             switch (e.Key)
             {
@@ -696,7 +699,8 @@ namespace System.Windows.Controls
         /// <param name="e">MouseWheelEventArgs</param>
         protected override void OnMouseWheel(MouseWheelEventArgs e)
         {
-            if (e.Handled) { return; }
+            if (e.Handled)
+            { return; }
 
             if (_contentHost != null)
             {
@@ -827,12 +831,12 @@ namespace System.Windows.Controls
                     continueInvalidation = FrameworkElement.InvalidateAutomationIntermediateElements(LogicalTreeHelper.GetParent(document), LogicalTreeHelper.GetParent(branchNode));
                 }
             }
-            
+
             continueInvalidation &= base.InvalidateAutomationAncestorsCore(branchNodeStack, out continuePastCoreTree);
 
             return continueInvalidation;
         }
-        
+
         /// <summary>
         /// Bring specified content position into view.
         /// </summary>
@@ -989,9 +993,11 @@ namespace System.Windows.Controls
                 RenderScope != null &&
                 Document.StructuralCache.TextContainer.TextSelection == null)
             {
-                _textEditor = new TextEditor(Document.StructuralCache.TextContainer, this, false);
-                _textEditor.IsReadOnly = !IsEditingEnabled;
-                _textEditor.TextView = textView;
+                _textEditor = new TextEditor(Document.StructuralCache.TextContainer, this, false)
+                {
+                    IsReadOnly = !IsEditingEnabled,
+                    TextView = textView
+                };
             }
 
             //restore AnnotationsService state
@@ -1129,7 +1135,7 @@ namespace System.Windows.Controls
 
                         targetRect = MakeVisible((IScrollInfo)RenderScope, targetUIElement, targetRect);
 
-                        if(!targetRect.IsEmpty)
+                        if (!targetRect.IsEmpty)
                         {
                             GeneralTransform t = RenderScope.TransformToAncestor(this);
                             targetRect = t.TransformBounds(targetRect);
@@ -1143,7 +1149,7 @@ namespace System.Windows.Controls
                     child = args.TargetObject;
                     while (child != null && child != document)
                     {
-                       child = LogicalTreeHelper.GetParent(child);
+                        child = LogicalTreeHelper.GetParent(child);
                     }
 
                     if (child != null)
@@ -1157,7 +1163,7 @@ namespace System.Windows.Controls
                             {
                                 targetRect = MakeVisible((IScrollInfo)RenderScope, (Visual)ich, rects[0]);
 
-                                if(!targetRect.IsEmpty)
+                                if (!targetRect.IsEmpty)
                                 {
                                     GeneralTransform t = RenderScope.TransformToAncestor(this);
                                     targetRect = t.TransformBounds(targetRect);
@@ -1303,9 +1309,11 @@ namespace System.Windows.Controls
         /// </summary>
         private void CreateTwoWayBinding(FrameworkElement fe, DependencyProperty dp, string propertyPath)
         {
-            Binding binding = new Binding(propertyPath);
-            binding.Mode = BindingMode.TwoWay;
-            binding.Source = this;
+            Binding binding = new Binding(propertyPath)
+            {
+                Mode = BindingMode.TwoWay,
+                Source = this
+            };
             fe.SetBinding(dp, binding);
         }
 
@@ -1602,7 +1610,7 @@ namespace System.Windows.Controls
 
             Rect result;
 
-            if(scrollInfo.GetType() == typeof(System.Windows.Controls.ScrollContentPresenter))
+            if (scrollInfo.GetType() == typeof(System.Windows.Controls.ScrollContentPresenter))
             {
                 result = ((ScrollContentPresenter)scrollInfo).MakeVisible(visual, rectangle, false);
             }

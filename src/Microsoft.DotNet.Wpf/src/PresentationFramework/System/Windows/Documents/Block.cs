@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,8 +10,8 @@
 
 using System.ComponentModel;    // TypeConverter
 using System.Windows.Media;     // Brush
-using MS.Internal.Text;         // Text DPI restrictions
 using MS.Internal.PtsHost.UnsafeNativeMethods; // PTS restrictions
+using MS.Internal.Text;         // Text DPI restrictions
 
 namespace System.Windows.Documents
 {
@@ -75,13 +75,13 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for hyphenation property.
         /// </summary>
-        public static readonly DependencyProperty IsHyphenationEnabledProperty = 
+        public static readonly DependencyProperty IsHyphenationEnabledProperty =
                 DependencyProperty.RegisterAttached(
-                        "IsHyphenationEnabled", 
-                        typeof(bool), 
-                        typeof(Block), 
+                        "IsHyphenationEnabled",
+                        typeof(bool),
+                        typeof(Block),
                         new FrameworkPropertyMetadata(
-                                false, 
+                                false,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits));
 
         /// <summary>
@@ -119,14 +119,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="Margin" /> property.
         /// </summary>
-        public static readonly DependencyProperty MarginProperty = 
+        public static readonly DependencyProperty MarginProperty =
                 DependencyProperty.Register(
-                        "Margin", 
-                        typeof(Thickness), 
-                        typeof(Block), 
+                        "Margin",
+                        typeof(Thickness),
+                        typeof(Block),
                         new FrameworkPropertyMetadata(
-                                new Thickness(), 
-                                FrameworkPropertyMetadataOptions.AffectsMeasure), 
+                                new Thickness(),
+                                FrameworkPropertyMetadataOptions.AffectsMeasure),
                         new ValidateValueCallback(IsValidMargin));
 
         /// <summary>
@@ -141,14 +141,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="Padding" /> property.
         /// </summary>
-        public static readonly DependencyProperty PaddingProperty = 
+        public static readonly DependencyProperty PaddingProperty =
                 DependencyProperty.Register(
-                        "Padding", 
-                        typeof(Thickness), 
-                        typeof(Block), 
+                        "Padding",
+                        typeof(Thickness),
+                        typeof(Block),
                         new FrameworkPropertyMetadata(
-                                new Thickness(), 
-                                FrameworkPropertyMetadataOptions.AffectsMeasure), 
+                                new Thickness(),
+                                FrameworkPropertyMetadataOptions.AffectsMeasure),
                         new ValidateValueCallback(IsValidPadding));
 
         /// <summary>
@@ -163,14 +163,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="BorderThickness" /> property.
         /// </summary>
-        public static readonly DependencyProperty BorderThicknessProperty = 
+        public static readonly DependencyProperty BorderThicknessProperty =
                 DependencyProperty.Register(
-                        "BorderThickness", 
-                        typeof(Thickness), 
-                        typeof(Block), 
+                        "BorderThickness",
+                        typeof(Thickness),
+                        typeof(Block),
                         new FrameworkPropertyMetadata(
-                                new Thickness(), 
-                                FrameworkPropertyMetadataOptions.AffectsMeasure), 
+                                new Thickness(),
+                                FrameworkPropertyMetadataOptions.AffectsMeasure),
                         new ValidateValueCallback(IsValidBorderThickness));
 
         /// <summary>
@@ -185,10 +185,10 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="BorderBrush" /> property.
         /// </summary>
-        public static readonly DependencyProperty BorderBrushProperty = 
+        public static readonly DependencyProperty BorderBrushProperty =
                 DependencyProperty.Register(
-                        "BorderBrush", 
-                        typeof(Brush), 
+                        "BorderBrush",
+                        typeof(Brush),
                         typeof(Block),
                         new FrameworkPropertyMetadata(
                                 null,
@@ -206,14 +206,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="TextAlignment" /> property.
         /// </summary>
-        public static readonly DependencyProperty TextAlignmentProperty = 
+        public static readonly DependencyProperty TextAlignmentProperty =
                 DependencyProperty.RegisterAttached(
-                        "TextAlignment", 
-                        typeof(TextAlignment), 
-                        typeof(Block), 
+                        "TextAlignment",
+                        typeof(TextAlignment),
+                        typeof(Block),
                         new FrameworkPropertyMetadata(
-                                TextAlignment.Left, 
-                                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits), 
+                                TextAlignment.Left,
+                                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits),
                         new ValidateValueCallback(IsValidTextAlignment));
 
         /// <summary>
@@ -251,7 +251,7 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="FlowDirection" /> property.
         /// </summary>
-        public static readonly DependencyProperty FlowDirectionProperty = 
+        public static readonly DependencyProperty FlowDirectionProperty =
                 FrameworkElement.FlowDirectionProperty.AddOwner(typeof(Block));
 
         /// <summary>
@@ -266,14 +266,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// DependencyProperty for <see cref="LineHeight" /> property.
         /// </summary>
-        public static readonly DependencyProperty LineHeightProperty = 
+        public static readonly DependencyProperty LineHeightProperty =
                 DependencyProperty.RegisterAttached(
-                        "LineHeight", 
-                        typeof(double), 
-                        typeof(Block), 
+                        "LineHeight",
+                        typeof(double),
+                        typeof(Block),
                         new FrameworkPropertyMetadata(
-                                double.NaN, 
-                                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits), 
+                                double.NaN,
+                                FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits),
                         new ValidateValueCallback(IsValidLineHeight));
 
         /// <summary>
@@ -358,13 +358,13 @@ namespace System.Windows.Documents
         /// <summary>
         /// Page break property, replaces PageBreak element. Indicates that a break should occur before this page.
         /// </summary>
-        public static readonly DependencyProperty BreakPageBeforeProperty = 
+        public static readonly DependencyProperty BreakPageBeforeProperty =
                 DependencyProperty.Register(
-                        "BreakPageBefore", 
-                        typeof(bool), 
-                        typeof(Block), 
+                        "BreakPageBefore",
+                        typeof(bool),
+                        typeof(Block),
                         new FrameworkPropertyMetadata(
-                                false, 
+                                false,
                                 FrameworkPropertyMetadataOptions.AffectsParentMeasure));
 
         /// <summary>
@@ -379,13 +379,13 @@ namespace System.Windows.Documents
         /// <summary>
         /// Column break property, replaces ColumnBreak element. Indicates that a break should occur before this column.
         /// </summary>
-        public static readonly DependencyProperty BreakColumnBeforeProperty = 
+        public static readonly DependencyProperty BreakColumnBeforeProperty =
                 DependencyProperty.Register(
-                        "BreakColumnBefore", 
-                        typeof(bool), 
-                        typeof(Block), 
+                        "BreakColumnBefore",
+                        typeof(bool),
+                        typeof(Block),
                         new FrameworkPropertyMetadata(
-                                false, 
+                                false,
                                 FrameworkPropertyMetadataOptions.AffectsParentMeasure));
 
         /// <summary>
@@ -400,14 +400,14 @@ namespace System.Windows.Documents
         /// <summary>
         /// ClearFloaters property, replaces FloaterClear element. Clears floater in specified WrapDirection 
         /// </summary>
-        public static readonly DependencyProperty ClearFloatersProperty = 
+        public static readonly DependencyProperty ClearFloatersProperty =
                 DependencyProperty.Register(
-                        "ClearFloaters", 
-                        typeof(WrapDirection), 
-                        typeof(Block), 
+                        "ClearFloaters",
+                        typeof(WrapDirection),
+                        typeof(Block),
                         new FrameworkPropertyMetadata(
-                                WrapDirection.None, 
-                                FrameworkPropertyMetadataOptions.AffectsParentMeasure), 
+                                WrapDirection.None,
+                                FrameworkPropertyMetadataOptions.AffectsParentMeasure),
                         new ValidateValueCallback(IsValidWrapDirection));
 
         /// <summary>
@@ -504,7 +504,7 @@ namespace System.Windows.Documents
         private static bool IsValidLineStackingStrategy(object o)
         {
             LineStackingStrategy value = (LineStackingStrategy)o;
-            return (value == LineStackingStrategy.MaxHeight 
+            return (value == LineStackingStrategy.MaxHeight
                     || value == LineStackingStrategy.BlockLineHeight);
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,12 +7,10 @@
 //              Spec at Canvas.xml
 //
 
-using MS.Internal.Telemetry.PresentationFramework;
 using System.ComponentModel;
-
 using System.Windows.Media;
-
 using MS.Internal.PresentationFramework;
+using MS.Internal.Telemetry.PresentationFramework;
 
 namespace System.Windows.Controls
 {
@@ -185,13 +183,13 @@ namespace System.Windows.Controls
         private static void OnPositioningChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             UIElement uie = d as UIElement;
-            if(uie != null)
+            if (uie != null)
             {
                 Canvas p = VisualTreeHelper.GetParent(uie) as Canvas;
-                if(p != null)
+                if (p != null)
                     p.InvalidateArrange();
             }
-         }
+        }
 
         /// <summary>
         /// This is the dependency property registered for the Canvas' Left attached property.
@@ -260,7 +258,8 @@ namespace System.Windows.Controls
 
             foreach (UIElement child in InternalChildren)
             {
-                if (child == null) { continue; }
+                if (child == null)
+                { continue; }
                 child.Measure(childConstraint);
             }
 
@@ -283,7 +282,8 @@ namespace System.Windows.Controls
 
             foreach (UIElement child in InternalChildren)
             {
-                if (child == null) { continue; }
+                if (child == null)
+                { continue; }
 
                 double x = 0;
                 double y = 0;
@@ -294,7 +294,7 @@ namespace System.Windows.Controls
                 //If Left is not specified, then Right is used
                 //If both are not there, then 0
                 double left = GetLeft(child);
-                if(!double.IsNaN(left))
+                if (!double.IsNaN(left))
                 {
                     x = left;
                 }
@@ -302,14 +302,14 @@ namespace System.Windows.Controls
                 {
                     double right = GetRight(child);
 
-                    if(!double.IsNaN(right))
+                    if (!double.IsNaN(right))
                     {
                         x = arrangeSize.Width - child.DesiredSize.Width - right;
                     }
                 }
 
                 double top = GetTop(child);
-                if(!double.IsNaN(top))
+                if (!double.IsNaN(top))
                 {
                     y = top;
                 }
@@ -317,7 +317,7 @@ namespace System.Windows.Controls
                 {
                     double bottom = GetBottom(child);
 
-                    if(!double.IsNaN(bottom))
+                    if (!double.IsNaN(bottom))
                     {
                         y = arrangeSize.Height - child.DesiredSize.Height - bottom;
                     }
@@ -336,7 +336,7 @@ namespace System.Windows.Controls
         {
             //Canvas only clips to bounds if ClipToBounds is set,
             //  no automatic clipping
-            if(ClipToBounds)
+            if (ClipToBounds)
                 return new RectangleGeometry(new Rect(RenderSize));
             else
                 return null;

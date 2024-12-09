@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@ namespace System.Windows.Controls
     ///</summary>
     public class UserControl : ContentControl
     {
-#region Constructors
+        #region Constructors
         static UserControl()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(UserControl), new FrameworkPropertyMetadata(typeof(UserControl)));
@@ -33,12 +33,12 @@ namespace System.Windows.Controls
         public UserControl()
         {
         }
-#endregion Constructors
+        #endregion Constructors
 
         // Set the EventArgs' source to be this UserControl
         internal override void AdjustBranchSource(RoutedEventArgs e)
         {
-            e.Source=this;
+            e.Source = this;
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace System.Windows.Controls
         }
 
 
-#region DTypeThemeStyleKey
+        #region DTypeThemeStyleKey
 
         // Returns the DependencyObjectType for the registered ThemeStyleKey's default 
         // value. Controls will override this method to return approriate types.
@@ -72,6 +72,6 @@ namespace System.Windows.Controls
 
         private static DependencyObjectType _dType;
 
-#endregion DTypeThemeStyleKey
+        #endregion DTypeThemeStyleKey
     }
 }

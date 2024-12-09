@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
 using System.ComponentModel;
-using System.Windows.Markup;
 using System.Windows.Converters;
+using System.Windows.Markup;
+using MS.Internal;
 // These types are aliased to match the unamanaged names used in interop
 
 namespace System.Windows
@@ -44,7 +44,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='point1'>The first Point to compare</param>
         /// <param name='point2'>The second Point to compare</param>
-        public static bool operator == (Point point1, Point point2)
+        public static bool operator ==(Point point1, Point point2)
         {
             return point1.X == point2.X &&
                    point1.Y == point2.Y;
@@ -61,7 +61,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='point1'>The first Point to compare</param>
         /// <param name='point2'>The second Point to compare</param>
-        public static bool operator != (Point point1, Point point2)
+        public static bool operator !=(Point point1, Point point2)
         {
             return !(point1 == point2);
         }
@@ -77,7 +77,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='point1'>The first Point to compare</param>
         /// <param name='point2'>The second Point to compare</param>
-        public static bool Equals (Point point1, Point point2)
+        public static bool Equals(Point point1, Point point2)
         {
             return point1.X.Equals(point2.X) &&
                    point1.Y.Equals(point2.Y);
@@ -102,7 +102,7 @@ namespace System.Windows
             }
 
             Point value = (Point)o;
-            return Point.Equals(this,value);
+            return Point.Equals(this, value);
         }
 
         /// <summary>
@@ -185,7 +185,7 @@ namespace System.Windows
             {
                 _x = value;
             }
-}
+        }
 
         /// <summary>
         ///     Y - double.  Default value is 0.
@@ -201,7 +201,7 @@ namespace System.Windows
             {
                 _y = value;
             }
-}
+        }
 
         #endregion Public Properties
 

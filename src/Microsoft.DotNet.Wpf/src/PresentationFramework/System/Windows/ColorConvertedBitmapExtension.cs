@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,12 +28,12 @@ namespace System.Windows
         public ColorConvertedBitmapExtension()
         {
         }
-        
+
         /// <summary>
         ///  Constructor that takes the markup for a "{ColorConvertedBitmap image source.icc destination.icc}"
         /// </summary>
         public ColorConvertedBitmapExtension(
-            object image) 
+            object image)
         {
             ArgumentNullException.ThrowIfNull(image);
 
@@ -62,7 +62,7 @@ namespace System.Windows
                 }
             }
         }
-        
+
         /// <summary>
         ///  Return an object that should be set on the targetObject's targetProperty
         ///  for this markup extension.  For ColorConvertedBitmapExtension, this is the object found in
@@ -81,19 +81,19 @@ namespace System.Windows
             {
                 throw new InvalidOperationException(SR.ColorConvertedBitmapExtensionNoSourceProfile);
             }
-            
+
             // [BreakingChange] 
             // (NullReferenceException in ColorConvertedBitmapExtension.ProvideValue)
             // We really should throw an ArgumentNullException here for serviceProvider.
 
             // Save away the BaseUri.
             IUriContext uriContext = serviceProvider.GetService(typeof(IUriContext)) as IUriContext;
-            if( uriContext == null )
+            if (uriContext == null)
             {
-                throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IUriContext" ));
+                throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, "IUriContext"));
             }
             _baseUri = uriContext.BaseUri;
-            
+
 
             Uri imageUri = GetResolvedUri(_image);
             Uri sourceProfileUri = GetResolvedUri(_sourceProfile);
@@ -118,7 +118,7 @@ namespace System.Windows
             try
             {
                 ColorConvertedBitmap colorConverted = new ColorConvertedBitmap(formatConverted, sourceContext, destinationContext, PixelFormats.Bgra32);
-                result= colorConverted;
+                result = colorConverted;
             }
             catch (FileFormatException)
             {   // Gracefully ignore non-matching profile
@@ -137,7 +137,7 @@ namespace System.Windows
                 return null;
             }
 
-            return new Uri(_baseUri,uri);
+            return new Uri(_baseUri, uri);
         }
 
         string _image;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,9 +7,9 @@
 // types when calling into the Read method, meant to prevent instantiation of unexpected types.
 //
 
-using Microsoft.Win32;
 using System.Xaml;
 using System.Xml;
+using Microsoft.Win32;
 
 namespace System.Windows.Markup
 {
@@ -211,7 +211,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Per instance set of allow-listed types, may grow at runtime to encompass implicit allow list.
         /// </summary>
-        HashSet<Type> _safeTypesSet = new HashSet<Type>() { 
+        HashSet<Type> _safeTypesSet = new HashSet<Type>() {
             typeof(System.Windows.ResourceDictionary),
             typeof(System.Windows.StaticResourceExtension),
             typeof(System.Windows.Documents.DocumentStructures.FigureStructure),
@@ -227,7 +227,7 @@ namespace System.Windows.Markup
             typeof(System.Windows.Documents.DocumentStructures.TableRowGroupStructure),
             typeof(System.Windows.Documents.DocumentStructures.TableRowStructure),
             typeof(System.Windows.Documents.DocumentStructures.TableStructure),
-            typeof(System.Windows.Documents.LinkTarget)          
-            };  
+            typeof(System.Windows.Documents.LinkTarget)
+            };
     }
 }

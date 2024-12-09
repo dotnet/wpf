@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,12 +35,12 @@ namespace MS.Internal
     [Flags]
     internal enum ShutDownEvents : ushort
     {
-        DomainUnload        = 0x0001,
-        ProcessExit         = 0x0002,
-        DispatcherShutdown  = 0x0004,
+        DomainUnload = 0x0001,
+        ProcessExit = 0x0002,
+        DispatcherShutdown = 0x0004,
 
-        AppDomain           = DomainUnload | ProcessExit,
-        All                 = AppDomain | DispatcherShutdown,
+        AppDomain = DomainUnload | ProcessExit,
+        All = AppDomain | DispatcherShutdown,
     }
 
     internal abstract class ShutDownListener : WeakReference
@@ -136,12 +136,12 @@ namespace MS.Internal
         [Flags]
         enum PrivateFlags : ushort
         {
-            DomainUnload        = ShutDownEvents.DomainUnload,
-            ProcessExit         = ShutDownEvents.ProcessExit,
-            DispatcherShutdown  = ShutDownEvents.DispatcherShutdown,
+            DomainUnload = ShutDownEvents.DomainUnload,
+            ProcessExit = ShutDownEvents.ProcessExit,
+            DispatcherShutdown = ShutDownEvents.DispatcherShutdown,
 
-            Static              = 0x4000,
-            Listening           = 0x8000,
+            Static = 0x4000,
+            Listening = 0x8000,
         }
 
         PrivateFlags _flags;

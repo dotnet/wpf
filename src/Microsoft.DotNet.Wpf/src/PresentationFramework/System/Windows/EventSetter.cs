@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -36,19 +36,19 @@ namespace System.Windows
             _event = routedEvent;
             _handler = handler;
         }
-        
+
         /// <summary>
         ///    Event that is being set by this setter
         /// </summary>
         public RoutedEvent Event
         {
             get { return _event; }
-            set 
+            set
             {
                 ArgumentNullException.ThrowIfNull(value);
 
                 CheckSealed();
-                _event = value; 
+                _event = value;
             }
         }
 
@@ -59,12 +59,12 @@ namespace System.Windows
         public Delegate Handler
         {
             get { return _handler; }
-            set 
+            set
             {
                 ArgumentNullException.ThrowIfNull(value);
 
                 CheckSealed();
-                _handler = value; 
+                _handler = value;
             }
         }
 
@@ -75,10 +75,10 @@ namespace System.Windows
         public bool HandledEventsToo
         {
             get { return _handledEventsToo; }
-            set 
-            { 
+            set
+            {
                 CheckSealed();
-                _handledEventsToo = value; 
+                _handledEventsToo = value;
             }
         }
 
@@ -87,7 +87,7 @@ namespace System.Windows
         //  Do the error checking that we can only do once all of the properties have been
         //  set, then call up to base.
         //
-        
+
         internal override void Seal()
         {
 
@@ -105,14 +105,14 @@ namespace System.Windows
             }
 
             base.Seal();
-            
+
         }
 
 
-        private RoutedEvent    _event;
-        private Delegate         _handler;
-        private bool             _handledEventsToo;
+        private RoutedEvent _event;
+        private Delegate _handler;
+        private bool _handledEventsToo;
     }
-    
+
 }
 

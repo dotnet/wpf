@@ -1,15 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal.Interop;
-using MS.Win32.Pointer;
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 using System.Windows.Input.StylusPointer;
 using System.Windows.Media;
 using System.Windows.Threading;
+using MS.Internal.Interop;
+using MS.Win32.Pointer;
 
 namespace System.Windows.Interop
 {
@@ -214,7 +214,7 @@ namespace System.Windows.Interop
             if (data.IsValid
                 && (data.Info.pointerType == UnsafeNativeMethods.POINTER_INPUT_TYPE.PT_TOUCH
                 || data.Info.pointerType == UnsafeNativeMethods.POINTER_INPUT_TYPE.PT_PEN))
-            {               
+            {
                 uint cursorId = 0;
 
                 if (UnsafeNativeMethods.GetPointerCursorId(pointerId, ref cursorId))
@@ -227,7 +227,7 @@ namespace System.Windows.Interop
                     {
                         return false;
                     }
-                                     
+
                     // Convert move to InAirMove if applicable
                     if (action == RawStylusActions.Move
                         && (!data.Info.pointerFlags.HasFlag(UnsafeNativeMethods.POINTER_FLAGS.POINTER_FLAG_INCONTACT)

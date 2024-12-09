@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,8 @@
 using System.Collections.ObjectModel;   // Collection<T>
 using System.ComponentModel;    // [DefaultValue]
 using System.Globalization;     // CultureInfo
-using System.Windows.Markup;    // MarkupExtension
 using System.Windows.Controls;  // ValidationRule
+using System.Windows.Markup;    // MarkupExtension
 using MS.Internal;              // Helper
 
 
@@ -55,7 +55,7 @@ namespace System.Windows.Data
     /// </summary>
     [MarkupExtensionReturnType(typeof(object))]
     [Localizability(LocalizationCategory.None, Modifiability = Modifiability.Unmodifiable, Readability = Readability.Unreadable)] // Not localizable by-default
-    public abstract class BindingBase: MarkupExtension
+    public abstract class BindingBase : MarkupExtension
     {
         #region Constructors
 
@@ -258,15 +258,15 @@ namespace System.Windows.Data
             /// </summary>
             PathGeneratedInternally = BindingExpressionBase.BindingFlags.PathGeneratedInternally,
 
-            ValidatesOnExceptions   = BindingExpressionBase.BindingFlags.ValidatesOnExceptions,
-            ValidatesOnDataErrors   = BindingExpressionBase.BindingFlags.ValidatesOnDataErrors,
-            ValidatesOnNotifyDataErrors   = BindingExpressionBase.BindingFlags.ValidatesOnNotifyDataErrors,
+            ValidatesOnExceptions = BindingExpressionBase.BindingFlags.ValidatesOnExceptions,
+            ValidatesOnDataErrors = BindingExpressionBase.BindingFlags.ValidatesOnDataErrors,
+            ValidatesOnNotifyDataErrors = BindingExpressionBase.BindingFlags.ValidatesOnNotifyDataErrors,
 
             /// <summary> Flags describing data transfer </summary>
             PropagationMask = OneWay | TwoWay | OneWayToSource | OneTime | PropDefault,
 
             /// <summary> Flags describing update trigger </summary>
-            UpdateMask      = UpdateDefault | UpdateOnPropertyChanged | UpdateOnLostFocus | UpdateExplicitly,
+            UpdateMask = UpdateDefault | UpdateOnPropertyChanged | UpdateOnLostFocus | UpdateExplicitly,
 
             /// <summary> Default value</summary>
             Default = BindingExpressionBase.BindingFlags.Default | ValidatesOnNotifyDataErrors,
@@ -313,7 +313,7 @@ namespace System.Windows.Data
         internal void ChangeFlag(BindingFlags flag, bool value)
         {
             if (value)
-                _flags |=  flag;
+                _flags |= flag;
             else
                 _flags &= ~flag;
         }
@@ -335,11 +335,16 @@ namespace System.Windows.Data
         {
             switch (bindingMode)
             {
-                case BindingMode.OneWay:            return BindingFlags.OneWay;
-                case BindingMode.TwoWay:            return BindingFlags.TwoWay;
-                case BindingMode.OneWayToSource:    return BindingFlags.OneWayToSource;
-                case BindingMode.OneTime:           return BindingFlags.OneTime;
-                case BindingMode.Default:           return BindingFlags.PropDefault;
+                case BindingMode.OneWay:
+                    return BindingFlags.OneWay;
+                case BindingMode.TwoWay:
+                    return BindingFlags.TwoWay;
+                case BindingMode.OneWayToSource:
+                    return BindingFlags.OneWayToSource;
+                case BindingMode.OneTime:
+                    return BindingFlags.OneTime;
+                case BindingMode.Default:
+                    return BindingFlags.PropDefault;
             }
 
             return BindingFlags.IllegalInput;
@@ -350,10 +355,14 @@ namespace System.Windows.Data
         {
             switch (updateSourceTrigger)
             {
-                case UpdateSourceTrigger.Default:           return BindingFlags.UpdateDefault;
-                case UpdateSourceTrigger.PropertyChanged:   return BindingFlags.UpdateOnPropertyChanged;
-                case UpdateSourceTrigger.LostFocus:         return BindingFlags.UpdateOnLostFocus;
-                case UpdateSourceTrigger.Explicit:          return BindingFlags.UpdateExplicitly;
+                case UpdateSourceTrigger.Default:
+                    return BindingFlags.UpdateDefault;
+                case UpdateSourceTrigger.PropertyChanged:
+                    return BindingFlags.UpdateOnPropertyChanged;
+                case UpdateSourceTrigger.LostFocus:
+                    return BindingFlags.UpdateOnLostFocus;
+                case UpdateSourceTrigger.Explicit:
+                    return BindingFlags.UpdateExplicitly;
             }
 
             return BindingFlags.IllegalInput;
@@ -448,7 +457,7 @@ namespace System.Windows.Data
             if (collection == null)
                 return null;
 
-            for (int i=0; i<collection.Count; ++i)
+            for (int i = 0; i < collection.Count; ++i)
             {
                 if (type.IsInstanceOfType(collection[i]))
                     return collection[i];
@@ -490,8 +499,8 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        BindingFlags    _flags = BindingFlags.Default;
-        bool            _isSealed;
+        BindingFlags _flags = BindingFlags.Default;
+        bool _isSealed;
 
         #endregion Private Fields
 
@@ -527,13 +536,13 @@ namespace System.Windows.Data
             LastFeatureId
         }
 
-        internal bool      HasValue(Feature id) { return _values.HasValue((int)id); }
-        internal object    GetValue(Feature id, object defaultValue) { return _values.GetValue((int)id, defaultValue); }
-        internal void      SetValue(Feature id, object value) { _values.SetValue((int)id, value); }
-        internal void      SetValue(Feature id, object value, object defaultValue) { if (Object.Equals(value, defaultValue)) _values.ClearValue((int)id); else _values.SetValue((int)id, value); }
-        internal void      ClearValue(Feature id) { _values.ClearValue((int)id); }
-        internal void      CopyValue(Feature id, BindingBase clone) { if (HasValue(id)) { clone.SetValue(id, GetValue(id, null)); } }
-        UncommonValueTable  _values;
+        internal bool HasValue(Feature id) { return _values.HasValue((int)id); }
+        internal object GetValue(Feature id, object defaultValue) { return _values.GetValue((int)id, defaultValue); }
+        internal void SetValue(Feature id, object value) { _values.SetValue((int)id, value); }
+        internal void SetValue(Feature id, object value, object defaultValue) { if (Object.Equals(value, defaultValue)) _values.ClearValue((int)id); else _values.SetValue((int)id, value); }
+        internal void ClearValue(Feature id) { _values.ClearValue((int)id); }
+        internal void CopyValue(Feature id, BindingBase clone) { if (HasValue(id)) { clone.SetValue(id, GetValue(id, null)); } }
+        UncommonValueTable _values;
 
         #endregion Uncommon Values
     }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,14 +19,14 @@
 
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Media.Converters;
-using System.Windows.Media.Composition;
-using System.Windows.Media.TextFormatting;
 using System.Windows.Markup;
+using System.Windows.Media.Composition;
+using System.Windows.Media.Converters;
+using System.Windows.Media.TextFormatting;
 using MS.Internal;
 using MS.Internal.FontCache;
-using MS.Internal.TextFormatting;
 using MS.Internal.Text.TextInterface;
+using MS.Internal.TextFormatting;
 
 namespace System.Windows.Media
 {
@@ -208,19 +208,19 @@ namespace System.Windows.Media
         [CLSCompliant(false)]
         [Obsolete("Use the PixelsPerDip override", false)]
         public GlyphRun(
-            GlyphTypeface           glyphTypeface,
-            int                     bidiLevel,
-            bool                    isSideways,
-            double                  renderingEmSize,
-            IList<ushort>           glyphIndices,
-            Point                   baselineOrigin,
-            IList<double>           advanceWidths,
-            IList<Point>            glyphOffsets,
-            IList<char>             characters,
-            string                  deviceFontName,
-            IList<ushort>           clusterMap,
-            IList<bool>             caretStops,
-            XmlLanguage             language
+            GlyphTypeface glyphTypeface,
+            int bidiLevel,
+            bool isSideways,
+            double renderingEmSize,
+            IList<ushort> glyphIndices,
+            Point baselineOrigin,
+            IList<double> advanceWidths,
+            IList<Point> glyphOffsets,
+            IList<char> characters,
+            string deviceFontName,
+            IList<ushort> clusterMap,
+            IList<bool> caretStops,
+            XmlLanguage language
             )
         {
             // Suppress PRESharp warning that glyphIndices and advanceWidths are not validated and can be null.
@@ -265,21 +265,21 @@ namespace System.Windows.Media
         /// exception if the GlyphRun area or a coordinate exceed the maximum value.
         /// </summary>
         internal static GlyphRun TryCreate(
-            GlyphTypeface           glyphTypeface,
-            int                     bidiLevel,
-            bool                    isSideways,
-            double                  renderingEmSize,
-            float                   pixelsPerDip,
-            IList<ushort>           glyphIndices,
-            Point                   baselineOrigin,
-            IList<double>           advanceWidths,
-            IList<Point>            glyphOffsets,
-            IList<char>             characters,
-            string                  deviceFontName,
-            IList<ushort>           clusterMap,
-            IList<bool>             caretStops,
-            XmlLanguage             language,
-            TextFormattingMode          textLayout
+            GlyphTypeface glyphTypeface,
+            int bidiLevel,
+            bool isSideways,
+            double renderingEmSize,
+            float pixelsPerDip,
+            IList<ushort> glyphIndices,
+            Point baselineOrigin,
+            IList<double> advanceWidths,
+            IList<Point> glyphOffsets,
+            IList<char> characters,
+            string deviceFontName,
+            IList<ushort> clusterMap,
+            IList<bool> caretStops,
+            XmlLanguage language,
+            TextFormattingMode textLayout
             )
         {
             GlyphRun glyphRun = new GlyphRun(pixelsPerDip);
@@ -316,21 +316,21 @@ namespace System.Windows.Media
         }
 
         private void Initialize(
-            GlyphTypeface           glyphTypeface,
-            int                     bidiLevel,
-            bool                    isSideways,
-            double                  renderingEmSize,
-            float                   pixelsPerDip,
-            IList<ushort>           glyphIndices,
-            Point                   baselineOrigin,
-            IList<double>           advanceWidths,
-            IList<Point>            glyphOffsets,
-            IList<char>             characters,
-            string                  deviceFontName,
-            IList<ushort>           clusterMap,
-            IList<bool>             caretStops,
-            XmlLanguage             language,
-            TextFormattingMode      textFormattingMode
+            GlyphTypeface glyphTypeface,
+            int bidiLevel,
+            bool isSideways,
+            double renderingEmSize,
+            float pixelsPerDip,
+            IList<ushort> glyphIndices,
+            Point baselineOrigin,
+            IList<double> advanceWidths,
+            IList<Point> glyphOffsets,
+            IList<char> characters,
+            string deviceFontName,
+            IList<ushort> clusterMap,
+            IList<bool> caretStops,
+            XmlLanguage language,
+            TextFormattingMode textFormattingMode
             )
         {
             // The default branch prediction rules for modern processors specify that forward branches
@@ -529,7 +529,7 @@ namespace System.Windows.Media
             int currentCodepoint = clusterCodepointStart;
 
             IList<double> advances = AdvanceWidths;
-            for (;;)
+            for (; ; )
             {
                 ++currentCodepoint;
 
@@ -834,7 +834,7 @@ namespace System.Windows.Media
                 double advance = 0;
                 if (_advanceWidths != null)
                 {
-                    foreach(double glyphAdvance in _advanceWidths)
+                    foreach (double glyphAdvance in _advanceWidths)
                         advance += glyphAdvance;
                 }
 
@@ -1599,8 +1599,10 @@ namespace System.Windows.Media
 
                 if (accumulatedGeometry == null)
                 {
-                    accumulatedGeometry = new GeometryGroup();
-                    accumulatedGeometry.FillRule = FillRule.Nonzero;
+                    accumulatedGeometry = new GeometryGroup
+                    {
+                        FillRule = FillRule.Nonzero
+                    };
                 }
 
                 accumulatedGeometry.Children.Add(glyphGeometry.GetOutlinedPathGeometry(RelativeFlatteningTolerance, ToleranceType.Relative));
@@ -1803,7 +1805,7 @@ namespace System.Windows.Media
 
                 return _mcr.GetHandle(channel);
             }
-}
+        }
 
         /// <summary>
         /// Generates request to delete slave glyph run resource.
@@ -1898,7 +1900,8 @@ namespace System.Windows.Media
             // BidiLevel
             // Fix font file name (remove first 4 characters)
 
-            unsafe {
+            unsafe
+            {
                 // calculate variable data size
 
                 // glyph indices
@@ -1952,7 +1955,7 @@ namespace System.Windows.Media
                     {
                         if (glyphCount <= MaxStackAlloc / sizeof(float))
                         {
-                            float *pAdvanceWidths = stackalloc float[glyphCount];
+                            float* pAdvanceWidths = stackalloc float[glyphCount];
 
                             for (int i = 0; i < glyphCount; i++)
                             {
@@ -1976,12 +1979,12 @@ namespace System.Windows.Media
                         {
                             if (glyphCount <= MaxStackAlloc / (2 * sizeof(float)))
                             {
-                                float *pOffsets = stackalloc float[2*glyphCount];
+                                float* pOffsets = stackalloc float[2 * glyphCount];
 
                                 for (int i = 0; i < glyphCount; i++)
                                 {
-                                    pOffsets[2*i] = (float)_glyphOffsets[i].X;
-                                    pOffsets[2*i+1] = (float)_glyphOffsets[i].Y;
+                                    pOffsets[2 * i] = (float)_glyphOffsets[i].X;
+                                    pOffsets[2 * i + 1] = (float)_glyphOffsets[i].Y;
                                 }
                                 channel.AppendCommandData((byte*)pOffsets, 2 * glyphCount * sizeof(float));
                             }
@@ -1997,7 +2000,7 @@ namespace System.Windows.Media
                             }
                         }
                     }
-}
+                }
                 channel.EndCommand();
             }
         }
@@ -2034,10 +2037,10 @@ namespace System.Windows.Media
         /// <param name="caretStopIndex">Nearest caret stop index, or -1 if there are no caret stops.</param>
         /// <param name="codePointsUntilNextStop">Code points until the next caret stop, or -1 if there is no next caret stop.</param>
         private void FindNearestCaretStop(
-            int         characterIndex,
+            int characterIndex,
             IList<bool> caretStops,
-            out int     caretStopIndex,
-            out int     codePointsUntilNextStop)
+            out int caretStopIndex,
+            out int codePointsUntilNextStop)
         {
             caretStopIndex = -1;
             codePointsUntilNextStop = -1;
@@ -2427,30 +2430,30 @@ namespace System.Windows.Media
             /// At this state, all operations on the object would cause InvalidOperationException.
             /// The object can only transit to 'IsInitializing' state with BeginInit() call.
             /// </summary>
-            None                = 0x00,
+            None = 0x00,
 
             /// <summary>
             /// Set to display the GlyphRun sideways.
             /// </summary>
-            IsSideways          = 0x01,
+            IsSideways = 0x01,
 
             /// <summary>
             /// The state in which the GlyphRun object is fully initialized. At this state the object
             /// is fully functional. There is no valid transition out of the state.
             /// </summary>
-            IsInitialized       = 0x08,
+            IsInitialized = 0x08,
 
             /// <summary>
             /// The state in which the GlyphRun is being initialized. At this state, user can
             /// set values into the required properties. The object can only transit to 'IsInitialized' state
             /// with EndInit() call.
             /// </summary>
-            IsInitializing      = 0x10,
+            IsInitializing = 0x10,
 
             /// <summary>
             /// Caching ink bounds
             /// </summary>
-            CacheInkBounds      = 0x20,
+            CacheInkBounds = 0x20,
         }
 
         #endregion Private Enumerations
@@ -2463,38 +2466,38 @@ namespace System.Windows.Media
         //------------------------------------------------------
         #region Private Fields
 
-        private Point               _baselineOrigin;
+        private Point _baselineOrigin;
 
-        private GlyphRunFlags       _flags;
-        private double              _renderingEmSize;
-        private IList<ushort>       _glyphIndices;
-        private IList<double>       _advanceWidths;
-        private IList<Point>        _glyphOffsets;
-        private int                 _bidiLevel;
-        private GlyphTypeface       _glyphTypeface;
-        private IList<char>         _characters;
-        private IList<ushort>       _clusterMap;
-        private IList<bool>         _caretStops;
-        private XmlLanguage         _language;
-        private string              _deviceFontName;
-        private object              _inkBoundingBox;    // Used when CacheInkBounds is on
-        private TextFormattingMode      _textFormattingMode;
-        private float               _pixelsPerDip = MS.Internal.FontCache.Util.PixelsPerDip;
+        private GlyphRunFlags _flags;
+        private double _renderingEmSize;
+        private IList<ushort> _glyphIndices;
+        private IList<double> _advanceWidths;
+        private IList<Point> _glyphOffsets;
+        private int _bidiLevel;
+        private GlyphTypeface _glyphTypeface;
+        private IList<char> _characters;
+        private IList<ushort> _clusterMap;
+        private IList<bool> _caretStops;
+        private XmlLanguage _language;
+        private string _deviceFontName;
+        private object _inkBoundingBox;    // Used when CacheInkBounds is on
+        private TextFormattingMode _textFormattingMode;
+        private float _pixelsPerDip = MS.Internal.FontCache.Util.PixelsPerDip;
 
         // the sine of 20 degrees
-        private const double        Sin20 = 0.34202014332566873304409961468226;
+        private const double Sin20 = 0.34202014332566873304409961468226;
 
         // This is the precision that is used to decide that glyph metrics are equal,
         // for example when detecting blank glyphs.
         // The chosen value is greater than typical floating point precision loss
         // but smaller than typical design font unit (1/1024th or 1/2048th).
-        private const double        InkMetricsEpsilon = 0.0000001;
+        private const double InkMetricsEpsilon = 0.0000001;
 
         // Dummy font hinting size
-        private const double        DefaultFontHintingSize = 12.0;
+        private const double DefaultFontHintingSize = 12.0;
 
         // Tolerance for flattening Bezier curves when calling GetOutlinedPathGeometry.
-        internal static double        RelativeFlatteningTolerance = 0.01;
+        internal static double RelativeFlatteningTolerance = 0.01;
 
         // The constants that delimit glyph run size.
         internal const int MaxGlyphCount = 0xFFFF;

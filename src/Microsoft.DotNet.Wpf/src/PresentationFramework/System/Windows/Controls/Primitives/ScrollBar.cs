@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -70,7 +70,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public Orientation Orientation
         {
-            get { return (Orientation) GetValue(OrientationProperty); }
+            get { return (Orientation)GetValue(OrientationProperty); }
             set { SetValue(OrientationProperty, value); }
         }
 
@@ -174,7 +174,7 @@ namespace System.Windows.Controls.Primitives
             else
             {
                 // Clear the mouse point
-                _latestRightButtonClickPoint = new Point(-1,-1);
+                _latestRightButtonClickPoint = new Point(-1, -1);
             }
 
             base.OnPreviewMouseRightButtonUp(e);
@@ -297,7 +297,8 @@ namespace System.Windows.Controls.Primitives
         private static void OnThumbDragStarted(object sender, DragStartedEventArgs e)
         {
             ScrollBar scrollBar = sender as ScrollBar;
-            if (scrollBar == null) { return; }
+            if (scrollBar == null)
+            { return; }
 
             scrollBar._hasScrolled = false;
             scrollBar._previousValue = scrollBar.Value;
@@ -307,7 +308,8 @@ namespace System.Windows.Controls.Primitives
         private static void OnThumbDragDelta(object sender, DragDeltaEventArgs e)
         {
             ScrollBar scrollBar = sender as ScrollBar;
-            if (scrollBar == null) { return; }
+            if (scrollBar == null)
+            { return; }
 
             scrollBar.UpdateValue(e.HorizontalChange + scrollBar._thumbOffset.X, e.VerticalChange + scrollBar._thumbOffset.Y);
         }
@@ -319,8 +321,8 @@ namespace System.Windows.Controls.Primitives
             if (Track != null)
             {
                 double valueDelta = Track.ValueFromDistance(horizontalDragDelta, verticalDragDelta);
-                if (    System.Windows.Shapes.Shape.IsDoubleFinite(valueDelta)
-                    &&  !DoubleUtil.IsZero(valueDelta))
+                if (System.Windows.Shapes.Shape.IsDoubleFinite(valueDelta)
+                    && !DoubleUtil.IsZero(valueDelta))
                 {
                     double currentValue = Value;
                     double newValue = currentValue + valueDelta;
@@ -402,12 +404,13 @@ namespace System.Windows.Controls.Primitives
                 ChangeValue(value, false /* defer */);
             }
         }
-        
+
 
         private void ChangeValue(double newValue, bool defer)
         {
             newValue = Math.Min(Math.Max(newValue, Minimum), Maximum);
-            if (IsStandalone) { Value = newValue; }
+            if (IsStandalone)
+            { Value = newValue; }
             else
             {
                 IInputElement target = CommandTarget;
@@ -447,7 +450,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         internal void ScrollToLastMousePoint()
         {
-            Point pt = new Point(-1,-1);
+            Point pt = new Point(-1, -1);
             if ((Track != null) && (_latestRightButtonClickPoint != pt))
             {
                 double newValue = Track.ValueFromPoint(_latestRightButtonClickPoint);
@@ -462,8 +465,10 @@ namespace System.Windows.Controls.Primitives
 
         internal void RaiseScrollEvent(ScrollEventType scrollEventType)
         {
-            ScrollEventArgs newEvent = new ScrollEventArgs(scrollEventType, Value);
-            newEvent.Source=this;
+            ScrollEventArgs newEvent = new ScrollEventArgs(scrollEventType, Value)
+            {
+                Source = this
+            };
             RaiseEvent(newEvent);
         }
 
@@ -672,7 +677,7 @@ namespace System.Windows.Controls.Primitives
 
             var onScrollCommand = new ExecutedRoutedEventHandler(OnScrollCommand);
             var onQueryScrollCommand = new CanExecuteRoutedEventHandler(OnQueryScrollCommand);
-            
+
             FocusableProperty.OverrideMetadata(typeof(ScrollBar), new FrameworkPropertyMetadata(BooleanBoxes.FalseBox));
 
             // Register Event Handler for the Thumb
@@ -740,7 +745,7 @@ namespace System.Windows.Controls.Primitives
 
         private Track _track;
 
-        private Point _latestRightButtonClickPoint = new Point(-1,-1);
+        private Point _latestRightButtonClickPoint = new Point(-1, -1);
 
         private bool _canScroll = true;  // Maximum > Minimum by default
         private bool _hasScrolled;  // Has the thumb been dragged
@@ -881,15 +886,19 @@ namespace System.Windows.Controls.Primitives
 
         private static MenuItem CreateMenuItem(string name, string automationId, RoutedCommand command)
         {
-            MenuItem menuItem = new MenuItem();
-            menuItem.Header = SR.GetResourceString(name);
-            menuItem.Command = command;
+            MenuItem menuItem = new MenuItem
+            {
+                Header = SR.GetResourceString(name),
+                Command = command
+            };
             AutomationProperties.SetAutomationId(menuItem, automationId);
 
-            Binding binding = new Binding();
-            binding.Path = new PropertyPath(ContextMenu.PlacementTargetProperty);
-            binding.Mode = BindingMode.OneWay;
-            binding.RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(ContextMenu), 1);
+            Binding binding = new Binding
+            {
+                Path = new PropertyPath(ContextMenu.PlacementTargetProperty),
+                Mode = BindingMode.OneWay,
+                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(ContextMenu), 1)
+            };
             menuItem.SetBinding(MenuItem.CommandTargetProperty, binding);
 
             return menuItem;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,9 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal.KnownBoxes;
 using System.Globalization;
 using System.Windows.Media.Media3D;
-
+using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media.Animation
@@ -22,7 +21,7 @@ namespace System.Windows.Media.Animation
     /// between two values.  The values are determined by the combination of
     /// From, To, or By values that are set on the animation.
     /// </summary>
-    public partial class QuaternionAnimation : 
+    public partial class QuaternionAnimation :
         QuaternionAnimationBase
     {
         #region Data
@@ -32,7 +31,7 @@ namespace System.Windows.Media.Animation
         /// </summary>
         private Quaternion[] _keyValues;
 
-        private AnimationType _animationType;        
+        private AnimationType _animationType;
         private bool _isAnimationFunctionValid;
 
         #endregion
@@ -220,22 +219,22 @@ namespace System.Windows.Media.Animation
                 progress = easingFunction.Ease(progress);
             }
 
-            Quaternion   from        = Quaternion.Identity;
-            Quaternion   to          = Quaternion.Identity;
-            Quaternion   accumulated = Quaternion.Identity;
-            Quaternion   foundation  = Quaternion.Identity;
+            Quaternion from = Quaternion.Identity;
+            Quaternion to = Quaternion.Identity;
+            Quaternion accumulated = Quaternion.Identity;
+            Quaternion foundation = Quaternion.Identity;
 
             // need to validate the default origin and destination values if 
             // the animation uses them as the from, to, or foundation values
             bool validateOrigin = false;
             bool validateDestination = false;
 
-            switch(_animationType)
+            switch (_animationType)
             {
                 case AnimationType.Automatic:
 
-                    from    = defaultOriginValue;
-                    to      = defaultDestinationValue;
+                    from = defaultOriginValue;
+                    to = defaultDestinationValue;
 
                     validateOrigin = true;
                     validateDestination = true;
@@ -244,8 +243,8 @@ namespace System.Windows.Media.Animation
 
                 case AnimationType.From:
 
-                    from    = _keyValues[0];
-                    to      = defaultDestinationValue;
+                    from = _keyValues[0];
+                    to = defaultDestinationValue;
 
                     validateDestination = true;
 
@@ -268,8 +267,8 @@ namespace System.Windows.Media.Animation
                     // animations that precede it in the list without having
                     // to manually set the From value to the base value.
 
-                    to          = _keyValues[0];
-                    foundation  = defaultOriginValue;
+                    to = _keyValues[0];
+                    foundation = defaultOriginValue;
 
                     validateOrigin = true;
 
@@ -277,8 +276,8 @@ namespace System.Windows.Media.Animation
 
                 case AnimationType.FromTo:
 
-                    from    = _keyValues[0];
-                    to      = _keyValues[1];
+                    from = _keyValues[0];
+                    to = _keyValues[1];
 
                     if (IsAdditive)
                     {
@@ -290,8 +289,8 @@ namespace System.Windows.Media.Animation
 
                 case AnimationType.FromBy:
 
-                    from    = _keyValues[0];
-                    to      = AnimatedTypeHelpers.AddQuaternion(_keyValues[0], _keyValues[1]);
+                    from = _keyValues[0];
+                    to = AnimatedTypeHelpers.AddQuaternion(_keyValues[0], _keyValues[1]);
 
                     if (IsAdditive)
                     {
@@ -308,7 +307,7 @@ namespace System.Windows.Media.Animation
                     break;
             }
 
-            if (validateOrigin 
+            if (validateOrigin
                 && !AnimatedTypeHelpers.IsValidAnimationValueQuaternion(defaultOriginValue))
             {
                 throw new InvalidOperationException(
@@ -319,7 +318,7 @@ namespace System.Windows.Media.Animation
                         defaultOriginValue.ToString(CultureInfo.InvariantCulture)));
             }
 
-            if (validateDestination 
+            if (validateDestination
                 && !AnimatedTypeHelpers.IsValidAnimationValueQuaternion(defaultDestinationValue))
             {
                 throw new InvalidOperationException(
@@ -346,7 +345,7 @@ namespace System.Windows.Media.Animation
             // return foundation + accumulated + from + ((to - from) * progress)
 
             return AnimatedTypeHelpers.AddQuaternion(
-                foundation, 
+                foundation,
                 AnimatedTypeHelpers.AddQuaternion(
                     accumulated,
                     AnimatedTypeHelpers.InterpolateQuaternion(from, to, progress, UseShortestPath)));
@@ -430,7 +429,7 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// From
         /// </summary>
-        public Quaternion? From                
+        public Quaternion? From
         {
             get
             {
@@ -450,7 +449,7 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// To
         /// </summary>
-        public Quaternion? To                
+        public Quaternion? To
         {
             get
             {
@@ -470,7 +469,7 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// By
         /// </summary>
-        public Quaternion? By                
+        public Quaternion? By
         {
             get
             {
@@ -491,7 +490,7 @@ namespace System.Windows.Media.Animation
         /// <summary>
         /// EasingFunction
         /// </summary>
-        public IEasingFunction EasingFunction                
+        public IEasingFunction EasingFunction
         {
             get
             {
@@ -507,8 +506,8 @@ namespace System.Windows.Media.Animation
         /// If this property is set to true the animation will add its value to
         /// the base value instead of replacing it entirely.
         /// </summary>
-        public bool IsAdditive         
-        { 
+        public bool IsAdditive
+        {
             get
             {
                 return (bool)GetValue(IsAdditiveProperty);
@@ -525,8 +524,8 @@ namespace System.Windows.Media.Animation
         /// a To value of 1.0, the animation return values from 1.0 to 2.0 over
         /// the second reteat cycle, and 2.0 to 3.0 over the third, etc.
         /// </summary>
-        public bool IsCumulative      
-        { 
+        public bool IsCumulative
+        {
             get
             {
                 return (bool)GetValue(IsCumulativeProperty);

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -58,7 +58,7 @@ namespace System.Windows.Media.Imaging
         /// Adds an object to a given table
         private static void AddToCache(Uri uri, object obj, Hashtable table)
         {
-            lock(table)
+            lock (table)
             {
                 // if entry is already there, exit
                 if (table.Contains(uri))
@@ -100,7 +100,7 @@ namespace System.Windows.Media.Imaging
         /// Removes an object from a given table
         private static void RemoveFromCache(Uri uri, Hashtable table)
         {
-            lock(table)
+            lock (table)
             {
                 // if entry is there, remove it
                 if (table.Contains(uri))
@@ -113,7 +113,7 @@ namespace System.Windows.Media.Imaging
         /// Return an object from a given table
         private static object CheckCache(Uri uri, Hashtable table)
         {
-            lock(table)
+            lock (table)
             {
                 return table[uri];
             }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,19 +15,17 @@ Abstract:
 
 --*/
 
-using System.IO;
 using System.Globalization;
-using System.Runtime.InteropServices;
-
-using System.Printing.Interop;
+using System.IO;
 using System.Printing;
-
-using System.Windows.Xps;
-using System.Windows.Xps.Serialization;
-using MS.Utility;
+using System.Printing.Interop;
+using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Threading;
+using System.Windows.Xps;
+using System.Windows.Xps.Serialization;
 using MS.Internal.PrintWin32Thunk;
+using MS.Utility;
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -182,7 +180,7 @@ namespace MS.Internal.Printing.Configuration
             this._deviceName = deviceName;
 
             this._thread = Thread.CurrentThread;
-            
+
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXPTProviderEnd);
         }
 
@@ -309,25 +307,25 @@ namespace MS.Internal.Printing.Configuration
                             switch (hResult)
                             {
                                 case (uint)NativeErrorCode.S_PT_CONFLICT_RESOLVED:
-                                {
-                                    conflictStatus = ConflictStatus.ConflictResolved;
-                                    break;
-                                }
+                                    {
+                                        conflictStatus = ConflictStatus.ConflictResolved;
+                                        break;
+                                    }
                                 case (uint)NativeErrorCode.S_PT_NO_CONFLICT:
-                                {
-                                    conflictStatus = ConflictStatus.NoConflict;
-                                    break;
-                                }
+                                    {
+                                        conflictStatus = ConflictStatus.NoConflict;
+                                        break;
+                                    }
                                 default:
-                                {
-                                    throw new PrintQueueException((int)hResult,
-                                                                  "PrintConfig.Provider.MergeValidateFail",
-                                                                  _deviceName);
-                                }
+                                    {
+                                        throw new PrintQueueException((int)hResult,
+                                                                      "PrintConfig.Provider.MergeValidateFail",
+                                                                      _deviceName);
+                                    }
                             }
 
                             RewindIStream(validatedPrintTicketStream);
-                            
+
                             return MemoryStreamFromIStream(validatedPrintTicketStream);
                         }
 
@@ -455,7 +453,7 @@ namespace MS.Internal.Printing.Configuration
 
             uint hResult = 0;
             string errorMsg = null;
-            
+
             IntPtr umDevMode = IntPtr.Zero;
             try
             {
@@ -491,7 +489,7 @@ namespace MS.Internal.Printing.Configuration
                     umDevMode = IntPtr.Zero;
                 }
             }
-            
+
             if ((hResult == (uint)NativeErrorCode.E_XML_INVALID) ||
                 (hResult == (uint)NativeErrorCode.E_PRINTTICKET_FORMAT))
             {
@@ -557,12 +555,12 @@ namespace MS.Internal.Printing.Configuration
         {
             ObjectDisposedException.ThrowIf(_providerHandle is null, typeof(PTProvider));
 
-            if(_thread != Thread.CurrentThread)
+            if (_thread != Thread.CurrentThread)
             {
                 throw new InvalidOperationException(SR.PTProvider_VerifyAccess);
             }
         }
-        
+
         /// <summary>
         /// Copies the managed source stream data to a native buffer and exposes the native buffer as an unmanaged IStream
         /// </summary>
@@ -579,17 +577,17 @@ namespace MS.Internal.Printing.Configuration
             {
                 return null;
             }
-            
+
             long bufferPosition = stream.Position;
             byte[] streamBuffer = stream.GetBuffer();
             int resultLength = ClampToPositiveInt(stream.Length - bufferPosition);
-            if(bufferPosition != 0)
-            {                
+            if (bufferPosition != 0)
+            {
                 streamBuffer = new byte[resultLength];
                 stream.Read(streamBuffer, 0, resultLength);
                 stream.Position = bufferPosition;
             }
-        
+
             IStream result = CreateStreamOnHGlobal();
             try
             {
@@ -602,10 +600,10 @@ namespace MS.Internal.Printing.Configuration
                 Marshal.ReleaseComObject(result);
                 throw;
             }
-            
+
             return result;
         }
-        
+
         /// <summary>
         /// Copies the native buffer data to the returned managed memory stream
         /// </summary>
@@ -625,13 +623,13 @@ namespace MS.Internal.Printing.Configuration
             ulong iStreamLength = (ulong)stats.cbSize;
             ulong iStreamPosition = 0;
 
-            byte [] result = null;
-            unsafe 
+            byte[] result = null;
+            unsafe
             {
                 stream.Seek(0, 1 /* STREAM_SEEK_CUR */, new IntPtr(&iStreamPosition));
             }
-                
-            result = new byte [ClampToPositiveInt(iStreamLength - iStreamPosition)];
+
+            result = new byte[ClampToPositiveInt(iStreamLength - iStreamPosition)];
             CopyIStreamToArray(stream, result, (uint)result.Length);
 
             return new MemoryStream(result);
@@ -646,36 +644,36 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="src">the source array</param>
         /// <param name="dst">the destination IStream</param>
         /// <param name="byteCount">the number of bytes to copy</param>
-        private static void CopyArrayToIStream(byte [] src, IStream dst, uint byteCount)
+        private static void CopyArrayToIStream(byte[] src, IStream dst, uint byteCount)
         {
             Invariant.Assert(src.Length >= byteCount);
 
             // IStream does not auto resize.
             // we must ensure there is enough remaing capacity to write byteCount bytes.
             EnsureRemainingIStreamLength(dst, byteCount);
-            
+
             // Optimisticly try and write the whole IStream into our MemoryStream
             uint totalBytesWritten = 0;
             unsafe
             {
                 dst.Write(src, (int)byteCount, new IntPtr(&totalBytesWritten));
             }
-                
-            if(totalBytesWritten < byteCount)
+
+            if (totalBytesWritten < byteCount)
             {
                 // Our optimistic write failed, write BLOCK_TRANSFER_SIZE chunks of the input array into our IStream
-                
+
                 // Since totalBytesWritten is less than byteCount which is less than or equal to an int
                 // it is safe to cast it to int without data loss. (This happens a couple of times in the loop)
                 byte[] data = new byte[BLOCK_TRANSFER_SIZE];
-                do 
+                do
                 {
-                    checked 
+                    checked
                     {
                         int bytesToWrite = Math.Min(data.Length, (int)(byteCount - totalBytesWritten));
 
                         Array.Copy(src, (int)totalBytesWritten, data, 0, bytesToWrite);
-                        
+
                         uint bytesWritten = 0;
                         unsafe
                         {
@@ -686,14 +684,14 @@ namespace MS.Internal.Printing.Configuration
                         {
                             break;
                         }
-                            
+
                         totalBytesWritten += bytesWritten;
                     }
                 }
                 while (totalBytesWritten < byteCount);
             }
         }
-        
+
         /// <summary>
         /// Copies native IStream to byte array
         /// </summary>
@@ -704,13 +702,13 @@ namespace MS.Internal.Printing.Configuration
         /// <param name="src">the source IStream</param>
         /// <param name="dst">the destination MemoryStream</param>
         /// <param name="byteCount">the number of bytes to copy</param>
-        private static void CopyIStreamToArray(IStream src, byte [] dst, uint byteCount)
+        private static void CopyIStreamToArray(IStream src, byte[] dst, uint byteCount)
         {
             Invariant.Assert(dst.Length >= byteCount);
-                
+
             // Optimisticly try and read the whole IStream into our MemoryStream                
             uint totalBytesRead = 0;
-            unsafe 
+            unsafe
             {
                 src.Read(dst, (int)byteCount, new IntPtr(&totalBytesRead));
             }
@@ -718,18 +716,18 @@ namespace MS.Internal.Printing.Configuration
             if (totalBytesRead < byteCount)
             {
                 // Our optimistic read failed, write BLOCK_TRANSFER_SIZE chunks of the IStream into our output array                    
-                
+
                 // Since totalBytesRead is less than byteCount which is less than or equal to an int
                 // it is safe to cast it to int without data loss. (This happens a couple of times in the loop)                
                 byte[] data = new byte[BLOCK_TRANSFER_SIZE];
-                do 
+                do
                 {
-                    checked 
+                    checked
                     {
                         int bytesToRead = Math.Min(data.Length, (int)(byteCount - totalBytesRead));
 
                         Array.Clear(data, 0, data.Length);
-                        
+
                         uint bytesRead = 0;
                         unsafe
                         {
@@ -740,7 +738,7 @@ namespace MS.Internal.Printing.Configuration
                         {
                             break;
                         }
-                        
+
                         Array.Copy(data, 0, dst, (int)totalBytesRead, bytesRead);
                         totalBytesRead += bytesRead;
                     }
@@ -748,30 +746,30 @@ namespace MS.Internal.Printing.Configuration
                 while (totalBytesRead < byteCount);
             }
         }
-        
+
         /// <summary>
         /// Ensures an IStream has enough capacity to write byteCount more bytes
         /// </summary>
         private static void EnsureRemainingIStreamLength(IStream stream, uint byteCount)
         {
             ulong iStreamPosition = 0;
-            unsafe 
+            unsafe
             {
                 stream.Seek(0, 1 /* STREAM_SEEK_CUR */, new IntPtr(&iStreamPosition));
             }
 
             System.Runtime.InteropServices.ComTypes.STATSTG stats;
             stream.Stat(out stats, 1 /* STATFLAG_NONAME */);
-            Invariant.Assert(stats.cbSize >= 0);            
+            Invariant.Assert(stats.cbSize >= 0);
             long iStreamLength = stats.cbSize;
-            
+
             long newIStreamLength = 0;
-            checked 
+            checked
             {
                 newIStreamLength = (long)(iStreamPosition + byteCount);
             }
-            
-            if(iStreamLength < newIStreamLength)
+
+            if (iStreamLength < newIStreamLength)
             {
                 stream.SetSize(newIStreamLength);
             }
@@ -797,7 +795,7 @@ namespace MS.Internal.Printing.Configuration
 
             return result;
         }
-        
+
         private static void DeleteIStream(ref IStream stream)
         {
             if (stream != null)
@@ -806,12 +804,12 @@ namespace MS.Internal.Printing.Configuration
                 stream = null;
             }
         }
-        
+
         private static void RewindIStream(IStream stream)
         {
             stream.Seek(0, 0 /*STREAM_SEEK_SET*/ , IntPtr.Zero);
         }
-        
+
         private static int ClampToPositiveInt(long value)
         {
             return (int)Math.Max(0, Math.Min(value, int.MaxValue));
@@ -821,7 +819,7 @@ namespace MS.Internal.Printing.Configuration
         {
             return (int)Math.Min(value, int.MaxValue);
         }
-        
+
         #endregion Private Methods
 
         #region Private Fields
@@ -845,7 +843,7 @@ namespace MS.Internal.Printing.Configuration
         /// Thread the PTProvider was created in
         /// </summary>
         private Thread _thread;
-        
+
         /// <summary>
         /// size of block buffer to use when transferring between managed bytes and unmanaged bytes
         /// </summary>

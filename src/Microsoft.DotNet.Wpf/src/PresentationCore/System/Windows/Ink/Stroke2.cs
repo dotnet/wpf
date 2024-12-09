@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -180,7 +180,7 @@ namespace System.Windows.Ink
         /// <returns>True is this stroke is hit, false otherwise</returns>
         public bool HitTest(Point point)
         {
-            return HitTest(new Point[]{point}, new EllipseStylusShape(TapHitPointSize, TapHitPointSize, TapHitRotation));
+            return HitTest(new Point[] { point }, new EllipseStylusShape(TapHitPointSize, TapHitPointSize, TapHitRotation));
         }
 
         /// <summary>
@@ -195,7 +195,7 @@ namespace System.Windows.Ink
             {
                 throw new ArgumentOutOfRangeException("diameter", SR.InvalidDiameter);
             }
-            return HitTest(new Point[]{point}, new EllipseStylusShape(diameter, diameter, TapHitRotation));
+            return HitTest(new Point[] { point }, new EllipseStylusShape(diameter, diameter, TapHitRotation));
         }
 
         /// <summary>
@@ -302,7 +302,7 @@ namespace System.Windows.Ink
                     strokeInfo.Detach();
                 }
             }
-}
+        }
 
         /// <summary>
         ///
@@ -613,7 +613,7 @@ namespace System.Windows.Ink
             System.Diagnostics.Debug.Assert(cutAt != null);
 
             // Nothing needs to be erased
-            if(cutAt.Length == 0)
+            if (cutAt.Length == 0)
             {
                 StrokeCollection strokes = new StrokeCollection();
                 strokes.Add(this.Clone()); //clip and erase always return clones for this condition
@@ -698,13 +698,13 @@ namespace System.Windows.Ink
 
         #region Private fields
 
-        private Geometry                _cachedGeometry     = null;
-        private bool                    _isSelected         = false;
-        private bool                    _drawAsHollow       = false;
-        private bool                    _cloneStylusPoints  = true;
-        private bool                    _delayRaiseInvalidated  = false;
-        private const double            HollowLineSize = 1.0f;
-        private Rect                    _cachedBounds       = Rect.Empty;
+        private Geometry _cachedGeometry = null;
+        private bool _isSelected = false;
+        private bool _drawAsHollow = false;
+        private bool _cloneStylusPoints = true;
+        private bool _delayRaiseInvalidated = false;
+        private const double HollowLineSize = 1.0f;
+        private Rect _cachedBounds = Rect.Empty;
 
         // The private PropertyChanged event
         private PropertyChangedEventHandler _propertyChanged;

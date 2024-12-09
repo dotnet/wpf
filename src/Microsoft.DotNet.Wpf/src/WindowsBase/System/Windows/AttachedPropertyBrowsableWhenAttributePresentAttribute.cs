@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,15 +11,15 @@ namespace System.Windows
     ///     to an object that defines the given attribute on its class. 
     /// </summary>
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
-    public sealed class AttachedPropertyBrowsableWhenAttributePresentAttribute : AttachedPropertyBrowsableAttribute 
+    public sealed class AttachedPropertyBrowsableWhenAttributePresentAttribute : AttachedPropertyBrowsableAttribute
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
-        
-        
+
+
         /// <summary>
         ///     Creates a new AttachedPropertyBrowsableWhenAttributePresentAttribute.  Provide
         ///     the type of attribute that, when present on a dependency object,
@@ -31,7 +31,7 @@ namespace System.Windows
 
             _attributeType = attributeType;
         }
-        
+
 
         //------------------------------------------------------
         //
@@ -50,7 +50,7 @@ namespace System.Windows
                 return _attributeType;
             }
         }
-    
+
 
         //------------------------------------------------------
         //
@@ -62,17 +62,18 @@ namespace System.Windows
         ///     Overrides Object.Equals to implement correct equality semantics for this
         ///     attribute.
         /// </summary>
-        public override bool Equals(object obj) 
+        public override bool Equals(object obj)
         {
             AttachedPropertyBrowsableWhenAttributePresentAttribute other = obj as AttachedPropertyBrowsableWhenAttributePresentAttribute;
-            if (other == null) return false;
+            if (other == null)
+                return false;
             return _attributeType == other._attributeType;
         }
 
         /// <summary>
         ///     Overrides Object.GetHashCode to implement correct hashing semantics.
         /// </summary>
-        public override int GetHashCode() 
+        public override int GetHashCode()
         {
             return _attributeType.GetHashCode();
         }
@@ -84,7 +85,7 @@ namespace System.Windows
         //
         //------------------------------------------------------
 
-    
+
         /// <summary>
         ///     Returns true if the dependency object class defines an attribute 
         ///     of the same type contained in this attribute.  The attribute must 
@@ -98,7 +99,7 @@ namespace System.Windows
             Attribute a = TypeDescriptor.GetAttributes(d)[_attributeType];
             return (a != null && !a.IsDefaultAttribute());
         }
-    
+
         //------------------------------------------------------
         //
         //  Private Fields

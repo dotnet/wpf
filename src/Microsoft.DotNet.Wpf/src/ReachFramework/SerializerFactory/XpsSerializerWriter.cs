@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,7 +37,7 @@ namespace System.Windows.Xps.Serialization
         public XpsSerializerWriter(Stream stream)
             : base()
         {
-            _package = Package.Open(stream,FileMode.Create,FileAccess.ReadWrite);
+            _package = Package.Open(stream, FileMode.Create, FileAccess.ReadWrite);
 
             _xpsDocument = new XpsDocument(_package);
             _xpsDocumentWriter = XpsDocument.CreateXpsDocumentWriter(_xpsDocument);
@@ -62,7 +62,7 @@ namespace System.Windows.Xps.Serialization
 
             FinalizeWriter();
         }
-        
+
         /// <summary>
         /// Write a single Visual and close stream
         /// </summary>
@@ -84,7 +84,7 @@ namespace System.Windows.Xps.Serialization
 
             _xpsDocumentWriter.WriteAsync(visual);
         }
-        
+
         /// <summary>
         /// Async Write a single Visual and close stream
         /// </summary>
@@ -94,7 +94,7 @@ namespace System.Windows.Xps.Serialization
 
             _xpsDocumentWriter.WriteAsync(visual, printTicket);
         }
-        
+
         /// <summary>
         /// Async Write a single Visual and close stream
         /// </summary>
@@ -104,7 +104,7 @@ namespace System.Windows.Xps.Serialization
 
             _xpsDocumentWriter.WriteAsync(visual, userState);
         }
-        
+
         /// <summary>
         /// Async Write a single Visual and close stream
         /// </summary>
@@ -406,7 +406,7 @@ namespace System.Windows.Xps.Serialization
             CheckDisposed();
 
             SerializerWriterCollator collator = _xpsDocumentWriter.CreateVisualsCollator(documentSequencePT, documentPT);
-    
+
             // swc will close these
             _xpsDocument = null;
             _xpsDocumentWriter = null;
@@ -449,7 +449,7 @@ namespace System.Windows.Xps.Serialization
 
         private void xsw_WritingProgressChanged(object sender, WritingProgressChangedEventArgs e)
         {
-            if ( WritingProgressChanged != null)
+            if (WritingProgressChanged != null)
             {
                 WritingProgressChanged.Invoke(sender, e);
             }
@@ -457,7 +457,7 @@ namespace System.Windows.Xps.Serialization
 
         private void xsw_WritingCompleted(object sender, WritingCompletedEventArgs e)
         {
-            if ( WritingCompleted != null)
+            if (WritingCompleted != null)
             {
                 FinalizeWriter();
                 WritingCompleted.Invoke(sender, e);
@@ -466,7 +466,7 @@ namespace System.Windows.Xps.Serialization
 
         private void xsw_WritingCancelled(object sender, WritingCancelledEventArgs e)
         {
-            if ( WritingCancelled != null)
+            if (WritingCancelled != null)
             {
                 FinalizeWriter();
                 WritingCancelled.Invoke(sender, e);
@@ -494,9 +494,9 @@ namespace System.Windows.Xps.Serialization
 
         #region Data
 
-        private Package             _package;
-        private XpsDocument         _xpsDocument;
-        private XpsDocumentWriter   _xpsDocumentWriter;
+        private Package _package;
+        private XpsDocument _xpsDocument;
+        private XpsDocumentWriter _xpsDocumentWriter;
 
         #endregion
     }

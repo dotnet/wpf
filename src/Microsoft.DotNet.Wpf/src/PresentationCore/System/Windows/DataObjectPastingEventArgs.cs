@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -112,9 +112,9 @@ namespace System.Windows
         /// </summary>
         public IDataObject DataObject
         {
-            get 
-            { 
-                return _dataObject; 
+            get
+            {
+                return _dataObject;
             }
 
             set
@@ -145,9 +145,9 @@ namespace System.Windows
         /// </summary>
         public string FormatToApply
         {
-            get 
-            { 
-                return _formatToApply; 
+            get
+            {
+                return _formatToApply;
             }
             set
             {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -34,7 +34,7 @@ namespace System.Windows.Media.Animation
         /// <remarks>
         /// There is no default PathGeometry so the user must specify one.
         /// </remarks>
-        public MatrixAnimationUsingPath() 
+        public MatrixAnimationUsingPath()
             : base()
         {
         }
@@ -243,7 +243,7 @@ namespace System.Windows.Media.Animation
             Debug.Assert(animationClock.CurrentState != ClockState.Stopped);
 
             PathGeometry pathGeometry = PathGeometry;
-            
+
             if (pathGeometry == null)
             {
                 return defaultDestinationValue;
@@ -277,7 +277,7 @@ namespace System.Windows.Media.Animation
                     pathPoint = pathPoint + (_accumulatingOffset * currentRepeat);
                 }
 
-                if (   DoesRotateWithTangent
+                if (DoesRotateWithTangent
                     && IsAngleCumulative)
                 {
                     angle = angle + (_accumulatingAngle * currentRepeat);
@@ -287,7 +287,7 @@ namespace System.Windows.Media.Animation
             matrix.Rotate(angle);
             matrix.Translate(pathPoint.X, pathPoint.Y);
 
-            if (IsAdditive) 
+            if (IsAdditive)
             {
                 return Matrix.Multiply(matrix, defaultOriginValue);
             }
@@ -305,7 +305,7 @@ namespace System.Windows.Media.Animation
         {
             Debug.Assert(!_isValid);
 
-            if (   IsOffsetCumulative
+            if (IsOffsetCumulative
                 || IsAngleCumulative)
             {
                 Point startPoint;

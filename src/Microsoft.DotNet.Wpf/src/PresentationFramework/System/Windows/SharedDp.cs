@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,19 +20,19 @@ namespace System.Windows
     {
         internal SharedDp(
             DependencyProperty dp,
-            object             value,
-            string             elementName)
+            object value,
+            string elementName)
         {
             Dp = dp;
             Value = value;
             ElementName = elementName;
         }
-        
+
         internal DependencyProperty Dp;
-        internal object             Value;
-        internal string             ElementName;
+        internal object Value;
+        internal string ElementName;
     }
 
-}         
+}
 
 

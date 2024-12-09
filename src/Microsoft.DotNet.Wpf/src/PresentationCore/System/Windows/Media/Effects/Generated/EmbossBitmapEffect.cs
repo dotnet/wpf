@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,14 +53,14 @@ namespace System.Windows.Media.Effects
 
         private static void LightAnglePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            EmbossBitmapEffect target = ((EmbossBitmapEffect) d);
+            EmbossBitmapEffect target = ((EmbossBitmapEffect)d);
 
 
             target.PropertyChanged(LightAngleProperty);
         }
         private static void ReliefPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            EmbossBitmapEffect target = ((EmbossBitmapEffect) d);
+            EmbossBitmapEffect target = ((EmbossBitmapEffect)d);
 
 
             target.PropertyChanged(ReliefProperty);
@@ -76,7 +76,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(LightAngleProperty);
+                return (double)GetValue(LightAngleProperty);
             }
             set
             {
@@ -91,7 +91,7 @@ namespace System.Windows.Media.Effects
         {
             get
             {
-                return (double) GetValue(ReliefProperty);
+                return (double)GetValue(ReliefProperty);
             }
             set
             {

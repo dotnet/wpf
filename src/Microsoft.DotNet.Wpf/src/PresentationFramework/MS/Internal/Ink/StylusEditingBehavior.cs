@@ -1,9 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Input;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace MS.Internal.Ink
 {
@@ -42,7 +42,7 @@ namespace MS.Internal.Ink
             : base(editingCoordinator, inkCanvas)
         {
         }
-        
+
         #endregion Constructors
 
         //-------------------------------------------------------------------------------
@@ -95,12 +95,12 @@ namespace MS.Internal.Ink
             EditingCoordinator.DebugCheckActiveBehavior(this);
 
             // Don't process if SwitchToMode is called during the mid-stroke.
-            if ( _disableInput )
+            if (_disableInput)
             {
                 return;
             }
 
-            if ( !EditingCoordinator.UserIsEditing )
+            if (!EditingCoordinator.UserIsEditing)
             {
                 EditingCoordinator.UserIsEditing = true;
                 StylusInputBegin(stylusPoints, userInitiated);
@@ -126,7 +126,7 @@ namespace MS.Internal.Ink
         /// </summary>
         /// <param name="mode"></param>
         protected abstract void OnSwitchToMode(InkCanvasEditingMode mode);
-        
+
         /// <summary>
         /// Called when the InkEditingBehavior is activated.
         /// </summary>
@@ -148,7 +148,7 @@ namespace MS.Internal.Ink
         protected sealed override void OnCommit(bool commit)
         {
             // Make sure that user is still editing
-            if ( EditingCoordinator.UserIsEditing )
+            if (EditingCoordinator.UserIsEditing)
             {
                 EditingCoordinator.UserIsEditing = false;
 
@@ -201,7 +201,7 @@ namespace MS.Internal.Ink
         {
             //defer to derived classes
         }
-       
+
         #endregion Protected Methods
 
         //-------------------------------------------------------------------------------
@@ -212,7 +212,7 @@ namespace MS.Internal.Ink
 
         #region Private Fields
 
-        private bool    _disableInput;  // No need for initializing. The default value is false.
+        private bool _disableInput;  // No need for initializing. The default value is false.
 
         #endregion Private Fields
     }

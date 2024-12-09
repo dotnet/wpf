@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,10 +37,10 @@
 #define TRACE
 #endif
 
+using System.Collections;               // for IComparer
 using System.IO;
 using System.Net;
 using System.Threading;
-using System.Collections;               // for IComparer
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 
 namespace MS.Internal.IO.Packaging
@@ -50,7 +50,7 @@ namespace MS.Internal.IO.Packaging
     /// </summary>
     /// <remarks>NetStream spawns two download requests.  One downloads the entire file and the other
     /// downloads portions as needed by calls to Read().</remarks>
-    internal class NetStream: Stream
+    internal class NetStream : Stream
     {
         //------------------------------------------------------
         //
@@ -125,7 +125,7 @@ namespace MS.Internal.IO.Packaging
             CheckDisposed();
 #if DEBUG
             if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                System.Diagnostics.Trace.TraceInformation("NetStream.Read() offset:{0} length:{1}", _position, count );
+                System.Diagnostics.Trace.TraceInformation("NetStream.Read() offset:{0} length:{1}", _position, count);
 #endif
 
             PackagingUtilities.VerifyStreamReadArgs(this, buffer, offset, count);
@@ -163,7 +163,7 @@ namespace MS.Internal.IO.Packaging
                         _tempFileMutex.ReleaseMutex();
                     }
 
-                   // Update our position - we do this last because the Stream contract guarantees the position is only updated
+                    // Update our position - we do this last because the Stream contract guarantees the position is only updated
                     // if the Read() call was successful.
                     _position += bytesRead;
                 }
@@ -387,8 +387,8 @@ namespace MS.Internal.IO.Packaging
                         try
                         {
 #if DEBUG
-                        if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                            System.Diagnostics.Trace.TraceInformation("NetStream.Dispose(bool) - mark as closed");
+                            if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
+                                System.Diagnostics.Trace.TraceInformation("NetStream.Dispose(bool) - mark as closed");
 #endif
 
                             // No matter what, mark ourselves as disposed.
@@ -424,8 +424,8 @@ namespace MS.Internal.IO.Packaging
 
                             FreeTempFile();
 #if DEBUG
-                        if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                            System.Diagnostics.Trace.TraceInformation("NetStream.Dispose(bool) - exiting");
+                            if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
+                                System.Diagnostics.Trace.TraceInformation("NetStream.Dispose(bool) - exiting");
 #endif
                         }
                         finally
@@ -533,7 +533,7 @@ namespace MS.Internal.IO.Packaging
                             if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
                                 System.Diagnostics.Trace.TraceInformation("NetStream.ReadCallBack (offset,length):({0},{1})", _highWaterMark, read);
 #endif
-                            lock(PackagingUtilities.IsolatedStorageFileLock)
+                            lock (PackagingUtilities.IsolatedStorageFileLock)
                             {
                                 _tempFileStream.Seek(_highWaterMark, SeekOrigin.Begin);
                                 _tempFileStream.Write(_readBuf, 0, read);
@@ -591,12 +591,13 @@ namespace MS.Internal.IO.Packaging
                 _byteRangeDownloader = new ByteRangeDownloader(_uri,
                                                                _tempFileStream,
                                                                _readEventHandles[(int)ReadEvent.ByteRangeReadEvent].SafeWaitHandle,
-                                                               _tempFileMutex);
+                                                               _tempFileMutex)
+                {
+                    Proxy = _originalRequest.Proxy,
 
-                _byteRangeDownloader.Proxy = _originalRequest.Proxy;
-
-                _byteRangeDownloader.Credentials = _originalRequest.Credentials;
-                _byteRangeDownloader.CachePolicy = _originalRequest.CachePolicy;
+                    Credentials = _originalRequest.Credentials,
+                    CachePolicy = _originalRequest.CachePolicy
+                };
 
                 _byteRangesAvailable = new ArrayList(); // byte ranges that are downloaded
             }
@@ -684,7 +685,7 @@ namespace MS.Internal.IO.Packaging
 
                 while (r < ranges.GetLength(0))
                 {
-                    _byteRangesAvailable.Add(new Block(ranges[r,0], ranges[r,1]));
+                    _byteRangesAvailable.Add(new Block(ranges[r, 0], ranges[r, 1]));
                     r++;
 #if DEBUG
                     if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
@@ -805,7 +806,7 @@ namespace MS.Internal.IO.Packaging
         /// Stream Block
         /// </summary>
         /// <remarks>represents a byte range that has been downloaded and is available</remarks>
-        private class Block: IComparable
+        private class Block : IComparable
         {
             internal Block(long offset, int length)
             {
@@ -900,8 +901,8 @@ namespace MS.Internal.IO.Packaging
                 }
             }
 
-            private long    _offset;        // zero-based index from start of stream
-            private int     _length;        // number of bytes starting at _offset
+            private long _offset;        // zero-based index from start of stream
+            private int _length;        // number of bytes starting at _offset
         };
 
         // Merge all overlapping and adjacent ranges
@@ -961,8 +962,8 @@ namespace MS.Internal.IO.Packaging
                     // network traffic is flowing better than expected - increase the threshold
                     _additionalRequestThreshold *= 2;
 #if DEBUG
-                if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                    System.Diagnostics.Trace.TraceInformation("NetStream.GetData() - byteRange request satisfied by full download - increasing threshold");
+                    if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
+                        System.Diagnostics.Trace.TraceInformation("NetStream.GetData() - byteRange request satisfied by full download - increasing threshold");
 #endif
                 }
                 else
@@ -1007,8 +1008,8 @@ namespace MS.Internal.IO.Packaging
                 checked
                 {
 #if DEBUG
-                if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
-                    System.Diagnostics.Trace.TraceInformation("NetStream.GetData() - Request Data (BeginRead)");
+                    if (System.IO.Packaging.PackWebRequestFactory._traceSwitch.Enabled)
+                        System.Diagnostics.Trace.TraceInformation("NetStream.GetData() - Request Data (BeginRead)");
 #endif
 
                     // Continue reading data until
@@ -1066,8 +1067,8 @@ namespace MS.Internal.IO.Packaging
                         // 5. The block we were asked to retrieve was not satisfied by existing data
                         if (_allowByteRangeRequests
                             && !_inAdditionalRequest
-                            && (_highWaterMark <= Int64.MaxValue - (long) _additionalRequestThreshold) // Ensure that we don't get overflow from the next line
-                            && (block.Offset > _highWaterMark + (long) _additionalRequestThreshold)
+                            && (_highWaterMark <= Int64.MaxValue - (long)_additionalRequestThreshold) // Ensure that we don't get overflow from the next line
+                            && (block.Offset > _highWaterMark + (long)_additionalRequestThreshold)
                             && ((_byteRangeDownloader == null) || !_byteRangeDownloader.ErroredOut) && (block.Length > 0))
                         {
                             MakeByteRangeRequest(block);            // request data
@@ -1268,11 +1269,11 @@ namespace MS.Internal.IO.Packaging
         //------------------------------------------------------
         private enum ReadEvent { FullDownloadReadEvent = 0, ByteRangeReadEvent = 1, MaxReadEventEnum };
 
-        Uri                     _uri;               // uri we are resolving
+        Uri _uri;               // uri we are resolving
 
-        WebRequest              _originalRequest;   // Proxy member is Critical
-        Stream                  _tempFileStream;    // local temp stream we are writing to and reading from - protected by _tempFileMutex
-        long                    _position;          // our "logical stream position"
+        WebRequest _originalRequest;   // Proxy member is Critical
+        Stream _tempFileStream;    // local temp stream we are writing to and reading from - protected by _tempFileMutex
+        long _position;          // our "logical stream position"
 
         // syncObject - provides mutually-exclusive access control to the following entities:
         // 1. _highWaterMark - this is actually queried outside of a lock in get_Length, but this is safe as a stale value only impacts perf
@@ -1284,38 +1285,38 @@ namespace MS.Internal.IO.Packaging
         // 3. _readEventHandles - cannot be as these are synchronization objects which must be freely accessible
         // 4. _byteRangeDownloader - yes except this object can be disposed while it is still "active" - it is expected to behave correctly in this
         //                scenario.
-        private Object          _syncObject = new Object();
-        private volatile bool   _disposed;
+        private Object _syncObject = new Object();
+        private volatile bool _disposed;
 
         // full-file download
-        private const int       _readTimeOut = 40000;   // how long before we give-up on async Read? (milliseconds)
-        private const int       _additionalRequestMinSize = 0x1000;     // minimum size for a ByteRangeRequest - make it worth the trouble (overhead)
-        private const int       _bufferSize = 0x1000;                   // smaller allows for quicker response
-        private const int       _tempFileSyncTimeout = 5000;            // wait 5 seconds for byteRangeDownloader to release it's File mutex before closing it
-        private uint            _additionalRequestThreshold = 0x4000;   // dynamically adjusting this value based on network conditions (start small because this only goes up)
-        private Stream          _responseStream;        // Stream returned by WebResponse
-        private byte[]          _readBuf;               // destination buffer for async inner webResponse reads
-        private string          _tempFileName;          // file name of temp file
-        private long            _fullStreamLength;      // need to return this in call to get_Length
-        private volatile bool   _fullDownloadComplete;  // download complete if this is true - prevents us from waiting for more data
-                                                        // this is volatile because it can be updated and inspected by different threads
-        private long            _highWaterMark;         // how much data is currently available from full download
-                                                        // used to determine whether it makes sense to spawn a byte-range download
-                                                        // access to this value must be synchronized using lock()
+        private const int _readTimeOut = 40000;   // how long before we give-up on async Read? (milliseconds)
+        private const int _additionalRequestMinSize = 0x1000;     // minimum size for a ByteRangeRequest - make it worth the trouble (overhead)
+        private const int _bufferSize = 0x1000;                   // smaller allows for quicker response
+        private const int _tempFileSyncTimeout = 5000;            // wait 5 seconds for byteRangeDownloader to release it's File mutex before closing it
+        private uint _additionalRequestThreshold = 0x4000;   // dynamically adjusting this value based on network conditions (start small because this only goes up)
+        private Stream _responseStream;        // Stream returned by WebResponse
+        private byte[] _readBuf;               // destination buffer for async inner webResponse reads
+        private string _tempFileName;          // file name of temp file
+        private long _fullStreamLength;      // need to return this in call to get_Length
+        private volatile bool _fullDownloadComplete;  // download complete if this is true - prevents us from waiting for more data
+                                                      // this is volatile because it can be updated and inspected by different threads
+        private long _highWaterMark;         // how much data is currently available from full download
+                                             // used to determine whether it makes sense to spawn a byte-range download
+                                             // access to this value must be synchronized using lock()
 
         // OS synchronization event used to signal that new data is available
-        private EventWaitHandle[]   _readEventHandles = new EventWaitHandle[(int)ReadEvent.MaxReadEventEnum];
+        private EventWaitHandle[] _readEventHandles = new EventWaitHandle[(int)ReadEvent.MaxReadEventEnum];
 
         // protects the _tempFileStream object and allows both our thread and the ByteRangeDownloader thread to safely access the temp stream
-        private Mutex               _tempFileMutex = new Mutex(false);
+        private Mutex _tempFileMutex = new Mutex(false);
 
         // byte-range downloads
-        private bool                _allowByteRangeRequests;        // toggle
+        private bool _allowByteRangeRequests;        // toggle
         private ByteRangeDownloader _byteRangeDownloader;           // handles byte-range downloads for us
-        private bool                _inAdditionalRequest;           // only spawn one byte-range request at a time
-        private ArrayList           _byteRangesAvailable;           // byte ranges that are downloaded
+        private bool _inAdditionalRequest;           // only spawn one byte-range request at a time
+        private ArrayList _byteRangesAvailable;           // byte ranges that are downloaded
 #if DEBUG
-        private int                 _unmergedBlocks;                // for trace only
+        private int _unmergedBlocks;                // for trace only
 #endif
     }
 }

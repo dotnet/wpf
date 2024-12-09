@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -49,7 +49,7 @@ namespace System.Security.RightsManagement
 
             if (contentIdStr == null)
             {
-                throw new RightsManagementException(RightsManagementFailureCode.InvalidLicense);                
+                throw new RightsManagementException(RightsManagementFailureCode.InvalidLicense);
             }
             else
             {
@@ -61,7 +61,7 @@ namespace System.Security.RightsManagement
             /////////////////
             ClientSession.GetReferralInfoFromPublishLicense(
                             _serializedPublishLicense,
-                            out _referralInfoName, 
+                            out _referralInfoName,
                             out _referralInfoUri);
         }
 
@@ -69,7 +69,7 @@ namespace System.Security.RightsManagement
         /// This function allows the Owner (or a person granted ViewRightsData right)
         /// to extract the original publishing information that was encrypted during publishing process.
         /// </summary>
-        public UnsignedPublishLicense DecryptUnsignedPublishLicense(CryptoProvider cryptoProvider )
+        public UnsignedPublishLicense DecryptUnsignedPublishLicense(CryptoProvider cryptoProvider)
         {
 
             ArgumentNullException.ThrowIfNull(cryptoProvider);
@@ -85,10 +85,10 @@ namespace System.Security.RightsManagement
         /// </summary>
         public string ReferralInfoName
         {
-            get 
-            { 
-            
-                return _referralInfoName; 
+            get
+            {
+
+                return _referralInfoName;
             }
         }
 
@@ -100,10 +100,10 @@ namespace System.Security.RightsManagement
         /// </summary>
         public Uri ReferralInfoUri
         {
-            get 
-            { 
-            
-                return _referralInfoUri; 
+            get
+            {
+
+                return _referralInfoUri;
             }
         }
 
@@ -112,9 +112,9 @@ namespace System.Security.RightsManagement
         /// </summary>
         public Guid ContentId
         {
-            get 
-            { 
-            
+            get
+            {
+
                 return _contentId;
             }
         }
@@ -122,23 +122,23 @@ namespace System.Security.RightsManagement
         /// <summary>
         /// The Uri that will be used by the AcquireUseLicense call to get the UseLicense. 
         /// </summary>
-        public Uri UseLicenseAcquisitionUrl 
+        public Uri UseLicenseAcquisitionUrl
         {
-            get 
+            get
             {
-            
+
                 return _useLicenseAcquisitionUriFromPublishLicense;
             }
         }
-        
+
         /// <summary>
         /// Returns the original XrML string that was used to deserialize the Pubish License 
         /// </summary>
         public override string ToString()
         {
-            
+
             return _serializedPublishLicense;
-        }        
+        }
 
         /// <summary>
         ///  This function attempts to acquire a Use License.
@@ -171,7 +171,7 @@ namespace System.Security.RightsManagement
             // Accordingly suppressing preSharp warning about having to validate ClientSession.
 #pragma warning suppress 6506
             return secureEnvironment.ClientSession.AcquireUseLicense(_serializedPublishLicense, true);
-        }        
+        }
 
         private string _serializedPublishLicense;
         private string _referralInfoName;

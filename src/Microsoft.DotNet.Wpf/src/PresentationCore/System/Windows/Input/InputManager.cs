@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections;
-using System.Windows.Threading;
 using System.Threading;
-using MS.Internal;
 using System.Windows.Automation;
+using System.Windows.Threading;
+using MS.Internal;
 
 namespace System.Windows.Input
 {
@@ -140,7 +140,7 @@ namespace System.Windows.Input
             // Avalon doesn't necessarily require STA, but many components do.  Examples
             // include Cicero, OLE, COM, etc.  So we throw an exception here if the
             // thread is not STA.
-            if(Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
+            if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
                 throw new InvalidOperationException(SR.RequiresSTA);
             }
@@ -225,7 +225,7 @@ namespace System.Windows.Input
         /// </param>
         internal InputProviderSite RegisterInputProvider(IInputProvider inputProvider)
         {
-//             VerifyAccess();
+            //             VerifyAccess();
 
 
             // Create a site for this provider, and keep track of it.
@@ -268,7 +268,7 @@ namespace System.Windows.Input
         public KeyboardDevice PrimaryKeyboardDevice
         {
             // 
-            get {return _primaryKeyboardDevice;}
+            get { return _primaryKeyboardDevice; }
         }
 
         /// <summary>
@@ -277,7 +277,7 @@ namespace System.Windows.Input
         public MouseDevice PrimaryMouseDevice
         {
             // 
-            get {return _primaryMouseDevice;}
+            get { return _primaryMouseDevice; }
         }
 
         /// <summary>
@@ -296,7 +296,7 @@ namespace System.Windows.Input
         /// </summary>
         internal CommandDevice PrimaryCommandDevice
         {
-            get {return _primaryCommandDevice;}
+            get { return _primaryCommandDevice; }
         }
 
         /// <summary>
@@ -400,7 +400,7 @@ namespace System.Windows.Input
         {
             // The HitTest result may have changed for someone somewhere.
             // Raise the HitTestInvalidatedAsync event after the next layout.
-            if(_hitTestInvalidatedAsyncOperation == null)
+            if (_hitTestInvalidatedAsyncOperation == null)
             {
                 // It would be best to re-evaluate anything dependent on the hit-test results
                 // immediately after layout & rendering are complete.  Unfortunately this can
@@ -488,7 +488,7 @@ namespace System.Windows.Input
                 // Promote the pending DispatcherOperation to Input Priority
 
                 _hitTestInvalidatedAsyncOperation.Priority = DispatcherPriority.Input;
-}
+            }
 
             // Stop the input timer
 
@@ -555,7 +555,7 @@ namespace System.Windows.Input
         {
             object input = null;
 
-            if(_stagingArea.Count > 0)
+            if (_stagingArea.Count > 0)
             {
                 input = _stagingArea.Pop();
             }
@@ -568,7 +568,7 @@ namespace System.Windows.Input
         {
             object input = null;
 
-            if(_stagingArea.Count > 0)
+            if (_stagingArea.Count > 0)
             {
                 input = _stagingArea.Peek();
             }
@@ -583,7 +583,7 @@ namespace System.Windows.Input
             // It is possible that we can be re-entered by a nested
             // dispatcher frame.  Continue processing the staging
             // area if we need to.
-            if(_stagingArea.Count > 0)
+            if (_stagingArea.Count > 0)
             {
                 // Before we actually start to drain the staging area, we need
                 // to post a work item to process more input.  This enables us
@@ -662,7 +662,7 @@ namespace System.Windows.Input
             // changes underneath us.  Instead, just loop until we find a
             // frame marker or until the staging area is empty.
             StagingAreaInputItem item = null;
-            while((item = PopInput()) != null)
+            while ((item = PopInput()) != null)
             {
                 // If we found a marker, we have reached the end of a
                 // "section" of the staging area.  We just return from
@@ -704,14 +704,14 @@ namespace System.Windows.Input
                     // Invoke the handlers in reverse order so that handlers that
                     // users add are invoked before handlers in the system.
                     Delegate[] handlers = _preProcessInput.Item2;
-                    for(int i = (handlers.Length - 1); i >= 0; i--)
+                    for (int i = (handlers.Length - 1); i >= 0; i--)
                     {
-                        PreProcessInputEventHandler handler = (PreProcessInputEventHandler) handlers[i];
+                        PreProcessInputEventHandler handler = (PreProcessInputEventHandler)handlers[i];
                         handler(this, preProcessInputEventArgs);
                     }
                 }
 
-                if(!preProcessInputEventArgs.Canceled)
+                if (!preProcessInputEventArgs.Canceled)
                 {
                     // Pre-Notify the input.
                     //
@@ -720,16 +720,16 @@ namespace System.Windows.Input
                     // a handler.  This means we can just call the current
                     // multi-cast delegate instance, and it is safe to iterate
                     // over, even if we get reentered.
-                    if(_preNotifyInput != null)
+                    if (_preNotifyInput != null)
                     {
                         notifyInputEventArgs.Reset(item, this);
 
                         // Invoke the handlers in reverse order so that handlers that
                         // users add are invoked before handlers in the system.
                         Delegate[] handlers = _preNotifyInput.Item2;
-                        for(int i = (handlers.Length - 1); i >= 0; i--)
+                        for (int i = (handlers.Length - 1); i >= 0; i--)
                         {
-                            NotifyInputEventHandler handler = (NotifyInputEventHandler) handlers[i];
+                            NotifyInputEventHandler handler = (NotifyInputEventHandler)handlers[i];
                             handler(this, notifyInputEventArgs);
                         }
                     }
@@ -741,7 +741,7 @@ namespace System.Windows.Input
                     // an element.  Those that are not are associated with
                     // the target of the input device for this event.
                     DependencyObject eventSource = input.Source as DependencyObject;
-                    if(eventSource == null || !InputElement.IsValid(eventSource as IInputElement))
+                    if (eventSource == null || !InputElement.IsValid(eventSource as IInputElement))
                     {
                         if (input.Device != null)
                         {
@@ -770,7 +770,7 @@ namespace System.Windows.Input
                                     _synchronizedInputState = SynchronizedInputStates.Discarded;
                                     SynchronizedInputHelper.RaiseAutomationEvents();
                                     CancelSynchronizedInput();
-                                }, 
+                                },
                                 DispatcherPriority.Background);
                         }
                     }
@@ -792,7 +792,7 @@ namespace System.Windows.Input
                             }
 
                             // If synchronized input raise appropriate automation event.
-                            
+
                             if (_isSynchronizedInput && SynchronizedInputHelper.IsListening(_listeningElement, input))
                             {
                                 if (!SynchronizedInputHelper.ShouldContinueListening(input))
@@ -806,7 +806,7 @@ namespace System.Windows.Input
                                         {
                                             SynchronizedInputHelper.RaiseAutomationEvents();
                                             CancelSynchronizedInput();
-                                        }, 
+                                        },
                                         DispatcherPriority.Background);
                                 }
                             }
@@ -820,16 +820,16 @@ namespace System.Windows.Input
                     // a handler.  This means we can just call the current
                     // multi-cast delegate instance, and it is safe to iterate
                     // over, even if we get reentered.
-                    if(_postNotifyInput != null)
+                    if (_postNotifyInput != null)
                     {
                         notifyInputEventArgs.Reset(item, this);
 
                         // Invoke the handlers in reverse order so that handlers that
                         // users add are invoked before handlers in the system.
                         Delegate[] handlers = _postNotifyInput.Item2;
-                        for(int i = (handlers.Length - 1); i >= 0; i--)
+                        for (int i = (handlers.Length - 1); i >= 0; i--)
                         {
-                            NotifyInputEventHandler handler = (NotifyInputEventHandler) handlers[i];
+                            NotifyInputEventHandler handler = (NotifyInputEventHandler)handlers[i];
                             handler(this, notifyInputEventArgs);
                         }
                     }
@@ -842,27 +842,29 @@ namespace System.Windows.Input
                     // a handler.  This means we can just call the current
                     // multi-cast delegate instance, and it is safe to iterate
                     // over, even if we get reentered.
-                    if(_postProcessInput != null)
+                    if (_postProcessInput != null)
                     {
                         processInputEventArgs.Reset(item, this);
 
                         RaiseProcessInputEventHandlers(_postProcessInput, processInputEventArgs);
 
                         // PreviewInputReport --> InputReport
-                        if(item.Input.RoutedEvent == InputManager.PreviewInputReportEvent)
+                        if (item.Input.RoutedEvent == InputManager.PreviewInputReportEvent)
                         {
-                            if(!item.Input.Handled)
+                            if (!item.Input.Handled)
                             {
-                                InputReportEventArgs previewInputReport = (InputReportEventArgs) item.Input;
+                                InputReportEventArgs previewInputReport = (InputReportEventArgs)item.Input;
 
-                                InputReportEventArgs inputReport = new InputReportEventArgs(previewInputReport.Device, previewInputReport.Report);
-                                inputReport.RoutedEvent=InputManager.InputReportEvent;
+                                InputReportEventArgs inputReport = new InputReportEventArgs(previewInputReport.Device, previewInputReport.Report)
+                                {
+                                    RoutedEvent = InputManager.InputReportEvent
+                                };
                                 PushInput(inputReport, item);
                             }
                         }
                     }
 
-                    if(input.Handled)
+                    if (input.Handled)
                     {
                         handled = true;
                     }
@@ -893,9 +895,9 @@ namespace System.Windows.Input
                 // Invoke the handlers in reverse order so that handlers that
                 // users add are invoked before handlers in the system.
                 Delegate[] handlers = postProcessInput.Item2;
-                for(int i = (handlers.Length - 1); i >= 0; i--)
+                for (int i = (handlers.Length - 1); i >= 0; i--)
                 {
-                    ProcessInputEventHandler handler = (ProcessInputEventHandler) handlers[i];
+                    ProcessInputEventHandler handler = (ProcessInputEventHandler)handlers[i];
                     handler(this, processInputEventArgs);
                 }
             }
@@ -904,11 +906,11 @@ namespace System.Windows.Input
                 processInputEventArgs.StagingItem.Input.ClearUserInitiated();
             }
         }
-        
-                     
+
+
         private void RequestContinueProcessingStagingArea()
         {
-            if(!_continueProcessingStagingArea)
+            if (!_continueProcessingStagingArea)
             {
                 Dispatcher.BeginInvoke(DispatcherPriority.Input, _continueProcessingStagingAreaCallback, null);
                 _continueProcessingStagingArea = true;
@@ -936,10 +938,10 @@ namespace System.Windows.Input
         private Hashtable _inputProviders = new Hashtable();
 
         private KeyboardDevice _primaryKeyboardDevice;
-        private MouseDevice    _primaryMouseDevice;
-        private CommandDevice  _primaryCommandDevice;
+        private MouseDevice _primaryMouseDevice;
+        private CommandDevice _primaryCommandDevice;
 
-        private bool            _inDragDrop;
+        private bool _inDragDrop;
 
         private DispatcherOperationCallback _hitTestInvalidatedAsyncCallback;
         private DispatcherOperation _hitTestInvalidatedAsyncOperation;
@@ -951,7 +953,7 @@ namespace System.Windows.Input
 
         // Timer used to synchronize the input devices periodically
         private DispatcherTimer _inputTimer;
-        
+
         // Synchronized input automation related fields
 
         // Used to indicate whether any element is currently listening for synchronized input. 
@@ -977,6 +979,6 @@ namespace System.Windows.Input
 
         // Lock used to serialize access to synchronized input related static fields.
         private static readonly object _synchronizedInputLock = new object();
-}
+    }
 }
 

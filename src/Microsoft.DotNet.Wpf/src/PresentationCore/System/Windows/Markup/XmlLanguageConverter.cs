@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace System.Windows.Markup
     /// XmlLanuageConverter - Converter class for converting instances of other types to and from XmlLanguage
     ///     in a way that does not depend on the current user's language settings.
     /// </summary> 
-    public class XmlLanguageConverter: TypeConverter
+    public class XmlLanguageConverter : TypeConverter
     {
         //-------------------------------------------------------------------
         //
@@ -52,7 +52,7 @@ namespace System.Windows.Markup
         /// </returns>
         /// <param name="typeDescriptorContext"> The ITypeDescriptorContext for this call. </param>
         /// <param name="destinationType"> The Type being queried for support. </param>
-        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext typeDescriptorContext, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
             return destinationType == typeof(InstanceDescriptor) ||
@@ -75,8 +75,8 @@ namespace System.Windows.Markup
         /// <param name="typeDescriptorContext">The ITypeDescriptorContext for this call.</param>
         /// <param name="cultureInfo">The CultureInfo which is respected when converting.</param>
         /// <param name="source">The object to convert to a CultureInfo.</param>
-        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext, 
-                                           CultureInfo cultureInfo, 
+        public override object ConvertFrom(ITypeDescriptorContext typeDescriptorContext,
+                                           CultureInfo cultureInfo,
                                            object source)
         {
             string ietfLanguageTag = source as string;
@@ -105,7 +105,7 @@ namespace System.Windows.Markup
         /// <param name="cultureInfo"> The CultureInfo which is respected when converting. </param>
         /// <param name="value"> The XmlLanguage to convert. </param>
         /// <param name="destinationType">The type to which to convert the CultureInfo. </param>
-        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext, 
+        public override object ConvertTo(ITypeDescriptorContext typeDescriptorContext,
                                          CultureInfo cultureInfo,
                                          object value,
                                          Type destinationType)
@@ -121,13 +121,13 @@ namespace System.Windows.Markup
                 }
                 else if (destinationType == typeof(InstanceDescriptor))
                 {
-                        MethodInfo method = typeof(XmlLanguage).GetMethod(
-                        "GetLanguage",
-                        BindingFlags.Static | BindingFlags.InvokeMethod | BindingFlags.Public,
-                        null, // use default binder
-                        new Type[] { typeof(string) },
-                        null  // default binder doesn't use parameter modifiers
-                        );
+                    MethodInfo method = typeof(XmlLanguage).GetMethod(
+                    "GetLanguage",
+                    BindingFlags.Static | BindingFlags.InvokeMethod | BindingFlags.Public,
+                    null, // use default binder
+                    new Type[] { typeof(string) },
+                    null  // default binder doesn't use parameter modifiers
+                    );
 
                     return new InstanceDescriptor(method, new object[] { xmlLanguage.IetfLanguageTag });
                 }

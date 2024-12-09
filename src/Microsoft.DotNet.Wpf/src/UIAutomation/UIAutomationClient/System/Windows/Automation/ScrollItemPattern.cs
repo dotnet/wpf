@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,7 @@ namespace System.Windows.Automation
 #if (INTERNAL_COMPILE)
     internal class ScrollItemPattern: BasePattern
 #else
-    public class ScrollItemPattern: BasePattern
+    public class ScrollItemPattern : BasePattern
 #endif
     {
         //------------------------------------------------------
@@ -22,7 +22,7 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         private ScrollItemPattern(AutomationElement el, SafePatternHandle hPattern)
@@ -39,7 +39,7 @@ namespace System.Windows.Automation
         //  Public Constants / Readonly Fields
         //
         //------------------------------------------------------
- 
+
         #region Public Constants and Readonly Fields
 
         /// <summary>Scroll pattern</summary>
@@ -53,7 +53,7 @@ namespace System.Windows.Automation
         //  Public Methods
         //
         //------------------------------------------------------
- 
+
         #region Public Methods
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace System.Windows.Automation
         /// InvalidOperationException should be thrown if item becomes unable to be scrolled. Makes
         /// no guarantees about where the item will be in the scrolled window.
         /// </summary>
-       public void ScrollIntoView()
+        public void ScrollIntoView()
         {
             UiaCoreApi.ScrollItemPattern_ScrollIntoView(_hPattern);
         }
@@ -73,7 +73,7 @@ namespace System.Windows.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
         static internal object Wrap(AutomationElement el, SafePatternHandle hPattern, bool cached)
@@ -89,7 +89,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private SafePatternHandle _hPattern;

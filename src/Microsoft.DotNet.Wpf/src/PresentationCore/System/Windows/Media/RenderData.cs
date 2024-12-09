@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,12 +12,12 @@
 //
 //
 
-using MS.Internal;
-using MS.Utility;
 using System.Buffers;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
+using MS.Internal;
+using MS.Utility;
 
 namespace System.Windows.Media
 {
@@ -56,7 +56,7 @@ namespace System.Windows.Media
             BitmapEffect,
             Other
         }
- 
+
         /// <summary>
         /// WriteDataRecord - writes a data record in the form of "size - id - data"
         /// The Length of the data packed is "size" - (2 * sizeof(int)).
@@ -528,7 +528,7 @@ namespace System.Windows.Media
         private int _curOffset;
 
         private int _bitmapEffectStackDepth;
-        
+
         private FrugalStructList<Object> _dependentResources = new FrugalStructList<Object>();
 
         // DUCE resource

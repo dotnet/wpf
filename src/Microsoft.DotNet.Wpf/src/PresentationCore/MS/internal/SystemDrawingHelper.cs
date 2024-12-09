@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -44,14 +44,14 @@ namespace MS.Internal
         // Get the metafile from the handle of the enhanced metafile.
         internal static Object GetMetafileFromHemf(IntPtr hMetafile)
         {
-            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
+            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force: true);
             return (extensions != null) ? extensions.GetMetafileFromHemf(hMetafile) : null;
         }
 
         // Get a bitmap from the given data (either BitmapSource or Bitmap)
         internal static object GetBitmap(object data)
         {
-            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
+            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force: true);
             return (extensions != null) ? extensions.GetBitmap(data) : null;
         }
 
@@ -59,7 +59,7 @@ namespace MS.Internal
         // Also return its width and height.
         internal static IntPtr GetHBitmap(object data, out int width, out int height)
         {
-            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
+            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force: true);
             if (extensions != null)
             {
                 return extensions.GetHBitmap(data, out width, out height);
@@ -79,21 +79,21 @@ namespace MS.Internal
         // Convert a metafile to HBitmap
         internal static IntPtr ConvertMetafileToHBitmap(IntPtr handle)
         {
-            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
+            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force: true);
             return (extensions != null) ? extensions.ConvertMetafileToHBitmap(handle) : IntPtr.Zero;
         }
 
         // return a stream for the ExifUserComment in the given Gif
         internal static Stream GetCommentFromGifStream(Stream stream)
         {
-            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
+            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force: true);
             return (extensions != null) ? extensions.GetCommentFromGifStream(stream) : null;
         }
 
         // write a metafile stream to the output stream in PNG format
         internal static void SaveMetafileToImageStream(MemoryStream metafileStream, Stream imageStream)
         {
-            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
+            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force: true);
             if (extensions != null)
             {
                 extensions.SaveMetafileToImageStream(metafileStream, imageStream);
@@ -104,7 +104,7 @@ namespace MS.Internal
         //this code takes a BitmapImage and converts it to a Bitmap so it can be put on the clipboard
         internal static object GetBitmapFromBitmapSource(object source)
         {
-            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force:true);
+            SystemDrawingExtensionMethods extensions = AssemblyHelper.ExtensionsForSystemDrawing(force: true);
             return (extensions != null) ? extensions.GetBitmapFromBitmapSource(source) : null;
         }
     }

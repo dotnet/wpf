@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,7 +38,7 @@ namespace System.Windows.Input
         /// <ExternalAPI Inherit="true"/>
         public TextComposition TextComposition
         {
-            get {return _composition;}
+            get { return _composition; }
         }
 
         /// <summary>
@@ -47,7 +47,7 @@ namespace System.Windows.Input
         /// <ExternalAPI Inherit="true"/>
         public string Text
         {
-            get {return _composition.Text;}
+            get { return _composition.Text; }
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace System.Windows.Input
         /// <ExternalAPI Inherit="true"/>
         public string SystemText
         {
-            get {return _composition.SystemText;}
+            get { return _composition.SystemText; }
         }
 
         /// <summary>
@@ -65,7 +65,7 @@ namespace System.Windows.Input
         /// <ExternalAPI Inherit="true"/>
         public string ControlText
         {
-            get {return _composition.ControlText;}
+            get { return _composition.ControlText; }
         }
 
         /// <summary>
@@ -81,8 +81,8 @@ namespace System.Windows.Input
         /// <ExternalAPI/> 
         protected override void InvokeEventHandler(Delegate genericHandler, object genericTarget)
         {
-            TextCompositionEventHandler handler = (TextCompositionEventHandler) genericHandler;
-            
+            TextCompositionEventHandler handler = (TextCompositionEventHandler)genericHandler;
+
             handler(genericTarget, this);
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -48,11 +48,11 @@ namespace System.Windows.Documents
             // We don't allow to create a glyph node with zero run length.
             // it will lots of problem in textOM due to some assumption there.
             //
-            Debug.Assert( (type != FlowNodeType.Run)  ||  ((int)cookie != 0));
+            Debug.Assert((type != FlowNodeType.Run) || ((int)cookie != 0));
 
             _scopeId = scopeId;
-            _type       = type;
-            _cookie     = cookie;
+            _type = type;
+            _cookie = cookie;
         }
         #endregion Constructors
 
@@ -76,7 +76,7 @@ namespace System.Windows.Documents
         /// <returns>int - hash code</returns>
         public override int GetHashCode()
         {
-            return _scopeId.GetHashCode()^_fp.GetHashCode();
+            return _scopeId.GetHashCode() ^ _fp.GetHashCode();
         }
 
 
@@ -149,28 +149,28 @@ namespace System.Windows.Documents
                 case FlowNodeType.Start:
                 case FlowNodeType.End:
                 case FlowNodeType.Object:
-                {
-                    FixedElement element = _cookie as FixedElement;
-                    if (element != null)
                     {
-                        page = element.PageIndex;
+                        FixedElement element = _cookie as FixedElement;
+                        if (element != null)
+                        {
+                            page = element.PageIndex;
+                        }
+                        break;
                     }
-                    break;
-                }
                 case FlowNodeType.Virtual:
                 case FlowNodeType.Noop:
-                {
-                    page = (int) _cookie;
-                    break;
-                }
-                case FlowNodeType.Run:
-                {
-                    if (this.FixedSOMElements != null && this.FixedSOMElements.Length > 0)
                     {
-                        page = this.FixedSOMElements[0].FixedNode.Page;
+                        page = (int)_cookie;
+                        break;
                     }
-                    break;
-                }
+                case FlowNodeType.Run:
+                    {
+                        if (this.FixedSOMElements != null && this.FixedSOMElements.Length > 0)
+                        {
+                            page = this.FixedSOMElements[0].FixedNode.Page;
+                        }
+                        break;
+                    }
                 default:
                     break;
             }

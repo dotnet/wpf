@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Implements the Service class for perf diagnostics
 
-using SRCS = System.Runtime.CompilerServices;
-using MS.Win32.PresentationCore;
 using System.Reflection;
+using MS.Win32.PresentationCore;
+using SRCS = System.Runtime.CompilerServices;
 
 namespace MS.Utility
 {
@@ -27,9 +27,9 @@ namespace MS.Utility
         ///</summary>
         internal static long GetPerfElementID2(object element, string extraData)
         {
-            return (long) perfElementIds.GetValue(
+            return (long)perfElementIds.GetValue(
                 element,
-                delegate(object key)
+                delegate (object key)
                 {
                     long eltId = SafeNativeMethods.GetNextPerfElementId();
 

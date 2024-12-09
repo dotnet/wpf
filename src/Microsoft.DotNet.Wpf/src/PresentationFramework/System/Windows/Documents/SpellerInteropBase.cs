@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,7 +8,7 @@ using System.Windows.Controls;
 
 namespace System.Windows.Documents
 {
-    internal abstract class SpellerInteropBase: IDisposable
+    internal abstract class SpellerInteropBase : IDisposable
     {
         #region Internal Types
 
@@ -75,7 +75,7 @@ namespace System.Windows.Documents
         internal interface ISpellerSentence
         {
             IReadOnlyList<ISpellerSegment> Segments { get; }
-            
+
             /// <summary>
             /// Returns the final symbol offset of a sentence.
             /// </summary>
@@ -85,12 +85,12 @@ namespace System.Windows.Documents
         [Flags]
         internal enum SpellerMode
         {
-            None                          = 0x0000,
-            WordBreaking                  = 0x0001, 
-            SpellingErrors                = 0x0002, 
-            Suggestions                   = 0x0004,
-            SpellingErrorsWithSuggestions = SpellingErrors | Suggestions, 
-            All                           = WordBreaking | SpellingErrorsWithSuggestions,
+            None = 0x0000,
+            WordBreaking = 0x0001,
+            SpellingErrors = 0x0002,
+            Suggestions = 0x0004,
+            SpellingErrorsWithSuggestions = SpellingErrors | Suggestions,
+            All = WordBreaking | SpellingErrorsWithSuggestions,
         };
 
         #endregion Internal Types
@@ -109,7 +109,7 @@ namespace System.Windows.Documents
             SpellerInteropBase spellerInterop = null;
 
             bool winRTSupport = false;
-            
+
             try
             {
                 spellerInterop = new WinRTSpellerInterop();
@@ -133,7 +133,7 @@ namespace System.Windows.Documents
                 {
                     spellerInterop = new NLGSpellerInterop();
                 }
-                catch (Exception ex) when 
+                catch (Exception ex) when
                     (ex is DllNotFoundException || ex is EntryPointNotFoundException)
                 {
                     return null;
@@ -159,9 +159,9 @@ namespace System.Windows.Documents
         /// Unloads given custom dictionary
         /// </summary>
         /// <param name="lexicon"></param>
-        internal abstract void UnloadDictionary(object dictionary); 
+        internal abstract void UnloadDictionary(object dictionary);
 
-         /// <summary>
+        /// <summary>
         /// Loads custom dictionary
         /// </summary>
         /// <param name="lexiconFilePath"></param>
@@ -208,7 +208,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal abstract bool MultiWordMode
         {
-             set;
+            set;
         }
 
         /// <summary>

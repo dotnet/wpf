@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -81,7 +81,7 @@ namespace MS.Internal
         //  Private Fields
         //
 
-        private static Dictionary<Key,PresentationTraceLevel> _dictionary = new Dictionary<Key,PresentationTraceLevel>();
+        private static Dictionary<Key, PresentationTraceLevel> _dictionary = new Dictionary<Key, PresentationTraceLevel>();
 
         #endregion Private Fields
 
@@ -132,7 +132,7 @@ namespace MS.Internal
                     wr = that._element as WeakReference;
                     object s2 = (wr != null) ? wr.Target : that._element;
 
-                    if (s1!=null && s2!=null)
+                    if (s1 != null && s2 != null)
                         return (s1 == s2);
                     else
                         return (this._element == that._element);
@@ -143,12 +143,12 @@ namespace MS.Internal
                 }
             }
 
-            public static bool operator==(Key key1, Key key2)
+            public static bool operator ==(Key key1, Key key2)
             {
                 return key1.Equals(key2);
             }
 
-            public static bool operator!=(Key key1, Key key2)
+            public static bool operator !=(Key key1, Key key2)
             {
                 return !key1.Equals(key2);
             }

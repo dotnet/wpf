@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -192,7 +192,7 @@ namespace MS.Utility
             protected virtual void IncludeOverride(int start, int end)
             {
                 // item-by-item move
-                for (int i=start; i<end; ++i)
+                for (int i = start; i < end; ++i)
                 {
                     _store.SetAt(_validItemCount++, _store.EntryAt(i));
                 }
@@ -202,7 +202,7 @@ namespace MS.Utility
             {
                 // clear out vacated entries
                 T filler = default(T);
-                for (int i=_validItemCount, n=_store._count; i<n; ++i)
+                for (int i = _validItemCount, n = _store._count; i < n; ++i)
                 {
                     _store.SetAt(i, filler);
                 }
@@ -507,7 +507,7 @@ namespace MS.Utility
                 RemoveAt(0);
                 return true;
             }
-            else if ( _count > 1)
+            else if (_count > 1)
             {
                 if (EqualityComparer<T>.Default.Equals(_entry1, value))
                 {
@@ -664,10 +664,10 @@ namespace MS.Utility
             array[index] = _entry0;
             if (_count >= 2)
             {
-                array[index+1] = _entry1;
+                array[index + 1] = _entry1;
                 if (_count == 3)
                 {
-                    array[index+2] = _entry2;
+                    array[index + 2] = _entry2;
                 }
             }
         }
@@ -1210,19 +1210,19 @@ namespace MS.Utility
                 array[index] = _entry0;
                 if (_count >= 2)
                 {
-                    array[index+1] = _entry1;
+                    array[index + 1] = _entry1;
                     if (_count >= 3)
                     {
-                        array[index+2] = _entry2;
+                        array[index + 2] = _entry2;
                         if (_count >= 4)
                         {
-                            array[index+3] = _entry3;
+                            array[index + 3] = _entry3;
                             if (_count >= 5)
                             {
-                                array[index+4] = _entry4;
+                                array[index + 4] = _entry4;
                                 if (_count == 6)
                                 {
-                                    array[index+5] = _entry5;
+                                    array[index + 5] = _entry5;
                                 }
                             }
                         }
@@ -1568,7 +1568,7 @@ namespace MS.Utility
                 if (_sourceArray == _targetArray)
                 {
                     // in-place array source
-                    for (int i=_validItemCount, n=_store.Count; i<n; ++i)
+                    for (int i = _validItemCount, n = _store.Count; i < n; ++i)
                     {
                         _sourceArray[i] = filler;
                     }

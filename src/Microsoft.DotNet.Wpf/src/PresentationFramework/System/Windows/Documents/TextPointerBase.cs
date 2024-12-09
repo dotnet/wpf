@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using MS.Internal.Documents;
 using System.Globalization;
 using System.Windows.Media; // Matrix
+using MS.Internal;
+using MS.Internal.Documents;
 
 //
 // Description: ITextPointer helper methods.
@@ -162,9 +162,9 @@ namespace System.Windows.Documents
         // position.
         internal static bool IsAtPotentialRunPosition(TextElement run)
         {
-            return 
-                run is Run && 
-                run.IsEmpty && 
+            return
+                run is Run &&
+                run.IsEmpty &&
                 IsAtPotentialRunPosition(run.ElementStart, run.ElementEnd);
         }
 
@@ -232,7 +232,7 @@ namespace System.Windows.Documents
             {
                 return
                     typeof(ListItem).IsAssignableFrom(parentType) ||
-                    typeof(TableCell).IsAssignableFrom(parentType);                    
+                    typeof(TableCell).IsAssignableFrom(parentType);
             }
             else if (backwardContext == TextPointerContext.None && forwardContext == TextPointerContext.None)
             {
@@ -315,7 +315,7 @@ namespace System.Windows.Documents
             ITextPointer navigator = position.CreatePointer();
             bool moved = false;
             Type elementType;
-            
+
             while (true)
             {
                 BorderingElementCategory category = GetBorderingElementCategory(navigator, LogicalDirection.Forward);
@@ -350,10 +350,10 @@ namespace System.Windows.Documents
                     break;
                 }
 
-		// Move to next insertion position if we are done skipping a string of sequential UICs to get a
-		// valid selection start pointer. We need to make sure we land at a position that would be given 
-		// to this function had the UICs not been there. This ensures that we end up inside Runs that
-		// follow instead of before them, e.g. </Span><Run>|abc</Run> instead of |</Span><Run>abc</Run>.
+                // Move to next insertion position if we are done skipping a string of sequential UICs to get a
+                // valid selection start pointer. We need to make sure we land at a position that would be given 
+                // to this function had the UICs not been there. This ensures that we end up inside Runs that
+                // follow instead of before them, e.g. </Span><Run>|abc</Run> instead of |</Span><Run>abc</Run>.
                 elementType = navigator.GetElementType(LogicalDirection.Forward);
                 if (!(elementType == typeof(InlineUIContainer)) && !(elementType == typeof(BlockUIContainer)))
                 {
@@ -694,8 +694,8 @@ namespace System.Windows.Documents
                 return false;
             }
 
-            bool isAtLineWrappingPosition = position.LogicalDirection == LogicalDirection.Forward 
-                ? position.CompareTo(lineSegment.Start) == 0 
+            bool isAtLineWrappingPosition = position.LogicalDirection == LogicalDirection.Forward
+                ? position.CompareTo(lineSegment.Start) == 0
                 : position.CompareTo(lineSegment.End) == 0;
 
             return isAtLineWrappingPosition;
@@ -811,7 +811,7 @@ namespace System.Windows.Documents
 
             if (!position.IsAtInsertionPosition)
             {
-                if (!respectNonMeargeableInlineStart || 
+                if (!respectNonMeargeableInlineStart ||
                     (!IsAtNonMergeableInlineStart(position) && !IsAtNonMergeableInlineEnd(position)))
                 {
                     position.MoveToInsertionPosition(position.LogicalDirection);

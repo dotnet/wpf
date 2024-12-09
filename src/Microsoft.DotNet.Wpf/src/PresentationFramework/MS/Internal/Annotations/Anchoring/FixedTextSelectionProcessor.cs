@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,9 +14,9 @@
 //     Spec: Anchoring to text in paginated docs.doc
 //
 
-using System.Windows;
 using System.Collections.ObjectModel;
 using System.Globalization;
+using System.Windows;
 using System.Windows.Annotations;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;

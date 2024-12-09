@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -103,7 +103,7 @@ namespace MS.Internal.Text
             Debug.Assert((uint)PropertyId.PropertyCount <= 32);
             ResetProperties();
         }
- 
+
         #region Public typography properties   
         /// <summary>
         /// 
@@ -676,7 +676,7 @@ namespace MS.Internal.Text
         }
 
         #endregion Public typography properties
-        
+
         /// <summary>
         /// Check whether two Property sets are equal
         /// </summary>
@@ -699,40 +699,41 @@ namespace MS.Internal.Text
             return  //This will cover all boolean properties
                 _idPropertySetFlags == genericOther._idPropertySetFlags &&
                 //And this will cover the rest
-                _variant == genericOther._variant && 
-                _capitals == genericOther._capitals && 
-                _fraction == genericOther._fraction && 
-                _numeralStyle == genericOther._numeralStyle && 
-                _numeralAlignment == genericOther._numeralAlignment && 
-                _eastAsianWidths == genericOther._eastAsianWidths && 
-                _eastAsianLanguage == genericOther._eastAsianLanguage && 
-                _standardSwashes == genericOther._standardSwashes && 
-                _contextualSwashes == genericOther._contextualSwashes && 
+                _variant == genericOther._variant &&
+                _capitals == genericOther._capitals &&
+                _fraction == genericOther._fraction &&
+                _numeralStyle == genericOther._numeralStyle &&
+                _numeralAlignment == genericOther._numeralAlignment &&
+                _eastAsianWidths == genericOther._eastAsianWidths &&
+                _eastAsianLanguage == genericOther._eastAsianLanguage &&
+                _standardSwashes == genericOther._standardSwashes &&
+                _contextualSwashes == genericOther._contextualSwashes &&
                 _stylisticAlternates == genericOther._stylisticAlternates &&
                 _annotationAlternates == genericOther._annotationAlternates;
         }
 
         public override int GetHashCode()
         {
-            return (int)(_idPropertySetFlags >> 32) ^ 
-                   (int)(_idPropertySetFlags & 0xFFFFFFFF) ^ 
-                   (int)_variant << 28 ^ 
-                   (int)_capitals << 24 ^ 
-                   (int)_numeralStyle << 20 ^ 
-                   (int)_numeralAlignment << 18 ^ 
-                   (int)_eastAsianWidths << 14 ^ 
-                   (int)_eastAsianLanguage << 10 ^ 
-                   (int)_standardSwashes << 6 ^ 
-                   (int)_contextualSwashes << 2 ^ 
-                   (int)_stylisticAlternates ^ 
-                   (int)_fraction << 16 ^ 
+            return (int)(_idPropertySetFlags >> 32) ^
+                   (int)(_idPropertySetFlags & 0xFFFFFFFF) ^
+                   (int)_variant << 28 ^
+                   (int)_capitals << 24 ^
+                   (int)_numeralStyle << 20 ^
+                   (int)_numeralAlignment << 18 ^
+                   (int)_eastAsianWidths << 14 ^
+                   (int)_eastAsianLanguage << 10 ^
+                   (int)_standardSwashes << 6 ^
+                   (int)_contextualSwashes << 2 ^
+                   (int)_stylisticAlternates ^
+                   (int)_fraction << 16 ^
                    (int)_annotationAlternates << 12;
         }
 
         public static bool operator ==(TypographyProperties first, TypographyProperties second)
         {
             //Need to cast to object to do null comparision.
-            if (((object)first) == null) return (((object)second) == null);
+            if (((object)first) == null)
+                return (((object)second) == null);
 
             return first.Equals(second);
         }

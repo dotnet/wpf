@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -27,10 +27,10 @@ namespace System.Windows.Media.Media3D
         #region Constructors
 
         // Internal to prevent 3rd parties from extending this abstract base class.
-        internal HitTestParameters3D() {}
+        internal HitTestParameters3D() { }
 
         #endregion Constructors
-    
+
         //------------------------------------------------------
         //
         //  Public Methods
@@ -60,9 +60,9 @@ namespace System.Windows.Media.Media3D
         {
             Debug.Assert(!HasModelTransformMatrix,
                 "ModelTransform stack should be empty when pusing a visual transform");
-            
+
             if (transform != null && transform != Transform3D.Identity)
-            {            
+            {
                 _visualTransformStack.Push(transform.Value);
             }
         }
@@ -70,7 +70,7 @@ namespace System.Windows.Media.Media3D
         internal void PushModelTransform(Transform3D transform)
         {
             if (transform != null && transform != Transform3D.Identity)
-            {            
+            {
                 _modelTransformStack.Push(transform.Value);
             }
         }
@@ -89,7 +89,7 @@ namespace System.Windows.Media.Media3D
                 }
             }
         }
-        
+
         //------------------------------------------------------
         //
         //  Internal Properties
@@ -102,11 +102,11 @@ namespace System.Windows.Media.Media3D
         {
             get { return _visualTransformStack.Count > 0 || _modelTransformStack.Count > 0; }
         }
-        
+
         internal Matrix3D WorldTransformMatrix
         {
             get
-            { 
+            {
                 Debug.Assert(HasWorldTransformMatrix,
                     "Check HasWorldTransformMatrix before accessing WorldTransformMatrix.");
 
@@ -126,7 +126,7 @@ namespace System.Windows.Media.Media3D
         }
 
 
-        
+
         internal bool HasModelTransformMatrix
         {
             get { return _modelTransformStack.Count > 0; }
@@ -139,11 +139,11 @@ namespace System.Windows.Media.Media3D
         internal Matrix3D ModelTransformMatrix
         {
             get
-            { 
+            {
                 Debug.Assert(HasModelTransformMatrix,
                     "Check HasModelTransformMatrix before accessing ModelTransformMatrix.");
 
-                return  _modelTransformStack.Top;
+                return _modelTransformStack.Top;
             }
         }
         /// <summary>
@@ -154,7 +154,7 @@ namespace System.Windows.Media.Media3D
         {
             get { return _hitTestProjectionMatrix != null; }
         }
-        
+
         /// <summary>
         ///     The projection matrix can be set to give additional
         ///     information about a hit test that originated from a camera.
@@ -182,10 +182,10 @@ namespace System.Windows.Media.Media3D
             {
                 Debug.Assert(HasHitTestProjectionMatrix,
                     "Check HasHitTestProjectionMatrix before accessing HitTestProjectionMatrix.");
-                
+
                 return _hitTestProjectionMatrix.Value;
             }
-            
+
             set
             {
                 _hitTestProjectionMatrix = new Matrix3D?(value);
@@ -195,9 +195,9 @@ namespace System.Windows.Media.Media3D
         internal Visual3D CurrentVisual;
         internal Model3D CurrentModel;
         internal GeometryModel3D CurrentGeometry;
-        
+
         #endregion Internal Properties
-        
+
         //------------------------------------------------------
         //
         //  Private Fields

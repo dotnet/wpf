@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //                                             
 
-using MS.Internal;
 using System.Windows.Media.Composition;
+using MS.Internal;
 
 namespace System.Windows.Media
 {
@@ -59,7 +59,7 @@ namespace System.Windows.Media
         }
 
         #endregion
-        
+
         /// <summary>
         /// Gets the bounds of this Geometry as an axis-aligned bounding box
         /// </summary>
@@ -82,7 +82,7 @@ namespace System.Windows.Media
                 {
                     boundsRect = currentRect;
                 }
-                else 
+                else
                 {
                     double radiusX = RadiusX;
                     double radiusY = RadiusY;
@@ -114,7 +114,7 @@ namespace System.Windows.Media
                             radiusX,
                             radiusY,
                             geometryMatrix,
-                            StandardFlatteningTolerance, 
+                            StandardFlatteningTolerance,
                             ToleranceType.Absolute);
                     }
                 }
@@ -132,7 +132,7 @@ namespace System.Windows.Media
                 RectangleGeometry rectGeometry1 = this;
                 Rect rect1 = rectGeometry1.Rect;
                 Rect rect2 = rectGeometry2.Rect;
-                
+
                 return (
                     DoubleUtil.AreClose(rect1.X, rect2.X) &&
                     DoubleUtil.AreClose(rect1.Y, rect2.Y) &&
@@ -155,7 +155,7 @@ namespace System.Windows.Media
         internal override Rect GetBoundsInternal(Pen pen, Matrix worldMatrix, double tolerance, ToleranceType type)
         {
             Matrix geometryMatrix;
-            
+
             Transform.GetTransformValue(Transform, out geometryMatrix);
 
             return RectangleGeometry.GetBoundsHelper(
@@ -168,7 +168,7 @@ namespace System.Windows.Media
                 tolerance,
                 type);
         }
-        
+
         internal static Rect GetBoundsHelper(Pen pen, Matrix worldMatrix, Rect rect, double radiusX, double radiusY,
                                              Matrix geometryMatrix, double tolerance, ToleranceType type)
         {
@@ -178,7 +178,7 @@ namespace System.Windows.Media
             {
                 boundingRect = Rect.Empty;
             }
-            else if ( (pen == null || pen.DoesNotContainGaps) &&
+            else if ((pen == null || pen.DoesNotContainGaps) &&
                 geometryMatrix.IsIdentity && worldMatrix.IsIdentity)
             {
                 double strokeThickness = 0.0;
@@ -189,8 +189,8 @@ namespace System.Windows.Media
                 {
                     strokeThickness = Math.Abs(pen.Thickness);
 
-                    boundingRect.X -= 0.5*strokeThickness;
-                    boundingRect.Y -= 0.5*strokeThickness;
+                    boundingRect.X -= 0.5 * strokeThickness;
+                    boundingRect.Y -= 0.5 * strokeThickness;
                     boundingRect.Width += strokeThickness;
                     boundingRect.Height += strokeThickness;
                 }
@@ -241,7 +241,7 @@ namespace System.Windows.Media
 
             uint pointCount = GetPointCount(rect, radiusX, radiusY);
             uint segmentCount = GetSegmentCount(rect, radiusX, radiusY);
-            
+
             unsafe
             {
                 Point* pPoints = stackalloc Point[(int)pointCount];
@@ -252,7 +252,7 @@ namespace System.Windows.Media
                     return ContainsInternal(
                         pen,
                         hitPoint,
-                        tolerance, 
+                        tolerance,
                         type,
                         pPoints,
                         pointCount,
@@ -270,7 +270,7 @@ namespace System.Windows.Media
         public override double GetArea(double tolerance, ToleranceType type)
         {
             ReadPreamble();
-                
+
             if (IsEmpty())
             {
                 return 0.0;
@@ -284,8 +284,8 @@ namespace System.Windows.Media
             double area = Math.Abs(rect.Width * rect.Height);
 
             // correct it for the rounded corners
-            area -= Math.Abs(radiusX * radiusY) * (4.0 - Math.PI);                 
-            
+            area -= Math.Abs(radiusX * radiusY) * (4.0 - Math.PI);
+
             // Adjust to internal transformation
             Transform transform = Transform;
             if (!transform.IsIdentity)
@@ -317,7 +317,7 @@ namespace System.Windows.Media
                 // Transform if applicable.
                 if (!matrix.IsIdentity)
                 {
-                    for (int i=0; i<points.Length; i++)
+                    for (int i = 0; i < points.Length; i++)
                     {
                         points[i] *= matrix;
                     }
@@ -342,7 +342,7 @@ namespace System.Windows.Media
                 return collection;
             }
             else
-            {                
+            {
                 PathFigureCollection collection = new PathFigureCollection();
                 collection.Add(
                     new PathFigure(
@@ -361,9 +361,9 @@ namespace System.Windows.Media
                 );
 
                 return collection;
-            }            
+            }
         }
-        
+
         internal static bool IsRounded(double radiusX, double radiusY)
         {
             return (radiusX != 0.0) && (radiusY != 0.0);
@@ -397,9 +397,11 @@ namespace System.Windows.Media
                 return Geometry.GetEmptyPathGeometryData();
             }
 
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule.EvenOdd;
-            data.Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform);
+            PathGeometryData data = new PathGeometryData
+            {
+                FillRule = FillRule.EvenOdd,
+                Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform)
+            };
 
             double radiusX = RadiusX;
             double radiusY = RadiusY;
@@ -421,7 +423,7 @@ namespace System.Windows.Media
                 ctx.BezierTo(points[13], points[14], points[15], true /* is stroked */, false /* is smooth join */);
             }
             else
-            {   
+            {
                 ctx.BeginFigure(rect.TopLeft, true /* is filled */, true /* is closed */);
                 ctx.LineTo(rect.TopRight, true /* is stroked */, false /* is smooth join */);
                 ctx.LineTo(rect.BottomRight, true /* is stroked */, false /* is smooth join */);
@@ -444,7 +446,7 @@ namespace System.Windows.Media
 
             unsafe
             {
-                fixed(Point *pPoints = points)
+                fixed (Point* pPoints = points)
                 {
                     RectangleGeometry.GetPointList(pPoints, pointCount, rect, radiusX, radiusY);
                 }
@@ -453,7 +455,7 @@ namespace System.Windows.Media
             return points;
         }
 
-        private unsafe static void GetPointList(Point * points, uint pointsCount, Rect rect, double radiusX, double radiusY)
+        private unsafe static void GetPointList(Point* points, uint pointsCount, Rect rect, double radiusX, double radiusY)
         {
             if (IsRounded(radiusX, radiusY))
             {
@@ -590,7 +592,7 @@ namespace System.Windows.Media
         static private UInt32 c_roundedPointCount = 17;
 
         static private byte smoothBezier = (byte)MILCoreSegFlags.SegTypeBezier |
-                                            (byte)MILCoreSegFlags.SegIsCurved   |
+                                            (byte)MILCoreSegFlags.SegIsCurved |
                                             (byte)MILCoreSegFlags.SegSmoothJoin;
 
         static private byte smoothLine = (byte)MILCoreSegFlags.SegTypeLine | (byte)MILCoreSegFlags.SegSmoothJoin;

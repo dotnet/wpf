@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Specialized;   // NameValueCollection
 using System.Configuration;             // ConfigurationManager
 using System.IO;
-using System.Windows;
 using System.Text;
+using System.Windows;
 using MS.Internal;
 
 namespace MS.Win32
@@ -263,7 +263,7 @@ namespace MS.Win32
                 themeName = themeNameSB.ToString();
                 themeName = Path.GetFileNameWithoutExtension(themeName);
 
-                if(string.Equals(themeName, "aero", StringComparison.OrdinalIgnoreCase) && Utilities.IsOSWindows8OrNewer)
+                if (string.Equals(themeName, "aero", StringComparison.OrdinalIgnoreCase) && Utilities.IsOSWindows8OrNewer)
                 {
                     themeName = "Aero2";
                 }
@@ -315,13 +315,13 @@ namespace MS.Win32
                 _themeColor = color;
             }
 
-            public bool     IsActive    { get { return _isActive; } }
-            public string   ThemeName   { get { return _themeName; } }
-            public string   ThemeColor  { get { return _themeColor; } }
+            public bool IsActive { get { return _isActive; } }
+            public string ThemeName { get { return _themeName; } }
+            public string ThemeColor { get { return _themeColor; } }
 
-            private bool    _isActive;
-            private string  _themeName;
-            private string  _themeColor;
+            private bool _isActive;
+            private string _themeName;
+            private string _themeColor;
         }
 
         #region Compatibility
@@ -348,9 +348,9 @@ namespace MS.Win32
         // Note that step (3) will never happen if the app is intercepting
         // WM_THEMECHANGED.
 
-        private static bool    _isActive;
-        private static string  _themeName;
-        private static string  _themeColor;
+        private static bool _isActive;
+        private static string _themeName;
+        private static string _themeColor;
 
         private static bool IsAppSupported
         {
@@ -370,11 +370,11 @@ namespace MS.Win32
             {
                 if (IsAppSupported)
                 {
-                    ThemeState themeState = EnsureThemeState(themeChanged:false);
+                    ThemeState themeState = EnsureThemeState(themeChanged: false);
 
                     if (themeState.IsActive)
                     {
-                         return themeState.ThemeName;
+                        return themeState.ThemeName;
                     }
                     else
                     {
@@ -394,7 +394,7 @@ namespace MS.Win32
             {
                 if (IsAppSupported)
                 {
-                    ThemeState themeState = EnsureThemeState(themeChanged:false);
+                    ThemeState themeState = EnsureThemeState(themeChanged: false);
                     Debug.Assert(themeState.IsActive, "Queried ThemeColor while UxTheme is not active.");
 
                     return themeState.ThemeColor;
@@ -412,7 +412,7 @@ namespace MS.Win32
             {
                 if (IsAppSupported)
                 {
-                    ThemeState themeState = EnsureThemeState(themeChanged:false);
+                    ThemeState themeState = EnsureThemeState(themeChanged: false);
                     if (themeState.IsActive)
                     {
                         return $"themes/{themeState.ThemeName.ToLowerInvariant()}.{themeState.ThemeColor.ToLowerInvariant()}";

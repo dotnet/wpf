@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal.AppModel;
-using MS.Internal.Interop;
 using System.IO;
 using System.Windows;
+using MS.Internal.AppModel;
+using MS.Internal.Interop;
 
 //
 // 
@@ -212,7 +212,7 @@ namespace Microsoft.Win32
             {
                 return false;
             }
-         
+
             bool fExist = File.Exists(fileName);
 
             // If the file does not exist, check if CreatePrompt is

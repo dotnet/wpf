@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,7 +18,7 @@ namespace System.Windows.Media.Animation
     {
         private object _value;
         private KeyTimeType _type;
-        
+
         #region Static Create Methods
 
         /// <summary>
@@ -34,10 +34,11 @@ namespace System.Windows.Media.Animation
                 throw new ArgumentOutOfRangeException("percent", SR.Format(SR.Animation_KeyTime_InvalidPercentValue, percent));
             }
 
-            KeyTime keyTime = new KeyTime();
-
-            keyTime._value = percent;
-            keyTime._type = KeyTimeType.Percent;
+            KeyTime keyTime = new KeyTime
+            {
+                _value = percent,
+                _type = KeyTimeType.Percent
+            };
 
             return keyTime;
         }
@@ -53,10 +54,11 @@ namespace System.Windows.Media.Animation
                 throw new ArgumentOutOfRangeException("timeSpan", SR.Format(SR.Animation_KeyTime_LessThanZero, timeSpan));
             }
 
-            KeyTime keyTime = new KeyTime();
-
-            keyTime._value = timeSpan;
-            keyTime._type = KeyTimeType.TimeSpan;
+            KeyTime keyTime = new KeyTime
+            {
+                _value = timeSpan,
+                _type = KeyTimeType.TimeSpan
+            };
 
             return keyTime;
         }
@@ -69,8 +71,10 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                KeyTime keyTime = new KeyTime();
-                keyTime._type = KeyTimeType.Uniform;
+                KeyTime keyTime = new KeyTime
+                {
+                    _type = KeyTimeType.Uniform
+                };
 
                 return keyTime;
             }
@@ -84,8 +88,10 @@ namespace System.Windows.Media.Animation
         {
             get
             {
-                KeyTime keyTime = new KeyTime();
-                keyTime._type = KeyTimeType.Paced;
+                KeyTime keyTime = new KeyTime
+                {
+                    _type = KeyTimeType.Paced
+                };
 
                 return keyTime;
             }
@@ -170,12 +176,12 @@ namespace System.Windows.Media.Animation
         /// </summary>
         public override bool Equals(object value)
         {
-            if (   value == null
+            if (value == null
                 || !(value is KeyTime))
             {
                 return false;
             }
-            
+
             return this == (KeyTime)value;
         }
 
@@ -195,7 +201,7 @@ namespace System.Windows.Media.Animation
                 return _type.GetHashCode();
             }
         }
-        
+
         /// <summary>
         /// Generates a string representing this KeyTime.
         /// </summary>

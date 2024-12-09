@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System.Xml;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Xml;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -21,7 +21,7 @@ namespace System.Windows.Xps.Serialization
         public
         ReachVisualSerializerAsync(
             PackageSerializationManager manager
-            ):
+            ) :
         base(manager)
         {
         }
@@ -33,30 +33,30 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
-           
+
             }
 
-            switch (context.Action) 
+            switch (context.Action)
             {
                 case SerializerAction.serializeNextTreeNode:
-                {
-                    ReachVisualSerializerContext thisContext = context as ReachVisualSerializerContext;
-
-                    if(thisContext != null)
                     {
-                        SerializeNextTreeNode(thisContext);
+                        ReachVisualSerializerContext thisContext = context as ReachVisualSerializerContext;
+
+                        if (thisContext != null)
+                        {
+                            SerializeNextTreeNode(thisContext);
+                        }
+
+                        break;
                     }
-  
-                    break;
-                }
 
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
 
@@ -79,7 +79,7 @@ namespace System.Windows.Xps.Serialization
 
             IXpsSerializationManagerAsync manager = (IXpsSerializationManagerAsync)SerializationManager;
 
-            XmlWriter pageWriter  = ((PackageSerializationManager)manager).
+            XmlWriter pageWriter = ((PackageSerializationManager)manager).
                                     PackagingPolicy.AcquireXmlWriterForPage();
 
             XmlWriter resWriter = ((PackageSerializationManager)manager).
@@ -140,10 +140,10 @@ namespace System.Windows.Xps.Serialization
             ReachVisualSerializerContext context
             )
         {
-            if(context.ContextStack.Count > 0)
+            if (context.ContextStack.Count > 0)
             {
-                Stack<NodeContext>  contextStack = context.ContextStack;
-                VisualTreeFlattener flattener    = context.VisualFlattener;
+                Stack<NodeContext> contextStack = context.ContextStack;
+                VisualTreeFlattener flattener = context.VisualFlattener;
 
                 ReachVisualSerializerContext nextContext = new ReachVisualSerializerContext(this,
                                                                                         contextStack,
@@ -179,7 +179,7 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             //
@@ -197,7 +197,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if(base.XmlWriter == null)
+                if (base.XmlWriter == null)
                 {
                     base.XmlWriter = SerializationManager.AcquireXmlWriter(typeof(FixedPage));
                 }
@@ -232,10 +232,10 @@ namespace System.Windows.Xps.Serialization
 
             IXpsSerializationManagerAsync manager = (IXpsSerializationManagerAsync)SerializationManager;
 
-            XmlWriter           pageWriter  = ((PackageSerializationManager)manager).
+            XmlWriter pageWriter = ((PackageSerializationManager)manager).
                                               PackagingPolicy.AcquireXmlWriterForPage();
 
-            XmlWriter           resWriter   = ((PackageSerializationManager)manager).
+            XmlWriter resWriter = ((PackageSerializationManager)manager).
                                               PackagingPolicy.AcquireXmlWriterForResourceDictionary();
 
             Size fixedPageSize = ((IXpsSerializationManager)SerializationManager).FixedPageSize;
@@ -248,7 +248,7 @@ namespace System.Windows.Xps.Serialization
         }
 
         #endregion Internal Methods
-        
+
     };
 
     internal class ReachVisualSerializerContext :
@@ -256,20 +256,20 @@ namespace System.Windows.Xps.Serialization
     {
         public
         ReachVisualSerializerContext(
-            ReachSerializerAsync        serializer,
-            Stack<NodeContext>          contextStack,
-            VisualTreeFlattener         flattener,
-            SerializerAction            action
-            ):
-            base(serializer,action)
+            ReachSerializerAsync serializer,
+            Stack<NodeContext> contextStack,
+            VisualTreeFlattener flattener,
+            SerializerAction action
+            ) :
+            base(serializer, action)
         {
             this._contextStack = contextStack;
-            this._flattener    = flattener;
+            this._flattener = flattener;
         }
 
 
         public
-        Stack<NodeContext> 
+        Stack<NodeContext>
         ContextStack
         {
             get
@@ -290,7 +290,7 @@ namespace System.Windows.Xps.Serialization
 
 
         private
-        Stack<NodeContext>   _contextStack;
-        VisualTreeFlattener  _flattener;
+        Stack<NodeContext> _contextStack;
+        VisualTreeFlattener _flattener;
     };
 }

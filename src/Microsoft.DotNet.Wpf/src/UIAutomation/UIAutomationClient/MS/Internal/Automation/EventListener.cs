@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,14 +17,14 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         // full ctor
         internal EventListener(
-            AutomationEvent eventId, 
-            TreeScope scope, 
-            AutomationProperty [] properties,
+            AutomationEvent eventId,
+            TreeScope scope,
+            AutomationProperty[] properties,
             UiaCoreApi.UiaCacheRequest cacheRequest
             )
         {
@@ -44,7 +44,7 @@ namespace MS.Internal.Automation
         //  Internal Properties
         //
         //------------------------------------------------------
- 
+
         #region Internal Properties
 
         // returns the id of the event this listener represents.
@@ -57,7 +57,7 @@ namespace MS.Internal.Automation
         }
 
         // returns the array of properties being listened to for property changed events.
-        internal AutomationProperty [] Properties
+        internal AutomationProperty[] Properties
         {
             get
             {
@@ -91,12 +91,12 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
-        private AutomationEvent            _eventId;    // the event this listener represents
-        private TreeScope                  _scope;      // fire events based on this scope
-        private AutomationProperty []      _properties; // for property change, indicates the properties we're listening for
+        private AutomationEvent _eventId;    // the event this listener represents
+        private TreeScope _scope;      // fire events based on this scope
+        private AutomationProperty[] _properties; // for property change, indicates the properties we're listening for
         private UiaCoreApi.UiaCacheRequest _cacheRequest; // properties etc to prefetch
 
         #endregion Private Fields

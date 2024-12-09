@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,19 +24,19 @@ namespace System.Windows.Media.TextFormatting
     internal sealed class TextParagraphCache : IDisposable
 #endif
     {
-        private FullTextState  _fullText;                  // full text state of the whole paragraph
-        private IntPtr         _ploparabreak;              // unmanaged LS resource for parabreak session
-        private int            _finiteFormatWidth;         // finite formatting ideal width
-        private bool           _penalizedAsJustified;      // flag indicating whether the paragraph should be penalized as fully-justified one
+        private FullTextState _fullText;                  // full text state of the whole paragraph
+        private IntPtr _ploparabreak;              // unmanaged LS resource for parabreak session
+        private int _finiteFormatWidth;         // finite formatting ideal width
+        private bool _penalizedAsJustified;      // flag indicating whether the paragraph should be penalized as fully-justified one
 
 
         /// <summary>
         /// Construct a paragraph cache to be used during optimal paragraph formatting
         /// </summary>
         internal TextParagraphCache(
-            FormatSettings      settings,
-            int                 firstCharIndex,
-            int                 paragraphWidth
+            FormatSettings settings,
+            int firstCharIndex,
+            int paragraphWidth
             )
         {
             Invariant.Assert(settings != null);
@@ -64,15 +64,15 @@ namespace System.Windows.Media.TextFormatting
 
             // get the exception in context before it is released
             Exception callbackException = context.CallbackException;
-            
+
             // release the context
             context.Release();
 
-            if(lserr != LsErr.None)
+            if (lserr != LsErr.None)
             {
                 GC.SuppressFinalize(this);
-                if(callbackException != null)
-                {                        
+                if (callbackException != null)
+                {
                     // rethrow exception thrown in callbacks
                     throw new InvalidOperationException(SR.Format(SR.CreateParaBreakingSessionFailure, lserr), callbackException);
                 }
@@ -121,11 +121,11 @@ namespace System.Windows.Media.TextFormatting
         /// using 'best-fit' algorithm.
         /// </remarks>
         internal IList<TextBreakpoint> FormatBreakpoints(
-            int                             firstCharIndex,
-            TextLineBreak                   previousLineBreak,
-            IntPtr                          breakpointRestrictionHandle,
-            double                          maxLineWidth,
-            out int                         bestFitIndex                             
+            int firstCharIndex,
+            TextLineBreak previousLineBreak,
+            IntPtr breakpointRestrictionHandle,
+            double maxLineWidth,
+            out int bestFitIndex
             )
         {
             // format all potential breakpoints starting from the specified firstCharIndex.
@@ -138,7 +138,7 @@ namespace System.Windows.Media.TextFormatting
                 breakpointRestrictionHandle,
                 out bestFitIndex
                 );
-        }        
+        }
 
 
         /// <summary>
@@ -146,7 +146,7 @@ namespace System.Windows.Media.TextFormatting
         /// </summary>
         private void Dispose(bool disposing)
         {
-            if(_ploparabreak != IntPtr.Zero)
+            if (_ploparabreak != IntPtr.Zero)
             {
                 UnsafeNativeMethods.LoDisposeParaBreakingSession(_ploparabreak, !disposing);
 
@@ -161,7 +161,7 @@ namespace System.Windows.Media.TextFormatting
         private int VerifyMaxLineWidth(double maxLineWidth)
         {
             ArgumentOutOfRangeException.ThrowIfEqual(maxLineWidth, double.NaN);
-            
+
             if (maxLineWidth == 0 || double.IsPositiveInfinity(maxLineWidth))
             {
                 // consider 0 or positive infinity as maximum ideal width
@@ -173,7 +173,7 @@ namespace System.Windows.Media.TextFormatting
 
             // convert real value to ideal value
             return TextFormatterImp.RealToIdeal(maxLineWidth);
-}
+        }
 
         /// <summary>
         /// Full text state of the paragraph

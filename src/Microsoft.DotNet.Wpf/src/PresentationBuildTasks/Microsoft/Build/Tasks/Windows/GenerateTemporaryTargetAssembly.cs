@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,16 +17,14 @@
 //---------------------------------------------------------------------------
 
 using System;
-using System.IO;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Diagnostics;
+using System.IO;
+using System.Linq;
 using System.Xml;
-
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-
 using MS.Utility;
 
 // Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
@@ -116,10 +114,10 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 XmlDocument xmlProjectDoc = null;
 
-                xmlProjectDoc = new XmlDocument( );
+                xmlProjectDoc = new XmlDocument();
                 //Bugfix for GB chars, exception thrown when using Load(CurrentProject), when project name has GB characters in it.
                 //Using a filestream instead of using string path to avoid the need to properly compose Uri (which is another way of fixing - but more complicated).
-                using(FileStream fs = File.OpenRead(CurrentProject))
+                using (FileStream fs = File.OpenRead(CurrentProject))
                 {
                     xmlProjectDoc.Load(fs);
                 }
@@ -158,7 +156,7 @@ namespace Microsoft.Build.Tasks.Windows
                 // Contols.Ribbon.csproj). Instead, just append the extension - after all, we already know
                 // for a fact that this name (i.e., tempProj) lacks a file extension.
                 string tempProjPrefix = string.Join("_", currentProjectName, randomFileName, WPFTMP);
-                string tempProj = tempProjPrefix  + currentProjectExtension;
+                string tempProj = tempProjPrefix + currentProjectExtension;
 
 
                 // Save the xmlDocument content into the temporary project file.
@@ -245,10 +243,10 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 XmlDocument xmlProjectDoc = null;
 
-                xmlProjectDoc = new XmlDocument( );
+                xmlProjectDoc = new XmlDocument();
                 //Bugfix for GB chars, exception thrown when using Load(CurrentProject), when project name has GB characters in it.
                 //Using a filestream instead of using string path to avoid the need to properly compose Uri (which is another way of fixing - but more complicated).
-                using(FileStream fs = File.OpenRead(CurrentProject))
+                using (FileStream fs = File.OpenRead(CurrentProject))
                 {
                     xmlProjectDoc.Load(fs);
                 }
@@ -352,7 +350,7 @@ namespace Microsoft.Build.Tasks.Windows
         ///    The full path of current project file.
         /// </summary>
         [Required]
-        public string  CurrentProject
+        public string CurrentProject
         {
             get { return _currentProject; }
             set { _currentProject = value; }
@@ -760,9 +758,9 @@ namespace Microsoft.Build.Tasks.Windows
             }
         }
 
-        private void AddNewProperties(XmlDocument xmlProjectDoc, List<(string PropertyName, string PropertyValue)> properties )
+        private void AddNewProperties(XmlDocument xmlProjectDoc, List<(string PropertyName, string PropertyValue)> properties)
         {
-            if (xmlProjectDoc == null || properties == null )
+            if (xmlProjectDoc == null || properties == null)
             {
                 // When the parameters are not valid, simply return it, instead of throwing exceptions.
                 return;
@@ -775,7 +773,7 @@ namespace Microsoft.Build.Tasks.Windows
             root.PrependChild(nodeItemGroup);
 
             // Append this new ItemGroup item into the list of children of the document root.
-            foreach(var property in properties)
+            foreach (var property in properties)
             {
                 // Skip empty properties
                 if (!string.IsNullOrEmpty(property.PropertyValue))
@@ -924,9 +922,9 @@ namespace Microsoft.Build.Tasks.Windows
 
         private string _msbuildBinPath;
 
-        private string  _intermediateOutputPath;
-        private string  _assemblyName;
-        private string  _compileTargetName;
+        private string _intermediateOutputPath;
+        private string _assemblyName;
+        private string _compileTargetName;
         private bool _generateTemporaryTargetAssemblyDebuggingInformation = false;
 
         private const string intermediateOutputPathPropertyName = "IntermediateOutputPath";

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,7 +10,7 @@ namespace System.Windows.Controls.Primitives
     /// </summary>
     /// <seealso cref="Thumb.DragCompletedEvent" />
     /// <seealso cref="RoutedEventArgs" />
-    public class DragCompletedEventArgs: RoutedEventArgs
+    public class DragCompletedEventArgs : RoutedEventArgs
     {
         /// <summary>
         /// This is an instance constructor for the DragCompletedEventArgs class.  It
@@ -22,7 +22,7 @@ namespace System.Windows.Controls.Primitives
             _horizontalChange = horizontalChange;
             _verticalChange = verticalChange;
             _wasCanceled = canceled;
-            RoutedEvent=Thumb.DragCompletedEvent;
+            RoutedEvent = Thumb.DragCompletedEvent;
         }
 
         /// <value>

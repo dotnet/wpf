@@ -1,4 +1,4 @@
-using System.IO;
+﻿using System.IO;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 
@@ -48,8 +48,8 @@ namespace MS.Internal.WindowsRuntime
             ///     If the fetch fails, we return false and return the default accent color.
             /// </returns>
             internal bool TryGetColorValue(UISettingsRCW.UIColorType desiredColor, out Color color)
-            {                
-                if(_isSupported)
+            {
+                if (_isSupported)
                 {
                     try
                     {
@@ -77,15 +77,15 @@ namespace MS.Internal.WindowsRuntime
             {
                 _useFallbackColor = true;
 
-                if(_isSupported)
+                if (_isSupported)
                 {
                     try
                     {
-                        if(TryGetColorValue(UISettingsRCW.UIColorType.Accent, out Color systemAccent))
+                        if (TryGetColorValue(UISettingsRCW.UIColorType.Accent, out Color systemAccent))
                         {
                             // For verifying if any of the calls to TryGetColorValue fails.
                             bool result = true;
-                            if(_accentColor != systemAccent)
+                            if (_accentColor != systemAccent)
                             {
                                 result &= TryGetColorValue(UISettingsRCW.UIColorType.AccentLight1, out _accentLight1);
                                 result &= TryGetColorValue(UISettingsRCW.UIColorType.AccentLight2, out _accentLight2);

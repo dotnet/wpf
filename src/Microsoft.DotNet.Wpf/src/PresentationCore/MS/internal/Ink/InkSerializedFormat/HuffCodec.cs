@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -137,7 +137,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 writer.Write((byte)0, 1); //more efficent
                 return (byte)1;
             }
-            
+
             // First, encode extra if non-ZERO
             uint bitSize = _huffBits.GetSize();
             if (0 != extra)
@@ -161,7 +161,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
             uint nData = (uint)MathHelper.AbsNoThrow(data);
             // Find the prefix lenght
             byte nPrefLen = 1;
-            for (; (nPrefLen < bitSize) && (nData >= _mins[nPrefLen]); ++nPrefLen) ;
+            for (; (nPrefLen < bitSize) && (nData >= _mins[nPrefLen]); ++nPrefLen)
+                ;
             // Get the data length
             uint nDataLen = _huffBits.GetBitsAtIndex((uint)nPrefLen - 1);
 
@@ -228,7 +229,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 int extra2Ignored = 0;
                 Decode(ref extra2, ref extra2Ignored, reader);
                 extra = extra2;
-                
+
                 // Following is the actual data
                 int data2 = 0;
                 Decode(ref data2, ref extra2Ignored, reader);
@@ -241,8 +242,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <summary>
         /// Privates
         /// </summary>
-        private HuffBits    _huffBits;
-        private uint[]      _mins = new uint[MaxBAASize];
+        private HuffBits _huffBits;
+        private uint[] _mins = new uint[MaxBAASize];
 
         /// <summary>
         /// Private statics

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,8 @@ using System.Collections;
 using System.ComponentModel;
 using System.Windows.Automation.Peers;
 using System.Windows.Markup;
-using MS.Internal.PtsHost.UnsafeNativeMethods;
 using MS.Internal.Documents;
+using MS.Internal.PtsHost.UnsafeNativeMethods;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -58,7 +58,7 @@ namespace System.Windows.Documents
         //------------------------------------------------------
 
         #region Public Methods 
-        
+
         /// <summary>
         /// <see cref="IAddChild.AddChild"/>
         /// </summary>
@@ -157,7 +157,7 @@ namespace System.Windows.Documents
         [TypeConverter(typeof(LengthConverter))]
         public double CellSpacing
         {
-            get { return (double) GetValue(CellSpacingProperty); }
+            get { return (double)GetValue(CellSpacingProperty); }
             set { SetValue(CellSpacingProperty, value); }
         }
 
@@ -302,9 +302,9 @@ namespace System.Windows.Documents
         {
             rowGroupIndex--;
 
-            while(rowGroupIndex >= 0)
+            while (rowGroupIndex >= 0)
             {
-                if(RowGroups[rowGroupIndex].Rows.Count > 0)
+                if (RowGroups[rowGroupIndex].Rows.Count > 0)
                 {
                     return false;
                 }
@@ -322,9 +322,9 @@ namespace System.Windows.Documents
         {
             rowGroupIndex++;
 
-            while(rowGroupIndex < RowGroups.Count)
+            while (rowGroupIndex < RowGroups.Count)
             {
-                if(RowGroups[rowGroupIndex].Rows.Count > 0)
+                if (RowGroups[rowGroupIndex].Rows.Count > 0)
                 {
                     return false;
                 }
@@ -452,8 +452,8 @@ namespace System.Windows.Documents
                     {
                         case (ChildrenTypes.Columns):
                             if (_columns.MoveNext())
-                            { 
-                                currentChild = _columns.Current; 
+                            {
+                                currentChild = _columns.Current;
                             }
                             break;
                         case (ChildrenTypes.RowGroups):
@@ -464,8 +464,8 @@ namespace System.Windows.Documents
                             break;
                     }
 
-                    if (currentChild != null)  
-                    { 
+                    if (currentChild != null)
+                    {
                         _currentChild = currentChild;
                         break;
                     }
@@ -483,12 +483,12 @@ namespace System.Windows.Documents
                 {
                     if (_currentChildType == ChildrenTypes.BeforeFirst)
                     {
-                        #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                         throw new InvalidOperationException(SR.EnumeratorNotStarted);
                     }
                     if (_currentChildType == ChildrenTypes.AfterLast)
                     {
-                        #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+#pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
                         throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                     }
 
@@ -518,10 +518,10 @@ namespace System.Windows.Documents
 
             private enum ChildrenTypes : int
             {
-                BeforeFirst     = 0,
-                Columns         = 1,
-                RowGroups       = 2,
-                AfterLast       = 3,
+                BeforeFirst = 0,
+                Columns = 1,
+                RowGroups = 2,
+                AfterLast = 3,
             }
         }
 
@@ -540,11 +540,11 @@ namespace System.Windows.Documents
         /// </summary>
         public static readonly DependencyProperty CellSpacingProperty =
                 DependencyProperty.Register(
-                        "CellSpacing", 
-                        typeof(double), 
+                        "CellSpacing",
+                        typeof(double),
                         typeof(Table),
                         new FrameworkPropertyMetadata(
-                                c_defaultCellSpacing, 
+                                c_defaultCellSpacing,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure),
                         new ValidateValueCallback(IsValidCellSpacing));
 
@@ -556,9 +556,9 @@ namespace System.Windows.Documents
         //
         //------------------------------------------------------
 
-        #if TABLEPARANOIA
+#if TABLEPARANOIA
         internal int ParanoiaVersion = 0;
-        #endif // TABLEPARANOIA
+#endif // TABLEPARANOIA
     }
 }
 

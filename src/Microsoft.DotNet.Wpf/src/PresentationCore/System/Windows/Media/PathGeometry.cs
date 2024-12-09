@@ -1,11 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using System.Windows.Media.Composition;
 using System.Windows.Markup;
-
+using System.Windows.Media.Composition;
+using MS.Internal;
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
@@ -14,10 +13,10 @@ namespace System.Windows.Media
     [System.Flags]
     internal enum PathGeometryInternalFlags
     {
-        None            = 0x0,
-        Invalid         = 0x1,
-        Dirty           = 0x2,
-        BoundsValid     = 0x4
+        None = 0x0,
+        Invalid = 0x1,
+        Dirty = 0x2,
+        BoundsValid = 0x4
     }
     #endregion
 
@@ -116,7 +115,7 @@ namespace System.Windows.Media
                     // ... while this assert tests "physical" correctness (i.e. are we running out of buffer).
                     Invariant.Assert(pathData.SerializedData.Length >= currentOffset + sizeof(MIL_PATHGEOMETRY));
 
-                    MIL_PATHGEOMETRY *pPathGeometry = (MIL_PATHGEOMETRY*)pbData;
+                    MIL_PATHGEOMETRY* pPathGeometry = (MIL_PATHGEOMETRY*)pbData;
 
                     // Move the current offset to after the Path's data
                     currentOffset += sizeof(MIL_PATHGEOMETRY);
@@ -134,12 +133,12 @@ namespace System.Windows.Media
                             // too much data.
                             Debug.Assert(pathData.SerializedData.Length >= currentOffset + sizeof(MIL_PATHFIGURE));
 
-                            MIL_PATHFIGURE *pPathFigure = (MIL_PATHFIGURE*)(pbData + currentOffset);
+                            MIL_PATHFIGURE* pPathFigure = (MIL_PATHFIGURE*)(pbData + currentOffset);
 
                             // Move the current offset to the after of the Figure's data
                             currentOffset += sizeof(MIL_PATHFIGURE);
 
-                            ctx.BeginFigure(pPathFigure->StartPoint, 
+                            ctx.BeginFigure(pPathFigure->StartPoint,
                                             ((pPathFigure->Flags & MilPathFigureFlags.IsFillable) != 0),
                                             ((pPathFigure->Flags & MilPathFigureFlags.IsClosed) != 0));
 
@@ -155,139 +154,139 @@ namespace System.Windows.Media
                                     Debug.Assert(pathData.SerializedData.Length >= currentOffset + sizeof(MIL_SEGMENT));
                                     Debug.Assert(pathData.Size >= currentOffset + sizeof(MIL_SEGMENT));
 
-                                    MIL_SEGMENT *pSegment = (MIL_SEGMENT*)(pbData + currentOffset);
+                                    MIL_SEGMENT* pSegment = (MIL_SEGMENT*)(pbData + currentOffset);
 
                                     switch (pSegment->Type)
                                     {
-                                    case MIL_SEGMENT_TYPE.MilSegmentLine:
-                                        {
-                                            // We only expect well-formed data, but we should assert that we're not reading too much data.
-                                            Debug.Assert(pathData.SerializedData.Length >= currentOffset + sizeof(MIL_SEGMENT_LINE));
-                                            Debug.Assert(pathData.Size >= currentOffset + sizeof(MIL_SEGMENT_LINE));
-
-                                            MIL_SEGMENT_LINE *pSegmentLine = (MIL_SEGMENT_LINE*)(pbData + currentOffset);
-
-                                            ctx.LineTo(pSegmentLine->Point, 
-                                                       ((pSegmentLine->Flags & MILCoreSegFlags.SegIsAGap) == 0),
-                                                       ((pSegmentLine->Flags & MILCoreSegFlags.SegSmoothJoin) != 0));
-
-                                            currentOffset += sizeof(MIL_SEGMENT_LINE);
-                                        }
-                                        break;
-                                    case MIL_SEGMENT_TYPE.MilSegmentBezier:
-                                        {
-                                            // We only expect well-formed data, but we should assert that we're not reading too much data.
-                                            Debug.Assert(pathData.SerializedData.Length >= currentOffset + sizeof(MIL_SEGMENT_BEZIER));
-                                            Debug.Assert(pathData.Size >= currentOffset + sizeof(MIL_SEGMENT_BEZIER));
-
-                                            MIL_SEGMENT_BEZIER *pSegmentBezier = (MIL_SEGMENT_BEZIER*)(pbData + currentOffset);
-
-                                            ctx.BezierTo(pSegmentBezier->Point1, 
-                                                         pSegmentBezier->Point2,
-                                                         pSegmentBezier->Point3,
-                                                         ((pSegmentBezier->Flags & MILCoreSegFlags.SegIsAGap) == 0),
-                                                         ((pSegmentBezier->Flags & MILCoreSegFlags.SegSmoothJoin) != 0));
-                                            
-                                            currentOffset += sizeof(MIL_SEGMENT_BEZIER);
-                                        }
-                                        break;
-                                    case MIL_SEGMENT_TYPE.MilSegmentQuadraticBezier:
-                                        {
-                                            // We only expect well-formed data, but we should assert that we're not reading too much data.
-                                            Debug.Assert(pathData.SerializedData.Length >= currentOffset + sizeof(MIL_SEGMENT_QUADRATICBEZIER));
-                                            Debug.Assert(pathData.Size >= currentOffset + sizeof(MIL_SEGMENT_QUADRATICBEZIER));
-
-                                            MIL_SEGMENT_QUADRATICBEZIER *pSegmentQuadraticBezier = (MIL_SEGMENT_QUADRATICBEZIER*)(pbData + currentOffset);
-
-                                            ctx.QuadraticBezierTo(pSegmentQuadraticBezier->Point1, 
-                                                                  pSegmentQuadraticBezier->Point2,
-                                                                  ((pSegmentQuadraticBezier->Flags & MILCoreSegFlags.SegIsAGap) == 0),
-                                                                  ((pSegmentQuadraticBezier->Flags & MILCoreSegFlags.SegSmoothJoin) != 0));
-                                            
-                                            currentOffset += sizeof(MIL_SEGMENT_QUADRATICBEZIER);
-                                        }
-                                        break;
-                                    case MIL_SEGMENT_TYPE.MilSegmentArc:
-                                        {
-                                            // We only expect well-formed data, but we should assert that we're not reading too much data.
-                                            Debug.Assert(pathData.SerializedData.Length >= currentOffset + sizeof(MIL_SEGMENT_ARC));
-                                            Debug.Assert(pathData.Size >= currentOffset + sizeof(MIL_SEGMENT_ARC));
-
-                                            MIL_SEGMENT_ARC *pSegmentArc = (MIL_SEGMENT_ARC*)(pbData + currentOffset);
-
-                                            ctx.ArcTo(pSegmentArc->Point,
-                                                      pSegmentArc->Size,
-                                                      pSegmentArc->XRotation,
-                                                      (pSegmentArc->LargeArc != 0),
-                                                      (pSegmentArc->Sweep == 0) ? SweepDirection.Counterclockwise : SweepDirection.Clockwise,
-                                                      ((pSegmentArc->Flags & MILCoreSegFlags.SegIsAGap) == 0),
-                                                      ((pSegmentArc->Flags & MILCoreSegFlags.SegSmoothJoin) != 0));
-                                            
-                                            currentOffset += sizeof(MIL_SEGMENT_ARC);
-                                        }
-                                        break;
-                                    case MIL_SEGMENT_TYPE.MilSegmentPolyLine:
-                                    case MIL_SEGMENT_TYPE.MilSegmentPolyBezier:
-                                    case MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier:
-                                        {
-                                            // We only expect well-formed data, but we should assert that we're not reading too much data.
-                                            Debug.Assert(pathData.SerializedData.Length >= currentOffset + sizeof(MIL_SEGMENT_POLY));
-                                            Debug.Assert(pathData.Size >= currentOffset + sizeof(MIL_SEGMENT_POLY));
-
-                                            MIL_SEGMENT_POLY *pSegmentPoly = (MIL_SEGMENT_POLY*)(pbData + currentOffset);
-
-                                            Debug.Assert(pSegmentPoly->Count <= Int32.MaxValue);
-
-                                            if (pSegmentPoly->Count > 0)
+                                        case MIL_SEGMENT_TYPE.MilSegmentLine:
                                             {
-                                                List<Point> points = new List<Point>((int)pSegmentPoly->Count);
-
                                                 // We only expect well-formed data, but we should assert that we're not reading too much data.
-                                                Debug.Assert(pathData.SerializedData.Length >= 
-                                                             currentOffset + 
-                                                             sizeof(MIL_SEGMENT_POLY) +
-                                                             (int)pSegmentPoly->Count * sizeof(Point));
-                                                Debug.Assert(pathData.Size >= 
-                                                             currentOffset + 
-                                                             sizeof(MIL_SEGMENT_POLY) +
-                                                             (int)pSegmentPoly->Count * sizeof(Point));
+                                                Debug.Assert(pathData.SerializedData.Length >= currentOffset + sizeof(MIL_SEGMENT_LINE));
+                                                Debug.Assert(pathData.Size >= currentOffset + sizeof(MIL_SEGMENT_LINE));
 
-                                                Point* pPoint = (Point*)(pbData + currentOffset + sizeof(MIL_SEGMENT_POLY));
+                                                MIL_SEGMENT_LINE* pSegmentLine = (MIL_SEGMENT_LINE*)(pbData + currentOffset);
 
-                                                for (uint k = 0; k < pSegmentPoly->Count; k++)
-                                                {
-                                                    points.Add(*pPoint);
-                                                    pPoint++;
-                                                }
+                                                ctx.LineTo(pSegmentLine->Point,
+                                                           ((pSegmentLine->Flags & MILCoreSegFlags.SegIsAGap) == 0),
+                                                           ((pSegmentLine->Flags & MILCoreSegFlags.SegSmoothJoin) != 0));
 
-                                                switch (pSegment->Type)
-                                                {
-                                                case MIL_SEGMENT_TYPE.MilSegmentPolyLine:
-                                                    ctx.PolyLineTo(points,
-                                                                   ((pSegmentPoly->Flags & MILCoreSegFlags.SegIsAGap) == 0),
-                                                                   ((pSegmentPoly->Flags & MILCoreSegFlags.SegSmoothJoin) != 0));
-                                                    break;
-                                                case MIL_SEGMENT_TYPE.MilSegmentPolyBezier:
-                                                    ctx.PolyBezierTo(points,
-                                                                     ((pSegmentPoly->Flags & MILCoreSegFlags.SegIsAGap) == 0),
-                                                                     ((pSegmentPoly->Flags & MILCoreSegFlags.SegSmoothJoin) != 0));
-                                                    break;
-                                                case MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier:
-                                                    ctx.PolyQuadraticBezierTo(points,
-                                                                   ((pSegmentPoly->Flags & MILCoreSegFlags.SegIsAGap) == 0),
-                                                                   ((pSegmentPoly->Flags & MILCoreSegFlags.SegSmoothJoin) != 0));
-                                                    break;
-                                                }
+                                                currentOffset += sizeof(MIL_SEGMENT_LINE);
                                             }
+                                            break;
+                                        case MIL_SEGMENT_TYPE.MilSegmentBezier:
+                                            {
+                                                // We only expect well-formed data, but we should assert that we're not reading too much data.
+                                                Debug.Assert(pathData.SerializedData.Length >= currentOffset + sizeof(MIL_SEGMENT_BEZIER));
+                                                Debug.Assert(pathData.Size >= currentOffset + sizeof(MIL_SEGMENT_BEZIER));
 
-                                            currentOffset += sizeof(MIL_SEGMENT_POLY) + (int)pSegmentPoly->Count * sizeof(Point);
-                                        }
-                                        break;
+                                                MIL_SEGMENT_BEZIER* pSegmentBezier = (MIL_SEGMENT_BEZIER*)(pbData + currentOffset);
+
+                                                ctx.BezierTo(pSegmentBezier->Point1,
+                                                             pSegmentBezier->Point2,
+                                                             pSegmentBezier->Point3,
+                                                             ((pSegmentBezier->Flags & MILCoreSegFlags.SegIsAGap) == 0),
+                                                             ((pSegmentBezier->Flags & MILCoreSegFlags.SegSmoothJoin) != 0));
+
+                                                currentOffset += sizeof(MIL_SEGMENT_BEZIER);
+                                            }
+                                            break;
+                                        case MIL_SEGMENT_TYPE.MilSegmentQuadraticBezier:
+                                            {
+                                                // We only expect well-formed data, but we should assert that we're not reading too much data.
+                                                Debug.Assert(pathData.SerializedData.Length >= currentOffset + sizeof(MIL_SEGMENT_QUADRATICBEZIER));
+                                                Debug.Assert(pathData.Size >= currentOffset + sizeof(MIL_SEGMENT_QUADRATICBEZIER));
+
+                                                MIL_SEGMENT_QUADRATICBEZIER* pSegmentQuadraticBezier = (MIL_SEGMENT_QUADRATICBEZIER*)(pbData + currentOffset);
+
+                                                ctx.QuadraticBezierTo(pSegmentQuadraticBezier->Point1,
+                                                                      pSegmentQuadraticBezier->Point2,
+                                                                      ((pSegmentQuadraticBezier->Flags & MILCoreSegFlags.SegIsAGap) == 0),
+                                                                      ((pSegmentQuadraticBezier->Flags & MILCoreSegFlags.SegSmoothJoin) != 0));
+
+                                                currentOffset += sizeof(MIL_SEGMENT_QUADRATICBEZIER);
+                                            }
+                                            break;
+                                        case MIL_SEGMENT_TYPE.MilSegmentArc:
+                                            {
+                                                // We only expect well-formed data, but we should assert that we're not reading too much data.
+                                                Debug.Assert(pathData.SerializedData.Length >= currentOffset + sizeof(MIL_SEGMENT_ARC));
+                                                Debug.Assert(pathData.Size >= currentOffset + sizeof(MIL_SEGMENT_ARC));
+
+                                                MIL_SEGMENT_ARC* pSegmentArc = (MIL_SEGMENT_ARC*)(pbData + currentOffset);
+
+                                                ctx.ArcTo(pSegmentArc->Point,
+                                                          pSegmentArc->Size,
+                                                          pSegmentArc->XRotation,
+                                                          (pSegmentArc->LargeArc != 0),
+                                                          (pSegmentArc->Sweep == 0) ? SweepDirection.Counterclockwise : SweepDirection.Clockwise,
+                                                          ((pSegmentArc->Flags & MILCoreSegFlags.SegIsAGap) == 0),
+                                                          ((pSegmentArc->Flags & MILCoreSegFlags.SegSmoothJoin) != 0));
+
+                                                currentOffset += sizeof(MIL_SEGMENT_ARC);
+                                            }
+                                            break;
+                                        case MIL_SEGMENT_TYPE.MilSegmentPolyLine:
+                                        case MIL_SEGMENT_TYPE.MilSegmentPolyBezier:
+                                        case MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier:
+                                            {
+                                                // We only expect well-formed data, but we should assert that we're not reading too much data.
+                                                Debug.Assert(pathData.SerializedData.Length >= currentOffset + sizeof(MIL_SEGMENT_POLY));
+                                                Debug.Assert(pathData.Size >= currentOffset + sizeof(MIL_SEGMENT_POLY));
+
+                                                MIL_SEGMENT_POLY* pSegmentPoly = (MIL_SEGMENT_POLY*)(pbData + currentOffset);
+
+                                                Debug.Assert(pSegmentPoly->Count <= Int32.MaxValue);
+
+                                                if (pSegmentPoly->Count > 0)
+                                                {
+                                                    List<Point> points = new List<Point>((int)pSegmentPoly->Count);
+
+                                                    // We only expect well-formed data, but we should assert that we're not reading too much data.
+                                                    Debug.Assert(pathData.SerializedData.Length >=
+                                                                 currentOffset +
+                                                                 sizeof(MIL_SEGMENT_POLY) +
+                                                                 (int)pSegmentPoly->Count * sizeof(Point));
+                                                    Debug.Assert(pathData.Size >=
+                                                                 currentOffset +
+                                                                 sizeof(MIL_SEGMENT_POLY) +
+                                                                 (int)pSegmentPoly->Count * sizeof(Point));
+
+                                                    Point* pPoint = (Point*)(pbData + currentOffset + sizeof(MIL_SEGMENT_POLY));
+
+                                                    for (uint k = 0; k < pSegmentPoly->Count; k++)
+                                                    {
+                                                        points.Add(*pPoint);
+                                                        pPoint++;
+                                                    }
+
+                                                    switch (pSegment->Type)
+                                                    {
+                                                        case MIL_SEGMENT_TYPE.MilSegmentPolyLine:
+                                                            ctx.PolyLineTo(points,
+                                                                           ((pSegmentPoly->Flags & MILCoreSegFlags.SegIsAGap) == 0),
+                                                                           ((pSegmentPoly->Flags & MILCoreSegFlags.SegSmoothJoin) != 0));
+                                                            break;
+                                                        case MIL_SEGMENT_TYPE.MilSegmentPolyBezier:
+                                                            ctx.PolyBezierTo(points,
+                                                                             ((pSegmentPoly->Flags & MILCoreSegFlags.SegIsAGap) == 0),
+                                                                             ((pSegmentPoly->Flags & MILCoreSegFlags.SegSmoothJoin) != 0));
+                                                            break;
+                                                        case MIL_SEGMENT_TYPE.MilSegmentPolyQuadraticBezier:
+                                                            ctx.PolyQuadraticBezierTo(points,
+                                                                           ((pSegmentPoly->Flags & MILCoreSegFlags.SegIsAGap) == 0),
+                                                                           ((pSegmentPoly->Flags & MILCoreSegFlags.SegSmoothJoin) != 0));
+                                                            break;
+                                                    }
+                                                }
+
+                                                currentOffset += sizeof(MIL_SEGMENT_POLY) + (int)pSegmentPoly->Count * sizeof(Point);
+                                            }
+                                            break;
 #if DEBUG
-                                    case MIL_SEGMENT_TYPE.MilSegmentNone:
-                                        throw new System.InvalidOperationException();
-                                    default:
-                                        throw new System.InvalidOperationException();
+                                        case MIL_SEGMENT_TYPE.MilSegmentNone:
+                                            throw new System.InvalidOperationException();
+                                        default:
+                                            throw new System.InvalidOperationException();
 #endif
                                     }
                                 }
@@ -306,7 +305,7 @@ namespace System.Windows.Media
         protected override void OnChanged()
         {
             SetDirty();
-            
+
             base.OnChanged();
         }
 
@@ -427,17 +426,18 @@ namespace System.Windows.Media
             ///</param>
             internal unsafe void AddFigureToList(bool isFilled, bool isClosed, MilPoint2F* pPoints, UInt32 pointCount, byte* pSegTypes, UInt32 segmentCount)
             {
-                if (pointCount >=1 && segmentCount >= 1)
+                if (pointCount >= 1 && segmentCount >= 1)
                 {
-                    PathFigure figure = new PathFigure();
-
-                    figure.IsFilled = isFilled;
-                    figure.StartPoint = new Point(pPoints->X, pPoints->Y);
+                    PathFigure figure = new PathFigure
+                    {
+                        IsFilled = isFilled,
+                        StartPoint = new Point(pPoints->X, pPoints->Y)
+                    };
 
                     int pointIndex = 1;
                     int sameSegCount = 0;
 
-                    for (int segIndex=0; segIndex<segmentCount; segIndex += sameSegCount)
+                    for (int segIndex = 0; segIndex < segmentCount; segIndex += sameSegCount)
                     {
                         byte segType = (byte)(pSegTypes[segIndex] & (byte)MILCoreSegFlags.SegTypeMask);
 
@@ -445,7 +445,7 @@ namespace System.Windows.Media
 
                         // Look for a run of same-type segments for a PolyXXXSegment.
                         while (((segIndex + sameSegCount) < segmentCount) &&
-                            (pSegTypes[segIndex] == pSegTypes[segIndex+sameSegCount]))
+                            (pSegTypes[segIndex] == pSegTypes[segIndex + sameSegCount]))
                         {
                             sameSegCount++;
                         }
@@ -455,17 +455,17 @@ namespace System.Windows.Media
 
                         if (segType == (byte)MILCoreSegFlags.SegTypeLine)
                         {
-                            if (pointIndex+sameSegCount > pointCount)
+                            if (pointIndex + sameSegCount > pointCount)
                             {
                                 throw new System.InvalidOperationException(SR.PathGeometry_InternalReadBackError);
                             }
 
-                            if (sameSegCount>1)
+                            if (sameSegCount > 1)
                             {
                                 PointCollection ptCollection = new PointCollection();
-                                for (int i=0; i<sameSegCount; i++)
+                                for (int i = 0; i < sameSegCount; i++)
                                 {
-                                    ptCollection.Add(new Point(pPoints[pointIndex+i].X, pPoints[pointIndex+i].Y));
+                                    ptCollection.Add(new Point(pPoints[pointIndex + i].X, pPoints[pointIndex + i].Y));
                                 }
                                 ptCollection.Freeze();
 
@@ -484,19 +484,19 @@ namespace System.Windows.Media
                         }
                         else if (segType == (byte)MILCoreSegFlags.SegTypeBezier)
                         {
-                            int pointBezierCount = sameSegCount*3;
+                            int pointBezierCount = sameSegCount * 3;
 
-                            if (pointIndex+pointBezierCount > pointCount)
+                            if (pointIndex + pointBezierCount > pointCount)
                             {
                                 throw new System.InvalidOperationException(SR.PathGeometry_InternalReadBackError);
                             }
 
-                            if (sameSegCount>1)
+                            if (sameSegCount > 1)
                             {
                                 PointCollection ptCollection = new PointCollection();
-                                for (int i=0; i<pointBezierCount; i++)
+                                for (int i = 0; i < pointBezierCount; i++)
                                 {
-                                    ptCollection.Add(new Point(pPoints[pointIndex+i].X, pPoints[pointIndex+i].Y));
+                                    ptCollection.Add(new Point(pPoints[pointIndex + i].X, pPoints[pointIndex + i].Y));
                                 }
                                 ptCollection.Freeze();
 
@@ -511,8 +511,8 @@ namespace System.Windows.Media
 
                                 figure.Segments.Add(new BezierSegment(
                                     new Point(pPoints[pointIndex].X, pPoints[pointIndex].Y),
-                                    new Point(pPoints[pointIndex+1].X, pPoints[pointIndex+1].Y),
-                                    new Point(pPoints[pointIndex+2].X, pPoints[pointIndex+2].Y),
+                                    new Point(pPoints[pointIndex + 1].X, pPoints[pointIndex + 1].Y),
+                                    new Point(pPoints[pointIndex + 2].X, pPoints[pointIndex + 2].Y),
                                     fStroked,
                                     fSmooth));
                             }
@@ -543,7 +543,7 @@ namespace System.Windows.Media
             internal PathFigureCollection _figures;
         };
 
-        internal unsafe delegate void AddFigureToListDelegate(bool isFilled, bool isClosed, MilPoint2F *pPoints, UInt32 pointCount, byte *pTypes, UInt32 typeCount);
+        internal unsafe delegate void AddFigureToListDelegate(bool isFilled, bool isClosed, MilPoint2F* pPoints, UInt32 pointCount, byte* pTypes, UInt32 typeCount);
 
         #region GetPointAtFractionLength
         /// <summary>
@@ -564,7 +564,7 @@ namespace System.Windows.Media
             {
                 PathGeometryData pathData = GetPathGeometryData();
 
-                fixed (byte *pbPathData = pathData.SerializedData)
+                fixed (byte* pbPathData = pathData.SerializedData)
                 {
                     Debug.Assert(pbPathData != (byte*)0);
 
@@ -692,8 +692,8 @@ namespace System.Windows.Media
                         _bounds = GetPathBoundsAsRB(
                             GetPathGeometryData(),
                             null,   // pen
-                            Matrix.Identity, 
-                            StandardFlatteningTolerance, 
+                            Matrix.Identity,
+                            StandardFlatteningTolerance,
                             ToleranceType.Absolute,
                             false);  // Do not skip non-fillable figures
 
@@ -710,10 +710,10 @@ namespace System.Windows.Media
         /// </summary>
         internal static Rect GetPathBounds(
             PathGeometryData pathData,
-            Pen pen, 
-            Matrix worldMatrix, 
-            double tolerance, 
-            ToleranceType type, 
+            Pen pen,
+            Matrix worldMatrix,
+            double tolerance,
+            ToleranceType type,
             bool skipHollows)
         {
             if (pathData.IsEmpty())
@@ -725,15 +725,15 @@ namespace System.Windows.Media
                 MilRectD bounds = PathGeometry.GetPathBoundsAsRB(
                     pathData,
                     pen,
-                    worldMatrix, 
-                    tolerance, 
+                    worldMatrix,
+                    tolerance,
                     type,
                     skipHollows);
 
                 return bounds.AsRect;
             }
         }
-        
+
         /// <summary>
         /// Gets the bounds of this PathGeometry as an axis-aligned bounding box with pen and/or transform
         /// 
@@ -742,10 +742,10 @@ namespace System.Windows.Media
         /// </summary>
         internal static MilRectD GetPathBoundsAsRB(
             PathGeometryData pathData,
-            Pen pen, 
-            Matrix worldMatrix, 
-            double tolerance, 
-            ToleranceType type, 
+            Pen pen,
+            Matrix worldMatrix,
+            double tolerance,
+            ToleranceType type,
             bool skipHollows)
         {
             // This method can't handle the empty geometry case, as it's impossible for us to
@@ -765,13 +765,13 @@ namespace System.Windows.Media
 
                 MilMatrix3x2D worldMatrix3X2 = CompositionResourceManager.MatrixToMilMatrix3x2D(ref worldMatrix);
 
-                fixed (byte *pbPathData = pathData.SerializedData)
+                fixed (byte* pbPathData = pathData.SerializedData)
                 {
                     MilRectD bounds;
 
                     Debug.Assert(pbPathData != (byte*)0);
 
-                    fixed (double *pDashArray = dashArray)
+                    fixed (double* pDashArray = dashArray)
                     {
                         int hr = UnsafeNativeMethods.MilCoreApi.MilUtility_PathGeometryBounds(
                             (pen == null) ? null : &penData,
@@ -808,7 +808,7 @@ namespace System.Windows.Media
 
         #endregion
 
-        
+
         #region HitTestWithPathGeometry
         internal static IntersectionDetail HitTestWithPathGeometry(
             Geometry geometry1,
@@ -823,11 +823,11 @@ namespace System.Windows.Media
                 PathGeometryData data1 = geometry1.GetPathGeometryData();
                 PathGeometryData data2 = geometry2.GetPathGeometryData();
 
-                fixed (byte *pbPathData1 = data1.SerializedData)
+                fixed (byte* pbPathData1 = data1.SerializedData)
                 {
                     Debug.Assert(pbPathData1 != (byte*)0);
 
-                    fixed (byte *pbPathData2 = data2.SerializedData)
+                    fixed (byte* pbPathData2 = data2.SerializedData)
                     {
                         Debug.Assert(pbPathData2 != (byte*)0);
 
@@ -886,7 +886,7 @@ namespace System.Windows.Media
 
             int count = (figures != null) ? figures.Count : 0;
 
-            for (int i=0; i<count; i++)
+            for (int i = 0; i < count; i++)
             {
                 if (figures.Internal_GetItem(i).MayHaveCurves())
                 {
@@ -898,7 +898,7 @@ namespace System.Windows.Media
         }
 
         #region Internal
-                
+
         /// <summary>
         /// GetAsPathGeometry - return a PathGeometry version of this Geometry
         /// </summary>
@@ -922,7 +922,7 @@ namespace System.Windows.Media
             FillRule fillRule = FillRule;
 
             string figuresString = String.Empty;
-            
+
             if (figures != null)
             {
                 figuresString = figures.ConvertToString(format, provider);
@@ -949,13 +949,15 @@ namespace System.Windows.Media
         /// </summary>
         internal override PathGeometryData GetPathGeometryData()
         {
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule;
-            data.Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform);
-            
+            PathGeometryData data = new PathGeometryData
+            {
+                FillRule = FillRule,
+                Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform)
+            };
+
             if (IsObviouslyEmpty())
             {
-                return Geometry.GetEmptyPathGeometryData();                
+                return Geometry.GetEmptyPathGeometryData();
             }
 
             ByteStreamGeometryContext ctx = new ByteStreamGeometryContext();
@@ -1015,9 +1017,9 @@ namespace System.Windows.Media
                             (byte*)&data,
                             sizeof(DUCE.MILCMD_PATHGEOMETRY),
                             (int)data.FiguresSize
-                            ); 
+                            );
 
-                        fixed (byte *pPathData = pathData.SerializedData)
+                        fixed (byte* pPathData = pathData.SerializedData)
                         {
                             channel.AppendCommandData(pPathData, (int)data.FiguresSize);
                         }
@@ -1041,7 +1043,7 @@ namespace System.Windows.Media
                 // marshal the MIL_PATHGEOMETRY.Flags.
             }
         }
-        
+
         internal void FiguresPropertyChangedHook(DependencyPropertyChangedEventArgs e)
         {
             // This is necessary to invalidate the cached bounds.

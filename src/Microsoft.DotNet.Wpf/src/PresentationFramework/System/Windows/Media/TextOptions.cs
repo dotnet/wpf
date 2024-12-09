@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,12 +33,12 @@ namespace System.Windows.Media
 
         internal static bool IsTextFormattingModeValid(object valueObject)
         {
-            TextFormattingMode value = (TextFormattingMode) valueObject;
+            TextFormattingMode value = (TextFormattingMode)valueObject;
 
-            return (value == TextFormattingMode.Ideal) || 
+            return (value == TextFormattingMode.Ideal) ||
                    (value == TextFormattingMode.Display);
-        }                                       
-        
+        }
+
         /// <summary> Text rendering Property </summary>
         public static readonly DependencyProperty TextRenderingModeProperty =
                 DependencyProperty.RegisterAttached(
@@ -51,13 +51,13 @@ namespace System.Windows.Media
                         new ValidateValueCallback(System.Windows.Media.ValidateEnums.IsTextRenderingModeValid));
 
         /// <summary> Text hinting property </summary>
-        public static readonly DependencyProperty TextHintingModeProperty = 
+        public static readonly DependencyProperty TextHintingModeProperty =
                 TextOptionsInternal.TextHintingModeProperty.AddOwner(
                         typeof(TextOptions));
 
         #endregion Dependency Properties
 
-        
+
         #region Attached Properties Setters
 
         public static void SetTextFormattingMode(DependencyObject element, TextFormattingMode value)
@@ -73,7 +73,7 @@ namespace System.Windows.Media
 
             return (TextFormattingMode)element.GetValue(TextFormattingModeProperty);
         }
-        
+
         public static void SetTextRenderingMode(DependencyObject element, TextRenderingMode value)
         {
             ArgumentNullException.ThrowIfNull(element);

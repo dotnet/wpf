@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,10 +15,9 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using MS.Internal.Text;
 using MS.Internal.Documents;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -99,7 +98,7 @@ namespace MS.Internal.PtsHost
         /// OUT: empty space suppressible at the bottom
         /// </param>
         internal void GetDvrSuppressibleBottomSpace(
-            out int dvrSuppressible)            
+            out int dvrSuppressible)
         {
             dvrSuppressible = Math.Max(0, TextDpi.ToTextDpi(_line.OverhangAfter));
         }
@@ -117,9 +116,9 @@ namespace MS.Internal.PtsHost
         /// OUT: distance from the beginning of the line to the anchor
         /// </param>
         internal void GetDurFigureAnchor(
-            FigureParagraph paraFigure,         
-            uint fswdir,                        
-            out int dur)                        
+            FigureParagraph paraFigure,
+            uint fswdir,
+            out int dur)
         {
             int cpFigure = TextContainerHelper.GetCPFromElement(_paraClient.Paragraph.StructuralCache.TextContainer, paraFigure.Element, ElementEdge.BeforeStart);
             int dcpFigure = cpFigure - _cpPara;
@@ -191,7 +190,7 @@ namespace MS.Internal.PtsHost
             int nonTextLength = 0;
             CharacterBufferRange precedingText = CharacterBufferRange.Empty;
             CultureInfo culture = null;
-            
+
             if (dcp > 0)
             {
                 // Create TextPointer at dcp, and pointer at paragraph start to compare
@@ -209,7 +208,7 @@ namespace MS.Internal.PtsHost
 
                 // Return text in run. If it is at start of TextContainer this will return an empty string
                 string precedingTextString = position.GetTextInRun(LogicalDirection.Backward);
-                precedingText = new CharacterBufferRange(precedingTextString, 0, precedingTextString.Length);                
+                precedingText = new CharacterBufferRange(precedingTextString, 0, precedingTextString.Length);
 
                 StaticTextPointer pointer = position.CreateStaticPointer();
                 DependencyObject element = (pointer.Parent != null) ? pointer.Parent : _paraClient.Paragraph.Element;
@@ -217,7 +216,7 @@ namespace MS.Internal.PtsHost
             }
 
             return new TextSpan<CultureSpecificCharacterBufferRange>(
-                nonTextLength + precedingText.Length, 
+                nonTextLength + precedingText.Length,
                 new CultureSpecificCharacterBufferRange(culture, precedingText)
                 );
         }
@@ -278,7 +277,7 @@ namespace MS.Internal.PtsHost
             try
             {
                 // Create line object
-                if(ctx.LineFormatLengthTarget == -1)
+                if (ctx.LineFormatLengthTarget == -1)
                 {
                     _line = _host.TextFormatter.FormatLine(_host, dcp, _wrappingWidth, lineProps, textLineBreak, ctx.TextRunCache);
                 }
@@ -422,7 +421,7 @@ namespace MS.Internal.PtsHost
                                 ContainerVisual parent = currentParent as ContainerVisual;
                                 Invariant.Assert(parent != null, "Parent should always derives from ContainerVisual.");
                                 parent.Children.Remove(inlineObject.UIElementIsland);
-                            }                                                        
+                            }
 
                             if (!line.HasCollapsed || ((rect.Left + inlineObject.UIElementIsland.Root.DesiredSize.Width) < line.Width))
                             {
@@ -451,14 +450,14 @@ namespace MS.Internal.PtsHost
                 DrawingContext ctx = visual.Open();
                 line.Draw(ctx, new Point(delta, 0), (_mirror ? InvertAxes.Horizontal : InvertAxes.None));
                 ctx.Close();
-                
+
                 visual.WidthIncludingTrailingWhitespace = line.WidthIncludingTrailingWhitespace - _indent;
             }
             finally
             {
                 _host.Context = null; // clear the context
             }
-            
+
             return visual;
         }
 
@@ -473,7 +472,7 @@ namespace MS.Internal.PtsHost
         /// </param>
         internal Rect GetBoundsFromTextPosition(int textPosition, out FlowDirection flowDirection)
         {
-            return GetBoundsFromPosition(textPosition, 1, out flowDirection);            
+            return GetBoundsFromPosition(textPosition, 1, out flowDirection);
         }
 
         /// <summary>
@@ -499,7 +498,7 @@ namespace MS.Internal.PtsHost
         internal List<Rect> GetRangeBounds(int cp, int cch, double xOffset, double yOffset)
         {
             List<Rect> rectangles = new List<Rect>();
-    
+
             // Calculate shift in line offset to render trailing spaces or avoid clipping text
             double delta = TextDpi.FromTextDpi(CalculateUOffsetShift());
             double newUOffset = xOffset + delta;
@@ -534,7 +533,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal TextLineBreak GetTextLineBreak()
         {
-            if(_line == null)
+            if (_line == null)
             {
                 return null;
             }
@@ -628,13 +627,13 @@ namespace MS.Internal.PtsHost
             // There are no ellipses, if:
             // * there is no overflow in the line
             // * text trimming is turned off
-            if (!_line.HasOverflowed) 
-            { 
-                return 0; 
+            if (!_line.HasOverflowed)
+            {
+                return 0;
             }
-            if (TextParagraph.Properties.TextTrimming == TextTrimming.None) 
-            { 
-                return 0; 
+            if (TextParagraph.Properties.TextTrimming == TextTrimming.None)
+            {
+                return 0;
             }
 
             // Create collapsed text line to get length of collapsed content.
@@ -678,7 +677,7 @@ namespace MS.Internal.PtsHost
 
             // Calculate shift in line offset to render trailing spaces or avoid clipping text
             double delta = TextDpi.FromTextDpi(CalculateUOffsetShift());
- 
+
             _line.Draw(ctx, new Point(delta, 0), InvertAxes.None);
             ctx.Close();
 
@@ -797,20 +796,20 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Distance from the beginning of paragraph edge to the line edge. 
         /// </summary>
-        internal int Start 
-        { 
-            get 
-            { 
-                return TextDpi.ToTextDpi(_line.Start) + TextDpi.ToTextDpi(_indent) + CalculateUOffsetShift(); 
-            } 
+        internal int Start
+        {
+            get
+            {
+                return TextDpi.ToTextDpi(_line.Start) + TextDpi.ToTextDpi(_indent) + CalculateUOffsetShift();
+            }
         }
 
         /// <summary>
         /// Calculated width of the line.
         /// </summary>
-        internal int Width 
-        { 
-            get 
+        internal int Width
+        {
+            get
             {
                 int width;
                 if (IsWidthAdjusted)
@@ -823,29 +822,29 @@ namespace MS.Internal.PtsHost
                 }
                 Invariant.Assert(width >= 0, "Line width cannot be negative");
                 return width;
-            } 
+            }
         }
 
         /// <summary>
         /// Height of the line; line advance distance. 
         /// </summary>
-        internal int Height 
-        { 
-            get 
-            { 
-                return TextDpi.ToTextDpi(_line.Height); 
-            } 
+        internal int Height
+        {
+            get
+            {
+                return TextDpi.ToTextDpi(_line.Height);
+            }
         }
 
         /// <summary>
         /// Baseline offset from the top of the line.
         /// </summary>
-        internal int Baseline 
-        { 
-            get 
-            { 
-                return TextDpi.ToTextDpi(_line.Baseline); 
-            } 
+        internal int Baseline
+        {
+            get
+            {
+                return TextDpi.ToTextDpi(_line.Baseline);
+            }
         }
 
         /// <summary>
@@ -856,13 +855,13 @@ namespace MS.Internal.PtsHost
             get
             {
                 // If there are no Newline characters, it is not the end of paragraph.
-                if (_line.NewlineLength == 0) 
-                { 
-                    return false; 
+                if (_line.NewlineLength == 0)
+                {
+                    return false;
                 }
                 // Since there are Newline characters in the line, do more expensive and
                 // accurate check.
-                return (((TextSpan<TextRun>)_runs[_runs.Count-1]).Value is ParagraphBreakRun);
+                return (((TextSpan<TextRun>)_runs[_runs.Count - 1]).Value is ParagraphBreakRun);
             }
         }
 
@@ -870,57 +869,57 @@ namespace MS.Internal.PtsHost
         /// Length of the line including any synthetic characters.
         /// This length is PTS frendly. PTS does not like 0 length lines.
         /// </summary>
-        internal int SafeLength 
-        { 
-            get 
-            { 
-                return _line.Length; 
-            } 
+        internal int SafeLength
+        {
+            get
+            {
+                return _line.Length;
+            }
         }
 
         /// <summary>
         /// Length of the line excluding any synthetic characters. 
         /// </summary>
-        internal int ActualLength 
-        { 
-            get 
-            { 
-                return _line.Length - (EndOfParagraph ? _syntheticCharacterLength : 0); 
-            } 
+        internal int ActualLength
+        {
+            get
+            {
+                return _line.Length - (EndOfParagraph ? _syntheticCharacterLength : 0);
+            }
         }
 
         /// <summary>
         /// Length of the line excluding any synthetic characters and line breaks. 
         /// </summary>
-        internal int ContentLength 
-        { 
-            get 
-            { 
-                return _line.Length - _line.NewlineLength; 
-            } 
+        internal int ContentLength
+        {
+            get
+            {
+                return _line.Length - _line.NewlineLength;
+            }
         }
 
         /// <summary>
         /// Number of characters after the end of the line which may affect
         /// line wrapping. 
         /// </summary>
-        internal int DependantLength 
-        { 
-            get 
-            { 
-                return _line.DependentLength; 
-            } 
+        internal int DependantLength
+        {
+            get
+            {
+                return _line.DependentLength;
+            }
         }
 
         /// <summary>
         /// Was line truncated (forced broken)?
         /// </summary>
         internal bool IsTruncated
-        { 
-            get 
-            { 
-                return _line.IsTruncated; 
-            } 
+        {
+            get
+            {
+                return _line.IsTruncated;
+            }
         }
 
         /// <summary>
@@ -932,9 +931,9 @@ namespace MS.Internal.PtsHost
             {
                 PTS.FSFLRES formatResult = PTS.FSFLRES.fsflrOutOfSpace;
                 // If there are no Newline characters, we run out of space.
-                if (_line.NewlineLength == 0) 
-                { 
-                    return formatResult; 
+                if (_line.NewlineLength == 0)
+                {
+                    return formatResult;
                 }
                 // Since there are Newline characters in the line, do more expensive and
                 // accurate check.
@@ -1023,7 +1022,7 @@ namespace MS.Internal.PtsHost
                 rect = textBounds[0].Rectangle;
             }
 
-            flowDirection = textBounds[0].FlowDirection;           
+            flowDirection = textBounds[0].FlowDirection;
             rect.X = rect.X + delta;
             return rect;
         }
@@ -1102,7 +1101,7 @@ namespace MS.Internal.PtsHost
             if (IsUOffsetAdjusted)
             {
                 width = TextDpi.ToTextDpi(_line.WidthIncludingTrailingWhitespace);
-                trailingSpacesDelta =  TextDpi.ToTextDpi(_line.Width) - width;
+                trailingSpacesDelta = TextDpi.ToTextDpi(_line.Width) - width;
                 Invariant.Assert(trailingSpacesDelta <= 0);
             }
             else

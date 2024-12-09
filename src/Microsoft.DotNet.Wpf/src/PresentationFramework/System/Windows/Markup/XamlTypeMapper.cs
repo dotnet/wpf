@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,16 +8,16 @@
 //
 
 using System;
-using System.IO;
-using MS.Utility;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
-using System.ComponentModel;
 using System.Collections.Specialized;
-using System.Runtime.CompilerServices;
+using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
+using System.IO;
 using System.Reflection;
+using System.Runtime.CompilerServices;
+using MS.Utility;
 
 #if !PBTCOMPILER
 
@@ -46,9 +46,9 @@ namespace System.Windows.Markup
     public partial class XamlTypeMapper
 #endif
     {
-#region Public
+        #region Public
 
-#region Methods
+        #region Methods
 
 #if !PBTCOMPILER
         /// <summary>
@@ -57,9 +57,9 @@ namespace System.Windows.Markup
         /// <param name="assemblyNames">Assemblies XamlTypeMapper should use when resolving XAML</param>
         public XamlTypeMapper(string[] assemblyNames)
         {
-            if(null == assemblyNames)
+            if (null == assemblyNames)
             {
-                throw new ArgumentNullException( "assemblyNames" );
+                throw new ArgumentNullException("assemblyNames");
             }
 
             _assemblyNames = assemblyNames;
@@ -76,9 +76,9 @@ namespace System.Windows.Markup
             string[] assemblyNames,
             NamespaceMapEntry[] namespaceMaps)
         {
-            if(null == assemblyNames)
+            if (null == assemblyNames)
             {
-                throw new ArgumentNullException( "assemblyNames" );
+                throw new ArgumentNullException("assemblyNames");
             }
 
             _assemblyNames = assemblyNames;
@@ -107,17 +107,17 @@ namespace System.Windows.Markup
             string xmlNamespace,
             string localName)
         {
-            if(null == xmlNamespace)
+            if (null == xmlNamespace)
             {
-                throw new ArgumentNullException( "xmlNamespace" );
+                throw new ArgumentNullException("xmlNamespace");
             }
-            if(null == localName)
+            if (null == localName)
             {
-                throw new ArgumentNullException( "localName" );
+                throw new ArgumentNullException("localName");
             }
 
             TypeAndSerializer typeAndSerializer =
-                GetTypeOnly(xmlNamespace,localName);
+                GetTypeOnly(xmlNamespace, localName);
 
             return typeAndSerializer != null ? typeAndSerializer.ObjectType : null;
         }
@@ -137,19 +137,19 @@ namespace System.Windows.Markup
         /// The "PresentationFramework" argument in the mapping PI example.
         /// </param>
         public void AddMappingProcessingInstruction(
-            string  xmlNamespace,
-            string  clrNamespace,
-            string  assemblyName )
+            string xmlNamespace,
+            string clrNamespace,
+            string assemblyName)
         {
-            if( null == xmlNamespace )
+            if (null == xmlNamespace)
             {
                 throw new ArgumentNullException("xmlNamespace");
             }
-            if( null == clrNamespace )
+            if (null == clrNamespace)
             {
                 throw new ArgumentNullException("clrNamespace");
             }
-            if( null == assemblyName )
+            if (null == assemblyName)
             {
                 throw new ArgumentNullException("assemblyName");
             }
@@ -187,11 +187,11 @@ namespace System.Windows.Markup
             string assemblyName,
             string assemblyPath)
         {
-            if( null == assemblyName )
+            if (null == assemblyName)
             {
                 throw new ArgumentNullException("assemblyName");
             }
-            if( null == assemblyPath )
+            if (null == assemblyPath)
             {
                 throw new ArgumentNullException("assemblyPath");
             }
@@ -235,9 +235,9 @@ namespace System.Windows.Markup
 #endif
         }
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         /// <summary>
         ///  Instance of XamlTypeMapper to use if none is specified in a
@@ -251,13 +251,13 @@ namespace System.Windows.Markup
             }
         }
 
-#endregion Properties
+        #endregion Properties
 
-#endregion Public
+        #endregion Public
 
-#region Internal
+        #region Internal
 
-#region Initialization
+        #region Initialization
 
 #if !PBTCOMPILER
         ///<summary>
@@ -282,20 +282,21 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal XamlTypeMapper Clone()
         {
-            XamlTypeMapper newMapper = new XamlTypeMapper(_assemblyNames.Clone() as string[]);
+            XamlTypeMapper newMapper = new XamlTypeMapper(_assemblyNames.Clone() as string[])
+            {
+                _mapTable = _mapTable,
+                _referenceAssembliesLoaded = _referenceAssembliesLoaded,
+                _lineNumber = _lineNumber,
+                _linePosition = _linePosition,
 
-            newMapper._mapTable = _mapTable;
-            newMapper._referenceAssembliesLoaded = _referenceAssembliesLoaded;
-            newMapper._lineNumber = _lineNumber;
-            newMapper._linePosition = _linePosition;
-
-            newMapper._namespaceMaps = _namespaceMaps.Clone() as NamespaceMapEntry[];
-            newMapper._typeLookupFromXmlHashtable = _typeLookupFromXmlHashtable.Clone() as Hashtable;
-            newMapper._namespaceMapHashList = _namespaceMapHashList.Clone() as Hashtable;
-            newMapper._typeInformationCache = CloneHybridDictionary(_typeInformationCache);
-            newMapper._piTable = CloneHybridDictionary(_piTable);
-            newMapper._piReverseTable = CloneStringDictionary(_piReverseTable);
-            newMapper._assemblyPathTable = CloneHybridDictionary(_assemblyPathTable);
+                _namespaceMaps = _namespaceMaps.Clone() as NamespaceMapEntry[],
+                _typeLookupFromXmlHashtable = _typeLookupFromXmlHashtable.Clone() as Hashtable,
+                _namespaceMapHashList = _namespaceMapHashList.Clone() as Hashtable,
+                _typeInformationCache = CloneHybridDictionary(_typeInformationCache),
+                _piTable = CloneHybridDictionary(_piTable),
+                _piReverseTable = CloneStringDictionary(_piReverseTable),
+                _assemblyPathTable = CloneHybridDictionary(_assemblyPathTable)
+            };
 
             return newMapper;
         }
@@ -305,7 +306,7 @@ namespace System.Windows.Markup
         private HybridDictionary CloneHybridDictionary(HybridDictionary dict)
         {
             HybridDictionary newDict = new HybridDictionary(dict.Count);
-            foreach ( DictionaryEntry de in dict )
+            foreach (DictionaryEntry de in dict)
             {
                 newDict.Add(de.Key, de.Value);
             }
@@ -325,9 +326,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion Initialization
+        #endregion Initialization
 
-#region Assemblies
+        #region Assemblies
 
         ///<summary>
         /// Returns the assembly path for the passed assembly.  If none, return null.
@@ -388,11 +389,11 @@ namespace System.Windows.Markup
             }
         }
 
-#endregion Assemblies
+        #endregion Assemblies
 
-#region AssemblyLoading
+        #region AssemblyLoading
 
-#if  PBTCOMPILER
+#if PBTCOMPILER
 
         private void PreLoadDefaultAssemblies(string asmName, string asmPath)
         {
@@ -421,7 +422,7 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion AssemblyLoading
+        #endregion AssemblyLoading
 
         #region Events
 
@@ -444,29 +445,29 @@ namespace System.Windows.Markup
         /// <returns>The RoutedEvent ID or null if no match was found</returns>
         /// <ExternalAPI/>
         internal RoutedEvent GetRoutedEvent(
-            Type   owner,
+            Type owner,
             string xmlNamespace,
             string localName)
         {
             Type baseType = null;
             string dynamicObjectName = null;
 
-            if(null == localName)
+            if (null == localName)
             {
-                throw new ArgumentNullException( "localName" );
+                throw new ArgumentNullException("localName");
             }
-            if(null == xmlNamespace)
+            if (null == xmlNamespace)
             {
-                throw new ArgumentNullException( "xmlNamespace" );
+                throw new ArgumentNullException("xmlNamespace");
             }
             if (owner != null && !ReflectionHelper.IsPublicType(owner))
             {
                 _lineNumber = 0;  // Public API, so we don't know the line number.
-                ThrowException(nameof(SR.ParserOwnerEventMustBePublic), owner.FullName );
+                ThrowException(nameof(SR.ParserOwnerEventMustBePublic), owner.FullName);
             }
 
-            RoutedEvent Event = GetDependencyObject(true,owner,xmlNamespace,
-                localName,ref baseType,ref dynamicObjectName)
+            RoutedEvent Event = GetDependencyObject(true, owner, xmlNamespace,
+                localName, ref baseType, ref dynamicObjectName)
                 as RoutedEvent;
 
             return Event;
@@ -474,9 +475,9 @@ namespace System.Windows.Markup
 
 #endif
 
-#endregion Events
+        #endregion Events
 
-#region Properties
+        #region Properties
 
 #if !PBTCOMPILER
         ///<summary>
@@ -499,14 +500,14 @@ namespace System.Windows.Markup
         /// Null is returned if no TypeConverter for the Property type.
         ///</returns>
         internal Object ParseProperty(
-            object                 targetObject,
-            Type                   propType,
-            string                 propName,
-            object                 dpOrPiOrFi,
+            object targetObject,
+            Type propType,
+            string propName,
+            object dpOrPiOrFi,
             ITypeDescriptorContext typeContext,
-            ParserContext          parserContext,
-            string                 value,
-            short                  converterTypeId)
+            ParserContext parserContext,
+            string value,
+            short converterTypeId)
         {
             _lineNumber = parserContext != null ? parserContext.LineNumber : 0;
             _linePosition = parserContext != null ? parserContext.LinePosition : 0;
@@ -542,36 +543,36 @@ namespace System.Windows.Markup
                 // Reflect for per property type converter or type converter based on the property's type
                 typeConvert = GetPropertyConverter(propType, dpOrPiOrFi);
 
-                #if DEBUG
-                if( propType.Assembly.FullName == "PresentationFramework"
+#if DEBUG
+                if (propType.Assembly.FullName == "PresentationFramework"
                     ||
                     propType.Assembly.FullName == "PresentationCore"
                     ||
-                    propType.Assembly.FullName == "WindowsBase" )
+                    propType.Assembly.FullName == "WindowsBase")
                 {
                     Debug.WriteLine($"Reflected for type converter on {propType.Name}.{propName}");
                 }
-                #endif
+#endif
             }
 
 #if !STRESS
             try
             {
 #endif
-                obj =  typeConvert.ConvertFromString(typeContext, TypeConverterHelper.InvariantEnglishUS, value);
+                obj = typeConvert.ConvertFromString(typeContext, TypeConverterHelper.InvariantEnglishUS, value);
 
-                if( TraceMarkup.IsEnabled )
+                if (TraceMarkup.IsEnabled)
                 {
-                    TraceMarkup.TraceActivityItem( TraceMarkup.TypeConvert,
+                    TraceMarkup.TraceActivityItem(TraceMarkup.TypeConvert,
                                                  typeConvert,
                                                  value,
-                                                 obj );
+                                                 obj);
                 }
 #if !STRESS
             }
             catch (Exception e)
             {
-                if( CriticalExceptions.IsCriticalException(e) || e is XamlParseException )
+                if (CriticalExceptions.IsCriticalException(e) || e is XamlParseException)
                 {
                     throw;
                 }
@@ -583,12 +584,12 @@ namespace System.Windows.Markup
                 {
                     obj = iProvidePropertyFallback.ProvidePropertyFallback(propName, e);
 
-                    if( TraceMarkup.IsEnabled )
+                    if (TraceMarkup.IsEnabled)
                     {
-                        TraceMarkup.TraceActivityItem( TraceMarkup.TypeConvertFallback,
+                        TraceMarkup.TraceActivityItem(TraceMarkup.TypeConvertFallback,
                                                      typeConvert,
                                                      value,
-                                                     obj );
+                                                     obj);
                     }
                 }
 
@@ -597,7 +598,7 @@ namespace System.Windows.Markup
                 else if (typeConvert.GetType() == typeof(TypeConverter))
                 {
                     string message;
-                    if( propName != string.Empty )
+                    if (propName != string.Empty)
                     {
                         // <SomeElement SomeProp="SomeText"/> and there's no TypeConverter
                         //  to handle converting "SomeText" into an instance of something
@@ -614,18 +615,18 @@ namespace System.Windows.Markup
                 }
                 else
                 {
-                    string message = TypeConverterFailure( value, propName, propType.FullName );
+                    string message = TypeConverterFailure(value, propName, propType.FullName);
                     XamlParseException.ThrowException(parserContext, _lineNumber, _linePosition, message, e);
                 }
             }
 #endif
 
             // Verify that the type converter actually gave us an instance of the correct object type.
-            if( obj != null )
+            if (obj != null)
             {
-                if(!propType.IsAssignableFrom(obj.GetType()))
+                if (!propType.IsAssignableFrom(obj.GetType()))
                 {
-                    string message = TypeConverterFailure( value, propName, propType.FullName );
+                    string message = TypeConverterFailure(value, propName, propType.FullName);
 
                     XamlParseException.ThrowException(parserContext, _lineNumber, _linePosition, message, null);
                 }
@@ -634,11 +635,11 @@ namespace System.Windows.Markup
             return obj;
         }
 
-        private string TypeConverterFailure( string value, string propName, string propType )
+        private string TypeConverterFailure(string value, string propName, string propType)
         {
             string message;
 
-            if( propName != string.Empty )
+            if (propName != string.Empty)
             {
                 // We were called to do type conversion on a string that's been
                 //  assigned in an element attribute, but failed for whatever reason.
@@ -660,7 +661,7 @@ namespace System.Windows.Markup
                 // There is no associated propName available in this case, so we
                 //  give a different error message.
 
-                message = SR.Format(SR.ParserCannotConvertInitializationText, value, propType );
+                message = SR.Format(SR.ParserCannotConvertInitializationText, value, propType);
             }
             return message;
         }
@@ -680,9 +681,9 @@ namespace System.Windows.Markup
         /// Name names.
         /// </summary>
         internal void ValidateNames(
-            string   value,
-            int      lineNumber,
-            int      linePosition)
+            string value,
+            int lineNumber,
+            int linePosition)
         {
             // set the linenumber and position
             _lineNumber = lineNumber;
@@ -717,9 +718,9 @@ namespace System.Windows.Markup
         /// for enums you can't pass numbers to it.
         /// </summary>
         internal void ValidateEnums(
-            string        propName,
-            Type          propType,
-            string        attribValue)
+            string propName,
+            Type propType,
+            string attribValue)
         {
             if (propType.IsEnum && attribValue != string.Empty)
             {
@@ -773,9 +774,9 @@ namespace System.Windows.Markup
         /// will be discovered by the BamlRecordWriter.
         /// </remarks>
         private MemberInfo GetCachedMemberInfo(
-               Type                    owner,
-               string                  propName,
-               bool                    onlyPropInfo,
+               Type owner,
+               string propName,
+               bool onlyPropInfo,
            out BamlAttributeInfoRecord infoRecord)
         {
             infoRecord = null;
@@ -798,7 +799,7 @@ namespace System.Windows.Markup
         /// Add cached member info for the property name.
         /// </summary>
         private void AddCachedAttributeInfo(
-               Type                    ownerType,
+               Type ownerType,
                BamlAttributeInfoRecord infoRecord)
         {
             if (MapTable != null)
@@ -935,8 +936,8 @@ namespace System.Windows.Markup
         /// <param name="propName">Name of the resolved property or event</param>
         /// <returns>PropertyInfo or EventInfo for resolved property or event</returns>
         internal MemberInfo GetClrInfo(
-                bool   isEvent,
-                Type   owner,
+                bool isEvent,
+                Type owner,
                 string xmlNamespace,
                 string localName,
             ref string propName)
@@ -952,7 +953,7 @@ namespace System.Windows.Markup
             {
                 // If using .net then match against the class.
                 globalClassName = localName.Substring(0, lastIndex);
-                localName = localName.Substring(lastIndex+1);
+                localName = localName.Substring(lastIndex + 1);
             }
 
             return GetClrInfoForClass(isEvent, owner, xmlNamespace, localName, globalClassName, ref propName);
@@ -1209,9 +1210,9 @@ namespace System.Windows.Markup
         /// <param name="globalClassName">Class Name of the Attribute, or null if not present</param>
         /// <param name="propName">Name of the resolved property or event</param>
         /// <returns>PropertyInfo or EventInfo for resolved property or event</returns>
-        internal MemberInfo GetClrInfoForClass (
-                bool   isEvent,
-                Type   owner,
+        internal MemberInfo GetClrInfoForClass(
+                bool isEvent,
+                Type owner,
                 string xmlNamespace,
                 string localName,
                 string globalClassName,
@@ -1222,7 +1223,7 @@ namespace System.Windows.Markup
             if (owner == null || ReflectionHelper.IsPublicType(owner))
             {
 #endif
-            // first, try normal lookup for public properties and events only.
+                // first, try normal lookup for public properties and events only.
                 mi = GetClrInfoForClass(isEvent, owner, xmlNamespace, localName, globalClassName, false, ref propName);
 #if PBTCOMPILER
             }
@@ -1346,7 +1347,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                             memberInfo = null;
 #else
-                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", $"{objectType.Name}.{localName}", "add");
+                                        ThrowException(nameof(SR.ParserCantSetAttribute), "event", $"{objectType.Name}.{localName}", "add");
 #endif
                                         }
 #if PBTCOMPILER
@@ -1504,7 +1505,7 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                                             memberInfo = null;
 #else
-                                            ThrowException(nameof(SR.ParserCantSetAttribute), "event", $"{owner.Name}.{localName}", "add");
+                                        ThrowException(nameof(SR.ParserCantSetAttribute), "event", $"{owner.Name}.{localName}", "add");
 #endif
                                         }
 #if PBTCOMPILER
@@ -1586,7 +1587,7 @@ namespace System.Windows.Markup
         /// <param name="eventName">Then name of the handler of the event</param>
         /// <returns>EventInfo for resolved event</returns>
         internal EventInfo GetClrEventInfo(
-            Type   owner,
+            Type owner,
             string eventName)
         {
             Debug.Assert(null != eventName, "null eventName");
@@ -1627,12 +1628,12 @@ namespace System.Windows.Markup
         /// <returns>resolved object, which can be a RoutedEvent, a DependencyProperty
         ///          or the MethodInfo for the event or property setter</returns>
         internal object GetDependencyObject(
-                bool       isEvent,
-                Type       owner,
-                string     xmlNamespace,
-                string     localName,
-            ref Type       baseType,
-            ref string     dynamicObjectName)
+                bool isEvent,
+                Type owner,
+                string xmlNamespace,
+                string localName,
+            ref Type baseType,
+            ref string dynamicObjectName)
         {
             Debug.Assert(null != localName, "null localName");
             Debug.Assert(null != xmlNamespace, "null xmlNamespace");
@@ -1647,8 +1648,8 @@ namespace System.Windows.Markup
             if (-1 != lastIndex)
             {
                 // if using .net then match against the class.
-                globalClassName = localName.Substring(0,lastIndex);
-                localName = localName.Substring(lastIndex+1);
+                globalClassName = localName.Substring(0, lastIndex);
+                localName = localName.Substring(lastIndex + 1);
             }
 
             // If this is a globalClassName then resolve the type and then call
@@ -1656,14 +1657,14 @@ namespace System.Windows.Markup
             if (null != globalClassName)
             {
                 TypeAndSerializer typeAndSerializer =
-                    GetTypeOnly(xmlNamespace,globalClassName);
+                    GetTypeOnly(xmlNamespace, globalClassName);
 
                 if (typeAndSerializer != null && typeAndSerializer.ObjectType != null)
                 {
                     baseType = typeAndSerializer.ObjectType;
                     if (isEvent)
                     {
-                        memInfo = RoutedEventFromName(localName,baseType);
+                        memInfo = RoutedEventFromName(localName, baseType);
                     }
                     else
                     {
@@ -1697,7 +1698,7 @@ namespace System.Windows.Markup
                     // Look at each namespace for a match with this baseType
                     for (int count = 0;
                          count < namespaceMaps.Length && !foundNamespaceMatch;
-                         count ++)
+                         count++)
                     {
                         NamespaceMapEntry namespaceMap = namespaceMaps[count];
 
@@ -1717,7 +1718,7 @@ namespace System.Windows.Markup
                         // 'normal' properties and events if this attempt fails.
                         if (isEvent)
                         {
-                            memInfo = RoutedEventFromName(localName,baseType);
+                            memInfo = RoutedEventFromName(localName, baseType);
                         }
                         else
                         {
@@ -1745,7 +1746,7 @@ namespace System.Windows.Markup
         }
 
 
-         ///<summary>
+        ///<summary>
         /// Returns a DependencyProperty given a local name and an xml namespace
         ///</summary>
         ///<param name="localName">
@@ -1763,10 +1764,10 @@ namespace System.Windows.Markup
         internal DependencyProperty DependencyPropertyFromName(
                 string localName,
                 string xmlNamespace,
-            ref Type   ownerType)
-         {
-             Debug.Assert(null != localName, "null localName");
-             Debug.Assert(null != xmlNamespace, "null xmlNamespace");
+            ref Type ownerType)
+        {
+            Debug.Assert(null != localName, "null localName");
+            Debug.Assert(null != xmlNamespace, "null xmlNamespace");
 
             // Adjust localName if there are any periods that indicate a global class.  Use
             // this class name as the owner type and return it.  Otherwise just use the
@@ -1774,8 +1775,8 @@ namespace System.Windows.Markup
             int lastIndex = localName.LastIndexOf('.');
             if (-1 != lastIndex)
             {
-                string globalClassName = localName.Substring(0,lastIndex);
-                localName = localName.Substring(lastIndex+1);
+                string globalClassName = localName.Substring(0, lastIndex);
+                localName = localName.Substring(lastIndex + 1);
                 TypeAndSerializer typeAndSerializer =
                     GetTypeOnly(xmlNamespace, globalClassName);
                 if (typeAndSerializer == null || typeAndSerializer.ObjectType == null)
@@ -1785,9 +1786,9 @@ namespace System.Windows.Markup
                 ownerType = typeAndSerializer.ObjectType;
             }
 
-            if(null == ownerType)
+            if (null == ownerType)
             {
-                throw new ArgumentNullException( "ownerType" );
+                throw new ArgumentNullException("ownerType");
             }
 
             return DependencyProperty.FromName(localName, ownerType);
@@ -1802,8 +1803,8 @@ namespace System.Windows.Markup
         /// along with the TypeAndSerializer information for fast retrieval.
         /// </summary>
         internal PropertyInfo GetXmlLangProperty(
-                string    xmlNamespace,     // xml namespace for the type
-                string    localName)        // local name of the type without any '.'
+                string xmlNamespace,     // xml namespace for the type
+                string localName)        // local name of the type without any '.'
         {
             TypeAndSerializer typeAndSerializer = GetTypeOnly(xmlNamespace, localName);
 
@@ -1828,7 +1829,7 @@ namespace System.Windows.Markup
                 else
                 {
                     string xmlLangPropertyName = null;
-                    bool   xmlLangPropertyFound = false;
+                    bool xmlLangPropertyFound = false;
 
 #if !PBTCOMPILER
                     AttributeCollection attributes = TypeDescriptor.GetAttributes(typeAndSerializer.ObjectType);
@@ -1851,16 +1852,16 @@ namespace System.Windows.Markup
                                                                               out typeValue);
 #endif
 
-                    if ( xmlLangPropertyFound )
+                    if (xmlLangPropertyFound)
                     {
-                        if( xmlLangPropertyName != null && xmlLangPropertyName.Length > 0)
+                        if (xmlLangPropertyName != null && xmlLangPropertyName.Length > 0)
                         {
                             typeAndSerializer.XmlLangProperty = typeAndSerializer.ObjectType.GetProperty(
                                 xmlLangPropertyName,
                                 BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
                         }
 
-                        if( typeAndSerializer.XmlLangProperty == null )
+                        if (typeAndSerializer.XmlLangProperty == null)
                         {
                             // Either the given name could not be found, or there
                             //  was no name specified at all.  (null or empty string.)
@@ -1900,7 +1901,7 @@ namespace System.Windows.Markup
         ///</returns>
         private PropertyInfo PropertyInfoFromName(
             string localName,
-            Type   ownerType,
+            Type ownerType,
             bool tryInternal,
             bool tryPublicOnly,
             out bool isInternal)
@@ -1992,7 +1993,7 @@ namespace System.Windows.Markup
         ///</returns>
         internal RoutedEvent RoutedEventFromName(
             string localName,
-            Type   ownerType)
+            Type ownerType)
         {
             RoutedEvent Event = null;
             Type currentType = ownerType;
@@ -2006,10 +2007,10 @@ namespace System.Windows.Markup
 
             // EventManager takes care of going up the hierarchy, so we don't need to loop here
             // to do it.  Just do one call.
-            Event =  EventManager.GetRoutedEventFromName(localName,ownerType);
+            Event = EventManager.GetRoutedEventFromName(localName, ownerType);
 
             return Event;
-       }
+        }
 #endif
 
         /// <summary>
@@ -2035,8 +2036,8 @@ namespace System.Windows.Markup
         /// </summary>
         internal static void GetPropertyType(
             object propertyMember,
-        out Type   propertyType,
-        out bool   propertyCanWrite)
+        out Type propertyType,
+        out bool propertyCanWrite)
         {
 #if !PBTCOMPILER
             DependencyProperty dp = propertyMember as DependencyProperty;
@@ -2048,29 +2049,29 @@ namespace System.Windows.Markup
             else
             {
 #endif
-                PropertyInfo propertyInfo = propertyMember as PropertyInfo;
-                if (propertyInfo != null)
+            PropertyInfo propertyInfo = propertyMember as PropertyInfo;
+            if (propertyInfo != null)
+            {
+                propertyType = propertyInfo.PropertyType;
+                propertyCanWrite = propertyInfo.CanWrite;
+            }
+            else
+            {
+                MethodInfo methodInfo = propertyMember as MethodInfo;
+                if (methodInfo != null)
                 {
-                    propertyType = propertyInfo.PropertyType;
-                    propertyCanWrite = propertyInfo.CanWrite;
+                    ParameterInfo[] parameters = methodInfo.GetParameters();
+                    propertyType = parameters.Length == 1 ? methodInfo.ReturnType : parameters[1].ParameterType;
+                    propertyCanWrite = parameters.Length == 1 ? false : true;
                 }
                 else
                 {
-                    MethodInfo methodInfo = propertyMember as MethodInfo;
-                    if (methodInfo != null)
-                    {
-                        ParameterInfo[] parameters = methodInfo.GetParameters();
-                        propertyType = parameters.Length == 1 ? methodInfo.ReturnType : parameters[1].ParameterType;
-                        propertyCanWrite = parameters.Length == 1 ? false : true;
-                    }
-                    else
-                    {
-                        // If its not a propertyinfo, methodinfo, or dependencyproperty,
-                        // all we know is that it must be an object...
-                        propertyType = typeof(object);
-                        propertyCanWrite = false;
-                    }
+                    // If its not a propertyinfo, methodinfo, or dependencyproperty,
+                    // all we know is that it must be an object...
+                    propertyType = typeof(object);
+                    propertyCanWrite = false;
                 }
+            }
 #if !PBTCOMPILER
             }
 #endif
@@ -2125,16 +2126,16 @@ namespace System.Windows.Markup
             else
             {
 #if !PBTCOMPILER
-                Debug.Assert( propertyMember is DependencyProperty);
+                Debug.Assert(propertyMember is DependencyProperty);
                 validType = ((DependencyProperty)propertyMember).OwnerType;
 #endif
             }
 
             return validType;
         }
-#endregion Properties
+        #endregion Properties
 
-#region Types
+        #region Types
 
 #if !PBTCOMPILER
         /// <summary>
@@ -2157,11 +2158,11 @@ namespace System.Windows.Markup
         {
             if (element == null)
             {
-                throw new ArgumentNullException( "element" );
+                throw new ArgumentNullException("element");
             }
             if (typeName == null)
             {
-                throw new ArgumentNullException( "typeName" );
+                throw new ArgumentNullException("typeName");
             }
 
             // Now map the prefix to an xml namespace uri
@@ -2170,7 +2171,7 @@ namespace System.Windows.Markup
             if (colonIndex > 0)
             {
                 prefix = typeName.Substring(0, colonIndex);
-                typeName = typeName.Substring(colonIndex+1, typeName.Length-colonIndex-1);
+                typeName = typeName.Substring(colonIndex + 1, typeName.Length - colonIndex - 1);
             }
 
             // First, get the xmlns dictionary to map prefixes to xml namespace uris
@@ -2235,7 +2236,7 @@ namespace System.Windows.Markup
 
             // Didn't find a match, so return null.
             return null;
-       }
+        }
 #endif
 
         // Given a qualified member Name, returns its declaring Type and its name as a string.
@@ -2396,12 +2397,12 @@ namespace System.Windows.Markup
         /// the Serializer information may not be present if a new TypeAndSerializer
         /// instance is created.  Be sure to check the IsSerializerTypeSet flag.
         /// </remarks>
-        internal TypeAndSerializer GetTypeOnly (
-                string    xmlNamespace,     // xml namespace for the type
-                string    localName)        // local name of the type without any '.'
+        internal TypeAndSerializer GetTypeOnly(
+                string xmlNamespace,     // xml namespace for the type
+                string localName)        // local name of the type without any '.'
         {
-            Debug.Assert(null != xmlNamespace,"null value passed for xmlNamespace");
-            Debug.Assert(null != localName,"null value passed for localName");
+            Debug.Assert(null != xmlNamespace, "null value passed for xmlNamespace");
+            Debug.Assert(null != localName, "null value passed for localName");
 
             // check if object is in the Hash.
             String hashString = $"{xmlNamespace}:{localName}";
@@ -2434,13 +2435,13 @@ namespace System.Windows.Markup
         /// associated with a property we will check for serializer attributes on the property first.
         /// If no matching attribute is found for the property we resort to search for the attribute on the given type.
         /// </remarks>
-        internal TypeAndSerializer GetTypeAndSerializer (
-                string    xmlNamespace,     // xml namespace for the type
-                string    localName,        // local name of the type without any '.'
-                object    dpOrPiorMi)       // property associated with the type
+        internal TypeAndSerializer GetTypeAndSerializer(
+                string xmlNamespace,     // xml namespace for the type
+                string localName,        // local name of the type without any '.'
+                object dpOrPiorMi)       // property associated with the type
         {
-            Debug.Assert(null != xmlNamespace,"null value passed for xmlNamespace");
-            Debug.Assert(null != localName,"null value passed for localName");
+            Debug.Assert(null != xmlNamespace, "null value passed for xmlNamespace");
+            Debug.Assert(null != localName, "null value passed for localName");
 
             // check if object is in the Hash.
             String hashString = $"{xmlNamespace}:{localName}";
@@ -2519,8 +2520,8 @@ namespace System.Windows.Markup
         /// is found.
         /// </summary>
         private TypeAndSerializer CreateTypeAndSerializer(
-                string    xmlNamespace,     // xml namespace for the type
-                string    localName)        // local name of the type without any '.'
+                string xmlNamespace,     // xml namespace for the type
+                string localName)        // local name of the type without any '.'
         {
             TypeAndSerializer typeAndSerializer = null;
             NamespaceMapEntry[] namespaceMaps = GetNamespaceMapEntries(xmlNamespace);
@@ -2557,8 +2558,10 @@ namespace System.Windows.Markup
                                 }
                             }
                             // Create new data structure to store information for the current type
-                            typeAndSerializer = new TypeAndSerializer();
-                            typeAndSerializer.ObjectType = objectType;
+                            typeAndSerializer = new TypeAndSerializer
+                            {
+                                ObjectType = objectType
+                            };
 
                             break;
                         }
@@ -2587,11 +2590,11 @@ namespace System.Windows.Markup
         /// <returns>Type of object that corresponds to localName</returns>
         private Type GetObjectType(
             NamespaceMapEntry namespaceMap,
-            string            localName,
-            bool              knownTypesOnly)
+            string localName,
+            bool knownTypesOnly)
         {
-            Debug.Assert(namespaceMap.ClrNamespace != null,"Null CLR Namespace");
-            Debug.Assert(localName != null,"Null localName");
+            Debug.Assert(namespaceMap.ClrNamespace != null, "Null CLR Namespace");
+            Debug.Assert(localName != null, "Null localName");
 
             Type type = null;
 
@@ -2607,7 +2610,7 @@ namespace System.Windows.Markup
             }
             else
             {
-               Assembly assembly ;
+                Assembly assembly;
 #if PBTCOMPILER
                 try
                 {
@@ -2637,7 +2640,7 @@ namespace System.Windows.Markup
                     {
                         if (CriticalExceptions.IsCriticalException(e))
                         {
-                           throw;
+                            throw;
                         }
                         else
                         {
@@ -2805,7 +2808,7 @@ namespace System.Windows.Markup
 
             if (isAllowedDelegateType)
             {
-                 d = Delegate.CreateDelegate(delegateType, target, handler);
+                d = Delegate.CreateDelegate(delegateType, target, handler);
             }
 
             return d;
@@ -2844,9 +2847,9 @@ namespace System.Windows.Markup
         /// type names
         /// </summary>
         internal Type GetTypeFromBaseString(
-            string        typeString,
+            string typeString,
             ParserContext context,
-            bool          throwOnError)
+            bool throwOnError)
         {
             string xmlns = string.Empty;
             Type keyObject = null;
@@ -2986,8 +2989,10 @@ namespace System.Windows.Markup
             typeInformationCacheData = _typeInformationCache[type] as TypeInformationCacheData;
             if (null == typeInformationCacheData)
             {
-                typeInformationCacheData = new TypeInformationCacheData(type.BaseType);
-                typeInformationCacheData.ClrNamespace = type.Namespace;
+                typeInformationCacheData = new TypeInformationCacheData(type.BaseType)
+                {
+                    ClrNamespace = type.Namespace
+                };
 
                 _typeInformationCache[type] = typeInformationCacheData;
             }
@@ -3028,12 +3033,12 @@ namespace System.Windows.Markup
             // The colon is what we look for to determine if there's a namespace prefix specifier.
             int nsIndex = nameString.IndexOf(':');
             string nsPrefix = string.Empty;
-            if( nsIndex != -1 )
+            if (nsIndex != -1)
             {
                 // Found a namespace prefix separator, so create replacement propertyName.
                 // String processing - split "foons" from "BarClass.BazProp"
-                nsPrefix = nameString.Substring (0, nsIndex);
-                nameString = nameString.Substring (nsIndex + 1);
+                nsPrefix = nameString.Substring(0, nsIndex);
+                nameString = nameString.Substring(nsIndex + 1);
             }
 
             // Find the namespace, even if its the default one
@@ -3055,9 +3060,9 @@ namespace System.Windows.Markup
         \***************************************************************************/
 
         internal static DependencyProperty ParsePropertyName(
-                ParserContext   parserContext,
-                string          propertyName,
-            ref Type            ownerType)
+                ParserContext parserContext,
+                string propertyName,
+            ref Type ownerType)
         {
             string namespaceURI = ProcessNameString(parserContext, ref propertyName);
 
@@ -3078,9 +3083,9 @@ namespace System.Windows.Markup
         \***************************************************************************/
 
         internal static RoutedEvent ParseEventName(
-            ParserContext   parserContext,
-            string          eventName,
-            Type            ownerType)
+            ParserContext parserContext,
+            string eventName,
+            Type ownerType)
         {
             string namespaceURI = ProcessNameString(parserContext, ref eventName);
 
@@ -3112,20 +3117,20 @@ namespace System.Windows.Markup
             else
             {
 #endif
-                o = Activator.CreateInstance(t,
-                                             BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.Public,
-                                             null,
-                                             null,
-                                             TypeConverterHelper.InvariantEnglishUS);
+            o = Activator.CreateInstance(t,
+                                         BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.Public,
+                                         null,
+                                         null,
+                                         TypeConverterHelper.InvariantEnglishUS);
 #if !PBTCOMPILER
             }
 #endif
             return o;
         }
 
-#endregion Types
+        #endregion Types
 
-#region Namespaces
+        #region Namespaces
 
         // Return true if the passed namespace is known, meaning that it maps
         // to a set of assemblies and clr namespaces
@@ -3268,8 +3273,8 @@ namespace System.Windows.Markup
                     for (int j = 0; j < namespaceAssemblyPair.Count; j++)
                     {
                         ClrNamespaceAssemblyPair mapping = namespaceAssemblyPair[j];
-                        string          usingAssemblyName = null;
-                        string          path =  AssemblyPathFor(mapping.AssemblyName);
+                        string usingAssemblyName = null;
+                        string path = AssemblyPathFor(mapping.AssemblyName);
 
                         // using could either have an assembly or not, if it does
                         // have an assembly just need to add this one entry, if
@@ -3279,11 +3284,11 @@ namespace System.Windows.Markup
 #if PBTCOMPILER
                             mapping.LocalAssembly ||
 #endif
-                            (!(String.IsNullOrEmpty(mapping.AssemblyName)) && !(String.IsNullOrEmpty(mapping.ClrNamespace))) )
+                            (!(String.IsNullOrEmpty(mapping.AssemblyName)) && !(String.IsNullOrEmpty(mapping.ClrNamespace))))
                         {
                             usingAssemblyName = mapping.AssemblyName;
                             NamespaceMapEntry nsMap = new NamespaceMapEntry(xmlNamespace,
-                                usingAssemblyName,mapping.ClrNamespace,path);
+                                usingAssemblyName, mapping.ClrNamespace, path);
 
 #if PBTCOMPILER
                             nsMap.LocalAssembly = mapping.LocalAssembly;
@@ -3332,12 +3337,12 @@ namespace System.Windows.Markup
                 }
 
                 // convert to a namespaceMap
-                namespaceMaps = (NamespaceMapEntry[]) namespaceMapArray.ToArray(typeof(NamespaceMapEntry));
+                namespaceMaps = (NamespaceMapEntry[])namespaceMapArray.ToArray(typeof(NamespaceMapEntry));
 
                 // add to hash even if not items so we don't do this work again.
                 if (null != namespaceMaps)
                 {
-                    _namespaceMapHashList.Add(xmlNamespace,namespaceMaps);
+                    _namespaceMapHashList.Add(xmlNamespace, namespaceMaps);
                 }
             }
 
@@ -3371,8 +3376,8 @@ namespace System.Windows.Markup
         // Get the xml namespace from the _piReverseTable that corresponds to the
         // passed type full name and assembly name
         internal string GetXmlNamespace(
-            string  clrNamespaceFullName,
-            string  assemblyFullName)
+            string clrNamespaceFullName,
+            string assemblyFullName)
         {
             string upperAssemblyName = assemblyFullName.ToUpper(
                                               TypeConverterHelper.InvariantEnglishUS);
@@ -3387,7 +3392,7 @@ namespace System.Windows.Markup
             }
             else
             {
-               return string.Empty;
+                return string.Empty;
             }
         }
 
@@ -3430,9 +3435,9 @@ namespace System.Windows.Markup
             return mappingArray;
         }
 
-#endregion Namespaces
+        #endregion Namespaces
 
-#region TypeConverters
+        #region TypeConverters
 
         // Returns the Type of the TypeConverter for the given type.
         // Returns null if not found.
@@ -3601,9 +3606,9 @@ namespace System.Windows.Markup
         }
 #endif
 
-#endregion TypeConverters
+        #endregion TypeConverters
 
-#region Resources
+        #region Resources
 
         /// <summary>
         /// Given a string, return a key to be used in a dictionary relating to this string.
@@ -3614,20 +3619,20 @@ namespace System.Windows.Markup
         /// </summary>
         internal object GetDictionaryKey(string keyString, ParserContext context)
         {
-             if (keyString.Length > 0 &&
-                 (Char.IsWhiteSpace(keyString[0]) ||
-                  Char.IsWhiteSpace(keyString[keyString.Length-1])))
-             {
+            if (keyString.Length > 0 &&
+                (Char.IsWhiteSpace(keyString[0]) ||
+                 Char.IsWhiteSpace(keyString[keyString.Length - 1])))
+            {
                 keyString = keyString.Trim();
-             }
-             return keyString;
+            }
+            return keyString;
         }
 
-#endregion Resources
+        #endregion Resources
 
 #if !PBTCOMPILER
 
-#region ConstructorInfos
+        #region ConstructorInfos
 
         /// <summary>
         /// Fetches the cached ConstructorInfos if there exists one or
@@ -3709,11 +3714,11 @@ namespace System.Windows.Markup
             #endregion Data
         }
 
-#endregion ConstructorInfos
+        #endregion ConstructorInfos
 
 #endif
 
-#region TrimSurroundingWhitespace
+        #region TrimSurroundingWhitespace
 
         /// <summary>
         /// Returns the Cached TrimSurroundingWhitespace for the associated type
@@ -3749,12 +3754,12 @@ namespace System.Windows.Markup
             {
 #if !PBTCOMPILER
                 TrimSurroundingWhitespaceAttribute[] trimAttribute =
-                    type.GetCustomAttributes(typeof(TrimSurroundingWhitespaceAttribute),true )
+                    type.GetCustomAttributes(typeof(TrimSurroundingWhitespaceAttribute), true)
                     as TrimSurroundingWhitespaceAttribute[];
 
                 if (trimAttribute.Length > 0)
                 {
-                    Debug.Assert(1 == trimAttribute.Length,"More than one TrimWhitespace Attribute");
+                    Debug.Assert(1 == trimAttribute.Length, "More than one TrimWhitespace Attribute");
                     return true;
                 }
 #else
@@ -3770,9 +3775,9 @@ namespace System.Windows.Markup
             return false;
         }
 
-#endregion TrimSurroundingWhitespace
+        #endregion TrimSurroundingWhitespace
 
-#region Exceptions
+        #region Exceptions
 
         //
         // ThrowException wrappers for 0-3 parameter SRIDs
@@ -3810,9 +3815,9 @@ namespace System.Windows.Markup
         }
 
 
-#endregion Exceptions
+        #endregion Exceptions
 
-#region Properties
+        #region Properties
 
         /// <summary>
         /// Hashtable where key is the xmlNamespace, and value is the
@@ -3910,7 +3915,7 @@ namespace System.Windows.Markup
             }
         }
 #endif
-#endregion Properties
+        #endregion Properties
 
         #region Data
 
@@ -4003,10 +4008,10 @@ namespace System.Windows.Markup
             /// Set a new PropertyAndType in the DependencyProperty information Hashtable.
             /// </summary>
             internal void SetPropertyAndType(
-                string          dpName,
-                PropertyInfo    dpInfo,
-                Type            ownerType,
-                bool            isInternal)
+                string dpName,
+                PropertyInfo dpInfo,
+                Type ownerType,
+                bool isInternal)
             {
                 Debug.Assert(_dpLookupHashtable != null,
                     "GetPropertyAndType must always be called before SetPropertyAndType");
@@ -4058,53 +4063,53 @@ namespace System.Windows.Markup
             }
 
             // Private data members
-            string        _clrNamespace;
-            Type          _baseType;
-            bool          _trimSurroundingWhitespace;
-            Hashtable     _dpLookupHashtable;  // Hashtable of PropertyAndType keyed by dp name
-            HybridDictionary     _propertyConverters = new HybridDictionary(); // Dictionary of TypeConverters keyed on dpOrPi
-            bool          _trimSurroundingWhitespaceSet;
+            string _clrNamespace;
+            Type _baseType;
+            bool _trimSurroundingWhitespace;
+            Hashtable _dpLookupHashtable;  // Hashtable of PropertyAndType keyed by dp name
+            HybridDictionary _propertyConverters = new HybridDictionary(); // Dictionary of TypeConverters keyed on dpOrPi
+            bool _trimSurroundingWhitespaceSet;
 #if !PBTCOMPILER
             TypeConverter _typeConverter;
 #endif
-            Type          _typeConverterType;
+            Type _typeConverterType;
         }
 
         // DP setter method, PropertyInfo and Type record held in _dpLookupHashtable
         internal class PropertyAndType
         {
-            public PropertyAndType (MethodInfo dpSetter,
+            public PropertyAndType(MethodInfo dpSetter,
                                     PropertyInfo dpInfo,
                                     bool setterSet,
                                     bool propInfoSet,
                                     Type ot,
                                     bool isInternal)
             {
-                Setter      = dpSetter;
-                PropInfo    = dpInfo;
-                OwnerType   = ot;
-                SetterSet   = setterSet;
+                Setter = dpSetter;
+                PropInfo = dpInfo;
+                OwnerType = ot;
+                SetterSet = setterSet;
                 PropInfoSet = propInfoSet;
-                IsInternal  = isInternal;
+                IsInternal = isInternal;
             }
 
             public PropertyInfo PropInfo;
-            public MethodInfo   Setter;
-            public Type         OwnerType;
-            public bool         PropInfoSet;
-            public bool         SetterSet;
-            public bool         IsInternal;
+            public MethodInfo Setter;
+            public Type OwnerType;
+            public bool PropInfoSet;
+            public bool SetterSet;
+            public bool IsInternal;
         }
 
         // Constants that identify special types of string values
         internal const string MarkupExtensionTypeString = "Type ";
         internal const string MarkupExtensionStaticString = "Static ";
-//        internal const string MarkupExtensionNullString = "Null";
+        //        internal const string MarkupExtensionNullString = "Null";
         internal const string MarkupExtensionDynamicResourceString = "DynamicResource ";
 
         // If the case or name of the assembly name changes in the Framework build,
         // then the following will have to change also.
-        internal const string PresentationFrameworkDllName  = "PresentationFramework";
+        internal const string PresentationFrameworkDllName = "PresentationFramework";
 
         // Namespace & classname of the generated helper class for accessing allowed internal types in PT.
         internal const string GeneratedNamespace = "XamlGeneratedNamespace";
@@ -4161,7 +4166,7 @@ namespace System.Windows.Markup
 
         // Hashtable where key is the xmlNamespace, and value is the
         // ClrNamespaceAssemblyPair structure containing clrNamespace and assembly
-        HybridDictionary _piTable =  new HybridDictionary();
+        HybridDictionary _piTable = new HybridDictionary();
 
         // Hashtable where key is the clrNamespace + "#" + assemblyName and the
         // value is the corresponding xmlNamespace.  This is used for fast lookups
@@ -4184,9 +4189,9 @@ namespace System.Windows.Markup
         // Cache of namespace and assemblies.
         private static XmlnsCache _xmlnsCache = null;
 
-#endregion Data
+        #endregion Data
 
-#endregion Internal
+        #endregion Internal
     }
 
     // Type of object and type of Serializer for that type.  If this type
@@ -4230,7 +4235,7 @@ namespace System.Windows.Markup
         /// <param name="xmlNamespace">The XML NamespaceURi</param>
         /// <param name="assemblyName">Assembly to use when resolving a Tag</param>
         /// <param name="clrNamespace">Namespace within the assembly</param>
-        public NamespaceMapEntry(string xmlNamespace,string assemblyName,string clrNamespace)
+        public NamespaceMapEntry(string xmlNamespace, string assemblyName, string clrNamespace)
         {
             if (xmlNamespace == null)
                 throw new ArgumentNullException("xmlNamespace");
@@ -4253,11 +4258,11 @@ namespace System.Windows.Markup
         /// <param name="assemblyName">Assembly to use when resolving a Tag</param>
         /// <param name="clrNamespace">Namespace within the assembly</param>
         /// <param name="assemblyPath">Path to use when loading assembly.  This may be null.</param>
-         internal NamespaceMapEntry(
-                string xmlNamespace,
-                string assemblyName,
-                string clrNamespace,
-                string assemblyPath) : this(xmlNamespace, assemblyName, clrNamespace)
+        internal NamespaceMapEntry(
+               string xmlNamespace,
+               string assemblyName,
+               string clrNamespace,
+               string assemblyPath) : this(xmlNamespace, assemblyName, clrNamespace)
         {
             _assemblyPath = assemblyPath;
         }
@@ -4376,18 +4381,18 @@ namespace System.Windows.Markup
             set { _isLocalAssembly = value; }
         }
 
-        bool     _isLocalAssembly;
+        bool _isLocalAssembly;
 #endif
 
-#region Data
+        #region Data
 
-        string   _xmlNamespace;
-        string   _assemblyName;
-        string   _assemblyPath;
+        string _xmlNamespace;
+        string _assemblyName;
+        string _assemblyPath;
         Assembly _assembly;
-        string   _clrNamespace;
+        string _clrNamespace;
 
-#endregion Data
+        #endregion Data
     }
 
     // This is a convenience holder for all the possible IDs that Xaml understands which could
@@ -4400,12 +4405,12 @@ namespace System.Windows.Markup
     }
 
 
-#region XmlParserDefaults Class
+    #region XmlParserDefaults Class
 
     // class for getting and setting mapping defaults.
     internal static class XmlParserDefaults
     {
-#region Methods
+        #region Methods
 
         /// <summary>
         ///  Instance of XamlTypeMapper to use if none is specified in the
@@ -4417,13 +4422,13 @@ namespace System.Windows.Markup
         {
             get
             {
-                return new XamlTypeMapper(GetDefaultAssemblyNames(),GetDefaultNamespaceMaps());
+                return new XamlTypeMapper(GetDefaultAssemblyNames(), GetDefaultNamespaceMaps());
             }
         }
 
-#endregion Methods
+        #endregion Methods
 
-#region Properties
+        #region Properties
 
         /// <summary>
         /// Returns an array of the DefaultAssemblyNames
@@ -4441,19 +4446,19 @@ namespace System.Windows.Markup
             return (NamespaceMapEntry[])_defaultNamespaceMapTable.Clone();
         }
 
-#endregion Properties
+        #endregion Properties
 
-#region Data
+        #region Data
 
         // array of our defaultAssemblies.
-        private static readonly string[] _defaultAssemblies = {"WindowsBase", "PresentationCore", "PresentationFramework"};
+        private static readonly string[] _defaultAssemblies = { "WindowsBase", "PresentationCore", "PresentationFramework" };
 
         // array of namespaceMaps the map an xmlns namespaceURI
         // to the assembly and urtNamespace to search in when resolving the xml
 
         private static readonly NamespaceMapEntry[] _defaultNamespaceMapTable = { };
 
-#endregion Data
+        #endregion Data
     }
-#endregion XmlParserDefaults Class
+    #endregion XmlParserDefaults Class
 }

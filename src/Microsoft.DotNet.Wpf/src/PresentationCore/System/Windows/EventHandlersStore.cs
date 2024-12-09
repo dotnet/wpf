@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,7 +17,7 @@ namespace System.Windows
     internal class EventHandlersStore
     {
         #region Construction
-        
+
         /// <summary>
         ///     Constructor for EventHandlersStore
         /// </summary>
@@ -33,7 +33,7 @@ namespace System.Windows
         {
             _entries = source._entries;
         }
-        
+
         #endregion Construction
 
         #region ExternalAPI
@@ -89,7 +89,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(handler);
 
             // Get the entry corresponding to the given key
-            Delegate existingDelegate = (Delegate) this[key];
+            Delegate existingDelegate = (Delegate)this[key];
             if (existingDelegate != null)
             {
                 existingDelegate = Delegate.Remove(existingDelegate, handler);
@@ -102,7 +102,7 @@ namespace System.Windows
                 else
                 {
                     _entries[key.GlobalIndex] = existingDelegate;
-                }            
+                }
             }
         }
 
@@ -127,9 +127,9 @@ namespace System.Windows
             // Return the handlers corresponding to the given key
             return (Delegate)this[key];
         }
-        
+
         #endregion ExternalAPI
-        
+
         #region Operations
 
         /// <summary>
@@ -147,9 +147,9 @@ namespace System.Windows
             {
                 throw new ArgumentException(SR.HandlerTypeIllegal);
             }
-            
+
             // Create a new RoutedEventHandler
-            RoutedEventHandlerInfo routedEventHandlerInfo = 
+            RoutedEventHandlerInfo routedEventHandlerInfo =
                 new RoutedEventHandlerInfo(handler, handledEventsToo);
 
             // Get the entry corresponding to the given RoutedEvent
@@ -181,7 +181,7 @@ namespace System.Windows
             {
                 throw new ArgumentException(SR.HandlerTypeIllegal);
             }
-            
+
             // Get the entry corresponding to the given RoutedEvent
             FrugalObjectList<RoutedEventHandlerInfo> handlers = (FrugalObjectList<RoutedEventHandlerInfo>)this[routedEvent];
             if (handlers != null && handlers.Count > 0)
@@ -244,7 +244,7 @@ namespace System.Windows
 
         // Returns Handlers for the given key
         internal FrugalObjectList<RoutedEventHandlerInfo> this[RoutedEvent key]
-        {            
+        {
             get
             {
                 Debug.Assert(key != null, "Search key cannot be null");
@@ -286,14 +286,14 @@ namespace System.Windows
                 return _entries.Count;
             }
         }
-        
+
         #endregion Operations
 
         #region Data
 
         // Map of EventPrivateKey/RoutedEvent to Delegate/FrugalObjectList<RoutedEventHandlerInfo> (respectively)
         private FrugalMap _entries;
-        
+
         #endregion Data
     }
 }

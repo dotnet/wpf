@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,9 +6,9 @@
 // Description: Span class - inline element grouping several other inline elements
 //
 
-using MS.Internal;                  // Invariant.Assert
-using System.Windows.Markup; // ContentProperty
 using System.ComponentModel;        // DesignerSerializationVisibility
+using System.Windows.Markup; // ContentProperty
+using MS.Internal;                  // Invariant.Assert
 
 namespace System.Windows.Documents
 {

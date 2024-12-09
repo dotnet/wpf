@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,7 +13,7 @@ using System.Windows.Automation.Peers;
 namespace MS.Internal.Automation
 {
     // struct containing information about an automation pattern
-    internal delegate object WrapObject( AutomationPeer peer, object iface, IntPtr hwnd );
+    internal delegate object WrapObject(AutomationPeer peer, object iface, IntPtr hwnd);
 
     internal class AutomationPatternInfo
     {
@@ -22,10 +22,10 @@ namespace MS.Internal.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        internal AutomationPatternInfo( 
+        internal AutomationPatternInfo(
             AutomationPattern id,
             WrapObject wcpWrapper)
         {
@@ -40,11 +40,11 @@ namespace MS.Internal.Automation
         //  Internal Properties
         //
         //------------------------------------------------------
- 
+
         #region Internal Properties
 
-        internal AutomationPattern         ID                    { get { return _id; } }
-        internal WrapObject                WcpWrapper            { get { return _wcpWrapper; } }
+        internal AutomationPattern ID { get { return _id; } }
+        internal WrapObject WcpWrapper { get { return _wcpWrapper; } }
 
 
         #endregion Internal Properties
@@ -54,7 +54,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPattern _id;

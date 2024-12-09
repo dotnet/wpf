@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,7 +19,7 @@ namespace MS.Internal.FontCache
         static DWriteFactory()
         {
             _factory = Text.TextInterface.Factory.Create(
-                Text.TextInterface.FactoryType.Shared, 
+                Text.TextInterface.FactoryType.Shared,
                 new FontSourceCollectionFactory(),
                 new FontSourceFactory());
 
@@ -41,7 +41,7 @@ namespace MS.Internal.FontCache
             {
                 if (_systemFontCollection == null)
                 {
-                    lock(_systemFontCollectionLock)
+                    lock (_systemFontCollectionLock)
                     {
                         if (_systemFontCollection == null)
                         {
@@ -89,7 +89,7 @@ namespace MS.Internal.FontCache
             // We follow a different approach here, as opposed to local files, where we only load the file
             // requested since file download and network latency cost becomes higher and loading all fonts 
             // in a network path might hurt perf instead.
-            return DWriteFactory.Instance.GetFontCollection(fontCollectionUri);            
+            return DWriteFactory.Instance.GetFontCollection(fontCollectionUri);
         }
 
         internal static Text.TextInterface.FontCollection GetFontCollectionFromFolder(Uri fontCollectionUri)

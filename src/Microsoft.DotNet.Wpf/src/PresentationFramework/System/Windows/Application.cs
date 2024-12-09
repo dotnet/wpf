@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,29 +24,26 @@
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.IO.Packaging;
+using System.Net;
 using System.Reflection;
 using System.Threading;
-
-using System.IO.Packaging;
-using System.Windows.Threading;
-using System.Windows.Navigation;
 using System.Windows.Interop;
-using System.Windows.Resources;
 using System.Windows.Markup;
-using System.Net;
-
+using System.Windows.Navigation;
+using System.Windows.Resources;
+using System.Windows.Threading;
+using Microsoft.Win32;
 using MS.Internal;
 using MS.Internal.AppModel;
-using MS.Internal.IO.Packaging;
 using MS.Internal.Interop;
+using MS.Internal.IO.Packaging;
+using MS.Internal.Telemetry.PresentationFramework;
 using MS.Internal.Utility;
 using MS.Utility;
 using MS.Win32;
-using Microsoft.Win32;
-using MS.Internal.Telemetry.PresentationFramework;
-using System.Diagnostics.CodeAnalysis;
-
 using PackUriHelper = System.IO.Packaging.PackUriHelper;
 
 namespace System.Windows
@@ -103,7 +100,7 @@ namespace System.Windows
 
             EventTrace.EasyTraceEvent(EventTrace.Keyword.KeywordGeneral | EventTrace.Keyword.KeywordPerf, EventTrace.Event.WClientAppCtor);
 
-            lock(_globalLock)
+            lock (_globalLock)
             {
                 // set the default statics
                 // DO NOT move this from the begining of this constructor
@@ -111,7 +108,7 @@ namespace System.Windows
                 {
                     Debug.Assert(_appInstance == null, "_appInstance must be null here.");
                     _appInstance = this;
-                    IsShuttingDown    = false;
+                    IsShuttingDown = false;
                     _appCreatedInThisAppDomain = true;
                 }
                 else
@@ -136,7 +133,7 @@ namespace System.Windows
             // application's Dispatcher.
             Dispatcher.BeginInvoke(
                 DispatcherPriority.Send,
-                (DispatcherOperationCallback) delegate(object unused)
+                (DispatcherOperationCallback)delegate (object unused)
                 {
                     // Shutdown may be started before the Dispatcher gets to this callback.
                     // This can happen in browser-hosted applications.
@@ -277,7 +274,7 @@ namespace System.Windows
             SetExitCode(exitCode);
             IsShuttingDown = true;
             Dispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(ShutdownCallback), null);
-}
+        }
 
         /// <summary>
         ///     Searches for a resource with the passed resourceKey and returns it
@@ -298,7 +295,7 @@ namespace System.Windows
                 resource = resources[resourceKey];
             }
 
-            if (resource == DependencyProperty.UnsetValue  || resource == null)
+            if (resource == DependencyProperty.UnsetValue || resource == null)
             {
                 // This is the top of the tree, try the system resource collection
                 // Safe from multithreading issues, SystemResources uses the SyncRoot lock to access the resource
@@ -331,7 +328,7 @@ namespace System.Windows
                 resource = resources[resourceKey];
             }
 
-            if (resource == DependencyProperty.UnsetValue  || resource == null)
+            if (resource == DependencyProperty.UnsetValue || resource == null)
             {
                 // This is the top of the tree, try the system resource collection
                 // Safe from multithreading issues, SystemResources uses the SyncRoot lock to access the resource
@@ -376,7 +373,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(resourceLocator);
 
             if (resourceLocator.OriginalString == null)
-                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
+                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "resourceLocator", "OriginalString"));
 
             if (resourceLocator.IsAbsoluteUri == true)
                 throw new ArgumentException(SR.AbsoluteUriNotAllowed);
@@ -390,9 +387,10 @@ namespace System.Windows
             //
             // Generate the ParserContext from packUri
             //
-            ParserContext pc = new ParserContext();
-
-            pc.BaseUri = currentUri;
+            ParserContext pc = new ParserContext
+            {
+                BaseUri = currentUri
+            };
 
             bool bCloseStream = true;  // Whether or not to close the stream after LoadBaml is done.
 
@@ -449,7 +447,7 @@ namespace System.Windows
 
             if (bamlStream == null || bamlStream.Assembly != component.GetType().Assembly)
             {
-                throw new Exception(SR.Format(SR.UriNotMatchWithRootType, component.GetType( ), resourceLocator));
+                throw new Exception(SR.Format(SR.UriNotMatchWithRootType, component.GetType(), resourceLocator));
             }
 
             XamlReader.LoadBaml(stream, pc, component, bCloseStream);
@@ -465,7 +463,7 @@ namespace System.Windows
             ArgumentNullException.ThrowIfNull(resourceLocator);
 
             if (resourceLocator.OriginalString == null)
-                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull,"resourceLocator", "OriginalString"));
+                throw new ArgumentException(SR.Format(SR.ArgumentPropertyMustNotBeNull, "resourceLocator", "OriginalString"));
 
             if (resourceLocator.IsAbsoluteUri == true)
                 throw new ArgumentException(SR.AbsoluteUriNotAllowed);
@@ -497,9 +495,11 @@ namespace System.Windows
             ContentType contentType = new ContentType(part.ContentType);
             Stream stream = part.GetSeekableStream();
 
-            ParserContext pc = new ParserContext();
-            pc.BaseUri = packUri;
-            pc.SkipJournaledProperties = bSkipJournaledProperties;
+            ParserContext pc = new ParserContext
+            {
+                BaseUri = packUri,
+                SkipJournaledProperties = bSkipJournaledProperties
+            };
 
             //
             // The stream must be a BAML or XAML stream.
@@ -722,7 +722,7 @@ namespace System.Windows
             }
 
             // When stream is not null, sooPart cannot be null either
-            Debug.Assert( ((stream != null) && (sooPart == null)) != true,  "When stream is not null, sooPart cannot be null either");
+            Debug.Assert(((stream != null) && (sooPart == null)) != true, "When stream is not null, sooPart cannot be null either");
 
             return (stream == null) ? null : new StreamResourceInfo(stream, sooPart.ContentType);
         }
@@ -855,7 +855,7 @@ namespace System.Windows
             set
             {
                 VerifyAccess();
-                if ( !IsValidShutdownMode(value) )
+                if (!IsValidShutdownMode(value))
                 {
                     throw new InvalidEnumArgumentException("value", (int)value, typeof(ShutdownMode));
                 }
@@ -882,7 +882,7 @@ namespace System.Windows
                 ResourceDictionary resources;
                 bool needToAddOwner = false;
 
-                lock(_globalLock)
+                lock (_globalLock)
                 {
                     if (_resources == null)
                     {
@@ -907,7 +907,7 @@ namespace System.Windows
                 bool invalidateResources = false;
                 ResourceDictionary oldValue;
 
-                lock(_globalLock)
+                lock (_globalLock)
                 {
                     oldValue = _resources;
                     _resources = value;
@@ -919,9 +919,9 @@ namespace System.Windows
                     oldValue.RemoveOwner(this);
                 }
 
-                if(_reloadFluentDictionary && !_resourcesInitialized)
+                if (_reloadFluentDictionary && !_resourcesInitialized)
                 {
-                    if(value != null && ThemeMode != ThemeMode.None)
+                    if (value != null && ThemeMode != ThemeMode.None)
                     {
                         value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
                     }
@@ -997,11 +997,11 @@ namespace System.Windows
                 {
                     throw new ArgumentException(string.Format("ThemeMode value {0} is invalid. Use None, System, Light or Dark", value));
                 }
-                
+
                 ThemeMode oldValue = _themeMode;
                 _themeMode = value;
 
-                if(!_resourcesInitialized)
+                if (!_resourcesInitialized)
                 {
 
                     ThemeManager.OnApplicationThemeChanged(oldValue, value);
@@ -1076,7 +1076,7 @@ namespace System.Windows
                 // change from before; Before we used to return null
                 // but that might throw a nullpointer exception if
                 // indexers are being used on the Hashtable object
-                lock(_globalLock)
+                lock (_globalLock)
                 {
                     if (_htProps == null)
                     {
@@ -1141,8 +1141,8 @@ namespace System.Windows
         /// </summary>
         public event StartupEventHandler Startup
         {
-            add{ VerifyAccess(); Events.AddHandler(EVENT_STARTUP, value); }
-            remove{ VerifyAccess(); Events.RemoveHandler(EVENT_STARTUP, value); }
+            add { VerifyAccess(); Events.AddHandler(EVENT_STARTUP, value); }
+            remove { VerifyAccess(); Events.RemoveHandler(EVENT_STARTUP, value); }
         }
 
         /// <summary>
@@ -1151,8 +1151,8 @@ namespace System.Windows
         /// </summary>
         public event ExitEventHandler Exit
         {
-            add{ VerifyAccess(); Events.AddHandler(EVENT_EXIT, value); }
-            remove{ VerifyAccess(); Events.RemoveHandler(EVENT_EXIT, value); }
+            add { VerifyAccess(); Events.AddHandler(EVENT_EXIT, value); }
+            remove { VerifyAccess(); Events.RemoveHandler(EVENT_EXIT, value); }
         }
 
         /// <summary>
@@ -1177,8 +1177,8 @@ namespace System.Windows
         /// </summary>
         public event SessionEndingCancelEventHandler SessionEnding
         {
-            add{ VerifyAccess(); Events.AddHandler(EVENT_SESSIONENDING, value); }
-            remove{ VerifyAccess(); Events.RemoveHandler(EVENT_SESSIONENDING, value); }
+            add { VerifyAccess(); Events.AddHandler(EVENT_SESSIONENDING, value); }
+            remove { VerifyAccess(); Events.RemoveHandler(EVENT_SESSIONENDING, value); }
         }
 
         /// <summary>
@@ -1194,7 +1194,7 @@ namespace System.Windows
             {
                 Dispatcher.Invoke(
                     DispatcherPriority.Send,
-                    (DispatcherOperationCallback) delegate(object unused)
+                    (DispatcherOperationCallback)delegate (object unused)
                     {
                         Dispatcher.UnhandledException += value;
                         return null;
@@ -1205,7 +1205,7 @@ namespace System.Windows
             {
                 Dispatcher.Invoke(
                     DispatcherPriority.Send,
-                    (DispatcherOperationCallback) delegate(object unused)
+                    (DispatcherOperationCallback)delegate (object unused)
                     {
                         Dispatcher.UnhandledException -= value;
                         return null;
@@ -1579,7 +1579,7 @@ namespace System.Windows
                     FireNavigating(e, true);
 
                     // Navigating can be cancelled.
-                    if (! e.Cancel)
+                    if (!e.Cancel)
                     {
                         object root = LoadComponent(StartupUri, false);
 
@@ -1597,8 +1597,10 @@ namespace System.Windows
                     // this support when we can do breaking change. We need to understand what scenarios require
                     // the Application StartupUri to load content other than xaml/baml in the app resource or content file.
                     // If there are no interesting ones, we should remove this support.
-                    NavService = new NavigationService(null);
-                    NavService.AllowWindowNavigation = true;
+                    NavService = new NavigationService(null)
+                    {
+                        AllowWindowNavigation = true
+                    };
                     NavService.PreBPReady += new BPReadyEventHandler(OnPreBPReady);
                     NavService.Navigate(StartupUri);
                 }
@@ -1616,7 +1618,7 @@ namespace System.Windows
             // in the function that calls us.
 
             // We use a while loop like this because closing a window will modify the windows list.
-            while(WindowsInternal.Count > 0)
+            while (WindowsInternal.Count > 0)
             {
                 if (!WindowsInternal[0].IsDisposed)
                 {
@@ -1731,7 +1733,7 @@ namespace System.Windows
                 {
                     Dispatcher.BeginInvoke(
                         DispatcherPriority.Send,
-                        (DispatcherOperationCallback) delegate(object obj)
+                        (DispatcherOperationCallback)delegate (object obj)
                         {
                             Window win = obj as Window;
                             win.Show();
@@ -1756,7 +1758,7 @@ namespace System.Windows
         internal void InvalidateResourceReferences(ResourcesChangeInfo info)
         {
             _resourcesInitialized = true;
-            
+
             // Sync needs to be performed only under the following conditions:
             //  - the resource change event raised is due to a collection change
             //      i.e. it is not a IsIndividualResourceAddOperation
@@ -1767,7 +1769,7 @@ namespace System.Windows
             {
                 ThemeManager.SyncApplicationThemeMode();
             }
-            
+
             // Invalidate ResourceReference properties on all the windows.
             // we Clone() the collection b/c if we don't then some other thread can be
             // modifying the collection while we iterate over it
@@ -1852,9 +1854,9 @@ namespace System.Windows
         {
             get
             {
-                lock(_globalLock)
+                lock (_globalLock)
                 {
-                    if(_appWindowList == null)
+                    if (_appWindowList == null)
                     {
                         _appWindowList = new WindowCollection();
                     }
@@ -1863,7 +1865,7 @@ namespace System.Windows
             }
             private set
             {
-                lock(_globalLock)
+                lock (_globalLock)
                 {
                     _appWindowList = value;
                 }
@@ -1874,7 +1876,7 @@ namespace System.Windows
         {
             get
             {
-                lock(_globalLock)
+                lock (_globalLock)
                 {
                     if (_nonAppWindowList == null)
                     {
@@ -1886,7 +1888,7 @@ namespace System.Windows
 
             private set
             {
-                lock(_globalLock)
+                lock (_globalLock)
                 {
                     _nonAppWindowList = value;
                 }
@@ -1929,7 +1931,7 @@ namespace System.Windows
             set
             {
                 VerifyAccess();
-                _serviceProvider = value ;
+                _serviceProvider = value;
             }
         }
 
@@ -1968,7 +1970,7 @@ namespace System.Windows
             }
             set
             {
-                lock(_globalLock)
+                lock (_globalLock)
                 {
                     _isShuttingDown = value;
                 }
@@ -2130,7 +2132,7 @@ namespace System.Windows
                 // (HwndWrapper keeps a WeakReference to the hook)
 
                 _appFilterHook = new HwndWrapperHook(AppFilterMessage);
-                HwndWrapperHook[] wrapperHooks = {_appFilterHook};
+                HwndWrapperHook[] wrapperHooks = { _appFilterHook };
 
                 _parkingHwnd = new HwndWrapper(
                                 0,
@@ -2154,7 +2156,7 @@ namespace System.Windows
                 case WindowMessage.WM_ACTIVATEAPP:
                     handled = WmActivateApp(NativeMethods.IntPtrToInt32(wParam));
                     break;
-                case WindowMessage.WM_QUERYENDSESSION :
+                case WindowMessage.WM_QUERYENDSESSION:
                     handled = WmQueryEndSession(lParam, ref retInt);
                     break;
                 default:
@@ -2167,7 +2169,7 @@ namespace System.Windows
         private bool WmActivateApp(Int32 wParam)
         {
             int temp = wParam;
-            bool isActivated = (temp == 0? false : true);
+            bool isActivated = (temp == 0 ? false : true);
 
             // Event handler exception continuality: if exception occurs in Activate/Deactivate event handlers, our state would not
             // be corrupted because no internal state are affected by Activate/Deactivate. Please check Event handler exception continuality
@@ -2191,11 +2193,11 @@ namespace System.Windows
             // Event handler exception continuality: if exception occurs in SessionEnding event handlers, our state would not
             // be corrupted because no internal state are affected by SessionEnding. Please check Event handler exception continuality
             // if a state depending on this event is added.
-            SessionEndingCancelEventArgs secEventArgs = new SessionEndingCancelEventArgs( (reason & NativeMethods.ENDSESSION_LOGOFF) != 0? ReasonSessionEnding.Logoff : ReasonSessionEnding.Shutdown );
-            OnSessionEnding( secEventArgs );
+            SessionEndingCancelEventArgs secEventArgs = new SessionEndingCancelEventArgs((reason & NativeMethods.ENDSESSION_LOGOFF) != 0 ? ReasonSessionEnding.Logoff : ReasonSessionEnding.Shutdown);
+            OnSessionEnding(secEventArgs);
 
             // shut down the app if not cancelled
-            if ( secEventArgs.Cancel == false )
+            if (secEventArgs.Cancel == false)
             {
                 Shutdown();
                 // return true to the wnd proc to signal that we can terminate properly
@@ -2215,7 +2217,7 @@ namespace System.Windows
 
         private void InvalidateResourceReferenceOnWindowCollection(WindowCollection wc, ResourcesChangeInfo info)
         {
-            bool hasImplicitStyles  = info.IsResourceAddOperation && HasImplicitStylesInResources;
+            bool hasImplicitStyles = info.IsResourceAddOperation && HasImplicitStylesInResources;
 
             for (int i = 0; i < wc.Count; i++)
             {
@@ -2235,7 +2237,7 @@ namespace System.Windows
                 {
                     wc[i].Dispatcher.BeginInvoke(
                         DispatcherPriority.Send,
-                        (DispatcherOperationCallback) delegate(object obj)
+                        (DispatcherOperationCallback)delegate (object obj)
                         {
                             object[] args = obj as object[];
 
@@ -2248,7 +2250,7 @@ namespace System.Windows
                             TreeWalkHelper.InvalidateOnResourcesChange((FrameworkElement)args[0], null, (ResourcesChangeInfo)args[1]);
                             return null;
                         },
-                        new object[] {wc[i], info}
+                        new object[] { wc[i], info }
                         );
                 }
             }
@@ -2487,46 +2489,46 @@ namespace System.Windows
         //------------------------------------------------------
 
         #region Private Fields
-        static private object                           _globalLock;
-        static private bool                             _isShuttingDown;
-        static private bool                             _appCreatedInThisAppDomain;
-        static private Application                      _appInstance;
-        static private Assembly                         _resourceAssembly;
+        static private object _globalLock;
+        static private bool _isShuttingDown;
+        static private bool _appCreatedInThisAppDomain;
+        static private Application _appInstance;
+        static private Assembly _resourceAssembly;
 
         // Keep LoadBamlSyncInfo stack so that the Outer LoadBaml and Inner LoadBaml( ) for the same
         // Uri share the related information.
         [ThreadStatic]
         private static Stack<NestedBamlLoadInfo> s_NestedBamlLoadInfo = null;
 
-        private Uri                         _startupUri;
-        private Uri                         _applicationMarkupBaseUri;
-        private HybridDictionary            _htProps;
-        private WindowCollection            _appWindowList;
-        private WindowCollection            _nonAppWindowList;
-        private Window                      _mainWindow;
-        private ResourceDictionary          _resources;
+        private Uri _startupUri;
+        private Uri _applicationMarkupBaseUri;
+        private HybridDictionary _htProps;
+        private WindowCollection _appWindowList;
+        private WindowCollection _nonAppWindowList;
+        private Window _mainWindow;
+        private ResourceDictionary _resources;
 
-        private bool                        _ownDispatcherStarted;
-        private NavigationService           _navService;
+        private bool _ownDispatcherStarted;
+        private NavigationService _navService;
 
-        private ThemeMode                   _themeMode = ThemeMode.None;
-        private bool                        _resourcesInitialized = false;
-        private bool                        _reloadFluentDictionary = false;
+        private ThemeMode _themeMode = ThemeMode.None;
+        private bool _resourcesInitialized = false;
+        private bool _reloadFluentDictionary = false;
 
-        private MimeType                    _appMimeType;
-        private IServiceProvider            _serviceProvider;
+        private MimeType _appMimeType;
+        private IServiceProvider _serviceProvider;
 
-        private bool                        _appIsShutdown;
-        private int                         _exitCode;
+        private bool _appIsShutdown;
+        private int _exitCode;
 
-        private ShutdownMode                _shutdownMode = ShutdownMode.OnLastWindowClose;
+        private ShutdownMode _shutdownMode = ShutdownMode.OnLastWindowClose;
 
-        private HwndWrapper                 _parkingHwnd;
+        private HwndWrapper _parkingHwnd;
 
-        private HwndWrapperHook             _appFilterHook;
+        private HwndWrapperHook _appFilterHook;
 
-        private EventHandlerList            _events;
-        private bool                        _hasImplicitStylesInResources;
+        private EventHandlerList _events;
+        private bool _hasImplicitStylesInResources;
 
         private static readonly object EVENT_STARTUP = new object();
         private static readonly object EVENT_EXIT = new object();
@@ -2536,9 +2538,9 @@ namespace System.Windows
                                                                             SafeNativeMethods.PlaySoundFlags.SND_NODEFAULT |
                                                                             SafeNativeMethods.PlaySoundFlags.SND_ASYNC |
                                                                             SafeNativeMethods.PlaySoundFlags.SND_NOSTOP;
-        private const string SYSTEM_SOUNDS_REGISTRY_BASE                = @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\";
-        private const string SOUND_NAVIGATING                           = "Navigating";
-        private const string SOUND_COMPLETE_NAVIGATION                  = "ActivatingDocument";
+        private const string SYSTEM_SOUNDS_REGISTRY_BASE = @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\";
+        private const string SOUND_NAVIGATING = "Navigating";
+        private const string SOUND_COMPLETE_NAVIGATION = "ActivatingDocument";
 
         #endregion Private Fields
 
@@ -2593,7 +2595,7 @@ namespace System.Windows
         //
         internal Uri BamlUri
         {
-            get { return _BamlUri;  }
+            get { return _BamlUri; }
             set { _BamlUri = value; }   // Code could reset the OuterBamlUri for performance optimization.
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,5 +33,5 @@ namespace MS.Internal.FontCache
         internal const int GetCacheNameMessage = 0;    //Indicates a request to get the server cache name
         internal const int SendMissReportMessage = 1;  //Indicates that a miss report is being sent
         internal const int ServerShutdownMessage = 2;  //Indicates a request for the server to shutdown.
-}
+    }
 }

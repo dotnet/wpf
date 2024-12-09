@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ namespace System.Windows
             _startIndex = startIndex;
             _source = source;
         }
-        
+
         #endregion Construction
 
         #region Operations
@@ -71,11 +71,11 @@ namespace System.Windows
         {
             return base.GetHashCode();
         }
-        
+
         /// <summary>
         ///     Equals operator overload
         /// </summary>
-        public static bool operator== (SourceItem sourceItem1, SourceItem sourceItem2)
+        public static bool operator ==(SourceItem sourceItem1, SourceItem sourceItem2)
         {
             return sourceItem1.Equals(sourceItem2);
         }
@@ -83,11 +83,11 @@ namespace System.Windows
         /// <summary>
         ///     NotEquals operator overload
         /// </summary>
-        public static bool operator!= (SourceItem sourceItem1, SourceItem sourceItem2)
+        public static bool operator !=(SourceItem sourceItem1, SourceItem sourceItem2)
         {
             return !sourceItem1.Equals(sourceItem2);
         }
-        
+
         #endregion Operations
 
         #region Data

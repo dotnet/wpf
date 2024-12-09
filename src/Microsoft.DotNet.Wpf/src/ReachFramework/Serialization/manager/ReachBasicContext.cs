@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,12 +19,12 @@ namespace System.Windows.Xps.Serialization
         /// <summary>
         /// Instantiates a BasicContext
         /// </summary>
-        public 
+        public
         BasicContext(
-            string name, 
+            string name,
             string prefix)
         {
-            this._name   = name;
+            this._name = name;
             this._prefix = prefix;
         }
 
@@ -33,26 +33,26 @@ namespace System.Windows.Xps.Serialization
         /// null Data. Data can be initialized
         /// later.
         /// </summary>
-        public 
+        public
         BasicContext()
         {
             Initialize();
         }
 
         #endregion Constructor
-        
+
         #region Public Properties
-        
+
         /// <summary>
         /// Query/Set the Name of the context
         /// </summary>
         public
-        string 
+        string
         Name
         {
-            get 
-            { 
-                return _name; 
+            get
+            {
+                return _name;
             }
 
             set
@@ -60,24 +60,24 @@ namespace System.Windows.Xps.Serialization
                 _name = value;
             }
         }
-        
+
         /// <summary>
         /// Query/Set the prefix of the context
         /// </summary>
-        public 
-        string 
+        public
+        string
         Prefix
         {
-            get 
-            { 
-                return _prefix; 
+            get
+            {
+                return _prefix;
             }
 
             set
             {
                 _prefix = value;
             }
-        }   
+        }
 
         #endregion Public Properties
 
@@ -88,10 +88,10 @@ namespace System.Windows.Xps.Serialization
         /// Initialize the internal Properties
         /// </summary>
         public
-        void 
+        void
         Initialize()
         {
-            _name   = null;
+            _name = null;
             _prefix = null;
         }
 
@@ -99,20 +99,20 @@ namespace System.Windows.Xps.Serialization
         /// Clears the internal properties
         /// </summary>
         public
-        virtual 
-        void 
+        virtual
+        void
         Clear()
         {
-            _name   = null;
+            _name = null;
             _prefix = null;
         }
 
         #endregion Public Methods
-        
+
         #region Private Data
-        
+
         private string _name;
-        private string _prefix;        
+        private string _prefix;
 
         #endregion Private Data
     };

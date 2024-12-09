@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections;
+using System.Collections.Concurrent;
+using System.Reflection;
 using System.Xaml;
 using System.Xaml.Schema;
-using System.Collections;
-using System.Reflection;
-using System.Collections.Concurrent;
 
 namespace System.Windows.Baml2006
 {
@@ -18,7 +18,7 @@ namespace System.Windows.Baml2006
         private enum BoolTypeBits
         {
             BamlScenerio = 0x0001,
-            V3Rules     = 0x0002
+            V3Rules = 0x0002
         }
 
         const int ConcurrencyLevel = 1;
@@ -493,14 +493,14 @@ namespace System.Windows.Baml2006
                     return XamlCollectionKind.Collection;
                 }
                 // Several types in V3 implemented IAddChildInternal which allowed them to be collections
-                if (typeof(System.Windows.Documents.DocumentReferenceCollection).IsAssignableFrom(UnderlyingType) || 
+                if (typeof(System.Windows.Documents.DocumentReferenceCollection).IsAssignableFrom(UnderlyingType) ||
                     typeof(System.Windows.Documents.PageContentCollection).IsAssignableFrom(UnderlyingType))
                 {
                     return XamlCollectionKind.Collection;
-                } 
+                }
                 // Doing a type comparison against XmlNamespaceMappingCollection will load System.Xml. We get around
                 // this by only doing the comparison if it's an ICollection<XmlNamespaceMapping>
-                if (typeof(ICollection<System.Windows.Data.XmlNamespaceMapping>).IsAssignableFrom(UnderlyingType) 
+                if (typeof(ICollection<System.Windows.Data.XmlNamespaceMapping>).IsAssignableFrom(UnderlyingType)
                     && IsXmlNamespaceMappingCollection)
                 {
                     return XamlCollectionKind.Collection;
@@ -531,7 +531,7 @@ namespace System.Windows.Baml2006
             else
             {
                 return base.LookupMember(name, true);
-            }            
+            }
         }
 
         internal static bool GetFlag(ref byte bitField, byte typeBit)

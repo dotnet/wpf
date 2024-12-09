@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -51,12 +51,12 @@ namespace System.Windows
         /// <summary>
         /// Overloaded [] operator to access the WindowCollection list
         /// </summary>
-        public Window this[int index]        
+        public Window this[int index]
         {
             get
-            {    
+            {
                 return _list[index] as Window;
-            }       
+            }
         }
         #endregion Operator overload
 
@@ -91,7 +91,7 @@ namespace System.Windows
         {
             _list.CopyTo(array, index);
         }
-        
+
         /// <summary>
         /// CopyTo
         /// </summary>
@@ -112,7 +112,7 @@ namespace System.Windows
                 return _list.Count;
             }
         }
-        
+
         /// <summary>
         /// IsSynchronized
         /// </summary>
@@ -155,7 +155,7 @@ namespace System.Windows
             }
             return clone;
         }
-        
+
         internal void Remove(Window win)
         {
             lock (_list.SyncRoot)
@@ -172,7 +172,7 @@ namespace System.Windows
             }
         }
 
-        internal int Add (Window win)
+        internal int Add(Window win)
         {
             lock (_list.SyncRoot)
             {

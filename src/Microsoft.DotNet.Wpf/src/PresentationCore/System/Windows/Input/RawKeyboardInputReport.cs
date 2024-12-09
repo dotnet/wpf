@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,7 +15,7 @@ namespace System.Windows.Input
     /// </remarks>
     internal class RawKeyboardInputReport : InputReport
     {
-         /// <summary>
+        /// <summary>
         ///     Constructs ad instance of the RawKeyboardInputReport class.
         /// </summary>
         /// <param name="inputSource">
@@ -48,12 +48,12 @@ namespace System.Windows.Input
         public RawKeyboardInputReport(
             PresentationSource inputSource,
             InputMode mode,
-            int timestamp, 
-            RawKeyboardActions actions, 
-            int scanCode, 
+            int timestamp,
+            RawKeyboardActions actions,
+            int scanCode,
             bool isExtendedKey,
             bool isSystemKey,
-            int virtualKey, 
+            int virtualKey,
             IntPtr extraInformation) : base(inputSource, InputType.Keyboard, mode, timestamp)
         {
             if (!IsValidRawKeyboardActions(actions))
@@ -70,27 +70,27 @@ namespace System.Windows.Input
         /// <summary>
         ///     Read-only access to the set of actions that were reported.
         /// </summary>
-        public RawKeyboardActions Actions {get {return _actions;}}
+        public RawKeyboardActions Actions { get { return _actions; } }
 
         /// <summary>
         ///     Read-only access to the scan code that was reported.
         /// </summary>
-        public int ScanCode {get {return _scanCode;}}
+        public int ScanCode { get { return _scanCode; } }
 
         /// <summary>
         ///     Read-only access to the flag of an extended key.
         /// </summary>
-        public bool IsExtendedKey {get {return _isExtendedKey;}}
+        public bool IsExtendedKey { get { return _isExtendedKey; } }
 
         /// <summary>
         ///     Read-only access to the flag of a system key.
         /// </summary>
-        public bool IsSystemKey {get {return _isSystemKey;}}
+        public bool IsSystemKey { get { return _isSystemKey; } }
 
         /// <summary>
         ///     Read-only access to the virtual key that was reported.
         /// </summary>
-        public int VirtualKey {get {return _virtualKey;}}
+        public int VirtualKey { get { return _virtualKey; } }
 
         /// <summary>
         ///     Read-only access to the extra information was provided along
@@ -110,7 +110,7 @@ namespace System.Windows.Input
                     return true;
                 }
             }
-	    return false;
+            return false;
         }
 
         private RawKeyboardActions _actions;
@@ -119,6 +119,6 @@ namespace System.Windows.Input
         private bool _isSystemKey;
         private int _virtualKey;
         private readonly IntPtr _extraInformation;
-    }    
+    }
 }
 

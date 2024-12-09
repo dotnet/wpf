@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,16 +38,16 @@ namespace System.Windows.Markup
     /// </summary>
     internal class BamlRecordWriter
     {
-#region Constructor
+        #region Constructor
 
         /// <summary>
         /// Constructor that allows defer loading feature to be enabled, even
         /// for non-compile cases.
         /// </summary>
         public BamlRecordWriter(
-            Stream        stream,
+            Stream stream,
             ParserContext parserContext,
-            bool          deferLoadingSupport)
+            bool deferLoadingSupport)
         {
             _bamlStream = stream;
             _xamlTypeMapper = parserContext.XamlTypeMapper;
@@ -59,28 +59,28 @@ namespace System.Windows.Markup
             _lineNumber = -1;
             _linePosition = -1;
 
-            _bamlBinaryWriter = new BamlBinaryWriter(stream,new System.Text.UTF8Encoding());
+            _bamlBinaryWriter = new BamlBinaryWriter(stream, new System.Text.UTF8Encoding());
             _bamlRecordManager = new BamlRecordManager();
         }
 
-#endregion Constructor
+        #endregion Constructor
 
-#region Methods
+        #region Methods
 
 
         // Called by BamlRecordWriter records to persist a record.
         internal virtual void WriteBamlRecord(
             BamlRecord bamlRecord,
-            int        lineNumber,
-            int        linePosition)
+            int lineNumber,
+            int linePosition)
         {
             try
             {
                 bamlRecord.Write(BinaryWriter);
 
-                if(DebugBamlStream)
+                if (DebugBamlStream)
                 {
-                    if(BamlRecordHelper.DoesRecordTypeHaveDebugExtension(bamlRecord.RecordType))
+                    if (BamlRecordHelper.DoesRecordTypeHaveDebugExtension(bamlRecord.RecordType))
                     {
                         WriteDebugExtensionRecord(lineNumber, linePosition);
                     }
@@ -110,7 +110,7 @@ namespace System.Windows.Markup
             // only update if we are allowed to update the parent nodes
             if (UpdateParentNodes)
             {
-                 // update the parseMode in the StartRecord.
+                // update the parseMode in the StartRecord.
                 if (xamlParseMode == XamlParseMode.Asynchronous)
                 {
                     Debug.Assert(null != DocumentStartRecord);
@@ -140,9 +140,9 @@ namespace System.Windows.Markup
             }
         }
 
-#region Record Writing
+        #region Record Writing
 
-#region Debug Record Writing
+        #region Debug Record Writing
 
         public bool DebugBamlStream
         {
@@ -156,7 +156,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if(_bamlLineAndPositionRecord == null)
+                if (_bamlLineAndPositionRecord == null)
                 {
                     _bamlLineAndPositionRecord = new BamlLineAndPositionRecord();
                 }
@@ -168,7 +168,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                if(_bamlLinePositionRecord == null)
+                if (_bamlLinePositionRecord == null)
                 {
                     _bamlLinePositionRecord = new BamlLinePositionRecord();
                 }
@@ -180,7 +180,7 @@ namespace System.Windows.Markup
         {
             // if the Linenumber has changed then the Position had also.
             // So write out a record with both Line and Position.
-            if(lineNumber != _lineNumber)
+            if (lineNumber != _lineNumber)
             {
                 BamlLineAndPositionRecord rec = LineAndPositionRecord;
                 _lineNumber = lineNumber;
@@ -193,7 +193,7 @@ namespace System.Windows.Markup
             }
             // if the Line has NOT changed but the position has then
             // write a smaller record with just the position.
-            else if(linePosition != _linePosition)
+            else if (linePosition != _linePosition)
             {
                 _linePosition = linePosition;
                 BamlLinePositionRecord rec = LinePositionRecord;
@@ -204,7 +204,7 @@ namespace System.Windows.Markup
             // don't write a record.
         }
 
-#endregion Debug Record Writing
+        #endregion Debug Record Writing
 
         // called to start writing the BAML
         internal void WriteDocumentStart(XamlDocumentStartNode xamlDocumentNode)
@@ -213,7 +213,7 @@ namespace System.Windows.Markup
             BamlVersionHeader bamlVersion = new BamlVersionHeader();
             bamlVersion.WriteVersion(BinaryWriter);
 
-            DocumentStartRecord = (BamlDocumentStartRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.DocumentStart);
+            DocumentStartRecord = (BamlDocumentStartRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.DocumentStart);
             DocumentStartRecord.DebugBaml = DebugBamlStream;
 
             // go ahead and write initial values to the Stream, will back fill.
@@ -229,7 +229,7 @@ namespace System.Windows.Markup
         {
             // write end of document record
             BamlDocumentEndRecord endDocument =
-                (BamlDocumentEndRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.DocumentEnd);
+                (BamlDocumentEndRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.DocumentEnd);
 
             WriteBamlRecord(endDocument, xamlDocumentEndNode.LineNumber,
                             xamlDocumentEndNode.LinePosition);
@@ -254,7 +254,7 @@ namespace System.Windows.Markup
         {
             // initialize the element and add to the stack
             BamlElementStartRecord bamlElement =
-                   (BamlElementStartRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.ElementStart);
+                   (BamlElementStartRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.ElementStart);
 
             // If we do not already have a type record for the type of this element,
             // then add a new TypeInfo record to the map table.
@@ -318,7 +318,7 @@ namespace System.Windows.Markup
                                             xamlElementNode.LineNumber,
                                             xamlElementNode.LinePosition);
 
-                    if(_deferComplexPropertyDepth > 0)
+                    if (_deferComplexPropertyDepth > 0)
                     {
                         // If we are in the middle of a complex property specified for a defered
                         // type, we need to append to the _deferElement array.
@@ -349,7 +349,7 @@ namespace System.Windows.Markup
                             KnownTypes.Types[(int)KnownElements.StaticExtension].IsAssignableFrom(xamlElementNode.ElementType) ||
                             KnownTypes.Types[(int)KnownElements.TypeExtension].IsAssignableFrom(xamlElementNode.ElementType))
                         {
-                            ((KeyDeferRecord)_deferKeys[_deferKeys.Count-1]).RecordList.Add(deferRecord);
+                            ((KeyDeferRecord)_deferKeys[_deferKeys.Count - 1]).RecordList.Add(deferRecord);
                         }
                         else
                         {
@@ -385,13 +385,13 @@ namespace System.Windows.Markup
 
                 BamlRecordManager.ReleaseWriteRecord(bamlElement);
             }
-          }
+        }
 
         // The end of an element has been reached, so write out the end indication
         internal void WriteElementEnd(XamlElementEndNode xamlElementEndNode)
         {
-             BamlElementEndRecord bamlElementEnd =
-                (BamlElementEndRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.ElementEnd);
+            BamlElementEndRecord bamlElementEnd =
+               (BamlElementEndRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.ElementEnd);
 
             // Check if we're queuing up deferable content.  If so and we're at the
             // end tag for that content, now is the time to actually write everything
@@ -434,7 +434,7 @@ namespace System.Windows.Markup
             }
 
             // we've come to the end of the element.
-         }
+        }
 
         // The end of the start tag has been reached.  For compile cases, check
         // if we are accumulating a deferable block of records.
@@ -451,7 +451,7 @@ namespace System.Windows.Markup
         {
             // initialize the element and add to the stack
             BamlLiteralContentRecord bamlLiteralContent =
-                (BamlLiteralContentRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.LiteralContent);
+                (BamlLiteralContentRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.LiteralContent);
             bamlLiteralContent.Value = xamlLiteralContentNode.Content;
 
             WriteAndReleaseRecord(bamlLiteralContent, xamlLiteralContentNode);
@@ -492,7 +492,7 @@ namespace System.Windows.Markup
             if (_deferLoadingSupport &&
                 _deferElementDepth == 2)
             {
-                KeyDeferRecord keyRecord = (KeyDeferRecord)(_deferKeys[_deferKeys.Count-1]);
+                KeyDeferRecord keyRecord = (KeyDeferRecord)(_deferKeys[_deferKeys.Count - 1]);
 
                 TransferOldSharedData(keyRecord.Record as IBamlDictionaryKey, bamlDefRecord as IBamlDictionaryKey);
                 keyRecord.Record = bamlDefRecord;
@@ -566,12 +566,12 @@ namespace System.Windows.Markup
                 // Note that if we get to here the assumption is that the value of the Name
                 // attribute is *NOT* a MarkupExtension.  A MarkupExtension would cause
                 // WriteKeyElementStart being called.
-                KeyDeferRecord keyRecord = (KeyDeferRecord)(_deferKeys[_deferKeys.Count-1]);
+                KeyDeferRecord keyRecord = (KeyDeferRecord)(_deferKeys[_deferKeys.Count - 1]);
                 BamlDefAttributeKeyStringRecord defKeyRecord = keyRecord.Record as BamlDefAttributeKeyStringRecord;
                 if (defKeyRecord == null)
                 {
                     defKeyRecord =
-                        (BamlDefAttributeKeyStringRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.DefAttributeKeyString);
+                        (BamlDefAttributeKeyStringRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.DefAttributeKeyString);
                     TransferOldSharedData(keyRecord.Record as IBamlDictionaryKey, defKeyRecord as IBamlDictionaryKey);
                     keyRecord.Record = defKeyRecord;
                 }
@@ -601,13 +601,13 @@ namespace System.Windows.Markup
                 Debug.Assert(!InStaticResourceSection, "We do not support x:Shared within a StaticResource Section");
 
                 // NOTE:  This does not properly handle MarkupExtensions....
-                KeyDeferRecord keyRecord = (KeyDeferRecord)(_deferKeys[_deferKeys.Count-1]);
+                KeyDeferRecord keyRecord = (KeyDeferRecord)(_deferKeys[_deferKeys.Count - 1]);
 
                 IBamlDictionaryKey defKeyRecord = FindBamlDictionaryKey(keyRecord);
                 if (defKeyRecord == null)
                 {
                     BamlDefAttributeKeyStringRecord defStringKeyRecord =
-                        (BamlDefAttributeKeyStringRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.DefAttributeKeyString);
+                        (BamlDefAttributeKeyStringRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.DefAttributeKeyString);
                     keyRecord.Record = defStringKeyRecord;
                     defKeyRecord = (IBamlDictionaryKey)defStringKeyRecord;
                 }
@@ -630,10 +630,10 @@ namespace System.Windows.Markup
             }
 
             BamlDefAttributeRecord defRecord =
-                (BamlDefAttributeRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.DefAttribute);
+                (BamlDefAttributeRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.DefAttribute);
 
-            defRecord.Value  = xamlDefNode.Value;
-            defRecord.Name   = xamlDefNode.Name;
+            defRecord.Value = xamlDefNode.Value;
+            defRecord.Name = xamlDefNode.Name;
             defRecord.AttributeUsage = xamlDefNode.AttributeUsage;
             defRecord.NameId = stringId;
 
@@ -654,7 +654,7 @@ namespace System.Windows.Markup
             }
 
             BamlPresentationOptionsAttributeRecord attributeRecord =
-                (BamlPresentationOptionsAttributeRecord) BamlRecordManager.GetWriteRecord(
+                (BamlPresentationOptionsAttributeRecord)BamlRecordManager.GetWriteRecord(
                                         BamlRecordType.PresentationOptionsAttribute);
 
             attributeRecord.Value = xamlPresentationOptionsNode.Value;
@@ -670,10 +670,10 @@ namespace System.Windows.Markup
         internal void WriteNamespacePrefix(XamlXmlnsPropertyNode xamlXmlnsPropertyNode)
         {
             BamlXmlnsPropertyRecord xmlnsRecord =
-                (BamlXmlnsPropertyRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.XmlnsProperty);
+                (BamlXmlnsPropertyRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.XmlnsProperty);
 
             xmlnsRecord.Prefix = xamlXmlnsPropertyNode.Prefix;
-            xmlnsRecord.XmlNamespace  = xamlXmlnsPropertyNode.XmlNamespace;
+            xmlnsRecord.XmlNamespace = xamlXmlnsPropertyNode.XmlNamespace;
 
 #if PBTCOMPILER
 
@@ -730,14 +730,14 @@ namespace System.Windows.Markup
         internal void WritePIMapping(XamlPIMappingNode xamlPIMappingNode)
         {
             BamlPIMappingRecord piMappingRecord =
-                (BamlPIMappingRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.PIMapping);
+                (BamlPIMappingRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.PIMapping);
 
             BamlAssemblyInfoRecord bamlAssemblyInfoRecord = MapTable.AddAssemblyMap(BinaryWriter,
                                                                   xamlPIMappingNode.AssemblyName);
 
             piMappingRecord.XmlNamespace = xamlPIMappingNode.XmlNamespace;
             piMappingRecord.ClrNamespace = xamlPIMappingNode.ClrNamespace;
-            piMappingRecord.AssemblyId   = bamlAssemblyInfoRecord.AssemblyId;
+            piMappingRecord.AssemblyId = bamlAssemblyInfoRecord.AssemblyId;
 
             WriteBamlRecord(piMappingRecord, xamlPIMappingNode.LineNumber,
                             xamlPIMappingNode.LinePosition);
@@ -751,7 +751,7 @@ namespace System.Windows.Markup
         {
             // review same as property + flag, combine code
             BamlPropertyComplexStartRecord bamlComplexProperty =
-                (BamlPropertyComplexStartRecord) BamlRecordManager.GetWriteRecord(
+                (BamlPropertyComplexStartRecord)BamlRecordManager.GetWriteRecord(
                                                         BamlRecordType.PropertyComplexStart);
 
             bamlComplexProperty.AttributeId =
@@ -771,7 +771,7 @@ namespace System.Windows.Markup
             XamlPropertyComplexEndNode xamlPropertyComplexEnd)
         {
             BamlPropertyComplexEndRecord endPropertyRecord =
-                (BamlPropertyComplexEndRecord) BamlRecordManager.GetWriteRecord(
+                (BamlPropertyComplexEndRecord)BamlRecordManager.GetWriteRecord(
                                                          BamlRecordType.PropertyComplexEnd);
 
             WriteAndReleaseRecord(endPropertyRecord, xamlPropertyComplexEnd);
@@ -800,7 +800,7 @@ namespace System.Windows.Markup
 
             // initialize the element and add to the stack
             BamlKeyElementStartRecord bamlElement =
-                   (BamlKeyElementStartRecord) BamlRecordManager.GetWriteRecord(
+                   (BamlKeyElementStartRecord)BamlRecordManager.GetWriteRecord(
                                                BamlRecordType.KeyElementStart);
 
             // If we do not already have a type record for the type of this element,
@@ -835,7 +835,7 @@ namespace System.Windows.Markup
                 _deferElementDepth++;
                 _deferKeyCollecting = true;
 
-                KeyDeferRecord keyRecord = (KeyDeferRecord)(_deferKeys[_deferKeys.Count-1]);
+                KeyDeferRecord keyRecord = (KeyDeferRecord)(_deferKeys[_deferKeys.Count - 1]);
                 keyRecord.RecordList = new ArrayList(5);
 
                 Debug.Assert(keyRecord.RecordList.Count == 0, "Should have empty record list");
@@ -867,7 +867,7 @@ namespace System.Windows.Markup
             Debug.Assert(!InStaticResourceSection, "We do not support x:Key within a StaticResource Section");
 
             BamlKeyElementEndRecord endRecord =
-                (BamlKeyElementEndRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.KeyElementEnd);
+                (BamlKeyElementEndRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.KeyElementEnd);
 
             WriteAndReleaseRecord(endRecord, xamlKeyElementEnd);
 
@@ -920,7 +920,7 @@ namespace System.Windows.Markup
         {
             // Create a new baml record
             BamlConstructorParametersStartRecord startRecord =
-                (BamlConstructorParametersStartRecord) BamlRecordManager.GetWriteRecord(
+                (BamlConstructorParametersStartRecord)BamlRecordManager.GetWriteRecord(
                      BamlRecordType.ConstructorParametersStart);
 
             WriteAndReleaseRecord(startRecord, xamlConstructorParametersStartNode);
@@ -934,7 +934,7 @@ namespace System.Windows.Markup
         {
             // Create a new baml record
             BamlConstructorParametersEndRecord startRecord =
-                (BamlConstructorParametersEndRecord) BamlRecordManager.GetWriteRecord(
+                (BamlConstructorParametersEndRecord)BamlRecordManager.GetWriteRecord(
                      BamlRecordType.ConstructorParametersEnd);
 
             WriteAndReleaseRecord(startRecord, xamlConstructorParametersEndNode);
@@ -977,7 +977,7 @@ namespace System.Windows.Markup
             if (xamlProperty.AssemblyName != string.Empty && xamlProperty.TypeFullName != string.Empty)
             {
                 short converterOrSerializerTypeId;
-                Type  converterOrSerializerType;
+                Type converterOrSerializerType;
                 bool isCustomSerializer = MapTable.GetCustomSerializerOrConverter(
                               BinaryWriter,
                               xamlProperty.ValueDeclaringType,
@@ -1167,15 +1167,15 @@ namespace System.Windows.Markup
                     xamlPropertyNode.LinePosition));
 
                 // Add the current StaticResource to the list on the current key record
-                KeyDeferRecord keyDeferRecord = ((KeyDeferRecord)_deferKeys[_deferKeys.Count-1]);
+                KeyDeferRecord keyDeferRecord = ((KeyDeferRecord)_deferKeys[_deferKeys.Count - 1]);
                 keyDeferRecord.StaticResourceRecordList.Add(_staticResourceRecordList);
 
                 // Write a PropertyWithStaticResourceId to the values collection
                 BamlPropertyWithStaticResourceIdRecord bamlPropertyWithStaticResourceId =
-                    (BamlPropertyWithStaticResourceIdRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.PropertyWithStaticResourceId);
+                    (BamlPropertyWithStaticResourceIdRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.PropertyWithStaticResourceId);
 
                 bamlPropertyWithStaticResourceId.AttributeId = attributeId;
-                bamlPropertyWithStaticResourceId.StaticResourceId = (short)(keyDeferRecord.StaticResourceRecordList.Count-1);
+                bamlPropertyWithStaticResourceId.StaticResourceId = (short)(keyDeferRecord.StaticResourceRecordList.Count - 1);
 
                 _deferValues.Add(new ValueDeferRecord(
                     bamlPropertyWithStaticResourceId,
@@ -1273,7 +1273,7 @@ namespace System.Windows.Markup
         {
             // initialize the element and add to the stack
             BamlPropertyArrayStartRecord bamlPropertyArrayStart =
-                (BamlPropertyArrayStartRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.PropertyArrayStart);
+                (BamlPropertyArrayStartRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.PropertyArrayStart);
 
             bamlPropertyArrayStart.AttributeId =
                 MapTable.AddAttributeInfoMap(BinaryWriter,
@@ -1293,7 +1293,7 @@ namespace System.Windows.Markup
         {
             // initialize the element and add to the stack
             BamlPropertyArrayEndRecord bamlPropertyArrayEndRecord =
-                (BamlPropertyArrayEndRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.PropertyArrayEnd);
+                (BamlPropertyArrayEndRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.PropertyArrayEnd);
 
             WriteAndReleaseRecord(bamlPropertyArrayEndRecord, xamlPropertyArrayEndNode);
         }
@@ -1304,7 +1304,7 @@ namespace System.Windows.Markup
         {
             // initialize the element and add to the stack
             BamlPropertyIListStartRecord bamlPropertyIListStart =
-                (BamlPropertyIListStartRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.PropertyIListStart);
+                (BamlPropertyIListStartRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.PropertyIListStart);
 
             bamlPropertyIListStart.AttributeId =
                 MapTable.AddAttributeInfoMap(BinaryWriter,
@@ -1324,7 +1324,7 @@ namespace System.Windows.Markup
         {
             // initialize the element and add to the stack
             BamlPropertyIListEndRecord bamlPropertyIListEndRecord =
-                (BamlPropertyIListEndRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.PropertyIListEnd);
+                (BamlPropertyIListEndRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.PropertyIListEnd);
 
             WriteAndReleaseRecord(bamlPropertyIListEndRecord, xamlPropertyIListEndNode);
         }
@@ -1335,7 +1335,7 @@ namespace System.Windows.Markup
         {
             // initialize the element and add to the stack
             BamlPropertyIDictionaryStartRecord bamlPropertyIDictionaryStart =
-                (BamlPropertyIDictionaryStartRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.PropertyIDictionaryStart);
+                (BamlPropertyIDictionaryStartRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.PropertyIDictionaryStart);
 
             bamlPropertyIDictionaryStart.AttributeId =
                 MapTable.AddAttributeInfoMap(BinaryWriter,
@@ -1347,7 +1347,7 @@ namespace System.Windows.Markup
                                              BamlAttributeUsage.Default);
 
             WriteAndReleaseRecord(bamlPropertyIDictionaryStart, xamlPropertyIDictionaryStartNode);
-       }
+        }
 
         // Write the end of a complex property that implements IDictionary
         internal virtual void WritePropertyIDictionaryEnd(
@@ -1355,7 +1355,7 @@ namespace System.Windows.Markup
         {
             // initialize the element and add to the stack
             BamlPropertyIDictionaryEndRecord bamlPropertyIDictionaryEndRecord =
-                (BamlPropertyIDictionaryEndRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.PropertyIDictionaryEnd);
+                (BamlPropertyIDictionaryEndRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.PropertyIDictionaryEnd);
 
             WriteAndReleaseRecord(bamlPropertyIDictionaryEndRecord, xamlPropertyIDictionaryEndNode);
         }
@@ -1366,7 +1366,7 @@ namespace System.Windows.Markup
         internal void WriteRoutedEvent(XamlRoutedEventNode xamlRoutedEventNode)
         {
             BamlRoutedEventRecord bamlEvent =
-                (BamlRoutedEventRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.RoutedEvent);
+                (BamlRoutedEventRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.RoutedEvent);
 
             BamlAttributeInfoRecord bamlAttributeInfoRecord;
             MapTable.AddAttributeInfoMap(BinaryWriter,
@@ -1396,11 +1396,11 @@ namespace System.Windows.Markup
             {
                 if (!InStaticResourceSection && !InDynamicResourceSection)
                 {
-                    bamlText = (BamlTextRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.Text);
+                    bamlText = (BamlTextRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.Text);
                 }
                 else
                 {
-                    bamlText = (BamlTextWithIdRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.TextWithId);
+                    bamlText = (BamlTextWithIdRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.TextWithId);
 
                     // Store the string value in the string table, since these records
                     // are often used as the key for a [Static/Dynamic]Resource.
@@ -1439,19 +1439,19 @@ namespace System.Windows.Markup
                 ((BamlTextWithConverterRecord)bamlText).ConverterTypeId = typeId;
             }
 
-             bamlText.Value = xamlTextNode.Text;
+            bamlText.Value = xamlTextNode.Text;
 
-             // up the parent node count, wait to update until endElement.
+            // up the parent node count, wait to update until endElement.
 
-             // add text to the Tree.
+            // add text to the Tree.
             WriteAndReleaseRecord(bamlText, xamlTextNode);
         }
 
         // Helper to write out the baml record, with line numbers obtained from
         // the associated xaml node.
         private void WriteAndReleaseRecord(
-            BamlRecord    bamlRecord,
-            XamlNode      xamlNode)
+            BamlRecord bamlRecord,
+            XamlNode xamlNode)
         {
             int lineNumber = xamlNode != null ? xamlNode.LineNumber : 0;
             int linePosition = xamlNode != null ? xamlNode.LinePosition : 0;
@@ -1475,23 +1475,23 @@ namespace System.Windows.Markup
                         // If we are starting/ending a complex property, and we are at the same
                         // depth as the defered element, then track a mode so that we write to
                         // the _deferElement array instead of the key/value arrays.
-                        if(_deferElementDepth == 1 && xamlNode is XamlPropertyComplexStartNode)
+                        if (_deferElementDepth == 1 && xamlNode is XamlPropertyComplexStartNode)
                         {
                             _deferComplexPropertyDepth++;
                         }
 
-                        if(_deferComplexPropertyDepth > 0)
+                        if (_deferComplexPropertyDepth > 0)
                         {
                             _deferElement.Add(deferRec);
 
-                            if(_deferElementDepth == 1 && xamlNode is XamlPropertyComplexEndNode)
+                            if (_deferElementDepth == 1 && xamlNode is XamlPropertyComplexEndNode)
                             {
                                 _deferComplexPropertyDepth--;
                             }
                         }
                         else if (_deferKeyCollecting)
                         {
-                            ((KeyDeferRecord)_deferKeys[_deferKeys.Count-1]).RecordList.Add(deferRec);
+                            ((KeyDeferRecord)_deferKeys[_deferKeys.Count - 1]).RecordList.Add(deferRec);
                         }
                         else
                         {
@@ -1525,7 +1525,7 @@ namespace System.Windows.Markup
         private void WriteDeferableContent(XamlElementEndNode xamlNode)
         {
             // 1) Write Start record and all property information for the start tag
-            for (int h = 0; h<_deferElement.Count; h++)
+            for (int h = 0; h < _deferElement.Count; h++)
             {
                 ValueDeferRecord deferRecord = (ValueDeferRecord)_deferElement[h];
                 WriteBamlRecord(deferRecord.Record,
@@ -1544,7 +1544,7 @@ namespace System.Windows.Markup
             Int64 endOfStart = BinaryWriter.Seek(0, SeekOrigin.Current);
 
             // 2) Write key collection
-            for (int i = 0; i<_deferKeys.Count; i++)
+            for (int i = 0; i < _deferKeys.Count; i++)
             {
                 KeyDeferRecord keyRecord = (KeyDeferRecord)_deferKeys[i];
                 // If we don't have a Record stored here, then we didn't find a key
@@ -1588,11 +1588,11 @@ namespace System.Windows.Markup
                 if (staticResourceRecordList.Count > 0)
                 {
                     // Iterate through each one of the StaticResources in the list
-                    for (int j=0; j<staticResourceRecordList.Count; j++)
+                    for (int j = 0; j < staticResourceRecordList.Count; j++)
                     {
                         // Iterate through each one of the BamlRecords for a StaticResource
                         List<ValueDeferRecord> srRecords = staticResourceRecordList[j];
-                        for (int k=0; k<srRecords.Count; k++)
+                        for (int k = 0; k < srRecords.Count; k++)
                         {
                             ValueDeferRecord srRecord = srRecords[k];
                             WriteBamlRecord(srRecord.Record,
@@ -1608,7 +1608,7 @@ namespace System.Windows.Markup
             //    start of the Values section, not the deferable block as a whole.
             Int64 endOfKeys = BinaryWriter.Seek(0, SeekOrigin.Current);
             int keyIndex = 0;
-            for (int j = 0; j<_deferValues.Count; j++)
+            for (int j = 0; j < _deferValues.Count; j++)
             {
                 ValueDeferRecord deferRecord = (ValueDeferRecord)_deferValues[j];
                 if (deferRecord.UpdateOffset)
@@ -1629,7 +1629,7 @@ namespace System.Windows.Markup
                     Debug.Assert(keyRecord != null, "Unknown key record type in defer load dictionary");
                     if (keyRecord != null)
                     {
-                        keyRecord.UpdateValuePosition((Int32)(position-endOfKeys), BinaryWriter);
+                        keyRecord.UpdateValuePosition((Int32)(position - endOfKeys), BinaryWriter);
                     }
                 }
                 WriteBamlRecord(deferRecord.Record,
@@ -1679,40 +1679,40 @@ namespace System.Windows.Markup
             valueDeferRecord.Record = bamlStaticResourceStart;
 
             // Replace last record in the list with the StaticResource end record
-            valueDeferRecord = _staticResourceRecordList[_staticResourceRecordList.Count-1];
+            valueDeferRecord = _staticResourceRecordList[_staticResourceRecordList.Count - 1];
             Debug.Assert(valueDeferRecord.Record != null && valueDeferRecord.Record.RecordType == BamlRecordType.ElementEnd,
                 "The last record in the list must be the ElementEnd record for the StaticResourceExtension tag");
 
             BamlStaticResourceEndRecord bamlStaticResourceEnd =
-                (BamlStaticResourceEndRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.StaticResourceEnd);
+                (BamlStaticResourceEndRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.StaticResourceEnd);
             valueDeferRecord.Record = bamlStaticResourceEnd;
 
             // Add the current StaticResource to the list on the current key record
-            KeyDeferRecord keyDeferRecord = ((KeyDeferRecord)_deferKeys[_deferKeys.Count-1]);
+            KeyDeferRecord keyDeferRecord = ((KeyDeferRecord)_deferKeys[_deferKeys.Count - 1]);
             keyDeferRecord.StaticResourceRecordList.Add(_staticResourceRecordList);
 
             // Write a StaticResourceId to the values collection
             BamlStaticResourceIdRecord bamlStaticResourceId =
-                (BamlStaticResourceIdRecord) BamlRecordManager.GetWriteRecord(BamlRecordType.StaticResourceId);
-            bamlStaticResourceId.StaticResourceId = (short)(keyDeferRecord.StaticResourceRecordList.Count-1);
+                (BamlStaticResourceIdRecord)BamlRecordManager.GetWriteRecord(BamlRecordType.StaticResourceId);
+            bamlStaticResourceId.StaticResourceId = (short)(keyDeferRecord.StaticResourceRecordList.Count - 1);
 
             _deferValues.Add(new ValueDeferRecord(bamlStaticResourceId, lineNumber, linePosition));
         }
 
-#endregion Record Writing
+        #endregion Record Writing
 
-#endregion Methods
+        #endregion Methods
 
-#region Private Classes
+        #region Private Classes
 
         // DeferRecord contains information about a BamlRecord or list of
         // BamlRecords that has not been written to the baml stream yet
         // because we are processing a deferable content element.
         private class DeferRecord
         {
-            internal DeferRecord (
-                int        lineNumber,
-                int        linePosition)
+            internal DeferRecord(
+                int lineNumber,
+                int linePosition)
             {
                 _lineNumber = lineNumber;
                 _linePosition = linePosition;
@@ -1730,16 +1730,16 @@ namespace System.Windows.Markup
                 set { _linePosition = value; }
             }
 
-            private int        _lineNumber;
-            private int        _linePosition;
+            private int _lineNumber;
+            private int _linePosition;
         }
 
         private class ValueDeferRecord : DeferRecord
         {
-            internal ValueDeferRecord (
+            internal ValueDeferRecord(
                 BamlRecord record,
-                int        lineNumber,
-                int        linePosition) : base(lineNumber, linePosition)
+                int lineNumber,
+                int linePosition) : base(lineNumber, linePosition)
             {
                 _record = record;
                 _updateOffset = false;
@@ -1757,15 +1757,15 @@ namespace System.Windows.Markup
                 set { _updateOffset = value; }
             }
 
-            private bool       _updateOffset;
+            private bool _updateOffset;
             private BamlRecord _record;
         }
 
         private class KeyDeferRecord : DeferRecord
         {
-            internal KeyDeferRecord (
-                int        lineNumber,
-                int        linePosition) : base(lineNumber, linePosition)
+            internal KeyDeferRecord(
+                int lineNumber,
+                int linePosition) : base(lineNumber, linePosition)
             {
             }
 
@@ -1799,9 +1799,9 @@ namespace System.Windows.Markup
             private List<List<ValueDeferRecord>> _staticResourceRecordList;
         }
 
-#endregion Private Classes
+        #endregion Private Classes
 
-#region Properties
+        #region Properties
 
 #if PBTCOMPILER
 
@@ -1828,12 +1828,12 @@ namespace System.Windows.Markup
 
         internal BamlMapTable MapTable
         {
-            get { return _bamlMapTable ; }
+            get { return _bamlMapTable; }
         }
 
         internal ParserContext ParserContext
         {
-            get { return _parserContext ; }
+            get { return _parserContext; }
         }
 
         internal virtual BamlRecordManager BamlRecordManager
@@ -1844,7 +1844,7 @@ namespace System.Windows.Markup
         BamlDocumentStartRecord DocumentStartRecord
         {
             get { return _startDocumentRecord; }
-            set {  _startDocumentRecord = value; }
+            set { _startDocumentRecord = value; }
         }
 
         private bool CollectingValues
@@ -1888,59 +1888,59 @@ namespace System.Windows.Markup
             get { return _dynamicResourceElementDepth > 0; }
         }
 
-#endregion Properties
+        #endregion Properties
 
 
-#region Data
-        XamlTypeMapper          _xamlTypeMapper;
-        Stream                  _bamlStream;
-        BamlBinaryWriter        _bamlBinaryWriter;
+        #region Data
+        XamlTypeMapper _xamlTypeMapper;
+        Stream _bamlStream;
+        BamlBinaryWriter _bamlBinaryWriter;
 
         BamlDocumentStartRecord _startDocumentRecord;
-        ParserContext           _parserContext;
-        BamlMapTable            _bamlMapTable;
-        BamlRecordManager       _bamlRecordManager;
-        ITypeDescriptorContext  _typeConvertContext;
+        ParserContext _parserContext;
+        BamlMapTable _bamlMapTable;
+        BamlRecordManager _bamlRecordManager;
+        ITypeDescriptorContext _typeConvertContext;
 
-        bool                    _deferLoadingSupport;  // true if defer load of ResourceDictionary
-                                                       // is enabled.
-        int                     _deferElementDepth = 0;
+        bool _deferLoadingSupport;  // true if defer load of ResourceDictionary
+                                    // is enabled.
+        int _deferElementDepth = 0;
 
         // True if we are processing a defered content element and we have reached the end
         // end of the start record for the element.  At this point all properties for that
         // element have been collected.
-        bool                    _deferEndOfStartReached = false;
+        bool _deferEndOfStartReached = false;
 
         // How deep are we in a complex property of a defered type?
-        int                    _deferComplexPropertyDepth = 0;
+        int _deferComplexPropertyDepth = 0;
 
         // True if we are processing a defered content block and we are collecting all the
         // baml records that make up a single key for the keys section of defered content
-        bool                    _deferKeyCollecting = false;
+        bool _deferKeyCollecting = false;
 
         // List of keys for a defered content section.  Each item is a KeyDeferRecord
-        ArrayList               _deferKeys;
+        ArrayList _deferKeys;
 
         // List of values for a defered content section.  Each item is a ValueDeferRecord
-        ArrayList               _deferValues;       // Values in the dictionary
+        ArrayList _deferValues;       // Values in the dictionary
 
         // List of properties set on an element that is the root of a defered content
         // section.  Each item is a ValueDeferRecord.
-        ArrayList               _deferElement;      // Start tag and properties
-                                                    // of deferable content
+        ArrayList _deferElement;      // Start tag and properties
+                                      // of deferable content
 
-        short                   _staticResourceElementDepth = 0; // Used to identify the StaticResource EndRecord
+        short _staticResourceElementDepth = 0; // Used to identify the StaticResource EndRecord
 
-        short                   _dynamicResourceElementDepth = 0; // Used to identify the DynamicResource EndRecord
+        short _dynamicResourceElementDepth = 0; // Used to identify the DynamicResource EndRecord
 
-        List<ValueDeferRecord>  _staticResourceRecordList;  // List of BamlRecords between the start and end of a StaticResource definition (both ends inclusive).
+        List<ValueDeferRecord> _staticResourceRecordList;  // List of BamlRecords between the start and end of a StaticResource definition (both ends inclusive).
 
-        bool                    _debugBamlStream;
-        int                     _lineNumber;
-        int                     _linePosition;
-        BamlLineAndPositionRecord  _bamlLineAndPositionRecord;
-        BamlLinePositionRecord     _bamlLinePositionRecord;
+        bool _debugBamlStream;
+        int _lineNumber;
+        int _linePosition;
+        BamlLineAndPositionRecord _bamlLineAndPositionRecord;
+        BamlLinePositionRecord _bamlLinePositionRecord;
 
-#endregion Data
+        #endregion Data
     }
 }

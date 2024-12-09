@@ -13,13 +13,11 @@ using System;
 using System.IO;
 using System.Resources;
 using System.Runtime.InteropServices;
-
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-
-using MS.Utility;
 using MS.Internal;
 using MS.Internal.Tasks;
+using MS.Utility;
 
 // Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
 // We first need to disable warnings about unknown message numbers and unknown pragmas.
@@ -69,7 +67,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             public override bool CanWrite { get { return false; } }
 
-            public override void Flush() {}
+            public override void Flush() { }
 
             public override long Length
             {
@@ -116,7 +114,7 @@ namespace Microsoft.Build.Tasks.Windows
                 }
             }
         }
-        
+
         //------------------------------------------------------
         //
         //  Constructors
@@ -125,7 +123,7 @@ namespace Microsoft.Build.Tasks.Windows
 
         #region Constructors
 
-        public ResourcesGenerator ( )
+        public ResourcesGenerator()
                  : base(SR.SharedResourceManager)
         {
             // set the source directory
@@ -153,9 +151,9 @@ namespace Microsoft.Build.Tasks.Windows
 
             if (ValidResourceFiles(ResourceFiles) == false)
             {
-               // ValidResourceFiles has already showed up error message.
-               // Just stop here.
-               return false;
+                // ValidResourceFiles has already showed up error message.
+                // Just stop here.
+                return false;
             }
 
             if (OutputResourcesFile != null && OutputResourcesFile.Length > 1)
@@ -246,7 +244,7 @@ namespace Microsoft.Build.Tasks.Windows
         /// Image or baml files which will be embedded into Resources File
         ///</summary>
         [Required]
-        public ITaskItem [] ResourceFiles { get; set; }
+        public ITaskItem[] ResourceFiles { get; set; }
 
         ///<summary>
         /// The directory where the generated resources file lives.
@@ -274,7 +272,7 @@ namespace Microsoft.Build.Tasks.Windows
         ///</summary>
         [Output]
         [Required]
-        public ITaskItem [] OutputResourcesFile { get; set; }
+        public ITaskItem[] OutputResourcesFile { get; set; }
 
         #endregion Public Properties
 
@@ -295,7 +293,7 @@ namespace Microsoft.Build.Tasks.Windows
         {
             bool bValid = true;
 
-            foreach (ITaskItem  inputFile  in inputFiles)
+            foreach (ITaskItem inputFile in inputFiles)
             {
                 string strFileName;
 
@@ -320,10 +318,10 @@ namespace Microsoft.Build.Tasks.Windows
         private string GetResourceIdForResourceFile(ITaskItem resFile)
         {
             bool requestExtensionChange = true;
-            
+
             return GetResourceIdForResourceFile(
-                resFile.ItemSpec, 
-                resFile.GetMetadata(SharedStrings.Link), 
+                resFile.ItemSpec,
+                resFile.GetMetadata(SharedStrings.Link),
                 resFile.GetMetadata(SharedStrings.LogicalName),
                 OutputPath,
                 SourceDir,
@@ -331,12 +329,12 @@ namespace Microsoft.Build.Tasks.Windows
         }
 
         internal static string GetResourceIdForResourceFile(
-            string filePath, 
-            string linkAlias, 
+            string filePath,
+            string linkAlias,
             string logicalName,
             string outputPath,
             string sourceDir,
-            bool   requestExtensionChange)
+            bool requestExtensionChange)
         {
             string relPath;
 
@@ -363,7 +361,7 @@ namespace Microsoft.Build.Tasks.Windows
                 linkAlias = ReplaceXAMLWithBAML(filePath, linkAlias, requestExtensionChange);
                 filePath = !string.IsNullOrEmpty(linkAlias) ? linkAlias : filePath;
                 string fullFilePath = Path.GetFullPath(filePath);
-                
+
                 //
                 // If the resFile, or it's perceived path, is relative to the StagingDir
                 // (OutputPath here) take the relative path as resource id.
@@ -371,14 +369,14 @@ namespace Microsoft.Build.Tasks.Windows
                 // to the project directory, take this relative path as resource id.
                 // Otherwise, just take the file name as resource id.
                 //
-                
+
                 relPath = TaskHelper.GetRootRelativePath(outputPath, fullFilePath);
-                
+
                 if (string.IsNullOrEmpty(relPath))
                 {
                     relPath = TaskHelper.GetRootRelativePath(sourceDir, fullFilePath);
                 }
-                
+
                 if (string.IsNullOrEmpty(relPath))
                 {
                     relPath = Path.GetFileName(fullFilePath);
@@ -397,8 +395,8 @@ namespace Microsoft.Build.Tasks.Windows
 
         private static string ReplaceXAMLWithBAML(string sourceFilePath, string path, bool requestExtensionChange)
         {
-            if (requestExtensionChange && 
-                Path.GetExtension(sourceFilePath).Equals(SharedStrings.BamlExtension) && 
+            if (requestExtensionChange &&
+                Path.GetExtension(sourceFilePath).Equals(SharedStrings.BamlExtension) &&
                 Path.GetExtension(path).Equals(SharedStrings.XamlExtension))
             {
                 // Replace the path extension to baml only if the source file path is baml
@@ -429,7 +427,7 @@ namespace Microsoft.Build.Tasks.Windows
 
         #region Private Fields
 
-        private string                     _outputPath;
+        private string _outputPath;
 
         private const string UnknownErrorID = "RG1000";
 

@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.ObjectModel;
-using MS.Internal.Security.RightsManagement;
 using MS.Internal;
+using MS.Internal.Security.RightsManagement;
 
 namespace System.Security.RightsManagement
 {
@@ -23,7 +23,7 @@ namespace System.Security.RightsManagement
         public static SecureEnvironment Create(string applicationManifest,
                                                ContentUser user)
         {
-    
+
             return CriticalCreate(applicationManifest, user);
         }
 
@@ -41,16 +41,16 @@ namespace System.Security.RightsManagement
         /// Regardless of Windows or Passport Authentication, all Temporary created activation will be 
         /// destroyed when SecureEnvironment instance is Disposed or Finalized.  
         /// </summary>   
-        public static SecureEnvironment Create(string applicationManifest, 
-                                                                                        AuthenticationType authentication, 
+        public static SecureEnvironment Create(string applicationManifest,
+                                                                                        AuthenticationType authentication,
                                                                                         UserActivationMode userActivationMode)
         {
 
-            return CriticalCreate(applicationManifest, 
+            return CriticalCreate(applicationManifest,
                                             authentication,
                                             userActivationMode);
         }
-        
+
         /// <summary>
         /// This property verifies whether the current machine was prepared for consuming and producing RM protected content. 
         /// If property returns true it could be used as an indication that Init function call will not result in a network transaction.
@@ -61,12 +61,12 @@ namespace System.Security.RightsManagement
             ArgumentNullException.ThrowIfNull(user);
 
             // we only let specifically identified users to be used here  
-            if ((user.AuthenticationType != AuthenticationType.Windows) && 
+            if ((user.AuthenticationType != AuthenticationType.Windows) &&
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
                 throw new ArgumentOutOfRangeException("user", SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
             }
-            
+
             using (ClientSession userClientSession = new ClientSession(user))
             {
                 // if machine activation is not present we can return false right away             
@@ -83,7 +83,7 @@ namespace System.Security.RightsManagement
             ArgumentNullException.ThrowIfNull(user);
 
             // we only let specifically identifyed users to be used here  
-            if ((user.AuthenticationType != AuthenticationType.Windows) && 
+            if ((user.AuthenticationType != AuthenticationType.Windows) &&
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
                 throw new ArgumentOutOfRangeException("user", SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed);
@@ -91,50 +91,50 @@ namespace System.Security.RightsManagement
 
             // Generic client session to enumerate user certificates 
             using (ClientSession userClientSession = new ClientSession(user))
-            {          
+            {
                 // Remove Licensor certificastes first 
-                List<string> userClientLicensorCertificateIds = 
+                List<string> userClientLicensorCertificateIds =
                                 userClientSession.EnumerateUsersCertificateIds(user, EnumerateLicenseFlags.ClientLicensor);
 
                 // and now we can remove certificates that have been enumerated 
-                foreach(string licenseId in userClientLicensorCertificateIds)
+                foreach (string licenseId in userClientLicensorCertificateIds)
                 {
-                    userClientSession.DeleteLicense(licenseId); 
-                }                
-                        
+                    userClientSession.DeleteLicense(licenseId);
+                }
+
                 // Remove User's identity certificastes second 
-                List<string> userGroupIdentityCertificateIds = 
+                List<string> userGroupIdentityCertificateIds =
                                 userClientSession.EnumerateUsersCertificateIds(user, EnumerateLicenseFlags.GroupIdentity);
 
                 // and now we can remove certificates that have been enumerated 
-                foreach(string licenseId in userGroupIdentityCertificateIds)
+                foreach (string licenseId in userGroupIdentityCertificateIds)
                 {
-                    userClientSession.DeleteLicense(licenseId); 
-                }                
+                    userClientSession.DeleteLicense(licenseId);
+                }
             }
         }
 
         /// <summary>
         /// This function returns a read only collection of the activated users.
         /// </summary>
-        static public  ReadOnlyCollection<ContentUser>  GetActivatedUsers()
+        static public ReadOnlyCollection<ContentUser> GetActivatedUsers()
         {
-            
+
             //build user with the default authentication type and a default name 
             // neither name not authentication type is important in this case 
             //ContentUser tempUser = new ContentUser(_defaultUserName, AuthenticationType.Windows);
-        
+
             // Generic client session to enumerate user certificates 
-            using(ClientSession genericClientSession = 
+            using (ClientSession genericClientSession =
                 ClientSession.DefaultUserClientSession(AuthenticationType.Windows))
             {
-                List<ContentUser> userList = new List<ContentUser>(); 
+                List<ContentUser> userList = new List<ContentUser>();
 
                 // if machine activation is not present we can return empty list right away             
                 if (genericClientSession.IsMachineActivated())
                 {
-                    int index =0; 
-                    while(true)
+                    int index = 0;
+                    while (true)
                     {
                         // we get a string which can be parsed to get the ID and type 
                         string userCertificate = genericClientSession.EnumerateLicense(EnumerateLicenseFlags.GroupIdentity, index);
@@ -146,18 +146,18 @@ namespace System.Security.RightsManagement
                         ContentUser user = ClientSession.ExtractUserFromCertificateChain(userCertificate);
 
                         // User specific client session to check it's status 
-                        using(ClientSession userClientSession = new ClientSession(user))
+                        using (ClientSession userClientSession = new ClientSession(user))
                         {
-                            if (userClientSession.IsUserActivated()) 
+                            if (userClientSession.IsUserActivated())
                             {
                                 userList.Add(user);
                             }
                         }
 
-                        index ++;
+                        index++;
                     }
                 }
-                
+
                 return new ReadOnlyCollection<ContentUser>(userList);
             }
         }
@@ -166,8 +166,8 @@ namespace System.Security.RightsManagement
         /// This method is responsible for tearing down secure environment that was built as a result of Init call.
         /// </summary>
         public void Dispose()
-        {              
-            
+        {
+
             Dispose(true);
             GC.SuppressFinalize(this);
         }
@@ -179,7 +179,7 @@ namespace System.Security.RightsManagement
         {
             get
             {
-            
+
                 CheckDisposed();
                 return _user;
             }
@@ -188,11 +188,11 @@ namespace System.Security.RightsManagement
         /// <summary>
         /// Read only property which returns the Application Manifest provided in the constructor. 
         /// </summary>
-        public string ApplicationManifest        
+        public string ApplicationManifest
         {
             get
             {
-            
+
                 CheckDisposed();
                 return _applicationManifest;
             }
@@ -217,12 +217,12 @@ namespace System.Security.RightsManagement
             }
         }
 
-        internal ClientSession ClientSession 
+        internal ClientSession ClientSession
         {
             get
             {
                 Invariant.Assert(_clientSession != null);
-            
+
                 return _clientSession;
             }
         }
@@ -237,7 +237,7 @@ namespace System.Security.RightsManagement
             ArgumentNullException.ThrowIfNull(user);
 
             // we only let specifically identifyed users to be used here  
-            if ((user.AuthenticationType != AuthenticationType.Windows) && 
+            if ((user.AuthenticationType != AuthenticationType.Windows) &&
                  (user.AuthenticationType != AuthenticationType.Passport))
             {
                 throw new ArgumentOutOfRangeException("user");
@@ -247,7 +247,7 @@ namespace System.Security.RightsManagement
             {
                 throw new RightsManagementException(RightsManagementFailureCode.NeedsGroupIdentityActivation);
             }
-            
+
             ClientSession clientSession = new ClientSession(user);
 
             try
@@ -264,13 +264,13 @@ namespace System.Security.RightsManagement
         }
 
         private static SecureEnvironment CriticalCreate(
-            string applicationManifest, 
+            string applicationManifest,
             AuthenticationType authentication,
             UserActivationMode userActivationMode)
         {
             ArgumentNullException.ThrowIfNull(applicationManifest);
 
-            if ((authentication != AuthenticationType.Windows) && 
+            if ((authentication != AuthenticationType.Windows) &&
                  (authentication != AuthenticationType.Passport))
             {
                 throw new ArgumentOutOfRangeException("authentication");
@@ -279,13 +279,13 @@ namespace System.Security.RightsManagement
             if ((userActivationMode != UserActivationMode.Permanent) &&
                  (userActivationMode != UserActivationMode.Temporary))
             {
-                throw new ArgumentOutOfRangeException("userActivationMode");            
+                throw new ArgumentOutOfRangeException("userActivationMode");
             }
 
             //build user with the given authnetication type and a default name 
             // only authentication type is critical in this case 
-            ContentUser user; 
-            
+            ContentUser user;
+
             using (ClientSession tempClientSession =
                 ClientSession.DefaultUserClientSession(authentication))
             {
@@ -318,7 +318,7 @@ namespace System.Security.RightsManagement
                     // as ClientLicensorCertificate only required for publishing not for consumption 
                     // and therefore it is optional to have one.
                 }
-            
+
                 clientSession.BuildSecureEnvironment(applicationManifest);
 
                 return new SecureEnvironment(applicationManifest, user, clientSession);
@@ -334,8 +334,8 @@ namespace System.Security.RightsManagement
         /// Private Constructor for the SecureEnvironment. 
         /// </summary>
         private SecureEnvironment(string applicationManifest,
-                                                         ContentUser user, 
-                                                         ClientSession clientSession) 
+                                                         ContentUser user,
+                                                         ClientSession clientSession)
         {
             Invariant.Assert(applicationManifest != null);
             Invariant.Assert(user != null);

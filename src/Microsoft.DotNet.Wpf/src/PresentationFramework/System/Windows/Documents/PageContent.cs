@@ -1,17 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal;
-using MS.Internal.Documents;
-using MS.Internal.Utility;
-using System.Windows.Navigation;
-using System.Windows.Markup;
-using System.Windows.Threading;               // Dispatcher
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
-
+using System.Windows.Markup;
+using System.Windows.Navigation;
+using System.Windows.Threading;               // Dispatcher
+using MS.Internal;
+using MS.Internal.Documents;
+using MS.Internal.Utility;
 using MS.Utility;
 
 //
@@ -72,7 +71,7 @@ namespace System.Windows.Documents
             DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRoot Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
 #endif
 
-//             VerifyAccess();
+            //             VerifyAccess();
             if (_asyncOp != null)
             {
                 _asyncOp.Wait();
@@ -104,7 +103,7 @@ namespace System.Windows.Documents
             DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsync Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
 #endif
 
-//             VerifyAccess();
+            //             VerifyAccess();
 
             if (_asyncOp != null)
             {
@@ -143,7 +142,7 @@ namespace System.Windows.Documents
 #if DEBUG
             DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsyncCancel Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
 #endif
-//             VerifyAccess();
+            //             VerifyAccess();
             // Important: do not throw if no outstanding GetPageRootAsyncCall
             if (_asyncOp != null)
             {
@@ -166,7 +165,7 @@ namespace System.Windows.Documents
         /// <ExternalAPI/>
         void IAddChild.AddChild(Object value)
         {
-//             VerifyAccess();
+            //             VerifyAccess();
 
             ArgumentNullException.ThrowIfNull(value);
 
@@ -183,7 +182,7 @@ namespace System.Windows.Documents
             }
 
             _pageRef = null;
-            _child   = fp;
+            _child = fp;
             LogicalTreeHelper.AddLogicalChild(this, _child);
         }
 
@@ -217,12 +216,12 @@ namespace System.Windows.Documents
                         typeof(Uri),
                         typeof(PageContent),
                         new FrameworkPropertyMetadata(
-                                (Uri) null,
+                                (Uri)null,
                                 new PropertyChangedCallback(OnSourceChanged)));
 
         static void OnSourceChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            PageContent p = (PageContent) d;
+            PageContent p = (PageContent)d;
             p._pageRef = null;
         }
 
@@ -231,7 +230,7 @@ namespace System.Windows.Documents
         /// </summary>
         public Uri Source
         {
-            get { return (Uri) GetValue(SourceProperty); }
+            get { return (Uri)GetValue(SourceProperty); }
             set { SetValue(SourceProperty, value); }
         }
 
@@ -343,7 +342,7 @@ namespace System.Windows.Documents
         /// <returns></returns>
         internal bool IsOwnerOf(FixedPage pageVisual)
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             ArgumentNullException.ThrowIfNull(pageVisual);
 
             if (_child == pageVisual)
@@ -466,7 +465,7 @@ namespace System.Windows.Documents
         //---------------------------------------------------------------------
 
         #region Private Methods
-        private void  _Init()
+        private void _Init()
         {
             InheritanceBehavior = InheritanceBehavior.SkipToAppNow;
             _pendingStreams = new HybridDictionary();
@@ -590,8 +589,10 @@ namespace System.Windows.Documents
                 throw new ApplicationException(SR.PageContentNotFound);
             }
 
-            ParserContext pc = new ParserContext();
-            pc.BaseUri = uriToLoad;
+            ParserContext pc = new ParserContext
+            {
+                BaseUri = uriToLoad
+            };
 
             if (BindUriHelper.IsXamlMimeType(mimeType))
             {
@@ -612,7 +613,7 @@ namespace System.Windows.Documents
                 throw new ApplicationException(SR.Format(SR.PageContentUnsupportedPageType, o.GetType()));
             }
 
-            fixedPage =  (FixedPage)o;
+            fixedPage = (FixedPage)o;
         }
 
         #endregion Private Methods
@@ -625,9 +626,9 @@ namespace System.Windows.Documents
 
         #region Private Fields
         private WeakReference _pageRef;         // weak ref to page's root visual
-        private FixedPage     _child;              // directly hosted page stream
-        private PageContentAsyncResult  _asyncOp;
-        private HybridDictionary  _pendingStreams;
+        private FixedPage _child;              // directly hosted page stream
+        private PageContentAsyncResult _asyncOp;
+        private HybridDictionary _pendingStreams;
         private LinkTargetCollection _linkTargets;
         #endregion Private Fields
     }

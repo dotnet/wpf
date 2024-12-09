@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -38,7 +38,7 @@ namespace System.Windows.Shapes
         #endregion Constructors
 
         #region Dynamic Properties
-  
+
         // For an Ellipse, RenderedGeometry = defining geometry and GeometryTransform = Identity
 
         /// <summary>
@@ -158,7 +158,7 @@ namespace System.Windows.Shapes
 
             return finalSize;
         }
-        
+
         /// <summary>
         /// Get the ellipse that defines this shape
         /// </summary>
@@ -188,7 +188,7 @@ namespace System.Windows.Shapes
         }
 
         #endregion Protected
-        
+
         #region Internal Methods
 
         internal override void CacheDefiningGeometry()
@@ -214,7 +214,7 @@ namespace System.Windows.Shapes
         {
             return _rect;
         }
-        
+
         //
         //  This property
         //  1. Finds the correct initial size for the _effectiveValues store on the current DependencyObject
@@ -228,7 +228,7 @@ namespace System.Windows.Shapes
         #endregion Internal Methods
 
         #region Private Fields
-        
+
         private Rect _rect = Rect.Empty;
 
         #endregion Private Fields

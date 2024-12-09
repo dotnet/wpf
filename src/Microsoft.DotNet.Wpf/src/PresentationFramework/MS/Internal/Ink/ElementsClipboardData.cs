@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,7 +21,7 @@ namespace MS.Internal.Ink
         // Constructors
         //
         //-------------------------------------------------------------------------------
-        
+
         #region Constructors
 
         // The default constructor
@@ -30,7 +30,7 @@ namespace MS.Internal.Ink
         // The constructor which takes a FrameworkElement array.
         internal ElementsClipboardData(UIElement[] elements)
         {
-            if ( elements != null )
+            if (elements != null)
             {
                 ElementList = new List<UIElement>(elements);
             }
@@ -51,7 +51,7 @@ namespace MS.Internal.Ink
         {
             get
             {
-                if ( ElementList != null )
+                if (ElementList != null)
                 {
                     return _elementList;
                 }

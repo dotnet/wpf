@@ -1,16 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.Collections;              // for ArrayList
+using System.Printing;
+using System.Printing.Interop;
 using System.Windows;                  // for Rect                        WindowsBase.dll
 using System.Windows.Media;            // for Geometry, Brush, ImageData. PresentationCore.dll
 using System.Windows.Media.Imaging;
-
 using System.Windows.Xps.Serialization;
-using System.Printing;
-using System.Printing.Interop;
 using MS.Utility;
 
 namespace Microsoft.Internal.AlphaFlattener
@@ -23,10 +22,10 @@ namespace Microsoft.Internal.AlphaFlattener
         [Flags]
         private enum DeviceState
         {
-            NoChange       = 0,
-            Init           = 1,
-            DocStarted     = 2,
-            PageStarted    = 4
+            NoChange = 0,
+            Init = 1,
+            DocStarted = 2,
+            PageStarted = 4
         };
 
         private enum PushType
@@ -36,15 +35,15 @@ namespace Microsoft.Internal.AlphaFlattener
             Transform
         };
 
-        private DeviceState     _state;
+        private DeviceState _state;
 
         private CanvasPrimitive _page;          // Page
         private CanvasPrimitive _root;          // Current root
-        private BrushProxy      _opacityMask;   // Current layer OpacityMask
-        private double          _opacity;       // Current layer Opacity
-        private Geometry        _clip;          // Current layer Clip
+        private BrushProxy _opacityMask;   // Current layer OpacityMask
+        private double _opacity;       // Current layer Opacity
+        private Geometry _clip;          // Current layer Clip
 
-        private Stack           _stack;
+        private Stack _stack;
 
 #if UNIT_TEST
         static private bool     s_first = true;
@@ -115,9 +114,9 @@ namespace Microsoft.Internal.AlphaFlattener
             _root = _page;
             _stack = new Stack();
 
-            _opacity     = 1;
+            _opacity = 1;
             _opacityMask = null;
-            _clip        = null;
+            _clip = null;
 
             return true;
         }
@@ -165,12 +164,13 @@ namespace Microsoft.Internal.AlphaFlattener
 
             AssertState(DeviceState.PageStarted, DeviceState.NoChange);
 
-            GeometryPrimitive g = new GeometryPrimitive();
-
-            g.Geometry    = geometry;
-            g.Clip        = _clip;
-            g.Opacity     = _opacity;
-            g.OpacityMask = _opacityMask;
+            GeometryPrimitive g = new GeometryPrimitive
+            {
+                Geometry = geometry,
+                Clip = _clip,
+                Opacity = _opacity,
+                OpacityMask = _opacityMask
+            };
 
             int needBounds = 0; // 1 for fill, 2 for stroke
 
@@ -248,14 +248,15 @@ namespace Microsoft.Internal.AlphaFlattener
 
             AssertState(DeviceState.PageStarted, DeviceState.NoChange);
 
-            ImagePrimitive g = new ImagePrimitive();
+            ImagePrimitive g = new ImagePrimitive
+            {
+                Image = new ImageProxy((BitmapSource)image),
 
-            g.Image   = new ImageProxy((BitmapSource)image);
-
-            g.DstRect     = rectangle;
-            g.Clip        = _clip;
-            g.Opacity     = _opacity;
-            g.OpacityMask = _opacityMask;
+                DstRect = rectangle,
+                Clip = _clip,
+                Opacity = _opacity,
+                OpacityMask = _opacityMask
+            };
 
             _root.Children.Add(g);
         }
@@ -276,10 +277,10 @@ namespace Microsoft.Internal.AlphaFlattener
                 needBounds = true;
             }
 
-            g.GlyphRun    = glyphRun;
-            g.Brush       = BrushProxy.CreateBrush(foreground, g.GetRectBounds(needBounds));
-            g.Clip        = _clip;
-            g.Opacity     = _opacity;
+            g.GlyphRun = glyphRun;
+            g.Brush = BrushProxy.CreateBrush(foreground, g.GetRectBounds(needBounds));
+            g.Clip = _clip;
+            g.Opacity = _opacity;
             g.OpacityMask = _opacityMask;
 
             // Optimization: Unfold primitive DrawingBrush when possible to avoid rasterizing it.
@@ -315,8 +316,8 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 bool empty;
 
-                _clip        = Utility.Intersect(_clip, clip, Matrix.Identity, out empty);
-                _opacity    *= opacity;
+                _clip = Utility.Intersect(_clip, clip, Matrix.Identity, out empty);
+                _opacity *= opacity;
                 _opacityMask = null;
 
                 if (empty)
@@ -344,7 +345,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 bool empty;
 
-                c.Clip    = Utility.Intersect(clip, _clip, Matrix.Identity, out empty); // Combined with inherited attributes
+                c.Clip = Utility.Intersect(clip, _clip, Matrix.Identity, out empty); // Combined with inherited attributes
                 c.Opacity = opacity * _opacity;
 
                 if (empty)
@@ -370,8 +371,8 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 _root = c;
 
-                _clip        = null;
-                _opacity     = 1.0;
+                _clip = null;
+                _opacity = 1.0;
                 _opacityMask = null;
             }
         }
@@ -381,9 +382,9 @@ namespace Microsoft.Internal.AlphaFlattener
             AssertState(DeviceState.PageStarted, DeviceState.NoChange);
 
             _opacityMask = _stack.Pop() as BrushProxy;
-            _opacity     = (double) _stack.Pop();
-            _clip        = _stack.Pop() as Geometry;
-            _root        = _stack.Pop() as CanvasPrimitive;
+            _opacity = (double)_stack.Pop();
+            _clip = _stack.Pop() as Geometry;
+            _root = _stack.Pop() as CanvasPrimitive;
         }
 
 #if COMMENT
@@ -405,19 +406,19 @@ namespace Microsoft.Internal.AlphaFlattener
     /// </summary>
     internal class MetroToGdiConverter : IMetroDrawingContext
     {
-        static protected object         s_TestingHook;
+        static protected object s_TestingHook;
 
-        protected  MetroDevice0         m_Flattener;
-        protected  ILegacyDevice        m_GDIExporter;
-        protected  PrintQueue           m_PrintQueue;
-        protected  PrintTicketConverter m_Converter; // Expensive to create, cache it
-        protected  PrintTicketCache     m_printTicketCache; // Cache for per ticket data that is expensive to fetch
+        protected MetroDevice0 m_Flattener;
+        protected ILegacyDevice m_GDIExporter;
+        protected PrintQueue m_PrintQueue;
+        protected PrintTicketConverter m_Converter; // Expensive to create, cache it
+        protected PrintTicketCache m_printTicketCache; // Cache for per ticket data that is expensive to fetch
 
-        protected  byte[]             m_Devmode;
+        protected byte[] m_Devmode;
 
         // settings captured from current PrintTicket
-        protected  double             m_PageWidth;
-        protected  double             m_PageHeight;
+        protected double m_PageWidth;
+        protected double m_PageHeight;
 
         protected Nullable<OutputQuality> m_OutputQuality;
 
@@ -430,8 +431,8 @@ namespace Microsoft.Internal.AlphaFlattener
         {
             ArgumentNullException.ThrowIfNull(queue);
 
-            m_PrintQueue  = queue;
-            m_Flattener   = new MetroDevice0();
+            m_PrintQueue = queue;
+            m_Flattener = new MetroDevice0();
             m_GDIExporter = queue.GetLegacyDevice();
 
             m_printTicketCache = new PrintTicketCache(s_PrintTicketCacheMaxCount);
@@ -450,7 +451,7 @@ namespace Microsoft.Internal.AlphaFlattener
             // by reference instead of making a copy
             byte[] result = null;
 
-            if (ticketXMLString != null &&  m_printTicketCache.TryGetDevMode(ticketXMLString, out result))
+            if (ticketXMLString != null && m_printTicketCache.TryGetDevMode(ticketXMLString, out result))
             {
             }
             // 10ms slowpath.
@@ -513,7 +514,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     m_PageWidth = capabilities.OrientedPageMediaWidth.GetValueOrDefault(816);
                     m_PageHeight = capabilities.OrientedPageMediaHeight.GetValueOrDefault(1056);
 
-                    if(ticketXMLString != null)
+                    if (ticketXMLString != null)
                     {
                         m_printTicketCache.CachePageSize(ticketXMLString, m_PageWidth, m_PageHeight);
                     }
@@ -553,7 +554,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public void EndDocument()
         {
-            EndDocument(abort:false);
+            EndDocument(abort: false);
         }
 
         public void EndDocument(bool abort)
@@ -764,7 +765,7 @@ namespace Microsoft.Internal.AlphaFlattener
     {
         public PrintTicketCache(int maxEntries)
         {
-            if(maxEntries < 1)
+            if (maxEntries < 1)
             {
                 throw new ArgumentOutOfRangeException("maxEntries", maxEntries, string.Empty);
             }
@@ -779,7 +780,7 @@ namespace Microsoft.Internal.AlphaFlattener
             EnsurePacketForKey(ticket).PageSize = new Size(width, height);
         }
 
-        public void CacheDevMode(string ticket, byte [] devMode)
+        public void CacheDevMode(string ticket, byte[] devMode)
         {
             ArgumentNullException.ThrowIfNull(ticket);
             ArgumentNullException.ThrowIfNull(devMode);
@@ -792,9 +793,9 @@ namespace Microsoft.Internal.AlphaFlattener
             ArgumentNullException.ThrowIfNull(ticket);
 
             CachePacket packet;
-            if(this.m_innerCache.TryGetValue(ticket, out packet))
+            if (this.m_innerCache.TryGetValue(ticket, out packet))
             {
-                if(packet.PageSize.HasValue)
+                if (packet.PageSize.HasValue)
                 {
                     width = packet.PageSize.Value.Width;
                     height = packet.PageSize.Value.Height;
@@ -807,15 +808,15 @@ namespace Microsoft.Internal.AlphaFlattener
             return false;
         }
 
-        public bool TryGetDevMode(string ticket, out byte [] devMode)
+        public bool TryGetDevMode(string ticket, out byte[] devMode)
         {
             ArgumentNullException.ThrowIfNull(ticket);
 
             CachePacket packet;
-            if(this.m_innerCache.TryGetValue(ticket, out packet))
+            if (this.m_innerCache.TryGetValue(ticket, out packet))
             {
                 devMode = packet.DevMode;
-                if(devMode != null)
+                if (devMode != null)
                 {
                     return true;
                 }
@@ -828,7 +829,7 @@ namespace Microsoft.Internal.AlphaFlattener
         private CachePacket EnsurePacketForKey(string ticket)
         {
             CachePacket packet;
-            if(!this.m_innerCache.TryGetValue(ticket, out packet))
+            if (!this.m_innerCache.TryGetValue(ticket, out packet))
             {
                 packet = new CachePacket();
                 this.m_innerCache.CacheValue(ticket, packet);
@@ -842,7 +843,7 @@ namespace Microsoft.Internal.AlphaFlattener
             // "null" for any field means it hasn't been set yet.
             // This implies that the fields cannot have real values of "null".
             public Nullable<Size> PageSize;
-            public byte [] DevMode;
+            public byte[] DevMode;
         }
 
         private MS.Internal.Printing.MostFrequentlyUsedCache<string, CachePacket> m_innerCache;

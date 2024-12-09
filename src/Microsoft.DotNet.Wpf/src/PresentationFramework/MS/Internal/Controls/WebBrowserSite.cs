@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,14 +10,13 @@
 //      Copied from WebBrowser.cs in winforms
 //
 
-using MS.Win32;
-using MS.Internal.Interop;
-using System.Windows.Controls;
-using System.Windows.Interop;
-using System.Windows.Input;
-using System.Windows.Threading;
 using System.Threading;
-
+using System.Windows.Controls;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Threading;
+using MS.Internal.Interop;
+using MS.Win32;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace MS.Internal.Controls

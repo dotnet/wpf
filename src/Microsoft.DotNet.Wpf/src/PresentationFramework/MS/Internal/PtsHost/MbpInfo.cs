@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,8 @@
 
 using System.Windows;                       // DependencyObject
 using System.Windows.Documents;             // Block
-using MS.Internal.Text;                     // TextDpi
 using System.Windows.Media;                 // Brush
+using MS.Internal.Text;                     // TextDpi
 
 namespace MS.Internal.PtsHost
 {
@@ -98,8 +98,8 @@ namespace MS.Internal.PtsHost
         /// <param name="block">Block for which MBP properties are retrieved.</param>
         private MbpInfo(TextElement block)
         {
-            _margin  = (Thickness)block.GetValue(Block.MarginProperty);
-            _border  = (Thickness)block.GetValue(Block.BorderThicknessProperty);
+            _margin = (Thickness)block.GetValue(Block.MarginProperty);
+            _border = (Thickness)block.GetValue(Block.BorderThicknessProperty);
             _padding = (Thickness)block.GetValue(Block.PaddingProperty);
             _borderBrush = (Brush)block.GetValue(Block.BorderBrushProperty);
         }

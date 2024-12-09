@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Documents.Internal; // ColumnResizeAdorner
 using MS.Internal;
 using MS.Internal.Documents;
-using System.Windows.Documents.Internal; // ColumnResizeAdorner
 
 //
 // Description: Internal static class representing a group of methods
@@ -402,7 +402,7 @@ namespace System.Windows.Documents
             start = null;
             end = null;
 
-            for (int i = 0; i < textSegments.Count; i++ )
+            for (int i = 0; i < textSegments.Count; i++)
             {
                 TextSegment segment = textSegments[i];
 
@@ -656,8 +656,10 @@ namespace System.Windows.Documents
             Invariant.Assert(paragraph != null, "Expecting non-null paragraph at insertionPosition");
 
             // Build a table with a given number of rows and columns
-            Table table = new Table();
-            table.CellSpacing = 0;
+            Table table = new Table
+            {
+                CellSpacing = 0
+            };
             TableRowGroup rowGroup = new TableRowGroup();
             for (int rowIndex = 0; rowIndex < rowCount; rowIndex++)
             {
@@ -665,9 +667,11 @@ namespace System.Windows.Documents
 
                 for (int columnIndex = 0; columnIndex < columnCount; columnIndex++)
                 {
-                    TableCell cell = new TableCell(new Paragraph());
-                    cell.BorderThickness = GetCellBorder(1, rowIndex, columnIndex, 1, 1, rowCount, columnCount);
-                    cell.BorderBrush = System.Windows.Media.Brushes.Black;
+                    TableCell cell = new TableCell(new Paragraph())
+                    {
+                        BorderThickness = GetCellBorder(1, rowIndex, columnIndex, 1, 1, rowCount, columnCount),
+                        BorderBrush = System.Windows.Media.Brushes.Black
+                    };
                     row.Cells.Add(cell);
                 }
                 rowGroup.Rows.Add(row);
@@ -1233,7 +1237,7 @@ namespace System.Windows.Documents
             if (deletedRowsCount == rows.Count)
             {
                 // To delete all rows we need to delete the whole table
-                Table table= startRow.Table;
+                Table table = startRow.Table;
                 table.RepositionWithContent(null);
             }
             else
@@ -1456,7 +1460,7 @@ namespace System.Windows.Documents
 
             for (int iCol = 0; iCol < cCols; iCol++)
             {
-                if(columnCount < 0)
+                if (columnCount < 0)
                 {
                     InsertColumn(colIndexInsert - 1, endCell.Table as Table);
                 }
@@ -1629,7 +1633,7 @@ namespace System.Windows.Documents
             if (cell.ColumnIndex + cell.ColumnSpan <= cell.Table.ColumnCount &&
                 point.X > cellInfo.CellArea.Right - sensitivity)
             {
-                if(!IsLastCellInRow(cell) || point.X < cellInfo.CellArea.Right + sensitivity)
+                if (!IsLastCellInRow(cell) || point.X < cellInfo.CellArea.Right + sensitivity)
                 {
                     columnIndex = cell.ColumnIndex + cell.ColumnSpan - 1;
                     columnRect = new Rect(cellInfo.CellArea.Right, cellInfo.TableArea.Top, 1, cellInfo.TableArea.Height);
@@ -1673,7 +1677,7 @@ namespace System.Windows.Documents
                 table.Columns.Add(new TableColumn());
             }
 
-            for(int columnIndex = 0; columnIndex < table.ColumnCount; columnIndex++)
+            for (int columnIndex = 0; columnIndex < table.ColumnCount; columnIndex++)
             {
                 table.Columns[columnIndex].Width = new GridLength(columnWidths[columnIndex]);
             }
@@ -1696,11 +1700,11 @@ namespace System.Windows.Documents
 
                 _dxl = _columnWidths[columnIndex];
 
-                if(columnIndex == table.ColumnCount - 1)
+                if (columnIndex == table.ColumnCount - 1)
                 {
                     _dxr = _tableAutofitWidth;
 
-                    for(int columnIndexCounter = 0; columnIndexCounter < table.ColumnCount; columnIndexCounter++)
+                    for (int columnIndexCounter = 0; columnIndexCounter < table.ColumnCount; columnIndexCounter++)
                     {
                         _dxr -= _columnWidths[columnIndexCounter] + table.InternalCellSpacing;
                     }
@@ -1740,7 +1744,7 @@ namespace System.Windows.Documents
             {
                 double dx = mousePoint.X - (_columnRect.X + _columnRect.Width / 2);
 
-                dx = Math.Max(dx, - this.LeftDragMax);
+                dx = Math.Max(dx, -this.LeftDragMax);
                 dx = Math.Min(dx, this.RightDragMax);
 
                 int columnIndex = _columnIndex;
@@ -1751,7 +1755,7 @@ namespace System.Windows.Documents
 
                 _columnWidths[columnIndex] += dx;
 
-                if(columnIndex < (table.ColumnCount - 1))
+                if (columnIndex < (table.ColumnCount - 1))
                 {
                     _columnWidths[columnIndex + 1] -= dx;
                 }
@@ -1760,7 +1764,7 @@ namespace System.Windows.Documents
 
                 UndoManager undoManager = table.TextContainer.UndoManager;
 
-                if(undoManager != null && undoManager.IsEnabled)
+                if (undoManager != null && undoManager.IsEnabled)
                 {
                     IParentUndoUnit columnResizeUndoUnit = new ColumnResizeUndoUnit(table.ContentStart, columnIndex, _columnWidths, dx);
 
@@ -2516,7 +2520,7 @@ namespace System.Windows.Documents
 
                 // Check if the cell crosses bottom row
                 int startColumn = cell.ColumnIndex;
-                int endColumn = startColumn + cell.ColumnSpan -1;
+                int endColumn = startColumn + cell.ColumnSpan - 1;
 
                 if (startColumn <= rightColumn && endColumn >= leftColumn)
                 {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,8 +11,8 @@
 //
 //
 
-using System.Windows.Media.Media3D;
 using System.Windows.Media.Composition;
+using System.Windows.Media.Media3D;
 using System.Windows.Threading;
 
 namespace System.Windows.Media
@@ -44,7 +44,7 @@ namespace System.Windows.Media
             }
         }
         #endregion Constructors
-        
+
         void ICyclicBrush.FireOnChanged()
         {
             // Simple loop detection to avoid stack overflow in cyclic VisualBrush
@@ -68,7 +68,7 @@ namespace System.Windows.Media
                     Exit();
                 }
             }
-        } 
+        }
 
         /// <summary> 
         /// Calling this will make sure that the render request
@@ -100,8 +100,8 @@ namespace System.Windows.Media
             }
         }
 
-       void ICyclicBrush.RenderForCyclicBrush(DUCE.Channel channel, bool skipChannelCheck)
-       {
+        void ICyclicBrush.RenderForCyclicBrush(DUCE.Channel channel, bool skipChannelCheck)
+        {
             Visual vVisual = Visual;
 
             // The Visual may have been registered for an asynchronous render, but may have been
@@ -182,13 +182,13 @@ namespace System.Windows.Media
                     // another tree (i.e. the parent is null) or its not the hwnd root.
                     if (AutoLayoutContent)
                     {
-                        Debug.Assert(!_pendingLayout);                    
+                        Debug.Assert(!_pendingLayout);
                         UIElement element = Visual as UIElement;
-            
-                        if ((element != null) 
-                              && 
-                              ((VisualTreeHelper.GetParent(element) == null && !(element.IsRootElement)) 
-                               || (VisualTreeHelper.GetParent(element) is Visual3D)))                            
+
+                        if ((element != null)
+                              &&
+                              ((VisualTreeHelper.GetParent(element) == null && !(element.IsRootElement))
+                               || (VisualTreeHelper.GetParent(element) is Visual3D)))
                         {
                             //
                             // We need 2 ways of initiating layout on the VisualBrush root.
@@ -320,7 +320,7 @@ namespace System.Windows.Media
         {
             Debug.Assert(_reentrancyFlag); // Exit must be matched with Enter. See Enter comments.
             _reentrancyFlag = false;
-        }       
+        }
 
         /// <summary>
         /// Obtains the current bounds of the brush's content
@@ -338,14 +338,14 @@ namespace System.Windows.Media
             }
 
             contentBounds = _bbox;
-        }  
+        }
 
         private DispatcherOperation _DispatcherLayoutResult;
-        private bool _pendingLayout;        
+        private bool _pendingLayout;
         private bool _reentrancyFlag;
 
         private bool _isAsyncRenderRegistered = false;
-        
+
         // Whether we need to re-calculate our content bounds.
         private bool _isCacheDirty = true;
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,9 +19,8 @@
 using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Packaging;
-using System.Xml;
 using System.Printing;
-
+using System.Xml;
 using MS.Internal.IO.Packaging.Extensions;
 using PackageRelationship = System.IO.Packaging.PackageRelationship;
 using PackUriHelper = System.IO.Packaging.PackUriHelper;
@@ -34,7 +33,7 @@ namespace System.Windows.Xps.Packaging
     /// Interface for reading fixed document parts from the Xps package.
     /// </summary>
     /// <remarks>Interface will be internal until reading/de-serialization is implemented.</remarks>
-    public  interface IXpsFixedDocumentReader:
+    public interface IXpsFixedDocumentReader :
                       IDocumentStructureProvider
     {
         #region Public methods
@@ -52,7 +51,7 @@ namespace System.Windows.Xps.Packaging
         /// </returns>
         IXpsFixedPageReader
         GetFixedPage(
-            Uri         pageSource
+            Uri pageSource
             );
 
         #endregion Public methods
@@ -85,25 +84,28 @@ namespace System.Windows.Xps.Packaging
         /// <summary>
         /// 0 based document number in the document sequence
         /// </summary>
-        int DocumentNumber{ get; }
+        int DocumentNumber { get; }
 
         /// <summary>
         /// A list of signature definitions associated with the document
         /// </summary>
         ICollection<XpsSignatureDefinition>
-        SignatureDefinitions{ get; }
+        SignatureDefinitions
+        { get; }
 
         /// <summary>
         /// thumbnail image associated with this document
         /// </summary>
         XpsThumbnail
-        Thumbnail{ get; }
+        Thumbnail
+        { get; }
 
         /// <summary>
         /// Document Structure associated with this document
         /// </summary>
         XpsStructure
-        DocumentStructure{ get; }
+        DocumentStructure
+        { get; }
 
 
         #endregion Public properties
@@ -147,7 +149,7 @@ namespace System.Windows.Xps.Packaging
     /// <summary>
     /// Interface for writing fixed document parts to the xps package.
     /// </summary>
-    public interface IXpsFixedDocumentWriter:
+    public interface IXpsFixedDocumentWriter :
                      IDocumentStructureProvider
     {
         #region Public methods
@@ -215,7 +217,7 @@ namespace System.Windows.Xps.Packaging
         /// <summary>
         /// 0 based document number in the document sequence
         /// </summary>
-        int DocumentNumber{ get; }
+        int DocumentNumber { get; }
 
         #endregion Public properties
     }
@@ -254,10 +256,10 @@ namespace System.Windows.Xps.Packaging
         /// <exception cref="ArgumentNullException">part is null.</exception>
         internal
         XpsFixedDocumentReaderWriter(
-            XpsManager    xpsManager,
-            INode           parent,
-            PackagePart     part,
-            int             documentNumber
+            XpsManager xpsManager,
+            INode parent,
+            PackagePart part,
+            int documentNumber
             )
             : base(xpsManager)
         {
@@ -278,7 +280,7 @@ namespace System.Windows.Xps.Packaging
             _hasParsedPages = false;
 
             _documentNumber = documentNumber;
-       }
+        }
 
         #endregion Constructors
 
@@ -298,15 +300,15 @@ namespace System.Windows.Xps.Packaging
         {
             get
             {
-                if( _printTicket == null )
+                if (_printTicket == null)
                 {
-                    _printTicket = CurrentXpsManager.EnsurePrintTicket( Uri );
+                    _printTicket = CurrentXpsManager.EnsurePrintTicket(Uri);
                 }
                 return _printTicket;
             }
             set
             {
-                if(value != null)
+                if (value != null)
                 {
                     if (_isPrintTicketCommitted)
                     {
@@ -341,7 +343,7 @@ namespace System.Windows.Xps.Packaging
             get
             {
                 UpdatePageCache();
-                return new ReadOnlyCollection<IXpsFixedPageReader>(_pageCache );
+                return new ReadOnlyCollection<IXpsFixedPageReader>(_pageCache);
             }
         }
 
@@ -362,13 +364,13 @@ namespace System.Windows.Xps.Packaging
         /// <summary>
         /// 0 based document number in the document sequence
         /// </summary>
-         public int DocumentNumber
-         {
+        public int DocumentNumber
+        {
             get
             {
                 return _documentNumber;
             }
-         }
+        }
 
         public
         XpsThumbnail
@@ -455,12 +457,12 @@ namespace System.Windows.Xps.Packaging
             XpsImageType imageType
             )
         {
-            _thumbnail = CurrentXpsManager.AddThumbnail( imageType, this, Thumbnail );
-            _metroPart.CreateRelationship( _thumbnail.Uri,
+            _thumbnail = CurrentXpsManager.AddThumbnail(imageType, this, Thumbnail);
+            _metroPart.CreateRelationship(_thumbnail.Uri,
                                            TargetMode.Internal,
                                            XpsS0Markup.ThumbnailRelationshipName
                                           );
-           return _thumbnail;
+            return _thumbnail;
         }
 
         /// <summary>
@@ -515,15 +517,15 @@ namespace System.Windows.Xps.Packaging
         public
         void
         AddRelationship(
-            Uri         targetUri,
-            string      relationshipName
+            Uri targetUri,
+            string relationshipName
             )
         {
             //
             // We can not read from the file to do validation
             // when streaming
             //
-            if( !CurrentXpsManager.Streaming )
+            if (!CurrentXpsManager.Streaming)
             {
                 foreach (PackageRelationship rel in _metroPart.GetRelationships())
                 {
@@ -560,17 +562,17 @@ namespace System.Windows.Xps.Packaging
         public
         IXpsFixedPageReader
         GetFixedPage(
-            Uri         pageUri
+            Uri pageUri
             )
         {
             UpdatePageCache();
             IXpsFixedPageReader pageReader = null;
 
-            foreach (IXpsFixedPageReader reader in _pageCache )
+            foreach (IXpsFixedPageReader reader in _pageCache)
             {
-                if( reader.Uri == pageUri )
+                if (reader.Uri == pageUri)
                 {
-                    pageReader =  reader;
+                    pageReader = reader;
                 }
             }
 
@@ -584,9 +586,9 @@ namespace System.Windows.Xps.Packaging
             )
         {
             EnsureSignatureDefinitions();
-            _signatureDefinitions.Add( signatureDefinition );
+            _signatureDefinitions.Add(signatureDefinition);
             _sigCollectionDirty = true;
-}
+        }
 
         public
         void
@@ -598,18 +600,18 @@ namespace System.Windows.Xps.Packaging
             // if the collection is dirty not point in testing
             // each signature.
             //
-            if( !_sigCollectionDirty )
+            if (!_sigCollectionDirty)
             {
-                foreach( XpsSignatureDefinition sigDef in _signatureDefinitions )
+                foreach (XpsSignatureDefinition sigDef in _signatureDefinitions)
                 {
-                    if( sigDef.HasBeenModified )
+                    if (sigDef.HasBeenModified)
                     {
                         isDirty = true;
                         break;
                     }
                 }
             }
-            if( isDirty || _sigCollectionDirty )
+            if (isDirty || _sigCollectionDirty)
             {
                 WriteSignatureDefinitions();
             }
@@ -626,10 +628,10 @@ namespace System.Windows.Xps.Packaging
         void
         RemoveSignatureDefinition(XpsSignatureDefinition signatureDefinition)
         {
-           EnsureSignatureDefinitions();
-           _signatureDefinitions.Remove( signatureDefinition );
-           _sigCollectionDirty = true;
-}
+            EnsureSignatureDefinitions();
+            _signatureDefinitions.Remove(signatureDefinition);
+            _sigCollectionDirty = true;
+        }
 
         /// <summary>
         /// This method commits any changes not already committed for this
@@ -661,9 +663,9 @@ namespace System.Windows.Xps.Packaging
             {
                 if (null != _partEditor.XmlWriter)
                 {
-                    if(_partEditor.DoesWriteStartEndTags)
+                    if (_partEditor.DoesWriteStartEndTags)
                     {
-                        if(_partEditor.IsStartElementWritten)
+                        if (_partEditor.IsStartElementWritten)
                         {
                             _partEditor.XmlWriter.WriteEndElement();
                             _partEditor.XmlWriter.WriteEndDocument();
@@ -675,19 +677,19 @@ namespace System.Windows.Xps.Packaging
                 _partEditor.Close();
 
 
-                _partEditor     = null;
-                _metroPart      = null;
+                _partEditor = null;
+                _metroPart = null;
 
-                _parentNode     = null;
+                _parentNode = null;
 
-                _thumbnail      = null;
+                _thumbnail = null;
 
-                _pageCache      = null;
+                _pageCache = null;
 
-                _pagesWritten     = 0;
+                _pagesWritten = 0;
 
                 _hasParsedPages = false;
-           }
+            }
 
             base.CommitInternal();
         }
@@ -702,9 +704,9 @@ namespace System.Windows.Xps.Packaging
         internal
         void
         CollectSelfAndDependents(
-            Dictionary<Uri,Uri>                 dependentList,
-            List<PackageRelationshipSelector>   selectorList,
-            XpsDigSigPartAlteringRestrictions   restrictions
+            Dictionary<Uri, Uri> dependentList,
+            List<PackageRelationshipSelector> selectorList,
+            XpsDigSigPartAlteringRestrictions restrictions
             )
         {
             //
@@ -721,7 +723,7 @@ namespace System.Windows.Xps.Packaging
             //
             // Add Signature Definitions
             //
-            selectorList.Add( new PackageRelationshipSelector(
+            selectorList.Add(new PackageRelationshipSelector(
                                     Uri,
                                     PackageRelationshipSelectorType.Type,
                                     XpsS0Markup.SignatureDefinitionRelationshipName
@@ -729,14 +731,14 @@ namespace System.Windows.Xps.Packaging
                                  );
 
 
-            if( signatureDefinitionPart != null )
+            if (signatureDefinitionPart != null)
             {
                 dependentList[signatureDefinitionPart.Uri] = signatureDefinitionPart.Uri;
             }
             //
             // Add Restricted Font relationship
             //
-            selectorList.Add( new PackageRelationshipSelector(
+            selectorList.Add(new PackageRelationshipSelector(
                                     Uri,
                                     PackageRelationshipSelectorType.Type,
                                     XpsS0Markup.RestrictedFontRelationshipType
@@ -745,7 +747,7 @@ namespace System.Windows.Xps.Packaging
             //
             // Add Document Structure relationship
             //
-            selectorList.Add( new PackageRelationshipSelector(
+            selectorList.Add(new PackageRelationshipSelector(
                                     Uri,
                                     PackageRelationshipSelectorType.Type,
                                     XpsS0Markup.StructureRelationshipName
@@ -754,8 +756,8 @@ namespace System.Windows.Xps.Packaging
             //
             // Add this documents dependants
             //
-            CollectDependents( dependentList, selectorList, restrictions);
-}
+            CollectDependents(dependentList, selectorList, restrictions);
+        }
 
         internal
         void
@@ -806,16 +808,16 @@ namespace System.Windows.Xps.Packaging
         internal
         void
         CollectDependents(
-            Dictionary<Uri,Uri>                 dependents,
-            List<PackageRelationshipSelector>   selectorList,
-            XpsDigSigPartAlteringRestrictions   restrictions
+            Dictionary<Uri, Uri> dependents,
+            List<PackageRelationshipSelector> selectorList,
+            XpsDigSigPartAlteringRestrictions restrictions
             )
         {
             UpdatePageCache();
             //
             // Add all pages
             //
-            foreach( IXpsFixedPageReader reader in _pageCache)
+            foreach (IXpsFixedPageReader reader in _pageCache)
             {
                 (reader as XpsFixedPageReaderWriter).
                     CollectSelfAndDependents(
@@ -829,11 +831,11 @@ namespace System.Windows.Xps.Packaging
             // Add DocumentStructure
             //
             EnsureDocumentStructure();
-            if( _documentStructure != null )
+            if (_documentStructure != null)
             {
                 dependents[_documentStructure.Uri] = _documentStructure.Uri;
             }
-       }
+        }
 
         #endregion Public methods
 
@@ -842,8 +844,8 @@ namespace System.Windows.Xps.Packaging
         private
         void
         AddPageToDocument(
-            Uri                 partUri,
-            IList<String>       linkTargetStream
+            Uri partUri,
+            IList<String> linkTargetStream
             )
         {
             _partEditor.PrepareXmlWriter(XpsS0Markup.FixedDocument, XpsS0Markup.FixedDocumentNamespace);
@@ -861,16 +863,16 @@ namespace System.Windows.Xps.Packaging
             //
             if (linkTargetStream.Count != 0)
             {
-                xmlWriter.WriteRaw ("<PageContent.LinkTargets>");
+                xmlWriter.WriteRaw("<PageContent.LinkTargets>");
                 foreach (String nameElement in linkTargetStream)
                 {
-                     xmlWriter.WriteRaw (String.Format(
-                        System.Globalization.CultureInfo.InvariantCulture,
-                        "<LinkTarget Name=\"{0}\" />",
-                        nameElement)
-                        );
+                    xmlWriter.WriteRaw(String.Format(
+                       System.Globalization.CultureInfo.InvariantCulture,
+                       "<LinkTarget Name=\"{0}\" />",
+                       nameElement)
+                       );
                 }
-                xmlWriter.WriteRaw ("</PageContent.LinkTargets>");
+                xmlWriter.WriteRaw("</PageContent.LinkTargets>");
             }
 
             xmlWriter.WriteEndElement();
@@ -887,11 +889,11 @@ namespace System.Windows.Xps.Packaging
             //
             // Flush the PrintTicket if needed
             //
-            if (!_isPrintTicketCommitted )
+            if (!_isPrintTicketCommitted)
             {
-                if(null != _printTicket)
+                if (null != _printTicket)
                 {
-                    CurrentXpsManager.WritePrintTicket(this,_metroPart, _printTicket);
+                    CurrentXpsManager.WritePrintTicket(this, _metroPart, _printTicket);
                 }
                 else
                 {
@@ -910,7 +912,7 @@ namespace System.Windows.Xps.Packaging
         void
         CurrentPageCommitted()
         {
-            if( _currentPage != null )
+            if (_currentPage != null)
             {
                 //Write out the fixed page tag
                 AddPageToDocument(_currentPage.Uri, _linkTargetStream);
@@ -926,7 +928,7 @@ namespace System.Windows.Xps.Packaging
         void
         UpdatePageCache()
         {
-            if( !_hasParsedPages )
+            if (!_hasParsedPages)
             {
                 ParsePages();
                 _hasParsedPages = true;
@@ -967,13 +969,13 @@ namespace System.Windows.Xps.Packaging
 
         private
         IXpsFixedPageReader
-        AddPageToCache( Uri pageUri )
+        AddPageToCache(Uri pageUri)
         {
             PackagePart pagePart = CurrentXpsManager.GetPart(pageUri);
 
             if (pagePart == null)
             {
-                 throw new XpsPackagingException(SR.ReachPackaging_PartNotFound);
+                throw new XpsPackagingException(SR.ReachPackaging_PartNotFound);
             }
 
             if (!pagePart.ValidatedContentType().AreTypeAndSubTypeEqual(XpsS0Markup.FixedPageContentType))
@@ -984,12 +986,12 @@ namespace System.Windows.Xps.Packaging
             //
             // Create the reader/writer for the part
             //
-            IXpsFixedPageReader pageReader = new XpsFixedPageReaderWriter(CurrentXpsManager, this, pagePart, null, _pageCache.Count+1);
+            IXpsFixedPageReader pageReader = new XpsFixedPageReaderWriter(CurrentXpsManager, this, pagePart, null, _pageCache.Count + 1);
 
             //
             // Cache the new reader/writer for later
             //
-            _pageCache.Add(pageReader );
+            _pageCache.Add(pageReader);
 
             return pageReader;
         }
@@ -998,9 +1000,9 @@ namespace System.Windows.Xps.Packaging
         void
         EnsureThumbnail()
         {
-            if( _thumbnail == null )
+            if (_thumbnail == null)
             {
-                _thumbnail = CurrentXpsManager.EnsureThumbnail( this, _metroPart );
+                _thumbnail = CurrentXpsManager.EnsureThumbnail(this, _metroPart);
             }
         }
 
@@ -1011,16 +1013,16 @@ namespace System.Windows.Xps.Packaging
         {
             // if _xpsSignaturs is not null we have already initialized this
             //
-            if( null != _signatureDefinitions)
+            if (null != _signatureDefinitions)
             {
                 return;
             }
             _signatureDefinitions = new Collection<XpsSignatureDefinition>();
             PackagePart sigDefPart =
                 CurrentXpsManager.GetSignatureDefinitionPart(Uri);
-            if( sigDefPart != null )
+            if (sigDefPart != null)
             {
-                ParseSignaturePart( sigDefPart, _signatureDefinitions );
+                ParseSignaturePart(sigDefPart, _signatureDefinitions);
             }
         }
 
@@ -1030,7 +1032,7 @@ namespace System.Windows.Xps.Packaging
         {
             // if _xpsSignaturs is not null we have already initialized this
             //
-            if( null != _documentStructure)
+            if (null != _documentStructure)
             {
                 return;
             }
@@ -1062,8 +1064,8 @@ namespace System.Windows.Xps.Packaging
         private
         void
         ParseSignaturePart(
-            PackagePart                         sigDefPart,
-            Collection<XpsSignatureDefinition>  sigDefCollection
+            PackagePart sigDefPart,
+            Collection<XpsSignatureDefinition> sigDefCollection
             )
         {
             using (XmlTextReader reader = new XmlTextReader(sigDefPart.GetStream(FileMode.Open)))
@@ -1083,25 +1085,25 @@ namespace System.Windows.Xps.Packaging
         private
         void
         ParseSignatureDefinitions(
-            XmlReader                           reader,
-            Collection<XpsSignatureDefinition>  sigDefCollection
+            XmlReader reader,
+            Collection<XpsSignatureDefinition> sigDefCollection
             )
         {
             bool endLoop = false;
             while (!endLoop && reader.Read())
             {
-               if( reader.NodeType == XmlNodeType.Element &&
-                    reader.Name == XpsS0Markup.SignatureDefinition
-                  )
+                if (reader.NodeType == XmlNodeType.Element &&
+                     reader.Name == XpsS0Markup.SignatureDefinition
+                   )
                 {
                     XpsSignatureDefinition sigDef = new XpsSignatureDefinition();
                     sigDef.ReadXML(reader);
-                    sigDefCollection.Add( sigDef );
+                    sigDefCollection.Add(sigDef);
                 }
 
-               if( reader.NodeType == XmlNodeType.EndElement &&
-                    reader.Name == XpsS0Markup.SignatureDefinitions
-                  )
+                if (reader.NodeType == XmlNodeType.EndElement &&
+                     reader.Name == XpsS0Markup.SignatureDefinitions
+                   )
                 {
                     endLoop = true;
                 }
@@ -1114,9 +1116,9 @@ namespace System.Windows.Xps.Packaging
         {
             PackagePart sigDefPart =
                 CurrentXpsManager.GetSignatureDefinitionPart(Uri);
-            if( sigDefPart == null )
+            if (sigDefPart == null)
             {
-                sigDefPart = CurrentXpsManager.AddSignatureDefinitionPart( _metroPart );
+                sigDefPart = CurrentXpsManager.AddSignatureDefinitionPart(_metroPart);
             }
 
             using (Stream stream = sigDefPart.GetStream(FileMode.Create))
@@ -1159,7 +1161,7 @@ namespace System.Windows.Xps.Packaging
         // This variable flags whether the PrintTicket property is
         // committed.  A writer can only commit this property once.
         //
-        private bool                                _isPrintTicketCommitted;
+        private bool _isPrintTicketCommitted;
 
         //
         // These variables are used to keep track of the parent
@@ -1167,20 +1169,20 @@ namespace System.Windows.Xps.Packaging
         // down the current tree.  This is used be the flushing
         // policy to do interleave flushing of parts correctly.
         //
-        private INode                               _parentNode;
+        private INode _parentNode;
 
         //
         // This variable flags wehter the pageCashe
         // has been populated by parsing the part for dependent pages
         //
-        private bool                                _hasParsedPages;
+        private bool _hasParsedPages;
 
         //
         // 0 based document number in the document sequence
         //
-        private int                                 _documentNumber;
+        private int _documentNumber;
 
-        private XpsThumbnail                        _thumbnail;
+        private XpsThumbnail _thumbnail;
 
 
         //
@@ -1189,18 +1191,18 @@ namespace System.Windows.Xps.Packaging
         // for this reason we can not handle adding new page
         // until the the current page has been committed
         //
-        private XpsFixedPageReaderWriter            _currentPage;
+        private XpsFixedPageReaderWriter _currentPage;
         //
         // A cached list of Signature Definitions
         //
-        private Collection<XpsSignatureDefinition>  _signatureDefinitions;
+        private Collection<XpsSignatureDefinition> _signatureDefinitions;
         //
         // Boolean indicating whetehr _signatureDefinitions collection
         // has been changed
         //
-        private bool                                _sigCollectionDirty;
+        private bool _sigCollectionDirty;
 
-        private XpsStructure                        _documentStructure;
+        private XpsStructure _documentStructure;
         #endregion Private data
 
         #region Internal properties
@@ -1234,7 +1236,7 @@ namespace System.Windows.Xps.Packaging
             //
             // Create the relationship between the package and the tumbnail
             //
-            if( _thumbnail != null )
+            if (_thumbnail != null)
             {
                 _thumbnail = null;
             }

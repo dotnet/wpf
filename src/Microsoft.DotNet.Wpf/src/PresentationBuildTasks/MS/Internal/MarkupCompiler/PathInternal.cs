@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,15 +16,14 @@
 #pragma warning disable 1634, 1691
 
 using System;
-using System.IO;
-using System.Text;
-
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.CompilerServices;
+using System.Text;
 
 namespace MS.Internal
 {
-    internal sealed class PathInternal 
+    internal sealed class PathInternal
     {
         internal static string GetRelativePath(string relativeTo, string path, StringComparison comparisonType)
         {
@@ -66,7 +65,8 @@ namespace MS.Internal
                 pathLength--;
 
             // If we have effectively the same path, return "."
-            if (relativeToLength == pathLength && commonLength >= relativeToLength) return CurrentDir.ToString();
+            if (relativeToLength == pathLength && commonLength >= relativeToLength)
+                return CurrentDir.ToString();
 
             // We have the same root, we need to calculate the difference now using the
             // common Length and Segment count past the length.
@@ -256,7 +256,8 @@ namespace MS.Internal
         /// </summary>
         internal static unsafe int EqualStartingCharacterCount(string first, string second, bool ignoreCase)
         {
-            if (string.IsNullOrEmpty(first) || string.IsNullOrEmpty(second)) return 0;
+            if (string.IsNullOrEmpty(first) || string.IsNullOrEmpty(second))
+                return 0;
 
             int commonChars = 0;
 
@@ -280,7 +281,7 @@ namespace MS.Internal
             return commonChars;
         }
 
-            /// <summary>
+        /// <summary>
         /// Returns true if the path uses any of the DOS device path syntaxes. ("\\.\", "\\?\", or "\??\")
         /// </summary>
         internal static bool IsDevice(ReadOnlySpan<char> path)
@@ -346,11 +347,11 @@ namespace MS.Internal
         /// </summary>
         public static bool DoesEndInDirectorySeparator(string path)
               => path != null && path.Length > 0 && PathInternal.IsDirectorySeparator(path[path.Length - 1]);
-        
+
         internal const char VolumeSeparatorChar = ':';
-          // \\?\UNC\, \\.\UNC\
+        // \\?\UNC\, \\.\UNC\
         internal const int UncExtendedPrefixLength = 8;
-            // \\?\, \\.\, \??\
+        // \\?\, \\.\, \??\
         internal const int DevicePrefixLength = 4;
         // \\
         internal const int UncPrefixLength = 2;

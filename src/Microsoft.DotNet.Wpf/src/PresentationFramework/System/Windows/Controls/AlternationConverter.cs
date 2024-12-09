@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,7 +32,7 @@ namespace System.Windows.Controls
         ///<summary>
         /// Convert an integer to the corresponding value from the Values list.
         ///</summary>
-        public object Convert (object o, Type targetType, object parameter, CultureInfo culture)
+        public object Convert(object o, Type targetType, object parameter, CultureInfo culture)
         {
             if (_values.Count > 0 && o is int)
             {

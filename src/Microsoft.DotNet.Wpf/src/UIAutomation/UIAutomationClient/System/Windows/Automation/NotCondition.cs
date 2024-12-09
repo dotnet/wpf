@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -21,14 +21,14 @@ namespace System.Windows.Automation
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
         /// <summary>
         /// Constructor to create a condition that negates the specified condition
         /// </summary>
         /// <param name="condition">Condition to negate</param>
-        public NotCondition( Condition condition )
+        public NotCondition(Condition condition)
         {
             ArgumentNullException.ThrowIfNull(condition);
 
@@ -48,7 +48,7 @@ namespace System.Windows.Automation
         //  Public Properties
         //
         //------------------------------------------------------
- 
+
         #region Public Properties
 
         /// <summary>
@@ -70,7 +70,7 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         Condition _condition;

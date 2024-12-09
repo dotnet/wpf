@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Automation.Peers;
 using System.Windows.Threading;
 using MS.Internal;
-using System.Windows.Automation.Peers;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -46,7 +46,7 @@ namespace System.Windows.Input
         /// <returns>
         ///     The state of the specified key
         /// </returns>
-        protected abstract KeyStates GetKeyStatesFromSystem( Key key );
+        protected abstract KeyStates GetKeyStatesFromSystem(Key key);
 
         /// <summary>
         ///     Returns the element that input from this device is sent to.
@@ -56,7 +56,7 @@ namespace System.Windows.Input
             get
             {
                 //VerifyAccess();
-                if(null != ForceTarget)
+                if (null != ForceTarget)
                     return ForceTarget;
 
                 return FocusedElement;
@@ -67,7 +67,7 @@ namespace System.Windows.Input
         {
             get
             {
-                return (IInputElement) _forceTarget;
+                return (IInputElement)_forceTarget;
             }
             set
             {
@@ -83,7 +83,7 @@ namespace System.Windows.Input
         /// <summary>
         ///     The default mode for restoring focus.
         /// </summary>
-        public RestoreFocusMode DefaultRestoreFocusMode {get; set;}
+        public RestoreFocusMode DefaultRestoreFocusMode { get; set; }
 
         /// <summary>
         ///     Returns the element that the keyboard is focused on.
@@ -92,7 +92,7 @@ namespace System.Windows.Input
         {
             get
             {
-                return (IInputElement) _focus;
+                return (IInputElement)_focus;
             }
         }
 
@@ -116,19 +116,19 @@ namespace System.Windows.Input
             bool forceToNullIfFailed = false;
 
             // Validate that elt is either a UIElement, a ContentElement or a UIElement3D.
-            if(element != null)
+            if (element != null)
             {
-                if(!InputElement.IsValid(element))
+                if (!InputElement.IsValid(element))
                 {
-                    #pragma warning suppress 6506 // element is obviously not null
+#pragma warning suppress 6506 // element is obviously not null
                     throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, element.GetType()));
                 }
 
-                oFocus = (DependencyObject) element;
+                oFocus = (DependencyObject)element;
             }
 
             // If no element is given for focus, use the root of the active source.
-            if(oFocus == null && _activeSource != null)
+            if (oFocus == null && _activeSource != null)
             {
                 oFocus = _activeSource.RootVisual;
                 forceToNullIfFailed = true;
@@ -136,29 +136,29 @@ namespace System.Windows.Input
 
             Focus(oFocus, true, true, forceToNullIfFailed);
 
-            return (IInputElement) _focus;
+            return (IInputElement)_focus;
         }
         private void Focus(DependencyObject focus, bool askOld, bool askNew, bool forceToNullIfFailed)
         {
             // Make sure that the element is valid for receiving focus.
             bool isValid = true;
-            if(focus != null)
+            if (focus != null)
             {
                 isValid = Keyboard.IsFocusable(focus);
 
-                if(!isValid && forceToNullIfFailed)
+                if (!isValid && forceToNullIfFailed)
                 {
                     focus = null;
                     isValid = true;
                 }
             }
 
-            if(isValid)
+            if (isValid)
             {
                 // Get the keyboard input provider that provides input for the active source.
                 IKeyboardInputProvider keyboardInputProvider = null;
                 DependencyObject containingVisual = InputElement.GetContainingVisual(focus);
-                if(containingVisual != null)
+                if (containingVisual != null)
                 {
                     PresentationSource source = PresentationSource.CriticalFromVisual(containingVisual);
                     if (source != null)
@@ -179,18 +179,18 @@ namespace System.Windows.Input
         {
             get
             {
-//                 VerifyAccess();
+                //                 VerifyAccess();
 
                 ModifierKeys modifiers = ModifierKeys.None;
-                if(IsKeyDown_private(Key.LeftAlt) || IsKeyDown_private(Key.RightAlt))
+                if (IsKeyDown_private(Key.LeftAlt) || IsKeyDown_private(Key.RightAlt))
                 {
                     modifiers |= ModifierKeys.Alt;
                 }
-                if(IsKeyDown_private(Key.LeftCtrl) || IsKeyDown_private(Key.RightCtrl))
+                if (IsKeyDown_private(Key.LeftCtrl) || IsKeyDown_private(Key.RightCtrl))
                 {
                     modifiers |= ModifierKeys.Control;
                 }
-                if(IsKeyDown_private(Key.LeftShift) || IsKeyDown_private(Key.RightShift))
+                if (IsKeyDown_private(Key.LeftShift) || IsKeyDown_private(Key.RightShift))
                 {
                     modifiers |= ModifierKeys.Shift;
                 }
@@ -205,8 +205,8 @@ namespace System.Windows.Input
         /// </summary>
         private void Validate_Key(Key key)
         {
-            if( 256 <= (int)key || (int)key <= 0)
-                throw new  System.ComponentModel.InvalidEnumArgumentException("key", (int)key, typeof(Key));
+            if (256 <= (int)key || (int)key <= 0)
+                throw new System.ComponentModel.InvalidEnumArgumentException("key", (int)key, typeof(Key));
         }
 
         /// <summary>
@@ -215,7 +215,7 @@ namespace System.Windows.Input
         /// </summary>
         private bool IsKeyDown_private(Key key)
         {
-            return ( ( GetKeyStatesFromSystem(key) & KeyStates.Down ) == KeyStates.Down );
+            return ((GetKeyStatesFromSystem(key) & KeyStates.Down) == KeyStates.Down);
         }
 
         /// <summary>
@@ -223,7 +223,7 @@ namespace System.Windows.Input
         /// </summary>
         public bool IsKeyDown(Key key)
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             Validate_Key(key);
             return IsKeyDown_private(key);
         }
@@ -233,7 +233,7 @@ namespace System.Windows.Input
         /// </summary>
         public bool IsKeyUp(Key key)
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             Validate_Key(key);
             return (!IsKeyDown_private(key));
         }
@@ -243,9 +243,9 @@ namespace System.Windows.Input
         /// </summary>
         public bool IsKeyToggled(Key key)
         {
-//             VerifyAccess();
+            //             VerifyAccess();
             Validate_Key(key);
-            return( ( GetKeyStatesFromSystem(key) & KeyStates.Toggled ) == KeyStates.Toggled );
+            return ((GetKeyStatesFromSystem(key) & KeyStates.Toggled) == KeyStates.Toggled);
         }
 
         /// <summary>
@@ -265,19 +265,21 @@ namespace System.Windows.Input
         private void TryChangeFocus(DependencyObject newFocus, IKeyboardInputProvider keyboardInputProvider, bool askOld, bool askNew, bool forceToNullIfFailed)
         {
             bool changeFocus = true;
-            int timeStamp = Environment.TickCount ;
+            int timeStamp = Environment.TickCount;
             DependencyObject oldFocus = _focus; // This is required, used below to see if focus has been delegated
 
-            if(newFocus != _focus)
+            if (newFocus != _focus)
             {
                 // If requested, and there is currently something with focus
                 // Send the PreviewLostKeyboardFocus event to see if the object losing focus want to cancel it.
                 // - no need to check "changeFocus" here as it was just previously unconditionally set to true
-                if(askOld && _focus != null)
+                if (askOld && _focus != null)
                 {
-                    KeyboardFocusChangedEventArgs previewLostFocus = new KeyboardFocusChangedEventArgs(this, timeStamp, (IInputElement)_focus, (IInputElement)newFocus);
-                    previewLostFocus.RoutedEvent=Keyboard.PreviewLostKeyboardFocusEvent;
-                    previewLostFocus.Source= _focus;
+                    KeyboardFocusChangedEventArgs previewLostFocus = new KeyboardFocusChangedEventArgs(this, timeStamp, (IInputElement)_focus, (IInputElement)newFocus)
+                    {
+                        RoutedEvent = Keyboard.PreviewLostKeyboardFocusEvent,
+                        Source = _focus
+                    };
                     _inputManager?.ProcessInput(previewLostFocus);
 
                     // is handled the right indication of canceled?
@@ -290,11 +292,13 @@ namespace System.Windows.Input
                 // Send the PreviewGotKeyboardFocus event to see if the object gaining focus want to cancel it.
                 // - must also check "changeFocus", no point in checking if the "previewLostFocus" event
                 //   above already cancelled it
-                if(askNew && changeFocus && newFocus != null)
+                if (askNew && changeFocus && newFocus != null)
                 {
-                    KeyboardFocusChangedEventArgs previewGotFocus = new KeyboardFocusChangedEventArgs(this, timeStamp, (IInputElement)_focus, (IInputElement)newFocus);
-                    previewGotFocus.RoutedEvent=Keyboard.PreviewGotKeyboardFocusEvent;
-                    previewGotFocus.Source= newFocus;
+                    KeyboardFocusChangedEventArgs previewGotFocus = new KeyboardFocusChangedEventArgs(this, timeStamp, (IInputElement)_focus, (IInputElement)newFocus)
+                    {
+                        RoutedEvent = Keyboard.PreviewGotKeyboardFocusEvent,
+                        Source = newFocus
+                    };
                     _inputManager?.ProcessInput(previewGotFocus);
 
                     // is handled the right indication of canceled?
@@ -306,7 +310,7 @@ namespace System.Windows.Input
 
                 // If we are setting the focus to an element, see if the InputProvider
                 // can take focus for us.
-                if(changeFocus && newFocus != null)
+                if (changeFocus && newFocus != null)
                 {
                     if (keyboardInputProvider != null && Keyboard.IsFocusable(newFocus))
                     {
@@ -315,9 +319,11 @@ namespace System.Windows.Input
                         // element receiving focus have all agreed to the
                         // transaction.  This is used by menus to configure the
                         // behavior of focus changes.
-                        KeyboardInputProviderAcquireFocusEventArgs acquireFocus = new KeyboardInputProviderAcquireFocusEventArgs(this, timeStamp, changeFocus);
-                        acquireFocus.RoutedEvent = Keyboard.PreviewKeyboardInputProviderAcquireFocusEvent;
-                        acquireFocus.Source= newFocus;
+                        KeyboardInputProviderAcquireFocusEventArgs acquireFocus = new KeyboardInputProviderAcquireFocusEventArgs(this, timeStamp, changeFocus)
+                        {
+                            RoutedEvent = Keyboard.PreviewKeyboardInputProviderAcquireFocusEvent,
+                            Source = newFocus
+                        };
                         _inputManager?.ProcessInput(acquireFocus);
 
                         // Acquire focus through the input provider.
@@ -325,9 +331,11 @@ namespace System.Windows.Input
 
                         // Tell the element whether or not we were able to
                         // acquire focus through the input provider.
-                        acquireFocus = new KeyboardInputProviderAcquireFocusEventArgs(this, timeStamp, changeFocus);
-                        acquireFocus.RoutedEvent = Keyboard.KeyboardInputProviderAcquireFocusEvent;
-                        acquireFocus.Source= newFocus;
+                        acquireFocus = new KeyboardInputProviderAcquireFocusEventArgs(this, timeStamp, changeFocus)
+                        {
+                            RoutedEvent = Keyboard.KeyboardInputProviderAcquireFocusEvent,
+                            Source = newFocus
+                        };
                         _inputManager?.ProcessInput(acquireFocus);
                     }
                     else
@@ -338,7 +346,7 @@ namespace System.Windows.Input
 
                 // If the ChangeFocus operation was cancelled or the AcquireFocus operation failed
                 // and the "ForceToNullIfFailed" flag was set, we set focus to null
-                if( !changeFocus && forceToNullIfFailed && oldFocus == _focus /* Focus is not delegated */ )
+                if (!changeFocus && forceToNullIfFailed && oldFocus == _focus /* Focus is not delegated */ )
                 {
                     // focus might be delegated (e.g. during PreviewGotKeyboardFocus)
                     // without actually changing, if it was already on the delegated
@@ -356,7 +364,7 @@ namespace System.Windows.Input
                 // If both the old and new focus elements allowed it, and the
                 // InputProvider has acquired it, go ahead and change our internal
                 // sense of focus to the desired element.
-                if(changeFocus)
+                if (changeFocus)
                 {
                     ChangeFocus(newFocus, timeStamp);
                 }
@@ -366,17 +374,17 @@ namespace System.Windows.Input
         {
             DependencyObject o = null;
 
-            if(focus != _focus)
+            if (focus != _focus)
             {
                 // Update the critical pieces of data.
                 DependencyObject oldFocus = _focus;
                 _focus = focus;
                 _focusRootVisual = InputElement.GetRootVisual(focus);
 
-                using(Dispatcher.DisableProcessing()) // Disable reentrancy due to locks taken
+                using (Dispatcher.DisableProcessing()) // Disable reentrancy due to locks taken
                 {
                     // Adjust the handlers we use to track everything.
-                    if(oldFocus != null)
+                    if (oldFocus != null)
                     {
                         o = oldFocus;
                         if (o is UIElement uie)
@@ -399,10 +407,10 @@ namespace System.Windows.Input
                         }
                         else
                         {
-                            throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType())); 
+                            throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType()));
                         }
                     }
-                    if(_focus != null)
+                    if (_focus != null)
                     {
                         o = _focus;
                         if (o is UIElement uie)
@@ -410,7 +418,7 @@ namespace System.Windows.Input
                             uie.IsEnabledChanged += _isEnabledChangedEventHandler;
                             uie.IsVisibleChanged += _isVisibleChangedEventHandler;
                             uie.FocusableChanged += _focusableChangedEventHandler;
-                        }                        
+                        }
                         else if (o is ContentElement ce)
                         {
                             ce.IsEnabledChanged += _isEnabledChangedEventHandler;
@@ -425,7 +433,7 @@ namespace System.Windows.Input
                         }
                         else
                         {
-                            throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType())); 
+                            throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, o.GetType()));
                         }
                     }
                 }
@@ -436,12 +444,12 @@ namespace System.Windows.Input
                 UIElement.FocusWithinProperty.OnOriginValueChanged(oldFocus, _focus, ref _focusTreeState);
 
                 // Invalidate the IsKeyboardFocused properties.
-                if(oldFocus != null)
+                if (oldFocus != null)
                 {
                     o = oldFocus;
                     o.SetValue(UIElement.IsKeyboardFocusedPropertyKey, false); // Same property for ContentElements
                 }
-                if(_focus != null)
+                if (_focus != null)
                 {
                     // Invalidate the IsKeyboardFocused property.
                     o = _focus;
@@ -458,19 +466,23 @@ namespace System.Windows.Input
                 InputLanguageManager.Current.Focus(_focus, oldFocus);
 
                 // Send the LostKeyboardFocus and GotKeyboardFocus events.
-                if(oldFocus != null)
+                if (oldFocus != null)
                 {
-                    KeyboardFocusChangedEventArgs lostFocus = new KeyboardFocusChangedEventArgs(this, timestamp, (IInputElement) oldFocus, (IInputElement) focus);
-                    lostFocus.RoutedEvent=Keyboard.LostKeyboardFocusEvent;
-                    lostFocus.Source= oldFocus;
+                    KeyboardFocusChangedEventArgs lostFocus = new KeyboardFocusChangedEventArgs(this, timestamp, (IInputElement)oldFocus, (IInputElement)focus)
+                    {
+                        RoutedEvent = Keyboard.LostKeyboardFocusEvent,
+                        Source = oldFocus
+                    };
                     _inputManager?.ProcessInput(lostFocus);
                 }
 
-                if(_focus != null)
+                if (_focus != null)
                 {
-                    KeyboardFocusChangedEventArgs gotFocus = new KeyboardFocusChangedEventArgs(this, timestamp, (IInputElement) oldFocus, (IInputElement) _focus);
-                    gotFocus.RoutedEvent=Keyboard.GotKeyboardFocusEvent;
-                    gotFocus.Source= _focus;
+                    KeyboardFocusChangedEventArgs gotFocus = new KeyboardFocusChangedEventArgs(this, timestamp, (IInputElement)oldFocus, (IInputElement)_focus)
+                    {
+                        RoutedEvent = Keyboard.GotKeyboardFocusEvent,
+                        Source = _focus
+                    };
                     _inputManager?.ProcessInput(gotFocus);
                 }
 
@@ -519,9 +531,9 @@ namespace System.Windows.Input
         /// </remarks>
         internal void ReevaluateFocusAsync(DependencyObject element, DependencyObject oldParent, bool isCoreParent)
         {
-            if(element != null)
+            if (element != null)
             {
-                if(isCoreParent)
+                if (isCoreParent)
                 {
                     FocusTreeState.SetCoreParent(element, oldParent);
                 }
@@ -545,7 +557,7 @@ namespace System.Windows.Input
             // the user can change the input device to avoid the infinite loops, or close
             // the app if nothing else works.
             //
-            if(_reevaluateFocusOperation == null)
+            if (_reevaluateFocusOperation == null)
             {
                 _reevaluateFocusOperation = Dispatcher.BeginInvoke(DispatcherPriority.Input, _reevaluateFocusCallback, null);
             }
@@ -565,7 +577,7 @@ namespace System.Windows.Input
         {
             _reevaluateFocusOperation = null;
 
-            if( _focus == null )
+            if (_focus == null)
             {
                 return null;
             }
@@ -576,9 +588,9 @@ namespace System.Windows.Input
             // for an ancestor that is.
             //
             DependencyObject element = _focus;
-            while(element != null)
+            while (element != null)
             {
-                if(Keyboard.IsFocusable(element))
+                if (Keyboard.IsFocusable(element))
                 {
                     break;
                 }
@@ -590,26 +602,26 @@ namespace System.Windows.Input
             // Get the PresentationSource that contains the element to be focused.
             PresentationSource presentationSource = null;
             DependencyObject visualContainer = InputElement.GetContainingVisual(element);
-            if(visualContainer != null)
+            if (visualContainer != null)
             {
                 presentationSource = PresentationSource.CriticalFromVisual(visualContainer);
             }
-            
+
             // The default action is to reset focus to the root element
             // of the active presentation source.
             bool moveFocus = true;
             DependencyObject moveFocusTo = null;
 
-            if(presentationSource != null)
+            if (presentationSource != null)
             {
                 IKeyboardInputProvider keyboardProvider = presentationSource.GetInputProvider(typeof(KeyboardDevice)) as IKeyboardInputProvider;
-                if(keyboardProvider != null)
+                if (keyboardProvider != null)
                 {
                     // Confirm with the keyboard provider for this
                     // presentation source that it has acquired focus.
-                    if(keyboardProvider.AcquireFocus(true))
+                    if (keyboardProvider.AcquireFocus(true))
                     {
-                        if(element == _focus)
+                        if (element == _focus)
                         {
                             // The focus element is still good.
                             moveFocus = false;
@@ -625,9 +637,9 @@ namespace System.Windows.Input
                 }
             }
 
-            if(moveFocus)
+            if (moveFocus)
             {
-                if(moveFocusTo is null && _activeSource is not null)
+                if (moveFocusTo is null && _activeSource is not null)
                 {
                     moveFocusTo = _activeSource.RootVisual;
                 }
@@ -640,7 +652,7 @@ namespace System.Windows.Input
                 //
                 // We only need to do this if there is any information about the old
                 // tree structure.
-                if(_focusTreeState != null && !_focusTreeState.IsEmpty)
+                if (_focusTreeState != null && !_focusTreeState.IsEmpty)
                 {
                     UIElement.FocusWithinProperty.OnOriginValueChanged(_focus, _focus, ref _focusTreeState);
                 }
@@ -652,7 +664,7 @@ namespace System.Windows.Input
         private void PreProcessInput(object sender, PreProcessInputEventArgs e)
         {
             RawKeyboardInputReport keyboardInput = ExtractRawKeyboardInputReport(e, InputManager.PreviewInputReportEvent);
-            if(keyboardInput != null)
+            if (keyboardInput != null)
             {
                 // Claim the input for the keyboard.
                 e.StagingItem.Input.Device = this;
@@ -662,7 +674,7 @@ namespace System.Windows.Input
         private void PreNotifyInput(object sender, NotifyInputEventArgs e)
         {
             RawKeyboardInputReport keyboardInput = ExtractRawKeyboardInputReport(e, InputManager.PreviewInputReportEvent);
-            if(keyboardInput != null)
+            if (keyboardInput != null)
             {
                 CheckForDisconnectedFocus();
 
@@ -680,22 +692,22 @@ namespace System.Windows.Input
                 // the keyboard again, since Win32 will have updated the
                 // keyboard state correctly by then.
                 //
-                if((keyboardInput.Actions & RawKeyboardActions.Activate) == RawKeyboardActions.Activate)
+                if ((keyboardInput.Actions & RawKeyboardActions.Activate) == RawKeyboardActions.Activate)
                 {
                     //if active source is null, no need to do special-case handling
-                    if(_activeSource == null)
+                    if (_activeSource == null)
                     {
                         // we are now active.
                         _activeSource = keyboardInput.InputSource;
                     }
-                    else if(_activeSource != keyboardInput.InputSource)
+                    else if (_activeSource != keyboardInput.InputSource)
                     {
                         IKeyboardInputProvider toDeactivate = _activeSource.GetInputProvider(typeof(KeyboardDevice)) as IKeyboardInputProvider;
 
                         // we are now active.
                         _activeSource = keyboardInput.InputSource;
 
-                        if(toDeactivate != null)
+                        if (toDeactivate != null)
                         {
                             toDeactivate.NotifyDeactivate();
                         }
@@ -710,7 +722,7 @@ namespace System.Windows.Input
 
                 // If the input is reporting a key down, the action is never
                 // considered redundant.
-                if((keyboardInput.Actions & RawKeyboardActions.KeyDown) == RawKeyboardActions.KeyDown)
+                if ((keyboardInput.Actions & RawKeyboardActions.KeyDown) == RawKeyboardActions.KeyDown)
                 {
                     RawKeyboardActions actions = GetNonRedundantActions(e);
                     actions |= RawKeyboardActions.KeyDown;
@@ -722,12 +734,12 @@ namespace System.Windows.Input
                     e.StagingItem.SetData(_tagScanCode, new ScanCode(keyboardInput.ScanCode, keyboardInput.IsExtendedKey));
 
                     // Tell the InputManager that the MostRecentDevice is us.
-                    if(_inputManager is not null)
+                    if (_inputManager is not null)
                         _inputManager.MostRecentInputDevice = this;
                 }
 
                 // We are missing detection for redundant ups
-                if((keyboardInput.Actions & RawKeyboardActions.KeyUp) == RawKeyboardActions.KeyUp)
+                if ((keyboardInput.Actions & RawKeyboardActions.KeyUp) == RawKeyboardActions.KeyUp)
                 {
                     RawKeyboardActions actions = GetNonRedundantActions(e);
                     actions |= RawKeyboardActions.KeyUp;
@@ -739,18 +751,18 @@ namespace System.Windows.Input
                     e.StagingItem.SetData(_tagScanCode, new ScanCode(keyboardInput.ScanCode, keyboardInput.IsExtendedKey));
 
                     // Tell the InputManager that the MostRecentDevice is us.
-                    if(_inputManager is not null)
+                    if (_inputManager is not null)
                         _inputManager.MostRecentInputDevice = this;
                 }
             }
 
             // On KeyDown, we might need to set the Repeat flag
 
-            if(e.StagingItem.Input.RoutedEvent == Keyboard.PreviewKeyDownEvent)
+            if (e.StagingItem.Input.RoutedEvent == Keyboard.PreviewKeyDownEvent)
             {
                 CheckForDisconnectedFocus();
 
-                KeyEventArgs args = (KeyEventArgs) e.StagingItem.Input;
+                KeyEventArgs args = (KeyEventArgs)e.StagingItem.Input;
 
                 // Is this the same as the previous key?  (Look at the real key, e.g. TextManager
                 // might have changed args.Key it to Key.TextInput.)
@@ -770,11 +782,11 @@ namespace System.Windows.Input
             }
 
             // On KeyUp, we clear Repeat flag
-            else if(e.StagingItem.Input.RoutedEvent == Keyboard.PreviewKeyUpEvent)
+            else if (e.StagingItem.Input.RoutedEvent == Keyboard.PreviewKeyUpEvent)
             {
                 CheckForDisconnectedFocus();
 
-                KeyEventArgs args = (KeyEventArgs) e.StagingItem.Input;
+                KeyEventArgs args = (KeyEventArgs)e.StagingItem.Input;
                 args.SetRepeat(false);
 
                 // Clear _previousKey, so that down/up/down/up doesn't look like a repeat
@@ -785,13 +797,13 @@ namespace System.Windows.Input
         private void PostProcessInput(object sender, ProcessInputEventArgs e)
         {
             // PreviewKeyDown --> KeyDown
-            if(e.StagingItem.Input.RoutedEvent == Keyboard.PreviewKeyDownEvent)
+            if (e.StagingItem.Input.RoutedEvent == Keyboard.PreviewKeyDownEvent)
             {
                 CheckForDisconnectedFocus();
 
-                if(!e.StagingItem.Input.Handled)
+                if (!e.StagingItem.Input.Handled)
                 {
-                    KeyEventArgs previewKeyDown = (KeyEventArgs) e.StagingItem.Input;
+                    KeyEventArgs previewKeyDown = (KeyEventArgs)e.StagingItem.Input;
 
                     // Dig out the real key.
                     bool isSystemKey = false;
@@ -802,7 +814,7 @@ namespace System.Windows.Input
                     {
                         isSystemKey = true;
                         key = previewKeyDown.RealKey;
-                    } 
+                    }
                     else if (key == Key.ImeProcessed)
                     {
                         isImeProcessed = true;
@@ -815,7 +827,7 @@ namespace System.Windows.Input
                     }
 
                     KeyEventArgs keyDown = new KeyEventArgs(this, previewKeyDown.UnsafeInputSource, previewKeyDown.Timestamp, key);
-                    keyDown.SetRepeat( previewKeyDown.IsRepeat );
+                    keyDown.SetRepeat(previewKeyDown.IsRepeat);
 
                     // Mark the new event as SystemKey as appropriate.
                     if (isSystemKey)
@@ -832,7 +844,7 @@ namespace System.Windows.Input
                         keyDown.MarkDeadCharProcessed();
                     }
 
-                    keyDown.RoutedEvent=Keyboard.KeyDownEvent;
+                    keyDown.RoutedEvent = Keyboard.KeyDownEvent;
                     keyDown.ScanCode = previewKeyDown.ScanCode;
                     keyDown.IsExtendedKey = previewKeyDown.IsExtendedKey;
                     e.PushInput(keyDown, e.StagingItem);
@@ -840,13 +852,13 @@ namespace System.Windows.Input
             }
 
             // PreviewKeyUp --> KeyUp
-            if(e.StagingItem.Input.RoutedEvent == Keyboard.PreviewKeyUpEvent)
+            if (e.StagingItem.Input.RoutedEvent == Keyboard.PreviewKeyUpEvent)
             {
                 CheckForDisconnectedFocus();
 
-                if(!e.StagingItem.Input.Handled)
+                if (!e.StagingItem.Input.Handled)
                 {
-                    KeyEventArgs previewKeyUp = (KeyEventArgs) e.StagingItem.Input;
+                    KeyEventArgs previewKeyUp = (KeyEventArgs)e.StagingItem.Input;
 
                     // Dig out the real key.
                     bool isSystemKey = false;
@@ -863,7 +875,7 @@ namespace System.Windows.Input
                         isImeProcessed = true;
                         key = previewKeyUp.RealKey;
                     }
-                    else if(key == Key.DeadCharProcessed)
+                    else if (key == Key.DeadCharProcessed)
                     {
                         isDeadCharProcessed = true;
                         key = previewKeyUp.RealKey;
@@ -880,13 +892,13 @@ namespace System.Windows.Input
                     {
                         // Mark the new event as ImeProcessed as appropriate.
                         keyUp.MarkImeProcessed();
-                    } 
+                    }
                     else if (isDeadCharProcessed)
                     {
                         keyUp.MarkDeadCharProcessed();
                     }
 
-                    keyUp.RoutedEvent=Keyboard.KeyUpEvent;
+                    keyUp.RoutedEvent = Keyboard.KeyUpEvent;
                     keyUp.ScanCode = previewKeyUp.ScanCode;
                     keyUp.IsExtendedKey = previewKeyUp.IsExtendedKey;
                     e.PushInput(keyUp, e.StagingItem);
@@ -894,21 +906,21 @@ namespace System.Windows.Input
             }
 
             RawKeyboardInputReport keyboardInput = ExtractRawKeyboardInputReport(e, InputManager.InputReportEvent);
-            if(keyboardInput != null)
+            if (keyboardInput != null)
             {
                 CheckForDisconnectedFocus();
 
-                if(!e.StagingItem.Input.Handled)
+                if (!e.StagingItem.Input.Handled)
                 {
                     // In general, this is where we promote the non-redundant
                     // reported actions to our premier events.
                     RawKeyboardActions actions = GetNonRedundantActions(e);
 
                     // Raw --> PreviewKeyDown
-                    if((actions & RawKeyboardActions.KeyDown) == RawKeyboardActions.KeyDown)
+                    if ((actions & RawKeyboardActions.KeyDown) == RawKeyboardActions.KeyDown)
                     {
-                        Key key = (Key) e.StagingItem.GetData(_tagKey);
-                        if(key != Key.None)
+                        Key key = (Key)e.StagingItem.GetData(_tagKey);
+                        if (key != Key.None)
                         {
                             KeyEventArgs previewKeyDown = new KeyEventArgs(this, keyboardInput.InputSource, keyboardInput.Timestamp, key);
                             ScanCode scanCode = (ScanCode)e.StagingItem.GetData(_tagScanCode);
@@ -918,16 +930,16 @@ namespace System.Windows.Input
                             {
                                 previewKeyDown.MarkSystem();
                             }
-                            previewKeyDown.RoutedEvent=Keyboard.PreviewKeyDownEvent;
+                            previewKeyDown.RoutedEvent = Keyboard.PreviewKeyDownEvent;
                             e.PushInput(previewKeyDown, e.StagingItem);
                         }
                     }
 
                     // Raw --> PreviewKeyUp
-                    if((actions & RawKeyboardActions.KeyUp) == RawKeyboardActions.KeyUp)
+                    if ((actions & RawKeyboardActions.KeyUp) == RawKeyboardActions.KeyUp)
                     {
-                        Key key = (Key) e.StagingItem.GetData(_tagKey);
-                        if(key != Key.None)
+                        Key key = (Key)e.StagingItem.GetData(_tagKey);
+                        if (key != Key.None)
                         {
                             KeyEventArgs previewKeyUp = new KeyEventArgs(this, keyboardInput.InputSource, keyboardInput.Timestamp, key);
                             ScanCode scanCode = (ScanCode)e.StagingItem.GetData(_tagScanCode);
@@ -937,16 +949,16 @@ namespace System.Windows.Input
                             {
                                 previewKeyUp.MarkSystem();
                             }
-                            previewKeyUp.RoutedEvent=Keyboard.PreviewKeyUpEvent;
+                            previewKeyUp.RoutedEvent = Keyboard.PreviewKeyUpEvent;
                             e.PushInput(previewKeyUp, e.StagingItem);
                         }
                     }
                 }
 
                 // Deactivate
-                if((keyboardInput.Actions & RawKeyboardActions.Deactivate) == RawKeyboardActions.Deactivate)
+                if ((keyboardInput.Actions & RawKeyboardActions.Deactivate) == RawKeyboardActions.Deactivate)
                 {
-                    if(IsActive)
+                    if (IsActive)
                     {
                         _activeSource = null;
 
@@ -962,9 +974,9 @@ namespace System.Windows.Input
             RawKeyboardInputReport keyboardInput = null;
 
             InputReportEventArgs input = e.StagingItem.Input as InputReportEventArgs;
-            if(input != null)
+            if (input != null)
             {
-                if(input.Report.Type == InputType.Keyboard && input.RoutedEvent == Event)
+                if (input.Report.Type == InputType.Keyboard && input.RoutedEvent == Event)
                 {
                     keyboardInput = input.Report as RawKeyboardInputReport;
                 }
@@ -980,9 +992,9 @@ namespace System.Windows.Input
             // The CLR throws a null-ref exception if it tries to unbox a
             // null.  So we have to special case that.
             object o = e.StagingItem.GetData(_tagNonRedundantActions);
-            if(o != null)
+            if (o != null)
             {
-                actions = (RawKeyboardActions) o;
+                actions = (RawKeyboardActions)o;
             }
             else
             {
@@ -1001,10 +1013,10 @@ namespace System.Windows.Input
         {
             bool wasDisconnected = false;
 
-            if(InputElement.GetRootVisual (_focus as DependencyObject) != _focusRootVisual)
+            if (InputElement.GetRootVisual(_focus as DependencyObject) != _focusRootVisual)
             {
                 wasDisconnected = true;
-                Focus (null);
+                Focus(null);
             }
 
             return wasDisconnected;
@@ -1053,8 +1065,8 @@ namespace System.Windows.Input
                 _isExtended = isExtended;
             }
 
-            internal int Code {get {return _code;}}
-            internal bool IsExtended {get {return _isExtended;}}
+            internal int Code { get { return _code; } }
+            internal bool IsExtended { get { return _isExtended; } }
 
             private readonly int _code;
             private readonly bool _isExtended;
@@ -1064,6 +1076,6 @@ namespace System.Windows.Input
         private readonly TextCompositionManager _textcompositionManager;
         // TextServicesManager handles KeyDown -> IME composition conversion.
         private readonly TextServicesManager _TsfManager;
-}
+    }
 }
 

@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 #nullable enable
 
 using System.Collections;
 using System.Drawing;
+using System.IO;
 using System.Runtime.CompilerServices;
 using System.Runtime.Serialization;
-using System.IO;
 
 namespace System.Windows
 {
@@ -442,12 +442,12 @@ namespace System.Windows
         {
             // Get the ISerializable data from the hashtable. This way we don't have to worry about
             // getting the LoadFactor, Version, etc. wrong.
-    #pragma warning disable SYSLIB0050 // Type or member is obsolete
+#pragma warning disable SYSLIB0050 // Type or member is obsolete
             SerializationInfo info = new(typeof(Hashtable), FormatterConverterStub.Instance);
-    #pragma warning restore SYSLIB0050
-    #pragma warning disable SYSLIB0051 // Type or member is obsolete
+#pragma warning restore SYSLIB0050
+#pragma warning disable SYSLIB0051 // Type or member is obsolete
             hashtable.GetObjectData(info, default);
-    #pragma warning restore SYSLIB0051
+#pragma warning restore SYSLIB0051
 
             if (info.GetValue<object?>("Comparer") is not null
                 || info.GetValue<object?>("HashCodeProvider") is not null)

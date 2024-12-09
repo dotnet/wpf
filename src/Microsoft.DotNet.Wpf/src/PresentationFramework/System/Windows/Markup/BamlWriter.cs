@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,8 +7,8 @@
 * Purpose:  Public api for writing baml records to a stream
 *
 \***************************************************************************/
-using System.IO;
 using System.Collections;
+using System.IO;
 using System.Reflection;
 
 namespace System.Windows.Markup
@@ -18,7 +18,7 @@ namespace System.Windows.Markup
     /// </summary>
     internal class BamlWriter : IParserHelper
     {
-#region Constructor
+        #region Constructor
 
         /// <summary>
         /// Create a BamlWriter on the passed stream.  The stream must be writable.
@@ -31,9 +31,9 @@ namespace System.Windows.Markup
             {
                 throw new ArgumentException(SR.BamlWriterBadStream);
             }
-            
+
             _parserContext = new ParserContext();
-            if (null == _parserContext.XamlTypeMapper) 
+            if (null == _parserContext.XamlTypeMapper)
             {
                 _parserContext.XamlTypeMapper = new BamlWriterXamlTypeMapper(XmlParserDefaults.GetDefaultAssemblyNames(),
                                                                              XmlParserDefaults.GetDefaultNamespaceMaps());
@@ -45,14 +45,14 @@ namespace System.Windows.Markup
             _closed = false;
             _nodeTypeStack = new ParserStack();
             _assemblies = new Hashtable(7);
-           _extensionParser = new MarkupExtensionParser((IParserHelper)this, _parserContext);
-           _markupExtensionNodes = new ArrayList();
+            _extensionParser = new MarkupExtensionParser((IParserHelper)this, _parserContext);
+            _markupExtensionNodes = new ArrayList();
         }
 
-  
-#endregion Constructor
 
-#region Close
+        #endregion Constructor
+
+        #region Close
         /// <summary>
         /// Close the underlying stream and terminate write operations.
         /// </summary>
@@ -65,9 +65,9 @@ namespace System.Windows.Markup
             _bamlRecordWriter.BamlStream.Close();
             _closed = true;
         }
-#endregion Close
+        #endregion Close
 
-#region IParserHelper
+        #region IParserHelper
 
         string IParserHelper.LookupNamespace(string prefix)
         {
@@ -75,20 +75,20 @@ namespace System.Windows.Markup
         }
 
         bool IParserHelper.GetElementType(
-                bool    extensionFirst,  
-                string  localName,
-                string  namespaceURI,
-            ref string  assemblyName,
-            ref string  typeFullName,
-            ref Type    baseType,
-            ref Type    serializerType)
+                bool extensionFirst,
+                string localName,
+                string namespaceURI,
+            ref string assemblyName,
+            ref string typeFullName,
+            ref Type baseType,
+            ref Type serializerType)
         {
             bool result = false;
 
-            assemblyName   = string.Empty;
-            typeFullName   = string.Empty;
+            assemblyName = string.Empty;
+            typeFullName = string.Empty;
             serializerType = null;
-            baseType       = null;
+            baseType = null;
 
             // if no namespaceURI or local name don't bother
             if (null == namespaceURI || null == localName)
@@ -96,7 +96,7 @@ namespace System.Windows.Markup
                 return false;
             }
 
-            TypeAndSerializer typeAndSerializer = 
+            TypeAndSerializer typeAndSerializer =
                 _xamlTypeMapper.GetTypeAndSerializer(namespaceURI, localName, null);
             // If the normal type resolution fails, try the name with "Extension" added
             // so that we'll find MarkupExtension subclasses.
@@ -113,24 +113,24 @@ namespace System.Windows.Markup
                 typeFullName = baseType.FullName;
                 assemblyName = baseType.Assembly.FullName;
                 result = true;
-                
-                Debug.Assert(null != assemblyName,"assembly name returned from GetBaseElement is null");
-                Debug.Assert(null != typeFullName,"Type name returned from GetBaseElement is null");
+
+                Debug.Assert(null != assemblyName, "assembly name returned from GetBaseElement is null");
+                Debug.Assert(null != typeFullName, "Type name returned from GetBaseElement is null");
             }
 
             return result;
         }
-        
+
 
         bool IParserHelper.CanResolveLocalAssemblies()
         {
             return false;
         }
-        
 
-#endregion IParserHelper
 
-#region Record Writing
+        #endregion IParserHelper
+
+        #region Record Writing
 
         /// <summary>
         /// Write the start of document record, giving the baml version string
@@ -149,8 +149,8 @@ namespace System.Windows.Markup
             {
                 throw new InvalidOperationException(SR.BamlWriterStartDoc);
             }
-            
-            XamlDocumentStartNode node = new XamlDocumentStartNode(0,0,_depth);
+
+            XamlDocumentStartNode node = new XamlDocumentStartNode(0, 0, _depth);
             _bamlRecordWriter.WriteDocumentStart(node);
             _startDocumentWritten = true;
             Push(BamlRecordType.DocumentStart);
@@ -164,10 +164,10 @@ namespace System.Windows.Markup
         /// </remarks>
         public void WriteEndDocument()
         {
-            VerifyEndTagState(BamlRecordType.DocumentStart, 
+            VerifyEndTagState(BamlRecordType.DocumentStart,
                               BamlRecordType.DocumentEnd);
 
-            XamlDocumentEndNode node = new XamlDocumentEndNode(0,0,_depth);
+            XamlDocumentEndNode node = new XamlDocumentEndNode(0, 0, _depth);
             _bamlRecordWriter.WriteDocumentEnd(node);
         }
 
@@ -215,10 +215,12 @@ namespace System.Windows.Markup
                                                assemblyName,
                                                typeFullName,
                                                elementType,
-                                               serializerType);  
-            node.IsInjected = isInjected;
-            node.CreateUsingTypeConverter = useTypeConverter;
-            
+                                               serializerType)
+            {
+                IsInjected = isInjected,
+                CreateUsingTypeConverter = useTypeConverter
+            };
+
             _bamlRecordWriter.WriteElementStart(node);
         }
 
@@ -232,10 +234,10 @@ namespace System.Windows.Markup
         /// </remarks>
         public void WriteEndElement()
         {
-            VerifyEndTagState(BamlRecordType.ElementStart, 
+            VerifyEndTagState(BamlRecordType.ElementStart,
                               BamlRecordType.ElementEnd);
             ProcessMarkupExtensionNodes();
-            
+
             XamlElementEndNode node = new XamlElementEndNode(
                                                0,
                                                0,
@@ -243,7 +245,7 @@ namespace System.Windows.Markup
             _bamlRecordWriter.WriteElementEnd(node);
             _parserContext.PopScope();
         }
-        
+
         /// <summary>
         /// Write the start of constructor section that follows the start of an element.
         /// </summary>
@@ -251,7 +253,7 @@ namespace System.Windows.Markup
         {
             VerifyWriteState();
             Push(BamlRecordType.ConstructorParametersStart);
-            
+
             XamlConstructorParametersStartNode node = new XamlConstructorParametersStartNode(
                                                0,
                                                0,
@@ -264,16 +266,16 @@ namespace System.Windows.Markup
         /// </summary>
         public void WriteEndConstructor()
         {
-            VerifyEndTagState(BamlRecordType.ConstructorParametersStart, 
+            VerifyEndTagState(BamlRecordType.ConstructorParametersStart,
                               BamlRecordType.ConstructorParametersEnd);
-            
+
             XamlConstructorParametersEndNode node = new XamlConstructorParametersEndNode(
                                                0,
                                                0,
                                                --_depth);
             _bamlRecordWriter.WriteConstructorParametersEnd(node);
         }
-        
+
         /// <summary>
         /// Write simple property information to baml.
         /// </summary>
@@ -288,14 +290,14 @@ namespace System.Windows.Markup
         /// at load time from the stored string.
         /// </remarks>
         public void WriteProperty(
-            string             assemblyName,
-            string             ownerTypeFullName,
-            string             propName,
-            string             value,
+            string assemblyName,
+            string ownerTypeFullName,
+            string propName,
+            string value,
             BamlAttributeUsage propUsage)
         {
             VerifyWriteState();
-            
+
             BamlRecordType parentType = PeekRecordType();
             if (parentType != BamlRecordType.ElementStart)
             {
@@ -305,14 +307,14 @@ namespace System.Windows.Markup
             }
 
             object dpOrPi;
-            Type   declaringType;
+            Type declaringType;
             GetDpOrPi(assemblyName, ownerTypeFullName, propName, out dpOrPi, out declaringType);
 
             // Check if the value is a MarkupExtension.  If so it must be expanded into
             // a series of baml records.  Otherwise just write out the property.
             AttributeData data = _extensionParser.IsMarkupExtensionAttribute(
-                                                        declaringType,    
-                                                        propName,       
+                                                        declaringType,
+                                                        propName,
                                                     ref value,
                                                         0,       // No line numbers for baml
                                                         0,
@@ -325,7 +327,7 @@ namespace System.Windows.Markup
                                             0,
                                             0,
                                             _depth,
-                                            dpOrPi,   
+                                            dpOrPi,
                                             assemblyName,
                                             ownerTypeFullName,
                                             propName,
@@ -369,7 +371,7 @@ namespace System.Windows.Markup
                     _dpProperty = null;
                 }
 
-                _bamlRecordWriter.WriteProperty(propNode);            
+                _bamlRecordWriter.WriteProperty(propNode);
             }
             else
             {
@@ -386,13 +388,13 @@ namespace System.Windows.Markup
                             new XamlPropertyWithTypeNode(0,
                                                          0,
                                                          _depth,
-                                                         dpOrPi,   
+                                                         dpOrPi,
                                                          assemblyName,
                                                          ownerTypeFullName,
                                                          propName,
                                                          typeValue.FullName,
                                                          typeValue.Assembly.FullName,
-                                                         typeValue,   
+                                                         typeValue,
                                                          string.Empty,
                                                          string.Empty);
 
@@ -428,12 +430,12 @@ namespace System.Windows.Markup
         /// Write Content Property Record.
         /// </summary>
         public void WriteContentProperty(
-            string             assemblyName,
-            string             ownerTypeFullName,
-            string             propName )
+            string assemblyName,
+            string ownerTypeFullName,
+            string propName)
         {
             object dpOrPi;
-            Type   declaringType;
+            Type declaringType;
             GetDpOrPi(assemblyName, ownerTypeFullName, propName, out dpOrPi, out declaringType);
 
             XamlContentPropertyNode CpaNode = new XamlContentPropertyNode(
@@ -442,7 +444,7 @@ namespace System.Windows.Markup
                                                     assemblyName,
                                                     ownerTypeFullName,
                                                     propName);
-            _bamlRecordWriter.WriteContentProperty( CpaNode );
+            _bamlRecordWriter.WriteContentProperty(CpaNode);
         }
 
         /// <summary>
@@ -454,11 +456,11 @@ namespace System.Windows.Markup
         /// an empty string, then this sets the default namespace.
         /// </remarks>
         public void WriteXmlnsProperty(
-            string  localName,
-            string  xmlNamespace)
+            string localName,
+            string xmlNamespace)
         {
             VerifyWriteState();
-            
+
             BamlRecordType parentType = PeekRecordType();
             if (parentType != BamlRecordType.ElementStart &&
                 parentType != BamlRecordType.PropertyComplexStart &&
@@ -470,14 +472,14 @@ namespace System.Windows.Markup
                                                            "WriteXmlnsProperty",
                                                            parentType.ToString()));
             }
-            
+
             XamlXmlnsPropertyNode xmlnsNode = new XamlXmlnsPropertyNode(
                                                     0,
                                                     0,
                                                     _depth,
                                                     localName,
                                                     xmlNamespace);
-        
+
             _bamlRecordWriter.WriteNamespacePrefix(xmlnsNode);
             _parserContext.XmlnsDictionary[localName] = xmlNamespace;
         }
@@ -495,10 +497,10 @@ namespace System.Windows.Markup
             string value)
         {
             VerifyWriteState();
-            
+
             BamlRecordType parentType = PeekRecordType();
             if (parentType != BamlRecordType.ElementStart &&
-                name != "Uid" ) // Parser's supposed to ignore x:Uid everywhere
+                name != "Uid") // Parser's supposed to ignore x:Uid everywhere
             {
                 throw new InvalidOperationException(SR.Format(SR.BamlWriterNoInElement,
                                                            "WriteDefAttribute",
@@ -509,7 +511,7 @@ namespace System.Windows.Markup
                 // Check if this is a MarkupExtension, and if so expand it in xaml so that
                 // it represents a key tree.
                 DefAttributeData data = _extensionParser.IsMarkupExtensionDefAttribute(
-                                                            PeekElementType(),    
+                                                            PeekElementType(),
                                                             ref value, 0, 0, 0);
 
                 if (data != null)
@@ -529,18 +531,18 @@ namespace System.Windows.Markup
                         if (colonIndex > 0)
                         {
                             prefix = data.Args.Substring(0, colonIndex);
-                            typeName = data.Args.Substring(colonIndex+1);
+                            typeName = data.Args.Substring(colonIndex + 1);
                         }
 
                         string valueNamespaceURI = _parserContext.XmlnsDictionary[prefix];
                         string valueAssemblyName = string.Empty;
                         string valueTypeFullName = string.Empty;
-                        Type   valueElementType = null;
-                        Type   valueSerializerType = null;
+                        Type valueElementType = null;
+                        Type valueSerializerType = null;
 
-                        bool resolvedTag = ((IParserHelper)this).GetElementType(false, typeName, 
-                                                        valueNamespaceURI,ref valueAssemblyName,
-                                                        ref valueTypeFullName, ref valueElementType, 
+                        bool resolvedTag = ((IParserHelper)this).GetElementType(false, typeName,
+                                                        valueNamespaceURI, ref valueAssemblyName,
+                                                        ref valueTypeFullName, ref valueElementType,
                                                         ref valueSerializerType);
 
                         // If we can't resolve a simple TypeExtension value at compile time,
@@ -552,8 +554,8 @@ namespace System.Windows.Markup
                                                                     0,
                                                                     0,
                                                                     _depth,
-                                                                    valueTypeFullName,  
-                                                                    valueElementType.Assembly.FullName,  
+                                                                    valueTypeFullName,
+                                                                    valueElementType.Assembly.FullName,
                                                                     valueElementType);
                             _bamlRecordWriter.WriteDefAttributeKeyType(defKeyNode);
                         }
@@ -571,14 +573,14 @@ namespace System.Windows.Markup
                     return;
                 }
             }
-            
+
             XamlDefAttributeNode defNode = new XamlDefAttributeNode(
                                                     0,
                                                     0,
                                                     _depth,
                                                     name,
                                                     value);
-        
+
             _bamlRecordWriter.WriteDefAttribute(defNode);
         }
 
@@ -594,16 +596,16 @@ namespace System.Windows.Markup
             string value)
         {
             VerifyWriteState();
-            
+
             XamlPresentationOptionsAttributeNode defNode = new XamlPresentationOptionsAttributeNode(
                                                     0,
                                                     0,
                                                     _depth,
                                                     name,
                                                     value);
-        
+
             _bamlRecordWriter.WritePresentationOptionsAttribute(defNode);
-        }        
+        }
 
         /// <summary>
         /// Write the start of a complex property
@@ -622,10 +624,10 @@ namespace System.Windows.Markup
             ProcessMarkupExtensionNodes();
 
             object dpOrPi;
-            Type   ownerType;
-            Type   propertyType = null;
-            bool   propertyCanWrite = true;
-            
+            Type ownerType;
+            Type propertyType = null;
+            bool propertyCanWrite = true;
+
             GetDpOrPi(assemblyName, ownerTypeFullName, propName, out dpOrPi, out ownerType);
             if (dpOrPi == null)
             {
@@ -679,39 +681,12 @@ namespace System.Windows.Markup
             {
                 BamlRecordType recordType = BamlRecordManager.GetPropertyStartRecordType(propertyType, propertyCanWrite);
                 Push(recordType);
-                
+
                 switch (recordType)
                 {
                     case BamlRecordType.PropertyArrayStart:
-                    {
-                        XamlPropertyArrayStartNode arrayStart = new XamlPropertyArrayStartNode(
-                                                                    0,
-                                                                    0,
-                                                                    _depth++,
-                                                                    dpOrPi,
-                                                                    assemblyName,
-                                                                    ownerTypeFullName,
-                                                                    propName);
-                        _bamlRecordWriter.WritePropertyArrayStart(arrayStart);
-                        break;
-                    }
-                    case BamlRecordType.PropertyIDictionaryStart:
-                    {
-                         XamlPropertyIDictionaryStartNode dictionaryStart = 
-                                                  new XamlPropertyIDictionaryStartNode(
-                                                              0,
-                                                              0,
-                                                              _depth++,
-                                                              dpOrPi,
-                                                              assemblyName,
-                                                              ownerTypeFullName,
-                                                              propName);
-                        _bamlRecordWriter.WritePropertyIDictionaryStart(dictionaryStart);
-                        break;
-                    }
-                    case BamlRecordType.PropertyIListStart:
-                    {
-                        XamlPropertyIListStartNode listStart = new XamlPropertyIListStartNode(
+                        {
+                            XamlPropertyArrayStartNode arrayStart = new XamlPropertyArrayStartNode(
                                                                         0,
                                                                         0,
                                                                         _depth++,
@@ -719,23 +694,50 @@ namespace System.Windows.Markup
                                                                         assemblyName,
                                                                         ownerTypeFullName,
                                                                         propName);
-                        _bamlRecordWriter.WritePropertyIListStart(listStart);
-                        break;
-                    }
+                            _bamlRecordWriter.WritePropertyArrayStart(arrayStart);
+                            break;
+                        }
+                    case BamlRecordType.PropertyIDictionaryStart:
+                        {
+                            XamlPropertyIDictionaryStartNode dictionaryStart =
+                                                     new XamlPropertyIDictionaryStartNode(
+                                                                 0,
+                                                                 0,
+                                                                 _depth++,
+                                                                 dpOrPi,
+                                                                 assemblyName,
+                                                                 ownerTypeFullName,
+                                                                 propName);
+                            _bamlRecordWriter.WritePropertyIDictionaryStart(dictionaryStart);
+                            break;
+                        }
+                    case BamlRecordType.PropertyIListStart:
+                        {
+                            XamlPropertyIListStartNode listStart = new XamlPropertyIListStartNode(
+                                                                            0,
+                                                                            0,
+                                                                            _depth++,
+                                                                            dpOrPi,
+                                                                            assemblyName,
+                                                                            ownerTypeFullName,
+                                                                            propName);
+                            _bamlRecordWriter.WritePropertyIListStart(listStart);
+                            break;
+                        }
                     default: // PropertyComplexStart
-                    {
-                         XamlPropertyComplexStartNode node = new XamlPropertyComplexStartNode(
-                                                       0,
-                                                       0,
-                                                       _depth++,
-                                                       dpOrPi,
-                                                       assemblyName,
-                                                       ownerTypeFullName,
-                                                       propName);
-                    
-                        _bamlRecordWriter.WritePropertyComplexStart(node);
-                        break;
-                    }
+                        {
+                            XamlPropertyComplexStartNode node = new XamlPropertyComplexStartNode(
+                                                          0,
+                                                          0,
+                                                          _depth++,
+                                                          dpOrPi,
+                                                          assemblyName,
+                                                          ownerTypeFullName,
+                                                          propName);
+
+                            _bamlRecordWriter.WritePropertyComplexStart(node);
+                            break;
+                        }
                 }
             }
         }
@@ -754,37 +756,37 @@ namespace System.Windows.Markup
             switch (startTagType)
             {
                 case BamlRecordType.PropertyArrayStart:
-                    XamlPropertyArrayEndNode arrayEnd = 
+                    XamlPropertyArrayEndNode arrayEnd =
                                       new XamlPropertyArrayEndNode(
-                                                  0, 
-                                                  0, 
+                                                  0,
+                                                  0,
                                                   --_depth);
                     _bamlRecordWriter.WritePropertyArrayEnd(arrayEnd);
                     break;
-                    
+
                 case BamlRecordType.PropertyIListStart:
-                    XamlPropertyIListEndNode listEnd = 
+                    XamlPropertyIListEndNode listEnd =
                                       new XamlPropertyIListEndNode(
-                                                  0, 
-                                                  0, 
+                                                  0,
+                                                  0,
                                                   --_depth);
                     _bamlRecordWriter.WritePropertyIListEnd(listEnd);
                     break;
-        
+
                 case BamlRecordType.PropertyIDictionaryStart:
-                    XamlPropertyIDictionaryEndNode dictionaryEnd = 
+                    XamlPropertyIDictionaryEndNode dictionaryEnd =
                                       new XamlPropertyIDictionaryEndNode(
-                                                  0, 
-                                                  0, 
+                                                  0,
+                                                  0,
                                                   --_depth);
                     _bamlRecordWriter.WritePropertyIDictionaryEnd(dictionaryEnd);
                     break;
-                    
+
                 case BamlRecordType.PropertyComplexStart:
-                    XamlPropertyComplexEndNode complexEnd = 
+                    XamlPropertyComplexEndNode complexEnd =
                                        new XamlPropertyComplexEndNode(
-                                                  0, 
-                                                  0, 
+                                                  0,
+                                                  0,
                                                   --_depth);
                     _bamlRecordWriter.WritePropertyComplexEnd(complexEnd);
                     break;
@@ -794,7 +796,7 @@ namespace System.Windows.Markup
                                     SR.Format(SR.BamlWriterBadScope,
                                            startTagType.ToString(),
                                            BamlRecordType.PropertyComplexEnd.ToString()));
-            }                        
+            }
             _parserContext.PopScope();
         }
 
@@ -819,9 +821,9 @@ namespace System.Windows.Markup
         /// Write a mapping processing instruction to baml stream
         /// </summary>
         public void WritePIMapping(
-            string    xmlNamespace,
-            string    clrNamespace,
-            string    assemblyName)
+            string xmlNamespace,
+            string clrNamespace,
+            string assemblyName)
         {
             VerifyWriteState();
             ProcessMarkupExtensionNodes();
@@ -854,7 +856,7 @@ namespace System.Windows.Markup
             VerifyWriteState();
             ProcessMarkupExtensionNodes();
 
-            Type typeConverter=null;
+            Type typeConverter = null;
             if (!String.IsNullOrEmpty(typeConverterName))
             {
                 typeConverter = GetType(typeConverterAssemblyName, typeConverterName);
@@ -878,10 +880,10 @@ namespace System.Windows.Markup
         /// is included here for completeness and future expandability.
         /// </remarks>
         public void WriteRoutedEvent(
-            string     assemblyName,
-            string     ownerTypeFullName,
-            string     eventIdName,
-            string     handlerName)
+            string assemblyName,
+            string ownerTypeFullName,
+            string eventIdName,
+            string handlerName)
         {
 #if EVENTSUPPORT            
             VerifyWriteState();
@@ -911,8 +913,8 @@ namespace System.Windows.Markup
         /// is included here for completeness and future expandability.
         /// </remarks>
         public void WriteEvent(
-            string    eventName,
-            string    handlerName)
+            string eventName,
+            string handlerName)
         {
 #if EVENTSUPPORT            
             VerifyWriteState();
@@ -930,218 +932,218 @@ namespace System.Windows.Markup
 #endif
         }
 
-#endregion Record Writing
+        #endregion Record Writing
 
-#region Internal Methods
+        #region Internal Methods
 
-    /***************************************************************************\
-    *
-    * BamlWriter.ProcessMarkupExtensionNodes
-    *
-    * Write out baml records for all the xamlnodes contained in the buffered
-    * markup extension list.
-    * NOTE:  This list must contain only xamlnodes that are known to be part of
-    *        MarkupExtensions.  This is NOT a general method to handle all types
-    *        of xaml nodes.
-    *
-    \***************************************************************************/
+        /***************************************************************************\
+        *
+        * BamlWriter.ProcessMarkupExtensionNodes
+        *
+        * Write out baml records for all the xamlnodes contained in the buffered
+        * markup extension list.
+        * NOTE:  This list must contain only xamlnodes that are known to be part of
+        *        MarkupExtensions.  This is NOT a general method to handle all types
+        *        of xaml nodes.
+        *
+        \***************************************************************************/
 
-    private void ProcessMarkupExtensionNodes()
-    {
-        for (int i=0; i < _markupExtensionNodes.Count; i++)
+        private void ProcessMarkupExtensionNodes()
         {
-            XamlNode node = _markupExtensionNodes[i] as XamlNode;
-            switch (node.TokenType)
+            for (int i = 0; i < _markupExtensionNodes.Count; i++)
             {
-                case XamlNodeType.ElementStart:
-                    _bamlRecordWriter.WriteElementStart((XamlElementStartNode)node);
-                    break;
-                case XamlNodeType.ElementEnd:
-                    _bamlRecordWriter.WriteElementEnd((XamlElementEndNode)node);
-                    break;
-                case XamlNodeType.KeyElementStart:
-                    _bamlRecordWriter.WriteKeyElementStart((XamlKeyElementStartNode)node);
-                    break;
-                case XamlNodeType.KeyElementEnd:
-                    _bamlRecordWriter.WriteKeyElementEnd((XamlKeyElementEndNode)node);
-                    break;
-                case XamlNodeType.Property:
-                    _bamlRecordWriter.WriteProperty((XamlPropertyNode)node);
-                    break;
-                case XamlNodeType.PropertyWithExtension:
-                    _bamlRecordWriter.WritePropertyWithExtension((XamlPropertyWithExtensionNode)node);
-                    break;
-                case XamlNodeType.PropertyWithType:
-                    _bamlRecordWriter.WritePropertyWithType((XamlPropertyWithTypeNode)node);
-                    break;
-                case XamlNodeType.PropertyComplexStart:
-                    _bamlRecordWriter.WritePropertyComplexStart((XamlPropertyComplexStartNode)node);
-                    break;
-                case XamlNodeType.PropertyComplexEnd:
-                    _bamlRecordWriter.WritePropertyComplexEnd((XamlPropertyComplexEndNode)node);
-                    break;
-                case XamlNodeType.Text:
-                    _bamlRecordWriter.WriteText((XamlTextNode)node);
-                    break;
-                case XamlNodeType.EndAttributes:
-                    _bamlRecordWriter.WriteEndAttributes((XamlEndAttributesNode)node);
-                    break;
-                case XamlNodeType.ConstructorParametersStart:
-                    _bamlRecordWriter.WriteConstructorParametersStart((XamlConstructorParametersStartNode)node);
-                    break;
-                case XamlNodeType.ConstructorParametersEnd:
-                    _bamlRecordWriter.WriteConstructorParametersEnd((XamlConstructorParametersEndNode)node);
-                    break;
-                default:
-                    throw new InvalidOperationException(SR.BamlWriterUnknownMarkupExtension);
+                XamlNode node = _markupExtensionNodes[i] as XamlNode;
+                switch (node.TokenType)
+                {
+                    case XamlNodeType.ElementStart:
+                        _bamlRecordWriter.WriteElementStart((XamlElementStartNode)node);
+                        break;
+                    case XamlNodeType.ElementEnd:
+                        _bamlRecordWriter.WriteElementEnd((XamlElementEndNode)node);
+                        break;
+                    case XamlNodeType.KeyElementStart:
+                        _bamlRecordWriter.WriteKeyElementStart((XamlKeyElementStartNode)node);
+                        break;
+                    case XamlNodeType.KeyElementEnd:
+                        _bamlRecordWriter.WriteKeyElementEnd((XamlKeyElementEndNode)node);
+                        break;
+                    case XamlNodeType.Property:
+                        _bamlRecordWriter.WriteProperty((XamlPropertyNode)node);
+                        break;
+                    case XamlNodeType.PropertyWithExtension:
+                        _bamlRecordWriter.WritePropertyWithExtension((XamlPropertyWithExtensionNode)node);
+                        break;
+                    case XamlNodeType.PropertyWithType:
+                        _bamlRecordWriter.WritePropertyWithType((XamlPropertyWithTypeNode)node);
+                        break;
+                    case XamlNodeType.PropertyComplexStart:
+                        _bamlRecordWriter.WritePropertyComplexStart((XamlPropertyComplexStartNode)node);
+                        break;
+                    case XamlNodeType.PropertyComplexEnd:
+                        _bamlRecordWriter.WritePropertyComplexEnd((XamlPropertyComplexEndNode)node);
+                        break;
+                    case XamlNodeType.Text:
+                        _bamlRecordWriter.WriteText((XamlTextNode)node);
+                        break;
+                    case XamlNodeType.EndAttributes:
+                        _bamlRecordWriter.WriteEndAttributes((XamlEndAttributesNode)node);
+                        break;
+                    case XamlNodeType.ConstructorParametersStart:
+                        _bamlRecordWriter.WriteConstructorParametersStart((XamlConstructorParametersStartNode)node);
+                        break;
+                    case XamlNodeType.ConstructorParametersEnd:
+                        _bamlRecordWriter.WriteConstructorParametersEnd((XamlConstructorParametersEndNode)node);
+                        break;
+                    default:
+                        throw new InvalidOperationException(SR.BamlWriterUnknownMarkupExtension);
+                }
+            }
+            _markupExtensionNodes.Clear();
+        }
+
+        /***************************************************************************\
+        *
+        * BamlWriter.VerifyWriteState
+        *
+        * Verify that we are in a good state to perform a record write.  Throw
+        * appropriate exceptions if not.
+        *
+        \***************************************************************************/
+
+        private void VerifyWriteState()
+        {
+            if (_closed)
+            {
+                throw new InvalidOperationException(SR.BamlWriterClosed);
+            }
+            if (!_startDocumentWritten)
+            {
+                throw new InvalidOperationException(SR.BamlWriterStartDoc);
             }
         }
-        _markupExtensionNodes.Clear();
-    }
 
-    /***************************************************************************\
-    *
-    * BamlWriter.VerifyWriteState
-    *
-    * Verify that we are in a good state to perform a record write.  Throw
-    * appropriate exceptions if not.
-    *
-    \***************************************************************************/
-    
-    private void VerifyWriteState()
-    {
-        if (_closed)
+        /***************************************************************************\
+        *
+        * BamlWriter.VerifyEndTagState
+        *
+        * Verify that we are in a good state to perform a record write and that
+        * the xamlnodetype on the node type stack is of the expected type.  This
+        * is called when an end tag record is written
+        *
+        \***************************************************************************/
+
+        private void VerifyEndTagState(
+            BamlRecordType expectedStartTag,
+            BamlRecordType endTagBeingWritten)
         {
-            throw new InvalidOperationException(SR.BamlWriterClosed);
+            VerifyWriteState();
+
+            BamlRecordType startTagState = Pop();
+            if (startTagState != expectedStartTag)
+            {
+                throw new InvalidOperationException(SR.Format(SR.BamlWriterBadScope,
+                                                           startTagState.ToString(),
+                                                           endTagBeingWritten.ToString()));
+            }
         }
-        if (!_startDocumentWritten)
+
+        /***************************************************************************\
+        *
+        * BamlWriter.GetAssembly
+        *
+        * Get the Assembly given a name.  This uses the LoadWrapper to load the
+        * assembly from the current directory.  
+        * NOTE:  Assembly paths are not currently supported, but may be in the
+        *        future if the need arises.
+        *
+        \***************************************************************************/
+
+        private Assembly GetAssembly(string assemblyName)
         {
-            throw new InvalidOperationException(SR.BamlWriterStartDoc);
-        }
-    }
-
-    /***************************************************************************\
-    *
-    * BamlWriter.VerifyEndTagState
-    *
-    * Verify that we are in a good state to perform a record write and that
-    * the xamlnodetype on the node type stack is of the expected type.  This
-    * is called when an end tag record is written
-    *
-    \***************************************************************************/
-    
-    private void VerifyEndTagState(
-        BamlRecordType   expectedStartTag,
-        BamlRecordType   endTagBeingWritten)
-    {
-        VerifyWriteState();
-
-        BamlRecordType startTagState = Pop();
-        if (startTagState != expectedStartTag)
-        {
-            throw new InvalidOperationException(SR.Format(SR.BamlWriterBadScope,
-                                                       startTagState.ToString(),
-                                                       endTagBeingWritten.ToString()));
-        }
-    }
-
-    /***************************************************************************\
-    *
-    * BamlWriter.GetAssembly
-    *
-    * Get the Assembly given a name.  This uses the LoadWrapper to load the
-    * assembly from the current directory.  
-    * NOTE:  Assembly paths are not currently supported, but may be in the
-    *        future if the need arises.
-    *
-    \***************************************************************************/
-
-    private Assembly GetAssembly(string assemblyName)
-    {
-        Assembly assy = _assemblies[assemblyName] as Assembly;
-        if (assy == null)
-        {
-            assy = ReflectionHelper.LoadAssembly(assemblyName, null);
+            Assembly assy = _assemblies[assemblyName] as Assembly;
             if (assy == null)
             {
-                throw new ArgumentException(SR.Format(SR.BamlWriterBadAssembly, 
-                                                   assemblyName));
+                assy = ReflectionHelper.LoadAssembly(assemblyName, null);
+                if (assy == null)
+                {
+                    throw new ArgumentException(SR.Format(SR.BamlWriterBadAssembly,
+                                                       assemblyName));
+                }
+                else
+                {
+                    _assemblies[assemblyName] = assy;
+                }
             }
-            else
-            {
-                _assemblies[assemblyName] = assy;
-            }
+
+            return assy;
         }
 
-        return assy;
-    }
+        /***************************************************************************\
+        *
+        * BamlWriter.GetType
+        *
+        * Get the Type given an assembly name where the type is declared and the
+        * type's fully qualified name
+        *
+        \***************************************************************************/
 
-    /***************************************************************************\
-    *
-    * BamlWriter.GetType
-    *
-    * Get the Type given an assembly name where the type is declared and the
-    * type's fully qualified name
-    *
-    \***************************************************************************/
-    
-    private Type GetType(
-        string assemblyName,
-        string typeFullName)
-    {
-        // Get the assembly that contains the type of the element
-        Assembly assembly = GetAssembly(assemblyName);
-        
-        // Now see if the type is declared in this assembly
-        Type objectType = assembly.GetType(typeFullName);
+        private Type GetType(
+            string assemblyName,
+            string typeFullName)
+        {
+            // Get the assembly that contains the type of the element
+            Assembly assembly = GetAssembly(assemblyName);
 
-        // Note that null objectType is allowed, since this may be something like
-        // a <Set> element in a style, which is mapped to a element tag
-        return objectType;
-    }
+            // Now see if the type is declared in this assembly
+            Type objectType = assembly.GetType(typeFullName);
 
-    /***************************************************************************\
-    *
-    * BamlWriter.GetDpOrPi
-    *
-    * Get the DependencyProperty or the PropertyInfo that corresponds to the 
-    * passed property name on the passed owner type (or type where the
-    * property is declared).
-    *
-    \***************************************************************************/
+            // Note that null objectType is allowed, since this may be something like
+            // a <Set> element in a style, which is mapped to a element tag
+            return objectType;
+        }
 
-    private object GetDpOrPi(
-        Type    ownerType,
-        string  propName)
-    {
-        // Now that we have the type, see if this is a DependencyProperty or
-        // a PropertyInfo.  Note that ownerType may be null for fake properties
-        // like those associated with Styles.  Note also that the property may
-        // not resolve to a known DP.  This is allowed for fake properties like
-        // those contained in Styles, such as Set.Value.
-        object dpOrPi = null;
+        /***************************************************************************\
+        *
+        * BamlWriter.GetDpOrPi
+        *
+        * Get the DependencyProperty or the PropertyInfo that corresponds to the 
+        * passed property name on the passed owner type (or type where the
+        * property is declared).
+        *
+        \***************************************************************************/
+
+        private object GetDpOrPi(
+            Type ownerType,
+            string propName)
+        {
+            // Now that we have the type, see if this is a DependencyProperty or
+            // a PropertyInfo.  Note that ownerType may be null for fake properties
+            // like those associated with Styles.  Note also that the property may
+            // not resolve to a known DP.  This is allowed for fake properties like
+            // those contained in Styles, such as Set.Value.
+            object dpOrPi = null;
 
 #if !PBTCOMPILER
-        if (ownerType != null)
-        {
-            dpOrPi = DependencyProperty.FromName(propName, ownerType);
-            if (dpOrPi == null)
+            if (ownerType != null)
             {
-                PropertyInfo mostDerived = null;
-                MemberInfo[] infos = ownerType.GetMember(propName, MemberTypes.Property, BindingFlags.Instance | BindingFlags.Public);
-                foreach(PropertyInfo pi in infos)
+                dpOrPi = DependencyProperty.FromName(propName, ownerType);
+                if (dpOrPi == null)
                 {
-                    if(pi.GetIndexParameters().Length == 0)
+                    PropertyInfo mostDerived = null;
+                    MemberInfo[] infos = ownerType.GetMember(propName, MemberTypes.Property, BindingFlags.Instance | BindingFlags.Public);
+                    foreach (PropertyInfo pi in infos)
                     {
-                        if(mostDerived == null || mostDerived.DeclaringType.IsAssignableFrom(pi.DeclaringType))
+                        if (pi.GetIndexParameters().Length == 0)
                         {
-                            mostDerived = pi;
+                            if (mostDerived == null || mostDerived.DeclaringType.IsAssignableFrom(pi.DeclaringType))
+                            {
+                                mostDerived = pi;
+                            }
                         }
                     }
+                    dpOrPi = mostDerived;
                 }
-                dpOrPi = mostDerived;
             }
-        }
 #else
         if (ownerType != null)
         {
@@ -1160,160 +1162,160 @@ namespace System.Windows.Markup
         }
 #endif
 
-        return dpOrPi;
-    }
-    
-    /***************************************************************************\
-    *
-    * BamlWriter.GetDpOrPi
-    *
-    * Get the DependencyProperty or the PropertyInfo that corresponds to the 
-    * passed property name on the passed owner type name.  This typename is
-    * first resolved to a type.
-    *
-    \***************************************************************************/
-
-    private void GetDpOrPi(
-            string  assemblyName,
-            string  ownerTypeFullName,
-            string  propName,
-        out object  dpOrPi,
-        out Type    ownerType)
-    {
-        // If there is no valid owner or assembly, then we can't resolve the type,
-        // so just return null.  This can occur if we are writing 'fake' properties
-        // that are used for things such as Style property triggers.
-        if (assemblyName == string.Empty || ownerTypeFullName == string.Empty)
-        {
-            dpOrPi = null;
-            ownerType = null;
-        }
-        else
-        {
-            ownerType = GetType(assemblyName, ownerTypeFullName);
-            dpOrPi = GetDpOrPi(ownerType, propName);
-        }
-    }
-
-    private MethodInfo GetMi(Type ownerType, string propName)
-    {
-        MethodInfo memberInfo = null;
-
-        memberInfo = ownerType.GetMethod($"Set{propName}",
-                                            BindingFlags.Public |
-                                            BindingFlags.Static |
-                                            BindingFlags.FlattenHierarchy);
-        if (memberInfo != null && ((MethodInfo)memberInfo).GetParameters().Length != 2)
-        {
-            memberInfo = null;
+            return dpOrPi;
         }
 
-        // Try read-only case (Getter only)
-        if (memberInfo == null)
+        /***************************************************************************\
+        *
+        * BamlWriter.GetDpOrPi
+        *
+        * Get the DependencyProperty or the PropertyInfo that corresponds to the 
+        * passed property name on the passed owner type name.  This typename is
+        * first resolved to a type.
+        *
+        \***************************************************************************/
+
+        private void GetDpOrPi(
+                string assemblyName,
+                string ownerTypeFullName,
+                string propName,
+            out object dpOrPi,
+            out Type ownerType)
         {
-            memberInfo = ownerType.GetMethod($"Get{propName}",
+            // If there is no valid owner or assembly, then we can't resolve the type,
+            // so just return null.  This can occur if we are writing 'fake' properties
+            // that are used for things such as Style property triggers.
+            if (assemblyName == string.Empty || ownerTypeFullName == string.Empty)
+            {
+                dpOrPi = null;
+                ownerType = null;
+            }
+            else
+            {
+                ownerType = GetType(assemblyName, ownerTypeFullName);
+                dpOrPi = GetDpOrPi(ownerType, propName);
+            }
+        }
+
+        private MethodInfo GetMi(Type ownerType, string propName)
+        {
+            MethodInfo memberInfo = null;
+
+            memberInfo = ownerType.GetMethod($"Set{propName}",
                                                 BindingFlags.Public |
                                                 BindingFlags.Static |
                                                 BindingFlags.FlattenHierarchy);
-            if (memberInfo != null && ((MethodInfo)memberInfo).GetParameters().Length != 1)
+            if (memberInfo != null && ((MethodInfo)memberInfo).GetParameters().Length != 2)
             {
                 memberInfo = null;
             }
-        }
-        return memberInfo;
-    }
 
-    private MethodInfo GetMi(
-            string assemblyName,
-            string ownerTypeFullName,
-            string propName,
-            out Type ownerType)
-    {
-        MethodInfo mi = null;
-
-        // If there is no valid owner or assembly, then we can't resolve the type,
-        // so just return null.  This can occur if we are writing 'fake' properties
-        // that are used for things such as Style property triggers.
-        if (assemblyName == string.Empty || ownerTypeFullName == string.Empty)
-        {
-            mi = null;
-            ownerType = null;
-        }
-        else
-        {
-            ownerType = GetType(assemblyName, ownerTypeFullName);
-            mi = GetMi(ownerType, propName);
-        }
-        return mi;
-    }
-
-
-    // Helper methods for dealing with the node stack
-
-    // Push a new record type on the stack.  If we have not generated an 
-    // end attributes write operation for the current item on the stack, and
-    // that item is a start element, then now is the time to do it.
-    private void Push(BamlRecordType recordType)
-    {
-        CheckEndAttributes();
-        _nodeTypeStack.Push(new WriteStackNode(recordType));
-    }
-    
-    private void Push(BamlRecordType recordType, Type elementType)
-    {
-        CheckEndAttributes();
-        _nodeTypeStack.Push(new WriteStackNode(recordType, elementType));
-    }
-
-    // Pop an item off the node stack and return its type.
-    private BamlRecordType Pop()
-    {
-        WriteStackNode stackNode = _nodeTypeStack.Pop() as WriteStackNode;
-        Debug.Assert(stackNode != null);
-        return stackNode.RecordType;
-    }
-
-    // Return the record type on the top of the stack
-    private BamlRecordType PeekRecordType()
-    {
-        WriteStackNode stackNode = _nodeTypeStack.Peek() as WriteStackNode;
-        Debug.Assert(stackNode != null);
-        return stackNode.RecordType;
-    }
-    
-    // Return the element type on the top of the stack
-    private Type PeekElementType()
-    {
-        WriteStackNode stackNode = _nodeTypeStack.Peek() as WriteStackNode;
-        Debug.Assert(stackNode != null);
-        return stackNode.ElementType;
-    }
-
-    // Check if we have to insert an EndAttributes xaml node at the end
-    // of an element start tag.
-    private void CheckEndAttributes()
-    {
-        if (_nodeTypeStack.Count > 0)
-        {
-            WriteStackNode parentNode = _nodeTypeStack.Peek() as WriteStackNode;
-            if (!parentNode.EndAttributesReached &&
-                parentNode.RecordType == BamlRecordType.ElementStart)
+            // Try read-only case (Getter only)
+            if (memberInfo == null)
             {
-                XamlEndAttributesNode node = new XamlEndAttributesNode(
-                                                   0,
-                                                   0,
-                                                   _depth,
-                                                   false);
-                _bamlRecordWriter.WriteEndAttributes(node);
+                memberInfo = ownerType.GetMethod($"Get{propName}",
+                                                    BindingFlags.Public |
+                                                    BindingFlags.Static |
+                                                    BindingFlags.FlattenHierarchy);
+                if (memberInfo != null && ((MethodInfo)memberInfo).GetParameters().Length != 1)
+                {
+                    memberInfo = null;
+                }
             }
-            parentNode.EndAttributesReached = true;
+            return memberInfo;
         }
-    }
+
+        private MethodInfo GetMi(
+                string assemblyName,
+                string ownerTypeFullName,
+                string propName,
+                out Type ownerType)
+        {
+            MethodInfo mi = null;
+
+            // If there is no valid owner or assembly, then we can't resolve the type,
+            // so just return null.  This can occur if we are writing 'fake' properties
+            // that are used for things such as Style property triggers.
+            if (assemblyName == string.Empty || ownerTypeFullName == string.Empty)
+            {
+                mi = null;
+                ownerType = null;
+            }
+            else
+            {
+                ownerType = GetType(assemblyName, ownerTypeFullName);
+                mi = GetMi(ownerType, propName);
+            }
+            return mi;
+        }
 
 
-#endregion Internal Methods
+        // Helper methods for dealing with the node stack
 
-#region Data
+        // Push a new record type on the stack.  If we have not generated an 
+        // end attributes write operation for the current item on the stack, and
+        // that item is a start element, then now is the time to do it.
+        private void Push(BamlRecordType recordType)
+        {
+            CheckEndAttributes();
+            _nodeTypeStack.Push(new WriteStackNode(recordType));
+        }
+
+        private void Push(BamlRecordType recordType, Type elementType)
+        {
+            CheckEndAttributes();
+            _nodeTypeStack.Push(new WriteStackNode(recordType, elementType));
+        }
+
+        // Pop an item off the node stack and return its type.
+        private BamlRecordType Pop()
+        {
+            WriteStackNode stackNode = _nodeTypeStack.Pop() as WriteStackNode;
+            Debug.Assert(stackNode != null);
+            return stackNode.RecordType;
+        }
+
+        // Return the record type on the top of the stack
+        private BamlRecordType PeekRecordType()
+        {
+            WriteStackNode stackNode = _nodeTypeStack.Peek() as WriteStackNode;
+            Debug.Assert(stackNode != null);
+            return stackNode.RecordType;
+        }
+
+        // Return the element type on the top of the stack
+        private Type PeekElementType()
+        {
+            WriteStackNode stackNode = _nodeTypeStack.Peek() as WriteStackNode;
+            Debug.Assert(stackNode != null);
+            return stackNode.ElementType;
+        }
+
+        // Check if we have to insert an EndAttributes xaml node at the end
+        // of an element start tag.
+        private void CheckEndAttributes()
+        {
+            if (_nodeTypeStack.Count > 0)
+            {
+                WriteStackNode parentNode = _nodeTypeStack.Peek() as WriteStackNode;
+                if (!parentNode.EndAttributesReached &&
+                    parentNode.RecordType == BamlRecordType.ElementStart)
+                {
+                    XamlEndAttributesNode node = new XamlEndAttributesNode(
+                                                       0,
+                                                       0,
+                                                       _depth,
+                                                       false);
+                    _bamlRecordWriter.WriteEndAttributes(node);
+                }
+                parentNode.EndAttributesReached = true;
+            }
+        }
+
+
+        #endregion Internal Methods
+
+        #region Data
 
         // Item pushed on a node stack to keep track for matching
         // end tags and for determining when the end of the 
@@ -1321,15 +1323,15 @@ namespace System.Windows.Markup
         private class WriteStackNode
         {
             public WriteStackNode(
-                BamlRecordType   recordType)
+                BamlRecordType recordType)
             {
                 _recordType = recordType;
                 _endAttributesReached = false;
             }
-            
+
             public WriteStackNode(
-                BamlRecordType   recordType,
-                Type             elementType) : this(recordType)
+                BamlRecordType recordType,
+                Type elementType) : this(recordType)
             {
                 _elementType = elementType;
             }
@@ -1339,7 +1341,7 @@ namespace System.Windows.Markup
                 get { return _recordType; }
             }
 
-            public bool EndAttributesReached 
+            public bool EndAttributesReached
             {
                 get { return _endAttributesReached; }
                 set { _endAttributesReached = value; }
@@ -1350,51 +1352,51 @@ namespace System.Windows.Markup
                 get { return _elementType; }
             }
 
-            bool           _endAttributesReached;
+            bool _endAttributesReached;
             BamlRecordType _recordType;
-            Type           _elementType;
+            Type _elementType;
         }
 
         // Writer that actually writes BamlRecords to a stream.
-        BamlRecordWriter      _bamlRecordWriter;
-    
+        BamlRecordWriter _bamlRecordWriter;
+
         // True if the DocumentStart record has been written to the stream.
-        bool                  _startDocumentWritten;
+        bool _startDocumentWritten;
 
         // The depth of the element tree, including complex properties
-        int                   _depth;
+        int _depth;
 
         // True if Close() has been called.
-        bool                  _closed;
+        bool _closed;
 
         // If a custom property is of Type DependencyProperty, this is used to provide
         // info about the Type of value for such a property in order to write it out in
         // an optimized form by its custom serializer.
-        DependencyProperty    _dpProperty;
+        DependencyProperty _dpProperty;
 
         // Stack of the type of nodes written to the baml stream.  This is 
         // used for end-tag matching and basic structure checking.  This
         // contains WriteStackNode objects.
-        ParserStack           _nodeTypeStack;
+        ParserStack _nodeTypeStack;
 
         // Cache of assemblies that are needed for type resolutions when
         // doingIBamlSerialize
-        Hashtable             _assemblies;
-    
+        Hashtable _assemblies;
+
         // XamlTypeMapper used by this writer
-        XamlTypeMapper        _xamlTypeMapper;
+        XamlTypeMapper _xamlTypeMapper;
 
         // ParserContext for this writer
-        ParserContext         _parserContext;
+        ParserContext _parserContext;
 
         // The helper class that handles parsing of MarkupExtension values.
         MarkupExtensionParser _extensionParser;
 
         // Buffered XamlNodes that occur when a property with a MarkupExtension value
         // is written and expanded into a complex property subtree.
-        ArrayList             _markupExtensionNodes;
+        ArrayList _markupExtensionNodes;
 
-#endregion Data
+        #endregion Data
     }
 
     internal class BamlWriterXamlTypeMapper : XamlTypeMapper

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,7 +26,7 @@ namespace System.Windows.Media
             ArgumentNullException.ThrowIfNull(hitTestParameters);
 
             if (_content != null)
-            {                
+            {
                 if (_content.HitTestPoint(hitTestParameters.HitPoint))
                 {
                     return new PointHitTestResult(this, hitTestParameters.HitPoint);
@@ -44,7 +44,7 @@ namespace System.Windows.Media
             ArgumentNullException.ThrowIfNull(hitTestParameters);
 
             if ((_content != null) && GetHitTestBounds().IntersectsWith(hitTestParameters.Bounds))
-            {                 
+            {
                 IntersectionDetail intersectionDetail;
 
                 intersectionDetail = _content.HitTestGeometry(hitTestParameters.InternalHitGeometry);
@@ -54,7 +54,7 @@ namespace System.Windows.Media
                 {
                     return new GeometryHitTestResult(this, intersectionDetail);
                 }
-}
+            }
 
             return null;
         }
@@ -112,7 +112,7 @@ namespace System.Windows.Media
             if (newContent != null)
             {
                 // Propagate notification handlers.
-                newContent.PropagateChangedHandler(ContentsChangedHandler, true /* adding */);                
+                newContent.PropagateChangedHandler(ContentsChangedHandler, true /* adding */);
             }
 
             _content = newContent;
@@ -129,7 +129,7 @@ namespace System.Windows.Media
                 this,
                 VisualFlags.IsSubtreeDirtyForPrecompute,
                 VisualProxyFlags.IsSubtreeDirtyForRender);
-}
+        }
 
         /// <summary>
         /// Overriding this function to release DUCE resources during Dispose and during removal of a subtree.
@@ -137,19 +137,19 @@ namespace System.Windows.Media
         internal override void FreeContent(DUCE.Channel channel)
         {
             Debug.Assert(_proxy.IsOnChannel(channel));
-            
+
             if (_content != null)
             {
                 if (CheckFlagsAnd(channel, VisualProxyFlags.IsContentConnected))
                 {
                     DUCE.CompositionNode.SetContent(
-                        _proxy.GetHandle(channel), 
-                        DUCE.ResourceHandle.Null, 
+                        _proxy.GetHandle(channel),
+                        DUCE.ResourceHandle.Null,
                         channel);
 
                     SetFlags(
-                        channel, 
-                        false, 
+                        channel,
+                        false,
                         VisualProxyFlags.IsContentConnected);
 
                     ((DUCE.IResource)_content).ReleaseOnChannel(channel);
@@ -164,16 +164,16 @@ namespace System.Windows.Media
         /// Returns the bounding box of the content.
         /// </summary>
         internal override Rect GetContentBounds()
-        {            
+        {
             if (_content != null)
             {
                 Rect resultRect = Rect.Empty;
-                MediaContext mediaContext = MediaContext.From(Dispatcher);                
+                MediaContext mediaContext = MediaContext.From(Dispatcher);
                 BoundsDrawingContextWalker ctx = mediaContext.AcquireBoundsDrawingContextWalker();
 
                 resultRect = _content.GetContentBounds(ctx);
                 mediaContext.ReleaseBoundsDrawingContextWalker(ctx);
-                
+
                 return resultRect;
             }
             else
@@ -225,8 +225,8 @@ namespace System.Windows.Media
                     channel);
 
                 SetFlags(
-                    channel, 
-                    true, 
+                    channel,
+                    true,
                     VisualProxyFlags.IsContentConnected);
             }
             else if (isOnChannel) /*_content == null*/
@@ -237,7 +237,7 @@ namespace System.Windows.Media
                     channel);
             }
         }
-        
+
         /// <summary>
         /// GetDrawing - Returns the drawing content of this Visual.  
         /// </summary>
@@ -251,16 +251,16 @@ namespace System.Windows.Media
 
             VerifyAPIReadOnly();
 
-            DrawingGroup drawingGroupContent = null;                  
+            DrawingGroup drawingGroupContent = null;
 
             // Convert our content to a DrawingGroup, if content exists
             if (_content != null)
             {
-                drawingGroupContent = DrawingServices.DrawingGroupFromRenderData((RenderData) _content);
+                drawingGroupContent = DrawingServices.DrawingGroupFromRenderData((RenderData)_content);
             }
 
             return drawingGroupContent;
-        }                  
+        }
 
         /// <summary>
         /// Drawing - Returns the drawing content of this Visual.  
@@ -273,8 +273,8 @@ namespace System.Windows.Media
             get
             {
                 return GetDrawing();
-            }                
-        }  
+            }
+        }
     }
 }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,12 +31,12 @@ namespace System.Windows
             _rootInheritableValues = null;
             _inheritablePropertiesStack = null;
             _valueIndexer = 0;
-            
+
             // Create the InheritableProperties cache for the parent
             // and push it to start the stack ... we don't need to
             // pop this when we're done because we'll be throing the
             // stack away at that point.
-            InheritablePropertiesStack.Push(CreateParentInheritableProperties(root, parent, isAddOperation));            
+            InheritablePropertiesStack.Push(CreateParentInheritableProperties(root, parent, isAddOperation));
         }
 
         //
@@ -46,12 +46,12 @@ namespace System.Windows
         //  3. It also accumulates oldValues for the inheritable properties that are about to be invalidated
         //
         internal FrugalObjectList<DependencyProperty> CreateParentInheritableProperties(
-            DependencyObject                         d,
-            DependencyObject                         parent,
-            bool                                     isAddOperation)
+            DependencyObject d,
+            DependencyObject parent,
+            bool isAddOperation)
         {
             Debug.Assert(d != null, "Must have non-null current node");
-            
+
             if (parent == null)
             {
                 return new FrugalObjectList<DependencyProperty>(0);
@@ -84,19 +84,19 @@ namespace System.Windows
                 inheritablePropertiesCount = parent.InheritableEffectiveValuesCount;
             }
 
-            FrugalObjectList<DependencyProperty> inheritableProperties = new FrugalObjectList<DependencyProperty>((int) inheritablePropertiesCount);
+            FrugalObjectList<DependencyProperty> inheritableProperties = new FrugalObjectList<DependencyProperty>((int)inheritablePropertiesCount);
 
             if (inheritablePropertiesCount == 0)
             {
                 return inheritableProperties;
             }
 
-            _rootInheritableValues = new InheritablePropertyChangeInfo[(int) inheritablePropertiesCount];
+            _rootInheritableValues = new InheritablePropertyChangeInfo[(int)inheritablePropertiesCount];
             int inheritableIndex = 0;
 
             FrameworkObject foParent = new FrameworkObject(parent);
-            
-            for (uint i=0; i<parentEffectiveValuesCount; i++)
+
+            for (uint i = 0; i < parentEffectiveValuesCount; i++)
             {
                 // Add all the inheritable properties from the effectiveValues
                 // cache to the TreeStateCache on the parent
@@ -135,18 +135,18 @@ namespace System.Windows
                                 newEntry = entry;
 
                                 if ((newEntry.BaseValueSourceInternal != BaseValueSourceInternal.Default) || newEntry.HasModifiers)
-                                {                        
+                                {
                                     newEntry = newEntry.GetFlattenedEntry(RequestFlags.FullyResolved);
                                     newEntry.BaseValueSourceInternal = BaseValueSourceInternal.Inherited;
-                                }                        
+                                }
                             }
                             else
                             {
                                 newEntry = new EffectiveValueEntry();
                             }
 
-                            
-                            _rootInheritableValues[inheritableIndex++] = 
+
+                            _rootInheritableValues[inheritableIndex++] =
                                         new InheritablePropertyChangeInfo(d, dp, oldEntry, newEntry);
 
                             if (inheritablePropertiesCount == inheritableIndex)
@@ -168,7 +168,7 @@ namespace System.Windows
         {
             _valueIndexer = 0;
         }
-        
+
         // This is called by TreeWalker.InvalidateTreeDependentProperty.
         // _valueIndexer is an optimization because we know (a) that the last DP list pushed on the
         // InheritablePropertiesStack is a subset of the first DP list pushed on this stack; 
@@ -186,7 +186,7 @@ namespace System.Windows
                 info = _rootInheritableValues[_valueIndexer++];
             }
             while (info.Property != dp);
-            return info;                
+            return info;
         }
 
         /// <summary>
@@ -197,14 +197,14 @@ namespace System.Windows
         /// </summary>
         internal Stack<FrugalObjectList<DependencyProperty>> InheritablePropertiesStack
         {
-            get 
-            { 
+            get
+            {
                 if (_inheritablePropertiesStack == null)
                 {
                     _inheritablePropertiesStack = new Stack<FrugalObjectList<DependencyProperty>>(1);
                 }
-                
-                return _inheritablePropertiesStack; 
+
+                return _inheritablePropertiesStack;
             }
         }
 
@@ -237,13 +237,13 @@ namespace System.Windows
         #endregion Properties
 
         #region Data
-        
+
         private Stack<FrugalObjectList<DependencyProperty>> _inheritablePropertiesStack;
-        private object                                      _topmostCollapsedParentNode;
-        private bool                                        _isAddOperation;
-        private DependencyObject                            _rootOfChange;
-        private InheritablePropertyChangeInfo[]             _rootInheritableValues;
-        private int                                         _valueIndexer;
+        private object _topmostCollapsedParentNode;
+        private bool _isAddOperation;
+        private DependencyObject _rootOfChange;
+        private InheritablePropertyChangeInfo[] _rootInheritableValues;
+        private int _valueIndexer;
 
         #endregion Data
     }

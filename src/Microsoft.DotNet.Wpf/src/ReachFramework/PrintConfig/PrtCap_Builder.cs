@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,9 +13,8 @@ Abstract:
 --*/
 
 using System.IO;
-using System.Xml;
-
 using System.Printing;
+using System.Xml;
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -48,10 +47,10 @@ namespace MS.Internal.Printing.Configuration
         /// <exception cref="XmlException">XML is not well-formed.</exception>
         public void Build(InternalPrintCapabilities printCap)
         {
-            #if _DEBUG
+#if _DEBUG
             Trace.WriteLine("-Trace- Building PrintCapabilities ... " +
                             DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
-            #endif
+#endif
 
             // Loop over root-level schema elements
             while (_reader.MoveToNextSchemaElement(_kRootElementDepth,
@@ -61,10 +60,10 @@ namespace MS.Internal.Printing.Configuration
                 // any empty element here.
                 if (_reader.CurrentElementIsEmpty)
                 {
-                    #if _DEBUG
+#if _DEBUG
                     Trace.WriteLine("-Warning- skip empty root " + _reader.CurrentElementNodeType
                                     + " " + _reader.CurrentElementNameAttrValue);
-                    #endif
+#endif
 
                     continue;
                 }
@@ -85,19 +84,19 @@ namespace MS.Internal.Printing.Configuration
                         break;
 
                     default:
-                        #if _DEBUG
+#if _DEBUG
                         Trace.WriteLine("-Warning- Skip unsupported root element type " +
                                         _reader.CurrentElementNodeType);
-                        #endif
+#endif
 
                         break;
                 }
             }
 
-            #if _DEBUG
+#if _DEBUG
             Trace.WriteLine("-Trace- ... PrintCapabilities built " +
                             DateTime.Now.Second + ":" + DateTime.Now.Millisecond);
-            #endif
+#endif
         }
 
         #endregion Public Methods
@@ -116,10 +115,10 @@ namespace MS.Internal.Printing.Configuration
             // Skip if the feature is unknown to us
             if (featureIndex < 0)
             {
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Warning- Skip unknown feature '" +
                                 _reader.CurrentElementNameAttrValue + "'");
-                #endif
+#endif
 
                 return;
             }
@@ -172,12 +171,12 @@ namespace MS.Internal.Printing.Configuration
 
                     if (!handled)
                     {
-                        #if _DEBUG
+#if _DEBUG
                         Trace.WriteLine("-Warning- Skip feature's unknown " + _reader.CurrentElementNodeType +
                                         " '" + _reader.CurrentElementNameAttrValue + "'" +
                                         " at line " + _reader._xmlReader.LineNumber +
                                         ", position " + _reader._xmlReader.LinePosition);
-                        #endif
+#endif
                     }
                 }
                 else if (_reader.CurrentElementNodeType == PrintSchemaNodeTypes.Option)
@@ -210,11 +209,11 @@ namespace MS.Internal.Printing.Configuration
 
                             if (!handled)
                             {
-                                #if _DEBUG
+#if _DEBUG
                                 Trace.WriteLine("-Warning- Skip option's unknown " + _reader.CurrentElementNodeType +
                                                 " at line " + _reader._xmlReader.LineNumber +
                                                 ", position " + _reader._xmlReader.LinePosition);
-                                #endif
+#endif
                             }
                         }
                     }
@@ -225,32 +224,32 @@ namespace MS.Internal.Printing.Configuration
                     // add the option to the option collection.
                     if (!newFeature.AddOptionCallback(newOption))
                     {
-                        #if _DEBUG
+#if _DEBUG
                         Trace.WriteLine("-Warning- skip unknown or incomplete option (name='" +
                                         newOption._optionName + "') at line " +
                                         _reader._xmlReader.LineNumber + ", position " +
                                         _reader._xmlReader.LinePosition + ": " + newOption);
-                        #endif
+#endif
                     }
                 }
                 else if (_reader.CurrentElementNodeType == PrintSchemaNodeTypes.Feature)
                 {
-                    #if _DEBUG
+#if _DEBUG
                     Trace.Assert(newFeature.HasSubFeature,
                                  "THIS SHOULD NOT HAPPEN: BuildFeature() hits sub-feature " +
                                  _reader.CurrentElementNameAttrValue);
-                    #endif
+#endif
 
                     // Recursively builds the sub-feature
                     BuildFeature(printCap, newFeature);
                 }
                 else
                 {
-                    #if _DEBUG
+#if _DEBUG
                     Trace.Assert(false, "THIS SHOULD NOT HAPPEN: BuildFeature() hits " +
                                         _reader.CurrentElementNodeType + " node " +
                                         _reader.CurrentElementNameAttrValue);
-                    #endif
+#endif
                 }
             }
 
@@ -268,9 +267,9 @@ namespace MS.Internal.Printing.Configuration
             }
             else
             {
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Warning- skip invalid or incomplete feature " + newFeature.FeatureName);
-                #endif
+#endif
             }
         }
 
@@ -288,10 +287,10 @@ namespace MS.Internal.Printing.Configuration
             // Skip if the parameter-def is unknown to us
             if (paramIndex < 0)
             {
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Warning- Skip unknown parameter-def '" +
                                 _reader.CurrentElementNameAttrValue + "'");
-                #endif
+#endif
 
                 return;
             }
@@ -339,9 +338,9 @@ namespace MS.Internal.Printing.Configuration
             }
             else
             {
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Warning- skip invalid or incomplete parameter-def " + newParam.ParameterName);
-                #endif
+#endif
             }
         }
 
@@ -362,10 +361,10 @@ namespace MS.Internal.Printing.Configuration
             }
             else
             {
-                #if _DEBUG
+#if _DEBUG
                 Trace.WriteLine("-Warning- Skip unknown root-level property '" +
                                  _reader.CurrentElementNameAttrValue + "'");
-                #endif
+#endif
             }
         }
 
@@ -418,7 +417,7 @@ namespace MS.Internal.Printing.Configuration
         /// </summary>
         /// <exception>none</exception>
         private static void LookupFeatureCallbacks(string featureName,
-                                                   bool   isSubFeature,
+                                                   bool isSubFeature,
                                                    out NewFeatureHandler newFeatureCallback)
         {
             FeatureHandlersTableEntry[] handlersTable;
@@ -434,18 +433,18 @@ namespace MS.Internal.Printing.Configuration
 
             newFeatureCallback = null;
 
-            for (int i=0; i<handlersTable.Length; i++)
+            for (int i = 0; i < handlersTable.Length; i++)
             {
                 if (handlersTable[i].Name == featureName)
                 {
-                    newFeatureCallback =  handlersTable[i].NewFeatureCallback;
+                    newFeatureCallback = handlersTable[i].NewFeatureCallback;
                     return;
                 }
             }
 
-            #if _DEBUG
+#if _DEBUG
             Trace.Assert(false, "THIS SHOULD NOT HAPPEN: LookupFeatureCallbacks() doesn't know feature " + featureName);
-            #endif
+#endif
 
             return;
         }
@@ -455,7 +454,7 @@ namespace MS.Internal.Printing.Configuration
         /// </summary>
         /// <exception>none</exception>
         private static void LookupParameterCallbacks(string paramName,
-                                                     bool   isLocalParam,
+                                                     bool isLocalParam,
                                                      out NewParamDefHandler newParamDefCallback)
         {
             ParamDefHandlersTableEntry[] handlersTable;
@@ -471,7 +470,7 @@ namespace MS.Internal.Printing.Configuration
 
             newParamDefCallback = null;
 
-            for (int i=0; i<handlersTable.Length; i++)
+            for (int i = 0; i < handlersTable.Length; i++)
             {
                 if (handlersTable[i].Name == paramName)
                 {
@@ -480,9 +479,9 @@ namespace MS.Internal.Printing.Configuration
                 }
             }
 
-            #if _DEBUG
+#if _DEBUG
             Trace.Assert(false, "THIS SHOULD NOT HAPPEN: LookupParameterCallbacks() doesn't know parameter " + paramName);
-            #endif
+#endif
 
             return;
         }
@@ -505,14 +504,14 @@ namespace MS.Internal.Printing.Configuration
             /// Constructs one feature handlers table entry
             /// </summary>
             public FeatureHandlersTableEntry(string name,
-                                             NewFeatureHandler  newFeatureCallback)
+                                             NewFeatureHandler newFeatureCallback)
             {
                 this.Name = name;
                 this.NewFeatureCallback = newFeatureCallback;
             }
 
-            public string             Name;
-            public NewFeatureHandler  NewFeatureCallback;
+            public string Name;
+            public NewFeatureHandler NewFeatureCallback;
         }
 
         /// <summary>
@@ -529,7 +528,7 @@ namespace MS.Internal.Printing.Configuration
             /// Constructs one parameter-def handlers table entry
             /// </summary>
             public ParamDefHandlersTableEntry(string name,
-                                              NewParamDefHandler  newParamDefCallback)
+                                              NewParamDefHandler newParamDefCallback)
             {
                 this.Name = name;
                 this.NewParamDefCallback = newParamDefCallback;

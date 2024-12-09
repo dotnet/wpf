@@ -5,8 +5,6 @@
 global using System;
 global using System.Collections.Generic;
 global using System.Diagnostics;
-
-global using SR = MS.Internal.WindowsBase.SR;
-
-global using NativeMethodsSetLastError = MS.Internal.WindowsBase.NativeMethodsSetLastError;
 global using DllImport = MS.Internal.WindowsBase.DllImport;
+global using NativeMethodsSetLastError = MS.Internal.WindowsBase.NativeMethodsSetLastError;
+global using SR = MS.Internal.WindowsBase.SR;

@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 
+using System.Windows.Automation;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Automation;
 
 namespace System.Windows.Controls.Primitives
 {
@@ -49,12 +49,12 @@ namespace System.Windows.Controls.Primitives
             var row = details.DataGridRowOwner;
             var dataGrid = row != null ? row.DataGridOwner : null;
             return DataGridHelper.GetCoercedTransferPropertyValue(
-                details, 
-                baseValue, 
+                details,
+                baseValue,
                 ContentTemplateProperty,
-                row, 
+                row,
                 DataGridRow.DetailsTemplateProperty,
-                dataGrid, 
+                dataGrid,
                 DataGrid.RowDetailsTemplateProperty);
         }
 
@@ -67,12 +67,12 @@ namespace System.Windows.Controls.Primitives
             var row = details.DataGridRowOwner;
             var dataGrid = row != null ? row.DataGridOwner : null;
             return DataGridHelper.GetCoercedTransferPropertyValue(
-                details, 
-                baseValue, 
+                details,
+                baseValue,
                 ContentTemplateSelectorProperty,
-                row, 
+                row,
                 DataGridRow.DetailsTemplateSelectorProperty,
-                dataGrid, 
+                dataGrid,
                 DataGrid.RowDetailsTemplateSelectorProperty);
         }
 
@@ -83,7 +83,7 @@ namespace System.Windows.Controls.Primitives
         protected internal override void OnVisualParentChanged(DependencyObject oldParent)
         {
             base.OnVisualParentChanged(oldParent);
-        
+
             // DataGridRow.DetailsPresenter is used by automation peers
             // Give the Row a pointer to the RowHeader so that it can propagate down change notifications
             DataGridRow owner = DataGridRowOwner;
@@ -216,7 +216,7 @@ namespace System.Windows.Controls.Primitives
                 return base.MeasureOverride(availableSize);
             }
 
-            if (row.DetailsPresenterDrawsGridLines && 
+            if (row.DetailsPresenterDrawsGridLines &&
                 DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ true))
             {
                 double thickness = dataGrid.HorizontalGridLineThickness;
@@ -288,8 +288,10 @@ namespace System.Windows.Controls.Primitives
                 DataGridHelper.IsGridLineVisible(dataGrid, /*isHorizontal = */ true))
             {
                 double thickness = dataGrid.HorizontalGridLineThickness;
-                Rect rect = new Rect(new Size(RenderSize.Width, thickness));
-                rect.Y = RenderSize.Height - thickness;
+                Rect rect = new Rect(new Size(RenderSize.Width, thickness))
+                {
+                    Y = RenderSize.Height - thickness
+                };
 
                 drawingContext.DrawRectangle(dataGrid.HorizontalGridLinesBrush, null, rect);
             }

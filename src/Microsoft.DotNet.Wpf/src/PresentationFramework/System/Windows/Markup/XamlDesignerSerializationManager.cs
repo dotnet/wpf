@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -36,7 +36,7 @@ namespace System.Windows.Markup
     //moved into base or core, we should consider move the methods
     //in ServiceProviders into XamlDesignerSerializationManager.
     public class XamlDesignerSerializationManager : ServiceProviders
-    {        
+    {
         #region Construction
 
         /// <summary>
@@ -69,7 +69,7 @@ namespace System.Windows.Markup
             set
             {
                 // Validate Input Arguments
-                if (!IsValidXamlWriterMode(value)) 
+                if (!IsValidXamlWriterMode(value))
                 {
                     throw new InvalidEnumArgumentException("value", (int)value, typeof(XamlWriterMode));
                 }
@@ -94,14 +94,14 @@ namespace System.Windows.Markup
         {
             _xmlWriter = null;
         }
-        
+
         #endregion
 
         #region Private Methods
 
         private static bool IsValidXamlWriterMode(XamlWriterMode value)
         {
-            return value == XamlWriterMode.Value 
+            return value == XamlWriterMode.Value
                 || value == XamlWriterMode.Expression;
         }
 

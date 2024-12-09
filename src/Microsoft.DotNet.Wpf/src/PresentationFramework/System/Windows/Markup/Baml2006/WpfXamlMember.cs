@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,7 +20,7 @@ namespace System.Windows.Baml2006
         }
 
         public WpfXamlMember(DependencyProperty dp, bool isAttachable)
-            : base(dp.Name, 
+            : base(dp.Name,
                    System.Windows.Markup.XamlReader.BamlSharedSchemaContext.GetXamlType(dp.OwnerType),
                    isAttachable)
         {
@@ -57,7 +57,7 @@ namespace System.Windows.Baml2006
             PropertyInfo property,
             XamlSchemaContext schemaContext,
             bool useV3Rules)
-            : base (property, schemaContext)
+            : base(property, schemaContext)
         {
             DependencyProperty = dp;
             _useV3Rules = useV3Rules;
@@ -249,7 +249,7 @@ namespace System.Windows.Baml2006
         }
 
         // The Markup compiler doesn't support XamlDeferringLoader so we don't need to look it up in BAML scenarios.
-        protected override XamlValueConverter<XamlDeferringLoader>  LookupDeferringLoader()
+        protected override XamlValueConverter<XamlDeferringLoader> LookupDeferringLoader()
         {
             if (_useV3Rules)
             {
@@ -325,5 +325,5 @@ namespace System.Windows.Baml2006
         private byte _bitField;
         private XamlMember _baseUnderlyingMember;
         private WpfXamlMember _asContentProperty;
-    } 
+    }
 }

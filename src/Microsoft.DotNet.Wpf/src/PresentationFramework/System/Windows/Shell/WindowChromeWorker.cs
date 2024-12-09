@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -443,10 +443,10 @@ namespace Microsoft.Windows.Shell
             IntPtr retVal = IntPtr.Zero;
             if (wParam.ToInt32() != 0) // wParam == TRUE
             {
-                retVal = new IntPtr((int) (WVR.REDRAW));
+                retVal = new IntPtr((int)(WVR.REDRAW));
             }
 
-            return retVal; 
+            return retVal;
         }
 
         private HT _GetHTFromResizeGripDirection(ResizeGripDirection direction)
@@ -629,8 +629,10 @@ namespace Microsoft.Windows.Shell
             var wpl = NativeMethods.GetWindowPlacement(_hwnd);
             switch (wpl.showCmd)
             {
-                case SW.SHOWMINIMIZED: return WindowState.Minimized;
-                case SW.SHOWMAXIMIZED: return WindowState.Maximized;
+                case SW.SHOWMINIMIZED:
+                    return WindowState.Minimized;
+                case SW.SHOWMAXIMIZED:
+                    return WindowState.Maximized;
             }
             return WindowState.Normal;
         }
@@ -1080,17 +1082,17 @@ namespace Microsoft.Windows.Shell
             RECT rcWindow = NativeMethods.GetWindowRect(_hwnd);
             Size logicalSize = DpiHelper.DeviceSizeToLogical(new Size(rcWindow.Width, rcWindow.Height), dpi.DpiScaleX, dpi.DpiScaleY);
 
-            Point logicalTopLeft     = new Point(resizeBorderThickness.Left,
+            Point logicalTopLeft = new Point(resizeBorderThickness.Left,
                                                  resizeBorderThickness.Top + captionHeight);
             Point logicalBottomRight = new Point(logicalSize.Width - resizeBorderThickness.Right,
                                                  logicalSize.Height - resizeBorderThickness.Bottom);
 
-            Point deviceTopLeft     = DpiHelper.LogicalPixelsToDevice(logicalTopLeft,     dpi.DpiScaleX, dpi.DpiScaleY);
+            Point deviceTopLeft = DpiHelper.LogicalPixelsToDevice(logicalTopLeft, dpi.DpiScaleX, dpi.DpiScaleY);
             Point deviceBottomRight = DpiHelper.LogicalPixelsToDevice(logicalBottomRight, dpi.DpiScaleX, dpi.DpiScaleY);
 
-            rcClient.left   = (int)deviceTopLeft.X;
-            rcClient.top    = (int)deviceTopLeft.Y;
-            rcClient.right  = (int)deviceBottomRight.X;
+            rcClient.left = (int)deviceTopLeft.X;
+            rcClient.top = (int)deviceTopLeft.Y;
+            rcClient.right = (int)deviceBottomRight.X;
             rcClient.bottom = (int)deviceBottomRight.Y;
 
             return true;

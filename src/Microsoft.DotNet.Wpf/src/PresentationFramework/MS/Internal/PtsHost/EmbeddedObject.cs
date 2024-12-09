@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -33,8 +33,8 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Dispose object.
         /// </summary>
-        internal virtual void Dispose() 
-        { 
+        internal virtual void Dispose()
+        {
         }
 
         /// <summary>
@@ -49,9 +49,9 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Embedded object's owner.
         /// </summary>
-        internal abstract DependencyObject Element 
-        { 
-            get; 
+        internal abstract DependencyObject Element
+        {
+            get;
         }
 
         /// <summary>
@@ -110,12 +110,12 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Attached object's owner.
         /// </summary>
-        internal override DependencyObject Element 
-        { 
-            get 
-            { 
-                return Para.Element; 
-            } 
+        internal override DependencyObject Element
+        {
+            get
+            {
+                return Para.Element;
+            }
         }
 
         /// <summary>
@@ -184,12 +184,12 @@ namespace MS.Internal.PtsHost
         /// <summary>
         /// Embedded object's owner.
         /// </summary>
-        internal override DependencyObject Element 
-        { 
-            get 
+        internal override DependencyObject Element
+        {
+            get
             {
-                return _uiElementIsland.Root; 
-            } 
+                return _uiElementIsland.Root;
+            }
         }
 
         private UIElementIsland _uiElementIsland;

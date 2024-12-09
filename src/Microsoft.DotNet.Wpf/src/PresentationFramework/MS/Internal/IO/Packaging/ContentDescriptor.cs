@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,7 +30,7 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Equality test.
         /// </summary>
-        public override bool Equals( object other )
+        public override bool Equals(object other)
         {
             if (other == null)
                 return false;   // Standard behavior.
@@ -41,10 +41,10 @@ namespace MS.Internal.IO.Packaging
             // Note that because of the GetType() checking above, the casting must be valid.
             ElementTableKey otherElement = (ElementTableKey)other;
 
-            return (   string.Equals(BaseName, otherElement.BaseName, StringComparison.Ordinal)
-                && string.Equals(XmlNamespace, otherElement.XmlNamespace, StringComparison.Ordinal) );
+            return (string.Equals(BaseName, otherElement.BaseName, StringComparison.Ordinal)
+                && string.Equals(XmlNamespace, otherElement.XmlNamespace, StringComparison.Ordinal));
         }
-            
+
         /// <summary>
         /// Hash on all name components.
         /// </summary>
@@ -56,32 +56,32 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// XML namespace.
         /// </summary>
-        internal string     XmlNamespace
+        internal string XmlNamespace
         {
             get
             {
-                return _xmlNamespace; 
+                return _xmlNamespace;
             }
         }
 
         /// <summary>
         /// Local name.
         /// </summary>
-        internal string     BaseName
+        internal string BaseName
         {
             get
             {
-                return _baseName; 
+                return _baseName;
             }
         }
 
-        private string      _baseName;
-        private string      _xmlNamespace;
+        private string _baseName;
+        private string _xmlNamespace;
 
-        public static readonly string  XamlNamespace = "http://schemas.microsoft.com/winfx/2006/xaml/presentation";
-        public static readonly string  FixedMarkupNamespace = "http://schemas.microsoft.com/xps/2005/06";
+        public static readonly string XamlNamespace = "http://schemas.microsoft.com/winfx/2006/xaml/presentation";
+        public static readonly string FixedMarkupNamespace = "http://schemas.microsoft.com/xps/2005/06";
     }
-                
+
     ///<summary>Content-location information for an element.</summary>
     internal class ContentDescriptor
     {
@@ -99,9 +99,9 @@ namespace MS.Internal.IO.Packaging
         /// Standard constructor.
         /// </summary>
         internal ContentDescriptor(
-            bool hasIndexableContent, 
+            bool hasIndexableContent,
             bool isInline,
-            string contentProp, 
+            string contentProp,
             string titleProp)
         {
             HasIndexableContent = hasIndexableContent;
@@ -118,12 +118,12 @@ namespace MS.Internal.IO.Packaging
         /// It would make sense to use it with HasIndexableContent=true, however.
         /// </remarks>
         internal ContentDescriptor(
-            bool hasIndexableContent) 
+            bool hasIndexableContent)
         {
             HasIndexableContent = hasIndexableContent;
             IsInline = false;
             ContentProp = null;
-            TitleProp   = null;
+            TitleProp = null;
         }
 
         /// <summary>
@@ -133,7 +133,7 @@ namespace MS.Internal.IO.Packaging
         /// ContentDescriptor properties are read-write because at table creation time these properties
         /// are discovered and stored incrementally.
         /// </remarks>
-        internal bool       HasIndexableContent
+        internal bool HasIndexableContent
         {
             get
             {
@@ -163,7 +163,7 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Attribute in which to find content or null.
         /// </summary>
-        internal string     ContentProp
+        internal string ContentProp
         {
             get
             {
@@ -178,7 +178,7 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Attribute in which to find a title rather than the real content.
         /// </summary>
-        internal string     TitleProp
+        internal string TitleProp
         {
             get
             {
@@ -190,9 +190,9 @@ namespace MS.Internal.IO.Packaging
             }
         }
 
-        private bool        _hasIndexableContent;
-        private bool        _isInline;
-        private string      _contentProp;
-        private string      _titleProp;
+        private bool _hasIndexableContent;
+        private bool _isInline;
+        private string _contentProp;
+        private string _titleProp;
     }
 }   // namespace MS.Internal.IO.Packaging

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,8 +25,8 @@ namespace MS.Internal.IO.Packaging
         internal IndexingContentUnit(
             string contents,
             uint chunkID,
-            CHUNK_BREAKTYPE breakType, 
-            ManagedFullPropSpec attribute, 
+            CHUNK_BREAKTYPE breakType,
+            ManagedFullPropSpec attribute,
             uint lcid)
             : base(chunkID, breakType, attribute, lcid, CHUNKSTATE.CHUNK_TEXT)
         {
@@ -40,8 +40,8 @@ namespace MS.Internal.IO.Packaging
         internal void InitIndexingContentUnit(
             string contents,
             uint chunkID,
-            CHUNK_BREAKTYPE breakType, 
-            ManagedFullPropSpec attribute, 
+            CHUNK_BREAKTYPE breakType,
+            ManagedFullPropSpec attribute,
             uint lcid)
         {
             _contents = contents;
@@ -52,14 +52,14 @@ namespace MS.Internal.IO.Packaging
         }
 
         ///<summary>The chunk's contents.</summary>
-        internal string Text 
-        { 
+        internal string Text
+        {
             get
             {
                 return _contents;
             }
-        } 
+        }
 
-        private string          _contents;
+        private string _contents;
     }
 }

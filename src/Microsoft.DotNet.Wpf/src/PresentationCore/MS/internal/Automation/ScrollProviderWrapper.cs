@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 //
 //
 
-using System.Windows.Threading;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -30,17 +30,17 @@ namespace MS.Internal.Automation
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
 
-    internal class ScrollProviderWrapper: MarshalByRefObject, IScrollProvider
+    internal class ScrollProviderWrapper : MarshalByRefObject, IScrollProvider
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        private ScrollProviderWrapper( AutomationPeer peer, IScrollProvider iface )
+        private ScrollProviderWrapper(AutomationPeer peer, IScrollProvider iface)
         {
             _peer = peer;
             _iface = iface;
@@ -54,24 +54,24 @@ namespace MS.Internal.Automation
         //  Interface IScrollProvider
         //
         //------------------------------------------------------
- 
+
         #region Interface IScrollProvider
 
-        public void Scroll( ScrollAmount horizontalAmount, ScrollAmount verticalAmount )
+        public void Scroll(ScrollAmount horizontalAmount, ScrollAmount verticalAmount)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( Scroll ), new ScrollAmount [ ] { horizontalAmount, verticalAmount } );
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(Scroll), new ScrollAmount[] { horizontalAmount, verticalAmount });
         }
 
-        public void SetScrollPercent( double horizontalPercent, double verticalPercent )
+        public void SetScrollPercent(double horizontalPercent, double verticalPercent)
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( SetScrollPercent ), new double [ ] { horizontalPercent, verticalPercent } );
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(SetScrollPercent), new double[] { horizontalPercent, verticalPercent });
         }
-        
+
         public double HorizontalScrollPercent
         {
             get
             {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetHorizontalScrollPercent ), null );
+                return (double)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetHorizontalScrollPercent), null);
             }
         }
 
@@ -79,7 +79,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetVerticalScrollPercent ), null );
+                return (double)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetVerticalScrollPercent), null);
             }
         }
 
@@ -87,7 +87,7 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetHorizontalViewSize ), null );
+                return (double)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetHorizontalViewSize), null);
             }
         }
 
@@ -95,23 +95,23 @@ namespace MS.Internal.Automation
         {
             get
             {
-                return (double) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetVerticalViewSize ), null );
+                return (double)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetVerticalViewSize), null);
             }
         }
-        
+
         public bool HorizontallyScrollable
         {
             get
             {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetHorizontallyScrollable ), null );
+                return (bool)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetHorizontallyScrollable), null);
             }
         }
-        
+
         public bool VerticallyScrollable
         {
             get
             {
-                return (bool) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetVerticallyScrollable ), null );
+                return (bool)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetVerticallyScrollable), null);
             }
         }
 
@@ -123,12 +123,12 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new ScrollProviderWrapper( peer, (IScrollProvider) iface );
+            return new ScrollProviderWrapper(peer, (IScrollProvider)iface);
         }
 
         #endregion Internal Methods
@@ -138,49 +138,49 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
-        private object Scroll( object arg )
+        private object Scroll(object arg)
         {
-            ScrollAmount [ ] args = (ScrollAmount [ ]) arg;
-            _iface.Scroll( args[ 0 ], args[ 1 ] );
+            ScrollAmount[] args = (ScrollAmount[])arg;
+            _iface.Scroll(args[0], args[1]);
             return null;
         }
 
-        private object SetScrollPercent( object arg )
+        private object SetScrollPercent(object arg)
         {
-            double [ ] args = (double [ ]) arg;
-            _iface.SetScrollPercent( args[ 0 ], args[ 1 ] );
+            double[] args = (double[])arg;
+            _iface.SetScrollPercent(args[0], args[1]);
             return null;
         }
-        
-        private object GetHorizontalScrollPercent( object unused )
+
+        private object GetHorizontalScrollPercent(object unused)
         {
             return _iface.HorizontalScrollPercent;
         }
 
-        private object GetVerticalScrollPercent( object unused )
+        private object GetVerticalScrollPercent(object unused)
         {
             return _iface.VerticalScrollPercent;
         }
 
-        private object GetHorizontalViewSize( object unused )
+        private object GetHorizontalViewSize(object unused)
         {
             return _iface.HorizontalViewSize;
         }
 
-        private object GetVerticalViewSize( object unused )
+        private object GetVerticalViewSize(object unused)
         {
             return _iface.VerticalViewSize;
         }
-        
-        private object GetHorizontallyScrollable( object unused )
+
+        private object GetHorizontallyScrollable(object unused)
         {
             return _iface.HorizontallyScrollable;
         }
-        
-        private object GetVerticallyScrollable( object unused )
+
+        private object GetVerticallyScrollable(object unused)
         {
             return _iface.VerticallyScrollable;
         }
@@ -193,7 +193,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;

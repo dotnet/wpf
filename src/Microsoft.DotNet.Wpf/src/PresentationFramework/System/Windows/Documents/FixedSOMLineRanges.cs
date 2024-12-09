@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,7 +13,7 @@ namespace System.Windows.Documents
     {
         public void AddRange(double start, double end)
         {
-            for (int i = 0; i < Start.Count; )
+            for (int i = 0; i < Start.Count;)
             {
                 if (start > End[i] + _minLineSeparation)
                 {
@@ -81,13 +81,13 @@ namespace System.Windows.Documents
 
         public List<double> Start
         {
-            get 
+            get
             {
                 if (_start == null)
                 {
                     _start = new List<double>();
                 }
-                return _start; 
+                return _start;
             }
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -346,8 +346,10 @@ namespace MS.Internal.Data
                     if (c == 0)
                     {   // one or both of the loops terminated due to pointer collision.
                         // swap the outer green regions into the middle, and terminate
-                        Trade(low, greenL, red); red += low - greenL;
-                        Trade(blue, greenR, high); blue += high - greenR;
+                        Trade(low, greenL, red);
+                        red += low - greenL;
+                        Trade(blue, greenR, high);
+                        blue += high - greenR;
                         break;
                     }
                     else if (c == 1)
@@ -356,16 +358,25 @@ namespace MS.Internal.Data
                     else if (c == 2)
                     {   // special case - this[left] is blue, this[left+1] is red
                         // swap the outer green regions into the middle, and terminate
-                        Trade(low, greenL, red); red += low - greenL + 1; Exchange(red - 1, left + 1);
-                        if (red > left) ++left;
-                        Trade(blue, greenR, high); blue += high - greenR - 1; Exchange(left, blue);
+                        Trade(low, greenL, red);
+                        red += low - greenL + 1;
+                        Exchange(red - 1, left + 1);
+                        if (red > left)
+                            ++left;
+                        Trade(blue, greenR, high);
+                        blue += high - greenR - 1;
+                        Exchange(left, blue);
                         break;
                     }
                     else
                     {   // swap this[left] (blue) with this[right-1] (red) and continue
                         Exchange(left, right - 1);
-                        Trade(greenL, red, left); greenL += left - red; red = ++left;
-                        Trade(right, blue, greenR); greenR -= blue - right; blue = --right;
+                        Trade(greenL, red, left);
+                        greenL += left - red;
+                        red = ++left;
+                        Trade(right, blue, greenR);
+                        greenR -= blue - right;
+                        blue = --right;
                     }
                 }
 
@@ -653,7 +664,8 @@ namespace MS.Internal.Data
 
         public void LoadTree(string s)
         {
-            if (s.StartsWith("\"", StringComparison.Ordinal)) s = s.Substring(1);
+            if (s.StartsWith("\"", StringComparison.Ordinal))
+                s = s.Substring(1);
             int index = s.IndexOf('(');
             LeftSize = Int32.Parse(s.Substring(0, index), TypeConverterHelper.InvariantEnglishUS);
             s = s.Substring(index);

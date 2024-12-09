@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -63,9 +63,9 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 if ((_overlapping != null) && FindIntersection(gp.WidenGeometry, ref start, out topPI, out topBounds, out inter))
                 {
-                    cur    = gp.WidenGeometry;
+                    cur = gp.WidenGeometry;
                     _brush = _pen.StrokeBrush;
-                    _pen   = null;
+                    _pen = null;
 
                     // Draw the stroking as filling widened path
 #if DEBUG
@@ -135,7 +135,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
 
             _dc.Comment(desp);
-            
+
             return _dc.DrawGlyphs(glyphrun, _clip, trans, _brush);
         }
 
@@ -171,7 +171,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 _pen = value;
             }
         }
-        
+
         public List<int> Overlapping
         {
             set { _overlapping = value; }
@@ -241,13 +241,13 @@ namespace Microsoft.Internal.AlphaFlattener
         #region Private Methods
 
         private void RenderImage(
-            ImageProxy image, 
-            Rect       dest, 
-            Geometry   bounds, 
-            bool       clipToBounds, 
-            int        start, 
-            Matrix     trans,
-            string     desp
+            ImageProxy image,
+            Rect dest,
+            Geometry bounds,
+            bool clipToBounds,
+            int start,
+            Matrix trans,
+            string desp
             )
         {
             PrimitiveInfo topPI;
@@ -389,7 +389,7 @@ namespace Microsoft.Internal.AlphaFlattener
             {
                 if (curAlt != null)
                 {
-                    cur  = curAlt;
+                    cur = curAlt;
                     desp = despAlt;
                 }
 
@@ -403,13 +403,13 @@ namespace Microsoft.Internal.AlphaFlattener
         // Recursive
         // _brush must be in world space
         private void FillGeometry(
-            PrimitiveInfo topPI, 
-            Geometry cur, 
-            string desp, 
-            Geometry curAlt, 
-            string despAlt, 
-            int start, 
-            Geometry inter, 
+            PrimitiveInfo topPI,
+            Geometry cur,
+            string desp,
+            Geometry curAlt,
+            string despAlt,
+            int start,
+            Geometry inter,
             Geometry topBounds
             )
         {
@@ -544,13 +544,13 @@ namespace Microsoft.Internal.AlphaFlattener
 
         #region Private Fields
 
-        private Geometry             _clip;
-        private BrushProxy           _brush;    // primitive brush, possibly in world space
-        private PenProxy             _pen;
-        private List<int>            _overlapping;
-        private List<PrimitiveInfo>  _commands;
+        private Geometry _clip;
+        private BrushProxy _brush;    // primitive brush, possibly in world space
+        private PenProxy _pen;
+        private List<int> _overlapping;
+        private List<PrimitiveInfo> _commands;
         private IProxyDrawingContext _dc;
-        private bool                 _disjoint;
+        private bool _disjoint;
 
         #endregion
     } // end of class PrimitiveRenderer

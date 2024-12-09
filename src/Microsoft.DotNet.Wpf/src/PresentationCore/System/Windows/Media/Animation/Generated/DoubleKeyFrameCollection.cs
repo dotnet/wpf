@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -35,7 +35,7 @@ namespace System.Windows.Media.Animation
         public DoubleKeyFrameCollection()
             : base()
         {
-            _keyFrames = new List< DoubleKeyFrame>(2);
+            _keyFrames = new List<DoubleKeyFrame>(2);
         }
 
         #endregion
@@ -51,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    DoubleKeyFrameCollection emptyCollection = new DoubleKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< DoubleKeyFrame>(0);
+                    DoubleKeyFrameCollection emptyCollection = new DoubleKeyFrameCollection
+                    {
+                        _keyFrames = new List<DoubleKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;
@@ -90,12 +91,12 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
-            DoubleKeyFrameCollection sourceCollection = (DoubleKeyFrameCollection) sourceFreezable;
+            DoubleKeyFrameCollection sourceCollection = (DoubleKeyFrameCollection)sourceFreezable;
             base.CloneCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
 
-            _keyFrames = new List< DoubleKeyFrame>(count);
+            _keyFrames = new List<DoubleKeyFrame>(count);
 
             for (int i = 0; i < count; i++)
             {
@@ -111,12 +112,12 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
-            DoubleKeyFrameCollection sourceCollection = (DoubleKeyFrameCollection) sourceFreezable;
+            DoubleKeyFrameCollection sourceCollection = (DoubleKeyFrameCollection)sourceFreezable;
             base.CloneCurrentValueCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
 
-            _keyFrames = new List< DoubleKeyFrame>(count);
+            _keyFrames = new List<DoubleKeyFrame>(count);
 
             for (int i = 0; i < count; i++)
             {
@@ -132,12 +133,12 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetAsFrozenCore(Freezable sourceFreezable)
         {
-            DoubleKeyFrameCollection sourceCollection = (DoubleKeyFrameCollection) sourceFreezable;
+            DoubleKeyFrameCollection sourceCollection = (DoubleKeyFrameCollection)sourceFreezable;
             base.GetAsFrozenCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
 
-            _keyFrames = new List< DoubleKeyFrame>(count);
+            _keyFrames = new List<DoubleKeyFrame>(count);
 
             for (int i = 0; i < count; i++)
             {
@@ -153,12 +154,12 @@ namespace System.Windows.Media.Animation
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
         {
-            DoubleKeyFrameCollection sourceCollection = (DoubleKeyFrameCollection) sourceFreezable;
+            DoubleKeyFrameCollection sourceCollection = (DoubleKeyFrameCollection)sourceFreezable;
             base.GetCurrentValueAsFrozenCore(sourceFreezable);
 
             int count = sourceCollection._keyFrames.Count;
 
-            _keyFrames = new List< DoubleKeyFrame>(count);
+            _keyFrames = new List<DoubleKeyFrame>(count);
 
             for (int i = 0; i < count; i++)
             {
@@ -299,7 +300,7 @@ namespace System.Windows.Media.Animation
             WritePreamble();
 
             if (_keyFrames.Count > 0)
-            {            
+            {
                 for (int i = 0; i < _keyFrames.Count; i++)
                 {
                     OnFreezablePropertyChanged(_keyFrames[i], null);

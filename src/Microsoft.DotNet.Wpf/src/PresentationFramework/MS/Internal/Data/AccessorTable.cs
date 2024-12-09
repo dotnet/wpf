@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -62,20 +62,20 @@ namespace MS.Internal.Data
 
                     if (age >= _ages.Length)
                     {
-                        int[] newAges = new int[2*age];
+                        int[] newAges = new int[2 * age];
                         _ages.CopyTo(newAges, 0);
                         _ages = newAges;
                     }
 
-                    ++ _ages[age];
-                    ++ _hits;
+                    ++_ages[age];
+                    ++_hits;
 #endif
                     info.Generation = _generation;
                 }
 #if DEBUG
                 else
                 {
-                    ++ _misses;
+                    ++_misses;
                 }
 #endif
                 return info;
@@ -142,16 +142,16 @@ namespace MS.Internal.Data
             }
 
             Console.WriteLine("AccessorTable had {0} hits, {1} misses ({2,2}%) in {3} generations.",
-                        _hits, _misses, (100*_hits)/(_hits+_misses), _generation);
+                        _hits, _misses, (100 * _hits) / (_hits + _misses), _generation);
             Console.WriteLine("  Age   Hits   Pct   Cumulative");
             int cumulativeHits = 0;
-            for (int i=0; i<_ages.Length; ++i)
+            for (int i = 0; i < _ages.Length; ++i)
             {
                 if (_ages[i] > 0)
                 {
                     cumulativeHits += _ages[i];
                     Console.WriteLine("{0,5} {1,6} {2,5} {3,5}",
-                                    i, _ages[i], 100*_ages[i]/_hits, 100*cumulativeHits/_hits);
+                                    i, _ages[i], 100 * _ages[i] / _hits, 100 * cumulativeHits / _hits);
                 }
             }
 #endif
@@ -170,8 +170,8 @@ namespace MS.Internal.Data
         private bool _cleanupRequested;
         bool _traceSize;
 #if DEBUG
-        private int[]       _ages = new int[10];
-        private int         _hits, _misses;
+        private int[] _ages = new int[10];
+        private int _hits, _misses;
 #endif
 
         private readonly struct AccessorTableKey : IEquatable<AccessorTableKey>

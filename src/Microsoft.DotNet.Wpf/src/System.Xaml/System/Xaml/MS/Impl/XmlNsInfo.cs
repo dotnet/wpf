@@ -434,7 +434,7 @@ namespace System.Xaml.MS.Impl
                 _nsInfo = nsInfo;
 
                 // Calculate the subsume count upfront, since this also serves as our cycle detection
-                _subsumeCount = new Dictionary<string,int>(nsInfo.OldToNewNs.Count);
+                _subsumeCount = new Dictionary<string, int>(nsInfo.OldToNewNs.Count);
 
                 HashSet<string> visited = new HashSet<string>();
 

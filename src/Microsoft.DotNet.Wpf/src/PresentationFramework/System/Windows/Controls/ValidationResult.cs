@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,7 +24,7 @@ namespace System.Windows.Controls
             _isValid = isValid;
             _errorContent = errorContent;
         }
-            
+
         /// <summary>
         ///     Whether or not the ValidationRule that was checked is valid.
         /// </summary>
@@ -32,7 +32,7 @@ namespace System.Windows.Controls
         {
             get
             {
-                return _isValid;   
+                return _isValid;
             }
         }
 
@@ -42,7 +42,7 @@ namespace System.Windows.Controls
         /// </summary>
         public object ErrorContent
         {
-            get 
+            get
             {
                 return _errorContent;
             }
@@ -65,7 +65,7 @@ namespace System.Windows.Controls
         /// <param name="left">left operand</param>
         /// <param name="right">right operand</param>
         /// <returns>true if the values are equal</returns>
-        public static bool operator == (ValidationResult left, ValidationResult right)
+        public static bool operator ==(ValidationResult left, ValidationResult right)
         {
             return Object.Equals(left, right);
         }
@@ -76,7 +76,7 @@ namespace System.Windows.Controls
         /// <param name="left">left operand</param>
         /// <param name="right">right operand</param>
         /// <returns>true if the values are not equal</returns>
-        public static bool operator != (ValidationResult left, ValidationResult right)
+        public static bool operator !=(ValidationResult left, ValidationResult right)
         {
             return !Object.Equals(left, right);
         }

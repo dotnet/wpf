@@ -1,13 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
-using MS.Utility;
-using MS.Internal;
 using System.Collections;
 using System.Globalization;
+using MS.Internal;
+using MS.Utility;
 
 namespace System.Windows.Media.Media3D
 {
@@ -49,7 +49,7 @@ namespace System.Windows.Media.Media3D
             int addedPosition = InternalCount;
             _collection.Add(value);
             InvalidateEnumerators();
-            
+
             // NOTE: The collection must be updated before notifying the Visual.
             ConnectChild(addedPosition, value);
 
@@ -118,7 +118,7 @@ namespace System.Windows.Media.Media3D
 
             // NOTE: The collection must be updated before notifying the Visual.
             for (int i = oldCollection.Count - 1; i >= 0; i--)
-            {                
+            {
                 _owner.RemoveChild(oldCollection[i]);
             }
 
@@ -395,7 +395,7 @@ namespace System.Windows.Media.Media3D
         internal Visual3D InternalGetItem(int index)
         {
             return _collection[index];
-        }       
+        }
 
         #endregion Internal Methods
 
@@ -455,7 +455,7 @@ namespace System.Windows.Media.Media3D
                 throw new System.ArgumentException(SR.Format(SR.Collection_BadType, this.GetType().Name, value.GetType().Name, "Visual3D"));
             }
 
-            return (Visual3D) value;
+            return (Visual3D)value;
         }
 
         private void VerifyAPIForAdd(Visual3D value)
@@ -474,7 +474,7 @@ namespace System.Windows.Media.Media3D
         }
 
         private void InternalInsert(int index, Visual3D value)
-        {            
+        {
             _collection.Insert(index, value);
 
             // Update ParentIndex value on each Visual3D.  Run through them
@@ -484,12 +484,12 @@ namespace System.Windows.Media.Media3D
             {
                 Debug.Assert(InternalGetItem(i).ParentIndex == i - 1,
                     "ParentIndex has been corrupted.");
-                
+
                 InternalGetItem(i).ParentIndex = i;
             }
-            
+
             InvalidateEnumerators();
-            
+
             // NOTE: The collection must be updated before notifying the Visual.
             ConnectChild(index, value);
 
@@ -508,12 +508,12 @@ namespace System.Windows.Media.Media3D
             {
                 Debug.Assert(InternalGetItem(i).ParentIndex == i + 1,
                     "ParentIndex has been corrupted.");
-                
+
                 InternalGetItem(i).ParentIndex = i;
             }
-            
+
             InvalidateEnumerators();
-            
+
             // NOTE: The collection must be updated before notifying the Visual.
             _owner.RemoveChild(value);
 
@@ -579,7 +579,7 @@ namespace System.Windows.Media.Media3D
 
         #region Private Fields
 
-        private IVisual3DContainer _owner = null;       
+        private IVisual3DContainer _owner = null;
         private FrugalStructList<Visual3D> _collection = new FrugalStructList<Visual3D>();
         private int _version = 0;
 

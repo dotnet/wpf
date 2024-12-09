@@ -10,7 +10,7 @@ using System.Xaml;
 
 namespace System.Windows.Markup
 {
-    public class NameReferenceConverter: TypeConverter
+    public class NameReferenceConverter : TypeConverter
     {
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
@@ -48,7 +48,7 @@ namespace System.Windows.Markup
 
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            if (context == null || (context.GetService(typeof(IXamlNameProvider)) as  IXamlNameProvider) == null)
+            if (context == null || (context.GetService(typeof(IXamlNameProvider)) as IXamlNameProvider) == null)
             {
                 return false;
             }

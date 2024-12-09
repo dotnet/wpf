@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,8 +10,8 @@
 *
 \***************************************************************************/
 
-using MS.Internal;
 using System.Windows.Media.Composition;
+using MS.Internal;
 
 namespace System.Windows.Media
 {
@@ -19,7 +19,7 @@ namespace System.Windows.Media
     ///<summary>
     /// Transform provides a base for all types of transformations, including matrix and list type.
     ///</summary>
-    [Localizability(LocalizationCategory.None, Readability=Readability.Unreadable)]
+    [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)]
     public abstract partial class Transform : GeneralTransform
     {
         internal Transform()
@@ -43,9 +43,9 @@ namespace System.Windows.Media
             identity.Freeze();
             return identity;
         }
-         
+
         private static Transform s_identity = MakeIdentityTransform();
-        
+
         ///<summary>
         /// Return the current transformation value.
         ///</summary>
@@ -57,8 +57,8 @@ namespace System.Windows.Media
         /// transient identity) -- this is intentional.  This property is used internally only.  If you need to check the
         /// current matrix value for identity, use Transform.Value.Identity.
         ///</summary>
-        internal abstract bool IsIdentity {get;}
- 
+        internal abstract bool IsIdentity { get; }
+
         internal virtual bool CanSerializeToString() { return false; }
 
         #region Perf Helpers
@@ -109,7 +109,7 @@ namespace System.Windows.Media
             else
             {
                 currentTransformValue = Matrix.Identity;
-            }    
+            }
         }
 
         /// <summary>

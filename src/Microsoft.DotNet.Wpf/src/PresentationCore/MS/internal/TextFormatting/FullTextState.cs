@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,21 +18,21 @@ namespace MS.Internal.TextFormatting
     /// </summary>
     internal sealed class FullTextState
     {
-        private TextStore           _store;                     // formatting store for main text
-        private TextStore           _markerStore;               // store specifically for marker
-        private StatusFlags         _statusFlags;               // status flags
-        private int                 _cpMeasured;                // number of CP successfully measured and fit within column width
-        private int                 _lscpHyphenationLookAhead;  // LSCP after the last character examined by the hyphenation code.
-        private bool                _isSideways;
+        private TextStore _store;                     // formatting store for main text
+        private TextStore _markerStore;               // store specifically for marker
+        private StatusFlags _statusFlags;               // status flags
+        private int _cpMeasured;                // number of CP successfully measured and fit within column width
+        private int _lscpHyphenationLookAhead;  // LSCP after the last character examined by the hyphenation code.
+        private bool _isSideways;
 
 
         [Flags]
         private enum StatusFlags
         {
-            None            = 0,
-            VerticalAdjust  = 0x00000001,   // vertical adjustment on some runs required
-            ForceWrap       = 0x00000002,   // force wrap
-            KeepState       = 0x00000040,   // state should be kept in the line
+            None = 0,
+            VerticalAdjust = 0x00000001,   // vertical adjustment on some runs required
+            ForceWrap = 0x00000002,   // force wrap
+            KeepState = 0x00000040,   // state should be kept in the line
         }
 
 
@@ -64,25 +64,25 @@ namespace MS.Internal.TextFormatting
         /// e.g. fulltext line, mix/max computation, potential breakpoints for optimal paragraph formatting.
         /// </summary>
         internal static FullTextState Create(
-            FormatSettings      settings,
-            int                 cpFirst,
-            int                 finiteFormatWidth
+            FormatSettings settings,
+            int cpFirst,
+            int finiteFormatWidth
             )
         {
             // prepare text stores
             TextStore store = new TextStore(
-                settings, 
-                cpFirst, 
-                0, 
+                settings,
+                cpFirst,
+                0,
                 settings.GetFormatWidth(finiteFormatWidth)
                 );
 
             ParaProp pap = settings.Pap;
             TextStore markerStore = null;
 
-            if(     pap.FirstLineInParagraph
-                &&  pap.TextMarkerProperties != null
-                &&  pap.TextMarkerProperties.TextSource != null)
+            if (pap.FirstLineInParagraph
+                && pap.TextMarkerProperties != null
+                && pap.TextMarkerProperties.TextSource != null)
             {
                 // create text store specifically for marker
                 markerStore = new TextStore(
@@ -112,8 +112,8 @@ namespace MS.Internal.TextFormatting
         /// Construct full text state for formatting
         /// </summary>
         private FullTextState(
-            TextStore       store,
-            TextStore       markerStore,
+            TextStore store,
+            TextStore markerStore,
             bool isSideways
             )
         {
@@ -127,15 +127,15 @@ namespace MS.Internal.TextFormatting
         /// Number of client CP for which we know the nominal widths fit in the
         /// available margin (i.e., because we've measured them).
         /// </summary>
-        internal int CpMeasured 
+        internal int CpMeasured
         {
-            get 
-            { 
-                return _cpMeasured; 
+            get
+            {
+                return _cpMeasured;
             }
-            set 
-            { 
-                _cpMeasured = value; 
+            set
+            {
+                _cpMeasured = value;
             }
         }
 
@@ -199,8 +199,10 @@ namespace MS.Internal.TextFormatting
                     }
                     else
                     {
-                        LsTbd markerRequiredLsTbd = new LsTbd();
-                        markerRequiredLsTbd.ur = settings.TextIndent; // marker requires a tab stop at text start position
+                        LsTbd markerRequiredLsTbd = new LsTbd
+                        {
+                            ur = settings.TextIndent // marker requires a tab stop at text start position
+                        };
                         context.SetTabs(incrementalTab, &markerRequiredLsTbd, 1);
                     }
                 }
@@ -229,9 +231,9 @@ namespace MS.Internal.TextFormatting
         /// Fill a fixed buffer of LsTbd with 
         /// </summary>
         private unsafe void CreateLsTbds(
-            ParaProp        pap,
-            LsTbd*          plsTbds,
-            int             lsTbdCount
+            ParaProp pap,
+            LsTbd* plsTbds,
+            int lsTbdCount
             )
         {
             for (int i = 0; i < lsTbdCount; i++)
@@ -268,15 +270,15 @@ namespace MS.Internal.TextFormatting
             return 0;
         }
 
-        
+
         /// <summary>
         /// Map LSCP to host CP, and return the last LSRun
         /// before the specified limit.
         /// </summary>
         internal LSRun CountText(
-            int         lscpLim,
-            int         cpFirst,
-            out int     count
+            int lscpLim,
+            int cpFirst,
+            out int count
             )
         {
             LSRun lastRun = null;
@@ -381,9 +383,9 @@ namespace MS.Internal.TextFormatting
 
                 lscp += lastSpanLength;
                 ccpCurrent += lastRunLength;
-} while (   ++i < plsrunVector.Count
-                    &&  lsrun.Type != Plsrun.ParaBreak
-                    &&  ccp >= ccpCurrent
+            } while (++i < plsrunVector.Count
+                    && lsrun.Type != Plsrun.ParaBreak
+                    && ccp >= ccpCurrent
                 );
 
             // Since we may overread the span vector by one span,
@@ -413,11 +415,11 @@ namespace MS.Internal.TextFormatting
         /// <param name="lscpHyphen">LSCP of the hyphen</param>
         /// <param name="lshyph">Hyphen properties</param>
         internal bool FindNextHyphenBreak(
-            int         lscpCurrent,
-            int         lscchLim,
-            bool        isCurrentAtWordStart,
-            ref int     lscpHyphen,
-            ref LsHyph  lshyph
+            int lscpCurrent,
+            int lscchLim,
+            bool isCurrentAtWordStart,
+            ref int lscpHyphen,
+            ref LsHyph lshyph
             )
         {
             lshyph = new LsHyph();  // no additional hyphen properties for now
@@ -477,12 +479,12 @@ namespace MS.Internal.TextFormatting
         /// Get the lexical chunk the specified current LSCP is within.
         /// </summary>
         private LexicalChunk GetChunk(
-            TextLexicalService      lexicalService,
-            int                     lscpCurrent,
-            int                     lscchLim,
-            bool                    isCurrentAtWordStart,
-            out int                 lscpChunk,
-            out int                 lscchChunk
+            TextLexicalService lexicalService,
+            int lscpCurrent,
+            int lscchLim,
+            bool isCurrentAtWordStart,
+            out int lscpChunk,
+            out int lscchChunk
             )
         {
             int lscpStart = lscpCurrent;
@@ -513,12 +515,12 @@ namespace MS.Internal.TextFormatting
                 out textVector
                 );
 
-            if (    rawText != null
-                &&  cchWordMax >= MinCchWordToHyphenate
-                &&  lscpLim < lscpChunk + lscchChunk
-                &&  textCulture != null 
-                &&  lexicalService != null
-                &&  lexicalService.IsCultureSupported(textCulture)
+            if (rawText != null
+                && cchWordMax >= MinCchWordToHyphenate
+                && lscpLim < lscpChunk + lscchChunk
+                && textCulture != null
+                && lexicalService != null
+                && lexicalService.IsCultureSupported(textCulture)
                 )
             {
                 // analyze the chunk and produce the lexical chunk to cache
@@ -562,10 +564,10 @@ namespace MS.Internal.TextFormatting
         internal bool VerticalAdjust
         {
             get { return (_statusFlags & StatusFlags.VerticalAdjust) != 0; }
-            set 
+            set
             {
                 if (value)
-                    _statusFlags |= StatusFlags.VerticalAdjust; 
+                    _statusFlags |= StatusFlags.VerticalAdjust;
                 else
                     _statusFlags &= ~StatusFlags.VerticalAdjust;
             }
@@ -578,10 +580,10 @@ namespace MS.Internal.TextFormatting
         internal bool ForceWrap
         {
             get { return (_statusFlags & StatusFlags.ForceWrap) != 0; }
-            set 
+            set
             {
                 if (value)
-                    _statusFlags |= StatusFlags.ForceWrap; 
+                    _statusFlags |= StatusFlags.ForceWrap;
                 else
                     _statusFlags &= ~StatusFlags.ForceWrap;
             }

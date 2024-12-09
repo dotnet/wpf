@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 //#define OLD_ISF
 
-using System.IO;
 using System.Collections.ObjectModel;
-using System.Windows.Media;
-using System.Windows.Input;
+using System.IO;
 using System.Windows.Ink;
+using System.Windows.Input;
+using System.Windows.Media;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {
@@ -63,19 +63,19 @@ namespace MS.Internal.Ink.InkSerializedFormat
 #if OLD_ISF
                 compressor, 
 #endif 
-                stream, 
-                size, 
-                guidList, 
-                strokeDescriptor, 
-                stylusPointDescription, 
-                transform, 
-                out stylusPoints, 
+                stream,
+                size,
+                guidList,
+                strokeDescriptor,
+                stylusPointDescription,
+                transform,
+                out stylusPoints,
                 out extendedProperties);
 
             if (cb != size)
             {
                 throw new ArgumentException(StrokeCollectionSerializer.ISFDebugMessage("Stroke size (" +
-                    cb.ToString(System.Globalization.CultureInfo.InvariantCulture) + ") != expected (" + 
+                    cb.ToString(System.Globalization.CultureInfo.InvariantCulture) + ") != expected (" +
                     size.ToString(System.Globalization.CultureInfo.InvariantCulture) + ")"));
             }
 
@@ -122,13 +122,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
 #if OLD_ISF
             Compressor compressor, 
 #endif
-            Stream stream, 
-            uint totalBytesInStrokeBlockOfIsfStream, 
-            GuidList guidList, 
+            Stream stream,
+            uint totalBytesInStrokeBlockOfIsfStream,
+            GuidList guidList,
             StrokeDescriptor strokeDescriptor,
             StylusPointDescription stylusPointDescription,
             Matrix transform,
-            out StylusPointCollection stylusPoints, 
+            out StylusPointCollection stylusPoints,
             out ExtendedPropertyCollection extendedProperties)
         {
             stylusPoints = null;
@@ -139,18 +139,18 @@ namespace MS.Internal.Ink.InkSerializedFormat
             {
                 return 0;
             }
-             
+
             uint locallyDecodedBytes;
             uint remainingBytesInStrokeBlock = totalBytesInStrokeBlockOfIsfStream;
 
             // First try to load any packet data
-            locallyDecodedBytes = LoadPackets(  stream, 
-                                                remainingBytesInStrokeBlock, 
+            locallyDecodedBytes = LoadPackets(stream,
+                                                remainingBytesInStrokeBlock,
 #if OLD_ISF
                                                 compressor, 
 #endif
-                                                stylusPointDescription, 
-                                                transform, 
+                                                stylusPointDescription,
+                                                transform,
                                                 out stylusPoints);
 
             if (locallyDecodedBytes > remainingBytesInStrokeBlock)
@@ -341,13 +341,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// Loads packets from the input stream.  For example, packets are all of the x's in a stroke
         /// </summary>
 #endif
-        static uint LoadPackets(Stream inputStream, 
-                                uint totalBytesInStrokeBlockOfIsfStream, 
+        static uint LoadPackets(Stream inputStream,
+                                uint totalBytesInStrokeBlockOfIsfStream,
 #if OLD_ISF
                                 Compressor compressor, 
 #endif
-                                StylusPointDescription stylusPointDescription, 
-                                Matrix transform, 
+                                StylusPointDescription stylusPointDescription,
+                                Matrix transform,
                                 out StylusPointCollection stylusPoints)
         {
             stylusPoints = null;
@@ -377,7 +377,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             //add one int per point for button data if it exists
             int[] rawPointData = new int[pointCount * intsPerPoint];
             int[] packetDataSet = new int[pointCount];
-            
+
 
             // copy the rest of the data from the stroke data
             byte[] inputBuffer = new byte[locallyDecodedBytesRemaining];
@@ -385,7 +385,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             // Read the input data into the byte array
             uint bytesRead = StrokeCollectionSerializer.ReliableRead(inputStream, inputBuffer, locallyDecodedBytesRemaining);
 
-            if ( bytesRead != locallyDecodedBytesRemaining )
+            if (bytesRead != locallyDecodedBytesRemaining)
             {
                 // Make sure the bytes read are expected. If not, we should bail out.
                 // An exception will be thrown.
@@ -405,8 +405,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
 #if OLD_ISF
                         compressor, 
 #endif
-                        inputBuffer, 
-                        ref localBytesRead, 
+                        inputBuffer,
+                        ref localBytesRead,
                         packetDataSet);
 
                 if (localBytesRead > locallyDecodedBytesRemaining)
@@ -428,8 +428,8 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 // reordered in the StylusPointDescription, we need to account for that here
                 //
                 int tempi = i;
-                if (tempi > 1 && 
-                    originalPressureIndex != -1 && 
+                if (tempi > 1 &&
+                    originalPressureIndex != -1 &&
                     originalPressureIndex != StylusPointDescription.RequiredPressureIndex/*2*/)
                 {
                     //
@@ -473,11 +473,11 @@ namespace MS.Internal.Ink.InkSerializedFormat
             // For example, if there are 16 packets, and 2 buttons, then 32 bits can be used (e.g. 1 32-bit integer)
             if (0 != locallyDecodedBytesRemaining && buttonCount > 0)
             {
-                    // calculate the number of full bytes used for buttons per packet
-                    //   Example: 10 buttons would require 1 full byte
+                // calculate the number of full bytes used for buttons per packet
+                //   Example: 10 buttons would require 1 full byte
                 int fullBytesForButtonsPerPacket = buttonCount / Native.BitsPerByte;
-                    // calculate the number of bits that spill beyond the full byte boundary
-                    //   Example: 10 buttons would require 2 extra bits (8 fit in a full byte)
+                // calculate the number of bits that spill beyond the full byte boundary
+                //   Example: 10 buttons would require 2 extra bits (8 fit in a full byte)
                 int partialBitsForButtonsPerPacket = buttonCount % Native.BitsPerByte;
 
                 // Now figure out how many bytes we need to read for the button data
@@ -488,7 +488,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 }
                 locallyDecodedBytesRemaining -= localBytesRead;
 
-                int buttonSizeInBytes = (buttonCount + 7)/Native.BitsPerByte;
+                int buttonSizeInBytes = (buttonCount + 7) / Native.BitsPerByte;
                 buttonData = new byte[pointCount * buttonSizeInBytes];
 
                 // Create a bit reader to unpack the bits from the ISF stream into
@@ -522,7 +522,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 //
                 // set the point data in the raw array
                 //
-                FillButtonData( (int)pointCount,
+                FillButtonData((int)pointCount,
                                 buttonCount,
                                 valueIntsPerPoint, //gives the first button index
                                 rawPointData,
@@ -545,7 +545,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             return totalBytesInStrokeBlockOfIsfStream - locallyDecodedBytesRemaining;
         }
 
-        
+
         /// <summary>
         /// Fill packet buffer with button data
         /// </summary>
@@ -555,10 +555,10 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="packets">packet data</param>
         /// <param name="buttonData">button data to fill</param>
         private static void FillButtonData(
-            int pointCount, 
-            int buttonCount, 
-            int buttonIndex, 
-            int[] packets, 
+            int pointCount,
+            int buttonCount,
+            int buttonIndex,
+            int[] packets,
             byte[] buttonData)
         {
             int intsPerPoint = buttonIndex + 1;
@@ -651,17 +651,17 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="strokeLookupEntry"></param>
 #endif
         internal static uint EncodeStroke(
-            Stroke stroke, 
-            Stream stream, 
+            Stroke stroke,
+            Stream stream,
 #if OLD_ISF
             Compressor compressor, 
 #endif
-            byte compressionAlgorithm, 
+            byte compressionAlgorithm,
             GuidList guidList,
             StrokeCollectionSerializer.StrokeLookupEntry strokeLookupEntry)
         {
-            uint cbWrite = SavePackets( stroke, 
-                                        stream, 
+            uint cbWrite = SavePackets(stroke,
+                                        stream,
 #if OLD_ISF
                                         compressor, 
 #endif
@@ -678,10 +678,10 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// For details on how this is strored please refer to the spec.
         /// </summary>
         internal static void BuildStrokeDescriptor(
-            Stroke stroke, 
-            GuidList guidList, 
+            Stroke stroke,
+            GuidList guidList,
             StrokeCollectionSerializer.StrokeLookupEntry strokeLookupEntry,
-            out StrokeDescriptor strokeDescriptor, 
+            out StrokeDescriptor strokeDescriptor,
             out MetricBlock metricBlock)
         {
             // Initialize the metric block for this stroke
@@ -706,7 +706,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             int i = 0; //i is defined out of the for loop so we can use it later for buttons
             for (i = 2/*past x,y*/; i < propertyInfos.Count; i++)
             {
-                if (i == StylusPointDescription.RequiredPressureIndex/*2*/ && 
+                if (i == StylusPointDescription.RequiredPressureIndex/*2*/ &&
                     !strokeLookupEntry.StorePressure)
                 {
                     //
@@ -796,7 +796,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 #endif
         static uint SavePackets(
             Stroke stroke,
-            Stream stream, 
+            Stream stream,
 #if OLD_ISF
             Compressor compressor,
 #endif
@@ -811,7 +811,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             //We don't serialize button data
             //int valuesPerPoint = stroke.StylusPoints.Description.GetOutputArrayLengthPerPoint();
             //int buttonCount = stroke.StylusPoints.Description.ButtonCount;
-            
+
             ReadOnlyCollection<StylusPointPropertyInfo> propertyInfos
                 = stroke.StylusPoints.Description.GetStylusPointProperties();
 
@@ -834,12 +834,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     break;
                 }
                 compressionAlgorithm = strokeLookupEntry.CompressionData;
-                localBytesWritten += SavePacketPropertyData(outputArrays[i], 
+                localBytesWritten += SavePacketPropertyData(outputArrays[i],
                                                             stream,
 #if OLD_ISF
                                                             compressor, 
 #endif
-                                                            propertyInfo.Id, 
+                                                            propertyInfo.Id,
                                                             ref compressionAlgorithm);
             }
 
@@ -936,12 +936,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <param name="algo"></param>
 #endif
         static uint SavePacketPropertyData(
-            int[] packetdata, 
-            Stream stream, 
+            int[] packetdata,
+            Stream stream,
 #if OLD_ISF
             Compressor compressor, 
 #endif
-            Guid guid, 
+            Guid guid,
             ref byte algo)
         {
             if (packetdata.Length == 0)
@@ -949,12 +949,12 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 return 0;
             }
 
-            byte[] data = 
+            byte[] data =
                 Compressor.CompressPacketData(
 #if OLD_ISF
                         compressor, 
 #endif
-                        packetdata, 
+                        packetdata,
                         ref algo);
 
             Debug.Assert(stream != null);

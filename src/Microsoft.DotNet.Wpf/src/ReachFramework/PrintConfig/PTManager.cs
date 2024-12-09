@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,11 +15,10 @@ Abstract:
 --*/
 
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Printing.Interop;
-using MS.Internal.Printing.Configuration;
+using System.Runtime.InteropServices;
 using System.Windows.Xps.Serialization; // for Toolbox
-
+using MS.Internal.Printing.Configuration;
 using MS.Utility;
 
 namespace System.Printing
@@ -56,7 +55,7 @@ namespace System.Printing
         /// </summary>
         /// <param name="validatedPrintTicketStream">resulting PrintTicket stream of the validation</param>
         /// <param name="conflictStatus">conflict resolution result of PrintTicket validation</param>
-        internal ValidationResult(MemoryStream   validatedPrintTicketStream,
+        internal ValidationResult(MemoryStream validatedPrintTicketStream,
                                   ConflictStatus conflictStatus)
         {
             _ptStream = validatedPrintTicketStream;
@@ -98,52 +97,52 @@ namespace System.Printing
         #endregion Public Properties
 
         #region Public Methods
-        
+
         public override bool Equals(object o)
         {
-            if(o == null || !(o is ValidationResult))
+            if (o == null || !(o is ValidationResult))
             {
                 return false;
             }
-            
+
             return Equals((ValidationResult)o);
         }
-        
+
         public override int GetHashCode()
         {
             int hashCode = NullHashCode;
-            
+
             int ptStreamHash = (this._ptStream != null) ? this._ptStream.GetHashCode() : NullHashCode;
-            hashCode = (hashCode << 5) + ptStreamHash;            
+            hashCode = (hashCode << 5) + ptStreamHash;
             hashCode = (hashCode << 5) + this.ValidatedPrintTicket.GetHashCode();
-            
+
             return hashCode;
         }
-        
-        public static bool operator == (ValidationResult a, ValidationResult b)
+
+        public static bool operator ==(ValidationResult a, ValidationResult b)
         {
             return a.Equals(b);
         }
-        
-        public static bool operator != (ValidationResult a, ValidationResult b)
+
+        public static bool operator !=(ValidationResult a, ValidationResult b)
         {
             return !(a == b);
         }
-        
+
         #endregion Public Methods
-                
+
         #region Private Methods
-        
+
         private bool Equals(ValidationResult other)
         {
-            return 
+            return
                    object.Equals(this.ConflictStatus, other.ConflictStatus)
                 && object.ReferenceEquals(this._ptStream, other._ptStream)
                 && object.ReferenceEquals(this._printTicket, other._printTicket);
         }
-        
+
         #endregion Private Methods
-        
+
         #region Private Fields
 
         private MemoryStream _ptStream;
@@ -326,8 +325,8 @@ namespace System.Printing
         /// <exception cref="PrintQueueException">
         /// The PrintTicketManager instance failed to merge and validate the input PrintTicket(s).
         /// </exception>
-        public ValidationResult MergeAndValidatePrintTicket(PrintTicket   basePrintTicket,
-                                                            PrintTicket   deltaPrintTicket)
+        public ValidationResult MergeAndValidatePrintTicket(PrintTicket basePrintTicket,
+                                                            PrintTicket deltaPrintTicket)
         {
             return MergeAndValidatePrintTicket(basePrintTicket, deltaPrintTicket, PrintTicketScope.JobScope);
         }
@@ -360,8 +359,8 @@ namespace System.Printing
         /// <exception cref="PrintQueueException">
         /// The PrintTicketManager instance failed to merge and validate the input PrintTicket(s).
         /// </exception>
-        public ValidationResult MergeAndValidatePrintTicket(PrintTicket      basePrintTicket,
-                                                            PrintTicket      deltaPrintTicket,
+        public ValidationResult MergeAndValidatePrintTicket(PrintTicket basePrintTicket,
+                                                            PrintTicket deltaPrintTicket,
                                                             PrintTicketScope scope)
         {
             ObjectDisposedException.ThrowIf(_disposed, typeof(PrintTicketManager));

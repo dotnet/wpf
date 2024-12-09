@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,8 +17,8 @@ namespace System.Windows.Input
     public class NotifyInputEventArgs : EventArgs
     {
         // Only we can make these.  Note that we cache and reuse instances.
-        internal NotifyInputEventArgs() {}
-        
+        internal NotifyInputEventArgs() { }
+
         internal virtual void Reset(StagingAreaInputItem input, InputManager inputManager)
         {
             _input = input;
@@ -29,14 +29,14 @@ namespace System.Windows.Input
         ///     The staging area input item being processed by the input
         ///     manager.
         /// </summary>
-        public StagingAreaInputItem StagingItem {get {return _input;}}
+        public StagingAreaInputItem StagingItem { get { return _input; } }
 
         /// <summary>
         ///     The input manager processing the input event.
         /// </summary>
-        public InputManager InputManager 
+        public InputManager InputManager
         {
-            get 
+            get
             {
                 return _inputManager;
             }
@@ -46,18 +46,18 @@ namespace System.Windows.Input
         ///     The input manager processing the input event.
         ///     *** FOR INTERNAL USE ONLY **** 
         /// </summary>
-        internal InputManager UnsecureInputManager 
+        internal InputManager UnsecureInputManager
         {
-            get 
+            get
             {
                 return _inputManager;
             }
         }
-        
+
         private StagingAreaInputItem _input;
 
         private InputManager _inputManager;
-}
+    }
 
     /// <summary>
     ///     Delegate type for handles of events that use

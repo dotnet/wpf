@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,11 +15,11 @@ namespace System.Windows
     /// This property describes mechanism by which a line box is determined for each line.
     /// </summary>
     public enum LineStackingStrategy
-    {        
+    {
         /// <summary>
         /// The stack-height is determined by the block element 'line-height' property value.
         /// </summary>
-        BlockLineHeight,   
+        BlockLineHeight,
 
         /// <summary>
         /// The stack-height is the smallest value that contains the extended block progression 
@@ -51,13 +51,13 @@ namespace System.Windows
         /// <summary>
         /// The space is placed before the first column.
         /// </summary>
-        Left    = 0,
+        Left = 0,
 
         /// <summary>
         /// The space is placed after the last column.
         /// </summary>
         /// 
-        Right   = 1,
+        Right = 1,
 
         /// <summary>
         /// The space is distrubted equally between all columns.
@@ -74,38 +74,38 @@ namespace System.Windows
         /// <summary>
         /// Anchor the figure to the top of the page area.
         /// </summary>
-        PageTop         = 0,
+        PageTop = 0,
 
         /// <summary>
         /// Anchor the figure to the center of the page area.
         /// </summary>
-        PageCenter      = 1,
+        PageCenter = 1,
 
         /// <summary>
         /// Anchor the figure to the bottom of the page area.
         /// </summary>
-        PageBottom      = 2,
+        PageBottom = 2,
 
         /// <summary>
         /// Anchor the figure to the top of the page content area.
         /// </summary>
-        ContentTop      = 3,
+        ContentTop = 3,
 
         /// <summary>
         /// Anchor the figure to the center of the page content area.
         /// </summary>
-        ContentCenter   = 4,
+        ContentCenter = 4,
 
         /// <summary>
         /// Anchor the figure to the bottom of the page content area.
         /// </summary>
-        ContentBottom   = 5,
+        ContentBottom = 5,
 
 
         /// <summary>
         /// Anchor the figure to the top of the current paragraph.
         /// </summary>
-        ParagraphTop    = 6,
+        ParagraphTop = 6,
 
         //ParagraphCenter = 7,      Not supported by PTS
         //ParagraphBottom = 8,      Not supported by PTS
@@ -128,37 +128,37 @@ namespace System.Windows
         /// <summary>
         /// Anchor the figure to the left of the page area.
         /// </summary>
-        PageLeft        = 0,
+        PageLeft = 0,
 
         /// <summary>
         /// Anchor the figure to the center of the page area.
         /// </summary>
-        PageCenter      = 1,
+        PageCenter = 1,
 
         /// <summary>
         /// Anchor the figure to the right of the page area.
         /// </summary>
-        PageRight       = 2,
+        PageRight = 2,
 
         /// <summary>
         /// Anchor the figure to the left of the page content area.
         /// </summary>
-        ContentLeft     = 3,
+        ContentLeft = 3,
 
         /// <summary>
         /// Anchor the figure to the center of the page content area.
         /// </summary>
-        ContentCenter   = 4,
+        ContentCenter = 4,
 
         /// <summary>
         /// Anchor the figure to the right of the page content area.
         /// </summary>
-        ContentRight    = 5,
+        ContentRight = 5,
 
         /// <summary>
         /// Anchor the figure to the left of the current column
         /// </summary>
-        ColumnLeft   = 6,
+        ColumnLeft = 6,
 
         /// <summary>
         /// Anchor the figure to the center of the current column
@@ -168,7 +168,7 @@ namespace System.Windows
         /// <summary>
         /// Anchor the figure to the right of the current column
         /// </summary>
-        ColumnRight  = 8,
+        ColumnRight = 8,
 
         // Disabled
         // Anchor the figure to the left of the current character position.
@@ -188,21 +188,21 @@ namespace System.Windows
         /// <summary>
         /// Content does not flow around the object.
         /// </summary>
-        None    = 0,
+        None = 0,
 
         /// <summary>
         /// Content flows around the left side of the object only; no content is displayed to the right.
         /// </summary>
-        Left    = 1,
+        Left = 1,
 
         /// <summary>
         /// Content flows around the right side of the object only; no content is displayed to the left.
         /// </summary>
-        Right   = 2,
+        Right = 2,
 
         /// <summary>
         /// Content flows around both sides of the object.
         /// </summary>
-        Both    = 3,
+        Both = 3,
     }
 }

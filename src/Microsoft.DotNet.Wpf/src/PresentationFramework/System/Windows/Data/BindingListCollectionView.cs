@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -393,8 +393,11 @@ namespace System.Windows.Data
         /// </summary>
         public override bool IsEmpty
         {
-            get { return (NewItemPlaceholderPosition == NewItemPlaceholderPosition.None &&
-                            CollectionProxy.Count == 0); }
+            get
+            {
+                return (NewItemPlaceholderPosition == NewItemPlaceholderPosition.None &&
+                            CollectionProxy.Count == 0);
+            }
         }
 
         /// <summary>
@@ -436,7 +439,7 @@ namespace System.Windows.Data
                 }
 
                 NotifyCollectionChangedEventArgs args = null;
-                int oldIndex=-1, newIndex=-1;
+                int oldIndex = -1, newIndex = -1;
 
                 // we're adding, removing, or moving the placeholder.
                 // Determine the appropriate events.
@@ -629,7 +632,7 @@ namespace System.Windows.Data
                     case NewItemPlaceholderPosition.None:
                         break;
                     case NewItemPlaceholderPosition.AtBeginning:
-                        -- _newItemIndex;
+                        --_newItemIndex;
                         position = 1;
                         break;
                     case NewItemPlaceholderPosition.AtEnd:
@@ -1440,7 +1443,7 @@ namespace System.Windows.Data
         // this must be called under read-access protection to InternalList
         void RebuildLists()
         {
-            lock(SyncRoot)
+            lock (SyncRoot)
             {
                 ClearPendingChanges();
                 RebuildListsCore();
@@ -1776,15 +1779,15 @@ namespace System.Windows.Data
                     {
                         if (index == 0)
                             return _newItem;
-                        if (index <= _newItemIndex+1)
-                            -- index;
+                        if (index <= _newItemIndex + 1)
+                            --index;
                     }
                     break;
 
                 case NewItemPlaceholderPosition.AtEnd:
                     if (index == InternalCount - 1)
                         return NewItemPlaceholder;
-                    if (IsAddingNew && index == InternalCount-2)
+                    if (IsAddingNew && index == InternalCount - 2)
                         return _newItem;
                     break;
             }
@@ -1846,7 +1849,7 @@ namespace System.Windows.Data
         }
 
         // move to a given index
-        private void _MoveTo (int proposed)
+        private void _MoveTo(int proposed)
         {
             if (proposed == CurrentPosition || IsEmpty)
                 return;
@@ -1878,7 +1881,7 @@ namespace System.Windows.Data
         }
 
         // subscribe to change notifications
-        private void SubscribeToChanges ()
+        private void SubscribeToChanges()
         {
             if (InternalList.SupportsChangeNotification)
             {
@@ -1907,143 +1910,143 @@ namespace System.Windows.Data
 
             switch (args.ListChangedType)
             {
-            case ListChangedType.ItemAdded:
-                // Some implementations of IBindingList raise an extra ItemAdded event
-                // when the new item (from a previous call to AddNew) is "committed".
-                // [The IBindingList documentation suggests that all implementations
-                // should do this, but only DataView seems to obey this rather
-                // bizarre requirement.]  We will ignore these extra events, unless
-                // they arise from a commit that we initiated.  There's
-                // no way to detect them from the event args;  we do it the same
-                // way WinForms.DataGridView does - by comparing counts.
-                if (InternalList.Count == _cachedList.Count)
-                {
-                    if (IsAddingNew && index == _newItemIndex)
+                case ListChangedType.ItemAdded:
+                    // Some implementations of IBindingList raise an extra ItemAdded event
+                    // when the new item (from a previous call to AddNew) is "committed".
+                    // [The IBindingList documentation suggests that all implementations
+                    // should do this, but only DataView seems to obey this rather
+                    // bizarre requirement.]  We will ignore these extra events, unless
+                    // they arise from a commit that we initiated.  There's
+                    // no way to detect them from the event args;  we do it the same
+                    // way WinForms.DataGridView does - by comparing counts.
+                    if (InternalList.Count == _cachedList.Count)
                     {
-                        Debug.Assert(_newItem == InternalList[index], "unexpected item while committing AddNew");
-                        forwardedArgs = ProcessCommitNew(index + delta, index + delta);
+                        if (IsAddingNew && index == _newItemIndex)
+                        {
+                            Debug.Assert(_newItem == InternalList[index], "unexpected item while committing AddNew");
+                            forwardedArgs = ProcessCommitNew(index + delta, index + delta);
+                        }
                     }
-                }
-                else
-                {
-                    // normal ItemAdded event
-                    item = InternalList[index];
-                    forwardedArgs = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, index + delta);
-                    _cachedList.Insert(index, item);
+                    else
+                    {
+                        // normal ItemAdded event
+                        item = InternalList[index];
+                        forwardedArgs = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Add, item, index + delta);
+                        _cachedList.Insert(index, item);
+                        if (InternalList.Count != _cachedList.Count)
+                            throw new InvalidOperationException(SR.Format(SR.InconsistentBindingList, InternalList, args.ListChangedType));
+                        if (index <= _newItemIndex)
+                        {
+                            ++_newItemIndex;
+                        }
+                    }
+                    break;
+
+                case ListChangedType.ItemDeleted:
+                    item = _cachedList[index];
+                    _cachedList.RemoveAt(index);
                     if (InternalList.Count != _cachedList.Count)
                         throw new InvalidOperationException(SR.Format(SR.InconsistentBindingList, InternalList, args.ListChangedType));
-                    if (index <= _newItemIndex)
+                    if (index < _newItemIndex)
                     {
-                        ++ _newItemIndex;
+                        --_newItemIndex;
                     }
-                }
-                break;
 
-            case ListChangedType.ItemDeleted:
-                item = _cachedList[index];
-                _cachedList.RemoveAt(index);
-                if (InternalList.Count != _cachedList.Count)
-                    throw new InvalidOperationException(SR.Format(SR.InconsistentBindingList, InternalList, args.ListChangedType));
-                if (index < _newItemIndex)
-                {
-                    -- _newItemIndex;
-                }
-
-                // implicitly cancel AddNew and/or EditItem transactions if the relevant item is removed
-                if (item == CurrentEditItem)
-                {
-                    ImplicitlyCancelEdit();
-                }
-                if (item == CurrentAddItem)
-                {
-                    EndAddNew(true);
-
-                    switch (NewItemPlaceholderPosition)
+                    // implicitly cancel AddNew and/or EditItem transactions if the relevant item is removed
+                    if (item == CurrentEditItem)
                     {
-                        case NewItemPlaceholderPosition.AtBeginning:
-                            index = 0;
-                            break;
-                        case NewItemPlaceholderPosition.AtEnd:
-                            index = InternalCount - 1;
-                            break;
+                        ImplicitlyCancelEdit();
                     }
-                }
-
-                forwardedArgs = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index + delta);
-                break;
-
-            case ListChangedType.ItemMoved:
-                if (IsAddingNew && args.OldIndex == _newItemIndex)
-                {
-                    // ItemMoved applied to the new item.  We assume this is the result
-                    // of committing a new item when a sort is in effect - the item
-                    // moves to its sorted position.  There's no way to verify this assumption.
-                    item = _newItem;
-                    Debug.Assert(item == InternalList[index], "unexpected item while committing AddNew");
-                    forwardedArgs = ProcessCommitNew(args.OldIndex, index + delta);
-                }
-                else
-                {
-                    // normal ItemMoved event
-                    item = InternalList[index];
-                    forwardedArgs = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Move, item, index+delta, args.OldIndex+delta);
-                    if (args.OldIndex < _newItemIndex && _newItemIndex < args.NewIndex)
-                    {
-                        -- _newItemIndex;
-                    }
-                    else if (args.NewIndex <= _newItemIndex && _newItemIndex < args.OldIndex)
-                    {
-                        ++ _newItemIndex;
-                    }
-                }
-
-                _cachedList.RemoveAt(args.OldIndex);
-                _cachedList.Insert(args.NewIndex, item);
-                if (InternalList.Count != _cachedList.Count)
-                    throw new InvalidOperationException(SR.Format(SR.InconsistentBindingList, InternalList, args.ListChangedType));
-                break;
-
-            case ListChangedType.ItemChanged:
-                if (!_itemsRaisePropertyChanged.HasValue)
-                {
-                    // check whether individual items raise PropertyChanged events
-                    // (DataRowView does)
-                    item = InternalList[args.NewIndex];
-                    _itemsRaisePropertyChanged = (item is INotifyPropertyChanged);
-                }
-
-                // if items raise PropertyChanged, we can ignore ItemChanged;
-                // otherwise, treat it like a Reset
-                if (!_itemsRaisePropertyChanged.Value)
-                {
-                    goto case ListChangedType.Reset;
-                }
-                break;
-
-            case ListChangedType.Reset:
-            // treat all other changes like Reset
-            case ListChangedType.PropertyDescriptorAdded:
-            case ListChangedType.PropertyDescriptorChanged:
-            case ListChangedType.PropertyDescriptorDeleted:
-                // implicitly cancel EditItem transactions
-                if (IsEditingItem)
-                {
-                    ImplicitlyCancelEdit();
-                }
-
-                // adjust AddNew transactions, depending on whether the new item
-                // survived the Reset
-                if (IsAddingNew)
-                {
-                    _newItemIndex = InternalList.IndexOf(_newItem);
-                    if (_newItemIndex < 0)
+                    if (item == CurrentAddItem)
                     {
                         EndAddNew(true);
-                    }
-                }
 
-                RefreshOrDefer();
-                break;
+                        switch (NewItemPlaceholderPosition)
+                        {
+                            case NewItemPlaceholderPosition.AtBeginning:
+                                index = 0;
+                                break;
+                            case NewItemPlaceholderPosition.AtEnd:
+                                index = InternalCount - 1;
+                                break;
+                        }
+                    }
+
+                    forwardedArgs = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Remove, item, index + delta);
+                    break;
+
+                case ListChangedType.ItemMoved:
+                    if (IsAddingNew && args.OldIndex == _newItemIndex)
+                    {
+                        // ItemMoved applied to the new item.  We assume this is the result
+                        // of committing a new item when a sort is in effect - the item
+                        // moves to its sorted position.  There's no way to verify this assumption.
+                        item = _newItem;
+                        Debug.Assert(item == InternalList[index], "unexpected item while committing AddNew");
+                        forwardedArgs = ProcessCommitNew(args.OldIndex, index + delta);
+                    }
+                    else
+                    {
+                        // normal ItemMoved event
+                        item = InternalList[index];
+                        forwardedArgs = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Move, item, index + delta, args.OldIndex + delta);
+                        if (args.OldIndex < _newItemIndex && _newItemIndex < args.NewIndex)
+                        {
+                            --_newItemIndex;
+                        }
+                        else if (args.NewIndex <= _newItemIndex && _newItemIndex < args.OldIndex)
+                        {
+                            ++_newItemIndex;
+                        }
+                    }
+
+                    _cachedList.RemoveAt(args.OldIndex);
+                    _cachedList.Insert(args.NewIndex, item);
+                    if (InternalList.Count != _cachedList.Count)
+                        throw new InvalidOperationException(SR.Format(SR.InconsistentBindingList, InternalList, args.ListChangedType));
+                    break;
+
+                case ListChangedType.ItemChanged:
+                    if (!_itemsRaisePropertyChanged.HasValue)
+                    {
+                        // check whether individual items raise PropertyChanged events
+                        // (DataRowView does)
+                        item = InternalList[args.NewIndex];
+                        _itemsRaisePropertyChanged = (item is INotifyPropertyChanged);
+                    }
+
+                    // if items raise PropertyChanged, we can ignore ItemChanged;
+                    // otherwise, treat it like a Reset
+                    if (!_itemsRaisePropertyChanged.Value)
+                    {
+                        goto case ListChangedType.Reset;
+                    }
+                    break;
+
+                case ListChangedType.Reset:
+                // treat all other changes like Reset
+                case ListChangedType.PropertyDescriptorAdded:
+                case ListChangedType.PropertyDescriptorChanged:
+                case ListChangedType.PropertyDescriptorDeleted:
+                    // implicitly cancel EditItem transactions
+                    if (IsEditingItem)
+                    {
+                        ImplicitlyCancelEdit();
+                    }
+
+                    // adjust AddNew transactions, depending on whether the new item
+                    // survived the Reset
+                    if (IsAddingNew)
+                    {
+                        _newItemIndex = InternalList.IndexOf(_newItem);
+                        if (_newItemIndex < 0)
+                        {
+                            EndAddNew(true);
+                        }
+                    }
+
+                    RefreshOrDefer();
+                    break;
             }
 
             if (forwardedArgs != null)
@@ -2283,7 +2286,7 @@ namespace System.Windows.Data
             bool isLiveGrouping = (IsLiveGrouping == true);
             LiveShapingList lsList = list as LiveShapingList;
 
-            for (int k=0, n=list.Count;  k<n;  ++k)
+            for (int k = 0, n = list.Count; k < n; ++k)
             {
                 object item = list[k];
                 LiveShapingItem lsi = isLiveGrouping ? lsList.ItemAt(k) : null;
@@ -2503,7 +2506,7 @@ namespace System.Windows.Data
                 List<Action> deferredActions = _deferredActions;
                 _deferredActions = null;
 
-                foreach(Action action in deferredActions)
+                foreach (Action action in deferredActions)
                 {
                     action();
                 }
@@ -2534,7 +2537,7 @@ namespace System.Windows.Data
                 base.InsertItem(index, item);
             }
 
-            private bool    _allowMultipleDescriptions;
+            private bool _allowMultipleDescriptions;
         }
 
         //------------------------------------------------------
@@ -2545,34 +2548,34 @@ namespace System.Windows.Data
 
         #region Private Fields
 
-        private IBindingList        _internalList;
+        private IBindingList _internalList;
         private CollectionViewGroupRoot _group;
-        private bool                _isGrouping;
-        private IBindingListView    _blv;
+        private bool _isGrouping;
+        private IBindingListView _blv;
         private BindingListSortDescriptionCollection _sort;
-        private IList               _shadowList;
-        private bool                _isSorted;
-        private IComparer           _comparer;
-        private string              _customFilter;
-        private bool                _isFiltered;
-        private bool                _ignoreInnerRefresh;
-        private bool?               _itemsRaisePropertyChanged;
-        private bool                _isDataView;
-        private object              _newItem = NoNewItem;
-        private object              _editItem;
-        private int                 _newItemIndex;  // position of _newItem in the source collection
+        private IList _shadowList;
+        private bool _isSorted;
+        private IComparer _comparer;
+        private string _customFilter;
+        private bool _isFiltered;
+        private bool _ignoreInnerRefresh;
+        private bool? _itemsRaisePropertyChanged;
+        private bool _isDataView;
+        private object _newItem = NoNewItem;
+        private object _editItem;
+        private int _newItemIndex;  // position of _newItem in the source collection
         private NewItemPlaceholderPosition _newItemPlaceholderPosition;
-        private List<Action>        _deferredActions;
-        bool                        _isRemoving;
-        private bool?               _isLiveGrouping = false;
-        private bool                _isLiveShapingDirty;
-        private ObservableCollection<string>    _liveSortingProperties;
-        private ObservableCollection<string>    _liveFilteringProperties;
-        private ObservableCollection<string>    _liveGroupingProperties;
+        private List<Action> _deferredActions;
+        bool _isRemoving;
+        private bool? _isLiveGrouping = false;
+        private bool _isLiveShapingDirty;
+        private ObservableCollection<string> _liveSortingProperties;
+        private ObservableCollection<string> _liveFilteringProperties;
+        private ObservableCollection<string> _liveGroupingProperties;
 
         // to handle ItemRemoved directly, we need to remember the items -
         // IBL's event args tell us the index, not the item itself
-        private IList               _cachedList;
+        private IList _cachedList;
         #endregion Private Fields
 
     }

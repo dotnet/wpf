@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,12 +10,11 @@
 using System.Collections.ObjectModel;
 using System.Threading;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Documents;
+using System.Windows.Media;
 using MS.Internal.Documents;
-using MS.Internal.Text;
-
 using MS.Internal.PtsHost.UnsafeNativeMethods;
+using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {
@@ -125,7 +124,7 @@ namespace MS.Internal.PtsHost
             _pageMargin = pageMargin;
             SetSize(pageSize);
 
-            if(!DoubleUtil.AreClose(_lastFormatWidth, pageSize.Width) || !DoubleUtil.AreClose(_pageMargin.Left, pageMargin.Left) ||
+            if (!DoubleUtil.AreClose(_lastFormatWidth, pageSize.Width) || !DoubleUtil.AreClose(_pageMargin.Left, pageMargin.Left) ||
                !DoubleUtil.AreClose(_pageMargin.Right, pageMargin.Right))
             {
                 // No incremental update if width changes.
@@ -134,7 +133,7 @@ namespace MS.Internal.PtsHost
 
             _lastFormatWidth = pageSize.Width;
 
-            using(_structuralCache.SetDocumentFormatContext(this))
+            using (_structuralCache.SetDocumentFormatContext(this))
             {
                 OnBeforeFormatPage();
 
@@ -197,7 +196,7 @@ namespace MS.Internal.PtsHost
                 pageSize.Width - (pageMargin.Left + pageMargin.Right),
                 pageSize.Height - (pageMargin.Top + pageMargin.Bottom)));
 
-            using(_structuralCache.SetDocumentFormatContext(this))
+            using (_structuralCache.SetDocumentFormatContext(this))
             {
                 OnBeforeFormatPage();
 
@@ -229,7 +228,7 @@ namespace MS.Internal.PtsHost
 
             _partitionSize = partitionSize;
 
-            using(_structuralCache.SetDocumentArrangeContext(this))
+            using (_structuralCache.SetDocumentArrangeContext(this))
             {
                 _ptsPage.ArrangePage();
                 _structuralCache.DetectInvalidOperation();
@@ -330,13 +329,13 @@ namespace MS.Internal.PtsHost
                 }
             }
 
-            if(this.PageVisual != null && rectangles.Count > 0)
+            if (this.PageVisual != null && rectangles.Count > 0)
             {
                 List<Rect> transformedRectangles = new List<Rect>(rectangles.Count);
                 // NOTE: TransformToAncestor is safe (will never throw an exception).
                 GeneralTransform transform = this.PageVisual.Child.TransformToAncestor(this.PageVisual);
 
-                for(int index = 0; index < rectangles.Count; index++)
+                for (int index = 0; index < rectangles.Count; index++)
                 {
                     transformedRectangles.Add(transform.TransformBounds(rectangles[index]));
                 }
@@ -392,7 +391,7 @@ namespace MS.Internal.PtsHost
         }
 
         /// <summary>
-        /// Called when a UIElement-derived class which is hosted by a IContentHost changes it’s DesiredSize
+        /// Called when a UIElement-derived class which is hosted by a IContentHost changes itâ€™s DesiredSize
         /// </summary>
         /// <param name="child">
         /// Child element whose DesiredSize has changed
@@ -426,7 +425,7 @@ namespace MS.Internal.PtsHost
             }
             else
             {
-               // (2) PTS page - use page PTS APIs to get columns.
+                // (2) PTS page - use page PTS APIs to get columns.
                 PTS.FSPAGEDETAILS pageDetails;
                 PTS.Validate(PTS.FsQueryPageDetails(StructuralCache.PtsContext.Context, _ptsPage.PageHandle, out pageDetails));
 
@@ -629,7 +628,7 @@ namespace MS.Internal.PtsHost
                 contentViewport = transform.TransformBounds(contentViewport);
             }
 
-            if(!IsDisposed)
+            if (!IsDisposed)
             {
                 // Draw background
                 if (drawBackground)
@@ -829,7 +828,7 @@ namespace MS.Internal.PtsHost
                         // Notify interested parties about disposal of the page.
                         OnPageDestroyed(EventArgs.Empty);
                     }
-}
+                }
                 finally
                 {
                     _ptsPage = null;
@@ -1212,7 +1211,7 @@ namespace MS.Internal.PtsHost
         }
 
         /// <summary>
-        /// Called when a UIElement-derived class which is hosted by a IContentHost changes it’s DesiredSize
+        /// Called when a UIElement-derived class which is hosted by a IContentHost changes itâ€™s DesiredSize
         /// </summary>
         /// <param name="child">
         /// Child element whose DesiredSize has changed

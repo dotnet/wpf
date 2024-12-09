@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,11 +10,11 @@ using System.Windows.Threading;
 namespace System.Windows.Automation.Peers
 {
     ///
-    public class ComboBoxAutomationPeer: SelectorAutomationPeer, IValueProvider, IExpandCollapseProvider
+    public class ComboBoxAutomationPeer : SelectorAutomationPeer, IValueProvider, IExpandCollapseProvider
     {
         ///
-        public ComboBoxAutomationPeer(ComboBox owner): base(owner)
-        {}
+        public ComboBoxAutomationPeer(ComboBox owner) : base(owner)
+        { }
 
         ///
         override protected ItemAutomationPeer CreateItemAutomationPeer(object item)
@@ -43,9 +43,10 @@ namespace System.Windows.Automation.Peers
 
             if (pattern == PatternInterface.Value)
             {
-                if (owner.IsEditable) iface = this;
+                if (owner.IsEditable)
+                    iface = this;
             }
-            else if(pattern == PatternInterface.ExpandCollapse)
+            else if (pattern == PatternInterface.ExpandCollapse)
             {
                 iface = this;
             }
@@ -115,7 +116,7 @@ namespace System.Windows.Automation.Peers
             // Item can be scrolled into view only when the Combo is expanded.
             // If combo is not expanded the possible solution is expanding scrolling and 
             // bringing back to original state but that is a breaking change and if there is a strong case can be supported later. 
-            if(((IExpandCollapseProvider)this).ExpandCollapseState == ExpandCollapseState.Expanded)
+            if (((IExpandCollapseProvider)this).ExpandCollapseState == ExpandCollapseState.Expanded)
             {
                 ComboBox owner = (ComboBox)Owner;
                 if (owner.ItemContainerGenerator.Status == GeneratorStatus.ContainersGenerated)
@@ -179,7 +180,7 @@ namespace System.Windows.Automation.Peers
             {
                 RaisePropertyChangedEvent(ValuePatternIdentifiers.ValueProperty, oldValue, newValue);
             }
-        } 
+        }
 
         #endregion Value
 
@@ -190,7 +191,7 @@ namespace System.Windows.Automation.Peers
         /// <returns>true if the node was successfully expanded</returns>
         void IExpandCollapseProvider.Expand()
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             ComboBox owner = (ComboBox)((ComboBoxAutomationPeer)this).Owner;
@@ -204,7 +205,7 @@ namespace System.Windows.Automation.Peers
         /// <returns>true if the node was successfully collapsed</returns>
         void IExpandCollapseProvider.Collapse()
         {
-            if(!IsEnabled())
+            if (!IsEnabled())
                 throw new ElementNotEnabledException();
 
             ComboBox owner = (ComboBox)((ComboBoxAutomationPeer)this).Owner;

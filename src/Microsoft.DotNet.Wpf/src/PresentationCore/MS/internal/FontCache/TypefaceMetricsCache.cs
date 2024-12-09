@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -46,20 +46,20 @@ namespace MS.Internal.FontCache
             // Hashtable allows for one writer and multiple reader at the same time. So we don't have
             // read-write confict. In heavy threading environment, the worst is adding 
             // the same value more than once. 
-            lock(_lock)
+            lock (_lock)
             {
                 if (_hashTable.Count >= MaxCacheCapacity)
                 {
                     // when cache is full, we just renew the cache.
                     _hashTable = new Hashtable(MaxCacheCapacity);
                 }
-                
+
                 _hashTable[key] = value;
             }
         }
-   
+
         private static Hashtable _hashTable = new Hashtable(MaxCacheCapacity);
-        private static readonly object _lock         = new object();        
-        private const int MaxCacheCapacity  = 64;   // Maximum cache capacity
-    }        
+        private static readonly object _lock = new object();
+        private const int MaxCacheCapacity = 64;   // Maximum cache capacity
+    }
 }

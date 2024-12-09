@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,10 +9,10 @@
 //
 //
 
-using System.Windows.Threading;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
+using System.Windows.Automation.Provider;
+using System.Windows.Threading;
 
 namespace MS.Internal.Automation
 {
@@ -29,17 +29,17 @@ namespace MS.Internal.Automation
     // * private methods - one for each interface entry point - which get called back
     //   on the right context. These call through to the peer that's actually
     //   implenting the I...Provider version of the interface. 
-    internal class ToggleProviderWrapper: MarshalByRefObject, IToggleProvider
+    internal class ToggleProviderWrapper : MarshalByRefObject, IToggleProvider
     {
         //------------------------------------------------------
         //
         //  Constructors
         //
         //------------------------------------------------------
- 
+
         #region Constructors
 
-        private ToggleProviderWrapper( AutomationPeer peer, IToggleProvider iface )
+        private ToggleProviderWrapper(AutomationPeer peer, IToggleProvider iface)
         {
             _peer = peer;
             _iface = iface;
@@ -53,19 +53,19 @@ namespace MS.Internal.Automation
         //  Interface IValueProvider
         //
         //------------------------------------------------------
- 
+
         #region Interface IToggleProvider
 
-        public void Toggle( )
+        public void Toggle()
         {
-            ElementUtil.Invoke( _peer, new DispatcherOperationCallback( ToggleInternal ), null );
+            ElementUtil.Invoke(_peer, new DispatcherOperationCallback(ToggleInternal), null);
         }
 
         public ToggleState ToggleState
         {
             get
             {
-                return (ToggleState) ElementUtil.Invoke( _peer, new DispatcherOperationCallback( GetToggleState ), null );
+                return (ToggleState)ElementUtil.Invoke(_peer, new DispatcherOperationCallback(GetToggleState), null);
             }
         }
 
@@ -77,12 +77,12 @@ namespace MS.Internal.Automation
         //  Internal Methods
         //
         //------------------------------------------------------
- 
+
         #region Internal Methods
 
-        internal static object Wrap( AutomationPeer peer, object iface )
+        internal static object Wrap(AutomationPeer peer, object iface)
         {
-            return new ToggleProviderWrapper( peer, (IToggleProvider) iface );
+            return new ToggleProviderWrapper(peer, (IToggleProvider)iface);
         }
 
         #endregion Internal Methods
@@ -92,16 +92,16 @@ namespace MS.Internal.Automation
         //  Private Methods
         //
         //------------------------------------------------------
- 
+
         #region Private Methods
 
-        private object ToggleInternal( object unused )
+        private object ToggleInternal(object unused)
         {
             _iface.Toggle();
             return null;
         }
 
-        private object GetToggleState( object unused )
+        private object GetToggleState(object unused)
         {
             return _iface.ToggleState;
         }
@@ -114,7 +114,7 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         private AutomationPeer _peer;

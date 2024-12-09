@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,14 +20,14 @@ using System.Windows.Automation.Peers;  // AutomationPeer
 using System.Windows.Documents;         // IDocumentPaginatorSource, ...
 using System.Windows.Documents.Serialization;  // WritingCompletedEventArgs
 using System.Windows.Input;             // UICommand
-using System.Windows.Media;             // Visual
 using System.Windows.Markup;            // IAddChild, XamlSerializerUtil, ContentPropertyAttribute
+using System.Windows.Media;             // Visual
 using MS.Internal;                      // Invariant, DoubleUtil
-using MS.Internal.KnownBoxes;           // BooleanBoxes
 using MS.Internal.Annotations.Anchoring;// DataIdProcessor, FixedPageProcessor, ...
-using MS.Internal.Documents;            // MultiPageTextView
-using MS.Internal.Controls;             // EmptyEnumerator
 using MS.Internal.Commands;             // CommandHelpers
+using MS.Internal.Controls;             // EmptyEnumerator
+using MS.Internal.Documents;            // MultiPageTextView
+using MS.Internal.KnownBoxes;           // BooleanBoxes
 
 namespace System.Windows.Controls.Primitives
 {
@@ -92,7 +92,7 @@ namespace System.Windows.Controls.Primitives
         public override void OnApplyTemplate()
         {
             base.OnApplyTemplate();
-            
+
             // Update collection of DocumentPageViews if the Visual tree has
             // been updated through control template
             UpdatePageViews();
@@ -164,7 +164,7 @@ namespace System.Windows.Controls.Primitives
             // Can navigate to a page, if:
             // a) the number is in valid range between 1 and PageCount, or
             // b) Paginator is set and pageNumber is PageCount+1.
-            return (pageNumber > 0 && pageNumber <= this.PageCount) || 
+            return (pageNumber > 0 && pageNumber <= this.PageCount) ||
                 ((_document != null) && (pageNumber - 1 == this.PageCount) && !_document.DocumentPaginator.IsPageCountValid);
         }
 
@@ -194,7 +194,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public int PageCount
         {
-            get { return (int) GetValue(PageCountProperty); }
+            get { return (int)GetValue(PageCountProperty); }
         }
 
         /// <summary>
@@ -203,7 +203,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public virtual int MasterPageNumber
         {
-            get { return (int) GetValue(MasterPageNumberProperty); }
+            get { return (int)GetValue(MasterPageNumberProperty); }
         }
 
         /// <summary>
@@ -211,7 +211,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public virtual bool CanGoToPreviousPage
         {
-            get { return (bool) GetValue(CanGoToPreviousPageProperty); }
+            get { return (bool)GetValue(CanGoToPreviousPageProperty); }
         }
 
         /// <summary>
@@ -219,7 +219,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public virtual bool CanGoToNextPage
         {
-            get { return (bool) GetValue(CanGoToNextPageProperty); }
+            get { return (bool)GetValue(CanGoToNextPageProperty); }
         }
 
         /// <summary>
@@ -376,7 +376,7 @@ namespace System.Windows.Controls.Primitives
         /// <summary>
         /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>)
         /// </summary>
-        protected override AutomationPeer OnCreateAutomationPeer() 
+        protected override AutomationPeer OnCreateAutomationPeer()
         {
             return new DocumentViewerBaseAutomationPeer(this);
         }
@@ -589,11 +589,11 @@ namespace System.Windows.Controls.Primitives
                     CommandManager.InvalidateRequerySuggested();
 
                     // Write to the PrintQueue
-                    if( _document is FixedDocumentSequence )
+                    if (_document is FixedDocumentSequence)
                     {
                         docWriter.WriteAsync(_document as FixedDocumentSequence);
                     }
-                    else if( _document is FixedDocument )
+                    else if (_document is FixedDocument)
                     {
                         docWriter.WriteAsync(_document as FixedDocument);
                     }
@@ -637,7 +637,7 @@ namespace System.Windows.Controls.Primitives
             //      - MasterPageNumber
             //      - CanGoToPreviousPage
             //      - CanGoToNextPage
-            UpdateReadOnlyProperties(true, true);                        
+            UpdateReadOnlyProperties(true, true);
 
             // Attach TextEditor, if content supports it. This method will also
             // detach TextEditor from old content.
@@ -919,7 +919,7 @@ namespace System.Windows.Controls.Primitives
             // b) Visual is DocumentPageView.
             // Add to collection any DocumentPageViews found in the Control Template.
             int count = root.InternalVisualChildrenCount;
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 Visual child = root.InternalGetVisualChild(i);
                 fe = child as FrameworkElement;
@@ -968,7 +968,7 @@ namespace System.Windows.Controls.Primitives
             // b) Visual is DocumentPageView.
             // c) Visual is AdornerDecorator.
             int count = root.InternalVisualChildrenCount;
-            for(int i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
                 Visual child = root.InternalGetVisualChild(i);
                 fe = child as FrameworkElement;
@@ -1004,7 +1004,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void AttachTextEditor()
         {
-            AnnotationService service = AnnotationService.GetService(this); 
+            AnnotationService service = AnnotationService.GetService(this);
             ITextContainer textContainer;
 
             // This method is called when Document is changing, so need
@@ -1034,9 +1034,11 @@ namespace System.Windows.Controls.Primitives
             if (textContainer != null && this.TextEditorRenderScope != null && textContainer.TextSelection == null)
             {
                 _textView = new MultiPageTextView(this, this.TextEditorRenderScope, textContainer);
-                _textEditor = new TextEditor(textContainer, this, false);
-                _textEditor.IsReadOnly = !IsEditingEnabled;
-                _textEditor.TextView = _textView;
+                _textEditor = new TextEditor(textContainer, this, false)
+                {
+                    IsReadOnly = !IsEditingEnabled,
+                    TextView = _textView
+                };
                 textContainer.TextView = _textView;
             }
 
@@ -1259,7 +1261,7 @@ namespace System.Windows.Controls.Primitives
                 invalidateRequery = true;
             }
 
-            if(invalidateRequery)
+            if (invalidateRequery)
             {
                 CommandManager.InvalidateRequerySuggested();
             }
@@ -1339,7 +1341,7 @@ namespace System.Windows.Controls.Primitives
             // If DocumentViewer was created through style, then do not modify
             // the logical tree. Instead, set "core parent" for the Document.
             doDocument = _document as DependencyObject;
-	        if (doDocument != null && LogicalTreeHelper.GetParent(doDocument) != null && doDocument is ContentElement)
+            if (doDocument != null && LogicalTreeHelper.GetParent(doDocument) != null && doDocument is ContentElement)
             {
                 // Set the "core parent" back to us.
                 ContentOperations.SetParent((ContentElement)doDocument, this);
@@ -1497,7 +1499,7 @@ namespace System.Windows.Controls.Primitives
             DocumentViewerBase dv = target as DocumentViewerBase;
             Invariant.Assert(dv != null, "Target of CanExecuteRoutedEventHandler must be DocumentViewerBase.");
             Invariant.Assert(args != null, "args cannot be null.");
-  
+
             // DocumentViewerBase is capable of execution of the majority of its commands.
             // Special rules:
             // a) Print command is enabled when Document is attached and printing is not in progress.
@@ -1609,7 +1611,7 @@ namespace System.Windows.Controls.Primitives
         private static void DocumentChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             Invariant.Assert(d != null && d is DocumentViewerBase);
-            ((DocumentViewerBase) d).DocumentChanged((IDocumentPaginatorSource) e.OldValue, (IDocumentPaginatorSource) e.NewValue);
+            ((DocumentViewerBase)d).DocumentChanged((IDocumentPaginatorSource)e.OldValue, (IDocumentPaginatorSource)e.NewValue);
 
             // Since Document state is used to determine CanExecute state, we must invalidate that state.
             CommandManager.InvalidateRequerySuggested();
@@ -1686,8 +1688,8 @@ namespace System.Windows.Controls.Primitives
         private enum Flags
         {
             // free bit                 = 0x10,
-            IsSelectionEnabled          = 0x20,     // Is text selection enabled.
-            DocumentAsLogicalChild      = 0x40,     // Is Document part of logical tree.
+            IsSelectionEnabled = 0x20,     // Is text selection enabled.
+            DocumentAsLogicalChild = 0x40,     // Is Document part of logical tree.
         }
 
         /// <summary>

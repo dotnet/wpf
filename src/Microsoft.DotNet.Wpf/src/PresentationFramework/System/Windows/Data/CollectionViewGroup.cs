@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -89,8 +89,8 @@ namespace System.Windows.Data
         /// </summary>
         event PropertyChangedEventHandler INotifyPropertyChanged.PropertyChanged
         {
-            add     { PropertyChanged += value; }
-            remove  { PropertyChanged -= value; }
+            add { PropertyChanged += value; }
+            remove { PropertyChanged -= value; }
         }
 
         /// <summary>
@@ -154,10 +154,10 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        object                                  _name;
-        ObservableCollection<object>            _itemsRW;
-        ReadOnlyObservableCollection<object>    _itemsRO;
-        int                                     _itemCount;
+        object _name;
+        ObservableCollection<object> _itemsRW;
+        ReadOnlyObservableCollection<object> _itemsRO;
+        int _itemCount;
 
         #endregion Private Fields
     }

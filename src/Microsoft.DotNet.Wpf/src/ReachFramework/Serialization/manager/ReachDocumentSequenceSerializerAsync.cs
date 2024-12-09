@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using System.ComponentModel;
-using System.Xml;
 using System.Windows.Documents;
+using System.Xml;
 
 namespace System.Windows.Xps.Serialization
 {
@@ -20,11 +20,11 @@ namespace System.Windows.Xps.Serialization
         /// </summary>
         public
         DocumentSequenceSerializerAsync(
-            PackageSerializationManager   manager
-            ):
+            PackageSerializationManager manager
+            ) :
         base(manager)
         {
-            
+
         }
 
         public
@@ -34,24 +34,24 @@ namespace System.Windows.Xps.Serialization
             ReachSerializerContext context
             )
         {
-            if(context == null)
+            if (context == null)
             {
 
             }
-           
-            switch (context.Action) 
+
+            switch (context.Action)
             {
                 case SerializerAction.endPersistObjectData:
-                {
-                    EndPersistObjectData();
-                    break;
-                }
-                
+                    {
+                        EndPersistObjectData();
+                        break;
+                    }
+
                 default:
-                {
-                    base.AsyncOperation(context);
-                    break;
-                }
+                    {
+                        base.AsyncOperation(context);
+                        break;
+                    }
             }
         }
 
@@ -62,17 +62,17 @@ namespace System.Windows.Xps.Serialization
         override
         void
         PersistObjectData(
-            SerializableObjectContext   serializableObjectContext
+            SerializableObjectContext serializableObjectContext
             )
         {
             String xmlnsForType = SerializationManager.GetXmlNSForType(typeof(FixedDocumentSequence));
 
-            if( SerializationManager is XpsSerializationManager)
+            if (SerializationManager is XpsSerializationManager)
             {
-               (SerializationManager as XpsSerializationManager).RegisterDocumentSequenceStart();
+                (SerializationManager as XpsSerializationManager).RegisterDocumentSequenceStart();
             }
 
-            if(xmlnsForType == null)
+            if (xmlnsForType == null)
             {
                 XmlWriter.WriteStartElement(serializableObjectContext.Name);
             }
@@ -88,9 +88,9 @@ namespace System.Windows.Xps.Serialization
 
                 ((IXpsSerializationManagerAsync)SerializationManager).OperationStack.Push(context);
 
-                if(serializableObjectContext.IsComplexValue)
+                if (serializableObjectContext.IsComplexValue)
                 {
-                    XpsSerializationPrintTicketRequiredEventArgs e = 
+                    XpsSerializationPrintTicketRequiredEventArgs e =
                     new XpsSerializationPrintTicketRequiredEventArgs(PrintTicketLevel.FixedDocumentSequencePrintTicket,
                                                                      0);
 
@@ -99,9 +99,9 @@ namespace System.Windows.Xps.Serialization
                     //
                     // Serialize the data for the PrintTicket
                     //
-                    if(e.Modified)
+                    if (e.Modified)
                     {
-                        if(e.PrintTicket != null)
+                        if (e.PrintTicket != null)
                         {
                             PrintTicketSerializerAsync serializer = new PrintTicketSerializerAsync(SerializationManager);
                             serializer.SerializeObject(e.PrintTicket);
@@ -129,20 +129,20 @@ namespace System.Windows.Xps.Serialization
             //
             // Signal to any registered callers that the Sequence has been serialized
             //
-            XpsSerializationProgressChangedEventArgs progressEvent = 
+            XpsSerializationProgressChangedEventArgs progressEvent =
             new XpsSerializationProgressChangedEventArgs(XpsWritingProgressChangeLevel.FixedDocumentSequenceWritingProgress,
                                                          0,
                                                          0,
                                                          null);
 
-            if( SerializationManager is XpsSerializationManager)
+            if (SerializationManager is XpsSerializationManager)
             {
-               (SerializationManager as XpsSerializationManager).RegisterDocumentSequenceEnd();
+                (SerializationManager as XpsSerializationManager).RegisterDocumentSequenceEnd();
             }
             ((IXpsSerializationManager)SerializationManager).OnXPSSerializationProgressChanged(progressEvent);
         }
 
-    
+
         /// <summary>
         /// 
         /// </summary>
@@ -153,7 +153,7 @@ namespace System.Windows.Xps.Serialization
         {
             get
             {
-                if(base.XmlWriter == null)
+                if (base.XmlWriter == null)
                 {
                     base.XmlWriter = SerializationManager.AcquireXmlWriter(typeof(FixedDocumentSequence));
                 }
@@ -184,8 +184,8 @@ namespace System.Windows.Xps.Serialization
 
             attributeValue = GetValueOfAttributeAsString(serializablePropertyContext);
 
-            if ( (attributeValue != null) && 
-                 (attributeValue.Length > 0) )
+            if ((attributeValue != null) &&
+                 (attributeValue.Length > 0))
             {
                 //
                 // Emit name="value" attribute
@@ -202,11 +202,11 @@ namespace System.Windows.Xps.Serialization
         {
             ArgumentNullException.ThrowIfNull(serializablePropertyContext);
 
-            String valueAsString                  = null;
+            String valueAsString = null;
             Object targetObjectContainingProperty = serializablePropertyContext.TargetObject;
-            Object propertyValue                  = serializablePropertyContext.Value;
+            Object propertyValue = serializablePropertyContext.Value;
 
-            if(propertyValue != null)
+            if (propertyValue != null)
             {
                 TypeConverter typeConverter = serializablePropertyContext.TypeConverter;
 
@@ -233,5 +233,5 @@ namespace System.Windows.Xps.Serialization
         }
     };
 }
-    
+
 

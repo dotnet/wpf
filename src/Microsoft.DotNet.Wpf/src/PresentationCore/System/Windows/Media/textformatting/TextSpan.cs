@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,8 +18,8 @@ namespace System.Windows.Media.TextFormatting
     /// </summary>
     public class TextSpan<T>
     {
-        private int     _length;
-        private T       _value;
+        private int _length;
+        private T _value;
 
 
         /// <summary>
@@ -28,8 +28,8 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="length">run length</param>
         /// <param name="value">value</param>
         public TextSpan(
-            int     length,
-            T       value
+            int length,
+            T value
             )
         {
             _length = length;

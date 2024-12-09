@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,26 +16,26 @@ namespace MS.Internal.TextFormatting
     /// 
     /// </summary>
     internal sealed class ThousandthOfEmRealPoints : IList<Point>
-    {        
+    {
         //----------------------------------
         // Constructor
         //----------------------------------
         internal ThousandthOfEmRealPoints(
             double emSize,
-            int    capacity
+            int capacity
             )
         {
             Debug.Assert(capacity >= 0);
             InitArrays(emSize, capacity);
         }
-        
+
         internal ThousandthOfEmRealPoints(
-            double       emSize,
+            double emSize,
             IList<Point> pointValues
             )
         {
-            Debug.Assert(pointValues != null);            
-            InitArrays(emSize, pointValues.Count);            
+            Debug.Assert(pointValues != null);
+            InitArrays(emSize, pointValues.Count);
 
             // do the setting
             for (int i = 0; i < Count; i++)
@@ -43,7 +43,7 @@ namespace MS.Internal.TextFormatting
                 _xArray[i] = pointValues[i].X;
                 _yArray[i] = pointValues[i].Y;
             }
-}
+        }
 
         //-------------------------------------
         // Internal properties
@@ -59,14 +59,14 @@ namespace MS.Internal.TextFormatting
         public bool IsReadOnly
         {
             get { return false; }
-        }        
+        }
 
         public Point this[int index]
         {
             get
             {
                 // underlying array does boundary check
-                return new Point(_xArray[index], _yArray[index]);               
+                return new Point(_xArray[index], _yArray[index]);
             }
 
             set
@@ -89,8 +89,8 @@ namespace MS.Internal.TextFormatting
                 {
                     return i;
                 }
-            }            
-            
+            }
+
             return -1;
         }
 
@@ -113,8 +113,8 @@ namespace MS.Internal.TextFormatting
             if (array.Rank != 1)
             {
                 throw new ArgumentException(
-                    SR.Collection_CopyTo_ArrayCannotBeMultidimensional, 
-                    "array");                
+                    SR.Collection_CopyTo_ArrayCannotBeMultidimensional,
+                    "array");
             }
 
             ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
@@ -123,8 +123,8 @@ namespace MS.Internal.TextFormatting
             {
                 throw new ArgumentException(
                     SR.Format(
-                        SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength, 
-                        "arrayIndex", 
+                        SR.Collection_CopyTo_IndexGreaterThanOrEqualToArrayLength,
+                        "arrayIndex",
                         "array"),
                     "arrayIndex");
             }
@@ -136,8 +136,8 @@ namespace MS.Internal.TextFormatting
                         SR.Collection_CopyTo_NumberOfElementsExceedsArrayLength,
                         "arrayIndex",
                         "array"));
-            }           
-            
+            }
+
 
             // do the copying here
             for (int i = 0; i < Count; i++)
@@ -152,9 +152,9 @@ namespace MS.Internal.TextFormatting
             {
                 yield return this[i];
             }
-        }        
+        }
 
-	System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
+        System.Collections.IEnumerator System.Collections.IEnumerable.GetEnumerator()
         {
             return ((IEnumerable<Point>)this).GetEnumerator();
         }
@@ -162,25 +162,25 @@ namespace MS.Internal.TextFormatting
         public void Add(Point value)
         {
             // not supported, same as Point[] 
-            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);
         }
 
         public void Insert(int index, Point item)
         {
             // not supported, same as Point[] 
-            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);
         }
 
         public bool Remove(Point item)
         {
             // not supported, same as Point[]             
-            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);
         }
 
         public void RemoveAt(int index)
         {
             // not supported, same as Point[]             
-            throw new NotSupportedException(SR.CollectionIsFixedSize);                           
+            throw new NotSupportedException(SR.CollectionIsFixedSize);
         }
 
         //---------------------------------------------
@@ -197,5 +197,5 @@ namespace MS.Internal.TextFormatting
         //----------------------------------------
         private ThousandthOfEmRealDoubles _xArray; // scaled double array for X coordinates
         private ThousandthOfEmRealDoubles _yArray; // scaled double array for Y coordinates
-}    
+    }
 }

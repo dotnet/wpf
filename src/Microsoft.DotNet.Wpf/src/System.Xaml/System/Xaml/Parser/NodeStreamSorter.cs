@@ -12,7 +12,7 @@ using MS.Internal.Xaml.Parser;
 
 namespace MS.Internal.Xaml
 {
-    internal class NodeStreamSorter: IEnumerator<XamlNode>
+    internal class NodeStreamSorter : IEnumerator<XamlNode>
     {
         XamlParserContext _context;
         XamlXmlReaderSettings _settings;
@@ -49,7 +49,7 @@ namespace MS.Internal.Xaml
         private void StartObjectFrame()
         {
             _startObjectDepth += 1;
-            if(_seenStack.Count <=_startObjectDepth)
+            if (_seenStack.Count <= _startObjectDepth)
             {
                 _seenStack.Add(new SeenCtorDirectiveFlags());
             }
@@ -177,23 +177,23 @@ namespace MS.Internal.Xaml
                 node = _source.Current;
                 switch (node.NodeType)
                 {
-                case XamlNodeType.NamespaceDeclaration:
-                    _buffer.Enqueue(node);
-                    break;
-                case XamlNodeType.StartObject:
-                    foundFirstStartObject = true;
-                    EnqueueInitialExtraXmlNses();
-                    _buffer.Enqueue(node);
-                    EnqueueInitialXmlState();
-                    break;
-                case XamlNodeType.None:
-                    if (node.IsLineInfo)
-                    {
+                    case XamlNodeType.NamespaceDeclaration:
                         _buffer.Enqueue(node);
-                    }
-                    break;
-                default:
-                    break;
+                        break;
+                    case XamlNodeType.StartObject:
+                        foundFirstStartObject = true;
+                        EnqueueInitialExtraXmlNses();
+                        _buffer.Enqueue(node);
+                        EnqueueInitialXmlState();
+                        break;
+                    case XamlNodeType.None:
+                        if (node.IsLineInfo)
+                        {
+                            _buffer.Enqueue(node);
+                        }
+                        break;
+                    default:
+                        break;
                 }
             }
         }
@@ -269,7 +269,7 @@ namespace MS.Internal.Xaml
             // then dig in and correct the stream.
             //
             //if (HaveSeenOutOfOrderCtorDirective)
-            if(_moveList != null)
+            if (_moveList != null)
             {
                 SortContentsOfReadAheadBuffer();
             }
@@ -301,41 +301,41 @@ namespace MS.Internal.Xaml
                 node = _source.Current;
                 switch (node.NodeType)
                 {
-                case XamlNodeType.StartObject:
-                    StartObjectFrame();
-                    break;
+                    case XamlNodeType.StartObject:
+                        StartObjectFrame();
+                        break;
 
-                case XamlNodeType.EndObject:
-                    EndObjectFrame();
-                    if (propertyDepth == 0)
-                    {
-                        done = true;
-                    }
-                    break;
-
-                case XamlNodeType.None:
-                    if (node.IsEndOfAttributes)
-                    {
+                    case XamlNodeType.EndObject:
+                        EndObjectFrame();
                         if (propertyDepth == 0)
                         {
                             done = true;
                         }
-                    }
-                    break;
+                        break;
 
-                case XamlNodeType.StartMember:
-                    {
-                        propertyDepth += 1;
-                        if (!HaveSeenOutOfOrderCtorDirective)
+                    case XamlNodeType.None:
+                        if (node.IsEndOfAttributes)
                         {
-                            CheckForOutOfOrderCtorDirectives(node);
+                            if (propertyDepth == 0)
+                            {
+                                done = true;
+                            }
                         }
-                    }
-                    break;
+                        break;
 
-                case XamlNodeType.EndMember:
-                    propertyDepth -= 1;
-                    break;
+                    case XamlNodeType.StartMember:
+                        {
+                            propertyDepth += 1;
+                            if (!HaveSeenOutOfOrderCtorDirective)
+                            {
+                                CheckForOutOfOrderCtorDirectives(node);
+                            }
+                        }
+                        break;
+
+                    case XamlNodeType.EndMember:
+                        propertyDepth -= 1;
+                        break;
                 }
                 _buffer.Enqueue(node);
 
@@ -359,29 +359,29 @@ namespace MS.Internal.Xaml
                 XamlNode node = _source.Current;
                 switch (node.NodeType)
                 {
-                case XamlNodeType.StartMember:
-                    {
-                        propertyDepth++;
-                        bool isInstancingProperty = CheckForOutOfOrderCtorDirectives(node);
-                        if (isInstancingProperty && propertyDepth == 1)
+                    case XamlNodeType.StartMember:
                         {
+                            propertyDepth++;
+                            bool isInstancingProperty = CheckForOutOfOrderCtorDirectives(node);
+                            if (isInstancingProperty && propertyDepth == 1)
+                            {
+                                done = true;
+                            }
+                        }
+                        break;
+
+                    case XamlNodeType.EndMember:
+                        propertyDepth--;
+                        break;
+
+                    case XamlNodeType.EndObject:
+                        if (propertyDepth == 0)
+                        {
+                            // end of current object, no real properties but we are done.
+                            // Exit loop normaly so we Enqueue the EndObject.
                             done = true;
                         }
-                    }
-                    break;
-
-                case XamlNodeType.EndMember:
-                    propertyDepth--;
-                    break;
-
-                case XamlNodeType.EndObject:
-                    if (propertyDepth == 0)
-                    {
-                        // end of current object, no real properties but we are done.
-                        // Exit loop normaly so we Enqueue the EndObject.
-                        done = true;
-                    }
-                    break;
+                        break;
                 }
                 _buffer.Enqueue(node);
             } while (!done);
@@ -586,9 +586,9 @@ namespace MS.Internal.Xaml
             end = current;
             int originalIdx = _sortingInfoArray[current].OriginalOrderIndex;
             XamlMember nextMember = _originalNodesInOrder[originalIdx].Member;
-            while(!IsInstancingMember(nextMember))
+            while (!IsInstancingMember(nextMember))
             {
-                if(!AdvanceTo(current, XamlNodeType.StartMember, depth, out end))
+                if (!AdvanceTo(current, XamlNodeType.StartMember, depth, out end))
                 {
                     return false;
                 }
@@ -646,7 +646,7 @@ namespace MS.Internal.Xaml
         }
 
         private void SwapRanges(int beginning, int middle, int end)
-            {
+        {
             int length1 = middle - beginning;
             int length2 = end - middle;
             Debug.Assert(length1 > 0 && length2 > 0);
@@ -655,15 +655,15 @@ namespace MS.Internal.Xaml
 
             // Copy first half into temp storage.
             //             srcArray,      srcIdx, destArray, destIdx, length
-            Array.Copy(_sortingInfoArray, beginning, temp,       0,      length1);
+            Array.Copy(_sortingInfoArray, beginning, temp, 0, length1);
 
             // Copy second half up where the first half was.
             //             srcArray,      srcIdx,    destArray,     destIdx,  length
-            Array.Copy(_sortingInfoArray, middle, _sortingInfoArray, beginning,  length2);
+            Array.Copy(_sortingInfoArray, middle, _sortingInfoArray, beginning, length2);
 
             // Copy first half out of temp storage in after the first half
             //        srcArray, srcIdx, destArray,        destIdx,         length
-            Array.Copy(temp,      0,  _sortingInfoArray, beginning + length2, length1);
+            Array.Copy(temp, 0, _sortingInfoArray, beginning + length2, length1);
         }
 
         private bool AdvanceTo(int start, XamlNodeType nodeType, int searchDepth, out int end)
@@ -672,7 +672,7 @@ namespace MS.Internal.Xaml
             {
                 XamlNodeType currentNodeType = _sortingInfoArray[idx].XamlNodeType;
                 int nodeDepth = _sortingInfoArray[idx].Depth;
-                if(nodeDepth == searchDepth)
+                if (nodeDepth == searchDepth)
                 {
                     if (currentNodeType == nodeType)
                     {
@@ -686,7 +686,7 @@ namespace MS.Internal.Xaml
                     return false;  // we have searched past the end of the current Object.
                 }
             }
-            end =_sortingInfoArray.Length;
+            end = _sortingInfoArray.Length;
             return false;
         }
 

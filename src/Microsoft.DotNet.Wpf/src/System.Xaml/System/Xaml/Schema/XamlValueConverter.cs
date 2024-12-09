@@ -122,6 +122,7 @@ namespace System.Xaml.Schema
             {
                 result ^= ConverterType.GetHashCode();
             }
+
             if (TargetType != null)
             {
                 result ^= TargetType.GetHashCode();
@@ -138,6 +139,7 @@ namespace System.Xaml.Schema
             {
                 return converter2 is null;
             }
+
             if (converter2 is null)
             {
                 return false;

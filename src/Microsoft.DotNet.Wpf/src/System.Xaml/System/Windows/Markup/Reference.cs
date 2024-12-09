@@ -31,16 +31,19 @@ namespace System.Windows.Markup
             {
                 throw new InvalidOperationException(SR.MissingNameResolver);
             }
+
             if (String.IsNullOrEmpty(Name))
             {
                 throw new InvalidOperationException(SR.MustHaveName);
             }
+
             object obj = nameResolver.Resolve(Name);
             if (obj == null)
             {
                 string[] names = new string[] { Name };
                 obj = nameResolver.GetFixupToken(names, true);
             }
+
             return obj;
         }
     }

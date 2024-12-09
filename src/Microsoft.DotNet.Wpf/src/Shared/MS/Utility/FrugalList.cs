@@ -138,6 +138,8 @@ namespace MS.Utility
         /// </summary>
         public abstract T EntryAt(int index);
 
+        public abstract ref T EntryAtRef(int index);
+
         /// <summary>
         /// Promotes the values in the current store to the next larger
         /// and more complex storage model.
@@ -315,6 +317,11 @@ namespace MS.Utility
         public override T EntryAt(int index)
         {
             return _loneEntry;
+        }
+
+        public override ref T EntryAtRef(int index)
+        {
+            return ref _loneEntry;
         }
 
         public override void Promote(FrugalListBase<T> oldList)
@@ -561,6 +568,24 @@ namespace MS.Utility
 
                 case 2:
                     return _entry2;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(index));
+            }
+        }
+
+        public override ref T EntryAtRef(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return ref _entry0;
+
+                case 1:
+                    return ref _entry1;
+
+                case 2:
+                    return ref _entry2;
 
                 default:
                     throw new ArgumentOutOfRangeException(nameof(index));
@@ -1016,6 +1041,33 @@ namespace MS.Utility
             }
         }
 
+        public override ref T EntryAtRef(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return ref _entry0;
+
+                case 1:
+                    return ref _entry1;
+
+                case 2:
+                    return ref _entry2;
+
+                case 3:
+                    return ref _entry3;
+
+                case 4:
+                    return ref _entry4;
+
+                case 5:
+                    return ref _entry5;
+
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(index));
+            }
+        }
+
         public override void Promote(FrugalListBase<T> oldList)
         {
             int oldCount = oldList.Count;
@@ -1387,6 +1439,11 @@ namespace MS.Utility
         public override T EntryAt(int index)
         {
             return _entries[index];
+        }
+
+        public override ref T EntryAtRef(int index)
+        {
+            return ref _entries[index];
         }
 
         public override void Promote(FrugalListBase<T> oldList)
@@ -2050,24 +2107,27 @@ namespace MS.Utility
         {
             get
             {
-                // If no entry, default(T) is returned
-                if ((null != _listStore) && ((index < _listStore.Count) && (index >= 0)))
-                {
-                    return _listStore.EntryAt(index);
-                }
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
+                if ((_listStore is null) || ((uint)index >= (uint)_listStore.Count))
+                    throw new ArgumentOutOfRangeException(nameof(index));
 
+                return _listStore.EntryAt(index);
+            }
             set
             {
                 // Ensure write success
-                if ((null != _listStore) && ((index < _listStore.Count) && (index >= 0)))
-                {
-                    _listStore.SetAt(index, value);
-                    return;
-                }
-                throw new ArgumentOutOfRangeException(nameof(index));
+                if ((_listStore is null) || ((uint)index >= (uint)_listStore.Count))
+                    throw new ArgumentOutOfRangeException(nameof(index));
+
+                _listStore.SetAt(index, value);
             }
+        }
+
+        public ref T GetEntryAtRef(int index)
+        {
+            if ((_listStore is null) || ((uint)index >= (uint)_listStore.Count))
+                throw new ArgumentOutOfRangeException(nameof(index));
+
+            return ref _listStore.EntryAtRef(index);
         }
 
         public int Add(T value)

@@ -837,11 +837,6 @@
         <target state="translated">Konstruktor pro {0} s {1} argumenty nebyl nalezen.</target>
         <note />
       </trans-unit>
-      <trans-unit id="NoDefaultConstructor">
-        <source>No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
-        <target state="translated">Pro typ {0} nebyl nalezen žádný výchozí konstruktor. Chcete-li zkonstruovat tento typ, můžete použít direktivy Arguments nebo FactoryMethod.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NoElementUsage">
         <source>'{0}' is not allowed in element usage.</source>
         <target state="translated">{0} není povoleno v použití elementu.</target>

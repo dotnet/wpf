@@ -244,7 +244,7 @@ namespace System.Windows
             MessageBoxImage icon, MessageBoxResult defaultResult, 
             MessageBoxOptions options) 
         {
-            return ShowCore((new WindowInteropHelper(owner)).CriticalHandle, messageBoxText, caption, button, icon, defaultResult, options);
+            return ShowCore((new WindowInteropHelper(owner)).Handle, messageBoxText, caption, button, icon, defaultResult, options);
         }
 
         /// <devdoc>
@@ -260,7 +260,7 @@ namespace System.Windows
             MessageBoxImage icon, 
             MessageBoxResult defaultResult) 
         {
-            return ShowCore((new WindowInteropHelper (owner)).CriticalHandle, messageBoxText, caption, button, icon, defaultResult, 0);
+            return ShowCore((new WindowInteropHelper (owner)).Handle, messageBoxText, caption, button, icon, defaultResult, 0);
         }
 
         /// <devdoc>
@@ -275,7 +275,7 @@ namespace System.Windows
             MessageBoxButton button, 
             MessageBoxImage icon) 
         {
-            return ShowCore((new WindowInteropHelper (owner)).CriticalHandle, messageBoxText, caption, button, icon, 0, 0);
+            return ShowCore((new WindowInteropHelper (owner)).Handle, messageBoxText, caption, button, icon, 0, 0);
         }
 
         /// <devdoc>
@@ -289,7 +289,7 @@ namespace System.Windows
             string caption, 
             MessageBoxButton button) 
         {
-            return ShowCore((new WindowInteropHelper (owner)).CriticalHandle, messageBoxText, caption, button, MessageBoxImage.None, 0, 0);
+            return ShowCore((new WindowInteropHelper (owner)).Handle, messageBoxText, caption, button, MessageBoxImage.None, 0, 0);
         }
 
         /// <devdoc>
@@ -299,7 +299,7 @@ namespace System.Windows
         /// </devdoc>
         public static MessageBoxResult Show(Window owner, string messageBoxText, string caption) 
         {
-            return ShowCore((new WindowInteropHelper (owner)).CriticalHandle, messageBoxText, caption, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
+            return ShowCore((new WindowInteropHelper (owner)).Handle, messageBoxText, caption, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
         }
 
         /// <devdoc>
@@ -309,7 +309,7 @@ namespace System.Windows
         /// </devdoc>
         public static MessageBoxResult Show(Window owner, string messageBoxText) 
         {
-            return ShowCore((new WindowInteropHelper (owner)).CriticalHandle, messageBoxText, String.Empty, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
+            return ShowCore((new WindowInteropHelper (owner)).Handle, messageBoxText, String.Empty, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
         }
         #endregion
 

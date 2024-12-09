@@ -62,7 +62,7 @@ namespace System.Windows.Interop
                     _restoreFocus = null;
                 }
 
-                HandleRef thisWindow = new HandleRef(this, _source.CriticalHandle);
+                HandleRef thisWindow = new HandleRef(this, _source.Handle);
                 IntPtr focus = UnsafeNativeMethods.GetFocus();
 
                 int windowStyle = UnsafeNativeMethods.GetWindowLong(thisWindow, NativeMethods.GWL_EXSTYLE);
@@ -123,7 +123,7 @@ namespace System.Windows.Interop
                         // deactivated.  Now we detect that we already have
                         // Win32 focus but are not activated and treat it the
                         // same as getting focus.
-                        if (!_active && focus == _source.CriticalHandle)
+                        if (!_active && focus == _source.Handle)
                         {
                             OnSetFocus(focus);
                         }
@@ -137,7 +137,7 @@ namespace System.Windows.Interop
                         }
                     }
 
-                    result = (focus == _source.CriticalHandle);
+                    result = (focus == _source.Handle);
                 }
             }
             catch(System.ComponentModel.Win32Exception)
@@ -325,7 +325,7 @@ namespace System.Windows.Interop
                 // This is our clue that the keyboard is inactive.
                 case WindowMessage.WM_KILLFOCUS:
                 {
-                    if(_active && wParam != _source.CriticalHandle )
+                    if(_active && wParam != _source.Handle )
                     {
                         // Console.WriteLine("WM_KILLFOCUS");
 
@@ -334,7 +334,7 @@ namespace System.Windows.Interop
                             // when the window that's acquiring focus (wParam) is
                             // a descendant of our window, remember the immediate
                             // child so that we can restore focus to it.
-                            _restoreFocusWindow = GetImmediateChildFor((IntPtr)wParam, _source.CriticalHandle);
+                            _restoreFocusWindow = GetImmediateChildFor((IntPtr)wParam, _source.Handle);
 
                             _restoreFocus = null;
 
@@ -491,7 +491,7 @@ namespace System.Windows.Interop
                         // this window, we do not allow the focused element to be in
                         // a different window.
                         IntPtr focus = UnsafeNativeMethods.GetFocus();
-                        if (focus == thisSource.CriticalHandle)
+                        if (focus == thisSource.Handle)
                         {
                             restoreFocusDO = (DependencyObject)Keyboard.FocusedElement;
                             if (restoreFocusDO != null)
@@ -715,7 +715,7 @@ namespace System.Windows.Interop
             // Only deactivate the keyboard input stream if needed.
             if(deactivate)
             {
-                ReportInput(_source.CriticalHandle,
+                ReportInput(_source.Handle,
                             InputMode.Foreground,
                             _msgTime,
                             RawKeyboardActions.Deactivate,

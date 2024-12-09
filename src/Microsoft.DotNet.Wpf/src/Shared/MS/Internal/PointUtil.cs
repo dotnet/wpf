@@ -169,7 +169,7 @@ namespace MS.Internal
             {
                 return pointClient;
             }
-            HandleRef handleRef = new HandleRef(inputSource, inputSource.CriticalHandle);
+            HandleRef handleRef = new HandleRef(inputSource, inputSource.Handle);
 
             NativeMethods.POINT ptClient            = FromPoint(pointClient);
             NativeMethods.POINT ptClientRTLAdjusted = AdjustForRightToLeft(ptClient, handleRef);
@@ -192,7 +192,7 @@ namespace MS.Internal
                 return pointScreen;
             }
 
-            HandleRef handleRef = new HandleRef(inputSource, inputSource.CriticalHandle);
+            HandleRef handleRef = new HandleRef(inputSource, inputSource.Handle);
 
             NativeMethods.POINT ptClient = FromPoint(pointScreen);
 

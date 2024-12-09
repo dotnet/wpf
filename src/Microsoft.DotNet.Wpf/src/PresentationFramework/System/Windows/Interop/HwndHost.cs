@@ -65,15 +65,19 @@ namespace System.Windows.Interop
         /// <summary>
         ///     The Win32 handle of the hosted window.
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UnmanagedCode permission to call this API.
-        /// </remarks>
         public IntPtr Handle
         {
             get
             {
+                if (_hwnd.Handle != IntPtr.Zero)
+                {
+                    if (!UnsafeNativeMethods.IsWindow(_hwnd))
+                    {
+                        _hwnd = new HandleRef(null, IntPtr.Zero);
+                    }
+                }
 
-                return CriticalHandle;
+                return _hwnd.Handle;
             }
         }
 
@@ -335,7 +339,7 @@ namespace System.Windows.Interop
 
             PresentationSource source = null;
             CompositionTarget vt = null;
-            if (( CriticalHandle != IntPtr.Zero) && IsVisible)
+            if (( Handle != IntPtr.Zero) && IsVisible)
             {
                 source = PresentationSource.CriticalFromVisual(this, false /* enable2DTo3DTransition */);
                 if(source != null)
@@ -632,7 +636,7 @@ namespace System.Windows.Interop
             {
                 // get the element proxy
                 IRawElementProviderSimple el = containerPeer.GetInteropChild();
-                result = AutomationInteropProvider.ReturnRawElementProvider(CriticalHandle, wparam, lparam, el);
+                result = AutomationInteropProvider.ReturnRawElementProvider(Handle, wparam, lparam, el);
             }
             return result;
         }
@@ -692,7 +696,7 @@ namespace System.Windows.Interop
 
             // Measure to our desired size.  If we have a 0-length dimension,
             // the system will assume we don't care about that dimension.
-            if(CriticalHandle != IntPtr.Zero)
+            if(Handle != IntPtr.Zero)
             {
                 desiredSize.Width = Math.Min(_desiredSize.Width, constraint.Width);
                 desiredSize.Height = Math.Min(_desiredSize.Height, constraint.Height);
@@ -929,7 +933,7 @@ namespace System.Windows.Interop
                 HwndSource hwndSource = source as HwndSource ;
                 if(hwndSource != null)
                 {
-                    hwndParent = hwndSource.CriticalHandle;
+                    hwndParent = hwndSource.Handle;
                 }
             }
             else
@@ -1075,7 +1079,7 @@ namespace System.Windows.Interop
         private void DestroyWindow()
         {
             // Destroy the window if we are hosting one.
-            if( CriticalHandle == IntPtr.Zero)
+            if( Handle == IntPtr.Zero)
                 return;
 
             if(!CheckAccess())
@@ -1100,22 +1104,6 @@ namespace System.Windows.Interop
         {
             DestroyWindow();
             return null;
-        }
-
-        internal IntPtr CriticalHandle
-        {
-            get
-            {
-                if(_hwnd.Handle != IntPtr.Zero)
-                {
-                    if(!UnsafeNativeMethods.IsWindow(_hwnd))
-                    {
-                        _hwnd = new HandleRef(null, IntPtr.Zero);
-                    }
-                }
-
-                return _hwnd.Handle;
-            }
         }
 
         private IntPtr SubclassWndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)

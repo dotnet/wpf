@@ -131,7 +131,7 @@ namespace MS.Internal.WindowsRuntime
             /// <exception cref="PlatformNotSupportedException"></exception>
             internal static InputPane GetForWindow(HwndSource source)
             {
-                return new InputPane(source?.CriticalHandle ?? null);
+                return new InputPane(source?.Handle ?? null);
             }
 
             /// <summary>

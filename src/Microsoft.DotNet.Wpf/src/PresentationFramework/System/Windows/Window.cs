@@ -2,20 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Implements the base Avalon Window class
-//
-
-using System;
-
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows.Appearance;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
@@ -29,12 +19,12 @@ using MS.Internal.AppModel;
 using MS.Internal.Interop;
 using MS.Internal.KnownBoxes;
 using MS.Win32;
-using Microsoft.Win32;
 using System.Diagnostics.CodeAnalysis;
 
-using HRESULT = MS.Internal.Interop.HRESULT;
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 using SNM = Standard.NativeMethods;
+using HRESULT = MS.Internal.Interop.HRESULT;
+using Win32Error = MS.Internal.Interop.Win32Error;
 
 //In order to avoid generating warnings about unknown message numbers and
 //unknown pragmas when compiling your C# source code with the actual C# compiler,
@@ -43,9 +33,6 @@ using SNM = Standard.NativeMethods;
 
 namespace System.Windows
 {
-    /// <summary>
-    ///
-    /// </summary>
     [Localizability(LocalizationCategory.Ignore)]
     public class Window : ContentControl, IWindowService
     {
@@ -566,28 +553,28 @@ namespace System.Windows
         /// Gets or sets the Fluent theme mode of the window.
         /// </summary>
         /// <remarks>
-        /// Setting this property controls if Fluent theme is loaded in Light, Dark or System mode. 
+        /// Setting this property controls if Fluent theme is loaded in Light, Dark or System mode.
         /// It also controls the application of backdrop and darkmode on window.
         /// The four values for the ThemeMode enum are :
-        ///     <see cref="ThemeMode.None"/> - No Fluent theme is loaded. However, if <see cref="Application.ThemeMode"/> is not None, 
+        ///     <see cref="ThemeMode.None"/> - No Fluent theme is loaded. However, if <see cref="Application.ThemeMode"/> is not None,
         ///         then the window will appear as defined in <see cref="Application.ThemeMode"/>.
         ///     <see cref="ThemeMode.System"/> - Fluent theme is loaded based on the system theme.
         ///     <see cref="ThemeMode.Light"/> - Fluent theme is loaded in Light mode.
         ///     <see cref="ThemeMode.Dark"/> - Fluent theme is loaded in Dark mode.
-        /// 
+        ///
         /// These values are predefined in <see cref="ThemeMode"/> struct.
-        /// 
+        ///
         /// The default value is <see cref="ThemeMode.None"/>.
-        ///     
+        ///
         /// <see cref="ThemeMode"/> and <see cref="Resources"/> are designed to be in sync with each other.
-        ///     Syncing is done in order to avoid UI inconsistencies, for example, if the application is in dark mode 
-        ///     but the windows are in light mode or vice versa. 
-        ///     
+        ///     Syncing is done in order to avoid UI inconsistencies, for example, if the application is in dark mode
+        ///     but the windows are in light mode or vice versa.
+        ///
         ///     Setting this property loads the Fluent theme dictionaries in the window resources.
         ///     So, if you set this property, it is preferrable to not include Fluent theme dictionaries
         ///     in the window resources manually. If you do, the Fluent theme dictionaries added in the window
         ///     resources will take precedence over the ones added by setting this property.
-        ///     
+        ///
         ///     This property is experimental and may be removed in future versions.
         /// </remarks>
         [Experimental("WPF0001")]
@@ -607,10 +594,10 @@ namespace System.Windows
                 {
                     throw new ArgumentException(string.Format("ThemeMode value {0} is invalid. Use None, System, Light or Dark", value));
                 }
-                
+
                 ThemeMode oldTheme = _themeMode;
                 _themeMode = value;
-                
+
                 if(!AreResourcesInitialized)
                 {
                     ThemeManager.OnWindowThemeChanged(this, oldTheme, value);
@@ -1980,7 +1967,7 @@ namespace System.Windows
         {
             VerifyContextAndObjectState();
 
-            // Setting WindowBackdrop 
+            // Setting WindowBackdrop
             WindowBackdropManager.SetBackdrop(this, WindowBackdropType);
 
             EventHandler handler = (EventHandler)Events[EVENT_SOURCEINITIALIZED];
@@ -2162,7 +2149,7 @@ namespace System.Windows
 
             if(_reloadFluentDictionary && !AreResourcesInitialized)
             {
-                if(value != null && ThemeMode != ThemeMode.None) 
+                if(value != null && ThemeMode != ThemeMode.None)
                 {
                     value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
                     invalidateResources = true;
@@ -3159,7 +3146,7 @@ namespace System.Windows
             typeof(WindowBackdropType),
             typeof(Window),
             new PropertyMetadata(
-                WindowBackdropType.MainWindow, 
+                WindowBackdropType.MainWindow,
                 new PropertyChangedCallback(OnBackdropTypeChanged)));
 
         private static void OnBackdropTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
@@ -7272,7 +7259,7 @@ namespace System.Windows
         private Window              _ownerWindow;                       // owner window
         private bool _reloadFluentDictionary = false;
         private bool _resourcesInitialized = false;
-        
+
         // keeps track of the owner hwnd
         // we need this one b/c a owner/parent
         // can be set through the WindowInteropHandler

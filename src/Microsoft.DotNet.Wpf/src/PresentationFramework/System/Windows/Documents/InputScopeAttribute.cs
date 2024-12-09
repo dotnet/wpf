@@ -7,16 +7,8 @@
 // Description: InputScopeAttribute is an image object that links IOleDataObject.
 //
 
-using System;
-using System.Security;
 using System.Runtime.InteropServices;
-using System.Windows.Threading;
-
-using System.Diagnostics;
-using System.Windows.Media;
 using System.Windows.Input;
-using System.Windows.Documents;
-using System.Windows.Controls;
 using MS.Win32;
 
 

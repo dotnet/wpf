@@ -8,20 +8,7 @@
 // Description: Declaration of the GeneralTransform3DTo2DTo3D class.
 //
 
-using MS.Internal;
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Markup;
 using System.Windows.Media.Media3D;
 
 namespace MS.Internal.Media3D

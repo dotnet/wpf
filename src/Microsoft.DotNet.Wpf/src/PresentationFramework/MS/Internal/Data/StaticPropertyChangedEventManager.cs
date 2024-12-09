@@ -7,12 +7,9 @@
 //              pattern.  See WeakEventTable.cs for an overview.
 //
 
-using System;
 using System.Collections;       // ICollection
-using System.Collections.Generic; // List<T>
 using System.Collections.Specialized;   // HybridDictionary
 using System.ComponentModel;    // INotifyPropertyChanged
-using System.Diagnostics;       // Debug
 using System.Reflection;        // EventInfo
 using System.Windows;           // WeakEventManager
 

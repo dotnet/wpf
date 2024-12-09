@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System.Diagnostics;
 using MS.Internal.Xaml.Context;
 
 namespace System.Xaml

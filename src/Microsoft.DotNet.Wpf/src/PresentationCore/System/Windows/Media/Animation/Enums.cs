@@ -4,10 +4,6 @@
 
 //                                             
 
-using System;
-using MS.Internal;
-using System.Runtime.InteropServices;
-
 namespace System.Windows.Media.Animation
 {
     // IMPORTANT: If you change public Enums, TimeEnumHelper.cs must be updated

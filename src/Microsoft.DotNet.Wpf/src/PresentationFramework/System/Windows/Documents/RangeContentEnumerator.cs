@@ -7,12 +7,8 @@
 // Description: IEnumerator for TextRange and TextElement content.
 //
 
-using System;
 using System.Collections;
 using MS.Internal;
-using System.Text;
-using MS.Utility;
-using System.Windows.Controls;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 

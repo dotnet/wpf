@@ -8,10 +8,6 @@
 //
 
 
-using System;
-using System.Windows;
-using System.Windows.Documents;
-using MS.Internal.Text;
 using System.Windows.Media.TextFormatting;
 
 namespace MS.Internal.PtsHost

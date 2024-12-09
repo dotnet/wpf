@@ -7,11 +7,8 @@
 // Description: UIElementParagraph class provides a wrapper for UIElements.
 //
 #pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-                                    // message numbers and unknown pragmas for PRESharp contol
+// message numbers and unknown pragmas for PRESharp contol
 
-using System;
-using System.Collections;                       // IEnumerator
-using System.Security;                          // SecurityCritical
 using System.Windows;                           // UIElement
 using System.Windows.Documents;                 // BlockUIContainer
 using MS.Internal.Text;                         // TextDpi

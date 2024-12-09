@@ -2,17 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Markup; // ContentWrapper
+using System.Windows.Controls; // TextBlock
+using System.Collections;
+
 // 
 // Description: Collection of Inline elements
 //
 
 namespace System.Windows.Documents
 {
-    using MS.Internal; // Invariant
-    using System.Windows.Markup; // ContentWrapper
-    using System.Windows.Controls; // TextBlock
-    using System.Collections;
-
     /// <summary>
     /// Collection of Inline elements - elements allowed as children
     /// of Paragraph, Span and TextBlock elements.

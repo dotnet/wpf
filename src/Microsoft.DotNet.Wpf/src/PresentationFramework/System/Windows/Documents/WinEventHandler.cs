@@ -6,13 +6,7 @@
 // Description: WinEventHandler implementation.
 //
 
-using System;
-using System.Collections;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Security;
-using System.Windows.Threading;
 using MS.Win32;
 
 using MS.Internal;

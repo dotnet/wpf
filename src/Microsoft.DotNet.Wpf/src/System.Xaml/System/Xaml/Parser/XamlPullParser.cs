@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Xaml;
 using System.Xaml.Schema;

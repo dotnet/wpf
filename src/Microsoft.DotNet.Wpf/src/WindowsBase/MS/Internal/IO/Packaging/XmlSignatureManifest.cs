@@ -67,24 +67,11 @@
 //
 //      </Manifest>
 
-//
-//
-//
-
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
-//using System.Security;                      // for SecurityCritical and SecurityTreatAsSafe
 using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
-using System.Security.Cryptography.X509Certificates;
 using System.Xml;
 using System.IO;
-using System.Windows;
 using System.IO.Packaging;
-using MS.Internal;
-using MS.Internal.WindowsBase;
 
 using PackageRelationship = MS.Internal.IO.Packaging.Extensions.PackageRelationship;
 

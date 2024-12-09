@@ -9,8 +9,6 @@ All rights reserved.
 
 namespace MS.Internal.Printing.Configuration
 {
-    using System;
-
     internal enum DeviceCapability : short
     {
         /// <summary>

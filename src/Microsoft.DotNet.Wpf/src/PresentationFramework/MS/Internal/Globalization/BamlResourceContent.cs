@@ -6,14 +6,8 @@
 // Description: Utility that handles parsing Baml Resource Content
 // 
 
-using System;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Collections;
-using System.Diagnostics;
-using System.Collections.Generic;
-
-using System.Windows;
 
 namespace MS.Internal.Globalization
 {

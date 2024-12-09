@@ -4,14 +4,6 @@
 
 // Description: Class to create a queue on its own thread.
 
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
-using System;
-using System.Threading;
-using System.Collections;
-using MS.Internal.Automation;
-using MS.Win32;
-
 namespace MS.Internal.Automation
 {
     // Worker class used to handle WinEvents

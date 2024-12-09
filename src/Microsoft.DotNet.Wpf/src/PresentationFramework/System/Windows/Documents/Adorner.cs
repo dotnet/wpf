@@ -8,11 +8,8 @@
 //              See spec at AdornerLayer Spec.htm
 // 
 
-using System;
-using System.Collections;
 using System.Windows.Data;
 using System.Windows.Media;
-using System.Windows.Input;
 using System.Windows.Threading;
 using MS.Internal; // DoubleUtil
 

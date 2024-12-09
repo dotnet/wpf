@@ -11,8 +11,6 @@ using System;
 using System.Collections;
 using System.Globalization;
 using System.Text;
-using System.ComponentModel;
-using Accessibility;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation;
 using System.Runtime.InteropServices;

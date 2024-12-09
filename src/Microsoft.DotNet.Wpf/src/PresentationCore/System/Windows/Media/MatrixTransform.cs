@@ -4,24 +4,7 @@
 
 //                                             
 
-using System.Windows.Media;
-using System;
-using System.Windows;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using System.Security;
-using System.Collections;
 using MS.Internal;
-using MS.Internal.PresentationCore;
-using System.Windows.Media.Animation;
-using System.Globalization;
-using System.Text;
-using System.Runtime.InteropServices;  
-using System.Windows.Media.Composition;
-using System.Diagnostics;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {

@@ -13,21 +13,12 @@
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //
 
-using System;
-using System.Collections;
-using System.Diagnostics;
-using System.Globalization;
-using System.Security;
-using Microsoft.Win32;
-using System.IO.Packaging;
 using System.Windows;
 using System.Windows.Interop;
 using MS.Internal.Utility;
 using MS.Win32;
 using System.Runtime.InteropServices;
 using MS.Internal.Documents.Application;
-
-using SecurityHelper = MS.Internal.SecurityHelper;
 
 namespace MS.Internal.AppModel
 {

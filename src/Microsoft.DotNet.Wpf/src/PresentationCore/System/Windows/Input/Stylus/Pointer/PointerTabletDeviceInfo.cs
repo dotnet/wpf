@@ -4,11 +4,7 @@
 
 
 using MS.Win32.Pointer;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Security;
-using System.Windows.Input;
 
 namespace System.Windows.Input.StylusPointer
 {

@@ -2,25 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Microsoft.Win32; // for RegistryKey class
 using MS.Internal;
 using MS.Internal.Interop;
-using MS.Internal.PresentationCore; // SecurityHelper
 using MS.Utility;
-using MS.Win32; // for *NativeMethods
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+using MS.Win32;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.Tracing;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusWisp
 {

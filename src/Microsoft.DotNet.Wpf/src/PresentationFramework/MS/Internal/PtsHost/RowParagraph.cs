@@ -6,12 +6,8 @@
 //
 // Description: RowParagraph represents a single row in a table
 //
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
 using System.Windows.Documents;
-using MS.Internal.PtsTable;
 using MS.Internal.Text;
 using MS.Internal.PtsHost.UnsafeNativeMethods;
 

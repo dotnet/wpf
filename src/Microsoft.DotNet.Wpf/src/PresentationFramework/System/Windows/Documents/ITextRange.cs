@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.IO;
+
 //
 // Description: A part of abstract layer of TextOM.
 //      Defines an abstraction for a TextRange.
@@ -15,12 +17,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Diagnostics;
-    using System.Collections.Generic;
-    using System.Threading;
-    using System.Globalization;
-    using System.IO;
-
     /// <summary>
     /// A class a portion of text content.
     /// Can be contigous or disjoint; supports rectangular table ranges.

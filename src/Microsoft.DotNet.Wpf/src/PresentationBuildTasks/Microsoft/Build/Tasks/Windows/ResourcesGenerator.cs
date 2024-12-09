@@ -11,11 +11,6 @@
 
 using System;
 using System.IO;
-using System.Collections;
-
-using System.Globalization;
-using System.Diagnostics;
-using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 
@@ -23,7 +18,6 @@ using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
 using MS.Utility;
-using Microsoft.Build.Tasks.Windows;
 using MS.Internal;
 using MS.Internal.Tasks;
 

@@ -4,14 +4,10 @@
 
 // Description: Unsafe P/Invokes used by UIAutomation
 
-using System.Threading;
 using System;
 using Accessibility;
 using System.Runtime.InteropServices;
-using System.Collections;
-using System.IO;
 using System.Text;
-using Microsoft.Win32.SafeHandles;
 using System.Diagnostics;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
 

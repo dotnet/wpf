@@ -2,12 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
 
-namespace System.Windows 
+namespace System.Windows
 {
-    using System;
-    using System.ComponentModel;
-
     /// <summary>
     ///     This attribute declares that an attached property can only be attached 
     ///     to an object that defines the given attribute on its class. 

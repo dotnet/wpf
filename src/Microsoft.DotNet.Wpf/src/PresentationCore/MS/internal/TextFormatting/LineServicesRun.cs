@@ -2,24 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Globalization;
-
-using System.Security;
-using MS.Internal.Shaping;
-using MS.Internal.FontCache;
-using MS.Utility;
-
-using SR=MS.Internal.PresentationCore.SR;
-
 using MS.Internal.Text.TextInterface;
 
 namespace MS.Internal.TextFormatting

@@ -2,23 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using System.Windows;
-using System.Windows.Markup;    // for XmlLanguage
-using System.Windows.Media;
-
-using MS.Internal;
 using MS.Internal.PresentationCore;
-using MS.Utility;
 using MS.Internal.FontCache;
 
 // Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.

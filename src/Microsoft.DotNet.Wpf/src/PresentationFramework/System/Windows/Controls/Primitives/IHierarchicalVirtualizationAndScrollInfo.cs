@@ -6,9 +6,6 @@
 // Description: IHierarchicalVirtualizationAndScrollInfo interface
 //
 
-
-using System;
-
 namespace System.Windows.Controls.Primitives
 {
     /// <summary>

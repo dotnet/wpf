@@ -2,12 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.ComponentModel;
-using MS.Internal;
-using System.Windows;
-using System.Diagnostics;
-using System.Globalization;
 
 namespace System.Windows
 {

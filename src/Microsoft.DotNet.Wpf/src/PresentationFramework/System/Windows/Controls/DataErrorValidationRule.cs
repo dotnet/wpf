@@ -8,13 +8,9 @@
 //      a data error in the source item itself (e.g. as exposed by IDataErrorInfo).
 //
 
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Data;
 using MS.Internal;
 

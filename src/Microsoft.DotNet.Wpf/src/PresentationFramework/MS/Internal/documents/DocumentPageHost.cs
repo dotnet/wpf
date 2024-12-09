@@ -6,7 +6,6 @@
 // Description: Provides a view port for a page of content for a DocumentPage.
 //
 
-using System;
 using System.Windows;           // UIElement
 using System.Windows.Media;     // Visual
 

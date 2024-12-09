@@ -1,12 +1,5 @@
-using Standard;
 using Microsoft.Win32;
-using System.Collections;
-using System.Collections.ObjectModel; 
-using System.Collections.Generic;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Appearance;
-using System.Diagnostics;
 
 
 namespace System.Windows;

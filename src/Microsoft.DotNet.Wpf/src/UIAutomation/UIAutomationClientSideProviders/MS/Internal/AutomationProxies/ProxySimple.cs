@@ -31,15 +31,11 @@
 #pragma warning disable 1634, 1691
 
 using System;
-using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Collections;
 using Accessibility;
 using System.Windows;
-using System.Windows.Input;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies

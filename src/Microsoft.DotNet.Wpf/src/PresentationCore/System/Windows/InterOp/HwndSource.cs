@@ -2,28 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Threading;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Interop;
 using System.Runtime.InteropServices;
 using MS.Win32;
 using MS.Utility;
 using MS.Internal;
 using MS.Internal.Interop;
-using Microsoft.Win32;
-using System.Diagnostics;
 using System.ComponentModel;
-using System;
-using System.Security;
-using System.IO;
-
-using SR = MS.Internal.PresentationCore.SR;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 

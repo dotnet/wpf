@@ -12,22 +12,10 @@
 //
 
 using MS.Internal;
-using System;
-using System.IO;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Markup;
 
-using SR=MS.Internal.PresentationCore.SR;
-
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     /// <summary>
     /// Brush - 

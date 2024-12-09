@@ -6,10 +6,7 @@
 // Description: Context used to communicate with PTS component.
 //
 
-using System;                                   // IntPtr, IDisposable, ...
 using System.Collections;                       // ArrayList
-using System.Collections.Generic;               // List<T>
-using System.Security;                          // SecurityCritical, SecurityTreatAsSafe
 using System.Threading;                         // Interlocked
 using System.Windows.Media.TextFormatting;      // TextFormatter
 using System.Windows.Threading;                 // DispatcherObject

@@ -5,10 +5,6 @@
 //
 //
 
-using System;
-using System.Security;
-using System.Windows;
-
 namespace System.Windows.Input
 {
     /// <summary>

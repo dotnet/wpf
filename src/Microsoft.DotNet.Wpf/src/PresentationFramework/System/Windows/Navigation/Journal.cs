@@ -21,18 +21,10 @@
 //
 // 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.Serialization;
-using System.Windows.Threading;
-using System.Security;
 
 using MS.Internal;
 using MS.Internal.AppModel;
-using MS.Utility;
-using System.ComponentModel;
 
 // Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691

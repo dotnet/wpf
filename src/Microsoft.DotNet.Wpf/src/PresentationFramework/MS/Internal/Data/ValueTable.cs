@@ -20,14 +20,10 @@
     See the ShouldCache method.
 \***************************************************************************/
 
-using System;
 using System.Collections;
-using System.Collections.Generic;           // IEnumerable<T>
 using System.Collections.Specialized;       // HybridDictionary
 using System.ComponentModel;                // IBindingList
-using System.Reflection;                    // TypeDescriptor
 using System.Windows;                       // SR
-using MS.Internal;                          // Invariant.Assert
 
 namespace MS.Internal.Data
 {

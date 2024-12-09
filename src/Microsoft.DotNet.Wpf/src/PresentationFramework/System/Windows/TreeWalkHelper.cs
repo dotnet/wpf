@@ -11,12 +11,8 @@
 \***************************************************************************/
 using MS.Internal;
 using MS.Utility;
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace System.Windows

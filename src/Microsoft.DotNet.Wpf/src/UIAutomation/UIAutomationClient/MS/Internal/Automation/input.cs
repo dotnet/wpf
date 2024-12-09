@@ -5,7 +5,6 @@
 // Description: Provides mouse and keyboard input functionality
 
 using System.Windows.Input;
-using System.ComponentModel;
 using System.Runtime.InteropServices;
 using MS.Win32;
 

@@ -6,21 +6,13 @@
 // Description: The stock password control.
 //
 
-using System.Diagnostics;
-using System.Collections;
 using System.ComponentModel;
-using System.Globalization;
 using System.Security;
-using System.Text;
 using System.Windows.Media;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;

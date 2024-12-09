@@ -7,13 +7,8 @@
 // Description: MouseActionConverter - Serializes a MouseAction 
 
 
-using System;
 using System.ComponentModel;    // for TypeConverter
-using System.Globalization;     // for CultureInfo
-using System.Reflection;
-using System.Windows;
 using System.Windows.Markup;
-using System.Windows.Input;
 
 namespace System.Windows.Input
 {

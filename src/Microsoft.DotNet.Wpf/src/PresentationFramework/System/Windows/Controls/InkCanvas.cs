@@ -9,23 +9,13 @@
 //      editing ink
 //
 
-using MS.Utility;
-using MS.Internal;
 using MS.Internal.Commands;
 using MS.Internal.Controls;
 using MS.Internal.Ink;
 using MS.Internal.KnownBoxes;
-using System;
 using System.Collections;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Diagnostics;
-using System.IO;
-using System.Windows;
-using System.Collections.Generic;
-using System.Security;
 using System.Runtime.InteropServices;
 using System.Windows.Media;
 using System.Windows.Data;
@@ -33,13 +23,11 @@ using System.Windows.Documents;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
-using System.Windows.Controls;
 using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
 using System.Windows.Threading;
 using System.Windows.Automation.Peers;
 
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
-using SecurityHelper = MS.Internal.SecurityHelper;
 
 namespace System.Windows.Controls
 {

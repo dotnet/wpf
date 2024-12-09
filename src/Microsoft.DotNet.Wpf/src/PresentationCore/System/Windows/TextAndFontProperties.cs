@@ -7,8 +7,6 @@
 
 //---------------------------------------------------------------------------
 
-using System;
-
 namespace System.Windows
 {
     #region Text formatting properties

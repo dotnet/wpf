@@ -7,21 +7,17 @@
 //   Managed equivalent of IFilter implemenation for Package
 //
 
-using System;
 using System.IO;
 using System.IO.Packaging;
 using System.Collections;
-using System.Diagnostics;               // For Assert
 using System.Runtime.InteropServices;   // For Marshal.ThrowExceptionForHR
 using System.Windows;                   // for ExceptionStringTable
 using Microsoft.Win32;                  // For RegistryKey
 using MS.Internal.Interop;              // For STAT_CHUNK, etc.
-using MS.Internal;                      // For ContentType
 using MS.Internal.Utility;              // For BindUriHelper
 
 using MS.Internal.IO.Packaging.Extensions;
 using Package = System.IO.Packaging.Package;
-using PackUriHelper = System.IO.Packaging.PackUriHelper;
 using InternalPackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
 
 namespace MS.Internal.IO.Packaging

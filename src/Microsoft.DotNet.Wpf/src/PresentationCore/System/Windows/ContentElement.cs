@@ -7,21 +7,10 @@ using MS.Internal;
 using MS.Internal.Interop;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationCore;
-using MS.Utility;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows
 {

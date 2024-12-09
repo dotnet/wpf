@@ -7,12 +7,8 @@
 
 using System;
 using System.Drawing;
-using System.Globalization;
 using System.IO;
 using System.IO.Packaging;                  // For Package
-using System.Security;                      // For CriticalData
-using System.Windows.TrustUI;               // For string resources
-using System.Windows.Xps.Packaging;         // For XpsDocument
 
 namespace MS.Internal.Documents.Application
 {

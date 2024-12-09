@@ -2,37 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
-using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Input.StylusWisp;
 using System.Windows.Media;
-using System.Security;
-using MS.Internal;
-
-using MS.Win32;
-using MS.Utility;
-using System.Runtime.InteropServices;
-
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Interop;
 
-using SR=MS.Internal.PresentationCore.SR;
-
-using MS.Internal.PresentationCore;                        // SecurityHelper
-
 namespace System.Windows.Input
 {
-    /////////////////////////////////////////////////////////////////////////
-
     internal sealed class PenContexts
     {
-        /////////////////////////////////////////////////////////////////////////
-
         internal PenContexts(WispLogic stylusLogic, PresentationSource inputSource)
         {
             HwndSource hwndSource = inputSource as HwndSource;

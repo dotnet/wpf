@@ -4,23 +4,7 @@
 
 
 using MS.Win32.Pointer;
-using MS.Internal;
-using MS.Internal.Interop;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using MS.Utility;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Input.StylusPlugIns;
-using System.Windows.Interop;
 using System.Windows.Media;
-using System.Windows.Threading;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusPointer
 {

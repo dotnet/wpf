@@ -7,17 +7,9 @@
 //      and change value converters depending on changing source and target types
 //
 
-using System;
 using System.Globalization;
-using System.Collections;
-using System.ComponentModel;
-
-using System.Reflection;
 using System.Windows;
 using System.Windows.Data;
-
-using MS.Internal;          // Invariant.Assert
-using System.Diagnostics;
 
 namespace MS.Internal.Data
 {

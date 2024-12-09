@@ -7,28 +7,19 @@
 // Description: Implements the Avalon basic Navigation unit class
 //
 
-using System;
-using System.Timers;
 using System.IO;
 using System.IO.Packaging;
-using System.Globalization;
 using System.Windows.Threading;
 using System.Collections;
 using System.ComponentModel;
-using System.Reflection;
-using System.Diagnostics;
 using System.Security;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Net;
 using System.Net.Cache;
 using MS.Internal;
 using MS.Internal.Navigation;
 using MS.Internal.Utility;
 using MS.Internal.AppModel;
-using MS.Internal.Controls;
 using MS.Utility;
-
-using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;

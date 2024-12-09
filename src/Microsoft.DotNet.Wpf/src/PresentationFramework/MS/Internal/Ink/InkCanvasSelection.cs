@@ -8,25 +8,13 @@
 //
 
 
-using MS.Utility;
-using MS.Internal;
 using MS.Internal.Controls;
-using MS.Internal.Ink;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.ComponentModel;
-using System.ComponentModel.Design;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Documents;
 using System.Windows.Ink;
-using System.Windows.Input;
 using System.Windows.Controls;
-using System.Windows.Markup;
-using System.Windows.Threading;
 
 namespace MS.Internal.Ink
 {

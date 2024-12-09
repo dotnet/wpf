@@ -7,7 +7,6 @@
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
-using System.Security;
 
 namespace System.Windows.Markup
 {

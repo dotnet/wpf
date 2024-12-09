@@ -8,11 +8,8 @@
 //              versions of GetPage and ComputePageCount.
 //
 
-using System;                       // IServiceProvider
-using System.ComponentModel;        // AsyncCompletedEventArgs
 using System.Windows;               // Size
 using System.Windows.Documents;     // DocumentPaginator
-using System.Windows.Media;         // Visual
 
 namespace MS.Internal.Documents
 {

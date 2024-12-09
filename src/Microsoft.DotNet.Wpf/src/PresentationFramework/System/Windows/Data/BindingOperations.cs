@@ -8,18 +8,9 @@
 // See spec at Data Binding.mht
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.ComponentModel;
-using System.Globalization;
 using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Markup;
-using System.Windows.Threading;
 
 using MS.Internal.Data;
 

@@ -14,25 +14,16 @@
 
 
 --*/
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Packaging;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows.Documents;
-using System.Windows.Media;
-using System.Printing;
-using System.Windows.Xps;
 using System.Windows.Xps.Serialization;
 using System.Windows.Markup;
-using System.Threading;
 using System.Xml;
-using System.Security;
 using MS.Internal;
 using MS.Internal.Security;
-using MS.Internal.IO.Packaging;
 
 using MS.Internal.IO.Packaging.Extensions;
 using Package = System.IO.Packaging.Package;

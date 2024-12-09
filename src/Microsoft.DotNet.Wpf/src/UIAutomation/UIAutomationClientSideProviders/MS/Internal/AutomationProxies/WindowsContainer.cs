@@ -5,13 +5,8 @@
 // Description: Windows Container Proxy
 
 using System;
-using System.Windows;
-using System.Collections;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Text;
 using MS.Win32;
 
 

@@ -12,11 +12,7 @@
 //
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 

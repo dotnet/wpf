@@ -12,9 +12,6 @@
 //
 
 
-using System;
-using System.Collections.Generic;
-
 using MS.Internal.TextFormatting;
 
 namespace System.Windows.Media.TextFormatting

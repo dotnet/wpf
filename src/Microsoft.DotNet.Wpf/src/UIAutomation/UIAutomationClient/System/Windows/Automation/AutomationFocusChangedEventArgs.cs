@@ -4,11 +4,7 @@
 
 // Description: Focus event args class (Client Side)
 
-using System;
-using System.Windows.Automation.Provider;
-using MS.Internal.Automation;
-
-namespace System.Windows.Automation 
+namespace System.Windows.Automation
 {
     /// <summary>
     /// Delegate to handle focus change events

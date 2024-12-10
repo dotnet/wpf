@@ -8,9 +8,7 @@
 //
 //
 
-using System;
-
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     /// <summary>
     ///     The TextCompositionEventArgs class contains a text representation of

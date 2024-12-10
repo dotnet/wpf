@@ -5,7 +5,6 @@
 // Description: Class used to track context menus appearing 
 
 using System;
-using System.Text;
 using System.Windows.Automation;
 using System.Diagnostics;
 using MS.Win32;

@@ -11,20 +11,7 @@
         contained within that object
 
 --*/
-using System;
 using System.Collections;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
-using System.Xml;
-using System.IO;
-using System.Security;
-using System.ComponentModel.Design.Serialization;
-using System.Windows.Xps.Packaging;
-using System.Windows.Documents;
-using System.Windows.Media;
-using System.Windows.Markup;
 
 namespace System.Windows.Xps.Serialization
 {

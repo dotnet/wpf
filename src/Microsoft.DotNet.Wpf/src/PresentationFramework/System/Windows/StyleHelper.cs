@@ -12,22 +12,16 @@
 using MS.Internal;                      // Helper
 using MS.Utility;                       // ItemStructList<ChildValueLookup>
 using System.Collections;               // Hashtable
-using System.Collections.Generic;       // List<T>
 using System.Collections.Specialized;   // HybridDictionary
 using System.ComponentModel;            // TypeConverter, TypeDescriptor
-using System.Diagnostics;               // Debug.Assert
 using System.Runtime.CompilerServices;  // ConditionalWeakTable
 using System.Windows.Controls;          // Control, ContentPresenter
 using System.Windows.Data;              // BindingExpression
-using System.Windows.Documents;         // TableRowGroup,TableRow
 using System.Windows.Media;             // VisualCollection
 using System.Windows.Media.Animation;   // Storyboard
 using System.Windows.Markup;            // MarkupExtension
-using System.Windows.Threading;         // DispatcherObject
 using System.Threading;                 // Interlocked
 using MS.Internal.Data;                 // BindingValueChangedEventArgs
-using System.Globalization;
-using System.Reflection;
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and

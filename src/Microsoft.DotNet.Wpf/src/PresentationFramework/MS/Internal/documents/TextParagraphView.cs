@@ -6,16 +6,10 @@
 // Description: TextView implementation for TextBlock. 
 //
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using MS.Internal.Text;
-using MS.Internal.PtsHost;
 
 namespace MS.Internal.Documents
 {

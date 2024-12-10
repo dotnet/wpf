@@ -2,25 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//+-----------------------------------------------------------------------
-//
-//
-//
-//  Contents:  FamilyTypeface implementation
-//
-//  Spec:      Fonts.htm
-//
-//
-
-using System;
-using System.Collections.Generic;
-using System.Globalization;
 using System.ComponentModel;
-using System.Windows.Markup;    // for XmlLanguage
+using System.Windows.Markup;
 using MS.Internal.FontFace;
-using System.Security;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {

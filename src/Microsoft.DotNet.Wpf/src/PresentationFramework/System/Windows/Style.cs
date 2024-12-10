@@ -11,20 +11,10 @@
 \***************************************************************************/
 using System.Collections;
 using System.Collections.Specialized;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;  // For Debug.Assert
 using System.Windows.Threading;
-using System.Threading;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Media;
-using System.Windows.Media.Animation; // For Storyboard support
 using System.Windows.Markup;
-using System.IO;
 using MS.Utility;
-using MS.Internal;
-using System;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 

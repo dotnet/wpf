@@ -8,9 +8,6 @@
 // Description: 
 //      Tracks the amount of native memory used by SafeMILHandle objects.
 
-using System;
-using System.Security;
-using MS.Internal;
 using System.Threading;
 
 namespace System.Windows.Media

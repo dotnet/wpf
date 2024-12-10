@@ -3,16 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Navigation;
 using System.Windows.Threading;
 using System.Windows.Input;
 using System.Diagnostics;
 using System.IO;
 using System.Windows.Interop;
-using System.Security;
 
 namespace Microsoft.Internal.DeploymentUI
 {

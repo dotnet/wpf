@@ -12,6 +12,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
+using MS.Win32;
 using MS.Internal.WindowsBase;
 
 using Windows.Win32;

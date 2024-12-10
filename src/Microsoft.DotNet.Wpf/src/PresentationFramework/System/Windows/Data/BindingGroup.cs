@@ -6,17 +6,12 @@
 // Description: Defines BindingGroup object, manages a collection of bindings.
 //
 
-using System;
 using System.Collections;               // IList
-using System.Collections.Generic;       // IList<T>
 using System.Collections.ObjectModel;   // Collection<T>
 using System.Collections.Specialized;   // INotifyCollectionChanged
 using System.ComponentModel;            // IEditableObject
-using System.Diagnostics;               // Debug
 using System.Globalization;             // CultureInfo
 using System.Threading;                 // Thread
-
-using System.Windows;
 using System.Windows.Controls;          // ValidationRule
 using MS.Internal.Controls;             // ValidationRuleCollection
 using MS.Internal;                      // InheritanceContextHelper

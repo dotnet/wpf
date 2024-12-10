@@ -12,11 +12,7 @@
 //
 
 
-using System;
-using System.Diagnostics;
 using MS.Internal;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.TextFormatting
 {

@@ -2,27 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
 // Description: InputBindingCollection serves the purpose of Storing/Retrieving InputBindings
 //
 //              See spec at : http://avalon/coreui/Specs/Commanding(new).mht
-//
-//
-//
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Collections.Specialized;
-using System.Windows;
-using System.Windows.Input;
-
 using MS.Internal;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {

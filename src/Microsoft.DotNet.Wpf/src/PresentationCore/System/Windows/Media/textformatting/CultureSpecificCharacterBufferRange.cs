@@ -7,11 +7,7 @@
 // Description: CultureSpecificCharacterBufferRange class
 //
 
-using System;
 using System.Globalization;
-using System.Windows.Media.TextFormatting;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.TextFormatting
 {

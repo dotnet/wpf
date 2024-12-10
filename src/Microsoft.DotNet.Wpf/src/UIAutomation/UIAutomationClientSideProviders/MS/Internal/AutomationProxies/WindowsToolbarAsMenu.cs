@@ -12,7 +12,6 @@
 
 using System;
 using System.Windows.Automation;
-using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {

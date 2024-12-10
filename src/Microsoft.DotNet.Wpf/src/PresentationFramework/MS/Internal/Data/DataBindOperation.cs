@@ -6,7 +6,6 @@
 // Description: Analogous to DispatcherOperation - one unit of cross-thread work.
 //
 
-using System;
 using System.Windows.Threading;
 
 namespace MS.Internal.Data

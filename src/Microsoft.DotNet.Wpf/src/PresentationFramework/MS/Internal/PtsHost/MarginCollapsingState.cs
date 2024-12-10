@@ -7,9 +7,6 @@
 // Description: Provides paragraph level margin collapsing support. 
 //
 
-
-using System;
-
 namespace MS.Internal.PtsHost
 {
     // ----------------------------------------------------------------------

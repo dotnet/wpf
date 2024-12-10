@@ -2,6 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using MS.Internal.AppModel;
+using MS.Internal.Interop;
+using System.ComponentModel;
+using System.IO;
+using System.Windows;
+
 //
 //
 // Description:
@@ -15,17 +22,6 @@
 
 namespace Microsoft.Win32
 {
-    using MS.Internal;
-    using MS.Internal.AppModel;
-    using MS.Internal.Interop;
-
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.IO;
-    using System.Text;
-    using System.Windows;
-
     /// <summary>
     ///    Provides a common base class for wrappers around both the
     ///    File Open and File Save common dialog boxes.  Derives from

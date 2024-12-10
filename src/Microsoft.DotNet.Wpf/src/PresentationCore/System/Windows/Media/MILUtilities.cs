@@ -5,16 +5,10 @@
 //
 //
 
-using System;
-using System.Diagnostics;
-using System.Security;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using MS.Internal;
 using System.Runtime.InteropServices;
-using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media
 {

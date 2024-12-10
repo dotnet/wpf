@@ -21,18 +21,13 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
-using System.Globalization;
 using System.Diagnostics;
-using System.Reflection;
-using System.Resources;
 using System.Xml;
 
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
 using MS.Utility;
-using MS.Internal.Tasks;
 
 // Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
 // We first need to disable warnings about unknown message numbers and unknown pragmas.

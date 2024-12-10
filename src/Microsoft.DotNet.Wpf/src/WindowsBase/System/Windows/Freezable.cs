@@ -2,25 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
 // Description: The Freezable class (plus the FreezableHelper class)
 //              encompasses all of the Freezable pattern.
 
-
-using System;
-using System.Diagnostics;
 using System.Collections;
-using System.Collections.Specialized;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
-using System.Windows.Threading;
-
-using MS.Internal;                          // for Invariant
-using MS.Internal.WindowsBase;
-using MS.Utility;                           // FrugalList
+using MS.Internal;
+using MS.Utility;
 
 namespace System.Windows
 {

@@ -8,7 +8,6 @@
 // See spec at Cross-thread Collections.docx
 //
 
-using System;
 using System.Collections;
 
 namespace System.Windows.Data

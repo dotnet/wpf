@@ -7,9 +7,6 @@
 //              pattern.  See WeakEventTable.cs for an overview.
 //
 
-using System;
-using System.Windows;       // WeakEventManager
-
 namespace System.Windows.Data
 {
     /// <summary>

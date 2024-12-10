@@ -2,19 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  Static helper class that serves up Xml strings used to generate and parse
 //  XmlDigitalSignatures.
-//
-//
-//
-//
-
-using System;
-using System.Xml;
-using System.Diagnostics;
 
 namespace MS.Internal.IO.Packaging
 {

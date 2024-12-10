@@ -13,14 +13,10 @@
 using System;
 using System.IO;
 using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
 
 using Microsoft.Build.Tasks.Windows;
-using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
-using MS.Utility;
 
 namespace MS.Internal.Tasks
 {

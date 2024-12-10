@@ -12,14 +12,9 @@
 //
 
 
-using System;
-using System.Security;
-using System.Collections;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using MS.Internal.Shaping;
 
 namespace MS.Internal.TextFormatting
 {

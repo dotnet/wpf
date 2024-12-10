@@ -9,14 +9,11 @@
 //
 
 
-using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using MS.Internal;
 using MS.Internal.Text;
 using MS.Internal.Documents;
 using MS.Internal.PtsHost.UnsafeNativeMethods;

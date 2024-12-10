@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System;
-using System.Diagnostics;
 using System.Xaml;
 using System.Xaml.MS.Impl;
 using System.Xml;

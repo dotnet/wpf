@@ -10,15 +10,13 @@
 *
 *
 \***************************************************************************/
-using System.Diagnostics;               // Debug.Assert
-
 namespace System.Windows.Media.Animation
 {
-/// <summary>
-/// ResumeStoryboard will call resume on its Storyboard reference when
-///  it is triggered.
-/// </summary>
-public sealed class ResumeStoryboard : ControllableStoryboardAction
+    /// <summary>
+    /// ResumeStoryboard will call resume on its Storyboard reference when
+    ///  it is triggered.
+    /// </summary>
+    public sealed class ResumeStoryboard : ControllableStoryboardAction
 {
     /// <summary>
     ///     Called when it's time to execute this storyboard action

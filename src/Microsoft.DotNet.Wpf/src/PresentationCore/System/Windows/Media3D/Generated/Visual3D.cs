@@ -2,31 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // This file was generated, please do not edit it directly.
 // 
 // This file was generated from the codegen template located at:
 //     wpf\src\Graphics\codegen\mcg\generators\AnimatableTemplate.cs
 //
 // Please see MilCodeGen.html for more information.
-//
 
 // Allow suppression of certain presharp messages
 #pragma warning disable 1634, 1691
 
-using MS.Internal;
-using MS.Utility;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security;
-using System.Windows.Threading;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Media3D
 {

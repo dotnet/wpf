@@ -8,8 +8,6 @@
 // Specs:       UIBinding.mht
 //
 
-using System;
-
 namespace MS.Internal.Data
 {
     /// <summary>

@@ -2,32 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-//
-// Description: The FontEmbeddingManager class handles physical and composite font embedding.
-//
-//              See spec at http://avalon/text/DesignDocsAndSpecs/Font%20embedding%20APIs.htm
-// 
-//
-//
-
-using System;
-using System.Text;
-using System.IO;
-using System.Globalization;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
-
-using MS.Internal.FontCache;
-using MS.Internal.FontFace;
-using MS.Internal.Shaping;
-using System.Security;
-
-using SR=MS.Internal.PresentationCore.SR;
-
 // Allow suppression of presharp warnings
 #pragma warning disable 1634, 1691
 

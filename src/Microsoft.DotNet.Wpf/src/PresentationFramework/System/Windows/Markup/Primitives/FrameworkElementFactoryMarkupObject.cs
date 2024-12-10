@@ -7,16 +7,10 @@
 //             FrameworkElementFactory
 //
 
-using System;
 using System.ComponentModel;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 
-using System.Windows;
-using System.Windows.Markup;
-
-using MS.Utility;                       
+using MS.Utility;
 
 namespace System.Windows.Markup.Primitives
 {

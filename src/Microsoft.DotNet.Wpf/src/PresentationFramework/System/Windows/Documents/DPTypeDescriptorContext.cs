@@ -2,17 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using System.Globalization;
+
 //
 // Description: Set of static methods implementing text range serialization
 //
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Windows;
-    using System.Globalization;
-    using System.Windows.Media;
-
     /// <summary>
     /// An object implementing ITypeDescriptorContext intended to be used in serialization
     /// scenarios for checking whether a particular value can be converted to a string

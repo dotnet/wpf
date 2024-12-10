@@ -4,17 +4,14 @@
 
 
 
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Threading;
+using System.Diagnostics.CodeAnalysis;
+
 namespace Standard
 {
-    using System;
-    using System.Runtime.ConstrainedExecution;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Windows;
-    using System.Windows.Threading;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-
     internal sealed class MessageWindow : CriticalFinalizerObject
     {
         static MessageWindow()

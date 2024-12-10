@@ -4,8 +4,6 @@
 
 // Description: ActiveTextPositionChangedEventArgs event args class
 
-using System;
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 
 namespace System.Windows.Automation

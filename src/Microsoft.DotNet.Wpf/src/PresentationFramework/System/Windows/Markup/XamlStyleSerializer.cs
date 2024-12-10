@@ -8,18 +8,7 @@
 //   Class that serializes and deserializes Styles.
 //
 
-using System;
-using System.ComponentModel;
-
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Collections;
 using System.Globalization;
-using System.IO;
-using System.Reflection;
-using System.Text;
-using System.Xml;
-using MS.Utility;
 
 #if !PBTCOMPILER
 using System.Windows.Data;

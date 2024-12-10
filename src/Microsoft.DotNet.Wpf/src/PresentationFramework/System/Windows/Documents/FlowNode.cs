@@ -11,9 +11,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-    using System.Diagnostics;
-
     //=====================================================================
     /// <summary>
     /// FlowNode represents a structural node in the Flow Order of a fixed document.

@@ -2,34 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //      Defines a node in the composition scene graph.
-//
 
-using System;
-using System.Security;
 using System.Windows.Threading;
-using MS.Win32;
 using System.Windows.Diagnostics;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Effects;
-using System.Diagnostics;
-using System.Collections;
 using System.Windows.Interop;
-using System.Collections.Generic;
 using MS.Internal;
 using MS.Internal.Media;
 using MS.Internal.Media3D;
-using System.Resources;
-using MS.Utility;
-using System.Runtime.InteropServices;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 //------------------------------------------------------------------------------
 // This section lists various things that we could improve on the Visual class.

@@ -3,14 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using MS.Internal;
-using MS.Utility;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
-using System.Windows.Threading;
 using System.Windows.Media;
 using System.Windows.Input;
 

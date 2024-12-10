@@ -5,7 +5,6 @@
 #nullable disable
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows.Markup;
 using System.Xaml.MS.Impl;

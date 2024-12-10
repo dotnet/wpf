@@ -11,8 +11,6 @@
 //
 
 using MS.Internal;
-using MS.Internal.Telemetry;
-using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 
 namespace System.Windows.Documents.Tracing

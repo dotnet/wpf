@@ -10,10 +10,7 @@
 *
 *
 \***************************************************************************/
-using System.Collections;
-using System.Diagnostics;
 using System.Windows.Markup;
-using System.Collections.Specialized;
 using System.ComponentModel;
 
 namespace System.Windows

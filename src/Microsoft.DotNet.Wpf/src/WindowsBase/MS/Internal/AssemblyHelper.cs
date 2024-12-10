@@ -2,10 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description: services for code that potentially loads uncommon assemblies.
-//
 
 /*
     Most of the WPF codebase uses types from WPF's own assemblies or from certain
@@ -22,12 +19,8 @@
     loading the extension assembly.
 */
 
-using System;
-using System.IO;                    // FileNotFoundException
-using System.Reflection;            // Assembly
-using System.Security;              // 
-
-using MS.Internal.WindowsBase;      // BuildInfo
+using System.Reflection;
+using MS.Internal.WindowsBase;
 
 namespace MS.Internal
 {

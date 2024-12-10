@@ -3,14 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.ComponentModel;
-using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Markup;
-using System.Diagnostics;
 using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Controls

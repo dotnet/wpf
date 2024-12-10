@@ -3,23 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Threading;
 using System.Windows.Data;
-using System.ComponentModel;
 using System.Windows.Input;
-
-using System.Collections;
 using MS.Win32;
 using System.Globalization;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Markup;    // for XmlLanguage
-using System.Windows.Media;
-using System.Text;
-using System.Collections.Generic;
 using MS.Internal;
 using MS.Internal.Data;
 

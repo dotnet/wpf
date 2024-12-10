@@ -3,12 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
 using MS.Internal.KnownBoxes;
-using MS.Utility;
 using System.ComponentModel;
-
-using System.Diagnostics;
 using System.Windows.Threading;
 
 using System.Windows.Automation;
@@ -16,9 +12,6 @@ using System.Windows.Automation.Peers;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Controls.Primitives;
-using System.Windows.Shapes;
-
-using System;
 
 // Disable CS3001: Warning as Error: not CLS-compliant
 #pragma warning disable 3001

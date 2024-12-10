@@ -6,7 +6,6 @@
 // Description: IViewAutomationPeer interface
 //
 
-using System.Collections.Generic;
 using System.Collections.Specialized;
 
 

@@ -7,23 +7,18 @@
 // PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
 
-using System;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Text;
-using System.Windows.Automation.Provider;
-using System.Collections;
-using System.Runtime.InteropServices;
 using System.Globalization;
 using System.Diagnostics;
-using MS.Internal.Automation;
 
 
 namespace MS.Internal.Automation
 {
     // Disable warning for obsolete types.  These are scheduled to be removed in M8.2 so 
     // only need the warning to come out for components outside of APT.
-    #pragma warning disable 0618
+#pragma warning disable 0618
 
     // Information about automation properties and patterns
     internal sealed class Schema

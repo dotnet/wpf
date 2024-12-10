@@ -8,7 +8,6 @@
 //
 
 
-using System;
 using System.Windows.Media;
 
 namespace MS.Internal.PtsHost

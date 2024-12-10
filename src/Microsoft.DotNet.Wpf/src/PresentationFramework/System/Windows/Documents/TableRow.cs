@@ -8,25 +8,10 @@
 //              See spec at WPP TableOM.doc
 //
 
-using MS.Internal;
-using MS.Internal.PtsHost;
 using MS.Internal.PtsTable;
-using MS.Internal.Text;
-using MS.Utility;
-
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Security;
-using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Markup;
-using System.Collections.Generic;
 using MS.Internal.Documents;
-using MS.Internal.PtsHost.UnsafeNativeMethods;
 
 namespace System.Windows.Documents
 {

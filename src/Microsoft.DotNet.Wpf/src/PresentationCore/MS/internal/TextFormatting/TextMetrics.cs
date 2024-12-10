@@ -2,23 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-//  Contents:  Full text implementation of ITextMetrics
-//
-//
-
-using System;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using System.Security;
-using MS.Internal.FontCache;
-
-using SR = MS.Internal.PresentationCore.SR;
-
 
 namespace MS.Internal.TextFormatting
 {

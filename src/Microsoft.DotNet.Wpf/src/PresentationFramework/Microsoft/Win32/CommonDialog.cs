@@ -2,6 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.InteropServices;
+using System.Threading;
+using System.Windows;
+using System.Windows.Interop;
+
+using MS.Internal.Interop;
+using MS.Win32;
+
 //
 // 
 // Description:
@@ -17,17 +25,6 @@
 
 namespace Microsoft.Win32
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Threading;
-    using System.Windows;
-    using System.Windows.Interop;
-
-    using MS.Internal.Interop;
-    using MS.Internal.PresentationFramework;
-    using MS.Win32;
-
     /// <summary>
     ///  An abstract base class for displaying common dialogs.
     /// </summary>

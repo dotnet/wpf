@@ -6,16 +6,9 @@
 // Description: Contains the MediaElement class.
 //
 
-using MS.Internal;
-using MS.Utility;
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Automation.Peers;
-using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Threading;
 using System.Windows.Markup;
 using MS.Internal.Telemetry.PresentationFramework;
 

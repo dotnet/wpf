@@ -7,12 +7,10 @@
 //    flow content inline collections
 //
 
-using System.ComponentModel;        // DesignerSerializationVisibility
 using System.Windows.Markup; // XamlDesignerSerializationManager
-using MS.Internal;
 using MS.Internal.Documents;
 
-namespace System.Windows.Documents 
+namespace System.Windows.Documents
 {
     /// <summary>
     /// InlineUIContainer - a wrapper for embedded UIElements in text 

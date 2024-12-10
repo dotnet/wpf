@@ -8,18 +8,9 @@
 *           Doing async parsing on a separate thread.
 *
 \***************************************************************************/
-using System;
-using System.Xml;
 using System.IO;
-using System.Windows;
 using System.Collections;
-using System.ComponentModel;
-
-using System.Diagnostics;
-using System.Reflection;
 using System.Threading;
-
-using MS.Utility;
 
 
 #if PBTCOMPILER

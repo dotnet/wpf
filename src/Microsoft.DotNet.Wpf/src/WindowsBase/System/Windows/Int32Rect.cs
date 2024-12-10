@@ -16,10 +16,10 @@ namespace System.Windows
     [ValueSerializer(typeof(Int32RectValueSerializer))] // Used by MarkupWriter
     public struct Int32Rect : IFormattable
     {
-        internal int _x;
-        internal int _y;
-        internal int _width;
-        internal int _height;
+        private int _x;
+        private int _y;
+        private int _width;
+        private int _height;
 
         /// <summary>
         /// Constructor which sets the initial values to the values of the parameters.

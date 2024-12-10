@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.ComponentModel;
+using System.Security.Cryptography.Xml;
 using System.Windows.Converters;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -17,8 +18,8 @@ namespace System.Windows
     [ValueSerializer(typeof(VectorValueSerializer))] // Used by MarkupWriter
     public struct Vector : IFormattable
     {
-        internal double _x;
-        internal double _y;
+        private double _x;
+        private double _y;
 
         /// <summary>
         /// Constructor which sets the vector's initial values
@@ -138,12 +139,12 @@ namespace System.Windows
         /// <summary>
         /// Operator Vector + Point
         /// </summary>
-        public static Point operator +(Vector vector, Point point) => new(point._x + vector._x, point._y + vector._y);
+        public static Point operator +(Vector vector, Point point) => new(point.X + vector._x, point.Y + vector._y);
 
         /// <summary>
         /// Add: Vector + Point
         /// </summary>
-        public static Point Add(Vector vector, Point point) => new(point._x + vector._x, point._y + vector._y);
+        public static Point Add(Vector vector, Point point) => new(point.X + vector._x, point.Y + vector._y);
 
         /// <summary>
         /// Operator Vector * double
@@ -381,5 +382,10 @@ namespace System.Windows
                 _x,
                 _y);
         }
+
+        /// <summary>
+        ///  Transforms the vector by the given matrix.
+        /// </summary>
+        internal void Transform(ref readonly Matrix matrix) => matrix.MultiplyVector(ref _x, ref _y);
     }
 }

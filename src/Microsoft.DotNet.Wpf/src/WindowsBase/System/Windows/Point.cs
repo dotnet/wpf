@@ -17,8 +17,8 @@ namespace System.Windows
     [ValueSerializer(typeof(PointValueSerializer))] // Used by MarkupWriter
     public partial struct Point : IFormattable
     {
-        internal double _x;
-        internal double _y;
+        private double _x;
+        private double _y;
 
         /// <summary>
         /// Constructor which accepts the X and Y values
@@ -295,5 +295,7 @@ namespace System.Windows
                 _x,
                 _y);
         }
+
+        internal void Transform(ref readonly Matrix matrix) => matrix.MultiplyPoint(ref _x, ref _y);
     }
 }

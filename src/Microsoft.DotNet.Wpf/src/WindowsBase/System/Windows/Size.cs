@@ -16,8 +16,8 @@ namespace System.Windows
     [ValueSerializer(typeof(SizeValueSerializer))] // Used by MarkupWriter
     public struct Size : IFormattable
     {
-        internal double _width;
-        internal double _height;
+        private double _width;
+        private double _height;
 
         /// <summary>
         /// Constructor which sets the size's initial values.  Width and Height must be non-negative

@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Runtime.InteropServices;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal
 {
@@ -14,13 +14,13 @@ namespace MS.Internal
     internal static class MILRenderTargetBitmap
     {
         [DllImport(DllImport.MilCore, EntryPoint="MILRenderTargetBitmapGetBitmap")]//CASRemoval:
-        internal static extern int /*HRESULT*/
+        internal static extern HRESULT
             GetBitmap(
             SafeMILHandle /* IMILRenderTargetBitmap */ THIS_PTR,
             out BitmapSourceSafeMILHandle /* IWICBitmap */ ppIBitmap);
 
         [DllImport(DllImport.MilCore, EntryPoint = "MILRenderTargetBitmapClear")]
-        internal static extern int /*HRESULT*/
+        internal static extern HRESULT
             Clear(
             SafeMILHandle /* IMILRenderTargetBitmap */ THIS_PTR);
     }
@@ -32,121 +32,121 @@ namespace MS.Internal
     internal static class MILMedia
     {
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaOpen")]
-        internal static extern int /* HRESULT */ Open(
+        internal static extern HRESULT Open(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             [In, MarshalAs(UnmanagedType.BStr)] string /* LPOLESTR */ src
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaStop")]//CASRemoval:
-        internal static extern int /* HRESULT */ Stop(
+        internal static extern HRESULT Stop(
             SafeMediaHandle /* IMILMedia */ THIS_PTR
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaClose")]//CASRemoval:
-        internal static extern int /*HRESULT */ Close(
+        internal static extern HRESULT Close(
             SafeMediaHandle /* IMILMedia */ THIS_PTR
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaGetPosition")]//CASRemoval:
-        internal static extern int /* HRESULT */ GetPosition(
+        internal static extern HRESULT GetPosition(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             ref long pllTime);
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaSetPosition")]//CASRemoval:
-        internal static extern int /* HRESULT */ SetPosition(
+        internal static extern HRESULT SetPosition(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             long llTime);
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaSetVolume")]//CASRemoval:
-        internal static extern int /* HRESULT */ SetVolume(
+        internal static extern HRESULT SetVolume(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             double dblVolume
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaSetBalance")]
-        internal static extern int /* HRESULT */ SetBalance(
+        internal static extern HRESULT SetBalance(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             double dblBalance
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaSetIsScrubbingEnabled")]
-        internal static extern int /* HRESULT */ SetIsScrubbingEnabled(
+        internal static extern HRESULT SetIsScrubbingEnabled(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             bool isScrubbingEnabled
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaIsBuffering")]//CASRemoval:
-        internal static extern int /* HRESULT */ IsBuffering(
+        internal static extern HRESULT IsBuffering(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             ref bool pIsBuffering
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaCanPause")]//CASRemoval:
-        internal static extern int /* HRESULT */ CanPause(
+        internal static extern HRESULT CanPause(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             ref bool pCanPause
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaGetDownloadProgress")]//CASRemoval:
-        internal static extern int /* HRESULT */ GetDownloadProgress(
+        internal static extern HRESULT GetDownloadProgress(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             ref double pProgress
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaGetBufferingProgress")]//CASRemoval:
-        internal static extern int /* HRESULT */ GetBufferingProgress(
+        internal static extern HRESULT GetBufferingProgress(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             ref double pProgress
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaSetRate")]//CASRemoval:
-        internal static extern int /* HRESULT */ SetRate(
+        internal static extern HRESULT SetRate(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             double dblRate
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaHasVideo")]//CASRemoval:
-        internal static extern int /* HRESULT */ HasVideo(
+        internal static extern HRESULT HasVideo(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             ref bool pfHasVideo
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaHasAudio")]//CASRemoval:
-        internal static extern int /* HRESULT */ HasAudio(
+        internal static extern HRESULT HasAudio(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             ref bool pfHasAudio
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaGetNaturalHeight")]//CASRemoval:
-        internal static extern int /* HRESULT */ GetNaturalHeight(
+        internal static extern HRESULT GetNaturalHeight(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             ref UInt32 puiHeight
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaGetNaturalWidth")]//CASRemoval:
-        internal static extern int /* HRESULT */ GetNaturalWidth(
+        internal static extern HRESULT GetNaturalWidth(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             ref UInt32 puiWidth
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaGetMediaLength")]//CASRemoval:
-        internal static extern int /* HRESULT */ GetMediaLength(
+        internal static extern HRESULT GetMediaLength(
             SafeMediaHandle /* IMILMedia */ THIS_PTR,
             ref long pllLength
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaNeedUIFrameUpdate")]
-        internal static extern int /* HRESULT */ NeedUIFrameUpdate(
+        internal static extern HRESULT NeedUIFrameUpdate(
             SafeMediaHandle /* IMILMedia */ THIS_PTR
             );
 
         [DllImport(DllImport.MilCore, EntryPoint="MILMediaShutdown")]//CASRemoval:
-        internal static extern int /* HRESULT */ Shutdown(
+        internal static extern HRESULT Shutdown(
             IntPtr /* IMILMedia */ THIS_PTR
             );
 
         [DllImport(DllImport.MilCore, EntryPoint = "MILMediaProcessExitHandler")]
-        internal static extern int /*HRESULT*/ ProcessExitHandler(
+        internal static extern HRESULT ProcessExitHandler(
             SafeMediaHandle /* IMILMedia */ THIS_PTR
             );
     }
@@ -156,7 +156,7 @@ namespace MS.Internal
     internal static class MILSwDoubleBufferedBitmap
     {
         [DllImport(DllImport.MilCore, EntryPoint = "MILSwDoubleBufferedBitmapCreate")]
-        internal static extern int /* HRESULT */ Create(
+        internal static extern HRESULT Create(
             uint width,
             uint height,
             double dpiX,
@@ -179,7 +179,7 @@ namespace MS.Internal
             );
 
         [DllImport(DllImport.MilCore, EntryPoint = "MILSwDoubleBufferedBitmapProtectBackBuffer")]
-        internal static extern int /* HRESULT */ ProtectBackBuffer(
+        internal static extern HRESULT ProtectBackBuffer(
             SafeMILHandle /* CSwDoubleBufferedBitmap */ THIS_PTR
             );
     }
@@ -192,7 +192,7 @@ namespace MS.Internal
     internal static class MILUpdateSystemParametersInfo
     {
         [DllImport(DllImport.MilCore, EntryPoint="MILUpdateSystemParametersInfo")]
-        internal static extern int /* HRESULT */
+        internal static extern HRESULT
             Update();
     }
     #endregion

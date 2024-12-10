@@ -1,8 +1,11 @@
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using System.Windows.Interop;
 using System.Windows.Media;
 using MS.Internal;
 using Standard;
-using HRESULT = Standard.HRESULT;
+using Windows.Win32.Foundation;
 
 // ReSharper disable once CheckNamespace
 namespace System.Windows.Appearance;
@@ -71,11 +74,11 @@ internal static class WindowBackdropManager
 
         var backdropPvAttribute = backdropType switch
         {
-            WindowBackdropType.Auto => Standard.DWMSBT.DWMSBT_TABBEDWINDOW,
-            WindowBackdropType.TabbedWindow => Standard.DWMSBT.DWMSBT_TABBEDWINDOW,
-            WindowBackdropType.MainWindow => Standard.DWMSBT.DWMSBT_MAINWINDOW,
-            WindowBackdropType.TransientWindow => Standard.DWMSBT.DWMSBT_TRANSIENTWINDOW,
-            _ => Standard.DWMSBT.DWMSBT_NONE
+            WindowBackdropType.Auto => DWMSBT.DWMSBT_TABBEDWINDOW,
+            WindowBackdropType.TabbedWindow => DWMSBT.DWMSBT_TABBEDWINDOW,
+            WindowBackdropType.MainWindow => DWMSBT.DWMSBT_MAINWINDOW,
+            WindowBackdropType.TransientWindow => DWMSBT.DWMSBT_TRANSIENTWINDOW,
+            _ => DWMSBT.DWMSBT_NONE
         };
 
         var dwmResult = NativeMethods.DwmSetWindowAttributeSystemBackdropType(hwnd, backdropPvAttribute);
@@ -86,7 +89,7 @@ internal static class WindowBackdropManager
     {
         UpdateGlassFrame(hwnd, WindowBackdropType.None);
 
-        var backdropPvAttribute = Standard.DWMSBT.DWMSBT_NONE;
+        var backdropPvAttribute = DWMSBT.DWMSBT_NONE;
         var dwmResult = NativeMethods.DwmSetWindowAttributeSystemBackdropType(hwnd, backdropPvAttribute);
         return dwmResult == HRESULT.S_OK;
     }
@@ -128,8 +131,7 @@ internal static class WindowBackdropManager
             margins = new MARGINS { cxLeftWidth = -1, cxRightWidth = -1, cyTopHeight = -1, cyBottomHeight = -1 };
         }
 
-        var dwmApiResult = NativeMethods.DwmExtendFrameIntoClientArea(hwnd, ref margins);
-        return new HRESULT((uint)dwmApiResult) == HRESULT.S_OK;
+        return NativeMethods.DwmExtendFrameIntoClientArea(hwnd, ref margins) == HRESULT.S_OK;
     }
 
     #endregion

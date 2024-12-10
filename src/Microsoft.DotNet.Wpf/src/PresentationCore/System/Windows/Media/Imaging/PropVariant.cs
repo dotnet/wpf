@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,6 +9,7 @@ using MS.Internal;
 using MS.Win32.PresentationCore;
 using System.Runtime.InteropServices;
 using MS.Internal.PresentationCore;
+using Windows.Win32.Foundation;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -420,10 +421,10 @@ namespace System.Windows.Media.Imaging
                     }
 
                     Guid wicMetadataQueryReader = MILGuidData.IID_IWICMetadataQueryReader;
-                    HRESULT.Check(UnsafeNativeMethods.MILUnknown.QueryInterface(
+                    UnsafeNativeMethods.MILUnknown.QueryInterface(
                         metadataHandle,
                         ref wicMetadataQueryReader,
-                        out punkTemp));
+                        out punkTemp).ThrowOnFailureExtended();
 
                     varType = (ushort)VarEnum.VT_UNKNOWN;
                     punkVal = punkTemp;
@@ -706,9 +707,9 @@ namespace System.Windows.Media.Imaging
 
                         try
                         {
-                            int hr = UnsafeNativeMethods.MILUnknown.QueryInterface(punkVal, ref guidIWICQueryWriter, out queryHandle);
+                            HRESULT result = UnsafeNativeMethods.MILUnknown.QueryInterface(punkVal, ref guidIWICQueryWriter, out queryHandle);
 
-                            if (hr == HRESULT.S_OK)
+                            if (result == HRESULT.S_OK)
                             {
                                 // It's a IWICMetadataQueryWriter interface - read and write
                                 SafeMILHandle metadataHandle = new SafeMILHandle(queryHandle);
@@ -720,9 +721,9 @@ namespace System.Windows.Media.Imaging
                             }
                             else
                             {
-                                hr = UnsafeNativeMethods.MILUnknown.QueryInterface(punkVal, ref guidIWICQueryReader, out queryHandle);
+                                result = UnsafeNativeMethods.MILUnknown.QueryInterface(punkVal, ref guidIWICQueryReader, out queryHandle);
 
-                                if (hr == HRESULT.S_OK)
+                                if (result == HRESULT.S_OK)
                                 {
                                     // It's a IWICMetadataQueryReader interface - read only
                                     SafeMILHandle metadataHandle = new SafeMILHandle(queryHandle);
@@ -733,7 +734,7 @@ namespace System.Windows.Media.Imaging
                                     return new BitmapMetadata(metadataHandle, true, false, syncObject);
                                 }
 
-                                HRESULT.Check(hr);
+                                result.ThrowOnFailureExtended();
                             }
                         }
                         finally

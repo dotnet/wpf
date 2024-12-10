@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,6 +19,8 @@ using System.Windows;                           // for ExceptionStringTable
 
 using MS.Win32;
 using MS.Internal.Interop;                      // For STAT_CHUNK, etc.
+
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.IO.Packaging
 {
@@ -53,14 +55,14 @@ namespace MS.Internal.IO.Packaging
             if (_filter == null)
             {
                 throw new COMException(SR.FileToFilterNotLoaded,
-                    (int)NativeMethods.E_FAIL);
+                    (int)HRESULT.E_FAIL);
             }
 
             if (cAttributes > 0 && aAttributes == null)
             {
                 // Attributes count and array do not match.
                 throw new COMException(SR.FilterInitInvalidAttributes,
-                    (int)NativeMethods.E_INVALIDARG);
+                    (int)HRESULT.E_INVALIDARG);
             }
 
             return _filter.Init(grfFlags, cAttributes, aAttributes);
@@ -316,11 +318,11 @@ namespace MS.Internal.IO.Packaging
             if (_filter == null || _xpsFileName == null)
             {
                 ppszFileName = $"*.{PackagingUtilities.ContainerFileExtension}";
-                return NativeMethods.S_FALSE;
+                return HRESULT.S_FALSE;
             }
 
             ppszFileName = _xpsFileName;
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         /// <summary>
@@ -336,7 +338,7 @@ namespace MS.Internal.IO.Packaging
         [PreserveSig]
         int IPersistFile.IsDirty()
         {
-            return NativeMethods.S_FALSE;
+            return HRESULT.S_FALSE;
         }
 
         /// <summary>
@@ -503,7 +505,7 @@ namespace MS.Internal.IO.Packaging
         [PreserveSig]
         int IPersistStream.IsDirty()
         {
-            return NativeMethods.S_FALSE;
+            return HRESULT.S_FALSE;
         }
 
         /// <summary>

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //
 //  Description:
@@ -11,9 +10,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows.Threading;
-
-// Disambiguate MS.Internal.HRESULT...
-using HR = MS.Internal.Interop.HRESULT;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.AppModel
 {
@@ -22,17 +19,17 @@ namespace MS.Internal.AppModel
     interface INativeProgressPage
     {
         [PreserveSig]
-        HR Show();
+        HRESULT Show();
         [PreserveSig]
-        HR Hide();
+        HRESULT Hide();
         [PreserveSig]
-        HR ShowProgressMessage(string message);
+        HRESULT ShowProgressMessage(string message);
         [PreserveSig]
-        HR SetApplicationName(string appName);
+        HRESULT SetApplicationName(string appName);
         [PreserveSig]
-        HR SetPublisherName(string publisherName);
+        HRESULT SetPublisherName(string publisherName);
         [PreserveSig]
-        HR OnDownloadProgress(ulong bytesDownloaded, ulong bytesTotal);
+        HRESULT OnDownloadProgress(ulong bytesDownloaded, ulong bytesTotal);
     };
 
     /// <remarks>
@@ -54,13 +51,13 @@ namespace MS.Internal.AppModel
         public void ShowProgressMessage(string message)
         {
             // Ignore the error code.  This page is transient and it's not the end of the world if this doesn't show up.
-            HR hr = _npp.ShowProgressMessage(message);
+            _ = _npp.ShowProgressMessage(message);
         }
 
         public Uri DeploymentPath
         {
             set { }
-            get { throw new System.NotImplementedException(); }
+            get { throw new NotImplementedException(); }
         }
 
         /// <remarks>
@@ -70,14 +67,14 @@ namespace MS.Internal.AppModel
         public DispatcherOperationCallback StopCallback
         {
             set { }
-            get { throw new System.NotImplementedException(); }
+            get { throw new NotImplementedException(); }
         }
 
         /// <remarks>
         /// The native progress page sends a Refresh request to its host object, which then calls 
         /// IBrowserHostServices.ExecCommand(OLECMDID_REFRESH).
         /// </remarks>
-        public System.Windows.Threading.DispatcherOperationCallback RefreshCallback
+        public DispatcherOperationCallback RefreshCallback
         {
             set { }
             get { return null; }
@@ -88,10 +85,10 @@ namespace MS.Internal.AppModel
             set
             {
                 // Ignore the error code.  This page is transient and it's not the end of the world if this doesn't show up.
-                HR hr = _npp.SetApplicationName(value);
+                _ = _npp.SetApplicationName(value);
             }
 
-            get { throw new System.NotImplementedException(); }
+            get { throw new NotImplementedException(); }
         }
 
         /// <SecurityNOoe>
@@ -105,7 +102,7 @@ namespace MS.Internal.AppModel
             set
             {
                 // Ignore the error code.  This page is transient and it's not the end of the world if this doesn't show up.
-                HR hr = _npp.SetPublisherName(value);
+                _ = _npp.SetPublisherName(value);
             }
 
             get { throw new System.NotImplementedException(); }
@@ -117,7 +114,7 @@ namespace MS.Internal.AppModel
         public void UpdateProgress(long bytesDownloaded, long bytesTotal)
         {
             // Ignore the error code.  This page is transient and it's not the end of the world if this doesn't show up.
-            HR hr = _npp.OnDownloadProgress((ulong)bytesDownloaded, (ulong)bytesTotal);
+            _ = _npp.OnDownloadProgress((ulong)bytesDownloaded, (ulong)bytesTotal);
         }
 
         INativeProgressPage _npp;

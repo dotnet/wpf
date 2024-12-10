@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,6 +15,7 @@
 using System.Threading;
 using Microsoft.Win32;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 #if WINDOWS_BASE
 #elif PRESENTATION_CORE
@@ -103,7 +104,7 @@ namespace MS.Internal
                 // loaded (no TIPs to run), you can check that in msctf.dll's NoTipsInstalled
                 // which lives in nt\windows\advcore\ctf\lib\immxutil.cpp.  If that's the
                 // problem, ServicesInstalled is out of sync with Cicero's thinking.
-                if (UnsafeNativeMethods.TF_CreateThreadMgr(out threadManager) == NativeMethods.S_OK)
+                if (UnsafeNativeMethods.TF_CreateThreadMgr(out threadManager) == HRESULT.S_OK)
                 {
                     return threadManager;
                 }

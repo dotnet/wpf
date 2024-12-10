@@ -1,10 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Runtime.InteropServices;
 using MS.Utility;
+using Windows.Win32.Foundation;
 
 namespace MS.Win32
 {
@@ -119,7 +120,7 @@ namespace MS.Win32
         internal static NativeMethods.RECT GetClientRect(HandleRef hWnd)
         {
             var clientRect = default(NativeMethods.RECT);
-            SafeNativeMethods.GetClientRect(hWnd, ref clientRect);
+            GetClientRect(hWnd, ref clientRect);
             return clientRect;
         }
 
@@ -368,13 +369,7 @@ namespace MS.Win32
         internal static NativeMethods.PROCESS_DPI_AWARENESS GetProcessDpiAwareness(HandleRef hProcess)
         {
             var ptrProcessDpiAwareness = IntPtr.Zero;
-            var hr = (int)SafeNativeMethodsPrivate.GetProcessDpiAwareness(hProcess, out ptrProcessDpiAwareness);
-
-            if(hr != NativeMethods.S_OK)
-            {
-                Marshal.ThrowExceptionForHR(hr);
-            }
-
+            SafeNativeMethodsPrivate.GetProcessDpiAwareness(hProcess, out ptrProcessDpiAwareness).ThrowOnFailure();
             return (NativeMethods.PROCESS_DPI_AWARENESS)NativeMethods.IntPtrToInt32(ptrProcessDpiAwareness);
         }
 
@@ -591,19 +586,19 @@ namespace MS.Win32
             [return:MarshalAs(UnmanagedType.Bool)]
             public static extern bool ProcessIdToSessionId([In]int dwProcessId, [Out]out int pSessionId);
 
-            [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = CharSet.Auto)]
             public static extern int GetCurrentThreadId();
 
             [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
             public static extern IntPtr GetCapture();
 
-            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
             public static extern bool IsWindowVisible(HandleRef hWnd);
 
-            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
             public static extern int GetMessagePos();
 
-            [DllImport(ExternDll.User32, EntryPoint = "ReleaseCapture", ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
+            [DllImport(ExternDll.User32, EntryPoint = "ReleaseCapture", ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
             public static extern bool IntReleaseCapture();
 
             [DllImport(ExternDll.User32, EntryPoint = "GetWindowRect", ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
@@ -612,7 +607,7 @@ namespace MS.Win32
             [DllImport(ExternDll.User32, EntryPoint = "GetClientRect", ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
             public static extern bool IntGetClientRect(HandleRef hWnd, [In, Out] ref NativeMethods.RECT rect);
 
-            [DllImport(ExternDll.User32, EntryPoint = "AdjustWindowRectEx", ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
+            [DllImport(ExternDll.User32, EntryPoint = "AdjustWindowRectEx", ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
             public static extern bool IntAdjustWindowRectEx(ref NativeMethods.RECT lpRect, int dwStyle, bool bMenu, int dwExStyle);
 
             [DllImport(ExternDll.User32, ExactSpelling=true)]
@@ -627,28 +622,28 @@ namespace MS.Win32
             [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=CharSet.Auto)]
             public static extern IntPtr GetKeyboardLayout(int dwLayout);
 
-            [DllImport(ExternDll.User32, SetLastError = true, ExactSpelling=true, CharSet=System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, SetLastError = true, ExactSpelling=true, CharSet= CharSet.Auto)]
             public static extern IntPtr SetTimer(HandleRef hWnd, int nIDEvent, int uElapse, NativeMethods.TimerProc lpTimerFunc);
 
-            [DllImport(ExternDll.User32, EntryPoint="SetTimer", CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, EntryPoint="SetTimer", CharSet = CharSet.Auto)]
             public static extern IntPtr TrySetTimer(HandleRef hWnd, int nIDEvent, int uElapse, NativeMethods.TimerProc lpTimerFunc);
 
-            [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, ExactSpelling=true, CharSet= CharSet.Auto)]
             public static extern bool KillTimer(HandleRef hwnd, int idEvent);
 
-            [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, ExactSpelling=true, CharSet= CharSet.Auto)]
             public static extern bool IsWindowUnicode(HandleRef hWnd);
 
             [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=CharSet.Auto)]
             public static extern int GetDoubleClickTime();
 
-            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
             public static extern bool IsWindowEnabled(HandleRef hWnd);
 
-            [DllImport(ExternDll.User32, ExactSpelling=true, CharSet=System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, ExactSpelling=true, CharSet= CharSet.Auto)]
             public static extern IntPtr GetCursor();
 
-            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
             public static extern int ShowCursor(bool show);
 
             [DllImport(ExternDll.User32, EntryPoint = "GetMonitorInfo", CharSet = CharSet.Auto, SetLastError = true)]
@@ -673,13 +668,13 @@ namespace MS.Win32
             [DllImport(ExternDll.User32, ExactSpelling=true, SetLastError=true)]
             public static extern bool TrackMouseEvent(NativeMethods.TRACKMOUSEEVENT tme);
 
-            [DllImport(ExternDll.User32, CharSet=System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
+            [DllImport(ExternDll.User32, CharSet= CharSet.Auto, SetLastError = true)]
             public static extern NativeMethods.CursorHandle LoadCursor(HandleRef hInst, IntPtr iconId);
 
 #endif
 
 #if BASE_NATIVEMETHODS || CORE_NATIVEMETHODS || FRAMEWORK_NATIVEMETHODS
-            [DllImport(ExternDll.Kernel32, ExactSpelling=true, CharSet=System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.Kernel32, ExactSpelling=true, CharSet= CharSet.Auto)]
             public static extern int GetTickCount();
 
 #endif
@@ -737,7 +732,7 @@ namespace MS.Win32
             /// - This function is supported on Windows 8.1 onwards. 
             /// </remarks>
             [DllImport(ExternDll.Shcore, CallingConvention = CallingConvention.Winapi)]
-            internal static extern uint GetProcessDpiAwareness([In] HandleRef hProcess, out IntPtr awareness);
+            internal static extern HRESULT GetProcessDpiAwareness([In] HandleRef hProcess, out IntPtr awareness);
 
             /// <summary>
             /// Calculates the required size of the window rectangle, based on the desired size of the

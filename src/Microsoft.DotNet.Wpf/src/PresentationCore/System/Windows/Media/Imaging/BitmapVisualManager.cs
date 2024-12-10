@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,6 +6,7 @@ using System.Windows.Threading;
 using MS.Internal;
 using System.Windows.Media.Composition;
 using MS.Win32.PresentationCore;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media.Imaging
 {
@@ -111,10 +112,10 @@ namespace System.Windows.Media.Imaging
 
                 Guid iidRTB = MILGuidData.IID_IMILRenderTargetBitmap;
 
-                HRESULT.Check(UnsafeNativeMethods.MILUnknown.QueryInterface(
+                UnsafeNativeMethods.MILUnknown.QueryInterface(
                     renderTargetBitmap,
                     ref iidRTB,
-                    out pIRenderTargetBitmap));
+                    out pIRenderTargetBitmap).ThrowOnFailureExtended();
 
 
                 //

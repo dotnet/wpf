@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,6 +8,7 @@
 using MS.Internal;
 using MS.Win32;
 using System.Runtime.InteropServices;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media
 {
@@ -47,8 +48,8 @@ namespace System.Windows.Media
     {
         static EventProxyStaticPtrs()
         {
-            EventProxyStaticPtrs.pfnDispose = new EventProxyDescriptor.Dispose(EventProxyDescriptor.StaticDispose);
-            EventProxyStaticPtrs.pfnRaiseEvent = new EventProxyDescriptor.RaiseEvent(EventProxyWrapper.RaiseEvent);
+            pfnDispose = new EventProxyDescriptor.Dispose(EventProxyDescriptor.StaticDispose);
+            pfnRaiseEvent = new EventProxyDescriptor.RaiseEvent(EventProxyWrapper.RaiseEvent);
 }
 
         internal static EventProxyDescriptor.Dispose pfnDispose;
@@ -75,9 +76,8 @@ namespace System.Windows.Media
 
         #region Public methods
 
-        public int RaiseEvent(byte[] buffer, uint cb)
+        public HRESULT RaiseEvent(byte[] buffer, uint cb)
         {
-#pragma warning disable 6500
             try
             {
                 ObjectDisposedException.ThrowIf(target == null, typeof(EventProxyWrapper));
@@ -90,16 +90,15 @@ namespace System.Windows.Media
                 {
                     // return E_HANDLE to notify that object is no longer alive
 
-                    return NativeMethods.E_HANDLE;
+                    return HRESULT.E_HANDLE;
                 }
             }
             catch (Exception e)
             {
-                return Marshal.GetHRForException(e);
+                return (HRESULT)Marshal.GetHRForException(e);
             }
-#pragma warning restore 6500
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         #endregion
@@ -108,13 +107,13 @@ namespace System.Windows.Media
         internal static EventProxyWrapper FromEPD(ref EventProxyDescriptor epd)
         {
             Debug.Assert(((IntPtr)epd.m_handle) != IntPtr.Zero, "Stream is disposed.");
-            System.Runtime.InteropServices.GCHandle handle = (System.Runtime.InteropServices.GCHandle)(epd.m_handle);
-            return (EventProxyWrapper)(handle.Target);
+            GCHandle handle = epd.m_handle;
+            return (EventProxyWrapper)handle.Target;
         }
 
         internal static int RaiseEvent(ref EventProxyDescriptor pEPD, byte[] buffer, uint cb)
         {
-            EventProxyWrapper target = EventProxyWrapper.FromEPD(ref pEPD);
+            EventProxyWrapper target = FromEPD(ref pEPD);
             if (target != null)
             {
                 return target.RaiseEvent(buffer, cb);
@@ -141,9 +140,9 @@ namespace System.Windows.Media
             epd.pfnDispose = EventProxyStaticPtrs.pfnDispose;
             epd.pfnRaiseEvent = EventProxyStaticPtrs.pfnRaiseEvent;
 
-            epd.m_handle = System.Runtime.InteropServices.GCHandle.Alloc(epw, System.Runtime.InteropServices.GCHandleType.Normal);
+            epd.m_handle = GCHandle.Alloc(epw, GCHandleType.Normal);
 
-            HRESULT.Check(MILCreateEventProxy(ref epd, out eventProxy));
+            MILCreateEventProxy(ref epd, out eventProxy).ThrowOnFailureExtended();
 
             return eventProxy;
         }
@@ -151,7 +150,7 @@ namespace System.Windows.Media
         #endregion
 
         [DllImport(DllImport.MilCore)]
-        private extern static int /* HRESULT */ MILCreateEventProxy(ref EventProxyDescriptor pEPD, out SafeMILHandle ppEventProxy);
+        private extern static HRESULT MILCreateEventProxy(ref EventProxyDescriptor pEPD, out SafeMILHandle ppEventProxy);
     }
     #endregion
 }

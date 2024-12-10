@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,6 +17,7 @@ using System.Threading;
 using System.Windows.Media.Imaging;
 
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
+using Windows.Win32.Foundation;
 
 namespace System.Windows
 {
@@ -49,16 +50,16 @@ namespace System.Windows
             while (true)
             {
                 // Clear the system clipboard by calling OleSetClipboard with null parameter.
-                int hr = OleServicesContext.CurrentOleServicesContext.OleSetClipboard(null);
+                HRESULT result = OleServicesContext.CurrentOleServicesContext.OleSetClipboard(null);
 
-                if (NativeMethods.Succeeded(hr))
+                if (result.Succeeded)
                 {
                     break;
                 }
 
                 if (--i == 0)
                 {
-                    Marshal.ThrowExceptionForHR(hr);
+                    result.ThrowOnFailure();
                 }
 
                 Thread.Sleep(OleRetryDelay);
@@ -138,16 +139,16 @@ namespace System.Windows
 
             while (true)
             {
-                int hr = OleServicesContext.CurrentOleServicesContext.OleFlushClipboard();
+                HRESULT result = OleServicesContext.CurrentOleServicesContext.OleFlushClipboard();
 
-                if (NativeMethods.Succeeded(hr))
+                if (result.Succeeded)
                 {
                     break;
                 }
 
                 if (--i == 0)
                 {
-                    SecurityHelper.ThrowExceptionForHR(hr);
+                    result.ThrowOnFailure();
                 }
 
                 Thread.Sleep(OleRetryDelay);
@@ -358,7 +359,7 @@ namespace System.Windows
         /// Data object from the current containing clipboard which the caller
         /// previously placed on the clipboard.
         /// </param>
-        public static bool IsCurrent(IDataObject data) 
+        public static bool IsCurrent(IDataObject data)
         {
             bool bReturn;
 
@@ -368,7 +369,7 @@ namespace System.Windows
 
             if (data is IComDataObject)
             {
-                int hr;
+                HRESULT result;
 
                 // Retry OLE operations several times as mitigation for clipboard locking issues in TS sessions.
 
@@ -376,9 +377,9 @@ namespace System.Windows
 
                 while (true)
                 {
-                    hr = OleServicesContext.CurrentOleServicesContext.OleIsCurrentClipboard((IComDataObject)data);
+                    result = OleServicesContext.CurrentOleServicesContext.OleIsCurrentClipboard((IComDataObject)data);
 
-                    if (NativeMethods.Succeeded(hr) || (--i == 0))
+                    if (result.Succeeded || (--i == 0))
                     {
                         break;
                     }
@@ -386,13 +387,15 @@ namespace System.Windows
                     Thread.Sleep(OleRetryDelay);
                 }
 
-                if (hr == NativeMethods.S_OK)
+                if (result == HRESULT.S_OK)
                 {
                     bReturn = true;
                 }
-                else if (!NativeMethods.Succeeded(hr))
+                else if (!result.Succeeded)
                 {
-                    throw new ExternalException("OleIsCurrentClipboard()", hr);
+#pragma warning disable CA2201 // Do not raise reserved exception types
+                    throw new ExternalException("OleIsCurrentClipboard()", result);
+#pragma warning restore CA2201
                 }
             }
 
@@ -480,16 +483,16 @@ namespace System.Windows
             while (true)
             {
                 // Clear the system clipboard by calling OleSetClipboard with null parameter.
-                int hr = OleServicesContext.CurrentOleServicesContext.OleSetClipboard(dataObject);
+                HRESULT result = OleServicesContext.CurrentOleServicesContext.OleSetClipboard(dataObject);
 
-                if (NativeMethods.Succeeded(hr))
+                if (result.Succeeded)
                 {
                     break;
                 }
 
                 if (--i == 0)
                 {
-                    Marshal.ThrowExceptionForHR(hr);
+                    result.ThrowOnFailure();
                 }
 
                 Thread.Sleep(OleRetryDelay);
@@ -555,9 +558,9 @@ namespace System.Windows
                     IntPtr entryPoint = UnsafeNativeMethods.GetProcAddressNoThrow(new HandleRef(null, hModule), "WldpIsDynamicCodePolicyEnabled");
                     if (entryPoint != IntPtr.Zero)
                     {
-                        int hResult = UnsafeNativeMethods.WldpIsDynamicCodePolicyEnabled(out isEnabled);
+                        HRESULT result = UnsafeNativeMethods.WldpIsDynamicCodePolicyEnabled(out isEnabled);
 
-                        if (hResult != NativeMethods.S_OK)
+                        if (result != HRESULT.S_OK)
                         {
                             isEnabled = false;
                         }
@@ -590,16 +593,16 @@ namespace System.Windows
             while (true)
             {
                 oleDataObject = null;
-                int hr = OleServicesContext.CurrentOleServicesContext.OleGetClipboard(ref oleDataObject);
+                HRESULT result = OleServicesContext.CurrentOleServicesContext.OleGetClipboard(ref oleDataObject);
 
-                if (NativeMethods.Succeeded(hr))
+                if (result.Succeeded)
                 {
                     break;
                 }
 
                 if (--i == 0)
                 {
-                    Marshal.ThrowExceptionForHR(hr);
+                    result.ThrowOnFailure();
                 }
 
                 Thread.Sleep(OleRetryDelay);
@@ -659,7 +662,7 @@ namespace System.Windows
         {
             IDataObject dataObject;
 
-            dataObject = Clipboard.GetDataObject();
+            dataObject = GetDataObject();
 
             if (dataObject != null)
             {
@@ -702,7 +705,7 @@ namespace System.Windows
             dataObject = new DataObject();
             dataObject.SetData(format, data, autoConvert);
 
-            Clipboard.SetDataObject(dataObject, /*copy*/true);
+            SetDataObject(dataObject, copy: true);
         }
 
         /// <summary>

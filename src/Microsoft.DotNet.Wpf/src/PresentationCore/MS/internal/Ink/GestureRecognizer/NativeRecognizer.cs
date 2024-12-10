@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,6 +13,7 @@ using System.Text;
 using System.Windows.Media;
 using System.Windows.Ink;
 using System.Windows.Input;
+using Windows.Win32.Foundation;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -44,20 +45,22 @@ namespace MS.Internal.Ink.GestureRecognition
         /// </summary>
         private NativeRecognizer()
         {
-            Debug.Assert(NativeRecognizer.RecognizerHandleSingleton != null);
+            Debug.Assert(RecognizerHandleSingleton != null);
 
-            int hr = MS.Win32.Recognizer.UnsafeNativeMethods.CreateContext(NativeRecognizer.RecognizerHandleSingleton,
-                                                                        out _hContext);
-            if (HRESULT.Failed(hr))
+            HRESULT result = Win32.Recognizer.UnsafeNativeMethods.CreateContext(
+                RecognizerHandleSingleton,
+                out _hContext);
+
+            if (result.Failed)
             {
-                //don't throw a com exception here, we don't need to pass out any details
+                // Don't throw a com exception here, we don't need to pass out any details
                 throw new InvalidOperationException(SR.UnspecifiedGestureConstructionException);
             }
 
             // We add a reference of the recognizer to the context handle.
             // The context will dereference the recognizer reference when it gets disposed.
             // This trick will prevent the GC from disposing the recognizer before all contexts.
-            _hContext.AddReferenceOnRecognizer(NativeRecognizer.RecognizerHandleSingleton);
+            _hContext.AddReferenceOnRecognizer(RecognizerHandleSingleton);
         }
 
         #endregion Constructors
@@ -76,7 +79,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// <returns>null if it fails</returns>
         internal static NativeRecognizer CreateInstance()
         {
-            if (NativeRecognizer.RecognizerHandleSingleton != null)
+            if (RecognizerHandleSingleton != null)
             {
                 return new NativeRecognizer();
             }
@@ -99,8 +102,7 @@ namespace MS.Internal.Ink.GestureRecognition
                 GetApplicationGestureArrayAndVerify(applicationGestures);
 
             // Set enabled Gestures.
-            int hr = SetEnabledGestures(_hContext, enabledGestures);
-            if (HRESULT.Failed(hr))
+            if (SetEnabledGestures(_hContext, enabledGestures).Failed)
             {
                 //don't throw a com exception here, we don't need to pass out any details
                 throw new InvalidOperationException(SR.UnspecifiedSetEnabledGesturesException);
@@ -136,33 +138,32 @@ namespace MS.Internal.Ink.GestureRecognition
                 return recResults;
             }
 
-            int hr = 0;
+            HRESULT result = HRESULT.S_OK;
 
             try
             {
                 // Reset the context
-                hr = MS.Win32.Recognizer.UnsafeNativeMethods.ResetContext(_hContext);
-                if (HRESULT.Failed(hr))
+                result = Win32.Recognizer.UnsafeNativeMethods.ResetContext(_hContext);
+                if (result.Failed)
                 {
                     //finally block will clean up and throw
                     return recResults;
                 }
 
                 // Add strokes
-                hr = AddStrokes(_hContext, strokes);
-                if (HRESULT.Failed(hr))
+                result = AddStrokes(_hContext, strokes);
+                if (result.Failed)
                 {
                     //AddStrokes's finally block will clean up this finally block will throw
                     return recResults;
                 }
 
                 // recognize the ink
-                bool bIncremental;
-                hr = MS.Win32.Recognizer.UnsafeNativeMethods.Process(_hContext, out bIncremental);
+                result = Win32.Recognizer.UnsafeNativeMethods.Process(_hContext, out bool bIncremental);
 
-                if (HRESULT.Succeeded(hr))
+                if (result.Succeeded)
                 {
-                    if ( s_GetAlternateListExists )
+                    if (s_GetAlternateListExists)
                     {
                         recResults = InvokeGetAlternateList();
                     }
@@ -175,7 +176,7 @@ namespace MS.Internal.Ink.GestureRecognition
             finally
             {
                 // Check if we should report any error.
-                if ( HRESULT.Failed(hr) )
+                if (result.Failed)
                 {
                     //don't throw a com exception here, we don't need to pass out any details
                     throw new InvalidOperationException(SR.UnspecifiedGestureException);
@@ -324,13 +325,13 @@ namespace MS.Internal.Ink.GestureRecognition
  
             if (path != null)
             {
-                IntPtr hModule = MS.Win32.UnsafeNativeMethods.LoadLibrary(path);
+                IntPtr hModule = UnsafeNativeMethods.LoadLibrary(path);
 
                 // Check whether GetAlternateList exists in the loaded Dll.
                 s_GetAlternateListExists = false;
                 if ( hModule != IntPtr.Zero )
                 {
-                    s_GetAlternateListExists = MS.Win32.UnsafeNativeMethods.GetProcAddressNoThrow(
+                    s_GetAlternateListExists = UnsafeNativeMethods.GetProcAddressNoThrow(
                         new HandleRef(null, hModule), "GetAlternateList") != IntPtr.Zero ?
                         true : false;
                 }
@@ -344,7 +345,7 @@ namespace MS.Internal.Ink.GestureRecognition
         /// Set the enabled gestures.
         /// This method is called from the internal SetEnabledGestures method.
         /// </summary>
-        private int SetEnabledGestures(MS.Win32.Recognizer.ContextSafeHandle recContext, ApplicationGesture[] enabledGestures)
+        private HRESULT SetEnabledGestures(MS.Win32.Recognizer.ContextSafeHandle recContext, ApplicationGesture[] enabledGestures)
         {
             Debug.Assert(recContext != null && !recContext.IsInvalid);
 
@@ -383,19 +384,17 @@ namespace MS.Internal.Ink.GestureRecognition
                     charRanges[i].wcLow = (ushort)( enabledGestures[i] );
                 }
             }
-            int hr = MS.Win32.Recognizer.UnsafeNativeMethods.SetEnabledUnicodeRanges(recContext, cRanges, charRanges);
-            return hr;
+
+            return Win32.Recognizer.UnsafeNativeMethods.SetEnabledUnicodeRanges(recContext, cRanges, charRanges);
         }
 
         /// <summary>
         /// Add the strokes to the recoContext.
         /// The method is called from the internal Recognize method.
         /// </summary>
-        private int AddStrokes(MS.Win32.Recognizer.ContextSafeHandle recContext, StrokeCollection strokes)
+        private HRESULT AddStrokes(MS.Win32.Recognizer.ContextSafeHandle recContext, StrokeCollection strokes)
         {
             Debug.Assert(recContext != null && !recContext.IsInvalid);
-
-            int hr;
 
             foreach ( Stroke stroke in strokes )
             {
@@ -409,14 +408,21 @@ namespace MS.Internal.Ink.GestureRecognition
                     GetPacketData(stroke, out packetDescription, out countOfBytes, out packets, out xForm);
                     if (packets == IntPtr.Zero)
                     {
-                        return -2147483640; //E_FAIL - 0x80000008.  We never raise this in an exception
+                        // This isn't actually E_FAIL, it's the Macintosh version of it from the headers. Keeping for compat.
+                        return (HRESULT)(-2147483640); // E_FAIL - 0x80000008.  We never raise this in an exception
                     }
 
-                    hr = MS.Win32.Recognizer.UnsafeNativeMethods.AddStroke(recContext, ref packetDescription, (uint)countOfBytes, packets, xForm);
-                    if ( HRESULT.Failed(hr) )
+                    HRESULT result = Win32.Recognizer.UnsafeNativeMethods.AddStroke(
+                        recContext,
+                        ref packetDescription,
+                        (uint)countOfBytes,
+                        packets,
+                        xForm);
+
+                    if (result.Failed)
                     {
                         // Return from here. The finally block will free the memory and report the error properly.
-                        return hr;
+                        return result;
                     }
                 }
                 finally
@@ -426,7 +432,7 @@ namespace MS.Internal.Ink.GestureRecognition
                 }
             }
 
-            return MS.Win32.Recognizer.UnsafeNativeMethods.EndInkInput(recContext);
+            return Win32.Recognizer.UnsafeNativeMethods.EndInkInput(recContext);
 }
 
         /// <summary>
@@ -585,7 +591,6 @@ namespace MS.Internal.Ink.GestureRecognition
         private GestureRecognitionResult[] InvokeGetAlternateList()
         {
             GestureRecognitionResult[] recResults = Array.Empty<GestureRecognitionResult>();
-            int hr = 0;
 
             MS.Win32.Recognizer.RECO_RANGE recoRange;
             recoRange.iwcBegin = 0;
@@ -595,9 +600,14 @@ namespace MS.Internal.Ink.GestureRecognition
 
             try
             {
-                hr = MS.Win32.Recognizer.UnsafeNativeMethods.GetAlternateList(_hContext, ref recoRange, ref countOfAlternates, pRecoAlternates, MS.Win32.Recognizer.ALT_BREAKS.ALT_BREAKS_SAME);
+                HRESULT result = Win32.Recognizer.UnsafeNativeMethods.GetAlternateList(
+                    _hContext,
+                    ref recoRange,
+                    ref countOfAlternates,
+                    pRecoAlternates,
+                    Win32.Recognizer.ALT_BREAKS.ALT_BREAKS_SAME);
 
-                if ( HRESULT.Succeeded(hr) && countOfAlternates != 0 )
+                if (result.Succeeded && countOfAlternates != 0)
                 {
                     List<GestureRecognitionResult> resultList = new List<GestureRecognitionResult>();
 
@@ -607,8 +617,8 @@ namespace MS.Internal.Ink.GestureRecognition
                         StringBuilder recoString = new StringBuilder(1);
                         RecognitionConfidence confidenceLevel;
 
-                        if ( HRESULT.Failed(MS.Win32.Recognizer.UnsafeNativeMethods.GetString(pRecoAlternates[i], out recoRange, ref size, recoString))
-                            || HRESULT.Failed(MS.Win32.Recognizer.UnsafeNativeMethods.GetConfidenceLevel(pRecoAlternates[i], out recoRange, out confidenceLevel)) )
+                        if (Win32.Recognizer.UnsafeNativeMethods.GetString(pRecoAlternates[i], out recoRange, ref size, recoString).Failed
+                            || Win32.Recognizer.UnsafeNativeMethods.GetConfidenceLevel(pRecoAlternates[i], out recoRange, out confidenceLevel).Failed)
                         {
                             // Fail to retrieve the reco result, skip this one
                             continue;
@@ -650,15 +660,12 @@ namespace MS.Internal.Ink.GestureRecognition
         {
             GestureRecognitionResult[] recResults = Array.Empty<GestureRecognitionResult>();
 
-//            int hr = 0;
             IntPtr ptr = IntPtr.Zero;
 
             // NOTICE-2005/07/11-WAYNEZEN,
             // There is no need to free the returned the structure. 
             // The memory will be released when ResetContext, which is invoked in the callee - Recognize, is called.
-            if ( HRESULT.Succeeded(
-                MS.Win32.Recognizer.UnsafeNativeMethods.GetLatticePtr(
-                _hContext, ref ptr)) )
+            if (Win32.Recognizer.UnsafeNativeMethods.GetLatticePtr(_hContext, ref ptr).Succeeded)
             {
                 unsafe
                 {
@@ -750,7 +757,7 @@ namespace MS.Internal.Ink.GestureRecognition
                     {
                         if (s_isSupported && s_hRec == null)
                         {
-                            if (HRESULT.Failed(MS.Win32.Recognizer.UnsafeNativeMethods.CreateRecognizer(ref s_Gesture, out s_hRec)))
+                            if (Win32.Recognizer.UnsafeNativeMethods.CreateRecognizer(ref s_Gesture, out s_hRec).Failed)
                             {
                                 s_hRec = null;
                             }

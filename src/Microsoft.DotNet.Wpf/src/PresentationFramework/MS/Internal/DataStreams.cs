@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -105,7 +105,7 @@ namespace MS.Internal.AppModel
                         // These properties should not be journaled.
                         // There should be a better way to do this, maybe FrameworkPropertyMetadata.CausesNavigation?
                         // Or maybe the Source property should be on INavigatorHost
-                        if (object.ReferenceEquals(localValueEntry.Property, Frame.SourceProperty))
+                        if (ReferenceEquals(localValueEntry.Property, Frame.SourceProperty))
                             continue;
 
                         if (subStreams == null)
@@ -132,10 +132,10 @@ namespace MS.Internal.AppModel
                                 Debug.Fail($"Unexpected exception writing binary formatted data. {ex.Message}");
                             }
 
-                            if(!success)
+                            if (!success)
                             {
                                 #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                                this.Formatter.Serialize(byteStream, currentValue);
+                                Formatter.Serialize(byteStream, currentValue);
                                 #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                             }
                             
@@ -171,7 +171,7 @@ namespace MS.Internal.AppModel
 
             if (persistId != 0)
             {
-                ArrayList subStreams = this.SaveSubStreams(element);
+                ArrayList subStreams = SaveSubStreams(element);
                 if (subStreams != null)
                 {
                     //
@@ -266,7 +266,7 @@ namespace MS.Internal.AppModel
                         {
                             dataStream.Position = 0;
                             #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                            newValue = this.Formatter.Deserialize(dataStream);
+                            newValue = Formatter.Deserialize(dataStream);
                             #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete 
                         }
                         
@@ -291,10 +291,10 @@ namespace MS.Internal.AppModel
             // Due to bug 1282529, PersistId can be null. Only XAML/BAML-loaded elements have it.
             if (persistId != 0)
             {
-                if (this.HasSubStreams(persistId))
+                if (HasSubStreams(persistId))
                 {
                     // Get the properties to restore
-                    ArrayList properties = this.GetSubStreams(persistId);
+                    ArrayList properties = GetSubStreams(persistId);
                     LoadSubStreams(element, properties);
                 }
 
@@ -366,14 +366,14 @@ namespace MS.Internal.AppModel
             {
                 _subStreams.Clear();
             }
-            WalkLogicalTree(root, new NodeOperation(this.SaveState));            
+            WalkLogicalTree(root, new NodeOperation(SaveState));            
         }
 
         internal void Load(Object root)
         {
-            if (this.HasAnyData)
+            if (HasAnyData)
             {
-                WalkLogicalTree(root, new NodeOperation(this.LoadState));               
+                WalkLogicalTree(root, new NodeOperation(LoadState));               
             }
         }
 

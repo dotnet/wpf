@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,6 +12,7 @@ using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using Accessibility;
 using MS.Win32;
+using Windows.Win32.Foundation;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
 
 namespace MS.Internal.AutomationProxies
@@ -481,7 +482,11 @@ namespace MS.Internal.AutomationProxies
             {
                 object obj = null;
 
-                if (UnsafeNativeMethods.AccessibleObjectFromWindow(WindowHandle, NativeMethods.OBJID_NATIVEOM, ref UnsafeNativeMethods.IID_IDispatch, ref obj) != NativeMethods.S_OK)
+                if (UnsafeNativeMethods.AccessibleObjectFromWindow(
+                    WindowHandle,
+                    NativeMethods.OBJID_NATIVEOM,
+                    ref UnsafeNativeMethods.IID_IDispatch,
+                    ref obj) != HRESULT.S_OK)
                 {
                     throw new System.NotImplementedException(SR.NoITextDocumentFromRichEdit);
                 }
@@ -532,7 +537,7 @@ namespace MS.Internal.AutomationProxies
                     {
                         sbText.Append(text.Substring(start, embeddedObjectOffset - start));
                         range.SetRange(embeddedObjectOffset, end);
-                        if (range.GetEmbeddedObject(out embeddedObject) == NativeMethods.S_OK && embeddedObject != null)
+                        if (range.GetEmbeddedObject(out embeddedObject) == HRESULT.S_OK && embeddedObject != null)
                         {
                             GetEmbeddedObjectText(embeddedObject, sbText);
                         }
@@ -580,7 +585,7 @@ namespace MS.Internal.AutomationProxies
             // Didn't get IAccessible (or didn't get a name from it).
             // Try the IDataObject technique instead...
 
-            int hr = NativeMethods.S_FALSE;
+            int hr = HRESULT.S_FALSE;
             IDataObject dataObject = null;
             IOleObject oleObject = embeddedObject as IOleObject;
             if (oleObject != null)
@@ -590,7 +595,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // If that didn't work, try the embeddedObject as a IDataObject instead...
-            if (hr != NativeMethods.S_OK)
+            if (hr != HRESULT.S_OK)
             {
                 dataObject = embeddedObject as IDataObject;
             }
@@ -618,7 +623,7 @@ namespace MS.Internal.AutomationProxies
 
             hr = dataObject.GetData(ref fetc, ref med);
 
-            if (hr != NativeMethods.S_OK || med.hGlobal == IntPtr.Zero)
+            if (hr != HRESULT.S_OK || med.hGlobal == IntPtr.Zero)
             {
                 // If we didn't get Unicode, try for ANSI instead...
                 fGotUnicode = false;
@@ -628,7 +633,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             // Did we get anything?
-            if (hr != NativeMethods.S_OK || med.hGlobal == IntPtr.Zero)
+            if (hr != HRESULT.S_OK || med.hGlobal == IntPtr.Zero)
             {
                 return;
             }

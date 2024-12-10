@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,6 +9,7 @@ using System.Windows.Media.Composition;
 using MS.Win32;
 
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media.Imaging
 {
@@ -235,7 +236,7 @@ namespace System.Windows.Media.Imaging
                     // update the local palette
                     if (_format.Palettized)
                     {
-                        _palette = Imaging.BitmapPalette.CreateFromBitmapSource(this);
+                        _palette = BitmapPalette.CreateFromBitmapSource(this);
                     }
                 }
 
@@ -440,7 +441,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         private double GetWidthInternal()
         {
-            return ImageSource.PixelsToDIPs(this.DpiX, this.PixelWidth);
+            return PixelsToDIPs(DpiX, PixelWidth);
         }
 
         /// <summary>
@@ -448,7 +449,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         private double GetHeightInternal()
         {
-            return ImageSource.PixelsToDIPs(this.DpiY, this.PixelHeight);
+            return PixelsToDIPs(DpiY, PixelHeight);
         }
 
         /// <summary>
@@ -581,10 +582,10 @@ namespace System.Windows.Media.Imaging
                 {
                     IntPtr wicSource = IntPtr.Zero;
                     Guid _uuidWicBitmapSource = MILGuidData.IID_IWICBitmapSource;
-                    HRESULT.Check(UnsafeNativeMethods.MILUnknown.QueryInterface(
+                    UnsafeNativeMethods.MILUnknown.QueryInterface(
                         value,
                         ref _uuidWicBitmapSource,
-                        out wicSource));
+                        out wicSource).ThrowOnFailureExtended();
 
                     _wicSource = new BitmapSourceSafeMILHandle(wicSource, value);
                     UpdateCachedSettings();
@@ -609,15 +610,15 @@ namespace System.Windows.Media.Imaging
             {
                 _format = PixelFormat.GetPixelFormat(_wicSource);
 
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapSource.GetSize(
+                UnsafeNativeMethods.WICBitmapSource.GetSize(
                     _wicSource,
                     out pw,
-                    out ph));
+                    out ph).ThrowOnFailureExtended();
 
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapSource.GetResolution(
+                UnsafeNativeMethods.WICBitmapSource.GetResolution(
                     _wicSource,
                     out _dpiX,
-                    out _dpiY));
+                    out _dpiY).ThrowOnFailureExtended();
             }
 
             _pixelWidth = (int)pw;
@@ -644,7 +645,7 @@ namespace System.Windows.Media.Imaging
 
             if (offset < 0)
             {
-                HRESULT.Check((int)WinCodecErrors.WINCODEC_ERR_VALUEOVERFLOW);
+                HRESULT.FromWin32(WIN32_ERROR.ERROR_ARITHMETIC_OVERFLOW).ThrowOnFailureExtended();
             }
 
             int elementSize = -1;
@@ -732,13 +733,12 @@ namespace System.Windows.Media.Imaging
 
             lock (_syncObject)
             {
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapSource.CopyPixels(
+                UnsafeNativeMethods.WICBitmapSource.CopyPixels(
                     WicSourceHandle,
                     ref sourceRect,
                     (uint)stride,
                     (uint)bufferSize,
-                    buffer
-                    ));
+                    buffer).ThrowOnFailureExtended();
             }
         }
 
@@ -814,13 +814,12 @@ namespace System.Windows.Media.Imaging
                             {
                                 fixed (void* pixelArray = &((byte[])buffer)[0])
                                 {
-                                    HRESULT.Check(UnsafeNativeMethods.WICBitmapSource.CopyPixels(
+                                    UnsafeNativeMethods.WICBitmapSource.CopyPixels(
                                         pIWICSource,
                                         ref sourceRect,
                                         (uint)bufferSize,
                                         (uint)bufferSize,
-                                        (IntPtr)pixelArray
-                                        ));
+                                        (IntPtr)pixelArray).ThrowOnFailureExtended();
                                 }
                             }
                         }
@@ -852,18 +851,18 @@ namespace System.Windows.Media.Imaging
                                     // necessary to avoid format conversion in the UCE during render and accompanying
                                     // sychronization locks with UI thread during bitmap access.
 
-                                    HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateFormatConverter(
+                                    UnsafeNativeMethods.WICImagingFactory.CreateFormatConverter(
                                         factoryMaker.ImagingFactoryPtr,
-                                        out pIWicConverter));
+                                        out pIWicConverter).ThrowOnFailureExtended();
 
-                                    HRESULT.Check(UnsafeNativeMethods.WICFormatConverter.Initialize(
+                                    UnsafeNativeMethods.WICFormatConverter.Initialize(
                                         pIWicConverter,
                                         pIWICSource,
                                         ref destFmt,
                                         DitherType.DitherTypeNone,
                                         new SafeMILHandle(IntPtr.Zero),
                                         0,
-                                        WICPaletteType.WICPaletteTypeCustom));
+                                        WICPaletteType.WICPaletteTypeCustom).ThrowOnFailureExtended();
 
                                     pIWICSource = pIWicConverter;
 
@@ -874,11 +873,11 @@ namespace System.Windows.Media.Imaging
 
                                 try
                                 {
-                                    HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromSource(
-                                            factoryMaker.ImagingFactoryPtr,
-                                            pIWICSource,
-                                            WICBitmapCreateCacheOptions.WICBitmapCacheOnLoad,
-                                            out pIWICSource));
+                                    UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromSource(
+                                        factoryMaker.ImagingFactoryPtr,
+                                        pIWICSource,
+                                        WICBitmapCreateCacheOptions.WICBitmapCacheOnLoad,
+                                        out pIWICSource).ThrowOnFailureExtended();
                                 }
                                 catch (Exception e)
                                 {
@@ -900,9 +899,9 @@ namespace System.Windows.Media.Imaging
                         }
                     }
 
-                    HRESULT.Check(UnsafeNativeMethods.MilCoreApi.CreateCWICWrapperBitmap(
-                            pIWICSource,
-                            out pCWICWrapperBitmap));
+                    UnsafeNativeMethods.MilCoreApi.CreateCWICWrapperBitmap(
+                        pIWICSource,
+                        out pCWICWrapperBitmap).ThrowOnFailureExtended();
 
                     UnsafeNativeMethods.MILUnknown.AddRef(pCWICWrapperBitmap);
                     _convertedDUCEPtr = new BitmapSourceSafeMILHandle(pCWICWrapperBitmap.DangerousGetHandle(), pIWICSource);
@@ -1100,7 +1099,7 @@ namespace System.Windows.Media.Imaging
                     if (!IsCompatibleFormat(originalFmt))
                         changeFormat = true;
 
-                    destFmt = BitmapSource.GetClosestDUCEFormat(originalFmt, palette);
+                    destFmt = GetClosestDUCEFormat(originalFmt, palette);
                 }
 
                 if (frame != null &&
@@ -1189,26 +1188,26 @@ namespace System.Windows.Media.Imaging
                 {
                     // start up a format converter
                     Guid fmtDestFmt = destFmt.Guid;
-                    HRESULT.Check(UnsafeNativeMethods.WICCodec.WICConvertBitmapSource(
-                            ref fmtDestFmt,
-                            wicSource,
-                            out wicConverter));
+                    UnsafeNativeMethods.WICCodec.WICConvertBitmapSource(
+                        ref fmtDestFmt,
+                        wicSource,
+                        out wicConverter).ThrowOnFailureExtended();
 
                     // dump the converted contents into a bitmap
-                    HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromSource(
-                            wicFactory,
-                            wicConverter,
-                            wicCache,
-                            out wicConvertedSource));
+                    UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromSource(
+                        wicFactory,
+                        wicConverter,
+                        wicCache,
+                        out wicConvertedSource).ThrowOnFailureExtended();
                 }
                 else
                 {
                     // Create the unmanaged resources
-                    HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromSource(
-                            wicFactory,
-                            wicSource,
-                            wicCache,
-                            out wicConvertedSource));
+                    UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromSource(
+                        wicFactory,
+                        wicSource,
+                        wicCache,
+                        out wicConvertedSource).ThrowOnFailureExtended();
                 }
 
                 wicConvertedSource.CalculateSize();
@@ -1734,13 +1733,13 @@ namespace System.Windows.Media.Imaging
                 {
                     puiWidth = bitmapSource.PixelWidth;
                     puiHeight = bitmapSource.PixelHeight;
-                    return NativeMethods.S_OK;
+                    return HRESULT.S_OK;
                 }
                 else
                 {
                     puiWidth = 0;
                     puiHeight = 0;
-                    return NativeMethods.E_FAIL;
+                    return HRESULT.E_FAIL;
                 }
             }
 
@@ -1750,12 +1749,12 @@ namespace System.Windows.Media.Imaging
                 if(_bitmapSource.TryGetTarget(out bitmapSource))
                 {
                     guidFormat = bitmapSource.Format.Guid;
-                    return NativeMethods.S_OK;
+                    return HRESULT.S_OK;
                 }
                 else
                 {
                     guidFormat = Guid.Empty;
-                    return NativeMethods.E_FAIL;
+                    return HRESULT.E_FAIL;
                 }
             }
 
@@ -1766,13 +1765,13 @@ namespace System.Windows.Media.Imaging
                 {
                     pDpiX = bitmapSource.DpiX;
                     pDpiY = bitmapSource.DpiY;
-                    return NativeMethods.S_OK;
+                    return HRESULT.S_OK;
                 }
                 else
                 {
                     pDpiX = 0.0;
                     pDpiY = 0.0;
-                    return NativeMethods.E_FAIL;
+                    return HRESULT.E_FAIL;
                 }
             }
 
@@ -1784,15 +1783,18 @@ namespace System.Windows.Media.Imaging
                     BitmapPalette palette = bitmapSource.Palette;
                     if ((palette == null) || (palette.InternalPalette == null) || palette.InternalPalette.IsInvalid)
                     {
-                        return (int)WinCodecErrors.WINCODEC_ERR_PALETTEUNAVAILABLE;
+                        return (int)HRESULT.WINCODEC_ERR_PALETTEUNAVAILABLE;
                     }
-                    
-                    HRESULT.Check(UnsafeNativeMethods.WICPalette.InitializeFromPalette(pIPalette, palette.InternalPalette));
-                    return NativeMethods.S_OK;
+
+                    UnsafeNativeMethods.WICPalette.InitializeFromPalette(
+                        pIPalette,
+                        palette.InternalPalette).ThrowOnFailureExtended();
+
+                    return HRESULT.S_OK;
                 }
                 else
                 {
-                    return NativeMethods.E_FAIL;
+                    return HRESULT.E_FAIL;
                 }
             }
 
@@ -1800,12 +1802,12 @@ namespace System.Windows.Media.Imaging
             {
                 if (cbStride < 0)
                 {
-                    return NativeMethods.E_INVALIDARG;
+                    return HRESULT.E_INVALIDARG;
                 }
 
                 if (pvPixels == IntPtr.Zero)
                 {
-                    return NativeMethods.E_INVALIDARG;
+                    return HRESULT.E_INVALIDARG;
                 }
 
                 BitmapSource bitmapSource;
@@ -1826,29 +1828,28 @@ namespace System.Windows.Media.Imaging
                     
                     rectHeight = rc.Height;
                     rectWidth = rc.Width;
-                    
+
                     if (rc.Width < 1 || rc.Height < 1)
                     {
-                        return NativeMethods.E_INVALIDARG;
+                        return HRESULT.E_INVALIDARG;
                     }
-                    
+
                     // assuming cbStride can't be negative, but that prc.Height can
                     PixelFormat pfStruct = bitmapSource.Format;
-                    
+
                     if (pfStruct.Format == PixelFormatEnum.Default ||
                         pfStruct.Format == PixelFormatEnum.Extended)
                     {
-                        return (int)(WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDPIXELFORMAT);
+                        return HRESULT.WINCODEC_ERR_UNSUPPORTEDPIXELFORMAT;
                     }
-                    
-                    
+
                     int rectRowSize = checked((rectWidth * pfStruct.InternalBitsPerPixel + 7) / 8);
-                    
+
                     if (cbPixels < checked((rectHeight - 1) * cbStride + rectRowSize))
                     {
-                        return (int)(WinCodecErrors.WINCODEC_ERR_INSUFFICIENTBUFFER);
+                        return HRESULT.WINCODEC_ERR_INSUFFICIENTBUFFER;
                     }
-                    
+
                     // Need to marshal
                     int arraySize = checked(rectHeight * rectRowSize);
                     byte[] managedArray = new byte[arraySize];
@@ -1865,12 +1866,12 @@ namespace System.Windows.Media.Imaging
                             rowPtr += cbStride;
                         }
                     }
-                    
-                    return NativeMethods.S_OK;
+
+                    return HRESULT.S_OK;
                 }
                 else
                 {
-                    return NativeMethods.E_FAIL;
+                    return HRESULT.E_FAIL;
                 }
             }
         }
@@ -1903,7 +1904,7 @@ namespace System.Windows.Media.Imaging
 
             public void OnSourceDownloadCompleted(object sender, EventArgs e)
             {
-                BitmapSource bitmapSource = this.Target as BitmapSource;
+                BitmapSource bitmapSource = Target as BitmapSource;
                 if (null != bitmapSource)
                 {
                     bitmapSource.OnSourceDownloadCompleted(bitmapSource, e);
@@ -1916,7 +1917,7 @@ namespace System.Windows.Media.Imaging
 
             public void OnSourceDownloadFailed(object sender, ExceptionEventArgs e)
             {
-                BitmapSource bitmapSource = this.Target as BitmapSource;
+                BitmapSource bitmapSource = Target as BitmapSource;
                 if (null != bitmapSource)
                 {
                     bitmapSource.OnSourceDownloadFailed(bitmapSource, e);
@@ -1929,7 +1930,7 @@ namespace System.Windows.Media.Imaging
 
             public void OnSourceDownloadProgress(object sender, DownloadProgressEventArgs e)
             {
-                BitmapSource bitmapSource = this.Target as BitmapSource;
+                BitmapSource bitmapSource = Target as BitmapSource;
                 if (null != bitmapSource)
                 {
                     bitmapSource.OnSourceDownloadProgress(bitmapSource, e);

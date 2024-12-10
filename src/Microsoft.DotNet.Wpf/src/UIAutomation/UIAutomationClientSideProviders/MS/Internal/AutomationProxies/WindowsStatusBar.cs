@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Windows Status Proxy
 
@@ -10,6 +9,7 @@ using System.Windows.Automation.Provider;
 using System.Windows;
 using System.Globalization;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.AutomationProxies
 {
@@ -562,7 +562,7 @@ namespace MS.Internal.AutomationProxies
                 else
                 {
                     Accessible acc = null;
-                    if (Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) != NativeMethods.S_OK || acc == null)
+                    if (Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) != HRESULT.S_OK || acc == null)
                     {
                         return Rect.Empty;
                     }

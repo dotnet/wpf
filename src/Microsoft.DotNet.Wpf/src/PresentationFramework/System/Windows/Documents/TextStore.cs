@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,6 +20,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 using MS.Internal.Documents;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Documents
 {
@@ -328,9 +329,9 @@ namespace System.Windows.Documents
 
             if (count > 0 && (index == 0 || index == UnsafeNativeMethods.TS_DEFAULT_SELECTION))
             {
-                selection[0].start = this.TextSelection.Start.CharOffset;
-                selection[0].end = this.TextSelection.End.CharOffset;
-                selection[0].style.ase = (this.TextSelection.MovingPosition.CompareTo(this.TextSelection.Start) == 0) ? UnsafeNativeMethods.TsActiveSelEnd.TS_AE_START : UnsafeNativeMethods.TsActiveSelEnd.TS_AE_END;
+                selection[0].start = TextSelection.Start.CharOffset;
+                selection[0].end = TextSelection.End.CharOffset;
+                selection[0].style.ase = (TextSelection.MovingPosition.CompareTo(TextSelection.Start) == 0) ? UnsafeNativeMethods.TsActiveSelEnd.TS_AE_START : UnsafeNativeMethods.TsActiveSelEnd.TS_AE_END;
                 selection[0].style.interimChar = _interimSelection;
                 fetched = 1;
 
@@ -364,15 +365,15 @@ namespace System.Windows.Documents
                 {
                     // Setting a caret.  Make sure we set Backward direction to
                     // keep the caret tight with the composition text.
-                    this.TextSelection.SetCaretToPosition(start, LogicalDirection.Backward, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                    TextSelection.SetCaretToPosition(start, LogicalDirection.Backward, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
                 }
                 else if (selection[0].style.ase == UnsafeNativeMethods.TsActiveSelEnd.TS_AE_START)
                 {
-                    this.TextSelection.Select(end, start);
+                    TextSelection.Select(end, start);
                 }
                 else
                 {
-                    this.TextSelection.Select(start, end);
+                    TextSelection.Select(start, end);
                 }
 
                 // Update the selection style of InterimSelection.
@@ -382,7 +383,7 @@ namespace System.Windows.Documents
                 if (previousInterimSelection != _interimSelection)
                 {
                     // Call TextSelection to start/stop the block caret.
-                    this.TextSelection.OnInterimSelectionChanged(_interimSelection);
+                    TextSelection.OnInterimSelectionChanged(_interimSelection);
                 }
             }
         }
@@ -470,7 +471,7 @@ namespace System.Windows.Documents
         // See msdn's ITextStoreACP documentation for a full description.
         public void SetText(UnsafeNativeMethods.SetTextFlags flags, int startIndex, int endIndex, char[] text, int cch, out UnsafeNativeMethods.TS_TEXTCHANGE change)
         {
-            if (this.IsReadOnly)
+            if (IsReadOnly)
             {
                 throw new COMException(SR.TextStore_TS_E_READONLY, UnsafeNativeMethods.TS_E_READONLY);
             }
@@ -493,7 +494,7 @@ namespace System.Windows.Documents
 
             if (start == null)
             {
-                throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
+                throw new COMException(SR.TextStore_CompositionRejected, HRESULT.E_FAIL);
             }
 
             if (start.CompareTo(end) > 0)
@@ -504,7 +505,7 @@ namespace System.Windows.Documents
             string filteredText = FilterCompositionString(new string(text), start.GetOffsetToPosition(end)); // does NOT filter MaxLength.
             if (filteredText == null)
             {
-                throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
+                throw new COMException(SR.TextStore_CompositionRejected, HRESULT.E_FAIL);
             }
 
             // Openes a composition undo unit for the composition undo.
@@ -515,7 +516,7 @@ namespace System.Windows.Documents
             {
                 ITextRange range = new TextRange(start, end, true /* ignoreTextUnitBoundaries */);
 
-                this.TextEditor.SetText(range, filteredText, InputLanguageManager.Current.CurrentInputLanguage);
+                TextEditor.SetText(range, filteredText, InputLanguageManager.Current.CurrentInputLanguage);
 
                 change.start = startIndex;
                 change.oldEnd = endIndex;
@@ -624,7 +625,7 @@ namespace System.Windows.Documents
             data = obj as IComDataObject;
             if (data == null)
             {
-                throw new COMException(SR.TextStore_BadObject, NativeMethods.E_INVALIDARG);
+                throw new COMException(SR.TextStore_BadObject, HRESULT.E_INVALIDARG);
             }
 
             container = (TextContainer)this.TextContainer;
@@ -671,7 +672,7 @@ namespace System.Windows.Documents
             // We need to refactor the code to change that.
             //
 
-            ITextRange range = new TextRange(this.TextSelection.AnchorPosition, this.TextSelection.MovingPosition);
+            ITextRange range = new TextRange(TextSelection.AnchorPosition, TextSelection.MovingPosition);
             range.ApplyTypingHeuristics(false /* overType */);
 
             ITextPointer start;
@@ -705,13 +706,13 @@ namespace System.Windows.Documents
                     string filteredText = FilterCompositionString(new string(text), range.Start.GetOffsetToPosition(range.End)); // does NOT filter MaxLength.
                     if (filteredText == null)
                     {
-                        throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
+                        throw new COMException(SR.TextStore_CompositionRejected, HRESULT.E_FAIL);
                     }
 
                     // We still need to call ApplyTypingHeuristics, even though
                     // we already did the work above, because it might need
                     // to spring load formatting.
-                    this.TextSelection.ApplyTypingHeuristics(false /* overType */);
+                    TextSelection.ApplyTypingHeuristics(false /* overType */);
 
                     //Invariant.Assert(this.TextSelection.Start.CompareTo(range.Start) == 0 && this.TextSelection.End.CompareTo(range.End) == 0);
                     // We cannot make this Assertion because TextRange will normalize
@@ -739,10 +740,10 @@ namespace System.Windows.Documents
                     // Avoid calling Select when the selection doesn't need a
                     // final reposition to preserve any spring loaded formatting
                     // from ApplyTypingHeuristics.
-                    if (start.CompareTo(this.TextSelection.Start) != 0 ||
-                        end.CompareTo(this.TextSelection.End) != 0)
+                    if (start.CompareTo(TextSelection.Start) != 0 ||
+                        end.CompareTo(TextSelection.End) != 0)
                     {
-                        this.TextSelection.Select(start, end);
+                        TextSelection.Select(start, end);
                     }
 
                     if (!_isComposing && _previousCompositionStartOffset == -1)
@@ -753,11 +754,11 @@ namespace System.Windows.Documents
                         // to remember where the composition started, from the
                         // point of view of the application listening to events
                         // we will raise in the future.
-                        _previousCompositionStartOffset = this.TextSelection.Start.Offset;
-                        _previousCompositionEndOffset = this.TextSelection.End.Offset;
+                        _previousCompositionStartOffset = TextSelection.Start.Offset;
+                        _previousCompositionEndOffset = TextSelection.End.Offset;
                     }
 
-                    this.TextEditor.SetSelectedText(filteredText, InputLanguageManager.Current.CurrentInputLanguage);
+                    TextEditor.SetSelectedText(filteredText, InputLanguageManager.Current.CurrentInputLanguage);
 
                     change.start = startNavigator.CharOffset;
                     change.newEnd = endNavigator.CharOffset;
@@ -821,7 +822,7 @@ namespace System.Windows.Documents
             data = obj as IComDataObject;
             if (data == null)
             {
-                throw new COMException(SR.TextStore_BadObject, NativeMethods.E_INVALIDARG);
+                throw new COMException(SR.TextStore_BadObject, HRESULT.E_INVALIDARG);
             }
 
             // Do the insert.
@@ -852,9 +853,9 @@ namespace System.Windows.Documents
                               count, filterAttributes);
 
             if (_preparedattributes.Count == 0)
-                return NativeMethods.S_FALSE;
+                return HRESULT.S_FALSE;
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
@@ -872,9 +873,9 @@ namespace System.Windows.Documents
                               count, filterAttributes);
 
             if (_preparedattributes.Count == 0)
-                return NativeMethods.S_FALSE;
+                return HRESULT.S_FALSE;
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
 
@@ -915,7 +916,7 @@ namespace System.Windows.Documents
         // See msdn's ITextStoreACP documentation for a full description.
         public void GetEnd(out int end)
         {
-            end = this.TextContainer.IMECharCount;
+            end = TextContainer.IMECharCount;
         }
 
         // See msdn's ITextStoreACP documentation for a full description.
@@ -1037,7 +1038,7 @@ namespace System.Windows.Documents
                                                 "text changed - bail");
                 }
 
-                _netCharCount = this.TextContainer.IMECharCount;
+                _netCharCount = TextContainer.IMECharCount;
                 throw new COMException(SR.TextStore_TS_E_NOLAYOUT, UnsafeNativeMethods.TS_E_NOLAYOUT);
             }
 
@@ -1050,7 +1051,7 @@ namespace System.Windows.Documents
             startPointer = CreatePointerAtCharOffset(startIndex, LogicalDirection.Forward);
             startPointer.MoveToInsertionPosition(LogicalDirection.Forward);
 
-            if (!this.TextView.IsValid)
+            if (!TextView.IsValid)
             {
                 // We can not get the visual. Return TS_R_NOLAYOUT to the caller.
                 throw new COMException(SR.TextStore_TS_E_NOLAYOUT, UnsafeNativeMethods.TS_E_NOLAYOUT);
@@ -1073,7 +1074,7 @@ namespace System.Windows.Documents
                 do
                 {
                     // Compute the textSegment bounds line by line.
-                    TextSegment lineRange = this.TextView.GetLineRange(navigator);
+                    TextSegment lineRange = TextView.GetLineRange(navigator);
                     ITextPointer end;
                     Rect lineRect;
 
@@ -1250,13 +1251,13 @@ namespace System.Windows.Documents
             }
             else
             {
-               if (this.TextEditor.AcceptsRichContent && start.CompareTo(end) != 0)
+               if (TextEditor.AcceptsRichContent && start.CompareTo(end) != 0)
                 {
                     TextElement startElement = (TextElement)((TextPointer)start).Parent;
                     TextElement endElement = (TextElement)((TextPointer)end).Parent;
                     TextElement commonAncestor = TextElement.GetCommonAncestor(startElement, endElement);
 
-                    int originalIMECharCount = this.TextContainer.IMECharCount;
+                    int originalIMECharCount = TextContainer.IMECharCount;
                     TextRange range = new TextRange(start, end);
                     string unmergedText = range.Text;
 
@@ -1266,7 +1267,7 @@ namespace System.Windows.Documents
                         // serialized text for the range can include extra characters for things like
                         // ListItems, which could cause us to increase the number of characters visible
                         // to the IME in the document.
-                        this.TextEditor.MarkCultureProperty(range, InputLanguageManager.Current.CurrentInputLanguage);
+                        TextEditor.MarkCultureProperty(range, InputLanguageManager.Current.CurrentInputLanguage);
                     }
                     else if (commonAncestor is Paragraph || commonAncestor is Span)
                     {
@@ -1282,19 +1283,19 @@ namespace System.Windows.Documents
                         // Force any merges now by replacing the content with a single
                         // Run, before we start caching character offsets.
 
-                        this.TextEditor.SetText(range, unmergedText, InputLanguageManager.Current.CurrentInputLanguage);
+                        TextEditor.SetText(range, unmergedText, InputLanguageManager.Current.CurrentInputLanguage);
                     }
                     // It is crucial that from the point of view of the IME the document
                     // has not changed.  That means the plain text of the content we just
                     // replaced must not have changed.
                     Invariant.Assert(range.Text == unmergedText);
-                    Invariant.Assert(originalIMECharCount == this.TextContainer.IMECharCount);
+                    Invariant.Assert(originalIMECharCount == TextContainer.IMECharCount);
                 }
             }
 
             // Add the composition message into the composition message list.
             // This composition message list will be handled all together after we release the lock.
-            this.CompositionEventList.Add(new CompositionEventRecord(CompositionStage.StartComposition, startOffsetBefore, endOffsetBefore, _lastCompositionText));
+            CompositionEventList.Add(new CompositionEventRecord(CompositionStage.StartComposition, startOffsetBefore, endOffsetBefore, _lastCompositionText));
 
             _previousCompositionStartOffset = start.Offset;
             _previousCompositionEndOffset = end.Offset;
@@ -1321,7 +1322,7 @@ namespace System.Windows.Documents
             }
 
             // If UiScope has a ToolTip and it is open, any keyboard/mouse activity should close the tooltip.
-            this.TextEditor.CloseToolTip();
+            TextEditor.CloseToolTip();
 
             Invariant.Assert(_isComposing);
             Invariant.Assert(_previousCompositionStartOffset != -1);
@@ -1348,7 +1349,7 @@ namespace System.Windows.Documents
             {
                 // Add internal shift record to process it later when we raise events in RaiseCompositionEvents.
                 CompositionEventRecord record = new CompositionEventRecord(CompositionStage.UpdateComposition, _previousCompositionStartOffset, _previousCompositionEndOffset, compositionText, true);
-                this.CompositionEventList.Add(record);
+                CompositionEventList.Add(record);
 
                 _previousCompositionStartOffset = newStart.Offset;
                 _previousCompositionEndOffset = newEnd.Offset;
@@ -1361,13 +1362,13 @@ namespace System.Windows.Documents
                 // This composition message list will be handled all together after release the lock.
 
                 CompositionEventRecord record = new CompositionEventRecord(CompositionStage.UpdateComposition, _previousCompositionStartOffset, _previousCompositionEndOffset, compositionText);
-                CompositionEventRecord previousRecord = (this.CompositionEventList.Count == 0) ? null : this.CompositionEventList[this.CompositionEventList.Count - 1];
+                CompositionEventRecord previousRecord = (CompositionEventList.Count == 0) ? null : CompositionEventList[CompositionEventList.Count - 1];
 
                 if (_lastCompositionText == null ||
                     !string.Equals(compositionText, _lastCompositionText, StringComparison.Ordinal))
                 {
                     // Add the new update event.
-                    this.CompositionEventList.Add(record);
+                    CompositionEventList.Add(record);
                 }
 
                 _previousCompositionStartOffset = oldStart.Offset;
@@ -1406,7 +1407,7 @@ namespace System.Windows.Documents
             {
                 // Add the composition message into the composition message list.
                 // This composition message list will be handled all together after release the lock.
-                this.CompositionEventList.Add(new CompositionEventRecord(CompositionStage.EndComposition, start.Offset, end.Offset, TextRangeBase.GetTextInternal(start, end)));
+                CompositionEventList.Add(new CompositionEventRecord(CompositionStage.EndComposition, start.Offset, end.Offset, TextRangeBase.GetTextInternal(start, end)));
 
                 // Composition event is completed, so new composition undo unit will be opened.
                 CompositionParentUndoUnit unit = PeekCompositionParentUndoUnit();
@@ -1509,10 +1510,10 @@ namespace System.Windows.Documents
                     string filteredText = FilterCompositionString(result, TextSelection.Start.GetOffsetToPosition(TextSelection.End)); // does NOT filter MaxLength.
                     if (filteredText == null)
                     {
-                        throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
+                        throw new COMException(SR.TextStore_CompositionRejected, HRESULT.E_FAIL);
                     }
 
-                    this.TextEditor.SetText(TextSelection, filteredText, InputLanguageManager.Current.CurrentInputLanguage);
+                    TextEditor.SetText(TextSelection, filteredText, InputLanguageManager.Current.CurrentInputLanguage);
                     TextSelection.Select(TextSelection.End, TextSelection.End);
                 }
             }
@@ -1561,13 +1562,13 @@ namespace System.Windows.Documents
                 UiScope.PreviewMouseRightButtonUp += new MouseButtonEventHandler(OnMouseButtonEvent);
                 UiScope.PreviewMouseMove += new MouseEventHandler(OnMouseEvent);
             }
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         // existing mouse sink is unadviced.
         public int UnadviceMouseSink(int dwCookie)
         {
-            int ret = NativeMethods.E_INVALIDARG;
+            int ret = HRESULT.E_INVALIDARG;
             int i;
             for (i = 0; i < _mouseSinks.Count; i++)
             {
@@ -1595,7 +1596,7 @@ namespace System.Windows.Documents
                     {
                         mSink.Dispose();
                     }
-                    ret = NativeMethods.S_OK;
+                    ret = HRESULT.S_OK;
                     break;
                 }
             }
@@ -1616,14 +1617,14 @@ namespace System.Windows.Documents
         // Called by the TextEditor when the document should go live.
         internal void OnAttach()
         {
-            _netCharCount = this.TextContainer.IMECharCount;
+            _netCharCount = TextContainer.IMECharCount;
 
             // keep _textservicesHost because we may not be in Dispatcher when GC Finalizer calls OnDetach().
             _textservicesHost = TextServicesHost.Current;
 
             _textservicesHost.RegisterTextStore(this);
 
-            this.TextContainer.Change += new TextContainerChangeEventHandler(OnTextContainerChange);
+            TextContainer.Change += new TextContainerChangeEventHandler(OnTextContainerChange);
 
             _textservicesproperty = new TextServicesProperty(this);
 
@@ -1637,9 +1638,9 @@ namespace System.Windows.Documents
         internal void OnDetach(bool finalizer)
         {
             // TextEditor could be GCed before.
-            if (this.IsTextEditorValid)
+            if (IsTextEditorValid)
             {
-                this.TextContainer.Change -= new TextContainerChangeEventHandler(OnTextContainerChange);
+                TextContainer.Change -= new TextContainerChangeEventHandler(OnTextContainerChange);
             }
 
             // Relase the naitive resources. Unregister ThreadFocusSink and EditSink and release DocumentManager.
@@ -1888,7 +1889,7 @@ namespace System.Windows.Documents
         {
             if (_isComposing)
             {
-                FrameworkTextComposition.CompleteCurrentComposition(this.DocumentManager);
+                FrameworkTextComposition.CompleteCurrentComposition(DocumentManager);
             }
 
             _previousCompositionStartOffset = -1;
@@ -1903,14 +1904,14 @@ namespace System.Windows.Documents
         {
             ValidateCharOffset(charOffset);
 
-            ITextPointer pointer = this.TextContainer.CreatePointerAtCharOffset(charOffset, direction);
+            ITextPointer pointer = TextContainer.CreatePointerAtCharOffset(charOffset, direction);
 
             if (pointer == null)
             {
                 // A null pointer means that the ITextContainer has no character offsets.
                 // This happens in an empty TextBox, or in a mal-formed RichTextBox.
                 // In either case, use the selection start.
-                pointer = this.TextSelection.Start.CreatePointer(direction);
+                pointer = TextSelection.Start.CreatePointer(direction);
             }
 
             return pointer;
@@ -1957,7 +1958,7 @@ namespace System.Windows.Documents
                 // If we're here it means composition is being finalized
                 //
                 range = new TextRange(composition._ResultStart, composition._ResultEnd, true /* ignoreTextUnitBoundaries */);
-                text = this.TextEditor._FilterText(composition.Text, range);
+                text = TextEditor._FilterText(composition.Text, range);
 
                 if (text.Length != composition.Text.Length)
                 {
@@ -1967,7 +1968,7 @@ namespace System.Windows.Documents
             else
             {
                 range = new TextRange(composition._CompositionStart, composition._CompositionEnd, true /* ignoreTextUnitBoundaries */);
-                text = this.TextEditor._FilterText(composition.CompositionText, range, /*filterMaxLength:*/false);
+                text = TextEditor._FilterText(composition.CompositionText, range, /*filterMaxLength:*/false);
 
                 // A change in length should not happen other than for MaxLength filtering during finalization since we cover those
                 // cases and reject input if necessary when the IME edits the document in the first place.
@@ -1996,19 +1997,19 @@ namespace System.Windows.Documents
                 compositionUndoUnit.IsLastCompositionUnit = true;
             }
 
-            this.TextSelection.BeginChange();
+            TextSelection.BeginChange();
             try
             {
-                this.TextEditor.SetText(range, text, InputLanguageManager.Current.CurrentInputLanguage);
+                TextEditor.SetText(range, text, InputLanguageManager.Current.CurrentInputLanguage);
 
                 // shouldn't we record the selection position from the original event instead?
                 if (_interimSelection)
                 {
-                    this.TextSelection.Select(range.Start, range.End);
+                    TextSelection.Select(range.Start, range.End);
                 }
                 else
                 {
-                    this.TextSelection.SetCaretToPosition(range.End, LogicalDirection.Backward, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
+                    TextSelection.SetCaretToPosition(range.End, LogicalDirection.Backward, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
                 }
 
                 compositionUndoUnit.RecordRedoSelectionState(range.End, range.End);
@@ -2026,7 +2027,7 @@ namespace System.Windows.Documents
                 }
 
                 // PUBLIC EVENT:
-                this.TextSelection.EndChange();
+                TextSelection.EndChange();
 
                 if (IsTracing)
                 {
@@ -2074,24 +2075,24 @@ namespace System.Windows.Documents
         {
             get
             {
-                 if (this.TextEditor == null)
+                 if (TextEditor == null)
                      return null;
 
-                 if (this.TextEditor.TextView == null)
+                 if (TextEditor.TextView == null)
                      return null;
 
-                 return this.TextEditor.TextView.RenderScope;
+                 return TextEditor.TextView.RenderScope;
             }
         }
 
         internal FrameworkElement UiScope
         {
-            get { return this.TextEditor.UiScope; }
+            get { return TextEditor.UiScope; }
         }
 
         internal ITextContainer TextContainer
         {
-            get { return this.TextEditor.TextContainer; }
+            get { return TextEditor.TextContainer; }
         }
 
         internal ITextView TextView
@@ -2191,7 +2192,7 @@ namespace System.Windows.Documents
                 IMECompositionTracer.Trace(this, IMECompositionTraceOp.BOnTextContainerChange);
             }
 
-            Invariant.Assert(sender == this.TextContainer);
+            Invariant.Assert(sender == TextContainer);
 
 #if ENABLE_INK_EMBEDDING
             // Record the offset of the first symbol in the document
@@ -2312,12 +2313,12 @@ namespace System.Windows.Documents
 
             int hrSession;
 
-            TextEditor textEditor = this.TextEditor;
+            TextEditor textEditor = TextEditor;
 
             if (textEditor == null)
             {
                 // The app shutdown before we got an async callback.
-                hrSession = NativeMethods.E_FAIL;
+                hrSession = HRESULT.E_FAIL;
             }
             else
             {
@@ -2613,7 +2614,7 @@ namespace System.Windows.Documents
                 throw new COMException(SR.TextStore_TS_E_NOLAYOUT, UnsafeNativeMethods.TS_E_NOLAYOUT);
             }
 
-            view = this.TextView;
+            view = TextView;
         }
 
         // Transforms mil measure unit points to screen pixels.
@@ -2664,7 +2665,7 @@ namespace System.Windows.Documents
 
             if (stgmedium.unionmember == IntPtr.Zero)
             {
-                throw new COMException(SR.TextStore_BadObjectData, NativeMethods.E_INVALIDARG);
+                throw new COMException(SR.TextStore_BadObjectData, HRESULT.E_INVALIDARG);
             }
 
             IntPtr hbitmap = SystemDrawingHelper.ConvertMetafileToHBitmap(stgmedium.unionmember);
@@ -2917,7 +2918,7 @@ namespace System.Windows.Documents
 
             if (_isComposing)
             {
-                UnsafeNativeMethods.ITfCompositionView view = FrameworkTextComposition.GetCurrentCompositionView(this.DocumentManager);
+                UnsafeNativeMethods.ITfCompositionView view = FrameworkTextComposition.GetCurrentCompositionView(DocumentManager);
 
                 if (view != null)
                 {
@@ -3111,7 +3112,7 @@ namespace System.Windows.Documents
         // and add it to the undo stack.
         private CompositionParentUndoUnit OpenCompositionUndoUnit(ITextPointer compositionStart, ITextPointer compositionEnd)
         {
-            UndoManager undoManager = UndoManager.GetUndoManager(this.TextContainer.Parent);
+            UndoManager undoManager = UndoManager.GetUndoManager(TextContainer.Parent);
 
             if (undoManager == null || !undoManager.IsEnabled)
             {
@@ -3138,16 +3139,16 @@ namespace System.Windows.Documents
                 GetCompositionPositions(out compositionStart, out compositionEnd);
             }
 
-            if (compositionStart != null && compositionStart.CompareTo(this.TextSelection.Start) > 0)
+            if (compositionStart != null && compositionStart.CompareTo(TextSelection.Start) > 0)
             {
                 start = compositionStart;
             }
             else
             {
-                start = this.TextSelection.Start;
+                start = TextSelection.Start;
             }
 
-            CompositionParentUndoUnit unit = new CompositionParentUndoUnit(this.TextSelection, start, start, _nextUndoUnitIsFirstCompositionUnit);
+            CompositionParentUndoUnit unit = new CompositionParentUndoUnit(TextSelection, start, start, _nextUndoUnitIsFirstCompositionUnit);
             _nextUndoUnitIsFirstCompositionUnit = false;
 
             // Add the given composition undo unit to the undo manager and making it
@@ -3272,7 +3273,7 @@ namespace System.Windows.Documents
         // filter MaxLength.
         private string FilterCompositionString(string text, int charsToReplaceCount)
         {
-            string newText = this.TextEditor._FilterText(text, charsToReplaceCount, /*filterMaxLength:*/false);
+            string newText = TextEditor._FilterText(text, charsToReplaceCount, /*filterMaxLength:*/false);
 
             // if the length has been changed, there is no way to recover and we finalize the composition string.
             if (newText.Length != text.Length)
@@ -3330,7 +3331,7 @@ namespace System.Windows.Documents
         // in sync with the actual TextContainer.
         private void VerifyTextStoreConsistency()
         {
-            if (_netCharCount != this.TextContainer.IMECharCount)
+            if (_netCharCount != TextContainer.IMECharCount)
             {
                 Invariant.Assert(false, "TextContainer/TextStore have inconsistent char counts!");
             }
@@ -3341,9 +3342,9 @@ namespace System.Windows.Documents
         // too large for the document.
         private void ValidateCharOffset(int offset)
         {
-            if (offset < 0 || offset > this.TextContainer.IMECharCount)
+            if (offset < 0 || offset > TextContainer.IMECharCount)
             {
-                throw new ArgumentException(SR.Format(SR.TextStore_BadIMECharOffset, offset, this.TextContainer.IMECharCount));
+                throw new ArgumentException(SR.Format(SR.TextStore_BadIMECharOffset, offset, TextContainer.IMECharCount));
             }
         }
 
@@ -3437,7 +3438,7 @@ namespace System.Windows.Documents
             // If we have non-canonical format, give up.
             if (start == null || start.IsAtRowEnd || TextPointerBase.IsInBlockUIContainer(start))
             {
-                throw new COMException(SR.TextStore_CompositionRejected, NativeMethods.E_FAIL);
+                throw new COMException(SR.TextStore_CompositionRejected, HRESULT.E_FAIL);
             }
 
             startOut = start;
@@ -3507,7 +3508,7 @@ namespace System.Windows.Documents
         // then restore state forward incrementally with each public event.
         private void HandleCompositionEvents(int previousUndoCount)
         {
-            if (this.CompositionEventList.Count == 0 ||
+            if (CompositionEventList.Count == 0 ||
                 _compositionEventState != CompositionEventState.NotRaisingEvents)
             {
                 // No work to do.
@@ -3534,10 +3535,10 @@ namespace System.Windows.Documents
             try
             {
                 // Remember our original selection positions.
-                int imeSelectionAnchorOffset = this.TextSelection.AnchorPosition.Offset;
-                int imeSelectionMovingOffset = this.TextSelection.MovingPosition.Offset;
+                int imeSelectionAnchorOffset = TextSelection.AnchorPosition.Offset;
+                int imeSelectionMovingOffset = TextSelection.MovingPosition.Offset;
 
-                UndoManager undoManager = UndoManager.GetUndoManager(this.TextContainer.Parent);
+                UndoManager undoManager = UndoManager.GetUndoManager(TextContainer.Parent);
 
                 //
                 // Undo the last set of IME changes, saving the current state
@@ -3568,7 +3569,7 @@ namespace System.Windows.Documents
             finally
             {
                 // Clear the composition message list
-                this.CompositionEventList.Clear();
+                CompositionEventList.Clear();
 
                 // Reset the rasising composition events flag
                 _compositionEventState = CompositionEventState.NotRaisingEvents;
@@ -3586,10 +3587,10 @@ namespace System.Windows.Documents
         // Open the text parent undo unit
         private TextParentUndoUnit OpenTextParentUndoUnit()
         {
-            UndoManager undoManager = UndoManager.GetUndoManager(this.TextContainer.Parent);
+            UndoManager undoManager = UndoManager.GetUndoManager(TextContainer.Parent);
 
             // Create the text parent undo unit
-            TextParentUndoUnit textParentUndoUnit = new TextParentUndoUnit(this.TextSelection, this.TextSelection.Start, this.TextSelection.Start);
+            TextParentUndoUnit textParentUndoUnit = new TextParentUndoUnit(TextSelection, TextSelection.Start, TextSelection.Start);
 
             // Open the text parent undo unit
             undoManager.Open(textParentUndoUnit);
@@ -3602,7 +3603,7 @@ namespace System.Windows.Documents
         {
             if (textParentUndoUnit != null)
             {
-                UndoManager undoManager = UndoManager.GetUndoManager(this.TextContainer.Parent);
+                UndoManager undoManager = UndoManager.GetUndoManager(TextContainer.Parent);
 
                 // Close the text parent undo unit
                 undoManager.Close(textParentUndoUnit, undoCloseAction);
@@ -3624,16 +3625,16 @@ namespace System.Windows.Documents
             appSelectionAnchorOffset = -1;
             appSelectionMovingOffset = -1;
 
-            UndoManager undoManager = UndoManager.GetUndoManager(this.TextContainer.Parent);
+            UndoManager undoManager = UndoManager.GetUndoManager(TextContainer.Parent);
 
             // Raise the each composition events
-            for (int i = 0; i < this.CompositionEventList.Count; i++)
+            for (int i = 0; i < CompositionEventList.Count; i++)
             {
-                CompositionEventRecord record = this.CompositionEventList[i];
-                FrameworkTextComposition composition = CreateComposition(this.TextEditor, this);
+                CompositionEventRecord record = CompositionEventList[i];
+                FrameworkTextComposition composition = CreateComposition(TextEditor, this);
 
-                ITextPointer start = this.TextContainer.CreatePointerAtOffset(record.StartOffsetBefore, LogicalDirection.Backward);
-                ITextPointer end = this.TextContainer.CreatePointerAtOffset(record.EndOffsetBefore, LogicalDirection.Forward);
+                ITextPointer start = TextContainer.CreatePointerAtOffset(record.StartOffsetBefore, LogicalDirection.Backward);
+                ITextPointer end = TextContainer.CreatePointerAtOffset(record.EndOffsetBefore, LogicalDirection.Forward);
 
                 bool handled = false;
                 _handledByTextStoreListener = false;
@@ -3774,8 +3775,8 @@ namespace System.Windows.Documents
                 if (_compositionModifiedByEventListener)
                 {
                     // Stop rasing the composition by application's text change or handled events
-                    appSelectionAnchorOffset = this.TextSelection.AnchorPosition.Offset;
-                    appSelectionMovingOffset = this.TextSelection.MovingPosition.Offset;
+                    appSelectionAnchorOffset = TextSelection.AnchorPosition.Offset;
+                    appSelectionMovingOffset = TextSelection.MovingPosition.Offset;
                     break;
                 }
 
@@ -3801,8 +3802,8 @@ namespace System.Windows.Documents
                 if (_compositionModifiedByEventListener)
                 {
                     // Stop rasing the composition by application's text change or handled events
-                    appSelectionAnchorOffset = this.TextSelection.AnchorPosition.Offset;
-                    appSelectionMovingOffset = this.TextSelection.MovingPosition.Offset;
+                    appSelectionAnchorOffset = TextSelection.AnchorPosition.Offset;
+                    appSelectionMovingOffset = TextSelection.MovingPosition.Offset;
                     break;
                 }
             }
@@ -3818,12 +3819,12 @@ namespace System.Windows.Documents
         {
             // We only filter text for plain text content
 
-            if (!this.TextEditor.AcceptsRichContent && this.TextEditor.MaxLength > 0)
+            if (!TextEditor.AcceptsRichContent && TextEditor.MaxLength > 0)
             {
-                ITextContainer textContainer = this.TextContainer;
+                ITextContainer textContainer = TextContainer;
                 int currentLength = textContainer.SymbolCount - charsToReplaceCount;
 
-                int extraCharsAllowed = Math.Max(0, this.TextEditor.MaxLength - currentLength);
+                int extraCharsAllowed = Math.Max(0, TextEditor.MaxLength - currentLength);
 
                 // Does textData length exceed allowed char length?
                 if (textData.Length > extraCharsAllowed)
@@ -3868,7 +3869,7 @@ namespace System.Windows.Documents
                 IMECompositionTracer.Trace(this, IMECompositionTraceOp.BSetFinalDocumentState);
             }
 
-            this.TextSelection.BeginChangeNoUndo();
+            TextSelection.BeginChangeNoUndo();
 
             // make sure this method decreases the IME reentrancy count,
             // even if an exception bypasses the normal codepath
@@ -3893,7 +3894,7 @@ namespace System.Windows.Documents
                 RedoQuietly(imeChangeCount);
 
                 // At this point the document should be exactly where the IME left it.
-                Invariant.Assert(_netCharCount == this.TextContainer.IMECharCount);
+                Invariant.Assert(_netCharCount == TextContainer.IMECharCount);
 
                 // we are done replaying IME changes, IME lock requests can be granted again
                 --_replayingIMEChangeReentrancyCount;
@@ -3947,14 +3948,14 @@ namespace System.Windows.Documents
                         RedoQuietly(appChangeCount);
 
                         // The IME should have received the app change events from preceeding RedoQuietly.
-                        Invariant.Assert(_netCharCount == this.TextContainer.IMECharCount);
+                        Invariant.Assert(_netCharCount == TextContainer.IMECharCount);
 
                         // we can't rely on Redo fixing up the selection.
                         // If the app only modified the selection appChangeCount == 0.
-                        ITextPointer anchor = this.TextContainer.CreatePointerAtOffset(appSelectionAnchorOffset, LogicalDirection.Forward);
-                        ITextPointer moving = this.TextContainer.CreatePointerAtOffset(appSelectionMovingOffset, LogicalDirection.Forward);
+                        ITextPointer anchor = TextContainer.CreatePointerAtOffset(appSelectionAnchorOffset, LogicalDirection.Forward);
+                        ITextPointer moving = TextContainer.CreatePointerAtOffset(appSelectionMovingOffset, LogicalDirection.Forward);
 
-                        this.TextSelection.Select(anchor, moving);
+                        TextSelection.Select(anchor, moving);
 
                         //
                         // We may have a filtering related composition undo unit on the top
@@ -3972,10 +3973,10 @@ namespace System.Windows.Documents
                 else
                 {
                     // Restore the selection.
-                    ITextPointer anchor = this.TextContainer.CreatePointerAtOffset(imeSelectionAnchorOffset, LogicalDirection.Backward);
-                    ITextPointer moving = this.TextContainer.CreatePointerAtOffset(imeSelectionMovingOffset, LogicalDirection.Backward);
+                    ITextPointer anchor = TextContainer.CreatePointerAtOffset(imeSelectionAnchorOffset, LogicalDirection.Backward);
+                    ITextPointer moving = TextContainer.CreatePointerAtOffset(imeSelectionMovingOffset, LogicalDirection.Backward);
 
-                    this.TextSelection.Select(anchor, moving);
+                    TextSelection.Select(anchor, moving);
 
                     // Since we just had a composition accepted, we need to merge all
                     // of its individual units now.
@@ -3985,7 +3986,7 @@ namespace System.Windows.Documents
             finally
             {
                 _replayingIMEChangeReentrancyCount += deltaReplayingIMEChangeReentrancyCount;
-                this.TextSelection.EndChange(false /* disableScroll */, true /* skipEvents */);
+                TextSelection.EndChange(false /* disableScroll */, true /* skipEvents */);
             }
 
             if (IsTracing)
@@ -4004,16 +4005,16 @@ namespace System.Windows.Documents
                     IMECompositionTracer.Trace(this, IMECompositionTraceOp.BUndoQuietly, count);
                 }
 
-                UndoManager undoManager = UndoManager.GetUndoManager(this.TextContainer.Parent);
+                UndoManager undoManager = UndoManager.GetUndoManager(TextContainer.Parent);
 
-                this.TextSelection.BeginChangeNoUndo();
+                TextSelection.BeginChangeNoUndo();
                 try
                 {
                     undoManager.Undo(count);
                 }
                 finally
                 {
-                    this.TextSelection.EndChange(false /* disableScroll */, true /* skipEvents */);
+                    TextSelection.EndChange(false /* disableScroll */, true /* skipEvents */);
                 }
 
                 if (IsTracing)
@@ -4033,16 +4034,16 @@ namespace System.Windows.Documents
                     IMECompositionTracer.Trace(this, IMECompositionTraceOp.BRedoQuietly, count);
                 }
 
-                UndoManager undoManager = UndoManager.GetUndoManager(this.TextContainer.Parent);
+                UndoManager undoManager = UndoManager.GetUndoManager(TextContainer.Parent);
 
-                this.TextSelection.BeginChangeNoUndo();
+                TextSelection.BeginChangeNoUndo();
                 try
                 {
                     undoManager.Redo(count);
                 }
                 finally
                 {
-                    this.TextSelection.EndChange(false /* disableScroll */, true /* skipEvents */);
+                    TextSelection.EndChange(false /* disableScroll */, true /* skipEvents */);
                 }
 
                 if (IsTracing)
@@ -4056,7 +4057,7 @@ namespace System.Windows.Documents
         // single undo units.
         private void MergeCompositionUndoUnits()
         {
-            UndoManager undoManager = UndoManager.GetUndoManager(this.TextContainer.Parent);
+            UndoManager undoManager = UndoManager.GetUndoManager(TextContainer.Parent);
 
             if (undoManager == null || !undoManager.IsEnabled)
             {
@@ -4102,7 +4103,7 @@ namespace System.Windows.Documents
         // if any.  Does not actually pop the unit.
         private CompositionParentUndoUnit PeekCompositionParentUndoUnit()
         {
-            UndoManager undoManager = UndoManager.GetUndoManager(this.TextContainer.Parent);
+            UndoManager undoManager = UndoManager.GetUndoManager(TextContainer.Parent);
 
             if (undoManager == null || !undoManager.IsEnabled)
                 return null;
@@ -4132,14 +4133,14 @@ namespace System.Windows.Documents
 
         private ITextSelection TextSelection
         {
-            get { return this.TextEditor.Selection; }
+            get { return TextEditor.Selection; }
         }
 
         private bool IsReadOnly
         {
             get
             {
-                return ((bool)this.UiScope.GetValue(TextEditor.IsReadOnlyProperty) || TextEditor.IsReadOnly);
+                return ((bool)UiScope.GetValue(TextEditor.IsReadOnlyProperty) || TextEditor.IsReadOnly);
             }
         }
 
@@ -4237,7 +4238,7 @@ namespace System.Windows.Documents
                 {
                     try
                     {
-                        return (TextEditor)this.Target;
+                        return (TextEditor)Target;
                     }
                     catch (InvalidOperationException)
                     {
@@ -4361,15 +4362,15 @@ namespace System.Windows.Documents
             {
                 object[] units = unit.CopyUnits();
 
-                Invariant.Assert(this.Locked); // If this fails, then the Locked = true below is invalid.
-                this.Locked = false;
+                Invariant.Assert(Locked); // If this fails, then the Locked = true below is invalid.
+                Locked = false;
 
                 for (int i = units.Length - 1; i >= 0; i--)
                 {
                     Add((IUndoUnit)units[i]);
                 }
 
-                this.Locked = true;
+                Locked = true;
 
                 MergeRedoSelectionState(unit);
 
@@ -4402,7 +4403,7 @@ namespace System.Windows.Documents
             // Returns a shallow copy of this units children.
             private object[] CopyUnits()
             {
-                return this.Units.ToArray();
+                return Units.ToArray();
             }
 
             private readonly bool _isFirstCompositionUnit;

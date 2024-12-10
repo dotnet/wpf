@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,6 +23,7 @@ using MS.Internal.Controls;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Interop;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 using CommonDependencyProperty = MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
 
@@ -264,9 +265,9 @@ namespace System.Windows.Controls.Primitives
                     // This causes Popup and its descedents to miss some change notifications.
                     // Thus a Popup that isnt connected to the tree in any way should be
                     // designated standalone and thus IsSelfInheritanceParent = true.
-                    if (!this.IsSelfInheritanceParent)
+                    if (!IsSelfInheritanceParent)
                     {
-                        this.SetIsSelfInheritanceParent();
+                        SetIsSelfInheritanceParent();
                     }
 
                     // Invalidate relevant properties for this subtree
@@ -1215,7 +1216,7 @@ namespace System.Windows.Controls.Primitives
                 //
                 // Note we do not reestablish capture if we are losing capture
                 // ourselves.
-                bool reestablishCapture = e.OriginalSource != root && Mouse.Captured == null && MS.Win32.SafeNativeMethods.GetCapture() == IntPtr.Zero;
+                bool reestablishCapture = e.OriginalSource != root && Mouse.Captured == null && SafeNativeMethods.GetCapture() == IntPtr.Zero;
 
                 if(reestablishCapture)
                 {
@@ -1287,7 +1288,7 @@ namespace System.Windows.Controls.Primitives
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value");
             }
 
-            this.Child = element;
+            Child = element;
         }
 
         ///<summary>
@@ -1324,7 +1325,7 @@ namespace System.Windows.Controls.Primitives
             // In the case that the Popup has a TemplatedParent we don't want
             // to block reverse inheritance because the Popup is considered
             // part of that tree.
-            return this.TemplatedParent == null;
+            return TemplatedParent == null;
         }
 
         /// <summary>
@@ -1395,7 +1396,7 @@ namespace System.Windows.Controls.Primitives
             {
                 get
                 {
-                    return Object.ReferenceEquals(Content, _popup.Child);
+                    return ReferenceEquals(Content, _popup.Child);
                 }
             }
 
@@ -2667,9 +2668,9 @@ namespace System.Windows.Controls.Primitives
                 SafeNativeMethods.GetMonitorInfo(new HandleRef(null, monitor), monitorInfo);
 
                 //If this is a pop up for a menu or ToolTip then respect the work area if opening in the work area.
-                if (((this.Child is MenuBase)
-                    || (this.Child is ToolTip)
-                    || (this.TemplatedParent is MenuItem))
+                if (((Child is MenuBase)
+                    || (Child is ToolTip)
+                    || (TemplatedParent is MenuItem))
                     && ((p.X >= monitorInfo.rcWork.left)
                         && (p.X <= monitorInfo.rcWork.right)
                         && (p.Y >= monitorInfo.rcWork.top)
@@ -2979,7 +2980,7 @@ namespace System.Windows.Controls.Primitives
             internal Point ClientToScreen(Visual rootVisual, Point clientPoint)
             {
                 // Get the HwndSource of the target element.
-                HwndSource targetWindow = PopupSecurityHelper.GetPresentationSource(rootVisual) as HwndSource;
+                HwndSource targetWindow = GetPresentationSource(rootVisual) as HwndSource;
 
                 if (targetWindow != null)
                 {
@@ -3023,7 +3024,7 @@ namespace System.Windows.Controls.Primitives
                     HwndSource hwndSource = null;
                     if (targetVisual != null)
                     {
-                        hwndSource = PopupSecurityHelper.GetPresentationSource(targetVisual) as HwndSource;
+                        hwndSource = GetPresentationSource(targetVisual) as HwndSource;
                     }
 
                     IInputElement relativeTarget = targetVisual as IInputElement;
@@ -3118,7 +3119,7 @@ namespace System.Windows.Controls.Primitives
                 HwndSource hwndSource = null;
                 if (targetVisual != null)
                 {
-                    hwndSource = PopupSecurityHelper.GetPresentationSource(targetVisual) as HwndSource;
+                    hwndSource = GetPresentationSource(targetVisual) as HwndSource;
                 }
 
                 if (hwndSource != null)
@@ -3151,7 +3152,7 @@ namespace System.Windows.Controls.Primitives
 
             internal static bool IsVisualPresentationSourceNull(Visual visual)
             {
-                return (PopupSecurityHelper.GetPresentationSource(visual) == null);
+                return (GetPresentationSource(visual) == null);
             }
 
             internal void ShowWindow()
@@ -3301,13 +3302,13 @@ namespace System.Windows.Controls.Primitives
                 }
 
                 // get visual's PresentationSource
-                HwndSource hwndSource = PopupSecurityHelper.GetPresentationSource(mainTreeVisual) as HwndSource;
+                HwndSource hwndSource = GetPresentationSource(mainTreeVisual) as HwndSource;
 
                 // get parent handle
                 IntPtr parent = IntPtr.Zero;
                 if (hwndSource != null)
                 {
-                    parent = PopupSecurityHelper.GetHandle(hwndSource);
+                    parent = GetHandle(hwndSource);
                 }
 
                 int classStyle = 0;
@@ -3438,13 +3439,11 @@ namespace System.Windows.Controls.Primitives
                         if (lResult != IntPtr.Zero)
                         {
                             IAccessible acc = null;
-                            int hr = NativeMethods.S_FALSE;
                             Guid iid = new Guid(MS.Internal.AppModel.IID.Accessible);
-                            hr = UnsafeNativeMethods.ObjectFromLresult(lResult, ref iid, IntPtr.Zero, ref acc);
-                            if (hr == NativeMethods.S_OK && acc != null)
+                            HRESULT result = UnsafeNativeMethods.ObjectFromLresult(lResult, ref iid, IntPtr.Zero, ref acc);
+                            if (result == HRESULT.S_OK && acc != null)
                             {
                                 // Release IAccessible(acc) object, just trusting the GC
-                                ;
                             }
                         }
                     }
@@ -3530,8 +3529,8 @@ namespace System.Windows.Controls.Primitives
                 var target = popup?.GetTarget() as UIElement;
                 if (target != null)
                 {
-                    var rootVisual = Popup.GetRootVisual(target);
-                    var targetToClientTransform = Popup.TransformToClient(target, rootVisual);
+                    var rootVisual = GetRootVisual(target);
+                    var targetToClientTransform = TransformToClient(target, rootVisual);
 
                     Point ptPlacementTargetOrigin;
 

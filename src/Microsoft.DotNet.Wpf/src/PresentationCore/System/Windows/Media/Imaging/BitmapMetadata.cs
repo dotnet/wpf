@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,7 +12,8 @@ using MS.Win32.PresentationCore;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Text;
-using MS.Internal.PresentationCore;                        // SecurityHelper
+using MS.Internal.PresentationCore;
+using Windows.Win32.Foundation;                        // SecurityHelper
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -34,27 +35,27 @@ namespace System.Windows.Media.Imaging
         // Guid: IID_IWICMetadataBlockReader
         [ComImport(),
          Guid("FEAA2A8D-B3F3-43E4-B25C-D1DE990A1AE1"),
-         InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
+         InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface IWICMetadataBlockReader
         {
             [PreserveSig]
-            int GetContainerFormat(
+            HRESULT GetContainerFormat(
                 out Guid containerFormat
             );
 
             [PreserveSig]
-            int GetCount(
+            HRESULT GetCount(
                 out UInt32 count
             );
 
             [PreserveSig]
-            int GetReaderByIndex(
+            HRESULT GetReaderByIndex(
                 UInt32 index,
                 out IntPtr /* IWICMetadataReader */ ppIMetadataReader
             );
 
             [PreserveSig]
-            int GetEnumerator(
+            HRESULT GetEnumerator(
                 out IntPtr /* IEnumUnknown */ pIEnumMetadata
             );
         }
@@ -67,55 +68,55 @@ namespace System.Windows.Media.Imaging
 
         // Guid: IID_IWICMetadataBlockWriter
         [ComImport(),
-         Guid("08FB9676-B444-41E8-8DBE-6A53A542BFF1"),
-         InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
+             Guid("08FB9676-B444-41E8-8DBE-6A53A542BFF1"),
+             InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface IWICMetadataBlockWriter : IWICMetadataBlockReader
         {
             [PreserveSig]
-            new int GetContainerFormat(
+            new HRESULT GetContainerFormat(
                 out Guid containerFormat
             );
 
             [PreserveSig]
-            new int GetCount(
+            new HRESULT GetCount(
                 out UInt32 count
             );
 
             [PreserveSig]
-            new int GetReaderByIndex(
+            new HRESULT GetReaderByIndex(
                 UInt32 index,
                 out IntPtr /* IWICMetadataReader */ ppIMetadataReader
             );
 
             [PreserveSig]
-            new int GetEnumerator(
+            new HRESULT GetEnumerator(
                 out IntPtr /* IEnumUnknown */ pIEnumMetadata
             );
 
             [PreserveSig]
-            int InitializeFromBlockReader(
+            HRESULT InitializeFromBlockReader(
                 IntPtr /* IWICMetadataBlockReader */ pIBlockReader
             );
 
             [PreserveSig]
-            int GetWriterByIndex(
+            HRESULT GetWriterByIndex(
                 UInt32 index,
                 out IntPtr /* IWICMetadataWriter */ ppIMetadataWriter
             );
 
             [PreserveSig]
-            int AddWriter(
+            HRESULT AddWriter(
                 IntPtr /* IWICMetadataWriter */ pIMetadataWriter
             );
 
             [PreserveSig]
-            int SetWriterByIndex(
+            HRESULT SetWriterByIndex(
                 UInt32 index,
                 IntPtr /* IWICMetadataWriter */ pIMetadataWriter
             );
 
             [PreserveSig]
-            int RemoveWriterByIndex(
+            HRESULT RemoveWriterByIndex(
                 UInt32 index
             );
         }
@@ -158,12 +159,11 @@ namespace System.Windows.Media.Imaging
 
                             try
                             {
-                                HRESULT.Check(UnsafeNativeMethods.WICComponentFactory.CreateMetadataWriterFromReader(
+                                UnsafeNativeMethods.WICComponentFactory.CreateMetadataWriterFromReader(
                                     factoryMaker.ImagingFactoryPtr,
                                     metadataHandle,
                                     ref guidVendor,
-                                    out pIMetadataWriter
-                                ));
+                                    out pIMetadataWriter).ThrowOnFailureExtended();
 
                                 SafeMILHandle metadataWriter = new SafeMILHandle(pIMetadataWriter);
                                 pIMetadataWriter = IntPtr.Zero;
@@ -183,29 +183,23 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            public int GetContainerFormat(
-                out Guid containerFormat
-            )
+            public HRESULT GetContainerFormat(out Guid containerFormat)
             {
                 containerFormat = _containerFormat;
-
-                return MS.Win32.NativeMethods.S_OK;
+                return HRESULT.S_OK;
             }
 
-            public int GetCount(
-                out UInt32 count
-            )
+            public HRESULT GetCount(out uint count)
             {
-                count = (UInt32) _metadataBlocks.Count;
-
-                return MS.Win32.NativeMethods.S_OK;
+                count = (uint)_metadataBlocks.Count;
+                return HRESULT.S_OK;
             }
 
             /// <summary>
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            public int GetReaderByIndex(
+            public HRESULT GetReaderByIndex(
                 UInt32 index,
                 out IntPtr /* IWICMetadataReader */ pIMetadataReader
             )
@@ -213,7 +207,7 @@ namespace System.Windows.Media.Imaging
                 if (index >= _metadataBlocks.Count)
                 {
                     pIMetadataReader = IntPtr.Zero;
-                    return (int) WinCodecErrors.WINCODEC_ERR_PROPERTYNOTFOUND;
+                    return HRESULT.WINCODEC_ERR_PROPERTYNOTFOUND;
                 }
 
                 SafeMILHandle metadataReader = (SafeMILHandle) _metadataBlocks[(int)index];
@@ -229,7 +223,7 @@ namespace System.Windows.Media.Imaging
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            public int GetEnumerator(
+            public HRESULT GetEnumerator(
                 out IntPtr /* IEnumUnknown */ pIEnumMetadata
             )
             {
@@ -239,35 +233,30 @@ namespace System.Windows.Media.Imaging
 
                 pIEnumMetadata = Marshal.GetComInterfaceForObject(
                     blockEnumerator,
-                    typeof(System.Windows.Media.Imaging.BitmapMetadata.IEnumUnknown));
+                    typeof(IEnumUnknown));
 
-                return MS.Win32.NativeMethods.S_OK;
+                return HRESULT.S_OK;
             }
 
             /// <summary>
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            public int InitializeFromBlockReader(
+            public HRESULT InitializeFromBlockReader(
                 IntPtr /* IWICMetadataBlockReader */ pIBlockReader
             )
             {
                 Invariant.Assert(pIBlockReader != IntPtr.Zero);
 
-                int hr = MS.Win32.NativeMethods.S_OK;
-
-                UInt32 count = 0;
-
                 Guid guidVendor = new Guid(MILGuidData.GUID_VendorMicrosoft);
 
                 ArrayList metadataBlocks = new ArrayList();
 
-                hr = UnsafeNativeMethods.WICMetadataBlockReader.GetCount(
+                HRESULT result = UnsafeNativeMethods.WICMetadataBlockReader.GetCount(
                     pIBlockReader,
-                    out count
-                );
+                    out uint count);
 
-                if (HRESULT.Succeeded(hr))
+                if (result.Succeeded)
                 {
                     using (FactoryMaker factoryMaker = new FactoryMaker())
                     {
@@ -278,25 +267,23 @@ namespace System.Windows.Media.Imaging
 
                             try
                             {
-                                hr = UnsafeNativeMethods.WICMetadataBlockReader.GetReaderByIndex(
+                                result = UnsafeNativeMethods.WICMetadataBlockReader.GetReaderByIndex(
                                     pIBlockReader,
                                     i,
-                                    out pIMetadataReader
-                                );
+                                    out pIMetadataReader);
 
-                                if (HRESULT.Failed(hr))
+                                if (result.Failed)
                                 {
                                     break;
                                 }
 
-                                hr = UnsafeNativeMethods.WICComponentFactory.CreateMetadataWriterFromReader(
+                                result = UnsafeNativeMethods.WICComponentFactory.CreateMetadataWriterFromReader(
                                     factoryMaker.ImagingFactoryPtr,
                                     pIMetadataReader,
                                     ref guidVendor,
-                                    out pIMetadataWriter
-                                );
+                                    out pIMetadataWriter);
 
-                                if (HRESULT.Failed(hr))
+                                if (result.Failed)
                                 {
                                     break;
                                 }
@@ -315,8 +302,8 @@ namespace System.Windows.Media.Imaging
                                 }
                                 if (pIMetadataWriter != IntPtr.Zero)
                                 {
-                                    #pragma warning suppress 6031 // Return value ignored on purpose.
-                                    UnsafeNativeMethods.MILUnknown.Release(pIMetadataWriter);
+                                    // Return value ignored on purpose.
+                                    _ = UnsafeNativeMethods.MILUnknown.Release(pIMetadataWriter);
                                 }
                             }
                         }
@@ -325,14 +312,14 @@ namespace System.Windows.Media.Imaging
                     _metadataBlocks = metadataBlocks;
                 }
 
-                return hr;
+                return result;
             }
 
             /// <summary>
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            public int GetWriterByIndex(
+            public HRESULT GetWriterByIndex(
                 UInt32 index,
                 out IntPtr  /* IWICMetadataWriter */ pIMetadataWriter
             )
@@ -340,7 +327,7 @@ namespace System.Windows.Media.Imaging
                 if (index >= _metadataBlocks.Count)
                 {
                     pIMetadataWriter = IntPtr.Zero;
-                    return (int) WinCodecErrors.WINCODEC_ERR_PROPERTYNOTFOUND;
+                    return HRESULT.WINCODEC_ERR_PROPERTYNOTFOUND;
                 }
 
                 SafeMILHandle metadataWriter = (SafeMILHandle) _metadataBlocks[(int)index];
@@ -356,18 +343,18 @@ namespace System.Windows.Media.Imaging
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            public int AddWriter(
+            public HRESULT AddWriter(
                 IntPtr /* IWICMetadataWriter */ pIMetadataWriter
             )
             {
                 if (pIMetadataWriter == IntPtr.Zero)
                 {
-                    return (int) WinCodecErrors.WINCODEC_ERR_INVALIDPARAMETER;
+                    return HRESULT.FromWin32(WIN32_ERROR.ERROR_INVALID_PARAMETER);
                 }
 
                 if (_fixedSize && _metadataBlocks.Count>0)
                 {
-                    return (int) WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION;
+                    return HRESULT.WINCODEC_ERR_UNSUPPORTEDOPERATION;
                 }
 
                 SafeMILHandle metadataWriter = new SafeMILHandle(pIMetadataWriter);
@@ -376,31 +363,31 @@ namespace System.Windows.Media.Imaging
 
                 _metadataBlocks.Add(metadataWriter);
 
-                return MS.Win32.NativeMethods.S_OK;
+                return HRESULT.S_OK;
             }
 
             /// <summary>
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            public int SetWriterByIndex(
+            public HRESULT SetWriterByIndex(
                 UInt32 index,
                 IntPtr /* IWICMetadataWriter */ pIMetadataWriter
             )
             {
                 if (index >= _metadataBlocks.Count)
                 {
-                    return (int) WinCodecErrors.WINCODEC_ERR_PROPERTYNOTFOUND;
+                    return HRESULT.WINCODEC_ERR_PROPERTYNOTFOUND;
                 }
 
                 if (pIMetadataWriter == IntPtr.Zero)
                 {
-                    return (int) WinCodecErrors.WINCODEC_ERR_INVALIDPARAMETER;
+                    return HRESULT.FromWin32(WIN32_ERROR.ERROR_INVALID_PARAMETER);
                 }
 
                 if (_fixedSize)
                 {
-                    return (int) WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION;
+                    return HRESULT.WINCODEC_ERR_UNSUPPORTEDOPERATION;
                 }
 
                 SafeMILHandle metadataWriter = new SafeMILHandle(pIMetadataWriter);
@@ -409,26 +396,24 @@ namespace System.Windows.Media.Imaging
 
                 _metadataBlocks[(int)index] = metadataWriter;
 
-                return MS.Win32.NativeMethods.S_OK;
+                return HRESULT.S_OK;
             }
 
-            public int RemoveWriterByIndex(
-                UInt32 index
-            )
+            public HRESULT RemoveWriterByIndex(uint index)
             {
                 if (index >= _metadataBlocks.Count)
                 {
-                    return (int) WinCodecErrors.WINCODEC_ERR_PROPERTYNOTFOUND;
+                    return HRESULT.WINCODEC_ERR_PROPERTYNOTFOUND;
                 }
 
                 if (_fixedSize)
                 {
-                    return (int) WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION;
+                    return HRESULT.WINCODEC_ERR_UNSUPPORTEDOPERATION;
                 }
 
                 _metadataBlocks.Remove(index);
 
-                return MS.Win32.NativeMethods.S_OK;
+                return HRESULT.S_OK;
             }
 
             internal ArrayList MetadataBlocks
@@ -453,26 +438,26 @@ namespace System.Windows.Media.Imaging
         // Guid: IID_IEnumUnknown
         [ComImport(),
          Guid("00000100-0000-0000-C000-000000000046"),
-         InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
+         InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface IEnumUnknown
         {
             [PreserveSig]
-            int Next(
+            HRESULT Next(
                 UInt32 celt,
                 out IntPtr /* IUnknown ** */ rgelt,
                 ref UInt32 pceltFetched
             );
 
             [PreserveSig]
-            int Skip(
+            HRESULT Skip(
                 UInt32 celt
             );
 
             [PreserveSig]
-            int Reset();
+            HRESULT Reset();
 
             [PreserveSig]
-            int Clone(
+            HRESULT Clone(
                 ref IntPtr /* IEnumString ** */ ppEnum
             );
         }
@@ -501,7 +486,7 @@ namespace System.Windows.Media.Imaging
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            public int Next(
+            public HRESULT Next(
                 UInt32 celt,
                 out IntPtr /* IUnknown ** */ rgelt,
                 ref UInt32 pceltFetched
@@ -512,69 +497,65 @@ namespace System.Windows.Media.Imaging
                 {
                     rgelt = IntPtr.Zero;
                     pceltFetched = 0;
-                    return (int) WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION;
+                    return HRESULT.WINCODEC_ERR_UNSUPPORTEDOPERATION;
                 }
 
                 if (_index >= _metadataBlocks.Count || celt == 0)
                 {
                     rgelt = IntPtr.Zero;
                     pceltFetched = 0;
-                    return MS.Win32.NativeMethods.S_FALSE;
+                    return HRESULT.S_FALSE;
                 }
                 else
                 {
-                    SafeMILHandle metadataHandle = (SafeMILHandle) _metadataBlocks[(int)_index];
+                    SafeMILHandle metadataHandle = (SafeMILHandle)_metadataBlocks[(int)_index];
 
                     Guid wicMetadataReader = MILGuidData.IID_IWICMetadataReader;
-                    int hr = UnsafeNativeMethods.MILUnknown.QueryInterface(
+                    HRESULT result = UnsafeNativeMethods.MILUnknown.QueryInterface(
                         metadataHandle,
                         ref wicMetadataReader,
                         out rgelt);
 
-                    if (HRESULT.Succeeded(hr))
+                    if (result.Succeeded)
                     {
                         pceltFetched = 1;
                         _index++;
                     }
 
-                    return hr;
+                    return result;
                 }
             }
 
-            public int Skip(
-                UInt32 celt
-            )
+            public HRESULT Skip(uint celt)
             {
-                UInt32 newIndex = _index + celt;
+                uint newIndex = _index + celt;
 
                 if (newIndex > _metadataBlocks.Count)
                 {
-                    _index = (uint) _metadataBlocks.Count;
-                    return MS.Win32.NativeMethods.S_FALSE;
+                    _index = (uint)_metadataBlocks.Count;
+                    return HRESULT.S_FALSE;
                 }
                 else
                 {
                     _index += celt;
-                    return MS.Win32.NativeMethods.S_OK;
+                    return HRESULT.S_OK;
                 }
             }
 
-            public int Reset()
+            public HRESULT Reset()
             {
                 _index = 0;
-                return MS.Win32.NativeMethods.S_OK;
+                return HRESULT.S_OK;
             }
 
             /// <summary>
             /// This method is part of an interface that is only called by way of WindowsCodec.  It is not
             /// publicly exposed or accessible in any way.
             /// </summary>
-            public int Clone(
-                ref IntPtr /* IEnumUnknown ** */ ppEnum
-            )
+            public HRESULT Clone(ref IntPtr /* IEnumUnknown ** */ ppEnum)
             {
                 ppEnum = IntPtr.Zero;
-                return (int) WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION;
+                return HRESULT.WINCODEC_ERR_UNSUPPORTEDOPERATION;
             }
 
             private ArrayList _metadataBlocks;
@@ -583,9 +564,6 @@ namespace System.Windows.Media.Imaging
 
         #region Constructors
 
-        /// <summary>
-        ///
-        /// </summary>
         public BitmapMetadata(String containerFormat)
         {
             ArgumentNullException.ThrowIfNull(containerFormat);
@@ -593,10 +571,7 @@ namespace System.Windows.Media.Imaging
             Guid guid = new Guid();
 
             // Find the length of the string needed
-            HRESULT.Check(UnsafeNativeMethods.WICCodec.WICMapShortNameToGuid(
-                containerFormat,
-                ref guid
-                ));
+            UnsafeNativeMethods.WICCodec.WICMapShortNameToGuid(containerFormat, ref guid).ThrowOnFailureExtended();
 
             Init(guid, false, false);
         }
@@ -644,7 +619,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         private void Init(Guid containerFormat, bool readOnly, bool fixedSize)
         {
-            int hr = 0;
+            HRESULT result = HRESULT.S_OK;
             IntPtr /* IWICMetadataQueryWriter */ queryWriter = IntPtr.Zero;
 
             using (FactoryMaker factoryMaker = new FactoryMaker())
@@ -652,7 +627,7 @@ namespace System.Windows.Media.Imaging
                 Guid vendorMicrosoft = new Guid(MILGuidData.GUID_VendorMicrosoft);
 
                 // If it's a metadata format, create a Query Writer to wrap it.
-                hr = UnsafeNativeMethods.WICImagingFactory.CreateQueryWriter(
+                result = UnsafeNativeMethods.WICImagingFactory.CreateQueryWriter(
                     factoryMaker.ImagingFactoryPtr,
                     ref containerFormat,
                     ref vendorMicrosoft,
@@ -660,7 +635,7 @@ namespace System.Windows.Media.Imaging
                     );
             }
 
-            if (HRESULT.Succeeded(hr))
+            if (result.Succeeded)
             {
                 _readOnly = readOnly;
                 _fixedSize = fixedSize;
@@ -692,13 +667,12 @@ namespace System.Windows.Media.Imaging
 
                     blockWriter = Marshal.GetComInterfaceForObject(
                         _blockWriter,
-                        typeof(System.Windows.Media.Imaging.BitmapMetadata.IWICMetadataBlockWriter));
+                        typeof(IWICMetadataBlockWriter));
 
-                    HRESULT.Check(UnsafeNativeMethods.WICComponentFactory.CreateQueryWriterFromBlockWriter(
+                    UnsafeNativeMethods.WICComponentFactory.CreateQueryWriterFromBlockWriter(
                         factoryMaker.ImagingFactoryPtr,
                         blockWriter,
-                        ref queryWriter
-                    ));
+                        ref queryWriter).ThrowOnFailureExtended();
 
                     _readOnly = readOnly;
                     _fixedSize = fixedSize;
@@ -741,13 +715,12 @@ namespace System.Windows.Media.Imaging
 
                     blockWriter = Marshal.GetComInterfaceForObject(
                         _blockWriter,
-                        typeof(System.Windows.Media.Imaging.BitmapMetadata.IWICMetadataBlockWriter));
+                        typeof(IWICMetadataBlockWriter));
 
-                    HRESULT.Check(UnsafeNativeMethods.WICComponentFactory.CreateQueryWriterFromBlockWriter(
+                    UnsafeNativeMethods.WICComponentFactory.CreateQueryWriterFromBlockWriter(
                         factoryMaker.ImagingFactoryPtr,
                         blockWriter,
-                        ref queryWriter
-                    ));
+                        ref queryWriter).ThrowOnFailureExtended();
 
                     _readOnly = false;
                     _fixedSize = false;
@@ -778,7 +751,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         private void InitializeFromMetadataWriter(SafeMILHandle metadataHandle, object syncObject)
         {
-            int hr;
+            HRESULT result;
             IntPtr queryWriter = IntPtr.Zero;
 
             Guid guidVendor = new Guid(MILGuidData.GUID_VendorMicrosoft);
@@ -790,7 +763,7 @@ namespace System.Windows.Media.Imaging
                 {
                     lock (syncObject)
                     {
-                        hr = UnsafeNativeMethods.WICImagingFactory.CreateQueryWriterFromReader(
+                        result = UnsafeNativeMethods.WICImagingFactory.CreateQueryWriterFromReader(
                             factoryMaker.ImagingFactoryPtr,
                             metadataHandle,
                             ref guidVendor,
@@ -798,7 +771,7 @@ namespace System.Windows.Media.Imaging
                     }
                 }
 
-                if (HRESULT.Succeeded(hr))
+                if (result.Succeeded)
                 {
                     _readOnly = false;
                     _fixedSize = false;
@@ -809,17 +782,17 @@ namespace System.Windows.Media.Imaging
 
                     _syncObject = _metadataHandle;
                 }
-                else if (!HRESULT.IsWindowsCodecError(hr))
+                else if (!result.IsWindowsCodecError())
                 {
-                    HRESULT.Check(hr);
+                    result.ThrowOnFailureExtended();
                 }
             }
             finally
             {
                 if (queryWriter != IntPtr.Zero)
                 {
-                    #pragma warning suppress 6031 // Return value ignored on purpose.
-                    UnsafeNativeMethods.MILUnknown.Release(queryWriter);
+                    // Return value ignored on purpose.
+                    _ = UnsafeNativeMethods.MILUnknown.Release(queryWriter);
                 }
             }
         }
@@ -838,7 +811,7 @@ namespace System.Windows.Media.Imaging
         }
 
         /// <summary>
-        /// Implementation of <see cref="System.Windows.Freezable.CreateInstanceCore">Freezable.CreateInstanceCore</see>.
+        /// Implementation of <see cref="Freezable.CreateInstanceCore">Freezable.CreateInstanceCore</see>.
         /// </summary>
         /// <returns>The new Freezable.</returns>
         protected override Freezable CreateInstanceCore()
@@ -847,7 +820,7 @@ namespace System.Windows.Media.Imaging
         }
 
         /// <summary>
-        /// Implementation of <see cref="System.Windows.Freezable.CloneCore(Freezable)">Freezable.CloneCore</see>.
+        /// Implementation of <see cref="Freezable.CloneCore(Freezable)">Freezable.CloneCore</see>.
         /// </summary>
         protected override void CloneCore(Freezable sourceFreezable)
         {
@@ -858,7 +831,7 @@ namespace System.Windows.Media.Imaging
         }
 
         /// <summary>
-        /// Implementation of <see cref="System.Windows.Freezable.CloneCurrentValueCore(Freezable)">Freezable.CloneCurrentValueCore</see>.
+        /// Implementation of <see cref="Freezable.CloneCurrentValueCore(Freezable)">Freezable.CloneCurrentValueCore</see>.
         /// </summary>
         protected override void CloneCurrentValueCore(Freezable sourceFreezable)
         {
@@ -870,7 +843,7 @@ namespace System.Windows.Media.Imaging
 
 
         /// <summary>
-        /// Implementation of <see cref="System.Windows.Freezable.GetAsFrozenCore(Freezable)">Freezable.GetAsFrozenCore</see>.
+        /// Implementation of <see cref="Freezable.GetAsFrozenCore(Freezable)">Freezable.GetAsFrozenCore</see>.
         /// </summary>
         protected override void GetAsFrozenCore(Freezable sourceFreezable)
         {
@@ -882,7 +855,7 @@ namespace System.Windows.Media.Imaging
 
 
         /// <summary>
-        /// Implementation of <see cref="System.Windows.Freezable.GetCurrentValueAsFrozenCore(Freezable)">Freezable.GetCurrentValueAsFrozenCore</see>.
+        /// Implementation of <see cref="Freezable.GetCurrentValueAsFrozenCore(Freezable)">Freezable.GetCurrentValueAsFrozenCore</see>.
         /// </summary>
         protected override void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
         {
@@ -894,16 +867,13 @@ namespace System.Windows.Media.Imaging
 
         #endregion
 
-        /// <summary>
-        ///
-        /// </summary>
         public String Format
         {
             get
             {
                 EnsureBitmapMetadata();
                 StringBuilder format = null;
-                UInt32 length = 0;
+                uint length = 0;
 
                 // This calls EnsureBitmapMetadata()
                 Guid guid = GuidFormat;
@@ -911,26 +881,22 @@ namespace System.Windows.Media.Imaging
                 // Find the length of the string needed
                 lock (_syncObject)
                 {
-                    HRESULT.Check(UnsafeNativeMethods.WICCodec.WICMapGuidToShortName(
+                    UnsafeNativeMethods.WICCodec.WICMapGuidToShortName(
                         ref guid,
                         0,
                         format,
-                        ref length
-                        ));
+                        ref length).ThrowOnFailureExtended();
 
-                    Debug.Assert(length >= 0);
-
-                    // get the string back
+                    // Get the string back
                     if (length > 0)
                     {
                         format = new StringBuilder((int)length);
 
-                        HRESULT.Check(UnsafeNativeMethods.WICCodec.WICMapGuidToShortName(
+                        UnsafeNativeMethods.WICCodec.WICMapGuidToShortName(
                             ref guid,
                             length,
                             format,
-                            ref length
-                            ));
+                            ref length).ThrowOnFailureExtended();
                     }
                 }
 
@@ -938,41 +904,33 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         public String Location
         {
             get
             {
                 StringBuilder location = null;
-                UInt32 length = 0;
 
                 EnsureBitmapMetadata();
 
                 // Find the length of the string needed
                 lock (_syncObject)
                 {
-                    HRESULT.Check(UnsafeNativeMethods.WICMetadataQueryReader.GetLocation(
+                    UnsafeNativeMethods.WICMetadataQueryReader.GetLocation(
                         _metadataHandle,
                         0,
                         location,
-                        out length
-                        ));
+                        out uint length).ThrowOnFailureExtended();
 
-                    Debug.Assert(length >= 0);
-
-                    // get the string back
+                    // Get the string back
                     if (length > 0)
                     {
                         location = new StringBuilder((int)length);
 
-                        HRESULT.Check(UnsafeNativeMethods.WICMetadataQueryReader.GetLocation(
+                        UnsafeNativeMethods.WICMetadataQueryReader.GetLocation(
                             _metadataHandle,
                             length,
                             location,
-                            out length
-                            ));
+                            out length).ThrowOnFailureExtended();
                     }
                 }
 
@@ -982,9 +940,6 @@ namespace System.Windows.Media.Imaging
 
         #region Properties
 
-        /// <summary>
-        ///
-        /// </summary>
         public bool IsReadOnly
         {
             get
@@ -995,9 +950,6 @@ namespace System.Windows.Media.Imaging
             }
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         public bool IsFixedSize
         {
             get
@@ -1025,7 +977,7 @@ namespace System.Windows.Media.Imaging
 
             if (_readOnly)
             {
-                throw new System.InvalidOperationException(SR.Image_MetadataReadOnly);
+                throw new InvalidOperationException(SR.Image_MetadataReadOnly);
             }
 
             // Store these for debugging stress failures.
@@ -1053,11 +1005,10 @@ namespace System.Windows.Media.Imaging
                     {
                         lock (_syncObject)
                         {
-                            HRESULT.Check(UnsafeNativeMethods.WICMetadataQueryWriter.SetMetadataByName(
+                            UnsafeNativeMethods.WICMetadataQueryWriter.SetMetadataByName(
                                 _metadataHandle,
                                 query,
-                                ref propVar
-                                ));
+                                ref propVar).ThrowOnFailureExtended();
                         }
                     }
                 }
@@ -1065,11 +1016,10 @@ namespace System.Windows.Media.Imaging
                 {
                     lock (_syncObject)
                     {
-                        HRESULT.Check(UnsafeNativeMethods.WICMetadataQueryWriter.SetMetadataByName(
+                        UnsafeNativeMethods.WICMetadataQueryWriter.SetMetadataByName(
                             _metadataHandle,
                             query,
-                            ref propVar
-                            ));
+                            ref propVar).ThrowOnFailureExtended();
                     }
                 }
             }
@@ -1081,12 +1031,9 @@ namespace System.Windows.Media.Imaging
             WritePostscript();
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         public object GetQuery(String query)
         {
-            int hr;
+            HRESULT result;
 
             ArgumentNullException.ThrowIfNull(query);
 
@@ -1100,16 +1047,15 @@ namespace System.Windows.Media.Imaging
 
                 lock (_syncObject)
                 {
-                    hr = UnsafeNativeMethods.WICMetadataQueryReader.GetMetadataByName(
+                    result = UnsafeNativeMethods.WICMetadataQueryReader.GetMetadataByName(
                         _metadataHandle,
                         query,
-                        ref propVar
-                        );
+                        ref propVar);
                 }
 
-                if (hr != (int)WinCodecErrors.WINCODEC_ERR_PROPERTYNOTFOUND)
+                if (result != HRESULT.WINCODEC_ERR_PROPERTYNOTFOUND)
                 {
-                    HRESULT.Check(hr);
+                    result.ThrowOnFailureExtended();
 
                     object objValue = propVar.ToObject(_syncObject);
 
@@ -1134,12 +1080,9 @@ namespace System.Windows.Media.Imaging
             return null;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         public void RemoveQuery(String query)
         {
-            int hr;
+            HRESULT result;
 
             WritePreamble();
 
@@ -1147,51 +1090,39 @@ namespace System.Windows.Media.Imaging
 
             if (_readOnly)
             {
-                throw new System.InvalidOperationException(SR.Image_MetadataReadOnly);
+                throw new InvalidOperationException(SR.Image_MetadataReadOnly);
             }
 
             EnsureBitmapMetadata();
 
             lock (_syncObject)
             {
-                hr = UnsafeNativeMethods.WICMetadataQueryWriter.RemoveMetadataByName(
+                result = UnsafeNativeMethods.WICMetadataQueryWriter.RemoveMetadataByName(
                     _metadataHandle,
-                    query
-                    );
+                    query);
             }
 
-            if (hr != (int)WinCodecErrors.WINCODEC_ERR_PROPERTYNOTFOUND)
+            if (result != HRESULT.WINCODEC_ERR_PROPERTYNOTFOUND)
             {
-                HRESULT.Check(hr);
+                result.ThrowOnFailureExtended();
             }
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         IEnumerator IEnumerable.GetEnumerator()
         {
             EnsureBitmapMetadata();
-
             return new BitmapMetadataEnumerator(_metadataHandle);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         IEnumerator<String> IEnumerable<String>.GetEnumerator()
         {
             EnsureBitmapMetadata();
-
             return new BitmapMetadataEnumerator(_metadataHandle);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         public bool ContainsQuery(String query)
         {
-            int hr;
+            HRESULT result;
 
             ArgumentNullException.ThrowIfNull(query);
 
@@ -1199,20 +1130,20 @@ namespace System.Windows.Media.Imaging
 
             lock (_syncObject)
             {
-                hr = UnsafeNativeMethods.WICMetadataQueryReader.ContainsMetadataByName(
+                result = UnsafeNativeMethods.WICMetadataQueryReader.ContainsMetadataByName(
                     _metadataHandle,
                     query,
                     IntPtr.Zero
                     );
             }
 
-            if (HRESULT.IsWindowsCodecError(hr))
+            if (result.IsWindowsCodecError())
             {
                 return false;
             }
             else
             {
-                HRESULT.Check(hr);
+                result.ThrowOnFailureExtended();
             }
 
             return true;
@@ -1274,14 +1205,14 @@ namespace System.Windows.Media.Imaging
 
                 if (rating != null && rating.GetType() == typeof(ushort))
                 {
-                    return System.Convert.ToInt32(rating, CultureInfo.InvariantCulture);
+                    return Convert.ToInt32(rating, CultureInfo.InvariantCulture);
                 }
 
                 return 0;
             }
             set
             {
-                SetQuery(policy_Rating, System.Convert.ToUInt16(value, CultureInfo.InvariantCulture));
+                SetQuery(policy_Rating, Convert.ToUInt16(value, CultureInfo.InvariantCulture));
             }
         }
 
@@ -1323,9 +1254,9 @@ namespace System.Windows.Media.Imaging
             get
             {
                 object fileTime = GetQuery(policy_DateTaken);
-                if (fileTime != null && fileTime.GetType() == typeof(System.Runtime.InteropServices.ComTypes.FILETIME))
+                if (fileTime != null && fileTime.GetType() == typeof(Runtime.InteropServices.ComTypes.FILETIME))
                 {
-                    System.Runtime.InteropServices.ComTypes.FILETIME time = (System.Runtime.InteropServices.ComTypes.FILETIME)fileTime;
+                    Runtime.InteropServices.ComTypes.FILETIME time = (Runtime.InteropServices.ComTypes.FILETIME)fileTime;
                     DateTime dateTime = DateTime.FromFileTime( (((long)time.dwHighDateTime) << 32) + (uint)time.dwLowDateTime );
                     return dateTime.ToString();
                 }
@@ -1333,7 +1264,7 @@ namespace System.Windows.Media.Imaging
             }
             set
             {
-                DateTime dt = System.Convert.ToDateTime(value, CultureInfo.InvariantCulture);
+                DateTime dt = Convert.ToDateTime(value, CultureInfo.InvariantCulture);
                 PROPVARIANT propVar= new PROPVARIANT();
 
                 propVar.varType = (ushort)VarEnum.VT_FILETIME;
@@ -1477,10 +1408,9 @@ namespace System.Windows.Media.Imaging
 
                 EnsureBitmapMetadata();
 
-                HRESULT.Check(UnsafeNativeMethods.WICMetadataQueryReader.GetContainerFormat(
+                UnsafeNativeMethods.WICMetadataQueryReader.GetContainerFormat(
                     _metadataHandle,
-                    out guid
-                    ));
+                    out guid).ThrowOnFailureExtended();
 
                 return guid;
             }
@@ -1516,7 +1446,7 @@ namespace System.Windows.Media.Imaging
 
             if (_metadataHandle == null)
             {
-                throw new System.InvalidOperationException(SR.Image_MetadataInitializationIncomplete);
+                throw new InvalidOperationException(SR.Image_MetadataInitializationIncomplete);
             }
         }
 

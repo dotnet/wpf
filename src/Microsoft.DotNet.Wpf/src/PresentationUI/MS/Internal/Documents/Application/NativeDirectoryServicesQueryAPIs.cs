@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,6 +9,7 @@
 using System;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.Documents
 {
@@ -36,12 +37,12 @@ namespace MS.Internal.Documents
             /// https://docs.microsoft.com/en-us/windows/desktop/api/cmnquery/nf-cmnquery-icommonquery-openquerywindow
             /// </summary>
             [Guid("ab50dec0-6f1d-11d0-a1c4-00aa00c16e65")]
-            [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
+            [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
             [ComImport]
             internal interface ICommonQuery
             {
                 [PreserveSig]
-                UInt32 OpenQueryWindow(
+                HRESULT OpenQueryWindow(
                     [In] IntPtr hwndParent,
                     [In] ref OpenQueryWindowParams pQueryWnd,
                     [Out] out IDataObject ppDataObj

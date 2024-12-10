@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,6 +8,7 @@ using MS.Win32;
 using System.Globalization;
 using System.Windows.Controls;
 using MS.Internal.PresentationFramework;
+using Windows.Win32.Foundation;
 
 //
 // Description: Custom COM marshalling code and interfaces for interaction
@@ -220,7 +221,7 @@ namespace System.Windows.Documents
 
                         result = EnumVariantNext(sentenceEnumerator, variant, fetched);
 
-                        if ((result != NativeMethods.S_OK) || (fetched[0] == 0))
+                        if ((result != HRESULT.S_OK) || (fetched[0] == 0))
                         {
                             break;
                         }
@@ -594,7 +595,7 @@ namespace System.Windows.Documents
                         variant.Clear();
                         result = EnumVariantNext(variantEnumerator, variant, fetched);
 
-                        if ((result != NativeMethods.S_OK) || (fetched[0] == 0))
+                        if ((result != HRESULT.S_OK) || (fetched[0] == 0))
                         {
                             break;
                         }
@@ -963,7 +964,7 @@ namespace System.Windows.Documents
             {
                 hasDemand = true;
 
-                lexicon = NLGSpellerInterop.CreateLexicon();
+                lexicon = CreateLexicon();
                 lexicon.ReadFrom(lexiconFilePath);
                 _textChunk.get_Context(out textContext);
                 textContext.AddLexicon(lexicon);

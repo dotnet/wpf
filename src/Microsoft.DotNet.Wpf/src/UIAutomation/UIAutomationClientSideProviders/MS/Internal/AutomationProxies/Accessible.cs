@@ -1,11 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 // Description: Wraps some of IAccessible to support getting basic properties
 //              and default action
-//
-
 
 // PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
@@ -18,6 +15,8 @@ using System.Windows;
 using Accessibility;
 using System.Runtime.InteropServices;
 using MS.Win32;
+using Windows.Win32.Foundation;
+using Windows.Win32.System.Diagnostics.Debug;
 
 namespace MS.Internal.AutomationProxies
 {
@@ -172,7 +171,7 @@ namespace MS.Internal.AutomationProxies
 
             // unwrap the pointer that was returned
             IAccessible acc = null;
-            int hr = NativeMethods.S_FALSE;
+            int hr = HRESULT.S_FALSE;
 
             try
             {
@@ -212,14 +211,14 @@ namespace MS.Internal.AutomationProxies
             // !Marshal.IsComObject()) - that only protects us from managed IAccessibles we get back directly; we could
             // still hit the above issue if we get back a remote unmanaged impl that then returns a maanged impl via
             // navigation (Media Center does this). So we now use AOFW all the time.
-            if(hr == NativeMethods.S_OK && acc != null)
+            if(hr == HRESULT.S_OK && acc != null)
             {
                 object obj = null;
                 hr = UnsafeNativeMethods.AccessibleObjectFromWindow(hwnd, idObject, ref UnsafeNativeMethods.IID_IUnknown, ref obj);
                 acc = obj as IAccessible;
             }
 
-            if (hr != NativeMethods.S_OK || acc == null)
+            if (hr != HRESULT.S_OK || acc == null)
             {
                 return null;
             }
@@ -312,7 +311,7 @@ namespace MS.Internal.AutomationProxies
         {
             get
             {
-                return _idChild == NativeMethods.CHILD_SELF ? GetChildAt(_acc, null, Accessible.GetChildCount(_acc) - 1) : null;
+                return _idChild == NativeMethods.CHILD_SELF ? GetChildAt(_acc, null, GetChildCount(_acc) - 1) : null;
             }
         }
 
@@ -335,7 +334,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             Accessible rval = null;
-            if (_accessibleChildrenIndex + 1 < Accessible.GetChildCount(parent._acc))
+            if (_accessibleChildrenIndex + 1 < GetChildCount(parent._acc))
             {
                 rval = GetChildAt(parent._acc, children, _accessibleChildrenIndex + 1);
             }
@@ -436,7 +435,7 @@ namespace MS.Internal.AutomationProxies
                 // We're not dealing with menus [in this version of NativeMsaaProxy] so won't worry about them
                 // here.  To "clean up" the tree we'll skip over IAccessibles that have the above states.  
                 // May revisit per user feedback.
-                if (Accessible.HasState(state, AccessibleState.Invisible) && !Accessible.HasState(state, AccessibleState.Offscreen))
+                if (HasState(state, AccessibleState.Invisible) && !HasState(state, AccessibleState.Offscreen))
                     return false;
 
                 return true;
@@ -563,8 +562,8 @@ namespace MS.Internal.AutomationProxies
 
         internal static Accessible GetFullAccessibleChildByIndex(Accessible accParent, int index)
         {
-            int childCount = 0; 
-            object[] accChildren = Accessible.GetAccessibleChildren(accParent.IAccessible, out childCount);
+            int childCount = 0;
+            object[] accChildren = GetAccessibleChildren(accParent.IAccessible, out childCount);
 
             if (accChildren != null && 0 <= index && index < accChildren.Length)
             {
@@ -572,12 +571,12 @@ namespace MS.Internal.AutomationProxies
                 IAccessible accChild = child as IAccessible;
                 if (accChild != null)
                 {
-                    return Accessible.Wrap(accChild);
+                    return Wrap(accChild);
                 }
                 else if (child is int)
                 {
                     int idChild = (int)child;
-                    return Accessible.Wrap(accParent.IAccessible, idChild);
+                    return Wrap(accParent.IAccessible, idChild);
                 }
             }
 
@@ -861,7 +860,7 @@ namespace MS.Internal.AutomationProxies
                     try
                     {
                         int result = UnsafeNativeMethods.WindowFromAccessibleObject(_acc, ref _hwnd);
-                        if ( result != NativeMethods.S_OK)
+                        if ( result != HRESULT.S_OK)
                         {
                             _hwnd = IntPtr.Zero;
                         }
@@ -900,12 +899,12 @@ namespace MS.Internal.AutomationProxies
 
                 accObject = obj as IAccessible;
 
-                if (hr != NativeMethods.S_OK || accObject == null)
+                if (hr != HRESULT.S_OK || accObject == null)
                 {
-                    return NativeMethods.S_FALSE;
+                    return HRESULT.S_FALSE;
                 }
 
-                acc = Accessible.Wrap(accObject);
+                acc = Wrap(accObject);
                 return hr;
             }
             catch (Exception e)
@@ -915,7 +914,7 @@ namespace MS.Internal.AutomationProxies
                     throw;
                 }
 
-                return NativeMethods.S_FALSE;
+                return HRESULT.S_FALSE;
             }
         }
 
@@ -937,9 +936,9 @@ namespace MS.Internal.AutomationProxies
                     aChildren = new object[childCount];
 
                     // Get the raw children because accNavigate doesn't work
-                    if (UnsafeNativeMethods.AccessibleChildren(accessibleObject, 0, childCount, aChildren, out childrenReturned) == NativeMethods.E_INVALIDARG)
+                    if (UnsafeNativeMethods.AccessibleChildren(accessibleObject, 0, childCount, aChildren, out childrenReturned) == HRESULT.E_INVALIDARG)
                     {
-                        System.Diagnostics.Debug.Assert(false, "Call to AccessibleChildren() returned E_INVALIDARG.");
+                        Debug.Assert(false, "Call to AccessibleChildren() returned E_INVALIDARG.");
                         throw new ElementNotAvailableException();
                     }
                 }
@@ -1306,7 +1305,7 @@ namespace MS.Internal.AutomationProxies
             rect.bottom += rect.top;    // convert height to bottom
             return rect;
         }
-        
+
         // converts the exception into a more appropriate one and throws it,
         // or returns false indicating the caller should assume a default result
         // or returns true indicating the caller should rethrow the exception.
@@ -1349,45 +1348,72 @@ namespace MS.Internal.AutomationProxies
                 // holding pointers to them, like when Trident navigates to a new page.
                 int errorCode = comException.ErrorCode;
 
+                HRESULT result = (HRESULT)errorCode;
+                if (result.Facility == FACILITY_CODE.FACILITY_WIN32)
+                {
+                    switch ((WIN32_ERROR)result.Code)
+                    {
+                        case WIN32_ERROR.ERROR_OUTOFMEMORY:
+                            // Some OLEACC proxies produce out-of-memory for non-critical reasons:
+                            // notably, the treeview proxy will raise this if the target HWND no longer exists,
+                            // GetWindowThreadProcessID fails and it therefore won't be able to allocate shared
+                            // memory in the target process, so it incorrectly assumes OOM.
+                            throw new ElementNotAvailableException(e);
+                        case WIN32_ERROR.ERROR_ACCESS_DENIED:
+                            // This is returned when you call get_accValue to get the value of a password control.
+                            throw new UnauthorizedAccessException();
+                    };
+                }
+
+                if (result == HRESULT.E_FAIL || result == HRESULT.E_NOTIMPL)
+                {
+                    // An unknown or generic error occurred; treat as a not-impl. (Other methods on the object
+                    // may still work, so don't treat as ElementNotAvailable.)
+                    throw new ArgumentException(SR.InvalidParameter);
+                }
+                else if (result == HRESULT.E_INVALIDARG)
+                {
+                    // One or more arguments were invalid. This error occurs when the caller attempts to identify
+                    // a child object using an identifier that the server does not recognize. This error also results
+                    // when a client attempts to identify a child object within an object that has no children.
+                    throw new ArgumentException(SR.InvalidParameter);
+                }
+                else if (result == HRESULT.DISP_E_MEMBERNOTFOUND)
+                {
+                    // The object does not support the requested property or action. For example,
+                    // a push button returns this value if you request its Value property, since
+                    // it does not have a Value property.
+                    return false;
+                }
+
+                // All of these can be updated to use defines from System.Private.Windows.Core when available.
+                // See inline comments for more.
                 switch (errorCode)
                 {
+                    // 2 HRESULT defines pending System.Private.Windows.Core update (FACILITY_RPC)
                     case NativeMethods.RPC_E_SERVERFAULT: // The server threw an exception.
                     case NativeMethods.RPC_E_DISCONNECTED: // The object invoked has disconnected from its clients.
+
+                    // WIN32_ERROR wrapped RPC_STATUS.RPC_S_SERVER_UNAVAILABLE
                     case NativeMethods.RPC_E_UNAVAILABLE: // The server has disappeared
+
+                    // HRESULT define pending System.Private.Windows.Core update
                     case NativeMethods.DISP_E_BADINDEX: // Index out of Range (Usually means Children have disappeared)
+
+                    // WIN32_ERROR wrapped RPC_STATUS.RPC_S_UNKNOWN_IF
                     case NativeMethods.E_INTERFACEUNKNOWN: // The interface is unknown, usually because things have changed.
+
+                    // Not a publicly defined HRESULT. FACILITY_CONTROL facility codes are VB specific errors.
+                    // Ultimately this comes from Visual Basic VB_E_NOTOBJECT or "Object required".
+                    // It is thrown by VBA when an object has been collected or a VARIANT is not an IDispatch
+                    // or IUnkown object.
+                    //
+                    // https://learn.microsoft.com/office/vba/language/reference/user-interface-help/object-required-error-424
                     case NativeMethods.E_UNKNOWNWORDERROR: // An unknown Error code thrown by Word being closed while a search is running
+
+                    // 2 HRESULT defines pending System.Private.Windows.Core update (FACILITY_RPC)
                     case NativeMethods.RPC_E_SYS_CALL_FAILED: // System call failed during RPC.
                         throw new ElementNotAvailableException(e);
-
-                    case NativeMethods.E_FAIL:
-                        // An unknown or generic error occurred; treat as a not-impl. (Other methods on the object
-                        // may still work, so don't treat as ElementNotAvailable.)
-                    case NativeMethods.E_MEMBERNOTFOUND:
-                        // The object does not support the requested property or action. For example,
-                        // a push button returns this value if you request its Value property, since
-                        // it does not have a Value property.
-                    case NativeMethods.E_NOTIMPL:
-                        // just return on E_NOTIMPL errors
-                        return false;
-
-                    case NativeMethods.E_OUTOFMEMORY:
-                        // Some OLEACC proxies produce out-of-memory for non-critical reasons:
-                        // notably, the treeview proxy will raise this if the target HWND no longer exists,
-                        // GetWindowThreadProcessID fails and it therefore won't be able to allocate shared
-                        // memory in the target process, so it incorrectly assumes OOM.
-                        throw new ElementNotAvailableException(e);
-                        
-                    case NativeMethods.E_INVALIDARG:
-                        // One or more arguments were invalid. This error occurs when the caller attempts to identify
-                        // a child object using an identifier that the server does not recognize. This error also results
-                        // when a client attempts to identify a child object within an object that has no children.
-                        throw new ArgumentException(SR.InvalidParameter);
-
-                    case NativeMethods.E_ACCESSDENIED:
-                        // This is returned when you call get_accValue to get the value of a password control.
-                        throw new UnauthorizedAccessException();
-
                     case NativeMethods.E_UNEXPECTED:
                         // An IAccessible server has been released unexpectedly but still has pending events.
                         // If the current execution context is inside one of these event handlers it must be 
@@ -1396,7 +1422,7 @@ namespace MS.Internal.AutomationProxies
 
                     default:
                         // we want to know when we get an exception we haven't seen before
-                        Debug.Assert(false, string.Format(CultureInfo.CurrentCulture, "MsaaNativeProvider: IAccessible threw a COMException: {0}", e.Message));
+                        Debug.Fail($"MsaaNativeProvider: IAccessible threw a COMException: {e.Message}");
                         break;
                 }
             }
@@ -1442,7 +1468,7 @@ namespace MS.Internal.AutomationProxies
            
 
             int childCount;
-            object[] rawChildren = Accessible.GetAccessibleChildren(accParent, out childCount);
+            object[] rawChildren = GetAccessibleChildren(accParent, out childCount);
 
             for (int i = 0; i < childCount; i++)
             {

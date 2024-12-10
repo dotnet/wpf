@@ -1,10 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
 using System.Windows;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 // Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
 // We first need to disable warnings about unknown message numbers and unknown pragmas.
@@ -30,7 +31,7 @@ namespace MS.Internal.Controls
                 try
                 {
                     Guid tmp = eventInterface.GUID;
-                    if (cpc.FindConnectionPoint(ref tmp, out connectionPoint) != NativeMethods.S_OK)
+                    if (cpc.FindConnectionPoint(ref tmp, out connectionPoint) != HRESULT.S_OK)
                     {
                         connectionPoint = null;
                     }
@@ -58,7 +59,7 @@ namespace MS.Internal.Controls
                 else
                 {
                     int hr = connectionPoint.Advise(sink, ref cookie);
-                    if (hr != NativeMethods.S_OK)
+                    if (hr != HRESULT.S_OK)
                     {
                         cookie = 0;
                         Marshal.FinalReleaseComObject(connectionPoint);
@@ -122,7 +123,7 @@ namespace MS.Internal.Controls
 
                 try
                 {
-                    System.Runtime.InteropServices.Marshal.FinalReleaseComObject(connectionPoint);
+                    Marshal.FinalReleaseComObject(connectionPoint);
                 }
                 catch (Exception ex)
                 {

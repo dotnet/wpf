@@ -1,0 +1,272 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.2" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="es" original="../SR.resx">
+    <body>
+      <trans-unit id="D3DImage_AARequires9Ex">
+        <source>An antialiased back buffer requires a IDirect3DDevice9Ex device.</source>
+        <target state="new">An antialiased back buffer requires a IDirect3DDevice9Ex device.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_InvalidDevice">
+        <source>Back buffer's device is not valid.</source>
+        <target state="new">Back buffer's device is not valid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_InvalidPool">
+        <source>Back buffer's pool does not meet the requirements for the resource type.</source>
+        <target state="new">Back buffer's pool does not meet the requirements for the resource type.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_InvalidUsage">
+        <source>Back buffer's usage does not meet the requirements for the resource type.</source>
+        <target state="new">Back buffer's usage does not meet the requirements for the resource type.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="D3DImage_SurfaceTooBig">
+        <source>Back buffer's size is too large.</source>
+        <target state="new">Back buffer's size is too large.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Geometry_BadNumber">
+        <source>Arithmetic error found while trying to perform this operation.</source>
+        <target state="new">Arithmetic error found while trying to perform this operation.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_BadDimensions">
+        <source>The bitmap specified does not have the correct dimensions.</source>
+        <target state="new">The bitmap specified does not have the correct dimensions.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_BadMetadataHeader">
+        <source>The image has corrupted metadata header.</source>
+        <target state="new">The image has corrupted metadata header.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_BadStreamData">
+        <source>The stream is corrupted.</source>
+        <target state="new">The stream is corrupted.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_CodecPresent">
+        <source>Codec added more than once.</source>
+        <target state="new">Codec added more than once.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_ComponentNotFound">
+        <source>No imaging component suitable to complete this operation was found.</source>
+        <target state="new">No imaging component suitable to complete this operation was found.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_DecoderError">
+        <source>The image decoder cannot decode the image. The image might be corrupted.</source>
+        <target state="new">The image decoder cannot decode the image. The image might be corrupted.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_DisplayStateInvalid">
+        <source>The system display state is not valid.</source>
+        <target state="new">The system display state is not valid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_DuplicateMetadataPresent">
+        <source>Duplicate copies of metadata present.</source>
+        <target state="new">Duplicate copies of metadata present.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_FrameMissing">
+        <source>The image is missing a frame.</source>
+        <target state="new">The image is missing a frame.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_HeaderError">
+        <source>The image cannot be decoded. The image header might be corrupted.</source>
+        <target state="new">The image cannot be decoded. The image header might be corrupted.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InsufficientBuffer">
+        <source>Buffer size is not sufficient.</source>
+        <target state="new">Buffer size is not sufficient.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InternalError">
+        <source>An error occurred.</source>
+        <target state="new">An error occurred.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InvalidColorContext">
+        <source>Bitmap color context is not valid.</source>
+        <target state="new">Bitmap color context is not valid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InvalidQueryCharacter">
+        <source>Character is not valid in metadata query request.</source>
+        <target state="new">Character is not valid in metadata query request.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_InvalidQueryRequest">
+        <source>Metadata query request is not valid.</source>
+        <target state="new">Metadata query request is not valid.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoPalette">
+        <source>The specified image does not contain a palette.</source>
+        <target state="new">The specified image does not contain a palette.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_NoThumbnail">
+        <source>Bitmap does not contain thumbnail.</source>
+        <target state="new">Bitmap does not contain thumbnail.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_Overflow">
+        <source>The image data generated an overflow during processing.</source>
+        <target state="new">The image data generated an overflow during processing.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PropertyNotFound">
+        <source>Property cannot be found.</source>
+        <target state="new">Property cannot be found.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PropertyNotSupported">
+        <source>This codec does not support the specified property.</source>
+        <target state="new">This codec does not support the specified property.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PropertySize">
+        <source>Property is corrupted.</source>
+        <target state="new">Property is corrupted.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_PropertyUnexpectedType">
+        <source>Unexpected property type or value.</source>
+        <target state="new">Unexpected property type or value.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_RequestOnlyValidAtMetadataRoot">
+        <source>The metadata query is valid only at the root of the metadata hierarchy.</source>
+        <target state="new">The metadata query is valid only at the root of the metadata hierarchy.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_SingularMatrix">
+        <source>Cannot invert singular matrix.</source>
+        <target state="new">Cannot invert singular matrix.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_SizeOutOfRange">
+        <source>The image dimensions are out of the range supported by this codec.</source>
+        <target state="new">The image dimensions are out of the range supported by this codec.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_StreamNotAvailable">
+        <source>Metadata stream is not available for this operation.</source>
+        <target state="new">Metadata stream is not available for this operation.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_StreamRead">
+        <source>Cannot read from the stream.</source>
+        <target state="new">Cannot read from the stream.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_StreamWrite">
+        <source>Cannot write to the stream.</source>
+        <target state="new">Cannot write to the stream.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_TooManyScanlines">
+        <source>The bitmap has too many scanlines for the specified encoder.</source>
+        <target state="new">The bitmap has too many scanlines for the specified encoder.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_TooMuchMetadata">
+        <source>Commit unsuccessful because too much metadata changed.</source>
+        <target state="new">Commit unsuccessful because too much metadata changed.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_UnexpectedMetadataType">
+        <source>Unexpected type of metadata.</source>
+        <target state="new">Unexpected type of metadata.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_UnknownFormat">
+        <source>The image format is unrecognized.</source>
+        <target state="new">The image format is unrecognized.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_UnsupportedOperation">
+        <source>Operation not supported.</source>
+        <target state="new">Operation not supported.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_UnsupportedPixelFormat">
+        <source>Pixel format not supported.</source>
+        <target state="new">Pixel format not supported.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Image_WrongState">
+        <source>Operation caused an invalid state.</source>
+        <target state="new">Operation caused an invalid state.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_DownloadFailed">
+        <source>Media file download failed.</source>
+        <target state="new">Media file download failed.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_FileFormatNotSupported">
+        <source>Installed codecs do not support the media file format.</source>
+        <target state="new">Installed codecs do not support the media file format.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_FileNotFound">
+        <source>Cannot find the media file.</source>
+        <target state="new">Cannot find the media file.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_HardwareVideoAccelerationNotAvailable">
+        <source>Display driver must support video acceleration for video or audio playback.</source>
+        <target state="new">Display driver must support video acceleration for video or audio playback.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_InsufficientVideoResources">
+        <source>There are insufficient video resources available for video or audio playback.</source>
+        <target state="new">There are insufficient video resources available for video or audio playback.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_InvalidArgument">
+        <source>Value does not fall within the expected range.</source>
+        <target state="new">Value does not fall within the expected range.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_InvalidWmpVersion">
+        <source>Windows Media Player version 10 or later is required.</source>
+        <target state="new">Windows Media Player version 10 or later is required.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_LogonFailure">
+        <source>Access was denied on the media file.</source>
+        <target state="new">Access was denied on the media file.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_PlayerIsClosed">
+        <source>No operations are valid on a closed media player except open and close.</source>
+        <target state="new">No operations are valid on a closed media player except open and close.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="Media_PlaylistFormatNotSupported">
+        <source>Unrecognized playlist file format.</source>
+        <target state="new">Unrecognized playlist file format.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="MilErr_UnsupportedVersion">
+        <source>Mismatched versions of PresentationCore.dll, Milcore.dll, WindowsCodecs.dll, or D3d9.dll. Check that these DLLs come from the same source.</source>
+        <target state="new">Mismatched versions of PresentationCore.dll, Milcore.dll, WindowsCodecs.dll, or D3d9.dll. Check that these DLLs come from the same source.</target>
+        <note />
+      </trans-unit>
+      <trans-unit id="WIC_NotInitialized">
+        <source>Object must be initialized before operation can be performed.</source>
+        <target state="new">Object must be initialized before operation can be performed.</target>
+        <note />
+      </trans-unit>
+    </body>
+  </file>
+</xliff>

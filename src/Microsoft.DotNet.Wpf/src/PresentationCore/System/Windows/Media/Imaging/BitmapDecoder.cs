@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,6 +15,7 @@ using MS.Internal.PresentationCore;
 using System.Net;
 using System.Net.Cache;
 using System.Text;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media.Imaging
 {
@@ -243,7 +244,7 @@ namespace System.Windows.Media.Imaging
             if (uri != null)
             {
                 finalUri = (baseUri != null) ?
-                               System.Windows.Navigation.BaseUriHelper.GetResolvedUri(baseUri, uri) :
+                               Navigation.BaseUriHelper.GetResolvedUri(baseUri, uri) :
                                uri;
 
                 if (insertInDecoderCache)
@@ -278,7 +279,7 @@ namespace System.Windows.Media.Imaging
             else
             {
                 // Create an unmanaged decoder
-                decoderHandle = BitmapDecoder.SetupDecoderFromUriOrStream(
+                decoderHandle = SetupDecoderFromUriOrStream(
                     finalUri,
                     stream,
                     cacheOption,
@@ -524,13 +525,13 @@ namespace System.Windows.Media.Imaging
 
                     lock (_syncObject)
                     {
-                        int hr = UnsafeNativeMethods.WICBitmapDecoder.CopyPalette(
+                        HRESULT result = UnsafeNativeMethods.WICBitmapDecoder.CopyPalette(
                             _decoderHandle,
-                            paletteHandle
-                            );
-                        if (hr != (int)WinCodecErrors.WINCODEC_ERR_PALETTEUNAVAILABLE)
+                            paletteHandle);
+
+                        if (result != HRESULT.WINCODEC_ERR_PALETTEUNAVAILABLE)
                         {
-                            HRESULT.Check(hr);
+                            result.ThrowOnFailureExtended();
                             _palette = new BitmapPalette(paletteHandle);
                         }
                     }
@@ -574,13 +575,13 @@ namespace System.Windows.Media.Imaging
                     // Check if there is embedded thumbnail or not
                     lock (_syncObject)
                     {
-                        int hr = UnsafeNativeMethods.WICBitmapDecoder.GetThumbnail(
+                        HRESULT result = UnsafeNativeMethods.WICBitmapDecoder.GetThumbnail(
                             _decoderHandle,
-                            out thumbnail
-                            );
-                        if (hr != (int)WinCodecErrors.WINCODEC_ERR_CODECNOTHUMBNAIL)
+                            out thumbnail);
+
+                        if (result != HRESULT.WINCODEC_ERR_CODECNOTHUMBNAIL)
                         {
-                            HRESULT.Check(hr);
+                            result.ThrowOnFailureExtended();
                         }
                     }
 
@@ -589,16 +590,16 @@ namespace System.Windows.Media.Imaging
                         BitmapSourceSafeMILHandle thumbHandle = new BitmapSourceSafeMILHandle(thumbnail);
                         SafeMILHandle unmanagedPalette = BitmapPalette.CreateInternalPalette();
                         BitmapPalette palette = null;
-                    
-                        int hr = UnsafeNativeMethods.WICBitmapSource.CopyPalette(
-                                    thumbHandle,
-                                    unmanagedPalette
-                                    );
-                        if (hr == HRESULT.S_OK)
+
+                        HRESULT result = UnsafeNativeMethods.WICBitmapSource.CopyPalette(
+                            thumbHandle,
+                            unmanagedPalette);
+
+                        if (result == HRESULT.S_OK)
                         {
                             palette = new BitmapPalette(unmanagedPalette);
                         }
-                    
+
                         _thumbnail = new UnmanagedBitmapWrapper(
                             BitmapSource.CreateCachedBitmap(
                                 null,
@@ -634,13 +635,13 @@ namespace System.Windows.Media.Imaging
 
                     lock (_syncObject)
                     {
-                        int hr = UnsafeNativeMethods.WICBitmapDecoder.GetMetadataQueryReader(
+                        HRESULT result = UnsafeNativeMethods.WICBitmapDecoder.GetMetadataQueryReader(
                             _decoderHandle,
-                            out metadata
-                            );
-                        if (hr != (int)WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION)
+                            out metadata);
+
+                        if (result != HRESULT.WINCODEC_ERR_UNSUPPORTEDOPERATION)
                         {
-                            HRESULT.Check(hr);
+                            result.ThrowOnFailureExtended();
                         }
                     }
 
@@ -674,10 +675,9 @@ namespace System.Windows.Media.Imaging
                 {
                     SafeMILHandle /* IWICBitmapDecoderInfo */ codecInfoHandle =  new SafeMILHandle();
 
-                    HRESULT.Check(UnsafeNativeMethods.WICBitmapDecoder.GetDecoderInfo(
+                    UnsafeNativeMethods.WICBitmapDecoder.GetDecoderInfo(
                         _decoderHandle,
-                        out codecInfoHandle
-                        ));
+                        out codecInfoHandle).ThrowOnFailureExtended();
 
                     _codecInfo = new BitmapCodecInfoInternal(codecInfoHandle);
                 }
@@ -728,13 +728,13 @@ namespace System.Windows.Media.Imaging
                     lock (_syncObject)
                     {
                         // Check if there is embedded preview or not
-                        int hr = UnsafeNativeMethods.WICBitmapDecoder.GetPreview(
+                        HRESULT result = UnsafeNativeMethods.WICBitmapDecoder.GetPreview(
                             _decoderHandle,
-                            out preview
-                            );
-                        if (hr != (int)WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION)
+                            out preview);
+
+                        if (result != HRESULT.WINCODEC_ERR_UNSUPPORTEDOPERATION)
                         {
-                            HRESULT.Check(hr);
+                            result.ThrowOnFailureExtended();
                         }
                     }
 
@@ -743,27 +743,27 @@ namespace System.Windows.Media.Imaging
                         BitmapSourceSafeMILHandle previewHandle = new BitmapSourceSafeMILHandle(preview);
                         SafeMILHandle unmanagedPalette = BitmapPalette.CreateInternalPalette();
                         BitmapPalette palette = null;
-                    
-                        int hr = UnsafeNativeMethods.WICBitmapSource.CopyPalette(
-                                    previewHandle,
-                                    unmanagedPalette
-                                    );
-                        if (hr == HRESULT.S_OK)
+
+                        HRESULT result = UnsafeNativeMethods.WICBitmapSource.CopyPalette(
+                            previewHandle,
+                            unmanagedPalette);
+
+                        if (result == HRESULT.S_OK)
                         {
                             palette = new BitmapPalette(unmanagedPalette);
                         }
-                    
+
                         _preview = new UnmanagedBitmapWrapper(
                             BitmapSource.CreateCachedBitmap(
                                 null,
                                 previewHandle,
                                 BitmapCreateOptions.PreservePixelFormat,
                                 _cacheOption,
-                                palette
-                                ));
+                                palette));
+
                         _preview.Freeze();
                     }
-                    
+
                     _isPreviewCached = true;
                 }
 
@@ -938,10 +938,10 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Used as a delegate in InternalColorContexts to get the unmanaged IWICColorContexts
         /// </summary>
-        private int GetColorContexts(ref uint numContexts, IntPtr[] colorContextPtrs)
+        private HRESULT GetColorContexts(ref uint numContexts, IntPtr[] colorContextPtrs)
         {
             Invariant.Assert(colorContextPtrs == null || numContexts <= colorContextPtrs.Length);
-            
+
             return UnsafeNativeMethods.WICBitmapDecoder.GetColorContexts(_decoderHandle, numContexts, colorContextPtrs, out numContexts);
         }
 
@@ -982,7 +982,7 @@ namespace System.Windows.Media.Imaging
         {
             if (!_isOriginalWritable)
             {
-                throw new System.InvalidOperationException(SR.Image_OriginalStreamReadOnly);
+                throw new InvalidOperationException(SR.Image_OriginalStreamReadOnly);
             }
         }
 
@@ -1003,7 +1003,7 @@ namespace System.Windows.Media.Imaging
         {
             SafeMILHandle decoderHandle;
             IntPtr decoder = IntPtr.Zero;
-            System.IO.Stream bitmapStream = null;
+            Stream bitmapStream = null;
             unmanagedMemoryStream = null;
             safeFilehandle = null;
             isOriginalWritable = false;
@@ -1030,7 +1030,7 @@ namespace System.Windows.Media.Imaging
                     }
                 }
 
-                if ((bitmapStream == null) || (bitmapStream == System.IO.Stream.Null))
+                if ((bitmapStream == null) || (bitmapStream == Stream.Null))
                 {
                     // We didn't get a stream from the pack web request, so we have
                     // to try to create one ourselves.
@@ -1044,7 +1044,7 @@ namespace System.Windows.Media.Imaging
                             if (uri.IsFile)
                             {
                                 // FileStream does a demand for us, so no need to do a demand
-                                bitmapStream = new System.IO.FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+                                bitmapStream = new FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
                             }
                         }
                         else // Any other zone
@@ -1075,7 +1075,7 @@ namespace System.Windows.Media.Imaging
                         // We don't have an absolute URI, so we don't necessarily know
                         // if it is a file, but we'll have to assume it is and try to
                         // create a stream from the original string.
-                        bitmapStream = new System.IO.FileStream(uri.OriginalString, FileMode.Open, FileAccess.Read, FileShare.Read);
+                        bitmapStream = new FileStream(uri.OriginalString, FileMode.Open, FileAccess.Read, FileShare.Read);
                         #pragma warning restore 6518
                     }
 
@@ -1104,9 +1104,9 @@ namespace System.Windows.Media.Imaging
 
             IntPtr comStream = IntPtr.Zero;
 
-            if (stream is System.IO.FileStream)
+            if (stream is FileStream)
             {
-                System.IO.FileStream filestream = stream as System.IO.FileStream;
+                FileStream filestream = stream as FileStream;
                 try
                 {
                     if (filestream.IsAsync is false)
@@ -1142,29 +1142,27 @@ namespace System.Windows.Media.Imaging
                 {
                     using (FactoryMaker myFactory = new FactoryMaker())
                     {
-                        HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateDecoderFromFileHandle(
+                        UnsafeNativeMethods.WICImagingFactory.CreateDecoderFromFileHandle(
                             myFactory.ImagingFactoryPtr,
                             safeFilehandle,
                             ref vendorMicrosoft,
                             metadataFlags,
-                            out decoder
-                            ));
+                            out decoder).ThrowOnFailureExtended();
                     }
                 }
                 else
                 {
-                    comStream = BitmapDecoder.GetIStreamFromStream(ref stream);
+                    comStream = GetIStreamFromStream(ref stream);
 
                     using (FactoryMaker myFactory = new FactoryMaker())
                     {
                         // This does an add-ref on the comStream
-                        HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateDecoderFromStream(
+                        UnsafeNativeMethods.WICImagingFactory.CreateDecoderFromStream(
                             myFactory.ImagingFactoryPtr,
                             comStream,
                             ref vendorMicrosoft,
                             metadataFlags,
-                            out decoder
-                            ));
+                            out decoder).ThrowOnFailureExtended();
                     }
                 }
                 Debug.Assert(decoder != IntPtr.Zero);
@@ -1228,7 +1226,7 @@ namespace System.Windows.Media.Imaging
         {
 
 
-            return new System.IO.FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
+            return new FileStream(uri.LocalPath, FileMode.Open, FileAccess.Read, FileShare.Read);
         }
 
         /// Returns the decoder's CLSID
@@ -1238,52 +1236,41 @@ namespace System.Windows.Media.Imaging
 
             // Get the decoder info
             SafeMILHandle decoderInfo = new SafeMILHandle();
-            HRESULT.Check(UnsafeNativeMethods.WICBitmapDecoder.GetDecoderInfo(
+            UnsafeNativeMethods.WICBitmapDecoder.GetDecoderInfo(
                 decoderHandle,
-                out decoderInfo
-                ));
+                out decoderInfo).ThrowOnFailureExtended();
 
             // Get CLSID for the decoder
-            HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.GetContainerFormat(decoderInfo, out clsId));
+            UnsafeNativeMethods.WICBitmapCodecInfo.GetContainerFormat(decoderInfo, out clsId).ThrowOnFailureExtended();
 
             StringBuilder mimeTypes = null;
-            UInt32 length = 0;
 
             // Find the length of the string needed
-            HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.GetMimeTypes(
+            UnsafeNativeMethods.WICBitmapCodecInfo.GetMimeTypes(
                 decoderInfo,
                 0,
                 mimeTypes,
-                out length
-                ));
+                out uint length).ThrowOnFailureExtended();
 
-            // get the string back
+            // Get the string back
             if (length > 0)
             {
                 mimeTypes = new StringBuilder((int)length);
 
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.GetMimeTypes(
+                UnsafeNativeMethods.WICBitmapCodecInfo.GetMimeTypes(
                     decoderInfo,
                     length,
                     mimeTypes,
-                    out length
-                    ));
+                    out _).ThrowOnFailureExtended();
             }
 
-            if (mimeTypes != null)
-            {
-                decoderMimeTypes = mimeTypes.ToString();
-            }
-            else
-            {
-                decoderMimeTypes = String.Empty;
-            }
+            decoderMimeTypes = mimeTypes?.ToString() ?? string.Empty;
 
             return clsId;
         }
 
         /// Return a seekable stream if the current one is not seekable
-        private static System.IO.Stream GetSeekableStream(System.IO.Stream bitmapStream)
+        private static Stream GetSeekableStream(Stream bitmapStream)
         {
             // MIL codecs require the source stream to be seekable. But if
             // the source stream is an internet stream, it is not seekable.
@@ -1301,8 +1288,8 @@ namespace System.Windows.Media.Imaging
             // hack here and pass the network stream (CConectStream)
             // directly to the unmanaged code
 
-            System.IO.MemoryStream memStream =
-                new System.IO.MemoryStream();
+            MemoryStream memStream =
+                new MemoryStream();
 
             byte[] buffer = new byte[1024];
             int read;
@@ -1323,7 +1310,7 @@ namespace System.Windows.Media.Imaging
             } while (true);
 
             // Reset the memory stream pointer back to the begining
-            memStream.Seek(0, System.IO.SeekOrigin.Begin);
+            memStream.Seek(0, SeekOrigin.Begin);
 
             // Use the new stream
 
@@ -1434,7 +1421,7 @@ namespace System.Windows.Media.Imaging
         {
             uint numFrames = 1;
 
-            HRESULT.Check(UnsafeNativeMethods.WICBitmapDecoder.GetFrameCount(_decoderHandle, out numFrames));
+            UnsafeNativeMethods.WICBitmapDecoder.GetFrameCount(_decoderHandle, out numFrames).ThrowOnFailureExtended();
 
             _frames = new List<BitmapFrame>((int)numFrames);
 
@@ -1502,7 +1489,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         /// <param name="bitmapStream"></param>
         /// <returns></returns>
-        private static IntPtr GetIStreamFromStream(ref System.IO.Stream bitmapStream)
+        private static IntPtr GetIStreamFromStream(ref Stream bitmapStream)
         {
             IntPtr  comStream = IntPtr.Zero;
 
@@ -1532,7 +1519,7 @@ namespace System.Windows.Media.Imaging
 
                 if (comStream == IntPtr.Zero)
                 {
-                    throw new System.InvalidOperationException(
+                    throw new InvalidOperationException(
                         SR.Image_CantDealWithStream);
                 }
 
@@ -1546,12 +1533,12 @@ namespace System.Windows.Media.Imaging
                     {
                         // we don't need the original stream anymore
                         UnsafeNativeMethods.MILUnknown.ReleaseInterface(ref comStream);
-                        bitmapStream = System.IO.Stream.Null;
+                        bitmapStream = Stream.Null;
                         return memoryStream;
                     }
                     else if (!seekable)
                     {
-                        throw new System.InvalidOperationException(
+                        throw new InvalidOperationException(
                                 SR.Image_CantDealWithStream);
                     }
                 }
@@ -1559,7 +1546,7 @@ namespace System.Windows.Media.Imaging
 
             if (comStream == IntPtr.Zero)
             {
-                throw new System.InvalidOperationException(
+                throw new InvalidOperationException(
                 SR.Image_CantDealWithStream);
             }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,7 +8,8 @@ using System.Text;
 using Microsoft.Win32.SafeHandles;
 using MS.Internal;
 using MS.Internal.Interop;
-
+using Windows.Win32.Foundation;
+using HRESULT = Windows.Win32.Foundation.HRESULT;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace MS.Win32
@@ -29,16 +30,13 @@ namespace MS.Win32
             return result;
         }
 
-        [DllImport(ExternDll.Shell32, CharSet = System.Runtime.InteropServices.CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(ExternDll.Shell32, CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern int ExtractIconEx(
                                         string szExeFileName,
                                         int nIconIndex,
                                         out NativeMethods.IconHandle phiconLarge,
                                         out NativeMethods.IconHandle phiconSmall,
                                         int nIcons);
-
-        [DllImport(ExternDll.User32, CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError=true)]
-        internal static extern NativeMethods.IconHandle CreateIcon(IntPtr hInstance, int nWidth, int nHeight, byte cPlanes, byte cBitsPixel, byte[] lpbANDbits, byte[] lpbXORbits);
 
         [DllImport(ExternDll.User32, SetLastError = true)]
         public static extern bool CreateCaret(HandleRef hwnd, NativeMethods.BitmapHandle hbitmap, int width, int height);
@@ -49,56 +47,33 @@ namespace MS.Win32
         [DllImport(ExternDll.User32, SetLastError = true)]
         public static extern bool HideCaret(HandleRef hwnd);
 
-        [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+        [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
         public static extern bool ShowWindowAsync(HandleRef hWnd, int nCmdShow);
 
-        [DllImport(ExternDll.User32, EntryPoint="LoadImage", CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern NativeMethods.IconHandle LoadImageIcon(IntPtr hinst, string stName, int nType, int cxDesired, int cyDesired, int nFlags);
-
-        [DllImport(ExternDll.User32, EntryPoint="LoadImage", CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        [DllImport(ExternDll.User32, EntryPoint="LoadImage", CharSet = CharSet.Auto, SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
         internal static extern NativeMethods.CursorHandle LoadImageCursor(IntPtr hinst, string stName, int nType, int cxDesired, int cyDesired, int nFlags);
-        // uncomment this if you plan to use LoadImage to load anything other than Icons/Cursors.
-        /*
-                [DllImport(ExternDll.User32, CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-                internal static extern SafeHandle LoadImage(
-                    IntPtr hinst, string stName, int nType, int cxDesired, int cyDesired, int nFlags);
-        */
-        /*
-                [DllImport(ExternDll.User32, CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-                internal static extern NativeMethods.IconHandle LoadImage(
-                    IntPtr hinst, string stName, int nType, int cxDesired, int cyDesired, int nFlags);
-        */
 
-        [DllImport( ExternDll.Urlmon, ExactSpelling=true)]
-        internal static extern int CoInternetIsFeatureEnabled( int featureEntry , int dwFlags );
+        [DllImport(ExternDll.Urlmon, ExactSpelling = true)]
+        internal static extern HRESULT CoInternetIsFeatureEnabled(int featureEntry, int dwFlags);
 
-        [DllImport( ExternDll.Urlmon, ExactSpelling=true)]
-        internal static extern int CoInternetSetFeatureEnabled( int featureEntry , int dwFlags, bool fEnable );
+        [DllImport(ExternDll.Urlmon, ExactSpelling = true)]
+        internal static extern HRESULT CoInternetSetFeatureEnabled(int featureEntry, int dwFlags, bool fEnable);
 
-        [DllImport( ExternDll.Urlmon, ExactSpelling=true)]
-        internal static extern int CoInternetIsFeatureZoneElevationEnabled(
-                                                            [MarshalAs(UnmanagedType.LPWStr)] string szFromURL,
-                                                            [MarshalAs(UnmanagedType.LPWStr)] string szToURL,
-                                                            UnsafeNativeMethods.IInternetSecurityManager secMgr,
-                                                            int dwFlags
-                                                            );
+        [DllImport(ExternDll.Urlmon, ExactSpelling = true)]
+        internal static extern HRESULT CoInternetIsFeatureZoneElevationEnabled(
+            [MarshalAs(UnmanagedType.LPWStr)] string szFromURL,
+            [MarshalAs(UnmanagedType.LPWStr)] string szToURL,
+            UnsafeNativeMethods.IInternetSecurityManager secMgr,
+            int dwFlags);
 
 
-        [DllImport(ExternDll.PresentationHostDll, EntryPoint = "ProcessUnhandledException")]
-        internal static extern void ProcessUnhandledException_DLL([MarshalAs(UnmanagedType.BStr)] string errMsg);
+        [DllImport(ExternDll.Urlmon, ExactSpelling = true)]
+        internal static extern HRESULT CoInternetCreateSecurityManager(
+            [MarshalAs(UnmanagedType.Interface)] object pIServiceProvider,
+            [MarshalAs(UnmanagedType.Interface)] out object ppISecurityManager,
+            int dwReserved);
 
-        [DllImport(ExternDll.Kernel32, CharSet=CharSet.Unicode)]
-        internal static extern bool GetVersionEx([In, Out] NativeMethods.OSVERSIONINFOEX ver);
-        [DllImport( ExternDll.Urlmon, ExactSpelling=true)]
-        internal static extern int CoInternetCreateSecurityManager(
-                                                                    [MarshalAs(UnmanagedType.Interface)] object pIServiceProvider,
-                                                                    [MarshalAs(UnmanagedType.Interface)] out object ppISecurityManager ,
-                                                                    int dwReserved ) ;
-
-
-
-
-        [ComImport, ComVisible(false), Guid("79eac9ee-baf9-11ce-8c82-00aa004ba90b"), System.Runtime.InteropServices.InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+        [ComImport, ComVisible(false), Guid("79eac9ee-baf9-11ce-8c82-00aa004ba90b"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         internal interface IInternetSecurityManager
         {
             void SetSecuritySite( NativeMethods.IInternetSecurityMgrSite pSite);
@@ -140,28 +115,17 @@ namespace MS.Win32
             unsafe void GetZoneMappings( /* [in] */ int dwZone, /* [out] */ /*IEnumString*/ void **ppenumString, /* [in] */ int dwFlags);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="hMem"></param>
-        /// <returns></returns>
-        [DllImport(ExternDll.Kernel32, SetLastError = true)]
-        internal static extern IntPtr LocalFree(IntPtr hMem);
-
 #if BASE_NATIVEMETHODS
         [DllImport(ExternDll.Kernel32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal unsafe static extern SafeFileHandle CreateFile(
-          string lpFileName,
-          uint dwDesiredAccess,
-          uint dwShareMode,
-          [In] NativeMethods.SECURITY_ATTRIBUTES lpSecurityAttributes,
-          int dwCreationDisposition,
-          int dwFlagsAndAttributes,
-          IntPtr hTemplateFile);
-#endif
+        internal static extern unsafe SafeFileHandle CreateFile(
+            string lpFileName,
+            uint dwDesiredAccess,
+            uint dwShareMode,
+            [In] NativeMethods.SECURITY_ATTRIBUTES lpSecurityAttributes,
+            int dwCreationDisposition,
+            int dwFlagsAndAttributes,
+            IntPtr hTemplateFile);
 
-
-#if BASE_NATIVEMETHODS
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
         internal static extern IntPtr GetMessageExtraInfo();
 
@@ -178,7 +142,7 @@ namespace MS.Win32
         internal static int WaitForMultipleObjectsEx(int nCount, IntPtr[] pHandles, bool bWaitAll, int dwMilliseconds, bool bAlertable)
         {
             int result = IntWaitForMultipleObjectsEx(nCount, pHandles, bWaitAll, dwMilliseconds, bAlertable);
-            if(result ==  UnsafeNativeMethods.WAIT_FAILED)
+            if(result == WAIT_FAILED)
             {
                 throw new Win32Exception();
             }
@@ -239,7 +203,7 @@ namespace MS.Win32
 
         // Note that processes at or below SECURITY_MANDATORY_LOW_RID are not allowed to change the message filter.
         // If those processes call this function, it will fail and generate the extended error code, ERROR_ACCESS_DENIED.
-        internal static MS.Internal.Interop.HRESULT ChangeWindowMessageFilterEx(IntPtr hwnd, WindowMessage message, MSGFLT action, out MSGFLTINFO extStatus)
+        internal static HRESULT ChangeWindowMessageFilterEx(IntPtr hwnd, WindowMessage message, MSGFLT action, out MSGFLTINFO extStatus)
         {
             extStatus = MSGFLTINFO.NONE;
 
@@ -247,7 +211,7 @@ namespace MS.Win32
             // If we're not on either, then this message filter isolation doesn't exist.
             if (!Utilities.IsOSVistaOrNewer)
             {
-                return MS.Internal.Interop.HRESULT.S_FALSE;
+                return HRESULT.S_FALSE;
             }
 
             // If we're on Vista rather than Win7 then we can't use the Ex version of this function.
@@ -258,42 +222,43 @@ namespace MS.Win32
                 // Note that the Win7 MSGFLT_ALLOW/DISALLOW enum values map to the Vista MSGFLT_ADD/REMOVE
                 if (!IntChangeWindowMessageFilter(message, action))
                 {
-                    return (MS.Internal.Interop.HRESULT)Win32Error.GetLastError();
+                    return (HRESULT)Marshal.GetHRForLastWin32Error();
                 }
-                return MS.Internal.Interop.HRESULT.S_OK;
+
+                return HRESULT.S_OK;
             }
 
             var filterstruct = new CHANGEFILTERSTRUCT { cbSize = (uint)Marshal.SizeOf(typeof(CHANGEFILTERSTRUCT)) };
             if (!IntChangeWindowMessageFilterEx(hwnd, message, action, ref filterstruct))
             {
-                return (MS.Internal.Interop.HRESULT)Win32Error.GetLastError();
+                return (HRESULT)Marshal.GetHRForLastWin32Error();
             }
 
             extStatus = filterstruct.ExtStatus;
-            return MS.Internal.Interop.HRESULT.S_OK;
+            return HRESULT.S_OK;
         }
 
-        [DllImport(ExternDll.Urlmon, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        private static extern MS.Internal.Interop.HRESULT ObtainUserAgentString(int dwOption, StringBuilder userAgent, ref int length);
+        [DllImport(ExternDll.Urlmon, ExactSpelling = true, CharSet = CharSet.Ansi, BestFitMapping = false, ThrowOnUnmappableChar = true)]
+        private static extern HRESULT ObtainUserAgentString(int dwOption, StringBuilder userAgent, ref int length);
 
         internal static string ObtainUserAgentString()
         {
-            int length = MS.Win32.NativeMethods.MAX_PATH;
+            int length = NativeMethods.MAX_PATH;
             StringBuilder userAgentBuffer = new StringBuilder(length);
-            MS.Internal.Interop.HRESULT hr = ObtainUserAgentString(0 /*reserved. must be 0*/, userAgentBuffer, ref length);
+            HRESULT result = ObtainUserAgentString(0 /*reserved. must be 0*/, userAgentBuffer, ref length);
 
             // Installing .NET 4.0 adds two parts to the user agent string, i.e.
             // .NET4.0C and .NET4.0E, potentially causing the user agent string to overflow its
             // documented maximum length of MAX_PATH. Turns out ObtainUserAgentString can return
             // a longer string if asked to do so. Therefore we grow the string dynamically when
             // needed, accommodating for this failure condition.
-            if (hr == MS.Internal.Interop.HRESULT.E_OUTOFMEMORY)
+            if (result == HRESULT.E_OUTOFMEMORY)
             {
                 userAgentBuffer = new StringBuilder(length);
-                hr = ObtainUserAgentString(0 /*reserved. must be 0*/, userAgentBuffer, ref length);
+                result = ObtainUserAgentString(0 /*reserved. must be 0*/, userAgentBuffer, ref length);
             }
 
-            hr.ThrowIfFailed();
+            result.ThrowOnFailureUnwrapWin32();
 
             return userAgentBuffer.ToString();
         }
@@ -315,21 +280,10 @@ namespace MS.Win32
         [DllImport(ExternDll.User32,EntryPoint="UnregisterPowerSettingNotification")]
         unsafe internal static extern IntPtr UnregisterPowerSettingNotification(IntPtr hPowerNotify);
 
-/*
-        //
-        // SendMessage taking a SafeHandle for wParam. Needed by some Win32 messages. e.g. WM_PRINT
-        //
-        [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
-        internal static extern IntPtr SendMessage(HandleRef hWnd, WindowMessage msg, SafeHandle wParam, IntPtr lParam);
-*/
-
         // private  DllImport - that takes an IconHandle.
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto, SetLastError = true)]
         internal static extern IntPtr SendMessage( HandleRef hWnd, WindowMessage msg, IntPtr wParam, NativeMethods.IconHandle iconHandle );
 #endif
-
-        [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = CharSet.Auto)]
-        internal static extern void SetLastError(int dwErrorCode);
 
 #if BASE_NATIVEMETHODS || CORE_NATIVEMETHODS || FRAMEWORK_NATIVEMETHODS
         /// <summary>
@@ -343,6 +297,7 @@ namespace MS.Win32
         [DllImport("user32.dll")]
         public static extern bool GetLayeredWindowAttributes(
                 HandleRef hwnd, IntPtr pcrKey, IntPtr pbAlpha, IntPtr pdwFlags);
+
         internal sealed class SafeFileMappingHandle : SafeHandleZeroOrMinusOneIsInvalid
         {
             internal SafeFileMappingHandle(IntPtr handle) : base(false)
@@ -367,6 +322,7 @@ namespace MS.Win32
                 return CloseHandleNoThrow(new HandleRef(null, handle));
             }
         }
+
         internal sealed class SafeViewOfFileHandle : SafeHandleZeroOrMinusOneIsInvalid
         {
             internal SafeViewOfFileHandle() : base(true) { }
@@ -382,7 +338,7 @@ namespace MS.Win32
 
             override protected bool ReleaseHandle()
             {
-                return UnsafeNativeMethods.UnmapViewOfFileNoThrow(new HandleRef(null, handle));
+                return UnmapViewOfFileNoThrow(new HandleRef(null, handle));
             }
         }
 
@@ -589,19 +545,6 @@ namespace MS.Win32
         [DllImport(ExternDll.Kernel32, ExactSpelling = true, SetLastError = true)]
         internal static extern int FindNLSString(int locale, uint flags, [MarshalAs(UnmanagedType.LPWStr)]string sourceString, int sourceCount, [MarshalAs(UnmanagedType.LPWStr)]string findString, int findCount, out int found);
 
-
-        //[DllImport(ExternDll.Psapi, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false)]
-        //public static extern int GetModuleFileNameEx(IntPtr hProcess, IntPtr hModule, StringBuilder buffer, int length);
-
-        //
-        // OpenProcess
-        //
-        public const int PROCESS_VM_READ = 0x0010;
-        public const int PROCESS_QUERY_INFORMATION = 0x0400;
-
-        //[DllImport(ExternDll.Kernel32, SetLastError = true, CharSet = CharSet.Auto)]
-        //public static extern IntPtr OpenProcess(int dwDesiredAccess, bool fInherit, int dwProcessId);
-
         [DllImport(ExternDll.User32, EntryPoint = "SetWindowText", CharSet = CharSet.Auto, SetLastError = true, BestFitMapping = false)]
         private static extern bool IntSetWindowText(HandleRef hWnd, string text);
 
@@ -612,8 +555,8 @@ namespace MS.Win32
                 throw new Win32Exception();
             }
         }
-        [DllImport(ExternDll.User32, EntryPoint = "GetIconInfo", CharSet = CharSet.Auto, SetLastError = true)]
 
+        [DllImport(ExternDll.User32, EntryPoint = "GetIconInfo", CharSet = CharSet.Auto, SetLastError = true)]
         private static extern bool GetIconInfoImpl(HandleRef hIcon, [Out] ICONINFO_IMPL piconinfo);
 
         [StructLayout(LayoutKind.Sequential)]
@@ -665,17 +608,6 @@ namespace MS.Win32
             }
         }
 
-#if never
-
-        [DllImport(ExternDll.User32,
-#if WIN64
-         EntryPoint="GetClassLongPtr",
-#endif
- CharSet = CharSet.Auto, SetLastError = true)
-        ]
-        internal static extern UInt32 GetClassLong(IntPtr hwnd, int nIndex);
-#endif
-
         [DllImport(ExternDll.User32, EntryPoint = "GetWindowPlacement", ExactSpelling = true, CharSet = CharSet.Auto, SetLastError = true)]
         private static extern bool IntGetWindowPlacement(HandleRef hWnd, ref NativeMethods.WINDOWPLACEMENT placement);
 
@@ -700,13 +632,6 @@ namespace MS.Win32
                 throw new Win32Exception();
             }
         }
-
-        //[DllImport("secur32.dll", CharSet = CharSet.Unicode, SetLastError = true, ExactSpelling = true)]
-        //internal static extern bool GetUserNameExW(
-        //    [In] EXTENDED_NAME_FORMAT nameFormat,
-        //    [MarshalAs(UnmanagedType.LPWStr)] StringBuilder lpNameBuffer,
-        //    [In, Out] ref ulong nSize);
-
 
         [DllImport(ExternDll.User32, CharSet = CharSet.Auto, BestFitMapping = false)]
         internal static extern bool SystemParametersInfo(int nAction, int nParam, [In, Out] NativeMethods.ANIMATIONINFO anim, int nUpdate);
@@ -805,24 +730,9 @@ namespace MS.Win32
             HandleRef hwnd,
             bool fAnimateBack);
 
-        /// <summary>
-        ///
-        /// </summary>
-        [DllImport(ExternDll.Kernel32, CharSet = CharSet.Auto, SetLastError = true)]
-        public static extern bool SetEvent(IntPtr hEvent);
-
         [DllImport(ExternDll.Kernel32, SetLastError = true, ExactSpelling = true, CharSet = CharSet.Auto)]
         public static extern int SetEvent([In] SafeWaitHandle hHandle);
 
-        [DllImport(ExternDll.Kernel32, SetLastError = true, ExactSpelling = true, CharSet = CharSet.Auto)]
-        public static extern int WaitForSingleObject([In] SafeWaitHandle hHandle, [In] int dwMilliseconds);
-
-
-        //[DllImport(ExternDll.Kernel32, SetLastError = true)]
-        //internal static extern int GetFileSize(SafeFileHandle hFile, ref int lpFileSizeHigh);
-
-
-        //////////////////////////////////////
         // Needed by BASE
 #if BASE_NATIVEMETHODS
 
@@ -835,19 +745,6 @@ namespace MS.Win32
                                         int nBufPoints,
                                         uint resolution
                                    );
-
-        [StructLayout(LayoutKind.Explicit)]
-        internal unsafe struct ULARGE_INTEGER
-        {
-            [FieldOffset(0)]
-            internal uint LowPart;
-
-            [FieldOffset(4)]
-            internal uint HighPart;
-
-            [FieldOffset(0)]
-            internal ulong QuadPart;
-        }
 
         [StructLayout(LayoutKind.Explicit)]
         internal unsafe struct LARGE_INTEGER
@@ -873,11 +770,7 @@ namespace MS.Win32
         internal static readonly IntPtr INVALID_HANDLE_VALUE = new IntPtr(-1);
 
         /// <summary>Win32 constants</summary>
-        internal const int PAGE_NOACCESS = 0x01;
-        /// <summary>Win32 constants</summary>
         internal const int PAGE_READONLY = 0x02;
-        /// <summary>Win32 constants</summary>
-        internal const int PAGE_READWRITE = 0x04;
         /// <summary>Win32 constants</summary>
         internal const int PAGE_WRITECOPY = 0x08;
         /// <summary>Win32 constants</summary>
@@ -914,10 +807,6 @@ namespace MS.Win32
         internal const int MEM_TOP_DOWN = 0x100000;
         /// <summary>Win32 constants</summary>
         internal const int MEM_WRITE_WATCH = 0x200000;
-        /// <summary>Win32 constants</summary>
-        internal const int MEM_PHYSICAL = 0x400000;
-        /// <summary>Win32 constants</summary>
-        internal const int MEM_4MB_PAGES = unchecked((int)0x80000000);
         /// <summary>Win32 constants</summary>
         internal const int SEC_FILE = 0x800000;
         /// <summary>Win32 constants</summary>
@@ -965,44 +854,6 @@ namespace MS.Win32
         /// <summary>Win32 constants</summary>
         internal const int FILE_MAP_ALL_ACCESS = SECTION_ALL_ACCESS;
 
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="stringSecurityDescriptor"></param>
-        /// <param name="stringSDRevision"></param>
-        /// <param name="securityDescriptor"></param>
-        /// <param name="securityDescriptorSize"></param>
-        /// <returns></returns>
-        [DllImport(ExternDll.Advapi32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern bool ConvertStringSecurityDescriptorToSecurityDescriptor(
-            string stringSecurityDescriptor,    // security descriptor string
-            int stringSDRevision,                  // revision level
-            ref IntPtr securityDescriptor,       // SD
-            IntPtr securityDescriptorSize       // SD size
-            );
-
-        /// <summary>Win32 constants</summary>
-        internal const int SDDL_REVISION_1 = 1;
-        /// <summary>Win32 constants</summary>
-        internal const int SDDL_REVISION = SDDL_REVISION_1;
-
-
-        [DllImport(ExternDll.Kernel32, SetLastError = true, CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern SafeFileMappingHandle OpenFileMapping(
-            int dwDesiredAccess,
-            bool bInheritHandle,
-            string lpName
-            );
-
-        [DllImport(ExternDll.Kernel32, SetLastError = true)]
-        internal static extern IntPtr VirtualAlloc(
-            IntPtr lpAddress,
-            UIntPtr dwSize,
-            int flAllocationType,
-            int flProtect
-            );
-
-
         //
         // RIT WM_MOUSEQUERY structure for DWM WM_MOUSEQUERY (see HwndMouseInputSource.cs)
         //
@@ -1018,43 +869,13 @@ namespace MS.Win32
         }
 
         [DllImport(ExternDll.Ole32, ExactSpelling = true, CharSet = CharSet.Auto)]
-        public static extern int OleIsCurrentClipboard(IComDataObject pDataObj);
+        public static extern HRESULT OleIsCurrentClipboard(IComDataObject pDataObj);
 
         [DllImport(ExternDll.Kernel32, ExactSpelling = true, CharSet = CharSet.Auto)]
         internal static extern int GetOEMCP();
 
-#if never
-        [DllImport("user32.dll", CharSet = CharSet.Auto, BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        internal static extern int ToUnicode(int nVirtKey, int nScanCode, byte[] keystate, StringBuilder text, int cch, int flags);
-#endif
-
         // WinEvent fired when new Avalon UI is created
         public const int EventObjectUIFragmentCreate = 0x6FFFFFFF;
-
-
-        //////////////////////////////////
-        // Needed by FontCache
-
-        [DllImport("ntdll.dll")]
-        internal static extern int RtlNtStatusToDosError(int Status);
-
-        internal static bool NtSuccess(int err)
-        {
-            return err >= STATUS_SUCCESS;
-        }
-
-        internal static void NtCheck(int err)
-        {
-            if (!NtSuccess(err))
-            {
-                int win32error = RtlNtStatusToDosError(err);
-                throw new System.ComponentModel.Win32Exception(win32error);
-            }
-        }
-
-        internal const int STATUS_SUCCESS = 0;
-        internal const int STATUS_TIMEOUT = 0x00000102;
-        internal const int STATUS_BUFFER_TOO_SMALL = unchecked((int)0xC0000023);
 
 #endif // BASE_NATIVEMETHODS
 
@@ -1156,55 +977,5 @@ namespace MS.Win32
         [DllImport(ExternDll.User32)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsIconic(IntPtr hWnd);
-
-        public enum HookType : int
-        {
-            WH_JOURNALRECORD = 0,
-            WH_JOURNALPLAYBACK = 1,
-            WH_KEYBOARD = 2,
-            WH_GETMESSAGE = 3,
-            WH_CALLWNDPROC = 4,
-            WH_CBT = 5,
-            WH_SYSMSGFILTER = 6,
-            WH_MOUSE = 7,
-            WH_HARDWARE = 8,
-            WH_DEBUG = 9,
-            WH_SHELL = 10,
-            WH_FOREGROUNDIDLE = 11,
-            WH_CALLWNDPROCRET = 12,
-            WH_KEYBOARD_LL = 13,
-            WH_MOUSE_LL = 14,
-        }
-
-        [StructLayout(LayoutKind.Sequential)]
-        public struct MOUSEHOOKSTRUCT
-        {
-            public NativeMethods.POINT pt;
-            public IntPtr hwnd;
-            public uint   wHitTestCode;
-            public IntPtr dwExtraInfo;
-        }
-
-        public delegate IntPtr HookProc(int code, IntPtr wParam, IntPtr lParam);
-
-        public static HandleRef SetWindowsHookEx(HookType idHook, HookProc lpfn, IntPtr hMod, int dwThreadId)
-        {
-            IntPtr result = IntSetWindowsHookEx(idHook, lpfn, hMod, dwThreadId);
-            if (result == IntPtr.Zero)
-            {
-                throw new Win32Exception();
-            }
-
-            return new HandleRef(lpfn, result);
-        }
-
-        [DllImport(ExternDll.User32, EntryPoint = "SetWindowsHookExW", SetLastError = true)]
-        private static extern IntPtr IntSetWindowsHookEx(HookType idHook, HookProc lpfn, IntPtr hMod, int dwThreadId);
-
-        [DllImport(ExternDll.User32, SetLastError = true)]
-        public static extern bool UnhookWindowsHookEx(HandleRef hhk);
-
-        [DllImport(ExternDll.User32, SetLastError = true)]
-        public static extern IntPtr CallNextHookEx(HandleRef hhk, int nCode, IntPtr wParam, IntPtr lParam);
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -20,8 +20,7 @@ using MS.Internal;
 using MS.Internal.Controls;
 using MS.Internal.Telemetry.PresentationFramework;
 using System.Diagnostics.CodeAnalysis;
-
-using HRESULT = MS.Internal.Interop.HRESULT;
+using Windows.Win32.Foundation;
 using PackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
 
 /* Overview of Keyboard Input Routing for the WebOC
@@ -288,7 +287,7 @@ namespace System.Windows.Controls
                     int[] dispids = new int[] { NativeMethods.DISPID_UNKNOWN };
 
                     HRESULT hr = scriptObjectEx.GetIDsOfNames(ref guid, names, 1, Thread.CurrentThread.CurrentCulture.LCID, dispids);
-                    hr.ThrowIfFailed();
+                    hr.ThrowOnFailureUnwrapWin32();
 
                     if (args != null)
                     {
@@ -321,7 +320,7 @@ namespace System.Windows.Controls
                         out retVal, 
                         new NativeMethods.EXCEPINFO(),
                         null);
-                    hr.ThrowIfFailed();
+                    hr.ThrowOnFailureUnwrapWin32();
                 }
                 finally
                 {
@@ -545,7 +544,7 @@ namespace System.Windows.Controls
         internal override void AttachInterfaces(object nativeActiveXObject)
         {
             //cache the interface
-            this._axIWebBrowser2 = (UnsafeNativeMethods.IWebBrowser2)nativeActiveXObject;
+            _axIWebBrowser2 = (UnsafeNativeMethods.IWebBrowser2)nativeActiveXObject;
 
             //
             //Initializations
@@ -922,7 +921,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void SyncUIActiveState()
         {
-            if (ActiveXState != ActiveXHelper.ActiveXState.UIActive && this.HasFocusWithinCore())
+            if (ActiveXState != ActiveXHelper.ActiveXState.UIActive && HasFocusWithinCore())
             {
                 Invariant.Assert(ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive);
                 ActiveXState = ActiveXHelper.ActiveXState.UIActive;
@@ -955,12 +954,12 @@ namespace System.Windows.Controls
             Invariant.Assert(ActiveXState >= ActiveXHelper.ActiveXState.InPlaceActive, "Should be at least InPlaceActive when tabbed into");
 
             bool activated = DoVerb(NativeMethods.OLEIVERB_UIACTIVATE);
-            
+
             if (activated)
             {
-                this.ActiveXState = ActiveXHelper.ActiveXState.UIActive;
+                ActiveXState = ActiveXHelper.ActiveXState.UIActive;
             }
-            
+
             return activated;
         }
 

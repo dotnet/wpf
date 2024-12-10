@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,7 +14,8 @@ using MS.Utility;
 using MS.Win32;
 
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
-using HRESULT = MS.Internal.HRESULT;
+using HRESULT = Windows.Win32.Foundation.HRESULT;
+using Windows.Win32.Foundation;
 
 /*
  *
@@ -111,101 +112,101 @@ namespace System.Windows.Media.Composition
         private static class UnsafeNativeMethods
         {
             [DllImport(DllImport.MilCore)]
-            internal static extern /*HRESULT*/ int MilResource_CreateOrAddRefOnChannel(
+            internal static extern HRESULT MilResource_CreateOrAddRefOnChannel(
                 IntPtr pChannel,
-                DUCE.ResourceType resourceType,
-                ref DUCE.ResourceHandle hResource
+                ResourceType resourceType,
+                ref ResourceHandle hResource
                 );
 
             [DllImport(DllImport.MilCore)]
-            internal static extern /*HRESULT*/ int MilResource_DuplicateHandle(
+            internal static extern HRESULT MilResource_DuplicateHandle(
                 IntPtr pSourceChannel,
-                DUCE.ResourceHandle original,
+                ResourceHandle original,
                 IntPtr pTargetChannel,
-                ref DUCE.ResourceHandle duplicate
+                ref ResourceHandle duplicate
                 );
 
             [DllImport(DllImport.MilCore, EntryPoint = "MilConnection_CreateChannel")]//CASRemoval:
-            internal static extern int MilConnection_CreateChannel(
+            internal static extern HRESULT MilConnection_CreateChannel(
                 IntPtr pTransport,
                 IntPtr hChannel,
                 out IntPtr channelHandle);
 
             [DllImport(DllImport.MilCore, EntryPoint = "MilConnection_DestroyChannel")]//CASRemoval:
-            internal static extern int MilConnection_DestroyChannel(
+            internal static extern HRESULT MilConnection_DestroyChannel(
                 IntPtr channelHandle);
 
             [DllImport(DllImport.MilCore, EntryPoint = "MilChannel_CloseBatch")]//CASRemoval:
-            internal static extern int MilConnection_CloseBatch(
+            internal static extern HRESULT MilConnection_CloseBatch(
                 IntPtr channelHandle);
 
             [DllImport(DllImport.MilCore, EntryPoint = "MilChannel_CommitChannel")]//CASRemoval:
-            internal static extern int MilConnection_CommitChannel(
+            internal static extern HRESULT MilConnection_CommitChannel(
                 IntPtr channelHandle);
 
             [DllImport(DllImport.MilCore)]//CASRemoval:
-            internal static extern int WgxConnection_SameThreadPresent(
+            internal static extern HRESULT WgxConnection_SameThreadPresent(
                 IntPtr pConnection);
 
             [DllImport(DllImport.MilCore, EntryPoint = "MilChannel_GetMarshalType")]
-            internal static extern int MilChannel_GetMarshalType(IntPtr channelHandle, out ChannelMarshalType marshalType);
+            internal static extern HRESULT MilChannel_GetMarshalType(IntPtr channelHandle, out ChannelMarshalType marshalType);
 
-            [DllImport (DllImport.MilCore, EntryPoint = "MilResource_SendCommand")]//CASRemoval:
-            unsafe internal static extern int MilResource_SendCommand(
-                byte *pbData,
+            [DllImport(DllImport.MilCore, EntryPoint = "MilResource_SendCommand")]//CASRemoval:
+            internal static extern unsafe HRESULT MilResource_SendCommand(
+                byte* pbData,
                 uint cbSize,
                 bool sendInSeparateBatch,
                 IntPtr pChannel);
 
-            [DllImport (DllImport.MilCore, EntryPoint = "MilChannel_BeginCommand")]//CASRemoval:
-            unsafe internal static extern int MilChannel_BeginCommand(
+            [DllImport(DllImport.MilCore, EntryPoint = "MilChannel_BeginCommand")]//CASRemoval:
+            internal static extern unsafe HRESULT MilChannel_BeginCommand(
                 IntPtr pChannel,
-                byte *pbData,
+                byte* pbData,
                 uint cbSize,
                 uint cbExtra
                 );
 
-            [DllImport (DllImport.MilCore, EntryPoint = "MilChannel_AppendCommandData")]//CASRemoval:
-            unsafe internal static extern int MilChannel_AppendCommandData(
+            [DllImport(DllImport.MilCore, EntryPoint = "MilChannel_AppendCommandData")]//CASRemoval:
+            internal static extern unsafe HRESULT MilChannel_AppendCommandData(
                 IntPtr pChannel,
-                byte *pbData,
+                byte* pbData,
                 uint cbSize
                 );
 
-            [DllImport (DllImport.MilCore, EntryPoint = "MilChannel_EndCommand")]//CASRemoval:
-            unsafe internal static extern int MilChannel_EndCommand(
+            [DllImport(DllImport.MilCore, EntryPoint = "MilChannel_EndCommand")]//CASRemoval:
+            internal static extern unsafe HRESULT MilChannel_EndCommand(
                 IntPtr pChannel);
 
-            [DllImport (DllImport.MilCore, EntryPoint = "MilResource_SendCommandMedia")]//CASRemoval:
-            unsafe internal static extern int MilResource_SendCommandMedia(
+            [DllImport(DllImport.MilCore, EntryPoint = "MilResource_SendCommandMedia")]//CASRemoval:
+            internal static extern unsafe HRESULT MilResource_SendCommandMedia(
                 ResourceHandle handle,
                 SafeMediaHandle pMedia,
                 IntPtr pChannel,
-                bool  notifyUceDirect
+                bool notifyUceDirect
                 );
 
-            [DllImport (DllImport.MilCore, EntryPoint = "MilResource_SendCommandBitmapSource")]//CASRemoval:
-            unsafe internal static extern int MilResource_SendCommandBitmapSource(
+            [DllImport(DllImport.MilCore, EntryPoint = "MilResource_SendCommandBitmapSource")]//CASRemoval:
+            internal static extern unsafe HRESULT MilResource_SendCommandBitmapSource(
                 ResourceHandle handle,
                 BitmapSourceSafeMILHandle /* IWICBitmapSource */ pBitmapSource,
                 IntPtr pChannel);
 
             [DllImport(DllImport.MilCore, EntryPoint = "MilResource_ReleaseOnChannel")]//CASRemoval:
-            internal static extern /*HRESULT*/ int MilResource_ReleaseOnChannel(
+            internal static extern HRESULT MilResource_ReleaseOnChannel(
                 IntPtr pChannel,
-                DUCE.ResourceHandle hResource,
+                ResourceHandle hResource,
                 out int deleted
                 );
 
             [DllImport(DllImport.MilCore)]
-            internal static extern int MilChannel_SetNotificationWindow(
+            internal static extern HRESULT MilChannel_SetNotificationWindow(
                 IntPtr pChannel,
                 IntPtr hwnd,
                 WindowMessage message
                 );
 
             [DllImport(DllImport.MilCore)]
-            internal static extern int MilComposition_WaitForNextMessage(
+            internal static extern HRESULT MilComposition_WaitForNextMessage(
                 IntPtr pChannel,
                 int nCount,
                 IntPtr[] handles,
@@ -215,7 +216,7 @@ namespace System.Windows.Media.Composition
                 );
 
             [DllImport(DllImport.MilCore)]
-            internal static extern int MilComposition_PeekNextMessage(
+            internal static extern HRESULT MilComposition_PeekNextMessage(
                 IntPtr pChannel,
                 out MilMessage.Message message,
                 /* size_t */ IntPtr messageSize,
@@ -223,9 +224,9 @@ namespace System.Windows.Media.Composition
                 );
 
             [DllImport(DllImport.MilCore, EntryPoint = "MilResource_GetRefCountOnChannel")]
-            internal static extern /*HRESULT*/ int MilResource_GetRefCountOnChannel(
+            internal static extern HRESULT MilResource_GetRefCountOnChannel(
                 IntPtr pChannel,
-                DUCE.ResourceHandle hResource,
+                ResourceHandle hResource,
                 out uint refCount
                 );
         }
@@ -233,7 +234,7 @@ namespace System.Windows.Media.Composition
         /// <summary>
         /// Define the value of an infinte wait in WaitForNextMessage.
         /// </summary>
-        internal const UInt32 waitInfinite = UInt32.MaxValue;
+        internal const uint InfiniteWait = uint.MaxValue;
 
         internal static class MilMessage
         {
@@ -242,16 +243,16 @@ namespace System.Windows.Media.Composition
             /// </summary>
             internal enum Type
             {
-                Invalid             = 0x00,
+                Invalid = 0x00,
 
-                SyncFlushReply      = 0x01,
-                Caps                = 0x04,
-                PartitionIsZombie   = 0x06,
-                SyncModeStatus      = 0x09,
-                Presented           = 0x0A,
-                BadPixelShader      = 0x10,
+                SyncFlushReply = 0x01,
+                Caps = 0x04,
+                PartitionIsZombie = 0x06,
+                SyncModeStatus = 0x09,
+                Presented = 0x0A,
+                BadPixelShader = 0x10,
 
-                ForceDWORD          = unchecked((int)0xffffffff)
+                ForceDWORD = unchecked((int)0xffffffff)
             };
 
             [StructLayout(LayoutKind.Explicit, Pack = 1)]
@@ -350,11 +351,11 @@ namespace System.Windows.Media.Composition
                     referenceChannelHandle = referenceChannel._hChannel;
                 }
 
-                HRESULT.Check(UnsafeNativeMethods.MilConnection_CreateChannel(
+                UnsafeNativeMethods.MilConnection_CreateChannel(
                     _pConnection,
                     referenceChannelHandle,
-                    out _hChannel));
-}
+                    out _hChannel).ThrowOnFailureExtended();
+            }
 
 
             /// <summary>
@@ -374,8 +375,8 @@ namespace System.Windows.Media.Composition
                     return;
                 }
 
-                HRESULT.Check(UnsafeNativeMethods.MilConnection_CommitChannel(
-                   _hChannel));
+                UnsafeNativeMethods.MilConnection_CommitChannel(
+                   _hChannel).ThrowOnFailureExtended();
             }
 
             /// <summary>
@@ -395,8 +396,8 @@ namespace System.Windows.Media.Composition
                     return;
                 }
 
-                HRESULT.Check(UnsafeNativeMethods.MilConnection_CloseBatch(
-                   _hChannel));
+                UnsafeNativeMethods.MilConnection_CloseBatch(
+                   _hChannel).ThrowOnFailureExtended();
             }
 
             /// <summary>
@@ -417,8 +418,8 @@ namespace System.Windows.Media.Composition
                     return;
                 }
 
-                HRESULT.Check(MilCoreApi.MilComposition_SyncFlush(_hChannel));
-}
+                MilCoreApi.MilComposition_SyncFlush(_hChannel).ThrowOnFailureExtended();
+            }
 
             /// <summary>
             /// Commits the channel and then closes it.
@@ -427,15 +428,15 @@ namespace System.Windows.Media.Composition
             {
                 if (_hChannel != IntPtr.Zero)
                 {
-                    HRESULT.Check(UnsafeNativeMethods.MilConnection_CloseBatch(_hChannel));
-                    HRESULT.Check(UnsafeNativeMethods.MilConnection_CommitChannel(_hChannel));
+                    UnsafeNativeMethods.MilConnection_CloseBatch(_hChannel).ThrowOnFailureExtended();
+                    UnsafeNativeMethods.MilConnection_CommitChannel(_hChannel).ThrowOnFailureExtended();
                 }
 
                 _referenceChannel = null;
 
                 if (_hChannel != IntPtr.Zero)
                 {
-                    HRESULT.Check(UnsafeNativeMethods.MilConnection_DestroyChannel(_hChannel));
+                    UnsafeNativeMethods.MilConnection_DestroyChannel(_hChannel).ThrowOnFailureExtended();
 
                     _hChannel = IntPtr.Zero;
                 }
@@ -446,7 +447,7 @@ namespace System.Windows.Media.Composition
             /// </summary>
             internal void Present()
             {
-                HRESULT.Check(UnsafeNativeMethods.WgxConnection_SameThreadPresent(_pConnection));
+                UnsafeNativeMethods.WgxConnection_SameThreadPresent(_pConnection).ThrowOnFailureExtended();
             }
 
             /// <summary>
@@ -457,21 +458,21 @@ namespace System.Windows.Media.Composition
             /// Returns true iff the resource was created on the channel. The caller is responsible to
             /// update the resource appropriately.
             /// </return>
-            internal bool CreateOrAddRefOnChannel(object instance, ref DUCE.ResourceHandle handle, DUCE.ResourceType resourceType)
+            internal bool CreateOrAddRefOnChannel(object instance, ref ResourceHandle handle, ResourceType resourceType)
             {
                 bool handleNeedsCreation = handle.IsNull;
 
                 Invariant.Assert(_hChannel != IntPtr.Zero);
 
-                HRESULT.Check(UnsafeNativeMethods.MilResource_CreateOrAddRefOnChannel(
+                UnsafeNativeMethods.MilResource_CreateOrAddRefOnChannel(
                     _hChannel,
                     resourceType,
                     ref handle
-                    ));
+                    ).ThrowOnFailureExtended();
 
                 if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW))
                 {
-                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.CreateOrAddResourceOnChannel, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW, PerfService.GetPerfElementID(instance), _hChannel, (uint) handle, (uint) resourceType);
+                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.CreateOrAddResourceOnChannel, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW, PerfService.GetPerfElementID(instance), _hChannel, (uint)handle, (uint)resourceType);
                 }
 
                 return handleNeedsCreation;
@@ -491,21 +492,21 @@ namespace System.Windows.Media.Composition
             /// Returns the duplicated handle (valid on the target channel) or the null
             /// handle if duplication failed.
             /// </return>
-            internal DUCE.ResourceHandle DuplicateHandle(
-                DUCE.ResourceHandle original,
-                DUCE.Channel targetChannel
+            internal ResourceHandle DuplicateHandle(
+                ResourceHandle original,
+                Channel targetChannel
                 )
             {
-                DUCE.ResourceHandle duplicate = DUCE.ResourceHandle.Null;
+                ResourceHandle duplicate = ResourceHandle.Null;
 
                 //Debug.WriteLine(string.Format("DuplicateHandle: Channel: {0}, Resource: {1}, Target channel: {2},  ", _hChannel, original._handle, targetChannel));
 
-                HRESULT.Check(UnsafeNativeMethods.MilResource_DuplicateHandle(
+                UnsafeNativeMethods.MilResource_DuplicateHandle(
                     _hChannel,
                     original,
                     targetChannel._hChannel,
                     ref duplicate
-                    ));
+                    ).ThrowOnFailureExtended();
 
                 return duplicate;
             }
@@ -518,7 +519,7 @@ namespace System.Windows.Media.Composition
             /// <return>
             /// Returns true iff the resource is not on this channel anymore.
             /// </return>
-            internal bool ReleaseOnChannel(DUCE.ResourceHandle handle)
+            internal bool ReleaseOnChannel(ResourceHandle handle)
             {
                 Invariant.Assert(_hChannel != IntPtr.Zero);
                 Debug.Assert(!handle.IsNull);
@@ -527,15 +528,15 @@ namespace System.Windows.Media.Composition
 
                 int releasedOnChannel;
 
-                HRESULT.Check(UnsafeNativeMethods.MilResource_ReleaseOnChannel(
+                UnsafeNativeMethods.MilResource_ReleaseOnChannel(
                     _hChannel,
                     handle,
                     out releasedOnChannel
-                    ));
+                    ).ThrowOnFailureExtended();
 
                 if ((releasedOnChannel != 0) && EventTrace.IsEnabled(EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW))
                 {
-                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.ReleaseOnChannel, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW, _hChannel, (uint) handle);
+                    EventTrace.EventProvider.TraceEvent(EventTrace.Event.ReleaseOnChannel, EventTrace.Keyword.KeywordGraphics | EventTrace.Keyword.KeywordPerf, EventTrace.Level.PERF_LOW, _hChannel, (uint)handle);
                 }
 
                 return (releasedOnChannel != 0);
@@ -548,18 +549,18 @@ namespace System.Windows.Media.Composition
             /// <return>
             /// Returns the ref count for a resource on this channel.
             /// </return>
-            internal uint GetRefCount(DUCE.ResourceHandle handle)
+            internal uint GetRefCount(ResourceHandle handle)
             {
                 Invariant.Assert(_hChannel != IntPtr.Zero);
                 Debug.Assert(!handle.IsNull);
 
                 uint refCount;
 
-                HRESULT.Check(UnsafeNativeMethods.MilResource_GetRefCountOnChannel(
+                UnsafeNativeMethods.MilResource_GetRefCountOnChannel(
                     _hChannel,
                     handle,
                     out refCount
-                    ));
+                    ).ThrowOnFailureExtended();
 
                 return refCount;
             }
@@ -586,10 +587,10 @@ namespace System.Windows.Media.Composition
                     Invariant.Assert(_hChannel != IntPtr.Zero);
 
                     ChannelMarshalType marshalType;
-                    HRESULT.Check(UnsafeNativeMethods.MilChannel_GetMarshalType(
+                    UnsafeNativeMethods.MilChannel_GetMarshalType(
                         _hChannel,
                         out marshalType
-                        ));
+                        ).ThrowOnFailureExtended();
 
                     return marshalType;
                 }
@@ -620,8 +621,8 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// SendCommand sends a command struct through the composition thread.
             /// </summary>
-            unsafe internal void SendCommand(
-                byte *pCommandData,
+            internal unsafe void SendCommand(
+                byte* pCommandData,
                 int cSize)
             {
                 SendCommand(pCommandData, cSize, false);
@@ -633,16 +634,14 @@ namespace System.Windows.Media.Composition
             /// current open batch, or whether it will be added to a new and separate batch
             /// which is then immediately closed, leaving the current batch untouched.
             /// </summary>
-            unsafe internal void SendCommand(
-                byte *pCommandData,
+            internal unsafe void SendCommand(
+                byte* pCommandData,
                 int cSize,
                 bool sendInSeparateBatch)
             {
                 checked
                 {
                     Invariant.Assert(pCommandData != (byte*)0 && cSize > 0);
-
-                    int hr = HRESULT.S_OK;
 
                     if (_hChannel == IntPtr.Zero)
                     {
@@ -656,21 +655,19 @@ namespace System.Windows.Media.Composition
                         return;
                     }
 
-                    hr = UnsafeNativeMethods.MilResource_SendCommand(
+                    UnsafeNativeMethods.MilResource_SendCommand(
                         pCommandData,
                         (uint)cSize,
                         sendInSeparateBatch,
-                        _hChannel);
-
-                    HRESULT.Check(hr);
+                        _hChannel).ThrowOnFailureExtended();
                 }
             }
 
             /// <summary>
             /// BeginCommand opens a command on a channel
             /// </summary>
-            unsafe internal void BeginCommand(
-                byte *pbCommandData,
+            internal unsafe void BeginCommand(
+                byte* pbCommandData,
                 int cbSize,
                 int cbExtra)
             {
@@ -678,8 +675,6 @@ namespace System.Windows.Media.Composition
                 {
                     Invariant.Assert(cbSize > 0);
 
-                    int hr = HRESULT.S_OK;
-
                     if (_hChannel == IntPtr.Zero)
                     {
                         //
@@ -692,29 +687,25 @@ namespace System.Windows.Media.Composition
                         return;
                     }
 
-                    hr = UnsafeNativeMethods.MilChannel_BeginCommand(
+                    UnsafeNativeMethods.MilChannel_BeginCommand(
                         _hChannel,
                         pbCommandData,
                         (uint)cbSize,
                         (uint)cbExtra
-                        );
-
-                    HRESULT.Check(hr);
+                        ).ThrowOnFailureExtended();
                 }
             }
 
             /// <summary>
             /// AppendCommandData appends data to an open command on a channel
             /// </summary>
-            unsafe internal void AppendCommandData(
-                byte *pbCommandData,
+            internal unsafe void AppendCommandData(
+                byte* pbCommandData,
                 int cbSize)
             {
                 checked
                 {
                     Invariant.Assert(pbCommandData != (byte*)0 && cbSize > 0);
-
-                    int hr = HRESULT.S_OK;
 
                     if (_hChannel == IntPtr.Zero)
                     {
@@ -728,13 +719,11 @@ namespace System.Windows.Media.Composition
                         return;
                     }
 
-                    hr = UnsafeNativeMethods.MilChannel_AppendCommandData(
+                    UnsafeNativeMethods.MilChannel_AppendCommandData(
                         _hChannel,
                         pbCommandData,
                         (uint)cbSize
-                        );
-
-                    HRESULT.Check(hr);
+                        ).ThrowOnFailureExtended();
                 }
             }
 
@@ -755,31 +744,31 @@ namespace System.Windows.Media.Composition
                     return;
                 }
 
-                HRESULT.Check(UnsafeNativeMethods.MilChannel_EndCommand(_hChannel));
+                UnsafeNativeMethods.MilChannel_EndCommand(_hChannel).ThrowOnFailureExtended();
             }
 
             /// <summary>
             /// SendCommand that creates an slave bitmap resource
             /// </summary>
             internal void SendCommandBitmapSource(
-                DUCE.ResourceHandle imageHandle,
+                ResourceHandle imageHandle,
                 BitmapSourceSafeMILHandle pBitmapSource
                 )
             {
                 Invariant.Assert(pBitmapSource != null && !pBitmapSource.IsInvalid);
                 Invariant.Assert(_hChannel != IntPtr.Zero);
 
-                HRESULT.Check(UnsafeNativeMethods.MilResource_SendCommandBitmapSource(
+                UnsafeNativeMethods.MilResource_SendCommandBitmapSource(
                     imageHandle,
                     pBitmapSource,
-                    _hChannel));
+                    _hChannel).ThrowOnFailureExtended();
             }
 
             /// <summary>
             /// SendCommand that creates an slave media resource
             /// </summary>
             internal void SendCommandMedia(
-                DUCE.ResourceHandle mediaHandle,
+                ResourceHandle mediaHandle,
                 SafeMediaHandle pMedia,
                 bool notifyUceDirect
                 )
@@ -788,12 +777,12 @@ namespace System.Windows.Media.Composition
 
                 Invariant.Assert(_hChannel != IntPtr.Zero);
 
-                HRESULT.Check(UnsafeNativeMethods.MilResource_SendCommandMedia(
+                UnsafeNativeMethods.MilResource_SendCommandMedia(
                     mediaHandle,
                     pMedia,
                     _hChannel,
                     notifyUceDirect
-                    ));
+                    ).ThrowOnFailureExtended();
             }
 
             /// <summary>
@@ -812,11 +801,11 @@ namespace System.Windows.Media.Composition
             {
                 Invariant.Assert(_hChannel != IntPtr.Zero);
 
-                HRESULT.Check(UnsafeNativeMethods.MilChannel_SetNotificationWindow(
+                UnsafeNativeMethods.MilChannel_SetNotificationWindow(
                     _hChannel,
                     hwnd,
                     message
-                    ));
+                    ).ThrowOnFailureExtended();
             }
 
             /// <summary>
@@ -831,14 +820,14 @@ namespace System.Windows.Media.Composition
             {
                 int waitReturn;
 
-                HRESULT.Check(UnsafeNativeMethods.MilComposition_WaitForNextMessage(
+                UnsafeNativeMethods.MilComposition_WaitForNextMessage(
                     _hChannel,
                     0,
                     null,
                     1, /* true */
-                    waitInfinite,
+                    InfiniteWait,
                     out waitReturn
-                    ));
+                    ).ThrowOnFailureExtended();
             }
 
             /// <summary>
@@ -861,12 +850,12 @@ namespace System.Windows.Media.Composition
                 {
                     unsafe
                     {
-                        HRESULT.Check(UnsafeNativeMethods.MilComposition_PeekNextMessage(
+                        UnsafeNativeMethods.MilComposition_PeekNextMessage(
                             _hChannel,
                             out message,
                             (IntPtr)sizeof(MilMessage.Message),
                             out messageRetrieved
-                            ));
+                            ).ThrowOnFailureExtended();
                     }
                 }
 
@@ -884,9 +873,9 @@ namespace System.Windows.Media.Composition
         /// </summary>
         internal struct Resource
         {
-            public static readonly Resource Null = new Resource(DUCE.ResourceHandle.Null);
+            public static readonly Resource Null = new Resource(ResourceHandle.Null);
 
-            private DUCE.ResourceHandle _handle;
+            private ResourceHandle _handle;
 #if DEBUG
             private Channel _debugOnly_Channel;
 #endif
@@ -896,7 +885,7 @@ namespace System.Windows.Media.Composition
             /// Creates a resource from a type and ResourceHandle.
             /// This is currently only used for some hwnd interop code in the VisualManager.
             /// </summary>
-            public Resource(DUCE.ResourceHandle h)
+            public Resource(ResourceHandle h)
             {
                 _handle = h;
 #if DEBUG
@@ -907,7 +896,7 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// CreatesOrAddRefs the resource on the specified channel.
             /// </summary>
-            public bool CreateOrAddRefOnChannel(object instance, Channel channel, DUCE.ResourceType type)
+            public bool CreateOrAddRefOnChannel(object instance, Channel channel, ResourceType type)
             {
                 Debug.Assert(channel != null);
 #if DEBUG
@@ -935,7 +924,7 @@ namespace System.Windows.Media.Composition
 #endif
                 if (channel.ReleaseOnChannel(_handle))
                 {
-                    _handle = DUCE.ResourceHandle.Null;
+                    _handle = ResourceHandle.Null;
                     return true;
                 }
                 return false;
@@ -960,7 +949,7 @@ namespace System.Windows.Media.Composition
             /// Consider moving to an abstract handle type in the future.
             /// </remarks>
 
-            public DUCE.ResourceHandle Handle { get { return _handle; } }
+            public ResourceHandle Handle { get { return _handle; } }
         }
 
         /// <summary>
@@ -1125,7 +1114,7 @@ namespace System.Windows.Media.Composition
                     if (_others != null)
                     {
                         Debug.Assert(_others.Count > 0);
-                        int j = _others.Count-1;
+                        int j = _others.Count - 1;
                         _first = _others[j];
                         if (j == 0) // Only one entry in the array.
                         {
@@ -1138,8 +1127,8 @@ namespace System.Windows.Media.Composition
                     }
                     else
                     {
-                    _first = new Entry();
-}
+                        _first = new Entry();
+                    }
 
                     return true;
                 }
@@ -1228,7 +1217,7 @@ namespace System.Windows.Media.Composition
 
                 return _others[index - 1]._key;
             }
-}
+        }
 
         /// <summary>
         /// This is a generic map that maps a key to a value. It is heavily optimized
@@ -1246,14 +1235,14 @@ namespace System.Windows.Media.Composition
             /// </summary>
             private struct Entry
             {
-                public Entry(object k, DUCE.ResourceHandle v)
+                public Entry(object k, ResourceHandle v)
                 {
                     _key = k;
                     _value = v;
                 }
 
                 public object _key;
-                public DUCE.ResourceHandle _value;
+                public ResourceHandle _value;
             }
 
             private const int FOUND_IN_INLINE_STORAGE = -1;
@@ -1308,7 +1297,7 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// Associates a key with the specified value. If the entry already exits the old value is overriden.
             /// </summary>
-            public void Set(object key, DUCE.ResourceHandle value)
+            public void Set(object key, ResourceHandle value)
             {
                 int index = Find(key);
 
@@ -1341,8 +1330,8 @@ namespace System.Windows.Media.Composition
 
                                 // ... and replace the single entry
                                 _head._key = others;
-                                _head._value = DUCE.ResourceHandle.Null;
-}
+                                _head._value = ResourceHandle.Null;
+                            }
                             else
                             {
                                 // There's already a List - simply add the new entry to the list.
@@ -1405,11 +1394,11 @@ namespace System.Windows.Media.Composition
             /// Gets the value for the specified key. If the entry for the specified key could not
             /// be found the Get method returns false otherwise true.
             /// </summary>
-            public bool Get(object key, out DUCE.ResourceHandle value)
+            public bool Get(object key, out ResourceHandle value)
             {
                 int index = Find(key);
 
-                value = DUCE.ResourceHandle.Null;
+                value = ResourceHandle.Null;
 
                 if (index == FOUND_IN_INLINE_STORAGE)
                 {
@@ -1467,7 +1456,7 @@ namespace System.Windows.Media.Composition
 
                 return ((List<Entry>)_head._key)[index]._key;
             }
-}
+        }
 
         /// <summary>
         /// ShareableDUCEMultiChannelResource class - this class simply wraps a MultiChannelResource,
@@ -1497,10 +1486,10 @@ namespace System.Windows.Media.Composition
             /// The method is not synchronized. If the resource is used in a multi-threaded scenario, the
             /// caller is responsible for taking a lock before calling CreateOrAddRefOnChannel or ReleaseOnChannel.
             /// </remark>
-            public bool CreateOrAddRefOnChannel(object instance, Channel channel, DUCE.ResourceType type)
+            public bool CreateOrAddRefOnChannel(object instance, Channel channel, ResourceType type)
             {
                 Debug.Assert(channel != null);
-                DUCE.ResourceHandle handle;
+                ResourceHandle handle;
                 bool inmap = _map.Get(channel, out handle);
 
                 bool created = channel.CreateOrAddRefOnChannel(instance, ref handle, type);
@@ -1522,12 +1511,12 @@ namespace System.Windows.Media.Composition
             /// </remarks>
             /// <param name="sourceChannel">The channel to duplicate the handle from.</param>
             /// <param name="targetChannel">The channel to duplicate the handle to.</param>
-            public DUCE.ResourceHandle DuplicateHandle(Channel sourceChannel, Channel targetChannel)
+            public ResourceHandle DuplicateHandle(Channel sourceChannel, Channel targetChannel)
             {
                 Debug.Assert(sourceChannel != null);
-                DUCE.ResourceHandle duplicate = DUCE.ResourceHandle.Null;
+                ResourceHandle duplicate = ResourceHandle.Null;
 
-                DUCE.ResourceHandle handle = DUCE.ResourceHandle.Null;
+                ResourceHandle handle = ResourceHandle.Null;
                 bool found = _map.Get(sourceChannel, out handle);
                 Debug.Assert(found);
 
@@ -1564,7 +1553,7 @@ namespace System.Windows.Media.Composition
             {
                 Debug.Assert(channel != null);
 
-                DUCE.ResourceHandle handle;
+                ResourceHandle handle;
 
                 bool found = _map.Get(channel, out handle);
                 Debug.Assert(found);
@@ -1583,9 +1572,9 @@ namespace System.Windows.Media.Composition
             /// <summary>
             /// Returns the ResourceHandle for this resource on the specified channel.
             /// </summary>
-            public DUCE.ResourceHandle GetHandle(Channel channel)
+            public ResourceHandle GetHandle(Channel channel)
             {
-                DUCE.ResourceHandle h;
+                ResourceHandle h;
 
                 if (channel != null)
                 {
@@ -1622,9 +1611,9 @@ namespace System.Windows.Media.Composition
                 return _map.Count();
             }
 
-            public DUCE.Channel GetChannel(int index)
+            public Channel GetChannel(int index)
             {
-                return _map.Get(index) as DUCE.Channel;
+                return _map.Get(index) as Channel;
             }
 
 
@@ -1632,7 +1621,7 @@ namespace System.Windows.Media.Composition
             {
                 Debug.Assert(channel != null);
 
-                DUCE.ResourceHandle handle;
+                ResourceHandle handle;
 
                 bool found = _map.Get(channel, out handle);
                 Debug.Assert(found);
@@ -1647,11 +1636,11 @@ namespace System.Windows.Media.Composition
             // Public imports for composition nodes.
             //
             internal static void SetTransform(
-                DUCE.ResourceHandle hCompositionNode,
-                DUCE.ResourceHandle hTransform,
+                ResourceHandle hCompositionNode,
+                ResourceHandle hTransform,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_SETTRANSFORM command;
+                MILCMD_VISUAL_SETTRANSFORM command;
 
                 command.Type = MILCMD.MilCmdVisualSetTransform;
                 command.Handle = hCompositionNode;
@@ -1661,18 +1650,18 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL_SETTRANSFORM)
+                        sizeof(MILCMD_VISUAL_SETTRANSFORM)
                         );
                 }
             }
 
 
             internal static void SetEffect(
-                DUCE.ResourceHandle hCompositionNode,
-                DUCE.ResourceHandle hEffect,
+                ResourceHandle hCompositionNode,
+                ResourceHandle hEffect,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_SETEFFECT command;
+                MILCMD_VISUAL_SETEFFECT command;
 
                 command.Type = MILCMD.MilCmdVisualSetEffect;
                 command.Handle = hCompositionNode;
@@ -1682,18 +1671,18 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL_SETEFFECT)
+                        sizeof(MILCMD_VISUAL_SETEFFECT)
                         );
                 }
             }
 
 
             internal static void SetCacheMode(
-                DUCE.ResourceHandle hCompositionNode,
-                DUCE.ResourceHandle hCacheMode,
+                ResourceHandle hCompositionNode,
+                ResourceHandle hCacheMode,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_SETCACHEMODE command;
+                MILCMD_VISUAL_SETCACHEMODE command;
 
                 command.Type = MILCMD.MilCmdVisualSetCacheMode;
                 command.Handle = hCompositionNode;
@@ -1703,18 +1692,18 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL_SETCACHEMODE)
+                        sizeof(MILCMD_VISUAL_SETCACHEMODE)
                         );
                 }
             }
 
             internal static void SetOffset(
-                DUCE.ResourceHandle hCompositionNode,
+                ResourceHandle hCompositionNode,
                 double offsetX,
                 double offsetY,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_SETOFFSET command;
+                MILCMD_VISUAL_SETOFFSET command;
                 command.Type = MILCMD.MilCmdVisualSetOffset;
                 command.Handle = hCompositionNode;
                 command.offsetX = offsetX;
@@ -1724,17 +1713,17 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL_SETOFFSET)
+                        sizeof(MILCMD_VISUAL_SETOFFSET)
                         );
                 }
             }
 
             internal static void SetContent(
-                DUCE.ResourceHandle hCompositionNode,
-                DUCE.ResourceHandle hContent,
+                ResourceHandle hCompositionNode,
+                ResourceHandle hContent,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_SETCONTENT command;
+                MILCMD_VISUAL_SETCONTENT command;
 
                 command.Type = MILCMD.MilCmdVisualSetContent;
                 command.Handle = hCompositionNode;
@@ -1744,17 +1733,17 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL_SETCONTENT)
+                        sizeof(MILCMD_VISUAL_SETCONTENT)
                         );
                 }
             }
 
             internal static void SetAlpha(
-                DUCE.ResourceHandle hCompositionNode,
+                ResourceHandle hCompositionNode,
                 double alpha,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_SETALPHA command;
+                MILCMD_VISUAL_SETALPHA command;
 
                 command.Type = MILCMD.MilCmdVisualSetAlpha;
                 command.Handle = hCompositionNode;
@@ -1764,17 +1753,17 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL_SETALPHA)
+                        sizeof(MILCMD_VISUAL_SETALPHA)
                         );
                 }
             }
 
             internal static void SetAlphaMask(
-                DUCE.ResourceHandle hCompositionNode,
-                DUCE.ResourceHandle hAlphaMaskBrush,
+                ResourceHandle hCompositionNode,
+                ResourceHandle hAlphaMaskBrush,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_SETALPHAMASK command;
+                MILCMD_VISUAL_SETALPHAMASK command;
 
                 command.Type = MILCMD.MilCmdVisualSetAlphaMask;
                 command.Handle = hCompositionNode;
@@ -1784,21 +1773,21 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL_SETALPHAMASK)
+                        sizeof(MILCMD_VISUAL_SETALPHAMASK)
                         );
                 }
             }
 
             internal static void SetScrollableAreaClip(
-                DUCE.ResourceHandle hCompositionNode,
+                ResourceHandle hCompositionNode,
                 Rect? clip,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_SETSCROLLABLEAREACLIP command;
+                MILCMD_VISUAL_SETSCROLLABLEAREACLIP command;
 
                 command.Type = MILCMD.MilCmdVisualSetScrollableAreaClip;
                 command.Handle = hCompositionNode;
-                command.IsEnabled = (uint) (clip.HasValue ? 1 : 0);
+                command.IsEnabled = (uint)(clip.HasValue ? 1 : 0);
 
                 if (clip.HasValue)
                 {
@@ -1813,17 +1802,17 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL_SETSCROLLABLEAREACLIP)
+                        sizeof(MILCMD_VISUAL_SETSCROLLABLEAREACLIP)
                         );
                 }
             }
 
             internal static void SetClip(
-                DUCE.ResourceHandle hCompositionNode,
-                DUCE.ResourceHandle hClip,
+                ResourceHandle hCompositionNode,
+                ResourceHandle hClip,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_SETCLIP command;
+                MILCMD_VISUAL_SETCLIP command;
 
                 command.Type = MILCMD.MilCmdVisualSetClip;
                 command.Handle = hCompositionNode;
@@ -1833,17 +1822,17 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL_SETCLIP)
+                        sizeof(MILCMD_VISUAL_SETCLIP)
                         );
                 }
             }
 
             internal static void SetRenderOptions(
-                DUCE.ResourceHandle hCompositionNode,
+                ResourceHandle hCompositionNode,
                 MilRenderOptions renderOptions,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_SETRENDEROPTIONS command;
+                MILCMD_VISUAL_SETRENDEROPTIONS command;
 
                 command.Type = MILCMD.MilCmdVisualSetRenderOptions;
                 command.Handle = hCompositionNode;
@@ -1853,17 +1842,17 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL_SETRENDEROPTIONS)
+                        sizeof(MILCMD_VISUAL_SETRENDEROPTIONS)
                         );
                 }
-}
+            }
 
             internal static void RemoveChild(
-                DUCE.ResourceHandle hCompositionNode,
-                DUCE.ResourceHandle hChild,
+                ResourceHandle hCompositionNode,
+                ResourceHandle hChild,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_REMOVECHILD command;
+                MILCMD_VISUAL_REMOVECHILD command;
 
                 command.Type = MILCMD.MilCmdVisualRemoveChild;
                 command.Handle = hCompositionNode;
@@ -1873,16 +1862,16 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL_REMOVECHILD)
+                        sizeof(MILCMD_VISUAL_REMOVECHILD)
                         );
                 }
             }
 
             internal static void RemoveAllChildren(
-                DUCE.ResourceHandle hCompositionNode,
+                ResourceHandle hCompositionNode,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_REMOVEALLCHILDREN command;
+                MILCMD_VISUAL_REMOVEALLCHILDREN command;
 
                 command.Type = MILCMD.MilCmdVisualRemoveAllChildren;
                 command.Handle = hCompositionNode;
@@ -1891,18 +1880,18 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL_REMOVEALLCHILDREN)
+                        sizeof(MILCMD_VISUAL_REMOVEALLCHILDREN)
                         );
                 }
             }
 
             internal static void InsertChildAt(
-                DUCE.ResourceHandle hCompositionNode,
-                DUCE.ResourceHandle hChild,
+                ResourceHandle hCompositionNode,
+                ResourceHandle hChild,
                 UInt32 iPosition,
                 Channel channel)
             {
-                DUCE.MILCMD_VISUAL_INSERTCHILDAT command;
+                MILCMD_VISUAL_INSERTCHILDAT command;
                 Debug.Assert(!hCompositionNode.IsNull);
 
                 command.Type = MILCMD.MilCmdVisualInsertChildAt;
@@ -1914,13 +1903,13 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL_INSERTCHILDAT)
+                        sizeof(MILCMD_VISUAL_INSERTCHILDAT)
                         );
                 }
             }
 
             internal static void SetGuidelineCollection(
-                DUCE.ResourceHandle hCompositionNode,
+                ResourceHandle hCompositionNode,
                 DoubleCollection guidelinesX,
                 DoubleCollection guidelinesY,
                 Channel channel
@@ -1928,7 +1917,7 @@ namespace System.Windows.Media.Composition
             {
                 checked
                 {
-                    DUCE.MILCMD_VISUAL_SETGUIDELINECOLLECTION command;
+                    MILCMD_VISUAL_SETGUIDELINECOLLECTION command;
                     Debug.Assert(!hCompositionNode.IsNull);
 
                     int countX = guidelinesX == null ? 0 : guidelinesX.Count;
@@ -1946,7 +1935,7 @@ namespace System.Windows.Media.Composition
                         {
                             channel.SendCommand(
                                 (byte*)&command,
-                                sizeof(DUCE.MILCMD_VISUAL_SETGUIDELINECOLLECTION)
+                                sizeof(MILCMD_VISUAL_SETGUIDELINECOLLECTION)
                                 );
                         }
                     }
@@ -1976,7 +1965,7 @@ namespace System.Windows.Media.Composition
                         {
                             channel.BeginCommand(
                                 (byte*)&command,
-                                sizeof(DUCE.MILCMD_VISUAL_SETGUIDELINECOLLECTION),
+                                sizeof(MILCMD_VISUAL_SETGUIDELINECOLLECTION),
                                 sizeof(float) * countXY
                                 );
 
@@ -1998,13 +1987,13 @@ namespace System.Windows.Media.Composition
         internal static class Viewport3DVisualNode
         {
             internal static void SetCamera(
-                DUCE.ResourceHandle hCompositionNode,
-                DUCE.ResourceHandle hCamera,
+                ResourceHandle hCompositionNode,
+                ResourceHandle hCamera,
                 Channel channel)
             {
                 unsafe
                 {
-                    DUCE.MILCMD_VIEWPORT3DVISUAL_SETCAMERA command;
+                    MILCMD_VIEWPORT3DVISUAL_SETCAMERA command;
 
                     command.Type = MILCMD.MilCmdViewport3DVisualSetCamera;
                     command.Handle = hCompositionNode;
@@ -2012,19 +2001,19 @@ namespace System.Windows.Media.Composition
 
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VIEWPORT3DVISUAL_SETCAMERA)
+                        sizeof(MILCMD_VIEWPORT3DVISUAL_SETCAMERA)
                         );
                 }
             }
 
             internal static void SetViewport(
-                DUCE.ResourceHandle hCompositionNode,
+                ResourceHandle hCompositionNode,
                 Rect viewport,
                 Channel channel)
             {
                 unsafe
                 {
-                    DUCE.MILCMD_VIEWPORT3DVISUAL_SETVIEWPORT command;
+                    MILCMD_VIEWPORT3DVISUAL_SETVIEWPORT command;
 
                     command.Type = MILCMD.MilCmdViewport3DVisualSetViewport;
                     command.Handle = hCompositionNode;
@@ -2032,19 +2021,19 @@ namespace System.Windows.Media.Composition
 
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VIEWPORT3DVISUAL_SETVIEWPORT)
+                        sizeof(MILCMD_VIEWPORT3DVISUAL_SETVIEWPORT)
                         );
                 }
             }
 
             internal static void Set3DChild(
-                DUCE.ResourceHandle hCompositionNode,
-                DUCE.ResourceHandle hVisual3D,
+                ResourceHandle hCompositionNode,
+                ResourceHandle hVisual3D,
                 Channel channel)
             {
                 unsafe
                 {
-                    DUCE.MILCMD_VIEWPORT3DVISUAL_SET3DCHILD command;
+                    MILCMD_VIEWPORT3DVISUAL_SET3DCHILD command;
 
                     command.Type = MILCMD.MilCmdViewport3DVisualSet3DChild;
                     command.Handle = hCompositionNode;
@@ -2052,7 +2041,7 @@ namespace System.Windows.Media.Composition
 
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VIEWPORT3DVISUAL_SET3DCHILD)
+                        sizeof(MILCMD_VIEWPORT3DVISUAL_SET3DCHILD)
                         );
                 }
             }
@@ -2061,13 +2050,13 @@ namespace System.Windows.Media.Composition
         internal static class Visual3DNode
         {
             internal static void RemoveChild(
-                DUCE.ResourceHandle hCompositionNode,
-                DUCE.ResourceHandle hChild,
+                ResourceHandle hCompositionNode,
+                ResourceHandle hChild,
                 Channel channel)
             {
                 unsafe
                 {
-                    DUCE.MILCMD_VISUAL3D_REMOVECHILD command;
+                    MILCMD_VISUAL3D_REMOVECHILD command;
 
                     command.Type = MILCMD.MilCmdVisual3DRemoveChild;
                     command.Handle = hCompositionNode;
@@ -2075,38 +2064,38 @@ namespace System.Windows.Media.Composition
 
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL3D_REMOVECHILD)
+                        sizeof(MILCMD_VISUAL3D_REMOVECHILD)
                         );
                 }
             }
 
             internal static void RemoveAllChildren(
-                DUCE.ResourceHandle hCompositionNode,
+                ResourceHandle hCompositionNode,
                 Channel channel)
             {
                 unsafe
                 {
-                    DUCE.MILCMD_VISUAL3D_REMOVEALLCHILDREN command;
+                    MILCMD_VISUAL3D_REMOVEALLCHILDREN command;
 
                     command.Type = MILCMD.MilCmdVisual3DRemoveAllChildren;
                     command.Handle = hCompositionNode;
 
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL3D_REMOVEALLCHILDREN)
+                        sizeof(MILCMD_VISUAL3D_REMOVEALLCHILDREN)
                         );
                 }
             }
 
             internal static void InsertChildAt(
-                DUCE.ResourceHandle hCompositionNode,
-                DUCE.ResourceHandle hChild,
+                ResourceHandle hCompositionNode,
+                ResourceHandle hChild,
                 UInt32 iPosition,
                 Channel channel)
             {
                 unsafe
                 {
-                    DUCE.MILCMD_VISUAL3D_INSERTCHILDAT command;
+                    MILCMD_VISUAL3D_INSERTCHILDAT command;
                     Debug.Assert(!hCompositionNode.IsNull);
 
                     command.Type = MILCMD.MilCmdVisual3DInsertChildAt;
@@ -2116,19 +2105,19 @@ namespace System.Windows.Media.Composition
 
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL3D_INSERTCHILDAT)
+                        sizeof(MILCMD_VISUAL3D_INSERTCHILDAT)
                         );
                 }
             }
 
             internal static void SetContent(
-                DUCE.ResourceHandle hCompositionNode,
-                DUCE.ResourceHandle hContent,
+                ResourceHandle hCompositionNode,
+                ResourceHandle hContent,
                 Channel channel)
             {
                 unsafe
                 {
-                    DUCE.MILCMD_VISUAL3D_SETCONTENT command;
+                    MILCMD_VISUAL3D_SETCONTENT command;
 
                     command.Type = MILCMD.MilCmdVisual3DSetContent;
                     command.Handle = hCompositionNode;
@@ -2136,19 +2125,19 @@ namespace System.Windows.Media.Composition
 
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL3D_SETCONTENT)
+                        sizeof(MILCMD_VISUAL3D_SETCONTENT)
                         );
                 }
             }
 
             internal static void SetTransform(
-                DUCE.ResourceHandle hCompositionNode,
-                DUCE.ResourceHandle hTransform,
+                ResourceHandle hCompositionNode,
+                ResourceHandle hTransform,
                 Channel channel)
             {
                 unsafe
                 {
-                    DUCE.MILCMD_VISUAL3D_SETTRANSFORM command;
+                    MILCMD_VISUAL3D_SETTRANSFORM command;
 
                     command.Type = MILCMD.MilCmdVisual3DSetTransform;
                     command.Handle = hCompositionNode;
@@ -2156,7 +2145,7 @@ namespace System.Windows.Media.Composition
 
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_VISUAL3D_SETTRANSFORM)
+                        sizeof(MILCMD_VISUAL3D_SETTRANSFORM)
                         );
                 }
             }
@@ -2168,7 +2157,7 @@ namespace System.Windows.Media.Composition
             // Public imports for composition targets.
             //
             internal static void HwndInitialize(
-                DUCE.ResourceHandle hCompositionTarget,
+                ResourceHandle hCompositionTarget,
                 IntPtr hWnd,
                 int nWidth,
                 int nHeight,
@@ -2178,7 +2167,7 @@ namespace System.Windows.Media.Composition
                 Channel channel
                 )
             {
-                DUCE.MILCMD_HWNDTARGET_CREATE command;
+                MILCMD_HWNDTARGET_CREATE command;
 
                 command.Type = MILCMD.MilCmdHwndTargetCreate;
                 command.Handle = hCompositionTarget;
@@ -2222,7 +2211,7 @@ namespace System.Windows.Media.Composition
                 }
 
                 bool? enableMultiMonitorDisplayClipping =
-                    System.Windows.CoreCompatibilityPreferences.EnableMultiMonitorDisplayClipping;
+                    CoreCompatibilityPreferences.EnableMultiMonitorDisplayClipping;
 
                 if (enableMultiMonitorDisplayClipping != null)
                 {
@@ -2231,7 +2220,7 @@ namespace System.Windows.Media.Composition
 
                     if (!enableMultiMonitorDisplayClipping.Value)
                     {
-                        command.flags |= (UInt32) MILRTInitializationFlags.MIL_RT_DISABLE_MULTIMON_DISPLAY_CLIPPING;
+                        command.flags |= (UInt32)MILRTInitializationFlags.MIL_RT_DISABLE_MULTIMON_DISPLAY_CLIPPING;
                     }
                 }
 
@@ -2240,7 +2229,7 @@ namespace System.Windows.Media.Composition
                     command.flags |= (UInt32)MILRTInitializationFlags.MIL_RT_DISABLE_DIRTY_RECTANGLES;
                 }
 
-                command.hBitmap = DUCE.ResourceHandle.Null;
+                command.hBitmap = ResourceHandle.Null;
                 command.stride = 0;
                 command.ePixelFormat = 0;
                 command.hSection = 0;
@@ -2254,20 +2243,20 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_HWNDTARGET_CREATE),
+                        sizeof(MILCMD_HWNDTARGET_CREATE),
                         false /* sendInSeparateBatch */
                         );
                 }
             }
 
             internal static void ProcessDpiChanged(
-                DUCE.ResourceHandle hCompositionTarget,
+                ResourceHandle hCompositionTarget,
                 DpiScale dpiScale,
                 bool afterParent,
                 Channel channel
                 )
             {
-                DUCE.MILCMD_HWNDTARGET_DPICHANGED command;
+                MILCMD_HWNDTARGET_DPICHANGED command;
 
                 command.Type = MILCMD.MilCmdHwndTargetDpiChanged;
                 command.Handle = hCompositionTarget;
@@ -2279,20 +2268,20 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_HWNDTARGET_DPICHANGED),
+                        sizeof(MILCMD_HWNDTARGET_DPICHANGED),
                         sendInSeparateBatch: false);
                 }
             }
 
             internal static void PrintInitialize(
-                DUCE.ResourceHandle hCompositionTarget,
+                ResourceHandle hCompositionTarget,
                 IntPtr pRenderTarget,
                 int nWidth,
                 int nHeight,
                 Channel channel
                 )
             {
-                DUCE.MILCMD_GENERICTARGET_CREATE command;
+                MILCMD_GENERICTARGET_CREATE command;
 
                 command.Type = MILCMD.MilCmdGenericTargetCreate;
                 command.Handle = hCompositionTarget;
@@ -2306,19 +2295,19 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_GENERICTARGET_CREATE),
+                        sizeof(MILCMD_GENERICTARGET_CREATE),
                         false /* sendInSeparateBatch */
                         );
                 }
             }
 
             internal static void SetClearColor(
-                DUCE.ResourceHandle hCompositionTarget,
+                ResourceHandle hCompositionTarget,
                 Color color,
                 Channel channel
                 )
             {
-                DUCE.MILCMD_TARGET_SETCLEARCOLOR command;
+                MILCMD_TARGET_SETCLEARCOLOR command;
 
                 command.Type = MILCMD.MilCmdTargetSetClearColor;
                 command.Handle = hCompositionTarget;
@@ -2331,18 +2320,18 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_TARGET_SETCLEARCOLOR)
+                        sizeof(MILCMD_TARGET_SETCLEARCOLOR)
                         );
                 }
             }
 
             internal static void SetRenderingMode(
-                DUCE.ResourceHandle hCompositionTarget,
+                ResourceHandle hCompositionTarget,
                 MILRTInitializationFlags nRenderingMode,
                 Channel channel
                 )
             {
-                DUCE.MILCMD_TARGET_SETFLAGS command;
+                MILCMD_TARGET_SETFLAGS command;
 
                 command.Type = MILCMD.MilCmdTargetSetFlags;
                 command.Handle = hCompositionTarget;
@@ -2352,19 +2341,19 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_TARGET_SETFLAGS)
+                        sizeof(MILCMD_TARGET_SETFLAGS)
                         );
                 }
             }
 
 
             internal static void SetRoot(
-                DUCE.ResourceHandle hCompositionTarget,
-                DUCE.ResourceHandle hRoot,
+                ResourceHandle hCompositionTarget,
+                ResourceHandle hRoot,
                 Channel channel
                 )
             {
-                DUCE.MILCMD_TARGET_SETROOT command;
+                MILCMD_TARGET_SETROOT command;
 
                 command.Type = MILCMD.MilCmdTargetSetRoot;
                 command.Handle = hCompositionTarget;
@@ -2374,7 +2363,7 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_TARGET_SETROOT)
+                        sizeof(MILCMD_TARGET_SETROOT)
                         );
                 }
             }
@@ -2394,13 +2383,13 @@ namespace System.Windows.Media.Composition
                 Channel channel
                 )
             {
-                DUCE.MILCMD_TARGET_UPDATEWINDOWSETTINGS command;
+                MILCMD_TARGET_UPDATEWINDOWSETTINGS command;
 
                 command.Type = MILCMD.MilCmdTargetUpdateWindowSettings;
                 command.Handle = hCompositionTarget;
 
                 command.renderingEnabled = (uint)(renderingEnabled ? 1 : 0);
-                command.disableCookie = (uint) disableCookie;
+                command.disableCookie = (uint)disableCookie;
 
                 command.windowRect = windowRect;
 
@@ -2420,18 +2409,18 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_TARGET_UPDATEWINDOWSETTINGS)
+                        sizeof(MILCMD_TARGET_UPDATEWINDOWSETTINGS)
                         );
                 }
             }
 
             internal static void Invalidate(
-                DUCE.ResourceHandle hCompositionTarget,
+                ResourceHandle hCompositionTarget,
                 ref NativeMethods.RECT pRect,
                 Channel channel
                 )
             {
-                DUCE.MILCMD_TARGET_INVALIDATE command;
+                MILCMD_TARGET_INVALIDATE command;
 
                 command.Type = MILCMD.MilCmdTargetInvalidate;
                 command.Handle = hCompositionTarget;
@@ -2441,7 +2430,7 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_TARGET_INVALIDATE),
+                        sizeof(MILCMD_TARGET_INVALIDATE),
                         false /* sendInSeparateBatch */
                         );
                 }
@@ -2460,7 +2449,7 @@ namespace System.Windows.Media.Composition
             Channel channel
             )
         {
-            var command = new DUCE.MILCMD_PARTITION_NOTIFYPOLICYCHANGEFORNONINTERACTIVEMODE
+            var command = new MILCMD_PARTITION_NOTIFYPOLICYCHANGEFORNONINTERACTIVEMODE
             {
                 Type = MILCMD.MilCmdPartitionNotifyPolicyChangeForNonInteractiveMode,
                 ShouldRenderEvenWhenNoDisplayDevicesAreAvailable = (forceRender ? 1u : 0u)
@@ -2470,7 +2459,7 @@ namespace System.Windows.Media.Composition
             {
                 channel.SendCommand(
                     (byte*)&command,
-                    sizeof(DUCE.MILCMD_PARTITION_NOTIFYPOLICYCHANGEFORNONINTERACTIVEMODE),
+                    sizeof(MILCMD_PARTITION_NOTIFYPOLICYCHANGEFORNONINTERACTIVEMODE),
                     sendInSeparateBatch: false
                     );
             }
@@ -2481,12 +2470,12 @@ namespace System.Windows.Media.Composition
         internal static class ETWEvent
         {
             internal static void RaiseEvent(
-                DUCE.ResourceHandle hEtwEvent,
+                ResourceHandle hEtwEvent,
                 UInt32 id,
                 Channel channel
                 )
             {
-                DUCE.MILCMD_ETWEVENTRESOURCE command;
+                MILCMD_ETWEVENTRESOURCE command;
 
                 command.Type = MILCMD.MilCmdEtwEventResource;
                 command.Handle = hEtwEvent;
@@ -2496,7 +2485,7 @@ namespace System.Windows.Media.Composition
                 {
                     channel.SendCommand(
                         (byte*)&command,
-                        sizeof(DUCE.MILCMD_ETWEVENTRESOURCE)
+                        sizeof(MILCMD_ETWEVENTRESOURCE)
                         );
                 }
             }
@@ -2508,15 +2497,15 @@ namespace System.Windows.Media.Composition
         ///</summary>
         internal interface IResource
         {
-            DUCE.ResourceHandle AddRefOnChannel(Channel channel);
+            ResourceHandle AddRefOnChannel(Channel channel);
 
             int GetChannelCount();
 
-            DUCE.Channel GetChannel(int index);
+            Channel GetChannel(int index);
 
             void ReleaseOnChannel(Channel channel);
 
-            DUCE.ResourceHandle GetHandle(Channel channel);
+            ResourceHandle GetHandle(Channel channel);
 
             /// <summary>
             /// Only Vieport3DVisual and Visual3D implement this.
@@ -2524,7 +2513,7 @@ namespace System.Windows.Media.Composition
             /// and the other one stored in _proxy3D. This function returns
             /// the handle stored in _proxy3D.
             /// </summary>
-            DUCE.ResourceHandle Get3DHandle(Channel channel);
+            ResourceHandle Get3DHandle(Channel channel);
 
             /// <summary>
             /// Sends a command to compositor to remove the child
@@ -2532,7 +2521,7 @@ namespace System.Windows.Media.Composition
             /// </summary>
             void RemoveChildFromParent(
                     IResource parent,
-                    DUCE.Channel channel);
+                    Channel channel);
         }
     }
 }

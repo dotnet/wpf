@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,6 +16,7 @@ using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using System.Text;
 using MS.Internal;
+using Windows.Win32.Foundation;
 
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
@@ -549,7 +550,7 @@ namespace System.Windows
                 return ((OleConverter)_innerData).OleDataObject.DAdvise(ref pFormatetc, advf, pAdvSink, out pdwConnection);
             }
             pdwConnection = 0;
-            return (NativeMethods.E_NOTIMPL);
+            return HRESULT.E_NOTIMPL;
         }
 
         /// <summary>
@@ -563,8 +564,8 @@ namespace System.Windows
                 return;
             }
 
-            // Throw the exception NativeMethods.E_NOTIMPL.
-            Marshal.ThrowExceptionForHR(NativeMethods.E_NOTIMPL);
+            // Throw the exception HRESULT.E_NOTIMPL.
+            HRESULT.E_NOTIMPL.ThrowOnFailure();
         }
 
         /// <summary>
@@ -577,7 +578,7 @@ namespace System.Windows
                 return ((OleConverter)_innerData).OleDataObject.EnumDAdvise(out enumAdvise);
             }
             enumAdvise = null;
-            return (OLE_E_ADVISENOTSUPPORTED);
+            return HRESULT.OLE_E_ADVISENOTSUPPORTED;
         }
 
         // <summary>
@@ -595,7 +596,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ExternalException(SR.Format(SR.DataObject_NotImplementedEnumFormatEtc, dwDirection), NativeMethods.E_NOTIMPL);
+                throw new ExternalException(SR.Format(SR.DataObject_NotImplementedEnumFormatEtc, dwDirection), HRESULT.E_NOTIMPL);
             }
         }
 
@@ -610,7 +611,8 @@ namespace System.Windows
 
             if (pformatetcIn.lindex != -1)
             {
-                return DV_E_LINDEX;
+                // return HRESULT.DV_E_LINDEX;
+                return (HRESULT)(-2147221400);
             }
 
             if (_innerData is OleConverter)
@@ -618,7 +620,8 @@ namespace System.Windows
                 return ((OleConverter)_innerData).OleDataObject.GetCanonicalFormatEtc(ref pformatetcIn, out pformatetcOut);
             }
 
-            return DATA_S_SAMEFORMATETC;
+            // return HRESULT.DATA_S_SAMEFORMATETC;
+            return (HRESULT)262448;
         }
 
         /// <summary>
@@ -632,9 +635,7 @@ namespace System.Windows
                 return;
             }
 
-            int hr;
-
-            hr = DV_E_TYMED;
+            HRESULT result = HRESULT.DV_E_TYMED;
 
             medium = new STGMEDIUM();
 
@@ -649,9 +650,9 @@ namespace System.Windows
                                                            | NativeMethods.GMEM_ZEROINIT,
                                                           (IntPtr)1);
 
-                    hr = OleGetDataUnrestricted(ref formatetc, ref medium, false /* doNotReallocate */);
+                    result = OleGetDataUnrestricted(ref formatetc, ref medium, false /* doNotReallocate */);
 
-                    if (NativeMethods.Failed(hr))
+                    if (result.Failed)
                     {
                         Win32GlobalFree(new HandleRef(this, medium.unionmember));
                     }
@@ -661,15 +662,15 @@ namespace System.Windows
                     medium.tymed = TYMED.TYMED_ISTREAM;
 
                     IStream istream = null;
-                    hr = Win32CreateStreamOnHGlobal(IntPtr.Zero, true /*deleteOnRelease*/, ref istream);
-                    if ( NativeMethods.Succeeded(hr) )
+                    result = Win32CreateStreamOnHGlobal(IntPtr.Zero, true /*deleteOnRelease*/, ref istream);
+                    if (result.Succeeded)
                     {
                         medium.unionmember = Marshal.GetComInterfaceForObject(istream, typeof(IStream));
                         Marshal.ReleaseComObject(istream);
 
-                        hr = OleGetDataUnrestricted(ref formatetc, ref medium, false /* doNotReallocate */);
+                        result = OleGetDataUnrestricted(ref formatetc, ref medium, false /* doNotReallocate */);
 
-                        if ( NativeMethods.Failed(hr) )
+                        if (result.Failed)
                         {
                             Marshal.Release(medium.unionmember);
                         }
@@ -678,16 +679,15 @@ namespace System.Windows
                 else
                 {
                     medium.tymed = formatetc.tymed;
-                    hr = OleGetDataUnrestricted(ref formatetc, ref medium, false /* doNotReallocate */);
+                    result = OleGetDataUnrestricted(ref formatetc, ref medium, false /* doNotReallocate */);
                 }
             }
 
             // Make sure we zero out that pointer if we don't support the format.
-            if (NativeMethods.Failed(hr))
+            if (result.Failed)
             {
                 medium.unionmember = IntPtr.Zero;
-
-                Marshal.ThrowExceptionForHR(hr);
+                result.ThrowOnFailure();
             }
         }
 
@@ -703,14 +703,10 @@ namespace System.Windows
                 medium.tymed != TYMED.TYMED_HGLOBAL &&
                 medium.tymed != TYMED.TYMED_FILE)
             {
-                Marshal.ThrowExceptionForHR(DV_E_TYMED);
+                HRESULT.DV_E_TYMED.ThrowOnFailure();
             }
 
-            int hr = OleGetDataUnrestricted(ref formatetc, ref medium, true /* doNotReallocate */);
-            if (NativeMethods.Failed(hr))
-            {
-                Marshal.ThrowExceptionForHR(hr);
-            }
+            OleGetDataUnrestricted(ref formatetc, ref medium, doNotReallocate: true).ThrowOnFailure();
         }
 
         /// <summary>
@@ -728,27 +724,27 @@ namespace System.Windows
                 {
                     if (formatetc.cfFormat == 0)
                     {
-                        return NativeMethods.S_FALSE;
+                        return HRESULT.S_FALSE;
                     }
                     else
                     {
                         if (!GetDataPresent(DataFormats.GetDataFormat(formatetc.cfFormat).Name))
                         {
-                            return (DV_E_FORMATETC);
+                            return HRESULT.DV_E_FORMATETC;
                         }
                     }
                 }
                 else
                 {
-                    return (DV_E_TYMED);
+                    return HRESULT.DV_E_TYMED;
                 }
             }
             else
             {
-                return (DV_E_DVASPECT);
+                return HRESULT.DV_E_DVASPECT;
             }
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         /// <summary>
@@ -762,7 +758,7 @@ namespace System.Windows
                 return;
             }
 
-            Marshal.ThrowExceptionForHR(NativeMethods.E_NOTIMPL);
+            Marshal.ThrowExceptionForHR(HRESULT.E_NOTIMPL);
         }
 
         //......................................................
@@ -982,15 +978,9 @@ namespace System.Windows
         /// <summary>
         /// Call Win32 UnsafeNativeMethods.CreateStreamOnHGlobal() with Win32 error checking.
         /// </summary>
-        private static int Win32CreateStreamOnHGlobal(IntPtr hGlobal, bool fDeleteOnRelease, ref IStream istream)
+        private static HRESULT Win32CreateStreamOnHGlobal(IntPtr hGlobal, bool fDeleteOnRelease, ref IStream istream)
         {
-            int hr = UnsafeNativeMethods.CreateStreamOnHGlobal(hGlobal, fDeleteOnRelease, ref istream);
-            if ( NativeMethods.Failed(hr) )
-            {
-                Marshal.ThrowExceptionForHR(hr);
-            }
-
-            return hr;
+            return UnsafeNativeMethods.CreateStreamOnHGlobal(hGlobal, fDeleteOnRelease, ref istream).ThrowOnFailure();
         }
 
         /// <summary>
@@ -1238,13 +1228,13 @@ namespace System.Windows
         /// Behaves like IComDataObject.GetData and IComDataObject.GetDataHere,
         /// except we make no restrictions TYMED values.
         /// </summary>
-        private int OleGetDataUnrestricted(ref FORMATETC formatetc, ref STGMEDIUM medium, bool doNotReallocate)
+        private HRESULT OleGetDataUnrestricted(ref FORMATETC formatetc, ref STGMEDIUM medium, bool doNotReallocate)
         {
             if (_innerData is OleConverter)
             {
                 ((OleConverter)_innerData).OleDataObject.GetDataHere(ref formatetc, ref medium);
 
-                return NativeMethods.S_OK;
+                return HRESULT.S_OK;
             }
 
             return GetDataIntoOleStructs(ref formatetc, ref medium, doNotReallocate);
@@ -1407,11 +1397,9 @@ namespace System.Windows
         /// Populates Ole datastructes from a WinForms dataObject. This is the core
         /// of WinForms to OLE conversion.
         /// </summary>
-        private int GetDataIntoOleStructs(ref FORMATETC formatetc, ref STGMEDIUM medium, bool doNotReallocate)
+        private HRESULT GetDataIntoOleStructs(ref FORMATETC formatetc, ref STGMEDIUM medium, bool doNotReallocate)
         {
-            int hr;
-
-            hr = DV_E_TYMED;
+            HRESULT result = HRESULT.DV_E_TYMED;
 
             if (GetTymedUseable(formatetc.tymed) && GetTymedUseable(medium.tymed))
             {
@@ -1420,7 +1408,7 @@ namespace System.Windows
                 format = DataFormats.GetDataFormat(formatetc.cfFormat).Name;
 
                 // set the default result with DV_E_FORMATETC.
-                hr = DV_E_FORMATETC;
+                result = HRESULT.DV_E_FORMATETC;
 
                 if (GetDataPresent(format))
                 {
@@ -1429,78 +1417,76 @@ namespace System.Windows
                     data = GetData(format);
 
                     // set the default result with DV_E_TYMED.
-                    hr = DV_E_TYMED;
+                    result = HRESULT.DV_E_TYMED;
 
                     if ((formatetc.tymed & TYMED.TYMED_HGLOBAL) != 0)
                     {
-                        hr = GetDataIntoOleStructsByTypeMedimHGlobal(format, data, ref medium, doNotReallocate);
+                        result = GetDataIntoOleStructsByTypeMedimHGlobal(format, data, ref medium, doNotReallocate);
                     }
                     else if ( ( formatetc.tymed & TYMED.TYMED_GDI ) != 0 )
                     {
-                        hr = GetDataIntoOleStructsByTypeMediumGDI(format, data, ref medium);
+                        result = GetDataIntoOleStructsByTypeMediumGDI(format, data, ref medium);
                     }
                     else if ( ( formatetc.tymed & TYMED.TYMED_ENHMF ) != 0 )
                     {
-                        hr = GetDataIntoOleStructsByTypeMediumEnhancedMetaFile(format, data, ref medium);
+                        result = GetDataIntoOleStructsByTypeMediumEnhancedMetaFile(format, data, ref medium);
                     }
                     else if ( ( formatetc.tymed & TYMED.TYMED_ISTREAM ) != 0 )
                     {
-                        hr = GetDataIntoOleStructsByTypeMedimIStream(format, data, ref medium);
+                        result = GetDataIntoOleStructsByTypeMedimIStream(format, data, ref medium);
                     }
                 }
             }
 
-            return hr;
+            return result;
         }
 
         /// <summary>
         /// Populates Ole data structes from a dataObject that is TYMED_HGLOBAL.
         /// </summary>
-        private int GetDataIntoOleStructsByTypeMedimHGlobal(string format, object data, ref STGMEDIUM medium, bool doNotReallocate)
+        private HRESULT GetDataIntoOleStructsByTypeMedimHGlobal(string format, object data, ref STGMEDIUM medium, bool doNotReallocate)
         {
-            int hr;
-
-            hr = NativeMethods.E_FAIL;
+            HRESULT result = HRESULT.E_FAIL;
 
             if (data is Stream)
             {
-                hr = SaveStreamToHandle(medium.unionmember, (Stream)data, doNotReallocate);
+                result = SaveStreamToHandle(medium.unionmember, (Stream)data, doNotReallocate);
             }
             else if (IsFormatEqual(format, DataFormats.Html)
                 || IsFormatEqual(format, DataFormats.Xaml))
             {
                 // Save Html and Xaml data string as UTF8 encoding.
-                hr = SaveStringToHandleAsUtf8(medium.unionmember, data.ToString(), doNotReallocate);
+                result = SaveStringToHandleAsUtf8(medium.unionmember, data.ToString(), doNotReallocate);
             }
             else if (IsFormatEqual(format, DataFormats.Text)
                 || IsFormatEqual(format, DataFormats.Rtf)
                 || IsFormatEqual(format, DataFormats.OemText)
                 || IsFormatEqual(format, DataFormats.CommaSeparatedValue))
             {
-                hr = SaveStringToHandle(medium.unionmember, data.ToString(), false /* unicode */, doNotReallocate);
+                result = SaveStringToHandle(medium.unionmember, data.ToString(), false /* unicode */, doNotReallocate);
             }
             else if (IsFormatEqual(format, DataFormats.UnicodeText)||
                      IsFormatEqual(format, DataFormats.ApplicationTrust))
             {
-                hr = SaveStringToHandle(medium.unionmember, data.ToString(), true /* unicode */, doNotReallocate);
+                result = SaveStringToHandle(medium.unionmember, data.ToString(), true /* unicode */, doNotReallocate);
             }
             else if (IsFormatEqual(format, DataFormats.FileDrop))
             {
-                hr = SaveFileListToHandle(medium.unionmember, (string[])data, doNotReallocate);
+                result = SaveFileListToHandle(medium.unionmember, (string[])data, doNotReallocate);
             }
             else if (IsFormatEqual(format, DataFormats.FileName))
             {
                 string[] filelist;
 
                 filelist = (string[])data;
-                hr = SaveStringToHandle(medium.unionmember, filelist[0], false /* unicode */, doNotReallocate);
+                result = SaveStringToHandle(medium.unionmember, filelist[0], false /* unicode */, doNotReallocate);
             }
             else if (IsFormatEqual(format, DataFormats.FileNameW))
             {
                 string[] filelist;
 
                 filelist = (string[])data;
-                hr = SaveStringToHandle(medium.unionmember, filelist[0], true /* unicode */, doNotReallocate);
+                result = SaveStringToHandle(medium.unionmember, filelist[0], true /* unicode */, doNotReallocate);
             }
             else if (IsFormatEqual(format, DataFormats.Dib)
                 && SystemDrawingHelper.IsImage(data))
@@ -1508,65 +1494,64 @@ namespace System.Windows
                 // GDI+ does not properly handle saving to DIB images.  Since the
                 // clipboard will take an HBITMAP and publish a Dib, we don't need
                 // to support this.
-                //
-                hr = DV_E_TYMED;
+                result = HRESULT.DV_E_TYMED;
             }
             else if (IsFormatEqual(format, typeof(BitmapSource).FullName))
             {
                 // Save the System.Drawing.Bitmap or BitmapSource data to handle as BitmapSource
-                hr = SaveSystemBitmapSourceToHandle(medium.unionmember, data, doNotReallocate);
+                result = SaveSystemBitmapSourceToHandle(medium.unionmember, data, doNotReallocate);
             }
             else if (IsFormatEqual(format, SystemDrawingBitmapFormat))
             {
                 // Save the System.Drawing.Bitmap or BitmapSource data to handle as System.Drawing.Bitmap
-                hr = SaveSystemDrawingBitmapToHandle(medium.unionmember, data, doNotReallocate);
+                result = SaveSystemDrawingBitmapToHandle(medium.unionmember, data, doNotReallocate);
             }
             else if (IsFormatEqual(format, DataFormats.EnhancedMetafile)
                 || SystemDrawingHelper.IsMetafile(data))
             {
                 // We don't need to support the enhanced metafile for TYMED.TYMED_HGLOBAL,
                 // since we directly support TYMED.TYMED_ENHMF.
-                hr = DV_E_TYMED;
+                result = HRESULT.DV_E_TYMED;
             }
 #pragma warning disable SYSLIB0050
             else if (IsFormatEqual(format, DataFormats.Serializable)
                 || data is ISerializable
                 || (data != null && data.GetType().IsSerializable))
             {
-                hr = SaveObjectToHandle(medium.unionmember, data, doNotReallocate);
+                result = SaveObjectToHandle(medium.unionmember, data, doNotReallocate);
             }
 #pragma warning restore SYSLIB0050
             else
             {
                 // Couldn't find the proper data for the current TYMED_HGLOBAL
-                hr = DV_E_TYMED;
+                result = HRESULT.DV_E_TYMED;
             }
 
-            if (hr == NativeMethods.S_OK)
+            if (result == HRESULT.S_OK)
             {
                 medium.tymed = TYMED.TYMED_HGLOBAL;
             }
 
-            return hr;
+            return result;
         }
 
         /// <summary>
         /// Populates Ole data structes from a dataObject that is TYMED_ISTREAM.
         /// </summary>
-        private int GetDataIntoOleStructsByTypeMedimIStream(string format, object data, ref STGMEDIUM medium)
+        private HRESULT GetDataIntoOleStructsByTypeMedimIStream(string format, object data, ref STGMEDIUM medium)
         {
             IStream istream = (IStream)( Marshal.GetObjectForIUnknown(medium.unionmember) );
             if ( istream == null )
             {
-                return NativeMethods.E_INVALIDARG;
+                return HRESULT.E_INVALIDARG;
             }
 
-            int hr = NativeMethods.E_FAIL;
+            HRESULT result = HRESULT.E_FAIL;
 
             try
             {
                 // If the format is ISF, we should copy the data from the managed stream to the COM IStream object.
-                if ( format == System.Windows.Ink.StrokeCollection.InkSerializedFormat )
+                if (format == Ink.StrokeCollection.InkSerializedFormat)
                 {
                     Stream inkStream = data as Stream;
 
@@ -1579,7 +1564,7 @@ namespace System.Windows
                         inkStream.ReadExactly(buffer);
 
                         istream.Write(buffer, NativeMethods.IntPtrToInt32(size), IntPtr.Zero);
-                        hr = NativeMethods.S_OK;
+                        result = HRESULT.S_OK;
                     }
                 }
             }
@@ -1588,22 +1573,20 @@ namespace System.Windows
                 Marshal.ReleaseComObject(istream);
             }
 
-            if ( NativeMethods.Succeeded(hr) )
+            if (result.Succeeded)
             {
                 medium.tymed = TYMED.TYMED_ISTREAM;
             }
 
-            return hr;
+            return result;
         }
 
         /// <summary>
         /// Populates Ole data structes from a dataObject that is TYMED_GDI.
         /// </summary>
-        private int GetDataIntoOleStructsByTypeMediumGDI(string format, object data, ref STGMEDIUM medium)
+        private HRESULT GetDataIntoOleStructsByTypeMediumGDI(string format, object data, ref STGMEDIUM medium)
         {
-            int hr;
-
-            hr = NativeMethods.E_FAIL;
+            HRESULT result = HRESULT.E_FAIL;
 
             if (IsFormatEqual(format, DataFormats.Bitmap)
                 && (SystemDrawingHelper.IsBitmap(data) || IsDataSystemBitmapSource(data)))
@@ -1618,27 +1601,25 @@ namespace System.Windows
                     medium.tymed = TYMED.TYMED_GDI;
                     medium.unionmember = hBitmap;
 
-                    hr = NativeMethods.S_OK;
+                    result = HRESULT.S_OK;
                 }
             }
             else
             {
                 // Couldn't find the proper data for the current TYMED_GDI
-                hr = DV_E_TYMED;
+                result = HRESULT.DV_E_TYMED;
             }
 
-            return hr;
+            return result;
         }
 
         /// <summary>
         /// Populates Ole data structes from a dataObject that is TYMED_ENHMF.
         /// </summary>
-        private int GetDataIntoOleStructsByTypeMediumEnhancedMetaFile(string format, object data, ref STGMEDIUM medium)
+        private HRESULT GetDataIntoOleStructsByTypeMediumEnhancedMetaFile(string format, object data, ref STGMEDIUM medium)
         {
             IntPtr hMetafile;
-            int hr;
-
-            hr = NativeMethods.E_FAIL;
+            HRESULT result = HRESULT.E_FAIL;
 
             if (IsFormatEqual(format, DataFormats.EnhancedMetafile))
             {
@@ -1651,19 +1632,19 @@ namespace System.Windows
                     medium.tymed = TYMED.TYMED_ENHMF;
                     medium.unionmember = hMetafile;
 
-                    hr = NativeMethods.S_OK;
+                    result = HRESULT.S_OK;
                 }
             }
             else
             {
                 // Couldn't find the proper data for the current TYMED_ENHMF
-                hr = DV_E_TYMED;
+                result = HRESULT.DV_E_TYMED;
             }
 
-            return hr;
+            return result;
         }
 #pragma warning disable SYSLIB0011 // Type or member is obsolete
-        private int SaveObjectToHandle(IntPtr handle, Object data, bool doNotReallocate)
+        private HRESULT SaveObjectToHandle(IntPtr handle, Object data, bool doNotReallocate)
         {
             Stream stream;
             BinaryWriter binaryWriter;
@@ -1693,6 +1674,7 @@ namespace System.Windows
                         formatter.Serialize(stream, data);
                         #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
                     }
+
                     return SaveStreamToHandle(handle, stream, doNotReallocate);
                 }
             }
@@ -1702,22 +1684,22 @@ namespace System.Windows
         /// <summary>
         /// Saves stream out to handle.
         /// </summary>
-        private int SaveStreamToHandle(IntPtr handle, Stream stream, bool doNotReallocate)
+        private HRESULT SaveStreamToHandle(IntPtr handle, Stream stream, bool doNotReallocate)
         {
             IntPtr size;
             IntPtr ptr;
 
             if (handle == IntPtr.Zero)
             {
-                return (NativeMethods.E_INVALIDARG);
+                return HRESULT.E_INVALIDARG;
             }
 
             size = (IntPtr)stream.Length;
 
-            int hr = EnsureMemoryCapacity(ref handle, NativeMethods.IntPtrToInt32(size), doNotReallocate);
-            if (NativeMethods.Failed(hr))
+            HRESULT result = EnsureMemoryCapacity(ref handle, NativeMethods.IntPtrToInt32(size), doNotReallocate);
+            if (result.Failed)
             {
-                return hr;
+                return result;
             }
 
             ptr = Win32GlobalLock(new HandleRef(this, handle));
@@ -1736,13 +1718,13 @@ namespace System.Windows
                 Win32GlobalUnlock(new HandleRef(this, handle));
             }
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         /// <summary>
         /// Save the System.Drawing.Bitmap or BitmapSource data to handle as BitmapSource.
         /// </summary>
-        private int SaveSystemBitmapSourceToHandle(IntPtr handle, Object data, bool doNotReallocate)
+        private HRESULT SaveSystemBitmapSourceToHandle(IntPtr handle, Object data, bool doNotReallocate)
         {
             BitmapSource bitmapSource;
             Stream bitmapStream;
@@ -1780,7 +1762,7 @@ namespace System.Windows
         /// <summary>
         /// Save the System.Drawing.Bitmap or BitmapSource data to handle as System.Drawing.Bitmap.
         /// </summary>
-        private int SaveSystemDrawingBitmapToHandle(IntPtr handle, Object data, bool doNotReallocate)
+        private HRESULT SaveSystemDrawingBitmapToHandle(IntPtr handle, Object data, bool doNotReallocate)
         {
             object systemDrawingBitmap = SystemDrawingHelper.GetBitmap(data);
 
@@ -1792,7 +1774,7 @@ namespace System.Windows
         /// <summary>
         /// Saves a list of files out to the handle in HDROP format.
         /// </summary>
-        private int SaveFileListToHandle(IntPtr handle, string[] files, bool doNotReallocate)
+        private HRESULT SaveFileListToHandle(IntPtr handle, string[] files, bool doNotReallocate)
         {
             IntPtr currentPtr;
             Int32 baseStructSize;
@@ -1802,18 +1784,18 @@ namespace System.Windows
 
             if (files == null || files.Length < 1)
             {
-                return NativeMethods.S_OK;
+                return HRESULT.S_OK;
             }
 
             if (handle == IntPtr.Zero)
             {
-                return (NativeMethods.E_INVALIDARG);
+                return HRESULT.E_INVALIDARG;
             }
 
             if (Marshal.SystemDefaultCharSize == 1)
             {
                 Invariant.Assert(false, "Expected the system default char size to be 2 for Unicode systems.");
-                return (NativeMethods.E_INVALIDARG);
+                return HRESULT.E_INVALIDARG;
             }
 
             currentPtr = IntPtr.Zero;
@@ -1829,10 +1811,10 @@ namespace System.Windows
             // Add the extra 2bytes since it is unicode.
             sizeInBytes += 2;
 
-            int hr = EnsureMemoryCapacity(ref handle, sizeInBytes, doNotReallocate);
-            if (NativeMethods.Failed(hr))
+            HRESULT result = EnsureMemoryCapacity(ref handle, sizeInBytes, doNotReallocate);
+            if (result.Failed)
             {
-                return hr;
+                return result;
             }
 
             basePtr = Win32GlobalLock(new HandleRef(this, handle));
@@ -1884,18 +1866,18 @@ namespace System.Windows
                 Win32GlobalUnlock(new HandleRef(this, handle));
             }
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         /// <summary>
         /// Save string to handle. If unicode is set to true
         /// then the string is saved as unicode, else it is saves as DBCS.
         /// </summary>
-        private int SaveStringToHandle(IntPtr handle, string str, bool unicode, bool doNotReallocate)
+        private HRESULT SaveStringToHandle(IntPtr handle, string str, bool unicode, bool doNotReallocate)
         {
             if (handle == IntPtr.Zero)
             {
-                return (NativeMethods.E_INVALIDARG);
+                return HRESULT.E_INVALIDARG;
             }
 
             if (unicode)
@@ -1906,10 +1888,10 @@ namespace System.Windows
 
                 byteSize = (str.Length*2 + 2);
 
-                int hr = EnsureMemoryCapacity(ref handle, byteSize, doNotReallocate);
-                if (NativeMethods.Failed(hr))
+                HRESULT result = EnsureMemoryCapacity(ref handle, byteSize, doNotReallocate);
+                if (result.Failed)
                 {
-                    return hr;
+                    return result;
                 }
 
                 ptr = Win32GlobalLock(new HandleRef(this, handle));
@@ -1964,10 +1946,10 @@ namespace System.Windows
                 }
 
                 // Ensure memory allocation and copy multi byte data with the null terminate
-                int hr = EnsureMemoryCapacity(ref handle, pinvokeSize + 1, doNotReallocate);
-                if (NativeMethods.Failed(hr))
+                HRESULT result = EnsureMemoryCapacity(ref handle, pinvokeSize + 1, doNotReallocate);
+                if (result.Failed)
                 {
-                    return hr;
+                    return result;
                 }
 
                 ptr = Win32GlobalLock(new HandleRef(this, handle));
@@ -1990,14 +1972,14 @@ namespace System.Windows
                 }
             }
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         /// <summary>
         /// Save string to handle as UTF8 encoding.
         /// Html and Xaml data format will be save as UTF8 encoding.
         /// </summary>
-        private int SaveStringToHandleAsUtf8(IntPtr handle, string str, bool doNotReallocate)
+        private HRESULT SaveStringToHandleAsUtf8(IntPtr handle, string str, bool doNotReallocate)
         {
             IntPtr pointerUtf8;
             byte[] utf8Bytes;
@@ -2006,7 +1988,7 @@ namespace System.Windows
 
             if (handle == IntPtr.Zero)
             {
-                return (NativeMethods.E_INVALIDARG);
+                return HRESULT.E_INVALIDARG;
             }
 
             // Create UTF8Encoding instance to convert the string to UFT8 from GetBytes.
@@ -2018,10 +2000,10 @@ namespace System.Windows
             // Create byte array and assign UTF8 encoding.
             utf8Bytes = utf8Encoding.GetBytes(str);
 
-            int hr = EnsureMemoryCapacity(ref handle, utf8ByteCount + 1, doNotReallocate);
-            if (NativeMethods.Failed(hr))
+            HRESULT result = EnsureMemoryCapacity(ref handle, utf8ByteCount + 1, doNotReallocate);
+            if (result.Failed)
             {
-                return hr;
+                return result;
             }
 
             pointerUtf8 = Win32GlobalLock(new HandleRef(this, handle));
@@ -2045,7 +2027,7 @@ namespace System.Windows
                 Win32GlobalUnlock(new HandleRef(this, handle));
             }
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         /// <summary>
@@ -2117,9 +2099,9 @@ namespace System.Windows
         /// If doNotReallocate is false, this method will always realloc the original
         /// handle to fit minimumByteCount tightly.
         /// </remarks>
-        private int EnsureMemoryCapacity(ref IntPtr handle, Int32 minimumByteCount, bool doNotReallocate)
+        private HRESULT EnsureMemoryCapacity(ref IntPtr handle, Int32 minimumByteCount, bool doNotReallocate)
         {
-            int hr = NativeMethods.S_OK;
+            HRESULT result = HRESULT.S_OK;
 
             if (doNotReallocate)
             {
@@ -2127,7 +2109,9 @@ namespace System.Windows
                 if (byteCount < minimumByteCount)
                 {
                     handle = IntPtr.Zero;
-                    hr = STG_E_MEDIUMFULL;
+
+                    // HRESULT.STG_E_MEDIUMFULL; Replace when added to System.Private.Windows.Core.
+                    result = (HRESULT)(-2147286928);
                 }
             }
             else
@@ -2140,11 +2124,11 @@ namespace System.Windows
 
                 if (handle == IntPtr.Zero)
                 {
-                    hr = NativeMethods.E_OUTOFMEMORY;
+                    result = HRESULT.E_OUTOFMEMORY;
                 }
             }
 
-            return hr;
+            return result;
         }
 
         /// <summary>
@@ -2208,15 +2192,6 @@ namespace System.Windows
         private const string SystemDrawingBitmapFormat = "System.Drawing.Bitmap";
         private const string SystemBitmapSourceFormat = "System.Windows.Media.Imaging.BitmapSource";
         private const string SystemDrawingImagingMetafileFormat = "System.Drawing.Imaging.Metafile";
-
-        private const int DV_E_FORMATETC     =       unchecked((int)0x80040064);
-        private const int DV_E_LINDEX        =       unchecked((int)0x80040068);
-        private const int DV_E_TYMED         =       unchecked((int)0x80040069);
-        private const int DV_E_DVASPECT      =       unchecked((int)0x8004006B);
-        private const int OLE_E_NOTRUNNING   =       unchecked((int)0x80040005);
-        private const int OLE_E_ADVISENOTSUPPORTED = unchecked((int)0x80040003);
-        private const int DATA_S_SAMEFORMATETC =     unchecked((int)0x00040130);
-        private const int STG_E_MEDIUMFULL   =       unchecked((int)0x80030070);
 
         // Const integer base size of the file drop list: "4 + 8 + 4 + 4"
         private const int FILEDROPBASESIZE   = 20;
@@ -2326,12 +2301,12 @@ namespace System.Windows
 
                 if (rgelt == null)
                 {
-                    return NativeMethods.E_INVALIDARG;
+                    return HRESULT.E_INVALIDARG;
                 }
 
                 for (int i = 0; i < celt && _current < _formats.Length; i++)
                 {
-                    rgelt[i] = _formats[this._current];
+                    rgelt[i] = _formats[_current];
                     _current++;
                     fetched++;
                 }
@@ -2341,7 +2316,7 @@ namespace System.Windows
                     pceltFetched[0] = fetched;
                 }
 
-                return (fetched == celt) ? NativeMethods.S_OK : NativeMethods.S_FALSE;
+                return (fetched == celt) ? HRESULT.S_OK : HRESULT.S_FALSE;
             }
 
             // IEnumFORMATETC.Skip implementation.
@@ -2350,14 +2325,14 @@ namespace System.Windows
                 // Make sure we don't overflow on the skip.
                 _current = _current + (int)Math.Min(celt, Int32.MaxValue - _current);
 
-                return (_current < _formats.Length) ? NativeMethods.S_OK : NativeMethods.S_FALSE;
+                return (_current < _formats.Length) ? HRESULT.S_OK : HRESULT.S_FALSE;
             }
 
             // IEnumFORMATETC.Reset implementation.
             public int Reset()
             {
                 _current = 0;
-                return NativeMethods.S_OK;
+                return HRESULT.S_OK;
             }
 
             // IEnumFORMATETC.Clone implementation.
@@ -2494,7 +2469,7 @@ namespace System.Windows
                     {
                         retrieved[0] = 0;
 
-                        if (enumFORMATETC.Next(1, formatetc, retrieved) == NativeMethods.S_OK && retrieved[0] > 0)
+                        if (enumFORMATETC.Next(1, formatetc, retrieved) == HRESULT.S_OK && retrieved[0] > 0)
                         {
                             string name;
 
@@ -2694,7 +2669,7 @@ namespace System.Windows
 
                 object outData = null;
 
-                if (NativeMethods.S_OK == QueryGetDataInner(ref formatetc))
+                if (HRESULT.S_OK == QueryGetDataInner(ref formatetc))
                 {
                     GetDataInner(ref formatetc, out medium);
                     try
@@ -2866,7 +2841,7 @@ namespace System.Windows
 
                 data = null;
 
-                if (NativeMethods.S_OK == QueryGetDataInner(ref formatetc))
+                if (HRESULT.S_OK == QueryGetDataInner(ref formatetc))
                 {
                     GetDataInner(ref formatetc, out medium);
                     try
@@ -2923,7 +2898,7 @@ namespace System.Windows
 
                 data = null;
 
-                if (NativeMethods.S_OK == QueryGetDataInner(ref formatetc))
+                if (HRESULT.S_OK == QueryGetDataInner(ref formatetc))
                 {
                     GetDataInner(ref formatetc, out medium);
                     try
@@ -3246,7 +3221,7 @@ namespace System.Windows
 
                 hr = QueryGetDataInner(ref formatetc);
 
-                return (hr == NativeMethods.S_OK);
+                return hr == HRESULT.S_OK;
             }
 
             private int QueryGetDataInner(ref FORMATETC formatetc)
@@ -3270,7 +3245,7 @@ namespace System.Windows
             ///     We need a separate method to avoid loading the System.Drawing assembly
             ///     when unnecessary.
             /// </summary>
-            [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+            [System.Runtime.CompilerServices.MethodImpl(Runtime.CompilerServices.MethodImplOptions.NoInlining)]
             private Object GetBitmapSourceFromHbitmap(IntPtr hbitmap)
             {
                 return Imaging.CreateBitmapSourceFromHBitmap(
@@ -3426,7 +3401,7 @@ namespace System.Windows
                                     dataStoreIndex < entries.Length;
                                     dataStoreIndex++)
                                 {
-                                    if (DataObject.IsFormatAndDataSerializable(cur[mappedFormatIndex], entries[dataStoreIndex].Data))
+                                    if (IsFormatAndDataSerializable(cur[mappedFormatIndex], entries[dataStoreIndex].Data))
                                     {
                                         if (serializationCheckFailedForThisFunction)
                                         {
@@ -3461,7 +3436,7 @@ namespace System.Windows
             public void SetData(Object data)
             {
                 if (data is ISerializable
-                    && !this._data.ContainsKey(DataFormats.Serializable))
+                    && !_data.ContainsKey(DataFormats.Serializable))
                 {
                     SetData(DataFormats.Serializable, data);
                 }
@@ -3633,7 +3608,7 @@ namespace System.Windows
                 DataStoreEntry[] datalist;
 
                 dse = new DataStoreEntry(data, autoConvert, aspect, index);
-                datalist = (DataStoreEntry[])this._data[format];
+                datalist = (DataStoreEntry[])_data[format];
 
                 if (datalist == null)
                 {
@@ -3649,7 +3624,7 @@ namespace System.Windows
                 }
 
                 datalist[0] = dse;
-                this._data[format] = datalist;
+                _data[format] = datalist;
             }
 
             private DataStoreEntry FindDataStoreEntry(string format, DVASPECT aspect, int index)
@@ -3738,10 +3713,10 @@ namespace System.Windows
 
                 public DataStoreEntry(Object data, bool autoConvert, DVASPECT aspect, int index)
                 {
-                    this._data = data;
-                    this._autoConvert = autoConvert;
-                    this._aspect = aspect;
-                    this._index = index;
+                    _data = data;
+                    _autoConvert = autoConvert;
+                    _aspect = aspect;
+                    _index = index;
                 }
 
                 #endregion Constructors

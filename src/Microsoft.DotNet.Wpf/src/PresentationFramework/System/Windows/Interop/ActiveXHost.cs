@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -31,6 +31,7 @@ using System.Windows.Input;
 using MS.Internal;
 using MS.Internal.Controls;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 // Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
 // We first need to disable warnings about unknown message numbers and unknown pragmas.
@@ -65,8 +66,8 @@ namespace System.Windows.Interop
         {
             // We use this map to lookup which invalidator method to call
             // when the Avalon parent's properties change.
-            invalidatorMap[UIElement.VisibilityProperty] = new PropertyInvalidator(OnVisibilityInvalidated);
-            invalidatorMap[FrameworkElement.IsEnabledProperty] = new PropertyInvalidator(OnIsEnabledInvalidated);
+            invalidatorMap[VisibilityProperty] = new PropertyInvalidator(OnVisibilityInvalidated);
+            invalidatorMap[IsEnabledProperty] = new PropertyInvalidator(OnIsEnabledInvalidated);
 
             // register for access keys
             EventManager.RegisterClassHandler(typeof(ActiveXHost), AccessKeyManager.AccessKeyPressedEvent, new AccessKeyPressedEventHandler(OnAccessKeyPressed));
@@ -140,7 +141,7 @@ namespace System.Windows.Interop
         /// </internalonly>
         protected override HandleRef BuildWindowCore(HandleRef hwndParent)
         {
-            this.ParentHandle = hwndParent;
+            ParentHandle = hwndParent;
 
             //BuildWindowCore should only be called if visible. Bug 1236445 tracks this.
             TransitionUpTo(ActiveXHelper.ActiveXState.InPlaceActive);
@@ -180,7 +181,7 @@ namespace System.Windows.Interop
             //SetExtent only sets height and width, can call it for perf if X, Y haven't changed
             //We need to call SetObjectRects instead, which updates X, Y, width and height
             //OnActiveXRectChange calls SetObjectRects
-            this.ActiveXSite.OnActiveXRectChange(_bounds);
+            ActiveXSite.OnActiveXRectChange(_bounds);
         }
 
         /// <summary>
@@ -395,108 +396,108 @@ namespace System.Windows.Interop
 
         internal void TransitionUpTo(ActiveXHelper.ActiveXState state)
         {
-            if (!this.GetAxHostState(ActiveXHelper.inTransition))
+            if (!GetAxHostState(ActiveXHelper.inTransition))
             {
-                this.SetAxHostState(ActiveXHelper.inTransition, true);
+                SetAxHostState(ActiveXHelper.inTransition, true);
 
                 try
                 {
                     ActiveXHelper.ActiveXState oldState;
 
-                    while (state > this.ActiveXState)
+                    while (state > ActiveXState)
                     {
-                        oldState = this.ActiveXState;
+                        oldState = ActiveXState;
 
-                        switch (this.ActiveXState)
+                        switch (ActiveXState)
                         {
                             case ActiveXHelper.ActiveXState.Passive:
                                 TransitionFromPassiveToLoaded();
-                                Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Loaded, "Failed transition");
-                                this.ActiveXState = ActiveXHelper.ActiveXState.Loaded;
+                                Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.Loaded, "Failed transition");
+                                ActiveXState = ActiveXHelper.ActiveXState.Loaded;
                                 break;
                             case ActiveXHelper.ActiveXState.Loaded:
                                 TransitionFromLoadedToRunning();
-                                Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Running, "Failed transition");
-                                this.ActiveXState = ActiveXHelper.ActiveXState.Running;
+                                Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.Running, "Failed transition");
+                                ActiveXState = ActiveXHelper.ActiveXState.Running;
                                 break;
                             case ActiveXHelper.ActiveXState.Running:
                                 TransitionFromRunningToInPlaceActive();
-                                Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive, "Failed transition");
-                                this.ActiveXState = ActiveXHelper.ActiveXState.InPlaceActive;
+                                Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive, "Failed transition");
+                                ActiveXState = ActiveXHelper.ActiveXState.InPlaceActive;
                                 break;
                             case ActiveXHelper.ActiveXState.InPlaceActive:
                                 TransitionFromInPlaceActiveToUIActive();
-                                Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.UIActive, "Failed transition");
-                                this.ActiveXState = ActiveXHelper.ActiveXState.UIActive;
+                                Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.UIActive, "Failed transition");
+                                ActiveXState = ActiveXHelper.ActiveXState.UIActive;
                                 break;
                             default:
                                 Debug.Fail("bad state");
-                                this.ActiveXState = this.ActiveXState + 1;  // To exit the loop
+                                ActiveXState = ActiveXState + 1;  // To exit the loop
                                 break;
                         }
 
-                        OnActiveXStateChange((int)oldState, (int)this.ActiveXState);
+                        OnActiveXStateChange((int)oldState, (int)ActiveXState);
                     }
                 }
                 finally
                 {
-                    this.SetAxHostState(ActiveXHelper.inTransition, false);
+                    SetAxHostState(ActiveXHelper.inTransition, false);
                 }
             }
         }
 
         internal void TransitionDownTo(ActiveXHelper.ActiveXState state)
         {
-            if (!this.GetAxHostState(ActiveXHelper.inTransition))
+            if (!GetAxHostState(ActiveXHelper.inTransition))
             {
-                this.SetAxHostState(ActiveXHelper.inTransition, true);
+                SetAxHostState(ActiveXHelper.inTransition, true);
 
                 try
                 {
                     ActiveXHelper.ActiveXState oldState;
 
-                    while (state < this.ActiveXState)
+                    while (state < ActiveXState)
                     {
-                        oldState = this.ActiveXState;
+                        oldState = ActiveXState;
 
-                        switch (this.ActiveXState)
+                        switch (ActiveXState)
                         {
                             case ActiveXHelper.ActiveXState.Open:
                                 Debug.Fail("how did we ever get into the open state?");
-                                this.ActiveXState = ActiveXHelper.ActiveXState.UIActive;
+                                ActiveXState = ActiveXHelper.ActiveXState.UIActive;
                                 break;
                             case ActiveXHelper.ActiveXState.UIActive:
                                 TransitionFromUIActiveToInPlaceActive();
-                                Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive, "Failed transition");
-                                this.ActiveXState = ActiveXHelper.ActiveXState.InPlaceActive;
+                                Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive, "Failed transition");
+                                ActiveXState = ActiveXHelper.ActiveXState.InPlaceActive;
                                 break;
                             case ActiveXHelper.ActiveXState.InPlaceActive:
                                 TransitionFromInPlaceActiveToRunning();
-                                Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Running, "Failed transition");
-                                this.ActiveXState = ActiveXHelper.ActiveXState.Running;
+                                Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.Running, "Failed transition");
+                                ActiveXState = ActiveXHelper.ActiveXState.Running;
                                 break;
                             case ActiveXHelper.ActiveXState.Running:
                                 TransitionFromRunningToLoaded();
-                                Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Loaded, "Failed transition");
-                                this.ActiveXState = ActiveXHelper.ActiveXState.Loaded;
+                                Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.Loaded, "Failed transition");
+                                ActiveXState = ActiveXHelper.ActiveXState.Loaded;
                                 break;
                             case ActiveXHelper.ActiveXState.Loaded:
                                 TransitionFromLoadedToPassive();
-                                Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Passive, "Failed transition");
-                                this.ActiveXState = ActiveXHelper.ActiveXState.Passive;
+                                Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.Passive, "Failed transition");
+                                ActiveXState = ActiveXHelper.ActiveXState.Passive;
                                 break;
                             default:
                                 Debug.Fail("bad state");
-                                this.ActiveXState = this.ActiveXState - 1;  // To exit the loop
+                                ActiveXState = ActiveXState - 1;  // To exit the loop
                                 break;
                         }
 
-                        OnActiveXStateChange((int)oldState, (int)this.ActiveXState);
+                        OnActiveXStateChange((int)oldState, (int)ActiveXState);
                     }
                 }
                 finally
                 {
-                    this.SetAxHostState(ActiveXHelper.inTransition, false);
+                    SetAxHostState(ActiveXHelper.inTransition, false);
                 }
             }
         }
@@ -505,13 +506,13 @@ namespace System.Windows.Interop
         {
             int hr = _axOleObject.DoVerb(verb,
                                          IntPtr.Zero,
-                                         this.ActiveXSite,
+                                         ActiveXSite,
                                          0,
-                                         this.ParentHandle.Handle,
+                                         ParentHandle.Handle,
                                          _bounds);
 
-            Debug.Assert(hr == NativeMethods.S_OK, $"DoVerb call failed for verb 0x{verb:X}");
-            return hr == NativeMethods.S_OK;
+            Debug.Assert(hr == HRESULT.S_OK, $"DoVerb call failed for verb 0x{verb:X}");
+            return hr == HRESULT.S_OK;
         }
 
         internal void AttachWindow(IntPtr hwnd)
@@ -525,36 +526,36 @@ namespace System.Windows.Interop
 
             _axWindow = new HandleRef(this, hwnd);
 
-            if (this.ParentHandle.Handle != IntPtr.Zero)
+            if (ParentHandle.Handle != IntPtr.Zero)
             {
-                UnsafeNativeMethods.SetParent(_axWindow, this.ParentHandle);
+                UnsafeNativeMethods.SetParent(_axWindow, ParentHandle);
             }
         }
 
         private void StartEvents()
         {
-            if (!this.GetAxHostState(ActiveXHelper.sinkAttached))
+            if (!GetAxHostState(ActiveXHelper.sinkAttached))
             {
-                this.SetAxHostState(ActiveXHelper.sinkAttached, true);
+                SetAxHostState(ActiveXHelper.sinkAttached, true);
                 CreateSink();
             }
-            this.ActiveXSite.StartEvents();
+            ActiveXSite.StartEvents();
         }
 
         private void StopEvents()
         {
-            if (this.GetAxHostState(ActiveXHelper.sinkAttached))
+            if (GetAxHostState(ActiveXHelper.sinkAttached))
             {
-                this.SetAxHostState(ActiveXHelper.sinkAttached, false);
+                SetAxHostState(ActiveXHelper.sinkAttached, false);
                 DetachSink();
             }
-            this.ActiveXSite.StopEvents();
+            ActiveXSite.StopEvents();
         }
 
         private void TransitionFromPassiveToLoaded()
         {
-            Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Passive, "Wrong start state to transition from");
-            if (this.ActiveXState == ActiveXHelper.ActiveXState.Passive)
+            Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.Passive, "Wrong start state to transition from");
+            if (ActiveXState == ActiveXHelper.ActiveXState.Passive)
             {
                 //
                 // First, create the ActiveX control
@@ -565,19 +566,19 @@ namespace System.Windows.Interop
 
                 //
                 // We are now Loaded!
-                this.ActiveXState = ActiveXHelper.ActiveXState.Loaded;
+                ActiveXState = ActiveXHelper.ActiveXState.Loaded;
 
                 //
                 // Lets give them a chance to cast the ActiveX object
                 // to the appropriate interfaces.
-                this.AttachInterfacesInternal();
+                AttachInterfacesInternal();
             }
         }
 
         private void TransitionFromLoadedToPassive()
         {
-            Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Loaded, "Wrong start state to transition from");
-            if (this.ActiveXState == ActiveXHelper.ActiveXState.Loaded)
+            Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.Loaded, "Wrong start state to transition from");
+            if (ActiveXState == ActiveXHelper.ActiveXState.Loaded)
             {
                 //
                 // Need to make sure that we don't handle any PropertyChanged
@@ -591,7 +592,7 @@ namespace System.Windows.Interop
                     {
                         //
                         // Lets first get the cached interface pointers of _axInstance released.
-                        this.DetachInterfacesInternal();
+                        DetachInterfacesInternal();
 
                         Marshal.FinalReleaseComObject(_axInstance);
                         _axInstance = null;
@@ -604,39 +605,39 @@ namespace System.Windows.Interop
 
                 //
                 // We are now Passive!
-                this.ActiveXState = ActiveXHelper.ActiveXState.Passive;
+                ActiveXState = ActiveXHelper.ActiveXState.Passive;
             }
         }
 
         private void TransitionFromLoadedToRunning()
         {
-            Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Loaded, "Wrong start state to transition from");
-            if (this.ActiveXState == ActiveXHelper.ActiveXState.Loaded)
+            Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.Loaded, "Wrong start state to transition from");
+            if (ActiveXState == ActiveXHelper.ActiveXState.Loaded)
             {
                 //
                 // See if the ActiveX control returns OLEMISC_SETCLIENTSITEFIRST
                 int bits = 0;
-                int hr = _axOleObject.GetMiscStatus(NativeMethods.DVASPECT_CONTENT, out bits);
-                if (NativeMethods.Succeeded(hr) && ((bits & NativeMethods.OLEMISC_SETCLIENTSITEFIRST) != 0))
+                HRESULT result = _axOleObject.GetMiscStatus(NativeMethods.DVASPECT_CONTENT, out bits);
+                if (result.Succeeded && ((bits & NativeMethods.OLEMISC_SETCLIENTSITEFIRST) != 0))
                 {
                     //
                     // Simply setting the site to the ActiveX control should activate it.
                     // And this will take us to the Running state.
-                    _axOleObject.SetClientSite(this.ActiveXSite);
+                    _axOleObject.SetClientSite(ActiveXSite);
                 }
 
                 StartEvents();
 
                 //
                 // We are now Running!
-                this.ActiveXState = ActiveXHelper.ActiveXState.Running;
+                ActiveXState = ActiveXHelper.ActiveXState.Running;
             }
         }
 
         private void TransitionFromRunningToLoaded()
         {
-            Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Running, "Wrong start state to transition from");
-            if (this.ActiveXState == ActiveXHelper.ActiveXState.Running)
+            Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.Running, "Wrong start state to transition from");
+            if (ActiveXState == ActiveXHelper.ActiveXState.Running)
             {
                 StopEvents();
 
@@ -646,14 +647,14 @@ namespace System.Windows.Interop
 
                 //
                 // We are now Loaded!
-                this.ActiveXState = ActiveXHelper.ActiveXState.Loaded;
+                ActiveXState = ActiveXHelper.ActiveXState.Loaded;
             }
         }
 
         private void TransitionFromRunningToInPlaceActive()
         {
-            Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.Running, "Wrong start state to transition from");
-            if (this.ActiveXState == ActiveXHelper.ActiveXState.Running)
+            Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.Running, "Wrong start state to transition from");
+            if (ActiveXState == ActiveXHelper.ActiveXState.Running)
             {
                 try
                 {
@@ -673,14 +674,14 @@ namespace System.Windows.Interop
 
                 //
                 // We are now InPlaceActive!
-                this.ActiveXState = ActiveXHelper.ActiveXState.InPlaceActive;
+                ActiveXState = ActiveXHelper.ActiveXState.InPlaceActive;
             }
         }
 
         private void TransitionFromInPlaceActiveToRunning()
         {
-            Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive, "Wrong start state to transition from");
-            if (this.ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive)
+            Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive, "Wrong start state to transition from");
+            if (ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive)
             {
                 //
                 // InPlaceDeactivate.
@@ -688,34 +689,33 @@ namespace System.Windows.Interop
 
                 //
                 // We are now Running!
-                this.ActiveXState = ActiveXHelper.ActiveXState.Running;
+                ActiveXState = ActiveXHelper.ActiveXState.Running;
             }
         }
 
         private void TransitionFromInPlaceActiveToUIActive()
         {
-            Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive, "Wrong start state to transition from");
-            if (this.ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive)
+            Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive, "Wrong start state to transition from");
+            if (ActiveXState == ActiveXHelper.ActiveXState.InPlaceActive)
             {
                 DoVerb(NativeMethods.OLEIVERB_UIACTIVATE);
 
                 //
                 // We are now UIActive!
-                this.ActiveXState = ActiveXHelper.ActiveXState.UIActive;
+                ActiveXState = ActiveXHelper.ActiveXState.UIActive;
             }
         }
 
         private void TransitionFromUIActiveToInPlaceActive()
         {
-            Debug.Assert(this.ActiveXState == ActiveXHelper.ActiveXState.UIActive, "Wrong start state to transition from");
-            if (this.ActiveXState == ActiveXHelper.ActiveXState.UIActive)
+            Debug.Assert(ActiveXState == ActiveXHelper.ActiveXState.UIActive, "Wrong start state to transition from");
+            if (ActiveXState == ActiveXHelper.ActiveXState.UIActive)
             {
-                int hr = _axOleInPlaceObject.UIDeactivate();
-                Debug.Assert(NativeMethods.Succeeded(hr), "Failed in IOleInPlaceObject.UiDeactivate");
+                HRESULT result = _axOleInPlaceObject.UIDeactivate();
+                Debug.Assert(result.Succeeded, "Failed in IOleInPlaceObject.UiDeactivate");
 
-                //
                 // We are now InPlaceActive!
-                this.ActiveXState = ActiveXHelper.ActiveXState.InPlaceActive;
+                ActiveXState = ActiveXHelper.ActiveXState.InPlaceActive;
             }
         }
 
@@ -837,7 +837,7 @@ namespace System.Windows.Interop
             //    AccessKeyManager.Register(k.ToString(), this);
             //}
 
-            this.Initialized -= new EventHandler(this.OnInitialized);
+            Initialized -= new EventHandler(OnInitialized);
 
             //Cannot inplace activate yet, since BuildWindowCore is not called yet
             //and we need that for getting the parent handle to pass on to the control.

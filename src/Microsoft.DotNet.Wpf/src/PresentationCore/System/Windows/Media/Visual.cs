@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -577,7 +577,7 @@ namespace System.Windows.Media
             if ((transform != null) && (!transform.IsIdentity))
             {
                 Matrix m = transform.Value;
-                MatrixUtil.TransformRect(ref bboxSubgraph, ref m);
+                Rect.TransformRect(ref bboxSubgraph, ref m);
             }
 
             // Apply Offset.
@@ -1109,7 +1109,7 @@ namespace System.Windows.Media
                     if ((transform != null) && (!transform.IsIdentity))
                     {
                         Matrix m = transform.Value;
-                        MatrixUtil.TransformRect(ref bboxSubgraph, ref m);
+                        Rect.TransformRect(ref bboxSubgraph, ref m);
                     }
 
                     if (!bboxSubgraph.IsEmpty)

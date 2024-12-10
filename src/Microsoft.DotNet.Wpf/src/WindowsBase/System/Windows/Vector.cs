@@ -36,15 +36,8 @@ namespace System.Windows
         /// </summary>
         public double X
         {
-            get
-            {
-                return _x;
-            }
-
-            set
-            {
-                _x = value;
-            }
+            get => _x;
+            set => _x = value;
         }
 
         /// <summary>
@@ -52,38 +45,19 @@ namespace System.Windows
         /// </summary>
         public double Y
         {
-            get
-            {
-                return _y;
-            }
-
-            set
-            {
-                _y = value;
-            }
+            get => _y;
+            set => _y = value;
         }
 
         /// <summary>
         /// Length Property - the length of this Vector
         /// </summary>
-        public double Length
-        {
-            get
-            {
-                return Math.Sqrt(_x*_x + _y*_y);
-            }
-        }
+        public double Length => Math.Sqrt(_x * _x + _y * _y);
 
         /// <summary>
         /// LengthSquared Property - the squared length of this Vector
         /// </summary>
-        public double LengthSquared
-        {
-            get
-            {
-                return _x*_x + _y*_y;
-            }
-        }
+        public double LengthSquared => (_x * _x) + (_y * _y);
 
         /// <summary>
         /// Normalize - Updates this Vector to maintain its direction, but to have a length
@@ -104,10 +78,8 @@ namespace System.Windows
         /// </returns>
         /// <param name="vector1"> The first Vector </param>
         /// <param name="vector2"> The second Vector </param>
-        public static double CrossProduct(Vector vector1, Vector vector2)
-        {
-            return vector1._x * vector2._y - vector1._y * vector2._x;
-        }
+        public static double CrossProduct(Vector vector1, Vector vector2) =>
+            (vector1._x * vector2._y) - (vector1._y * vector2._x);
 
         /// <summary>
         /// AngleBetween - the angle between 2 vectors
@@ -119,7 +91,7 @@ namespace System.Windows
         /// <param name="vector2"> The second Vector </param>
         public static double AngleBetween(Vector vector1, Vector vector2)
         {
-            double sin = vector1._x * vector2._y - vector2._x * vector1._y;  
+            double sin = vector1._x * vector2._y - vector2._x * vector1._y;
             double cos = vector1._x * vector2._x + vector1._y * vector2._y;
  
             return Math.Atan2(sin, cos) * (180 / Math.PI);
@@ -128,10 +100,7 @@ namespace System.Windows
         /// <summary>
         /// Operator -Vector (unary negation)
         /// </summary>
-        public static Vector operator - (Vector vector)
-        {
-            return new Vector(-vector._x,-vector._y);
-        }
+        public static Vector operator -(Vector vector) => new(-vector._x, -vector._y);
 
         /// <summary>
         /// Negates the values of X and Y on this Vector
@@ -145,130 +114,82 @@ namespace System.Windows
         /// <summary>
         /// Operator Vector + Vector
         /// </summary>
-        public static Vector operator + (Vector vector1, Vector vector2)
-        {
-            return new Vector(vector1._x + vector2._x,
-                              vector1._y + vector2._y);
-        }
+        public static Vector operator +(Vector vector1, Vector vector2) =>
+            new(vector1._x + vector2._x, vector1._y + vector2._y);
 
         /// <summary>
         /// Add: Vector + Vector
         /// </summary>
-        public static Vector Add(Vector vector1, Vector vector2)
-        {
-            return new Vector(vector1._x + vector2._x,
-                              vector1._y + vector2._y);
-        }
+        public static Vector Add(Vector vector1, Vector vector2) =>
+            new(vector1._x + vector2._x, vector1._y + vector2._y);
 
         /// <summary>
         /// Operator Vector - Vector
         /// </summary>
-        public static Vector operator - (Vector vector1, Vector vector2)
-        {
-            return new Vector(vector1._x - vector2._x,
-                              vector1._y - vector2._y);
-        }
+        public static Vector operator -(Vector vector1, Vector vector2) =>
+            new(vector1._x - vector2._x, vector1._y - vector2._y);
 
         /// <summary>
         /// Subtract: Vector - Vector
         /// </summary>
-        public static Vector Subtract(Vector vector1, Vector vector2)
-        {
-            return new Vector(vector1._x - vector2._x,
-                              vector1._y - vector2._y);
-        }
+        public static Vector Subtract(Vector vector1, Vector vector2) =>
+            new(vector1._x - vector2._x, vector1._y - vector2._y);
 
         /// <summary>
         /// Operator Vector + Point
         /// </summary>
-        public static Point operator + (Vector vector, Point point)
-        {
-            return new Point(point._x + vector._x, point._y + vector._y);
-        }
+        public static Point operator +(Vector vector, Point point) => new(point._x + vector._x, point._y + vector._y);
 
         /// <summary>
         /// Add: Vector + Point
         /// </summary>
-        public static Point Add(Vector vector, Point point)
-        {
-            return new Point(point._x + vector._x, point._y + vector._y);
-        }
+        public static Point Add(Vector vector, Point point) => new(point._x + vector._x, point._y + vector._y);
 
         /// <summary>
         /// Operator Vector * double
         /// </summary>
-        public static Vector operator * (Vector vector, double scalar)
-        {
-            return new Vector(vector._x * scalar,
-                              vector._y * scalar);
-        }
+        public static Vector operator *(Vector vector, double scalar) => new(vector._x * scalar, vector._y * scalar);
 
         /// <summary>
         /// Multiply: Vector * double
         /// </summary>
-        public static Vector Multiply(Vector vector, double scalar)
-        {
-            return new Vector(vector._x * scalar,
-                              vector._y * scalar);
-        }
+        public static Vector Multiply(Vector vector, double scalar) => new(vector._x * scalar, vector._y * scalar);
 
         /// <summary>
         /// Operator double * Vector
         /// </summary>
-        public static Vector operator * (double scalar, Vector vector)
-        {
-            return new Vector(vector._x * scalar,
-                              vector._y * scalar);
-        }
+        public static Vector operator *(double scalar, Vector vector) => new(vector._x * scalar, vector._y * scalar);
 
         /// <summary>
         /// Multiply: double * Vector
         /// </summary>
-        public static Vector Multiply(double scalar, Vector vector)
-        {
-            return new Vector(vector._x * scalar,
-                              vector._y * scalar);
-        }
+        public static Vector Multiply(double scalar, Vector vector) => new(vector._x * scalar, vector._y * scalar);
 
         /// <summary>
         /// Operator Vector / double
         /// </summary>
-        public static Vector operator / (Vector vector, double scalar)
-        {
-            return vector * (1.0 / scalar);
-        }
+        public static Vector operator /(Vector vector, double scalar) => vector * (1.0 / scalar);
 
         /// <summary>
         /// Multiply: Vector / double
         /// </summary>
-        public static Vector Divide(Vector vector, double scalar)
-        {
-            return vector * (1.0 / scalar);
-        }
+        public static Vector Divide(Vector vector, double scalar) => vector * (1.0 / scalar);
 
         /// <summary>
         /// Operator Vector * Matrix
         /// </summary>
-        public static Vector operator * (Vector vector, Matrix matrix)
-        {
-            return matrix.Transform(vector);
-        }
+        public static Vector operator *(Vector vector, Matrix matrix) => matrix.Transform(vector);
 
         /// <summary>
         /// Multiply: Vector * Matrix
         /// </summary>
-        public static Vector Multiply(Vector vector, Matrix matrix)
-        {
-            return matrix.Transform(vector);
-        }
+        public static Vector Multiply(Vector vector, Matrix matrix) => matrix.Transform(vector);
 
         /// <summary>
         /// Operator Vector * Vector, interpreted as their dot product
         /// </summary>
-        public static double operator * (Vector vector1, Vector vector2)
-        {
-            return vector1._x * vector2._x + vector1._y * vector2._y;
-        }
+        public static double operator *(Vector vector1, Vector vector2) =>
+            (vector1._x * vector2._x) + (vector1._y * vector2._y);
 
         /// <summary>
         /// Multiply - Returns the dot product: vector1.X*vector2.X + vector1.Y*vector2.Y
@@ -278,10 +199,8 @@ namespace System.Windows
         /// </returns>
         /// <param name="vector1"> The first Vector </param>
         /// <param name="vector2"> The second Vector </param>
-        public static double Multiply(Vector vector1, Vector vector2)
-        {
-            return vector1._x * vector2._x + vector1._y * vector2._y;
-        }
+        public static double Multiply(Vector vector1, Vector vector2) =>
+            (vector1._x * vector2._x) + (vector1._y * vector2._y);
 
         /// <summary>
         /// Determinant - Returns the determinant det(vector1, vector2)
@@ -291,11 +210,9 @@ namespace System.Windows
         /// </returns>
         /// <param name="vector1"> The first Vector </param>
         /// <param name="vector2"> The second Vector </param>
-        public static double Determinant(Vector vector1, Vector vector2)
-        {
-            return vector1._x * vector2._y - vector1._y * vector2._x;
-        }
-        
+        public static double Determinant(Vector vector1, Vector vector2) =>
+            (vector1._x * vector2._y) - (vector1._y * vector2._x);
+
         /// <summary>
         /// Explicit conversion to Size.  Note that since Size cannot contain negative values,
         /// the resulting size will contains the absolute values of X and Y
@@ -304,10 +221,7 @@ namespace System.Windows
         /// Size - A Size equal to this Vector
         /// </returns>
         /// <param name="vector"> Vector - the Vector to convert to a Size </param>
-        public static explicit operator Size(Vector vector)
-        {
-            return new Size(Math.Abs(vector._x), Math.Abs(vector._y));
-        }
+        public static explicit operator Size(Vector vector) => new(Math.Abs(vector._x), Math.Abs(vector._y));
 
         /// <summary>
         /// Explicit conversion to Point
@@ -316,10 +230,7 @@ namespace System.Windows
         /// Point - A Point equal to this Vector
         /// </returns>
         /// <param name="vector"> Vector - the Vector to convert to a Point </param>
-        public static explicit operator Point(Vector vector)
-        {
-            return new Point(vector._x, vector._y);
-        }
+        public static explicit operator Point(Vector vector) => new(vector._x, vector._y);
 
         /// <summary>
         /// Compares two Vector instances for exact equality.
@@ -332,11 +243,8 @@ namespace System.Windows
         /// </returns>
         /// <param name='vector1'>The first Vector to compare</param>
         /// <param name='vector2'>The second Vector to compare</param>
-        public static bool operator ==(Vector vector1, Vector vector2)
-        {
-            return vector1.X == vector2.X &&
-                   vector1.Y == vector2.Y;
-        }
+        public static bool operator ==(Vector vector1, Vector vector2) =>
+            vector1.X == vector2.X && vector1.Y == vector2.Y;
 
         /// <summary>
         /// Compares two Vector instances for exact inequality.
@@ -349,10 +257,8 @@ namespace System.Windows
         /// </returns>
         /// <param name='vector1'>The first Vector to compare</param>
         /// <param name='vector2'>The second Vector to compare</param>
-        public static bool operator !=(Vector vector1, Vector vector2)
-        {
-            return !(vector1 == vector2);
-        }
+        public static bool operator !=(Vector vector1, Vector vector2) => !(vector1 == vector2);
+
         /// <summary>
         /// Compares two Vector instances for object equality.  In this equality
         /// Double.NaN is equal to itself, unlike in numeric equality.
@@ -365,11 +271,8 @@ namespace System.Windows
         /// </returns>
         /// <param name='vector1'>The first Vector to compare</param>
         /// <param name='vector2'>The second Vector to compare</param>
-        public static bool Equals(Vector vector1, Vector vector2)
-        {
-            return vector1.X.Equals(vector2.X) &&
-                   vector1.Y.Equals(vector2.Y);
-        }
+        public static bool Equals(Vector vector1, Vector vector2) =>
+            vector1.X.Equals(vector2.X) && vector1.Y.Equals(vector2.Y);
 
         /// <summary>
         /// Equals - compares this Vector with the passed in object.  In this equality
@@ -382,16 +285,7 @@ namespace System.Windows
         /// bool - true if the object is an instance of Vector and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o)
-        {
-            if ((null == o) || !(o is Vector))
-            {
-                return false;
-            }
-
-            Vector value = (Vector)o;
-            return Vector.Equals(this, value);
-        }
+        public override bool Equals(object o) => o is Vector vector && Equals(this, vector);
 
         /// <summary>
         /// Equals - compares this Vector with the passed in object.  In this equality
@@ -404,22 +298,17 @@ namespace System.Windows
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Vector to compare to "this"</param>
-        public bool Equals(Vector value)
-        {
-            return Vector.Equals(this, value);
-        }
+        public bool Equals(Vector value) => Equals(this, value);
+
         /// <summary>
         /// Returns the HashCode for this Vector
         /// </summary>
         /// <returns>
         /// int - the HashCode for this Vector
         /// </returns>
-        public override int GetHashCode()
-        {
+        public override int GetHashCode() =>
             // Perform field-by-field XOR of HashCodes
-            return X.GetHashCode() ^
-                   Y.GetHashCode();
-        }
+            X.GetHashCode() ^ Y.GetHashCode();
 
         /// <summary>
         /// Parse - returns an instance converted from the provided string using
@@ -428,15 +317,13 @@ namespace System.Windows
         /// </summary>
         public static Vector Parse(string source)
         {
-            IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
+            IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
 
             TokenizerHelper th = new TokenizerHelper(source, formatProvider);
 
-            Vector value;
+            string firstToken = th.NextTokenRequired();
 
-            String firstToken = th.NextTokenRequired();
-
-            value = new Vector(
+            Vector value = new Vector(
                 Convert.ToDouble(firstToken, formatProvider),
                 Convert.ToDouble(th.NextTokenRequired(), formatProvider));
 
@@ -452,11 +339,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public override string ToString()
-        {
-            // Delegate to the internal method which implements all ToString calls.
-            return ConvertToString(null /* format string */, null /* format provider */);
-        }
+        public override string ToString() => ConvertToString(format: null, provider: null);
 
         /// <summary>
         /// Creates a string representation of this object based on the IFormatProvider
@@ -465,11 +348,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public string ToString(IFormatProvider provider)
-        {
-            // Delegate to the internal method which implements all ToString calls.
-            return ConvertToString(null /* format string */, provider);
-        }
+        public string ToString(IFormatProvider provider) => ConvertToString(format: null, provider);
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
@@ -480,11 +359,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        string IFormattable.ToString(string format, IFormatProvider provider)
-        {
-            // Delegate to the internal method which implements all ToString calls.
-            return ConvertToString(format, provider);
-        }
+        string IFormattable.ToString(string format, IFormatProvider provider) => ConvertToString(format, provider);
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
@@ -498,12 +373,13 @@ namespace System.Windows
         internal string ConvertToString(string format, IFormatProvider provider)
         {
             // Helper to get the numeric list separator for a given culture.
-            char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
-            return String.Format(provider,
-                                 "{1:" + format + "}{0}{2:" + format + "}",
-                                 separator,
-                                 _x,
-                                 _y);
+            char separator = TokenizerHelper.GetNumericListSeparator(provider);
+            return string.Format(
+                provider,
+                $"{{1:{format}}}{{0}}{{2:{format}}}",
+                separator,
+                _x,
+                _y);
         }
     }
 }

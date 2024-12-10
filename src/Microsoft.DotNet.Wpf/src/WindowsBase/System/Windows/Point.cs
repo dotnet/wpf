@@ -36,14 +36,8 @@ namespace System.Windows
         /// </summary>
         public double X
         {
-            get
-            {
-                return _x;
-            }
-            set
-            {
-                _x = value;
-            }
+            get => _x;
+            set => _x = value;
         }
 
         /// <summary>
@@ -51,14 +45,8 @@ namespace System.Windows
         /// </summary>
         public double Y
         {
-            get
-            {
-                return _y;
-            }
-            set
-            {
-                _y = value;
-            }
+            get => _y;
+            set => _y = value;
         }
 
         /// <summary>
@@ -80,10 +68,7 @@ namespace System.Windows
         /// </returns>
         /// <param name="point"> The Point to be added to the Vector </param>
         /// <param name="vector"> The Vectr to be added to the Point </param>
-        public static Point operator + (Point point, Vector vector)
-        {
-             return new Point(point._x + vector.X, point._y + vector.Y);
-        }
+        public static Point operator +(Point point, Vector vector) => new(point._x + vector.X, point._y + vector.Y);
 
         /// <summary>
         /// Add: Point + Vector
@@ -93,10 +78,7 @@ namespace System.Windows
         /// </returns>
         /// <param name="point"> The Point to be added to the Vector </param>
         /// <param name="vector"> The Vector to be added to the Point </param>
-        public static Point Add(Point point, Vector vector)
-        {
-            return new Point(point._x + vector.X, point._y + vector.Y);
-        }
+        public static Point Add(Point point, Vector vector) => new(point._x + vector.X, point._y + vector.Y);
 
         /// <summary>
         /// Operator Point - Vector
@@ -106,10 +88,7 @@ namespace System.Windows
         /// </returns>
         /// <param name="point"> The Point from which the Vector is subtracted </param>
         /// <param name="vector"> The Vector which is subtracted from the Point </param>
-        public static Point operator - (Point point, Vector vector)
-        {
-            return new Point(point._x - vector.X, point._y - vector.Y);
-        }
+        public static Point operator -(Point point, Vector vector) => new(point._x - vector.X, point._y - vector.Y);
 
         /// <summary>
         /// Subtract: Point - Vector
@@ -119,10 +98,7 @@ namespace System.Windows
         /// </returns>
         /// <param name="point"> The Point from which the Vector is subtracted </param>
         /// <param name="vector"> The Vector which is subtracted from the Point </param>
-        public static Point Subtract(Point point, Vector vector)
-        {
-            return new Point(point._x - vector.X, point._y - vector.Y);
-        }
+        public static Point Subtract(Point point, Vector vector) => new(point._x - vector.X, point._y - vector.Y);
 
         /// <summary>
         /// Operator Point - Point
@@ -132,10 +108,7 @@ namespace System.Windows
         /// </returns>
         /// <param name="point1"> The Point from which point2 is subtracted </param>
         /// <param name="point2"> The Point subtracted from point1 </param>
-        public static Vector operator - (Point point1, Point point2)
-        {
-            return new Vector(point1._x - point2._x, point1._y - point2._y);
-        }
+        public static Vector operator -(Point point1, Point point2) => new(point1._x - point2._x, point1._y - point2._y);
 
         /// <summary>
         /// Subtract: Point - Point
@@ -145,26 +118,17 @@ namespace System.Windows
         /// </returns>
         /// <param name="point1"> The Point from which point2 is subtracted </param>
         /// <param name="point2"> The Point subtracted from point1 </param>
-        public static Vector Subtract(Point point1, Point point2)
-        {
-            return new Vector(point1._x - point2._x, point1._y - point2._y);
-        }
+        public static Vector Subtract(Point point1, Point point2) => new(point1._x - point2._x, point1._y - point2._y);
 
         /// <summary>
         /// Operator Point * Matrix
         /// </summary>
-        public static Point operator * (Point point, Matrix matrix)
-        {
-            return matrix.Transform(point);
-        }
+        public static Point operator *(Point point, Matrix matrix) => matrix.Transform(point);
 
         /// <summary>
         /// Multiply: Point * Matrix
         /// </summary>
-        public static Point Multiply(Point point, Matrix matrix)
-        {
-            return matrix.Transform(point);
-        }
+        public static Point Multiply(Point point, Matrix matrix) => matrix.Transform(point);
 
         /// <summary>
         /// Explicit conversion to Size.  Note that since Size cannot contain negative values,
@@ -174,10 +138,7 @@ namespace System.Windows
         /// Size - A Size equal to this Point
         /// </returns>
         /// <param name="point"> Point - the Point to convert to a Size </param>
-        public static explicit operator Size(Point point)
-        {
-            return new Size(Math.Abs(point._x), Math.Abs(point._y));
-        }
+        public static explicit operator Size(Point point) => new(Math.Abs(point._x), Math.Abs(point._y));
 
         /// <summary>
         /// Explicit conversion to Vector
@@ -186,10 +147,7 @@ namespace System.Windows
         /// Vector - A Vector equal to this Point
         /// </returns>
         /// <param name="point"> Point - the Point to convert to a Vector </param>
-        public static explicit operator Vector(Point point)
-        {
-            return new Vector(point._x, point._y);
-        }
+        public static explicit operator Vector(Point point) => new(point._x, point._y);
 
         /// <summary>
         /// Compares two Point instances for exact equality.
@@ -202,11 +160,7 @@ namespace System.Windows
         /// </returns>
         /// <param name='point1'>The first Point to compare</param>
         /// <param name='point2'>The second Point to compare</param>
-        public static bool operator ==(Point point1, Point point2)
-        {
-            return point1.X == point2.X &&
-                   point1.Y == point2.Y;
-        }
+        public static bool operator ==(Point point1, Point point2) => point1.X == point2.X && point1.Y == point2.Y;
 
         /// <summary>
         /// Compares two Point instances for exact inequality.
@@ -219,10 +173,8 @@ namespace System.Windows
         /// </returns>
         /// <param name='point1'>The first Point to compare</param>
         /// <param name='point2'>The second Point to compare</param>
-        public static bool operator !=(Point point1, Point point2)
-        {
-            return !(point1 == point2);
-        }
+        public static bool operator !=(Point point1, Point point2) => !(point1 == point2);
+
         /// <summary>
         /// Compares two Point instances for object equality.  In this equality
         /// Double.NaN is equal to itself, unlike in numeric equality.
@@ -235,11 +187,8 @@ namespace System.Windows
         /// </returns>
         /// <param name='point1'>The first Point to compare</param>
         /// <param name='point2'>The second Point to compare</param>
-        public static bool Equals(Point point1, Point point2)
-        {
-            return point1.X.Equals(point2.X) &&
-                   point1.Y.Equals(point2.Y);
-        }
+        public static bool Equals(Point point1, Point point2) =>
+            point1.X.Equals(point2.X) && point1.Y.Equals(point2.Y);
 
         /// <summary>
         /// Equals - compares this Point with the passed in object.  In this equality
@@ -252,16 +201,7 @@ namespace System.Windows
         /// bool - true if the object is an instance of Point and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o)
-        {
-            if ((null == o) || !(o is Point))
-            {
-                return false;
-            }
-
-            Point value = (Point)o;
-            return Point.Equals(this, value);
-        }
+        public override bool Equals(object o) => o is Point point && Equals(this, point);
 
         /// <summary>
         /// Equals - compares this Point with the passed in object.  In this equality
@@ -274,22 +214,17 @@ namespace System.Windows
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Point to compare to "this"</param>
-        public bool Equals(Point value)
-        {
-            return Point.Equals(this, value);
-        }
+        public bool Equals(Point value) => Equals(this, value);
+
         /// <summary>
         /// Returns the HashCode for this Point
         /// </summary>
         /// <returns>
         /// int - the HashCode for this Point
         /// </returns>
-        public override int GetHashCode()
-        {
+        public override int GetHashCode() =>
             // Perform field-by-field XOR of HashCodes
-            return X.GetHashCode() ^
-                   Y.GetHashCode();
-        }
+            X.GetHashCode() ^ Y.GetHashCode();
 
         /// <summary>
         /// Parse - returns an instance converted from the provided string using
@@ -298,21 +233,17 @@ namespace System.Windows
         /// </summary>
         public static Point Parse(string source)
         {
-            IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
+            IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
 
-            TokenizerHelper th = new TokenizerHelper(source, formatProvider);
+            TokenizerHelper th = new(source, formatProvider);
+            string firstToken = th.NextTokenRequired();
 
-            Point value;
-
-            String firstToken = th.NextTokenRequired();
-
-            value = new Point(
+            Point value = new(
                 Convert.ToDouble(firstToken, formatProvider),
                 Convert.ToDouble(th.NextTokenRequired(), formatProvider));
 
             // There should be no more tokens in this string.
             th.LastTokenRequired();
-
             return value;
         }
 
@@ -322,11 +253,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public override string ToString()
-        {
-            // Delegate to the internal method which implements all ToString calls.
-            return ConvertToString(null /* format string */, null /* format provider */);
-        }
+        public override string ToString() => ConvertToString(format: null, provider: null);
 
         /// <summary>
         /// Creates a string representation of this object based on the IFormatProvider
@@ -335,11 +262,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public string ToString(IFormatProvider provider)
-        {
-            // Delegate to the internal method which implements all ToString calls.
-            return ConvertToString(null /* format string */, provider);
-        }
+        public string ToString(IFormatProvider provider) => ConvertToString(format: null, provider);
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
@@ -350,11 +273,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        string IFormattable.ToString(string format, IFormatProvider provider)
-        {
-            // Delegate to the internal method which implements all ToString calls.
-            return ConvertToString(format, provider);
-        }
+        string IFormattable.ToString(string format, IFormatProvider provider) => ConvertToString(format, provider);
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
@@ -368,13 +287,13 @@ namespace System.Windows
         internal string ConvertToString(string format, IFormatProvider provider)
         {
             // Helper to get the numeric list separator for a given culture.
-            char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
-            return String.Format(provider,
-                                 "{1:" + format + "}{0}{2:" + format + "}",
-                                 separator,
-                                 _x,
-                                 _y);
+            char separator = TokenizerHelper.GetNumericListSeparator(provider);
+            return string.Format(
+                provider,
+                $"{{1:{format}}}{{0}}{{2:{format}}}",
+                separator,
+                _x,
+                _y);
         }
-
     }
 }

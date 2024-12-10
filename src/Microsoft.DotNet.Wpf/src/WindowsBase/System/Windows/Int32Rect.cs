@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Windows.Converters;
@@ -25,10 +24,7 @@ namespace System.Windows
         /// <summary>
         /// Constructor which sets the initial values to the values of the parameters.
         /// </summary>
-        public Int32Rect(Int32 x,
-                    Int32 y,
-                    Int32 width,
-                    Int32 height)
+        public Int32Rect(int x, int y, int width, int height)
         {
             _x = x;
             _y = y;
@@ -41,15 +37,8 @@ namespace System.Windows
         /// </summary>
         public int X
         {
-            get
-            {
-                return _x;
-            }
-
-            set
-            {
-                _x = value;
-            }
+            get => _x;
+            set => _x = value;
         }
 
         /// <summary>
@@ -57,15 +46,8 @@ namespace System.Windows
         /// </summary>
         public int Y
         {
-            get
-            {
-                return _y;
-            }
-
-            set
-            {
-                _y = value;
-            }
+            get => _y;
+            set => _y = value;
         }
 
         /// <summary>
@@ -73,15 +55,8 @@ namespace System.Windows
         /// </summary>
         public int Width
         {
-            get
-            {
-                return _width;
-            }
-
-            set
-            {
-                _width = value;
-            }
+            get => _width;
+            set => _width = value;
         }
 
         /// <summary>
@@ -89,49 +64,24 @@ namespace System.Windows
         /// </summary>
         public int Height
         {
-            get
-            {
-                return _height;
-            }
-
-            set
-            {
-                _height = value;
-            }
+            get => _height;
+            set => _height = value;
         }
 
         /// <summary>
         /// Empty - a static property which provides an Empty Int32Rectangle.
         /// </summary>
-        public static Int32Rect Empty
-        {
-            get
-            {
-                return s_empty;
-            }
-        }
+        public static Int32Rect Empty => s_empty;
 
         /// <summary>
         /// Returns true if this Int32Rect is the Empty integer rectangle.
         /// </summary>
-        public bool IsEmpty
-        {
-            get
-            {
-                return (_x == 0) && (_y == 0) && (_width == 0) && (_height == 0);
-            }
-        }
+        public bool IsEmpty => _x == 0 && _y == 0 && _width == 0 && _height == 0;
 
         /// <summary>
         /// Returns true if this Int32Rect has area.
         /// </summary>
-        public bool HasArea
-        {
-            get
-            {
-                return _width > 0 && _height > 0;
-            }
-        }
+        public bool HasArea => _width > 0 && _height > 0;
 
         // Various places use an Int32Rect to specify a dirty rect for a
         // bitmap.  The logic for validation is centralized here.  Note that
@@ -160,13 +110,11 @@ namespace System.Windows
         /// </returns>
         /// <param name='int32Rect1'>The first Int32Rect to compare</param>
         /// <param name='int32Rect2'>The second Int32Rect to compare</param>
-        public static bool operator ==(Int32Rect int32Rect1, Int32Rect int32Rect2)
-        {
-            return int32Rect1.X == int32Rect2.X &&
-                   int32Rect1.Y == int32Rect2.Y &&
-                   int32Rect1.Width == int32Rect2.Width &&
-                   int32Rect1.Height == int32Rect2.Height;
-        }
+        public static bool operator ==(Int32Rect int32Rect1, Int32Rect int32Rect2) =>
+            int32Rect1.X == int32Rect2.X
+                && int32Rect1.Y == int32Rect2.Y
+                && int32Rect1.Width == int32Rect2.Width
+                && int32Rect1.Height == int32Rect2.Height;
 
         /// <summary>
         /// Compares two Int32Rect instances for exact inequality.
@@ -179,10 +127,9 @@ namespace System.Windows
         /// </returns>
         /// <param name='int32Rect1'>The first Int32Rect to compare</param>
         /// <param name='int32Rect2'>The second Int32Rect to compare</param>
-        public static bool operator !=(Int32Rect int32Rect1, Int32Rect int32Rect2)
-        {
-            return !(int32Rect1 == int32Rect2);
-        }
+        public static bool operator !=(Int32Rect int32Rect1, Int32Rect int32Rect2) =>
+            !(int32Rect1 == int32Rect2);
+
         /// <summary>
         /// Compares two Int32Rect instances for object equality.  In this equality
         /// Double.NaN is equal to itself, unlike in numeric equality.
@@ -195,20 +142,13 @@ namespace System.Windows
         /// </returns>
         /// <param name='int32Rect1'>The first Int32Rect to compare</param>
         /// <param name='int32Rect2'>The second Int32Rect to compare</param>
-        public static bool Equals(Int32Rect int32Rect1, Int32Rect int32Rect2)
-        {
-            if (int32Rect1.IsEmpty)
-            {
-                return int32Rect2.IsEmpty;
-            }
-            else
-            {
-                return int32Rect1.X.Equals(int32Rect2.X) &&
-                       int32Rect1.Y.Equals(int32Rect2.Y) &&
-                       int32Rect1.Width.Equals(int32Rect2.Width) &&
-                       int32Rect1.Height.Equals(int32Rect2.Height);
-            }
-        }
+        public static bool Equals(Int32Rect int32Rect1, Int32Rect int32Rect2) =>
+            int32Rect1.IsEmpty
+                ? int32Rect2.IsEmpty
+                : int32Rect1.X.Equals(int32Rect2.X)
+                    && int32Rect1.Y.Equals(int32Rect2.Y)
+                    && int32Rect1.Width.Equals(int32Rect2.Width)
+                    && int32Rect1.Height.Equals(int32Rect2.Height);
 
         /// <summary>
         /// Equals - compares this Int32Rect with the passed in object.  In this equality
@@ -221,16 +161,7 @@ namespace System.Windows
         /// bool - true if the object is an instance of Int32Rect and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o)
-        {
-            if ((null == o) || !(o is Int32Rect))
-            {
-                return false;
-            }
-
-            Int32Rect value = (Int32Rect)o;
-            return Int32Rect.Equals(this, value);
-        }
+        public override bool Equals(object o) => o is Int32Rect rect && Equals(this, rect);
 
         /// <summary>
         /// Equals - compares this Int32Rect with the passed in object.  In this equality
@@ -243,31 +174,17 @@ namespace System.Windows
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Int32Rect to compare to "this"</param>
-        public bool Equals(Int32Rect value)
-        {
-            return Int32Rect.Equals(this, value);
-        }
+        public bool Equals(Int32Rect value) => Equals(this, value);
+
         /// <summary>
         /// Returns the HashCode for this Int32Rect
         /// </summary>
         /// <returns>
         /// int - the HashCode for this Int32Rect
         /// </returns>
-        public override int GetHashCode()
-        {
-            if (IsEmpty)
-            {
-                return 0;
-            }
-            else
-            {
-                // Perform field-by-field XOR of HashCodes
-                return X.GetHashCode() ^
-                       Y.GetHashCode() ^
-                       Width.GetHashCode() ^
-                       Height.GetHashCode();
-            }
-        }
+        public override int GetHashCode() =>
+            // Perform field-by-field XOR of HashCodes
+            IsEmpty ? 0 : X.GetHashCode() ^ Y.GetHashCode() ^ Width.GetHashCode() ^ Height.GetHashCode();
 
         /// <summary>
         /// Parse - returns an instance converted from the provided string using
@@ -276,28 +193,20 @@ namespace System.Windows
         /// </summary>
         public static Int32Rect Parse(string source)
         {
-            IFormatProvider formatProvider = System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS;
+            IFormatProvider formatProvider = TypeConverterHelper.InvariantEnglishUS;
 
             TokenizerHelper th = new TokenizerHelper(source, formatProvider);
 
-            Int32Rect value;
+            string firstToken = th.NextTokenRequired();
 
-            String firstToken = th.NextTokenRequired();
-
-            // The token will already have had whitespace trimmed so we can do a
-            // simple string compare.
-            if (firstToken == "Empty")
-            {
-                value = Empty;
-            }
-            else
-            {
-                value = new Int32Rect(
+            // The token will already have had whitespace trimmed so we can do a simple string compare.
+            Int32Rect value = firstToken == "Empty"
+                ? Empty
+                : new Int32Rect(
                     Convert.ToInt32(firstToken, formatProvider),
                     Convert.ToInt32(th.NextTokenRequired(), formatProvider),
                     Convert.ToInt32(th.NextTokenRequired(), formatProvider),
                     Convert.ToInt32(th.NextTokenRequired(), formatProvider));
-            }
 
             // There should be no more tokens in this string.
             th.LastTokenRequired();
@@ -311,11 +220,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public override string ToString()
-        {
-            // Delegate to the internal method which implements all ToString calls.
-            return ConvertToString(null /* format string */, null /* format provider */);
-        }
+        public override string ToString() => ConvertToString(format: null, provider: null);
 
         /// <summary>
         /// Creates a string representation of this object based on the IFormatProvider
@@ -324,11 +229,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public string ToString(IFormatProvider provider)
-        {
-            // Delegate to the internal method which implements all ToString calls.
-            return ConvertToString(null /* format string */, provider);
-        }
+        public string ToString(IFormatProvider provider) => ConvertToString(format: null, provider);
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
@@ -339,11 +240,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        string IFormattable.ToString(string format, IFormatProvider provider)
-        {
-            // Delegate to the internal method which implements all ToString calls.
-            return ConvertToString(format, provider);
-        }
+        string IFormattable.ToString(string format, IFormatProvider provider) => ConvertToString(format, provider);
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
@@ -362,14 +259,16 @@ namespace System.Windows
             }
 
             // Helper to get the numeric list separator for a given culture.
-            char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
-            return String.Format(provider,
-                                 "{1:" + format + "}{0}{2:" + format + "}{0}{3:" + format + "}{0}{4:" + format + "}",
-                                 separator,
-                                 _x,
-                                 _y,
-                                 _width,
-                                 _height);
+            char separator = TokenizerHelper.GetNumericListSeparator(provider);
+
+            return string.Format(
+                provider,
+                $"{{1:{format}}}{{0}}{{2:{format}}}{{0}}{{3:{format}}}{{0}}{{4:{format}}}",
+                separator,
+                _x,
+                _y,
+                _width,
+                _height);
         }
     }
 

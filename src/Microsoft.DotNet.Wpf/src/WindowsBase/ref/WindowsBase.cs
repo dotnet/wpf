@@ -1,4 +1,4 @@
-namespace System.Collections.Specialized
+﻿namespace System.Collections.Specialized
 {
     public partial class CollectionChangedEventManager : System.Windows.WeakEventManager
     {
@@ -947,36 +947,36 @@ namespace System.Windows
         public Rect(System.Windows.Point location, System.Windows.Size size) { throw null; }
         public Rect(System.Windows.Point point, System.Windows.Vector vector) { throw null; }
         public Rect(System.Windows.Size size) { throw null; }
-        public double Bottom { get { throw null; } }
-        public System.Windows.Point BottomLeft { get { throw null; } }
-        public System.Windows.Point BottomRight { get { throw null; } }
+        public readonly double Bottom { get { throw null; } }
+        public readonly System.Windows.Point BottomLeft { get { throw null; } }
+        public readonly System.Windows.Point BottomRight { get { throw null; } }
         public static System.Windows.Rect Empty { get { throw null; } }
-        public double Height { get { throw null; } set { } }
-        public bool IsEmpty { get { throw null; } }
-        public double Left { get { throw null; } }
-        public System.Windows.Point Location { get { throw null; } set { } }
-        public double Right { get { throw null; } }
-        public System.Windows.Size Size { get { throw null; } set { } }
-        public double Top { get { throw null; } }
-        public System.Windows.Point TopLeft { get { throw null; } }
-        public System.Windows.Point TopRight { get { throw null; } }
-        public double Width { get { throw null; } set { } }
-        public double X { get { throw null; } set { } }
-        public double Y { get { throw null; } set { } }
-        public bool Contains(double x, double y) { throw null; }
-        public bool Contains(System.Windows.Point point) { throw null; }
-        public bool Contains(System.Windows.Rect rect) { throw null; }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Rect value) { throw null; }
+        public double Height { readonly get { throw null; } set { } }
+        public readonly bool IsEmpty { get { throw null; } }
+        public readonly double Left { get { throw null; } }
+        public System.Windows.Point Location { readonly get { throw null; } set { } }
+        public readonly double Right { get { throw null; } }
+        public System.Windows.Size Size { readonly get { throw null; } set { } }
+        public readonly double Top { get { throw null; } }
+        public readonly System.Windows.Point TopLeft { get { throw null; } }
+        public readonly System.Windows.Point TopRight { get { throw null; } }
+        public double Width { readonly get { throw null; } set { } }
+        public double X { readonly get { throw null; } set { } }
+        public double Y { readonly get { throw null; } set { } }
+        public readonly bool Contains(double x, double y) { throw null; }
+        public readonly bool Contains(System.Windows.Point point) { throw null; }
+        public readonly bool Contains(System.Windows.Rect rect) { throw null; }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Rect value) { throw null; }
         public static bool Equals(System.Windows.Rect rect1, System.Windows.Rect rect2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public void Inflate(double width, double height) { }
         public static System.Windows.Rect Inflate(System.Windows.Rect rect, double width, double height) { throw null; }
         public static System.Windows.Rect Inflate(System.Windows.Rect rect, System.Windows.Size size) { throw null; }
         public void Inflate(System.Windows.Size size) { }
         public void Intersect(System.Windows.Rect rect) { }
         public static System.Windows.Rect Intersect(System.Windows.Rect rect1, System.Windows.Rect rect2) { throw null; }
-        public bool IntersectsWith(System.Windows.Rect rect) { throw null; }
+        public readonly bool IntersectsWith(System.Windows.Rect rect) { throw null; }
         public void Offset(double offsetX, double offsetY) { }
         public static System.Windows.Rect Offset(System.Windows.Rect rect, double offsetX, double offsetY) { throw null; }
         public static System.Windows.Rect Offset(System.Windows.Rect rect, System.Windows.Vector offsetVector) { throw null; }
@@ -985,9 +985,9 @@ namespace System.Windows
         public static bool operator !=(System.Windows.Rect rect1, System.Windows.Rect rect2) { throw null; }
         public static System.Windows.Rect Parse(string source) { throw null; }
         public void Scale(double scaleX, double scaleY) { }
-        string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
-        public override string ToString() { throw null; }
-        public string ToString(System.IFormatProvider provider) { throw null; }
+        readonly string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
+        public override readonly string ToString() { throw null; }
+        public readonly string ToString(System.IFormatProvider provider) { throw null; }
         public void Transform(System.Windows.Media.Matrix matrix) { }
         public static System.Windows.Rect Transform(System.Windows.Rect rect, System.Windows.Media.Matrix matrix) { throw null; }
         public void Union(System.Windows.Point point) { }

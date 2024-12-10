@@ -24,11 +24,18 @@ namespace System.Windows
         private double _width;
         private double _height;
 
+        private static readonly Rect s_empty = new Rect
+        {
+            _x = double.PositiveInfinity,
+            _y = double.PositiveInfinity,
+            _width = double.NegativeInfinity,
+            _height = double.NegativeInfinity
+        };
+
         /// <summary>
         /// Constructor which sets the initial values to the values of the parameters
         /// </summary>
-        public Rect(Point location,
-                    Size size)
+        public Rect(Point location, Size size)
         {
             if (size.IsEmpty)
             {
@@ -47,10 +54,7 @@ namespace System.Windows
         /// Constructor which sets the initial values to the values of the parameters.
         /// Width and Height must be non-negative
         /// </summary>
-        public Rect(double x,
-                    double y,
-                    double width,
-                    double height)
+        public Rect(double x, double y, double width, double height)
         {
             if (width < 0 || height < 0)
             {
@@ -66,8 +70,7 @@ namespace System.Windows
         /// <summary>
         /// Constructor which sets the initial values to bound the two points provided.
         /// </summary>
-        public Rect(Point point1,
-                    Point point2)
+        public Rect(Point point1, Point point2)
         {
             _x = Math.Min(point1._x, point2._x);
             _y = Math.Min(point1._y, point2._y);
@@ -81,8 +84,7 @@ namespace System.Windows
         /// Constructor which sets the initial values to bound the point provided and the point
         /// which results from point + vector.
         /// </summary>
-        public Rect(Point point,
-                    Vector vector) : this(point, point + vector)
+        public Rect(Point point, Vector vector) : this(point, point + vector)
         {
         }
 
@@ -109,20 +111,14 @@ namespace System.Windows
         /// and Width and Height are negative infinity.  This is the only situation where Width or
         /// Height can be negative.
         /// </summary>
-        public static Rect Empty
-        {
-            get
-            {
-                return s_empty;
-            }
-        }
+        public static Rect Empty => s_empty;
 
         /// <summary>
         /// IsEmpty - this returns true if this rect is the Empty rectangle.
         /// Note: If width or height are 0 this Rectangle still contains a 0 or 1 dimensional set
         /// of points, so this method should not be used to check for 0 area.
         /// </summary>
-        public bool IsEmpty
+        public readonly bool IsEmpty
         {
             get
             {
@@ -138,10 +134,7 @@ namespace System.Windows
         /// </summary>
         public Point Location
         {
-            get
-            {
-                return new Point(_x, _y);
-            }
+            readonly get => new Point(_x, _y);
             set
             {
                 if (IsEmpty)
@@ -159,12 +152,7 @@ namespace System.Windows
         /// </summary>
         public Size Size
         {
-            get
-            {
-                if (IsEmpty)
-                    return Size.Empty;
-                return new Size(_width, _height);
-            }
+            readonly get => IsEmpty ? Size.Empty : new(_width, _height);
             set
             {
                 if (value.IsEmpty)
@@ -191,10 +179,7 @@ namespace System.Windows
         /// </summary>
         public double X
         {
-            get
-            {
-                return _x;
-            }
+            readonly get => _x;
             set
             {
                 if (IsEmpty)
@@ -213,10 +198,7 @@ namespace System.Windows
         /// </summary>
         public double Y
         {
-            get
-            {
-                return _y;
-            }
+            readonly get => _y;
             set
             {
                 if (IsEmpty)
@@ -235,10 +217,7 @@ namespace System.Windows
         /// </summary>
         public double Width
         {
-            get
-            {
-                return _width;
-            }
+            readonly get => _width;
             set
             {
                 if (IsEmpty)
@@ -262,10 +241,7 @@ namespace System.Windows
         /// </summary>
         public double Height
         {
-            get
-            {
-                return _height;
-            }
+            readonly get => _height;
             set
             {
                 if (IsEmpty)
@@ -286,107 +262,49 @@ namespace System.Windows
         /// Left Property - This is a read-only alias for X
         /// If this is the empty rectangle, the value will be positive infinity.
         /// </summary>
-        public double Left
-        {
-            get
-            {
-                return _x;
-            }
-        }
+        public readonly double Left => _x;
 
         /// <summary>
         /// Top Property - This is a read-only alias for Y
         /// If this is the empty rectangle, the value will be positive infinity.
         /// </summary>
-        public double Top
-        {
-            get
-            {
-                return _y;
-            }
-        }
+        public readonly double Top => _y;
 
         /// <summary>
         /// Right Property - This is a read-only alias for X + Width
         /// If this is the empty rectangle, the value will be negative infinity.
         /// </summary>
-        public double Right
-        {
-            get
-            {
-                if (IsEmpty)
-                {
-                    return double.NegativeInfinity;
-                }
-
-                return _x + _width;
-            }
-        }
+        public readonly double Right => IsEmpty ? double.NegativeInfinity : _x + _width;
 
         /// <summary>
         /// Bottom Property - This is a read-only alias for Y + Height
         /// If this is the empty rectangle, the value will be negative infinity.
         /// </summary>
-        public double Bottom
-        {
-            get
-            {
-                if (IsEmpty)
-                {
-                    return double.NegativeInfinity;
-                }
-
-                return _y + _height;
-            }
-        }
+        public readonly double Bottom => IsEmpty ? double.NegativeInfinity : _y + _height;
 
         /// <summary>
         /// TopLeft Property - This is a read-only alias for the Point which is at X, Y
         /// If this is the empty rectangle, the value will be positive infinity, positive infinity.
         /// </summary>
-        public Point TopLeft
-        {
-            get
-            {
-                return new Point(Left, Top);
-            }
-        }
+        public readonly Point TopLeft => new(Left, Top);
 
         /// <summary>
         /// TopRight Property - This is a read-only alias for the Point which is at X + Width, Y
         /// If this is the empty rectangle, the value will be negative infinity, positive infinity.
         /// </summary>
-        public Point TopRight
-        {
-            get
-            {
-                return new Point(Right, Top);
-            }
-        }
+        public readonly Point TopRight => new(Right, Top);
 
         /// <summary>
         /// BottomLeft Property - This is a read-only alias for the Point which is at X, Y + Height
         /// If this is the empty rectangle, the value will be positive infinity, negative infinity.
         /// </summary>
-        public Point BottomLeft
-        {
-            get
-            {
-                return new Point(Left, Bottom);
-            }
-        }
+        public readonly Point BottomLeft => new(Left, Bottom);
 
         /// <summary>
         /// BottomRight Property - This is a read-only alias for the Point which is at X + Width, Y + Height
         /// If this is the empty rectangle, the value will be negative infinity, negative infinity.
         /// </summary>
-        public Point BottomRight
-        {
-            get
-            {
-                return new Point(Right, Bottom);
-            }
-        }
+        public readonly Point BottomRight => new(Right, Bottom);
 
         /// <summary>
         /// Contains - Returns true if the Point is within the rectangle, inclusive of the edges.
@@ -397,10 +315,7 @@ namespace System.Windows
         /// Returns true if the Point is within the rectangle.
         /// Returns false otherwise
         /// </returns>
-        public bool Contains(Point point)
-        {
-            return Contains(point._x, point._y);
-        }
+        public readonly bool Contains(Point point) => Contains(point._x, point._y);
 
         /// <summary>
         /// Contains - Returns true if the Point represented by x,y is within the rectangle inclusive of the edges.
@@ -412,33 +327,19 @@ namespace System.Windows
         /// Returns true if the Point represented by x,y is within the rectangle.
         /// Returns false otherwise.
         /// </returns>
-        public bool Contains(double x, double y)
-        {
-            if (IsEmpty)
-            {
-                return false;
-            }
-
-            return ContainsInternal(x, y);
-        }
+        public readonly bool Contains(double x, double y) => !IsEmpty && ContainsInternal(x, y);
 
         /// <summary>
         /// Contains - Returns true if the Rect non-Empty and is entirely contained within the
         /// rectangle, inclusive of the edges.
         /// Returns false otherwise
         /// </summary>
-        public bool Contains(Rect rect)
-        {
-            if (IsEmpty || rect.IsEmpty)
-            {
-                return false;
-            }
-
-            return (_x <= rect._x &&
-                    _y <= rect._y &&
-                    _x + _width >= rect._x + rect._width &&
-                    _y + _height >= rect._y + rect._height);
-        }
+        public readonly bool Contains(Rect rect) => !IsEmpty
+            && !rect.IsEmpty
+            && _x <= rect._x
+            && _y <= rect._y
+            && _x + _width >= rect._x + rect._width
+            && _y + _height >= rect._y + rect._height;
 
         /// <summary>
         /// IntersectsWith - Returns true if the Rect intersects with this rectangle
@@ -451,18 +352,12 @@ namespace System.Windows
         /// or Height
         /// </returns>
         /// <param name="rect"> Rect </param>
-        public bool IntersectsWith(Rect rect)
-        {
-            if (IsEmpty || rect.IsEmpty)
-            {
-                return false;
-            }
-
-            return (rect.Left <= Right) &&
-                   (rect.Right >= Left) &&
-                   (rect.Top <= Bottom) &&
-                   (rect.Bottom >= Top);
-        }
+        public readonly bool IntersectsWith(Rect rect) => !IsEmpty
+            && !rect.IsEmpty
+            && (rect.Left <= Right)
+            && (rect.Right >= Left)
+            && (rect.Top <= Bottom)
+            && (rect.Bottom >= Top);
 
         /// <summary>
         /// Intersect - Update this rectangle to be the intersection of this and rect
@@ -555,10 +450,7 @@ namespace System.Windows
         /// <summary>
         /// Union - Update this rectangle to be the union of this and point.
         /// </summary>
-        public void Union(Point point)
-        {
-            Union(new Rect(point, point));
-        }
+        public void Union(Point point) => Union(new Rect(point, point));
 
         /// <summary>
         /// Union - Return the result of the union of rect and point.
@@ -826,7 +718,7 @@ namespace System.Windows
         /// </returns>
         /// <param name="x"> The x-coord of the point to test </param>
         /// <param name="y"> The y-coord of the point to test </param>
-        private bool ContainsInternal(double x, double y)
+        private readonly bool ContainsInternal(double x, double y)
         {
             // We include points on the edge as "contained".
             // We do "x - _width <= _x" instead of "x <= _x + _width"
@@ -835,20 +727,6 @@ namespace System.Windows
             return ((x >= _x) && (x - _width <= _x) &&
                     (y >= _y) && (y - _height <= _y));
         }
-
-        static private Rect CreateEmptyRect()
-        {
-            Rect rect = new Rect();
-            // We can't set these via the property setters because negatives widths
-            // are rejected in those APIs.
-            rect._x = double.PositiveInfinity;
-            rect._y = double.PositiveInfinity;
-            rect._width = double.NegativeInfinity;
-            rect._height = double.NegativeInfinity;
-            return rect;
-        }
-
-        private readonly static Rect s_empty = CreateEmptyRect();
 
         /// <summary>
         /// Compares two Rect instances for exact equality.
@@ -923,16 +801,7 @@ namespace System.Windows
         /// bool - true if the object is an instance of Rect and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o)
-        {
-            if ((null == o) || !(o is Rect))
-            {
-                return false;
-            }
-
-            Rect value = (Rect)o;
-            return Equals(this, value);
-        }
+        public override readonly bool Equals(object o) => o is Rect rect && Equals(this, rect);
 
         /// <summary>
         /// Equals - compares this Rect with the passed in object.  In this equality
@@ -945,10 +814,7 @@ namespace System.Windows
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Rect to compare to "this"</param>
-        public bool Equals(Rect value)
-        {
-            return Equals(this, value);
-        }
+        public readonly bool Equals(Rect value) => Equals(this, value);
 
         /// <summary>
         /// Returns the HashCode for this Rect
@@ -956,7 +822,7 @@ namespace System.Windows
         /// <returns>
         /// int - the HashCode for this Rect
         /// </returns>
-        public override int GetHashCode()
+        public override readonly int GetHashCode()
         {
             if (IsEmpty)
             {
@@ -1014,11 +880,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public override string ToString()
-        {
-            // Delegate to the internal method which implements all ToString calls.
-            return ConvertToString(null /* format string */, null /* format provider */);
-        }
+        public override readonly string ToString() => ConvertToString(format: null, provider: null);
 
         /// <summary>
         /// Creates a string representation of this object based on the IFormatProvider
@@ -1027,7 +889,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public string ToString(IFormatProvider provider)
+        public readonly string ToString(IFormatProvider provider)
         {
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(null /* format string */, provider);
@@ -1042,7 +904,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        string IFormattable.ToString(string format, IFormatProvider provider)
+        readonly string IFormattable.ToString(string format, IFormatProvider provider)
         {
             // Delegate to the internal method which implements all ToString calls.
             return ConvertToString(format, provider);
@@ -1057,7 +919,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        internal string ConvertToString(string format, IFormatProvider provider)
+        internal readonly string ConvertToString(string format, IFormatProvider provider)
         {
             if (IsEmpty)
             {
@@ -1066,13 +928,14 @@ namespace System.Windows
 
             // Helper to get the numeric list separator for a given culture.
             char separator = TokenizerHelper.GetNumericListSeparator(provider);
-            return string.Format(provider,
-                                 "{1:" + format + "}{0}{2:" + format + "}{0}{3:" + format + "}{0}{4:" + format + "}",
-                                 separator,
-                                 _x,
-                                 _y,
-                                 _width,
-                                 _height);
+            return string.Format(
+                provider,
+                $"{{1:{format}}}{{0}}{{2:{format}}}{{0}}{{3:{format}}}{{0}}{{4:{format}}}",
+                separator,
+                _x,
+                _y,
+                _width,
+                _height);
         }
     }
 }

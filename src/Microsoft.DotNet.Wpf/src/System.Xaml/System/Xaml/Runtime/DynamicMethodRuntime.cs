@@ -64,7 +64,7 @@ namespace MS.Internal.Xaml.Runtime
         {
             get
             {
-                if (_propertyGetDelegates == null)
+                if (_propertyGetDelegates is null)
                 {
                     _propertyGetDelegates = new Dictionary<MethodInfo, PropertyGetDelegate>();
                 }
@@ -76,7 +76,7 @@ namespace MS.Internal.Xaml.Runtime
         {
             get
             {
-                if (_propertySetDelegates == null)
+                if (_propertySetDelegates is null)
                 {
                     _propertySetDelegates = new Dictionary<MethodInfo, PropertySetDelegate>();
                 }
@@ -88,7 +88,7 @@ namespace MS.Internal.Xaml.Runtime
         {
             get
             {
-                if (_factoryDelegates == null)
+                if (_factoryDelegates is null)
                 {
                     _factoryDelegates = new Dictionary<MethodBase, FactoryDelegate>();
                 }
@@ -100,7 +100,7 @@ namespace MS.Internal.Xaml.Runtime
         {
             get
             {
-                if (_converterInstances == null)
+                if (_converterInstances is null)
                 {
                     _converterInstances = new Dictionary<Type, object>();
                 }
@@ -112,7 +112,7 @@ namespace MS.Internal.Xaml.Runtime
         {
             get
             {
-                if (_delegateCreators == null)
+                if (_delegateCreators is null)
                 {
                     _delegateCreators = new Dictionary<Type, DelegateCreator>();
                 }
@@ -124,11 +124,11 @@ namespace MS.Internal.Xaml.Runtime
             XamlAccessLevel accessLevel)
             : base(settings, true /*isWriter*/)
         {
-            Debug.Assert(schemaContext != null);
-            Debug.Assert(accessLevel != null);
+            Debug.Assert(schemaContext is not null);
+            Debug.Assert(accessLevel is not null);
             _schemaContext = schemaContext;
             _localAssembly = Assembly.Load(accessLevel.AssemblyAccessToAssemblyName);
-            if (accessLevel.PrivateAccessToTypeName != null)
+            if (accessLevel.PrivateAccessToTypeName is not null)
             {
                 _localType = _localAssembly.GetType(accessLevel.PrivateAccessToTypeName, true /*throwOnError*/);
             }
@@ -137,7 +137,7 @@ namespace MS.Internal.Xaml.Runtime
         public override TConverterBase GetConverterInstance<TConverterBase>(XamlValueConverter<TConverterBase> ts)
         {
             Type clrType = ts.ConverterType;
-            if (clrType == null)
+            if (clrType is null)
             {
                 return null;
             }
@@ -159,7 +159,7 @@ namespace MS.Internal.Xaml.Runtime
             if (ts == BuiltInValueConverter.Event)
             {
                 string valueString = value as string;
-                if (valueString != null)
+                if (valueString is not null)
                 {
                     object rootObject;
                     Type delegateType;
@@ -191,11 +191,11 @@ namespace MS.Internal.Xaml.Runtime
         private object CreateInstanceWithCtor(Type type, object[] args)
         {
             ConstructorInfo ctor = null;
-            if (args == null || args.Length == 0)
+            if (args is null || args.Length == 0)
             {
                 ctor = type.GetConstructor(BF_AllInstanceMembers, null, Type.EmptyTypes, null);
             }
-            if (ctor == null)
+            if (ctor is null)
             {
                 // We go down this path even if there are no args, because we might match a params array
                 ConstructorInfo[] ctors = type.GetConstructors(BF_AllInstanceMembers);
@@ -226,7 +226,7 @@ namespace MS.Internal.Xaml.Runtime
         protected override object GetValue(XamlMember member, object obj)
         {
             MethodInfo getter = member.Invoker.UnderlyingGetter;
-            if (getter == null)
+            if (getter is null)
             {
                 throw new NotSupportedException(SR.Format(SR.CantGetWriteonlyProperty, member));
             }
@@ -243,7 +243,7 @@ namespace MS.Internal.Xaml.Runtime
         protected override void SetValue(XamlMember member, object obj, object value)
         {
             MethodInfo setter = member.Invoker.UnderlyingSetter;
-            if (setter == null)
+            if (setter is null)
             {
                 throw new NotSupportedException(SR.Format(SR.CantSetReadonlyProperty, member));
             }
@@ -267,9 +267,9 @@ namespace MS.Internal.Xaml.Runtime
             // will fail if we the _localAssembly doesn't have RestrictedMemberAccess permission
             MethodInfo helper = targetType.GetMethod(KnownStrings.CreateDelegateHelper,
                 helperFlags, null, new Type[] { typeof(Type), typeof(string) }, null);
-            if (helper == null)
+            if (helper is null)
             {
-                if (_delegateCreatorWithoutHelper == null)
+                if (_delegateCreatorWithoutHelper is null)
                 {
                     _delegateCreatorWithoutHelper = CreateDelegateCreatorWithoutHelper();
                 }
@@ -381,13 +381,13 @@ namespace MS.Internal.Xaml.Runtime
         // update object[] args from any variables passed by ref in LoadArguments
         private void UnloadArguments(ILGenerator ilGenerator, LocalBuilder[] locals)
         {
-            if (locals == null)
+            if (locals is null)
             {
                 return;
             }
             for (int i = 0; i < locals.Length; i++)
             {
-                if (locals[i] != null)
+                if (locals[i] is not null)
                 {
                     ilGenerator.Emit(OpCodes.Ldarg_0);
                     Emit_ConstInt(ilGenerator, i);
@@ -442,7 +442,7 @@ namespace MS.Internal.Xaml.Runtime
 
         private DynamicMethod CreateDynamicMethod(string name, Type returnType, params Type[] argTypes)
         {
-            if (_localType != null)
+            if (_localType is not null)
             {
                 return new DynamicMethod(name, returnType, argTypes, _localType);
             }
@@ -457,7 +457,7 @@ namespace MS.Internal.Xaml.Runtime
             Type declaringType = instanceMethod.DeclaringType;
             // Derived classes are not allowed to access protected members on instances of their base classes.
             // So if it it's an inherited protected member, we need to cast to the local type.
-            if (_localType != null && _localType != declaringType && declaringType.IsAssignableFrom(_localType))
+            if (_localType is not null && _localType != declaringType && declaringType.IsAssignableFrom(_localType))
             {
                 if (instanceMethod.IsFamily || instanceMethod.IsFamilyAndAssembly)
                 {
@@ -573,7 +573,7 @@ namespace MS.Internal.Xaml.Runtime
             }
             ilGenerator.Emit(OpCodes.Ldloc, args);
 
-            if (s_InvokeMemberMethod == null)
+            if (s_InvokeMemberMethod is null)
             {
                 s_InvokeMemberMethod = typeof(Type).GetMethod(KnownStrings.InvokeMember,
                     new Type[] { typeof(string), typeof(BindingFlags), typeof(Binder), typeof(object), typeof(object[]) });
@@ -584,7 +584,7 @@ namespace MS.Internal.Xaml.Runtime
         private void Emit_TypeOf(ILGenerator ilGenerator, Type type)
         {
             ilGenerator.Emit(OpCodes.Ldtoken, type);
-            if (s_GetTypeFromHandleMethod == null)
+            if (s_GetTypeFromHandleMethod is null)
             {
                 s_GetTypeFromHandleMethod = typeof(Type).GetMethod(
                     KnownStrings.GetTypeFromHandle, BindingFlags.Public | BindingFlags.Static,

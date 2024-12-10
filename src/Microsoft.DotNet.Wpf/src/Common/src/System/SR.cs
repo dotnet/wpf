@@ -53,7 +53,7 @@ namespace System
         {
             string resourceString = GetResourceString(resourceKey);
 
-            if (defaultString != null && resourceKey.Equals(resourceString, StringComparison.Ordinal))
+            if (defaultString is not null && resourceKey.Equals(resourceString, StringComparison.Ordinal))
             {
                 return defaultString;
             }
@@ -63,7 +63,7 @@ namespace System
 
         internal static string Format(string resourceFormat, params object[] args)
         {
-            if (args != null)
+            if (args is not null)
             {
                 if (UsingResourceKeys())
                 {

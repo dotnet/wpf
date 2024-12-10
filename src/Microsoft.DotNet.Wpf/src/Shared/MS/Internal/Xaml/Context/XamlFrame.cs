@@ -49,7 +49,7 @@ namespace MS.Internal.Xaml.Context
             set
             {
                 _previous = value;
-                _depth = (_previous == null) ? 0 : _previous._depth + 1;
+                _depth = (_previous is null) ? 0 : _previous._depth + 1;
             }
         }
     }

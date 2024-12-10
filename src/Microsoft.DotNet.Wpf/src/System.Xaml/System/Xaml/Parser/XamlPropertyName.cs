@@ -11,7 +11,7 @@ namespace MS.Internal.Xaml.Parser
         private XamlPropertyName(XamlName owner, string prefix, string name)
             : base(name)
         {
-            if (owner != null)
+            if (owner is not null)
             {
                 Owner = owner;
                 _prefix = owner.Prefix ?? string.Empty;
@@ -94,7 +94,7 @@ namespace MS.Internal.Xaml.Parser
 
         public bool IsDotted
         {
-            get { return Owner != null; }
+            get { return Owner is not null; }
         }
     }
 }

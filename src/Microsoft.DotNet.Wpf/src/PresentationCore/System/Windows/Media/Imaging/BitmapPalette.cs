@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,6 +6,7 @@ using MS.Internal;
 using MS.Win32.PresentationCore;
 using System.Windows.Threading;
 using System.Runtime.InteropServices;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media.Imaging
 {
@@ -72,11 +73,11 @@ namespace System.Windows.Media.Imaging
 
             lock (bitmapSource.SyncObject)
             {
-                HRESULT.Check(UnsafeNativeMethods.WICPalette.InitializeFromBitmap(
-                            _palette,
-                            unmanagedBitmap,
-                            maxColorCount,
-                            false));
+                UnsafeNativeMethods.WICPalette.InitializeFromBitmap(
+                    _palette,
+                    unmanagedBitmap,
+                    maxColorCount,
+                    false).ThrowOnFailureExtended();
             }
 
             UpdateManaged();
@@ -117,10 +118,10 @@ namespace System.Windows.Media.Imaging
 
             _palette = CreateInternalPalette();
 
-            HRESULT.Check(UnsafeNativeMethods.WICPalette.InitializePredefined(
-                        _palette,
-                        paletteType,
-                        addtransparentColor));
+            UnsafeNativeMethods.WICPalette.InitializePredefined(
+                _palette,
+                paletteType,
+                addtransparentColor).ThrowOnFailureExtended();
 
             // Fill in the Colors property.
             UpdateManaged();
@@ -158,11 +159,9 @@ namespace System.Windows.Media.Imaging
             // that likely means that the source doesn't have a palette.
             lock (source.SyncObject)
             {
-                int hr = UnsafeNativeMethods.WICBitmapSource.CopyPalette(
-                            bitmapSource,
-                            unmanagedPalette);
+                HRESULT result = UnsafeNativeMethods.WICBitmapSource.CopyPalette(bitmapSource, unmanagedPalette);
 
-                if (hr != HRESULT.S_OK)
+                if (result != HRESULT.S_OK)
                 {
                     return null;
                 }
@@ -171,8 +170,8 @@ namespace System.Windows.Media.Imaging
             WICPaletteType paletteType;
             bool hasAlpha;
 
-            HRESULT.Check(UnsafeNativeMethods.WICPalette.GetType(unmanagedPalette, out paletteType));
-            HRESULT.Check(UnsafeNativeMethods.WICPalette.HasAlpha(unmanagedPalette, out hasAlpha));
+            UnsafeNativeMethods.WICPalette.GetType(unmanagedPalette, out paletteType).ThrowOnFailureExtended();
+            UnsafeNativeMethods.WICPalette.HasAlpha(unmanagedPalette, out hasAlpha).ThrowOnFailureExtended();
 
             if (paletteType == WICPaletteType.WICPaletteTypeCustom ||
                 paletteType == WICPaletteType.WICPaletteTypeOptimal)
@@ -247,9 +246,10 @@ namespace System.Windows.Media.Imaging
 
             using (FactoryMaker myFactory = new FactoryMaker())
             {
-                HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreatePalette(
-                            myFactory.ImagingFactoryPtr,
-                            out palette));
+                UnsafeNativeMethods.WICImagingFactory.CreatePalette(
+                    myFactory.ImagingFactoryPtr,
+                    out palette).ThrowOnFailureExtended();
+
                 Debug.Assert(palette != null && !palette.IsInvalid);
             }
 
@@ -280,10 +280,10 @@ namespace System.Windows.Media.Imaging
 
             fixed (void* paletteColorArrayPinned = paletteColorArray)
             {
-                HRESULT.Check(UnsafeNativeMethods.WICPalette.InitializeCustom(
-                            _palette,
-                            (IntPtr)paletteColorArrayPinned,
-                            numColors));
+                UnsafeNativeMethods.WICPalette.InitializeCustom(
+                    _palette,
+                    (IntPtr)paletteColorArrayPinned,
+                    numColors).ThrowOnFailureExtended();
             }
         }
 
@@ -296,8 +296,7 @@ namespace System.Windows.Media.Imaging
 
             int numColors = 0;
             int cActualColors = 0;
-            HRESULT.Check(UnsafeNativeMethods.WICPalette.GetColorCount(_palette,
-                        out numColors));
+            UnsafeNativeMethods.WICPalette.GetColorCount(_palette, out numColors).ThrowOnFailureExtended();
 
             List<Color> colors = new List<Color>();
 
@@ -310,13 +309,13 @@ namespace System.Windows.Media.Imaging
                 ImagePaletteColor[] paletteColorArray = new ImagePaletteColor[numColors];
                 unsafe
                 {
-                    fixed(void* paletteColorArrayPinned = paletteColorArray)
+                    fixed (void* paletteColorArrayPinned = paletteColorArray)
                     {
-                        HRESULT.Check(UnsafeNativeMethods.WICPalette.GetColors(
-                                    _palette,
-                                    numColors,
-                                    (IntPtr)paletteColorArrayPinned,
-                                    out cActualColors));
+                        UnsafeNativeMethods.WICPalette.GetColors(
+                            _palette,
+                            numColors,
+                            (IntPtr)paletteColorArrayPinned,
+                            out cActualColors).ThrowOnFailureExtended();
 
                         Debug.Assert(cActualColors == numColors);
                     }

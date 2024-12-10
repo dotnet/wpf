@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,6 +14,7 @@ using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Threading;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Interop
 {
@@ -153,7 +154,7 @@ namespace System.Windows.Interop
             // in a null _pInteropDeviceBitmap at the end
             if (backBuffer != IntPtr.Zero)
             {
-                HRESULT.Check(UnsafeNativeMethods.InteropDeviceBitmap.Create(
+                UnsafeNativeMethods.InteropDeviceBitmap.Create(
                     backBuffer,
                     _dpiX,
                     _dpiY,
@@ -163,7 +164,7 @@ namespace System.Windows.Interop
                     out newBitmap,
                     out newPixelWidth,
                     out newPixelHeight
-                    ));
+                    ).ThrowOnFailureExtended();
             }
 
             //
@@ -299,18 +300,18 @@ namespace System.Windows.Interop
                 throw new InvalidOperationException(SR.D3DImage_MustHaveBackBuffer);
             }
 
-            dirtyRect.ValidateForDirtyRect("dirtyRect", PixelWidth, PixelHeight);
+            dirtyRect.ValidateForDirtyRect(nameof(dirtyRect), PixelWidth, PixelHeight);
             if (dirtyRect.HasArea)
             {
                 // Unmanaged code will make sure that the rect is well-formed
-                HRESULT.Check(UnsafeNativeMethods.InteropDeviceBitmap.AddDirtyRect(
-                    dirtyRect.X, 
-                    dirtyRect.Y, 
-                    dirtyRect.Width, 
-                    dirtyRect.Height, 
+                UnsafeNativeMethods.InteropDeviceBitmap.AddDirtyRect(
+                    dirtyRect.X,
+                    dirtyRect.Y,
+                    dirtyRect.Width,
+                    dirtyRect.Height,
                     _pInteropDeviceBitmap
-                    ));
-                    
+                    ).ThrowOnFailureExtended();
+
                 // We're now dirty, but we won't consider it a change until Unlock
                 _isDirty = true;
                 _isChangePending = true;
@@ -400,7 +401,7 @@ namespace System.Windows.Interop
             { 
                 ReadPreamble();
 
-                return ImageSource.PixelsToDIPs(_dpiX, (int)_pixelWidth);
+                return PixelsToDIPs(_dpiX, (int)_pixelWidth);
             }
         }
 
@@ -415,7 +416,7 @@ namespace System.Windows.Interop
             { 
                 ReadPreamble();
                 
-                return ImageSource.PixelsToDIPs(_dpiY, (int)_pixelHeight);
+                return PixelsToDIPs(_dpiY, (int)_pixelHeight);
             }
         }
 
@@ -514,24 +515,23 @@ namespace System.Windows.Interop
         /// </Summary>
         protected internal virtual BitmapSource CopyBackBuffer()
         {
-            
             BitmapSource copy = null;
-            
+
             if (_pInteropDeviceBitmap != null)
             {
                 BitmapSourceSafeMILHandle pIWICBitmapSource;
-                
-                if (HRESULT.Succeeded(UnsafeNativeMethods.InteropDeviceBitmap.GetAsSoftwareBitmap(
+
+                if (UnsafeNativeMethods.InteropDeviceBitmap.GetAsSoftwareBitmap(
                     _pInteropDeviceBitmap,
                     out pIWICBitmapSource
-                    )))
+                    ).Succeeded)
                 {
                     // CachedBitmap will AddRef the bitmap
                     copy = new CachedBitmap(pIWICBitmapSource);
                 }
             }
 
-            return copy;         
+            return copy;
         }
 
         private void CloneCommon(Freezable sourceFreezable)
@@ -826,7 +826,7 @@ namespace System.Windows.Interop
 
         internal override DUCE.ResourceHandle AddRefOnChannelCore(DUCE.Channel channel)
         {
-            if (_duceResource.CreateOrAddRefOnChannel(this, channel, System.Windows.Media.Composition.DUCE.ResourceType.TYPE_D3DIMAGE))
+            if (_duceResource.CreateOrAddRefOnChannel(this, channel, DUCE.ResourceType.TYPE_D3DIMAGE))
             {
                 AddRefOnChannelAnimations(channel);
 

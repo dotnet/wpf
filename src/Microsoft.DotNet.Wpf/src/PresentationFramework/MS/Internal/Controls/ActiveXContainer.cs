@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,6 +11,7 @@
 
 using System.Windows.Interop;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.Controls
 {
@@ -25,7 +26,7 @@ namespace MS.Internal.Controls
 
         internal ActiveXContainer(ActiveXHost host)
         {
-            this._host = host;
+            _host = host;
 
             Invariant.Assert(_host != null);
         }
@@ -50,7 +51,7 @@ namespace MS.Internal.Controls
             if (ppmkOut != null)
                 ppmkOut[0] = null;
 
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IOleContainer.EnumObjects(int grfFlags, out UnsafeNativeMethods.IEnumUnknown ppenum)
@@ -73,16 +74,16 @@ namespace MS.Internal.Controls
                 Object[] temp = new Object[1];
                 temp[0] = ax;
                 ppenum = new EnumUnknown(temp);
-                return NativeMethods.S_OK;
+                return HRESULT.S_OK;
             }
 
             ppenum = new EnumUnknown(null);
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleContainer.LockContainer(bool fLock)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         #endregion IOleContainer
@@ -100,22 +101,22 @@ namespace MS.Internal.Controls
 
         int UnsafeNativeMethods.IOleInPlaceFrame.ContextSensitiveHelp(int fEnterMode)
         {
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleInPlaceFrame.GetBorder(NativeMethods.COMRECT lprectBorder)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IOleInPlaceFrame.RequestBorderSpace(NativeMethods.COMRECT pborderwidths)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IOleInPlaceFrame.SetBorderSpace(NativeMethods.COMRECT pborderwidths)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IOleInPlaceFrame.SetActiveObject(UnsafeNativeMethods.IOleInPlaceActiveObject pActiveObject, string pszObjName)
@@ -152,37 +153,37 @@ namespace MS.Internal.Controls
             }
             */
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleInPlaceFrame.InsertMenus(IntPtr hmenuShared, NativeMethods.tagOleMenuGroupWidths lpMenuWidths)
         {
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleInPlaceFrame.SetMenu(IntPtr hmenuShared, IntPtr holemenu, IntPtr hwndActiveObject)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IOleInPlaceFrame.RemoveMenus(IntPtr hmenuShared)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IOleInPlaceFrame.SetStatusText(string pszStatusText)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IOleInPlaceFrame.EnableModeless(bool fEnable)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IOleInPlaceFrame.TranslateAccelerator(ref MSG lpmsg, short wID)
         {
-            return NativeMethods.S_FALSE;
+            return HRESULT.S_FALSE;
         }
 
         #endregion IOleInPlaceFrame
@@ -214,7 +215,7 @@ namespace MS.Internal.Controls
 #if DEBUG
             if (_siteUIActive != null) {
                 //TODO: Debug.Assert(_siteUIActive == site, "deactivating when not active...");
-                Debug.Assert(this.ActiveXHost == site, "deactivating when not active...");
+                Debug.Assert(ActiveXHost == site, "deactivating when not active...");
             }
 #endif // DEBUG
 
@@ -227,7 +228,7 @@ namespace MS.Internal.Controls
         internal void OnInPlaceDeactivate(ActiveXHost site)
         {
             //TODO: Clear the focus here too?
-            if (this.ActiveXHost == site)
+            if (ActiveXHost == site)
             {
             }
         }

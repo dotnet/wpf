@@ -1,9 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Win32.PresentationCore;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media.Imaging
 {
@@ -355,11 +356,11 @@ namespace System.Windows.Media.Imaging
             {
                 using (FactoryMaker factoryMaker = new FactoryMaker())
                 {
-                    HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromSource(
-                            factoryMaker.ImagingFactoryPtr,
-                            wicSource,
-                            WICBitmapCreateCacheOptions.WICBitmapCacheOnLoad,
-                            out bitmapSource));
+                    UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromSource(
+                        factoryMaker.ImagingFactoryPtr,
+                        wicSource,
+                        WICBitmapCreateCacheOptions.WICBitmapCacheOnLoad,
+                        out bitmapSource).ThrowOnFailureExtended();
                 }
 
                 bitmapSource.CalculateSize();
@@ -409,28 +410,28 @@ namespace System.Windows.Media.Imaging
 
                 using (FactoryMaker factoryMaker = new FactoryMaker())
                 {
-                    HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromMemory(
-                            factoryMaker.ImagingFactoryPtr,
-                            (uint)pixelWidth, (uint)pixelHeight,
-                            ref guidFmt,
-                            (uint)stride,
-                            (uint)bufferSize,
-                            buffer,
-                            out wicBitmap));
+                    UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromMemory(
+                        factoryMaker.ImagingFactoryPtr,
+                        (uint)pixelWidth, (uint)pixelHeight,
+                        ref guidFmt,
+                        (uint)stride,
+                        (uint)bufferSize,
+                        buffer,
+                        out wicBitmap).ThrowOnFailureExtended();
 
                     wicBitmap.CalculateSize();
                 }
 
-                HRESULT.Check(UnsafeNativeMethods.WICBitmap.SetResolution(
-                        wicBitmap,
-                        dpiX,
-                        dpiY));
+                UnsafeNativeMethods.WICBitmap.SetResolution(
+                    wicBitmap,
+                    dpiX,
+                    dpiY).ThrowOnFailureExtended();
 
                 if (pixelFormat.Palettized)
                 {
-                    HRESULT.Check(UnsafeNativeMethods.WICBitmap.SetPalette(
+                    UnsafeNativeMethods.WICBitmap.SetPalette(
                         wicBitmap,
-                        palette.InternalPalette));
+                        palette.InternalPalette).ThrowOnFailureExtended();
                 }
 
                 WicSourceHandle = wicBitmap;

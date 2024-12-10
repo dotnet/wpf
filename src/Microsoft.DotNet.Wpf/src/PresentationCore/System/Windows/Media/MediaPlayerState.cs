@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using System.Windows.Navigation;
 
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
+using Windows.Win32.Foundation;
 
 #pragma warning disable 1634, 1691
 
@@ -102,7 +103,7 @@ namespace System.Windows.Media
             {
                 VerifyAPI();
                 bool isBuffering = false;
-                HRESULT.Check(MILMedia.IsBuffering(_nativeMedia, ref isBuffering));
+                MILMedia.IsBuffering(_nativeMedia, ref isBuffering).ThrowOnFailureExtended();
                 return isBuffering;
             }
         }
@@ -116,7 +117,7 @@ namespace System.Windows.Media
             {
                 VerifyAPI();
                 bool canPause = false;
-                HRESULT.Check(MILMedia.CanPause(_nativeMedia, ref canPause));
+                MILMedia.CanPause(_nativeMedia, ref canPause).ThrowOnFailureExtended();
                 return canPause;
             }
         }
@@ -130,7 +131,7 @@ namespace System.Windows.Media
             {
                 VerifyAPI();
                 double downloadProgress = 0;
-                HRESULT.Check(MILMedia.GetDownloadProgress(_nativeMedia, ref downloadProgress));
+                MILMedia.GetDownloadProgress(_nativeMedia, ref downloadProgress).ThrowOnFailureExtended();
                 return downloadProgress;
             }
         }
@@ -144,7 +145,7 @@ namespace System.Windows.Media
             {
                 VerifyAPI();
                 double bufferingProgress = 0;
-                HRESULT.Check(MILMedia.GetBufferingProgress(_nativeMedia, ref bufferingProgress));
+                MILMedia.GetBufferingProgress(_nativeMedia, ref bufferingProgress).ThrowOnFailureExtended();
                 return bufferingProgress;
             }
         }
@@ -160,7 +161,7 @@ namespace System.Windows.Media
 
                 UInt32 height = 0;
 
-                HRESULT.Check(MILMedia.GetNaturalHeight(_nativeMedia, ref height));
+                MILMedia.GetNaturalHeight(_nativeMedia, ref height).ThrowOnFailureExtended();
                 return (Int32)height;
             }
         }
@@ -176,7 +177,7 @@ namespace System.Windows.Media
 
                 UInt32 width = 0;
 
-                HRESULT.Check(MILMedia.GetNaturalWidth(_nativeMedia, ref width));
+                MILMedia.GetNaturalWidth(_nativeMedia, ref width).ThrowOnFailureExtended();
                 return (Int32)width;
             }
         }
@@ -192,7 +193,7 @@ namespace System.Windows.Media
 
                 bool hasAudio = true;
 
-                HRESULT.Check(MILMedia.HasAudio(_nativeMedia, ref hasAudio));
+                MILMedia.HasAudio(_nativeMedia, ref hasAudio).ThrowOnFailureExtended();
                 return hasAudio;
             }
         }
@@ -208,7 +209,7 @@ namespace System.Windows.Media
 
                 bool hasVideo = false;
 
-                HRESULT.Check(MILMedia.HasVideo(_nativeMedia, ref hasVideo));
+                MILMedia.HasVideo(_nativeMedia, ref hasVideo).ThrowOnFailureExtended();
                 return hasVideo;
             }
         }
@@ -259,9 +260,7 @@ namespace System.Windows.Media
                 {
                     if (!_muted)
                     {
-                        int hr = MILMedia.SetVolume(_nativeMedia, value);
-
-                        HRESULT.Check(hr);
+                        MILMedia.SetVolume(_nativeMedia, value).ThrowOnFailureExtended();
 
                         // value is changing
                         _volume = value;
@@ -305,9 +304,7 @@ namespace System.Windows.Media
                 // is not the same. No need to do extra work.
                 if (!DoubleUtil.AreClose(_balance, value))
                 {
-                    int hr = MILMedia.SetBalance(_nativeMedia, value);
-
-                    HRESULT.Check(hr);
+                    MILMedia.SetBalance(_nativeMedia, value).ThrowOnFailureExtended();
 
                     // value is changing
                     _balance = value;
@@ -330,7 +327,7 @@ namespace System.Windows.Media
                 VerifyAPI();
                 if (value != _scrubbingEnabled)
                 {
-                    HRESULT.Check(MILMedia.SetIsScrubbingEnabled(_nativeMedia, value));
+                    MILMedia.SetIsScrubbingEnabled(_nativeMedia, value).ThrowOnFailureExtended();
                     _scrubbingEnabled = value;
                 }
             }
@@ -358,7 +355,7 @@ namespace System.Windows.Media
                     // Going from Unmuted -> Muted
 
                     // Set the volume to 0
-                    this.Volume = 0;
+                    Volume = 0;
                     _muted = true;
 
                     // make sure cached volume is previous value
@@ -375,7 +372,7 @@ namespace System.Windows.Media
                     _volume = 0;
 
                     // set volume to old cached value, which will also update our current cached value
-                    this.Volume = volume;
+                    Volume = volume;
                 }
             }
         }
@@ -387,7 +384,8 @@ namespace System.Windows.Media
                 VerifyAPI();
 
                 long mediaLength = 0;
-                HRESULT.Check(MILMedia.GetMediaLength(_nativeMedia, ref mediaLength));
+                MILMedia.GetMediaLength(_nativeMedia, ref mediaLength).ThrowOnFailureExtended();
+
                 if (mediaLength == 0)
                 {
                     return Duration.Automatic;
@@ -718,7 +716,7 @@ namespace System.Windows.Media
 
             VerifyNotControlledByClock();
 
-            HRESULT.Check(MILMedia.Close(_nativeMedia));
+            MILMedia.Close(_nativeMedia).ThrowOnFailureExtended();
 
             //
             // Once we successfully close, we don't have a clock anymore.
@@ -767,8 +765,7 @@ namespace System.Windows.Media
         NeedUIFrameUpdate()
         {
             VerifyAPI();
-
-            HRESULT.Check(MILMedia.NeedUIFrameUpdate(_nativeMedia));
+            MILMedia.NeedUIFrameUpdate(_nativeMedia).ThrowOnFailureExtended();
         }
 
         #endregion
@@ -786,12 +783,11 @@ namespace System.Windows.Media
             {
                 using (FactoryMaker myFactory = new FactoryMaker())
                 {
-                    HRESULT.Check(UnsafeNativeMethods.MILFactory2.CreateMediaPlayer(
-                            myFactory.FactoryPtr,
-                            unmanagedProxy,
-                            true,
-                            out _nativeMedia
-                            ));
+                    UnsafeNativeMethods.MILFactory2.CreateMediaPlayer(
+                        myFactory.FactoryPtr,
+                        unmanagedProxy,
+                        true,
+                        out _nativeMedia).ThrowOnFailureExtended();
                 }
             }
             catch
@@ -844,7 +840,7 @@ namespace System.Windows.Media
 
             // We pass in exact same URI for which we demanded permissions so that we can be sure
             // there is no discrepancy between the two.
-            HRESULT.Check(MILMedia.Open(_nativeMedia, toOpen));
+            MILMedia.Open(_nativeMedia, toOpen).ThrowOnFailureExtended();
         }
 
         private Uri ResolveUri(Uri uri, Uri appBase)
@@ -885,8 +881,7 @@ namespace System.Windows.Media
         internal void SetPosition(TimeSpan value)
         {
             VerifyAPI();
-
-            HRESULT.Check(MILMedia.SetPosition(_nativeMedia, value.Ticks));
+            MILMedia.SetPosition(_nativeMedia, value.Ticks).ThrowOnFailureExtended();
         }
 
         /// <summary>
@@ -895,9 +890,8 @@ namespace System.Windows.Media
         private TimeSpan GetPosition()
         {
             VerifyAPI();
-
             long position = 0;
-            HRESULT.Check(MILMedia.GetPosition(_nativeMedia, ref position));
+            MILMedia.GetPosition(_nativeMedia, ref position).ThrowOnFailureExtended();
             return TimeSpan.FromTicks(position);
         }
 
@@ -906,10 +900,8 @@ namespace System.Windows.Media
             set
             {
                 VerifyAPI();
-
                 ArgumentOutOfRangeException.ThrowIfEqual(value, double.NaN);
-
-                HRESULT.Check(MILMedia.SetRate(_nativeMedia, value));
+                MILMedia.SetRate(_nativeMedia, value).ThrowOnFailureExtended();
             }
         }
 

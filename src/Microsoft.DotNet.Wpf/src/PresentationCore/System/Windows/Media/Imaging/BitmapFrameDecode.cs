@@ -1,13 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-//
-//
 
 using System.Collections.ObjectModel;
 using MS.Internal;
 using MS.Win32.PresentationCore;
+using Windows.Win32.Foundation;
 
 #pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
@@ -115,7 +113,7 @@ namespace System.Windows.Media.Imaging
 
             byte[] pixels = new byte[4];
 
-            BitmapSource source = BitmapSource.Create(
+            BitmapSource source = Create(
                 1,
                 1,
                 96,
@@ -215,11 +213,15 @@ namespace System.Windows.Media.Imaging
         /// <summary>
         /// Used as a delegate in ColorContexts to get the unmanaged IWICColorContexts
         /// </summary>
-        private int GetColorContexts(ref uint numContexts, IntPtr[] colorContextPtrs)
+        private HRESULT GetColorContexts(ref uint numContexts, IntPtr[] colorContextPtrs)
         {
             Invariant.Assert(colorContextPtrs == null || numContexts <= colorContextPtrs.Length);
-            
-            return UnsafeNativeMethods.WICBitmapFrameDecode.GetColorContexts(_frameSource, numContexts, colorContextPtrs, out numContexts);
+
+            return UnsafeNativeMethods.WICBitmapFrameDecode.GetColorContexts(
+                _frameSource,
+                numContexts,
+                colorContextPtrs,
+                out numContexts);
         }
 
         /// <summary>
@@ -576,14 +578,14 @@ namespace System.Windows.Media.Imaging
                 lock (_syncObject)
                 {
                     // Check if there is embedded thumbnail or not
-                    int hr = UnsafeNativeMethods.WICBitmapFrameDecode.GetThumbnail(
+                    HRESULT result = UnsafeNativeMethods.WICBitmapFrameDecode.GetThumbnail(
                         _frameSource,
                         out thumbnail
                         );
 
-                    if (hr != (int)WinCodecErrors.WINCODEC_ERR_CODECNOTHUMBNAIL)
+                    if (result != HRESULT.WINCODEC_ERR_CODECNOTHUMBNAIL)
                     {
-                        HRESULT.Check(hr);
+                        result.ThrowOnFailureExtended();
                     }
                 }
 
@@ -595,11 +597,9 @@ namespace System.Windows.Media.Imaging
                     SafeMILHandle unmanagedPalette = BitmapPalette.CreateInternalPalette();
                     BitmapPalette palette = null;
 
-                    int hr = UnsafeNativeMethods.WICBitmapSource.CopyPalette(
-                                thumbHandle,
-                                unmanagedPalette
-                                );
-                    if (hr == HRESULT.S_OK)
+                    HRESULT result = UnsafeNativeMethods.WICBitmapSource.CopyPalette(thumbHandle, unmanagedPalette);
+
+                    if (result == HRESULT.S_OK)
                     {
                         palette = new BitmapPalette(unmanagedPalette);
                     }
@@ -637,14 +637,13 @@ namespace System.Windows.Media.Imaging
                     lock (_syncObject)
                     {
                         // Check if there is embedded metadata or not
-                        int hr = UnsafeNativeMethods.WICBitmapFrameDecode.GetMetadataQueryReader(
+                        HRESULT result = UnsafeNativeMethods.WICBitmapFrameDecode.GetMetadataQueryReader(
                             _frameSource,
-                            out metadata
-                            );
+                            out metadata);
 
-                        if (hr != (int)WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION)
+                        if (result != HRESULT.WINCODEC_ERR_UNSUPPORTEDOPERATION)
                         {
-                            HRESULT.Check(hr);
+                            result.ThrowOnFailureExtended();
                         }
                     }
 
@@ -676,7 +675,7 @@ namespace System.Windows.Media.Imaging
             {
                 if (_decoder == null)
                 {
-                    HRESULT.Check((int)WinCodecErrors.WINCODEC_ERR_NOTINITIALIZED);
+                    HRESULT.WINCODEC_ERR_NOTINITIALIZED.ThrowOnFailureExtended();
                 }
 
                 //
@@ -701,11 +700,10 @@ namespace System.Windows.Media.Imaging
                 Debug.Assert(_syncObject != null);
                 lock (_syncObject)
                 {
-                    HRESULT.Check(UnsafeNativeMethods.WICBitmapDecoder.GetFrame(
+                    UnsafeNativeMethods.WICBitmapDecoder.GetFrame(
                         _decoder.InternalDecoder,
                         (uint)_frameNumber,
-                        out frameDecode
-                        ));
+                        out frameDecode).ThrowOnFailureExtended();
 
                     _frameSource = new BitmapSourceSafeMILHandle(frameDecode);
                     _frameSource.CalculateSize();
@@ -765,7 +763,7 @@ namespace System.Windows.Media.Imaging
 
             public void OnSourceDownloadCompleted(object sender, EventArgs e)
             {
-                BitmapFrameDecode clone = this.Target as BitmapFrameDecode;
+                BitmapFrameDecode clone = Target as BitmapFrameDecode;
                 if (null != clone)
                 {
                     clone.OnOriginalDownloadCompleted(_original, e);
@@ -778,7 +776,7 @@ namespace System.Windows.Media.Imaging
 
             public void OnSourceDownloadFailed(object sender, ExceptionEventArgs e)
             {
-                BitmapFrameDecode clone = this.Target as BitmapFrameDecode;
+                BitmapFrameDecode clone = Target as BitmapFrameDecode;
                 if (null != clone)
                 {
                     clone.OnOriginalDownloadFailed(e);
@@ -791,7 +789,7 @@ namespace System.Windows.Media.Imaging
 
             public void OnSourceDownloadProgress(object sender, DownloadProgressEventArgs e)
             {
-                BitmapFrameDecode clone = this.Target as BitmapFrameDecode;
+                BitmapFrameDecode clone = Target as BitmapFrameDecode;
                 if (null != clone)
                 {
                     clone.OnDownloadProgress(sender, e);

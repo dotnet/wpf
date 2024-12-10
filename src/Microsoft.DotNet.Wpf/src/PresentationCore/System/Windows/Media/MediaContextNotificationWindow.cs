@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,6 +12,8 @@
 using System.Runtime.InteropServices;
 using MS.Internal.Interop;
 using MS.Win32;
+using Windows.Win32.Foundation;
+using HRESULT = Windows.Win32.Foundation.HRESULT;
 
 namespace System.Windows.Media
 {
@@ -73,17 +75,15 @@ namespace System.Windows.Media
             //
 
             ChangeWindowMessageFilter(s_dwmRedirectionEnvironmentChanged, 1 /* MSGFLT_ADD */);
-            MS.Internal.HRESULT.Check(MilContent_AttachToHwnd(_hwndNotification.Handle));
+            MilContent_AttachToHwnd(_hwndNotification.Handle).ThrowOnFailureExtended();
         }
 
         public void Dispose()
         {
             if (!_isDisposed)
             {
-                //
                 // If DWM is not running, this call will result in NoOp.
-                //
-                MS.Internal.HRESULT.Check(MilContent_DetachFromHwnd(_hwndNotification.Handle));
+                MilContent_DetachFromHwnd(_hwndNotification.Handle).ThrowOnFailureExtended();
 
                 _hwndNotification.Dispose();
 
@@ -134,14 +134,13 @@ namespace System.Windows.Media
 
             if (message == WindowMessage.WM_DWMCOMPOSITIONCHANGED)
             {
-                //
                 // We need to register as MIL content to receive the Vista Magnifier messages
                 // (see comments in ctor).
                 //
                 // We're going to attempt to attach to DWM every time the desktop composition
                 // state changes to ensure that we properly handle DWM crashing/restarting/etc.
-                //
-                MS.Internal.HRESULT.Check(MilContent_AttachToHwnd(_hwndNotification.Handle));
+
+                MilContent_AttachToHwnd(_hwndNotification.Handle).ThrowOnFailureExtended();
             }
             else if (message == s_channelNotifyMessage)
             {
@@ -156,14 +155,10 @@ namespace System.Windows.Media
         }
 
         [DllImport(DllImport.MilCore)]
-        private static extern int MilContent_AttachToHwnd(
-            IntPtr hwnd
-            );
+        private static extern HRESULT MilContent_AttachToHwnd(IntPtr hwnd);
 
         [DllImport(DllImport.MilCore)]
-        private static extern int MilContent_DetachFromHwnd(
-            IntPtr hwnd
-            );
+        private static extern HRESULT MilContent_DetachFromHwnd(IntPtr hwnd);
 
         /// <summary>
         /// Allow lower integrity applications to send specified window messages

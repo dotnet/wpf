@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,6 +17,7 @@ using System.Windows.Interop;
 using System.Windows.Input;
 using System.Windows.Threading;
 using System.Threading;
+using Windows.Win32.Foundation;
 
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
@@ -65,7 +66,7 @@ namespace MS.Internal.Controls
             // i.e., execute the shortcut key. Returning S_OK will cancel the context menu
             //
 
-            return NativeMethods.S_FALSE;
+            return HRESULT.S_FALSE;
         }
 
         int UnsafeNativeMethods.IDocHostUIHandler.GetHostInfo(NativeMethods.DOCHOSTUIINFO info)
@@ -89,13 +90,13 @@ namespace MS.Internal.Controls
                            NativeMethods.DOCHOSTUIFLAG.ENABLE_REDIRECT_NOTIFICATION |
                            NativeMethods.DOCHOSTUIFLAG.NO3DOUTERBORDER);
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
 
         int UnsafeNativeMethods.IDocHostUIHandler.EnableModeless(bool fEnable)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
 
@@ -103,36 +104,36 @@ namespace MS.Internal.Controls
                 NativeMethods.IOleCommandTarget commandTarget, UnsafeNativeMethods.IOleInPlaceFrame frame,
                 UnsafeNativeMethods.IOleInPlaceUIWindow doc)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
 
         int UnsafeNativeMethods.IDocHostUIHandler.HideUI()
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IDocHostUIHandler.UpdateUI()
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
         int UnsafeNativeMethods.IDocHostUIHandler.OnDocWindowActivate(bool fActivate)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
         int UnsafeNativeMethods.IDocHostUIHandler.OnFrameWindowActivate(bool fActivate)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IDocHostUIHandler.ResizeBorder(NativeMethods.COMRECT rect, UnsafeNativeMethods.IOleInPlaceUIWindow doc, bool fFrameWindow)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IDocHostUIHandler.GetOptionKeyPath(string[] pbstrKey, int dw)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IDocHostUIHandler.GetDropTarget(UnsafeNativeMethods.IOleDropTarget pDropTarget, out UnsafeNativeMethods.IOleDropTarget ppDropTarget)
@@ -141,7 +142,7 @@ namespace MS.Internal.Controls
             // Set to null no matter what we return, to prevent the marshaller
             // from behaving erroneously if the pointer points to random stuff.
             ppDropTarget = null;
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         /// <summary>
@@ -152,7 +153,7 @@ namespace MS.Internal.Controls
         {
             WebBrowser wb = (WebBrowser)Host;
             ppDispatch = wb.HostingAdaptor.ObjectForScripting;
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         /// <summary>
@@ -173,13 +174,13 @@ namespace MS.Internal.Controls
 
                 if (msg.message != WindowMessage.WM_CHAR
                         && Enum.IsDefined(typeof(Shortcut), (Shortcut)keyCode)) {
-                    return NativeMethods.S_OK;
+                    return HRESULT.S_OK;
                 }
-                return NativeMethods.S_FALSE;
+                return HRESULT.S_FALSE;
             }
             */
 
-            return NativeMethods.S_FALSE;
+            return HRESULT.S_FALSE;
         }
 
         int UnsafeNativeMethods.IDocHostUIHandler.TranslateUrl(int dwTranslate, string strUrlIn, out string pstrUrlOut)
@@ -188,7 +189,7 @@ namespace MS.Internal.Controls
             // Set to null no matter what we return, to prevent the marshaller
             // from behaving erroneously if the pointer points to random stuff.
             pstrUrlOut = null;
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IDocHostUIHandler.FilterDataObject(IComDataObject pDO, out IComDataObject ppDORet)
@@ -197,7 +198,7 @@ namespace MS.Internal.Controls
             // Set to null no matter what we return, to prevent the marshaller
             // from behaving erroneously if the pointer points to random stuff.
             ppDORet = null;
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         #endregion
@@ -214,9 +215,9 @@ namespace MS.Internal.Controls
                 // For the WebOCHostedInBrowserProcess case, we need to switch to the right thread.
                 Host.Dispatcher.Invoke(
                     DispatcherPriority.Send, new SendOrPostCallback(MoveFocusCallback), direction);
-                return NativeMethods.S_OK;
+                return HRESULT.S_OK;
             }
-            return NativeMethods.S_FALSE;
+            return HRESULT.S_FALSE;
         }
 
         private void MoveFocusCallback(object direction)

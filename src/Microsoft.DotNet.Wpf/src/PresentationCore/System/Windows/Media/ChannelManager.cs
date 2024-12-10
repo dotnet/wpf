@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,7 +12,7 @@
 using System.Windows.Media.Composition;
 
 using MS.Internal;
-
+using Windows.Win32.Foundation;
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods.MilCoreApi;
 
 namespace System.Windows.Media
@@ -48,16 +48,16 @@ namespace System.Windows.Media
                 // Pass in a reference to the global mediasystem channel so that it uses
                 // the same partition.
                 _asyncChannel = new DUCE.Channel(
-                    System.Windows.Media.MediaSystem.ServiceChannel,
+                    MediaSystem.ServiceChannel,
                     false,      // not out of band
-                    System.Windows.Media.MediaSystem.Connection,
+                    MediaSystem.Connection,
                     false // sync transport
                     );
 
                 _asyncOutOfBandChannel = new DUCE.Channel(
-                    System.Windows.Media.MediaSystem.ServiceChannel,
+                    MediaSystem.ServiceChannel,
                     true,       // out of band
-                    System.Windows.Media.MediaSystem.Connection,
+                    MediaSystem.Connection,
                     false // sync transport
                     );
             }
@@ -104,12 +104,12 @@ namespace System.Windows.Media
                     _asyncOutOfBandChannel.Close();
                     _asyncOutOfBandChannel = null;
                 }
-               
+
                 RemoveSyncChannels();
 
                 if (_pSyncConnection != IntPtr.Zero)
                 {
-                    HRESULT.Check(UnsafeNativeMethods.WgxConnection_Disconnect(_pSyncConnection));
+                    UnsafeNativeMethods.WgxConnection_Disconnect(_pSyncConnection).ThrowOnFailureExtended();
                     _pSyncConnection = IntPtr.Zero;
                 }
 }
@@ -123,9 +123,9 @@ namespace System.Windows.Media
 
                 if (_pSyncConnection == IntPtr.Zero)
                 {
-                    HRESULT.Check(UnsafeNativeMethods.WgxConnection_Create(
+                    UnsafeNativeMethods.WgxConnection_Create(
                         true, // true means synchronous transport
-                        out _pSyncConnection));
+                        out _pSyncConnection).ThrowOnFailureExtended();
                 }
 
                 if (_freeSyncChannels == null)

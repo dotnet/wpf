@@ -1,21 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-//
-// Description: Helper object implementing IEnumUnknown for enumerating controls            
-//
-//              Source copied from AxContainer.cs
-//
 
 using System.Runtime.InteropServices;
-
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.Controls
 {
     #region class EnumUnknown
 
+    /// <summary>
+    ///  Helper object implementing IEnumUnknown for enumerating controls.
+    ///  Source copied from AxContainer.cs
+    /// </summary>
     internal class EnumUnknown : UnsafeNativeMethods.IEnumUnknown
     {
         private Object[] arr;
@@ -25,8 +22,8 @@ namespace MS.Internal.Controls
         internal EnumUnknown(Object[] arr)
         {
             this.arr = arr;
-            this.loc = 0;
-            this.size = (arr == null) ? 0 : arr.Length;
+            loc = 0;
+            size = (arr == null) ? 0 : arr.Length;
         }
 
         private EnumUnknown(Object[] arr, int loc)
@@ -42,21 +39,21 @@ namespace MS.Internal.Controls
 
             if (celt < 0)
             {
-                return NativeMethods.E_INVALIDARG;
+                return HRESULT.E_INVALIDARG;
             }
 
             int fetched = 0;
-            if (this.loc >= this.size)
+            if (loc >= size)
             {
                 fetched = 0;
             }
             else
             {
-                for (; this.loc < this.size && fetched < celt; ++(this.loc))
+                for (; loc < size && fetched < celt; ++(loc))
                 {
-                    if (this.arr[this.loc] != null)
+                    if (arr[loc] != null)
                     {
-                        Marshal.WriteIntPtr(rgelt, Marshal.GetIUnknownForObject(this.arr[this.loc]));
+                        Marshal.WriteIntPtr(rgelt, Marshal.GetIUnknownForObject(arr[loc]));
                         rgelt = (IntPtr)((long)rgelt + (long)sizeof(IntPtr));
                         ++fetched;
                     }
@@ -68,29 +65,29 @@ namespace MS.Internal.Controls
 
             if (fetched != celt)
             {
-                return (NativeMethods.S_FALSE);
+                return (HRESULT.S_FALSE);
             }
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IEnumUnknown.Skip(int celt)
         {
-            this.loc += celt;
-            if (this.loc >= this.size)
+            loc += celt;
+            if (loc >= size)
             {
-                return (NativeMethods.S_FALSE);
+                return (HRESULT.S_FALSE);
             }
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         void UnsafeNativeMethods.IEnumUnknown.Reset()
         {
-            this.loc = 0;
+            loc = 0;
         }
 
         void UnsafeNativeMethods.IEnumUnknown.Clone(out UnsafeNativeMethods.IEnumUnknown ppenum)
         {
-            ppenum = new EnumUnknown(this.arr, this.loc);
+            ppenum = new EnumUnknown(arr, loc);
         }
     }
     #endregion class EnumUnknown

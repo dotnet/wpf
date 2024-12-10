@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,6 +12,7 @@ using System.Windows.Threading;
 using System.Windows.Input;
 
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
+using Windows.Win32.Foundation;
 
 namespace System.Windows
 {
@@ -72,7 +73,7 @@ namespace System.Windows
                 OleServicesContext oleServicesContext;
 
                 // Get the ole services context from the Thread data slot.
-                oleServicesContext = (OleServicesContext)Thread.GetData(OleServicesContext._threadDataSlot);
+                oleServicesContext = (OleServicesContext)Thread.GetData(_threadDataSlot);
 
                 if (oleServicesContext == null)
                 {
@@ -80,7 +81,7 @@ namespace System.Windows
                     oleServicesContext = new OleServicesContext();
 
                     // Save the ole services context into the UIContext data slot.
-                    Thread.SetData(OleServicesContext._threadDataSlot, oleServicesContext);
+                    Thread.SetData(_threadDataSlot, oleServicesContext);
                 }
 
                 return oleServicesContext;
@@ -100,7 +101,7 @@ namespace System.Windows
         /// <summary>
         /// OleSetClipboard - Call OLE Interopo OleSetClipboard()
         /// </summary>
-        internal int OleSetClipboard(IComDataObject dataObject)
+        internal HRESULT OleSetClipboard(IComDataObject dataObject)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
@@ -113,7 +114,7 @@ namespace System.Windows
         /// <summary>
         /// OleGetClipboard - Call OLE Interop OleGetClipboard()
         /// </summary>
-        internal int OleGetClipboard(ref IComDataObject dataObject)
+        internal HRESULT OleGetClipboard(ref IComDataObject dataObject)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
@@ -126,7 +127,7 @@ namespace System.Windows
         /// <summary>
         /// OleFlushClipboard - Call OLE Interop OleFlushClipboard()
         /// </summary>
-        internal int OleFlushClipboard()
+        internal HRESULT OleFlushClipboard()
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
@@ -138,11 +139,11 @@ namespace System.Windows
 
         /// <summary>
         /// OleIsCurrentClipboard - OleIsCurrentClipboard only works for the data object 
-        /// used in the OleSetClipboard. This means that it can�t be called by the consumer 
+        /// used in the OleSetClipboard. This means that it can’t be called by the consumer 
         /// of the data object to determine if the object that was on the clipboard at the 
         /// previous OleGetClipboard call is still on the Clipboard.
         /// </summary>
-        internal int OleIsCurrentClipboard(IComDataObject dataObject)
+        internal HRESULT OleIsCurrentClipboard(IComDataObject dataObject)
         {
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
@@ -223,8 +224,6 @@ namespace System.Windows
         /// </summary>
         private void SetDispatcherThread()
         {
-            int hr;
-
             if (Thread.CurrentThread.GetApartmentState() != ApartmentState.STA)
             {
                 throw new ThreadStateException(SR.OleServicesContext_ThreadMustBeSTA);
@@ -232,11 +231,11 @@ namespace System.Windows
 
             // Initialize Ole services.
             // Balanced with OleUninitialize call in OnDispatcherShutdown.
-            hr = OleInitialize();
+            HRESULT result = OleInitialize();
 
-            if (!NativeMethods.Succeeded(hr))
+            if (!result.Succeeded)
             {
-                throw new SystemException(SR.Format(SR.OleServicesContext_oleInitializeFailure, hr));
+                throw new SystemException(SR.Format(SR.OleServicesContext_oleInitializeFailure, result));
             }
 
             // Add Dispatcher.Shutdown event handler. 
@@ -266,7 +265,7 @@ namespace System.Windows
         }
 
         // Wrapper for UnsafeNativeMethods.OleInitialize, useful for debugging.
-        private int OleInitialize()
+        private HRESULT OleInitialize()
         {
 #if DEBUG
             _debugOleInitializeRefCount++;

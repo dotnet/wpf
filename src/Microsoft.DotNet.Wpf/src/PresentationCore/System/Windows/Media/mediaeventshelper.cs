@@ -1,14 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
 using System.Text;
-using MS.Internal;
 using System.Windows.Threading;
 using System.IO;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media
 {
@@ -28,28 +25,28 @@ namespace System.Windows.Media
         internal MediaEventsHelper(MediaPlayer mediaPlayer)
         {
             _mediaOpened = new DispatcherOperationCallback(OnMediaOpened);
-            this.DispatcherMediaOpened += _mediaOpened;
+            DispatcherMediaOpened += _mediaOpened;
 
             _mediaFailed = new DispatcherOperationCallback(OnMediaFailed);
-            this.DispatcherMediaFailed += _mediaFailed;
+            DispatcherMediaFailed += _mediaFailed;
 
             _mediaPrerolled = new DispatcherOperationCallback(OnMediaPrerolled);
-            this.DispatcherMediaPrerolled += _mediaPrerolled;
+            DispatcherMediaPrerolled += _mediaPrerolled;
 
             _mediaEnded = new DispatcherOperationCallback(OnMediaEnded);
-            this.DispatcherMediaEnded += _mediaEnded;
+            DispatcherMediaEnded += _mediaEnded;
 
             _bufferingStarted = new DispatcherOperationCallback(OnBufferingStarted);
-            this.DispatcherBufferingStarted += _bufferingStarted;
+            DispatcherBufferingStarted += _bufferingStarted;
 
             _bufferingEnded = new DispatcherOperationCallback(OnBufferingEnded);
-            this.DispatcherBufferingEnded += _bufferingEnded;
+            DispatcherBufferingEnded += _bufferingEnded;
 
             _scriptCommand = new DispatcherOperationCallback(OnScriptCommand);
-            this.DispatcherScriptCommand += _scriptCommand;
+            DispatcherScriptCommand += _scriptCommand;
 
             _newFrame = new DispatcherOperationCallback(OnNewFrame);
-            this.DispatcherMediaNewFrame += _newFrame;
+            DispatcherMediaNewFrame += _newFrame;
 
             SetSender(mediaPlayer);
         }
@@ -231,10 +228,7 @@ namespace System.Windows.Media
         /// </summary>
         void IInvokable.RaiseEvent(byte[] buffer, int cb)
         {
-            const int S_OK = 0;
-
             AVEvent avEventType = AVEvent.AVMediaNone;
-            int failureHr = S_OK;
             int size = 0;
 
             //
@@ -261,7 +255,7 @@ namespace System.Windows.Media
                 // Unpack the event and the errorHResult
                 //
                 avEventType = (AVEvent)reader.ReadUInt32();
-                failureHr   = (int)reader.ReadUInt32();
+                HRESULT failureHr = (HRESULT)reader.ReadUInt32();
 
                 switch(avEventType)
                 {
@@ -275,7 +269,7 @@ namespace System.Windows.Media
 
                 case AVEvent.AVMediaFailed:
 
-                    RaiseMediaFailed(HRESULT.ConvertHRToException(failureHr));
+                    RaiseMediaFailed(failureHr.GetExtendedException());
                     break;
 
                 case AVEvent.AVMediaBufferingStarted:

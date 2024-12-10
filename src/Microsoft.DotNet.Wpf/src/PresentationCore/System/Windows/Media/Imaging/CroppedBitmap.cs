@@ -1,10 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using MS.Internal;
 using MS.Win32.PresentationCore;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media.Imaging
 {
@@ -96,16 +97,16 @@ namespace System.Windows.Media.Imaging
                 {
                     IntPtr wicFactory = factoryMaker.ImagingFactoryPtr;
 
-                    HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapClipper(
-                            wicFactory,
-                            out wicClipper));
+                    UnsafeNativeMethods.WICImagingFactory.CreateBitmapClipper(
+                        wicFactory,
+                        out wicClipper).ThrowOnFailureExtended();
 
                     lock (_syncObject)
                     {
-                        HRESULT.Check(UnsafeNativeMethods.WICBitmapClipper.Initialize(
-                                wicClipper,
-                                source.WicSourceHandle,
-                                ref rect));
+                        UnsafeNativeMethods.WICBitmapClipper.Initialize(
+                            wicClipper,
+                            source.WicSourceHandle,
+                            ref rect).ThrowOnFailureExtended();
                     }
 
                     //

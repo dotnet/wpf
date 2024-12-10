@@ -97,7 +97,6 @@
     <Compile Include="MS\Internal\GenericsInstances.cs" />
     <Compile Include="MS\Internal\InheritanceContextChangedEventManager.cs" />
     <Compile Include="MS\Internal\InheritanceContextHelper.cs" />
-    <Compile Include="MS\Internal\Interop\ErrorCodes.cs" />
     <Compile Include="MS\Internal\Interop\NativeStructs.cs" />
     <Compile Include="MS\Internal\Interop\NativeValues.cs" />
     <Compile Include="MS\Internal\IO\Packaging\CompoundFile\CFStream.cs" />

@@ -22,3 +22,6 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo($"UIAutomationTypes, PublicKey={PublicKeys.MicrosoftShared}")]
 [assembly: InternalsVisibleTo($"WindowsBase, PublicKey={PublicKeys.MicrosoftShared}")]
 [assembly: InternalsVisibleTo($"WindowsFormsIntegration, PublicKey={PublicKeys.MicrosoftShared}")]
+
+[assembly: InternalsVisibleTo($"System.Windows.Primitives.Tests, PublicKey={PublicKeys.Open}")]
+[assembly: InternalsVisibleTo($"PresentationCore.Tests, PublicKey={PublicKeys.Open}")]

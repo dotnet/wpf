@@ -29,8 +29,6 @@
     <Compile Include="$(WpfCommonDir)src\System\SR.cs">
         <Link>Common\System\SR.cs</Link>
     </Compile>
-    
-    <Compile Include="$(WpfCommonDir)\Graphics\wgx_error.cs" />
     <Compile Include="$(WpfCommonDir)\Graphics\wgx_render.cs" />
     <Compile Include="$(WpfCommonDir)\Graphics\wgx_exports.cs" />
     <Compile Include="$(WpfCommonDir)\Graphics\exports.cs" />
@@ -336,7 +334,6 @@
     <Compile Include="System\Windows\dataobject.cs" />
     <Compile Include="System\Windows\BinaryFormat\BinaryFormatWriter.cs" />
     <Compile Include="System\Windows\BinaryFormat\BinaryFormatWriterScope.cs" />
-    <Compile Include="System\Windows\BinaryFormat\ExceptionExtensions.cs" />
     <Compile Include="System\Windows\BinaryFormat\BinaryObjectString.cs" />
     <Compile Include="System\Windows\BinaryFormat\IBinaryWriteable.cs" />
     <Compile Include="System\Windows\BinaryFormat\MemberTypeInfo.cs" />
@@ -1418,6 +1415,7 @@
     <Compile Include="System\Windows\Media3D\Generated\Visual3D.cs" />
     <Compile Include="System\Windows\Navigation\BaseUriHelper.cs" />
     <Compile Include="System\Windows\Resources\AssemblyAssociatedContentFileAttribute.cs" />
+    <Compile Include="Windows\Win32\Foundation\HResultExtensions.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -1425,6 +1423,7 @@
     <PackageReference Include="System.Windows.Extensions" Version="$(SystemWindowsExtensionsPackageVersion)" />
     <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
     <PackageReference Include="System.Formats.Nrbf" Version="$(SystemFormatsNrbfVersion)" />
+    <MicrosoftPrivateWinFormsReference Include="System.Private.Windows.Core" />
   </ItemGroup>
 
   <ItemGroup>
@@ -1435,6 +1434,7 @@
     </ProjectReference>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <ProjectReference Include="$(WpfSourceDir)System.Windows.Input.Manipulations\System.Windows.Input.Manipulations.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Windows.Primitives\System.Windows.Primitives.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\ref\PresentationCore-ref.csproj">

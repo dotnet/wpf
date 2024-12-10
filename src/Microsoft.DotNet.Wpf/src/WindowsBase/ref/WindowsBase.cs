@@ -1,4 +1,4 @@
-namespace System.Collections.Specialized
+﻿namespace System.Collections.Specialized
 {
     public partial class CollectionChangedEventManager : System.Windows.WeakEventManager
     {
@@ -809,22 +809,22 @@ namespace System.Windows
     {
         public Int32Rect(int x, int y, int width, int height) { throw null; }
         public static System.Windows.Int32Rect Empty { get { throw null; } }
-        public bool HasArea { get { throw null; } }
-        public int Height { get { throw null; } set { } }
-        public bool IsEmpty { get { throw null; } }
-        public int Width { get { throw null; } set { } }
-        public int X { get { throw null; } set { } }
-        public int Y { get { throw null; } set { } }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Int32Rect value) { throw null; }
+        public readonly bool HasArea { get { throw null; } }
+        public int Height { readonly get { throw null; } set { } }
+        public readonly bool IsEmpty { get { throw null; } }
+        public int Width { readonly get { throw null; } set { } }
+        public int X { readonly get { throw null; } set { } }
+        public int Y { readonly get { throw null; } set { } }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Int32Rect value) { throw null; }
         public static bool Equals(System.Windows.Int32Rect int32Rect1, System.Windows.Int32Rect int32Rect2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static bool operator ==(System.Windows.Int32Rect int32Rect1, System.Windows.Int32Rect int32Rect2) { throw null; }
         public static bool operator !=(System.Windows.Int32Rect int32Rect1, System.Windows.Int32Rect int32Rect2) { throw null; }
         public static System.Windows.Int32Rect Parse(string source) { throw null; }
-        string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
-        public override string ToString() { throw null; }
-        public string ToString(System.IFormatProvider provider) { throw null; }
+        readonly string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
+        public override readonly string ToString() { throw null; }
+        public readonly string ToString(System.IFormatProvider provider) { throw null; }
     }
     public sealed partial class Int32RectConverter : System.ComponentModel.TypeConverter
     {
@@ -891,13 +891,13 @@ namespace System.Windows
     public partial struct Point : System.IFormattable
     {
         public Point(double x, double y) { throw null; }
-        public double X { get { throw null; } set { } }
-        public double Y { get { throw null; } set { } }
+        public double X { readonly get { throw null; } set { } }
+        public double Y { readonly get { throw null; } set { } }
         public static System.Windows.Point Add(System.Windows.Point point, System.Windows.Vector vector) { throw null; }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Point value) { throw null; }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Point value) { throw null; }
         public static bool Equals(System.Windows.Point point1, System.Windows.Point point2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static System.Windows.Point Multiply(System.Windows.Point point, System.Windows.Media.Matrix matrix) { throw null; }
         public void Offset(double offsetX, double offsetY) { }
         public static System.Windows.Point operator +(System.Windows.Point point, System.Windows.Vector vector) { throw null; }
@@ -911,9 +911,9 @@ namespace System.Windows
         public static System.Windows.Point Parse(string source) { throw null; }
         public static System.Windows.Vector Subtract(System.Windows.Point point1, System.Windows.Point point2) { throw null; }
         public static System.Windows.Point Subtract(System.Windows.Point point, System.Windows.Vector vector) { throw null; }
-        string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
-        public override string ToString() { throw null; }
-        public string ToString(System.IFormatProvider provider) { throw null; }
+        readonly string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
+        public override readonly string ToString() { throw null; }
+        public readonly string ToString(System.IFormatProvider provider) { throw null; }
     }
     public sealed partial class PointConverter : System.ComponentModel.TypeConverter
     {
@@ -1009,21 +1009,21 @@ namespace System.Windows
     {
         public Size(double width, double height) { throw null; }
         public static System.Windows.Size Empty { get { throw null; } }
-        public double Height { get { throw null; } set { } }
-        public bool IsEmpty { get { throw null; } }
-        public double Width { get { throw null; } set { } }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Size value) { throw null; }
+        public double Height { readonly get { throw null; } set { } }
+        public readonly bool IsEmpty { get { throw null; } }
+        public double Width { readonly get { throw null; } set { } }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Size value) { throw null; }
         public static bool Equals(System.Windows.Size size1, System.Windows.Size size2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static bool operator ==(System.Windows.Size size1, System.Windows.Size size2) { throw null; }
         public static explicit operator System.Windows.Point (System.Windows.Size size) { throw null; }
         public static explicit operator System.Windows.Vector (System.Windows.Size size) { throw null; }
         public static bool operator !=(System.Windows.Size size1, System.Windows.Size size2) { throw null; }
         public static System.Windows.Size Parse(string source) { throw null; }
-        string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
-        public override string ToString() { throw null; }
-        public string ToString(System.IFormatProvider provider) { throw null; }
+        readonly string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
+        public override readonly string ToString() { throw null; }
+        public readonly string ToString(System.IFormatProvider provider) { throw null; }
     }
     public sealed partial class SizeConverter : System.ComponentModel.TypeConverter
     {
@@ -1047,20 +1047,20 @@ namespace System.Windows
     public partial struct Vector : System.IFormattable
     {
         public Vector(double x, double y) { throw null; }
-        public double Length { get { throw null; } }
-        public double LengthSquared { get { throw null; } }
-        public double X { get { throw null; } set { } }
-        public double Y { get { throw null; } set { } }
+        public readonly double Length { get { throw null; } }
+        public readonly double LengthSquared { get { throw null; } }
+        public double X { readonly get { throw null; } set { } }
+        public double Y { readonly get { throw null; } set { } }
         public static System.Windows.Point Add(System.Windows.Vector vector, System.Windows.Point point) { throw null; }
         public static System.Windows.Vector Add(System.Windows.Vector vector1, System.Windows.Vector vector2) { throw null; }
         public static double AngleBetween(System.Windows.Vector vector1, System.Windows.Vector vector2) { throw null; }
         public static double CrossProduct(System.Windows.Vector vector1, System.Windows.Vector vector2) { throw null; }
         public static double Determinant(System.Windows.Vector vector1, System.Windows.Vector vector2) { throw null; }
         public static System.Windows.Vector Divide(System.Windows.Vector vector, double scalar) { throw null; }
-        public override bool Equals(object o) { throw null; }
-        public bool Equals(System.Windows.Vector value) { throw null; }
+        public override readonly bool Equals(object o) { throw null; }
+        public readonly bool Equals(System.Windows.Vector value) { throw null; }
         public static bool Equals(System.Windows.Vector vector1, System.Windows.Vector vector2) { throw null; }
-        public override int GetHashCode() { throw null; }
+        public override readonly int GetHashCode() { throw null; }
         public static System.Windows.Vector Multiply(double scalar, System.Windows.Vector vector) { throw null; }
         public static System.Windows.Vector Multiply(System.Windows.Vector vector, double scalar) { throw null; }
         public static System.Windows.Vector Multiply(System.Windows.Vector vector, System.Windows.Media.Matrix matrix) { throw null; }
@@ -1082,9 +1082,9 @@ namespace System.Windows
         public static System.Windows.Vector operator -(System.Windows.Vector vector) { throw null; }
         public static System.Windows.Vector Parse(string source) { throw null; }
         public static System.Windows.Vector Subtract(System.Windows.Vector vector1, System.Windows.Vector vector2) { throw null; }
-        string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
-        public override string ToString() { throw null; }
-        public string ToString(System.IFormatProvider provider) { throw null; }
+        readonly string System.IFormattable.ToString(string format, System.IFormatProvider provider) { throw null; }
+        public override readonly string ToString() { throw null; }
+        public readonly string ToString(System.IFormatProvider provider) { throw null; }
     }
     public sealed partial class VectorConverter : System.ComponentModel.TypeConverter
     {

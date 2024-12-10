@@ -52,14 +52,14 @@ namespace System.Windows
         /// Note: If size is 0 this Size still contains a 0 or 1 dimensional set
         /// of points, so this method should not be used to check for 0 area.
         /// </summary>
-        public bool IsEmpty => _width < 0;
+        public readonly bool IsEmpty => _width < 0;
 
         /// <summary>
         /// Width - Default is 0, must be non-negative
         /// </summary>
         public double Width
         {
-            get => _width;
+            readonly get => _width;
             set
             {
                 if (IsEmpty)
@@ -81,7 +81,7 @@ namespace System.Windows
         /// </summary>
         public double Height
         {
-            get => _height;
+            readonly get => _height;
             set
             {
                 if (IsEmpty)
@@ -171,7 +171,7 @@ namespace System.Windows
         /// bool - true if the object is an instance of Size and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o) => o is Size size && Equals(this, size);
+        public override readonly bool Equals(object o) => o is Size size && Equals(this, size);
 
         /// <summary>
         /// Equals - compares this Size with the passed in object.  In this equality
@@ -184,7 +184,7 @@ namespace System.Windows
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Size to compare to "this"</param>
-        public bool Equals(Size value) => Equals(this, value);
+        public readonly bool Equals(Size value) => Equals(this, value);
 
         /// <summary>
         /// Returns the HashCode for this Size
@@ -192,7 +192,7 @@ namespace System.Windows
         /// <returns>
         /// int - the HashCode for this Size
         /// </returns>
-        public override int GetHashCode() =>
+        public override readonly int GetHashCode() =>
             // Perform field-by-field XOR of HashCodes
             IsEmpty ? 0 : Width.GetHashCode() ^ Height.GetHashCode();
 
@@ -228,7 +228,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public override string ToString() => ConvertToString(format: null, provider: null);
+        public override readonly string ToString() => ConvertToString(format: null, provider: null);
 
         /// <summary>
         /// Creates a string representation of this object based on the IFormatProvider
@@ -237,7 +237,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public string ToString(IFormatProvider provider) => ConvertToString(format: null, provider);
+        public readonly string ToString(IFormatProvider provider) => ConvertToString(format: null, provider);
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
@@ -248,7 +248,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        string IFormattable.ToString(string format, IFormatProvider provider) => ConvertToString(format, provider);
+        readonly string IFormattable.ToString(string format, IFormatProvider provider) => ConvertToString(format, provider);
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
@@ -259,7 +259,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        internal string ConvertToString(string format, IFormatProvider provider)
+        internal readonly string ConvertToString(string format, IFormatProvider provider)
         {
             if (IsEmpty)
             {

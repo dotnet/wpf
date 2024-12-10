@@ -36,7 +36,7 @@ namespace System.Windows
         /// </summary>
         public double X
         {
-            get => _x;
+            readonly get => _x;
             set => _x = value;
         }
 
@@ -45,7 +45,7 @@ namespace System.Windows
         /// </summary>
         public double Y
         {
-            get => _y;
+            readonly get => _y;
             set => _y = value;
         }
 
@@ -201,7 +201,7 @@ namespace System.Windows
         /// bool - true if the object is an instance of Point and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o) => o is Point point && Equals(this, point);
+        public override readonly bool Equals(object o) => o is Point point && Equals(this, point);
 
         /// <summary>
         /// Equals - compares this Point with the passed in object.  In this equality
@@ -214,7 +214,7 @@ namespace System.Windows
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Point to compare to "this"</param>
-        public bool Equals(Point value) => Equals(this, value);
+        public readonly bool Equals(Point value) => Equals(this, value);
 
         /// <summary>
         /// Returns the HashCode for this Point
@@ -222,7 +222,7 @@ namespace System.Windows
         /// <returns>
         /// int - the HashCode for this Point
         /// </returns>
-        public override int GetHashCode() =>
+        public override readonly int GetHashCode() =>
             // Perform field-by-field XOR of HashCodes
             X.GetHashCode() ^ Y.GetHashCode();
 
@@ -253,7 +253,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public override string ToString() => ConvertToString(format: null, provider: null);
+        public override readonly string ToString() => ConvertToString(format: null, provider: null);
 
         /// <summary>
         /// Creates a string representation of this object based on the IFormatProvider
@@ -262,7 +262,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public string ToString(IFormatProvider provider) => ConvertToString(format: null, provider);
+        public readonly string ToString(IFormatProvider provider) => ConvertToString(format: null, provider);
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
@@ -273,7 +273,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        string IFormattable.ToString(string format, IFormatProvider provider) => ConvertToString(format, provider);
+        readonly string IFormattable.ToString(string format, IFormatProvider provider) => ConvertToString(format, provider);
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
@@ -284,7 +284,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        internal string ConvertToString(string format, IFormatProvider provider)
+        internal readonly string ConvertToString(string format, IFormatProvider provider)
         {
             // Helper to get the numeric list separator for a given culture.
             char separator = TokenizerHelper.GetNumericListSeparator(provider);

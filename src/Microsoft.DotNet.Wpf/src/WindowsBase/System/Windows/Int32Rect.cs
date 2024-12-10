@@ -37,7 +37,7 @@ namespace System.Windows
         /// </summary>
         public int X
         {
-            get => _x;
+            readonly get => _x;
             set => _x = value;
         }
 
@@ -46,7 +46,7 @@ namespace System.Windows
         /// </summary>
         public int Y
         {
-            get => _y;
+            readonly get => _y;
             set => _y = value;
         }
 
@@ -55,7 +55,7 @@ namespace System.Windows
         /// </summary>
         public int Width
         {
-            get => _width;
+            readonly get => _width;
             set => _width = value;
         }
 
@@ -64,30 +64,30 @@ namespace System.Windows
         /// </summary>
         public int Height
         {
-            get => _height;
+            readonly get => _height;
             set => _height = value;
         }
 
         /// <summary>
         /// Empty - a static property which provides an Empty Int32Rectangle.
         /// </summary>
-        public static Int32Rect Empty => s_empty;
+        public static Int32Rect Empty { get; }
 
         /// <summary>
         /// Returns true if this Int32Rect is the Empty integer rectangle.
         /// </summary>
-        public bool IsEmpty => _x == 0 && _y == 0 && _width == 0 && _height == 0;
+        public readonly bool IsEmpty => _x == 0 && _y == 0 && _width == 0 && _height == 0;
 
         /// <summary>
         /// Returns true if this Int32Rect has area.
         /// </summary>
-        public bool HasArea => _width > 0 && _height > 0;
+        public readonly bool HasArea => _width > 0 && _height > 0;
 
         // Various places use an Int32Rect to specify a dirty rect for a
         // bitmap.  The logic for validation is centralized here.  Note that
         // we could do a much better job of validation, but compatibility
         // concerns prevent this until a side-by-side release.
-        internal void ValidateForDirtyRect(string paramName, int width, int height)
+        internal readonly void ValidateForDirtyRect(string paramName, int width, int height)
         {
             ArgumentOutOfRangeException.ThrowIfNegative(_x, paramName);
             ArgumentOutOfRangeException.ThrowIfNegative(_y, paramName);
@@ -96,8 +96,6 @@ namespace System.Windows
             ArgumentOutOfRangeException.ThrowIfGreaterThan(_width, width, paramName);
             ArgumentOutOfRangeException.ThrowIfGreaterThan(_height, height, paramName);
         }
-
-        private readonly static Int32Rect s_empty = new Int32Rect(0, 0, 0, 0);
 
         /// <summary>
         /// Compares two Int32Rect instances for exact equality.
@@ -161,7 +159,7 @@ namespace System.Windows
         /// bool - true if the object is an instance of Int32Rect and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o) => o is Int32Rect rect && Equals(this, rect);
+        public override readonly bool Equals(object o) => o is Int32Rect rect && Equals(this, rect);
 
         /// <summary>
         /// Equals - compares this Int32Rect with the passed in object.  In this equality
@@ -174,7 +172,7 @@ namespace System.Windows
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Int32Rect to compare to "this"</param>
-        public bool Equals(Int32Rect value) => Equals(this, value);
+        public readonly bool Equals(Int32Rect value) => Equals(this, value);
 
         /// <summary>
         /// Returns the HashCode for this Int32Rect
@@ -182,7 +180,7 @@ namespace System.Windows
         /// <returns>
         /// int - the HashCode for this Int32Rect
         /// </returns>
-        public override int GetHashCode() =>
+        public override readonly int GetHashCode() =>
             // Perform field-by-field XOR of HashCodes
             IsEmpty ? 0 : X.GetHashCode() ^ Y.GetHashCode() ^ Width.GetHashCode() ^ Height.GetHashCode();
 
@@ -220,7 +218,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public override string ToString() => ConvertToString(format: null, provider: null);
+        public override readonly string ToString() => ConvertToString(format: null, provider: null);
 
         /// <summary>
         /// Creates a string representation of this object based on the IFormatProvider
@@ -229,7 +227,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public string ToString(IFormatProvider provider) => ConvertToString(format: null, provider);
+        public readonly string ToString(IFormatProvider provider) => ConvertToString(format: null, provider);
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
@@ -240,7 +238,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        string IFormattable.ToString(string format, IFormatProvider provider) => ConvertToString(format, provider);
+        readonly string IFormattable.ToString(string format, IFormatProvider provider) => ConvertToString(format, provider);
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
@@ -251,7 +249,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        internal string ConvertToString(string format, IFormatProvider provider)
+        internal readonly string ConvertToString(string format, IFormatProvider provider)
         {
             if (IsEmpty)
             {

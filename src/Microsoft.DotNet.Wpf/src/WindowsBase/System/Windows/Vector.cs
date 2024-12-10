@@ -36,7 +36,7 @@ namespace System.Windows
         /// </summary>
         public double X
         {
-            get => _x;
+            readonly get => _x;
             set => _x = value;
         }
 
@@ -45,19 +45,19 @@ namespace System.Windows
         /// </summary>
         public double Y
         {
-            get => _y;
+            readonly get => _y;
             set => _y = value;
         }
 
         /// <summary>
         /// Length Property - the length of this Vector
         /// </summary>
-        public double Length => Math.Sqrt(_x * _x + _y * _y);
+        public readonly double Length => Math.Sqrt((_x * _x) + (_y * _y));
 
         /// <summary>
         /// LengthSquared Property - the squared length of this Vector
         /// </summary>
-        public double LengthSquared => (_x * _x) + (_y * _y);
+        public readonly double LengthSquared => (_x * _x) + (_y * _y);
 
         /// <summary>
         /// Normalize - Updates this Vector to maintain its direction, but to have a length
@@ -285,7 +285,7 @@ namespace System.Windows
         /// bool - true if the object is an instance of Vector and if it's equal to "this".
         /// </returns>
         /// <param name='o'>The object to compare to "this"</param>
-        public override bool Equals(object o) => o is Vector vector && Equals(this, vector);
+        public override readonly bool Equals(object o) => o is Vector vector && Equals(this, vector);
 
         /// <summary>
         /// Equals - compares this Vector with the passed in object.  In this equality
@@ -298,7 +298,7 @@ namespace System.Windows
         /// bool - true if "value" is equal to "this".
         /// </returns>
         /// <param name='value'>The Vector to compare to "this"</param>
-        public bool Equals(Vector value) => Equals(this, value);
+        public readonly bool Equals(Vector value) => Equals(this, value);
 
         /// <summary>
         /// Returns the HashCode for this Vector
@@ -306,7 +306,7 @@ namespace System.Windows
         /// <returns>
         /// int - the HashCode for this Vector
         /// </returns>
-        public override int GetHashCode() =>
+        public override readonly int GetHashCode() =>
             // Perform field-by-field XOR of HashCodes
             X.GetHashCode() ^ Y.GetHashCode();
 
@@ -339,7 +339,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public override string ToString() => ConvertToString(format: null, provider: null);
+        public override readonly string ToString() => ConvertToString(format: null, provider: null);
 
         /// <summary>
         /// Creates a string representation of this object based on the IFormatProvider
@@ -348,7 +348,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        public string ToString(IFormatProvider provider) => ConvertToString(format: null, provider);
+        public readonly string ToString(IFormatProvider provider) => ConvertToString(format: null, provider);
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
@@ -359,7 +359,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        string IFormattable.ToString(string format, IFormatProvider provider) => ConvertToString(format, provider);
+        readonly string IFormattable.ToString(string format, IFormatProvider provider) => ConvertToString(format, provider);
 
         /// <summary>
         /// Creates a string representation of this object based on the format string
@@ -370,7 +370,7 @@ namespace System.Windows
         /// <returns>
         /// A string representation of this object.
         /// </returns>
-        internal string ConvertToString(string format, IFormatProvider provider)
+        internal readonly string ConvertToString(string format, IFormatProvider provider)
         {
             // Helper to get the numeric list separator for a given culture.
             char separator = TokenizerHelper.GetNumericListSeparator(provider);

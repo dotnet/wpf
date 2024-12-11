@@ -150,7 +150,7 @@ namespace MS.Internal.Xaml.Runtime
             return (TConverterBase)result;
         }
 
-        //CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
+        // CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
         public override object CreateFromValue(
                                     ServiceProviderContext serviceContext,
                                     XamlValueConverter<TypeConverter> ts, object value,
@@ -311,7 +311,7 @@ namespace MS.Internal.Xaml.Runtime
 
         private FactoryDelegate CreateFactoryDelegate(ConstructorInfo ctor)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod($"{ctor.DeclaringType.Name}Ctor", 
+            DynamicMethod dynamicMethod = CreateDynamicMethod($"{ctor.DeclaringType.Name}Ctor",
                 typeof(object), typeof(object[]));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
 
@@ -325,7 +325,7 @@ namespace MS.Internal.Xaml.Runtime
 
         private FactoryDelegate CreateFactoryDelegate(MethodInfo factory)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod($"{factory.Name}Factory", 
+            DynamicMethod dynamicMethod = CreateDynamicMethod($"{factory.Name}Factory",
                 typeof(object), typeof(object[]));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
 
@@ -403,7 +403,7 @@ namespace MS.Internal.Xaml.Runtime
         // Note that CreateGetDelegate fails verification for value types (and probably shouldn't)
         private PropertyGetDelegate CreateGetDelegate(MethodInfo getter)
         {
-            DynamicMethod dynamicMethod = CreateDynamicMethod($"{getter.Name}Getter", 
+            DynamicMethod dynamicMethod = CreateDynamicMethod($"{getter.Name}Getter",
                 typeof(object), typeof(object));
             ILGenerator ilGenerator = dynamicMethod.GetILGenerator();
 
@@ -548,7 +548,7 @@ namespace MS.Internal.Xaml.Runtime
         private void Emit_LateBoundInvoke(ILGenerator ilGenerator, Type targetType, string methodName,
             BindingFlags bindingFlags, short targetArgNum, params short[] paramArgNums)
         {
-            //Emits: typeof(targetType).InvokeMember(
+            // Emits: typeof(targetType).InvokeMember(
             //           methodName, bindingFlags, null, ldarg_targetArgNum,
             //           new object[] { ldarg_paramArgNums });
 

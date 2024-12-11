@@ -18,7 +18,7 @@ namespace System.Xaml
 
         public XamlSavedContext(SavedContextType savedContextType, ObjectWriterContext owContext, XamlContextStack<ObjectWriterFrame> stack)
         {
-            //We should harvest all information necessary from the xamlContext so that we can answer all ServiceProvider based questions.
+            // We should harvest all information necessary from the xamlContext so that we can answer all ServiceProvider based questions.
             _savedContextType = savedContextType;
             _context = owContext.SchemaContext;
             _stack = stack;

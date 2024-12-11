@@ -60,7 +60,7 @@ namespace System.Xaml
             _settings = (settings != null)
                 ? new XamlSchemaContextSettings(settings)
                 : new XamlSchemaContextSettings();
-            _syncExaminingAssemblies = new Object();
+            _syncExaminingAssemblies = new object();
             InitializeAssemblyLoadHook();
         }
 
@@ -175,7 +175,7 @@ namespace System.Xaml
             {
                 if (!string.IsNullOrEmpty(segment))
                 {
-                    sb.Append(Char.ToLower(segment[0], TypeConverterHelper.InvariantEnglishUS));
+                    sb.Append(char.ToLower(segment[0], TypeConverterHelper.InvariantEnglishUS));
                 }
             }
             if (sb.Length > 0)
@@ -465,7 +465,7 @@ namespace System.Xaml
         private ConcurrentDictionary<Type, XamlType> _masterTypeList;
         private ConcurrentDictionary<ReferenceEqualityTuple<Type, XamlType, Type>, object> _masterValueConverterList;
         private ConcurrentDictionary<ReferenceEqualityTuple<MemberInfo, MemberInfo>, XamlMember> _masterMemberList;
-        private ConcurrentDictionary<XamlType, Dictionary<string,SpecialBracketCharacters> > _masterBracketCharacterCache;
+        private ConcurrentDictionary<XamlType, Dictionary<string, SpecialBracketCharacters> > _masterBracketCharacterCache;
 
         // Security note: all of these ConcurrentDictionaries use Reference Equality to prevent spoofing of
         // RuntimeTypes/Members by other custom derived descendants of System.Type/MemberInfo.
@@ -570,7 +570,7 @@ namespace System.Xaml
             {
                 string constructorArgumentName = member.ConstructorArgument;
                 string propertyName = member.Name;
-                IReadOnlyDictionary<char,char> markupExtensionBracketCharactersList = member.MarkupExtensionBracketCharacters;
+                IReadOnlyDictionary<char, char> markupExtensionBracketCharactersList = member.MarkupExtensionBracketCharacters;
                 SpecialBracketCharacters splBracketCharacters = markupExtensionBracketCharactersList != null && markupExtensionBracketCharactersList.Count > 0
                     ? new SpecialBracketCharacters(markupExtensionBracketCharactersList)
                     : null;
@@ -678,7 +678,7 @@ namespace System.Xaml
         #region Namespace Mapping and Assembly Attribute (XmlNsInfo) caches
 
         // Lazy init, access these fields through the properties.
-        private ConcurrentDictionary<String, XamlNamespace> _namespaceByUriList;
+        private ConcurrentDictionary<string, XamlNamespace> _namespaceByUriList;
         private ConcurrentDictionary<Assembly, XmlNsInfo> _xmlnsInfo;
         private ConcurrentDictionary<WeakRefKey, XmlNsInfo> _xmlnsInfoForDynamicAssemblies;
         private ConcurrentDictionary<Assembly, XmlNsInfo> _xmlnsInfoForUnreferencedAssemblies;
@@ -719,7 +719,7 @@ namespace System.Xaml
 
         // This dictionary is also thread-safe for single reads and writes, but if you're
         // iterating them, lock on _syncExaminingAssemblies to ensure consistent results
-        private ConcurrentDictionary<String, XamlNamespace> NamespaceByUriList
+        private ConcurrentDictionary<string, XamlNamespace> NamespaceByUriList
         {
             get
             {
@@ -1021,7 +1021,7 @@ namespace System.Xaml
 
         private void InitializeAssemblyLoadHook()
         {
-            _syncAccessingUnexaminedAssemblies = new Object();
+            _syncAccessingUnexaminedAssemblies = new object();
             if (ReferenceAssemblies == null)
             {
 
@@ -1215,7 +1215,7 @@ namespace System.Xaml
 
         protected internal virtual Assembly OnAssemblyResolve(string assemblyName)
         {
-            if (String.IsNullOrEmpty(assemblyName))
+            if (string.IsNullOrEmpty(assemblyName))
             {
                 return null;
             }

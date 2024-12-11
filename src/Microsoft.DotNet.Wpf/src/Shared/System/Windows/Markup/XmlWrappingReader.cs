@@ -120,7 +120,7 @@ namespace System.Windows.Markup
             return (_readerAsResolver == null) ? null : _readerAsResolver.LookupPrefix( namespaceName );
         }
 
-        IDictionary<string,string> IXmlNamespaceResolver.GetNamespacesInScope ( XmlNamespaceScope scope ) {
+        IDictionary<string, string> IXmlNamespaceResolver.GetNamespacesInScope ( XmlNamespaceScope scope ) {
             return (_readerAsResolver == null) ? null : _readerAsResolver.GetNamespacesInScope( scope );
         }
 

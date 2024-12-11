@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -320,11 +320,10 @@ namespace System.Windows.Documents
             // Because of that we are expecting one of 2 types here.
             DynamicDocumentPaginator childPaginator = null;
             ContentPosition childContentPosition = null;
-            if (contentPosition is DocumentSequenceTextPointer)
+            if (contentPosition is DocumentSequenceTextPointer dsTextPointer)
             {
-                DocumentSequenceTextPointer dsTextPointer = (DocumentSequenceTextPointer)contentPosition;
 
-                #pragma warning suppress 6506 // dsTextPointer is obviously not null
+#pragma warning suppress 6506 // dsTextPointer is obviously not null
                 childPaginator = GetPaginator(dsTextPointer.ChildBlock.DocRef);
                 childContentPosition = dsTextPointer.ChildPointer as ContentPosition;
             }

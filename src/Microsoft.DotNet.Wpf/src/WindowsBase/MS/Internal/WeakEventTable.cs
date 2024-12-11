@@ -584,9 +584,8 @@ namespace MS.Internal
 
             public override bool Equals(object o)
             {
-                if (o is EventNameKey)
+                if (o is EventNameKey that)
                 {
-                    EventNameKey that = (EventNameKey)o;
                     return (this._eventSourceType == that._eventSourceType && this._eventName == that._eventName);
                 }
                 else

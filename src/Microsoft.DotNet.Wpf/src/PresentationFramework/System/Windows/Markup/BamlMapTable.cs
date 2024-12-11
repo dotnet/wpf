@@ -1845,10 +1845,8 @@ namespace System.Windows.Markup
         /// </summary>
         public override bool Equals(object o)
         {
-            if (o is AssemblyInfoKey)
+            if (o is AssemblyInfoKey key)
             {
-                AssemblyInfoKey key = (AssemblyInfoKey)o;
-
                 return ((key.AssemblyFullName != null) ?
                                       key.AssemblyFullName.Equals(this.AssemblyFullName) :
                                       (this.AssemblyFullName == null));
@@ -1907,10 +1905,8 @@ namespace System.Windows.Markup
         /// </summary>
         public override bool Equals(object o)
         {
-            if (o is TypeInfoKey)
+            if (o is TypeInfoKey key)
             {
-                TypeInfoKey key = (TypeInfoKey)o;
-
                 return ((key.DeclaringAssembly != null) ?
                                       key.DeclaringAssembly.Equals(this.DeclaringAssembly) :
                                       (this.DeclaringAssembly == null)) &&

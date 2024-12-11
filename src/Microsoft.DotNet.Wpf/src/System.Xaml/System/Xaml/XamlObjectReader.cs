@@ -1221,14 +1221,12 @@ namespace System.Xaml
                     // default ctor
                     methodParams = Array.Empty<ParameterInfo>();
                 }
-                else if (memberInfo is ConstructorInfo)
+                else if (memberInfo is ConstructorInfo ctor)
                 {
-                    var ctor = (ConstructorInfo)memberInfo;
                     methodParams = ctor.GetParameters();
                 }
-                else if (memberInfo is MethodInfo)
+                else if (memberInfo is MethodInfo mi)
                 {
-                    var mi = (MethodInfo)memberInfo;
                     methodParams = mi.GetParameters();
 
                     var methodName = memberInfo.Name;

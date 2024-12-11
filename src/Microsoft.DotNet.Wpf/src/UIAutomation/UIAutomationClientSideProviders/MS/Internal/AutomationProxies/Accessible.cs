@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -574,9 +574,8 @@ namespace MS.Internal.AutomationProxies
                 {
                     return Accessible.Wrap(accChild);
                 }
-                else if (child is int)
+                else if (child is int idChild)
                 {
-                    int idChild = (int)child;
                     return Accessible.Wrap(accParent.IAccessible, idChild);
                 }
             }
@@ -640,11 +639,10 @@ namespace MS.Internal.AutomationProxies
                 children = new Accessible[1];
                 children[0] = AccessibleFromObject(obj, _acc);
             }
-            else if (obj is object [])
+            else if (obj is object[] objs)
             {
-                object [] objs = (object [])obj;
                 children = new Accessible[objs.Length];
-                for (int i=0;i<objs.Length;i++)
+                for (int i = 0; i < objs.Length; i++)
                 {
                     children[i] = AccessibleFromObject(objs[i], _acc);
                 }
@@ -768,10 +766,8 @@ namespace MS.Internal.AutomationProxies
                 // point is not on this object or one of its children
                 rval = null;
             }
-            else if (scan is int)
+            else if (scan is int idChild) // point is on child or self. If self then return 'this'
             {
-                // point is on child or self. If self then return 'this'
-                int idChild = (int)scan;
                 if (idChild == NativeMethods.CHILD_SELF)
                 {
                     rval = this;

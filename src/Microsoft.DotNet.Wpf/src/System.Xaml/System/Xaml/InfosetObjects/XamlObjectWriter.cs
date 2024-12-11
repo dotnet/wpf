@@ -1979,9 +1979,8 @@ namespace System.Xaml
                                                 ctx.ParentType));
                     }
                     ctx.ParentIsPropertyValueSet = true;
-                    if (value is NameFixupToken)
+                    if (value is NameFixupToken token)
                     {
-                        var token = (NameFixupToken)value;
                         if (parentProperty.IsDirective)
                         {
                             // Only the key directive may be assigned a reference.

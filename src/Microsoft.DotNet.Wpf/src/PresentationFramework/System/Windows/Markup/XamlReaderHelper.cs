@@ -3197,9 +3197,8 @@ namespace System.Windows.Markup
                     propertyCanWrite = !((DependencyProperty)dynamicObject).ReadOnly;
                 }
 #endif
-                else if (dynamicObject is MethodInfo)
+                else if (dynamicObject is MethodInfo methodInfo)
                 {
-                    MethodInfo methodInfo = (MethodInfo)dynamicObject;
                     if (methodInfo.GetParameters().Length == 1)
                     {
                         methodInfo = methodInfo.DeclaringType.GetMethod(

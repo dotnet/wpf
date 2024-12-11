@@ -1833,9 +1833,8 @@ namespace MS.Internal
                         desc.Arguments.CopyTo(args, 0);
                         CodeExpression[] expressions = new CodeExpression[args.Length];
 
-                        if (desc.MemberInfo is MethodInfo)
+                        if (desc.MemberInfo is MethodInfo mi)
                         {
-                            MethodInfo mi = (MethodInfo)desc.MemberInfo;
                             ParameterInfo[] parameters = mi.GetParameters();
 
                             for (int i = 0; i < args.Length; i++)
@@ -1851,9 +1850,8 @@ namespace MS.Internal
 
                             ce = cmie;
                         }
-                        else if (desc.MemberInfo is ConstructorInfo)  // instance ctor invoke
+                        else if (desc.MemberInfo is ConstructorInfo ci)
                         {
-                            ConstructorInfo ci = (ConstructorInfo)desc.MemberInfo;
                             ParameterInfo[] parameters = ci.GetParameters();
 
                             for (int i = 0; i < args.Length; i++)
@@ -1885,9 +1883,8 @@ namespace MS.Internal
         private Type GetEventHandlerType(MemberInfo memberInfo)
         {
             Type eventHandlerType = null;
-            if (memberInfo is EventInfo)
+            if (memberInfo is EventInfo ei)
             {
-                EventInfo ei = (EventInfo)memberInfo;
                 eventHandlerType = ei.EventHandlerType;
             }
             else

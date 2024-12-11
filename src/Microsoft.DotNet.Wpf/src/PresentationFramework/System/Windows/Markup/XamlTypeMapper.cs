@@ -3891,20 +3891,16 @@ namespace System.Windows.Markup
             _linePosition = 0;
             _isProtectedAttributeAllowed = false;
 
-            NamespaceMapEntry[] defaultNsMaps = _namespaceMapHashList[XamlReaderHelper.DefaultNamespaceURI] as NamespaceMapEntry[];
-            NamespaceMapEntry[] definitionNsMaps = _namespaceMapHashList[XamlReaderHelper.DefinitionNamespaceURI] as NamespaceMapEntry[];
-            NamespaceMapEntry[] definitionMetroNsMaps = _namespaceMapHashList[XamlReaderHelper.DefinitionMetroNamespaceURI] as NamespaceMapEntry[];
-
             _namespaceMapHashList.Clear();
-            if (null != defaultNsMaps)
+            if (_namespaceMapHashList[XamlReaderHelper.DefaultNamespaceURI] is NamespaceMapEntry[] defaultNsMaps)
             {
                 _namespaceMapHashList.Add(XamlReaderHelper.DefaultNamespaceURI, defaultNsMaps);
             }
-            if (null != definitionNsMaps)
+            if (_namespaceMapHashList[XamlReaderHelper.DefinitionNamespaceURI] is NamespaceMapEntry[] definitionNsMaps)
             {
                 _namespaceMapHashList.Add(XamlReaderHelper.DefinitionNamespaceURI, definitionNsMaps);
             }
-            if (null != definitionMetroNsMaps)
+            if (_namespaceMapHashList[XamlReaderHelper.DefinitionMetroNamespaceURI] is NamespaceMapEntry[] definitionMetroNsMaps)
             {
                 _namespaceMapHashList.Add(XamlReaderHelper.DefinitionMetroNamespaceURI, definitionMetroNsMaps);
             }
@@ -4012,8 +4008,7 @@ namespace System.Windows.Markup
                     "GetPropertyAndType must always be called before SetPropertyAndType");
 
                 // add the type taking a lock
-                PropertyAndType pAndT = _dpLookupHashtable[dpName] as PropertyAndType;
-                if (pAndT == null)
+                if (_dpLookupHashtable[dpName] is not PropertyAndType pAndT)
                 {
                     _dpLookupHashtable[dpName] = new PropertyAndType(null, dpInfo, false, true, ownerType, isInternal);
                 }

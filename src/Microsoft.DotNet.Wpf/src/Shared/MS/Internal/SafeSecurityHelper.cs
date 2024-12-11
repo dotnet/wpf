@@ -198,8 +198,7 @@ namespace System.Xaml
             {
                 foreach (object key in _assemblies.Keys)
                 {
-                    WeakReference weakRef = key as WeakReference;
-                    if (weakRef == null)
+                    if (key is not WeakReference weakRef)
                     {
                         continue;
                     }

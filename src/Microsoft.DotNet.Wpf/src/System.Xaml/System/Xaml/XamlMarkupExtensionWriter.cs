@@ -172,9 +172,7 @@ namespace System.Xaml
 
         public override void WriteValue(object value)
         {
-            string s = value as string;
-
-            if (s == null)
+            if (value is not string s)
             {
                 throw new ArgumentException(SR.XamlMarkupExtensionWriterCannotWriteNonstringValue);
             }

@@ -641,8 +641,7 @@ namespace System.Windows
                 {
                     // 1% case - the target listens multiple times
                     // we store the delegates in a list
-                    List<Delegate> list = value as List<Delegate>;
-                    if (list == null)
+                    if (value is not List<Delegate> list)
                     {
                         // lazily allocate the list, and add the old handler
                         Delegate oldHandler = value as Delegate;
@@ -681,8 +680,7 @@ namespace System.Windows
                 // remove the handler from the CWT
                 if (_cwt.TryGetValue(target, out value))
                 {
-                    List<Delegate> list = value as List<Delegate>;
-                    if (list == null)
+                    if (value is not List<Delegate> list)
                     {
                         // 99% case - the target is removing its single handler
                         _cwt.Remove(target);
@@ -780,8 +778,7 @@ namespace System.Windows
                     else
                     {
                         // legacy (4.0)
-                        IWeakEventListener iwel = target as IWeakEventListener;
-                        if (iwel != null)
+                        if (target is IWeakEventListener iwel)
                         {
                             bool handled = iwel.ReceiveWeakEvent(managerType, sender, args);
 
@@ -834,9 +831,7 @@ namespace System.Windows
 
             protected void CopyTo(ListenerList newList)
             {
-                IWeakEventListener iwel;
-
-                for (int k=0, n=Count; k<n; ++k)
+                for (int k = 0, n = Count; k < n; ++k)
                 {
                     Listener listener = GetListener(k);
                     if (listener.Target != null)
@@ -849,7 +844,7 @@ namespace System.Windows
                                 newList.AddHandler(handler);
                             }
                         }
-                        else if ((iwel = listener.Target as IWeakEventListener) != null)
+                        else if (listener.Target is IWeakEventListener iwel)
                         {
                             newList.Add(iwel);
                         }

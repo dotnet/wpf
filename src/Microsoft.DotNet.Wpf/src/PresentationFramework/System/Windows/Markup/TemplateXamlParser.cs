@@ -745,25 +745,23 @@ namespace System.Windows.Markup
 
             if (xamlElementStartNode.SerializerType != null && _styleModeStack.Depth > 0)
             {
-                XamlSerializer serializer = XamlTypeMapper.CreateInstance(xamlElementStartNode.SerializerType)
-                                                          as XamlSerializer;
-                 if (serializer == null)
-                 {
-                     ThrowException(nameof(SR.ParserNoSerializer),
-                                   xamlElementStartNode.TypeFullName,
-                                   xamlElementStartNode.LineNumber,
-                                   xamlElementStartNode.LinePosition);
-                 }
-                 else
-                 {
-                     // Depending on whether this is the compile case or the parse xaml
-                     // case, we want to convert the xaml into baml or objects.
+                if (XamlTypeMapper.CreateInstance(xamlElementStartNode.SerializerType) is not XamlSerializer serializer)
+                {
+                    ThrowException(nameof(SR.ParserNoSerializer),
+                                  xamlElementStartNode.TypeFullName,
+                                  xamlElementStartNode.LineNumber,
+                                  xamlElementStartNode.LinePosition);
+                }
+                else
+                {
+                    // Depending on whether this is the compile case or the parse xaml
+                    // case, we want to convert the xaml into baml or objects.
 
-                     #if PBTCOMPILER
-                         serializer.ConvertXamlToBaml(TokenReader,
-                                       BamlRecordWriter == null ? ParserContext : BamlRecordWriter.ParserContext,
-                                       xamlElementStartNode, BamlRecordWriter);
-                     #else
+#if PBTCOMPILER
+                    serializer.ConvertXamlToBaml(TokenReader,
+                                  BamlRecordWriter == null ? ParserContext : BamlRecordWriter.ParserContext,
+                                  xamlElementStartNode, BamlRecordWriter);
+#else
 
                          // If we're in the content of the template, we'll convert to baml.  Then TemplateBamlRecordReader
                          // gets the option of instantiating it or keeping it in baml.  For example, if this is a nested
@@ -803,9 +801,9 @@ namespace System.Windows.Markup
                                                TreeBuilder.RecordReader);
                          }
 
-                     #endif
+#endif
 
-                 }
+                }
 
             }
             else

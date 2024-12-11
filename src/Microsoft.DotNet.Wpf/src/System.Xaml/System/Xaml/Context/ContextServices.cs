@@ -17,8 +17,7 @@ namespace MS.Internal.Xaml.Context
             // If the XamlMember implements IProvideValueTarget, ask it for the TargetProperty first
             Debug.Assert(xamlContext.ParentProperty != null);
 
-            IProvideValueTarget ipvt = xamlContext.ParentProperty as IProvideValueTarget;
-            if (ipvt != null)
+            if (xamlContext.ParentProperty is IProvideValueTarget ipvt)
             {
                 return ipvt.TargetProperty;
             }

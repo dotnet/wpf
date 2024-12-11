@@ -516,8 +516,7 @@ namespace MS.Internal
             public override int GetHashCode()
             {
 #if DEBUG
-                WeakReference wr = _source as WeakReference;
-                object source = (wr != null) ? wr.Target : _source;
+                object source = (_source is WeakReference wr) ? wr.Target : _source;
                 if (source != null)
                 {
                     int hashcode = unchecked(_manager.GetHashCode() + RuntimeHelpers.GetHashCode(source));

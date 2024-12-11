@@ -481,28 +481,28 @@ namespace MS.Internal.ComponentModel
 
                 foreach(Attribute attr in attrArray) 
                 {
-                    AttributeProviderAttribute pa = attr as AttributeProviderAttribute;
-                    if (pa != null) 
+                    if (attr is AttributeProviderAttribute pa)
                     {
                         Type providerType = Type.GetType(pa.TypeName);
-                        if (providerType != null) 
+                        if (providerType != null)
                         {
                             Attribute[] paAttrs = null;
-                            if (!string.IsNullOrEmpty(pa.PropertyName)) 
+                            if (!string.IsNullOrEmpty(pa.PropertyName))
                             {
                                 MemberInfo[] milist = providerType.GetMember(pa.PropertyName);
-                                if (milist.Length > 0 && milist[0] != null) 
+                                if (milist.Length > 0 && milist[0] != null)
                                 {
                                     paAttrs = (Attribute[])milist[0].GetCustomAttributes(typeof(Attribute), true);
                                 }
                             }
-                            else {
+                            else
+                            {
                                 paAttrs = (Attribute[])providerType.GetCustomAttributes(typeof(Attribute), true);
                             }
 
                             if (paAttrs != null)
                             {
-                                if (addAttrs == null) 
+                                if (addAttrs == null)
                                 {
                                     addAttrs = paAttrs;
                                 }
@@ -512,7 +512,7 @@ namespace MS.Internal.ComponentModel
                                     addAttrs.CopyTo(newArray, 0);
                                     paAttrs.CopyTo(newArray, addAttrs.Length);
                                     addAttrs = newArray;
-}
+                                }
                             }
                         }
                     }
@@ -664,18 +664,16 @@ namespace MS.Internal.ComponentModel
             foreach (Attribute a in baseAttributes) 
             {
                 Attribute attrToAdd = a;
-                DefaultValueAttribute defAttr = a as DefaultValueAttribute;
 
-                if (defAttr != null) 
+                if (a is DefaultValueAttribute defAttr)
                 {
                     // DP metadata always overrides CLR metadata for
                     // default value.
                     attrToAdd = null;
                 }
-                else 
+                else
                 {
-                    ReadOnlyAttribute roAttr = a as ReadOnlyAttribute;
-                    if (roAttr != null)
+                    if (a is ReadOnlyAttribute roAttr)
                     {
                         // DP metata is the merge of CLR metadata for
                         // read only

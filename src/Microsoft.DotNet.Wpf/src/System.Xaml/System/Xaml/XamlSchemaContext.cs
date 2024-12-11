@@ -781,8 +781,7 @@ namespace System.Xaml
         private static void CleanupCollectedAssemblies(object schemaContextWeakRef)
         {
             WeakReference weakRef = (WeakReference)schemaContextWeakRef;
-            XamlSchemaContext schemaContext = weakRef.Target as XamlSchemaContext;
-            if (schemaContext != null)
+            if (weakRef.Target is XamlSchemaContext schemaContext)
             {
                 schemaContext.CleanupCollectedAssemblies();
             }

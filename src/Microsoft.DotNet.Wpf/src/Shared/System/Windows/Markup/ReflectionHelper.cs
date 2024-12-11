@@ -200,8 +200,7 @@ namespace System.Xaml
             if (item == null)
                 return null;
 
-            ICustomTypeProvider ictp = item as ICustomTypeProvider;
-            if (ictp == null)
+            if (item is not ICustomTypeProvider ictp)
                 return item.GetType();
             else
                 return ictp.GetCustomType();

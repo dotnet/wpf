@@ -704,10 +704,8 @@ namespace System.Windows.Markup
         {
             set
             {
-                XmlTextReader xmlTextReader = Reader as XmlTextReader;
-
                 // review, what if not the XmlTextReader.
-                if (null != xmlTextReader)
+                if (Reader is XmlTextReader xmlTextReader)
                 {
                     xmlTextReader.Normalization = value;
                 }
@@ -722,8 +720,7 @@ namespace System.Windows.Markup
         {
             get
             {
-                XmlTextReader textReader = Reader as XmlTextReader;
-                if (textReader == null)
+                if (Reader is not XmlTextReader textReader)
                 {
                     return new System.Text.UTF8Encoding(true, true);
                 }

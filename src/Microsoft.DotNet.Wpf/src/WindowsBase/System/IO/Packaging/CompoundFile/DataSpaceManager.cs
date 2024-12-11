@@ -862,17 +862,15 @@ namespace System.IO.Packaging
     /// </returns>
     internal IDataTransform GetTransformFromName(string transformLabel)
     {
-        TransformInstance transformInstance = _transformDefinitions[transformLabel] as TransformInstance;
+            if (_transformDefinitions[transformLabel] is not TransformInstance transformInstance)
+            {
+                //
+                // There is no transform instance with the specified name.
+                //
+                return null;
+            }
 
-        if (transformInstance == null)
-        {
-            //
-            // There is no transform instance with the specified name.
-            //
-            return null;
-        }
-
-        IDataTransform transformObject = transformInstance.transformReference;
+            IDataTransform transformObject = transformInstance.transformReference;
         if (transformObject == null)
         {
             //

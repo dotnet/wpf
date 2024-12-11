@@ -849,10 +849,9 @@ namespace MS.Internal
                     case XmlNodeType.CDATA:
                     case XmlNodeType.Text:
                     {
-                        IXmlLineInfo xmlLineInfo = xmlReader as IXmlLineInfo;
-                        int lineNumber = 0;
+                            int lineNumber = 0;
 
-                        if (null != xmlLineInfo)
+                            if (xmlReader is IXmlLineInfo xmlLineInfo)
                         {
                             lineNumber = xmlLineInfo.LineNumber;
                         }
@@ -1306,8 +1305,7 @@ namespace MS.Internal
             {
                 for (int i = 0; i < ReferenceAssemblyList.Count; i++)
                 {
-                    ReferenceAssembly refasm = ReferenceAssemblyList[i] as ReferenceAssembly;
-                    if (refasm != null && refasm.Path.Length > 0)
+                    if (ReferenceAssemblyList[i] is ReferenceAssembly refasm && refasm.Path.Length > 0)
                     {
                         paths.Add(refasm.Path);
                     }
@@ -1324,9 +1322,7 @@ namespace MS.Internal
             {
                 for (int i = 0; i < ReferenceAssemblyList.Count; i++)
                 {
-                    ReferenceAssembly refasm = ReferenceAssemblyList[i] as ReferenceAssembly;
-
-                    if (refasm != null && refasm.Path.Length > 0)
+                    if (ReferenceAssemblyList[i] is ReferenceAssembly refasm && refasm.Path.Length > 0)
                     {
                         _typeMapper.SetAssemblyPath(refasm.AssemblyName, refasm.Path);
                     }

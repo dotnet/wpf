@@ -158,8 +158,7 @@ namespace MS.Internal.Xaml.Runtime
         {
             if (ts == BuiltInValueConverter.Event)
             {
-                string valueString = value as string;
-                if (valueString != null)
+                if (value is string valueString)
                 {
                     object rootObject;
                     Type delegateType;

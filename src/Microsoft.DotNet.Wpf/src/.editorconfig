@@ -194,9 +194,6 @@ dotnet_diagnostic.IDE0005.severity = suggestion
 # IDE0017: Simplify object initialization
 dotnet_diagnostic.IDE0017.severity = suggestion
 
-# IDE0019: Use pattern matching to avoid as followed by a null check
-dotnet_diagnostic.IDE0019.severity = suggestion
-
 # IDE0020: Use pattern matching to avoid is check followed by a cast (with variable)
 dotnet_diagnostic.IDE0020.severity = suggestion
 

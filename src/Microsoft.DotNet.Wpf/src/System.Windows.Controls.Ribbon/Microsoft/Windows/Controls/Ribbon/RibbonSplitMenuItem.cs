@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -270,8 +270,10 @@ namespace Microsoft.Windows.Controls.Ribbon
             // Bind to Button.IsPressed and set MenuItem.IsPressed manually.
             if (_partHeaderButton != null)
             {
-                Binding binding = new Binding("IsPressed");
-                binding.Source = _partHeaderButton;
+                Binding binding = new Binding("IsPressed")
+                {
+                    Source = _partHeaderButton
+                };
                 this.SetBinding(IsPressedInternalProperty, binding);
             }
         }

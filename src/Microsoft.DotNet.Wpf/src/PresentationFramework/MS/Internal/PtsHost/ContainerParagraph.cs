@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1243,10 +1243,11 @@ namespace MS.Internal.PtsHost
             DirtyTextRange dtr,
             int dcpContent)
         {
-            UpdateRecord ur = new UpdateRecord();
-
-            // (1) Initialize DTR
-            ur.Dtr = dtr;
+            UpdateRecord ur = new UpdateRecord
+            {
+                // (1) Initialize DTR
+                Dtr = dtr
+            };
 
             // (2) Find first paragraph affected by DTR
             BaseParagraph para = _firstChild;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -51,9 +51,10 @@ namespace System.Windows.Media.Animation
             {
                 if (s_emptyCollection == null)
                 {
-                    SingleKeyFrameCollection emptyCollection = new SingleKeyFrameCollection();
-
-                    emptyCollection._keyFrames = new List< SingleKeyFrame>(0);
+                    SingleKeyFrameCollection emptyCollection = new SingleKeyFrameCollection
+                    {
+                        _keyFrames = new List<SingleKeyFrame>(0)
+                    };
                     emptyCollection.Freeze();
 
                     s_emptyCollection = emptyCollection;

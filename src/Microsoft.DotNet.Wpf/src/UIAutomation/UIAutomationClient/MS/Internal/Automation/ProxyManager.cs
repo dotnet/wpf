@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -359,14 +359,16 @@ namespace MS.Internal.Automation
             }
 
             AssemblyName ourAssembly = Assembly.GetAssembly(typeof(ProxyManager)).GetName();
-            
+
             // Attempt to discover the version of UIA that the caller is linked against,
             // and then use the correpsonding proxy dll version. If we can't do that,
             // we'll use the default version.
-            AssemblyName proxyAssemblyName = new AssemblyName();
-            proxyAssemblyName.Name = _defaultProxyAssembly;
-            proxyAssemblyName.Version = ourAssembly.Version;
-            proxyAssemblyName.CultureInfo = ourAssembly.CultureInfo;
+            AssemblyName proxyAssemblyName = new AssemblyName
+            {
+                Name = _defaultProxyAssembly,
+                Version = ourAssembly.Version,
+                CultureInfo = ourAssembly.CultureInfo
+            };
             proxyAssemblyName.SetPublicKeyToken( ourAssembly.GetPublicKeyToken() );
 
             if ( callingAssembly != null )

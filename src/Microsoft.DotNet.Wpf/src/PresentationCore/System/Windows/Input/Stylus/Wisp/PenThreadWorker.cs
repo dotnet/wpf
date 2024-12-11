@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -479,8 +479,10 @@ namespace System.Windows.Input
                 _workerOperation.Add((WorkerOperation)started);
             }
 
-            Thread thread = new Thread(new ThreadStart(ThreadProc));
-            thread.IsBackground = true; // don't hold process open due to this thread.
+            Thread thread = new Thread(new ThreadStart(ThreadProc))
+            {
+                IsBackground = true // don't hold process open due to this thread.
+            };
             thread.Start();
             
             // Wait for this work to be completed (ie thread is started up).
@@ -850,9 +852,10 @@ namespace System.Windows.Input
         /// </summary>
         private static TabletDeviceInfo GetTabletInfoHelper(IPimcTablet3 pimcTablet)
         {
-            TabletDeviceInfo tabletInfo = new TabletDeviceInfo();
-
-            tabletInfo.PimcTablet = pimcTablet;
+            TabletDeviceInfo tabletInfo = new TabletDeviceInfo
+            {
+                PimcTablet = pimcTablet
+            };
             pimcTablet.GetKey(out tabletInfo.Id);
             pimcTablet.GetName(out tabletInfo.Name);
             pimcTablet.GetPlugAndPlayId(out tabletInfo.PlugAndPlayId);

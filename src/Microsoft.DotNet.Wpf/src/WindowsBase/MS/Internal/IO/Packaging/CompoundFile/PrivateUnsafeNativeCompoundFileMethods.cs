@@ -179,12 +179,13 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     throw new ArgumentException(SR.Format(SR.InvalidArgumentValue, "grfStatFlag", grfStatFlag.ToString(CultureInfo.InvariantCulture)));
                 }
 
-                System.Runtime.InteropServices.ComTypes.STATSTG returnValue = new System.Runtime.InteropServices.ComTypes.STATSTG();
-                
-                returnValue.grfLocksSupported = 0 ; // No lock supported
+                System.Runtime.InteropServices.ComTypes.STATSTG returnValue = new System.Runtime.InteropServices.ComTypes.STATSTG
+                {
+                    grfLocksSupported = 0, // No lock supported
 
-                returnValue.cbSize = _baseStream.Length;
-                returnValue.type = SafeNativeCompoundFileConstants.STGTY_LOCKBYTES;
+                    cbSize = _baseStream.Length,
+                    type = SafeNativeCompoundFileConstants.STGTY_LOCKBYTES
+                };
 
                 pstatstg = returnValue;
             }

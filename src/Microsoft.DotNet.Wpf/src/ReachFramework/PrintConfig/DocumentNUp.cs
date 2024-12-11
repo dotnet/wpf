@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -269,8 +269,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            JobNUpCapability cap = new JobNUpCapability(printCap);
-            cap._nUps = new Collection<NUpOption>();
+            JobNUpCapability cap = new JobNUpCapability(printCap)
+            {
+                _nUps = new Collection<NUpOption>()
+            };
 
             return cap;
         }
@@ -372,8 +374,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            NUpPresentationDirectionCapability cap = new NUpPresentationDirectionCapability(printCap);
-            cap._presentationDirections = new Collection<NUpPresentationDirectionOption>();
+            NUpPresentationDirectionCapability cap = new NUpPresentationDirectionCapability(printCap)
+            {
+                _presentationDirections = new Collection<NUpPresentationDirectionOption>()
+            };
 
             return cap;
         }
@@ -532,10 +536,11 @@ namespace MS.Internal.Printing.Configuration
             {
                 if (_presentationDirection == null)
                 {
-                    _presentationDirection = new NUpPresentationDirectionSetting(this._ownerPrintTicket);
-
-                    // This is a sub-feature so we need to set its parent feature field
-                    _presentationDirection._parentFeature = this;
+                    _presentationDirection = new NUpPresentationDirectionSetting(this._ownerPrintTicket)
+                    {
+                        // This is a sub-feature so we need to set its parent feature field
+                        _parentFeature = this
+                    };
                 }
 
                 return _presentationDirection;

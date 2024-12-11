@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -510,8 +510,10 @@ namespace System.Windows.Documents
         {
             if (_mouseSelectionState == null)
             {
-                _mouseSelectionState = new MouseSelectionState();
-                _mouseSelectionState.Timer = new DispatcherTimer(DispatcherPriority.Normal);
+                _mouseSelectionState = new MouseSelectionState
+                {
+                    Timer = new DispatcherTimer(DispatcherPriority.Normal)
+                };
                 _mouseSelectionState.Timer.Tick += new EventHandler(HandleMouseSelectionTick);
                 // 400ms is the default value for MenuShowDelay. Creating timer with smaller value may
                 // cause Dispatcher queue starvation.

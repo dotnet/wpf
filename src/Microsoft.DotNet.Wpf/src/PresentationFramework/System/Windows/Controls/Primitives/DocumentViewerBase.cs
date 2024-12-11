@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1034,9 +1034,11 @@ namespace System.Windows.Controls.Primitives
             if (textContainer != null && this.TextEditorRenderScope != null && textContainer.TextSelection == null)
             {
                 _textView = new MultiPageTextView(this, this.TextEditorRenderScope, textContainer);
-                _textEditor = new TextEditor(textContainer, this, false);
-                _textEditor.IsReadOnly = !IsEditingEnabled;
-                _textEditor.TextView = _textView;
+                _textEditor = new TextEditor(textContainer, this, false)
+                {
+                    IsReadOnly = !IsEditingEnabled,
+                    TextView = _textView
+                };
                 textContainer.TextView = _textView;
             }
 

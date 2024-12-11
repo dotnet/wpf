@@ -790,8 +790,10 @@ namespace Microsoft.Build.Tasks.Windows
                 // Generate a TaskItem for it.
                 //
 
-                bamlItem = new TaskItem();
-                bamlItem.ItemSpec = bamlFile;
+                bamlItem = new TaskItem
+                {
+                    ItemSpec = bamlFile
+                };
 
                 // Transfer the metadata value from source item to the generated baml item.
                 bamlItem.SetMetadata(SharedStrings.Localizable, localizable ?  "True" : "False");

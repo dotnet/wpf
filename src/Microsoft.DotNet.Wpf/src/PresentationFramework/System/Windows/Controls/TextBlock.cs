@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -3022,9 +3022,11 @@ Debug.Assert(lineCount == LineCount);
         {
             if (null == _textBlockCache)
             {
-                _textBlockCache = new TextBlockCache();
-                _textBlockCache._lineProperties = GetLineProperties();
-                _textBlockCache._textRunCache = new TextRunCache();
+                _textBlockCache = new TextBlockCache
+                {
+                    _lineProperties = GetLineProperties(),
+                    _textRunCache = new TextRunCache()
+                };
             }
         }
 

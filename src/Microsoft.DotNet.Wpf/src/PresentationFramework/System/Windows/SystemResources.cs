@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -936,9 +936,11 @@ namespace System.Windows
 
                 if (stream != null)
                 {
-                    Baml2006ReaderSettings settings = new Baml2006ReaderSettings();
-                    settings.OwnsStream = true;
-                    settings.LocalAssembly = assembly;
+                    Baml2006ReaderSettings settings = new Baml2006ReaderSettings
+                    {
+                        OwnsStream = true,
+                        LocalAssembly = assembly
+                    };
 
                     // For system themes, we don't seem to be passing the BAML Uri to the Baml2006Reader
                     Baml2006Reader bamlReader = new Baml2006ReaderInternal(stream, new Baml2006SchemaContext(settings.LocalAssembly), settings);

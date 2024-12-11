@@ -286,8 +286,10 @@ namespace MS.Internal.Xaml
             {
                 return null;
             }
-            var token = new NameFixupToken();
-            token.CanAssignDirectly = canAssignDirectly;
+            var token = new NameFixupToken
+            {
+                CanAssignDirectly = canAssignDirectly
+            };
             token.NeededNames.AddRange(names);
             if (token.CanAssignDirectly && token.NeededNames.Count != 1)
             {

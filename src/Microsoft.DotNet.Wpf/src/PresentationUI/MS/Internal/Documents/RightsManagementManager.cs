@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -357,11 +357,12 @@ namespace MS.Internal.Documents
             //we are enrolling.
             RMEnrollmentPage3 rmEnrollmentPage3 = new RMEnrollmentPage3();
 
-            RightsManagementEnrollThreadInfo rmEnrollThreadInfo = new RightsManagementEnrollThreadInfo();
-
-            //Setup Fields
-            rmEnrollThreadInfo.AccountType = accountType;
-            rmEnrollThreadInfo.ProgressForm = rmEnrollmentPage3;
+            RightsManagementEnrollThreadInfo rmEnrollThreadInfo = new RightsManagementEnrollThreadInfo
+            {
+                //Setup Fields
+                AccountType = accountType,
+                ProgressForm = rmEnrollmentPage3
+            };
 
             // Pass work off so UI doesn't block.
             // We use WaitCallback here because that is the delegate that is

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -64,8 +64,10 @@ namespace System.Windows.Documents
             // Set AllowDropProperty as "False" not to inherit the value from the ancestor.
             AllowDrop = false;
 
-            _caretElement = new CaretSubElement();
-            _caretElement.ClipToBounds = false;
+            _caretElement = new CaretSubElement
+            {
+                ClipToBounds = false
+            };
 
             AddVisualChild(_caretElement);
         }
@@ -718,8 +720,10 @@ namespace System.Windows.Documents
                     PathFigure pathFigure;
 
                     pathGeometry = new PathGeometry();
-                    pathFigure = new PathFigure();
-                    pathFigure.StartPoint = new Point(0, 0);
+                    pathFigure = new PathFigure
+                    {
+                        StartPoint = new Point(0, 0)
+                    };
                     pathFigure.Segments.Add(new LineSegment(new Point(-bidiCaretIndicatorWidth, 0), true));
                     pathFigure.Segments.Add(new LineSegment(new Point(0, _height / BidiIndicatorHeightRatio), true));
                     pathFigure.IsClosed = true;
@@ -906,9 +910,11 @@ namespace System.Windows.Documents
 
                 if (_blinkAnimationClock == null || _blinkAnimationClock.Timeline.Duration != blinkDuration)
                 {
-                    DoubleAnimationUsingKeyFrames blinkAnimation = new DoubleAnimationUsingKeyFrames();
-                    blinkAnimation.BeginTime = null;
-                    blinkAnimation.RepeatBehavior = RepeatBehavior.Forever;
+                    DoubleAnimationUsingKeyFrames blinkAnimation = new DoubleAnimationUsingKeyFrames
+                    {
+                        BeginTime = null,
+                        RepeatBehavior = RepeatBehavior.Forever
+                    };
                     blinkAnimation.KeyFrames.Add(new DiscreteDoubleKeyFrame(1, KeyTime.FromPercent(0.0)));
                     blinkAnimation.KeyFrames.Add(new DiscreteDoubleKeyFrame(0, KeyTime.FromPercent(0.5)));
                     blinkAnimation.Duration = blinkDuration;

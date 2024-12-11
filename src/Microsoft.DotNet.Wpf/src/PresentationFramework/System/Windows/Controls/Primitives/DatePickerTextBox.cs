@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -88,8 +88,10 @@ namespace System.Windows.Controls.Primitives
             // mimc SL. Hence setting the binding in code rather than in control template.
             if (elementContent != null)
             {
-                Binding watermarkBinding = new Binding("Watermark");
-                watermarkBinding.Source = this;
+                Binding watermarkBinding = new Binding("Watermark")
+                {
+                    Source = this
+                };
                 elementContent.SetBinding(ContentControl.ContentProperty, watermarkBinding);
             }
 

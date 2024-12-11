@@ -22,12 +22,16 @@ namespace MS.Internal
             _maxPollingInterval = TimeSpan.FromMilliseconds(maxInterval);
 
             _cleanupTimerPriority = DispatcherPriority.ContextIdle;
-            _defaultCleanupTimer = new DispatcherTimer(_cleanupTimerPriority);
-            _defaultCleanupTimer.Interval = _basePollingInterval;
+            _defaultCleanupTimer = new DispatcherTimer(_cleanupTimerPriority)
+            {
+                Interval = _basePollingInterval
+            };
             _defaultCleanupTimer.Tick += OnCleanupTick;
 
-            _starvationTimer = new DispatcherTimer(DispatcherPriority.Normal);
-            _starvationTimer.Interval = TimeSpan.FromMilliseconds(promotionInterval);
+            _starvationTimer = new DispatcherTimer(DispatcherPriority.Normal)
+            {
+                Interval = TimeSpan.FromMilliseconds(promotionInterval)
+            };
             _starvationTimer.Tick += OnStarvationTick;
 
             _cleanupTimer = _defaultCleanupTimer;

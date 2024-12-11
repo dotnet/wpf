@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -99,8 +99,10 @@ namespace System.Windows.Ink
         /// </summary>
         internal void SaveIsf(Stream stream, bool compress)
         {
-            StrokeCollectionSerializer serializer = new StrokeCollectionSerializer(this);
-            serializer.CurrentCompressionMode = compress ? CompressionMode.Compressed : CompressionMode.NoCompression;
+            StrokeCollectionSerializer serializer = new StrokeCollectionSerializer(this)
+            {
+                CurrentCompressionMode = compress ? CompressionMode.Compressed : CompressionMode.NoCompression
+            };
             serializer.EncodeISF(stream);
         }
 

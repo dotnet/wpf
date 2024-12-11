@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1599,11 +1599,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             Point startPoint = popupPlacementTarget.PointToScreen(new Point());
             Point endPoint = popupPlacementTarget.PointToScreen(new Point(popupPlacementTarget.ActualWidth, popupPlacementTarget.ActualHeight));
 
-            NativeMethods.RECT popupPlacementTargetRect = new NativeMethods.RECT();
-            popupPlacementTargetRect.left = (int)startPoint.X;
-            popupPlacementTargetRect.right = (int)endPoint.X;
-            popupPlacementTargetRect.top = (int)startPoint.Y;
-            popupPlacementTargetRect.bottom = (int)endPoint.Y;
+            NativeMethods.RECT popupPlacementTargetRect = new NativeMethods.RECT
+            {
+                left = (int)startPoint.X,
+                right = (int)endPoint.X,
+                top = (int)startPoint.Y,
+                bottom = (int)endPoint.Y
+            };
             IntPtr monitorPtr = NativeMethods.MonitorFromRect(ref popupPlacementTargetRect, NativeMethods.MONITOR_DEFAULTTONEAREST);
             if (monitorPtr != IntPtr.Zero)
             {

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -68,9 +68,11 @@ namespace Microsoft.Windows.Themes
                 LinearGradientBrush bevel = (LinearGradientBrush)GetCachedFreezable((int)AeroFreezables.NormalBevel);
                 if (bevel == null)
                 {
-                    bevel = new LinearGradientBrush();
-                    bevel.StartPoint = new Point();
-                    bevel.EndPoint = new Point(0.0, 1.0);
+                    bevel = new LinearGradientBrush
+                    {
+                        StartPoint = new Point(),
+                        EndPoint = new Point(0.0, 1.0)
+                    };
                     bevel.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 0.0));
                     bevel.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0xFF, 0xFF, 0xFF), 0.4));
                     bevel.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0xFC, 0xFC, 0xFD), 0.4));
@@ -101,9 +103,11 @@ namespace Microsoft.Windows.Themes
             LinearGradientBrush background = (LinearGradientBrush)GetCachedFreezable((int)backgroundType);
             if (background == null)
             {
-                background = new LinearGradientBrush();
-                background.StartPoint = new Point();
-                background.EndPoint = new Point(0.0, 1.0);
+                background = new LinearGradientBrush
+                {
+                    StartPoint = new Point(),
+                    EndPoint = new Point(0.0, 1.0)
+                };
 
                 switch (backgroundType)
                 {
@@ -175,9 +179,11 @@ namespace Microsoft.Windows.Themes
                             LinearGradientBrush lgBrush = null;
                             if (sideType != AeroFreezables.SortedSides)
                             {
-                                lgBrush = new LinearGradientBrush();
-                                lgBrush.StartPoint = new Point();
-                                lgBrush.EndPoint = new Point(0.0, 1.0);
+                                lgBrush = new LinearGradientBrush
+                                {
+                                    StartPoint = new Point(),
+                                    EndPoint = new Point(0.0, 1.0)
+                                };
                                 sideBrush = lgBrush;
                             }
 
@@ -226,9 +232,11 @@ namespace Microsoft.Windows.Themes
                 LinearGradientBrush topBrush = (LinearGradientBrush)GetCachedFreezable((int)AeroFreezables.PressedTop);
                 if (topBrush == null)
                 {
-                    topBrush = new LinearGradientBrush();
-                    topBrush.StartPoint = new Point();
-                    topBrush.EndPoint = new Point(0.0, 1.0);
+                    topBrush = new LinearGradientBrush
+                    {
+                        StartPoint = new Point(),
+                        EndPoint = new Point(0.0, 1.0)
+                    };
                     topBrush.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0x86, 0xA3, 0xB2), 0.0));
                     topBrush.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0x86, 0xA3, 0xB2), 0.1));
                     topBrush.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0xAA, 0xCE, 0xE1), 0.9));
@@ -243,9 +251,11 @@ namespace Microsoft.Windows.Themes
                 LinearGradientBrush pressedBevel = (LinearGradientBrush)GetCachedFreezable((int)AeroFreezables.PressedBevel);
                 if (pressedBevel == null)
                 {
-                    pressedBevel = new LinearGradientBrush();
-                    pressedBevel.StartPoint = new Point();
-                    pressedBevel.EndPoint = new Point(0.0, 1.0);
+                    pressedBevel = new LinearGradientBrush
+                    {
+                        StartPoint = new Point(),
+                        EndPoint = new Point(0.0, 1.0)
+                    };
                     pressedBevel.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0xA2, 0xCB, 0xE0), 0.0));
                     pressedBevel.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0xA2, 0xCB, 0xE0), 0.4));
                     pressedBevel.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0x72, 0xBC, 0xDF), 0.4));
@@ -354,9 +364,11 @@ namespace Microsoft.Windows.Themes
                 LinearGradientBrush arrowBorder = (LinearGradientBrush)GetCachedFreezable((int)AeroFreezables.ArrowBorder);
                 if (arrowBorder == null)
                 {
-                    arrowBorder = new LinearGradientBrush();
-                    arrowBorder.StartPoint = new Point();
-                    arrowBorder.EndPoint = new Point(1.0, 1.0);
+                    arrowBorder = new LinearGradientBrush
+                    {
+                        StartPoint = new Point(),
+                        EndPoint = new Point(1.0, 1.0)
+                    };
                     arrowBorder.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0x3C, 0x5E, 0x72), 0.0));
                     arrowBorder.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0x3C, 0x5E, 0x72), 0.1));
                     arrowBorder.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0xC3, 0xE4, 0xF5), 1.0));
@@ -369,9 +381,11 @@ namespace Microsoft.Windows.Themes
                 LinearGradientBrush arrowFill = (LinearGradientBrush)GetCachedFreezable((int)AeroFreezables.ArrowFill);
                 if (arrowFill == null)
                 {
-                    arrowFill = new LinearGradientBrush();
-                    arrowFill.StartPoint = new Point();
-                    arrowFill.EndPoint = new Point(1.0, 1.0);
+                    arrowFill = new LinearGradientBrush
+                    {
+                        StartPoint = new Point(),
+                        EndPoint = new Point(1.0, 1.0)
+                    };
                     arrowFill.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0x61, 0x96, 0xB6), 0.0));
                     arrowFill.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0x61, 0x96, 0xB6), 0.1));
                     arrowFill.GradientStops.Add(new GradientStop(Color.FromArgb(0xFF, 0xCA, 0xE6, 0xF5), 1.0));

@@ -195,9 +195,11 @@ namespace System.Windows
                 if (getValueCallback != null)
                 {
                     BaseValueSourceInternal valueSource;
-                    entry = new EffectiveValueEntry(dp);
-                    entry.Value = getValueCallback(this, out valueSource);
-                    entry.BaseValueSourceInternal = valueSource;
+                    entry = new EffectiveValueEntry(dp)
+                    {
+                        Value = getValueCallback(this, out valueSource),
+                        BaseValueSourceInternal = valueSource
+                    };
                     return entry;
                 }
             }
@@ -690,8 +692,10 @@ namespace System.Windows
             EffectiveValueEntry oldEntry;
             if (operationType == OperationType.ChangeMutableDefaultValue)
             {
-                oldEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Default);
-                oldEntry.Value = value;
+                oldEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Default)
+                {
+                    Value = value
+                };
             }
             else
             {
@@ -1179,8 +1183,10 @@ namespace System.Windows
 
             ArgumentNullException.ThrowIfNull(dp);
 
-            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Unknown);
-            newEntry.IsCoercedWithCurrentValue = preserveCurrentValue;
+            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Unknown)
+            {
+                IsCoercedWithCurrentValue = preserveCurrentValue
+            };
 
             UpdateEffectiveValue(
                     LookupEntry(dp.GlobalIndex),
@@ -1902,8 +1908,10 @@ namespace System.Windows
                 // (If local storage not Unset and not an Expression, return)
                 if (value != DependencyProperty.UnsetValue)
                 {
-                    newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Local);
-                    newEntry.Value = value;
+                    newEntry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Local)
+                    {
+                        Value = value
+                    };
 
                     // Check if an Expression is set
                     if (oldLocalIsExpression)
@@ -3282,8 +3290,10 @@ namespace System.Windows
             }
             else
             {
-                entry = new EffectiveValueEntry();
-                entry.PropertyIndex = targetIndex;
+                entry = new EffectiveValueEntry
+                {
+                    PropertyIndex = targetIndex
+                };
                 InsertEntry(entry, entryIndex.Index);
                 if (metadata != null && metadata.IsInherited)
                 {

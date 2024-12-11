@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1889,9 +1889,11 @@ namespace System.Windows
                     //
                     // PS Windows OS Bug: 955861
 
-                    Size childArrangeBounds = new Size();
-                    childArrangeBounds.Width = Math.Max(0.0, arrangeBounds.Width - frameSize.Width);
-                    childArrangeBounds.Height = Math.Max(0.0, arrangeBounds.Height - frameSize.Height);
+                    Size childArrangeBounds = new Size
+                    {
+                        Width = Math.Max(0.0, arrangeBounds.Width - frameSize.Width),
+                        Height = Math.Max(0.0, arrangeBounds.Height - frameSize.Height)
+                    };
 
                     child.Arrange(new Rect(childArrangeBounds));
 
@@ -2636,13 +2638,15 @@ namespace System.Windows
 
         internal virtual HwndSourceParameters CreateHwndSourceParameters()
         {
-            HwndSourceParameters param = new HwndSourceParameters(Title, NativeMethods.CW_USEDEFAULT, NativeMethods.CW_USEDEFAULT);
-            param.UsesPerPixelOpacity = AllowsTransparency;
-            param.WindowStyle = _Style;
-            param.ExtendedWindowStyle = _StyleEx;
-            param.ParentWindow = _ownerHandle;
-            param.AdjustSizingForNonClientArea = true;
-            param.HwndSourceHook = new HwndSourceHook(WindowFilterMessage); // hook to process window messages
+            HwndSourceParameters param = new HwndSourceParameters(Title, NativeMethods.CW_USEDEFAULT, NativeMethods.CW_USEDEFAULT)
+            {
+                UsesPerPixelOpacity = AllowsTransparency,
+                WindowStyle = _Style,
+                ExtendedWindowStyle = _StyleEx,
+                ParentWindow = _ownerHandle,
+                AdjustSizingForNonClientArea = true,
+                HwndSourceHook = new HwndSourceHook(WindowFilterMessage) // hook to process window messages
+            };
             return param;
         }
 
@@ -3425,9 +3429,11 @@ namespace System.Windows
                     // hwnd size and the frame size
                     //
                     // PS Windows OS Bug: 955861
-                    Size childConstraint = new Size();
-                    childConstraint.Width = ((constraint.Width == Double.PositiveInfinity) ? Double.PositiveInfinity : Math.Max(0.0, (constraint.Width - frameSize.Width)));
-                    childConstraint.Height = ((constraint.Height == Double.PositiveInfinity) ? Double.PositiveInfinity : Math.Max(0.0, (constraint.Height - frameSize.Height)));
+                    Size childConstraint = new Size
+                    {
+                        Width = ((constraint.Width == Double.PositiveInfinity) ? Double.PositiveInfinity : Math.Max(0.0, (constraint.Width - frameSize.Width))),
+                        Height = ((constraint.Height == Double.PositiveInfinity) ? Double.PositiveInfinity : Math.Max(0.0, (constraint.Height - frameSize.Height)))
+                    };
 
                     child.Measure(childConstraint);
                     Size childDesiredSize = child.DesiredSize;
@@ -3972,8 +3978,10 @@ namespace System.Windows
         {
             int styleEx = UnsafeNativeMethods.GetWindowLong(new HandleRef(this, hwndHandle), NativeMethods.GWL_EXSTYLE);
 
-            NativeMethods.WINDOWPLACEMENT wp = new NativeMethods.WINDOWPLACEMENT();
-            wp.length = Marshal.SizeOf(typeof(NativeMethods.WINDOWPLACEMENT));
+            NativeMethods.WINDOWPLACEMENT wp = new NativeMethods.WINDOWPLACEMENT
+            {
+                length = Marshal.SizeOf(typeof(NativeMethods.WINDOWPLACEMENT))
+            };
             UnsafeNativeMethods.GetWindowPlacement(new HandleRef(this, hwndHandle), ref wp);
             Point locationDeviceUnits = new Point(wp.rcNormalPosition_left, wp.rcNormalPosition_top);
 
@@ -5931,8 +5939,10 @@ namespace System.Windows
         private void UpdateHwndRestoreBounds(double newValue, BoundsSpecified specifiedRestoreBounds)
         {
 
-            NativeMethods.WINDOWPLACEMENT wp = new NativeMethods.WINDOWPLACEMENT();
-            wp.length = Marshal.SizeOf(typeof(NativeMethods.WINDOWPLACEMENT));
+            NativeMethods.WINDOWPLACEMENT wp = new NativeMethods.WINDOWPLACEMENT
+            {
+                length = Marshal.SizeOf(typeof(NativeMethods.WINDOWPLACEMENT))
+            };
             UnsafeNativeMethods.GetWindowPlacement(new HandleRef(this, CriticalHandle), ref wp);
 
             double convertedValue = (LogicalToDeviceUnits(new Point(newValue, 0))).X;
@@ -6016,8 +6026,10 @@ namespace System.Windows
 
             if (hMonitor != IntPtr.Zero)
             {
-                NativeMethods.MONITORINFOEX monitorInfo = new NativeMethods.MONITORINFOEX();
-                monitorInfo.cbSize = Marshal.SizeOf(typeof(NativeMethods.MONITORINFOEX));
+                NativeMethods.MONITORINFOEX monitorInfo = new NativeMethods.MONITORINFOEX
+                {
+                    cbSize = Marshal.SizeOf(typeof(NativeMethods.MONITORINFOEX))
+                };
 
                 SafeNativeMethods.GetMonitorInfo(new HandleRef(this, hMonitor), monitorInfo);
                 NativeMethods.RECT workAreaRect = monitorInfo.rcWork;
@@ -7433,10 +7445,12 @@ namespace System.Windows
                     get
                     {
                         IntPtr monitor;
-                        NativeMethods.MONITORINFOEX monitorInfo = new NativeMethods.MONITORINFOEX();
-                        monitorInfo.cbSize = Marshal.SizeOf(typeof(NativeMethods.MONITORINFOEX));
+                    NativeMethods.MONITORINFOEX monitorInfo = new NativeMethods.MONITORINFOEX
+                    {
+                        cbSize = Marshal.SizeOf(typeof(NativeMethods.MONITORINFOEX))
+                    };
 
-                        monitor = SafeNativeMethods.MonitorFromWindow( new HandleRef( this, CriticalHandle), NativeMethods.MONITOR_DEFAULTTONEAREST  );
+                    monitor = SafeNativeMethods.MonitorFromWindow( new HandleRef( this, CriticalHandle), NativeMethods.MONITOR_DEFAULTTONEAREST  );
                         if ( monitor != IntPtr.Zero )
                         {
                             SafeNativeMethods.GetMonitorInfo( new HandleRef ( this, monitor ) , monitorInfo);

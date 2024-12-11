@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2199,9 +2199,11 @@ namespace System.Windows.Interop
                 // on the screen.  The best way to get rid of this is to just make the entire
                 // sprite transparent.
 
-                NativeMethods.BLENDFUNCTION blend = new NativeMethods.BLENDFUNCTION();
-                blend.BlendOp = NativeMethods.AC_SRC_OVER;
-                blend.SourceConstantAlpha = 0; // transparent
+                NativeMethods.BLENDFUNCTION blend = new NativeMethods.BLENDFUNCTION
+                {
+                    BlendOp = NativeMethods.AC_SRC_OVER,
+                    SourceConstantAlpha = 0 // transparent
+                };
                 unsafe
                 {
                     UnsafeNativeMethods.UpdateLayeredWindow(_hWnd.h, IntPtr.Zero, null, null, IntPtr.Zero, null, 0, ref blend, NativeMethods.ULW_ALPHA);

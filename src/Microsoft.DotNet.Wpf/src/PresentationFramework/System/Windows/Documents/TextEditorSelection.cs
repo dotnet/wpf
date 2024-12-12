@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -311,7 +311,7 @@ namespace System.Windows.Documents
 
                         ITextPointer lineEndPosition = GetPositionAtLineEnd(originalMovingPosition);
                         ITextPointer nextPosition = lineEndPosition.GetNextInsertionPosition(LogicalDirection.Forward);
-                        This.Selection.SetCaretToPosition(nextPosition != null ? nextPosition : lineEndPosition,
+                        This.Selection.SetCaretToPosition(nextPosition ?? lineEndPosition,
                             originalMovingPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
                     }
                     else if (IsPaginated(This.TextView))
@@ -401,7 +401,7 @@ namespace System.Windows.Documents
 
                         ITextPointer lineStartPosition = GetPositionAtLineStart(originalMovingPosition);
                         ITextPointer previousPosition = lineStartPosition.GetNextInsertionPosition(LogicalDirection.Backward);
-                        This.Selection.SetCaretToPosition(previousPosition != null ? previousPosition : lineStartPosition,
+                        This.Selection.SetCaretToPosition(previousPosition ?? lineStartPosition,
                             originalMovingPosition.LogicalDirection, /*allowStopAtLineEnd:*/true, /*allowStopNearSpace:*/true);
                     }
                     else if (IsPaginated(This.TextView))
@@ -1070,7 +1070,7 @@ namespace System.Windows.Documents
                                 ITextPointer nextPosition = lineEndPosition.GetNextInsertionPosition(LogicalDirection.Forward);
 
                                 // Extend selection and bring new position into view if needed (for paginated viewers)
-                                ExtendSelectionAndBringIntoView(nextPosition != null ? nextPosition : lineEndPosition, This);
+                                ExtendSelectionAndBringIntoView(nextPosition ?? lineEndPosition, This);
                             }
                             else if (IsPaginated(This.TextView))
                             {
@@ -1260,7 +1260,7 @@ namespace System.Windows.Documents
                                 ITextPointer previousPosition = lineStartPosition.GetNextInsertionPosition(LogicalDirection.Backward);
 
                                 // Extend selection and bring new position into view if needed (for paginated viewers)
-                                ExtendSelectionAndBringIntoView(previousPosition != null ? previousPosition : lineStartPosition, This);
+                                ExtendSelectionAndBringIntoView(previousPosition ?? lineStartPosition, This);
                             }
                             else if (IsPaginated(This.TextView))
                             {

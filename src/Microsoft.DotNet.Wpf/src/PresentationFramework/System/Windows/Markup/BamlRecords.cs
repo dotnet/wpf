@@ -4710,8 +4710,7 @@ namespace System.Windows.Markup
             else
             {
                 // Cache a additional MemberInfo for the given attribute
-                object[] arr = PropertyMember as object[];
-                if (arr == null)
+                if (PropertyMember is not object[] arr)
                 {
                     arr = new object[3];
                     arr[0] = PropertyMember;

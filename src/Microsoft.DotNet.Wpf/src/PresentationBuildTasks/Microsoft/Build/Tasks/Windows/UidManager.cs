@@ -1278,7 +1278,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             public void SetLine(string line)
             {
-                Content = (line == null) ? string.Empty : line;
+                Content = line ?? string.Empty;
                 Index   = 0;
             }
 

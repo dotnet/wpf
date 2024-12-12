@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -63,12 +63,11 @@ namespace System.Windows.Media.Media3D.Converters
         /// </summary>
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value is Rect3D)
+            if (value is Rect3D instance)
             {
-                Rect3D instance = (Rect3D) value;
 
 
-                #pragma warning suppress 6506 // instance is obviously not null
+#pragma warning suppress 6506 // instance is obviously not null
                 return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
             }
 

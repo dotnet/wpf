@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -158,10 +158,9 @@ namespace System.Windows.Controls.Primitives
         // This is required by FxCop.
         public override bool Equals(object o)
         {
-            if (o is GeneratorPosition)
+            if (o is GeneratorPosition that)
             {
-                GeneratorPosition that = (GeneratorPosition)o;
-                return  this._index == that._index &&
+                return this._index == that._index &&
                         this._offset == that._offset;
             }
             return false;

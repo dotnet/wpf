@@ -279,7 +279,7 @@ namespace System.Windows.Markup
             set
             {
                 EndRepeat();
-                _xmlLang = (null == value ? String.Empty : value);
+                _xmlLang = (value ?? string.Empty);
             }
         }
 

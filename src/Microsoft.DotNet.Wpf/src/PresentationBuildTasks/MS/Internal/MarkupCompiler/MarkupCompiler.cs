@@ -849,10 +849,9 @@ namespace MS.Internal
                     case XmlNodeType.CDATA:
                     case XmlNodeType.Text:
                     {
-                        IXmlLineInfo xmlLineInfo = xmlReader as IXmlLineInfo;
-                        int lineNumber = 0;
+                            int lineNumber = 0;
 
-                        if (null != xmlLineInfo)
+                            if (xmlReader is IXmlLineInfo xmlLineInfo)
                         {
                             lineNumber = xmlLineInfo.LineNumber;
                         }
@@ -1306,8 +1305,7 @@ namespace MS.Internal
             {
                 for (int i = 0; i < ReferenceAssemblyList.Count; i++)
                 {
-                    ReferenceAssembly refasm = ReferenceAssemblyList[i] as ReferenceAssembly;
-                    if (refasm != null && refasm.Path.Length > 0)
+                    if (ReferenceAssemblyList[i] is ReferenceAssembly refasm && refasm.Path.Length > 0)
                     {
                         paths.Add(refasm.Path);
                     }
@@ -1324,9 +1322,7 @@ namespace MS.Internal
             {
                 for (int i = 0; i < ReferenceAssemblyList.Count; i++)
                 {
-                    ReferenceAssembly refasm = ReferenceAssemblyList[i] as ReferenceAssembly;
-
-                    if (refasm != null && refasm.Path.Length > 0)
+                    if (ReferenceAssemblyList[i] is ReferenceAssembly refasm && refasm.Path.Length > 0)
                     {
                         _typeMapper.SetAssemblyPath(refasm.AssemblyName, refasm.Path);
                     }
@@ -1837,9 +1833,8 @@ namespace MS.Internal
                         desc.Arguments.CopyTo(args, 0);
                         CodeExpression[] expressions = new CodeExpression[args.Length];
 
-                        if (desc.MemberInfo is MethodInfo)
+                        if (desc.MemberInfo is MethodInfo mi)
                         {
-                            MethodInfo mi = (MethodInfo)desc.MemberInfo;
                             ParameterInfo[] parameters = mi.GetParameters();
 
                             for (int i = 0; i < args.Length; i++)
@@ -1855,9 +1850,8 @@ namespace MS.Internal
 
                             ce = cmie;
                         }
-                        else if (desc.MemberInfo is ConstructorInfo)  // instance ctor invoke
+                        else if (desc.MemberInfo is ConstructorInfo ci)
                         {
-                            ConstructorInfo ci = (ConstructorInfo)desc.MemberInfo;
                             ParameterInfo[] parameters = ci.GetParameters();
 
                             for (int i = 0; i < args.Length; i++)
@@ -1889,9 +1883,8 @@ namespace MS.Internal
         private Type GetEventHandlerType(MemberInfo memberInfo)
         {
             Type eventHandlerType = null;
-            if (memberInfo is EventInfo)
+            if (memberInfo is EventInfo ei)
             {
-                EventInfo ei = (EventInfo)memberInfo;
                 eventHandlerType = ei.EventHandlerType;
             }
             else

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -713,9 +713,8 @@ namespace System.Windows.Controls
                 row.DataGridOwner,
                 DataGrid.RowDetailsVisibilityModeProperty);
 
-            if (visibility is DataGridRowDetailsVisibilityMode)
+            if (visibility is DataGridRowDetailsVisibilityMode visibilityMode)
             {
-                var visibilityMode = (DataGridRowDetailsVisibilityMode)visibility;
                 var hasDetailsTemplate = row.DetailsTemplate != null || row.DetailsTemplateSelector != null;
                 var isRealItem = row.Item != CollectionView.NewItemPlaceholder;
                 switch (visibilityMode)

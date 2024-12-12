@@ -73,8 +73,7 @@ namespace MS.Internal.ComponentModel
             {
                 foreach (Attribute attr in attributes) 
                 {
-                    PropertyFilterAttribute filterAttr = attr as PropertyFilterAttribute;
-                    if (filterAttr != null) 
+                    if (attr is PropertyFilterAttribute filterAttr)
                     {
                         filter = filterAttr.Filter;
                         break;

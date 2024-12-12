@@ -26,8 +26,7 @@ namespace System.Windows.Markup
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             ArgumentNullException.ThrowIfNull(serviceProvider);
-            IXamlNameResolver nameResolver = serviceProvider.GetService(typeof(IXamlNameResolver)) as IXamlNameResolver;
-            if (nameResolver == null)
+            if (serviceProvider.GetService(typeof(IXamlNameResolver)) is not IXamlNameResolver nameResolver)
             {
                 throw new InvalidOperationException(SR.MissingNameResolver);
             }

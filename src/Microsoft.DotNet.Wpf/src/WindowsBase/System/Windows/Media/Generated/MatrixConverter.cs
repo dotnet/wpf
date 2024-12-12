@@ -77,9 +77,8 @@ namespace System.Windows.Media
                 throw GetConvertFromException(value);
             }
 
-            String source = value as string;
 
-            if (source != null)
+            if (value is string source)
             {
                 return Matrix.Parse(source);
             }

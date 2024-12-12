@@ -22,8 +22,7 @@ namespace System.Xaml
         public XamlException(string message, Exception innerException)
             : base(message, innerException)
         {
-            XamlException xex = innerException as XamlException;
-            if (xex != null)
+            if (innerException is XamlException xex)
             {
                 LineNumber = xex.LineNumber;
                 LinePosition = xex.LinePosition;

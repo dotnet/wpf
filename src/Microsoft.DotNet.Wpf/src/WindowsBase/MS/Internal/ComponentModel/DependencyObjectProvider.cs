@@ -96,13 +96,11 @@ namespace MS.Internal.ComponentModel
         /// </summary>
         public override IDictionary GetCache(object instance) 
         {
-            DependencyObject d = instance as DependencyObject;
-
             // This should never happen because we are bound only
             // to dependency object types.  However, in case it
             // does, simply invoke the base and get out.
 
-            if (d == null) 
+            if (instance is not DependencyObject d)
             {
                 return base.GetCache(instance);
             }

@@ -227,7 +227,6 @@ namespace MS.Internal
                 if (key != null)
                 {
                     object dbgJITDebugLaunchSettingValue = key.GetValue("DbgJITDebugLaunchSetting");
-                    string dbgManagedDebuggerValue = key.GetValue("DbgManagedDebugger") as string;
 
                     //
                     // Only count the enable if there's a JIT debugger to launch.
@@ -235,7 +234,7 @@ namespace MS.Internal
                     enabled = (dbgJITDebugLaunchSettingValue is int && ((int)dbgJITDebugLaunchSettingValue & 2) != 0);
                     if (enabled)
                     {
-                        enabled = dbgManagedDebuggerValue != null && dbgManagedDebuggerValue.Length > 0;
+                        enabled = key.GetValue("DbgManagedDebugger") is string dbgManagedDebuggerValue && dbgManagedDebuggerValue.Length > 0;
                     }
                 }
                 return enabled;

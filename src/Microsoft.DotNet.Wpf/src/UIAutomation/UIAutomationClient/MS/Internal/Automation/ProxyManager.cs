@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -174,15 +174,14 @@ namespace MS.Internal.Automation
                         {
                             proxyDescriptions[count++] = (ClientSideProviderDescription)o;
                         }
-                        else if (o is ClientSideProviderFactoryCallback)
+                        else if (o is ClientSideProviderFactoryCallback pfc)
                         {
-                            ClientSideProviderFactoryCallback pfc = (ClientSideProviderFactoryCallback)o;
                             proxyDescriptions[count++] = new ClientSideProviderDescription(pfc, null);
 
                         }
                         else
                         {
-                            foreach( Object o1 in (ArrayList) o )
+                            foreach (Object o1 in (ArrayList)o)
                             {
                                 proxyDescriptions[count++] = (ClientSideProviderDescription)o1;
                             }

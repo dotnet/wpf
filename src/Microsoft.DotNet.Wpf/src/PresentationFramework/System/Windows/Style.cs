@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -782,28 +782,26 @@ namespace System.Windows
                         {
                             StyleHelper.AddPropertyTriggerWithAction( trigger, ((Trigger)trigger).Property, ref this.PropertyTriggersWithActions );
                         }
-                        else if( trigger is MultiTrigger )
+                        else if (trigger is MultiTrigger multiTrigger)
                         {
-                            MultiTrigger multiTrigger = (MultiTrigger)trigger;
-                            for( int k = 0; k < multiTrigger.Conditions.Count; k++ )
+                            for (int k = 0; k < multiTrigger.Conditions.Count; k++)
                             {
                                 Condition triggerCondition = multiTrigger.Conditions[k];
 
-                                StyleHelper.AddPropertyTriggerWithAction( trigger, triggerCondition.Property, ref this.PropertyTriggersWithActions );
+                                StyleHelper.AddPropertyTriggerWithAction(trigger, triggerCondition.Property, ref this.PropertyTriggersWithActions);
                             }
                         }
-                        else if( trigger is DataTrigger )
+                        else if (trigger is DataTrigger)
                         {
-                            StyleHelper.AddDataTriggerWithAction( trigger, ((DataTrigger)trigger).Binding, ref this.DataTriggersWithActions );
+                            StyleHelper.AddDataTriggerWithAction(trigger, ((DataTrigger)trigger).Binding, ref this.DataTriggersWithActions);
                         }
-                        else if( trigger is MultiDataTrigger )
+                        else if (trigger is MultiDataTrigger multiDataTrigger)
                         {
-                            MultiDataTrigger multiDataTrigger = (MultiDataTrigger)trigger;
-                            for( int k = 0; k < multiDataTrigger.Conditions.Count; k++ )
+                            for (int k = 0; k < multiDataTrigger.Conditions.Count; k++)
                             {
                                 Condition dataCondition = multiDataTrigger.Conditions[k];
 
-                                StyleHelper.AddDataTriggerWithAction( trigger, dataCondition.Binding, ref this.DataTriggersWithActions );
+                                StyleHelper.AddDataTriggerWithAction(trigger, dataCondition.Binding, ref this.DataTriggersWithActions);
                             }
                         }
                         else

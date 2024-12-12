@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -157,24 +157,21 @@ namespace System.Windows.Automation
                 // If this is a control type, use the ID, not the CLR object
                 val = ((ControlType)val).Id;
             }
-            else if (val is Rect)
+            else if (val is Rect rc)
             {
-                Rect rc = (Rect)val;
                 val = new double[] { rc.Left, rc.Top, rc.Width, rc.Height };
             }
-            else if (val is Point)
+            else if (val is Point pt)
             {
-                Point pt = (Point)val;
                 val = new double[] { pt.X, pt.Y };
             }
             else if (val is CultureInfo)
             {
                 val = ((CultureInfo)val).LCID;
             }
-            else if (val is AutomationHeadingLevel)
+            else if (val is AutomationHeadingLevel automationHeadingLevel)
             {
-                AutomationHeadingLevel automationHeadingLevel = (AutomationHeadingLevel)(val);
-                switch(automationHeadingLevel)
+                switch (automationHeadingLevel)
                 {
                     case AutomationHeadingLevel.None:
                         val = HeadingLevel.None;

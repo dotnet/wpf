@@ -49,9 +49,8 @@ namespace System.Windows.Markup
             {
                 MethodInfo methodInfo;
 #if !PBTCOMPILER
-                DependencyProperty dp = dpOrPiOrMi as DependencyProperty;
 
-                if (dp != null)
+                if (dpOrPiOrMi is DependencyProperty dp)
                 {
                     // While parsing styles or templates, we end up getting a DependencyProperty,
                     // even for non-attached cases. In this case, we try fetching the CLR

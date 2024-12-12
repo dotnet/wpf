@@ -258,7 +258,7 @@ namespace System.Windows
 
         private void AddListener(object source, IWeakEventListener listener, Delegate handler)
         {
-            object sourceKey = (source != null) ? source : StaticSource;
+            object sourceKey = source ?? StaticSource;
 
             using (Table.WriteLock)
             {
@@ -297,7 +297,7 @@ namespace System.Windows
 
         private void RemoveListener(object source, object target, Delegate handler)
         {
-            object sourceKey = (source != null) ? source : StaticSource;
+            object sourceKey = source ?? StaticSource;
 
             using (Table.WriteLock)
             {
@@ -338,7 +338,7 @@ namespace System.Windows
         protected void DeliverEvent(object sender, EventArgs args)
         {
             ListenerList list;
-            object sourceKey = (sender != null) ? sender : StaticSource;
+            object sourceKey = sender ?? StaticSource;
 
             // get the list of listeners
             using (Table.ReadLock)

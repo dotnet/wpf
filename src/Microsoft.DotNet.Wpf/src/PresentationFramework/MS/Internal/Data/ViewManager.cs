@@ -554,7 +554,7 @@ namespace MS.Internal.Data
                 else
                 {
                     // collection is not a factory - create an appropriate view
-                    IList il = (ilsList != null) ? ilsList : collection as IList;
+                    IList il = ilsList ?? collection as IList;
                     if (il != null)
                     {
                         // create a view on an IList or IBindingList
@@ -582,7 +582,7 @@ namespace MS.Internal.Data
                     throw new ArgumentException(SR.Format(SR.CollectionView_WrongType, collectionViewType.Name));
 
                 // if collection is IListSource, get its list first (bug 1023903)
-                object arg = (ilsList != null) ? ilsList : collection;
+                object arg = ilsList ?? collection;
 
                 try
                 {

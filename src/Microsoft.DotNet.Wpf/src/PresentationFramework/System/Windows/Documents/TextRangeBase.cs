@@ -1345,7 +1345,7 @@ namespace System.Windows.Documents
                 // which can create paragraphs etc.
                 if (textData.Length > 0)
                 {
-                    ITextPointer insertPosition = (explicitInsertPosition == null) ? thisRange.Start : explicitInsertPosition;
+                    ITextPointer insertPosition = explicitInsertPosition ?? thisRange.Start;
 
                     // Ensure last paragraph existence and prepare ends for the new selection
                     bool pastedFragmentEndsWithNewLine = textData.EndsWith("\n", StringComparison.Ordinal);

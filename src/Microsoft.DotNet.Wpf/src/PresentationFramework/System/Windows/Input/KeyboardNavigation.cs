@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1072,7 +1072,7 @@ namespace System.Windows.Input
                 if (!traversed && firstElement != nextTab)
                 {
                     // Navigate to next element in the tree
-                    traversed = Navigate(nextTab, request, modifierKeys, firstElement == null ? nextTab : firstElement);
+                    traversed = Navigate(nextTab, request, modifierKeys, firstElement ?? nextTab);
                 }
 
                 return traversed;
@@ -3093,7 +3093,7 @@ namespace System.Windows.Input
                     }
                 }
             }
-            return result != null ? result : partialResult;
+            return result ?? partialResult;
         }
 
         /// <summary>

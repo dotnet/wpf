@@ -194,9 +194,6 @@ dotnet_diagnostic.IDE0005.severity = suggestion
 # IDE0017: Simplify object initialization
 dotnet_diagnostic.IDE0017.severity = suggestion
 
-# IDE0029: Use coalesce expression
-dotnet_diagnostic.IDE0029.severity = suggestion
-
 # IDE0030: Null check can be simplified
 dotnet_diagnostic.IDE0030.severity = suggestion
 

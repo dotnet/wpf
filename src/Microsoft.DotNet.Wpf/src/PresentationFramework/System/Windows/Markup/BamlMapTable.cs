@@ -1949,6 +1949,6 @@ namespace System.Windows.Markup
         ///     Return string representation of this key
         /// </summary>
         public override string ToString() =>
-            $"TypeInfoKey: Assembly={((DeclaringAssembly != null) ? DeclaringAssembly : "null")} Type={((TypeFullName != null) ? TypeFullName : "null")}";
+            $"TypeInfoKey: Assembly={(DeclaringAssembly ?? "null")} Type={(TypeFullName ?? "null")}";
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -565,7 +565,7 @@ namespace MS.Internal.Globalization
         {
             if (first == null || second == null)
             {
-                return (first == null) ? second : first;
+                return first ?? second;
             }
 
             // min of two readability enum. The less the more restrictive.

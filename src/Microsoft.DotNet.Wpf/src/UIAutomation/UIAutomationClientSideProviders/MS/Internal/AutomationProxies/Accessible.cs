@@ -517,7 +517,7 @@ namespace MS.Internal.AutomationProxies
                     // Need to convert nulls into an empty string, so need to just test for a null.
                     // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
 #pragma warning suppress 6507
-                    return value != null ? value : "";
+                    return value ?? "";
                 }
                 catch (Exception e)
                 {

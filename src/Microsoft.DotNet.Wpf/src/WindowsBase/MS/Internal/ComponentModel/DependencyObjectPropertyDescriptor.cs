@@ -400,7 +400,7 @@ namespace MS.Internal.ComponentModel
                 method = reflectionType.GetMethod(methodName, f, _dpBinder, DpType, null);
 
                 lock(_getMethodCache) {
-                    _getMethodCache[dp] = (method == null ? _nullMethodSentinel : method);
+                    _getMethodCache[dp] = (method ?? _nullMethodSentinel);
                 }
             }
 
@@ -572,7 +572,7 @@ namespace MS.Internal.ComponentModel
                 method = reflectionType.GetMethod(methodName, f, _dpBinder, paramTypes, null);
 
                 lock(_setMethodCache) {
-                    _setMethodCache[dp] = (method == null ? _nullMethodSentinel : method);
+                    _setMethodCache[dp] = (method ?? _nullMethodSentinel);
                 }
             }
 

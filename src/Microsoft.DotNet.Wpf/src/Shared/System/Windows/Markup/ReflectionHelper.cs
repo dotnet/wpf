@@ -229,7 +229,7 @@ namespace System.Xaml
         {
             IList<CustomAttributeData> list = CustomAttributeData.GetCustomAttributes(mi);
             string attrValue = GetCustomAttributeData(list, attrType, out typeValue, true, false);
-            return attrValue == null ? string.Empty : attrValue;
+            return attrValue ?? string.Empty;
         }
 
 #if PBTCOMPILER

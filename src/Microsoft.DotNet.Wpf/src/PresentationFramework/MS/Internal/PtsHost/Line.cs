@@ -212,7 +212,7 @@ namespace MS.Internal.PtsHost
                 precedingText = new CharacterBufferRange(precedingTextString, 0, precedingTextString.Length);                
 
                 StaticTextPointer pointer = position.CreateStaticPointer();
-                DependencyObject element = (pointer.Parent != null) ? pointer.Parent : _paraClient.Paragraph.Element;
+                DependencyObject element = pointer.Parent ?? _paraClient.Paragraph.Element;
                 culture = DynamicPropertyReader.GetCultureInfo(element);
             }
 

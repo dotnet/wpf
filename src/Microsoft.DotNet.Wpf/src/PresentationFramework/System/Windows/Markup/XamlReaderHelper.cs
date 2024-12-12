@@ -2908,7 +2908,7 @@ namespace System.Windows.Markup
                             case AttributeContext.Unknown:
                                 WriteUnknownAttribute(attribNamespaceURI, attribLocalName,
                                                       attribValue, depth, parentTypeNamespace,
-                                                      unknownTagName == null ? parentType.Name : unknownTagName,
+                                                      unknownTagName ?? parentType.Name,
                                                       dynamicObject, resolvedProperties);
                                 break;
 

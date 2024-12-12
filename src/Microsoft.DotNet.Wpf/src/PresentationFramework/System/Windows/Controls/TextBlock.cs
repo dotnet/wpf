@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1717,7 +1717,7 @@ Debug.Assert(lineCount == LineCount);
             }
 
             // If nothing has been hit, assume that element itself has been hit.
-            return (ie != null) ? ie : this;
+            return ie ?? this;
         }
 
         /// <summary>
@@ -4090,7 +4090,7 @@ Debug.Assert(lineCount == LineCount);
 
             if (text._complexContent == null)
             {
-                text._contentCache = (newText != null) ? newText : String.Empty;
+                text._contentCache = newText ?? string.Empty;
             }
             else
             {

@@ -46,8 +46,10 @@ namespace System.Xaml
                     {
                         return SR.Format(SR.LineNumberAndPosition, base.Message, LineNumber, LinePosition);
                     }
+
                     return SR.Format(SR.LineNumberOnly, base.Message, LineNumber);
                 }
+
                 return base.Message;
             }
         }

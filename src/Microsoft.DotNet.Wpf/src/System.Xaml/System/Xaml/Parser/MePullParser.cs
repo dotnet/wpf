@@ -44,16 +44,19 @@ namespace MS.Internal.Xaml.Parser
             {
                 yield return node;
             }
+
             if (!f.found)
             {
                 string brokenRule = _brokenRule;
                 _brokenRule = null;
                 throw new XamlParseException(_tokenizer, brokenRule);
             }
+
             if (_tokenizer.Token != MeTokenType.None)
             {
                 throw new XamlParseException(_tokenizer, SR.UnexpectedTokenAfterME);
             }
+
             if (_tokenizer.HasTrailingWhitespace)
             {
                 throw new XamlParseException(_tokenizer, SR.WhitespaceAfterME);
@@ -76,6 +79,7 @@ namespace MS.Internal.Xaml.Parser
                 SetBrokenRuleString(ruleString);
                 return false;
             }
+
             return true;
         }
 
@@ -118,6 +122,7 @@ namespace MS.Internal.Xaml.Parser
                         {
                             yield return node;
                         }
+
                         break;
 
                     default:
@@ -162,6 +167,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return node;
                 }
+
                 f.found = f2.found;
                 if (f.found)
                 {
@@ -183,6 +189,7 @@ namespace MS.Internal.Xaml.Parser
                         yield return node;
                     }
                 }
+
                 break;
 
             // Arguments ::= (PositionalArgs ( ',' NamedArgs)?) | @ NamedArgs
@@ -191,6 +198,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return node;
                 }
+
                 f.found = f2.found;
                 break;
 
@@ -223,11 +231,13 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return node;
                 }
+
                 if (!f2.found)
                 {
                     SetBrokenRuleString("PositionalArgs ::= (NamedArg | (@Value (',' PositionalArgs)?)");
                     break;
                 }
+
                 f.found = f2.found;
 
                 //  PositionalArgs ::= (Value @ (',' PositionalArgs)?) | NamedArg
@@ -243,13 +253,16 @@ namespace MS.Internal.Xaml.Parser
                     {
                         yield return node;
                     }
+
                     if (!f3.found)
                     {
                         SetBrokenRuleString("PositionalArgs ::= (Value (',' @ PositionalArgs)?) | NamedArg");
                         break;
                     }
+
                     // no f.found this is optional
                 }
+
                 break;
 
             //  PositionalArgs ::= (Value (',' PositionalArgs)?) | @ NamedArg
@@ -258,14 +271,17 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return Logic_EndPositionalParameters();
                 }
+
                 foreach (XamlNode node in P_NamedArg(f2))
                 {
                     yield return node;
                 }
+
                 if (!f2.found)
                 {
                     SetBrokenRuleString("PositionalArgs ::= (Value (',' PositionalArgs)?) | @ NamedArg");
                 }
+
                 f.found = f2.found;
                 break;
 
@@ -290,6 +306,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return node;
                 }
+
                 f.found = f2.found;
 
                 // NamedArgs ::= NamedArg @( ',' NamedArg )*
@@ -304,6 +321,7 @@ namespace MS.Internal.Xaml.Parser
                         yield return node;
                     }
                 }
+
                 break;
 
             default:
@@ -336,6 +354,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return node;
                 }
+
                 f.found = true;
                 NextToken();
                 break;
@@ -346,6 +365,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     yield return node;
                 }
+
                 f.found = f2.found;
                 break;
 
@@ -389,6 +409,7 @@ namespace MS.Internal.Xaml.Parser
                     {
                         yield return node;
                     }
+
                     f.found = true;
                     NextToken();
                     break;
@@ -399,6 +420,7 @@ namespace MS.Internal.Xaml.Parser
                     {
                         yield return node;
                     }
+
                     f.found = f2.found;
                     break;
 
@@ -413,6 +435,7 @@ namespace MS.Internal.Xaml.Parser
                         {
                             error = SR.Format(SR.MissingComma2, _context.CurrentMember.Name, _tokenizer.TokenText);
                         }
+
                         throw new XamlParseException(_tokenizer, error);
                     }
 
@@ -420,10 +443,10 @@ namespace MS.Internal.Xaml.Parser
                     SetBrokenRuleString("NamedArg ::= PROPERTYNAME '=' @(STRING | QUOTEDMARKUPEXTENSION | MarkupExtension)");
                     break;
                 }
+
                 yield return Logic_EndMember();
             }
         }
-
 
         // ================================================
 
@@ -436,7 +459,6 @@ namespace MS.Internal.Xaml.Parser
         {
             get { return _tokenizer.LineNumber; }
         }
-
 
         private int LinePosition
         {

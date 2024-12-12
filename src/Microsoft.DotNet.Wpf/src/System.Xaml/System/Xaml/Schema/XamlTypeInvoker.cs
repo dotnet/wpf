@@ -45,6 +45,7 @@ namespace System.Xaml.Schema
                 {
                     s_Unknown = new XamlTypeInvoker();
                 }
+
                 return s_Unknown;
             }
         }
@@ -74,6 +75,7 @@ namespace System.Xaml.Schema
             {
                 throw new NotSupportedException(SR.OnlySupportedOnCollections);
             }
+
             XamlType itemType;
             if (item != null)
             {
@@ -83,11 +85,13 @@ namespace System.Xaml.Schema
             {
                 itemType = _xamlType.ItemType;
             }
+
             MethodInfo addMethod = GetAddMethod(itemType);
             if (addMethod == null)
             {
                 throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
+
             addMethod.Invoke(instance, new object[] { item });
         }
 
@@ -106,6 +110,7 @@ namespace System.Xaml.Schema
             {
                 throw new NotSupportedException(SR.OnlySupportedOnDictionaries);
             }
+
             XamlType itemType;
             if (item != null)
             {
@@ -115,11 +120,13 @@ namespace System.Xaml.Schema
             {
                 itemType = _xamlType.ItemType;
             }
+
             MethodInfo addMethod = GetAddMethod(itemType);
             if (addMethod == null)
             {
                 throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
+
             addMethod.Invoke(instance, new object[] { key, item });
         }
 
@@ -134,6 +141,7 @@ namespace System.Xaml.Schema
                     return result;
                 }
             }
+
             return Activator.CreateInstance(_xamlType.UnderlyingType, arguments);
         }
 
@@ -175,6 +183,7 @@ namespace System.Xaml.Schema
                         addMethods.TryAdd(type, addMethod);
                     }
                 }
+
                 _addMethods = addMethods;
             }
 
@@ -214,11 +223,13 @@ namespace System.Xaml.Schema
             {
                 return enumerable.GetEnumerator();
             }
+
             ThrowIfUnknown();
             if (!_xamlType.IsCollection && !_xamlType.IsDictionary)
             {
                 throw new NotSupportedException(SR.OnlySupportedOnCollectionsAndDictionaries);
             }
+
             MethodInfo getEnumMethod = GetEnumeratorMethod();
             return (IEnumerator)getEnumMethod.Invoke(instance, s_emptyObjectArray);
         }
@@ -234,9 +245,11 @@ namespace System.Xaml.Schema
                     bool result = SafeReflectionInvoker.IsInSystemXaml(type);
                     _isInSystemXaml = result ? ThreeValuedBool.True : ThreeValuedBool.False;
                 }
+
                 return _isInSystemXaml == ThreeValuedBool.True;
             }
         }
+
         // ^^^^^----- End of unused members.  -----^^^^^
 
         private bool IsPublic
@@ -248,6 +261,7 @@ namespace System.Xaml.Schema
                     Type type = _xamlType.UnderlyingType.UnderlyingSystemType;
                     _isPublic = type.IsVisible ? ThreeValuedBool.True : ThreeValuedBool.False;
                 }
+
                 return _isPublic == ThreeValuedBool.True;
             }
         }
@@ -271,13 +285,13 @@ namespace System.Xaml.Schema
             private static ConstructorInfo s_actionCtor =
                 typeof(Action<object>).GetConstructor(new Type[] { typeof(Object), typeof(IntPtr) });
 
-
             public static object CreateInstance(XamlTypeInvoker type)
             {
                 if (!EnsureConstructorDelegate(type))
                 {
                     return null;
                 }
+
                 object inst = CallCtorDelegate(type);
                 return inst;
             }
@@ -301,15 +315,18 @@ namespace System.Xaml.Schema
                 {
                     return true;
                 }
+
                 if (!type.IsPublic)
                 {
                     return false;
                 }
+
                 if (s_securityFailureWithCtorDelegate == ThreeValuedBool.NotSet)
                 {
                     s_securityFailureWithCtorDelegate =
                         ThreeValuedBool.False;
                 }
+
                 if (s_securityFailureWithCtorDelegate == ThreeValuedBool.True)
                 {
                     return false;
@@ -323,6 +340,7 @@ namespace System.Xaml.Schema
                     // Throwing MissingMethodException for equivalence with Activator.CreateInstance
                     throw new MissingMethodException(SR.Format(SR.NoDefaultConstructor, underlyingType.FullName));
                 }
+
                 if ((tConstInfo.IsSecurityCritical && !tConstInfo.IsSecuritySafeCritical) ||
                     (tConstInfo.Attributes & MethodAttributes.HasSecurity) == MethodAttributes.HasSecurity ||
                     (underlyingType.Attributes & TypeAttributes.HasSecurity) == TypeAttributes.HasSecurity)
@@ -332,6 +350,7 @@ namespace System.Xaml.Schema
                     type._isPublic = ThreeValuedBool.False;
                     return false;
                 }
+
                 IntPtr constPtr = tConstInfo.MethodHandle.GetFunctionPointer();
                 // This requires Reflection Permission
                 Action<object> ctorDelegate = ctorDelegate =

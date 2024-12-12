@@ -104,6 +104,7 @@ namespace System.Xaml
             {
                 return false;
             }
+
             for (int i = 0; i < ns1.Count; i++)
             {
                 if (ns1[i] != ns2[i])
@@ -111,6 +112,7 @@ namespace System.Xaml
                     return false;
                 }
             }
+
             return true;
         }
 

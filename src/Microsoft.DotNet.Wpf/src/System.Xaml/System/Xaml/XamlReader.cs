@@ -41,6 +41,7 @@ namespace System.Xaml
                 SkipFromTo(XamlNodeType.StartMember, XamlNodeType.EndMember);
                 break;
             }
+
             Read();
         }
 

@@ -44,6 +44,7 @@ namespace System.Xaml
             {
                 return right is null;
             }
+
             return left.Equals(right);
         }
 

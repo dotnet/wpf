@@ -93,7 +93,7 @@
   </PropertyGroup>
   <!-- Test related -->
   <PropertyGroup>
-    <MoqPackageVersion>4.18.4</MoqPackageVersion>
+    <MoqPackageVersion>4.20.70</MoqPackageVersion>
     <FluentAssertionsVersion>6.11.0</FluentAssertionsVersion>
     <SystemComponentModelTypeConverterTestDataVersion>8.0.0-beta.23107.1</SystemComponentModelTypeConverterTestDataVersion>
     <SystemDrawingCommonTestDataVersion>8.0.0-beta.23107.1</SystemDrawingCommonTestDataVersion>

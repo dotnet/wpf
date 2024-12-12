@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -575,8 +575,10 @@ namespace MS.Internal.Ink
             {
                 get
                 {
-                    LassoCrossing crossing = new LassoCrossing();
-                    crossing.FIndices = StrokeFIndices.Empty;
+                    LassoCrossing crossing = new LassoCrossing
+                    {
+                        FIndices = StrokeFIndices.Empty
+                    };
                     return crossing;
                 }
             }
@@ -714,9 +716,11 @@ namespace MS.Internal.Ink
                 if (!DoubleUtil.AreClose(i, intersection))
                 {
                     // Move points[i] to the intersection position
-                    Point intersectionPoint = new Point(0, 0);
-                    intersectionPoint.X = points[i].X + (intersection - i) * (points[i + 1].X - points[i].X);
-                    intersectionPoint.Y = points[i].Y + (intersection - i) * (points[i + 1].Y - points[i].Y);
+                    Point intersectionPoint = new Point(0, 0)
+                    {
+                        X = points[i].X + (intersection - i) * (points[i + 1].X - points[i].X),
+                        Y = points[i].Y + (intersection - i) * (points[i + 1].Y - points[i].Y)
+                    };
                     points[i] = intersectionPoint;
                     IsIncrementalLassoDirty = true;
                 }

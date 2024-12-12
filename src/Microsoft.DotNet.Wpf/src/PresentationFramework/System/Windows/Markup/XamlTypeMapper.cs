@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -282,20 +282,21 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal XamlTypeMapper Clone()
         {
-            XamlTypeMapper newMapper = new XamlTypeMapper(_assemblyNames.Clone() as string[]);
+            XamlTypeMapper newMapper = new XamlTypeMapper(_assemblyNames.Clone() as string[])
+            {
+                _mapTable = _mapTable,
+                _referenceAssembliesLoaded = _referenceAssembliesLoaded,
+                _lineNumber = _lineNumber,
+                _linePosition = _linePosition,
 
-            newMapper._mapTable = _mapTable;
-            newMapper._referenceAssembliesLoaded = _referenceAssembliesLoaded;
-            newMapper._lineNumber = _lineNumber;
-            newMapper._linePosition = _linePosition;
-
-            newMapper._namespaceMaps = _namespaceMaps.Clone() as NamespaceMapEntry[];
-            newMapper._typeLookupFromXmlHashtable = _typeLookupFromXmlHashtable.Clone() as Hashtable;
-            newMapper._namespaceMapHashList = _namespaceMapHashList.Clone() as Hashtable;
-            newMapper._typeInformationCache = CloneHybridDictionary(_typeInformationCache);
-            newMapper._piTable = CloneHybridDictionary(_piTable);
-            newMapper._piReverseTable = CloneStringDictionary(_piReverseTable);
-            newMapper._assemblyPathTable = CloneHybridDictionary(_assemblyPathTable);
+                _namespaceMaps = _namespaceMaps.Clone() as NamespaceMapEntry[],
+                _typeLookupFromXmlHashtable = _typeLookupFromXmlHashtable.Clone() as Hashtable,
+                _namespaceMapHashList = _namespaceMapHashList.Clone() as Hashtable,
+                _typeInformationCache = CloneHybridDictionary(_typeInformationCache),
+                _piTable = CloneHybridDictionary(_piTable),
+                _piReverseTable = CloneStringDictionary(_piReverseTable),
+                _assemblyPathTable = CloneHybridDictionary(_assemblyPathTable)
+            };
 
             return newMapper;
         }
@@ -2557,8 +2558,10 @@ namespace System.Windows.Markup
                                 }
                             }
                             // Create new data structure to store information for the current type
-                            typeAndSerializer = new TypeAndSerializer();
-                            typeAndSerializer.ObjectType = objectType;
+                            typeAndSerializer = new TypeAndSerializer
+                            {
+                                ObjectType = objectType
+                            };
 
                             break;
                         }
@@ -2986,8 +2989,10 @@ namespace System.Windows.Markup
             typeInformationCacheData = _typeInformationCache[type] as TypeInformationCacheData;
             if (null == typeInformationCacheData)
             {
-                typeInformationCacheData = new TypeInformationCacheData(type.BaseType);
-                typeInformationCacheData.ClrNamespace = type.Namespace;
+                typeInformationCacheData = new TypeInformationCacheData(type.BaseType)
+                {
+                    ClrNamespace = type.Namespace
+                };
 
                 _typeInformationCache[type] = typeInformationCacheData;
             }

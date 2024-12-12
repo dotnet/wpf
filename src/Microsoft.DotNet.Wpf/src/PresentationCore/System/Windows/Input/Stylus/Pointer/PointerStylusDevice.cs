@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -648,13 +648,15 @@ namespace System.Windows.Input.StylusPointer
                                                                              () => { return PointerTabletDevice.StylusPointDescription; },
                                                                              TabletDevice.Id,
                                                                              Id,
-                                                                             data);
+                                                                             data)
+                        {
+                            Synchronized = true
+                        };
 
-
-                        report.Synchronized = true;
-
-                        InputReportEventArgs inputReportEventArgs = new InputReportEventArgs(StylusDevice, report);
-                        inputReportEventArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                        InputReportEventArgs inputReportEventArgs = new InputReportEventArgs(StylusDevice, report)
+                        {
+                            RoutedEvent = InputManager.PreviewInputReportEvent
+                        };
 
                         InputManager.Current.ProcessInput(inputReportEventArgs);
                     }
@@ -1044,16 +1046,20 @@ namespace System.Windows.Input.StylusPointer
                 // Send the LostStylusCapture and GotStylusCapture events.
                 if (oldStylusCapture != null)
                 {
-                    StylusEventArgs lostCapture = new StylusEventArgs(StylusDevice, timestamp);
-                    lostCapture.RoutedEvent = Stylus.LostStylusCaptureEvent;
-                    lostCapture.Source = oldStylusCapture;
+                    StylusEventArgs lostCapture = new StylusEventArgs(StylusDevice, timestamp)
+                    {
+                        RoutedEvent = Stylus.LostStylusCaptureEvent,
+                        Source = oldStylusCapture
+                    };
                     InputManager.UnsecureCurrent.ProcessInput(lostCapture);
                 }
                 if (_stylusCapture != null)
                 {
-                    StylusEventArgs gotCapture = new StylusEventArgs(StylusDevice, timestamp);
-                    gotCapture.RoutedEvent = Stylus.GotStylusCaptureEvent;
-                    gotCapture.Source = _stylusCapture;
+                    StylusEventArgs gotCapture = new StylusEventArgs(StylusDevice, timestamp)
+                    {
+                        RoutedEvent = Stylus.GotStylusCaptureEvent,
+                        Source = _stylusCapture
+                    };
                     InputManager.UnsecureCurrent.ProcessInput(gotCapture);
                 }
 

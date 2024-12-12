@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -85,9 +85,11 @@ namespace MS.Internal.PtsHost
                 // Initialize the first pen.  Note that each pen is created via new()
                 // and frozen if possible.  Doing this avoids the overhead of
                 // maintaining changed handlers.
-                Pen pen = new Pen();
-                pen.Brush = _borderBrush;
-                pen.Thickness = _borderThickness.Left;
+                Pen pen = new Pen
+                {
+                    Brush = _borderBrush,
+                    Thickness = _borderThickness.Left
+                };
                 if (pen.CanFreeze) { pen.Freeze(); }
 
                 if (_borderThickness.IsUniform)
@@ -107,9 +109,11 @@ namespace MS.Internal.PtsHost
                     }
                     if (DoubleUtil.GreaterThanZero(_borderThickness.Right))
                     {
-                        pen = new Pen();
-                        pen.Brush = _borderBrush;
-                        pen.Thickness = _borderThickness.Right;
+                        pen = new Pen
+                        {
+                            Brush = _borderBrush,
+                            Thickness = _borderThickness.Right
+                        };
                         if (pen.CanFreeze) { pen.Freeze(); }
 
                         dc.DrawLine(pen,
@@ -118,9 +122,11 @@ namespace MS.Internal.PtsHost
                     }
                     if (DoubleUtil.GreaterThanZero(_borderThickness.Top))
                     {
-                        pen = new Pen();
-                        pen.Brush = _borderBrush;
-                        pen.Thickness = _borderThickness.Top;
+                        pen = new Pen
+                        {
+                            Brush = _borderBrush,
+                            Thickness = _borderThickness.Top
+                        };
                         if (pen.CanFreeze) { pen.Freeze(); }
 
                         dc.DrawLine(pen,
@@ -129,9 +135,11 @@ namespace MS.Internal.PtsHost
                     }
                     if (DoubleUtil.GreaterThanZero(_borderThickness.Bottom))
                     {
-                        pen = new Pen();
-                        pen.Brush = _borderBrush;
-                        pen.Thickness = _borderThickness.Bottom;
+                        pen = new Pen
+                        {
+                            Brush = _borderBrush,
+                            Thickness = _borderThickness.Bottom
+                        };
                         if (pen.CanFreeze) { pen.Freeze(); }
 
                         dc.DrawLine(pen,

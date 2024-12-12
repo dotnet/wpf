@@ -70,10 +70,14 @@ namespace System.Xaml.Schema
         // Used for UnknownReflector only
         private TypeReflector()
         {
-            _nonAttachableMemberCache = new ThreadSafeDictionary<string, XamlMember>();
-            _nonAttachableMemberCache.IsComplete = true;
-            _attachableMemberCache = new ThreadSafeDictionary<string, XamlMember>();
-            _attachableMemberCache.IsComplete = true;
+            _nonAttachableMemberCache = new ThreadSafeDictionary<string, XamlMember>
+            {
+                IsComplete = true
+            };
+            _attachableMemberCache = new ThreadSafeDictionary<string, XamlMember>
+            {
+                IsComplete = true
+            };
 
             _baseType.Value = XamlLanguage.Object;
             _boolTypeBits = (int)BoolTypeBits.Default | (int)BoolTypeBits.Unknown | (int)BoolTypeBits.WhitespaceSignificantCollection | (int)BoolTypeBits.AllValid;

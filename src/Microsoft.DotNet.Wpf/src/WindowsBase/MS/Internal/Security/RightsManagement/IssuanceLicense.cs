@@ -995,14 +995,15 @@ namespace MS.Internal.Security.RightsManagement
                                 publicKeyTemp);
             Errors.ThrowOnErrorCode(hr);
 
-            RevocationPoint resultRevocationPoint = new RevocationPoint();
-
-            resultRevocationPoint.Id = (idTemp == null) ? null : idTemp.ToString();
-            resultRevocationPoint.IdType = (idTypeTemp == null) ? null : idTypeTemp.ToString();
-            resultRevocationPoint.Url = (urlTemp == null) ? null : new Uri(urlTemp.ToString());
-            resultRevocationPoint.Name = (nameTemp == null) ? null : nameTemp.ToString();
-            resultRevocationPoint.PublicKey = (publicKeyTemp == null) ? null : publicKeyTemp.ToString();
-            resultRevocationPoint.Frequency = frequency;
+            RevocationPoint resultRevocationPoint = new RevocationPoint
+            {
+                Id = (idTemp == null) ? null : idTemp.ToString(),
+                IdType = (idTypeTemp == null) ? null : idTypeTemp.ToString(),
+                Url = (urlTemp == null) ? null : new Uri(urlTemp.ToString()),
+                Name = (nameTemp == null) ? null : nameTemp.ToString(),
+                PublicKey = (publicKeyTemp == null) ? null : publicKeyTemp.ToString(),
+                Frequency = frequency
+            };
 
             return resultRevocationPoint;
         }

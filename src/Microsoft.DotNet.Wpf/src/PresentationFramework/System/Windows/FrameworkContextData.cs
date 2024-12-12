@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -44,10 +44,12 @@ namespace System.Windows
         public void AddWalker(object data, DescendentsWalkerBase walker)
         {
             // push a new walker on the top of the stack
-            WalkerEntry walkerEntry = new WalkerEntry();
-            walkerEntry.Data = data;
-            walkerEntry.Walker = walker;
-        
+            WalkerEntry walkerEntry = new WalkerEntry
+            {
+                Data = data,
+                Walker = walker
+            };
+
             _currentWalkers.Add(walkerEntry);
         }
 

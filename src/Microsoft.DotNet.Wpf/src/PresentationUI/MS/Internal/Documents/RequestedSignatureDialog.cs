@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -49,13 +49,14 @@ namespace MS.Internal.Documents
             if (ValidateUserData())
             {
                 //Create SignatureResource to pass back to DocumentSignatureManager
-                SignatureResources sigResources = new SignatureResources();
+                SignatureResources sigResources = new SignatureResources
+                {
+                    //Get the user data.
+                    _subjectName = _requestedSignerNameTextBox.Text,
+                    _reason = _intentComboBox.Text,
+                    _location = _requestedLocationTextBox.Text
+                };
 
-                //Get the user data.
-                sigResources._subjectName = _requestedSignerNameTextBox.Text;
-                sigResources._reason = _intentComboBox.Text;
-                sigResources._location = _requestedLocationTextBox.Text;
-                    
                 //Add the SignatureDefinition.
                 _documentSignatureManager.OnAddRequestSignature(sigResources,_dateTimePicker.Value);
 

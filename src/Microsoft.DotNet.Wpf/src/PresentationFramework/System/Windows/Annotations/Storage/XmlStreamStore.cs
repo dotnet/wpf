@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -724,8 +724,10 @@ namespace System.Windows.Annotations.Storage
 
             lock (SyncRoot)
             {
-                _document = new XmlDocument();
-                _document.PreserveWhitespace = false;
+                _document = new XmlDocument
+                {
+                    PreserveWhitespace = false
+                };
                 if (_stream.Length == 0)
                 {
                     _document.LoadXml(

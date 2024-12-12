@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -32,8 +32,10 @@ namespace System.Windows.Markup.Primitives
         public static MarkupObject GetMarkupObjectFor(object instance)
         {
             ArgumentNullException.ThrowIfNull(instance);
-            XamlDesignerSerializationManager manager = new XamlDesignerSerializationManager(null);
-            manager.XamlWriterMode = XamlWriterMode.Expression;
+            XamlDesignerSerializationManager manager = new XamlDesignerSerializationManager(null)
+            {
+                XamlWriterMode = XamlWriterMode.Expression
+            };
             return new ElementMarkupObject(instance, manager);
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -64,10 +64,12 @@ namespace System.Windows.Interop
             IntPtr parent)
         {
 
-            HwndSourceParameters param = new HwndSourceParameters(name);
-            param.WindowClassStyle = classStyle;
-            param.WindowStyle = style;
-            param.ExtendedWindowStyle = exStyle;
+            HwndSourceParameters param = new HwndSourceParameters(name)
+            {
+                WindowClassStyle = classStyle,
+                WindowStyle = style,
+                ExtendedWindowStyle = exStyle
+            };
             param.SetPosition(x, y);
             param.ParentWindow = parent;
             Initialize(param);
@@ -123,10 +125,12 @@ namespace System.Windows.Interop
                           bool adjustSizingForNonClientArea)
         {
 
-            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height);
-            parameters.WindowClassStyle = classStyle;
-            parameters.WindowStyle = style;
-            parameters.ExtendedWindowStyle = exStyle;
+            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height)
+            {
+                WindowClassStyle = classStyle,
+                WindowStyle = style,
+                ExtendedWindowStyle = exStyle
+            };
             parameters.SetPosition(x, y);
             parameters.ParentWindow = parent;
             parameters.AdjustSizingForNonClientArea = adjustSizingForNonClientArea;
@@ -179,10 +183,12 @@ namespace System.Windows.Interop
             IntPtr parent)
         {
 
-            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height);
-            parameters.WindowClassStyle = classStyle;
-            parameters.WindowStyle = style;
-            parameters.ExtendedWindowStyle = exStyle;
+            HwndSourceParameters parameters = new HwndSourceParameters(name, width, height)
+            {
+                WindowClassStyle = classStyle,
+                WindowStyle = style,
+                ExtendedWindowStyle = exStyle
+            };
             parameters.SetPosition(x, y);
             parameters.ParentWindow = parent;
             Initialize(parameters);
@@ -261,9 +267,11 @@ namespace System.Windows.Interop
                                        parameters.ParentWindow,
                                        wrapperHooks);
 
-            _hwndTarget = new HwndTarget(_hwndWrapper.Handle);
-            _hwndTarget.UsesPerPixelOpacity = parameters.EffectivePerPixelOpacity;
-            if(_hwndTarget.UsesPerPixelOpacity)
+            _hwndTarget = new HwndTarget(_hwndWrapper.Handle)
+            {
+                UsesPerPixelOpacity = parameters.EffectivePerPixelOpacity
+            };
+            if (_hwndTarget.UsesPerPixelOpacity)
             {
                 _hwndTarget.BackgroundColor = Colors.Transparent;
 
@@ -1745,16 +1753,18 @@ namespace System.Windows.Interop
             case WindowMessage.WM_SYSCHAR:
             case WindowMessage.WM_DEADCHAR:
             case WindowMessage.WM_SYSDEADCHAR:
-                MSGDATA msgdata = new MSGDATA();
-                msgdata.msg = msg;
-                msgdata.handled = handled;
+                    MSGDATA msgdata = new MSGDATA
+                    {
+                        msg = msg,
+                        handled = handled
+                    };
 
-                // Do this under the exception filter/handlers of the
-                // dispatcher for this thread.
-                //
-                // NOTE: we lose the "perf optimization" of passing everything
-                // around by-ref since we have to call through a delegate.
-                object result = Dispatcher.CurrentDispatcher.Invoke(
+                    // Do this under the exception filter/handlers of the
+                    // dispatcher for this thread.
+                    //
+                    // NOTE: we lose the "perf optimization" of passing everything
+                    // around by-ref since we have to call through a delegate.
+                    object result = Dispatcher.CurrentDispatcher.Invoke(
                     DispatcherPriority.Send,
                     new DispatcherOperationCallback(OnPreprocessMessage),
                     msgdata);
@@ -2387,21 +2397,25 @@ namespace System.Windows.Interop
 
                     if (focusElement != null)
                     {
-                        KeyEventArgs tunnelArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key);
-                        tunnelArgs.ScanCode = scanCode;
-                        tunnelArgs.IsExtendedKey = isExtendedKey;
-                        tunnelArgs.RoutedEvent = keyPreviewEvent;
+                        KeyEventArgs tunnelArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key)
+                        {
+                            ScanCode = scanCode,
+                            IsExtendedKey = isExtendedKey,
+                            RoutedEvent = keyPreviewEvent
+                        };
                         focusElement.RaiseEvent(tunnelArgs);
 
                         handled = tunnelArgs.Handled;
                     }
                     if (!handled)
                     {
-                        KeyEventArgs bubbleArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key);
-                        bubbleArgs.ScanCode = scanCode;
-                        bubbleArgs.IsExtendedKey = isExtendedKey;
-                        bubbleArgs.RoutedEvent=keyEvent;
-                        if(focusElement != null)
+                        KeyEventArgs bubbleArgs = new KeyEventArgs(Keyboard.PrimaryDevice, this, msg.time, key)
+                        {
+                            ScanCode = scanCode,
+                            IsExtendedKey = isExtendedKey,
+                            RoutedEvent = keyEvent
+                        };
+                        if (focusElement != null)
                         {
                             focusElement.RaiseEvent(bubbleArgs);
                             handled = bubbleArgs.Handled;

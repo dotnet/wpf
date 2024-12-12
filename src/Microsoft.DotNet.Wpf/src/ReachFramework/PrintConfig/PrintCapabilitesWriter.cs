@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -26,13 +26,15 @@ namespace MS.Internal.Printing.Configuration
         {
             ArgumentNullException.ThrowIfNull(stream);
 
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.CheckCharacters = false;
-            settings.Encoding = Encoding.UTF8;
-            settings.OmitXmlDeclaration = false;
-            settings.CloseOutput = false;
-            settings.ConformanceLevel = ConformanceLevel.Document;
-            settings.NamespaceHandling = NamespaceHandling.Default;
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                CheckCharacters = false,
+                Encoding = Encoding.UTF8,
+                OmitXmlDeclaration = false,
+                CloseOutput = false,
+                ConformanceLevel = ConformanceLevel.Document,
+                NamespaceHandling = NamespaceHandling.Default
+            };
             this._writer = XmlWriter.Create(new StreamWriter(stream, Encoding.UTF8), settings);            
             this._privateNamespace = privateNamespace;
             this._privateQName = privateQname;

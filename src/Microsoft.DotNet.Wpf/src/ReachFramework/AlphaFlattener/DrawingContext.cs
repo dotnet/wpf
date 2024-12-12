@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -150,15 +150,16 @@ namespace Microsoft.Internal.AlphaFlattener
                 return;
             }
 
-            ImagePrimitive ip = new ImagePrimitive();
+            ImagePrimitive ip = new ImagePrimitive
+            {
+                // Fix bug 1460208: Give each ImagePrimitive its own ImageProxy, since rendering may alter
+                // the images.
+                Image = image.Clone(),
+                DstRect = dest,
+                Clip = clip,
+                Transform = trans * _transform
+            };
 
-            // Fix bug 1460208: Give each ImagePrimitive its own ImageProxy, since rendering may alter
-            // the images.
-            ip.Image     = image.Clone();
-            ip.DstRect   = dest;
-            ip.Clip      = clip;
-            ip.Transform = trans * _transform;
-            
             ip.PushOpacity(_opacity, _opacityMask);
             _flattener.AddPrimitive(ip);
         }
@@ -174,13 +175,14 @@ namespace Microsoft.Internal.AlphaFlattener
                 return true;
             }
 
-            GlyphPrimitive gp = new GlyphPrimitive();
+            GlyphPrimitive gp = new GlyphPrimitive
+            {
+                GlyphRun = glyphrun,
+                Clip = clip,
+                Transform = trans * _transform,
+                Brush = foreground
+            };
 
-            gp.GlyphRun  = glyphrun;
-            gp.Clip      = clip;
-            gp.Transform = trans * _transform;
-            gp.Brush     = foreground;
-            
             gp.PushOpacity(_opacity, _opacityMask);
             _flattener.AddPrimitive(gp);
 

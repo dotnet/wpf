@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -210,9 +210,11 @@ namespace System.Windows
             }
 
             // Not present, add to list
-            info = new ThemeDictionaryInfo();
-            info.DictionaryReference = new WeakReference(dictionary);
-            info.AssemblyName = assemblyName;
+            info = new ThemeDictionaryInfo
+            {
+                DictionaryReference = new WeakReference(dictionary),
+                AssemblyName = assemblyName
+            };
 
             _themeDictionaryInfos.Add(info);
             

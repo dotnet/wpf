@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -896,19 +896,20 @@ namespace System.Windows.Controls
                     continue;
                 }
 
-                CellCache cell = new CellCache();
+                CellCache cell = new CellCache
+                {
+                    //
+                    //  read and cache child positioning properties
+                    //
 
-                //
-                //  read and cache child positioning properties
-                //
-
-                //  read indices from the corresponding properties
-                //      clamp to value < number_of_columns
-                //      column >= 0 is guaranteed by property value validation callback
-                cell.ColumnIndex = Math.Min(GetColumn(child), DefinitionsU.Length - 1);
-                //      clamp to value < number_of_rows
-                //      row >= 0 is guaranteed by property value validation callback
-                cell.RowIndex = Math.Min(GetRow(child), DefinitionsV.Length - 1);
+                    //  read indices from the corresponding properties
+                    //      clamp to value < number_of_columns
+                    //      column >= 0 is guaranteed by property value validation callback
+                    ColumnIndex = Math.Min(GetColumn(child), DefinitionsU.Length - 1),
+                    //      clamp to value < number_of_rows
+                    //      row >= 0 is guaranteed by property value validation callback
+                    RowIndex = Math.Min(GetRow(child), DefinitionsV.Length - 1)
+                };
 
                 //  read span properties
                 //      clamp to not exceed beyond right side of the grid

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -605,9 +605,10 @@ namespace System.Windows.Xps.Packaging
             {
                  throw new XpsPackagingException(SR.ReachPackaging_InvalidStartingPart);
             }
-            ParserContext parserContext = new ParserContext();
-
-            parserContext.BaseUri = PackUriHelper.Create(Uri, CurrentXpsManager.StartingPart.Uri);
+            ParserContext parserContext = new ParserContext
+            {
+                BaseUri = PackUriHelper.Create(Uri, CurrentXpsManager.StartingPart.Uri)
+            };
 
             object fixedObject = XamlReader.Load(CurrentXpsManager.StartingPart.GetStream(), parserContext, useRestrictiveXamlReader: true);
             if (!(fixedObject is FixedDocumentSequence) )
@@ -877,9 +878,10 @@ namespace System.Windows.Xps.Packaging
             Package package = Package.Open(dataStream,
                                            FileMode.CreateNew,
                                            (dataStream.CanRead) ? FileAccess.ReadWrite : FileAccess.Write);
-            XpsDocument document = new XpsDocument(package);
-
-            document.OpcPackage = package;
+            XpsDocument document = new XpsDocument(package)
+            {
+                OpcPackage = package
+            };
 
             return document;
         }

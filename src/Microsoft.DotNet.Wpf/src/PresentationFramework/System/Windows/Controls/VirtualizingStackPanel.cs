@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2091,10 +2091,12 @@ namespace System.Windows.Controls
                 // when IsScrollActive is set to false (asynchronously).
                 if (IsScrollActive)
                 {
-                    info = new OffsetInformation();
-                    info.previouslyMeasuredOffsets = previouslyMeasuredOffsets;
-                    info.lastPageSafeOffset = lastPageSafeOffset;
-                    info.lastPagePixelSize = lastPagePixelSize;
+                    info = new OffsetInformation
+                    {
+                        previouslyMeasuredOffsets = previouslyMeasuredOffsets,
+                        lastPageSafeOffset = lastPageSafeOffset,
+                        lastPagePixelSize = lastPagePixelSize
+                    };
                     OffsetInformationField.SetValue(this, info);
                 }
 
@@ -6811,8 +6813,10 @@ namespace System.Windows.Controls
                 HierarchicalVirtualizationConstraints constraints = new HierarchicalVirtualizationConstraints(
                     childCacheSize,
                     childCacheUnit,
-                    childViewport);
-                constraints.ScrollGeneration = scrollGeneration;
+                    childViewport)
+                {
+                    ScrollGeneration = scrollGeneration
+                };
                 virtualizingChild.Constraints = constraints;
                 virtualizingChild.InBackgroundLayout = MeasureCaches;
                 virtualizingChild.MustDisableVirtualization = mustDisableVirtualization;
@@ -9445,8 +9449,10 @@ namespace System.Windows.Controls
 
         private bool NotifyCleanupItem(UIElement child, ItemsControl itemsControl)
         {
-            CleanUpVirtualizedItemEventArgs e = new CleanUpVirtualizedItemEventArgs(itemsControl.ItemContainerGenerator.ItemFromContainer(child), child);
-            e.Source = this;
+            CleanUpVirtualizedItemEventArgs e = new CleanUpVirtualizedItemEventArgs(itemsControl.ItemContainerGenerator.ItemFromContainer(child), child)
+            {
+                Source = this
+            };
             OnCleanUpVirtualizedItem(e);
 
             return !e.Cancel;
@@ -12989,11 +12995,13 @@ namespace System.Windows.Controls
 
             if (IsScrolling)
             {
-                s._scrollData = new ScrollData();
-                s._scrollData._offset = _scrollData._offset;
-                s._scrollData._extent = _scrollData._extent;
-                s._scrollData._computedOffset = _scrollData._computedOffset;
-                s._scrollData._viewport = _scrollData._viewport;
+                s._scrollData = new ScrollData
+                {
+                    _offset = _scrollData._offset,
+                    _extent = _scrollData._extent,
+                    _computedOffset = _scrollData._computedOffset,
+                    _viewport = _scrollData._viewport
+                };
             }
 
             s._boolFieldStore                               = _boolFieldStore;
@@ -13027,11 +13035,13 @@ namespace System.Windows.Controls
             List<ChildInfo> list = new List<ChildInfo>();
             foreach (UIElement child in RealizedChildren)
             {
-                ChildInfo info = new ChildInfo();
-                info._itemIndex = g.IndexFromContainer(child, returnLocalIndex:true);
-                info._desiredSize = child.DesiredSize;
-                info._arrangeRect = child.PreviousArrangeRect;
-                info._inset = (Thickness)child.GetValue(ItemsHostInsetProperty);
+                ChildInfo info = new ChildInfo
+                {
+                    _itemIndex = g.IndexFromContainer(child, returnLocalIndex: true),
+                    _desiredSize = child.DesiredSize,
+                    _arrangeRect = child.PreviousArrangeRect,
+                    _inset = (Thickness)child.GetValue(ItemsHostInsetProperty)
+                };
                 list.Add(info);
             }
             s._realizedChildren = list;

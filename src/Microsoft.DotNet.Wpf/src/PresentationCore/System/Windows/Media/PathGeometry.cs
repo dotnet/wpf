@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -429,10 +429,11 @@ namespace System.Windows.Media
             {
                 if (pointCount >=1 && segmentCount >= 1)
                 {
-                    PathFigure figure = new PathFigure();
-
-                    figure.IsFilled = isFilled;
-                    figure.StartPoint = new Point(pPoints->X, pPoints->Y);
+                    PathFigure figure = new PathFigure
+                    {
+                        IsFilled = isFilled,
+                        StartPoint = new Point(pPoints->X, pPoints->Y)
+                    };
 
                     int pointIndex = 1;
                     int sameSegCount = 0;
@@ -949,10 +950,12 @@ namespace System.Windows.Media
         /// </summary>
         internal override PathGeometryData GetPathGeometryData()
         {
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule;
-            data.Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform);
-            
+            PathGeometryData data = new PathGeometryData
+            {
+                FillRule = FillRule,
+                Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform)
+            };
+
             if (IsObviouslyEmpty())
             {
                 return Geometry.GetEmptyPathGeometryData();                

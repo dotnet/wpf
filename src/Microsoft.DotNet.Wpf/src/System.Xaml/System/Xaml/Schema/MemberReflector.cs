@@ -79,10 +79,12 @@ namespace System.Xaml.Schema
             {
                 if (s_UnknownReflector == null)
                 {
-                    s_UnknownReflector = new MemberReflector();
-                    s_UnknownReflector._designerSerializationVisibility = DesignerSerializationVisibility.Visible;
-                    s_UnknownReflector._memberBits = (int)BoolMemberBits.Default |
-                        (int)BoolMemberBits.Unknown | (int)BoolMemberBits.AllValid;
+                    s_UnknownReflector = new MemberReflector
+                    {
+                        _designerSerializationVisibility = DesignerSerializationVisibility.Visible,
+                        _memberBits = (int)BoolMemberBits.Default |
+                        (int)BoolMemberBits.Unknown | (int)BoolMemberBits.AllValid
+                    };
 
                     // Explicitly set all the nullable references so that IsSet is true
                     s_UnknownReflector._deferringLoader.Value = null;

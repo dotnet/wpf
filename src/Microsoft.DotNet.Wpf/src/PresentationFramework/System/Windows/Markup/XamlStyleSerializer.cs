@@ -55,9 +55,11 @@ namespace System.Windows.Markup
             XamlNode               xamlNode,
             BamlRecordWriter       bamlWriter)
         {
-            StyleXamlParser styleParser = new StyleXamlParser(tokenReader, context);
-            styleParser.BamlRecordWriter = bamlWriter;
-            styleParser.ParserHooks = _parserHooks;
+            StyleXamlParser styleParser = new StyleXamlParser(tokenReader, context)
+            {
+                BamlRecordWriter = bamlWriter,
+                ParserHooks = _parserHooks
+            };
 
 
             // Process the xamlNode that is passed in so that the <Style> element is written to baml

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1590,13 +1590,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               1, "AccessText",
                                               typeof(System.Windows.Controls.AccessText),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.AccessText(); };
-            bamlType.ContentPropertyName = "Text";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.AccessText(); },
+                ContentPropertyName = "Text",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1607,13 +1609,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               2, "AdornedElementPlaceholder",
                                               typeof(System.Windows.Controls.AdornedElementPlaceholder),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.AdornedElementPlaceholder(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.AdornedElementPlaceholder(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1624,11 +1628,13 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               3, "Adorner",
                                               typeof(System.Windows.Documents.Adorner),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1639,13 +1645,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               4, "AdornerDecorator",
                                               typeof(System.Windows.Documents.AdornerDecorator),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.AdornerDecorator(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.AdornerDecorator(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1656,11 +1664,13 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               5, "AdornerLayer",
                                               typeof(System.Windows.Documents.AdornerLayer),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1682,8 +1692,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               7, "AmbientLight",
                                               typeof(System.Windows.Media.Media3D.AmbientLight),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.AmbientLight(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.AmbientLight(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1694,11 +1706,13 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               8, "AnchoredBlock",
                                               typeof(System.Windows.Documents.AnchoredBlock),
-                                              isBamlType, useV3Rules);
-            bamlType.ContentPropertyName = "Blocks";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                ContentPropertyName = "Blocks",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1731,8 +1745,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               11, "AnimationTimeline",
                                               typeof(System.Windows.Media.Animation.AnimationTimeline),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1743,8 +1759,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               12, "Application",
                                               typeof(System.Windows.Application),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Application(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Application(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1755,8 +1773,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               13, "ArcSegment",
                                               typeof(System.Windows.Media.ArcSegment),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.ArcSegment(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.ArcSegment(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1767,9 +1787,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               14, "ArrayExtension",
                                               typeof(System.Windows.Markup.ArrayExtension),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.ArrayExtension(); };
-            bamlType.ContentPropertyName = "Items";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.ArrayExtension(); },
+                ContentPropertyName = "Items"
+            };
             bamlType.Constructors.Add(1, new Baml6ConstructorInfo(
                             new List<Type>() { typeof(System.Type) },
                             delegate(object[] arguments)
@@ -1787,8 +1809,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               15, "AxisAngleRotation3D",
                                               typeof(System.Windows.Media.Media3D.AxisAngleRotation3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.AxisAngleRotation3D(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.AxisAngleRotation3D(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1810,10 +1834,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               17, "BeginStoryboard",
                                               typeof(System.Windows.Media.Animation.BeginStoryboard),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.BeginStoryboard(); };
-            bamlType.ContentPropertyName = "Storyboard";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.BeginStoryboard(); },
+                ContentPropertyName = "Storyboard",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1824,8 +1850,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               18, "BevelBitmapEffect",
                                               typeof(System.Windows.Media.Effects.BevelBitmapEffect),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Effects.BevelBitmapEffect(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Effects.BevelBitmapEffect(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1836,8 +1864,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               19, "BezierSegment",
                                               typeof(System.Windows.Media.BezierSegment),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.BezierSegment(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.BezierSegment(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1848,8 +1878,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               20, "Binding",
                                               typeof(System.Windows.Data.Binding),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Data.Binding(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Data.Binding(); }
+            };
             bamlType.Constructors.Add(1, new Baml6ConstructorInfo(
                             new List<Type>() { typeof(System.String) },
                             delegate(object[] arguments)
@@ -1878,8 +1910,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               22, "BindingExpression",
                                               typeof(System.Windows.Data.BindingExpression),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.ExpressionConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.ExpressionConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1890,8 +1924,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               23, "BindingExpressionBase",
                                               typeof(System.Windows.Data.BindingExpressionBase),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.ExpressionConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.ExpressionConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1935,9 +1971,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               27, "BitmapEffectCollection",
                                               typeof(System.Windows.Media.Effects.BitmapEffectCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Effects.BitmapEffectCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Effects.BitmapEffectCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1948,9 +1986,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               28, "BitmapEffectGroup",
                                               typeof(System.Windows.Media.Effects.BitmapEffectGroup),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Effects.BitmapEffectGroup(); };
-            bamlType.ContentPropertyName = "Children";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Effects.BitmapEffectGroup(); },
+                ContentPropertyName = "Children"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1961,8 +2001,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               29, "BitmapEffectInput",
                                               typeof(System.Windows.Media.Effects.BitmapEffectInput),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Effects.BitmapEffectInput(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Effects.BitmapEffectInput(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1984,8 +2026,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               31, "BitmapFrame",
                                               typeof(System.Windows.Media.Imaging.BitmapFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -1996,9 +2040,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               32, "BitmapImage",
                                               typeof(System.Windows.Media.Imaging.BitmapImage),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Imaging.BitmapImage(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Imaging.BitmapImage(); },
+                TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2031,8 +2077,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               35, "BitmapSource",
                                               typeof(System.Windows.Media.Imaging.BitmapSource),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2043,10 +2091,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               36, "Block",
                                               typeof(System.Windows.Documents.Block),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2057,12 +2107,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               37, "BlockUIContainer",
                                               typeof(System.Windows.Documents.BlockUIContainer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.BlockUIContainer(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.BlockUIContainer(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2073,8 +2125,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               38, "BlurBitmapEffect",
                                               typeof(System.Windows.Media.Effects.BlurBitmapEffect),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Effects.BlurBitmapEffect(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Effects.BlurBitmapEffect(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2096,8 +2150,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               40, "BmpBitmapEncoder",
                                               typeof(System.Windows.Media.Imaging.BmpBitmapEncoder),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Imaging.BmpBitmapEncoder(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Imaging.BmpBitmapEncoder(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2108,12 +2164,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               41, "Bold",
                                               typeof(System.Windows.Documents.Bold),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.Bold(); };
-            bamlType.ContentPropertyName = "Inlines";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.Bold(); },
+                ContentPropertyName = "Inlines",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2124,8 +2182,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               42, "BoolIListConverter",
                                               typeof(System.Windows.Media.Converters.BoolIListConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Converters.BoolIListConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Converters.BoolIListConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2136,9 +2196,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               43, "Boolean",
                                               typeof(System.Boolean),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Boolean(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.BooleanConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Boolean(); },
+                TypeConverterType = typeof(System.ComponentModel.BooleanConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2149,8 +2211,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               44, "BooleanAnimationBase",
                                               typeof(System.Windows.Media.Animation.BooleanAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2161,10 +2225,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               45, "BooleanAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.BooleanAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.BooleanAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.BooleanAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2175,8 +2241,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               46, "BooleanConverter",
                                               typeof(System.ComponentModel.BooleanConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.BooleanConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.BooleanConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2198,9 +2266,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               48, "BooleanKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.BooleanKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.BooleanKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.BooleanKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2211,8 +2281,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               49, "BooleanToVisibilityConverter",
                                               typeof(System.Windows.Controls.BooleanToVisibilityConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.BooleanToVisibilityConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.BooleanToVisibilityConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2223,13 +2295,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               50, "Border",
                                               typeof(System.Windows.Controls.Border),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Border(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Border(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2240,8 +2314,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               51, "BorderGapMaskConverter",
                                               typeof(System.Windows.Controls.BorderGapMaskConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.BorderGapMaskConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.BorderGapMaskConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2252,8 +2328,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               52, "Brush",
                                               typeof(System.Windows.Media.Brush),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2264,8 +2342,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               53, "BrushConverter",
                                               typeof(System.Windows.Media.BrushConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.BrushConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.BrushConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2276,13 +2356,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               54, "BulletDecorator",
                                               typeof(System.Windows.Controls.Primitives.BulletDecorator),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.BulletDecorator(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.BulletDecorator(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2293,13 +2375,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               55, "Button",
                                               typeof(System.Windows.Controls.Button),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Button(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Button(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2310,12 +2394,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               56, "ButtonBase",
                                               typeof(System.Windows.Controls.Primitives.ButtonBase),
-                                              isBamlType, useV3Rules);
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2326,9 +2412,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               57, "Byte",
                                               typeof(System.Byte),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Byte(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.ByteConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Byte(); },
+                TypeConverterType = typeof(System.ComponentModel.ByteConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2339,9 +2427,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               58, "ByteAnimation",
                                               typeof(System.Windows.Media.Animation.ByteAnimation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.ByteAnimation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.ByteAnimation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2352,8 +2442,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               59, "ByteAnimationBase",
                                               typeof(System.Windows.Media.Animation.ByteAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2364,10 +2456,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               60, "ByteAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.ByteAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.ByteAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.ByteAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2378,8 +2472,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               61, "ByteConverter",
                                               typeof(System.ComponentModel.ByteConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.ByteConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.ByteConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2401,9 +2497,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               63, "ByteKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.ByteKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.ByteKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.ByteKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2414,8 +2512,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               64, "CachedBitmap",
                                               typeof(System.Windows.Media.Imaging.CachedBitmap),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2437,13 +2537,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               66, "Canvas",
                                               typeof(System.Windows.Controls.Canvas),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Canvas(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Canvas(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2454,9 +2556,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               67, "Char",
                                               typeof(System.Char),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Char(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.CharConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Char(); },
+                TypeConverterType = typeof(System.ComponentModel.CharConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2467,8 +2571,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               68, "CharAnimationBase",
                                               typeof(System.Windows.Media.Animation.CharAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2479,10 +2585,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               69, "CharAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.CharAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.CharAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.CharAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2493,8 +2601,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               70, "CharConverter",
                                               typeof(System.ComponentModel.CharConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.CharConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.CharConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2505,8 +2615,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               71, "CharIListConverter",
                                               typeof(System.Windows.Media.Converters.CharIListConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Converters.CharIListConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Converters.CharIListConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2528,9 +2640,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               73, "CharKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.CharKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.CharKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.CharKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2541,13 +2655,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               74, "CheckBox",
                                               typeof(System.Windows.Controls.CheckBox),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.CheckBox(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.CheckBox(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2591,8 +2707,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               78, "CollectionContainer",
                                               typeof(System.Windows.Data.CollectionContainer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Data.CollectionContainer(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Data.CollectionContainer(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2614,8 +2732,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               80, "CollectionViewSource",
                                               typeof(System.Windows.Data.CollectionViewSource),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Data.CollectionViewSource(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Data.CollectionViewSource(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2626,9 +2746,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               81, "Color",
                                               typeof(System.Windows.Media.Color),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Color(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.ColorConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Color(); },
+                TypeConverterType = typeof(System.Windows.Media.ColorConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2639,9 +2761,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               82, "ColorAnimation",
                                               typeof(System.Windows.Media.Animation.ColorAnimation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.ColorAnimation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.ColorAnimation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2652,8 +2776,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               83, "ColorAnimationBase",
                                               typeof(System.Windows.Media.Animation.ColorAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2664,10 +2790,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               84, "ColorAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.ColorAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.ColorAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.ColorAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2678,9 +2806,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               85, "ColorConvertedBitmap",
                                               typeof(System.Windows.Media.Imaging.ColorConvertedBitmap),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Imaging.ColorConvertedBitmap(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Imaging.ColorConvertedBitmap(); },
+                TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2691,8 +2821,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               86, "ColorConvertedBitmapExtension",
                                               typeof(System.Windows.ColorConvertedBitmapExtension),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.ColorConvertedBitmapExtension(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.ColorConvertedBitmapExtension(); }
+            };
             bamlType.Constructors.Add(1, new Baml6ConstructorInfo(
                             new List<Type>() { typeof(System.Object) },
                             delegate(object[] arguments)
@@ -2710,8 +2842,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               87, "ColorConverter",
                                               typeof(System.Windows.Media.ColorConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.ColorConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.ColorConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2733,9 +2867,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               89, "ColorKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.ColorKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.ColorKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.ColorKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2746,11 +2882,13 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               90, "ColumnDefinition",
                                               typeof(System.Windows.Controls.ColumnDefinition),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ColumnDefinition(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ColumnDefinition(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2761,9 +2899,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               91, "CombinedGeometry",
                                               typeof(System.Windows.Media.CombinedGeometry),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.CombinedGeometry(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.GeometryConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.CombinedGeometry(); },
+                TypeConverterType = typeof(System.Windows.Media.GeometryConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2774,13 +2914,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               92, "ComboBox",
                                               typeof(System.Windows.Controls.ComboBox),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ComboBox(); };
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ComboBox(); },
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2791,13 +2933,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               93, "ComboBoxItem",
                                               typeof(System.Windows.Controls.ComboBoxItem),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ComboBoxItem(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ComboBoxItem(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2808,8 +2952,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               94, "CommandConverter",
                                               typeof(System.Windows.Input.CommandConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.CommandConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.CommandConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2820,9 +2966,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               95, "ComponentResourceKey",
                                               typeof(System.Windows.ComponentResourceKey),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.ComponentResourceKey(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Markup.ComponentResourceKeyConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.ComponentResourceKey(); },
+                TypeConverterType = typeof(System.Windows.Markup.ComponentResourceKeyConverter)
+            };
             bamlType.Constructors.Add(2, new Baml6ConstructorInfo(
                             new List<Type>() { typeof(System.Type), typeof(System.Object) },
                             delegate(object[] arguments)
@@ -2841,8 +2989,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               96, "ComponentResourceKeyConverter",
                                               typeof(System.Windows.Markup.ComponentResourceKeyConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.ComponentResourceKeyConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.ComponentResourceKeyConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2864,8 +3014,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               98, "Condition",
                                               typeof(System.Windows.Condition),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Condition(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Condition(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2876,8 +3028,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               99, "ContainerVisual",
                                               typeof(System.Windows.Media.ContainerVisual),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.ContainerVisual(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.ContainerVisual(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2888,13 +3042,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               100, "ContentControl",
                                               typeof(System.Windows.Controls.ContentControl),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ContentControl(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ContentControl(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2905,8 +3061,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               101, "ContentElement",
                                               typeof(System.Windows.ContentElement),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.ContentElement(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.ContentElement(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2917,12 +3075,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               102, "ContentPresenter",
                                               typeof(System.Windows.Controls.ContentPresenter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ContentPresenter(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ContentPresenter(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2933,8 +3093,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               103, "ContentPropertyAttribute",
                                               typeof(System.Windows.Markup.ContentPropertyAttribute),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.ContentPropertyAttribute(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.ContentPropertyAttribute(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2956,13 +3118,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               105, "ContextMenu",
                                               typeof(System.Windows.Controls.ContextMenu),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ContextMenu(); };
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ContextMenu(); },
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -2984,12 +3148,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               107, "Control",
                                               typeof(System.Windows.Controls.Control),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Control(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Control(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3000,10 +3166,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               108, "ControlTemplate",
                                               typeof(System.Windows.Controls.ControlTemplate),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ControlTemplate(); };
-            bamlType.ContentPropertyName = "Template";
-            bamlType.DictionaryKeyPropertyName = "TargetType";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ControlTemplate(); },
+                ContentPropertyName = "Template",
+                DictionaryKeyPropertyName = "TargetType"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3025,9 +3193,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               110, "CornerRadius",
                                               typeof(System.Windows.CornerRadius),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.CornerRadius(); };
-            bamlType.TypeConverterType = typeof(System.Windows.CornerRadiusConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.CornerRadius(); },
+                TypeConverterType = typeof(System.Windows.CornerRadiusConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3038,8 +3208,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               111, "CornerRadiusConverter",
                                               typeof(System.Windows.CornerRadiusConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.CornerRadiusConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.CornerRadiusConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3050,9 +3222,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               112, "CroppedBitmap",
                                               typeof(System.Windows.Media.Imaging.CroppedBitmap),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Imaging.CroppedBitmap(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Imaging.CroppedBitmap(); },
+                TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3063,8 +3237,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               113, "CultureInfo",
                                               typeof(System.Globalization.CultureInfo),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.ComponentModel.CultureInfoConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.ComponentModel.CultureInfoConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3075,8 +3251,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               114, "CultureInfoConverter",
                                               typeof(System.ComponentModel.CultureInfoConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.CultureInfoConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.CultureInfoConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3087,8 +3265,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               115, "CultureInfoIetfLanguageTagConverter",
                                               typeof(System.Windows.CultureInfoIetfLanguageTagConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.CultureInfoIetfLanguageTagConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.CultureInfoIetfLanguageTagConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3099,8 +3279,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               116, "Cursor",
                                               typeof(System.Windows.Input.Cursor),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Input.CursorConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Input.CursorConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3111,8 +3293,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               117, "CursorConverter",
                                               typeof(System.Windows.Input.CursorConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.CursorConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.CursorConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3123,8 +3307,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               118, "DashStyle",
                                               typeof(System.Windows.Media.DashStyle),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.DashStyle(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.DashStyle(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3146,10 +3332,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               120, "DataTemplate",
                                               typeof(System.Windows.DataTemplate),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.DataTemplate(); };
-            bamlType.ContentPropertyName = "Template";
-            bamlType.DictionaryKeyPropertyName = "DataTemplateKey";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.DataTemplate(); },
+                ContentPropertyName = "Template",
+                DictionaryKeyPropertyName = "DataTemplateKey"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3160,9 +3348,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               121, "DataTemplateKey",
                                               typeof(System.Windows.DataTemplateKey),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.DataTemplateKey(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Markup.TemplateKeyConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.DataTemplateKey(); },
+                TypeConverterType = typeof(System.Windows.Markup.TemplateKeyConverter)
+            };
             bamlType.Constructors.Add(1, new Baml6ConstructorInfo(
                             new List<Type>() { typeof(System.Object) },
                             delegate(object[] arguments)
@@ -3180,9 +3370,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               122, "DataTrigger",
                                               typeof(System.Windows.DataTrigger),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.DataTrigger(); };
-            bamlType.ContentPropertyName = "Setters";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.DataTrigger(); },
+                ContentPropertyName = "Setters"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3193,9 +3385,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               123, "DateTime",
                                               typeof(System.DateTime),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.DateTime(); };
-            bamlType.HasSpecialValueConverter = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.DateTime(); },
+                HasSpecialValueConverter = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3206,8 +3400,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               124, "DateTimeConverter",
                                               typeof(System.ComponentModel.DateTimeConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.DateTimeConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.DateTimeConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3218,8 +3414,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               125, "DateTimeConverter2",
                                               typeof(System.Windows.Markup.DateTimeConverter2),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.DateTimeConverter2(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.DateTimeConverter2(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3230,9 +3428,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               126, "Decimal",
                                               typeof(System.Decimal),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Decimal(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.DecimalConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Decimal(); },
+                TypeConverterType = typeof(System.ComponentModel.DecimalConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3243,9 +3443,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               127, "DecimalAnimation",
                                               typeof(System.Windows.Media.Animation.DecimalAnimation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DecimalAnimation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DecimalAnimation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3256,8 +3458,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               128, "DecimalAnimationBase",
                                               typeof(System.Windows.Media.Animation.DecimalAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3268,10 +3472,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               129, "DecimalAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.DecimalAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DecimalAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DecimalAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3282,8 +3488,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               130, "DecimalConverter",
                                               typeof(System.ComponentModel.DecimalConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.DecimalConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.DecimalConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3305,9 +3513,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               132, "DecimalKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.DecimalKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DecimalKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DecimalKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3318,13 +3528,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               133, "Decorator",
                                               typeof(System.Windows.Controls.Decorator),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Decorator(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Decorator(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3335,10 +3547,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               134, "DefinitionBase",
                                               typeof(System.Windows.Controls.DefinitionBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3349,8 +3563,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               135, "DependencyObject",
                                               typeof(System.Windows.DependencyObject),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.DependencyObject(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.DependencyObject(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3361,8 +3577,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               136, "DependencyProperty",
                                               typeof(System.Windows.DependencyProperty),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Markup.DependencyPropertyConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Markup.DependencyPropertyConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3373,8 +3591,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               137, "DependencyPropertyConverter",
                                               typeof(System.Windows.Markup.DependencyPropertyConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.DependencyPropertyConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.DependencyPropertyConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3385,8 +3605,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               138, "DialogResultConverter",
                                               typeof(System.Windows.DialogResultConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.DialogResultConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.DialogResultConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3397,8 +3619,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               139, "DiffuseMaterial",
                                               typeof(System.Windows.Media.Media3D.DiffuseMaterial),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.DiffuseMaterial(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.DiffuseMaterial(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3409,8 +3633,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               140, "DirectionalLight",
                                               typeof(System.Windows.Media.Media3D.DirectionalLight),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.DirectionalLight(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.DirectionalLight(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3421,8 +3647,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               141, "DiscreteBooleanKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteBooleanKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteBooleanKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteBooleanKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3433,8 +3661,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               142, "DiscreteByteKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteByteKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteByteKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteByteKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3445,8 +3675,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               143, "DiscreteCharKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteCharKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteCharKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteCharKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3457,8 +3689,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               144, "DiscreteColorKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteColorKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteColorKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteColorKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3469,8 +3703,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               145, "DiscreteDecimalKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteDecimalKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteDecimalKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteDecimalKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3481,8 +3717,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               146, "DiscreteDoubleKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteDoubleKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteDoubleKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteDoubleKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3493,8 +3731,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               147, "DiscreteInt16KeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteInt16KeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteInt16KeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteInt16KeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3505,8 +3745,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               148, "DiscreteInt32KeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteInt32KeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteInt32KeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteInt32KeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3517,8 +3759,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               149, "DiscreteInt64KeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteInt64KeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteInt64KeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteInt64KeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3529,8 +3773,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               150, "DiscreteMatrixKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteMatrixKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteMatrixKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteMatrixKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3541,8 +3787,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               151, "DiscreteObjectKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteObjectKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteObjectKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteObjectKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3553,8 +3801,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               152, "DiscretePoint3DKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscretePoint3DKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscretePoint3DKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscretePoint3DKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3565,8 +3815,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               153, "DiscretePointKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscretePointKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscretePointKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscretePointKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3577,8 +3829,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               154, "DiscreteQuaternionKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteQuaternionKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteQuaternionKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteQuaternionKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3589,8 +3843,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               155, "DiscreteRectKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteRectKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteRectKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteRectKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3601,8 +3857,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               156, "DiscreteRotation3DKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteRotation3DKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteRotation3DKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteRotation3DKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3613,8 +3871,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               157, "DiscreteSingleKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteSingleKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteSingleKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteSingleKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3625,8 +3885,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               158, "DiscreteSizeKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteSizeKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteSizeKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteSizeKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3637,8 +3899,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               159, "DiscreteStringKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteStringKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteStringKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteStringKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3649,8 +3913,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               160, "DiscreteThicknessKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteThicknessKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteThicknessKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteThicknessKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3661,8 +3927,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               161, "DiscreteVector3DKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteVector3DKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteVector3DKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteVector3DKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3673,8 +3941,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               162, "DiscreteVectorKeyFrame",
                                               typeof(System.Windows.Media.Animation.DiscreteVectorKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DiscreteVectorKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DiscreteVectorKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3685,13 +3955,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               163, "DockPanel",
                                               typeof(System.Windows.Controls.DockPanel),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.DockPanel(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.DockPanel(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3702,12 +3974,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               164, "DocumentPageView",
                                               typeof(System.Windows.Controls.Primitives.DocumentPageView),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.DocumentPageView(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.DocumentPageView(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3718,11 +3992,13 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               165, "DocumentReference",
                                               typeof(System.Windows.Documents.DocumentReference),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.DocumentReference(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.DocumentReference(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3733,13 +4009,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               166, "DocumentViewer",
                                               typeof(System.Windows.Controls.DocumentViewer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.DocumentViewer(); };
-            bamlType.ContentPropertyName = "Document";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.DocumentViewer(); },
+                ContentPropertyName = "Document",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3750,12 +4028,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               167, "DocumentViewerBase",
                                               typeof(System.Windows.Controls.Primitives.DocumentViewerBase),
-                                              isBamlType, useV3Rules);
-            bamlType.ContentPropertyName = "Document";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                ContentPropertyName = "Document",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3766,9 +4046,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               168, "Double",
                                               typeof(System.Double),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Double(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.DoubleConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Double(); },
+                TypeConverterType = typeof(System.ComponentModel.DoubleConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3779,9 +4061,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               169, "DoubleAnimation",
                                               typeof(System.Windows.Media.Animation.DoubleAnimation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DoubleAnimation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DoubleAnimation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3792,8 +4076,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               170, "DoubleAnimationBase",
                                               typeof(System.Windows.Media.Animation.DoubleAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3804,10 +4090,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               171, "DoubleAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.DoubleAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DoubleAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DoubleAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3818,9 +4106,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               172, "DoubleAnimationUsingPath",
                                               typeof(System.Windows.Media.Animation.DoubleAnimationUsingPath),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DoubleAnimationUsingPath(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DoubleAnimationUsingPath(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3831,10 +4121,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               173, "DoubleCollection",
                                               typeof(System.Windows.Media.DoubleCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.DoubleCollection(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.DoubleCollectionConverter);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.DoubleCollection(); },
+                TypeConverterType = typeof(System.Windows.Media.DoubleCollectionConverter),
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3845,8 +4137,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               174, "DoubleCollectionConverter",
                                               typeof(System.Windows.Media.DoubleCollectionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.DoubleCollectionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.DoubleCollectionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3857,8 +4151,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               175, "DoubleConverter",
                                               typeof(System.ComponentModel.DoubleConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.DoubleConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.DoubleConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3869,8 +4165,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               176, "DoubleIListConverter",
                                               typeof(System.Windows.Media.Converters.DoubleIListConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Converters.DoubleIListConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Converters.DoubleIListConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3892,9 +4190,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               178, "DoubleKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.DoubleKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.DoubleKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.DoubleKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3916,9 +4216,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               180, "DrawingBrush",
                                               typeof(System.Windows.Media.DrawingBrush),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.DrawingBrush(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.DrawingBrush(); },
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3929,9 +4231,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               181, "DrawingCollection",
                                               typeof(System.Windows.Media.DrawingCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.DrawingCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.DrawingCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3953,9 +4257,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               183, "DrawingGroup",
                                               typeof(System.Windows.Media.DrawingGroup),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.DrawingGroup(); };
-            bamlType.ContentPropertyName = "Children";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.DrawingGroup(); },
+                ContentPropertyName = "Children"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3966,9 +4272,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               184, "DrawingImage",
                                               typeof(System.Windows.Media.DrawingImage),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.DrawingImage(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.DrawingImage(); },
+                TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3979,8 +4287,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               185, "DrawingVisual",
                                               typeof(System.Windows.Media.DrawingVisual),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.DrawingVisual(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.DrawingVisual(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -3991,8 +4301,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               186, "DropShadowBitmapEffect",
                                               typeof(System.Windows.Media.Effects.DropShadowBitmapEffect),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Effects.DropShadowBitmapEffect(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Effects.DropShadowBitmapEffect(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4003,9 +4315,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               187, "Duration",
                                               typeof(System.Windows.Duration),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Duration(); };
-            bamlType.TypeConverterType = typeof(System.Windows.DurationConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Duration(); },
+                TypeConverterType = typeof(System.Windows.DurationConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4016,8 +4330,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               188, "DurationConverter",
                                               typeof(System.Windows.DurationConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.DurationConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.DurationConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4028,9 +4344,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               189, "DynamicResourceExtension",
                                               typeof(System.Windows.DynamicResourceExtension),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.DynamicResourceExtension(); };
-            bamlType.TypeConverterType = typeof(System.Windows.DynamicResourceExtensionConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.DynamicResourceExtension(); },
+                TypeConverterType = typeof(System.Windows.DynamicResourceExtensionConverter)
+            };
             bamlType.Constructors.Add(1, new Baml6ConstructorInfo(
                             new List<Type>() { typeof(System.Object) },
                             delegate(object[] arguments)
@@ -4048,8 +4366,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               190, "DynamicResourceExtensionConverter",
                                               typeof(System.Windows.DynamicResourceExtensionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.DynamicResourceExtensionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.DynamicResourceExtensionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4060,12 +4380,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               191, "Ellipse",
                                               typeof(System.Windows.Shapes.Ellipse),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Shapes.Ellipse(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Shapes.Ellipse(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4076,9 +4398,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               192, "EllipseGeometry",
                                               typeof(System.Windows.Media.EllipseGeometry),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.EllipseGeometry(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.GeometryConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.EllipseGeometry(); },
+                TypeConverterType = typeof(System.Windows.Media.GeometryConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4089,8 +4413,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               193, "EmbossBitmapEffect",
                                               typeof(System.Windows.Media.Effects.EmbossBitmapEffect),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Effects.EmbossBitmapEffect(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Effects.EmbossBitmapEffect(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4101,8 +4427,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               194, "EmissiveMaterial",
                                               typeof(System.Windows.Media.Media3D.EmissiveMaterial),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.EmissiveMaterial(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.EmissiveMaterial(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4135,8 +4463,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               197, "EventSetter",
                                               typeof(System.Windows.EventSetter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.EventSetter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.EventSetter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4147,9 +4477,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               198, "EventTrigger",
                                               typeof(System.Windows.EventTrigger),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.EventTrigger(); };
-            bamlType.ContentPropertyName = "Actions";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.EventTrigger(); },
+                ContentPropertyName = "Actions"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4160,13 +4492,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               199, "Expander",
                                               typeof(System.Windows.Controls.Expander),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Expander(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Expander(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4177,8 +4511,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               200, "Expression",
                                               typeof(System.Windows.Expression),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.ExpressionConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.ExpressionConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4189,8 +4525,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               201, "ExpressionConverter",
                                               typeof(System.Windows.ExpressionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.ExpressionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.ExpressionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4201,12 +4539,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               202, "Figure",
                                               typeof(System.Windows.Documents.Figure),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.Figure(); };
-            bamlType.ContentPropertyName = "Blocks";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.Figure(); },
+                ContentPropertyName = "Blocks",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4217,9 +4557,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               203, "FigureLength",
                                               typeof(System.Windows.FigureLength),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.FigureLength(); };
-            bamlType.TypeConverterType = typeof(System.Windows.FigureLengthConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.FigureLength(); },
+                TypeConverterType = typeof(System.Windows.FigureLengthConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4230,8 +4572,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               204, "FigureLengthConverter",
                                               typeof(System.Windows.FigureLengthConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.FigureLengthConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.FigureLengthConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4242,12 +4586,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               205, "FixedDocument",
                                               typeof(System.Windows.Documents.FixedDocument),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.FixedDocument(); };
-            bamlType.ContentPropertyName = "Pages";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.FixedDocument(); },
+                ContentPropertyName = "Pages",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4258,12 +4604,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               206, "FixedDocumentSequence",
                                               typeof(System.Windows.Documents.FixedDocumentSequence),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.FixedDocumentSequence(); };
-            bamlType.ContentPropertyName = "References";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.FixedDocumentSequence(); },
+                ContentPropertyName = "References",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4274,13 +4622,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               207, "FixedPage",
                                               typeof(System.Windows.Documents.FixedPage),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.FixedPage(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.FixedPage(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4291,12 +4641,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               208, "Floater",
                                               typeof(System.Windows.Documents.Floater),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.Floater(); };
-            bamlType.ContentPropertyName = "Blocks";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.Floater(); },
+                ContentPropertyName = "Blocks",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4307,12 +4659,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               209, "FlowDocument",
                                               typeof(System.Windows.Documents.FlowDocument),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.FlowDocument(); };
-            bamlType.ContentPropertyName = "Blocks";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.FlowDocument(); },
+                ContentPropertyName = "Blocks",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4323,13 +4677,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               210, "FlowDocumentPageViewer",
                                               typeof(System.Windows.Controls.FlowDocumentPageViewer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.FlowDocumentPageViewer(); };
-            bamlType.ContentPropertyName = "Document";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.FlowDocumentPageViewer(); },
+                ContentPropertyName = "Document",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4340,13 +4696,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               211, "FlowDocumentReader",
                                               typeof(System.Windows.Controls.FlowDocumentReader),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.FlowDocumentReader(); };
-            bamlType.ContentPropertyName = "Document";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.FlowDocumentReader(); },
+                ContentPropertyName = "Document",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4357,13 +4715,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               212, "FlowDocumentScrollViewer",
                                               typeof(System.Windows.Controls.FlowDocumentScrollViewer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.FlowDocumentScrollViewer(); };
-            bamlType.ContentPropertyName = "Document";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.FlowDocumentScrollViewer(); },
+                ContentPropertyName = "Document",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4385,9 +4745,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               214, "FontFamily",
                                               typeof(System.Windows.Media.FontFamily),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.FontFamily(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.FontFamilyConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.FontFamily(); },
+                TypeConverterType = typeof(System.Windows.Media.FontFamilyConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4398,8 +4760,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               215, "FontFamilyConverter",
                                               typeof(System.Windows.Media.FontFamilyConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.FontFamilyConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.FontFamilyConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4410,8 +4774,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               216, "FontSizeConverter",
                                               typeof(System.Windows.FontSizeConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.FontSizeConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.FontSizeConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4422,9 +4788,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               217, "FontStretch",
                                               typeof(System.Windows.FontStretch),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.FontStretch(); };
-            bamlType.TypeConverterType = typeof(System.Windows.FontStretchConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.FontStretch(); },
+                TypeConverterType = typeof(System.Windows.FontStretchConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4435,8 +4803,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               218, "FontStretchConverter",
                                               typeof(System.Windows.FontStretchConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.FontStretchConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.FontStretchConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4447,9 +4817,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               219, "FontStyle",
                                               typeof(System.Windows.FontStyle),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.FontStyle(); };
-            bamlType.TypeConverterType = typeof(System.Windows.FontStyleConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.FontStyle(); },
+                TypeConverterType = typeof(System.Windows.FontStyleConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4460,8 +4832,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               220, "FontStyleConverter",
                                               typeof(System.Windows.FontStyleConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.FontStyleConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.FontStyleConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4472,9 +4846,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               221, "FontWeight",
                                               typeof(System.Windows.FontWeight),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.FontWeight(); };
-            bamlType.TypeConverterType = typeof(System.Windows.FontWeightConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.FontWeight(); },
+                TypeConverterType = typeof(System.Windows.FontWeightConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4485,8 +4861,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               222, "FontWeightConverter",
                                               typeof(System.Windows.FontWeightConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.FontWeightConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.FontWeightConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4497,9 +4875,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               223, "FormatConvertedBitmap",
                                               typeof(System.Windows.Media.Imaging.FormatConvertedBitmap),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Imaging.FormatConvertedBitmap(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Imaging.FormatConvertedBitmap(); },
+                TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4510,12 +4890,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               224, "Frame",
                                               typeof(System.Windows.Controls.Frame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Frame(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Frame(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4526,11 +4908,13 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               225, "FrameworkContentElement",
                                               typeof(System.Windows.FrameworkContentElement),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.FrameworkContentElement(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.FrameworkContentElement(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4541,12 +4925,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               226, "FrameworkElement",
                                               typeof(System.Windows.FrameworkElement),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.FrameworkElement(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.FrameworkElement(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4557,8 +4943,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               227, "FrameworkElementFactory",
                                               typeof(System.Windows.FrameworkElementFactory),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.FrameworkElementFactory(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.FrameworkElementFactory(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4569,8 +4957,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               228, "FrameworkPropertyMetadata",
                                               typeof(System.Windows.FrameworkPropertyMetadata),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.FrameworkPropertyMetadata(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.FrameworkPropertyMetadata(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4581,9 +4971,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               229, "FrameworkPropertyMetadataOptions",
                                               typeof(System.Windows.FrameworkPropertyMetadataOptions),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.FrameworkPropertyMetadataOptions(); };
-            bamlType.TypeConverterType = typeof(System.Windows.FrameworkPropertyMetadataOptions);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.FrameworkPropertyMetadataOptions(); },
+                TypeConverterType = typeof(System.Windows.FrameworkPropertyMetadataOptions)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4605,8 +4997,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               231, "FrameworkTemplate",
                                               typeof(System.Windows.FrameworkTemplate),
-                                              isBamlType, useV3Rules);
-            bamlType.ContentPropertyName = "Template";
+                                              isBamlType, useV3Rules)
+            {
+                ContentPropertyName = "Template"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4650,9 +5044,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               235, "GeneralTransformCollection",
                                               typeof(System.Windows.Media.GeneralTransformCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.GeneralTransformCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.GeneralTransformCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4663,9 +5059,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               236, "GeneralTransformGroup",
                                               typeof(System.Windows.Media.GeneralTransformGroup),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.GeneralTransformGroup(); };
-            bamlType.ContentPropertyName = "Children";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.GeneralTransformGroup(); },
+                ContentPropertyName = "Children"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4676,8 +5074,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               237, "Geometry",
                                               typeof(System.Windows.Media.Geometry),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Media.GeometryConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Media.GeometryConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4699,9 +5099,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               239, "GeometryCollection",
                                               typeof(System.Windows.Media.GeometryCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.GeometryCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.GeometryCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4712,8 +5114,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               240, "GeometryConverter",
                                               typeof(System.Windows.Media.GeometryConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.GeometryConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.GeometryConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4724,8 +5128,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               241, "GeometryDrawing",
                                               typeof(System.Windows.Media.GeometryDrawing),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.GeometryDrawing(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.GeometryDrawing(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4736,10 +5142,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               242, "GeometryGroup",
                                               typeof(System.Windows.Media.GeometryGroup),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.GeometryGroup(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.TypeConverterType = typeof(System.Windows.Media.GeometryConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.GeometryGroup(); },
+                ContentPropertyName = "Children",
+                TypeConverterType = typeof(System.Windows.Media.GeometryConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4750,8 +5158,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               243, "GeometryModel3D",
                                               typeof(System.Windows.Media.Media3D.GeometryModel3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.GeometryModel3D(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.GeometryModel3D(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4762,8 +5172,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               244, "GestureRecognizer",
                                               typeof(System.Windows.Ink.GestureRecognizer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Ink.GestureRecognizer(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Ink.GestureRecognizer(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4785,8 +5197,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               246, "GifBitmapEncoder",
                                               typeof(System.Windows.Media.Imaging.GifBitmapEncoder),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Imaging.GifBitmapEncoder(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Imaging.GifBitmapEncoder(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4797,8 +5211,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               247, "GlyphRun",
                                               typeof(System.Windows.Media.GlyphRun),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.GlyphRun(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.GlyphRun(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4809,8 +5225,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               248, "GlyphRunDrawing",
                                               typeof(System.Windows.Media.GlyphRunDrawing),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.GlyphRunDrawing(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.GlyphRunDrawing(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4821,8 +5239,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               249, "GlyphTypeface",
                                               typeof(System.Windows.Media.GlyphTypeface),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.GlyphTypeface(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.GlyphTypeface(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4833,12 +5253,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               250, "Glyphs",
                                               typeof(System.Windows.Documents.Glyphs),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.Glyphs(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.Glyphs(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4849,9 +5271,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               251, "GradientBrush",
                                               typeof(System.Windows.Media.GradientBrush),
-                                              isBamlType, useV3Rules);
-            bamlType.ContentPropertyName = "GradientStops";
-            bamlType.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                              isBamlType, useV3Rules)
+            {
+                ContentPropertyName = "GradientStops",
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4862,8 +5286,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               252, "GradientStop",
                                               typeof(System.Windows.Media.GradientStop),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.GradientStop(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.GradientStop(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4874,9 +5300,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               253, "GradientStopCollection",
                                               typeof(System.Windows.Media.GradientStopCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.GradientStopCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.GradientStopCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4887,13 +5315,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               254, "Grid",
                                               typeof(System.Windows.Controls.Grid),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Grid(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Grid(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4904,9 +5334,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               255, "GridLength",
                                               typeof(System.Windows.GridLength),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.GridLength(); };
-            bamlType.TypeConverterType = typeof(System.Windows.GridLengthConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.GridLength(); },
+                TypeConverterType = typeof(System.Windows.GridLengthConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4917,8 +5349,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               256, "GridLengthConverter",
                                               typeof(System.Windows.GridLengthConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.GridLengthConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.GridLengthConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4929,12 +5363,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               257, "GridSplitter",
                                               typeof(System.Windows.Controls.GridSplitter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.GridSplitter(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.GridSplitter(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4945,9 +5381,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               258, "GridView",
                                               typeof(System.Windows.Controls.GridView),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.GridView(); };
-            bamlType.ContentPropertyName = "Columns";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.GridView(); },
+                ContentPropertyName = "Columns"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4958,9 +5396,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               259, "GridViewColumn",
                                               typeof(System.Windows.Controls.GridViewColumn),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.GridViewColumn(); };
-            bamlType.ContentPropertyName = "Header";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.GridViewColumn(); },
+                ContentPropertyName = "Header"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4971,13 +5411,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               260, "GridViewColumnHeader",
                                               typeof(System.Windows.Controls.GridViewColumnHeader),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.GridViewColumnHeader(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.GridViewColumnHeader(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -4988,12 +5430,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               261, "GridViewHeaderRowPresenter",
                                               typeof(System.Windows.Controls.GridViewHeaderRowPresenter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.GridViewHeaderRowPresenter(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.GridViewHeaderRowPresenter(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5004,12 +5448,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               262, "GridViewRowPresenter",
                                               typeof(System.Windows.Controls.GridViewRowPresenter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.GridViewRowPresenter(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.GridViewRowPresenter(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5020,11 +5466,13 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               263, "GridViewRowPresenterBase",
                                               typeof(System.Windows.Controls.Primitives.GridViewRowPresenterBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5035,13 +5483,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               264, "GroupBox",
                                               typeof(System.Windows.Controls.GroupBox),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.GroupBox(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.GroupBox(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5052,13 +5502,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               265, "GroupItem",
                                               typeof(System.Windows.Controls.GroupItem),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.GroupItem(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.GroupItem(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5069,9 +5521,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               266, "Guid",
                                               typeof(System.Guid),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Guid(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.GuidConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Guid(); },
+                TypeConverterType = typeof(System.ComponentModel.GuidConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5082,8 +5536,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               267, "GuidConverter",
                                               typeof(System.ComponentModel.GuidConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.GuidConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.GuidConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5094,8 +5550,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               268, "GuidelineSet",
                                               typeof(System.Windows.Media.GuidelineSet),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.GuidelineSet(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.GuidelineSet(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5106,13 +5564,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               269, "HeaderedContentControl",
                                               typeof(System.Windows.Controls.HeaderedContentControl),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.HeaderedContentControl(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.HeaderedContentControl(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5123,13 +5583,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               270, "HeaderedItemsControl",
                                               typeof(System.Windows.Controls.HeaderedItemsControl),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.HeaderedItemsControl(); };
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.HeaderedItemsControl(); },
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5140,10 +5602,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               271, "HierarchicalDataTemplate",
                                               typeof(System.Windows.HierarchicalDataTemplate),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.HierarchicalDataTemplate(); };
-            bamlType.ContentPropertyName = "Template";
-            bamlType.DictionaryKeyPropertyName = "DataTemplateKey";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.HierarchicalDataTemplate(); },
+                ContentPropertyName = "Template",
+                DictionaryKeyPropertyName = "DataTemplateKey"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5154,8 +5618,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               272, "HostVisual",
                                               typeof(System.Windows.Media.HostVisual),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.HostVisual(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.HostVisual(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5166,12 +5632,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               273, "Hyperlink",
                                               typeof(System.Windows.Documents.Hyperlink),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.Hyperlink(); };
-            bamlType.ContentPropertyName = "Inlines";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.Hyperlink(); },
+                ContentPropertyName = "Inlines",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5204,8 +5672,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               276, "ICommand",
                                               typeof(System.Windows.Input.ICommand),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Input.CommandConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Input.CommandConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5260,12 +5730,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               281, "Image",
                                               typeof(System.Windows.Controls.Image),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Image(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Image(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5276,9 +5748,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               282, "ImageBrush",
                                               typeof(System.Windows.Media.ImageBrush),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.ImageBrush(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.ImageBrush(); },
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5289,8 +5763,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               283, "ImageDrawing",
                                               typeof(System.Windows.Media.ImageDrawing),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.ImageDrawing(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.ImageDrawing(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5312,8 +5788,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               285, "ImageSource",
                                               typeof(System.Windows.Media.ImageSource),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5324,8 +5802,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               286, "ImageSourceConverter",
                                               typeof(System.Windows.Media.ImageSourceConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.ImageSourceConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.ImageSourceConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5347,13 +5827,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               288, "InkCanvas",
                                               typeof(System.Windows.Controls.InkCanvas),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.InkCanvas(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.InkCanvas(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5364,13 +5846,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               289, "InkPresenter",
                                               typeof(System.Windows.Controls.InkPresenter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.InkPresenter(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.InkPresenter(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5381,10 +5865,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               290, "Inline",
                                               typeof(System.Windows.Documents.Inline),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5395,9 +5881,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               291, "InlineCollection",
                                               typeof(System.Windows.Documents.InlineCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.WhitespaceSignificantCollection = true;
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                WhitespaceSignificantCollection = true,
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5408,12 +5896,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               292, "InlineUIContainer",
                                               typeof(System.Windows.Documents.InlineUIContainer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.InlineUIContainer(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.InlineUIContainer(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5479,9 +5969,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               298, "InputScope",
                                               typeof(System.Windows.Input.InputScope),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.InputScope(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Input.InputScopeConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.InputScope(); },
+                TypeConverterType = typeof(System.Windows.Input.InputScopeConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5492,8 +5984,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               299, "InputScopeConverter",
                                               typeof(System.Windows.Input.InputScopeConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.InputScopeConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.InputScopeConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5504,10 +5998,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               300, "InputScopeName",
                                               typeof(System.Windows.Input.InputScopeName),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.InputScopeName(); };
-            bamlType.ContentPropertyName = "NameValue";
-            bamlType.TypeConverterType = typeof(System.Windows.Input.InputScopeNameConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.InputScopeName(); },
+                ContentPropertyName = "NameValue",
+                TypeConverterType = typeof(System.Windows.Input.InputScopeNameConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5518,8 +6014,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               301, "InputScopeNameConverter",
                                               typeof(System.Windows.Input.InputScopeNameConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.InputScopeNameConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.InputScopeNameConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5530,9 +6028,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               302, "Int16",
                                               typeof(System.Int16),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Int16(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.Int16Converter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Int16(); },
+                TypeConverterType = typeof(System.ComponentModel.Int16Converter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5543,9 +6043,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               303, "Int16Animation",
                                               typeof(System.Windows.Media.Animation.Int16Animation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Int16Animation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Int16Animation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5556,8 +6058,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               304, "Int16AnimationBase",
                                               typeof(System.Windows.Media.Animation.Int16AnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5568,10 +6072,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               305, "Int16AnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.Int16AnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Int16AnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Int16AnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5582,8 +6088,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               306, "Int16Converter",
                                               typeof(System.ComponentModel.Int16Converter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.Int16Converter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.Int16Converter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5605,9 +6113,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               308, "Int16KeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.Int16KeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Int16KeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Int16KeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5618,9 +6128,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               309, "Int32",
                                               typeof(System.Int32),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Int32(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.Int32Converter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Int32(); },
+                TypeConverterType = typeof(System.ComponentModel.Int32Converter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5631,9 +6143,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               310, "Int32Animation",
                                               typeof(System.Windows.Media.Animation.Int32Animation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Int32Animation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Int32Animation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5644,8 +6158,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               311, "Int32AnimationBase",
                                               typeof(System.Windows.Media.Animation.Int32AnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5656,10 +6172,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               312, "Int32AnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.Int32AnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Int32AnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Int32AnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5670,10 +6188,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               313, "Int32Collection",
                                               typeof(System.Windows.Media.Int32Collection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Int32Collection(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.Int32CollectionConverter);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Int32Collection(); },
+                TypeConverterType = typeof(System.Windows.Media.Int32CollectionConverter),
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5684,8 +6204,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               314, "Int32CollectionConverter",
                                               typeof(System.Windows.Media.Int32CollectionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Int32CollectionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Int32CollectionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5696,8 +6218,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               315, "Int32Converter",
                                               typeof(System.ComponentModel.Int32Converter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.Int32Converter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.Int32Converter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5719,9 +6243,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               317, "Int32KeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.Int32KeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Int32KeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Int32KeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5732,9 +6258,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               318, "Int32Rect",
                                               typeof(System.Windows.Int32Rect),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Int32Rect(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Int32RectConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Int32Rect(); },
+                TypeConverterType = typeof(System.Windows.Int32RectConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5745,8 +6273,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               319, "Int32RectConverter",
                                               typeof(System.Windows.Int32RectConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Int32RectConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Int32RectConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5757,9 +6287,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               320, "Int64",
                                               typeof(System.Int64),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Int64(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.Int64Converter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Int64(); },
+                TypeConverterType = typeof(System.ComponentModel.Int64Converter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5770,9 +6302,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               321, "Int64Animation",
                                               typeof(System.Windows.Media.Animation.Int64Animation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Int64Animation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Int64Animation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5783,8 +6317,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               322, "Int64AnimationBase",
                                               typeof(System.Windows.Media.Animation.Int64AnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5795,10 +6331,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               323, "Int64AnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.Int64AnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Int64AnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Int64AnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5809,8 +6347,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               324, "Int64Converter",
                                               typeof(System.ComponentModel.Int64Converter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.Int64Converter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.Int64Converter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5832,9 +6372,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               326, "Int64KeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.Int64KeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Int64KeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Int64KeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5845,12 +6387,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               327, "Italic",
                                               typeof(System.Windows.Documents.Italic),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.Italic(); };
-            bamlType.ContentPropertyName = "Inlines";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.Italic(); },
+                ContentPropertyName = "Inlines",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5861,8 +6405,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               328, "ItemCollection",
                                               typeof(System.Windows.Controls.ItemCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5873,13 +6419,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               329, "ItemsControl",
                                               typeof(System.Windows.Controls.ItemsControl),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ItemsControl(); };
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ItemsControl(); },
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5890,9 +6438,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               330, "ItemsPanelTemplate",
                                               typeof(System.Windows.Controls.ItemsPanelTemplate),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ItemsPanelTemplate(); };
-            bamlType.ContentPropertyName = "Template";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ItemsPanelTemplate(); },
+                ContentPropertyName = "Template"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5903,12 +6453,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               331, "ItemsPresenter",
                                               typeof(System.Windows.Controls.ItemsPresenter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ItemsPresenter(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ItemsPresenter(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5930,8 +6482,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               333, "JournalEntryListConverter",
                                               typeof(System.Windows.Navigation.JournalEntryListConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Navigation.JournalEntryListConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Navigation.JournalEntryListConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5942,8 +6496,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               334, "JournalEntryUnifiedViewConverter",
                                               typeof(System.Windows.Navigation.JournalEntryUnifiedViewConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Navigation.JournalEntryUnifiedViewConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Navigation.JournalEntryUnifiedViewConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5965,8 +6521,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               336, "JpegBitmapEncoder",
                                               typeof(System.Windows.Media.Imaging.JpegBitmapEncoder),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Imaging.JpegBitmapEncoder(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Imaging.JpegBitmapEncoder(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5977,8 +6535,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               337, "KeyBinding",
                                               typeof(System.Windows.Input.KeyBinding),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.KeyBinding(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.KeyBinding(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -5989,8 +6549,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               338, "KeyConverter",
                                               typeof(System.Windows.Input.KeyConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.KeyConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.KeyConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6001,8 +6563,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               339, "KeyGesture",
                                               typeof(System.Windows.Input.KeyGesture),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Input.KeyGestureConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Input.KeyGestureConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6013,8 +6577,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               340, "KeyGestureConverter",
                                               typeof(System.Windows.Input.KeyGestureConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.KeyGestureConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.KeyGestureConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6025,9 +6591,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               341, "KeySpline",
                                               typeof(System.Windows.Media.Animation.KeySpline),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.KeySpline(); };
-            bamlType.TypeConverterType = typeof(System.Windows.KeySplineConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.KeySpline(); },
+                TypeConverterType = typeof(System.Windows.KeySplineConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6038,8 +6606,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               342, "KeySplineConverter",
                                               typeof(System.Windows.KeySplineConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.KeySplineConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.KeySplineConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6050,9 +6620,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               343, "KeyTime",
                                               typeof(System.Windows.Media.Animation.KeyTime),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.KeyTime(); };
-            bamlType.TypeConverterType = typeof(System.Windows.KeyTimeConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.KeyTime(); },
+                TypeConverterType = typeof(System.Windows.KeyTimeConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6063,8 +6635,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               344, "KeyTimeConverter",
                                               typeof(System.Windows.KeyTimeConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.KeyTimeConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.KeyTimeConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6086,13 +6660,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               346, "Label",
                                               typeof(System.Windows.Controls.Label),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Label(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Label(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6114,8 +6690,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               348, "LengthConverter",
                                               typeof(System.Windows.LengthConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.LengthConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.LengthConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6137,12 +6715,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               350, "Line",
                                               typeof(System.Windows.Shapes.Line),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Shapes.Line(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Shapes.Line(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6153,11 +6733,13 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               351, "LineBreak",
                                               typeof(System.Windows.Documents.LineBreak),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.LineBreak(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.LineBreak(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6168,9 +6750,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               352, "LineGeometry",
                                               typeof(System.Windows.Media.LineGeometry),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.LineGeometry(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.GeometryConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.LineGeometry(); },
+                TypeConverterType = typeof(System.Windows.Media.GeometryConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6181,8 +6765,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               353, "LineSegment",
                                               typeof(System.Windows.Media.LineSegment),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.LineSegment(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.LineSegment(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6193,8 +6779,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               354, "LinearByteKeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearByteKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearByteKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearByteKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6205,8 +6793,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               355, "LinearColorKeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearColorKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearColorKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearColorKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6217,8 +6807,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               356, "LinearDecimalKeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearDecimalKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearDecimalKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearDecimalKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6229,8 +6821,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               357, "LinearDoubleKeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearDoubleKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearDoubleKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearDoubleKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6241,10 +6835,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               358, "LinearGradientBrush",
                                               typeof(System.Windows.Media.LinearGradientBrush),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.LinearGradientBrush(); };
-            bamlType.ContentPropertyName = "GradientStops";
-            bamlType.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.LinearGradientBrush(); },
+                ContentPropertyName = "GradientStops",
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6255,8 +6851,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               359, "LinearInt16KeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearInt16KeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearInt16KeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearInt16KeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6267,8 +6865,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               360, "LinearInt32KeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearInt32KeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearInt32KeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearInt32KeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6279,8 +6879,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               361, "LinearInt64KeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearInt64KeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearInt64KeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearInt64KeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6291,8 +6893,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               362, "LinearPoint3DKeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearPoint3DKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearPoint3DKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearPoint3DKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6303,8 +6907,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               363, "LinearPointKeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearPointKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearPointKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearPointKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6315,8 +6921,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               364, "LinearQuaternionKeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearQuaternionKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearQuaternionKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearQuaternionKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6327,8 +6935,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               365, "LinearRectKeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearRectKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearRectKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearRectKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6339,8 +6949,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               366, "LinearRotation3DKeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearRotation3DKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearRotation3DKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearRotation3DKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6351,8 +6963,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               367, "LinearSingleKeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearSingleKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearSingleKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearSingleKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6363,8 +6977,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               368, "LinearSizeKeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearSizeKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearSizeKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearSizeKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6375,8 +6991,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               369, "LinearThicknessKeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearThicknessKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearThicknessKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearThicknessKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6387,8 +7005,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               370, "LinearVector3DKeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearVector3DKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearVector3DKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearVector3DKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6399,8 +7019,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               371, "LinearVectorKeyFrame",
                                               typeof(System.Windows.Media.Animation.LinearVectorKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.LinearVectorKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.LinearVectorKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6411,12 +7033,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               372, "List",
                                               typeof(System.Windows.Documents.List),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.List(); };
-            bamlType.ContentPropertyName = "ListItems";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.List(); },
+                ContentPropertyName = "ListItems",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6427,13 +7051,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               373, "ListBox",
                                               typeof(System.Windows.Controls.ListBox),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ListBox(); };
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ListBox(); },
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6444,13 +7070,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               374, "ListBoxItem",
                                               typeof(System.Windows.Controls.ListBoxItem),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ListBoxItem(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ListBoxItem(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6472,12 +7100,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               376, "ListItem",
                                               typeof(System.Windows.Documents.ListItem),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.ListItem(); };
-            bamlType.ContentPropertyName = "Blocks";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.ListItem(); },
+                ContentPropertyName = "Blocks",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6488,13 +7118,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               377, "ListView",
                                               typeof(System.Windows.Controls.ListView),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ListView(); };
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ListView(); },
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6505,13 +7137,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               378, "ListViewItem",
                                               typeof(System.Windows.Controls.ListViewItem),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ListViewItem(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ListViewItem(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6566,9 +7200,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               383, "MaterialCollection",
                                               typeof(System.Windows.Media.Media3D.MaterialCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.MaterialCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.MaterialCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6579,9 +7215,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               384, "MaterialGroup",
                                               typeof(System.Windows.Media.Media3D.MaterialGroup),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.MaterialGroup(); };
-            bamlType.ContentPropertyName = "Children";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.MaterialGroup(); },
+                ContentPropertyName = "Children"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6592,9 +7230,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               385, "Matrix",
                                               typeof(System.Windows.Media.Matrix),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Matrix(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.MatrixConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Matrix(); },
+                TypeConverterType = typeof(System.Windows.Media.MatrixConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6605,9 +7245,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               386, "Matrix3D",
                                               typeof(System.Windows.Media.Media3D.Matrix3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Matrix3D(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.Media3D.Matrix3DConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Matrix3D(); },
+                TypeConverterType = typeof(System.Windows.Media.Media3D.Matrix3DConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6618,8 +7260,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               387, "Matrix3DConverter",
                                               typeof(System.Windows.Media.Media3D.Matrix3DConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Matrix3DConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Matrix3DConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6630,8 +7274,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               388, "MatrixAnimationBase",
                                               typeof(System.Windows.Media.Animation.MatrixAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6642,10 +7288,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               389, "MatrixAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.MatrixAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.MatrixAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.MatrixAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6656,9 +7304,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               390, "MatrixAnimationUsingPath",
                                               typeof(System.Windows.Media.Animation.MatrixAnimationUsingPath),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.MatrixAnimationUsingPath(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.MatrixAnimationUsingPath(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6669,8 +7319,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               391, "MatrixCamera",
                                               typeof(System.Windows.Media.Media3D.MatrixCamera),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.MatrixCamera(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.MatrixCamera(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6681,8 +7333,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               392, "MatrixConverter",
                                               typeof(System.Windows.Media.MatrixConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.MatrixConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.MatrixConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6704,9 +7358,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               394, "MatrixKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.MatrixKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.MatrixKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.MatrixKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6717,9 +7373,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               395, "MatrixTransform",
                                               typeof(System.Windows.Media.MatrixTransform),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.MatrixTransform(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.TransformConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.MatrixTransform(); },
+                TypeConverterType = typeof(System.Windows.Media.TransformConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6730,8 +7388,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               396, "MatrixTransform3D",
                                               typeof(System.Windows.Media.Media3D.MatrixTransform3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.MatrixTransform3D(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.MatrixTransform3D(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6753,12 +7413,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               398, "MediaElement",
                                               typeof(System.Windows.Controls.MediaElement),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.MediaElement(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.MediaElement(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6769,8 +7431,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               399, "MediaPlayer",
                                               typeof(System.Windows.Media.MediaPlayer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.MediaPlayer(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.MediaPlayer(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6781,9 +7445,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               400, "MediaTimeline",
                                               typeof(System.Windows.Media.MediaTimeline),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.MediaTimeline(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.MediaTimeline(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6794,13 +7460,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               401, "Menu",
                                               typeof(System.Windows.Controls.Menu),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Menu(); };
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Menu(); },
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6811,12 +7479,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               402, "MenuBase",
                                               typeof(System.Windows.Controls.Primitives.MenuBase),
-                                              isBamlType, useV3Rules);
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6827,13 +7497,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               403, "MenuItem",
                                               typeof(System.Windows.Controls.MenuItem),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.MenuItem(); };
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.MenuItem(); },
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6844,8 +7516,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               404, "MenuScrollingVisibilityConverter",
                                               typeof(System.Windows.Controls.MenuScrollingVisibilityConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.MenuScrollingVisibilityConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.MenuScrollingVisibilityConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6856,8 +7530,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               405, "MeshGeometry3D",
                                               typeof(System.Windows.Media.Media3D.MeshGeometry3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.MeshGeometry3D(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.MeshGeometry3D(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6879,9 +7555,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               407, "Model3DCollection",
                                               typeof(System.Windows.Media.Media3D.Model3DCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Model3DCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Model3DCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6892,9 +7570,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               408, "Model3DGroup",
                                               typeof(System.Windows.Media.Media3D.Model3DGroup),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Model3DGroup(); };
-            bamlType.ContentPropertyName = "Children";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Model3DGroup(); },
+                ContentPropertyName = "Children"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6905,9 +7585,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               409, "ModelVisual3D",
                                               typeof(System.Windows.Media.Media3D.ModelVisual3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.ModelVisual3D(); };
-            bamlType.ContentPropertyName = "Children";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.ModelVisual3D(); },
+                ContentPropertyName = "Children"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6918,8 +7600,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               410, "ModifierKeysConverter",
                                               typeof(System.Windows.Input.ModifierKeysConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.ModifierKeysConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.ModifierKeysConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6930,8 +7614,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               411, "MouseActionConverter",
                                               typeof(System.Windows.Input.MouseActionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.MouseActionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.MouseActionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6942,8 +7628,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               412, "MouseBinding",
                                               typeof(System.Windows.Input.MouseBinding),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.MouseBinding(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.MouseBinding(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6965,9 +7653,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               414, "MouseGesture",
                                               typeof(System.Windows.Input.MouseGesture),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.MouseGesture(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Input.MouseGestureConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.MouseGesture(); },
+                TypeConverterType = typeof(System.Windows.Input.MouseGestureConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6978,8 +7668,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               415, "MouseGestureConverter",
                                               typeof(System.Windows.Input.MouseGestureConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.MouseGestureConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.MouseGestureConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -6990,9 +7682,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               416, "MultiBinding",
                                               typeof(System.Windows.Data.MultiBinding),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Data.MultiBinding(); };
-            bamlType.ContentPropertyName = "Bindings";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Data.MultiBinding(); },
+                ContentPropertyName = "Bindings"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7003,8 +7697,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               417, "MultiBindingExpression",
                                               typeof(System.Windows.Data.MultiBindingExpression),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.ExpressionConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.ExpressionConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7015,9 +7711,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               418, "MultiDataTrigger",
                                               typeof(System.Windows.MultiDataTrigger),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.MultiDataTrigger(); };
-            bamlType.ContentPropertyName = "Setters";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.MultiDataTrigger(); },
+                ContentPropertyName = "Setters"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7028,9 +7726,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               419, "MultiTrigger",
                                               typeof(System.Windows.MultiTrigger),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.MultiTrigger(); };
-            bamlType.ContentPropertyName = "Setters";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.MultiTrigger(); },
+                ContentPropertyName = "Setters"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7041,9 +7741,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               420, "NameScope",
                                               typeof(System.Windows.NameScope),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.NameScope(); };
-            bamlType.CollectionKind = XamlCollectionKind.Dictionary;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.NameScope(); },
+                CollectionKind = XamlCollectionKind.Dictionary
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7054,12 +7756,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               421, "NavigationWindow",
                                               typeof(System.Windows.Navigation.NavigationWindow),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Navigation.NavigationWindow(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Navigation.NavigationWindow(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7070,8 +7774,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               422, "NullExtension",
                                               typeof(System.Windows.Markup.NullExtension),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.NullExtension(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.NullExtension(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7082,8 +7788,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               423, "NullableBoolConverter",
                                               typeof(System.Windows.NullableBoolConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.NullableBoolConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.NullableBoolConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7105,8 +7813,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               425, "NumberSubstitution",
                                               typeof(System.Windows.Media.NumberSubstitution),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.NumberSubstitution(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.NumberSubstitution(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7117,9 +7827,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               426, "Object",
                                               typeof(System.Object),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Object(); };
-            bamlType.HasSpecialValueConverter = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Object(); },
+                HasSpecialValueConverter = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7130,8 +7842,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               427, "ObjectAnimationBase",
                                               typeof(System.Windows.Media.Animation.ObjectAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7142,10 +7856,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               428, "ObjectAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.ObjectAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.ObjectAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.ObjectAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7156,8 +7872,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               429, "ObjectDataProvider",
                                               typeof(System.Windows.Data.ObjectDataProvider),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Data.ObjectDataProvider(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Data.ObjectDataProvider(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7179,9 +7897,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               431, "ObjectKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.ObjectKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.ObjectKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.ObjectKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7192,8 +7912,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               432, "OrthographicCamera",
                                               typeof(System.Windows.Media.Media3D.OrthographicCamera),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.OrthographicCamera(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.OrthographicCamera(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7204,8 +7926,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               433, "OuterGlowBitmapEffect",
                                               typeof(System.Windows.Media.Effects.OuterGlowBitmapEffect),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Effects.OuterGlowBitmapEffect(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Effects.OuterGlowBitmapEffect(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7216,13 +7940,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               434, "Page",
                                               typeof(System.Windows.Controls.Page),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Page(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Page(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7233,13 +7959,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               435, "PageContent",
                                               typeof(System.Windows.Documents.PageContent),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.PageContent(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.PageContent(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7250,12 +7978,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               436, "PageFunctionBase",
                                               typeof(System.Windows.Navigation.PageFunctionBase),
-                                              isBamlType, useV3Rules);
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7266,12 +7996,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               437, "Panel",
                                               typeof(System.Windows.Controls.Panel),
-                                              isBamlType, useV3Rules);
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7282,12 +8014,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               438, "Paragraph",
                                               typeof(System.Windows.Documents.Paragraph),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.Paragraph(); };
-            bamlType.ContentPropertyName = "Inlines";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.Paragraph(); },
+                ContentPropertyName = "Inlines",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7298,10 +8032,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               439, "ParallelTimeline",
                                               typeof(System.Windows.Media.Animation.ParallelTimeline),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.ParallelTimeline(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.ParallelTimeline(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7312,8 +8048,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               440, "ParserContext",
                                               typeof(System.Windows.Markup.ParserContext),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.ParserContext(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.ParserContext(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7324,12 +8062,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               441, "PasswordBox",
                                               typeof(System.Windows.Controls.PasswordBox),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.PasswordBox(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.PasswordBox(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7340,12 +8080,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               442, "Path",
                                               typeof(System.Windows.Shapes.Path),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Shapes.Path(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Shapes.Path(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7356,9 +8098,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               443, "PathFigure",
                                               typeof(System.Windows.Media.PathFigure),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.PathFigure(); };
-            bamlType.ContentPropertyName = "Segments";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.PathFigure(); },
+                ContentPropertyName = "Segments"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7369,10 +8113,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               444, "PathFigureCollection",
                                               typeof(System.Windows.Media.PathFigureCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.PathFigureCollection(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.PathFigureCollectionConverter);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.PathFigureCollection(); },
+                TypeConverterType = typeof(System.Windows.Media.PathFigureCollectionConverter),
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7383,8 +8129,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               445, "PathFigureCollectionConverter",
                                               typeof(System.Windows.Media.PathFigureCollectionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.PathFigureCollectionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.PathFigureCollectionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7395,10 +8143,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               446, "PathGeometry",
                                               typeof(System.Windows.Media.PathGeometry),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.PathGeometry(); };
-            bamlType.ContentPropertyName = "Figures";
-            bamlType.TypeConverterType = typeof(System.Windows.Media.GeometryConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.PathGeometry(); },
+                ContentPropertyName = "Figures",
+                TypeConverterType = typeof(System.Windows.Media.GeometryConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7420,9 +8170,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               448, "PathSegmentCollection",
                                               typeof(System.Windows.Media.PathSegmentCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.PathSegmentCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.PathSegmentCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7433,8 +8185,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               449, "PauseStoryboard",
                                               typeof(System.Windows.Media.Animation.PauseStoryboard),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.PauseStoryboard(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.PauseStoryboard(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7445,8 +8199,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               450, "Pen",
                                               typeof(System.Windows.Media.Pen),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Pen(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Pen(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7457,8 +8213,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               451, "PerspectiveCamera",
                                               typeof(System.Windows.Media.Media3D.PerspectiveCamera),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.PerspectiveCamera(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.PerspectiveCamera(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7469,9 +8227,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               452, "PixelFormat",
                                               typeof(System.Windows.Media.PixelFormat),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.PixelFormat(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.PixelFormatConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.PixelFormat(); },
+                TypeConverterType = typeof(System.Windows.Media.PixelFormatConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7482,8 +8242,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               453, "PixelFormatConverter",
                                               typeof(System.Windows.Media.PixelFormatConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.PixelFormatConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.PixelFormatConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7505,8 +8267,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               455, "PngBitmapEncoder",
                                               typeof(System.Windows.Media.Imaging.PngBitmapEncoder),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Imaging.PngBitmapEncoder(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Imaging.PngBitmapEncoder(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7517,9 +8281,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               456, "Point",
                                               typeof(System.Windows.Point),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Point(); };
-            bamlType.TypeConverterType = typeof(System.Windows.PointConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Point(); },
+                TypeConverterType = typeof(System.Windows.PointConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7530,9 +8296,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               457, "Point3D",
                                               typeof(System.Windows.Media.Media3D.Point3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Point3D(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.Media3D.Point3DConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Point3D(); },
+                TypeConverterType = typeof(System.Windows.Media.Media3D.Point3DConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7543,9 +8311,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               458, "Point3DAnimation",
                                               typeof(System.Windows.Media.Animation.Point3DAnimation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Point3DAnimation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Point3DAnimation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7556,8 +8326,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               459, "Point3DAnimationBase",
                                               typeof(System.Windows.Media.Animation.Point3DAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7568,10 +8340,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               460, "Point3DAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.Point3DAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Point3DAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Point3DAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7582,10 +8356,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               461, "Point3DCollection",
                                               typeof(System.Windows.Media.Media3D.Point3DCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Point3DCollection(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.Media3D.Point3DCollectionConverter);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Point3DCollection(); },
+                TypeConverterType = typeof(System.Windows.Media.Media3D.Point3DCollectionConverter),
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7596,8 +8372,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               462, "Point3DCollectionConverter",
                                               typeof(System.Windows.Media.Media3D.Point3DCollectionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Point3DCollectionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Point3DCollectionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7608,8 +8386,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               463, "Point3DConverter",
                                               typeof(System.Windows.Media.Media3D.Point3DConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Point3DConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Point3DConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7631,9 +8411,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               465, "Point3DKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.Point3DKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Point3DKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Point3DKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7644,9 +8426,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               466, "Point4D",
                                               typeof(System.Windows.Media.Media3D.Point4D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Point4D(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.Media3D.Point4DConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Point4D(); },
+                TypeConverterType = typeof(System.Windows.Media.Media3D.Point4DConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7657,8 +8441,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               467, "Point4DConverter",
                                               typeof(System.Windows.Media.Media3D.Point4DConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Point4DConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Point4DConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7669,9 +8455,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               468, "PointAnimation",
                                               typeof(System.Windows.Media.Animation.PointAnimation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.PointAnimation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.PointAnimation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7682,8 +8470,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               469, "PointAnimationBase",
                                               typeof(System.Windows.Media.Animation.PointAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7694,10 +8484,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               470, "PointAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.PointAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.PointAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.PointAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7708,9 +8500,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               471, "PointAnimationUsingPath",
                                               typeof(System.Windows.Media.Animation.PointAnimationUsingPath),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.PointAnimationUsingPath(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.PointAnimationUsingPath(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7721,10 +8515,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               472, "PointCollection",
                                               typeof(System.Windows.Media.PointCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.PointCollection(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.PointCollectionConverter);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.PointCollection(); },
+                TypeConverterType = typeof(System.Windows.Media.PointCollectionConverter),
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7735,8 +8531,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               473, "PointCollectionConverter",
                                               typeof(System.Windows.Media.PointCollectionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.PointCollectionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.PointCollectionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7747,8 +8545,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               474, "PointConverter",
                                               typeof(System.Windows.PointConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.PointConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.PointConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7759,8 +8559,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               475, "PointIListConverter",
                                               typeof(System.Windows.Media.Converters.PointIListConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Converters.PointIListConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Converters.PointIListConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7782,9 +8584,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               477, "PointKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.PointKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.PointKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.PointKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7795,8 +8599,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               478, "PointLight",
                                               typeof(System.Windows.Media.Media3D.PointLight),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.PointLight(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.PointLight(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7818,8 +8624,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               480, "PolyBezierSegment",
                                               typeof(System.Windows.Media.PolyBezierSegment),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.PolyBezierSegment(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.PolyBezierSegment(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7830,8 +8638,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               481, "PolyLineSegment",
                                               typeof(System.Windows.Media.PolyLineSegment),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.PolyLineSegment(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.PolyLineSegment(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7842,8 +8652,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               482, "PolyQuadraticBezierSegment",
                                               typeof(System.Windows.Media.PolyQuadraticBezierSegment),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.PolyQuadraticBezierSegment(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.PolyQuadraticBezierSegment(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7854,12 +8666,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               483, "Polygon",
                                               typeof(System.Windows.Shapes.Polygon),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Shapes.Polygon(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Shapes.Polygon(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7870,12 +8684,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               484, "Polyline",
                                               typeof(System.Windows.Shapes.Polyline),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Shapes.Polyline(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Shapes.Polyline(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7886,13 +8702,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               485, "Popup",
                                               typeof(System.Windows.Controls.Primitives.Popup),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.Popup(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.Popup(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7914,9 +8732,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               487, "PriorityBinding",
                                               typeof(System.Windows.Data.PriorityBinding),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Data.PriorityBinding(); };
-            bamlType.ContentPropertyName = "Bindings";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Data.PriorityBinding(); },
+                ContentPropertyName = "Bindings"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7927,8 +8747,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               488, "PriorityBindingExpression",
                                               typeof(System.Windows.Data.PriorityBindingExpression),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.ExpressionConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.ExpressionConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7939,12 +8761,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               489, "ProgressBar",
                                               typeof(System.Windows.Controls.ProgressBar),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ProgressBar(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ProgressBar(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7966,8 +8790,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               491, "PropertyPath",
                                               typeof(System.Windows.PropertyPath),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.PropertyPathConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.PropertyPathConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7978,8 +8804,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               492, "PropertyPathConverter",
                                               typeof(System.Windows.PropertyPathConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.PropertyPathConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.PropertyPathConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -7990,8 +8818,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               493, "QuadraticBezierSegment",
                                               typeof(System.Windows.Media.QuadraticBezierSegment),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.QuadraticBezierSegment(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.QuadraticBezierSegment(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8002,9 +8832,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               494, "Quaternion",
                                               typeof(System.Windows.Media.Media3D.Quaternion),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Quaternion(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.Media3D.QuaternionConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Quaternion(); },
+                TypeConverterType = typeof(System.Windows.Media.Media3D.QuaternionConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8015,9 +8847,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               495, "QuaternionAnimation",
                                               typeof(System.Windows.Media.Animation.QuaternionAnimation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.QuaternionAnimation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.QuaternionAnimation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8028,8 +8862,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               496, "QuaternionAnimationBase",
                                               typeof(System.Windows.Media.Animation.QuaternionAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8040,10 +8876,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               497, "QuaternionAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.QuaternionAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.QuaternionAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.QuaternionAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8054,8 +8892,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               498, "QuaternionConverter",
                                               typeof(System.Windows.Media.Media3D.QuaternionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.QuaternionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.QuaternionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8077,9 +8917,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               500, "QuaternionKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.QuaternionKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.QuaternionKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.QuaternionKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8090,8 +8932,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               501, "QuaternionRotation3D",
                                               typeof(System.Windows.Media.Media3D.QuaternionRotation3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.QuaternionRotation3D(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.QuaternionRotation3D(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8102,10 +8946,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               502, "RadialGradientBrush",
                                               typeof(System.Windows.Media.RadialGradientBrush),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.RadialGradientBrush(); };
-            bamlType.ContentPropertyName = "GradientStops";
-            bamlType.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.RadialGradientBrush(); },
+                ContentPropertyName = "GradientStops",
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8116,13 +8962,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               503, "RadioButton",
                                               typeof(System.Windows.Controls.RadioButton),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.RadioButton(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.RadioButton(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8133,11 +8981,13 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               504, "RangeBase",
                                               typeof(System.Windows.Controls.Primitives.RangeBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8148,9 +8998,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               505, "Rect",
                                               typeof(System.Windows.Rect),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Rect(); };
-            bamlType.TypeConverterType = typeof(System.Windows.RectConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Rect(); },
+                TypeConverterType = typeof(System.Windows.RectConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8161,9 +9013,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               506, "Rect3D",
                                               typeof(System.Windows.Media.Media3D.Rect3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Rect3D(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.Media3D.Rect3DConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Rect3D(); },
+                TypeConverterType = typeof(System.Windows.Media.Media3D.Rect3DConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8174,8 +9028,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               507, "Rect3DConverter",
                                               typeof(System.Windows.Media.Media3D.Rect3DConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Rect3DConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Rect3DConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8186,9 +9042,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               508, "RectAnimation",
                                               typeof(System.Windows.Media.Animation.RectAnimation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.RectAnimation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.RectAnimation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8199,8 +9057,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               509, "RectAnimationBase",
                                               typeof(System.Windows.Media.Animation.RectAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8211,10 +9071,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               510, "RectAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.RectAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.RectAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.RectAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8225,8 +9087,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               511, "RectConverter",
                                               typeof(System.Windows.RectConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.RectConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.RectConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8248,9 +9112,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               513, "RectKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.RectKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.RectKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.RectKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8261,12 +9127,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               514, "Rectangle",
                                               typeof(System.Windows.Shapes.Rectangle),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Shapes.Rectangle(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Shapes.Rectangle(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8277,9 +9145,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               515, "RectangleGeometry",
                                               typeof(System.Windows.Media.RectangleGeometry),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.RectangleGeometry(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.GeometryConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.RectangleGeometry(); },
+                TypeConverterType = typeof(System.Windows.Media.GeometryConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8290,8 +9160,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               516, "RelativeSource",
                                               typeof(System.Windows.Data.RelativeSource),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Data.RelativeSource(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Data.RelativeSource(); }
+            };
             bamlType.Constructors.Add(1, new Baml6ConstructorInfo(
                             new List<Type>() { typeof(System.Windows.Data.RelativeSourceMode) },
                             delegate(object[] arguments)
@@ -8318,8 +9190,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               517, "RemoveStoryboard",
                                               typeof(System.Windows.Media.Animation.RemoveStoryboard),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.RemoveStoryboard(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.RemoveStoryboard(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8341,8 +9215,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               519, "RenderTargetBitmap",
                                               typeof(System.Windows.Media.Imaging.RenderTargetBitmap),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8353,9 +9229,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               520, "RepeatBehavior",
                                               typeof(System.Windows.Media.Animation.RepeatBehavior),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.RepeatBehavior(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.Animation.RepeatBehaviorConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.RepeatBehavior(); },
+                TypeConverterType = typeof(System.Windows.Media.Animation.RepeatBehaviorConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8366,8 +9244,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               521, "RepeatBehaviorConverter",
                                               typeof(System.Windows.Media.Animation.RepeatBehaviorConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.RepeatBehaviorConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.RepeatBehaviorConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8378,13 +9258,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               522, "RepeatButton",
                                               typeof(System.Windows.Controls.Primitives.RepeatButton),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.RepeatButton(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.RepeatButton(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8395,12 +9277,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               523, "ResizeGrip",
                                               typeof(System.Windows.Controls.Primitives.ResizeGrip),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.ResizeGrip(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.ResizeGrip(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8411,10 +9295,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               524, "ResourceDictionary",
                                               typeof(System.Windows.ResourceDictionary),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.ResourceDictionary(); };
-            bamlType.IsUsableDuringInit = true;
-            bamlType.CollectionKind = XamlCollectionKind.Dictionary;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.ResourceDictionary(); },
+                IsUsableDuringInit = true,
+                CollectionKind = XamlCollectionKind.Dictionary
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8436,8 +9322,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               526, "ResumeStoryboard",
                                               typeof(System.Windows.Media.Animation.ResumeStoryboard),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.ResumeStoryboard(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.ResumeStoryboard(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8448,13 +9336,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               527, "RichTextBox",
                                               typeof(System.Windows.Controls.RichTextBox),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.RichTextBox(); };
-            bamlType.ContentPropertyName = "Document";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.RichTextBox(); },
+                ContentPropertyName = "Document",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8465,9 +9355,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               528, "RotateTransform",
                                               typeof(System.Windows.Media.RotateTransform),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.RotateTransform(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.TransformConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.RotateTransform(); },
+                TypeConverterType = typeof(System.Windows.Media.TransformConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8478,8 +9370,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               529, "RotateTransform3D",
                                               typeof(System.Windows.Media.Media3D.RotateTransform3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.RotateTransform3D(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.RotateTransform3D(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8501,9 +9395,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               531, "Rotation3DAnimation",
                                               typeof(System.Windows.Media.Animation.Rotation3DAnimation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Rotation3DAnimation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Rotation3DAnimation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8514,8 +9410,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               532, "Rotation3DAnimationBase",
                                               typeof(System.Windows.Media.Animation.Rotation3DAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8526,10 +9424,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               533, "Rotation3DAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.Rotation3DAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Rotation3DAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Rotation3DAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8551,9 +9451,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               535, "Rotation3DKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.Rotation3DKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Rotation3DKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Rotation3DKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8564,9 +9466,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               536, "RoutedCommand",
                                               typeof(System.Windows.Input.RoutedCommand),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.RoutedCommand(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Input.CommandConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.RoutedCommand(); },
+                TypeConverterType = typeof(System.Windows.Input.CommandConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8577,8 +9481,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               537, "RoutedEvent",
                                               typeof(System.Windows.RoutedEvent),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Markup.RoutedEventConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Markup.RoutedEventConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8589,8 +9495,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               538, "RoutedEventConverter",
                                               typeof(System.Windows.Markup.RoutedEventConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.RoutedEventConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.RoutedEventConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8601,9 +9509,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               539, "RoutedUICommand",
                                               typeof(System.Windows.Input.RoutedUICommand),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.RoutedUICommand(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Input.CommandConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.RoutedUICommand(); },
+                TypeConverterType = typeof(System.Windows.Input.CommandConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8614,9 +9524,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               540, "RoutingStrategy",
                                               typeof(System.Windows.RoutingStrategy),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.RoutingStrategy(); };
-            bamlType.TypeConverterType = typeof(System.Windows.RoutingStrategy);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.RoutingStrategy(); },
+                TypeConverterType = typeof(System.Windows.RoutingStrategy)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8627,11 +9539,13 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               541, "RowDefinition",
                                               typeof(System.Windows.Controls.RowDefinition),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.RowDefinition(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.RowDefinition(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8642,12 +9556,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               542, "Run",
                                               typeof(System.Windows.Documents.Run),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.Run(); };
-            bamlType.ContentPropertyName = "Text";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.Run(); },
+                ContentPropertyName = "Text",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8669,9 +9585,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               544, "SByte",
                                               typeof(System.SByte),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.SByte(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.SByteConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.SByte(); },
+                TypeConverterType = typeof(System.ComponentModel.SByteConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8682,8 +9600,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               545, "SByteConverter",
                                               typeof(System.ComponentModel.SByteConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.SByteConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.SByteConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8694,9 +9614,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               546, "ScaleTransform",
                                               typeof(System.Windows.Media.ScaleTransform),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.ScaleTransform(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.TransformConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.ScaleTransform(); },
+                TypeConverterType = typeof(System.Windows.Media.TransformConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8707,8 +9629,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               547, "ScaleTransform3D",
                                               typeof(System.Windows.Media.Media3D.ScaleTransform3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.ScaleTransform3D(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.ScaleTransform3D(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8719,12 +9643,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               548, "ScrollBar",
                                               typeof(System.Windows.Controls.Primitives.ScrollBar),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.ScrollBar(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.ScrollBar(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8735,12 +9661,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               549, "ScrollContentPresenter",
                                               typeof(System.Windows.Controls.ScrollContentPresenter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ScrollContentPresenter(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ScrollContentPresenter(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8751,13 +9679,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               550, "ScrollViewer",
                                               typeof(System.Windows.Controls.ScrollViewer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ScrollViewer(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ScrollViewer(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8768,12 +9698,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               551, "Section",
                                               typeof(System.Windows.Documents.Section),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.Section(); };
-            bamlType.ContentPropertyName = "Blocks";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.Section(); },
+                ContentPropertyName = "Blocks",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8784,8 +9716,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               552, "SeekStoryboard",
                                               typeof(System.Windows.Media.Animation.SeekStoryboard),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SeekStoryboard(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SeekStoryboard(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8796,12 +9730,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               553, "Selector",
                                               typeof(System.Windows.Controls.Primitives.Selector),
-                                              isBamlType, useV3Rules);
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8812,12 +9748,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               554, "Separator",
                                               typeof(System.Windows.Controls.Separator),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Separator(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Separator(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8828,8 +9766,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               555, "SetStoryboardSpeedRatio",
                                               typeof(System.Windows.Media.Animation.SetStoryboardSpeedRatio),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SetStoryboardSpeedRatio(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SetStoryboardSpeedRatio(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8840,8 +9780,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               556, "Setter",
                                               typeof(System.Windows.Setter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Setter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Setter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8863,11 +9805,13 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               558, "Shape",
                                               typeof(System.Windows.Shapes.Shape),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8878,9 +9822,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               559, "Single",
                                               typeof(System.Single),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Single(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.SingleConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Single(); },
+                TypeConverterType = typeof(System.ComponentModel.SingleConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8891,9 +9837,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               560, "SingleAnimation",
                                               typeof(System.Windows.Media.Animation.SingleAnimation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SingleAnimation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SingleAnimation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8904,8 +9852,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               561, "SingleAnimationBase",
                                               typeof(System.Windows.Media.Animation.SingleAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8916,10 +9866,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               562, "SingleAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.SingleAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SingleAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SingleAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8930,8 +9882,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               563, "SingleConverter",
                                               typeof(System.ComponentModel.SingleConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.SingleConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.SingleConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8953,9 +9907,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               565, "SingleKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.SingleKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SingleKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SingleKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8966,9 +9922,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               566, "Size",
                                               typeof(System.Windows.Size),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Size(); };
-            bamlType.TypeConverterType = typeof(System.Windows.SizeConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Size(); },
+                TypeConverterType = typeof(System.Windows.SizeConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8979,9 +9937,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               567, "Size3D",
                                               typeof(System.Windows.Media.Media3D.Size3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Size3D(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.Media3D.Size3DConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Size3D(); },
+                TypeConverterType = typeof(System.Windows.Media.Media3D.Size3DConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -8992,8 +9952,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               568, "Size3DConverter",
                                               typeof(System.Windows.Media.Media3D.Size3DConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Size3DConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Size3DConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9004,9 +9966,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               569, "SizeAnimation",
                                               typeof(System.Windows.Media.Animation.SizeAnimation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SizeAnimation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SizeAnimation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9017,8 +9981,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               570, "SizeAnimationBase",
                                               typeof(System.Windows.Media.Animation.SizeAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9029,10 +9995,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               571, "SizeAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.SizeAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SizeAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SizeAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9043,8 +10011,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               572, "SizeConverter",
                                               typeof(System.Windows.SizeConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.SizeConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.SizeConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9066,9 +10036,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               574, "SizeKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.SizeKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SizeKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SizeKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9079,9 +10051,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               575, "SkewTransform",
                                               typeof(System.Windows.Media.SkewTransform),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.SkewTransform(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.TransformConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.SkewTransform(); },
+                TypeConverterType = typeof(System.Windows.Media.TransformConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9092,8 +10066,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               576, "SkipStoryboardToFill",
                                               typeof(System.Windows.Media.Animation.SkipStoryboardToFill),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SkipStoryboardToFill(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SkipStoryboardToFill(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9104,12 +10080,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               577, "Slider",
                                               typeof(System.Windows.Controls.Slider),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Slider(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Slider(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9120,9 +10098,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               578, "SolidColorBrush",
                                               typeof(System.Windows.Media.SolidColorBrush),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.SolidColorBrush(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.SolidColorBrush(); },
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9133,8 +10113,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               579, "SoundPlayerAction",
                                               typeof(System.Windows.Controls.SoundPlayerAction),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.SoundPlayerAction(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.SoundPlayerAction(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9145,12 +10127,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               580, "Span",
                                               typeof(System.Windows.Documents.Span),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.Span(); };
-            bamlType.ContentPropertyName = "Inlines";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.Span(); },
+                ContentPropertyName = "Inlines",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9161,8 +10145,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               581, "SpecularMaterial",
                                               typeof(System.Windows.Media.Media3D.SpecularMaterial),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.SpecularMaterial(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.SpecularMaterial(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9184,8 +10170,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               583, "SplineByteKeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineByteKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineByteKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineByteKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9196,8 +10184,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               584, "SplineColorKeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineColorKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineColorKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineColorKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9208,8 +10198,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               585, "SplineDecimalKeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineDecimalKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineDecimalKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineDecimalKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9220,8 +10212,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               586, "SplineDoubleKeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineDoubleKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineDoubleKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineDoubleKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9232,8 +10226,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               587, "SplineInt16KeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineInt16KeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineInt16KeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineInt16KeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9244,8 +10240,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               588, "SplineInt32KeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineInt32KeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineInt32KeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineInt32KeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9256,8 +10254,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               589, "SplineInt64KeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineInt64KeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineInt64KeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineInt64KeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9268,8 +10268,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               590, "SplinePoint3DKeyFrame",
                                               typeof(System.Windows.Media.Animation.SplinePoint3DKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplinePoint3DKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplinePoint3DKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9280,8 +10282,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               591, "SplinePointKeyFrame",
                                               typeof(System.Windows.Media.Animation.SplinePointKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplinePointKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplinePointKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9292,8 +10296,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               592, "SplineQuaternionKeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineQuaternionKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineQuaternionKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineQuaternionKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9304,8 +10310,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               593, "SplineRectKeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineRectKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineRectKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineRectKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9316,8 +10324,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               594, "SplineRotation3DKeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineRotation3DKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineRotation3DKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineRotation3DKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9328,8 +10338,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               595, "SplineSingleKeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineSingleKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineSingleKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineSingleKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9340,8 +10352,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               596, "SplineSizeKeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineSizeKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineSizeKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineSizeKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9352,8 +10366,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               597, "SplineThicknessKeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineThicknessKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineThicknessKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineThicknessKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9364,8 +10380,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               598, "SplineVector3DKeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineVector3DKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineVector3DKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineVector3DKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9376,8 +10394,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               599, "SplineVectorKeyFrame",
                                               typeof(System.Windows.Media.Animation.SplineVectorKeyFrame),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.SplineVectorKeyFrame(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.SplineVectorKeyFrame(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9388,8 +10408,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               600, "SpotLight",
                                               typeof(System.Windows.Media.Media3D.SpotLight),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.SpotLight(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.SpotLight(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9400,13 +10422,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               601, "StackPanel",
                                               typeof(System.Windows.Controls.StackPanel),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.StackPanel(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.StackPanel(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9419,9 +10443,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               602, "StaticExtension",
                                               typeof(System.Windows.Markup.StaticExtension),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new MS.Internal.Markup.StaticExtension(); };
-            bamlType.HasSpecialValueConverter = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new MS.Internal.Markup.StaticExtension(); },
+                HasSpecialValueConverter = true
+            };
             bamlType.Constructors.Add(1, new Baml6ConstructorInfo(
                             new List<Type>() { typeof(System.String) },
                             delegate(object[] arguments)
@@ -9439,8 +10465,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               603, "StaticResourceExtension",
                                               typeof(System.Windows.StaticResourceExtension),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.StaticResourceExtension(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.StaticResourceExtension(); }
+            };
             bamlType.Constructors.Add(1, new Baml6ConstructorInfo(
                             new List<Type>() { typeof(System.Object) },
                             delegate(object[] arguments)
@@ -9458,13 +10486,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               604, "StatusBar",
                                               typeof(System.Windows.Controls.Primitives.StatusBar),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.StatusBar(); };
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.StatusBar(); },
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9475,13 +10505,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               605, "StatusBarItem",
                                               typeof(System.Windows.Controls.Primitives.StatusBarItem),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.StatusBarItem(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.StatusBarItem(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9492,11 +10524,13 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               606, "StickyNoteControl",
                                               typeof(System.Windows.Controls.StickyNoteControl),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9507,8 +10541,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               607, "StopStoryboard",
                                               typeof(System.Windows.Media.Animation.StopStoryboard),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.StopStoryboard(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.StopStoryboard(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9519,10 +10555,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               608, "Storyboard",
                                               typeof(System.Windows.Media.Animation.Storyboard),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Storyboard(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Storyboard(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9533,9 +10571,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               609, "StreamGeometry",
                                               typeof(System.Windows.Media.StreamGeometry),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.StreamGeometry(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.GeometryConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.StreamGeometry(); },
+                TypeConverterType = typeof(System.Windows.Media.GeometryConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9557,8 +10597,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               611, "StreamResourceInfo",
                                               typeof(System.Windows.Resources.StreamResourceInfo),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Resources.StreamResourceInfo(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Resources.StreamResourceInfo(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9569,8 +10611,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               612, "String",
                                               typeof(System.String),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.ComponentModel.StringConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.ComponentModel.StringConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9581,8 +10625,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               613, "StringAnimationBase",
                                               typeof(System.Windows.Media.Animation.StringAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9593,10 +10639,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               614, "StringAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.StringAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.StringAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.StringAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9607,8 +10655,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               615, "StringConverter",
                                               typeof(System.ComponentModel.StringConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.StringConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.StringConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9630,9 +10680,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               617, "StringKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.StringKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.StringKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.StringKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9643,10 +10695,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               618, "StrokeCollection",
                                               typeof(System.Windows.Ink.StrokeCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Ink.StrokeCollection(); };
-            bamlType.TypeConverterType = typeof(System.Windows.StrokeCollectionConverter);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Ink.StrokeCollection(); },
+                TypeConverterType = typeof(System.Windows.StrokeCollectionConverter),
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9657,8 +10711,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               619, "StrokeCollectionConverter",
                                               typeof(System.Windows.StrokeCollectionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.StrokeCollectionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.StrokeCollectionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9669,10 +10725,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               620, "Style",
                                               typeof(System.Windows.Style),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Style(); };
-            bamlType.ContentPropertyName = "Setters";
-            bamlType.DictionaryKeyPropertyName = "TargetType";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Style(); },
+                ContentPropertyName = "Setters",
+                DictionaryKeyPropertyName = "TargetType"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9705,13 +10763,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               623, "TabControl",
                                               typeof(System.Windows.Controls.TabControl),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.TabControl(); };
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.TabControl(); },
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9722,13 +10782,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               624, "TabItem",
                                               typeof(System.Windows.Controls.TabItem),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.TabItem(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.TabItem(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9739,13 +10801,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               625, "TabPanel",
                                               typeof(System.Windows.Controls.Primitives.TabPanel),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.TabPanel(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.TabPanel(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9756,12 +10820,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               626, "Table",
                                               typeof(System.Windows.Documents.Table),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.Table(); };
-            bamlType.ContentPropertyName = "RowGroups";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.Table(); },
+                ContentPropertyName = "RowGroups",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9772,12 +10838,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               627, "TableCell",
                                               typeof(System.Windows.Documents.TableCell),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.TableCell(); };
-            bamlType.ContentPropertyName = "Blocks";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.TableCell(); },
+                ContentPropertyName = "Blocks",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9788,11 +10856,13 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               628, "TableColumn",
                                               typeof(System.Windows.Documents.TableColumn),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.TableColumn(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.TableColumn(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9803,12 +10873,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               629, "TableRow",
                                               typeof(System.Windows.Documents.TableRow),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.TableRow(); };
-            bamlType.ContentPropertyName = "Cells";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.TableRow(); },
+                ContentPropertyName = "Cells",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9819,12 +10891,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               630, "TableRowGroup",
                                               typeof(System.Windows.Documents.TableRowGroup),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.TableRowGroup(); };
-            bamlType.ContentPropertyName = "Rows";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.TableRowGroup(); },
+                ContentPropertyName = "Rows",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9846,8 +10920,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               632, "TemplateBindingExpression",
                                               typeof(System.Windows.TemplateBindingExpression),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.TemplateBindingExpressionConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.TemplateBindingExpressionConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9858,8 +10934,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               633, "TemplateBindingExpressionConverter",
                                               typeof(System.Windows.TemplateBindingExpressionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.TemplateBindingExpressionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.TemplateBindingExpressionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9870,9 +10948,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               634, "TemplateBindingExtension",
                                               typeof(System.Windows.TemplateBindingExtension),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.TemplateBindingExtension(); };
-            bamlType.TypeConverterType = typeof(System.Windows.TemplateBindingExtensionConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.TemplateBindingExtension(); },
+                TypeConverterType = typeof(System.Windows.TemplateBindingExtensionConverter)
+            };
             bamlType.Constructors.Add(1, new Baml6ConstructorInfo(
                             new List<Type>() { typeof(System.Windows.DependencyProperty) },
                             delegate(object[] arguments)
@@ -9890,8 +10970,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               635, "TemplateBindingExtensionConverter",
                                               typeof(System.Windows.TemplateBindingExtensionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.TemplateBindingExtensionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.TemplateBindingExtensionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9902,8 +10984,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               636, "TemplateKey",
                                               typeof(System.Windows.TemplateKey),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Markup.TemplateKeyConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Markup.TemplateKeyConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9914,8 +10998,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               637, "TemplateKeyConverter",
                                               typeof(System.Windows.Markup.TemplateKeyConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.TemplateKeyConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.TemplateKeyConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9926,13 +11012,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               638, "TextBlock",
                                               typeof(System.Windows.Controls.TextBlock),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.TextBlock(); };
-            bamlType.ContentPropertyName = "Inlines";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.TextBlock(); },
+                ContentPropertyName = "Inlines",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9943,13 +11031,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               639, "TextBox",
                                               typeof(System.Windows.Controls.TextBox),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.TextBox(); };
-            bamlType.ContentPropertyName = "Text";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.TextBox(); },
+                ContentPropertyName = "Text",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9960,11 +11050,13 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               640, "TextBoxBase",
                                               typeof(System.Windows.Controls.Primitives.TextBoxBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -9997,8 +11089,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               643, "TextDecoration",
                                               typeof(System.Windows.TextDecoration),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.TextDecoration(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.TextDecoration(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10009,10 +11103,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               644, "TextDecorationCollection",
                                               typeof(System.Windows.TextDecorationCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.TextDecorationCollection(); };
-            bamlType.TypeConverterType = typeof(System.Windows.TextDecorationCollectionConverter);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.TextDecorationCollection(); },
+                TypeConverterType = typeof(System.Windows.TextDecorationCollectionConverter),
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10023,8 +11119,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               645, "TextDecorationCollectionConverter",
                                               typeof(System.Windows.TextDecorationCollectionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.TextDecorationCollectionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.TextDecorationCollectionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10035,8 +11133,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               646, "TextEffect",
                                               typeof(System.Windows.Media.TextEffect),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.TextEffect(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.TextEffect(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10047,9 +11147,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               647, "TextEffectCollection",
                                               typeof(System.Windows.Media.TextEffectCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.TextEffectCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.TextEffectCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10060,10 +11162,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               648, "TextElement",
                                               typeof(System.Windows.Documents.TextElement),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10085,8 +11189,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               650, "ThemeDictionaryExtension",
                                               typeof(System.Windows.ThemeDictionaryExtension),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.ThemeDictionaryExtension(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.ThemeDictionaryExtension(); }
+            };
             bamlType.Constructors.Add(1, new Baml6ConstructorInfo(
                             new List<Type>() { typeof(System.String) },
                             delegate(object[] arguments)
@@ -10104,9 +11210,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               651, "Thickness",
                                               typeof(System.Windows.Thickness),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Thickness(); };
-            bamlType.TypeConverterType = typeof(System.Windows.ThicknessConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Thickness(); },
+                TypeConverterType = typeof(System.Windows.ThicknessConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10117,9 +11225,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               652, "ThicknessAnimation",
                                               typeof(System.Windows.Media.Animation.ThicknessAnimation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.ThicknessAnimation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.ThicknessAnimation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10130,8 +11240,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               653, "ThicknessAnimationBase",
                                               typeof(System.Windows.Media.Animation.ThicknessAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10142,10 +11254,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               654, "ThicknessAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.ThicknessAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.ThicknessAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.ThicknessAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10156,8 +11270,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               655, "ThicknessConverter",
                                               typeof(System.Windows.ThicknessConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.ThicknessConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.ThicknessConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10179,9 +11295,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               657, "ThicknessKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.ThicknessKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.ThicknessKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.ThicknessKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10192,12 +11310,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               658, "Thumb",
                                               typeof(System.Windows.Controls.Primitives.Thumb),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.Thumb(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.Thumb(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10208,12 +11328,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               659, "TickBar",
                                               typeof(System.Windows.Controls.Primitives.TickBar),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.TickBar(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.TickBar(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10235,8 +11357,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               661, "TiffBitmapEncoder",
                                               typeof(System.Windows.Media.Imaging.TiffBitmapEncoder),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Imaging.TiffBitmapEncoder(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Imaging.TiffBitmapEncoder(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10247,8 +11371,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               662, "TileBrush",
                                               typeof(System.Windows.Media.TileBrush),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10259,9 +11385,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               663, "TimeSpan",
                                               typeof(System.TimeSpan),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.TimeSpan(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.TimeSpanConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.TimeSpan(); },
+                TypeConverterType = typeof(System.ComponentModel.TimeSpanConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10272,8 +11400,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               664, "TimeSpanConverter",
                                               typeof(System.ComponentModel.TimeSpanConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.TimeSpanConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.TimeSpanConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10284,8 +11414,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               665, "Timeline",
                                               typeof(System.Windows.Media.Animation.Timeline),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10296,9 +11428,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               666, "TimelineCollection",
                                               typeof(System.Windows.Media.Animation.TimelineCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.TimelineCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.TimelineCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10309,9 +11443,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               667, "TimelineGroup",
                                               typeof(System.Windows.Media.Animation.TimelineGroup),
-                                              isBamlType, useV3Rules);
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10322,13 +11458,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               668, "ToggleButton",
                                               typeof(System.Windows.Controls.Primitives.ToggleButton),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.ToggleButton(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.ToggleButton(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10339,13 +11477,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               669, "ToolBar",
                                               typeof(System.Windows.Controls.ToolBar),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ToolBar(); };
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ToolBar(); },
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10356,13 +11496,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               670, "ToolBarOverflowPanel",
                                               typeof(System.Windows.Controls.Primitives.ToolBarOverflowPanel),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.ToolBarOverflowPanel(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.ToolBarOverflowPanel(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10373,13 +11515,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               671, "ToolBarPanel",
                                               typeof(System.Windows.Controls.Primitives.ToolBarPanel),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.ToolBarPanel(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.ToolBarPanel(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10390,13 +11534,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               672, "ToolBarTray",
                                               typeof(System.Windows.Controls.ToolBarTray),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ToolBarTray(); };
-            bamlType.ContentPropertyName = "ToolBars";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ToolBarTray(); },
+                ContentPropertyName = "ToolBars",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10407,13 +11553,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               673, "ToolTip",
                                               typeof(System.Windows.Controls.ToolTip),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ToolTip(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ToolTip(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10435,12 +11583,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               675, "Track",
                                               typeof(System.Windows.Controls.Primitives.Track),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.Track(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.Track(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10451,8 +11601,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               676, "Transform",
                                               typeof(System.Windows.Media.Transform),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Media.TransformConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Media.TransformConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10474,9 +11626,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               678, "Transform3DCollection",
                                               typeof(System.Windows.Media.Media3D.Transform3DCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Transform3DCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Transform3DCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10487,9 +11641,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               679, "Transform3DGroup",
                                               typeof(System.Windows.Media.Media3D.Transform3DGroup),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Transform3DGroup(); };
-            bamlType.ContentPropertyName = "Children";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Transform3DGroup(); },
+                ContentPropertyName = "Children"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10500,9 +11656,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               680, "TransformCollection",
                                               typeof(System.Windows.Media.TransformCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.TransformCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.TransformCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10513,8 +11671,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               681, "TransformConverter",
                                               typeof(System.Windows.Media.TransformConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.TransformConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.TransformConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10525,10 +11685,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               682, "TransformGroup",
                                               typeof(System.Windows.Media.TransformGroup),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.TransformGroup(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.TypeConverterType = typeof(System.Windows.Media.TransformConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.TransformGroup(); },
+                ContentPropertyName = "Children",
+                TypeConverterType = typeof(System.Windows.Media.TransformConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10539,9 +11701,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               683, "TransformedBitmap",
                                               typeof(System.Windows.Media.Imaging.TransformedBitmap),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Imaging.TransformedBitmap(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Imaging.TransformedBitmap(); },
+                TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10552,9 +11716,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               684, "TranslateTransform",
                                               typeof(System.Windows.Media.TranslateTransform),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.TranslateTransform(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.TransformConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.TranslateTransform(); },
+                TypeConverterType = typeof(System.Windows.Media.TransformConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10565,8 +11731,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               685, "TranslateTransform3D",
                                               typeof(System.Windows.Media.Media3D.TranslateTransform3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.TranslateTransform3D(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.TranslateTransform3D(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10577,13 +11745,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               686, "TreeView",
                                               typeof(System.Windows.Controls.TreeView),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.TreeView(); };
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.TreeView(); },
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10594,13 +11764,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               687, "TreeViewItem",
                                               typeof(System.Windows.Controls.TreeViewItem),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.TreeViewItem(); };
-            bamlType.ContentPropertyName = "Items";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.TreeViewItem(); },
+                ContentPropertyName = "Items",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10611,9 +11783,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               688, "Trigger",
                                               typeof(System.Windows.Trigger),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Trigger(); };
-            bamlType.ContentPropertyName = "Setters";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Trigger(); },
+                ContentPropertyName = "Setters"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10646,9 +11820,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               691, "TypeExtension",
                                               typeof(System.Windows.Markup.TypeExtension),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.TypeExtension(); };
-            bamlType.HasSpecialValueConverter = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.TypeExtension(); },
+                HasSpecialValueConverter = true
+            };
             bamlType.Constructors.Add(1, new Baml6ConstructorInfo(
                             new List<Type>() { typeof(System.Type) },
                             delegate(object[] arguments)
@@ -10666,8 +11842,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               692, "TypeTypeConverter",
                                               typeof(System.Windows.Markup.TypeTypeConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.TypeTypeConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.TypeTypeConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10689,9 +11867,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               694, "UIElement",
                                               typeof(System.Windows.UIElement),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.UIElement(); };
-            bamlType.UidPropertyName = "Uid";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.UIElement(); },
+                UidPropertyName = "Uid"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10702,9 +11882,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               695, "UInt16",
                                               typeof(System.UInt16),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.UInt16(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.UInt16Converter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.UInt16(); },
+                TypeConverterType = typeof(System.ComponentModel.UInt16Converter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10715,8 +11897,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               696, "UInt16Converter",
                                               typeof(System.ComponentModel.UInt16Converter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.UInt16Converter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.UInt16Converter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10727,9 +11911,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               697, "UInt32",
                                               typeof(System.UInt32),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.UInt32(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.UInt32Converter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.UInt32(); },
+                TypeConverterType = typeof(System.ComponentModel.UInt32Converter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10740,8 +11926,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               698, "UInt32Converter",
                                               typeof(System.ComponentModel.UInt32Converter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.UInt32Converter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.UInt32Converter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10752,9 +11940,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               699, "UInt64",
                                               typeof(System.UInt64),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.UInt64(); };
-            bamlType.TypeConverterType = typeof(System.ComponentModel.UInt64Converter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.UInt64(); },
+                TypeConverterType = typeof(System.ComponentModel.UInt64Converter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10765,8 +11955,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               700, "UInt64Converter",
                                               typeof(System.ComponentModel.UInt64Converter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.ComponentModel.UInt64Converter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.ComponentModel.UInt64Converter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10777,8 +11969,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               701, "UShortIListConverter",
                                               typeof(System.Windows.Media.Converters.UShortIListConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Converters.UShortIListConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Converters.UShortIListConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10789,12 +11983,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               702, "Underline",
                                               typeof(System.Windows.Documents.Underline),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.Underline(); };
-            bamlType.ContentPropertyName = "Inlines";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.Underline(); },
+                ContentPropertyName = "Inlines",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10805,13 +12001,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               703, "UniformGrid",
                                               typeof(System.Windows.Controls.Primitives.UniformGrid),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Primitives.UniformGrid(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Primitives.UniformGrid(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10822,8 +12020,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               704, "Uri",
                                               typeof(System.Uri),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.UriTypeConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.UriTypeConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10834,8 +12034,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               705, "UriTypeConverter",
                                               typeof(System.UriTypeConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.UriTypeConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.UriTypeConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10846,13 +12048,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               706, "UserControl",
                                               typeof(System.Windows.Controls.UserControl),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.UserControl(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.UserControl(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10874,9 +12078,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               708, "Vector",
                                               typeof(System.Windows.Vector),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Vector(); };
-            bamlType.TypeConverterType = typeof(System.Windows.VectorConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Vector(); },
+                TypeConverterType = typeof(System.Windows.VectorConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10887,9 +12093,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               709, "Vector3D",
                                               typeof(System.Windows.Media.Media3D.Vector3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Vector3D(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.Media3D.Vector3DConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Vector3D(); },
+                TypeConverterType = typeof(System.Windows.Media.Media3D.Vector3DConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10900,9 +12108,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               710, "Vector3DAnimation",
                                               typeof(System.Windows.Media.Animation.Vector3DAnimation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Vector3DAnimation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Vector3DAnimation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10913,8 +12123,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               711, "Vector3DAnimationBase",
                                               typeof(System.Windows.Media.Animation.Vector3DAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10925,10 +12137,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               712, "Vector3DAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.Vector3DAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Vector3DAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Vector3DAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10939,10 +12153,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               713, "Vector3DCollection",
                                               typeof(System.Windows.Media.Media3D.Vector3DCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Vector3DCollection(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.Media3D.Vector3DCollectionConverter);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Vector3DCollection(); },
+                TypeConverterType = typeof(System.Windows.Media.Media3D.Vector3DCollectionConverter),
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10953,8 +12169,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               714, "Vector3DCollectionConverter",
                                               typeof(System.Windows.Media.Media3D.Vector3DCollectionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Vector3DCollectionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Vector3DCollectionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10965,8 +12183,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               715, "Vector3DConverter",
                                               typeof(System.Windows.Media.Media3D.Vector3DConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Vector3DConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Vector3DConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -10988,9 +12208,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               717, "Vector3DKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.Vector3DKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.Vector3DKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.Vector3DKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11001,9 +12223,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               718, "VectorAnimation",
                                               typeof(System.Windows.Media.Animation.VectorAnimation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.VectorAnimation(); };
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.VectorAnimation(); },
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11014,8 +12238,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               719, "VectorAnimationBase",
                                               typeof(System.Windows.Media.Animation.VectorAnimationBase),
-                                              isBamlType, useV3Rules);
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11026,10 +12252,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               720, "VectorAnimationUsingKeyFrames",
                                               typeof(System.Windows.Media.Animation.VectorAnimationUsingKeyFrames),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.VectorAnimationUsingKeyFrames(); };
-            bamlType.ContentPropertyName = "KeyFrames";
-            bamlType.RuntimeNamePropertyName = "Name";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.VectorAnimationUsingKeyFrames(); },
+                ContentPropertyName = "KeyFrames",
+                RuntimeNamePropertyName = "Name"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11040,10 +12268,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               721, "VectorCollection",
                                               typeof(System.Windows.Media.VectorCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.VectorCollection(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.VectorCollectionConverter);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.VectorCollection(); },
+                TypeConverterType = typeof(System.Windows.Media.VectorCollectionConverter),
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11054,8 +12284,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               722, "VectorCollectionConverter",
                                               typeof(System.Windows.Media.VectorCollectionConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.VectorCollectionConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.VectorCollectionConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11066,8 +12298,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               723, "VectorConverter",
                                               typeof(System.Windows.VectorConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.VectorConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.VectorConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11089,9 +12323,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               725, "VectorKeyFrameCollection",
                                               typeof(System.Windows.Media.Animation.VectorKeyFrameCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Animation.VectorKeyFrameCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Animation.VectorKeyFrameCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11102,8 +12338,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               726, "VideoDrawing",
                                               typeof(System.Windows.Media.VideoDrawing),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.VideoDrawing(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.VideoDrawing(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11125,13 +12363,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               728, "Viewbox",
                                               typeof(System.Windows.Controls.Viewbox),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Viewbox(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Viewbox(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11142,13 +12382,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               729, "Viewport3D",
                                               typeof(System.Windows.Controls.Viewport3D),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Viewport3D(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Viewport3D(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11159,9 +12401,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               730, "Viewport3DVisual",
                                               typeof(System.Windows.Media.Media3D.Viewport3DVisual),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Media3D.Viewport3DVisual(); };
-            bamlType.ContentPropertyName = "Children";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Media3D.Viewport3DVisual(); },
+                ContentPropertyName = "Children"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11172,12 +12416,14 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               731, "VirtualizingPanel",
                                               typeof(System.Windows.Controls.VirtualizingPanel),
-                                              isBamlType, useV3Rules);
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11188,13 +12434,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               732, "VirtualizingStackPanel",
                                               typeof(System.Windows.Controls.VirtualizingStackPanel),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.VirtualizingStackPanel(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.VirtualizingStackPanel(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11227,9 +12475,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               735, "VisualBrush",
                                               typeof(System.Windows.Media.VisualBrush),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.VisualBrush(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.BrushConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.VisualBrush(); },
+                TypeConverterType = typeof(System.Windows.Media.BrushConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11262,8 +12512,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               738, "WhitespaceSignificantCollectionAttribute",
                                               typeof(System.Windows.Markup.WhitespaceSignificantCollectionAttribute),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.WhitespaceSignificantCollectionAttribute(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.WhitespaceSignificantCollectionAttribute(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11274,13 +12526,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               739, "Window",
                                               typeof(System.Windows.Window),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Window(); };
-            bamlType.ContentPropertyName = "Content";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Window(); },
+                ContentPropertyName = "Content",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11302,8 +12556,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               741, "WmpBitmapEncoder",
                                               typeof(System.Windows.Media.Imaging.WmpBitmapEncoder),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Imaging.WmpBitmapEncoder(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Imaging.WmpBitmapEncoder(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11314,13 +12570,15 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               742, "WrapPanel",
                                               typeof(System.Windows.Controls.WrapPanel),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.WrapPanel(); };
-            bamlType.ContentPropertyName = "Children";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.WrapPanel(); },
+                ContentPropertyName = "Children",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11331,8 +12589,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               743, "WriteableBitmap",
                                               typeof(System.Windows.Media.Imaging.WriteableBitmap),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Media.ImageSourceConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11343,8 +12603,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               744, "XamlBrushSerializer",
                                               typeof(System.Windows.Markup.XamlBrushSerializer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.XamlBrushSerializer(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.XamlBrushSerializer(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11355,8 +12617,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               745, "XamlInt32CollectionSerializer",
                                               typeof(System.Windows.Markup.XamlInt32CollectionSerializer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.XamlInt32CollectionSerializer(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.XamlInt32CollectionSerializer(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11367,8 +12631,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               746, "XamlPathDataSerializer",
                                               typeof(System.Windows.Markup.XamlPathDataSerializer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.XamlPathDataSerializer(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.XamlPathDataSerializer(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11379,8 +12645,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               747, "XamlPoint3DCollectionSerializer",
                                               typeof(System.Windows.Markup.XamlPoint3DCollectionSerializer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.XamlPoint3DCollectionSerializer(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.XamlPoint3DCollectionSerializer(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11391,8 +12659,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               748, "XamlPointCollectionSerializer",
                                               typeof(System.Windows.Markup.XamlPointCollectionSerializer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.XamlPointCollectionSerializer(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.XamlPointCollectionSerializer(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11403,8 +12673,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               749, "XamlReader",
                                               typeof(System.Windows.Markup.XamlReader),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.XamlReader(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.XamlReader(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11415,8 +12687,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               750, "XamlStyleSerializer",
                                               typeof(System.Windows.Markup.XamlStyleSerializer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.XamlStyleSerializer(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.XamlStyleSerializer(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11427,8 +12701,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               751, "XamlTemplateSerializer",
                                               typeof(System.Windows.Markup.XamlTemplateSerializer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.XamlTemplateSerializer(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.XamlTemplateSerializer(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11439,8 +12715,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               752, "XamlVector3DCollectionSerializer",
                                               typeof(System.Windows.Markup.XamlVector3DCollectionSerializer),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.XamlVector3DCollectionSerializer(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.XamlVector3DCollectionSerializer(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11462,9 +12740,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               754, "XmlDataProvider",
                                               typeof(System.Windows.Data.XmlDataProvider),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Data.XmlDataProvider(); };
-            bamlType.ContentPropertyName = "XmlSerializer";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Data.XmlDataProvider(); },
+                ContentPropertyName = "XmlSerializer"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11486,8 +12766,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               756, "XmlLanguage",
                                               typeof(System.Windows.Markup.XmlLanguage),
-                                              isBamlType, useV3Rules);
-            bamlType.TypeConverterType = typeof(System.Windows.Markup.XmlLanguageConverter);
+                                              isBamlType, useV3Rules)
+            {
+                TypeConverterType = typeof(System.Windows.Markup.XmlLanguageConverter)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11498,8 +12780,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               757, "XmlLanguageConverter",
                                               typeof(System.Windows.Markup.XmlLanguageConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Markup.XmlLanguageConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Markup.XmlLanguageConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11510,8 +12794,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               758, "XmlNamespaceMapping",
                                               typeof(System.Windows.Data.XmlNamespaceMapping),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Data.XmlNamespaceMapping(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Data.XmlNamespaceMapping(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11522,8 +12808,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               759, "ZoomPercentageConverter",
                                               typeof(System.Windows.Documents.ZoomPercentageConverter),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Documents.ZoomPercentageConverter(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Documents.ZoomPercentageConverter(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11534,8 +12822,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "CommandBinding",
                                               typeof(System.Windows.Input.CommandBinding),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.CommandBinding(); };
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.CommandBinding(); }
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11546,9 +12836,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "XmlNamespaceMappingCollection",
                                               typeof(System.Windows.Data.XmlNamespaceMappingCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Data.XmlNamespaceMappingCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Data.XmlNamespaceMappingCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11559,8 +12851,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "PageContentCollection",
                                               typeof(System.Windows.Documents.PageContentCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11571,8 +12865,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "DocumentReferenceCollection",
                                               typeof(System.Windows.Documents.DocumentReferenceCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11583,9 +12879,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "KeyboardNavigationMode",
                                               typeof(System.Windows.Input.KeyboardNavigationMode),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.KeyboardNavigationMode(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Input.KeyboardNavigationMode);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.KeyboardNavigationMode(); },
+                TypeConverterType = typeof(System.Windows.Input.KeyboardNavigationMode)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11607,9 +12905,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "RelativeSourceMode",
                                               typeof(System.Windows.Data.RelativeSourceMode),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Data.RelativeSourceMode(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Data.RelativeSourceMode);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Data.RelativeSourceMode(); },
+                TypeConverterType = typeof(System.Windows.Data.RelativeSourceMode)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11620,9 +12920,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "PenLineJoin",
                                               typeof(System.Windows.Media.PenLineJoin),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.PenLineJoin(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.PenLineJoin);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.PenLineJoin(); },
+                TypeConverterType = typeof(System.Windows.Media.PenLineJoin)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11633,9 +12935,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "PenLineCap",
                                               typeof(System.Windows.Media.PenLineCap),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.PenLineCap(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.PenLineCap);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.PenLineCap(); },
+                TypeConverterType = typeof(System.Windows.Media.PenLineCap)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11646,9 +12950,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "InputBindingCollection",
                                               typeof(System.Windows.Input.InputBindingCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.InputBindingCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.InputBindingCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11659,9 +12965,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "CommandBindingCollection",
                                               typeof(System.Windows.Input.CommandBindingCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Input.CommandBindingCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Input.CommandBindingCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11672,9 +12980,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "Stretch",
                                               typeof(System.Windows.Media.Stretch),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Media.Stretch(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Media.Stretch);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Media.Stretch(); },
+                TypeConverterType = typeof(System.Windows.Media.Stretch)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11685,9 +12995,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "Orientation",
                                               typeof(System.Windows.Controls.Orientation),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.Orientation(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Controls.Orientation);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.Orientation(); },
+                TypeConverterType = typeof(System.Windows.Controls.Orientation)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11698,9 +13010,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "TextAlignment",
                                               typeof(System.Windows.TextAlignment),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.TextAlignment(); };
-            bamlType.TypeConverterType = typeof(System.Windows.TextAlignment);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.TextAlignment(); },
+                TypeConverterType = typeof(System.Windows.TextAlignment)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11711,9 +13025,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "NavigationUIVisibility",
                                               typeof(System.Windows.Navigation.NavigationUIVisibility),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Navigation.NavigationUIVisibility(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Navigation.NavigationUIVisibility);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Navigation.NavigationUIVisibility(); },
+                TypeConverterType = typeof(System.Windows.Navigation.NavigationUIVisibility)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11724,9 +13040,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "JournalOwnership",
                                               typeof(System.Windows.Navigation.JournalOwnership),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Navigation.JournalOwnership(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Navigation.JournalOwnership);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Navigation.JournalOwnership(); },
+                TypeConverterType = typeof(System.Windows.Navigation.JournalOwnership)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11737,9 +13055,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "ScrollBarVisibility",
                                               typeof(System.Windows.Controls.ScrollBarVisibility),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ScrollBarVisibility(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Controls.ScrollBarVisibility);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ScrollBarVisibility(); },
+                TypeConverterType = typeof(System.Windows.Controls.ScrollBarVisibility)
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11750,8 +13070,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "TriggerCollection",
                                               typeof(System.Windows.TriggerCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11762,8 +13084,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "UIElementCollection",
                                               typeof(System.Windows.Controls.UIElementCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11774,9 +13098,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "SetterBaseCollection",
                                               typeof(System.Windows.SetterBaseCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.SetterBaseCollection(); };
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.SetterBaseCollection(); },
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11787,8 +13113,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "ColumnDefinitionCollection",
                                               typeof(System.Windows.Controls.ColumnDefinitionCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11799,8 +13127,10 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "RowDefinitionCollection",
                                               typeof(System.Windows.Controls.RowDefinitionCollection),
-                                              isBamlType, useV3Rules);
-            bamlType.CollectionKind = XamlCollectionKind.Collection;
+                                              isBamlType, useV3Rules)
+            {
+                CollectionKind = XamlCollectionKind.Collection
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11811,10 +13141,12 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "ItemContainerTemplate",
                                               typeof(System.Windows.Controls.ItemContainerTemplate),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ItemContainerTemplate(); };
-            bamlType.ContentPropertyName = "Template";
-            bamlType.DictionaryKeyPropertyName = "ItemContainerTemplateKey";
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ItemContainerTemplate(); },
+                ContentPropertyName = "Template",
+                DictionaryKeyPropertyName = "ItemContainerTemplateKey"
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -11825,9 +13157,11 @@ namespace System.Windows.Baml2006
             var bamlType = new WpfKnownType(this, // SchemaContext
                                               0, "ItemContainerTemplateKey",
                                               typeof(System.Windows.Controls.ItemContainerTemplateKey),
-                                              isBamlType, useV3Rules);
-            bamlType.DefaultConstructor = delegate() { return new System.Windows.Controls.ItemContainerTemplateKey(); };
-            bamlType.TypeConverterType = typeof(System.Windows.Markup.TemplateKeyConverter);
+                                              isBamlType, useV3Rules)
+            {
+                DefaultConstructor = delegate () { return new System.Windows.Controls.ItemContainerTemplateKey(); },
+                TypeConverterType = typeof(System.Windows.Markup.TemplateKeyConverter)
+            };
             bamlType.Constructors.Add(1, new Baml6ConstructorInfo(
                             new List<Type>() { typeof(System.Object) },
                             delegate(object[] arguments)

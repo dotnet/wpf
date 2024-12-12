@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1304,8 +1304,10 @@ namespace System.Windows.Automation
             }
 
             // Set up a find struct...
-            UiaCoreApi.UiaFindParams findParams = new UiaCoreApi.UiaFindParams();
-            findParams.FindFirst = findFirst;
+            UiaCoreApi.UiaFindParams findParams = new UiaCoreApi.UiaFindParams
+            {
+                FindFirst = findFirst
+            };
 
             if ((scope & TreeScope.Descendants) != 0)
                 findParams.MaxDepth = -1;

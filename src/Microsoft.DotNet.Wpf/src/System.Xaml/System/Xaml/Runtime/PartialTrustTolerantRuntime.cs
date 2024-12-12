@@ -416,8 +416,10 @@ namespace MS.Internal.Xaml.Runtime
             if (_elevatedRuntime == null)
             {
                 _elevatedRuntime = new DynamicMethodRuntime(
-                    _transparentRuntime.GetSettings(), _schemaContext, _accessLevel);
-                _elevatedRuntime.LineInfo = LineInfo;
+                    _transparentRuntime.GetSettings(), _schemaContext, _accessLevel)
+                {
+                    LineInfo = LineInfo
+                };
             }
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -221,8 +221,10 @@ namespace System.Windows.Automation.Peers
 
         internal static HostedWindowWrapper CreateInternal(IntPtr hwnd)
         {
-            HostedWindowWrapper wrapper = new HostedWindowWrapper();
-            wrapper._hwnd = hwnd;
+            HostedWindowWrapper wrapper = new HostedWindowWrapper
+            {
+                _hwnd = hwnd
+            };
             return wrapper;
         }
 

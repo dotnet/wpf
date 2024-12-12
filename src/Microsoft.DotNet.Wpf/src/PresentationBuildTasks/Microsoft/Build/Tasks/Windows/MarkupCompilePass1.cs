@@ -1472,9 +1472,11 @@ namespace Microsoft.Build.Tasks.Windows
                 {
                     TaskItem codeItem;
 
-                    codeItem = new TaskItem();
-                    codeItem.ItemSpec = genLangFilePath;
-                    
+                    codeItem = new TaskItem
+                    {
+                        ItemSpec = genLangFilePath
+                    };
+
                     outputCodeFileList.Add(codeItem);
 
                     Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.GeneratedCodeFile), codeItem.ItemSpec);
@@ -1577,8 +1579,10 @@ namespace Microsoft.Build.Tasks.Windows
         {
             TaskItem bamlItem;
 
-            bamlItem =  new TaskItem();
-            bamlItem.ItemSpec = bamlFile;
+            bamlItem = new TaskItem
+            {
+                ItemSpec = bamlFile
+            };
 
             //
             // Transfer some special custom attributes from source task item

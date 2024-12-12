@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -288,14 +288,15 @@ namespace System.Windows.Controls
         ShowDialog()
         {
 
-            Win32PrintDialog dlg = new Win32PrintDialog();
-
-            //
-            // Setup the old values if any exist.
-            //
-            dlg.PrintTicket = _printTicket;
-            dlg.PrintQueue = _printQueue;
-            dlg.MinPage = Math.Max(1, Math.Min(_minPage, _maxPage));
+            Win32PrintDialog dlg = new Win32PrintDialog
+            {
+                //
+                // Setup the old values if any exist.
+                //
+                PrintTicket = _printTicket,
+                PrintQueue = _printQueue,
+                MinPage = Math.Max(1, Math.Min(_minPage, _maxPage))
+            };
             dlg.MaxPage = Math.Max(dlg.MinPage, Math.Max(_minPage, _maxPage));
             dlg.PageRangeEnabled = _userPageRangeEnabled;
             dlg.SelectedPagesEnabled = _selectedPagesEnabled;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -594,14 +594,16 @@ namespace System.Windows.Media.Media3D
 
         private static Rect3D CreateEmptyRect3D()
         {
-            Rect3D empty = new Rect3D();
-            empty._x = Double.PositiveInfinity;
-            empty._y = Double.PositiveInfinity;
-            empty._z = Double.PositiveInfinity;
-            // Can't use setters because they throw on negative values
-            empty._sizeX = Double.NegativeInfinity;
-            empty._sizeY = Double.NegativeInfinity;
-            empty._sizeZ = Double.NegativeInfinity;
+            Rect3D empty = new Rect3D
+            {
+                _x = Double.PositiveInfinity,
+                _y = Double.PositiveInfinity,
+                _z = Double.PositiveInfinity,
+                // Can't use setters because they throw on negative values
+                _sizeX = Double.NegativeInfinity,
+                _sizeY = Double.NegativeInfinity,
+                _sizeZ = Double.NegativeInfinity
+            };
             return empty;
         }
 
@@ -630,13 +632,15 @@ namespace System.Windows.Media.Media3D
             //         leaves us ample space to account for transforms, etc.
             //
 
-            Rect3D infinite = new Rect3D();
-            infinite._x = -float.MaxValue;
-            infinite._y = -float.MaxValue;
-            infinite._z = -float.MaxValue;
-            infinite._sizeX = float.MaxValue*2.0;
-            infinite._sizeY = float.MaxValue*2.0;
-            infinite._sizeZ = float.MaxValue*2.0;
+            Rect3D infinite = new Rect3D
+            {
+                _x = -float.MaxValue,
+                _y = -float.MaxValue,
+                _z = -float.MaxValue,
+                _sizeX = float.MaxValue * 2.0,
+                _sizeY = float.MaxValue * 2.0,
+                _sizeZ = float.MaxValue * 2.0
+            };
             return infinite;
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -401,9 +401,11 @@ namespace MS.Internal.PtsHost
             }
 
             // Bounding box is equal to actual size of the figure.
-            fsbbox = new PTS.FSBBOX();
-            fsbbox.fDefined = PTS.True;
-            fsbbox.fsrc = fsrcFlow;
+            fsbbox = new PTS.FSBBOX
+            {
+                fDefined = PTS.True,
+                fsrc = fsrcFlow
+            };
         }
         
         #endregion PTS callbacks

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2788,10 +2788,12 @@ namespace System.Windows.Documents
                         continue;
                 }
 
-                UnsafeNativeMethods.TS_ATTRVAL attrval = new UnsafeNativeMethods.TS_ATTRVAL();
-                attrval.attributeId = _supportingattributes[i].Guid;
-                attrval.overlappedId = (int)_supportingattributes[i].Style;
-                attrval.val = new NativeMethods.VARIANT();
+                UnsafeNativeMethods.TS_ATTRVAL attrval = new UnsafeNativeMethods.TS_ATTRVAL
+                {
+                    attributeId = _supportingattributes[i].Guid,
+                    overlappedId = (int)_supportingattributes[i].Style,
+                    val = new NativeMethods.VARIANT()
+                };
 
                 // This VARIANT is returned to the caller, which supposed to call VariantClear().
                 // GC does not have to clear it.

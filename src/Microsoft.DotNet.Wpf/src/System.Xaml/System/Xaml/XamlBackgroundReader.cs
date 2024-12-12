@@ -88,8 +88,10 @@ namespace System.Xaml
                 throw new InvalidOperationException(SR.ThreadAlreadyStarted);
             }
             ParameterizedThreadStart start = new ParameterizedThreadStart(XamlReaderThreadStart);
-            _thread = new Thread(start);
-            _thread.Name = threadName;
+            _thread = new Thread(start)
+            {
+                Name = threadName
+            };
             _thread.Start();
         }
 

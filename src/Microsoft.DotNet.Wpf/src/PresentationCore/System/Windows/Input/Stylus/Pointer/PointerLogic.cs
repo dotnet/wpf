@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -263,8 +263,10 @@ namespace System.Windows.Input.StylusPointer
                                                                     0,
                                                                     IntPtr.Zero);
 
-                                InputReportEventArgs args = new InputReportEventArgs(CurrentStylusDevice.StylusDevice, cancelCaptureInputReport);
-                                args.RoutedEvent = InputManager.PreviewInputReportEvent;
+                                InputReportEventArgs args = new InputReportEventArgs(CurrentStylusDevice.StylusDevice, cancelCaptureInputReport)
+                                {
+                                    RoutedEvent = InputManager.PreviewInputReportEvent
+                                };
                                 _inputManager.ProcessInput(args);
 
                                 // Cancel this so that it doesn't propagate further in the InputManager.  We're ok to allow
@@ -1336,9 +1338,10 @@ namespace System.Windows.Input.StylusPointer
                 StylusDevice = stylusDevice.StylusDevice,
             };
 
-            InputReportEventArgs input = new InputReportEventArgs(stylusDevice.StylusDevice, inputReport);
-
-            input.RoutedEvent = InputManager.PreviewInputReportEvent;
+            InputReportEventArgs input = new InputReportEventArgs(stylusDevice.StylusDevice, inputReport)
+            {
+                RoutedEvent = InputManager.PreviewInputReportEvent
+            };
 
             // Process this directly instead of doing a push. We want this event to get
             // to the user before the StylusUp and MouseUp event.

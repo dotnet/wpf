@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,8 +37,10 @@ namespace MS.Internal.Ink
             Debug.Assert(iterator != null);
             Debug.Assert(drawingAttributes != null);
 
-            StreamGeometry streamGeometry = new StreamGeometry();
-            streamGeometry.FillRule = FillRule.Nonzero;
+            StreamGeometry streamGeometry = new StreamGeometry
+            {
+                FillRule = FillRule.Nonzero
+            };
 
             StreamGeometryContext context = streamGeometry.Open();
             geometry = streamGeometry;
@@ -217,8 +219,10 @@ namespace MS.Internal.Ink
             }
             else
             {
-                StreamGeometry streamGeometry = new StreamGeometry();
-                streamGeometry.FillRule = FillRule.Nonzero;
+                StreamGeometry streamGeometry = new StreamGeometry
+                {
+                    FillRule = FillRule.Nonzero
+                };
 
                 StreamGeometryContext context = streamGeometry.Open();
                 geometry = streamGeometry;

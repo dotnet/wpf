@@ -81,10 +81,11 @@ namespace System.Windows
             if (!DTypeFromCLRType.TryGetValue(systemType, out dType))
             {
                 // No DependencyObjectType found, create
-                dType = new DependencyObjectType();
-
-                // Store CLR type
-                dType._systemType = systemType;
+                dType = new DependencyObjectType
+                {
+                    // Store CLR type
+                    _systemType = systemType
+                };
 
                 // Store reverse mapping
                 DTypeFromCLRType[systemType] = dType;

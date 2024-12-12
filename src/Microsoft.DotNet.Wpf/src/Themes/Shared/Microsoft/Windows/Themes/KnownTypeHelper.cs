@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -49,14 +49,16 @@ namespace Microsoft.Windows.Themes
         {
             Type type = typeof(Microsoft.Windows.Themes.ClassicBorderDecorator);
             DependencyProperty  dp = Microsoft.Windows.Themes.ClassicBorderDecorator.BorderStyleProperty;
-            var bamlMember = new WpfKnownMember( System.Windows.Markup.XamlReader.BamlSharedSchemaContext,  // Schema Context
+            var bamlMember = new WpfKnownMember(System.Windows.Markup.XamlReader.BamlSharedSchemaContext,  // Schema Context
                             System.Windows.Markup.XamlReader.BamlSharedSchemaContext.GetXamlType(typeof(Microsoft.Windows.Themes.ClassicBorderDecorator)), // DeclaringType
                             "BorderStyle", // Name
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             false // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(Microsoft.Windows.Themes.ClassicBorderStyle);
+                                     )
+            {
+                TypeConverterType = typeof(Microsoft.Windows.Themes.ClassicBorderStyle)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -65,14 +67,16 @@ namespace Microsoft.Windows.Themes
         {
             var bamlType = new ThemesKnownType(System.Windows.Markup.XamlReader.BamlSharedSchemaContext, // SchemaContext
                                               0, "ClassicBorderDecorator",
-                                              typeof(Microsoft.Windows.Themes.ClassicBorderDecorator));
-            bamlType.DefaultConstructor = delegate() { return new Microsoft.Windows.Themes.ClassicBorderDecorator(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
-            bamlType.CollectionKind = XamlCollectionKind.None;
+                                              typeof(Microsoft.Windows.Themes.ClassicBorderDecorator))
+            {
+                DefaultConstructor = delegate () { return new Microsoft.Windows.Themes.ClassicBorderDecorator(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true,
+                CollectionKind = XamlCollectionKind.None
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -81,10 +85,12 @@ namespace Microsoft.Windows.Themes
         {
             var bamlType = new ThemesKnownType(System.Windows.Markup.XamlReader.BamlSharedSchemaContext, // SchemaContext
                                               0, "ClassicBorderStyle",
-                                              typeof(Microsoft.Windows.Themes.ClassicBorderStyle));
-            bamlType.DefaultConstructor = delegate() { return new Microsoft.Windows.Themes.ClassicBorderStyle(); };
-            bamlType.TypeConverterType = typeof(Microsoft.Windows.Themes.ClassicBorderStyle);
-            bamlType.CollectionKind = XamlCollectionKind.None;
+                                              typeof(Microsoft.Windows.Themes.ClassicBorderStyle))
+            {
+                DefaultConstructor = delegate () { return new Microsoft.Windows.Themes.ClassicBorderStyle(); },
+                TypeConverterType = typeof(Microsoft.Windows.Themes.ClassicBorderStyle),
+                CollectionKind = XamlCollectionKind.None
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -96,14 +102,16 @@ namespace Microsoft.Windows.Themes
         {
             var bamlType = new ThemesKnownType(System.Windows.Markup.XamlReader.BamlSharedSchemaContext, // SchemaContext
                                               0, "ButtonChrome",
-                                              typeof(Microsoft.Windows.Themes.ButtonChrome));
-            bamlType.DefaultConstructor = delegate() { return new Microsoft.Windows.Themes.ButtonChrome(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
-            bamlType.CollectionKind = XamlCollectionKind.None;
+                                              typeof(Microsoft.Windows.Themes.ButtonChrome))
+            {
+                DefaultConstructor = delegate () { return new Microsoft.Windows.Themes.ButtonChrome(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true,
+                CollectionKind = XamlCollectionKind.None
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -112,13 +120,15 @@ namespace Microsoft.Windows.Themes
         {
             var bamlType = new ThemesKnownType(System.Windows.Markup.XamlReader.BamlSharedSchemaContext, // SchemaContext
                                               0, "BulletChrome",
-                                              typeof(Microsoft.Windows.Themes.BulletChrome));
-            bamlType.DefaultConstructor = delegate() { return new Microsoft.Windows.Themes.BulletChrome(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
-            bamlType.CollectionKind = XamlCollectionKind.None;
+                                              typeof(Microsoft.Windows.Themes.BulletChrome))
+            {
+                DefaultConstructor = delegate () { return new Microsoft.Windows.Themes.BulletChrome(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true,
+                CollectionKind = XamlCollectionKind.None
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -137,8 +147,10 @@ namespace Microsoft.Windows.Themes
                              dp, // DependencyProperty
                             false, // IsReadOnly
                             true // IsAttachable
-                                     );
-            bamlMember.TypeConverterType = typeof(Microsoft.Windows.Themes.ScrollGlyph);
+                                     )
+            {
+                TypeConverterType = typeof(Microsoft.Windows.Themes.ScrollGlyph)
+            };
             bamlMember.Freeze();
             return bamlMember;
         }
@@ -148,13 +160,15 @@ namespace Microsoft.Windows.Themes
         {
             var bamlType = new ThemesKnownType(System.Windows.Markup.XamlReader.BamlSharedSchemaContext, // SchemaContext
                                               0, "ScrollChrome",
-                                              typeof(Microsoft.Windows.Themes.ScrollChrome));
-            bamlType.DefaultConstructor = delegate() { return new Microsoft.Windows.Themes.ScrollChrome(); };
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
-            bamlType.CollectionKind = XamlCollectionKind.None;
+                                              typeof(Microsoft.Windows.Themes.ScrollChrome))
+            {
+                DefaultConstructor = delegate () { return new Microsoft.Windows.Themes.ScrollChrome(); },
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true,
+                CollectionKind = XamlCollectionKind.None
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -163,10 +177,12 @@ namespace Microsoft.Windows.Themes
         {
             var bamlType = new ThemesKnownType(System.Windows.Markup.XamlReader.BamlSharedSchemaContext, // SchemaContext
                                               0, "ScrollGlyph",
-                                              typeof(Microsoft.Windows.Themes.ScrollGlyph));
-            bamlType.DefaultConstructor = delegate() { return new Microsoft.Windows.Themes.ScrollGlyph(); };
-            bamlType.TypeConverterType = typeof(Microsoft.Windows.Themes.ScrollGlyph);
-            bamlType.CollectionKind = XamlCollectionKind.None;
+                                              typeof(Microsoft.Windows.Themes.ScrollGlyph))
+            {
+                DefaultConstructor = delegate () { return new Microsoft.Windows.Themes.ScrollGlyph(); },
+                TypeConverterType = typeof(Microsoft.Windows.Themes.ScrollGlyph),
+                CollectionKind = XamlCollectionKind.None
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -179,14 +195,16 @@ namespace Microsoft.Windows.Themes
         {
             var bamlType = new ThemesKnownType(System.Windows.Markup.XamlReader.BamlSharedSchemaContext, // SchemaContext
                                               0, "ListBoxChrome",
-                                              typeof(Microsoft.Windows.Themes.ListBoxChrome));
-            bamlType.DefaultConstructor = delegate() { return new Microsoft.Windows.Themes.ListBoxChrome(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
-            bamlType.CollectionKind = XamlCollectionKind.None;
+                                              typeof(Microsoft.Windows.Themes.ListBoxChrome))
+            {
+                DefaultConstructor = delegate () { return new Microsoft.Windows.Themes.ListBoxChrome(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true,
+                CollectionKind = XamlCollectionKind.None
+            };
             bamlType.Freeze();
             return bamlType;
         }
@@ -197,14 +215,16 @@ namespace Microsoft.Windows.Themes
         {
             var bamlType = new ThemesKnownType(System.Windows.Markup.XamlReader.BamlSharedSchemaContext, // SchemaContext
                                               0, "SystemDropShadowChrome",
-                                              typeof(Microsoft.Windows.Themes.SystemDropShadowChrome));
-            bamlType.DefaultConstructor = delegate() { return new Microsoft.Windows.Themes.SystemDropShadowChrome(); };
-            bamlType.ContentPropertyName = "Child";
-            bamlType.RuntimeNamePropertyName = "Name";
-            bamlType.XmlLangPropertyName = "Language";
-            bamlType.UidPropertyName = "Uid";
-            bamlType.IsUsableDuringInit = true;
-            bamlType.CollectionKind = XamlCollectionKind.None;
+                                              typeof(Microsoft.Windows.Themes.SystemDropShadowChrome))
+            {
+                DefaultConstructor = delegate () { return new Microsoft.Windows.Themes.SystemDropShadowChrome(); },
+                ContentPropertyName = "Child",
+                RuntimeNamePropertyName = "Name",
+                XmlLangPropertyName = "Language",
+                UidPropertyName = "Uid",
+                IsUsableDuringInit = true,
+                CollectionKind = XamlCollectionKind.None
+            };
             bamlType.Freeze();
             return bamlType;
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,12 +41,13 @@ namespace MS.Internal.Controls
             Debug.Assert(adornedElement != null, "adornedElement should not be null");
             Debug.Assert(adornerTemplate != null, "adornerTemplate should not be null");
 
-            Control control = new Control();
-
-            control.DataContext = Validation.GetErrors(adornedElement);
-            //control.IsEnabled = false; // Hittest should not work on visual subtree
-            control.IsTabStop = false;      // Tab should not get into adorner layer
-            control.Template = adornerTemplate;
+            Control control = new Control
+            {
+                DataContext = Validation.GetErrors(adornedElement),
+                //control.IsEnabled = false; // Hittest should not work on visual subtree
+                IsTabStop = false,      // Tab should not get into adorner layer
+                Template = adornerTemplate
+            };
             _child = control;
             this.AddVisualChild(_child);
         }

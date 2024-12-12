@@ -55,8 +55,10 @@ namespace System.Windows
         {
             _property = property;
             _metadata = metadata;
-            _oldEntry = new EffectiveValueEntry(property);
-            _oldEntry.Value = value;
+            _oldEntry = new EffectiveValueEntry(property)
+            {
+                Value = value
+            };
             _newEntry = _oldEntry;
 
             _flags = 0;

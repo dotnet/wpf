@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -462,8 +462,10 @@ namespace System.Windows.Controls.Primitives
 
         internal void RaiseScrollEvent(ScrollEventType scrollEventType)
         {
-            ScrollEventArgs newEvent = new ScrollEventArgs(scrollEventType, Value);
-            newEvent.Source=this;
+            ScrollEventArgs newEvent = new ScrollEventArgs(scrollEventType, Value)
+            {
+                Source = this
+            };
             RaiseEvent(newEvent);
         }
 
@@ -881,15 +883,19 @@ namespace System.Windows.Controls.Primitives
 
         private static MenuItem CreateMenuItem(string name, string automationId, RoutedCommand command)
         {
-            MenuItem menuItem = new MenuItem();
-            menuItem.Header = SR.GetResourceString(name);
-            menuItem.Command = command;
+            MenuItem menuItem = new MenuItem
+            {
+                Header = SR.GetResourceString(name),
+                Command = command
+            };
             AutomationProperties.SetAutomationId(menuItem, automationId);
 
-            Binding binding = new Binding();
-            binding.Path = new PropertyPath(ContextMenu.PlacementTargetProperty);
-            binding.Mode = BindingMode.OneWay;
-            binding.RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(ContextMenu), 1);
+            Binding binding = new Binding
+            {
+                Path = new PropertyPath(ContextMenu.PlacementTargetProperty),
+                Mode = BindingMode.OneWay,
+                RelativeSource = new RelativeSource(RelativeSourceMode.FindAncestor, typeof(ContextMenu), 1)
+            };
             menuItem.SetBinding(MenuItem.CommandTargetProperty, binding);
 
             return menuItem;

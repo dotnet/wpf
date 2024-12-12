@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -231,7 +231,7 @@ namespace MS.Win32
             {
             }
             
-            private BitmapHandle(bool ownsHandle) : base(ownsHandle, NativeMethods.CommonHandles.GDI)
+            private BitmapHandle(bool ownsHandle) : base(ownsHandle, CommonHandles.GDI)
             {
             }
             
@@ -256,7 +256,7 @@ namespace MS.Win32
 
         internal sealed class IconHandle : WpfSafeHandle
         {
-            private IconHandle() : base(true, NativeMethods.CommonHandles.Icon)
+            private IconHandle() : base(true, CommonHandles.Icon)
             {
             }
 
@@ -281,7 +281,7 @@ namespace MS.Win32
 
         internal sealed class CursorHandle : WpfSafeHandle
         {
-            private CursorHandle() : base(true, NativeMethods.CommonHandles.Cursor)
+            private CursorHandle() : base(true, CommonHandles.Cursor)
             {
             }
 
@@ -335,35 +335,6 @@ namespace MS.Win32
         public const int MWMO_INPUTAVAILABLE = 0x0004;
 
         public static IntPtr HWND_MESSAGE = new IntPtr(-3);
-
-
-        [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto)]
-        public class WNDCLASSEX_I
-        {
-            public int cbSize = 0;
-
-            public int style = 0;
-
-            public IntPtr lpfnWndProc = IntPtr.Zero;
-
-            public int cbClsExtra = 0;
-
-            public int cbWndExtra = 0;
-
-            public IntPtr hInstance = IntPtr.Zero;
-
-            public IntPtr hIcon = IntPtr.Zero;
-
-            public IntPtr hCursor = IntPtr.Zero;
-
-            public IntPtr hbrBackground = IntPtr.Zero;
-
-            public IntPtr lpszMenuName = IntPtr.Zero;
-
-            public IntPtr lpszClassName = IntPtr.Zero;
-
-            public IntPtr hIconSm = IntPtr.Zero;
-        }
 
         // NOTE:  this replaces the RECT struct in NativeMethodsCLR.cs because it adds an extra method IsEmpty
         [StructLayout(LayoutKind.Sequential)]
@@ -546,57 +517,49 @@ namespace MS.Win32
             }
         }
 
-		internal sealed class SafeLocalMemHandle : SafeHandleZeroOrMinusOneIsInvalid
-		{
-		    public SafeLocalMemHandle() : base(true)
-		    {
-		    }
+        internal sealed class SafeLocalMemHandle : SafeHandleZeroOrMinusOneIsInvalid
+        {
+            public SafeLocalMemHandle() : base(true)
+            {
+            }
 
-		    public SafeLocalMemHandle(IntPtr existingHandle, bool ownsHandle) : base(ownsHandle)
-		    {
-		        base.SetHandle(existingHandle);
-		    }
+            public SafeLocalMemHandle(IntPtr existingHandle, bool ownsHandle) : base(ownsHandle)
+            {
+                base.SetHandle(existingHandle);
+            }
 
-		    protected override bool ReleaseHandle()
-		    {
-		        return (LocalFree(base.handle) == IntPtr.Zero);
-		    }
+            protected override bool ReleaseHandle()
+            {
+                return (LocalFree(base.handle) == IntPtr.Zero);
+            }
 
             [DllImport("kernel32.dll")]
-		    private static extern IntPtr LocalFree(IntPtr hMem);
-		}
+            private static extern IntPtr LocalFree(IntPtr hMem);
+        }
 
 
-        internal const uint DELETE = 0x00010000, READ_CONTROL = 0x00020000, WRITE_DAC = 0x00040000, WRITE_OWNER = 0x00080000, SYNCHRONIZE = 0x00100000, STANDARD_RIGHTS_REQUIRED = 0x000F0000, STANDARD_RIGHTS_READ = READ_CONTROL, STANDARD_RIGHTS_WRITE = READ_CONTROL, STANDARD_RIGHTS_EXECUTE = READ_CONTROL, STANDARD_RIGHTS_ALL = 0x001F0000, SPECIFIC_RIGHTS_ALL = 0x0000FFFF, ACCESS_SYSTEM_SECURITY = 0x01000000, MAXIMUM_ALLOWED = 0x02000000, GENERIC_READ = 0x80000000, GENERIC_WRITE = 0x40000000, GENERIC_EXECUTE = 0x20000000, GENERIC_ALL = 0x10000000;
+        internal const uint DELETE = 0x00010000,
+            READ_CONTROL = 0x00020000,
+            WRITE_DAC = 0x00040000,
+            WRITE_OWNER = 0x00080000,
+            SYNCHRONIZE = 0x00100000,
+            STANDARD_RIGHTS_REQUIRED = 0x000F0000,
+            STANDARD_RIGHTS_READ = READ_CONTROL,
+            STANDARD_RIGHTS_WRITE = READ_CONTROL,
+            STANDARD_RIGHTS_EXECUTE = READ_CONTROL,
+            STANDARD_RIGHTS_ALL = 0x001F0000,
+            SPECIFIC_RIGHTS_ALL = 0x0000FFFF,
+            ACCESS_SYSTEM_SECURITY = 0x01000000,
+            MAXIMUM_ALLOWED = 0x02000000,
+            GENERIC_READ = 0x80000000,
+            GENERIC_WRITE = 0x40000000,
+            GENERIC_EXECUTE = 0x20000000,
+            GENERIC_ALL = 0x10000000;
 
-        internal const uint FILE_READ_DATA = 0x0001,    // file & pipe
-            FILE_LIST_DIRECTORY = 0x0001,    // directory
-            FILE_WRITE_DATA = 0x0002,    // file & pipe
-            FILE_ADD_FILE = 0x0002,    // directory
-            FILE_APPEND_DATA = 0x0004,    // file
-            FILE_ADD_SUBDIRECTORY = 0x0004,    // directory
-            FILE_CREATE_PIPE_INSTANCE = 0x0004,    // named pipe
-            FILE_READ_EA = 0x0008,    // file & directory
-            FILE_WRITE_EA = 0x0010,    // file & directory
-            FILE_EXECUTE = 0x0020,    // file
-            FILE_TRAVERSE = 0x0020,    // directory
-            FILE_DELETE_CHILD = 0x0040,    // directory
-            FILE_READ_ATTRIBUTES = 0x0080,    // all
-            FILE_WRITE_ATTRIBUTES = 0x0100;    // all
-
-        internal const uint FILE_ALL_ACCESS = STANDARD_RIGHTS_REQUIRED | SYNCHRONIZE | 0x1FF, FILE_GENERIC_READ = STANDARD_RIGHTS_READ | FILE_READ_DATA | FILE_READ_ATTRIBUTES | FILE_READ_EA | SYNCHRONIZE, FILE_GENERIC_WRITE = STANDARD_RIGHTS_WRITE | FILE_WRITE_DATA | FILE_WRITE_ATTRIBUTES | FILE_WRITE_EA | FILE_APPEND_DATA | SYNCHRONIZE, FILE_GENERIC_EXECUTE = STANDARD_RIGHTS_EXECUTE | FILE_READ_ATTRIBUTES | FILE_EXECUTE | SYNCHRONIZE;
-
-        internal const uint FILE_SHARE_READ = 0x00000001, FILE_SHARE_WRITE = 0x00000002, FILE_SHARE_DELETE = 0x00000004;
-
-        internal const int ERROR_ALREADY_EXISTS = 183;
+        internal const uint FILE_SHARE_READ = 0x00000001;
 
         internal const int OPEN_EXISTING = 3;
 
-        internal const int PAGE_READONLY = 0x02;
-
-        internal const int SECTION_MAP_READ = 0x0004;
-
-        internal const int FILE_ATTRIBUTE_NORMAL = 0x00000080;
         internal const int FILE_ATTRIBUTE_TEMPORARY = 0x00000100;
         internal const int FILE_FLAG_DELETE_ON_CLOSE = 0x04000000;
 
@@ -938,9 +901,6 @@ namespace MS.Win32
         // from Framework
         internal const int ENDSESSION_LOGOFF = (unchecked((int)0x80000000));
 
-        internal const int
-        ERROR_SUCCESS = 0;
-
         public const int LOCALE_FONTSIGNATURE = 0x00000058;
 
         public const int
@@ -1001,72 +961,13 @@ namespace MS.Win32
             SPI_SETBORDER = 0x0006,
             SPI_SETNONCLIENTMETRICS = 0x002A;
 
-        public const int LANG_KOREAN = 0x12;
-
-#if NEVER
-        public static int PRIMARYLANGID(int lgid)
-        {
-            return ((ushort)(lgid) & 0x3ff);
-        }
-#endif
-
         public const int
-            MB_YESNO = 0x00000004,
-            MB_SYSTEMMODAL = 0x00001000,
-            IDYES = 6;
-
-        public const int PM_QS_INPUT = unchecked(QS_INPUT << 16);
-        public const int PM_QS_PAINT = unchecked(QS_PAINT << 16);
-
-
-        public const int
-        SW_PARENTCLOSING = 1,
-        SW_PARENTOPENING = 3,
-        SC_MOUSEMOVE = SC_MOVE + 0x02,
-        SPI_SETKEYBOARDSPEED = 0x000B;
-
-        internal const int TYMED_HGLOBAL = 1;
-        internal const int TYMED_FILE = 2;
-        internal const int TYMED_ISTREAM = 4;
-        internal const int TYMED_ISTORAGE = 8;
-        internal const int TYMED_GDI = 16;
-        internal const int TYMED_MFPICT = 32;
-        internal const int TYMED_ENHMF = 64;
-
+            SW_PARENTCLOSING = 1,
+            SW_PARENTOPENING = 3,
+            SC_MOUSEMOVE = SC_MOVE + 0x02,
+            SPI_SETKEYBOARDSPEED = 0x000B;
 
         public const int WS_OVERLAPPEDWINDOW = (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU | WS_THICKFRAME | WS_MINIMIZEBOX | WS_MAXIMIZEBOX);
-
-        public const int KEYEVENTF_EXTENDEDKEY = 0x0001;
-        public const int KEYEVENTF_KEYUP = 0x0002;
-        public const int KEYEVENTF_UNICODE = 0x0004;
-        public const int KEYEVENTF_SCANCODE = 0x0008;
-
-        public const int MOUSEEVENTF_MOVE = 0x0001;
-        public const int MOUSEEVENTF_LEFTDOWN = 0x0002;
-        public const int MOUSEEVENTF_LEFTUP = 0x0004;
-        public const int MOUSEEVENTF_RIGHTDOWN = 0x0008;
-        public const int MOUSEEVENTF_RIGHTUP = 0x0010;
-        public const int MOUSEEVENTF_MIDDLEDOWN = 0x0020;
-        public const int MOUSEEVENTF_MIDDLEUP = 0x0040;
-        public const int MOUSEEVENTF_XDOWN = 0x0080;
-        public const int MOUSEEVENTF_XUP = 0x0100;
-        public const int MOUSEEVENTF_WHEEL = 0x00800;
-        public const int MOUSEEVENTF_VIRTUALDESK = 0x04000;
-        public const int MOUSEEVENTF_ABSOLUTE = 0x08000;
-        public const int MOUSEEVENTF_ACTUAL = 0x10000;
-
-        public const int GWL_HINSTANCE = -6;
-        public const int GWL_USERDATA = -21;
-        public const int GCL_MENUNAME = -8;
-        public const int GCL_HBRBACKGROUND = -10;
-        public const int GCL_HCURSOR = -12;
-        public const int GCL_HICON = -14;
-        public const int GCL_HMODULE = -16;
-        public const int GCL_CBWNDEXTRA = -18;
-        public const int GCL_CBCLSEXTRA = -20;
-        public const int GCL_STYLE = -26;
-        public const int GCW_ATOM = -32;
-        public const int GCL_HICONSM = -34;
 
         public const int MONITOR_DEFAULTTONULL       = 0x00000000;
         public const int MONITOR_DEFAULTTOPRIMARY    = 0x00000001;
@@ -1085,27 +986,6 @@ namespace MS.Win32
             }
         }
 
-
-
-        [StructLayout(LayoutKind.Sequential)]
-        public sealed class STATDATA
-        {
-            [MarshalAs(UnmanagedType.U4)]
-            public int advf = 0;
-            [MarshalAs(UnmanagedType.U4)]
-            public int dwConnection = 0;
-        }
-
-        public enum WINDOWTHEMEATTRIBUTETYPE
-        {
-            WTA_NONCLIENT = 1
-        };
-
-        public const uint WTNCA_NODRAWCAPTION = 0x00000001;   // don't draw the window caption
-        public const uint WTNCA_NODRAWICON = 0x00000002;   // don't draw the system icon
-        public const uint WTNCA_NOSYSMENU = 0x00000004;   // don't expose the system menu icon functionality
-        public const uint WTNCA_VALIDBITS = (WTNCA_NODRAWCAPTION | WTNCA_NODRAWICON | WTNCA_NOSYSMENU);
-
 #if WCP_SYSTEM_THEMES_ENABLED
         [StructLayout(LayoutKind.Sequential)]
         public class WTA_OPTIONS
@@ -1114,10 +994,6 @@ namespace MS.Win32
             public uint dwMask = 0;
         };
 #endif // WCP_SYSTEM_THEMES_ENABLED
-
-
-        internal const int NO_ERROR = 0;
-
 
         ///////////////////////////
         // Used by BASE
@@ -1161,16 +1037,8 @@ namespace MS.Win32
         [StructLayout(LayoutKind.Sequential)]
         public struct HWND
         {
-            /// <summary>
-            ///
-            /// </summary>
             public IntPtr h;
 
-            /// <summary>
-            ///
-            /// </summary>
-            /// <param name="h"></param>
-            /// <returns></returns>
             public static HWND Cast(IntPtr h)
             {
                 HWND hTemp = new HWND();
@@ -1183,53 +1051,27 @@ namespace MS.Win32
                 return new HandleRef(wrapper,h);
             }
 
-            /// <summary>
-            ///
-            /// </summary>
-            /// <param name="h"></param>
-            /// <returns></returns>
             public static implicit operator IntPtr(HWND h)
             {
                 return h.h;
             }
 
-            /// <summary>
-            ///
-            /// </summary>
-            /// <param name="hl"></param>
-            /// <param name="hr"></param>
-            /// <returns></returns>
             public static bool operator ==(HWND hl, HWND hr)
             {
                 return (hl.h == hr.h);
             }
 
-            /// <summary>
-            ///
-            /// </summary>
-            /// <param name="hl"></param>
-            /// <param name="hr"></param>
-            /// <returns></returns>
             public static bool operator !=(HWND hl, HWND hr)
             {
                 return (hl.h != hr.h);
             }
 
-            /// <summary>
-            ///
-            /// </summary>
-            /// <param name="oCompare"></param>
-            /// <returns></returns>
             override public bool Equals(object oCompare)
             {
                 HWND hr = Cast((HWND)oCompare);
                 return (h == hr.h);
             }
 
-            /// <summary>
-            ///
-            /// </summary>
-            /// <returns></returns>
             public override int GetHashCode()
             {
                 return (int)h;
@@ -1241,40 +1083,7 @@ namespace MS.Win32
         /// </summary>
         public struct HDC
         {
-            /// <summary>
-            ///
-            /// </summary>
             public IntPtr h;
-
-            /// <summary>
-            ///
-            /// </summary>
-            /// <param name="h"></param>
-            /// <returns></returns>
-            public static HDC Cast(IntPtr h)
-            {
-                HDC hTemp = new HDC();
-                hTemp.h = h;
-                return hTemp;
-            }
-
-            public HandleRef MakeHandleRef( object wrapper)
-            {
-                return new HandleRef(wrapper, h);
-            }
-
-            /// <summary>
-            ///
-            /// </summary>
-            public static HDC NULL
-            {
-                get
-                {
-                    HDC hTemp = new HDC();
-                    hTemp.h = IntPtr.Zero;
-                    return hTemp;
-                }
-            }
         }
 
         public const int DRAGDROP_S_DROP = 0x00040100;
@@ -1283,110 +1092,6 @@ namespace MS.Win32
 
         public const int TME_CANCEL = (unchecked((int)0x80000000));
         public const int IDC_HAND = 32649;
-
-        /// <summary>
-        /// End document printing
-        /// </summary>
-        /// <param name="hdc">Printer DC</param>
-        /// <returns>More than 0 if succeeds, zero or less if fails</returns>
-        [DllImport("gdi32.dll")]
-        public static extern Int32 EndDoc(HDC hdc);
-
-        public const int DM_ORIENTATION = 0x00000001;
-        public const int DM_PAPERSIZE = 0x00000002;
-        public const int DM_PAPERLENGTH = 0x00000004;
-        public const int DM_PAPERWIDTH = 0x00000008;
-        public const int DM_PRINTQUALITY = 0x00000400;
-        public const int DM_YRESOLUTION = 0x00002000;
-
-        /// <summary>
-        /// Escape description for ExtEscape
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public unsafe struct PrinterEscape
-        {
-            public Int32 cbInput;
-            public UInt32 cbOutput;
-            public UInt32 opcode;
-            public Int32 cbSize;
-            
-            public void* buffer;
-        }
-
-        /// <summary>
-        /// Send Escape to DC (printer)
-        /// </summary>
-        /// <param name="hdc">Printer DC</param>
-        /// <param name="nEscape">Escape code</param>
-        /// <param name="cbInput"># bytes in lpvInData</param>
-        /// <param name="lpvInData">Input data</param>
-        /// <param name="cbOutput">size of lpvOutData in bytes</param>
-        /// <param name="lpvOutData">Structure to receive data</param>
-        /// <returns>0 if escape not implemented, negative if error, otherwise succeeds</returns>
-        [DllImport("gdi32.dll")]
-        public static unsafe extern Int32 ExtEscape(HDC hdc, Int32 nEscape, Int32 cbInput, PrinterEscape* lpvInData, Int32 cbOutput, [Out] void* lpvOutData);
-
-        public const int MM_ISOTROPIC = 7;
-
-
-        public const int DM_OUT_BUFFER = 2;
-
-
-        /// <summary>
-        /// Document info for printing
-        /// </summary>
-        [StructLayout(LayoutKind.Sequential)]
-        public unsafe struct DocInfo
-        {// (*)indicates must be specfied
-            internal Int32 cbSize;                     // (*)size of this structure (20)
-            internal String lpszName;                   // (*)Name of document
-            internal String lpszOutput;                 // Name of output file (null)
-            internal String lpszDatatype;               // Type of data ("raw" or "emf") can be null
-            internal Int32 fwType;                     // Flags about print job (0)
-        }
-
-        /// <summary>
-        /// Start document printing
-        /// </summary>
-        /// <param name="hdc">Printer DC</param>
-        /// <param name="docInfo">Document information</param>
-        /// <returns>More than zero if succeeded</returns>
-        [DllImport("gdi32.dll")]
-        public unsafe static extern Int32 StartDoc(HDC hdc, ref DocInfo docInfo);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="printerName"></param>
-        /// <param name="phPrinter"></param>
-        /// <param name="pDefaults"></param>
-        /// <returns></returns>
-        [DllImport("winspool.drv", BestFitMapping = false, ThrowOnUnmappableChar = true)]
-        public unsafe static extern Int32 OpenPrinterA(String printerName, IntPtr* phPrinter, void* pDefaults);
-
-        /// <summary>
-        ///
-        /// </summary>
-        /// <param name="hPrinter"></param>
-        /// <returns></returns>
-        [DllImport("winspool.drv")]//CASRemoval:
-        public static extern Int32 ClosePrinter(IntPtr hPrinter);
-
-        /// <summary>
-        /// End document page
-        /// </summary>
-        /// <param name="hdc">Printer DC</param>
-        /// <returns>More than 0 if succeeds, zero or less if fails</returns>
-        [DllImport("gdi32.dll")]//CASRemoval:
-        public static extern Int32 EndPage(HDC hdc);
-
-        /// <summary>
-        /// Start document page
-        /// </summary>
-        /// <param name="hdc">Printer DC</param>
-        /// <returns>More than 0 if succeeds, zero or less if fails</returns>
-        [DllImport("gdi32.dll")]//CASRemoval:
-        public static extern Int32 StartPage(HDC hdc);
 
         /// <summary>Win32 constants</summary>
         public const int E_HANDLE = unchecked((int)0x80070006);
@@ -1508,7 +1213,7 @@ namespace MS.Win32
         public const int WTS_REMOTE_DISCONNECT  = 0x4;
         public const int WTS_SESSION_LOCK       = 0x7;
         public const int WTS_SESSION_UNLOCK     = 0x8;
-        
+
         public const uint NOTIFY_FOR_THIS_SESSION = 0;
 
         public const int PBT_APMSUSPEND         = 0x0004;
@@ -1526,8 +1231,6 @@ namespace MS.Win32
 
         public static readonly Guid GUID_MONITOR_POWER_ON = new Guid(0x02731015, 0x4510, 0x4526, 0x99, 0xE6, 0xE5, 0xA1, 0x7E, 0xBD, 0x1A, 0xEA);
 
-
-
         public const uint PROFILE_READ = 1;
 
         //
@@ -1542,7 +1245,7 @@ namespace MS.Win32
 
         public enum COLORTYPE : uint
         {
-            COLOR_GRAY       =   1,
+            COLOR_GRAY = 1,
             COLOR_RGB,
             COLOR_XYZ,
             COLOR_Yxy,
@@ -1560,7 +1263,7 @@ namespace MS.Win32
         };
 
         public enum ColorSpace : uint
-        {   
+        {
             SPACE_XYZ       = 0x58595A20,  // = 'XYZ '
             SPACE_Lab       = 0x4C616220,  // = 'Lab '
             SPACE_Luv       = 0x4C757620,  // = 'Luv '
@@ -1592,10 +1295,5 @@ namespace MS.Win32
             SPACE_F_CHANNEL = 0x46434C52,  // = 'FCLR'
             SPACE_sRGB      = 0x73524742   // = 'sRGB'
         };
-
-        //
-        // </Windows Color System (WCS) types>
-        //
     }
 }
-

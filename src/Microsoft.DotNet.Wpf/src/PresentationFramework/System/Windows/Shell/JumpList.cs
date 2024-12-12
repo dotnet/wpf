@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,7 @@ using MS.Internal;
 using MS.Internal.AppModel;
 using MS.Internal.Interop;
 using MS.Win32;
-
-using HRESULT = MS.Internal.Interop.HRESULT;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Shell
 {
@@ -411,7 +410,8 @@ namespace System.Windows.Shell
                     hr = HRESULT.S_OK;
                     appId = null;
                 }
-                hr.ThrowIfFailed();
+
+                hr.ThrowOnFailureUnwrapWin32();
                 return appId;
             }
         }
@@ -482,7 +482,7 @@ namespace System.Windows.Shell
                 // if they really care.  We'll happily add too many items with the hope that if the user changes the setting
                 // items will be recovered from the overflow.
                 uint slotsVisible;
-                Guid removedIid = new Guid(IID.ObjectArray);
+                Guid removedIid = new Guid(MS.Internal.AppModel.IID.ObjectArray);
                 var objectsRemoved = (IObjectArray)destinationList.BeginList(out slotsVisible, ref removedIid);
 
                 // Keep track of the items that were previously removed by the user.
@@ -765,7 +765,7 @@ namespace System.Windows.Shell
 
             var retList = new List<_ShellObjectPair>();
 
-            Guid unknownIid = new Guid(IID.Unknown);
+            Guid unknownIid = new Guid(MS.Internal.AppModel.IID.Unknown);
             uint count = shellObjects.GetCount();
             for (uint i = 0; i < count; ++i)
             {
@@ -831,7 +831,7 @@ namespace System.Windows.Shell
             {
                 // If the list contained items that could not be added because this object isn't a handler
                 // then drop all ShellItems and retry without them.
-                if (isHeterogenous && hr == HRESULT.DESTS_E_NO_MATCHING_ASSOC_HANDLER)
+                if (isHeterogenous && hr == (HRESULT)unchecked((int)0x80040F03)) // HRESULT.DESTS_E_NO_MATCHING_ASSOC_HANDLER
                 {
                     if (TraceShell.IsEnabled)
                     {
@@ -860,7 +860,7 @@ namespace System.Windows.Shell
                 }
                 else
                 {
-                    Debug.Assert(HRESULT.DESTS_E_NO_MATCHING_ASSOC_HANDLER != hr);
+                    Debug.Assert(hr != (HRESULT)unchecked((int)0x80040F03)); // HRESULT.DESTS_E_NO_MATCHING_ASSOC_HANDLER
                     // If we failed for some other reason, just reject everything.
                     foreach (var item in jumpItems)
                     {

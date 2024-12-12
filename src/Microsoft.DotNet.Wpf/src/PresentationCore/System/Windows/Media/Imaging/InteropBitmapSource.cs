@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,6 +11,7 @@ using MS.Win32.PresentationCore;
 using System.Windows.Media;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Interop
 {
@@ -30,11 +31,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Construct a BitmapSource from an HBITMAP.
         /// </summary>
-        /// <param name="hbitmap"></param>
-        /// <param name="hpalette"></param>
-        /// <param name="sourceRect"></param>
-        /// <param name="sizeOptions"></param>
-        /// <param name="alphaOptions"></param>
         internal InteropBitmap(IntPtr hbitmap, IntPtr hpalette, Int32Rect sourceRect, BitmapSizeOptions sizeOptions, WICBitmapAlphaChannelOption alphaOptions)
             : base(true) // Use virtuals
         {
@@ -42,13 +38,14 @@ namespace System.Windows.Interop
 
             using (FactoryMaker myFactory = new FactoryMaker())
             {
-                HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromHBITMAP(
-                        myFactory.ImagingFactoryPtr,
-                        hbitmap,
-                        hpalette,
-                        alphaOptions,
-                        out _unmanagedSource));
-                Debug.Assert (_unmanagedSource != null && !_unmanagedSource.IsInvalid);
+                UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromHBITMAP(
+                    myFactory.ImagingFactoryPtr,
+                    hbitmap,
+                    hpalette,
+                    alphaOptions,
+                    out _unmanagedSource).ThrowOnFailureExtended();
+
+                Debug.Assert(_unmanagedSource != null && !_unmanagedSource.IsInvalid);
             }
 
             _unmanagedSource.CalculateSize();
@@ -60,13 +57,10 @@ namespace System.Windows.Interop
 
             FinalizeCreation();
         }
-        
+
         /// <summary>
         /// Construct a BitmapSource from an HICON.
         /// </summary>
-        /// <param name="hicon"></param>
-        /// <param name="sourceRect"></param>
-        /// <param name="sizeOptions"></param>
         internal InteropBitmap(IntPtr hicon, Int32Rect sourceRect, BitmapSizeOptions sizeOptions)
             : base(true) // Use virtuals
         {
@@ -75,11 +69,12 @@ namespace System.Windows.Interop
 
             using (FactoryMaker myFactory = new FactoryMaker())
             {
-                HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromHICON(
+                UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromHICON(
                     myFactory.ImagingFactoryPtr,
                     hicon,
-                    out _unmanagedSource));
-                Debug.Assert (_unmanagedSource != null && !_unmanagedSource.IsInvalid);
+                    out _unmanagedSource).ThrowOnFailureExtended();
+
+                Debug.Assert(_unmanagedSource != null && !_unmanagedSource.IsInvalid);
             }
 
             _unmanagedSource.CalculateSize();
@@ -95,12 +90,6 @@ namespace System.Windows.Interop
         /// <summary>
         /// Construct a BitmapSource from a memory section.
         /// </summary>
-        /// <param name="section"></param>
-        /// <param name="pixelWidth"></param>
-        /// <param name="pixelHeight"></param>
-        /// <param name="format"></param>
-        /// <param name="stride"></param>
-        /// <param name="offset"></param>
         internal InteropBitmap(
             IntPtr section,
             int pixelWidth,
@@ -117,16 +106,16 @@ namespace System.Windows.Interop
 
             Guid formatGuid = format.Guid;
 
-            HRESULT.Check(UnsafeNativeMethods.WindowsCodecApi.CreateBitmapFromSection(
-                    (uint)pixelWidth,
-                    (uint)pixelHeight,
-                    ref formatGuid,
-                    section,
-                    (uint)stride,
-                    (uint)offset,
-                    out _unmanagedSource
-                    ));
-            Debug.Assert (_unmanagedSource != null && !_unmanagedSource.IsInvalid);
+            UnsafeNativeMethods.WindowsCodecApi.CreateBitmapFromSection(
+                (uint)pixelWidth,
+                (uint)pixelHeight,
+                ref formatGuid,
+                section,
+                (uint)stride,
+                (uint)offset,
+                out _unmanagedSource).ThrowOnFailureExtended();
+
+            Debug.Assert(_unmanagedSource != null && !_unmanagedSource.IsInvalid);
 
             _unmanagedSource.CalculateSize();
             _sourceRect = Int32Rect.Empty;
@@ -228,11 +217,11 @@ namespace System.Windows.Interop
             {
                 using (FactoryMaker factoryMaker = new FactoryMaker())
                 {
-                    HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromSource(
-                            factoryMaker.ImagingFactoryPtr,
-                            wicSource,
-                            WICBitmapCreateCacheOptions.WICBitmapCacheOnLoad,
-                            out bitmapSource));
+                    UnsafeNativeMethods.WICImagingFactory.CreateBitmapFromSource(
+                        factoryMaker.ImagingFactoryPtr,
+                        wicSource,
+                        WICBitmapCreateCacheOptions.WICBitmapCacheOnLoad,
+                        out bitmapSource).ThrowOnFailureExtended();
                 }
 
                 bitmapSource.CalculateSize();
@@ -345,7 +334,7 @@ namespace System.Windows.Interop
             BitmapSourceSafeMILHandle wicTransformer = null;
             BitmapSourceSafeMILHandle transformedSource = _unmanagedSource;
 
-            HRESULT.Check(UnsafeNativeMethods.WICBitmap.SetResolution(_unmanagedSource, 96, 96));
+            UnsafeNativeMethods.WICBitmap.SetResolution(_unmanagedSource, 96, 96).ThrowOnFailureExtended();
 
             using (FactoryMaker factoryMaker = new FactoryMaker())
             {
@@ -353,16 +342,16 @@ namespace System.Windows.Interop
 
                 if (!_sourceRect.IsEmpty)
                 {
-                    HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapClipper(
-                            wicFactory,
-                            out wicClipper));
+                    UnsafeNativeMethods.WICImagingFactory.CreateBitmapClipper(
+                        wicFactory,
+                        out wicClipper).ThrowOnFailureExtended();
 
                     lock (_syncObject)
                     {
-                        HRESULT.Check(UnsafeNativeMethods.WICBitmapClipper.Initialize(
-                                wicClipper,
-                                transformedSource,
-                                ref _sourceRect));
+                        UnsafeNativeMethods.WICBitmapClipper.Initialize(
+                            wicClipper,
+                            transformedSource,
+                            ref _sourceRect).ThrowOnFailureExtended();
                     }
 
                     transformedSource = wicClipper;
@@ -381,32 +370,32 @@ namespace System.Windows.Interop
                             out width,
                             out height);
 
-                        HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapScaler(
-                                wicFactory,
-                                out wicTransformer));
+                        UnsafeNativeMethods.WICImagingFactory.CreateBitmapScaler(
+                            wicFactory,
+                            out wicTransformer).ThrowOnFailureExtended();
 
                         lock (_syncObject)
                         {
-                            HRESULT.Check(UnsafeNativeMethods.WICBitmapScaler.Initialize(
-                                    wicTransformer,
-                                    transformedSource,
-                                    width,
-                                    height,
-                                    WICInterpolationMode.Fant));
+                            UnsafeNativeMethods.WICBitmapScaler.Initialize(
+                                wicTransformer,
+                                transformedSource,
+                                width,
+                                height,
+                                WICInterpolationMode.Fant).ThrowOnFailureExtended();
                         }
                     }
                     else if (_sizeOptions.Rotation != Rotation.Rotate0)
                     {
-                        HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapFlipRotator(
-                                wicFactory,
-                                out wicTransformer));
+                        UnsafeNativeMethods.WICImagingFactory.CreateBitmapFlipRotator(
+                            wicFactory,
+                            out wicTransformer).ThrowOnFailureExtended();
 
                         lock (_syncObject)
                         {
-                            HRESULT.Check(UnsafeNativeMethods.WICBitmapFlipRotator.Initialize(
-                                    wicTransformer,
-                                    transformedSource,
-                                    _sizeOptions.WICTransformOptions));
+                            UnsafeNativeMethods.WICBitmapFlipRotator.Initialize(
+                                wicTransformer,
+                                transformedSource,
+                                _sizeOptions.WICTransformOptions).ThrowOnFailureExtended();
                         }
                     }
 

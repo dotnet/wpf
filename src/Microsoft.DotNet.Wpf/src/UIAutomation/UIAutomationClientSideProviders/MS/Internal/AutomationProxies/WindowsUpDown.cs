@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,6 +9,7 @@ using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using MS.Win32;
+using Windows.Win32.Foundation;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
 
 namespace MS.Internal.AutomationProxies
@@ -308,7 +309,7 @@ namespace MS.Internal.AutomationProxies
             int hr = Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc);
 
             // Verify the role
-            return hr == NativeMethods.S_OK && acc != null ? acc.Role == AccessibleRole.SpinButton : false;
+            return hr == HRESULT.S_OK && acc != null ? acc.Role == AccessibleRole.SpinButton : false;
         }
 
         #endregion
@@ -577,7 +578,7 @@ namespace MS.Internal.AutomationProxies
 
                 switch (item)
                 {
-                    case WindowsUpDown.SpinItem.DownArrow:
+                    case SpinItem.DownArrow:
                         if (fHorz)
                         {
                             int width = (updownRect.right - updownRect.left);
@@ -591,7 +592,7 @@ namespace MS.Internal.AutomationProxies
                         // Don't need to normalize, GetWindowRect returns screen coordinates.
                         return updownRect.ToRect(false);
 
-                    case WindowsUpDown.SpinItem.UpArrow:
+                    case SpinItem.UpArrow:
                         if (fHorz)
                         {
                             int width = (updownRect.right - updownRect.left);

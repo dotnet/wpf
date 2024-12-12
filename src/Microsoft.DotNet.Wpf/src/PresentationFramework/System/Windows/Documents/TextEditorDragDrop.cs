@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,6 +11,7 @@ using System.Windows.Controls.Primitives;  // CharacterCasing, TextBoxBase
 using System.Windows.Data; // BindingExpression
 using System.Windows.Media;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 // 
 // Description: A Component of TextEditor class supposrtinng Drag-and-drop 
@@ -118,13 +119,13 @@ namespace System.Windows.Documents
             internal void DoMouseLeftButtonUp(MouseButtonEventArgs e)
             {
                 if (_dragStarted)
-                {   
+                {
                     // We get to this state when drag gesture ends within the selection,
                     // so we only need to set selection into mouse-releasing point.
-                    if (this.TextView.IsValid)
+                    if (TextView.IsValid)
                     {
                         Point mouseDownPoint = e.GetPosition(_textEditor.TextView.RenderScope);
-                        ITextPointer cursorPosition = this.TextView.GetTextPositionFromPoint(mouseDownPoint, /*snapToText:*/true);
+                        ITextPointer cursorPosition = TextView.GetTextPositionFromPoint(mouseDownPoint, /*snapToText:*/true);
                         if (cursorPosition != null)
                         {
                             _textEditor.Selection.SetSelectionByMouse(cursorPosition, mouseDownPoint);
@@ -228,7 +229,7 @@ namespace System.Windows.Documents
                 // if something unexpected happened during the drag and drop operation,
                 // e.g. the application receiving the drop failed. In this case we should
                 // not fail, we should catch the exception and act as if the drop wasn't allowed.
-                catch (COMException ex) when(ex.HResult == NativeMethods.E_UNEXPECTED)
+                catch (COMException ex) when(ex.HResult == HRESULT.E_UNEXPECTED)
                 {
                 }
 
@@ -407,7 +408,7 @@ namespace System.Windows.Documents
                         if (dragPosition != null)
                         {
                             // Get the caret position to show the dropable point.
-                            Rect caretRectangle = this.TextView.GetRectangleFromTextPosition(dragPosition);
+                            Rect caretRectangle = TextView.GetRectangleFromTextPosition(dragPosition);
 
                             // NOTE: We DO NOT use GetCurrentValue because springload formatting should NOT be involved for drop caret.
                             object fontStylePropertyValue = dragPosition.GetValue(TextElement.FontStyleProperty);
@@ -445,7 +446,7 @@ namespace System.Windows.Documents
                     transform.TryTransform(point, out point); 
                 }
 
-                ITextPointer dropPosition = this.TextView.GetTextPositionFromPoint(point, /*snapToText:*/true);
+                ITextPointer dropPosition = TextView.GetTextPositionFromPoint(point, /*snapToText:*/true);
                 
                 // For rich text content we adjust drop position to word boundary
                 if (dropPosition != null)
@@ -455,7 +456,7 @@ namespace System.Windows.Documents
 
                     if (_textEditor.AcceptsRichContent)
                     {
-                        TextSegment lineRange = TextEditorSelection.GetNormalizedLineRange(this.TextView, dropPosition);
+                        TextSegment lineRange = TextEditorSelection.GetNormalizedLineRange(TextView, dropPosition);
 
                         if (!lineRange.IsNull &&
                             // The drop position must be before of end of line

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,6 +11,7 @@ using System.Windows.Media.Composition;
 using MS.Internal;
 using MS.Utility;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media
 {
@@ -214,7 +215,7 @@ namespace System.Windows.Media
             }
 
             // Subscribe to the OnDestroyContext event so that we can cleanup our state.
-            _destroyHandler = new EventHandler(this.OnDestroyContext);
+            _destroyHandler = new EventHandler(OnDestroyContext);
             Dispatcher.ShutdownFinished += _destroyHandler;
 
             _renderMessage = new DispatcherOperationCallback(RenderMessageHandler);
@@ -271,7 +272,7 @@ namespace System.Windows.Media
                         // we remove the sync channels so that if the app handles the exception
                         // it will get a new partition on the next sync render request.
                         _channelManager.RemoveSyncChannels();
-                        NotifyPartitionIsZombie(message.HRESULTFailure.HRESULTFailureCode);
+                        NotifyPartitionIsZombie((HRESULT)message.HRESULTFailure.HRESULTFailureCode);
                         break;
 
                     default:
@@ -315,7 +316,7 @@ namespace System.Windows.Media
                             break;
 
                         case DUCE.MilMessage.Type.PartitionIsZombie:
-                            NotifyPartitionIsZombie(message.HRESULTFailure.HRESULTFailureCode);
+                            NotifyPartitionIsZombie((HRESULT)message.HRESULTFailure.HRESULTFailureCode);
                             break;
 
                         case DUCE.MilMessage.Type.BadPixelShader:
@@ -413,23 +414,27 @@ namespace System.Windows.Media
         /// zombie state. This means either an unhandled batch processing,
         /// rendering or presentation error and will require us to reconnect.
         /// </summary>
-        private void NotifyPartitionIsZombie(int failureCode)
+        private static void NotifyPartitionIsZombie(HRESULT failureCode)
         {
+            // We only get back these kinds of notification:
             //
-            // We only get back these kinds of notification:-
-            // For all OOM cases, we get E_OUTOFMEMORY.
-            // For all OOVM cases, we get D3DERR_OUTOFVIDEOMEMORY and
-            // for all other errors we get WGXERR_UCE_RENDERTHREADFAILURE.
-            //
+            //  For all OOM cases, we get E_OUTOFMEMORY.
+            //  For all OOVM cases, we get D3DERR_OUTOFVIDEOMEMORY and
+            //  for all other errors we get WGXERR_UCE_RENDERTHREADFAILURE.
 
-            switch (failureCode)
+            if (failureCode == HRESULT.E_OUTOFMEMORY)
             {
-            case HRESULT.E_OUTOFMEMORY:
-                throw new System.OutOfMemoryException();
-            case HRESULT.D3DERR_OUTOFVIDEOMEMORY:
-                throw new System.OutOfMemoryException(SR.MediaContext_OutOfVideoMemory);
-            default:
-                throw new System.InvalidOperationException(SR.MediaContext_RenderThreadError);
+#pragma warning disable CA2201 // Do not raise reserved exception types
+                throw new OutOfMemoryException();
+            }
+            else if (failureCode == D3dErrors.D3DERR_OUTOFVIDEOMEMORY)
+            {
+                throw new OutOfMemoryException(SR.MediaContext_OutOfVideoMemory);
+#pragma warning restore CA2201
+            }
+            else
+            {
+                throw new InvalidOperationException(SR.MediaContext_RenderThreadError);
             }
         }
 
@@ -1508,7 +1513,7 @@ namespace System.Windows.Media
             Debug.Assert(dispatcher != null);
             Debug.Assert(iv != null);
 
-            MediaContext.From(dispatcher).UnregisterICompositionTargetInternal(iv);
+            From(dispatcher).UnregisterICompositionTargetInternal(iv);
         }
 
         /// <summary>
@@ -1823,7 +1828,7 @@ namespace System.Windows.Media
                         // (TimeManager gets its tick time from MediaContext's IClock implementation).
                         // In the case where we can't query QPC or aren't doing interlocked presents,
                         // this will be equal to the current time, which is a good enough approximation.
-                        Rendering?.Invoke(this.Dispatcher, new RenderingEventArgs(_timeManager.LastTickTime));
+                        Rendering?.Invoke(Dispatcher, new RenderingEventArgs(_timeManager.LastTickTime));
 
                         // call all render callbacks again in case the Rendering event affects layout
                         // this will enable layout effecting changes to get triggered this frame

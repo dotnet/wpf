@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,6 +23,7 @@ using MS.Internal.FontCache;
 using MS.Internal.FontFace;
 using MS.Internal.PresentationCore;
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
+using Windows.Win32.Foundation;
 
 
 namespace System.Windows.Media
@@ -828,7 +829,7 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                return CreateGlyphIndexer(this.GetAdvanceWidth);
+                return CreateGlyphIndexer(GetAdvanceWidth);
             }
         }
 
@@ -840,7 +841,7 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                return CreateGlyphIndexer(this.GetAdvanceHeight);
+                return CreateGlyphIndexer(GetAdvanceHeight);
             }
         }
 
@@ -855,7 +856,7 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                return CreateGlyphIndexer(this.GetLeftSidebearing);
+                return CreateGlyphIndexer(GetLeftSidebearing);
             }
         }
 
@@ -870,7 +871,7 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                return CreateGlyphIndexer(this.GetRightSidebearing);
+                return CreateGlyphIndexer(GetRightSidebearing);
             }
         }
 
@@ -886,7 +887,7 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                return CreateGlyphIndexer(this.GetTopSidebearing);
+                return CreateGlyphIndexer(GetTopSidebearing);
             }
         }
 
@@ -902,7 +903,7 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                return CreateGlyphIndexer(this.GetBottomSidebearing);
+                return CreateGlyphIndexer(GetBottomSidebearing);
             }
         }
 
@@ -914,7 +915,7 @@ namespace System.Windows.Media
             get
             {
                 CheckInitialized(); // This can only be called on fully initialized GlyphTypeface
-                return CreateGlyphIndexer(this.GetBaseline);
+                return CreateGlyphIndexer(GetBaseline);
             }
         }
 
@@ -1263,7 +1264,7 @@ namespace System.Windows.Media
                 MS.Internal.Text.TextInterface.FontFace fontFaceDWrite = _font.GetFontFace();
                 try
                 {
-                    HRESULT.Check(UnsafeNativeMethods.MilCoreApi.MilGlyphRun_GetGlyphOutline(
+                    UnsafeNativeMethods.MilCoreApi.MilGlyphRun_GetGlyphOutline(
                         fontFaceDWrite.DWriteFontFaceAddRef, // Released in this native code function
                         glyphIndex,
                         sideways,
@@ -1271,7 +1272,7 @@ namespace System.Windows.Media
                         out pMilPathGeometry,
                         out size,
                         out fillRule
-                        ));
+                        ).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -1281,12 +1282,11 @@ namespace System.Windows.Media
                 Geometry.PathGeometryData pathGeoData = new Geometry.PathGeometryData();
                 byte[] data = new byte[size];
                 Marshal.Copy(new IntPtr(pMilPathGeometry), data, 0, checked((int)size));
-                
+
                 // Delete the memory we allocated in native code.
-                HRESULT.Check(UnsafeNativeMethods.MilCoreApi.MilGlyphRun_ReleasePathGeometryData(
-                    pMilPathGeometry
-                    ));
-                
+                UnsafeNativeMethods.MilCoreApi.MilGlyphRun_ReleasePathGeometryData(
+                    pMilPathGeometry).ThrowOnFailureExtended();
+
                 pathGeoData.SerializedData = data;
                 pathGeoData.FillRule = fillRule;
                 pathGeoData.Matrix = CompositionResourceManager.MatrixToMilMatrix3x2D(Matrix.Identity);

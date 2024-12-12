@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -97,7 +97,6 @@ namespace MS.Win32
         internal struct TRACE_GUID_REGISTRATION
         {
             internal unsafe Guid* Guid;
-            
             internal unsafe void* RegHandle;
         }
 
@@ -142,9 +141,6 @@ namespace MS.Win32
 
         [DllImport("Advapi32.dll")]
         internal static extern byte GetTraceEnableLevel(ulong traceHandle);
-
-        [DllImport("Advapi32.dll")]
-        internal static extern long GetTraceLoggerHandle(WNODE_HEADER* data);
 
         #region TraceEvent()
         // Structures for TraceEvent API.

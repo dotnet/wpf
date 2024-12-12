@@ -1,25 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-// Description:
-//      A sub-class of SafeMILHandle that can estimate size for bitmap
-//      source objects.
-
 using MS.Internal;
+using Windows.Win32.Foundation;
 
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media.Imaging
 {
     /// <summary>
-    /// Constructor which computes size of the handle and delegates
-    /// to baseclass safe handle.
+    ///  A sub-class of SafeMILHandle that can estimate size for bitmap
+    ///  source objects.
     /// </summary>
-
     internal class BitmapSourceSafeMILHandle : SafeMILHandle
     {
         static BitmapSourceSafeMILHandle() { }
@@ -76,13 +69,12 @@ namespace System.Windows.Media.Imaging
                 // calling through the right vtable on the pinvoke.
                 //
 
-                int hr = UnsafeNativeMethods.MILUnknown.QueryInterface(
+                HRESULT result = UnsafeNativeMethods.MILUnknown.QueryInterface(
                     bitmapObject,
                     ref _uuidBitmap,
-                    out wicBitmap
-                    );
+                    out wicBitmap);
 
-                if (hr == HRESULT.S_OK)
+                if (result == HRESULT.S_OK)
                 {
                     Debug.Assert(wicBitmap != IntPtr.Zero);
 
@@ -98,17 +90,17 @@ namespace System.Windows.Media.Imaging
                     uint pixelWidth = 0;
                     uint pixelHeight = 0;
 
-                    hr = UnsafeNativeMethods.WICBitmapSource.GetSize(
+                    result = UnsafeNativeMethods.WICBitmapSource.GetSize(
                         bitmapSourceSafeHandle,
                         out pixelWidth,
                         out pixelHeight);
 
-                    if (hr == HRESULT.S_OK)
+                    if (result == HRESULT.S_OK)
                     {
                         Guid guidFormat;
 
-                        hr = UnsafeNativeMethods.WICBitmapSource.GetPixelFormat(bitmapSourceSafeHandle, out guidFormat);
-                        if (hr == HRESULT.S_OK)
+                        result = UnsafeNativeMethods.WICBitmapSource.GetPixelFormat(bitmapSourceSafeHandle, out guidFormat);
+                        if (result == HRESULT.S_OK)
                         {
                             //
                             // Go to long space to avoid overflow and check for overflow
@@ -148,5 +140,5 @@ namespace System.Windows.Media.Imaging
         /// Guid for IWICBitmapSource
         /// </summary>
         private static Guid _uuidBitmap = MILGuidData.IID_IWICBitmapSource;
-}
+    }
 }

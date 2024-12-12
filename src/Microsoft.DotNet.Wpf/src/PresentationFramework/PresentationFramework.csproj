@@ -1313,7 +1313,6 @@
     <Compile Include="System\Windows\Standard\Debug.cs" />
     <Compile Include="System\Windows\Standard\DoubleUtil.cs" />
     <Compile Include="System\Windows\Standard\DpiHelper.cs" />
-    <Compile Include="System\Windows\Standard\ErrorCodes.cs" />
     <Compile Include="System\Windows\Standard\MessageWindow.cs" />
     <Compile Include="System\Windows\Standard\NativeMethods.cs" />
     <Compile Include="System\Windows\Standard\ShellProvider.cs" />
@@ -1371,6 +1370,7 @@
 
   <ItemGroup>
     <MicrosoftPrivateWinFormsReference Include="Accessibility" />
+    <MicrosoftPrivateWinFormsReference Include="System.Private.Windows.Core" />
   </ItemGroup>
 
   <ItemGroup>
@@ -1387,6 +1387,7 @@
     </ProjectReference>
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Windows.Primitives\System.Windows.Primitives.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationTypes\UIAutomationTypes.csproj" />
     <ProjectReference Include="$(WpfSourceDir)UIAutomation\UIAutomationProvider\UIAutomationProvider.csproj" />
     <ProjectReference Include="$(WpfSourceDir)PresentationFramework\ref\PresentationFramework-ref.csproj">

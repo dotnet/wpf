@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,6 +13,7 @@ using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Windows.TrustUI;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.Documents
 {
@@ -143,7 +144,7 @@ namespace MS.Internal.Documents
             IntPtr queryInitParamsPtr = Marshal.AllocCoTaskMem(Marshal.SizeOf(queryInitParams));
 
             //Now try to invoke the OpenQueryWindow method
-            uint hresult = UnsafeNativeMethods.E_FAIL;
+            HRESULT hresult = HRESULT.E_FAIL;
             IDataObject data = null;
 
             try
@@ -179,10 +180,11 @@ namespace MS.Internal.Documents
                 //Invoke the OpenQueryWindow method on the ICommonQuery object,
                 //which will invoke the dialog and return any entered data in the
                 //"data" field.
-                //OpenQueryWindow will not return until the dialog is closed.                
-                hresult = commonQueryInstance.OpenQueryWindow(hWndParent,
-                                            ref openQueryWindowParams,
-                                            out data);
+                //OpenQueryWindow will not return until the dialog is closed.
+                hresult = commonQueryInstance.OpenQueryWindow(
+                    hWndParent,
+                    ref openQueryWindowParams,
+                    out data);
             }
             finally
             {
@@ -191,13 +193,13 @@ namespace MS.Internal.Documents
                 Marshal.FreeCoTaskMem(queryInitParamsPtr);
                 commonQueryInstance = null;
             }
-            
-            if (hresult == UnsafeNativeMethods.S_OK)
+
+            if (hresult == HRESULT.S_OK)
             {
                 //The user pressed "OK," so we can return the selected data
                 return data;
             }
-            else if (hresult == UnsafeNativeMethods.S_FALSE)
+            else if (hresult == HRESULT.S_FALSE)
             {
                 //The user canceled out, so we just return null.
                 return null;
@@ -332,16 +334,16 @@ namespace MS.Internal.Documents
 
             /// <summary>
             /// Finalizer for DsObjectNamesWrapper, ensures that unmanaged resources are properly
-            /// cleaned up.          
+            /// cleaned up.
             /// </summary>
             ~DsObjectNamesWrapper()
             {
-                this.Dispose();
+                Dispose();
             }
 
             /// <summary>
             /// The number of names in the DsObjectNames struct this class is wrapping.
-            /// </summary>            
+            /// </summary>
             internal uint Count
             {
                 get

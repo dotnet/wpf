@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,6 +6,7 @@
 using System.Runtime.InteropServices;
 using System.Collections;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Documents
 {
@@ -116,12 +117,12 @@ namespace System.Windows.Documents
             displayAttributeGuid = Guid;
             context.GetProperty(ref displayAttributeGuid, out displayAttributeProperty);
             // Get a range enumerator for the property.
-            if (displayAttributeProperty.EnumRanges(ecReadOnly, out attributeRangeEnumerator, null) == NativeMethods.S_OK)
+            if (displayAttributeProperty.EnumRanges(ecReadOnly, out attributeRangeEnumerator, null) == HRESULT.S_OK)
             {
                 attributeRanges = new UnsafeNativeMethods.ITfRange[1];
 
                 // Walk each range.
-                while (attributeRangeEnumerator.Next(1, attributeRanges, out fetched) == NativeMethods.S_OK)
+                while (attributeRangeEnumerator.Next(1, attributeRanges, out fetched) == HRESULT.S_OK)
                 {
                     // Get a DisplayAttribute for this range.
                     guidAtom = GetInt32Value(ecReadOnly, displayAttributeProperty, attributeRanges[0]);
@@ -144,8 +145,8 @@ namespace System.Windows.Documents
 
                             if (_compositionAdorner == null)
                             {
-                                _compositionAdorner = new CompositionAdorner(this.TextStore.TextView);
-                                _compositionAdorner.Initialize(this.TextStore.TextView);
+                                _compositionAdorner = new CompositionAdorner(TextStore.TextView);
+                                _compositionAdorner.Initialize(TextStore.TextView);
                             }
 
 #if UNUSED_IME_HIGHLIGHT_LAYER
@@ -171,7 +172,7 @@ namespace System.Windows.Documents
                 if (_compositionAdorner != null)
                 {
                     // Update the layout to get the acurated rectangle from calling GetRectangleFromTextPosition
-                    this.TextStore.RenderScope.UpdateLayout();
+                    TextStore.RenderScope.UpdateLayout();
 
                     // Invalidate the composition adorner to render the composition attribute ranges.
                     _compositionAdorner.InvalidateAdorner();
@@ -225,7 +226,7 @@ namespace System.Windows.Documents
             // Use category manager to convert guidatom to GUID.
             //
             UnsafeNativeMethods.ITfCategoryMgr catmgr;
-            if (UnsafeNativeMethods.TF_CreateCategoryMgr(out catmgr) != NativeMethods.S_OK)
+            if (UnsafeNativeMethods.TF_CreateCategoryMgr(out catmgr) != HRESULT.S_OK)
                 return null;
 
             if (catmgr == null)
@@ -245,7 +246,7 @@ namespace System.Windows.Documents
             UnsafeNativeMethods.ITfDisplayAttributeMgr dam;
             UnsafeNativeMethods.ITfDisplayAttributeInfo dai;
             UnsafeNativeMethods.TF_DISPLAYATTRIBUTE tfattr;
-            if (UnsafeNativeMethods.TF_CreateDisplayAttributeMgr(out dam) != NativeMethods.S_OK)
+            if (UnsafeNativeMethods.TF_CreateDisplayAttributeMgr(out dam) != HRESULT.S_OK)
                 return null;
 
             if (dam == null)

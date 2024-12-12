@@ -1,8 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-
 
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
@@ -11,6 +8,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using Microsoft.Win32.SafeHandles;
+using Windows.Win32.Foundation;
 
 // Some COM interfaces and Win32 structures are already declared in the framework.
 // Interesting ones to remember in System.Runtime.InteropServices.ComTypes are:
@@ -1454,7 +1452,7 @@ namespace Standard
                 dc = NativeMethods.CreateCompatibleDC(hPtr);
                 if (dc == null)
                 {
-                    HRESULT.ThrowLastError();
+                    throw new Win32Exception();
                 }
             }
             finally
@@ -1491,8 +1489,8 @@ namespace Standard
 
             if (dc.IsInvalid)
             {
-                // GetDC does not set the last error...
-                HRESULT.E_FAIL.ThrowIfFailed();
+                // GetDC does not set the last error.
+                HRESULT.E_FAIL.ThrowOnFailureUnwrapWin32();
             }
 
             return dc;
@@ -1532,7 +1530,7 @@ namespace Standard
 
         protected override bool ReleaseHandle()
         {
-            Status s = NativeMethods.GdiplusShutdown(this.handle);
+            Status s = NativeMethods.GdiplusShutdown(handle);
             return s == Status.Ok;
         }
 
@@ -1600,7 +1598,7 @@ namespace Standard
         {
             try
             {
-                if (!this.IsInvalid)
+                if (!IsInvalid)
                 {
                     int dwCookie = handle.ToInt32();
                     handle = IntPtr.Zero;
@@ -2287,7 +2285,7 @@ namespace Standard
             // Native version modifies the parameter in place.
             if (!_AdjustWindowRectEx(ref lpRect, dwStyle, bMenu, dwExStyle))
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
 
             return lpRect;
@@ -2325,7 +2323,7 @@ namespace Standard
                 ret = _ChangeWindowMessageFilter(message, action);
                 if (!ret)
                 {
-                    return (HRESULT)Win32Error.GetLastError();
+                    return HRESULT.FromWin32((WIN32_ERROR)Marshal.GetLastPInvokeError());
                 }
                 return HRESULT.S_OK;
             }
@@ -2334,7 +2332,7 @@ namespace Standard
             ret = _ChangeWindowMessageFilterEx(hwnd, message, action, ref filterstruct);
             if (!ret)
             {
-                return (HRESULT)Win32Error.GetLastError();
+                return HRESULT.FromWin32((WIN32_ERROR)Marshal.GetLastPInvokeError());
             }
 
             filterInfo = filterstruct.ExtStatus;
@@ -2398,7 +2396,7 @@ namespace Standard
 
             if (hBitmap.IsInvalid)
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
 
             return hBitmap;
@@ -2478,7 +2476,7 @@ namespace Standard
             IntPtr ret = _CreateWindowEx(dwExStyle, lpClassName, lpWindowName, dwStyle, x, y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam);
             if (IntPtr.Zero == ret)
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
 
             return ret;
@@ -2507,7 +2505,7 @@ namespace Standard
         public static extern int DwmGetWindowAttribute(IntPtr hWnd, DWMWA dwAttributeToGet, ref int pvAttributeValue, int cbAttribute);
 
         [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
+        public static extern HRESULT DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
 
         [DllImport("dwmapi.dll", EntryPoint = "DwmIsCompositionEnabled", PreserveSig = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -2640,7 +2638,7 @@ namespace Standard
             RECT rc;
             if (!_GetClientRect(hwnd, out rc))
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
             return rc;
         }
@@ -2662,10 +2660,13 @@ namespace Standard
             var sizeBuilder = new StringBuilder((int)Win32Value.MAX_PATH);
 
             // This will throw if the theme service is not active (e.g. not UxTheme!IsThemeActive).
-            _GetCurrentThemeName(fileNameBuilder, fileNameBuilder.Capacity,
-                                 colorBuilder, colorBuilder.Capacity,
-                                 sizeBuilder, sizeBuilder.Capacity)
-                .ThrowIfFailed();
+            _GetCurrentThemeName(
+                fileNameBuilder,
+                fileNameBuilder.Capacity,
+                colorBuilder,
+                colorBuilder.Capacity,
+                sizeBuilder,
+                sizeBuilder.Capacity).ThrowOnFailureUnwrapWin32();
 
             themeFileName = fileNameBuilder.ToString();
             color = colorBuilder.ToString();
@@ -2690,7 +2691,7 @@ namespace Standard
                 int size = _GetModuleFileName(hModule, buffer, buffer.Capacity);
                 if (size == 0)
                 {
-                    HRESULT.ThrowLastError();
+                    throw new Win32Exception();
                 }
 
                 // GetModuleFileName returns nSize when it's truncated but does NOT set the last error.
@@ -2714,7 +2715,7 @@ namespace Standard
             IntPtr retPtr = _GetModuleHandle(lpModuleName);
             if (retPtr == IntPtr.Zero)
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
             return retPtr;
         }
@@ -2741,7 +2742,7 @@ namespace Standard
             IntPtr retPtr = _GetStockObject(fnObject);
             if (retPtr == IntPtr.Zero)
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
             return retPtr;
         }
@@ -2816,7 +2817,7 @@ namespace Standard
             RECT rc;
             if (!_GetWindowRect(hwnd, out rc))
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
             return rc;
         }
@@ -2875,7 +2876,7 @@ namespace Standard
             short ret = _RegisterClassEx(ref lpwcx);
             if (ret == 0)
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
 
             return ret;
@@ -2889,7 +2890,7 @@ namespace Standard
             uint iRet = _RegisterWindowMessage(lpString);
             if (iRet == 0)
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
             return (WM)iRet;
         }
@@ -2903,7 +2904,7 @@ namespace Standard
             IntPtr ret = _SetActiveWindow(hwnd);
             if (ret == IntPtr.Zero)
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
 
             return ret;
@@ -2978,7 +2979,7 @@ namespace Standard
         }
 
         [DllImport("shell32.dll", SetLastError = false)]
-        public static extern Win32Error SHFileOperation(ref SHFILEOPSTRUCT lpFileOp);
+        public static extern WIN32_ERROR SHFileOperation(ref SHFILEOPSTRUCT lpFileOp);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -3002,7 +3003,7 @@ namespace Standard
         {
             if (!_SystemParametersInfo_String(uiAction, uiParam, pvParam, fWinIni))
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
         }
 
@@ -3014,7 +3015,7 @@ namespace Standard
 
             if (!_SystemParametersInfo_NONCLIENTMETRICS(SPI.GETNONCLIENTMETRICS, metrics.cbSize, ref metrics, SPIF.None))
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
 
             return metrics;
@@ -3026,7 +3027,7 @@ namespace Standard
 
             if (!_SystemParametersInfo_HIGHCONTRAST(SPI.GETHIGHCONTRAST, hc.cbSize, ref hc, SPIF.None))
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
 
             return hc;
@@ -3045,7 +3046,7 @@ namespace Standard
             IntPtr ret = _SelectObject(hdc, hgdiobj);
             if (ret == IntPtr.Zero)
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
             return ret;
         }
@@ -3058,7 +3059,7 @@ namespace Standard
             IntPtr ret = _SelectObjectSafeHBITMAP(hdc, hgdiobj);
             if (ret == IntPtr.Zero)
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
             return ret;
         }
@@ -3082,7 +3083,7 @@ namespace Standard
         {
             if (!_UnregisterClassAtom(new IntPtr(atom), hinstance))
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
         }
 
@@ -3090,7 +3091,7 @@ namespace Standard
         {
             if (!_UnregisterClassName(lpClassName, hInstance))
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
         }
 
@@ -3133,7 +3134,7 @@ namespace Standard
         {
             if (!_UpdateLayeredWindow(hwnd, hdcDst, ref pptDst, ref psize, hdcSrc, ref pptSrc, crKey, ref pblend, dwFlags))
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
         }
 
@@ -3145,7 +3146,7 @@ namespace Standard
         {
             if (!_UpdateLayeredWindowIntPtr(hwnd, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, crKey, ref pblend, dwFlags))
             {
-                HRESULT.ThrowLastError();
+                throw new Win32Exception();
             }
         }
 
@@ -3186,12 +3187,13 @@ namespace Standard
 
             var dti = new DWM_TIMING_INFO { cbSize = Marshal.SizeOf(typeof(DWM_TIMING_INFO)) };
             HRESULT hr = _DwmGetCompositionTimingInfo(hwnd, ref dti);
-            if (hr == HRESULT.E_PENDING)
+            if (hr.Value == (-2147483638) /* HRESULT.E_PENDING */)
             {
                 // The system isn't yet ready to respond.  Return null rather than throw.
                 return null;
             }
-            hr.ThrowIfFailed();
+
+            hr.ThrowOnFailureUnwrapWin32();
 
             return dti;
         }

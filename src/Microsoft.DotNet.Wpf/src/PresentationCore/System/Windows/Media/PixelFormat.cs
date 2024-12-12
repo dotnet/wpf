@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,6 +9,7 @@ using MS.Internal;
 
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using System.Runtime.CompilerServices;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media
 {
@@ -192,7 +193,7 @@ namespace System.Windows.Media
 
             _flags = GetPixelFormatFlagsFromEnum(format);
             _bitsPerPixel = GetBitsPerPixelFromEnum(format);
-            _guidFormat = PixelFormat.GetGuidFromFormat(format);
+            _guidFormat = GetGuidFromFormat(format);
         }
 
         /// <summary>
@@ -207,7 +208,7 @@ namespace System.Windows.Media
 
             ArgumentNullException.ThrowIfNull(pixelFormatString);
 
-            string upperPixelFormatString = pixelFormatString.ToUpper(System.Globalization.CultureInfo.InvariantCulture);
+            string upperPixelFormatString = pixelFormatString.ToUpper(Globalization.CultureInfo.InvariantCulture);
 
             switch (upperPixelFormatString)
             {
@@ -328,7 +329,7 @@ namespace System.Windows.Media
 
             _flags = GetPixelFormatFlagsFromEnum(format);
             _bitsPerPixel = GetBitsPerPixelFromEnum(format);
-            _guidFormat = PixelFormat.GetGuidFromFormat(format);
+            _guidFormat = GetGuidFromFormat(format);
         }
 
         static private Guid GetGuidFromFormat(PixelFormatEnum format)
@@ -506,10 +507,9 @@ namespace System.Windows.Media
 
                 try
                 {
-                    HRESULT.Check(UnsafeNativeMethods.WICPixelFormatInfo.GetChannelCount(
+                    UnsafeNativeMethods.WICPixelFormatInfo.GetChannelCount(
                         pixelFormatInfo,
-                        out channelCount
-                        ));
+                        out channelCount).ThrowOnFailureExtended();
 
                     Debug.Assert(channelCount >= 1);
 
@@ -519,8 +519,12 @@ namespace System.Windows.Media
                     {
                         for (uint i = 0; i < channelCount; i++)
                         {
-                            HRESULT.Check(UnsafeNativeMethods.WICPixelFormatInfo.GetChannelMask(
-                                pixelFormatInfo, i, 0, null, out cbBytes));
+                            UnsafeNativeMethods.WICPixelFormatInfo.GetChannelMask(
+                                pixelFormatInfo,
+                                i,
+                                0,
+                                null,
+                                out cbBytes).ThrowOnFailureExtended();
 
                             Debug.Assert(cbBytes > 0);
 
@@ -528,8 +532,12 @@ namespace System.Windows.Media
 
                             fixed (byte *pbChannelMask = channelMask)
                             {
-                                HRESULT.Check(UnsafeNativeMethods.WICPixelFormatInfo.GetChannelMask(
-                                    pixelFormatInfo, i, cbBytes, pbChannelMask, out cbBytes));
+                                UnsafeNativeMethods.WICPixelFormatInfo.GetChannelMask(
+                                    pixelFormatInfo,
+                                    i,
+                                    cbBytes,
+                                    pbChannelMask,
+                                    out cbBytes).ThrowOnFailureExtended();
 
                                 Debug.Assert(cbBytes == channelMask.Length);
                             }
@@ -559,24 +567,26 @@ namespace System.Windows.Media
             {
                 try
                 {
-                    Guid guidPixelFormat = this.Guid;
+                    Guid guidPixelFormat = Guid;
 
-                    int hr = UnsafeNativeMethods.WICImagingFactory.CreateComponentInfo(
+                    HRESULT result = UnsafeNativeMethods.WICImagingFactory.CreateComponentInfo(
                         myFactory.ImagingFactoryPtr,
                         ref guidPixelFormat,
                         out componentInfo);
-                    if (hr == (int)WinCodecErrors.WINCODEC_ERR_COMPONENTINITIALIZEFAILURE ||
-                        hr == (int)WinCodecErrors.WINCODEC_ERR_COMPONENTNOTFOUND)
+
+                    if (result == HRESULT.WINCODEC_ERR_COMPONENTINITIALIZEFAILURE
+                        || result == HRESULT.WINCODEC_ERR_COMPONENTNOTFOUND)
                     {
-                        throw new System.NotSupportedException(SR.Image_NoPixelFormatFound);
+                        throw new NotSupportedException(SR.Image_NoPixelFormatFound);
                     }
-                    HRESULT.Check(hr);
+
+                    result.ThrowOnFailureExtended();
 
                     Guid guidPixelFormatInfo = MILGuidData.IID_IWICPixelFormatInfo;
-                    HRESULT.Check(UnsafeNativeMethods.MILUnknown.QueryInterface(
+                    UnsafeNativeMethods.MILUnknown.QueryInterface(
                         componentInfo,
                         ref guidPixelFormatInfo,
-                        out pixelFormatInfo));
+                        out pixelFormatInfo).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -603,10 +613,9 @@ namespace System.Windows.Media
 
                     try
                     {
-                        HRESULT.Check(UnsafeNativeMethods.WICPixelFormatInfo.GetBitsPerPixel(
+                        UnsafeNativeMethods.WICPixelFormatInfo.GetBitsPerPixel(
                             pixelFormatInfo,
-                            out bpp
-                            ));
+                            out bpp).ThrowOnFailureExtended();
                     }
                     finally
                     {
@@ -619,7 +628,7 @@ namespace System.Windows.Media
                     _bitsPerPixel = bpp;
                 }
 
-                return (int) _bitsPerPixel;
+                return (int)_bitsPerPixel;
             }
         }
 
@@ -672,7 +681,7 @@ namespace System.Windows.Media
         {
             Guid guidPixelFormat = WICPixelFormatGUIDs.WICPixelFormatDontCare;
 
-            HRESULT.Check(UnsafeNativeMethods.WICBitmapSource.GetPixelFormat(bitmapSource, out guidPixelFormat));
+            UnsafeNativeMethods.WICBitmapSource.GetPixelFormat(bitmapSource, out guidPixelFormat).ThrowOnFailureExtended();
 
             return new PixelFormat(guidPixelFormat);
         }

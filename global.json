@@ -2,7 +2,11 @@
   "tools": {
     "dotnet": "10.0.100-alpha.1.24573.1",
     "runtimes": {
-      "dotnet": [
+      "dotnet/x64": [
+        "2.1.7",
+        "$(VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion)"
+      ],
+      "dotnet/x86": [
         "2.1.7",
         "$(VSRedistCommonNetCoreSharedFrameworkx64100PackageVersion)"
       ]

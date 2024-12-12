@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -9,9 +8,6 @@ namespace MS.Win32
 {
     internal partial class SafeNativeMethods
     {
-        //////////////////////////////
-        // from Framework
-
         [Flags]
         internal enum PlaySoundFlags
         {
@@ -29,28 +25,9 @@ namespace MS.Win32
             SND_RESOURCE    =   0x00040000, /* name is resource name or atom */
         }
 
-        internal static  bool InSendMessage()
-        {
-             return SafeNativeMethodsPrivate.InSendMessage();
-        }
-
-
-#if never
-        public static int GetQueueStatus(uint flags)
-        {
-             return SafeNativeMethodsPrivate.GetQueueStatus(flags);
-        }
-        
-        internal static  int GetInputState()
-        {
-             return SafeNativeMethodsPrivate.GetInputState();
-        }
-#endif
-
         public static bool IsUxThemeActive() { return SafeNativeMethodsPrivate.IsThemeActive() != 0; }
 
-
-        public static  bool SetCaretPos(int x, int y)
+        public static bool SetCaretPos(int x, int y)
         {
             // To be consistent with our other PInvoke wrappers
             // we should "throw" a Win32Exception on error here.
@@ -59,9 +36,8 @@ namespace MS.Win32
 
             return SafeNativeMethodsPrivate.SetCaretPos(x,y);
         }
-        
 
-        public static  bool DestroyCaret()
+        public static bool DestroyCaret()
         {
             // To be consistent with our other PInvoke wrappers
             // we should "throw" a Win32Exception on error here.
@@ -114,10 +90,10 @@ namespace MS.Win32
 
             return win32Return;
         }
-        
-            public static int GetSysColor(int nIndex)
+
+        public static int GetSysColor(int nIndex)
         {
-                return SafeNativeMethodsPrivate.GetSysColor(nIndex);
+            return SafeNativeMethodsPrivate.GetSysColor(nIndex);
         }
 
         public static bool IsClipboardFormatAvailable(int format)
@@ -125,29 +101,15 @@ namespace MS.Win32
             return SafeNativeMethodsPrivate.IsClipboardFormatAvailable(format);
         }
 
-#if never
-        [DllImport(ExternDll.User32, EntryPoint = "DestroyIcon", CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
-        private static extern bool IntDestroyIcon(NativeMethods.IconHandle hIcon);
-        internal static void DestroyIcon(NativeMethods.IconHandle hIcon)
-        {
-            if (IntDestroyIcon(hIcon) == false)
-            {
-                throw new Win32Exception();
-            }
-        }
-#endif
-        /////////////////////////////
         // Used by BASE and FRAMEWORK
 
 #if FRAMEWORK_NATIVEMETHODS || BASE_NATIVEMETHODS 
-
-
-        public static bool  IsDebuggerPresent() { return SafeNativeMethodsPrivate.IsDebuggerPresent(); }
+        public static bool IsDebuggerPresent() { return SafeNativeMethodsPrivate.IsDebuggerPresent(); }
 #endif
+
 #if BASE_NATIVEMETHODS
 
-        /////////////////////
-        // used by BASE
+        // Used by BASE
 
         public static void QueryPerformanceCounter(out long lpPerformanceCount)
         {
@@ -158,7 +120,7 @@ namespace MS.Win32
         }
 
         public static void QueryPerformanceFrequency(out long lpFrequency)
-        { 
+        {
             if (!SafeNativeMethodsPrivate.QueryPerformanceFrequency(out lpFrequency))
             {
                 throw new Win32Exception(Marshal.GetLastWin32Error());
@@ -171,26 +133,17 @@ namespace MS.Win32
         }
 #endif // BASE_NATIVEMETHODS
 
-
         internal static Int32 GetWindowStyle(HandleRef hWnd, bool exStyle)
         {
             int nIndex = exStyle ? NativeMethods.GWL_EXSTYLE : NativeMethods.GWL_STYLE;
             return UnsafeNativeMethods.GetWindowLong(hWnd, nIndex);
         }
+
         private static partial class SafeNativeMethodsPrivate
         {
-            [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
-            internal static extern bool InSendMessage();
-
-//            [DllImport(ExternDll.User32, ExactSpelling = true)]
-//            public static extern int GetQueueStatus(uint flags);
-    
-//            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
-//            internal static extern int GetInputState();
-            
             [DllImport(ExternDll.Uxtheme, CharSet = CharSet.Unicode)]
             public static extern int IsThemeActive();
-            
+
             [DllImport(ExternDll.User32, SetLastError=true, CharSet=CharSet.Auto)]
             public static extern bool SetCaretPos(int x, int y);
 
@@ -205,29 +158,27 @@ namespace MS.Win32
             public static extern bool GetStringTypeEx(uint locale, uint infoType, char[] sourceString, int count,
                 [Out, MarshalAs(UnmanagedType.LPArray, SizeParamIndex = 3)] UInt16[] charTypes);
             
-            [DllImport(ExternDll.User32, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+            [DllImport(ExternDll.User32, CharSet = CharSet.Auto)]
             public static extern int GetSysColor(int nIndex);
 
             [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
             public static extern bool IsClipboardFormatAvailable(int format);
 
 #if FRAMEWORK_NATIVEMETHODS || BASE_NATIVEMETHODS
-
             [DllImport("kernel32.dll", ExactSpelling = true, CharSet = CharSet.Auto)]
-              internal static extern bool IsDebuggerPresent();
+            internal static extern bool IsDebuggerPresent();
 #endif
+
 #if BASE_NATIVEMETHODS
 
-              [DllImport("kernel32.dll", SetLastError = true)]
-              public static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
-        
-              [DllImport("kernel32.dll", SetLastError = true)]
-              public static extern bool QueryPerformanceFrequency(out long lpFrequency);
-        
-              [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
-              internal static extern int GetMessageTime();
+            [DllImport("kernel32.dll", SetLastError = true)]
+            public static extern bool QueryPerformanceCounter(out long lpPerformanceCount);
+
+            [DllImport("kernel32.dll", SetLastError = true)]
+            public static extern bool QueryPerformanceFrequency(out long lpFrequency);
+            [DllImport(ExternDll.User32, ExactSpelling = true, CharSet = CharSet.Auto)]
+            internal static extern int GetMessageTime();
 #endif
         }
+    }
 }
-}
-

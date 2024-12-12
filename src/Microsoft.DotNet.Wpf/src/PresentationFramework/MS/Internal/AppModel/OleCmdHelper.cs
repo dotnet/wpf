@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,6 +19,9 @@ using System.Windows.Controls;
 using MS.Internal.Documents;                               // DocumentApplicationDocumentViewer
 using MS.Internal.KnownBoxes;
 using MS.Win32;
+using Standard;
+
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.AppModel
 {
@@ -61,7 +64,7 @@ namespace MS.Internal.AppModel
 
             if (Application.Current == null || Application.IsShuttingDown == true)
             {
-                Marshal.ThrowExceptionForHR(NativeMethods.E_FAIL);
+                HRESULT.E_FAIL.ThrowOnFailure();
             }
 
             // Get values from mapping here else mark them as disabled ==>
@@ -71,7 +74,7 @@ namespace MS.Internal.AppModel
             IDictionary oleCmdMappingTable = GetOleCmdMappingTable(guidCmdGroup);
             if (oleCmdMappingTable == null)
             {
-                Marshal.ThrowExceptionForHR(OleCmdHelper.OLECMDERR_E_UNKNOWNGROUP);
+                ((HRESULT)OLECMDERR_E_UNKNOWNGROUP).ThrowOnFailure();
             }
             CommandWithArgument command = oleCmdMappingTable[cmdId] as CommandWithArgument;
             if (command == null)
@@ -110,7 +113,7 @@ namespace MS.Internal.AppModel
         {
             if (Application.Current == null || Application.IsShuttingDown == true)
             {
-                Marshal.ThrowExceptionForHR(NativeMethods.E_FAIL);
+                HRESULT.E_FAIL.ThrowOnFailure();
             }
 
             int hresult = (int)Application.Current.Dispatcher.Invoke(
@@ -148,7 +151,8 @@ namespace MS.Internal.AppModel
                 // This will always succeed because Window is IInputElement
                 target = (IInputElement)Application.Current.MainWindow;
             }
-            return command.Execute(target, arg) ? NativeMethods.S_OK : OLECMDERR_E_DISABLED;
+
+            return command.Execute(target, arg) ? HRESULT.S_OK : OLECMDERR_E_DISABLED;
         }
 
         private IDictionary GetOleCmdMappingTable(Guid guidCmdGroup)

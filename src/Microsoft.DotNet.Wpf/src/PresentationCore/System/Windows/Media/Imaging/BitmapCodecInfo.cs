@@ -1,13 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using MS.Internal;
 using MS.Win32.PresentationCore;
 using System.Text;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media.Imaging
 {
@@ -48,15 +45,11 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-
                 EnsureBuiltIn();
 
-                Guid containerFormat;
-
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.GetContainerFormat(
+                UnsafeNativeMethods.WICBitmapCodecInfo.GetContainerFormat(
                     _codecInfoHandle,
-                    out containerFormat
-                    ));
+                    out Guid containerFormat).ThrowOnFailureExtended();
 
                 return containerFormat;
             }
@@ -69,125 +62,98 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-
                 EnsureBuiltIn();
 
                 StringBuilder author = null;
-                UInt32 length = 0;
 
                 // Find the length of the string needed
-                HRESULT.Check(UnsafeNativeMethods.WICComponentInfo.GetAuthor(
+                UnsafeNativeMethods.WICComponentInfo.GetAuthor(
                     _codecInfoHandle,
                     0,
                     author,
-                    out length
-                    ));
+                    out uint length).ThrowOnFailureExtended();
 
-                Debug.Assert(length >= 0);
-
-                // get the string back
+                // Get the string back
                 if (length > 0)
                 {
                     author = new StringBuilder((int)length);
 
-                    HRESULT.Check(UnsafeNativeMethods.WICComponentInfo.GetAuthor(
+                    UnsafeNativeMethods.WICComponentInfo.GetAuthor(
                         _codecInfoHandle,
                         length,
                         author,
-                        out length
-                        ));
+                        out _).ThrowOnFailureExtended();
                 }
 
-                if (author != null)
-                    return author.ToString();
-                else
-                    return String.Empty;
+                return author?.ToString() ?? string.Empty;
             }
         }
 
         /// <summary>
-        /// Version
+        ///  Version
         /// </summary>
-        public virtual System.Version Version
+        public virtual Version Version
         {
             get
             {
-
                 EnsureBuiltIn();
 
                 StringBuilder version = null;
-                UInt32 length = 0;
 
                 // Find the length of the string needed
-                HRESULT.Check(UnsafeNativeMethods.WICComponentInfo.GetVersion(
+                UnsafeNativeMethods.WICComponentInfo.GetVersion(
                     _codecInfoHandle,
                     0,
                     version,
-                    out length
-                    ));
+                    out uint length).ThrowOnFailureExtended();
 
-                Debug.Assert(length >= 0);
-
-                // get the string back
                 if (length > 0)
                 {
+                    // Get the string back
                     version = new StringBuilder((int)length);
 
-                    HRESULT.Check(UnsafeNativeMethods.WICComponentInfo.GetVersion(
+                    UnsafeNativeMethods.WICComponentInfo.GetVersion(
                         _codecInfoHandle,
                         length,
                         version,
-                        out length
-                        ));
+                        out _).ThrowOnFailureExtended();
                 }
 
-                if (version != null)
-                    return new Version(version.ToString());
-                else
-                    return new Version();
+                return version is not null ? new Version(version.ToString()) : new Version();
             }
         }
 
         /// <summary>
-        /// Spec Version
+        ///  Spec Version
         /// </summary>
         public virtual Version SpecificationVersion
         {
             get
             {
-
                 EnsureBuiltIn();
 
                 StringBuilder specVersion = null;
-                UInt32 length = 0;
 
                 // Find the length of the string needed
-                HRESULT.Check(UnsafeNativeMethods.WICComponentInfo.GetSpecVersion(
+                UnsafeNativeMethods.WICComponentInfo.GetSpecVersion(
                     _codecInfoHandle,
                     0,
                     specVersion,
-                    out length
-                    ));
+                    out uint length).ThrowOnFailureExtended();
 
-                Debug.Assert(length >= 0);
-
-                // get the string back
+                // Get the string back
                 if (length > 0)
                 {
                     specVersion = new StringBuilder((int)length);
 
-                    HRESULT.Check(UnsafeNativeMethods.WICComponentInfo.GetSpecVersion(
+                    UnsafeNativeMethods.WICComponentInfo.GetSpecVersion(
                         _codecInfoHandle,
                         length,
                         specVersion,
-                        out length
-                        ));
+                        out _).ThrowOnFailureExtended();
                 }
 
-                if (specVersion != null)
-                    return new Version(specVersion.ToString());
-                else
-                    return new Version();
+                return specVersion is not null ? new Version(specVersion.ToString()) : new Version();
             }
         }
 
@@ -198,39 +164,33 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-
                 EnsureBuiltIn();
 
                 StringBuilder friendlyName = null;
-                UInt32 length = 0;
 
                 // Find the length of the string needed
-                HRESULT.Check(UnsafeNativeMethods.WICComponentInfo.GetFriendlyName(
+                UnsafeNativeMethods.WICComponentInfo.GetFriendlyName(
                     _codecInfoHandle,
                     0,
                     friendlyName,
-                    out length
-                    ));
+                    out uint length).ThrowOnFailureExtended();
 
                 Debug.Assert(length >= 0);
 
-                // get the string back
+                // Get the string back
                 if (length > 0)
                 {
                     friendlyName = new StringBuilder((int)length);
 
-                    HRESULT.Check(UnsafeNativeMethods.WICComponentInfo.GetFriendlyName(
+                    UnsafeNativeMethods.WICComponentInfo.GetFriendlyName(
                         _codecInfoHandle,
                         length,
                         friendlyName,
                         out length
-                        ));
+                        ).ThrowOnFailureExtended();
                 }
 
-                if (friendlyName != null)
-                    return friendlyName.ToString();
-                else
-                    return String.Empty;
+                return friendlyName?.ToString() ?? string.Empty;
             }
         }
 
@@ -241,39 +201,30 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-
                 EnsureBuiltIn();
 
                 StringBuilder deviceManufacturer = null;
-                UInt32 length = 0;
 
                 // Find the length of the string needed
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.GetDeviceManufacturer(
+                UnsafeNativeMethods.WICBitmapCodecInfo.GetDeviceManufacturer(
                     _codecInfoHandle,
                     0,
                     deviceManufacturer,
-                    out length
-                    ));
+                    out uint length).ThrowOnFailureExtended();
 
-                Debug.Assert(length >= 0);
-
-                // get the string back
+                // Get the string back
                 if (length > 0)
                 {
                     deviceManufacturer = new StringBuilder((int)length);
 
-                    HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.GetDeviceManufacturer(
+                    UnsafeNativeMethods.WICBitmapCodecInfo.GetDeviceManufacturer(
                         _codecInfoHandle,
                         length,
                         deviceManufacturer,
-                        out length
-                        ));
+                        out length).ThrowOnFailureExtended();
                 }
 
-                if (deviceManufacturer != null)
-                    return deviceManufacturer.ToString();
-                else
-                    return String.Empty;
+                return deviceManufacturer?.ToString() ?? string.Empty;
             }
         }
 
@@ -284,39 +235,30 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-
                 EnsureBuiltIn();
 
                 StringBuilder deviceModels = null;
-                UInt32 length = 0;
 
                 // Find the length of the string needed
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.GetDeviceModels(
+                UnsafeNativeMethods.WICBitmapCodecInfo.GetDeviceModels(
                     _codecInfoHandle,
                     0,
                     deviceModels,
-                    out length
-                    ));
+                    out uint length).ThrowOnFailureExtended();
 
-                Debug.Assert(length >= 0);
-
-                // get the string back
+                // Get the string back
                 if (length > 0)
                 {
                     deviceModels = new StringBuilder((int)length);
 
-                    HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.GetDeviceModels(
+                    UnsafeNativeMethods.WICBitmapCodecInfo.GetDeviceModels(
                         _codecInfoHandle,
                         length,
                         deviceModels,
-                        out length
-                        ));
+                        out _).ThrowOnFailureExtended();
                 }
 
-                if (deviceModels != null)
-                    return deviceModels.ToString();
-                else
-                    return String.Empty;
+                return deviceModels?.ToString() ?? string.Empty;
             }
         }
 
@@ -327,39 +269,32 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-
                 EnsureBuiltIn();
 
                 StringBuilder mimeTypes = null;
-                UInt32 length = 0;
 
                 // Find the length of the string needed
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.GetMimeTypes(
+                UnsafeNativeMethods.WICBitmapCodecInfo.GetMimeTypes(
                     _codecInfoHandle,
                     0,
                     mimeTypes,
-                    out length
-                    ));
+                    out uint length).ThrowOnFailureExtended();
 
                 Debug.Assert(length >= 0);
 
-                // get the string back
+                // Get the string back
                 if (length > 0)
                 {
                     mimeTypes = new StringBuilder((int)length);
 
-                    HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.GetMimeTypes(
+                    UnsafeNativeMethods.WICBitmapCodecInfo.GetMimeTypes(
                         _codecInfoHandle,
                         length,
                         mimeTypes,
-                        out length
-                        ));
+                        out _).ThrowOnFailureExtended();
                 }
 
-                if (mimeTypes != null)
-                    return mimeTypes.ToString();
-                else
-                    return String.Empty;
+                return mimeTypes?.ToString() ?? string.Empty;
             }
         }
 
@@ -370,39 +305,30 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-
                 EnsureBuiltIn();
 
                 StringBuilder fileExtensions = null;
-                UInt32 length = 0;
 
                 // Find the length of the string needed
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.GetFileExtensions(
+                UnsafeNativeMethods.WICBitmapCodecInfo.GetFileExtensions(
                     _codecInfoHandle,
                     0,
                     fileExtensions,
-                    out length
-                    ));
+                    out uint length).ThrowOnFailureExtended();
 
-                Debug.Assert(length >= 0);
-
-                // get the string back
+                // Get the string back
                 if (length > 0)
                 {
                     fileExtensions = new StringBuilder((int)length);
 
-                    HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.GetFileExtensions(
+                    UnsafeNativeMethods.WICBitmapCodecInfo.GetFileExtensions(
                         _codecInfoHandle,
                         length,
                         fileExtensions,
-                        out length
-                        ));
+                        out _).ThrowOnFailureExtended();
                 }
 
-                if (fileExtensions != null)
-                    return fileExtensions.ToString();
-                else
-                    return String.Empty;
+                return fileExtensions?.ToString() ?? string.Empty;
             }
         }
 
@@ -413,15 +339,11 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-
                 EnsureBuiltIn();
 
-                bool supportsAnimation;
-
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.DoesSupportAnimation(
+                UnsafeNativeMethods.WICBitmapCodecInfo.DoesSupportAnimation(
                     _codecInfoHandle,
-                    out supportsAnimation
-                    ));
+                    out bool supportsAnimation).ThrowOnFailureExtended();
 
                 return supportsAnimation;
             }
@@ -434,15 +356,11 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-
                 EnsureBuiltIn();
 
-                bool supportsLossless;
-
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.DoesSupportLossless(
+                UnsafeNativeMethods.WICBitmapCodecInfo.DoesSupportLossless(
                     _codecInfoHandle,
-                    out supportsLossless
-                    ));
+                    out bool supportsLossless).ThrowOnFailureExtended();
 
                 return supportsLossless;
             }
@@ -455,15 +373,11 @@ namespace System.Windows.Media.Imaging
         {
             get
             {
-
                 EnsureBuiltIn();
 
-                bool supportsMultiFrame;
-
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapCodecInfo.DoesSupportMultiframe(
+                UnsafeNativeMethods.WICBitmapCodecInfo.DoesSupportMultiframe(
                     _codecInfoHandle,
-                    out supportsMultiFrame
-                    ));
+                    out bool supportsMultiFrame).ThrowOnFailureExtended();
 
                 return supportsMultiFrame;
             }

@@ -1,8 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
+using Windows.Win32.Foundation;
 
 using MS.Internal.PresentationFramework;
 
@@ -11,13 +11,7 @@ namespace MS.Internal.Printing
     internal static class UnsafeNativeMethods
     {
         [DllImport("comdlg32.dll", CharSet = CharSet.Auto)]
-        internal
-        static
-        extern
-        Int32
-        PrintDlgEx(
-            IntPtr pdex
-            );
+        internal static extern HRESULT PrintDlgEx(IntPtr pdex);
 
         [DllImport("kernel32.dll")]
         internal

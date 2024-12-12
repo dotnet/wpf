@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,7 +10,7 @@ using System.Collections;
 using System.Windows.Media.Composition;
 using System.Windows.Threading;
 using MS.Internal;
-
+using Windows.Win32.Foundation;
 using SafeNativeMethods = MS.Win32.PresentationCore.SafeNativeMethods;
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods.MilCoreApi;
 
@@ -42,7 +42,7 @@ namespace System.Windows.Media
             // *** Failure here does NOT indicate a bug in MediaContext.Startup! ***
             //
 
-            HRESULT.Check(UnsafeNativeMethods.MilVersionCheck(MS.Internal.Composition.Version.MilSdkVersion));
+            UnsafeNativeMethods.MilVersionCheck(MS.Internal.Composition.Version.MilSdkVersion).ThrowOnFailureExtended();
 
             using (CompositionEngineLock.Acquire())
             {
@@ -51,9 +51,8 @@ namespace System.Windows.Media
                 //Is this the first startup?
                 if (0 == s_refCount)
                 {
-                    HRESULT.Check(SafeNativeMethods.MilCompositionEngine_InitializePartitionManager(
-                                  0 // THREAD_PRIORITY_NORMAL
-                                  ));
+                    SafeNativeMethods.MilCompositionEngine_InitializePartitionManager(
+                        0).ThrowOnFailureExtended(); // THREAD_PRIORITY_NORMAL
 
                     s_forceSoftareForGraphicsStreamMagnifier =
                         UnsafeNativeMethods.WgxConnection_ShouldForceSoftwareForGraphicsStreamClient();
@@ -134,7 +133,7 @@ namespace System.Windows.Media
                         DisconnectTransport();
                     }
 
-                    HRESULT.Check(SafeNativeMethods.MilCompositionEngine_DeinitializePartitionManager());
+                    SafeNativeMethods.MilCompositionEngine_DeinitializePartitionManager().ThrowOnFailureExtended();
                 }
             }
         }
@@ -194,9 +193,9 @@ namespace System.Windows.Media
             // If creation fails, fall back to a local transport.
             //
 
-            HRESULT.Check(UnsafeNativeMethods.WgxConnection_Create(
+            UnsafeNativeMethods.WgxConnection_Create(
                 false, // false means asynchronous transport
-                out s_pConnection));
+                out s_pConnection).ThrowOnFailureExtended();
 
             // Create service channel used by global glyph cache. This channel is
             // the first channel created for the app, and by creating it with
@@ -227,7 +226,7 @@ namespace System.Windows.Media
             // Close global glyph cache channel.
             s_serviceChannel.Close();
 
-            HRESULT.Check(UnsafeNativeMethods.WgxConnection_Disconnect(s_pConnection));
+            UnsafeNativeMethods.WgxConnection_Disconnect(s_pConnection).ThrowOnFailureExtended();
 
             // Release references to global glyph cache and service channel.
             s_serviceChannel = null;

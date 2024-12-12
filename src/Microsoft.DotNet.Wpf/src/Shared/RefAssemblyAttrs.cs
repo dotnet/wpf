@@ -35,6 +35,11 @@ namespace Microsoft.Internal
         // ECMA PublicKeyToken
         internal const string DEVDIV_PUBLIC_KEY_TOKEN = "b77a5c561934e089";
 
+        /// <summary>
+        ///  The open key. The token is cc7b13ffcd2ddd51.
+        /// </summary>
+        public const string OpenPublicKey = "00240000048000009400000006020000002400005253413100040000010001004b86c4cb78549b34bab61a3b1800e23bfeb5b3ec390074041536a7e3cbd97f5f04cf0f857155a8928eaa29ebfd11cfbbad3ba70efea7bda3226c6a8d370a4cd303f714486b6ebc225985a638471e6ef571cc92a4613c00b8fa65d61ccee0cbe5f36330c9a01f4183559f1bef24cc2917c6d913e3a541333a1d05d9bed22b38cb";
+
         // Constants to prevent hardcoding in InternalsVisibleTo attribute
         internal const string DirectWriteForwarder = $"DirectWriteForwarder, PublicKey={WCP_PUBLIC_KEY_STRING}";
         internal const string PresentationCore = $"PresentationCore, PublicKey={WCP_PUBLIC_KEY_STRING}";

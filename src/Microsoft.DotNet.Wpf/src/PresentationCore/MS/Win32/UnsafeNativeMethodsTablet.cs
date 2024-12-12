@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,6 +6,7 @@
 using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows.Ink;
+using Windows.Win32.Foundation;
 
 namespace MS.Win32.Recognizer
 {
@@ -15,50 +16,48 @@ namespace MS.Win32.Recognizer
     internal static class UnsafeNativeMethods
     {
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
-        internal static extern int CreateRecognizer([In] ref Guid clsid, [Out] out RecognizerSafeHandle hRec);
+        internal static extern HRESULT CreateRecognizer([In] ref Guid clsid, [Out] out RecognizerSafeHandle hRec);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
-        internal static extern int DestroyRecognizer([In] IntPtr hRec);
+        internal static extern HRESULT DestroyRecognizer([In] IntPtr hRec);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
-        internal static extern int CreateContext([In] RecognizerSafeHandle hRec, [Out] out ContextSafeHandle hRecContext);
+        internal static extern HRESULT CreateContext([In] RecognizerSafeHandle hRec, [Out] out ContextSafeHandle hRecContext);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
-        internal static extern int DestroyContext([In] IntPtr hRecContext);
+        internal static extern HRESULT DestroyContext([In] IntPtr hRecContext);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
-        internal static extern int AddStroke([In] ContextSafeHandle hRecContext, [In] ref PACKET_DESCRIPTION packetDesc, [In] uint cbPackets, [In] IntPtr pByte, [In, MarshalAs(UnmanagedType.LPStruct)] NativeMethods.XFORM xForm);
+        internal static extern HRESULT AddStroke([In] ContextSafeHandle hRecContext, [In] ref PACKET_DESCRIPTION packetDesc, [In] uint cbPackets, [In] IntPtr pByte, [In, MarshalAs(UnmanagedType.LPStruct)] NativeMethods.XFORM xForm);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
-        internal static extern int SetEnabledUnicodeRanges([In] ContextSafeHandle hRecContext, [In] uint cRangs, [In] CHARACTER_RANGE[] charRanges);
+        internal static extern HRESULT SetEnabledUnicodeRanges([In] ContextSafeHandle hRecContext, [In] uint cRangs, [In] CHARACTER_RANGE[] charRanges);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
-        internal static extern int EndInkInput([In] ContextSafeHandle hRecContext);
+        internal static extern HRESULT EndInkInput([In] ContextSafeHandle hRecContext);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
-        internal static extern int Process([In] ContextSafeHandle hRecContext, [Out] out bool partialProcessing);
+        internal static extern HRESULT Process([In] ContextSafeHandle hRecContext, [Out] out bool partialProcessing);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
-        internal static extern int GetAlternateList([In] ContextSafeHandle hRecContext, [In, Out] ref RECO_RANGE recoRange, [In, Out] ref uint cAlts, [In, Out] IntPtr[] recAtls, [In] ALT_BREAKS breaks);
+        internal static extern HRESULT GetAlternateList([In] ContextSafeHandle hRecContext, [In, Out] ref RECO_RANGE recoRange, [In, Out] ref uint cAlts, [In, Out] IntPtr[] recAtls, [In] ALT_BREAKS breaks);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
-        internal static extern int DestroyAlternate([In] IntPtr hRecAtls);
+        internal static extern HRESULT DestroyAlternate([In] IntPtr hRecAtls);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi, CharSet = CharSet.Unicode)]
-        internal static extern int GetString([In] IntPtr hRecAtls, [Out] out RECO_RANGE recoRange, [In, Out]ref uint size, [In, Out] StringBuilder recoString);
+        internal static extern HRESULT GetString([In] IntPtr hRecAtls, [Out] out RECO_RANGE recoRange, [In, Out]ref uint size, [In, Out] StringBuilder recoString);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
-        internal static extern int GetConfidenceLevel([In] IntPtr hRecAtls, [Out] out RECO_RANGE recoRange, [Out] out RecognitionConfidence confidenceLevel);
+        internal static extern HRESULT GetConfidenceLevel([In] IntPtr hRecAtls, [Out] out RECO_RANGE recoRange, [Out] out RecognitionConfidence confidenceLevel);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
-        internal static extern int ResetContext([In] ContextSafeHandle hRecContext);
+        internal static extern HRESULT ResetContext([In] ContextSafeHandle hRecContext);
 
         [DllImport(ExternDll.Mshwgst, CallingConvention = CallingConvention.Winapi)]
-        internal static extern int GetLatticePtr([In] ContextSafeHandle hRecContext, [In] ref IntPtr pRecoLattice);
+        internal static extern HRESULT GetLatticePtr([In] ContextSafeHandle hRecContext, [In] ref IntPtr pRecoLattice);
     }
 
-
-    
     /// <summary>
     /// RecognizerSafeHandle
     /// </summary>
@@ -86,10 +85,10 @@ namespace MS.Win32.Recognizer
             }
         }
 
-        override protected bool ReleaseHandle()
+        protected override bool ReleaseHandle()
         {
-            Debug.Assert(handle != IntPtr.Zero);
-            return (MS.Internal.HRESULT.Succeeded(MS.Win32.Recognizer.UnsafeNativeMethods.DestroyRecognizer(handle)));
+            Debug.Assert(handle != 0);
+            return UnsafeNativeMethods.DestroyRecognizer(handle).Succeeded;
         }
     }
 
@@ -120,33 +119,33 @@ namespace MS.Win32.Recognizer
                 return IsClosed || handle == IntPtr.Zero;
             }
         }
-  
-        override protected bool ReleaseHandle()
+
+        protected override bool ReleaseHandle()
         {
-            //Note: It is not an error to have already called DestroyRecognizer
-            //which makes _recognizerHandle.IsInvalid == true before calling
-            //DestroyContext.  I have removed this assert, but left it commented for
-            //context.
-            //Debug.Assert(_recognizerHandle != null && !_recognizerHandle.IsInvalid);
-            Debug.Assert(handle != IntPtr.Zero);
-            int hr = MS.Win32.Recognizer.UnsafeNativeMethods.DestroyContext(handle);
+            // Note: It is not an error to have already called DestroyRecognizer
+            // which makes _recognizerHandle.IsInvalid == true before calling
+            // DestroyContext.  I have removed this assert, but left it commented for
+            // context.
+            //
+            // Debug.Assert(_recognizerHandle != null && !_recognizerHandle.IsInvalid);
+            Debug.Assert(handle != 0);
+            HRESULT result = UnsafeNativeMethods.DestroyContext(handle);
 
             // Now, dereference the attached recognizer.
             _recognizerHandle = null;
 
-            return MS.Internal.HRESULT.Succeeded(hr);
+            return result.Succeeded;
         }
-
 
         internal void AddReferenceOnRecognizer(RecognizerSafeHandle handle)
         {
-            System.Diagnostics.Debug.Assert(_recognizerHandle == null);
+            Debug.Assert(_recognizerHandle == null);
             _recognizerHandle = handle;
         }
 
         private RecognizerSafeHandle _recognizerHandle;
     }
-    
+
     // The structure has been copied from public\internal\drivers\inc\tpcshrd.h
     //typedef struct _PROPERTY_METRICS
     //    {

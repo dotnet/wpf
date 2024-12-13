@@ -25,6 +25,7 @@ public class BinaryFormatWriterTests
 #pragma warning disable SYSLIB0011 // Type or member is obsolete
         BinaryFormatter formatter = new();
 #pragma warning restore
+        // CodeQL [SM03722, SM04191] : This is testing a case around latest implementation of Binary Formatter..
         object deserialized = formatter.Deserialize(stream);
         deserialized.Should().Be(testString);
     }
@@ -41,6 +42,7 @@ public class BinaryFormatWriterTests
 #pragma warning disable SYSLIB0011 // Type or member is obsolete
         BinaryFormatter formatter = new();
 #pragma warning restore SYSLIB0011 // Type or member is obsolete
+        // CodeQL [SM03722, SM04191] : This is testing a case around latest implementation of Binary Formatter.
         object deserialized = formatter.Deserialize(stream);
 
         if (value is Hashtable hashtable)

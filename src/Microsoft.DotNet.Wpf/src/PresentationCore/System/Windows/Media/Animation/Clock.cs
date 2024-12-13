@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -236,11 +236,11 @@ namespace System.Windows.Media.Animation
 
 
         /// <summary>
-        /// Gets a value indicating whether the Clock’s current time is inside the Active period
+        /// Gets a value indicating whether the Clockâ€™s current time is inside the Active period
         /// (meaning properties may change frame to frame), inside the Fill period, or Stopped.
         /// </summary>
         /// <remarks>
-        /// You can tell whether you’re in FillBegin or FillEnd by the value of CurrentProgress
+        /// You can tell whether youâ€™re in FillBegin or FillEnd by the value of CurrentProgress
         /// (0 for FillBegin, 1 for FillEnd).
         /// </remarks>
         public ClockState CurrentState
@@ -486,7 +486,7 @@ namespace System.Windows.Media.Animation
         {
             Debug.Assert(!IsTimeManager);
 
-            return _currentTime.HasValue ? _currentTime.Value : TimeSpan.Zero;
+            return _currentTime ?? TimeSpan.Zero;
         }
 
         /// <summary>
@@ -1949,8 +1949,7 @@ namespace System.Windows.Media.Animation
             RepeatBehavior repeatBehavior = _timeline.RepeatBehavior;
 
             // Apply speed and offset, convert down to TimeSpan
-            TimeSpan beginTimeForOffsetComputation = _currentIterationBeginTime.HasValue ? _currentIterationBeginTime.Value
-                                                                                         : _beginTime.Value;
+            TimeSpan beginTimeForOffsetComputation = _currentIterationBeginTime ?? _beginTime.Value;
             TimeSpan offsetFromBegin = MultiplyTimeSpan(parentTime - beginTimeForOffsetComputation, _appliedSpeedRatio);
 
             // This may be set redundantly in one case, but simplifies code
@@ -2806,7 +2805,7 @@ namespace System.Windows.Media.Animation
 
             if (parentIntervalCollection.Intersects(fillPeriod))  // We enter or leave Fill period
             {
-                TimeSpan relativeBeginTime = _currentIterationBeginTime.HasValue ? _currentIterationBeginTime.Value : _beginTime.Value;
+                TimeSpan relativeBeginTime = _currentIterationBeginTime ?? _beginTime.Value;
                 ComputeCurrentFillInterval(parentIntervalCollection,
                                            relativeBeginTime, endOfActivePeriod.Value,
                                            _currentDuration, _appliedSpeedRatio,
@@ -2833,7 +2832,7 @@ namespace System.Windows.Media.Animation
             Duration postFillDuration)
         {
             // Make sure that our periodic function is aligned to the boundary of the current iteration, regardless of prior slip
-            TimeSpan relativeBeginTime = _currentIterationBeginTime.HasValue ? _currentIterationBeginTime.Value : _beginTime.Value;
+            TimeSpan relativeBeginTime = _currentIterationBeginTime ?? _beginTime.Value;
             
             RaiseCurrentTimeInvalidated();
 
@@ -3178,7 +3177,7 @@ namespace System.Windows.Media.Animation
             // With these limitations, we can easily preview our CurrentTime:
             if (_beginTime.HasValue && currentParentTimePT >= _beginTime.Value)
             {
-                TimeSpan relativeBeginTimePT = _currentIterationBeginTime.HasValue ? _currentIterationBeginTime.Value : _beginTime.Value;
+                TimeSpan relativeBeginTimePT = _currentIterationBeginTime ?? _beginTime.Value;
                 TimeSpan previewCurrentOffsetPT = currentParentTimePT - relativeBeginTimePT;  // This is our time offset (not yet scaled by speed)
                 TimeSpan previewCurrentTimeLT = MultiplyTimeSpan(previewCurrentOffsetPT, _appliedSpeedRatio);  // This is what our time would be
 

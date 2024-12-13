@@ -203,9 +203,6 @@ dotnet_diagnostic.IDE0020.severity = suggestion
 # IDE0029: Use coalesce expression
 dotnet_diagnostic.IDE0029.severity = suggestion
 
-# IDE0030: Null check can be simplified
-dotnet_diagnostic.IDE0030.severity = suggestion
-
 # IDE0031: Use null propagation
 dotnet_diagnostic.IDE0031.severity = suggestion
 

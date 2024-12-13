@@ -7,9 +7,9 @@ using HRESULT = Standard.HRESULT;
 // ReSharper disable once CheckNamespace
 namespace System.Windows.Appearance;
 
-internal static class WindowBackdropManager
+public static class WindowBackdropManager
 {
-    internal static bool IsSupported(WindowBackdropType backdropType)
+    public static bool IsSupported(WindowBackdropType backdropType)
     {
         return backdropType switch
         {
@@ -22,7 +22,7 @@ internal static class WindowBackdropManager
         };
     }
 
-    internal static bool SetBackdrop(Window window, WindowBackdropType backdropType)
+    public static bool SetBackdrop(Window window, WindowBackdropType backdropType)
     {
         if (window is null ||
                 !IsSupported(backdropType) ||
@@ -136,7 +136,7 @@ internal static class WindowBackdropManager
 
     #region Internal Properties
 
-    internal static bool IsBackdropEnabled => _isBackdropEnabled ??= Utility.IsWindows11_22H2OrNewer && 
+    public static bool IsBackdropEnabled => _isBackdropEnabled ??= Utility.IsWindows11_22H2OrNewer && 
                                                                         !FrameworkAppContextSwitches.DisableFluentThemeWindowBackdrop;
 
     private static bool? _isBackdropEnabled = null;

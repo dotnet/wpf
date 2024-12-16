@@ -1014,6 +1014,14 @@ namespace System.Windows
                 }
                 return _menuDropAlignment;
             }
+            set
+            {
+                lock (_cacheValid)
+                {
+                    _cacheValid[(int)CacheSlot.MenuDropAlignment] = true;
+                    _menuDropAlignment = value;
+                }
+            }
         }
 
         /// <summary>
@@ -1041,6 +1049,14 @@ namespace System.Windows
                 }
 
                 return _menuFade;
+            }
+            set
+            {
+                lock (_cacheValid)
+                {
+                    _cacheValid[(int)CacheSlot.MenuFade] = true;
+                    _menuFade = value;
+                }
             }
         }
 
@@ -1070,6 +1086,14 @@ namespace System.Windows
                 }
 
                 return _menuShowDelay;
+            }
+            set
+            {
+                lock (_cacheValid)
+                {
+                    _cacheValid[(int)CacheSlot.MenuShowDelay] = true;
+                    _menuShowDelay = value;
+                }
             }
         }
 

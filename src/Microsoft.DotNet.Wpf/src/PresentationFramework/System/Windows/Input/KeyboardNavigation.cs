@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -800,10 +800,7 @@ namespace System.Windows.Input
             if (_focusVisualAdornerCache != null)
             {
                 AdornerLayer adornerlayer = VisualTreeHelper.GetParent(_focusVisualAdornerCache) as AdornerLayer;
-                if (adornerlayer != null)
-                {
-                    adornerlayer.Remove(_focusVisualAdornerCache);
-                }
+                adornerlayer?.Remove(_focusVisualAdornerCache);
                 _focusVisualAdornerCache = null;
             }
         }
@@ -1246,10 +1243,7 @@ namespace System.Windows.Input
             }
 
             Visual rootVisual = GetVisualRoot(visual);
-            if (rootVisual != null)
-            {
-                rootVisual.SetValue(ShowKeyboardCuesProperty, enable ? BooleanBoxes.TrueBox : BooleanBoxes.FalseBox);
-            }
+            rootVisual?.SetValue(ShowKeyboardCuesProperty, enable ? BooleanBoxes.TrueBox : BooleanBoxes.FalseBox);
         }
 
         internal static FocusNavigationDirection KeyToTraversalDirection(Key key)
@@ -2727,8 +2721,7 @@ namespace System.Windows.Input
                 else
                 {
                     ContentElement sourceContentElement = sourceElement as ContentElement;
-                    if (sourceContentElement != null)
-                        sourceContentElement.RemoveHandler(Keyboard.PreviewLostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(_LostFocus));
+                    sourceContentElement?.RemoveHandler(Keyboard.PreviewLostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(_LostFocus));
                 }
 
                 UIElement targetUIElement = targetElement as UIElement;
@@ -2737,11 +2730,8 @@ namespace System.Windows.Input
                 else
                 {
                     ContentElement targetContentElement = targetElement as ContentElement;
-                    if (targetContentElement != null)
-                    {
-                        // When Focus is changed we need to reset the base line
-                        targetContentElement.AddHandler(Keyboard.PreviewLostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(_LostFocus), true);
-                    }
+                    // When Focus is changed we need to reset the base line
+                    targetContentElement?.AddHandler(Keyboard.PreviewLostKeyboardFocusEvent, new KeyboardFocusChangedEventHandler(_LostFocus), true);
                 }
 
                 if (targetUIElement != null)

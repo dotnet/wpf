@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1859,12 +1859,12 @@ namespace System.Windows.Documents
 
         private UIElement RenderScope
         {
-            get { return _editor.TextView == null ? null : _editor.TextView.RenderScope; }
+            get { return _editor.TextView?.RenderScope; }
         }
 
         private FrameworkElement UiScope
         {
-            get { return (_editor == null) ? null : _editor.UiScope; }
+            get { return _editor?.UiScope; }
         }
 
         private bool IsReadOnly

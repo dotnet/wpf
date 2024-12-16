@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1092,10 +1092,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     Brush = Brush.PushOpacity(Opacity, OpacityMask);
                 }
 
-                if (Pen != null)
-                {
-                    Pen.PushOpacity(Opacity, OpacityMask);
-                }
+                Pen?.PushOpacity(Opacity, OpacityMask);
 
                 Opacity = 1;
                 OpacityMask = null;
@@ -1330,10 +1327,7 @@ namespace Microsoft.Internal.AlphaFlattener
                 // Clip     = Utility.TransformGeometry(Clip, Transform);
                 Geometry = Utility.TransformGeometry(Geometry, Transform);
 
-                if (Brush != null)
-                {
-                    Brush.ApplyTransform(Transform);
-                }
+                Brush?.ApplyTransform(Transform);
 
                 Transform = Matrix.Identity; // Reset transform
                 _widenGeometry = null;  // Reset cached widen geometry if any

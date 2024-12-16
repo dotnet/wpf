@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -189,8 +189,7 @@ namespace System.Windows.Controls
             Size desiredSize = AdornedElement.RenderSize;
             UIElement child = Child;
 
-            if (child != null)
-                child.Measure(desiredSize);
+            child?.Measure(desiredSize);
 
             return desiredSize;
         }
@@ -204,8 +203,7 @@ namespace System.Windows.Controls
         {
             UIElement child = Child;
 
-            if (child != null)
-                child.Arrange(new Rect(arrangeBounds));
+            child?.Arrange(new Rect(arrangeBounds));
 
             return arrangeBounds;
         }

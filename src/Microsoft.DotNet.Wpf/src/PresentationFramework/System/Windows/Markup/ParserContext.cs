@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -214,8 +214,7 @@ namespace System.Windows.Markup
             _currentFreezeStackFrame.IncrementRepeatCount();
 
             // Wait till the context needs XmlnsDictionary, create on first use.
-            if (_xmlnsDictionary != null)
-                _xmlnsDictionary.PushScope();
+            _xmlnsDictionary?.PushScope();
         }
 
         /// <summary>
@@ -248,8 +247,7 @@ namespace System.Windows.Markup
             }
 
             // Wait till the context needs XmlnsDictionary, create on first use.
-            if (_xmlnsDictionary != null)
-                _xmlnsDictionary.PopScope();
+            _xmlnsDictionary?.PopScope();
         }
 
         /// <summary>
@@ -716,8 +714,8 @@ namespace System.Windows.Markup
             ParserContext context = ScopedCopy();
 
             // Deep copy only selected instance variables
-            context._mapTable = (_mapTable != null) ? _mapTable.Clone() : null;
-            context._xamlTypeMapper = (_xamlTypeMapper != null) ? _xamlTypeMapper.Clone() : null;
+            context._mapTable = _mapTable?.Clone();
+            context._xamlTypeMapper = _xamlTypeMapper?.Clone();
 
             // Connect the XamlTypeMapper and bamlmaptable
             context._xamlTypeMapper.MapTable = context._mapTable;
@@ -801,10 +799,7 @@ namespace System.Windows.Markup
         internal Freezable TryGetFreezable(string value)
         {
             Freezable freezable = null;
-            if (_freezeCache != null)
-            {
-                _freezeCache.TryGetValue(value, out freezable);
-            }
+            _freezeCache?.TryGetValue(value, out freezable);
 
             return freezable;
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1578,12 +1578,9 @@ namespace System.Windows.Controls
                 }
 
                 OnScrollChange();
-                if (ScrollOwner != null)
-                {
-                    // When layout gets updated it may happen that visual is obscured by a ScrollBar
-                    // We call MakeVisible again to make sure element is visible in this case
-                    ScrollOwner.MakeVisible(visual, originalRect);
-                }
+                // When layout gets updated it may happen that visual is obscured by a ScrollBar
+                // We call MakeVisible again to make sure element is visible in this case
+                ScrollOwner?.MakeVisible(visual, originalRect);
             }
             else
             {
@@ -1663,11 +1660,8 @@ namespace System.Windows.Controls
                                 groupItem.UpdateLayout();
 
                                 VirtualizingPanel itemsHost = groupItem.ItemsHost as VirtualizingPanel;
-                                if (itemsHost != null)
-                                {
-                                    // Recursively call child panels until item is found.
-                                    itemsHost.BringIndexIntoViewPublic(index);
-                                }
+                                // Recursively call child panels until item is found.
+                                itemsHost?.BringIndexIntoViewPublic(index);
                             }
                             break;
                         }
@@ -1998,10 +1992,7 @@ namespace System.Windows.Controls
         {
             ItemsControl itemsControl = ItemsControl.GetItemsOwner(this);
 
-            if (itemsControl != null)
-            {
-                itemsControl.RaiseEvent(e);
-            }
+            itemsControl?.RaiseEvent(e);
         }
 
         #endregion
@@ -3116,10 +3107,7 @@ namespace System.Windows.Controls
                             {
                                 DependencyObject itemsOwner = itemStorageProvider as DependencyObject;
                                 Panel parentPanel = (itemsOwner != null) ? VisualTreeHelper.GetParent(itemsOwner) as Panel : null;
-                                if (parentPanel != null)
-                                {
-                                    parentPanel.InvalidateMeasure();
-                                }
+                                parentPanel?.InvalidateMeasure();
                             }
                         }
 
@@ -3223,7 +3211,7 @@ namespace System.Windows.Controls
                         SnapshotData data = new SnapshotData {
                             UniformOrAverageContainerSize = uniformOrAverageContainerPixelSize,
                             UniformOrAverageContainerPixelSize = uniformOrAverageContainerPixelSize,
-                            EffectiveOffsets = (effectiveOffsetInfo != null) ? effectiveOffsetInfo.OffsetList : null
+                            EffectiveOffsets = effectiveOffsetInfo?.OffsetList
                         };
                         SnapshotDataField.SetValue(this, data);
                     }
@@ -3523,7 +3511,7 @@ namespace System.Windows.Controls
                         SnapshotData data = new SnapshotData {
                             UniformOrAverageContainerSize = uniformOrAverageContainerPixelSize,
                             UniformOrAverageContainerPixelSize = uniformOrAverageContainerPixelSize,
-                            EffectiveOffsets = (effectiveOffsetInfo != null) ? effectiveOffsetInfo.OffsetList : null
+                            EffectiveOffsets = effectiveOffsetInfo?.OffsetList
                         };
                         SnapshotDataField.SetValue(this, data);
 
@@ -4025,10 +4013,7 @@ namespace System.Windows.Controls
                 CleanupContainers(Int32.MaxValue, Int32.MaxValue, itemsControl);
             }
 
-            if (_realizedChildren != null)
-            {
-                _realizedChildren.Clear();
-            }
+            _realizedChildren?.Clear();
 
             InternalChildren.ClearInternal();
         }
@@ -4067,10 +4052,7 @@ namespace System.Windows.Controls
         internal void ClearAllContainers()
         {
             IItemContainerGenerator generator = Generator;
-            if (generator != null)
-            {
-                generator.RemoveAll();
-            }
+            generator?.RemoveAll();
         }
 
         #endregion
@@ -4441,10 +4423,7 @@ namespace System.Windows.Controls
                                                     // need to remeasure, which should count
                                                     // as part of the scroll operation
                                                     DispatcherOperation clearIsScrollActiveOperation = ClearIsScrollActiveOperationField.GetValue(this);
-                                                    if (clearIsScrollActiveOperation != null)
-                                                    {
-                                                        clearIsScrollActiveOperation.Abort();
-                                                    }
+                                                    clearIsScrollActiveOperation?.Abort();
                                                     clearIsScrollActiveOperation = Dispatcher.BeginInvoke(DispatcherPriority.Background,
                                                         (Action)ClearIsScrollActive);
 
@@ -5689,7 +5668,7 @@ namespace System.Windows.Controls
             // giving the child panel the offset it wants the next time this
             // panel measures the child.
             EffectiveOffsetInformation effectiveOffsetInformation = EffectiveOffsetInformationField.GetValue(firstContainer);
-            List<Double> childOffsetList = (effectiveOffsetInformation != null) ? effectiveOffsetInformation.OffsetList : null;
+            List<Double> childOffsetList = effectiveOffsetInformation?.OffsetList;
             if (childOffsetList != null)
             {
                 int count = childOffsetList.Count;
@@ -6450,7 +6429,7 @@ namespace System.Windows.Controls
             // this only applies to a hierarchical element with a visible ItemsHost
             bool isChildHorizontal = isHorizontal;
             IHierarchicalVirtualizationAndScrollInfo virtualizingChild = GetVirtualizingChild(child, ref isChildHorizontal);
-            Panel itemsHost = (virtualizingChild == null) ? null : virtualizingChild.ItemsHost;
+            Panel itemsHost = virtualizingChild?.ItemsHost;
             if (itemsHost == null || !itemsHost.IsVisible)
                 return;
 
@@ -6520,7 +6499,7 @@ namespace System.Windows.Controls
             {
                 // re-measure the scrolling panel
                 ItemsControl scrollingItemsControl = GetScrollingItemsControl(child);
-                Panel scrollingPanel = (scrollingItemsControl == null) ? null : scrollingItemsControl.ItemsHost;
+                Panel scrollingPanel = scrollingItemsControl?.ItemsHost;
                 if (scrollingPanel != null)
                 {
                     VirtualizingStackPanel vsp = scrollingPanel as VirtualizingStackPanel;
@@ -9577,7 +9556,7 @@ namespace System.Windows.Controls
         // At the time this method is called, scrolling state is in its new, valid state.
         private void OnScrollChange()
         {
-            if (ScrollOwner != null) { ScrollOwner.InvalidateScrollInfo(); }
+            ScrollOwner?.InvalidateScrollInfo();
         }
 
         /// <summary>
@@ -9857,10 +9836,7 @@ namespace System.Windows.Controls
             if (discardOffsets)
             {
                 // All saved offsets are now meaningless.  Discard them.
-                if (previouslyMeasuredOffsets != null)
-                {
-                    previouslyMeasuredOffsets.Clear();
-                }
+                previouslyMeasuredOffsets?.Clear();
                 lastPageSafeOffset = null;
                 lastPagePixelSize = null;
             }

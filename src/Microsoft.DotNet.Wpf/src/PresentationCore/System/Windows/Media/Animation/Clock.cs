@@ -3703,13 +3703,10 @@ namespace System.Windows.Media.Animation
                 current = current._parent;  
             }
 
-            if (_timeManager != null)
-            {
-                // If we get here from within a Tick, this will force MediaContext to perform another subsequent Tick
-                // on the TimeManager.  This will apply the requested interactive operations, so their results will
-                // immediately become visible.
-                _timeManager.SetDirty();
-            }
+            // If we get here from within a Tick, this will force MediaContext to perform another subsequent Tick
+            // on the TimeManager.  This will apply the requested interactive operations, so their results will
+            // immediately become visible.
+            _timeManager?.SetDirty();
         }
 
 
@@ -3828,10 +3825,7 @@ namespace System.Windows.Media.Animation
         // This wrapper is invoked anytime we invalidate the _beginTime
         private void UpdateSyncBeginTime()
         {
-            if (_syncData != null)
-            {
-                _syncData.UpdateClockBeginTime();
-            }
+            _syncData?.UpdateClockBeginTime();
         }
 
         private void VerifyNeedsTicksWhenActive()
@@ -4308,10 +4302,7 @@ namespace System.Windows.Media.Animation
             {
                 Clock child = (Clock)children[index].Target;
 
-                if (child != null)
-                {
-                    child.BuildInfoRecursive(builder, 1);
-                }
+                child?.BuildInfoRecursive(builder, 1);
             }
         }
 

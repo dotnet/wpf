@@ -963,10 +963,7 @@ namespace System.Windows.Threading
                     operation.Completed += (s,e) => cancellationRegistration.Dispose();
                 }
 
-                if(hooks != null)
-                {
-                    hooks.RaiseOperationPosted(this, operation);
-                }
+                hooks?.RaiseOperationPosted(this, operation);
 
                 if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordDispatcher | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info))
                 {
@@ -1400,10 +1397,7 @@ namespace System.Windows.Threading
                 finally
                 {
                     ctTimeoutRegistration.Dispose();
-                    if (ctsTimeout != null)
-                    {
-                        ctsTimeout.Dispose();
-                    }
+                    ctsTimeout?.Dispose();
                 }
             }
 
@@ -1887,10 +1881,7 @@ namespace System.Windows.Threading
                     }
                 }
 
-                if(operation != null)
-                {
-                    operation.Abort();
-                }
+                operation?.Abort();
             } while(operation != null);
 
             // clear out the fields that could be holding onto large graphs of objects.
@@ -1944,10 +1935,7 @@ namespace System.Windows.Threading
 
             if (notify)
             {
-                if(hooks != null)
-                {
-                    hooks.RaiseOperationPriorityChanged(this, operation);
-                }
+                hooks?.RaiseOperationPriorityChanged(this, operation);
 
                 if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordDispatcher | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info))
                 {
@@ -1978,10 +1966,7 @@ namespace System.Windows.Threading
 
             if (notify)
             {
-                if(hooks != null)
-                {
-                    hooks.RaiseOperationAborted(this, operation);
-                }
+                hooks?.RaiseOperationAborted(this, operation);
 
                 if (EventTrace.IsEnabled(EventTrace.Keyword.KeywordDispatcher | EventTrace.Keyword.KeywordPerf, EventTrace.Level.Info))
                 {
@@ -2038,17 +2023,11 @@ namespace System.Windows.Threading
                     eventlogged = true;
                 }
 
-                if(hooks != null)
-                {
-                    hooks.RaiseOperationStarted(this, op);
-                }
+                hooks?.RaiseOperationStarted(this, op);
 
                 op.Invoke();
 
-                if(hooks != null)
-                {
-                    hooks.RaiseOperationCompleted(this, op);
-                }
+                hooks?.RaiseOperationCompleted(this, op);
 
                 if (eventlogged)
                 {
@@ -2289,10 +2268,7 @@ namespace System.Windows.Threading
 
             if (idle)
             {
-                if(hooks != null)
-                {
-                    hooks.RaiseDispatcherInactive(this);
-                }
+                hooks?.RaiseDispatcherInactive(this);
 
                 ComponentDispatcher.RaiseIdle();
             }
@@ -2576,10 +2552,7 @@ namespace System.Windows.Threading
                         }
 
                         // Now that we are outside of the lock, promote the timer.
-                        if(timer != null)
-                        {
-                            timer.Promote();
-                        }
+                        timer?.Promote();
                     } while(timer != null);
 }
             }

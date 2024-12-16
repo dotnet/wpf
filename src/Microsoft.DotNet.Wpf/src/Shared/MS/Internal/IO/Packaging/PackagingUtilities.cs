@@ -534,8 +534,7 @@ namespace MS.Internal.IO.Packaging
             }
             finally
             {
-                if (userProfileKey != null)
-                    userProfileKey.Close();
+                userProfileKey?.Close();
             }
 
             return userHasProfile;

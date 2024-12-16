@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -208,10 +208,7 @@ namespace System.Windows.Controls
             // We arrange our child as what Decorator does 
             // exceopt we are using the available size computed from our cached measure size.
             UIElement child = Child;
-            if ( child != null )
-            {
-                child.Arrange(new Rect(availableSize));
-            } 
+            child?.Arrange(new Rect(availableSize)); 
             
             return arrangeSize;
         }

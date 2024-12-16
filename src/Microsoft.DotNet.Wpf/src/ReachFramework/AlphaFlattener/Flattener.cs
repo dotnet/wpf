@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -168,10 +168,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     }
 #endif
 
-                    if (opacityMask != null)
-                    {
-                        opacityMask.ApplyTransform(transform);
-                    }
+                    opacityMask?.ApplyTransform(transform);
 
                     // Flatten sub-tree structure into a new DisplayList
                     fl.TreeFlatten(ntree, clip, transform, 1.0, null);
@@ -361,10 +358,7 @@ namespace Microsoft.Internal.AlphaFlattener
 #if DEBUG
             for (int i = 0; i < count; i ++)
             {
-                if (commands[i] != null)
-                {
-                    commands[i].SetID(i);
-                }
+                commands[i]?.SetID(i);
             }
 
             Console.WriteLine();
@@ -691,7 +685,7 @@ namespace Microsoft.Internal.AlphaFlattener
                     {
                         // Blend it with brush underneath
                         BrushProxy blendedBrush = gp.Brush;
-                        BrushProxy blendedPenBrush = gp.Pen == null ? null : gp.Pen.StrokeBrush;
+                        BrushProxy blendedPenBrush = gp.Pen?.StrokeBrush;
 
                         if (blendedBrush != null)
                         {

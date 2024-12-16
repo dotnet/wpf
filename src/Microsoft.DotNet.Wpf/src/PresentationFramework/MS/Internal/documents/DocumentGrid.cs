@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2175,10 +2175,7 @@ namespace MS.Internal.Documents
         private void UpdateTextView()
         {
             MultiPageTextView tv = TextView as MultiPageTextView;
-            if (tv != null)
-            {
-                tv.OnPageLayoutChanged();
-            }
+            tv?.OnPageLayoutChanged();
         }
 
         /// <summary>
@@ -2276,10 +2273,7 @@ namespace MS.Internal.Documents
             {
                 UIElement page = _childrenCollection[i] as UIElement;
 
-                if (page != null)
-                {
-                    page.InvalidateMeasure();
-                }
+                page?.InvalidateMeasure();
             }
         }
 
@@ -2497,15 +2491,9 @@ namespace MS.Internal.Documents
         /// </summary>
         private void InvalidateDocumentScrollInfo()
         {
-            if (ScrollOwner != null)
-            {
-                ScrollOwner.InvalidateScrollInfo();
-            }
+            ScrollOwner?.InvalidateScrollInfo();
 
-            if (DocumentViewerOwner != null)
-            {
-                DocumentViewerOwner.InvalidateDocumentScrollInfo();
-            }
+            DocumentViewerOwner?.InvalidateDocumentScrollInfo();
         }
 
         /// <summary>
@@ -2642,7 +2630,7 @@ namespace MS.Internal.Documents
         {
             //Hit test to find the DocumentPageView
             HitTestResult result = VisualTreeHelper.HitTest(this, point);
-            DependencyObject currentVisual = (result != null) ? result.VisualHit : null;
+            DependencyObject currentVisual = result?.VisualHit;
 
             DocumentPageView page = null;
 

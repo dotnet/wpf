@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1068,8 +1068,7 @@ namespace System.Windows.Media
                             TextWrapping currentWrap = _that._defaultParaProps.TextWrapping;
                             _that._defaultParaProps.SetTextWrapping(TextWrapping.NoWrap);
 
-                            if (currentLineBreak != null)
-                                currentLineBreak.Dispose();
+                            currentLineBreak?.Dispose();
 
                             _currentLine.Dispose();
                             _currentLine = FormatLine(
@@ -1088,8 +1087,7 @@ namespace System.Windows.Media
                 _previousHeight = _currentLine.Height;
                 _previousLength = _currentLine.Length;
 
-                if (_previousLineBreak != null)
-                    _previousLineBreak.Dispose();
+                _previousLineBreak?.Dispose();
 
                 _previousLineBreak = currentLineBreak;
 

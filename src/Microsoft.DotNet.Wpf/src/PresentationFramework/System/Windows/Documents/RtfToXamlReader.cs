@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7327,7 +7327,7 @@ namespace System.Windows.Documents
             DocumentNodeArray dnaCells = dn.GetRowsCells();
             RowFormat rf = dn.FormatState.RowFormat;
             DocumentNode dnTable = dn.GetParentOfType(DocumentNodeType.dnTable);
-            ColumnStateArray csa = (dnTable != null) ? dnTable.ColumnStateArray : null;
+            ColumnStateArray csa = dnTable?.ColumnStateArray;
 
             // Normally number of cells and cell definitions are equal, but be careful.
             int nCount = dnaCells.Count < rf.CellCount ? dnaCells.Count : rf.CellCount;
@@ -10929,11 +10929,8 @@ namespace System.Windows.Documents
                     break;
                 case RtfControlWord.Ctrl_BRDRNONE:
                     // No borders
-                    if (ConverterState.CurrentBorder != null)
-                    {
-                        // Note that propset does validation
-                        ConverterState.CurrentBorder.SetDefaults();
-                    }
+                    // Note that propset does validation
+                    ConverterState.CurrentBorder?.SetDefaults();
                     break;
                 case RtfControlWord.Ctrl_BRDRWAVY:
                     // Wavy border

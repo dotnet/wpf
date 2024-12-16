@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -598,7 +598,7 @@ namespace System.Windows.Controls.Primitives
                 }
             }
 
-            Type selectedType = (value != null) ?  value.GetType() : null;
+            Type selectedType = value?.GetType();
             object selectedValue = value;
             DynamicValueConverter converter = new DynamicValueConverter(false);
 
@@ -999,8 +999,7 @@ namespace System.Windows.Controls.Primitives
                 if (item != null)
                 {
                     SelectorItemAutomationPeer itemPeer = selectorPeer.ItemPeers[item] as SelectorItemAutomationPeer;
-                    if (itemPeer != null)
-                        itemPeer.RaiseAutomationIsSelectedChanged(isSelected);
+                    itemPeer?.RaiseAutomationIsSelectedChanged(isSelected);
                 }
             }
         }
@@ -2420,8 +2419,7 @@ namespace System.Windows.Controls.Primitives
                                         selectedItems.Add(info);
                                     }
 
-                                    if (toRemove != null)
-                                        toRemove.Add(info);
+                                    toRemove?.Add(info);
                                 }
                             }
 
@@ -2695,10 +2693,7 @@ namespace System.Windows.Controls.Primitives
 
             public void Add(ItemInfo info)
             {
-                if (_set != null)
-                {
-                    _set.Add(info, info);
-                }
+                _set?.Add(info, info);
                 _list.Add(info);
 
                 if (info.IsResolved)    ++_resolvedCount;
@@ -2779,10 +2774,7 @@ namespace System.Windows.Controls.Primitives
             public void Clear()
             {
                 _list.Clear();
-                if (_set != null)
-                {
-                    _set.Clear();
-                }
+                _set?.Clear();
 
                 _resolvedCount = _unresolvedCount = 0;
             }

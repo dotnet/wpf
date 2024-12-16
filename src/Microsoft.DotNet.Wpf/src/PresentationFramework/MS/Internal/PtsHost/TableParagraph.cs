@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -550,16 +550,13 @@ namespace MS.Internal.PtsHost
             // - to create dirty text range corresponding to the Table content
             // - notify formatter that Table's content is changed.
             //
-            int charCount = Table.SymbolCount - 2;// This is equivalent to (ContentEndOffset � ContentStartOffset) but is more performant.
+            int charCount = Table.SymbolCount - 2;// This is equivalent to (ContentEndOffset – ContentStartOffset) but is more performant.
             if (charCount > 0)
             {
                 DirtyTextRange dtr = new DirtyTextRange(Table.ContentStartOffset, charCount, charCount);
                 StructuralCache.AddDirtyTextRange(dtr);
             }
-            if (StructuralCache.FormattingOwner.Formatter != null)
-            {
-                StructuralCache.FormattingOwner.Formatter.OnContentInvalidated(true, Table.ContentStart, Table.ContentEnd);
-            }
+            StructuralCache.FormattingOwner.Formatter?.OnContentInvalidated(true, Table.ContentStart, Table.ContentEnd);
         }
 
         #endregion Private Methods

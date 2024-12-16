@@ -525,8 +525,7 @@ namespace MS.Internal.IO.Packaging
             if (algorithm == null && o != null)
             {
                 IDisposable disposable = o as IDisposable;
-                if (disposable != null)
-                    disposable.Dispose();
+                disposable?.Dispose();
             }
 
             return algorithm;

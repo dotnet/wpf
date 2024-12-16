@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -123,8 +123,7 @@ namespace Microsoft.Windows.Controls.Ribbon
             RibbonComboBoxAutomationPeer peer = UIElementAutomationPeer.FromElement(cb) as RibbonComboBoxAutomationPeer;
             // Raise the propetyChangeEvent for Value if Automation Peer exist, the new Value must
             // be the one in SelctionBoxItem(selected value is the one user will care about)
-            if (peer != null)
-                peer.RaiseValuePropertyChangedEvent((string)e.OldValue, (string)e.NewValue);
+            peer?.RaiseValuePropertyChangedEvent((string)e.OldValue, (string)e.NewValue);
 
 
             cb.TextUpdated((string)e.NewValue, false);
@@ -885,15 +884,12 @@ namespace Microsoft.Windows.Controls.Ribbon
 
                 Dispatcher.BeginInvoke((Action)delegate()
                 {
-                    if (_firstGallery != null)
-                    {
-                        // Scroll the highlighted item into view. Note that we need to do the
-                        // scroll in a Dispatcher operation because the scroll operation wont
-                        // succeed until the Popup contents are Loaded and connected to a
-                        // PresentationSource. We need to allow time for that to happen.
+                    // Scroll the highlighted item into view. Note that we need to do the
+                    // scroll in a Dispatcher operation because the scroll operation wont
+                    // succeed until the Popup contents are Loaded and connected to a
+                    // PresentationSource. We need to allow time for that to happen.
 
-                        _firstGallery.ScrollIntoView(_firstGallery.HighlightedItem);
-                    }
+                    _firstGallery?.ScrollIntoView(_firstGallery.HighlightedItem);
                 },
                 DispatcherPriority.Render);
             }

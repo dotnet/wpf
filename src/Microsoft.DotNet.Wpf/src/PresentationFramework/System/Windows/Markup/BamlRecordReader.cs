@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -360,10 +360,7 @@ namespace System.Windows.Markup
         /// </summary>
         internal void Close()
         {
-            if (BamlStream != null)
-            {
-                BamlStream.Close();
-            }
+            BamlStream?.Close();
             EndOfDocument = true;
         }
 
@@ -2955,10 +2952,7 @@ namespace System.Windows.Markup
                         // "myStyle" also gets registered with the Window
                         // "myBrush" gets registered with the Style
                         INameScope nameScopePeek = ParserContext.NameScopeStack.Peek() as INameScope;
-                        if (nameScopePeek != null)
-                        {
-                            nameScopePeek.RegisterName(name, element);
-                        }
+                        nameScopePeek?.RegisterName(name, element);
                     }
                     else
                     {
@@ -4427,10 +4421,7 @@ namespace System.Windows.Markup
             }
 
             UIElement uiElement = element as UIElement;
-            if (uiElement != null)
-            {
-                uiElement.SetPersistId(++_persistId);
-            }
+            uiElement?.SetPersistId(++_persistId);
 
             // The second consition is to handle events within standalone dictionaries.
             // We need to setup the component connector correctly in this case. Note
@@ -4869,7 +4860,7 @@ namespace System.Windows.Markup
                         // represent the explicit collection and the grandparent is that property's target.
                         element = GetElementValue(element, GrandParentObjectData,
                                                   holder.PropertyDefinition.DependencyProperty, ref isMarkupExtension);
-                        elementType = element == null ? null : element.GetType();
+                        elementType = element?.GetType();
                     }
 
                     // the element is an explicit collection if it is assignable to the expected type of the parent or
@@ -5341,10 +5332,7 @@ namespace System.Windows.Markup
             if (_parserContext.FreezeFreezables)
             {
                 Freezable f = element as Freezable;
-                if (f != null)
-                {
-                    f.Freeze();
-                }
+                f?.Freeze();
             }
         }
         internal void PreParsedBamlReset()
@@ -5497,7 +5485,7 @@ namespace System.Windows.Markup
             get
             {
                 ReaderContextStackData contextData = ParentContext;
-                return contextData == null ? null : contextData.ObjectData;
+                return contextData?.ObjectData;
             }
         }
 
@@ -5511,7 +5499,7 @@ namespace System.Windows.Markup
             get
             {
                 ReaderContextStackData contextData = GrandParentContext;
-                return contextData == null ? null : contextData.ObjectData;
+                return contextData?.ObjectData;
             }
         }
 

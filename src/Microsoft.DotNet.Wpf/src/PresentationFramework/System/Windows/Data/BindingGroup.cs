@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -338,10 +338,7 @@ namespace System.Windows.Data
                 for (int i=items.Count-1; i>=0; --i)
                 {
                     IEditableObject ieo = items[i] as IEditableObject;
-                    if (ieo != null)
-                    {
-                        ieo.BeginEdit();
-                    }
+                    ieo?.BeginEdit();
                 }
 
                 IsEditing = true;
@@ -382,10 +379,7 @@ namespace System.Windows.Data
             for (int i=items.Count-1; i>=0; --i)
             {
                 IEditableObject ieo = items[i] as IEditableObject;
-                if (ieo != null)
-                {
-                    ieo.CancelEdit();
-                }
+                ieo?.CancelEdit();
             }
 
             // update targets
@@ -725,10 +719,7 @@ namespace System.Windows.Data
         internal void AddBindingForProposedValue(BindingExpressionBase dependent, object item, string propertyName)
         {
             ProposedValueEntry entry = _proposedValueTable[item, propertyName];
-            if (entry != null)
-            {
-                entry.AddDependent(dependent);
-            }
+            entry?.AddDependent(dependent);
         }
 
         // add a validation error to the mentor's list
@@ -869,10 +860,7 @@ namespace System.Windows.Data
                 if (IsEditing)
                 {
                     IEditableObject ieo = newItems[i].Target as IEditableObject;
-                    if (ieo != null)
-                    {
-                        ieo.BeginEdit();
-                    }
+                    ieo?.BeginEdit();
                 }
 
                 // the item may implement INotifyDataErrorInfo

@@ -41,10 +41,7 @@ namespace MS.Internal.Xaml.Context
         {
             XamlType = null;
             Member = null;
-            if (_namespaces != null)
-            {
-                _namespaces.Clear();
-            }
+            _namespaces?.Clear();
         }
 
         public XamlType XamlType { get; set; }
@@ -57,10 +54,7 @@ namespace MS.Internal.Xaml.Context
 
         public void SetNamespaces(Dictionary<string, string> namespaces)
         {
-            if (_namespaces != null)
-            {
-                _namespaces.Clear();
-            }
+            _namespaces?.Clear();
             if (namespaces != null)
             {
                 foreach (KeyValuePair<string, string> ns in namespaces)

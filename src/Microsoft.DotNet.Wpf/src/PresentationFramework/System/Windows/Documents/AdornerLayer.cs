@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -472,7 +472,7 @@ namespace System.Windows.Documents
                         if (index >= 0)
                         {
                             // Get the matrix transform out, skip all non affine transforms
-                            Transform transform = (adornerTransform != null) ? adornerTransform.AffineTransform : null;
+                            Transform transform = adornerTransform?.AffineTransform;
                             
                             ((Adorner)(_children[index])).AdornerTransform = transform;
                         }

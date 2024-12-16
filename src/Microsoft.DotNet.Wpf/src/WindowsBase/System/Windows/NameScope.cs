@@ -421,10 +421,7 @@ namespace System.Windows
 
             void IEnumerator.Reset()
             {
-                if (_enumerator != null)
-                {
-                    _enumerator.Reset();
-                }
+                _enumerator?.Reset();
             }
         }
         #endregion

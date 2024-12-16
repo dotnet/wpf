@@ -256,8 +256,7 @@ namespace System.Windows.Markup
         public void CopyTo(Array array, int index)
         {
             IDictionary dict = GetNamespacesInScope(NamespaceScope.All) as IDictionary;
-            if (dict != null)
-                dict.CopyTo(array,index);
+            dict?.CopyTo(array,index);
         }
 
 #endregion ICollectionMethods

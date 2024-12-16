@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -247,10 +247,7 @@ namespace System.Windows.Controls
                 throw new InvalidOperationException(SR.ItemsSourceInUse);
             }
 
-            if (_internalView != null)
-            {
-                _internalView.Clear();
-            }
+            _internalView?.Clear();
             ModelParent.ClearValue(ItemsControl.HasItemsPropertyKey);
         }
 
@@ -1285,7 +1282,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveSorting : null;
+                return cvls?.IsLiveSorting;
             }
             set
             {
@@ -1307,7 +1304,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveFiltering : null;
+                return cvls?.IsLiveFiltering;
             }
             set
             {
@@ -1329,7 +1326,7 @@ namespace System.Windows.Controls
             get
             {
                 ICollectionViewLiveShaping cvls = _collectionView as ICollectionViewLiveShaping;
-                return (cvls != null) ? cvls.IsLiveGrouping : null;
+                return cvls?.IsLiveGrouping;
             }
             set
             {
@@ -1582,10 +1579,7 @@ namespace System.Windows.Controls
         internal override void GetCollectionChangedSources(int level, Action<int, object, bool?, List<string>> format, List<string> sources)
         {
             format(level, this, false, sources);
-            if (_collectionView != null)
-            {
-                _collectionView.GetCollectionChangedSources(level+1, format, sources);
-            }
+            _collectionView?.GetCollectionChangedSources(level+1, format, sources);
         }
 
 

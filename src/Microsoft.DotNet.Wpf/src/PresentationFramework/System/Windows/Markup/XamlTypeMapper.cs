@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -119,7 +119,7 @@ namespace System.Windows.Markup
             TypeAndSerializer typeAndSerializer =
                 GetTypeOnly(xmlNamespace,localName);
 
-            return typeAndSerializer != null ? typeAndSerializer.ObjectType : null;
+            return typeAndSerializer?.ObjectType;
         }
 
 #if !PBTCOMPILER
@@ -168,10 +168,7 @@ namespace System.Windows.Markup
             _piReverseTable[fullName] = xmlNamespace;
 
             // Add mapping to the SchemaContext
-            if (_schemaContext != null)
-            {
-                _schemaContext.SetMappingProcessingInstruction(xmlNamespace, pair);
-            }
+            _schemaContext?.SetMappingProcessingInstruction(xmlNamespace, pair);
         }
 #endif
         /// <summary>
@@ -1408,17 +1405,7 @@ namespace System.Windows.Markup
 
                             if (null != memberInfo)
                             {
-                                if (infoRecord != null)
-                                {
-#if !PBTCOMPILER
-                                    // DP's aren't present in the PBT case
-                                    if (infoRecord.DP == null)
-                                    {
-                                        infoRecord.DP = MapTable.GetDependencyProperty(infoRecord);
-                                    }
-#endif
-                                    infoRecord.SetPropertyMember(memberInfo);
-                                }
+                                infoRecord?.SetPropertyMember(memberInfo);
                             }
                         }
                     }
@@ -1552,17 +1539,7 @@ namespace System.Windows.Markup
 
                             if (null != memberInfo)
                             {
-                                if (infoRecord != null)
-                                {
-#if !PBTCOMPILER
-                                    // DP's aren't present in the PBT case
-                                    if (infoRecord.DP == null)
-                                    {
-                                        infoRecord.DP = MapTable.GetDependencyProperty(infoRecord);
-                                    }
-#endif
-                                    infoRecord.SetPropertyMember(memberInfo);
-                                }
+                                infoRecord?.SetPropertyMember(memberInfo);
                             }
                         }
                     }
@@ -2177,7 +2154,7 @@ namespace System.Windows.Markup
             XmlnsDictionary prefixDictionary = element.GetValue(XmlAttributeProperties.XmlnsDictionaryProperty)
                                                as XmlnsDictionary;
 
-            object xmlNamespaceObject = (prefixDictionary != null) ? prefixDictionary[prefix] : null;
+            object xmlNamespaceObject = prefixDictionary?[prefix];
 
             // Then get the list of NamespaceMapEntry objects that maps the xml namespace uri to one
             // or more clr namespace / assembly pairs.  This should be stored on the root element

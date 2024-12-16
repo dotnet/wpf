@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1071,10 +1071,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnPreviewKeyDown(e);
-            }
+            _textEditor?.OnPreviewKeyDown(e);
         }
 
         /// <summary>
@@ -1089,10 +1086,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnKeyDown(e);
-            }
+            _textEditor?.OnKeyDown(e);
         }
 
         /// <summary>
@@ -1107,10 +1101,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnKeyUp(e);
-            }
+            _textEditor?.OnKeyUp(e);
         }
 
         /// <summary>
@@ -1125,10 +1116,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnTextInput(e);
-            }
+            _textEditor?.OnTextInput(e);
         }
 
         /// <summary>
@@ -1143,10 +1131,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnMouseDown(e);
-            }
+            _textEditor?.OnMouseDown(e);
         }
 
         /// <summary>
@@ -1161,10 +1146,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnMouseMove(e);
-            }
+            _textEditor?.OnMouseMove(e);
         }
 
         /// <summary>
@@ -1179,10 +1161,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnMouseUp(e);
-            }
+            _textEditor?.OnMouseUp(e);
         }
 
         /// <summary>
@@ -1197,10 +1176,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnQueryCursor(e);
-            }
+            _textEditor?.OnQueryCursor(e);
         }
 
         /// <summary>
@@ -1215,10 +1191,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnQueryContinueDrag(e);
-            }
+            _textEditor?.OnQueryContinueDrag(e);
         }
 
         /// <summary>
@@ -1233,10 +1206,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnGiveFeedback(e);
-            }
+            _textEditor?.OnGiveFeedback(e);
         }
 
         /// <summary>
@@ -1251,10 +1221,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnDragEnter(e);
-            }
+            _textEditor?.OnDragEnter(e);
         }
 
         /// <summary>
@@ -1269,10 +1236,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnDragOver(e);
-            }
+            _textEditor?.OnDragOver(e);
         }
 
         /// <summary>
@@ -1287,10 +1251,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnDragLeave(e);
-            }
+            _textEditor?.OnDragLeave(e);
         }
 
         /// <summary>
@@ -1305,10 +1266,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnDrop(e);
-            }
+            _textEditor?.OnDrop(e);
         }
 
         /// <summary>
@@ -1324,10 +1282,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnContextMenuOpening(e);
-            }
+            _textEditor?.OnContextMenuOpening(e);
         }
 
         /// <summary>
@@ -1342,10 +1297,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnGotKeyboardFocus(e);
-            }
+            _textEditor?.OnGotKeyboardFocus(e);
         }
 
         /// <summary>
@@ -1360,10 +1312,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnLostKeyboardFocus(e);
-            }
+            _textEditor?.OnLostKeyboardFocus(e);
         }
 
         /// <summary>
@@ -1379,10 +1328,7 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            if (_textEditor != null)
-            {
-                _textEditor.OnLostFocus(e);
-            }
+            _textEditor?.OnLostFocus(e);
         }
 
         // Allocates the initial render scope for this control.
@@ -1529,10 +1475,7 @@ namespace System.Windows.Controls.Primitives
             // Transform to content coordinates.
             GeneralTransform transform = this.TransformToDescendant(this.RenderScope);
 
-            if (transform != null)
-            {
-                transform.TryTransform(point, out point);
-            }
+            transform?.TryTransform(point, out point);
 
             if (TextEditor.GetTextView(this.RenderScope).Validate(point))
             {
@@ -1582,10 +1525,7 @@ namespace System.Windows.Controls.Primitives
                 // Transform to RichTextBox control coordinates.
                 offset = new Point(0, 0);
                 GeneralTransform transform = this.TransformToDescendant(this.RenderScope);
-                if (transform != null)
-                {
-                    transform.TryTransform(offset, out offset);
-                }
+                transform?.TryTransform(offset, out offset);
                 rect.X -= offset.X;
                 rect.Y -= offset.Y;
             }
@@ -1641,19 +1581,13 @@ namespace System.Windows.Controls.Primitives
         // Do the work of line up.  Can be overridden by subclass to implement true line up.
         internal virtual void DoLineUp()
         {
-            if (this.ScrollViewer != null)
-            {
-                this.ScrollViewer.LineUp();
-            }
+            this.ScrollViewer?.LineUp();
         }
 
         // Do the work of line down.  Can be overridden by subclass to implement true line down.
         internal virtual void DoLineDown()
         {
-            if (this.ScrollViewer != null)
-            {
-                this.ScrollViewer.LineDown();
-            }
+            this.ScrollViewer?.LineDown();
         }
 
         /// <summary>
@@ -1852,10 +1786,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void DetachFromVisualTree()
         {
-            if (_textEditor != null)
-            {
-                _textEditor.Selection.DetachFromVisualTree();
-            }
+            _textEditor?.Selection.DetachFromVisualTree();
 
             // Detach scroll handler from old scroll viewer.
             // Note that this.ScrollViewer will walk the tree from current TextEditor's render scope up to its ui scope.

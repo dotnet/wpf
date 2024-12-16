@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -370,10 +370,7 @@ namespace System.Windows
 
             while (reader.Read())
             {
-                if (lineInfoConsumer != null)
-                {
-                    lineInfoConsumer.SetLineInfo(lineInfo.LineNumber, lineInfo.LinePosition);
-                }
+                lineInfoConsumer?.SetLineInfo(lineInfo.LineNumber, lineInfo.LinePosition);
 
                 object newValue;
                 bool reProcessOnApply = ParseNode(reader, stack, sharedProperties, ref nameNumber, out newValue);
@@ -984,10 +981,7 @@ namespace System.Windows
                                     // events inside of a FramewokrTemplate
                                     if (!insideTemplate && frames.CurrentFrame.Property == XamlLanguage.ConnectionId)
                                     {
-                                        if (OwnerTemplate.StyleConnector != null)
-                                        {
-                                            OwnerTemplate.StyleConnector.Connect((int)xamlReader.Value, frames.CurrentFrame.Instance);
-                                        }
+                                        OwnerTemplate.StyleConnector?.Connect((int)xamlReader.Value, frames.CurrentFrame.Instance);
                                     }
                                     break;
                             }

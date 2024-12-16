@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1237,10 +1237,7 @@ namespace System.Windows.Controls
 
             ClearLineMetrics();
 
-            if (_complexContent != null)
-            {
-                _complexContent.TextView.Invalidate();
-            }
+            _complexContent?.TextView.Invalidate();
 
             // To determine natural size of the text TextAlignment has to be ignored.
             // Since for rendering/hittesting lines are recreated, it can be done without
@@ -1382,10 +1379,7 @@ namespace System.Windows.Controls
             MS.Internal.PtsHost.TextPanelDebug.StartTimer("TextBlock.ArrangeOverride", MS.Internal.PtsHost.TextPanelDebug.Category.MeasureArrange);
 #endif
             // Remove all existing visuals. If there are inline objects, they will be added below.
-            if (_complexContent != null)
-            {
-                _complexContent.VisualChildren.Clear();
-            }
+            _complexContent?.VisualChildren.Clear();
 
             ArrayList inlineObjects = InlineObjects;
             int lineCount = LineCount;
@@ -1907,10 +1901,7 @@ Debug.Assert(lineCount == LineCount);
         /// </summary>
         internal void RemoveChild(Visual child)
         {
-            if (_complexContent != null)
-            {
-                _complexContent.VisualChildren.Remove(child);
-            }
+            _complexContent?.VisualChildren.Remove(child);
         }
 
         /// <summary>
@@ -2773,7 +2764,7 @@ Debug.Assert(lineCount == LineCount);
         //-------------------------------------------------------------------
         private ArrayList InlineObjects
         {
-            get { return (_complexContent == null) ? null : _complexContent.InlineObjects; }
+            get { return _complexContent?.InlineObjects; }
             set { if (_complexContent != null) _complexContent.InlineObjects = value; }
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -94,10 +94,7 @@ namespace System.Windows.Automation.Peers
                             if (_recentlyRealizedPeers != null && _recentlyRealizedPeers.Count > 0 && this.AncestorsInvalid)
                             {
                                 GroupItemAutomationPeer groupItemPeer = peer as GroupItemAutomationPeer;
-                                if (groupItemPeer != null)
-                                {
-                                    groupItemPeer.InvalidateGroupItemPeersContainingRecentlyRealizedPeers(_recentlyRealizedPeers);
-                                }
+                                groupItemPeer?.InvalidateGroupItemPeersContainingRecentlyRealizedPeers(_recentlyRealizedPeers);
                             }
                         }
                         else
@@ -213,10 +210,7 @@ namespace System.Windows.Automation.Peers
                 }
             }
 
-            if (peer != null)
-            {
-                peer.ReuseForItem(item);
-            }
+            peer?.ReuseForItem(item);
 
             return peer;
         }
@@ -380,10 +374,7 @@ namespace System.Windows.Automation.Peers
             {
                 peer = CreateItemAutomationPeer(item);
 
-                if (peer != null)
-                {
-                    peer.TrySetParentInfo(this);
-                }
+                peer?.TrySetParentInfo(this);
             }
 
             if (peer != null)
@@ -424,7 +415,7 @@ namespace System.Windows.Automation.Peers
             return _recyclableWrapperCache;
         }
 
-        // UpdateChildrenIntenal is called with ItemsInvalidateLimit to ensure we don�t fire unnecessary structure change events when items are just scrolled in/out of view in case of
+        // UpdateChildrenIntenal is called with ItemsInvalidateLimit to ensure we don’t fire unnecessary structure change events when items are just scrolled in/out of view in case of
         // virtualized controls.
         override internal IDisposable UpdateChildren()
         {
@@ -572,11 +563,9 @@ namespace System.Windows.Automation.Peers
             _usesHashCode = false;
             _count = 0;
 
-            if (_hashtable != null)
-                _hashtable.Clear();
+            _hashtable?.Clear();
 
-            if (_list != null)
-                _list.Clear();
+            _list?.Clear();
         }
 
         public T this[object item]

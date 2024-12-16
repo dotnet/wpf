@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -514,26 +514,17 @@ namespace System.Windows
             }
 
             // Seal setters
-            if (_setters != null)
-            {
-                _setters.Seal();
-            }
+            _setters?.Seal();
 
             // Seal triggers
-            if (_visualTriggers != null)
-            {
-                _visualTriggers.Seal();
-            }
+            _visualTriggers?.Seal();
 
             // Will throw InvalidOperationException if we find a loop of
             //  BasedOn references.  (A.BasedOn = B, B.BasedOn = C, C.BasedOn = A)
             CheckForCircularBasedOnReferences();
 
             // Seal BasedOn Style chain
-            if (_basedOn != null)
-            {
-                _basedOn.Seal();
-            }
+            _basedOn?.Seal();
 
             // Seal the ResourceDictionary
             if (_resources != null)

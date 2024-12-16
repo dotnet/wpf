@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -123,10 +123,7 @@ namespace System.Windows.Data
                         }
 
                         IDisposable d = e as IDisposable;
-                        if (d != null)
-                        {
-                            d.Dispose();
-                        }
+                        d?.Dispose();
                     },
                     false);
             }
@@ -1435,10 +1432,7 @@ namespace System.Windows.Data
         internal void InvalidateEnumerableWrapper()
         {
             IndexedEnumerable wrapper = (IndexedEnumerable) Interlocked.Exchange(ref _enumerableWrapper, null);
-            if (wrapper != null)
-            {
-                wrapper.Invalidate();
-            }
+            wrapper?.Invalidate();
         }
 
         internal ReadOnlyCollection<ItemPropertyInfo> GetItemProperties()
@@ -1576,10 +1570,7 @@ namespace System.Windows.Data
             }
 
             IDisposable d = ie as IDisposable;
-            if (d != null)
-            {
-                d.Dispose();
-            }
+            d?.Dispose();
 
             return result;
         }

@@ -136,10 +136,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     {
                         strByteLen += padLength;
 
-                        if (writer != null)
-                        {
-                            writer.Write(_paddingBuf, 0, padLength);
-                        }
+                        writer?.Write(_paddingBuf, 0, padLength);
                     }
                 }
 

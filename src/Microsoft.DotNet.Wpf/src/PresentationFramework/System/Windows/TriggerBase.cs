@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -248,14 +248,8 @@ namespace System.Windows
                 }
             }
 
-            if( _enterActions != null )
-            {
-                _enterActions.Seal(this);
-            }
-            if( _exitActions != null )
-            {
-                _exitActions.Seal(this);
-            }
+            _enterActions?.Seal(this);
+            _exitActions?.Seal(this);
 
             // Remove thread affinity so it can be accessed across threads
             DetachFromDispatcher();

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -617,10 +617,7 @@ namespace System.Windows.Controls
                         if (row != null)
                         {
                             var cellsPresenter = row.CellsPresenter;
-                            if (cellsPresenter != null)
-                            {
-                                cellsPresenter.InvalidateDataGridCellsPanelMeasureAndArrange();
-                            }
+                            cellsPresenter?.InvalidateDataGridCellsPanelMeasureAndArrange();
                         }
                     }
                 }
@@ -1160,10 +1157,7 @@ namespace System.Windows.Controls
             var row = (DataGridRow)arg;
             var dataGrid = row.DataGridOwner;
 
-            if (dataGrid != null)
-            {
-                dataGrid.OnLoadingRowDetailsWrapper(row);
-            }
+            dataGrid?.OnLoadingRowDetailsWrapper(row);
 
             return null;
         }
@@ -1347,10 +1341,7 @@ namespace System.Windows.Controls
             _itemAttachedStorage.ClearValue(item, DataGridRow.DetailsVisibilityProperty);
 
             var row = (DataGridRow)ItemContainerGenerator.ContainerFromItem(item);
-            if (row != null)
-            {
-                row.ClearValue(DataGridRow.DetailsVisibilityProperty);
-            }
+            row?.ClearValue(DataGridRow.DetailsVisibilityProperty);
         }
 
         internal DataGridItemAttachedStorage ItemAttachedStorage
@@ -2256,10 +2247,7 @@ namespace System.Windows.Controls
                         EditRowItem(cell.RowDataItem);
 
                         var bindingGroup = cell.RowOwner.BindingGroup;
-                        if (bindingGroup != null)
-                        {
-                            bindingGroup.BeginEdit();
-                        }
+                        bindingGroup?.BeginEdit();
 
                         _editingRowInfo = ItemInfoFromContainer(cell.RowOwner);
                     }
@@ -2449,10 +2437,7 @@ namespace System.Windows.Controls
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(this) as DataGridAutomationPeer;
-                if (peer != null)
-                {
-                    peer.RaiseAutomationRowInvokeEvents(e.Row);
-                }
+                peer?.RaiseAutomationRowInvokeEvents(e.Row);
             }
         }
 
@@ -2476,10 +2461,7 @@ namespace System.Windows.Controls
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(this) as DataGridAutomationPeer;
-                if (peer != null)
-                {
-                    peer.RaiseAutomationCellInvokeEvents(e.Column, e.Row);
-                }
+                peer?.RaiseAutomationCellInvokeEvents(e.Column, e.Row);
             }
         }
 
@@ -2546,10 +2528,7 @@ namespace System.Windows.Controls
                     if (cancelAllowed)
                     {
                         var bindingGroup = cell.RowOwner.BindingGroup;
-                        if (bindingGroup != null)
-                        {
-                            bindingGroup.CancelEdit();
-                        }
+                        bindingGroup?.CancelEdit();
 
                         CancelRowItem();
                     }
@@ -2948,17 +2927,14 @@ namespace System.Windows.Controls
 
                     if (oldCellContainer != cell)
                     {
-                        if (oldCellContainer != null)
-                        {
-                            oldCellContainer.NotifyCurrentCellContainerChanged();
-                        }
+                        oldCellContainer?.NotifyCurrentCellContainerChanged();
 
                         cell.NotifyCurrentCellContainerChanged();
                     }
                 }
-                else if (oldCellContainer != null)
+                else
                 {
-                    oldCellContainer.NotifyCurrentCellContainerChanged();
+                    oldCellContainer?.NotifyCurrentCellContainerChanged();
                 }
             }
 
@@ -3121,10 +3097,7 @@ namespace System.Windows.Controls
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(this) as DataGridAutomationPeer;
-                if (peer != null)
-                {
-                    peer.RaiseAutomationCellInvokeEvents(e.Column, e.Row);
-                }
+                peer?.RaiseAutomationCellInvokeEvents(e.Column, e.Row);
             }
         }
 
@@ -3806,10 +3779,7 @@ namespace System.Windows.Controls
 
             // Make sure the newItemPlaceholderRow reflects the correct visiblity
             DataGridRow newItemPlaceholderRow = (DataGridRow)ItemContainerGenerator.ContainerFromItem(CollectionView.NewItemPlaceholder);
-            if (newItemPlaceholderRow != null)
-            {
-                newItemPlaceholderRow.CoerceValue(VisibilityProperty);
-            }
+            newItemPlaceholderRow?.CoerceValue(VisibilityProperty);
         }
 
         private void SetCurrentItemToPlaceholder()
@@ -4308,10 +4278,7 @@ namespace System.Windows.Controls
                 AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection))
             {
                 DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(this) as DataGridAutomationPeer;
-                if (peer != null)
-                {
-                    peer.RaiseAutomationCellSelectedEvent(e);
-                }
+                peer?.RaiseAutomationCellSelectedEvent(e);
             }
         }
 
@@ -4561,10 +4528,7 @@ namespace System.Windows.Controls
                 AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection))
             {
                 DataGridAutomationPeer peer = DataGridAutomationPeer.FromElement(this) as DataGridAutomationPeer;
-                if (peer != null)
-                {
-                    peer.RaiseAutomationSelectionEvents(e);
-                }
+                peer?.RaiseAutomationSelectionEvents(e);
             }
 
             base.OnSelectionChanged(e);
@@ -4647,10 +4611,7 @@ namespace System.Windows.Controls
                         foreach (DataGridCellInfo cellInfo in cells)
                         {
                             DataGridCell cell = TryFindCell(cellInfo);
-                            if (cell != null)
-                            {
-                                cell.SyncIsSelected(isSelected);
-                            }
+                            cell?.SyncIsSelected(isSelected);
                         }
                     }
                 }
@@ -4959,10 +4920,7 @@ namespace System.Windows.Controls
                                 }
 
                                 IDisposable d = enumerator as IDisposable;
-                                if (d != null)
-                                {
-                                    d.Dispose();
-                                }
+                                d?.Dispose();
 
                                 _selectedCells.AddRegion(startIndex, 0, endIndex - startIndex + 1, _columns.Count);
                             }
@@ -6013,10 +5971,7 @@ namespace System.Windows.Controls
                             // When the new item jumped to the bottom, CurrentCell doesn't actually change,
                             // but there is a new container.
                             currentCellContainer = CurrentCellContainer;
-                            if (currentCellContainer != null)
-                            {
-                                currentCellContainer.Focus();
-                            }
+                            currentCellContainer?.Focus();
                         }
                     }
                 }
@@ -6231,9 +6186,9 @@ namespace System.Windows.Controls
                             }
                         }
                     }
-                    else if (targetElement != null)
+                    else
                     {
-                        targetElement.Focus();
+                        targetElement?.Focus();
                     }
                 }
             }
@@ -6890,10 +6845,7 @@ namespace System.Windows.Controls
                                 if (dataGridItemAutomationPeer != null)
                                 {
                                     DataGridCellItemAutomationPeer cellPeer = dataGridItemAutomationPeer.GetOrCreateCellItemPeer(column);
-                                    if (cellPeer != null)
-                                    {
-                                        cellPeer.RaisePropertyChangedEvent(ValuePatternIdentifiers.ValueProperty, _value, newValue);
-                                    }
+                                    cellPeer?.RaisePropertyChangedEvent(ValuePatternIdentifiers.ValueProperty, _value, newValue);
                                 }
                             }
                         }
@@ -7592,10 +7544,7 @@ namespace System.Windows.Controls
             Items.SortDescriptions.Clear();
             _sortingStarted = false;
             List<int> groupingSortDescriptionIndices = GroupingSortDescriptionIndices;
-            if (groupingSortDescriptionIndices != null)
-            {
-                groupingSortDescriptionIndices.Clear();
-            }
+            groupingSortDescriptionIndices?.Clear();
             foreach (DataGridColumn column in Columns)
             {
                 column.SortDirection = null;

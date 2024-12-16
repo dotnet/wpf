@@ -51,12 +51,12 @@ namespace System.Xaml.Schema
 
         public EventHandler<XamlSetMarkupExtensionEventArgs> SetMarkupExtensionHandler
         {
-            get { return _xamlType != null ? _xamlType.SetMarkupExtensionHandler : null; }
+            get { return _xamlType?.SetMarkupExtensionHandler; }
         }
 
         public EventHandler<XamlSetTypeConverterEventArgs> SetTypeConverterHandler
         {
-            get { return _xamlType != null ? _xamlType.SetTypeConverterHandler : null; }
+            get { return _xamlType?.SetTypeConverterHandler; }
         }
 
         public virtual void AddToCollection(object instance, object item)

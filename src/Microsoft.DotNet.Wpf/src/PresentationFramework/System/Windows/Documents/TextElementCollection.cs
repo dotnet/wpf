@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -720,7 +720,7 @@ namespace System.Windows.Documents
                 else
                 {
                     TextTreeTextElementNode node = this.TextContainer.FirstContainedNode as TextTreeTextElementNode;
-                    firstChild = (TextElementType)(node == null ? null : node.TextElement);
+                    firstChild = (TextElementType)(node?.TextElement);
                 }
 
                 return firstChild;
@@ -743,7 +743,7 @@ namespace System.Windows.Documents
                 else 
                 {
                     TextTreeTextElementNode node = this.TextContainer.LastContainedNode as TextTreeTextElementNode;
-                    lastChild = (TextElementType)(node == null ? null : node.TextElement);
+                    lastChild = (TextElementType)(node?.TextElement);
                 }
 
                 return lastChild;

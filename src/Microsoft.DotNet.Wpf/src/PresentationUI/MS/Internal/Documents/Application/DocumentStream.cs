@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -415,10 +415,7 @@ namespace MS.Internal.Documents.Application
 
         //----------------------------------------------------------------------
         // Release Existing Locks (so we open with write)
-        if (Target != null)
-        {
-            Target.Close();
-        }
+        Target?.Close();
 
         //----------------------------------------------------------------------
         // Open Writable (if it fails re-open for Read)

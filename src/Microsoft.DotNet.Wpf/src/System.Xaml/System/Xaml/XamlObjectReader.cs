@@ -101,7 +101,7 @@ namespace System.Xaml
             currentXamlNode = node.XamlNode;
 
             ObjectMarkupInfo objectNode = node as ObjectMarkupInfo;
-            currentInstance = objectNode != null ? objectNode.Object : null;
+            currentInstance = objectNode?.Object;
 
             var subNodes = node.Decompose();
 
@@ -2452,10 +2452,7 @@ namespace System.Xaml
             {
                 string result = null;
 
-                if (serviceProviderTable != null)
-                {
-                    serviceProviderTable.TryGetValue(value, out result);
-                }
+                serviceProviderTable?.TryGetValue(value, out result);
 
                 // this search is not recursive, because only names requested in the current
                 // namescope are meaningful references.
@@ -3195,7 +3192,7 @@ namespace System.Xaml
         {
             public static TConverter GetConverterInstance<TConverter>(XamlValueConverter<TConverter> converter) where TConverter : class
             {
-                return (converter == null) ? null : converter.ConverterInstance;
+                return converter?.ConverterInstance;
             }
         }
 

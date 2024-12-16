@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1039,10 +1039,7 @@ namespace MS.Internal.Documents
 
                 // WOOT! COLUMNS!
                 cellInfo = GetCellInfoFromPoint(subpageParagraphResult.Columns, subpageParagraphResult.FloatingElements, point, tableFilter);
-                if (cellInfo != null)
-                {
-                    cellInfo.Adjust(new Point(subpageParagraphResult.ContentOffset.X, subpageParagraphResult.ContentOffset.Y));
-                }
+                cellInfo?.Adjust(new Point(subpageParagraphResult.ContentOffset.X, subpageParagraphResult.ContentOffset.Y));
             }
             else if (paragraph is FigureParagraphResult)
             {
@@ -1050,10 +1047,7 @@ namespace MS.Internal.Documents
                 FigureParagraphResult figureParagraphResult = (FigureParagraphResult)paragraph;
                 TransformToSubpage(ref point, figureParagraphResult.ContentOffset);
                 cellInfo = GetCellInfoFromPoint(figureParagraphResult.Columns, figureParagraphResult.FloatingElements, point, tableFilter);
-                if (cellInfo != null)
-                {
-                    cellInfo.Adjust(new Point(figureParagraphResult.ContentOffset.X, figureParagraphResult.ContentOffset.Y));
-                }
+                cellInfo?.Adjust(new Point(figureParagraphResult.ContentOffset.X, figureParagraphResult.ContentOffset.Y));
             }
             else if (paragraph is FloaterParagraphResult)
             {
@@ -1061,10 +1055,7 @@ namespace MS.Internal.Documents
                 FloaterParagraphResult floaterParagraphResult = (FloaterParagraphResult)paragraph;
                 TransformToSubpage(ref point, floaterParagraphResult.ContentOffset);
                 cellInfo = GetCellInfoFromPoint(floaterParagraphResult.Columns, floaterParagraphResult.FloatingElements, point, tableFilter);
-                if (cellInfo != null)
-                {
-                    cellInfo.Adjust(new Point(floaterParagraphResult.ContentOffset.X, floaterParagraphResult.ContentOffset.Y));
-                }
+                cellInfo?.Adjust(new Point(floaterParagraphResult.ContentOffset.X, floaterParagraphResult.ContentOffset.Y));
             }
 
             if (tableFilter != null && cellInfo != null && cellInfo.Cell.Table != tableFilter)

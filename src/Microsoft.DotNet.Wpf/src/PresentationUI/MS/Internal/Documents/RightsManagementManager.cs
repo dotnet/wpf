@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -262,10 +262,7 @@ namespace MS.Internal.Documents
             _credManagerDialog = new CredentialManagerDialog(accountList, userAccount, this);
             result = _credManagerDialog.ShowDialog();
 
-            if (_credManagerDialog != null)
-            {
-                _credManagerDialog.Dispose();
-            }
+            _credManagerDialog?.Dispose();
 
             RightsManagementUser newDefaultUser = _rmProvider.GetDefaultCredentials();
 
@@ -403,10 +400,7 @@ namespace MS.Internal.Documents
                 RMPermissionsDialog rmPermissionsPage = new RMPermissionsDialog(rmLicense);
                 rmPermissionsPage.ShowDialog();
 
-                if (rmPermissionsPage != null)
-                {
-                    rmPermissionsPage.Dispose();
-                }
+                rmPermissionsPage?.Dispose();
             }
         }
 
@@ -544,10 +538,7 @@ namespace MS.Internal.Documents
             }
             finally
             {
-                if (rmPublish != null)
-                {
-                    rmPublish.Dispose();
-                }
+                rmPublish?.Dispose();
             }
 
             // If the status changed, call Evaluate to re-evaluate the RM
@@ -588,13 +579,10 @@ namespace MS.Internal.Documents
                 {
                     _rmProvider.RemoveCredentials(user);
 
-                    if (_credManagerDialog != null)
-                    {
-                        //Set the data source for the listbox
-                        _credManagerDialog.SetCredentialManagementList(
-                            GetCredentialManagementResourceList(),
-                            GetDefaultCredentialManagementResource());
-                    }
+                    //Set the data source for the listbox
+                    _credManagerDialog?.SetCredentialManagementList(
+                        GetCredentialManagementResourceList(),
+                        GetDefaultCredentialManagementResource());
                 }
                 catch (RightsManagementException exception)
                 {
@@ -624,13 +612,10 @@ namespace MS.Internal.Documents
         {
             ShowEnrollment();
 
-            if (_credManagerDialog != null)
-            {
-                //Set the data source for the listbox
-                _credManagerDialog.SetCredentialManagementList(
-                    GetCredentialManagementResourceList(),
-                    GetDefaultCredentialManagementResource());
-            }
+            //Set the data source for the listbox
+            _credManagerDialog?.SetCredentialManagementList(
+                GetCredentialManagementResourceList(),
+                GetDefaultCredentialManagementResource());
         }
 
         /// <summary>

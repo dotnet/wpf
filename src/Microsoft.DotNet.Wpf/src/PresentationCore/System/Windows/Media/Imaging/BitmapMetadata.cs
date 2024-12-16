@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -309,10 +309,7 @@ namespace System.Windows.Media.Imaging
                             }
                             finally
                             {
-                                if (pIMetadataReader != null)
-                                {
-                                    pIMetadataReader.Dispose();
-                                }
+                                pIMetadataReader?.Dispose();
                                 if (pIMetadataWriter != IntPtr.Zero)
                                 {
                                     #pragma warning suppress 6031 // Return value ignored on purpose.
@@ -1117,10 +1114,7 @@ namespace System.Windows.Media.Imaging
                     {
                         BitmapMetadata metadata = objValue as BitmapMetadata;
 
-                        if (metadata != null)
-                        {
-                            metadata.Freeze();
-                        }
+                        metadata?.Freeze();
                     }
 
                     return objValue;

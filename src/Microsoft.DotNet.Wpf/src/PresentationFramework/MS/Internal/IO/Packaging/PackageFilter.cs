@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -556,7 +556,7 @@ namespace MS.Internal.IO.Packaging
 
             // Get the string in value Extension of key \HKEY_CLASSES_ROOT\MIME\Database\Content Type\<MIME type>.
             RegistryKey mimeContentType = FindSubkey(Registry.ClassesRoot, _mimeContentTypeKey);
-            RegistryKey mimeTypeKey = (mimeContentType == null ? null : mimeContentType.OpenSubKey(contentType.ToString()));
+            RegistryKey mimeTypeKey = (mimeContentType?.OpenSubKey(contentType.ToString()));
             if (mimeTypeKey == null)
             {
                 return null;

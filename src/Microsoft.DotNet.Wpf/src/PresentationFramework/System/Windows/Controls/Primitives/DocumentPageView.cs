@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -354,7 +354,7 @@ namespace System.Windows.Controls.Primitives
                 }
                 Invariant.Assert(_pageHost != null);
 
-                pageVisual = (_documentPage == null) ? null : _documentPage.Visual;
+                pageVisual = _documentPage?.Visual;
                 if (pageVisual == null)
                 {
                     // Remove existing visiual children.
@@ -784,10 +784,7 @@ namespace System.Windows.Controls.Primitives
         private void OnPageConnected()
         {
             _newPageConnected = false;
-            if (_textView != null)
-            {
-                _textView.OnPageConnected();
-            }
+            _textView?.OnPageConnected();
             if (this.PageConnected != null && _documentPage != null)
             {
                 this.PageConnected(this, EventArgs.Empty);
@@ -799,10 +796,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         private void OnPageDisconnected()
         {
-            if (_textView != null)
-            {
-                _textView.OnPageDisconnected();
-            }
+            _textView?.OnPageDisconnected();
             if (this.PageDisconnected != null)
             {
                 this.PageDisconnected(this, EventArgs.Empty);

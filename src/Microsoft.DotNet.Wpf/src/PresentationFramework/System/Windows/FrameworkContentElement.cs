@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -282,11 +282,8 @@ namespace System.Windows
                 ResourceDictionary oldValue = ResourcesField.GetValue(this);
                 ResourcesField.SetValue(this, value);
 
-                if (oldValue != null)
-                {
-                    // This element is no longer an owner for the old RD
-                    oldValue.RemoveOwner(this);
-                }
+                // This element is no longer an owner for the old RD
+                oldValue?.RemoveOwner(this);
 
                 if (value != null)
                 {
@@ -2003,15 +2000,12 @@ namespace System.Windows
                 while(enumerator.MoveNext())
                 {
                     DependencyObject child =enumerator.Current as DependencyObject;
-                    if(child != null)
-                    {
-                        // CODE REVIEW (dwaynen)
-                        //
-                        // We assume we will only ever have a UIElement or a ContentElement
-                        // as a child of a FrameworkContentElement.  (Not a raw Visual.)
+                    // CODE REVIEW (dwaynen)
+                    //
+                    // We assume we will only ever have a UIElement or a ContentElement
+                    // as a child of a FrameworkContentElement.  (Not a raw Visual.)
 
-                        child.CoerceValue(property);
-                    }
+                    child?.CoerceValue(property);
                 }
             }
         }
@@ -2039,10 +2033,7 @@ namespace System.Windows
         private void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
-            {
-                store.Remove(key, handler);
-            }
+            store?.Remove(key, handler);
         }
 
         // Gettor and Settor for flag that indicates

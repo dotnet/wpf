@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -898,10 +898,7 @@ namespace System.Windows.Controls
             PasswordBox passwordBox = (PasswordBox)d;
 
             // Force a layout refresh to display the new char.
-            if (passwordBox._renderScope != null)
-            {
-                passwordBox._renderScope.InvalidateMeasure();
-            }
+            passwordBox._renderScope?.InvalidateMeasure();
         }
 
         /// <summary>
@@ -1054,10 +1051,7 @@ namespace System.Windows.Controls
         {
             Select(0, 0);
 
-            if (this.ScrollViewer != null)
-            {
-                this.ScrollViewer.ScrollToHome();
-            }
+            this.ScrollViewer?.ScrollToHome();
         }
 
         /// <summary>
@@ -1177,10 +1171,7 @@ namespace System.Windows.Controls
         /// </summary>
         private void DetachFromVisualTree()
         {
-            if (_textEditor != null)
-            {
-                _textEditor.Selection.DetachFromVisualTree();
-            }
+            _textEditor?.Selection.DetachFromVisualTree();
 
             // Invalidate our cached copy of scroll viewer.
             _scrollViewer = null;

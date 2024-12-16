@@ -481,10 +481,7 @@ namespace System.Xaml.Schema
                 {
                     if (knownMember != null)
                     {
-                        if (knownMembers != null)
-                        {
-                            knownMembers.Add(knownMember);
-                        }
+                        knownMembers?.Add(knownMember);
                         continue;
                     }
                     else if (skipKnownNegatives)

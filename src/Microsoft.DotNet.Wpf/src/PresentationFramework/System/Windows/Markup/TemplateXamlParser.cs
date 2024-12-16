@@ -599,10 +599,7 @@ namespace System.Windows.Markup
         {
             if (xamlDefAttributeNode.Name == BamlMapTable.NameString)
             {
-                if (BamlRecordWriter != null)
-                {
-                    BamlRecordWriter.WriteDefAttribute(xamlDefAttributeNode);
-                }
+                BamlRecordWriter?.WriteDefAttribute(xamlDefAttributeNode);
             }
             else
             {

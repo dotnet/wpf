@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -383,10 +383,7 @@ namespace System.Windows.Controls
                 hideGripperRightHalf = DoubleUtil.LessThan(ActualWidth, _headerGripper.Width);
             }
 
-            if (_previousHeader != null)
-            {
-                _previousHeader.HideGripperRightHalf(hideGripperRightHalf);
-            }
+            _previousHeader?.HideGripperRightHalf(hideGripperRightHalf);
 
             UpdateGripperCursor();
         }
@@ -571,10 +568,7 @@ namespace System.Windows.Controls
                         header.SetFlag(flag, false);
 
                         GridViewHeaderRowPresenter headerRowPresenter = header.Parent as GridViewHeaderRowPresenter;
-                        if (headerRowPresenter != null)
-                        {
-                            headerRowPresenter.UpdateHeaderProperty(header, e.Property);
-                        }
+                        headerRowPresenter?.UpdateHeaderProperty(header, e.Property);
                     }
                 }
             }
@@ -653,10 +647,7 @@ namespace System.Windows.Controls
         private void MakeParentGotFocus()
         {
             GridViewHeaderRowPresenter headerRP = this.Parent as GridViewHeaderRowPresenter;
-            if (headerRP != null)
-            {
-                headerRP.MakeParentItemsControlGotFocus();
-            }
+            headerRP?.MakeParentItemsControlGotFocus();
         }
 
         // Resize the header
@@ -809,8 +800,7 @@ namespace System.Windows.Controls
             if (AutomationPeer.ListenerExists(AutomationEvents.InvokePatternOnInvoked))
             {
                 AutomationPeer peer = UIElementAutomationPeer.CreatePeerForElement(this);
-                if (peer != null)
-                    peer.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
+                peer?.RaiseAutomationEvent(AutomationEvents.InvokePatternOnInvoked);
             }
 
             base.OnClick();

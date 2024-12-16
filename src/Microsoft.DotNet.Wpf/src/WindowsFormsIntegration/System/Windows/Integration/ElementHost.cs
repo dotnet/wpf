@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -439,10 +439,7 @@ namespace System.Windows.Forms.Integration
             }
             else
             {
-                if (Child != null)
-                {
-                    Child.Focus();
-                }
+                Child?.Focus();
             }
 
             base.Select(directed, forward);
@@ -849,10 +846,7 @@ namespace System.Windows.Forms.Integration
                         SWI.InputManager.Current.PostProcessInput -= InputManager_PostProcessInput;
 
                         IDisposable disposableChild = Child as IDisposable;
-                        if (disposableChild != null)
-                        {
-                            disposableChild.Dispose();
-                        }
+                        disposableChild?.Dispose();
                     }
                 }
             }
@@ -1027,10 +1021,7 @@ namespace System.Windows.Forms.Integration
         /// <param name="value">the new value of the property</param>
         public virtual void OnPropertyChanged(string propertyName, object value)
         {
-            if (PropertyMap != null)
-            {
-                PropertyMap.OnPropertyChanged(this, propertyName, value);
-            }
+            PropertyMap?.OnPropertyChanged(this, propertyName, value);
         }
 
         /// <summary>

@@ -130,10 +130,7 @@ namespace MS.Internal.Security.RightsManagement
                                 // Dispose call back handler 
                                 try
                                 {
-                                    if (_callbackHandler != null)
-                                    {
-                                        _callbackHandler.Dispose();
-                                    }
+                                    _callbackHandler?.Dispose();
                                 }
                                 finally
                                 {

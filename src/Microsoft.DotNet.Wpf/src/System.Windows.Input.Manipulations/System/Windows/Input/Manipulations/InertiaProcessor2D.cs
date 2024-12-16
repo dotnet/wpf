@@ -984,18 +984,9 @@ namespace System.Windows.Input.Manipulations
             {
                 case ProcessorState.NotInitialized:
                     // Check our various inertia behaviors to make sure they're in valid states
-                    if (this.translationBehavior != null)
-                    {
-                        this.translationBehavior.CheckValid();
-                    }
-                    if (this.expansionBehavior != null)
-                    {
-                        this.expansionBehavior.CheckValid();
-                    }
-                    if (this.rotationBehavior != null)
-                    {
-                        this.rotationBehavior.CheckValid();
-                    }
+                    this.translationBehavior?.CheckValid();
+                    this.expansionBehavior?.CheckValid();
+                    this.rotationBehavior?.CheckValid();
 
                     // verify if initialTimestamp is initialized and set it to the current timestamp if not
                     if (this.previousTimestamp != this.initialTimestamp)

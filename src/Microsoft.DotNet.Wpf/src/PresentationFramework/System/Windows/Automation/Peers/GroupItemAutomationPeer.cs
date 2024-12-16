@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -172,10 +172,7 @@ namespace System.Windows.Automation.Peers
                                     if (itemsControlAP.RecentlyRealizedPeers.Count > 0 && this.AncestorsInvalid)
                                     {
                                         GroupItemAutomationPeer groupItemPeer = peer as GroupItemAutomationPeer;
-                                        if (groupItemPeer != null)
-                                        {
-                                            groupItemPeer.InvalidateGroupItemPeersContainingRecentlyRealizedPeers(itemsControlAP.RecentlyRealizedPeers);
-                                        }
+                                        groupItemPeer?.InvalidateGroupItemPeersContainingRecentlyRealizedPeers(itemsControlAP.RecentlyRealizedPeers);
                                     }
                                 }
                                 else

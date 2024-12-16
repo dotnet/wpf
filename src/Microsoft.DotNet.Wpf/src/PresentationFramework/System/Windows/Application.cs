@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -913,13 +913,10 @@ namespace System.Windows
                     _resources = value;
                 }
 
-                if (oldValue != null)
-                {
-                    // This app is no longer an owner for the old RD
-                    oldValue.RemoveOwner(this);
-                }
+                // This app is no longer an owner for the old RD
+                oldValue?.RemoveOwner(this);
 
-                if(_reloadFluentDictionary && !_resourcesInitialized)
+                if (_reloadFluentDictionary && !_resourcesInitialized)
                 {
                     if(value != null && ThemeMode != ThemeMode.None)
                     {
@@ -1656,15 +1653,9 @@ namespace System.Windows
                 // this will always be null in the browser hosted case since we we don't
                 // support Activate, Deactivate, and SessionEnding events in the
                 // browser scenario and thus we never create this hwndsource.
-                if (_parkingHwnd != null)
-                {
-                    _parkingHwnd.Dispose();
-                }
+                _parkingHwnd?.Dispose();
 
-                if (_events != null)
-                {
-                    _events.Dispose();
-                }
+                _events?.Dispose();
 
                 PreloadedPackages.Clear();
                 AppSecurityManager.ClearSecurityManager();

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -712,13 +712,10 @@ namespace System.Windows
                 }
 
 
-                if (oldValue != null)
-                {
-                    // This element is no longer an owner for the old RD
-                    oldValue.RemoveOwner(this);
-                }
+                // This element is no longer an owner for the old RD
+                oldValue?.RemoveOwner(this);
 
-                if(this is Window window)
+                if (this is Window window)
                 {
                     window.AddFluentDictionary(value, out invalidateResources);
                 }
@@ -3085,10 +3082,7 @@ namespace System.Windows
                     while (enumerator.MoveNext())
                     {
                         DependencyObject child = enumerator.Current as DependencyObject;
-                        if (child != null)
-                        {
-                            child.CoerceValue(property);
-                        }
+                        child?.CoerceValue(property);
                     }
                 }
             }
@@ -5143,7 +5137,7 @@ namespace System.Windows
             FrameworkElement fe = element as FrameworkElement;
             element.InternalSetOffsetWorkaround(new Vector());
 
-            Transform additionalTransform = (fe == null ? null : fe.GetFlowDirectionTransform()); //rtl
+            Transform additionalTransform = (fe?.GetFlowDirectionTransform()); //rtl
 
             Transform renderTransform = element.RenderTransform;
             if(renderTransform == Transform.Identity)
@@ -5797,10 +5791,7 @@ namespace System.Windows
         internal override void AddSynchronizedInputPreOpportunityHandlerCore(EventRoute route, RoutedEventArgs args)
         {
             UIElement uiElement = this._templatedParent as UIElement;
-            if (uiElement != null)
-            {
-                uiElement.AddSynchronizedInputPreOpportunityHandler(route, args);
-            }
+            uiElement?.AddSynchronizedInputPreOpportunityHandler(route, args);
 
         }
 
@@ -6097,9 +6088,9 @@ namespace System.Windows
                         AddStyleHandlersToEventRoute(null, fce, route, args);
                     }
                 }
-                else if (uiElement3D != null)
+                else
                 {
-                    uiElement3D.AddToEventRoute(route, args);
+                    uiElement3D?.AddToEventRoute(route, args);
                 }
 
                 // Get model parent
@@ -6132,10 +6123,7 @@ namespace System.Windows
         internal void EventHandlersStoreRemove(EventPrivateKey key, Delegate handler)
         {
             EventHandlersStore store = EventHandlersStore;
-            if (store != null)
-            {
-                store.Remove(key, handler);
-            }
+            store?.Remove(key, handler);
         }
 
         // Gettor and Settor for flag that indicates if this

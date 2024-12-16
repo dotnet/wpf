@@ -143,7 +143,7 @@ namespace System.Xaml
         public XamlDuplicateMemberException() { }
 
         public XamlDuplicateMemberException(XamlMember member, XamlType type)
-            : base(SR.Format(SR.DuplicateMemberSet, (member != null) ? member.Name : null, (type != null) ? type.Name : null))
+            : base(SR.Format(SR.DuplicateMemberSet, member?.Name, type?.Name))
         {
             DuplicateMember = member;
             ParentType = type;

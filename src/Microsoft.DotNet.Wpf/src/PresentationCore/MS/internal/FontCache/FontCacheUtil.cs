@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -798,10 +798,8 @@ namespace MS.Internal.FontCache
             {
                 if (disposing)
                 {
-                    if (_viewHandle != null)
-                        _viewHandle.Dispose();
-                    if (_mappingHandle != null)
-                        _mappingHandle.Dispose();
+                    _viewHandle?.Dispose();
+                    _mappingHandle?.Dispose();
                 }
 
                 // We only handle flat disk files read only, should never be writeable.

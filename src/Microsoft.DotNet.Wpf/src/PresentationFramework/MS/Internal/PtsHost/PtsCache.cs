@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -331,10 +331,7 @@ namespace MS.Internal.PtsHost
                     PTS.IgnoreError(PTS.DestroyInstalledObjectsInfo(_contextPool[index].InstalledObjects));
                     // Explicitly dispose the penalty module object to ensure proper destruction
                     // order of PTSContext  and the penalty module (PTS context must be destroyed first).
-                    if (_contextPool[index].TextPenaltyModule != null)
-                    {
-                        _contextPool[index].TextPenaltyModule.Dispose();
-                    }
+                    _contextPool[index].TextPenaltyModule?.Dispose();
 
                     _contextPool.RemoveAt(index);
                 }
@@ -406,10 +403,7 @@ namespace MS.Internal.PtsHost
                         PTS.Validate(PTS.DestroyInstalledObjectsInfo(_contextPool[index].InstalledObjects));
                         // Explicitly dispose the penalty module object to ensure proper destruction
                         // order of PTSContext  and the penalty module (PTS context must be destroyed first).
-                        if (_contextPool[index].TextPenaltyModule != null)
-                        {
-                            _contextPool[index].TextPenaltyModule.Dispose();
-                        }
+                        _contextPool[index].TextPenaltyModule?.Dispose();
                         _contextPool.RemoveAt(index);
                         continue;
                     }

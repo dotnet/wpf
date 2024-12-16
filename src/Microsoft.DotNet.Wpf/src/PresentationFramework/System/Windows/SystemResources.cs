@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -310,11 +310,8 @@ namespace System.Windows
             else
             {
                 DispatcherObject dispatcherObject = resource as DispatcherObject;
-                if (dispatcherObject != null)
-                {
-                    // The current thread may not have access to this object.
-                    dispatcherObject.VerifyAccess();
-                }
+                // The current thread may not have access to this object.
+                dispatcherObject?.VerifyAccess();
             }
 
             if (found && mustReturnDeferredResourceReference)
@@ -1801,7 +1798,7 @@ namespace System.Windows
             }
             else
             {
-                return _keyOrValue != null ? _keyOrValue.GetType() : null;
+                return _keyOrValue?.GetType();
             }
         }
 
@@ -1835,10 +1832,7 @@ namespace System.Windows
         {
             Debug.Assert(_inflatedList != null);
 
-            if (_inflatedList != null)
-            {
-                _inflatedList.Remove(listener);
-            }
+            _inflatedList?.Remove(listener);
         }
 
         #endregion Methods
@@ -2021,7 +2015,7 @@ namespace System.Windows
         internal override Type GetValueType()
         {
             object value = Value;
-            return value != null ? value.GetType() : null;
+            return value?.GetType();
         }
 
         #endregion Methods

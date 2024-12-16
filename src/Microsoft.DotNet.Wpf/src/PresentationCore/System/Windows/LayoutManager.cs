@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -561,8 +561,7 @@ namespace System.Windows
         private static object UpdateLayoutCallback(object arg)
         {
             ContextLayoutManager ContextLayoutManager = arg as ContextLayoutManager;
-            if(ContextLayoutManager != null)
-                ContextLayoutManager.UpdateLayout();
+            ContextLayoutManager?.UpdateLayout();
             return null;
         }
 
@@ -999,8 +998,7 @@ namespace System.Windows
                     }
                     catch(System.OutOfMemoryException)
                     {
-                        if(lm != null)
-                            lm.setForceLayout(e);
+                        lm?.setForceLayout(e);
                         throw;
                     }
                 }

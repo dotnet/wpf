@@ -439,10 +439,7 @@ namespace MS.Internal.Xaml.Runtime
             try
             {
                 XAML3.IComponentConnector connector = root as XAML3.IComponentConnector;
-                if(connector != null)
-                {
-                    connector.Connect(connectionId, instance);
-                }
+                connector?.Connect(connectionId, instance);
             }
             catch(Exception e)
             {

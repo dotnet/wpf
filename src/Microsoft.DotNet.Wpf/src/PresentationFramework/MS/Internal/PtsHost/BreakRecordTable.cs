@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -413,10 +413,7 @@ namespace MS.Internal.PtsHost
                 {
                     ((FlowDocumentPage)pageRef.Target).Dispose();
                 }
-                if (_breakRecords[index].BreakRecord != null)
-                {
-                    _breakRecords[index].BreakRecord.Dispose();
-                }
+                _breakRecords[index].BreakRecord?.Dispose();
                 // Remov the entry.
                 _breakRecords.RemoveAt(index);
                 index--;

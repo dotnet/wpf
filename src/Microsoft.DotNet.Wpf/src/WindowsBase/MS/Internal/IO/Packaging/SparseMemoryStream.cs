@@ -404,11 +404,8 @@ namespace MS.Internal.IO.Packaging
                         }
 
                         // clean up isolated storage resources if in use
-                        if (_isolatedStorageStream != null)
-                        {
-                            // can only rely on _isolatedStorageStream behaving correctly if we are not in our finalizer
-                            _isolatedStorageStream.Close();
-                        }
+                        // can only rely on _isolatedStorageStream behaving correctly if we are not in our finalizer
+                        _isolatedStorageStream?.Close();
                     }
                 }
             }

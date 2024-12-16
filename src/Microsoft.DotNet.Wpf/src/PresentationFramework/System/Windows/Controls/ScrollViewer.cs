@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1454,10 +1454,7 @@ namespace System.Windows.Controls
         private static void OnPanningModeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             ScrollViewer sv = d as ScrollViewer;
-            if (sv != null)
-            {
-                sv.OnPanningModeChanged();
-            }
+            sv?.OnPanningModeChanged();
         }
 
         /// <summary>
@@ -2412,15 +2409,12 @@ namespace System.Windows.Controls
 
                     // Fire automation events if automation is active.
                     ScrollViewerAutomationPeer peer = UIElementAutomationPeer.FromElement(this) as ScrollViewerAutomationPeer;
-                    if(peer != null)
-                    {
-                        peer.RaiseAutomationEvents(oldExtentWidth,
+                    peer?.RaiseAutomationEvents(oldExtentWidth,
                                                    oldExtentHeight,
                                                    oldViewportWidth,
                                                    oldViewportHeight,
                                                    oldActualHorizontalOffset,
                                                    oldActualVerticalOffset);
-                    }
                 }
                 finally
                 {

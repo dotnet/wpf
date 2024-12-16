@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1049,10 +1049,7 @@ namespace System.Windows.Controls
                     AutomationPeer.ListenerExists(AutomationEvents.SelectionItemPatternOnElementRemovedFromSelection))
                 {
                     CalendarAutomationPeer peer = FrameworkElementAutomationPeer.FromElement(this) as CalendarAutomationPeer;
-                    if (peer != null)
-                    {
-                        peer.RaiseSelectionEvents(e);
-                    }
+                    peer?.RaiseSelectionEvents(e);
                 }
 
                 CoerceFromSelection();
@@ -1212,10 +1209,7 @@ namespace System.Windows.Controls
 
         internal void FocusDate(DateTime date)
         {
-            if (MonthControl != null)
-            {
-                MonthControl.FocusDate(date);
-            }
+            MonthControl?.FocusDate(date);
         }
 
         
@@ -1250,7 +1244,7 @@ namespace System.Windows.Controls
             {
                 // If a blackout day is inactive, when clicked on it, the previous inactive day which is not a blackout day can get the focus.
                 // In this case we should allow keyboard functions on that inactive day
-                CalendarDayButton currentDayButton = (MonthControl != null) ? MonthControl.GetCalendarDayButton(this.CurrentDate) : null;
+                CalendarDayButton currentDayButton = MonthControl?.GetCalendarDayButton(this.CurrentDate);
 
                 if (DateTimeHelper.CompareYearMonth(this.CurrentDate, this.DisplayDateInternal) != 0 && currentDayButton != null && !currentDayButton.IsInactive)
                 {

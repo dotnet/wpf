@@ -408,7 +408,7 @@ namespace System.Xaml.MS.Impl
             {
                 RootNamespaceAttribute rootNs = (RootNamespaceAttribute)
                     Attribute.GetCustomAttribute(assembly, typeof(RootNamespaceAttribute));
-                return (rootNs == null) ? null : rootNs.Namespace;
+                return rootNs?.Namespace;
             }
         }
 

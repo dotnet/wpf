@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -575,11 +575,8 @@ namespace System.Windows.Controls
                 if (tooltip.IsOpen)
                 {
                     IInputElement element = owner as IInputElement;
-                    if (element != null)
-                    {
-                        // ** Public callout - re-entrancy is possible **//
-                        element.RaiseEvent(new ToolTipEventArgs(opening:false));
-                    }
+                    // ** Public callout - re-entrancy is possible **//
+                    element?.RaiseEvent(new ToolTipEventArgs(opening: false));
                 }
             }
             finally

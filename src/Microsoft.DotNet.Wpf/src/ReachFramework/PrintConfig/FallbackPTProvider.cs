@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -350,10 +350,7 @@ namespace MS.Internal.Printing.Configuration
 
         public override void Release()
         {
-            if (_deviceHandle != null)
-            {
-                _deviceHandle.Dispose();
-            }
+            _deviceHandle?.Dispose();
 
             this._deviceHandle = null;
             this._deviceName = null;

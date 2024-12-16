@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -577,10 +577,7 @@ namespace System.Windows.Xps.Serialization
             if( subsetComplete && refCnt == 0 )
             {
                 XpsPackagingPolicy xpsPackagingPolicy = _packagingPolicy as  XpsPackagingPolicy;
-                if(xpsPackagingPolicy != null )
-                {
-                    xpsPackagingPolicy.InterleavingPolicy.SignalSubsetComplete();
-                }
+                xpsPackagingPolicy?.InterleavingPolicy.SignalSubsetComplete();
             }
 
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXReleaseWriterEnd);
@@ -839,10 +836,7 @@ namespace System.Windows.Xps.Serialization
             string relationshipName
             )
         {
-            if (_packagingPolicy != null)
-            {
-                _packagingPolicy.RelateResourceToCurrentPage(targetUri, relationshipName);
-            }
+            _packagingPolicy?.RelateResourceToCurrentPage(targetUri, relationshipName);
         }
 
         internal

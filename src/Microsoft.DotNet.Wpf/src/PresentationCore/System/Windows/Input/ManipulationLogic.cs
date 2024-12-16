@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -505,10 +505,7 @@ namespace System.Windows.Input
 
         internal void SetManipulationParameters(ManipulationParameters2D parameter)
         {
-            if (_manipulationProcessor != null)
-            {
-                _manipulationProcessor.SetParameters(parameter);
-            }
+            _manipulationProcessor?.SetParameters(parameter);
         }
 
         private void UpdateManipulators(ICollection<IManipulator> updatedManipulators)

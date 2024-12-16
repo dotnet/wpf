@@ -353,8 +353,7 @@ namespace System.IO.Packaging
             {
                 if (disposing)
                 {
-                    if (_baseStream != null)
-                        _baseStream.Close();
+                    _baseStream?.Close();
                 }
             }
             finally

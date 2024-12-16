@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -431,36 +431,21 @@ namespace System.Windows
             }
             
             // Always set the SourceProperty on the new root.
-            if (newRoot != null)
-            {
-                newRoot.SetValue(RootSourceProperty, this);
-            }
+            newRoot?.SetValue(RootSourceProperty, this);
 
             UIElement oldRootUIElement = oldRoot as UIElement;
             UIElement newRootUIElement = newRoot as UIElement;
 
             // The IsVisible property can only be true if root visual is connected to a presentation source.
             // For Read-Only force-inherited properties, use a private update method.
-            if(oldRootUIElement != null)
-            {
-                oldRootUIElement.UpdateIsVisibleCache();
-            }
-            if(newRootUIElement != null)
-            {
-                newRootUIElement.UpdateIsVisibleCache();
-            }
+            oldRootUIElement?.UpdateIsVisibleCache();
+            newRootUIElement?.UpdateIsVisibleCache();
 
             // Broadcast the Unloaded event starting at the old root visual
-            if (oldRootUIElement != null)
-            {
-                oldRootUIElement.OnPresentationSourceChanged(false);
-            }
+            oldRootUIElement?.OnPresentationSourceChanged(false);
 
             // Broadcast the Loaded event starting at the root visual
-            if (newRootUIElement != null)
-            {
-                newRootUIElement.OnPresentationSourceChanged(true);
-            }
+            newRootUIElement?.OnPresentationSourceChanged(true);
 
             // To fire PresentationSourceChanged when the RootVisual changes;
             // rather than simulate a "parent" pointer change, we just walk the

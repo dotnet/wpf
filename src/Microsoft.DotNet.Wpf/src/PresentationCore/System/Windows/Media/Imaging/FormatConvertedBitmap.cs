@@ -1,10 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using MS.Internal;
 using MS.Win32.PresentationCore;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media.Imaging
 {
@@ -96,9 +97,9 @@ namespace System.Windows.Media.Imaging
                 {
                     IntPtr wicFactory = factoryMaker.ImagingFactoryPtr;
 
-                    HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateFormatConverter(
-                            wicFactory,
-                            out wicFormatter));
+                    UnsafeNativeMethods.WICImagingFactory.CreateFormatConverter(
+                        wicFactory,
+                        out wicFormatter).ThrowOnFailureExtended();
 
                     SafeMILHandle internalPalette;
                     if (DestinationPalette != null)
@@ -110,15 +111,14 @@ namespace System.Windows.Media.Imaging
 
                     lock (_syncObject)
                     {
-                        HRESULT.Check(UnsafeNativeMethods.WICFormatConverter.Initialize(
-                                wicFormatter,
-                                Source.WicSourceHandle,
-                                ref format,
-                                DitherType.DitherTypeErrorDiffusion,
-                                internalPalette,
-                                AlphaThreshold,
-                                WICPaletteType.WICPaletteTypeOptimal
-                                ));
+                        UnsafeNativeMethods.WICFormatConverter.Initialize(
+                            wicFormatter,
+                            Source.WicSourceHandle,
+                            ref format,
+                            DitherType.DitherTypeErrorDiffusion,
+                            internalPalette,
+                            AlphaThreshold,
+                            WICPaletteType.WICPaletteTypeOptimal).ThrowOnFailureExtended();
                     }
 
                     //

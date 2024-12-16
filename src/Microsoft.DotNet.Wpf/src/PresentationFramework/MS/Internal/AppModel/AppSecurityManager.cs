@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,6 +19,7 @@ using MS.Internal.Utility;
 using MS.Win32;
 using System.Runtime.InteropServices;
 using MS.Internal.Documents.Application;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.AppModel
 {
@@ -75,9 +76,9 @@ namespace MS.Internal.AppModel
         {
             LaunchResult launched = LaunchResult.NotLaunched;
 
-            bool isKnownScheme = (Object.ReferenceEquals(destinationUri.Scheme, Uri.UriSchemeHttp)) ||
-                                   (Object.ReferenceEquals(destinationUri.Scheme, Uri.UriSchemeHttps)) ||
-                                   destinationUri.IsFile;
+            bool isKnownScheme = ReferenceEquals(destinationUri.Scheme, Uri.UriSchemeHttp)
+                || ReferenceEquals(destinationUri.Scheme, Uri.UriSchemeHttps)
+                || destinationUri.IsFile;
 
             bool fIsMailTo = string.Equals(destinationUri.Scheme, Uri.UriSchemeMailto, StringComparison.OrdinalIgnoreCase);
 
@@ -185,8 +186,8 @@ namespace MS.Internal.AppModel
 
             // is this feature enabled ? 
             fEnabled = UnsafeNativeMethods.CoInternetIsFeatureEnabled(
-                                        NativeMethods.FEATURE_ZONE_ELEVATION,
-                                        NativeMethods.GET_FEATURE_FROM_PROCESS) != NativeMethods.S_FALSE;
+                NativeMethods.FEATURE_ZONE_ELEVATION,
+                NativeMethods.GET_FEATURE_FROM_PROCESS) != HRESULT.S_FALSE;
 
             targetZone = MapUrlToZone(destinationUri);
 
@@ -300,10 +301,10 @@ namespace MS.Internal.AppModel
             if (fEnabled)
             {
                 if (UnsafeNativeMethods.CoInternetIsFeatureZoneElevationEnabled(
-                            BindUriHelper.UriToString(originatingUri),
-                            BindUriHelper.UriToString(destinationUri),
-                            _secMgr,
-                            NativeMethods.GET_FEATURE_FROM_PROCESS) == NativeMethods.S_FALSE)
+                    BindUriHelper.UriToString(originatingUri),
+                    BindUriHelper.UriToString(destinationUri),
+                    _secMgr,
+                    NativeMethods.GET_FEATURE_FROM_PROCESS) == HRESULT.S_FALSE)
                 {
                     return LaunchResult.Launched;
                 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,7 +17,7 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo(BuildInfo.PresentationFrameworkSystemDrawing)]
 [assembly: InternalsVisibleTo(BuildInfo.SystemWindowsControlsRibbon)]
 [assembly: InternalsVisibleTo(BuildInfo.WindowsFormsIntegration)]
-[assembly: InternalsVisibleTo($"PresentationCore.Tests, PublicKey={BuildInfo.WCP_PUBLIC_KEY_STRING}")]
+[assembly: InternalsVisibleTo($"PresentationCore.Tests, PublicKey={BuildInfo.OpenPublicKey}")]
 [assembly: TypeForwardedTo(typeof(System.Windows.Markup.IUriContext))]
 [assembly: TypeForwardedTo(typeof(System.Windows.Media.TextFormattingMode))]
 [assembly: TypeForwardedTo(typeof(System.Windows.Input.ICommand))]

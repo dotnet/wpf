@@ -1,12 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
 
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Interop;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.Controls
 {
@@ -44,18 +44,18 @@ namespace MS.Internal.Controls
         #region IOleControlSite
         int UnsafeNativeMethods.IOleControlSite.OnControlInfoChanged()
         {
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleControlSite.LockInPlaceActive(int fLock)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IOleControlSite.GetExtendedControl(out object ppDisp)
         {
             ppDisp = null;
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IOleControlSite.TransformCoords(ref NativeMethods.POINT pPtlHimetric, ref NativeMethods.POINTF pPtfContainer, int dwFlags)
@@ -74,7 +74,7 @@ namespace MS.Internal.Controls
                 }
                 else
                 {
-                    return NativeMethods.E_INVALIDARG;
+                    return HRESULT.E_INVALIDARG;
                 }
             }
             else if ((dwFlags & NativeMethods.XFORMCOORDS_CONTAINERTOHIMETRIC) != 0)
@@ -91,15 +91,15 @@ namespace MS.Internal.Controls
                 }
                 else
                 {
-                    return NativeMethods.E_INVALIDARG;
+                    return HRESULT.E_INVALIDARG;
                 }
             }
             else
             {
-                return NativeMethods.E_INVALIDARG;
+                return HRESULT.E_INVALIDARG;
             }
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         /// <internalonly/>
@@ -117,7 +117,7 @@ namespace MS.Internal.Controls
             
             try {
                 bool f = ((Control)this.Host).PreProcessMessage(ref msg);
-                return f ? NativeMethods.S_OK : NativeMethods.S_FALSE;
+                return f ? HRESULT.S_OK : HRESULT.S_FALSE;
             }
             finally {
                 this.Host.SetAxHostState(AxHostHelper.siteProcessedInputKey, false);
@@ -126,17 +126,17 @@ namespace MS.Internal.Controls
 
             // This is called by IOleInPlaceActiveObject::TranslateAccelerator. 
             // returning S_FALSE means we don't process the messages. Let the webbrowser control handle it.
-            return NativeMethods.S_FALSE;
+            return HRESULT.S_FALSE;
         }
 
         int UnsafeNativeMethods.IOleControlSite.OnFocus(int fGotFocus)
         {
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleControlSite.ShowPropertyFrame()
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         #endregion IOleControlSite
@@ -148,52 +148,52 @@ namespace MS.Internal.Controls
 
         int UnsafeNativeMethods.IOleClientSite.SaveObject()
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IOleClientSite.GetMoniker(int dwAssign, int dwWhichMoniker, out Object moniker)
         {
             moniker = null;
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IOleClientSite.GetContainer(out UnsafeNativeMethods.IOleContainer container)
         {
-            container = this.Host.Container;
-            return NativeMethods.S_OK;
+            container = Host.Container;
+            return HRESULT.S_OK;
         }
         int UnsafeNativeMethods.IOleClientSite.ShowObject()
         {
             if (HostState >= ActiveXHelper.ActiveXState.InPlaceActive)
             {
                 IntPtr hwnd;
-                if (NativeMethods.Succeeded(this.Host.ActiveXInPlaceObject.GetWindow(out hwnd)))
+                if (Host.ActiveXInPlaceObject.GetWindow(out hwnd).Succeeded)
                 {
-                    if (this.Host.ControlHandle.Handle != hwnd)
+                    if (Host.ControlHandle.Handle != hwnd)
                     {
                         if (hwnd != IntPtr.Zero)
                         {
-                            this.Host.AttachWindow(hwnd);
-                            this.OnActiveXRectChange(this.Host.Bounds);
+                            Host.AttachWindow(hwnd);
+                            OnActiveXRectChange(Host.Bounds);
                         }
                     }
                 }
-                else if (this.Host.ActiveXInPlaceObject is UnsafeNativeMethods.IOleInPlaceObjectWindowless)
+                else if (Host.ActiveXInPlaceObject is UnsafeNativeMethods.IOleInPlaceObjectWindowless)
                 {
                     throw new InvalidOperationException(SR.AxWindowlessControl);
                 }
             }
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleClientSite.OnShowWindow(int fShow)
         {
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleClientSite.RequestNewObjectLayout()
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         #endregion IOleClientSite
@@ -207,7 +207,7 @@ namespace MS.Internal.Controls
         {
             try
             {
-                return this.Host.ParentHandle.Handle;
+                return Host.ParentHandle.Handle;
             }
             catch (Exception t)
             {
@@ -218,12 +218,12 @@ namespace MS.Internal.Controls
 
         int UnsafeNativeMethods.IOleInPlaceSite.ContextSensitiveHelp(int fEnterMode)
         {
-            return NativeMethods.E_NOTIMPL;
+            return HRESULT.E_NOTIMPL;
         }
 
         int UnsafeNativeMethods.IOleInPlaceSite.CanInPlaceActivate()
         {
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleInPlaceSite.OnInPlaceActivate()
@@ -231,55 +231,55 @@ namespace MS.Internal.Controls
             HostState = ActiveXHelper.ActiveXState.InPlaceActive;
             if (!HostBounds.IsEmpty)
             {
-                this.OnActiveXRectChange(HostBounds);
+                OnActiveXRectChange(HostBounds);
             }
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleInPlaceSite.OnUIActivate()
         {
             HostState = ActiveXHelper.ActiveXState.UIActive;
-            this.Host.Container.OnUIActivate(this.Host);
-            return NativeMethods.S_OK;
+            Host.Container.OnUIActivate(Host);
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleInPlaceSite.GetWindowContext(out UnsafeNativeMethods.IOleInPlaceFrame ppFrame, out UnsafeNativeMethods.IOleInPlaceUIWindow ppDoc,
                                              NativeMethods.COMRECT lprcPosRect, NativeMethods.COMRECT lprcClipRect, NativeMethods.OLEINPLACEFRAMEINFO lpFrameInfo)
         {
             ppDoc = null;
-            ppFrame = this.Host.Container;
+            ppFrame = Host.Container;
 
-            lprcPosRect.left = (int)this.Host.Bounds.left;
-            lprcPosRect.top = (int)this.Host.Bounds.top;
-            lprcPosRect.right = (int)this.Host.Bounds.right;
-            lprcPosRect.bottom = (int)this.Host.Bounds.bottom;
+            lprcPosRect.left = (int)Host.Bounds.left;
+            lprcPosRect.top = (int)Host.Bounds.top;
+            lprcPosRect.right = (int)Host.Bounds.right;
+            lprcPosRect.bottom = (int)Host.Bounds.bottom;
 
-            lprcClipRect = this.Host.Bounds;
+            lprcClipRect = Host.Bounds;
             if (lpFrameInfo != null)
             {
                 lpFrameInfo.cb = (uint)Marshal.SizeOf(typeof(NativeMethods.OLEINPLACEFRAMEINFO));
                 lpFrameInfo.fMDIApp = false;
                 lpFrameInfo.hAccel = IntPtr.Zero;
                 lpFrameInfo.cAccelEntries = 0;
-                lpFrameInfo.hwndFrame = this.Host.ParentHandle.Handle;
+                lpFrameInfo.hwndFrame = Host.ParentHandle.Handle;
             }
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleInPlaceSite.Scroll(NativeMethods.SIZE scrollExtant)
         {
-            return NativeMethods.S_FALSE;
+            return HRESULT.S_FALSE;
         }
 
         int UnsafeNativeMethods.IOleInPlaceSite.OnUIDeactivate(int fUndoable)
         {
-            this.Host.Container.OnUIDeactivate(this.Host);
+            Host.Container.OnUIDeactivate(Host);
             if (HostState > ActiveXHelper.ActiveXState.InPlaceActive)
             {
                 HostState = ActiveXHelper.ActiveXState.InPlaceActive;
             }
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleInPlaceSite.OnInPlaceDeactivate()
@@ -289,24 +289,24 @@ namespace MS.Internal.Controls
                 ((UnsafeNativeMethods.IOleInPlaceSite)this).OnUIDeactivate(0);
             }
 
-            this.Host.Container.OnInPlaceDeactivate(this.Host);
+            Host.Container.OnInPlaceDeactivate(Host);
             HostState = ActiveXHelper.ActiveXState.Running;
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleInPlaceSite.DiscardUndoState()
         {
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         int UnsafeNativeMethods.IOleInPlaceSite.DeactivateAndUndo()
         {
-            return this.Host.ActiveXInPlaceObject.UIDeactivate();
+            return Host.ActiveXInPlaceObject.UIDeactivate();
         }
 
         int UnsafeNativeMethods.IOleInPlaceSite.OnPosRectChange(NativeMethods.COMRECT lprcPosRect)
         {
-            return this.OnActiveXRectChange(lprcPosRect);
+            return OnActiveXRectChange(lprcPosRect);
         }
 
         #endregion IOleInPlaceSite
@@ -316,11 +316,11 @@ namespace MS.Internal.Controls
         {
             get
             {
-                return this.Host.ActiveXState;
+                return Host.ActiveXState;
             }
             set
             {
-                this.Host.ActiveXState = value;
+                Host.ActiveXState = value;
             }
         }
 
@@ -328,7 +328,7 @@ namespace MS.Internal.Controls
         {
             get
             {
-                return this.Host.Bounds;
+                return Host.Bounds;
             }
         }
 
@@ -365,7 +365,7 @@ namespace MS.Internal.Controls
 
         int UnsafeNativeMethods.IPropertyNotifySink.OnRequestEdit(int dispid)
         {
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         #endregion IPropertyNotifySink
@@ -433,7 +433,7 @@ namespace MS.Internal.Controls
             if (_connectionPoint != null)
                 return;
 
-            Object nativeObject = this.Host.ActiveXInstance;
+            Object nativeObject = Host.ActiveXInstance;
             if (nativeObject != null)
             {
                 try
@@ -461,16 +461,16 @@ namespace MS.Internal.Controls
 
         internal int OnActiveXRectChange(NativeMethods.COMRECT lprcPosRect)
         {
-            if (this.Host.ActiveXInPlaceObject != null)
+            if (Host.ActiveXInPlaceObject != null)
             {
-                this.Host.ActiveXInPlaceObject.SetObjectRects(
+                Host.ActiveXInPlaceObject.SetObjectRects(
                         lprcPosRect,
                         lprcPosRect); //Same clip rect
 
-                this.Host.Bounds = lprcPosRect;
+                Host.Bounds = lprcPosRect;
             }
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         #endregion Internal Methods

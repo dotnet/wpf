@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="D3DImage_AARequires9Ex" xml:space="preserve">
+    <value>An antialiased back buffer requires a IDirect3DDevice9Ex device.</value>
+  </data>
+  <data name="D3DImage_InvalidDevice" xml:space="preserve">
+    <value>Back buffer's device is not valid.</value>
+  </data>
+  <data name="D3DImage_InvalidPool" xml:space="preserve">
+    <value>Back buffer's pool does not meet the requirements for the resource type.</value>
+  </data>
+  <data name="D3DImage_InvalidUsage" xml:space="preserve">
+    <value>Back buffer's usage does not meet the requirements for the resource type.</value>
+  </data>
+  <data name="D3DImage_SurfaceTooBig" xml:space="preserve">
+    <value>Back buffer's size is too large.</value>
+  </data>
+  <data name="Geometry_BadNumber" xml:space="preserve">
+    <value>Arithmetic error found while trying to perform this operation.</value>
+  </data>
+  <data name="Image_BadDimensions" xml:space="preserve">
+    <value>The bitmap specified does not have the correct dimensions.</value>
+  </data>
+  <data name="Image_BadMetadataHeader" xml:space="preserve">
+    <value>The image has corrupted metadata header.</value>
+  </data>
+  <data name="Image_BadStreamData" xml:space="preserve">
+    <value>The stream is corrupted.</value>
+  </data>
+  <data name="Image_CodecPresent" xml:space="preserve">
+    <value>Codec added more than once.</value>
+  </data>
+  <data name="Image_ComponentNotFound" xml:space="preserve">
+    <value>No imaging component suitable to complete this operation was found.</value>
+  </data>
+  <data name="Image_DecoderError" xml:space="preserve">
+    <value>The image decoder cannot decode the image. The image might be corrupted.</value>
+  </data>
+  <data name="Image_DisplayStateInvalid" xml:space="preserve">
+    <value>The system display state is not valid.</value>
+  </data>
+  <data name="Image_DuplicateMetadataPresent" xml:space="preserve">
+    <value>Duplicate copies of metadata present.</value>
+  </data>
+  <data name="Image_FrameMissing" xml:space="preserve">
+    <value>The image is missing a frame.</value>
+  </data>
+  <data name="Image_HeaderError" xml:space="preserve">
+    <value>The image cannot be decoded. The image header might be corrupted.</value>
+  </data>
+  <data name="Image_InsufficientBuffer" xml:space="preserve">
+    <value>Buffer size is not sufficient.</value>
+  </data>
+  <data name="Image_InternalError" xml:space="preserve">
+    <value>An error occurred.</value>
+  </data>
+  <data name="Image_InvalidColorContext" xml:space="preserve">
+    <value>Bitmap color context is not valid.</value>
+  </data>
+  <data name="Image_InvalidQueryCharacter" xml:space="preserve">
+    <value>Character is not valid in metadata query request.</value>
+  </data>
+  <data name="Image_InvalidQueryRequest" xml:space="preserve">
+    <value>Metadata query request is not valid.</value>
+  </data>
+  <data name="Media_InvalidWmpVersion" xml:space="preserve">
+    <value>Windows Media Player version 10 or later is required.</value>
+  </data>
+  <data name="Image_NoPalette" xml:space="preserve">
+    <value>The specified image does not contain a palette.</value>
+  </data>
+  <data name="Image_NoThumbnail" xml:space="preserve">
+    <value>Bitmap does not contain thumbnail.</value>
+  </data>
+  <data name="Image_Overflow" xml:space="preserve">
+    <value>The image data generated an overflow during processing.</value>
+  </data>
+  <data name="Image_PropertyNotFound" xml:space="preserve">
+    <value>Property cannot be found.</value>
+  </data>
+  <data name="Image_PropertyNotSupported" xml:space="preserve">
+    <value>This codec does not support the specified property.</value>
+  </data>
+  <data name="Image_PropertySize" xml:space="preserve">
+    <value>Property is corrupted.</value>
+  </data>
+  <data name="Image_PropertyUnexpectedType" xml:space="preserve">
+    <value>Unexpected property type or value.</value>
+  </data>
+  <data name="Image_RequestOnlyValidAtMetadataRoot" xml:space="preserve">
+    <value>The metadata query is valid only at the root of the metadata hierarchy.</value>
+  </data>
+  <data name="Image_SingularMatrix" xml:space="preserve">
+    <value>Cannot invert singular matrix.</value>
+  </data>
+  <data name="Image_SizeOutOfRange" xml:space="preserve">
+    <value>The image dimensions are out of the range supported by this codec.</value>
+  </data>
+  <data name="Image_StreamNotAvailable" xml:space="preserve">
+    <value>Metadata stream is not available for this operation.</value>
+  </data>
+  <data name="Image_StreamRead" xml:space="preserve">
+    <value>Cannot read from the stream.</value>
+  </data>
+  <data name="Image_StreamWrite" xml:space="preserve">
+    <value>Cannot write to the stream.</value>
+  </data>
+  <data name="Image_TooManyScanlines" xml:space="preserve">
+    <value>The bitmap has too many scanlines for the specified encoder.</value>
+  </data>
+  <data name="Image_TooMuchMetadata" xml:space="preserve">
+    <value>Commit unsuccessful because too much metadata changed.</value>
+  </data>
+  <data name="Image_UnexpectedMetadataType" xml:space="preserve">
+    <value>Unexpected type of metadata.</value>
+  </data>
+  <data name="Image_UnknownFormat" xml:space="preserve">
+    <value>The image format is unrecognized.</value>
+  </data>
+  <data name="Image_UnsupportedOperation" xml:space="preserve">
+    <value>Operation not supported.</value>
+  </data>
+  <data name="Image_UnsupportedPixelFormat" xml:space="preserve">
+    <value>Pixel format not supported.</value>
+  </data>
+  <data name="Image_WrongState" xml:space="preserve">
+    <value>Operation caused an invalid state.</value>
+  </data>
+  <data name="Media_DownloadFailed" xml:space="preserve">
+    <value>Media file download failed.</value>
+  </data>
+  <data name="Media_FileFormatNotSupported" xml:space="preserve">
+    <value>Installed codecs do not support the media file format.</value>
+  </data>
+  <data name="Media_FileNotFound" xml:space="preserve">
+    <value>Cannot find the media file.</value>
+  </data>
+  <data name="Media_HardwareVideoAccelerationNotAvailable" xml:space="preserve">
+    <value>Display driver must support video acceleration for video or audio playback.</value>
+  </data>
+  <data name="Media_InsufficientVideoResources" xml:space="preserve">
+    <value>There are insufficient video resources available for video or audio playback.</value>
+  </data>
+  <data name="Media_InvalidArgument" xml:space="preserve">
+    <value>Value does not fall within the expected range.</value>
+  </data>
+  <data name="Media_LogonFailure" xml:space="preserve">
+    <value>Access was denied on the media file.</value>
+  </data>
+  <data name="Media_PlayerIsClosed" xml:space="preserve">
+    <value>No operations are valid on a closed media player except open and close.</value>
+  </data>
+  <data name="Media_PlaylistFormatNotSupported" xml:space="preserve">
+    <value>Unrecognized playlist file format.</value>
+  </data>
+  <data name="MilErr_UnsupportedVersion" xml:space="preserve">
+    <value>Mismatched versions of PresentationCore.dll, Milcore.dll, WindowsCodecs.dll, or D3d9.dll. Check that these DLLs come from the same source.</value>
+  </data>
+  <data name="WIC_NotInitialized" xml:space="preserve">
+    <value>Object must be initialized before operation can be performed.</value>
+  </data>
+</root>

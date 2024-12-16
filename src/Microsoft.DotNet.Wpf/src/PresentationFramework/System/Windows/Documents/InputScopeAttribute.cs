@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,6 +10,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Input;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 
 namespace System.Windows.Documents
@@ -58,7 +59,7 @@ namespace System.Windows.Documents
                 }
                 catch (OutOfMemoryException)
                 {
-                    throw new COMException(SR.InputScopeAttribute_E_OUTOFMEMORY, NativeMethods.E_OUTOFMEMORY);
+                    throw new COMException(SR.InputScopeAttribute_E_OUTOFMEMORY, HRESULT.E_OUTOFMEMORY);
                 }
 
                 for (int i = 0; i < count; i++)
@@ -86,7 +87,7 @@ namespace System.Windows.Documents
             }
             catch (OutOfMemoryException)
             {
-                throw new COMException(SR.InputScopeAttribute_E_OUTOFMEMORY, NativeMethods.E_OUTOFMEMORY);
+                throw new COMException(SR.InputScopeAttribute_E_OUTOFMEMORY, HRESULT.E_OUTOFMEMORY);
             }
 
             int offset = 0;
@@ -105,14 +106,14 @@ namespace System.Windows.Documents
                         Marshal.FreeBSTR(Marshal.ReadIntPtr(ppbstrPhrases,  offset));
                         offset += IntPtr.Size;
                     }
-                    throw new COMException(SR.InputScopeAttribute_E_OUTOFMEMORY, NativeMethods.E_OUTOFMEMORY);
+                    throw new COMException(SR.InputScopeAttribute_E_OUTOFMEMORY, HRESULT.E_OUTOFMEMORY);
                 }
 
                 Marshal.WriteIntPtr(ppbstrPhrases , offset, pbstr);
                 offset += IntPtr.Size;
             }
              
-            return  count > 0 ? NativeMethods.S_OK : NativeMethods.S_FALSE;
+            return  count > 0 ? HRESULT.S_OK : HRESULT.S_FALSE;
         }
 
         // A method of ITfInputScope.
@@ -124,7 +125,7 @@ namespace System.Windows.Documents
             {
                 desc = _inputScope.RegularExpression;
             }
-            return desc != null ? NativeMethods.S_OK : NativeMethods.S_FALSE;
+            return desc != null ? HRESULT.S_OK : HRESULT.S_FALSE;
         }
 
         // A method of ITfInputScope.
@@ -136,14 +137,14 @@ namespace System.Windows.Documents
             {
                 desc = _inputScope.SrgsMarkup;
             }
-            return desc != null ? NativeMethods.S_OK : NativeMethods.S_FALSE;
+            return desc != null ? HRESULT.S_OK : HRESULT.S_FALSE;
         }
 
         // A method of ITfInputScope.
         public int GetXML(out string desc)
         {
             desc = null;
-            return NativeMethods.S_FALSE;
+            return HRESULT.S_FALSE;
         }
 
         #endregion Internal Methods

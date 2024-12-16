@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,6 +16,7 @@ using Microsoft.Win32;
 #if !PBTCOMPILER
 using MS.Win32;
 using System.IO.Packaging;
+using Windows.Win32.Foundation;
 #endif
 
 #if PRESENTATION_CORE
@@ -73,43 +74,46 @@ namespace MS.Internal.Drt
             return( appBase );
         }
 
-         internal static int MapUrlToZoneWrapper(Uri uri)
-         {
-              int targetZone = NativeMethods.URLZONE_LOCAL_MACHINE ; // fail securely this is the most priveleged zone
-              int hr = NativeMethods.S_OK ;
-              object curSecMgr = null;
-              hr = UnsafeNativeMethods.CoInternetCreateSecurityManager(
-                                                                       null,
-                                                                       out curSecMgr ,
-                                                                       0 );
-              if ( NativeMethods.Failed( hr ))
-                  throw new Win32Exception( hr ) ;
+        internal static int MapUrlToZoneWrapper(Uri uri)
+        {
+            int targetZone = NativeMethods.URLZONE_LOCAL_MACHINE ; // fail securely this is the most priveleged zone
 
-              UnsafeNativeMethods.IInternetSecurityManager pSec = (UnsafeNativeMethods.IInternetSecurityManager) curSecMgr;
+            HRESULT result = UnsafeNativeMethods.CoInternetCreateSecurityManager(
+                null,
+                out object curSecMgr,
+                0);
 
-              string uriString = BindUriHelper.UriToString( uri ) ;
-              //
-              // special case the condition if file is on local machine or UNC to ensure that content with mark of the web
-              // does not yield with an internet zone result
-              //
-              if (uri.IsFile)
-              {
-                  pSec.MapUrlToZone( uriString, out targetZone, MS.Win32.NativeMethods.MUTZ_NOSAVEDFILECHECK );
-              }
-              else
-              {
-                  pSec.MapUrlToZone( uriString, out targetZone, 0 );
-              }
-              //
-              // This is the condition for Invalid zone
-              //
-              if (targetZone < 0)
-              {
-                throw new SecurityException( SR.Invalid_URI );
-              }
-              pSec = null;
-              curSecMgr = null;
-              return targetZone;
+            if (result.Failed)
+            {
+                // This isn't technically right, keeping for compat.
+                throw new Win32Exception(result);
+            }
+
+            UnsafeNativeMethods.IInternetSecurityManager pSec = (UnsafeNativeMethods.IInternetSecurityManager) curSecMgr;
+
+            string uriString = BindUriHelper.UriToString( uri ) ;
+            //
+            // special case the condition if file is on local machine or UNC to ensure that content with mark of the web
+            // does not yield with an internet zone result
+            //
+            if (uri.IsFile)
+            {
+                pSec.MapUrlToZone( uriString, out targetZone, NativeMethods.MUTZ_NOSAVEDFILECHECK);
+            }
+            else
+            {
+                pSec.MapUrlToZone( uriString, out targetZone, 0 );
+            }
+            //
+            // This is the condition for Invalid zone
+            //
+            if (targetZone < 0)
+            {
+            throw new SecurityException( SR.Invalid_URI );
+            }
+            pSec = null;
+            curSecMgr = null;
+            return targetZone;
         }
 #endif
 
@@ -140,21 +144,21 @@ namespace MS.Internal.Drt
         {
             Marshal.ThrowExceptionForHR(hr, new IntPtr(-1));
         }
-        
-        internal static int GetHRForException(Exception exception)
+
+        internal static HRESULT GetHRForException(Exception exception)
         {
             ArgumentNullException.ThrowIfNull(exception);
 
             // GetHRForException fills a per thread IErrorInfo object with data from the exception
             // The exception may contain security sensitive data like full file paths that we do not
             // want to leak into an IErrorInfo
-            int hr = Marshal.GetHRForException(exception);
+            HRESULT result = (HRESULT)Marshal.GetHRForException(exception);
 
             // Call GetHRForException a second time with a security safe exception object
             // to make sure the per thread IErrorInfo is cleared of security sensitive data
             Marshal.GetHRForException(new Exception());
 
-            return hr;
+            return result;
         }
 
 #endif
@@ -165,44 +169,38 @@ namespace MS.Internal.Drt
         /// A helper method to do the necessary work to display a standard MessageBox.  This method performs
         /// and necessary elevations to make the dialog work as well.
         /// </summary>
-        internal
-        static
-        void
-        ShowMessageBoxHelper(
-            System.Windows.Window parent,
+        internal static void ShowMessageBoxHelper(
+            Window parent,
             string text,
             string title,
-            System.Windows.MessageBoxButton buttons,
-            System.Windows.MessageBoxImage image
+            MessageBoxButton buttons,
+            MessageBoxImage image
             )
         {
             // if we have a known parent window set, let's use it when alerting the user.
             if (parent != null)
             {
-                System.Windows.MessageBox.Show(parent, text, title, buttons, image);
+                MessageBox.Show(parent, text, title, buttons, image);
             }
             else
             {
-                System.Windows.MessageBox.Show(text, title, buttons, image);
+                MessageBox.Show(text, title, buttons, image);
             }
         }
         /// <summary>
         /// A helper method to do the necessary work to display a standard MessageBox.  This method performs
         /// and necessary elevations to make the dialog work as well.
         /// </summary>
-        internal
-        static
-        void
-        ShowMessageBoxHelper(
+        internal static void ShowMessageBoxHelper(
             IntPtr parentHwnd,
             string text,
             string title,
-            System.Windows.MessageBoxButton buttons,
-            System.Windows.MessageBoxImage image
+            MessageBoxButton buttons,
+            MessageBoxImage image
             )
         {
             // NOTE: the last param must always be MessageBoxOptions.None for this to be considered TreatAsSafe
-            System.Windows.MessageBox.ShowCore(parentHwnd, text, title, buttons, image, MessageBoxResult.None, MessageBoxOptions.None);
+            MessageBox.ShowCore(parentHwnd, text, title, buttons, image, MessageBoxResult.None, MessageBoxOptions.None);
         }
 #endif
 

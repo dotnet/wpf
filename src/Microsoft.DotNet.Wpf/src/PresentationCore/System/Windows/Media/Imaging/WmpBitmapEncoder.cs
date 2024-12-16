@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,6 +7,7 @@
 
 using MS.Internal;
 using MS.Win32.PresentationCore;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media.Imaging
 {
@@ -140,7 +141,7 @@ namespace System.Windows.Media.Imaging
             }
             set
             {
-                if (value != this.FlipHorizontal)
+                if (value != FlipHorizontal)
                 {
                     if (value)
                     {
@@ -166,7 +167,7 @@ namespace System.Windows.Media.Imaging
             }
             set
             {
-                if (value != this.FlipVertical)
+                if (value != FlipVertical)
                 {
                     if (value)
                     {
@@ -421,11 +422,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("ImageQuality");
                     propValue.Init((float)_imagequalitylevel);
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -439,13 +440,13 @@ namespace System.Windows.Media.Imaging
                 try
                 {
                     propBag.Init("BitmapTransform");
-                    propValue.Init((byte) _transformation);
+                    propValue.Init((byte)_transformation);
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -461,11 +462,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("Lossless");
                     propValue.Init((bool)_lossless);
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -481,11 +482,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("UseCodecOptions");
                     propValue.Init((bool)_usecodecoptions);
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -501,11 +502,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("Quality");
                     propValue.Init((byte)_qualitylevel);
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -521,11 +522,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("Subsampling");
                     propValue.Init((byte)_subsamplinglevel);
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -541,11 +542,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("Overlap");
                     propValue.Init((byte)_overlaplevel);
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -561,11 +562,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("HorizontalTileSlices");
                     propValue.Init((ushort)_horizontaltileslices );
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -581,11 +582,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("VerticalTileSlices");
                     propValue.Init((ushort)_verticaltileslices );
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -601,11 +602,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("FrequencyOrder");
                     propValue.Init((bool)_frequencyorder);
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -621,11 +622,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("InterleavedAlpha");
                     propValue.Init((bool)_interleavedalpha);
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -641,11 +642,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("AlphaQuality");
                     propValue.Init((byte)_alphaqualitylevel);
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -661,11 +662,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("CompressedDomainTranscode");
                     propValue.Init((bool)_compresseddomaintranscode);
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -681,11 +682,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("ImageDataDiscard");
                     propValue.Init((byte)_imagedatadiscardlevel);
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -701,11 +702,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("AlphaDataDiscard");
                     propValue.Init((byte)_alphadatadiscardlevel);
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -721,11 +722,11 @@ namespace System.Windows.Media.Imaging
                     propBag.Init("IgnoreOverlap");
                     propValue.Init((bool)_ignoreoverlap);
 
-                    HRESULT.Check(UnsafeNativeMethods.IPropertyBag2.Write(
+                    UnsafeNativeMethods.IPropertyBag2.Write(
                         encoderOptions,
                         1,
                         ref propBag,
-                        ref propValue));
+                        ref propValue).ThrowOnFailureExtended();
                 }
                 finally
                 {
@@ -734,10 +735,9 @@ namespace System.Windows.Media.Imaging
                 }
             }
 
-            HRESULT.Check(UnsafeNativeMethods.WICBitmapFrameEncode.Initialize(
+            UnsafeNativeMethods.WICBitmapFrameEncode.Initialize(
                 frameEncodeHandle,
-                encoderOptions
-                ));
+                encoderOptions).ThrowOnFailureExtended();
         }
 
         /// <summary>
@@ -753,7 +753,7 @@ namespace System.Windows.Media.Imaging
             }
             set
             {
-                if (value != this.Rotate90)
+                if (value != Rotate90)
                 {
                     bool IsFlipH = FlipHorizontal;
                     bool IsFlipV = FlipVertical;
@@ -784,7 +784,7 @@ namespace System.Windows.Media.Imaging
             }
             set
             {
-                if (value != this.Rotate180)
+                if (value != Rotate180)
                 {
                     bool IsFlipH = FlipHorizontal;
                     bool IsFlipV = FlipVertical;
@@ -815,7 +815,7 @@ namespace System.Windows.Media.Imaging
             }
             set
             {
-                if (value != this.Rotate270)
+                if (value != Rotate270)
                 {
                     bool IsFlipH = FlipHorizontal;
                     bool IsFlipV = FlipVertical;

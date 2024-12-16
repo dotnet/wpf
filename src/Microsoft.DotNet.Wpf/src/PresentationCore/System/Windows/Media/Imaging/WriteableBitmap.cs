@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,6 +8,7 @@ using MS.Win32.PresentationCore;
 using System.Runtime.InteropServices;
 using System.Windows.Media.Composition;
 using System.Threading;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media.Imaging
 {
@@ -81,25 +82,25 @@ namespace System.Windows.Media.Imaging
             if (pixelWidth < 0)
             {
                 // Backwards Compat
-                HRESULT.Check((int)WinCodecErrors.WINCODEC_ERR_VALUEOVERFLOW);
+                HRESULT.FromWin32(WIN32_ERROR.ERROR_ARITHMETIC_OVERFLOW).ThrowOnFailureExtended();
             }
 
             if (pixelWidth == 0)
             {
                 // Backwards Compat
-                HRESULT.Check(MS.Win32.NativeMethods.E_INVALIDARG);
+                HRESULT.E_INVALIDARG.ThrowOnFailureExtended();
             }
 
             if (pixelHeight < 0)
             {
                 // Backwards Compat
-                HRESULT.Check((int)WinCodecErrors.WINCODEC_ERR_VALUEOVERFLOW);
+                HRESULT.FromWin32(WIN32_ERROR.ERROR_ARITHMETIC_OVERFLOW).ThrowOnFailureExtended();
             }
 
             if (pixelHeight == 0)
             {
                 // Backwards Compat
-                HRESULT.Check(MS.Win32.NativeMethods.E_INVALIDARG);
+                HRESULT.E_INVALIDARG.ThrowOnFailureExtended();
             }
 
             //
@@ -114,15 +115,14 @@ namespace System.Windows.Media.Imaging
                 internalPalette = palette.InternalPalette;
             }
 
-            HRESULT.Check(MILSwDoubleBufferedBitmap.Create(
-                (uint) pixelWidth, // safe cast
-                (uint) pixelHeight, // safe cast
+            MILSwDoubleBufferedBitmap.Create(
+                (uint)pixelWidth, // safe cast
+                (uint)pixelHeight, // safe cast
                 dpiX,
                 dpiY,
                 ref formatGuid,
                 internalPalette,
-                out _pDoubleBufferedBitmap
-                ));
+                out _pDoubleBufferedBitmap).ThrowOnFailureExtended();
 
             _pDoubleBufferedBitmap.UpdateEstimatedSize(
                 GetEstimatedSize(pixelWidth, pixelHeight, pixelFormat));
@@ -254,12 +254,11 @@ namespace System.Windows.Media.Imaging
 
                 Int32Rect rect = new Int32Rect(0, 0, _pixelWidth, _pixelHeight);
 
-                HRESULT.Check(UnsafeNativeMethods.WICBitmap.Lock(
+                UnsafeNativeMethods.WICBitmap.Lock(
                     WicSourceHandle,
                     ref rect,
                     LockFlags.MIL_LOCK_WRITE,
-                    out _pBackBufferLock
-                    ));
+                    out _pBackBufferLock).ThrowOnFailureExtended();
 
                 // If this is the first lock operation, cache the BackBuffer and
                 // BackBufferStride.  These two values will never change, so we
@@ -268,18 +267,18 @@ namespace System.Windows.Media.Imaging
                 {
                     IntPtr tempBackBufferPointer = IntPtr.Zero;
                     uint lockBufferSize = 0;
-                    HRESULT.Check(UnsafeNativeMethods.WICBitmapLock.GetDataPointer(
+                    UnsafeNativeMethods.WICBitmapLock.GetDataPointer(
                         _pBackBufferLock,
                         ref lockBufferSize,
-                        ref tempBackBufferPointer
-                        ));
+                        ref tempBackBufferPointer).ThrowOnFailureExtended();
+
                     BackBuffer = tempBackBufferPointer;
 
                     uint lockBufferStride = 0;
-                    HRESULT.Check(UnsafeNativeMethods.WICBitmapLock.GetStride(
+                    UnsafeNativeMethods.WICBitmapLock.GetStride(
                         _pBackBufferLock,
-                        ref lockBufferStride
-                        ));
+                        ref lockBufferStride).ThrowOnFailureExtended();
+
                     Invariant.Assert(lockBufferStride <= Int32.MaxValue);
                     _backBufferStride = (int)lockBufferStride;
                 }
@@ -600,7 +599,7 @@ namespace System.Windows.Media.Imaging
                 //
 
                 // Protect the back buffer for writing
-                HRESULT.Check(MILSwDoubleBufferedBitmap.ProtectBackBuffer(_pDoubleBufferedBitmap));
+                MILSwDoubleBufferedBitmap.ProtectBackBuffer(_pDoubleBufferedBitmap).ThrowOnFailureExtended();
 
                 // Get the back buffer to be used as our WicSourceHandle
                 AcquireBackBuffer(TimeSpan.Zero, false);
@@ -723,13 +722,13 @@ namespace System.Windows.Media.Imaging
             if (source.PixelWidth < 0)
             {
                 // Backwards Compat
-                HRESULT.Check((int)WinCodecErrors.WINCODEC_ERR_VALUEOVERFLOW);
+                HRESULT.FromWin32(WIN32_ERROR.ERROR_ARITHMETIC_OVERFLOW).ThrowOnFailureExtended();
             }
 
             if (source.PixelHeight < 0)
             {
                 // Backwards Compat
-                HRESULT.Check((int)WinCodecErrors.WINCODEC_ERR_VALUEOVERFLOW);
+                HRESULT.FromWin32(WIN32_ERROR.ERROR_ARITHMETIC_OVERFLOW).ThrowOnFailureExtended();
             }
 
             BeginInit();
@@ -744,16 +743,15 @@ namespace System.Windows.Media.Imaging
                 {
                     internalPalette = source.Palette.InternalPalette;
                 }
-                
-                HRESULT.Check(MILSwDoubleBufferedBitmap.Create(
+
+                MILSwDoubleBufferedBitmap.Create(
                     (uint)source.PixelWidth, // safe cast
                     (uint)source.PixelHeight, // safe cast
                     source.DpiX,
                     source.DpiY,
                     ref formatGuid,
                     internalPalette,
-                    out _pDoubleBufferedBitmap
-                    ));
+                    out _pDoubleBufferedBitmap).ThrowOnFailureExtended();
 
                 _pDoubleBufferedBitmap.UpdateEstimatedSize(
                     GetEstimatedSize(source.PixelWidth, source.PixelHeight, source.Format));
@@ -831,11 +829,11 @@ namespace System.Windows.Media.Imaging
             }
             else if(sourceRect.Width > _pixelWidth || sourceRect.Height > _pixelHeight || destinationX > _pixelWidth - sourceRect.Width || destinationY > _pixelHeight - sourceRect.Height)
             {
-                HRESULT.Check(MS.Win32.NativeMethods.E_INVALIDARG);
+                HRESULT.E_INVALIDARG.ThrowOnFailureExtended();
             }
             else if (destinationX < 0 || destinationY < 0)
             {
-                HRESULT.Check((int)WinCodecErrors.WINCODEC_ERR_VALUEOVERFLOW);
+                HRESULT.FromWin32(WIN32_ERROR.ERROR_ARITHMETIC_OVERFLOW).ThrowOnFailureExtended();
             }
 
             //
@@ -871,7 +869,7 @@ namespace System.Windows.Media.Imaging
                 {
                     if (backwardsCompat)
                     {
-                        HRESULT.Check((int)WinCodecErrors.WINCODEC_ERR_INSUFFICIENTBUFFER);
+                        HRESULT.WINCODEC_ERR_INSUFFICIENTBUFFER.ThrowOnFailureExtended();
                     }
                     else
                     {

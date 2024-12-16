@@ -1,10 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 using MS.Win32.PresentationCore;
 using System.Windows.Media.Composition;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media.Imaging
 {
@@ -104,7 +105,7 @@ namespace System.Windows.Media.Imaging
             using (FactoryMaker myFactory = new FactoryMaker())
             {
                 // Create an IWICBitmap
-                BitmapSourceSafeMILHandle newBitmapHandle = BitmapSource.CreateCachedBitmap(
+                BitmapSourceSafeMILHandle newBitmapHandle = CreateCachedBitmap(
                     null,
                     WicSourceHandle,
                     BitmapCreateOptions.PreservePixelFormat,
@@ -117,11 +118,10 @@ namespace System.Windows.Media.Imaging
                 }
 
                 // Now create a Render target from that Bitmap
-                HRESULT.Check(UnsafeNativeMethods.MILFactory2.CreateBitmapRenderTargetForBitmap(
+                UnsafeNativeMethods.MILFactory2.CreateBitmapRenderTargetForBitmap(
                     myFactory.FactoryPtr,
                     newBitmapHandle,
-                    out _renderTargetBitmap
-                    ));
+                    out _renderTargetBitmap).ThrowOnFailureExtended();
             }
 
             _bitmapInit.EndInit();
@@ -190,7 +190,7 @@ namespace System.Windows.Media.Imaging
         /// </summary>
         public void Clear()
         {
-            HRESULT.Check(MILRenderTargetBitmap.Clear(_renderTargetBitmap));
+            MILRenderTargetBitmap.Clear(_renderTargetBitmap).ThrowOnFailureExtended();
             RenderTargetContentsChanged();
         }
 
@@ -236,7 +236,7 @@ namespace System.Windows.Media.Imaging
                 using (FactoryMaker myFactory = new FactoryMaker())
                 {
                     SafeMILHandle renderTargetBitmap = null;
-                    HRESULT.Check(UnsafeNativeMethods.MILFactory2.CreateBitmapRenderTarget(
+                    UnsafeNativeMethods.MILFactory2.CreateBitmapRenderTarget(
                         myFactory.FactoryPtr,
                         (uint)_pixelWidth,
                         (uint)_pixelHeight,
@@ -244,14 +244,14 @@ namespace System.Windows.Media.Imaging
                         (float)_dpiX,
                         (float)_dpiY,
                         MILRTInitializationFlags.MIL_RT_INITIALIZE_DEFAULT,
-                        out renderTargetBitmap));
+                        out renderTargetBitmap).ThrowOnFailureExtended();
 
                     Debug.Assert(renderTargetBitmap != null && !renderTargetBitmap.IsInvalid);
 
                     BitmapSourceSafeMILHandle bitmapSource = null;
-                    HRESULT.Check(MILRenderTargetBitmap.GetBitmap(
+                    MILRenderTargetBitmap.GetBitmap(
                         renderTargetBitmap,
-                        out bitmapSource));
+                        out bitmapSource).ThrowOnFailureExtended();
                     Debug.Assert(bitmapSource != null && !bitmapSource.IsInvalid);
 
                     lock (_syncObject)

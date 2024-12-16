@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -37,6 +37,7 @@ using System.Collections;
 using Accessibility;
 using System.Windows;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.AutomationProxies
 {
@@ -152,7 +153,7 @@ namespace MS.Internal.AutomationProxies
             int[] id = new int[idLen];
 
             // Base runtime id is the number indicating Win32Provider + hwnd
-            id[0] = ProxySimple.Win32ProviderRuntimeIdBase;
+            id[0] = Win32ProviderRuntimeIdBase;
             id[1] = _hwnd.ToInt32();
 
             // Append part id to make this unique
@@ -642,7 +643,7 @@ namespace MS.Internal.AutomationProxies
                 {
                     Accessible acc = null;
                     // We need to go search for it
-                    _IAccessible = Accessible.AccessibleObjectFromWindow(_hwnd, NativeMethods.OBJID_CLIENT, ref acc) == NativeMethods.S_OK ? acc.IAccessible : null;
+                    _IAccessible = Accessible.AccessibleObjectFromWindow(_hwnd, NativeMethods.OBJID_CLIENT, ref acc) == HRESULT.S_OK ? acc.IAccessible : null;
                 }
 
                 return _IAccessible;

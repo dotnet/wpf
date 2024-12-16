@@ -1,10 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using MS.Internal;
 using MS.Win32.PresentationCore;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media.Imaging
 {
@@ -176,18 +177,18 @@ namespace System.Windows.Media.Imaging
                         uint width = Math.Max(1, (uint)(scaleX * _source.PixelWidth + 0.5));
                         uint height = Math.Max(1, (uint)(scaleY * _source.PixelHeight + 0.5));
 
-                        HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapScaler(
-                                wicFactory,
-                                out wicTransformer));
+                        UnsafeNativeMethods.WICImagingFactory.CreateBitmapScaler(
+                            wicFactory,
+                            out wicTransformer).ThrowOnFailureExtended();
 
                         lock (_syncObject)
                         {
-                            HRESULT.Check(UnsafeNativeMethods.WICBitmapScaler.Initialize(
-                                    wicTransformer,
-                                    _source.WicSourceHandle,
-                                    width,
-                                    height,
-                                    WICInterpolationMode.Fant));
+                            UnsafeNativeMethods.WICBitmapScaler.Initialize(
+                                wicTransformer,
+                                _source.WicSourceHandle,
+                                width,
+                                height,
+                                WICInterpolationMode.Fant).ThrowOnFailureExtended();
                         }
                     }
 
@@ -208,16 +209,16 @@ namespace System.Windows.Media.Imaging
 
                         BitmapSourceSafeMILHandle rotator = null;
 
-                        HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapFlipRotator(
-                                wicFactory,
-                                out rotator));
+                        UnsafeNativeMethods.WICImagingFactory.CreateBitmapFlipRotator(
+                            wicFactory,
+                            out rotator).ThrowOnFailureExtended();
 
                         lock (_syncObject)
                         {
-                            HRESULT.Check(UnsafeNativeMethods.WICBitmapFlipRotator.Initialize(
-                                    rotator,
-                                    wicTransformer,
-                                    options));
+                            UnsafeNativeMethods.WICBitmapFlipRotator.Initialize(
+                                rotator,
+                                wicTransformer,
+                                options).ThrowOnFailureExtended();
                         }
 
                         wicTransformer = rotator;
@@ -228,16 +229,16 @@ namespace System.Windows.Media.Imaging
                     if (options == WICBitmapTransformOptions.WICBitmapTransformRotate0 &&
                         DoubleUtil.IsOne(scaleX) && DoubleUtil.IsOne(scaleY))
                     {
-                        HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateBitmapFlipRotator(
-                                wicFactory,
-                                out wicTransformer));
+                        UnsafeNativeMethods.WICImagingFactory.CreateBitmapFlipRotator(
+                            wicFactory,
+                            out wicTransformer).ThrowOnFailureExtended();
 
                         lock (_syncObject)
                         {
-                            HRESULT.Check(UnsafeNativeMethods.WICBitmapFlipRotator.Initialize(
-                                    wicTransformer,
-                                    _source.WicSourceHandle,
-                                    WICBitmapTransformOptions.WICBitmapTransformRotate0));
+                            UnsafeNativeMethods.WICBitmapFlipRotator.Initialize(
+                                wicTransformer,
+                                _source.WicSourceHandle,
+                                WICBitmapTransformOptions.WICBitmapTransformRotate0).ThrowOnFailureExtended();
                         }
                     }
 

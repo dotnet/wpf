@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,9 +16,10 @@ using MS.Utility;
 using MS.Win32;
 using MS.Internal.PresentationCore;
 
-using HRESULT = MS.Internal.HRESULT;
+using HRESULT = Windows.Win32.Foundation.HRESULT;
 using NativeMethodsSetLastError = MS.Internal.WindowsBase.NativeMethodsSetLastError;
 using PROCESS_DPI_AWARENESS = MS.Win32.NativeMethods.PROCESS_DPI_AWARENESS;
+using Windows.Win32.Foundation;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -544,9 +545,9 @@ namespace System.Windows.Interop
                     );
             }
 
-            int hr = VisualTarget_AttachToHwnd(hwnd);
+            HRESULT hr = VisualTarget_AttachToHwnd(hwnd);
 
-            if (HRESULT.Failed(hr))
+            if (hr.Failed)
             {
                 if (hr == unchecked((int)0x80070005)) // E_ACCESSDENIED
                 {
@@ -556,7 +557,7 @@ namespace System.Windows.Interop
                 }
                 else
                 {
-                    HRESULT.Check(hr);
+                    hr.ThrowOnFailureExtended();
                 }
             }
 
@@ -566,15 +567,11 @@ namespace System.Windows.Interop
         }
 
         [DllImport(DllImport.MilCore, EntryPoint = "MilVisualTarget_AttachToHwnd")]
-        internal static extern int VisualTarget_AttachToHwnd(
-            IntPtr hwnd
-            );
+        internal static extern HRESULT VisualTarget_AttachToHwnd(IntPtr hwnd);
 
 
         [DllImport(DllImport.MilCore, EntryPoint = "MilVisualTarget_DetachFromHwnd")]
-        internal static extern int VisualTarget_DetachFromHwnd(
-            IntPtr hwnd
-            );
+        internal static extern HRESULT VisualTarget_DetachFromHwnd(IntPtr hwnd);
 
         internal void InvalidateRenderMode()
         {
@@ -604,7 +601,7 @@ namespace System.Windows.Interop
 
             //Obtain compatibility flags set in the application
             bool? enableMultiMonitorDisplayClipping =
-                System.Windows.CoreCompatibilityPreferences.EnableMultiMonitorDisplayClipping;
+                CoreCompatibilityPreferences.EnableMultiMonitorDisplayClipping;
 
             if (enableMultiMonitorDisplayClipping != null)
             {
@@ -686,7 +683,7 @@ namespace System.Windows.Interop
                 {
                     RootVisual = null;
 
-                    HRESULT.Check(VisualTarget_DetachFromHwnd(_hWnd));
+                    VisualTarget_DetachFromHwnd(_hWnd).ThrowOnFailureExtended();
 
                     //
                     // Unregister this CompositionTarget from the MediaSystem.
@@ -1524,7 +1521,7 @@ namespace System.Windows.Interop
                  (int)firstParam == (int)NativeMethods.SPI_SETDISPLAYTEXTCONTRASTLEVEL
                 )
             {
-                HRESULT.Check(MILUpdateSystemParametersInfo.Update());
+                MILUpdateSystemParametersInfo.Update().ThrowOnFailureExtended();
                 return true;
             }
 

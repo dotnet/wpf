@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,6 +7,7 @@ using MS.Internal;
 using System.Windows.Threading;
 using System.Runtime.InteropServices;
 using MS.Win32.PresentationCore;
+using Windows.Win32.Foundation;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -243,12 +244,11 @@ namespace System.Windows.Media.Imaging
                 // There should always be a codec info.
                 if (_codecInfo == null)
                 {
-                    SafeMILHandle /* IWICBitmapEncoderInfo */ codecInfoHandle =  new SafeMILHandle();
+                    SafeMILHandle /* IWICBitmapEncoderInfo */ codecInfoHandle = new SafeMILHandle();
 
-                    HRESULT.Check(UnsafeNativeMethods.WICBitmapEncoder.GetEncoderInfo(
+                    UnsafeNativeMethods.WICBitmapEncoder.GetEncoderInfo(
                         _encoderHandle,
-                        out codecInfoHandle
-                        ));
+                        out codecInfoHandle).ThrowOnFailureExtended();
 
                     _codecInfo = new BitmapCodecInfoInternal(codecInfoHandle);
                 }
@@ -349,11 +349,10 @@ namespace System.Windows.Media.Imaging
                 comStream = StreamAsIStream.IStreamFrom(stream);
 
                 // does this addref the stream?
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapEncoder.Initialize(
+                UnsafeNativeMethods.WICBitmapEncoder.Initialize(
                     encoderHandle,
                     comStream,
-                    WICBitmapEncodeCacheOption.WICBitmapEncodeNoCache
-                    ));
+                    WICBitmapEncodeCacheOption.WICBitmapEncodeNoCache).ThrowOnFailureExtended();
 
                 // Helpful for debugging stress and remote dumps
                 _encodeState = EncodeState.EncoderInitialized;
@@ -366,10 +365,9 @@ namespace System.Windows.Media.Imaging
 
                     lock (_thumbnail.SyncObject)
                     {
-                        HRESULT.Check(UnsafeNativeMethods.WICBitmapEncoder.SetThumbnail(
+                        UnsafeNativeMethods.WICBitmapEncoder.SetThumbnail(
                             encoderHandle,
-                            thumbnailBitmapSource
-                            ));
+                            thumbnailBitmapSource).ThrowOnFailureExtended();
 
                         // Helpful for debugging stress and remote dumps
                         _encodeState = EncodeState.EncoderThumbnailSet;
@@ -381,10 +379,9 @@ namespace System.Windows.Media.Imaging
                 {
                     SafeMILHandle paletteHandle = _palette.InternalPalette;
 
-                    HRESULT.Check(UnsafeNativeMethods.WICBitmapEncoder.SetPalette(
+                    UnsafeNativeMethods.WICBitmapEncoder.SetPalette(
                         encoderHandle,
-                        paletteHandle
-                        ));
+                        paletteHandle).ThrowOnFailureExtended();
 
                     // Helpful for debugging stress and remote dumps
                     _encodeState = EncodeState.EncoderPaletteSet;
@@ -407,11 +404,10 @@ namespace System.Windows.Media.Imaging
 
                             lock (_metadata.SyncObject)
                             {
-                                HRESULT.Check(UnsafeNativeMethods.WICMetadataQueryWriter.SetMetadataByName(
+                                UnsafeNativeMethods.WICMetadataQueryWriter.SetMetadataByName(
                                     _metadataHandle,
                                     "/",
-                                    ref propVar
-                                    ));
+                                    ref propVar).ThrowOnFailureExtended();
                             }
                         }
                         finally
@@ -425,11 +421,10 @@ namespace System.Windows.Media.Imaging
                 {
                     SafeMILHandle frameEncodeHandle = new SafeMILHandle();
                     SafeMILHandle encoderOptions = new SafeMILHandle();
-                    HRESULT.Check(UnsafeNativeMethods.WICBitmapEncoder.CreateNewFrame(
+                    UnsafeNativeMethods.WICBitmapEncoder.CreateNewFrame(
                         encoderHandle,
                         out frameEncodeHandle,
-                        out encoderOptions
-                        ));
+                        out encoderOptions).ThrowOnFailureExtended();
 
                     // Helpful for debugging stress and remote dumps
                     _encodeState = EncodeState.EncoderCreatedNewFrame;
@@ -445,7 +440,7 @@ namespace System.Windows.Media.Imaging
                 }
 
                 // Now let the encoder know we are done encoding the file.
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapEncoder.Commit(encoderHandle));
+                UnsafeNativeMethods.WICBitmapEncoder.Commit(encoderHandle).ThrowOnFailureExtended();
 
                 // Helpful for debugging stress and remote dumps
                 _encodeState = EncodeState.EncoderCommitted;
@@ -521,18 +516,18 @@ namespace System.Windows.Media.Imaging
             {
                 SafeMILHandle /* IWICMetadataQueryWriter */ metadataHandle = new SafeMILHandle();
 
-                int hr = UnsafeNativeMethods.WICBitmapEncoder.GetMetadataQueryWriter(
+                HRESULT result = UnsafeNativeMethods.WICBitmapEncoder.GetMetadataQueryWriter(
                     _encoderHandle,
                     out metadataHandle
                     );
 
-                if (hr == (int)WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION)
+                if (result == HRESULT.WINCODEC_ERR_UNSUPPORTEDOPERATION)
                 {
                     _supportsGlobalMetadata = false;
                     return;
                 }
-                HRESULT.Check(hr);
 
+                result.ThrowOnFailureExtended();
                 _metadataHandle = metadataHandle;
             }
 
@@ -558,12 +553,11 @@ namespace System.Windows.Media.Imaging
                     Guid vendorMicrosoft = new Guid(MILGuidData.GUID_VendorMicrosoft);
                     Guid containerFormat = ContainerFormat;
 
-                    HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateEncoder(
-                                myFactory.ImagingFactoryPtr,
-                                ref containerFormat,
-                                ref vendorMicrosoft,
-                                out encoderHandle
-                                ));
+                    UnsafeNativeMethods.WICImagingFactory.CreateEncoder(
+                        myFactory.ImagingFactoryPtr,
+                        ref containerFormat,
+                        ref vendorMicrosoft,
+                        out encoderHandle).ThrowOnFailureExtended();
 
                     _encoderHandle = encoderHandle;
                 }
@@ -581,11 +575,10 @@ namespace System.Windows.Media.Imaging
             _encodeState = EncodeState.FrameEncodeInitialized;
 
             // Set the size
-            HRESULT.Check(UnsafeNativeMethods.WICBitmapFrameEncode.SetSize(
+            UnsafeNativeMethods.WICBitmapFrameEncode.SetSize(
                 frameEncodeHandle,
                 frame.PixelWidth,
-                frame.PixelHeight
-                ));
+                frame.PixelHeight).ThrowOnFailureExtended();
 
             // Helpful for debugging stress and remote dumps
             _encodeState = EncodeState.FrameEncodeSizeSet;
@@ -603,11 +596,10 @@ namespace System.Windows.Media.Imaging
                 dpiY = 96;
             }
 
-            HRESULT.Check(UnsafeNativeMethods.WICBitmapFrameEncode.SetResolution(
+            UnsafeNativeMethods.WICBitmapFrameEncode.SetResolution(
                 frameEncodeHandle,
                 dpiX,
-                dpiY
-                ));
+                dpiY).ThrowOnFailureExtended();
 
             // Helpful for debugging stress and remote dumps
             _encodeState = EncodeState.FrameEncodeResolutionSet;
@@ -623,10 +615,9 @@ namespace System.Windows.Media.Imaging
 
                     lock (thumbnail.SyncObject)
                     {
-                        HRESULT.Check(UnsafeNativeMethods.WICBitmapFrameEncode.SetThumbnail(
+                        UnsafeNativeMethods.WICBitmapFrameEncode.SetThumbnail(
                             frameEncodeHandle,
-                            thumbnailHandle
-                            ));
+                            thumbnailHandle).ThrowOnFailureExtended();
 
                         // Helpful for debugging stress and remote dumps
                         _encodeState = EncodeState.FrameEncodeThumbnailSet;
@@ -658,7 +649,7 @@ namespace System.Windows.Media.Imaging
             {
                 IList<ColorContext> colorContexts = frame.ColorContexts;
                 if (colorContexts != null && colorContexts.Count > 0)
-                {             
+                {
                     int count = colorContexts.Count;
 
                     // Marshal can't convert SafeMILHandle[] so we must
@@ -695,12 +686,11 @@ namespace System.Windows.Media.Imaging
 
                 // Set the pixel format and palette of the bitmap.
                 // This could (but hopefully won't) introduce a format converter.
-                HRESULT.Check(UnsafeNativeMethods.WICCodec.WICSetEncoderFormat(
+                UnsafeNativeMethods.WICCodec.WICSetEncoderFormat(
                     bitmapSourceHandle,
                     paletteHandle,
                     frameEncodeHandle,
-                    out outSourceHandle
-                    ));
+                    out outSourceHandle).ThrowOnFailureExtended();
 
                 // Helpful for debugging stress and remote dumps
                 _encodeState = EncodeState.FrameEncodeFormatSet;
@@ -716,10 +706,9 @@ namespace System.Windows.Media.Imaging
                     {
                         SafeMILHandle /* IWICMetadataQueryWriter */ metadataHandle = new SafeMILHandle();
 
-                        HRESULT.Check(UnsafeNativeMethods.WICBitmapFrameEncode.GetMetadataQueryWriter(
+                        UnsafeNativeMethods.WICBitmapFrameEncode.GetMetadataQueryWriter(
                             frameEncodeHandle,
-                            out metadataHandle
-                            ));
+                            out metadataHandle).ThrowOnFailureExtended();
 
                         PROPVARIANT propVar = new PROPVARIANT();
 
@@ -729,11 +718,10 @@ namespace System.Windows.Media.Imaging
 
                             lock (metadata.SyncObject)
                             {
-                                HRESULT.Check(UnsafeNativeMethods.WICMetadataQueryWriter.SetMetadataByName(
+                                UnsafeNativeMethods.WICMetadataQueryWriter.SetMetadataByName(
                                     metadataHandle,
                                     "/",
-                                    ref propVar
-                                    ));
+                                    ref propVar).ThrowOnFailureExtended();
 
                                 // Helpful for debugging stress and remote dumps
                                 _encodeState = EncodeState.FrameEncodeMetadataSet;
@@ -747,18 +735,15 @@ namespace System.Windows.Media.Imaging
                 }
 
                 Int32Rect r = new Int32Rect();
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapFrameEncode.WriteSource(
+                UnsafeNativeMethods.WICBitmapFrameEncode.WriteSource(
                     frameEncodeHandle,
                     outSourceHandle,
-                    ref r
-                    ));
+                    ref r).ThrowOnFailureExtended();
 
                 // Helpful for debugging stress and remote dumps
                 _encodeState = EncodeState.FrameEncodeSourceWritten;
 
-                HRESULT.Check(UnsafeNativeMethods.WICBitmapFrameEncode.Commit(
-                    frameEncodeHandle
-                    ));
+                UnsafeNativeMethods.WICBitmapFrameEncode.Commit(frameEncodeHandle).ThrowOnFailureExtended();
 
                 // Helpful for debugging stress and remote dumps
                 _encodeState = EncodeState.FrameEncodeCommitted;

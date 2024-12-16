@@ -3,19 +3,21 @@ setlocal enabledelayedexpansion
 
 :: This command launches a Visual Studio solution with environment variables required to use a local version of the .NET Core SDK.
 
+set _localDotNet=%~dp0.dotnet
+
 :: This tells .NET Core to use the same dotnet.exe that build scripts use
-set DOTNET_ROOT=%~dp0.dotnet
-set DOTNET_ROOT(x86)=%~dp0.dotnet\x86
+set DOTNET_ROOT=%_localDotNet%
+set DOTNET_ROOT(x86)=%_localDotNet%\x86
 
 :: This tells .NET Core not to go looking for .NET Core in other places
-set DOTNET_MULTILEVEL_LOOKUP=0
+:: set DOTNET_MULTILEVEL_LOOKUP=0
 
 :: Put our local dotnet.exe on PATH first so Visual Studio knows which one to use
-set PATH=%DOTNET_ROOT%;%PATH%
+set PATH=%_localDotNet%;%PATH%
 
 call restore.cmd
 
-if not exist "%DOTNET_ROOT%\dotnet.exe" (
+if not exist "%_localDotNet%\dotnet.exe" (
     echo [ERROR] .NET Core has not yet been installed. Run `%~dp0restore.cmd` to install tools
     exit /b 1
 )

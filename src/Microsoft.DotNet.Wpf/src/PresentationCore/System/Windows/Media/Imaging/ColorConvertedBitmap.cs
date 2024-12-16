@@ -1,10 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using MS.Internal;
 using MS.Win32.PresentationCore;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media.Imaging
 {
@@ -89,19 +90,18 @@ namespace System.Windows.Media.Imaging
             _bitmapInit.EnsureInitializedComplete();
             BitmapSourceSafeMILHandle wicConverter = null;
 
-            HRESULT.Check(UnsafeNativeMethods.WICCodec.CreateColorTransform(
-                    out wicConverter));
+            UnsafeNativeMethods.WICCodec.CreateColorTransform(out wicConverter).ThrowOnFailureExtended();
 
             lock (_syncObject)
             {
                 Guid fmtDestFmt = DestinationFormat.Guid;
 
-                HRESULT.Check(UnsafeNativeMethods.WICColorTransform.Initialize(
-                        wicConverter,
-                        Source.WicSourceHandle,
-                        SourceColorContext.ColorContextHandle,
-                        DestinationColorContext.ColorContextHandle,
-                        ref fmtDestFmt));
+                UnsafeNativeMethods.WICColorTransform.Initialize(
+                    wicConverter,
+                    Source.WicSourceHandle,
+                    SourceColorContext.ColorContextHandle,
+                    DestinationColorContext.ColorContextHandle,
+                    ref fmtDestFmt).ThrowOnFailureExtended();
             }
 
             //

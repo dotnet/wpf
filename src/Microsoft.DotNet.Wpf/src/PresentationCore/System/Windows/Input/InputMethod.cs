@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,6 +11,7 @@ using System.Windows.Threading;
 using System.Windows.Interop;
 using MS.Win32;
 using MS.Internal;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Input
 {
@@ -1292,7 +1293,7 @@ namespace System.Windows.Input
             IInputElement inputElement = (IInputElement)d;
             if (inputElement == Keyboard.FocusedElement)
             {
-                InputMethod.Current.EnableOrDisableInputMethod((bool) e.NewValue);
+                Current.EnableOrDisableInputMethod((bool) e.NewValue);
             }
         }
 
@@ -1657,7 +1658,7 @@ namespace System.Windows.Input
                 UnsafeNativeMethods.TF_LANGUAGEPROFILE[] tf_profiles = new UnsafeNativeMethods.TF_LANGUAGEPROFILE[1];
 
                 int fetched;
-                while(enumIpp.Next(1, tf_profiles,  out fetched) == NativeMethods.S_OK)
+                while(enumIpp.Next(1, tf_profiles,  out fetched) == HRESULT.S_OK)
                 {
                     // Check if this profile is active.
                     if (tf_profiles[0].fActive == true)

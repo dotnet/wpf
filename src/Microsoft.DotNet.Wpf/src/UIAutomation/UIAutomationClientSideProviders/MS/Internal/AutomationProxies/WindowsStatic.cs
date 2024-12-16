@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,6 +8,7 @@ using System;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.AutomationProxies
 {
@@ -172,7 +173,7 @@ namespace MS.Internal.AutomationProxies
             // could be a label or a linklabel
             // we differentiate based on whether the item has children or not
             Accessible acc = null;
-            return Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) == NativeMethods.S_OK && acc != null && acc.ChildCount > 0;
+            return Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) == HRESULT.S_OK && acc != null && acc.ChildCount > 0;
         }
 
         private static StaticType GetStaticTypeFromStyle(int style)

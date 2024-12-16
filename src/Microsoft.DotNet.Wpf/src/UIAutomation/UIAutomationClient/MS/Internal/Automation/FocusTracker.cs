@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -172,7 +172,7 @@ namespace MS.Internal.Automation
                         // use that instead.  This is here to get the subset link in the listview but could be usefull
                         // for listview subitems as well.
                         IRawElementProviderSimple realFocus = fragment.GetFocus();
-                        if(realFocus != null && !Object.ReferenceEquals(realFocus, provider))
+                        if(realFocus != null && !ReferenceEquals(realFocus, provider))
                         {
                             provider = realFocus;
                         }

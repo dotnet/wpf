@@ -19,9 +19,11 @@
     <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
     <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
     <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Windows.Primitives\System.Windows.Primitives.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="$(SystemIOPackagingPackage)" Version="$(SystemIOPackagingVersion)" />
     <PackageReference Include="Moq" Version="$(MoqPackageVersion)" />
     <PackageReference Include="coverlet.msbuild" Version="$(CoverletMSBuildPackageVersion)" />
     <PackageReference Include="xunit.stafact" Version="$(XUnitStaFactPackageVersion)" />
@@ -30,6 +32,10 @@
     <PackageReference Include="System.Formats.Nrbf" Version="$(SystemFormatsNrbfVersion)" />
     <PackageReference Include="System.Runtime.Serialization.Formatters" Version="$(SystemRuntimeSerializationFormattersPackageVersion)" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <MicrosoftPrivateWinFormsReference Include="System.Private.Windows.Core" />
   </ItemGroup>
 
 </Project>

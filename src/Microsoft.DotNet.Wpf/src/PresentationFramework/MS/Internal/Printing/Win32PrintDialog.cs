@@ -1,14 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 #if !DONOTREFPRINTINGASMMETA
 
-
 using System.Printing.Interop;
 using System.Printing;
 using System.Runtime.InteropServices;
 using System.Windows.Controls;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.Printing
 {
@@ -67,7 +67,7 @@ namespace MS.Internal.Printing
 
             try
             {
-                if (this._printQueue == null || this._printTicket == null)
+                if (_printQueue == null || _printTicket == null)
                 {
                     // Normally printDlgEx.SyncToStruct() probes the printer if both the print queue and print
                     // ticket are not null.
@@ -88,8 +88,7 @@ namespace MS.Internal.Printing
                     //
                     // Display the Win32 print dialog
                     //
-                    Int32 hr = UnsafeNativeMethods.PrintDlgEx(printDlgEx.UnmanagedPrintDlgEx);
-                    if (hr == MS.Win32.NativeMethods.S_OK)
+                    if (UnsafeNativeMethods.PrintDlgEx(printDlgEx.UnmanagedPrintDlgEx) == HRESULT.S_OK)
                     {
                         result = printDlgEx.SyncFromStruct();
                     }
@@ -118,12 +117,12 @@ namespace MS.Internal.Printing
 
                     if (owner == IntPtr.Zero)
                     {
-                        owner = MS.Win32.UnsafeNativeMethods.GetActiveWindow();
+                        owner = Win32.UnsafeNativeMethods.GetActiveWindow();
                     }
 
-                    if(0 != MS.Win32.UnsafeNativeMethods.MessageBox(new HandleRef(null, owner), message, caption, type))
+                    if (0 != Win32.UnsafeNativeMethods.MessageBox(new HandleRef(null, owner), message, caption, type))
                     {
-                         result = NativeMethods.PD_RESULT_CANCEL;
+                        result = NativeMethods.PD_RESULT_CANCEL;
                     }
                 }
                 else
@@ -284,7 +283,7 @@ namespace MS.Internal.Printing
             // We could avoid the exception if we had access to
             // MS.Internal.Printing.Configuration.NativeMethods.BindPTProviderThunk
 
-            string printerName = (this._printQueue != null) ? this._printQueue.FullName : string.Empty;
+            string printerName = (_printQueue != null) ? _printQueue.FullName : string.Empty;
 
             try
             {

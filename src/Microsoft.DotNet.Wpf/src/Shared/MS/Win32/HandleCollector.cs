@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,11 +24,6 @@ namespace MS.Win32
             return handle;
         }
 
-        internal static SafeHandle Add(SafeHandle handle, int type) {
-            handleTypes[type - 1].Add();
-            return handle;
-        }
-
         internal static void Add(int type) {
             handleTypes[type - 1].Add();
         }
@@ -36,15 +31,18 @@ namespace MS.Win32
         /// <devdoc>
         ///     Registers a new type of handle with the handle collector.
         /// </devdoc>
-        internal static int RegisterType(string typeName, int expense, int initialThreshold) {
+        internal static int RegisterType(string typeName, int expense, int initialThreshold)
+        {
             lock (handleMutex)
             {
                 if (handleTypeCount == 0 || handleTypeCount == handleTypes.Length)
                 {
                     HandleType[] newTypes = new HandleType[handleTypeCount + 10];
-                    if (handleTypes != null) {
+                    if (handleTypes != null)
+                    {
                         Array.Copy(handleTypes, 0, newTypes, 0, handleTypeCount);
                     }
+
                     handleTypes = newTypes;
                 }
 
@@ -59,11 +57,6 @@ namespace MS.Win32
         ///     frequently garbage collected.
         /// </devdoc>
         internal static IntPtr Remove(IntPtr handle, int type) {
-            handleTypes[type - 1].Remove();
-            return handle ; 
-        }
-
-        internal static SafeHandle Remove(SafeHandle handle, int type) {
             handleTypes[type - 1].Remove();
             return handle ; 
         }

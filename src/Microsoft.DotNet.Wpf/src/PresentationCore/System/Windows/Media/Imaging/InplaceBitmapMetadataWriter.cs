@@ -1,13 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
 using MS.Internal;
 using MS.Win32.PresentationCore;
-using MS.Internal.PresentationCore;                        // SecurityHelper
+using Windows.Win32.Foundation;                        // SecurityHelper
 
 namespace System.Windows.Media.Imaging
 {
@@ -16,20 +13,14 @@ namespace System.Windows.Media.Imaging
     /// <summary>
     /// Metadata Class for BitmapImage.
     /// </summary>
-    sealed public partial class InPlaceBitmapMetadataWriter : BitmapMetadata
+    public sealed partial class InPlaceBitmapMetadataWriter : BitmapMetadata
     {
         #region Constructors
 
-        /// <summary>
-        ///
-        /// </summary>
         private InPlaceBitmapMetadataWriter()
         {
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         internal InPlaceBitmapMetadataWriter(
             SafeMILHandle /* IWICFastMetadataEncoder */ fmeHandle,
             SafeMILHandle /* IWICMetadataQueryWriter */ metadataHandle,
@@ -39,10 +30,7 @@ namespace System.Windows.Media.Imaging
             _fmeHandle = fmeHandle;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        static internal InPlaceBitmapMetadataWriter CreateFromFrameDecode(BitmapSourceSafeMILHandle frameHandle, object syncObject)
+        internal static InPlaceBitmapMetadataWriter CreateFromFrameDecode(BitmapSourceSafeMILHandle frameHandle, object syncObject)
         {
             Invariant.Assert(frameHandle != null);
 
@@ -53,24 +41,21 @@ namespace System.Windows.Media.Imaging
             {
                 lock (syncObject)
                 {
-                    HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateFastMetadataEncoderFromFrameDecode(
-                            factoryMaker.ImagingFactoryPtr,
-                            frameHandle,
-                            out fmeHandle));
+                    UnsafeNativeMethods.WICImagingFactory.CreateFastMetadataEncoderFromFrameDecode(
+                        factoryMaker.ImagingFactoryPtr,
+                        frameHandle,
+                        out fmeHandle).ThrowOnFailureExtended();
                 }
             }
 
-            HRESULT.Check(UnsafeNativeMethods.WICFastMetadataEncoder.GetMetadataQueryWriter(
-                    fmeHandle,
-                    out metadataHandle));
+            UnsafeNativeMethods.WICFastMetadataEncoder.GetMetadataQueryWriter(
+                fmeHandle,
+                out metadataHandle).ThrowOnFailureExtended();
 
             return new InPlaceBitmapMetadataWriter(fmeHandle, metadataHandle, syncObject);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
-        static internal InPlaceBitmapMetadataWriter CreateFromDecoder(SafeMILHandle decoderHandle, object syncObject)
+        internal static InPlaceBitmapMetadataWriter CreateFromDecoder(SafeMILHandle decoderHandle, object syncObject)
         {
             Invariant.Assert(decoderHandle != null);
 
@@ -81,35 +66,28 @@ namespace System.Windows.Media.Imaging
             {
                 lock (syncObject)
                 {
-                    HRESULT.Check(UnsafeNativeMethods.WICImagingFactory.CreateFastMetadataEncoderFromDecoder(
-                            factoryMaker.ImagingFactoryPtr,
-                            decoderHandle,
-                            out fmeHandle));
+                    UnsafeNativeMethods.WICImagingFactory.CreateFastMetadataEncoderFromDecoder(
+                        factoryMaker.ImagingFactoryPtr,
+                        decoderHandle,
+                        out fmeHandle).ThrowOnFailureExtended();
                 }
             }
 
-            HRESULT.Check(UnsafeNativeMethods.WICFastMetadataEncoder.GetMetadataQueryWriter(
-                    fmeHandle,
-                    out metadataHandle));
+            UnsafeNativeMethods.WICFastMetadataEncoder.GetMetadataQueryWriter(
+                fmeHandle,
+                out metadataHandle).ThrowOnFailureExtended();
 
             return new InPlaceBitmapMetadataWriter(fmeHandle, metadataHandle, syncObject);
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         public bool TrySave()
         {
-            int hr;
-
             Invariant.Assert(_fmeHandle != null);
 
             lock (SyncObject)
             {
-                hr = UnsafeNativeMethods.WICFastMetadataEncoder.Commit(_fmeHandle);
+                return UnsafeNativeMethods.WICFastMetadataEncoder.Commit(_fmeHandle).Succeeded;
             }
-
-            return HRESULT.Succeeded(hr);
         }
 
         #endregion

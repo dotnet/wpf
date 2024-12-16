@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,6 +6,7 @@
 //
 
 using MS.Internal;
+using Windows.Win32.Foundation;
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
@@ -30,7 +31,9 @@ namespace System.Windows.Media
                     // should catch it. We won't add ref counter here if this
                     // happens.
 
-                    HRESULT.Check(UnsafeNativeMethods.MILFactory2.CreateFactory(out s_pFactory, MS.Internal.Composition.Version.MilSdkVersion));
+                    UnsafeNativeMethods.MILFactory2.CreateFactory(
+                        out s_pFactory,
+                        MS.Internal.Composition.Version.MilSdkVersion).ThrowOnFailureExtended();
                 }
 
                 s_cInstance++;
@@ -111,7 +114,9 @@ namespace System.Windows.Media
                 {
                     lock (s_factoryMakerLock)
                     {
-                        HRESULT.Check(UnsafeNativeMethods.WICCodec.CreateImagingFactory(UnsafeNativeMethods.WICCodec.WINCODEC_SDK_VERSION, out s_pImagingFactory));
+                        UnsafeNativeMethods.WICCodec.CreateImagingFactory(
+                            UnsafeNativeMethods.WICCodec.WINCODEC_SDK_VERSION,
+                            out s_pImagingFactory).ThrowOnFailureExtended();
                     }
                 }
                 Debug.Assert(s_pImagingFactory != IntPtr.Zero);

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,6 +6,7 @@ using System.Runtime.InteropServices;
 using MS.Internal;
 using MS.Win32;
 using Microsoft.Win32.SafeHandles;
+using Windows.Win32.Foundation;
 
 using UnsafeNativeMethodsMilCoreApi = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
@@ -91,7 +92,7 @@ namespace System.Windows.Media
             // what we want.
             if (!UnsafeNativeMethodsMilCoreApi.Mscms.GetColorProfileFromHandle(_profileHandle, buffer, ref bufferSize) && buffer != null)
             {
-                HRESULT.Check(Marshal.GetHRForLastWin32Error());
+                ((HRESULT)Marshal.GetHRForLastWin32Error()).ThrowOnFailureExtended();
             }
         }
 

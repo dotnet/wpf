@@ -1,13 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-
 
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using MS.Internal.Interop;
+using Windows.Win32.Foundation;
 
 using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 

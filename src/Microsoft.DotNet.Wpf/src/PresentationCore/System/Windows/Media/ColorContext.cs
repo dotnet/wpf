@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,6 +16,7 @@ using System.Text;
 
 using UnsafeNativeMethodsMilCoreApi = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using IWICCC = MS.Win32.PresentationCore.UnsafeNativeMethods.IWICColorContext;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media
 {
@@ -39,9 +40,9 @@ namespace System.Windows.Media
             // will be invalid and we'll emulate the old failure behavior later in
             // OpenProfileStream()
             //
-            
+
             IWICCC.WICColorContextType type;
-            if (HRESULT.Failed(IWICCC.GetType(_colorContextHandle, out type)))
+            if (IWICCC.GetType(_colorContextHandle, out type).Failed)
             {
                 return;
             }
@@ -50,13 +51,15 @@ namespace System.Windows.Media
             {
                 case IWICCC.WICColorContextType.WICColorContextProfile:
                     uint cbProfileActual;
-                    int hr = IWICCC.GetProfileBytes(_colorContextHandle, 0, null, out cbProfileActual);
-                    if (HRESULT.Succeeded(hr) && cbProfileActual != 0)
+                    HRESULT hr = IWICCC.GetProfileBytes(_colorContextHandle, 0, null, out cbProfileActual);
+                    if (hr.Succeeded && cbProfileActual != 0)
                     {
                         byte[] profileData = new byte[cbProfileActual];
-                        if (HRESULT.Failed(IWICCC.GetProfileBytes(
-                            _colorContextHandle, cbProfileActual, profileData, out cbProfileActual))
-                            )
+                        if (IWICCC.GetProfileBytes(
+                            _colorContextHandle,
+                            cbProfileActual,
+                            profileData,
+                            out cbProfileActual).Failed)
                         {
                             return;
                         }
@@ -68,7 +71,7 @@ namespace System.Windows.Media
 
                 case IWICCC.WICColorContextType.WICColorContextExifColorSpace:
                     uint colorSpace;
-                    if (HRESULT.Failed(IWICCC.GetExifColorSpace(_colorContextHandle, out colorSpace)))
+                    if (IWICCC.GetExifColorSpace(_colorContextHandle, out colorSpace).Failed)
                     {
                         return;
                     }
@@ -115,16 +118,17 @@ namespace System.Windows.Media
                             _colorContextHandle.Dispose();
                             _colorContextHandle = null;
                             
-                            if (HRESULT.Failed(UnsafeNativeMethodsMilCoreApi.WICCodec.CreateColorContext(
-                                factoryMaker.ImagingFactoryPtr, out _colorContextHandle))
-                                )
+                            if (UnsafeNativeMethodsMilCoreApi.WICCodec.CreateColorContext(
+                                factoryMaker.ImagingFactoryPtr,
+                                out _colorContextHandle).Failed)
                             {
                                 return;
                             }
 
-                            if (HRESULT.Failed(IWICCC.InitializeFromMemory(
-                                _colorContextHandle, sRGBProfile, (uint)sRGBProfile.Length))
-                                )
+                            if (IWICCC.InitializeFromMemory(
+                                _colorContextHandle,
+                                sRGBProfile,
+                                (uint)sRGBProfile.Length).Failed)
                             {
                                 return;
                             }
@@ -335,7 +339,7 @@ namespace System.Windows.Media
             }
         }
 
-        internal delegate int GetColorContextsDelegate(ref uint numContexts, IntPtr[] colorContextPtrs);
+        internal delegate HRESULT GetColorContextsDelegate(ref uint numContexts, IntPtr[] colorContextPtrs);
 
         /// <summary>
         /// Helper method that will retrieve ColorContexts from an unmanaged object (e.g. BitmapDecoder or BitmapFrameDecode)
@@ -345,12 +349,12 @@ namespace System.Windows.Media
             uint numContexts = 0;
             List<ColorContext> colorContextsList = null;
 
-            int hr = getColorContexts(ref numContexts, null);
-            if (hr != (int)WinCodecErrors.WINCODEC_ERR_UNSUPPORTEDOPERATION)
+            HRESULT hr = getColorContexts(ref numContexts, null);
+            if (hr != HRESULT.WINCODEC_ERR_UNSUPPORTEDOPERATION)
             {
-                HRESULT.Check(hr);
+                hr.ThrowOnFailureExtended();
             }
-            
+
             if (numContexts > 0)
             {
                 // GetColorContexts does not create new IWICColorContexts. Instead, it initializes existing
@@ -361,7 +365,9 @@ namespace System.Windows.Media
                 {
                     for (uint i = 0; i < numContexts; ++i)
                     {
-                        HRESULT.Check(UnsafeNativeMethodsMilCoreApi.WICCodec.CreateColorContext(factoryMaker.ImagingFactoryPtr, out colorContextHandles[i]));
+                        UnsafeNativeMethodsMilCoreApi.WICCodec.CreateColorContext(
+                            factoryMaker.ImagingFactoryPtr,
+                            out colorContextHandles[i]).ThrowOnFailureExtended();
                     }
                 }
 
@@ -374,7 +380,7 @@ namespace System.Windows.Media
                         colorContextPtrs[i] = colorContextHandles[i].DangerousGetHandle();
                     }
 
-                    HRESULT.Check(getColorContexts(ref numContexts, colorContextPtrs));
+                    getColorContexts(ref numContexts, colorContextPtrs).ThrowOnFailureExtended();
                 }
 
                 colorContextsList = new List<ColorContext>((int)numContexts);
@@ -549,7 +555,11 @@ namespace System.Windows.Media
             uint bufferSize = SIZE;
             StringBuilder buffer = new StringBuilder(SIZE);
 
-            HRESULT.Check(UnsafeNativeMethodsMilCoreApi.Mscms.GetStandardColorSpaceProfile(IntPtr.Zero, dwProfileID, buffer, out bufferSize));
+            UnsafeNativeMethodsMilCoreApi.Mscms.GetStandardColorSpaceProfile(
+                IntPtr.Zero,
+                dwProfileID,
+                buffer,
+                out bufferSize).ThrowOnFailureExtended();
 
             Uri profilePath;
             string profilePathString = buffer.ToString();
@@ -567,7 +577,10 @@ namespace System.Windows.Media
                 // bufferSize was modified by GetStandardColorSpaceProfile so set it again
                 bufferSize = SIZE;
 
-                HRESULT.Check(UnsafeNativeMethodsMilCoreApi.Mscms.GetColorDirectory(IntPtr.Zero, buffer, out bufferSize));
+                UnsafeNativeMethodsMilCoreApi.Mscms.GetColorDirectory(
+                    IntPtr.Zero,
+                    buffer,
+                    out bufferSize).ThrowOnFailureExtended();
 
                 profilePath = new Uri(Path.Combine(buffer.ToString(), profilePathString));
             }
@@ -600,8 +613,13 @@ namespace System.Windows.Media
 
                     using (FactoryMaker factoryMaker = new FactoryMaker())
                     {
-                        HRESULT.Check(UnsafeNativeMethodsMilCoreApi.WICCodec.CreateColorContext(factoryMaker.ImagingFactoryPtr, out _colorContextHandle));
-                        HRESULT.Check(IWICCC.InitializeFromMemory(_colorContextHandle, rawBytes, (uint)numBytesRead));
+                        UnsafeNativeMethodsMilCoreApi.WICCodec.CreateColorContext(
+                            factoryMaker.ImagingFactoryPtr,
+                            out _colorContextHandle).ThrowOnFailureExtended();
+                        IWICCC.InitializeFromMemory(
+                            _colorContextHandle,
+                            rawBytes,
+                            (uint)numBytesRead).ThrowOnFailureExtended();
                     }
 
                     return;
@@ -647,8 +665,8 @@ namespace System.Windows.Media
                             return;
                         }
                         else
-                        {                
-                            HRESULT.Check(Marshal.GetHRForLastWin32Error());
+                        {
+                            ((HRESULT)Marshal.GetHRForLastWin32Error()).ThrowOnFailureExtended();
                         }
                     }
                 }
@@ -661,8 +679,8 @@ namespace System.Windows.Media
                     return;
                 }
                 else
-                {                
-                    HRESULT.Check(Marshal.GetHRForLastWin32Error());
+                {
+                    ((HRESULT)Marshal.GetHRForLastWin32Error()).ThrowOnFailureExtended();
                 }
             }
             

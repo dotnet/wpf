@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,6 +11,7 @@ using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.AutomationProxies
 {
@@ -178,7 +179,7 @@ namespace MS.Internal.AutomationProxies
 
                 // Use IAccessible implementation to confirm the spinner & children
                 Accessible acc = null;
-                if (Accessible.AccessibleObjectFromWindow(hwndSpin, NativeMethods.OBJID_CLIENT, ref acc) != NativeMethods.S_OK || acc == null)
+                if (Accessible.AccessibleObjectFromWindow(hwndSpin, NativeMethods.OBJID_CLIENT, ref acc) != HRESULT.S_OK || acc == null)
                 {
                     return null;
                 }

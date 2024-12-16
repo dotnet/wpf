@@ -1,10 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Text;
 using System.Runtime.InteropServices;
+using System.Text;
 using MS.Win32;
 
 // Description: P/Invokes for methods that need to call SetLastError(0)
@@ -21,8 +21,6 @@ namespace MS.Internal.UIAutomationClientSideProviders
 namespace MS.Internal.WinFormsIntegration
 #elif UIAUTOMATIONTYPES
 namespace MS.Internal.UIAutomationTypes
-#elif DRT
-namespace MS.Internal.Drt
 #else
 #error Class is being used from an unknown assembly.
 #endif
@@ -33,7 +31,7 @@ namespace MS.Internal.Drt
 
 #if WINDOWSFORMSINTEGRATION     // WinFormsIntegration
 
-        [DllImport(PresentationNativeDll, EntryPoint="EnableWindowWrapper", SetLastError = true, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+        [DllImport(PresentationNativeDll, EntryPoint="EnableWindowWrapper", SetLastError = true, ExactSpelling = true, CharSet = CharSet.Auto)]
         public static extern bool EnableWindow(IntPtr hWnd, bool enable);
 
 #elif UIAUTOMATIONCLIENT || UIAUTOMATIONCLIENTSIDEPROVIDERS   // UIAutomation
@@ -93,7 +91,7 @@ namespace MS.Internal.Drt
 #endif
 #else       // Base/Core/FW + DRT
 
-    [DllImport(PresentationNativeDll, EntryPoint="EnableWindowWrapper", SetLastError = true, ExactSpelling = true, CharSet = System.Runtime.InteropServices.CharSet.Auto)]
+    [DllImport(PresentationNativeDll, EntryPoint="EnableWindowWrapper", SetLastError = true, ExactSpelling = true, CharSet = CharSet.Auto)]
         public static extern bool EnableWindow(HandleRef hWnd, bool enable);
 
         [DllImport(PresentationNativeDll, EntryPoint="GetAncestorWrapper", CharSet = CharSet.Auto)]
@@ -104,9 +102,6 @@ namespace MS.Internal.Drt
 
         [DllImport(PresentationNativeDll, EntryPoint="GetParentWrapper", SetLastError = true)]
         public static extern IntPtr GetParent(HandleRef hWnd);
-
-        [DllImport(PresentationNativeDll, EntryPoint="GetWindowWrapper", ExactSpelling = true, SetLastError = true)]
-        public static extern IntPtr GetWindow(IntPtr hWnd, int uCmd);
 
         [DllImport(PresentationNativeDll, EntryPoint="GetWindowLongWrapper", CharSet=CharSet.Auto, SetLastError=true)]
         public static extern Int32 GetWindowLong(HandleRef hWnd, int nIndex );
@@ -129,7 +124,7 @@ namespace MS.Internal.Drt
         [DllImport(PresentationNativeDll, EntryPoint = "GetWindowTextWrapper", CharSet=CharSet.Auto, BestFitMapping = false, SetLastError = true)]
         public static extern int GetWindowText(HandleRef hWnd, [Out] StringBuilder lpString, int nMaxCount);
 
-        [DllImport(PresentationNativeDll, EntryPoint = "GetWindowTextLengthWrapper", CharSet = System.Runtime.InteropServices.CharSet.Auto, SetLastError = true)]
+        [DllImport(PresentationNativeDll, EntryPoint = "GetWindowTextLengthWrapper", CharSet = CharSet.Auto, SetLastError = true)]
         public static extern int GetWindowTextLength(HandleRef hWnd);
 
         [DllImport(PresentationNativeDll, EntryPoint="MapWindowPointsWrapper", SetLastError = true, ExactSpelling=true, CharSet=CharSet.Auto)]

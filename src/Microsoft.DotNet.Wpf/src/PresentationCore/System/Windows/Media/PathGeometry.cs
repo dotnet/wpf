@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,6 +7,7 @@ using System.Windows.Media.Composition;
 using System.Windows.Markup;
 
 using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
+using Windows.Win32.Foundation;
 
 namespace System.Windows.Media
 {
@@ -568,14 +569,14 @@ namespace System.Windows.Media
                 {
                     Debug.Assert(pbPathData != (byte*)0);
 
-                    HRESULT.Check(MilCoreApi.MilUtility_GetPointAtLengthFraction(
+                    MilCoreApi.MilUtility_GetPointAtLengthFraction(
                         &pathData.Matrix,
                         pathData.FillRule,
                         pbPathData,
                         pathData.Size,
                         progress,
                         out point,
-                        out tangent));
+                        out tangent).ThrowOnFailureExtended();
                 }
             }
         }
@@ -619,7 +620,7 @@ namespace System.Windows.Media
                         FillRule fillRule = FillRule.Nonzero;
 
                         FigureList list = new FigureList();
-                        int hr = UnsafeNativeMethods.MilCoreApi.MilUtility_PathGeometryCombine(
+                        HRESULT result = UnsafeNativeMethods.MilCoreApi.MilUtility_PathGeometryCombine(
                             &matrix,
                             &data1.Matrix,
                             data1.FillRule,
@@ -635,7 +636,7 @@ namespace System.Windows.Media
                             mode,
                             out fillRule);
 
-                        if (hr == (int)MILErrors.WGXERR_BADNUMBER)
+                        if (result == MilErrors.WGXERR_BADNUMBER)
                         {
                             // When we encounter NaNs in the renderer, we absorb the error and draw
                             // nothing. To be consistent, we return an empty geometry.
@@ -643,8 +644,7 @@ namespace System.Windows.Media
                         }
                         else
                         {
-                            HRESULT.Check(hr);
-
+                            result.ThrowOnFailureExtended();
                             resultGeometry = new PathGeometry(list.Figures, fillRule, null);
                         }
                     }
@@ -710,10 +710,10 @@ namespace System.Windows.Media
         /// </summary>
         internal static Rect GetPathBounds(
             PathGeometryData pathData,
-            Pen pen, 
-            Matrix worldMatrix, 
-            double tolerance, 
-            ToleranceType type, 
+            Pen pen,
+            Matrix worldMatrix,
+            double tolerance,
+            ToleranceType type,
             bool skipHollows)
         {
             if (pathData.IsEmpty())
@@ -722,18 +722,18 @@ namespace System.Windows.Media
             }
             else
             {
-                MilRectD bounds = PathGeometry.GetPathBoundsAsRB(
+                MilRectD bounds = GetPathBoundsAsRB(
                     pathData,
                     pen,
-                    worldMatrix, 
-                    tolerance, 
+                    worldMatrix,
+                    tolerance,
                     type,
                     skipHollows);
 
                 return bounds.AsRect;
             }
         }
-        
+
         /// <summary>
         /// Gets the bounds of this PathGeometry as an axis-aligned bounding box with pen and/or transform
         /// 
@@ -771,9 +771,9 @@ namespace System.Windows.Media
 
                     Debug.Assert(pbPathData != (byte*)0);
 
-                    fixed (double *pDashArray = dashArray)
+                    fixed (double* pDashArray = dashArray)
                     {
-                        int hr = UnsafeNativeMethods.MilCoreApi.MilUtility_PathGeometryBounds(
+                        HRESULT result = UnsafeNativeMethods.MilCoreApi.MilUtility_PathGeometryBounds(
                             (pen == null) ? null : &penData,
                             pDashArray,
                             &worldMatrix3X2,
@@ -784,10 +784,9 @@ namespace System.Windows.Media
                             tolerance,
                             type == ToleranceType.Relative,
                             skipHollows,
-                            &bounds
-                            );
+                            &bounds);
 
-                        if (hr == (int)MILErrors.WGXERR_BADNUMBER)
+                        if (result == MilErrors.WGXERR_BADNUMBER)
                         {
                             // When we encounter NaNs in the renderer, we absorb the error and draw
                             // nothing. To be consistent, we report that the geometry has empty bounds
@@ -797,7 +796,7 @@ namespace System.Windows.Media
                         }
                         else
                         {
-                            HRESULT.Check(hr);
+                            result.ThrowOnFailureExtended();
                         }
                     }
 
@@ -827,11 +826,11 @@ namespace System.Windows.Media
                 {
                     Debug.Assert(pbPathData1 != (byte*)0);
 
-                    fixed (byte *pbPathData2 = data2.SerializedData)
+                    fixed (byte* pbPathData2 = data2.SerializedData)
                     {
                         Debug.Assert(pbPathData2 != (byte*)0);
 
-                        int hr = MilCoreApi.MilUtility_PathGeometryHitTestPathGeometry(
+                        HRESULT result = MilCoreApi.MilUtility_PathGeometryHitTestPathGeometry(
                             &data1.Matrix,
                             data1.FillRule,
                             pbPathData1,
@@ -844,7 +843,7 @@ namespace System.Windows.Media
                             type == ToleranceType.Relative,
                             &detail);
 
-                        if (hr == (int)MILErrors.WGXERR_BADNUMBER)
+                        if (result == MilErrors.WGXERR_BADNUMBER)
                         {
                             // When we encounter NaNs in the renderer, we absorb the error and draw
                             // nothing. To be consistent, we report that the geometry is never hittable.
@@ -852,7 +851,7 @@ namespace System.Windows.Media
                         }
                         else
                         {
-                            HRESULT.Check(hr);
+                            result.ThrowOnFailureExtended();
                         }
                     }
                 }
@@ -952,10 +951,10 @@ namespace System.Windows.Media
             PathGeometryData data = new PathGeometryData();
             data.FillRule = FillRule;
             data.Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform);
-            
+
             if (IsObviouslyEmpty())
             {
-                return Geometry.GetEmptyPathGeometryData();                
+                return GetEmptyPathGeometryData();
             }
 
             ByteStreamGeometryContext ctx = new ByteStreamGeometryContext();
@@ -989,7 +988,7 @@ namespace System.Windows.Media
                     // Obtain handles for properties that implement DUCE.IResource
                     DUCE.ResourceHandle hTransform;
                     if (vTransform == null ||
-                        Object.ReferenceEquals(vTransform, Transform.Identity)
+                        ReferenceEquals(vTransform, Transform.Identity)
                        )
                     {
                         hTransform = DUCE.ResourceHandle.Null;

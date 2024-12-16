@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,6 +19,7 @@ using System.Windows.Input;
 using System.Windows.Interop;
 
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
+using Windows.Win32.Foundation;
 
 namespace System.Windows
 {
@@ -627,7 +628,7 @@ namespace System.Windows
         /// <summary>
         /// Query the source to know the drag continue or not.
         /// </summary>
-        int UnsafeNativeMethods.IOleDropSource.OleQueryContinueDrag(int escapeKey, int grfkeyState)
+        HRESULT UnsafeNativeMethods.IOleDropSource.OleQueryContinueDrag(int escapeKey, int grfkeyState)
         {
             bool escapePressed;
             QueryContinueDragEventArgs args;
@@ -648,24 +649,24 @@ namespace System.Windows
             // Check the drag continue result.
             if (args.Action == DragAction.Continue)
             {
-                return NativeMethods.S_OK;
+                return HRESULT.S_OK;
             }
             else if (args.Action == DragAction.Drop)
             {
-                return NativeMethods.DRAGDROP_S_DROP;
+                return HRESULT.DRAGDROP_S_DROP;
             }
             else if (args.Action == DragAction.Cancel)
             {
-                return NativeMethods.DRAGDROP_S_CANCEL;
+                return HRESULT.DRAGDROP_S_CANCEL;
             }
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         /// <summary>
         /// Give feedback from the source whether use the default cursor or not.
         /// </summary>
-        int UnsafeNativeMethods.IOleDropSource.OleGiveFeedback(int effect)
+        HRESULT UnsafeNativeMethods.IOleDropSource.OleGiveFeedback(int effect)
         {
             GiveFeedbackEventArgs args;
 
@@ -678,10 +679,10 @@ namespace System.Windows
             // Check the give feedback result whether use default cursors or not.
             if (args.UseDefaultCursors)
             {
-                return NativeMethods.DRAGDROP_S_USEDEFAULTCURSORS;
+                return HRESULT.DRAGDROP_S_USEDEFAULTCURSORS;
             }
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         /// <summary>
@@ -910,7 +911,7 @@ namespace System.Windows
         /// <summary>
         /// OleDragEnter - check the data object and notify DragEnter to the target element.
         /// </summary>
-        int UnsafeNativeMethods.IOleDropTarget.OleDragEnter(object data, int dragDropKeyStates, long point, ref int effects)
+        HRESULT UnsafeNativeMethods.IOleDropTarget.OleDragEnter(object data, int dragDropKeyStates, long point, ref int effects)
         {
             DependencyObject target;
             Point targetPoint;
@@ -922,7 +923,7 @@ namespace System.Windows
                 // Set the none effect.
                 effects = (int)DragDropEffects.None;
 
-                return NativeMethods.S_FALSE;
+                return HRESULT.S_FALSE;
             }
 
             // Get the current target from the mouse drag point that is based on screen.
@@ -947,13 +948,13 @@ namespace System.Windows
                 effects = (int)DragDropEffects.None;
             }
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         /// <summary>
         /// OleDragOver - get the drop effect from the target element.
         /// </summary>
-        int UnsafeNativeMethods.IOleDropTarget.OleDragOver(int dragDropKeyStates, long point, ref int effects)
+        HRESULT UnsafeNativeMethods.IOleDropTarget.OleDragOver(int dragDropKeyStates, long point, ref int effects)
         {
             DependencyObject target;
             Point targetPoint;
@@ -1032,13 +1033,13 @@ namespace System.Windows
                 }
             }
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         /// <summary>
         /// OleDragLeave.
         /// </summary>
-        int UnsafeNativeMethods.IOleDropTarget.OleDragLeave()
+        HRESULT UnsafeNativeMethods.IOleDropTarget.OleDragLeave()
         {
             if (_lastTarget != null)
             {
@@ -1065,13 +1066,13 @@ namespace System.Windows
                 }
             }
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         /// <summary>
         /// OleDrop - drop the object to the target element.
         /// </summary>
-        int UnsafeNativeMethods.IOleDropTarget.OleDrop(object data, int dragDropKeyStates, long point, ref int effects)
+        HRESULT UnsafeNativeMethods.IOleDropTarget.OleDrop(object data, int dragDropKeyStates, long point, ref int effects)
         {
             IDataObject dataObject;
             DependencyObject target;
@@ -1083,7 +1084,7 @@ namespace System.Windows
             {
                 effects = (int)DragDropEffects.None;
 
-                return NativeMethods.S_FALSE;
+                return HRESULT.S_FALSE;
             }
 
             // Reset last element and target point.
@@ -1108,7 +1109,7 @@ namespace System.Windows
                 effects = (int)DragDropEffects.None;
             }
 
-            return NativeMethods.S_OK;
+            return HRESULT.S_OK;
         }
 
         #endregion IOleDropTarget

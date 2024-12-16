@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,8 +23,7 @@ using System.Diagnostics.CodeAnalysis;
 
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 using SNM = Standard.NativeMethods;
-using HRESULT = MS.Internal.Interop.HRESULT;
-using Win32Error = MS.Internal.Interop.Win32Error;
+using Windows.Win32.Foundation;
 
 //In order to avoid generating warnings about unknown message numbers and
 //unknown pragmas when compiling your C# source code with the actual C# compiler,
@@ -84,15 +83,15 @@ namespace System.Windows
             WM_APPLYTASKBARITEMINFO = UnsafeNativeMethods.RegisterWindowMessage("WPF_ApplyTaskbarItemInfo");
 
             EventManager.RegisterClassHandler(typeof(Window),
-                UIElement.ManipulationCompletedEvent,
+                ManipulationCompletedEvent,
                 new EventHandler<ManipulationCompletedEventArgs>(OnStaticManipulationCompleted),
                 /*handledEventsToo*/ true);
             EventManager.RegisterClassHandler(typeof(Window),
-                UIElement.ManipulationInertiaStartingEvent,
+                ManipulationInertiaStartingEvent,
                 new EventHandler<ManipulationInertiaStartingEventArgs>(OnStaticManipulationInertiaStarting),
                 /*handledEventsToo*/ true);
 
-            Window.DpiChangedEvent = EventManager.RegisterRoutedEvent("DpiChanged", RoutingStrategy.Bubble,
+            DpiChangedEvent = EventManager.RegisterRoutedEvent("DpiChanged", RoutingStrategy.Bubble,
                 typeof (System.Windows.DpiChangedEventHandler), typeof (Window));
         }
 
@@ -515,7 +514,7 @@ namespace System.Windows
             {
                 // Don't use UIElementCollection because we don't have a reference to content's visual parent;
                 // window has style and user can change it.
-                return new SingleChildEnumerator(this.Content);
+                return new SingleChildEnumerator(Content);
             }
         }
 
@@ -536,7 +535,7 @@ namespace System.Windows
             // Normally this value is set to the root Window element, all the element
             // inside the window view will get this value through property inheritance mechanism.
 
-            return dependencyObject.GetValue(Window.IWindowServiceProperty) as Window;
+            return dependencyObject.GetValue(IWindowServiceProperty) as Window;
         }
 
         #endregion static public method
@@ -683,7 +682,7 @@ namespace System.Windows
                 // Even if some of the taskbar methods get this error it doesn't mean that all of them will.
                 // They aren't all implemented with SendMessageTimeout, and unfortunately the ITaskbarList3 API inconsistently
                 // exposes that implementation detail.
-                if (hr == (HRESULT)Win32Error.ERROR_TIMEOUT)
+                if (hr == HRESULT.FromWin32(WIN32_ERROR.ERROR_TIMEOUT))
                 {
                     // Explorer appears to be busy.  Post back to the Window to try again.
                     if (TraceShell.IsEnabled)
@@ -695,7 +694,7 @@ namespace System.Windows
                     // Explorer being non-responsive should be a transient issue.  Post back to apply the full TaskbarItemInfo.
                     _taskbarRetryTimer.Start();
                 }
-                else if (hr == (HRESULT)Win32Error.ERROR_INVALID_WINDOW_HANDLE || hr == HRESULT.E_NOTIMPL)
+                else if (hr == HRESULT.FromWin32(WIN32_ERROR.ERROR_INVALID_WINDOW_HANDLE) || hr == HRESULT.E_NOTIMPL)
                 {
                     // We'll get this when Explorer's not running.  This means there's no Shell to integrate with.
                     if (TraceShell.IsEnabled)
@@ -722,7 +721,7 @@ namespace System.Windows
         private void OnTaskbarItemInfoSubPropertyChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             // Don't propagate changes from other TaskbarItemInfos.
-            if (sender != this.TaskbarItemInfo)
+            if (sender != TaskbarItemInfo)
             {
                 // Since this and the TaskbarItemInfo should share affinity for the same thread
                 // this really shouldn't happen...
@@ -1644,8 +1643,8 @@ namespace System.Windows
         /// </summary>
         public event DpiChangedEventHandler DpiChanged
         {
-            add { AddHandler(Window.DpiChangedEvent, value); }
-            remove { RemoveHandler(Window.DpiChangedEvent, value); }
+            add { AddHandler(DpiChangedEvent, value); }
+            remove { RemoveHandler(DpiChangedEvent, value); }
         }
 
         /// <summary>
@@ -1765,7 +1764,7 @@ namespace System.Windows
         /// </summary>
         protected override void OnDpiChanged(DpiScale oldDpi, DpiScale newDpi)
         {
-            RaiseEvent(new DpiChangedEventArgs(oldDpi, newDpi, Window.DpiChangedEvent, this));
+            RaiseEvent(new DpiChangedEventArgs(oldDpi, newDpi, DpiChangedEvent, this));
         }
 
         /// <summary>
@@ -1870,9 +1869,9 @@ namespace System.Windows
                 return arrangeBounds;
             }
 
-            if (this.VisualChildrenCount > 0)
+            if (VisualChildrenCount > 0)
             {
-                UIElement child = this.GetVisualChild(0) as UIElement;
+                UIElement child = GetVisualChild(0) as UIElement;
                 if (child != null)
                 {
                     // Find out the size of the window frame x.
@@ -1946,7 +1945,7 @@ namespace System.Windows
                 // Thus we don't want to hook up another event handler
                 if (_postContentRenderedFromLoadedHandler == false)
                 {
-                    this.Loaded += new RoutedEventHandler(LoadedHandler);
+                    Loaded += new RoutedEventHandler(LoadedHandler);
                     _postContentRenderedFromLoadedHandler = true;
                 }
             }
@@ -2674,10 +2673,10 @@ namespace System.Windows
 
         internal virtual void GetRequestedDimensions(ref double requestedLeft, ref double requestedTop, ref double requestedWidth, ref double requestedHeight)
         {
-            requestedTop = this.Top;
-            requestedLeft = this.Left;
-            requestedWidth = this.Width;
-            requestedHeight = this.Height;
+            requestedTop = Top;
+            requestedLeft = Left;
+            requestedWidth = Width;
+            requestedHeight = Height;
         }
 
         internal virtual void SetupInitialState(double requestedTop, double requestedLeft, double requestedWidth, double requestedHeight)
@@ -2928,7 +2927,7 @@ namespace System.Windows
                     double yDeviceUnits = rc.top;
 
                     // inputs to CalculateWindowLocation must be in DEVICE units
-                    Point newSizeDeviceUnits = LogicalToDeviceUnits(new Point(this.ActualWidth, this.ActualHeight));
+                    Point newSizeDeviceUnits = LogicalToDeviceUnits(new Point(ActualWidth, ActualHeight));
                     if (CalculateWindowLocation(ref xDeviceUnits, ref yDeviceUnits, new Size(newSizeDeviceUnits.X, newSizeDeviceUnits.Y)))
                     {
                         if (WindowState == WindowState.Normal)
@@ -3406,9 +3405,9 @@ namespace System.Windows
                 return new Size(0,0);
             }
 
-            if (this.VisualChildrenCount > 0)
+            if (VisualChildrenCount > 0)
             {
-                UIElement child = this.GetVisualChild(0) as UIElement;
+                UIElement child = GetVisualChild(0) as UIElement;
                 if (child != null) // UIElement children
                 {
                     // Find out the size of the window frame x.
@@ -3481,7 +3480,7 @@ namespace System.Windows
             //
             // Get the final Min/Max Width
             //
-            mm.minWidth = Math.Max(this.MinWidth, minSizeLogicalUnits.X);
+            mm.minWidth = Math.Max(MinWidth, minSizeLogicalUnits.X);
 
             // Min's precedence is higher than Max; If Min is greater than Max, use Min.
             if (MinWidth > MaxWidth)
@@ -3503,12 +3502,12 @@ namespace System.Windows
             //
             // Get the final Min/Max Height
             //
-            mm.minHeight = Math.Max(this.MinHeight, minSizeLogicalUnits.Y);
+            mm.minHeight = Math.Max(MinHeight, minSizeLogicalUnits.Y);
 
             // Min's precedence is higher than Max; If Min is greater than Max, use Min.
             if (MinHeight > MaxHeight)
             {
-                mm.maxHeight = Math.Min(this.MinHeight, maxSizeLogicalUnits.Y);
+                mm.maxHeight = Math.Min(MinHeight, maxSizeLogicalUnits.Y);
             }
             else
             {
@@ -3531,7 +3530,7 @@ namespace System.Windows
             {
                 PostContentRendered();
                 _postContentRenderedFromLoadedHandler = false;
-                this.Loaded -= new RoutedEventHandler(LoadedHandler);
+                Loaded -= new RoutedEventHandler(LoadedHandler);
             }
         }
 
@@ -4535,7 +4534,7 @@ namespace System.Windows
                 Owner.OwnedWindowsInternal.Remove(this);
             }
 
-            if (this.IsInsideApp)
+            if (IsInsideApp)
             {
                 if (Application.Current.Dispatcher.Thread == Dispatcher.CurrentDispatcher.Thread)
                 {
@@ -4662,8 +4661,8 @@ namespace System.Windows
             try
             {
                 _updateHwndSize = false;
-                SetValue(FrameworkElement.WidthProperty, ptLogicalUnits.X);
-                SetValue(FrameworkElement.HeightProperty, ptLogicalUnits.Y);
+                SetValue(WidthProperty, ptLogicalUnits.X);
+                SetValue(HeightProperty, ptLogicalUnits.Y);
             }
             finally
             {
@@ -5005,7 +5004,7 @@ namespace System.Windows
             //     x,y should be not be less than zero
             //     x,y should not be greater than RenderSize.Width and RenderSize.Height
 
-            GeneralTransform transfromFromWindow = this.TransformToDescendant(_resizeGripControl);
+            GeneralTransform transfromFromWindow = TransformToDescendant(_resizeGripControl);
             Point mousePositionWRTResizeGripControl = ptLogicalUnits;
             if (transfromFromWindow == null || transfromFromWindow.TryTransform(ptLogicalUnits, out mousePositionWRTResizeGripControl) == false)
             {
@@ -5993,7 +5992,7 @@ namespace System.Windows
             // of the window's visibility.
             // SetWindowPlacement with SW_SHOWMAXIMIZED and SW_SHOWMINIMIZED will cause a hidden window to show.
             // To workaround this issue, we check whether the current window is hidden and set showCmd to SW_HIDE if it is.
-            if (!this._isVisible)
+            if (!_isVisible)
             {
                 wp.showCmd = NativeMethods.SW_HIDE;
             }
@@ -6840,11 +6839,11 @@ namespace System.Windows
 
         private void CreateRtl()
         {
-            if ( this.FlowDirection == FlowDirection.LeftToRight )
+            if ( FlowDirection == FlowDirection.LeftToRight )
             {
                 _StyleEx &= ~NativeMethods.WS_EX_LAYOUTRTL;
             }
-            else if ( this.FlowDirection == FlowDirection.RightToLeft )
+            else if ( FlowDirection == FlowDirection.RightToLeft )
             {
                 _StyleEx |= NativeMethods.WS_EX_LAYOUTRTL;
             }
@@ -6906,7 +6905,7 @@ namespace System.Windows
 
         private NativeMethods.POINT GetPointRelativeToWindow( int x, int y )
         {
-            return _swh.GetPointRelativeToWindow( x, y, this.FlowDirection);
+            return _swh.GetPointRelativeToWindow( x, y, FlowDirection);
         }
 
         //     If you're in the middle of changing the window's _style or _styleEx and call this function,
@@ -7216,7 +7215,7 @@ namespace System.Windows
         /// </summary>
         private System.Windows.Application App
         {
-            get {return System.Windows.Application.Current;}
+            get {return Application.Current;}
         }
 
         /// <summary>
@@ -7913,7 +7912,7 @@ namespace System.Windows
                         NativeMethods.MONITOR_DPI_TYPE.MDT_EFFECTIVE_DPI,
                         out dpiX, out dpiY);
 
-                if (hr == NativeMethods.S_OK)
+                if (hr == HRESULT.S_OK)
                 {
                     double dpiScaleX = dpiX * 1.0d / 96.0d;
                     double dpiScaleY = dpiY * 1.0d / 96.0d;

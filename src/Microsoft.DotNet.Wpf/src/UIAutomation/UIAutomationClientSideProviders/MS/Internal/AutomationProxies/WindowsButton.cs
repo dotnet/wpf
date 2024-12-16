@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,6 +8,7 @@ using System;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using MS.Win32;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal.AutomationProxies
 {
@@ -319,7 +320,7 @@ namespace MS.Internal.AutomationProxies
             IntPtr hwndRadioButton = GetSelection();
 
             if (hwndRadioButton == IntPtr.Zero ||
-                Accessible.AccessibleObjectFromWindow(hwndRadioButton, NativeMethods.OBJID_CLIENT, ref accRadioButton) != NativeMethods.S_OK ||
+                Accessible.AccessibleObjectFromWindow(hwndRadioButton, NativeMethods.OBJID_CLIENT, ref accRadioButton) != HRESULT.S_OK ||
                 accRadioButton == null)
             {
                 // framework will handle this one correctly
@@ -394,7 +395,7 @@ namespace MS.Internal.AutomationProxies
                 if (hwndParent != IntPtr.Zero && WindowsFormsHelper.IsWindowsFormsControl(hwndParent))
                 {
                     Accessible accParent = null;
-                    if (Accessible.AccessibleObjectFromWindow(hwndParent, NativeMethods.OBJID_CLIENT, ref accParent) != NativeMethods.S_OK || accParent == null)
+                    if (Accessible.AccessibleObjectFromWindow(hwndParent, NativeMethods.OBJID_CLIENT, ref accParent) != HRESULT.S_OK || accParent == null)
                     {
                         return null;
                     }
@@ -680,7 +681,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             Accessible acc = null;
-            if (Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) == NativeMethods.S_OK &&
+            if (Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) == HRESULT.S_OK &&
                 acc != null && 
                 acc.Role == AccessibleRole.RadioButton)
             {
@@ -720,7 +721,7 @@ namespace MS.Internal.AutomationProxies
             }
 
             Accessible acc = null;
-            if (Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) == NativeMethods.S_OK &&
+            if (Accessible.AccessibleObjectFromWindow(hwnd, NativeMethods.OBJID_CLIENT, ref acc) == HRESULT.S_OK &&
                 acc != null &&
                 acc.Role == AccessibleRole.RadioButton &&
                 acc.HasState(AccessibleState.Checked))

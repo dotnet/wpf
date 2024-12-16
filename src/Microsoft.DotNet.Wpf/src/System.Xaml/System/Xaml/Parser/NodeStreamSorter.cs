@@ -226,7 +226,7 @@ namespace MS.Internal.Xaml
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Space, KnownStrings.Preserve);
             }
-            if (!String.IsNullOrEmpty(_settings.XmlLang))
+            if (!string.IsNullOrEmpty(_settings.XmlLang))
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Lang, _settings.XmlLang);
             }
@@ -268,7 +268,7 @@ namespace MS.Internal.Xaml
             // If we saw TypeArguments, Arguments, or FactoryMethod properties.
             // then dig in and correct the stream.
             //
-            //if (HaveSeenOutOfOrderCtorDirective)
+            // if (HaveSeenOutOfOrderCtorDirective)
             if(_moveList != null)
             {
                 SortContentsOfReadAheadBuffer();
@@ -468,7 +468,7 @@ namespace MS.Internal.Xaml
             // Build an array with the info we need
             _sortingInfoArray = new ReorderInfo[_originalNodesInOrder.Length];
             int depth = 0;
-            ReorderInfo rInfo = new ReorderInfo();
+            ReorderInfo rInfo = default(ReorderInfo);
 
             for (int i = 0; i < _originalNodesInOrder.Length; i++)
             {

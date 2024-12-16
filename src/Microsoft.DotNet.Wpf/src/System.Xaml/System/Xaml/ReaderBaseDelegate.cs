@@ -12,7 +12,7 @@ namespace System.Xaml
     // Advancing to the next node with Read() is left to be defined
     // in the deriving class.
     //
-    abstract internal class ReaderBaseDelegate: XamlReader, IXamlLineInfo
+    internal abstract class ReaderBaseDelegate: XamlReader, IXamlLineInfo
     {
         protected XamlSchemaContext _schemaContext;
         protected XamlNode _currentNode;

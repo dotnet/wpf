@@ -147,6 +147,7 @@ namespace System.Windows.Markup
                     }
                 }
             }
+
             lock (s_valueSerializersLock)
             {
                 // This uses s_valueSerializersLock's instance as a sentinal for null (as opposed to not attempted yet).
@@ -245,6 +246,7 @@ namespace System.Windows.Markup
             {
                 text = value.GetType().FullName;
             }
+
             return new NotSupportedException(SR.Format(SR.ConvertToException, base.GetType().Name, text, destinationType.FullName));
         }
 
@@ -262,6 +264,7 @@ namespace System.Windows.Markup
             {
                 text = value.GetType().FullName;
             }
+
             return new NotSupportedException(SR.Format(SR.ConvertFromException, base.GetType().Name, text));
         }
 

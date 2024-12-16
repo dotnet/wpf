@@ -18,6 +18,7 @@ namespace System.Xaml.Schema
             {
                 return true;
             }
+
             if (type.IsGenericType)
             {
                 foreach (Type typeArg in type.GetGenericArguments())
@@ -28,8 +29,10 @@ namespace System.Xaml.Schema
                     }
                 }
             }
+
             return false;
         }
+
         // ^^^^^----- End of unused members.  -----^^^^^
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
@@ -40,6 +43,7 @@ namespace System.Xaml.Schema
             {
                 return true;
             }
+
             if (method.IsGenericMethod)
             {
                 foreach (Type typeArg in method.GetGenericArguments())
@@ -50,8 +54,10 @@ namespace System.Xaml.Schema
                     }
                 }
             }
+
             return false;
         }
+
         // ^^^^^----- End of unused members.  -----^^^^^
     }
 }

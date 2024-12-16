@@ -480,8 +480,7 @@ namespace System.IO.Packaging
             bool embedCertificateInSignaturePart = (_certificateEmbeddingOption == CertificateEmbeddingOption.InSignaturePart);
 
             // convert cert to version2 - more functionality
-            X509Certificate2 exSigner = certificate as X509Certificate2;
-            if (exSigner == null)
+            if (certificate is not X509Certificate2 exSigner)
                 exSigner = new X509Certificate2(certificate.Handle);
 
             //PRESHARP: Parameter to this public method must be validated:  A null-dereference can occur here.
@@ -1004,8 +1003,7 @@ namespace System.IO.Packaging
                 return true;            // null means empty
 
             // see if it's really a collection as this is more efficient than enumerating
-            System.Collections.ICollection collection = enumerable as System.Collections.ICollection;
-            if (collection != null)
+            if (enumerable is System.Collections.ICollection collection)
             {
                 return (collection.Count == 0);
             }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -70,9 +70,8 @@ namespace System.Windows
         /// <returns>True if object is a Thickness and all sides of it are equal to this Thickness'.</returns>
         public override bool Equals(object obj)
         {
-            if (obj is Thickness)
+            if (obj is Thickness otherObj)
             {
-                Thickness otherObj = (Thickness)obj;
                 return (this == otherObj);
             }
             return (false);

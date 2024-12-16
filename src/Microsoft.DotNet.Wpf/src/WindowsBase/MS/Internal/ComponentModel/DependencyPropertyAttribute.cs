@@ -48,11 +48,9 @@ namespace MS.Internal.ComponentModel
         /// </summary>
         public override bool Equals(object value) 
         {
-            DependencyPropertyAttribute da = value as DependencyPropertyAttribute;
-
-            if (da != null && 
-                object.ReferenceEquals(da._dp, _dp) && 
-                da._isAttached == _isAttached) 
+            if (value is DependencyPropertyAttribute da &&
+                object.ReferenceEquals(da._dp, _dp) &&
+                da._isAttached == _isAttached)
             {
                 return true;
             }

@@ -399,8 +399,7 @@ namespace System.Xaml.Schema
             // We only check this once, at the root of the doc, and only in ObjectWriter.
             // So it's fine to use live reflection here.
             object obj = GetCustomAttribute(typeof(XAML3.NameScopePropertyAttribute), xamlType.UnderlyingType);
-            XAML3.NameScopePropertyAttribute nspAttr = obj as XAML3.NameScopePropertyAttribute;
-            if (nspAttr != null)
+            if (obj is XAML3.NameScopePropertyAttribute nspAttr)
             {
                 Type ownerType = nspAttr.Type;
                 string propertyName = nspAttr.Name;

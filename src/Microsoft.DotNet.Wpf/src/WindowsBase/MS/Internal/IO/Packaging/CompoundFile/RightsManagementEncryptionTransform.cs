@@ -754,8 +754,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             ref bool stop
             )
         {
-            LoadUseLicenseForUserParams lulfup = param as LoadUseLicenseForUserParams;
-            if (lulfup == null)
+            if (param is not LoadUseLicenseForUserParams lulfup)
             {
                 throw new ArgumentException(SR.CallbackParameterInvalid, "param");
             }
@@ -809,8 +808,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             ref bool stop
             )
         {
-            ContentUser userToDelete = param as ContentUser;
-            if (userToDelete == null)
+            if (param is not ContentUser userToDelete)
             {
                 throw new ArgumentException(SR.CallbackParameterInvalid, "param");
             }

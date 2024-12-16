@@ -22,8 +22,7 @@ namespace System.Windows
 
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            DependencyProperty property = value as DependencyProperty;
-            if (property != null)
+            if (value is DependencyProperty property)
             {
                 ValueSerializer typeSerializer = ValueSerializer.GetSerializerFor(typeof(Type), context);
                 if (typeSerializer != null)
@@ -37,8 +36,7 @@ namespace System.Windows
 
         public override IEnumerable<Type> TypeReferences(object value, IValueSerializerContext context)
         {
-            DependencyProperty property = value as DependencyProperty;
-            if (property != null)
+            if (value is DependencyProperty property)
             {
                 return new Type[] { property.OwnerType };
             }

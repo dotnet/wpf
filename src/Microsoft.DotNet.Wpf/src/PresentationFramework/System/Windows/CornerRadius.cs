@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -69,9 +69,8 @@ namespace System.Windows
         /// <returns>True if object is a CornerRadius and all sides of it are equal to this CornerRadius'.</returns>
         public override bool Equals(object obj)
         {
-            if (obj is CornerRadius)
+            if (obj is CornerRadius otherObj)
             {
-                CornerRadius otherObj = (CornerRadius)obj;
                 return (this == otherObj);
             }
             return (false);

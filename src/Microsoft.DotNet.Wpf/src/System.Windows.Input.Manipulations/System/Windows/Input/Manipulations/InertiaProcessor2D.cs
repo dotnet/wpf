@@ -328,22 +328,19 @@ namespace System.Windows.Input.Manipulations
         {
             ArgumentNullException.ThrowIfNull(parameters);
 
-            InertiaTranslationBehavior2D translationParameters = parameters as InertiaTranslationBehavior2D;
-            if (translationParameters != null)
+            if (parameters is InertiaTranslationBehavior2D translationParameters)
             {
                 TranslationBehavior = translationParameters;
                 return;
             }
 
-            InertiaRotationBehavior2D rotationParameters = parameters as InertiaRotationBehavior2D;
-            if (rotationParameters != null)
+            if (parameters is InertiaRotationBehavior2D rotationParameters)
             {
                 RotationBehavior = rotationParameters;
                 return;
             }
 
-            InertiaExpansionBehavior2D expansionParameters = parameters as InertiaExpansionBehavior2D;
-            if (expansionParameters != null)
+            if (parameters is InertiaExpansionBehavior2D expansionParameters)
             {
                 ExpansionBehavior = expansionParameters;
                 return;

@@ -804,8 +804,7 @@ namespace System.IO.Packaging
 
                 foreach (IDataTransform dataTransform in transforms)
                 {
-                    string id = dataTransform.TransformIdentifier as string;
-                    if (id != null)
+                    if (dataTransform.TransformIdentifier is string id)
                     {
                         if (string.Equals(id, RightsManagementEncryptionTransform.ClassTransformIdentifier, StringComparison.OrdinalIgnoreCase)
                             &&

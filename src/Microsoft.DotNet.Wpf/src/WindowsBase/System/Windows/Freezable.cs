@@ -951,9 +951,8 @@ namespace System.Windows
                     Debug.Assert(!(sourceValue is Expression && sourceValue is Freezable),
                         "This logic assumes Expressions and Freezables don't co-derive");
 
-                    Freezable valueAsFreezable = sourceValue as Freezable;
 
-                    if (valueAsFreezable != null)
+                    if (sourceValue is Freezable valueAsFreezable)
                     {
                         Freezable valueAsFreezableClone;
 
@@ -1931,8 +1930,7 @@ namespace System.Windows
 
                 Invariant.Assert(!cloneAsFreezable.HasHandlers, "CloneCore should not have handlers attached on construction.");
 
-                IList originalAsIList = original as IList;
-                if (originalAsIList != null)
+                if (original is IList originalAsIList)
                 {
                     // we've already checked that original and clone are the same type
                     IList cloneAsIList = clone as IList;
@@ -1942,8 +1940,7 @@ namespace System.Windows
                     for (int i = 0; i < cloneAsIList.Count; i++)
                     {
                         Freezable originalItemAsFreezable = originalAsIList[i] as Freezable;
-                        Freezable cloneItemAsFreezable = cloneAsIList[i] as Freezable;
-                        if (isDeepClone && cloneItemAsFreezable != null && cloneItemAsFreezable != null)
+                        if (isDeepClone && cloneAsIList[i] is Freezable cloneItemAsFreezable && cloneItemAsFreezable != null)
                         {
                             Invariant.Assert(originalItemAsFreezable != cloneItemAsFreezable, "CloneCore didn't clone the elements in the list correctly.");
                         }

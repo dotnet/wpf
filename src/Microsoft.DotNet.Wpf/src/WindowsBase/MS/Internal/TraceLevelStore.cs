@@ -105,8 +105,7 @@ namespace MS.Internal
             public override int GetHashCode()
             {
 #if DEBUG
-                WeakReference wr = _element as WeakReference;
-                object element = (wr != null) ? wr.Target : _element;
+                object element = (_element is WeakReference wr) ? wr.Target : _element;
                 if (element != null)
                 {
                     int hashcode = element.GetHashCode();

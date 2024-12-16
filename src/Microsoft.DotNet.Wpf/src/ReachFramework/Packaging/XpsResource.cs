@@ -133,13 +133,10 @@ namespace System.Windows.Xps.Packaging
         INode.Flush(
             )
         {
-            if( _partEditor != null )
-            {
                 //
                 // Flush the part editor
                 //
-                _partEditor.Flush();
-            }
+                _partEditor?.Flush();
         }
 
         void
@@ -163,10 +160,7 @@ namespace System.Windows.Xps.Packaging
         void
         IDisposable.Dispose()
         {
-            if (_partEditor != null)
-            {
-                _partEditor.Close();
-            }
+                _partEditor?.Close();
 
             GC.SuppressFinalize(this);
         }

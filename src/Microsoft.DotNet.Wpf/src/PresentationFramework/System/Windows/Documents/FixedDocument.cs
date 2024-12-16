@@ -129,9 +129,7 @@ namespace System.Windows.Documents
 
 //             Dispatcher.VerifyAccess();
 
-            PageContent fp = value as PageContent;
-
-            if (fp == null)
+            if (value is not PageContent fp)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(PageContent)), "value");
             }
@@ -398,8 +396,7 @@ namespace System.Windows.Documents
 
             ArgumentNullException.ThrowIfNull(contentPosition);
 
-            FixedTextPointer fixedTextPointer = contentPosition as FixedTextPointer;
-            if (fixedTextPointer == null)
+            if (contentPosition is not FixedTextPointer fixedTextPoiner)
             {
                 throw new ArgumentException(SR.IDPInvalidContentPosition);
             }
@@ -437,9 +434,7 @@ namespace System.Windows.Documents
         {
             ArgumentNullException.ThrowIfNull(o);
 
-            DependencyObject element = o as DependencyObject;
-
-            if (element == null)
+            if (o is not DependencyObject element)
             {
                 throw new ArgumentException(SR.FixedDocumentExpectsDependencyObject);
             }
@@ -456,16 +451,16 @@ namespace System.Windows.Documents
                 DependencyObject el = element;
                 while (el != null)
                 {
-                    fixedPage = el as FixedPage;
-
-                    if (fixedPage != null)
+                    
+                    if (el is FixedPage fixedPage2)
                     {
-                        pageIndex = GetIndexOfPage(fixedPage);
+                    fixedPage = fixedPage2;
+                        pageIndex = GetIndexOfPage(fixedPage2);
                         if (pageIndex >= 0)
                         {
                             break;
                         }
-                        el = fixedPage.Parent;
+                        el = fixedPage2.Parent;
                     }
                     else
                     {
@@ -507,8 +502,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal ContentPosition GetPagePosition(DocumentPage page)
         {
-            FixedDocumentPage docPage = page as FixedDocumentPage;
-            if (docPage == null)
+            if (page is not FixedDocumentPage docPage)
             {
                 return ContentPosition.Missing;
             }
@@ -825,7 +819,7 @@ namespace System.Windows.Documents
         {
             _paginator = new FixedDocumentPaginator(this);
             _pages = new PageContentCollection(this);
-            _highlights = new Dictionary<FixedPage, ArrayList>();
+            _highlights = new Dictionary<FixedPage, ArrayList>(); 
             _asyncOps = new Dictionary<Object, GetPageAsyncRequest>();
             _pendingPages = new List<PageContent>();
             _hasExplicitStructure = false;
@@ -850,8 +844,7 @@ namespace System.Windows.Documents
                 DocumentPage docPage = GetPage(0);
                 if (docPage != null)
                 {
-                    FixedPage page = docPage.Visual as FixedPage;
-                    if (page != null)
+                    if (docPage.Visual is FixedPage page)
                     {
                         this.Language = page.Language;
                     }
@@ -1012,8 +1005,8 @@ namespace System.Windows.Documents
         internal FixedPage GetFixedPage(int pageNumber)
         {
             FixedPage fp = null;
-            FixedDocumentPage fdp = GetPage(pageNumber) as FixedDocumentPage;
-            if (fdp != null && fdp != DocumentPage.Missing)
+            
+            if (GetPage(pageNumber) is FixedDocumentPage fdp && fdp != DocumentPage.Missing)
             {
                 fp = fdp.FixedPage;
             }
@@ -1042,8 +1035,7 @@ namespace System.Windows.Documents
 
             // If this document is part of a FixedDocumentSequence, we should use
             // the highlights that have been set on the sequence.
-            FixedDocumentSequence parent = this.Parent as FixedDocumentSequence;
-            if (parent != null)
+            if (this.Parent is FixedDocumentSequence parent)
                 highlights = parent.TextContainer.Highlights;
             else
                 highlights = this.FixedContainer.Highlights;
@@ -1129,7 +1121,7 @@ namespace System.Windows.Documents
                 }
             }
 
-            ArrayList dirtyPages = new ArrayList();
+            ArrayList dirtyPages = new ArrayList(); 
             IList ranges = args.Ranges;
 
             // Find the dirty page
@@ -1406,8 +1398,7 @@ namespace System.Windows.Documents
                 {
                     _layedOut = true;
 
-                    UIElement e;
-                    if ((e = ((object)base.Visual) as UIElement)!=null)
+                    if (base.Visual is UIElement e)
                     {
                         e.Measure(base.Size);
                         e.Arrange(new Rect(base.Size));

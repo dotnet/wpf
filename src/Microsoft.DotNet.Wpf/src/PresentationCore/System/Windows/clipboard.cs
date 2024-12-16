@@ -182,13 +182,9 @@ namespace System.Windows
         /// </summary>
         public static StringCollection GetFileDropList()
         {
-            StringCollection fileDropListCollection;
-            string[] fileDropList;
+            StringCollection fileDropListCollection = new StringCollection();
 
-            fileDropListCollection = new StringCollection();
-
-            fileDropList = GetDataInternal(DataFormats.FileDrop) as string[];
-            if (fileDropList != null)
+            if (GetDataInternal(DataFormats.FileDrop) is string[] fileDropList)
             {
                 fileDropListCollection.AddRange(fileDropList);
             }
@@ -366,7 +362,7 @@ namespace System.Windows
 
             bReturn = false;
 
-            if (data is IComDataObject)
+            if (data is IComDataObject icdo)
             {
                 int hr;
 
@@ -376,7 +372,7 @@ namespace System.Windows
 
                 while (true)
                 {
-                    hr = OleServicesContext.CurrentOleServicesContext.OleIsCurrentClipboard((IComDataObject)data);
+                    hr = OleServicesContext.CurrentOleServicesContext.OleIsCurrentClipboard(icdo);
 
                     if (NativeMethods.Succeeded(hr) || (--i == 0))
                     {
@@ -460,13 +456,13 @@ namespace System.Windows
 
             IComDataObject dataObject;
 
-            if (data is DataObject)
+            if (data is DataObject doData)
             {
-                dataObject = (DataObject)data;
+                dataObject = doData;
             }
-            else if (data is IComDataObject)
+            else if (data is IComDataObject icdoData)
             {
-                dataObject = (IComDataObject)data;
+                dataObject = icdoData;
             }
             else
             {
@@ -605,9 +601,9 @@ namespace System.Windows
                 Thread.Sleep(OleRetryDelay);
             }
 
-            if (oleDataObject is IDataObject && !Marshal.IsComObject(oleDataObject))
+            if (oleDataObject is IDataObject idoObj && !Marshal.IsComObject(oleDataObject))
             {
-                dataObject = (IDataObject)oleDataObject;
+                dataObject = idoObj;
             }
             else if (oleDataObject != null)
             {
@@ -663,16 +659,7 @@ namespace System.Windows
 
             if (dataObject != null)
             {
-                bool autoConvert;
-
-                if (IsDataFormatAutoConvert(format))
-                {
-                    autoConvert = true;
-                }
-                else
-                {
-                    autoConvert = false;
-                }
+                bool autoConvert = IsDataFormatAutoConvert(format);
 
                 return dataObject.GetData(format, autoConvert);
             }
@@ -688,16 +675,7 @@ namespace System.Windows
         private static void SetDataInternal(string format, object data)
         {
             IDataObject dataObject;
-            bool autoConvert;
-
-            if (IsDataFormatAutoConvert(format))
-            {
-                autoConvert = true;
-            }
-            else
-            {
-                autoConvert = false;
-            }
+            bool autoConvert = IsDataFormatAutoConvert(format);
 
             dataObject = new DataObject();
             dataObject.SetData(format, data, autoConvert);
@@ -710,18 +688,9 @@ namespace System.Windows
         /// </summary>
         private static bool IsDataFormatAutoConvert(string format)
         {
-            bool autoConvert;
-
-            if (string.Equals(format, DataFormats.FileDrop, StringComparison.Ordinal) ||
-                string.Equals(format, DataFormats.Bitmap, StringComparison.Ordinal))
-            {
-                autoConvert = true;
-            }
-            else
-            {
-                autoConvert = false;
-            }
-
+            bool autoConvert = (string.Equals(format, DataFormats.FileDrop, StringComparison.Ordinal) ||
+                string.Equals(format, DataFormats.Bitmap, StringComparison.Ordinal));
+            
             return autoConvert;
         }
 

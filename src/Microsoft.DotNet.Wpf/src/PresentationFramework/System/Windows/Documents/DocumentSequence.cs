@@ -76,11 +76,7 @@ namespace System.Windows.Documents
             {
                 // create this on demand, but not through the property, only through the
                 // service, so it is only created when it's actually used
-                if (_rubberbandSelector == null)
-                {
-                    _rubberbandSelector = new RubberbandSelector();
-                }
-                return _rubberbandSelector;
+                return _rubberbandSelector ??= new RubberbandSelector();
             }
 
             return null;
@@ -102,9 +98,7 @@ namespace System.Windows.Documents
 
 //             Dispatcher.VerifyAccess();
 
-            DocumentReference docRef = value as DocumentReference;
-
-            if (docRef == null)
+            if (value is not DocumentReference docRef)
             {
                 throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(DocumentReference)), "value");
             }
@@ -376,10 +370,10 @@ namespace System.Windows.Documents
                 if (childPaginator != null)
                 {
                     ContentPosition cp = childPaginator.GetObjectPosition(o);
-                    if (cp != ContentPosition.Missing && (cp is ITextPointer))
+                    if (cp != ContentPosition.Missing && (cp is ITextPointer itp))
                     {
                         ChildDocumentBlock childBlock = new ChildDocumentBlock(this.TextContainer, docRef);
-                        return new DocumentSequenceTextPointer(childBlock, (ITextPointer)cp);
+                        return new DocumentSequenceTextPointer(childBlock, itp);
                     }
                 }
             }
@@ -391,8 +385,7 @@ namespace System.Windows.Documents
         /// </summary>
         internal ContentPosition GetPagePosition(DocumentPage page)
         {
-            FixedDocumentSequenceDocumentPage docPage = page as FixedDocumentSequenceDocumentPage;
-            if (docPage == null)
+            if (page is not FixedDocumentSequenceDocumentPage docPage)
             {
                 return ContentPosition.Missing;
             }
@@ -692,13 +685,9 @@ namespace System.Windows.Documents
             if (PageCount > 0)
             {
                 DocumentPage docPage = GetPage(0);
-                if (docPage != null)
+                if (docPage?.Visual is FixedPage page)
                 {
-                    FixedPage page = docPage.Visual as FixedPage;
-                    if (page != null)
-                    {
                         this.Language = page.Language;
-                    }
                 }
             }
         }
@@ -1001,7 +990,7 @@ namespace System.Windows.Documents
             // override Equals semantic
             public override bool Equals(object obj)
             {
-                if (!(obj is RequestedPage))
+                if (obj is not RequestedPage)
                 {
                     return false;
                 }
@@ -1089,11 +1078,7 @@ namespace System.Windows.Documents
 
             if (serviceType == typeof(ITextView))
             {
-                if (_textView == null)
-                {
-                    _textView = new DocumentSequenceTextView(this);
-                }
-                return _textView;
+                return _textView ??= new DocumentSequenceTextView(this);
             }
             return null;
         }
@@ -1134,8 +1119,7 @@ namespace System.Windows.Documents
                 {
                     _layedOut = true;
 
-                    UIElement e;
-                    if ((e = ((object)base.Visual) as UIElement) != null)
+                    if (((object)base.Visual) is UIElement e) 
                     {
                         e.Measure(base.Size);
                         e.Arrange(new Rect(base.Size));

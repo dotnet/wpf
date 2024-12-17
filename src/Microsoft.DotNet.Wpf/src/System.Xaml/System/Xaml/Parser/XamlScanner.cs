@@ -209,7 +209,7 @@ namespace MS.Internal.Xaml.Parser
         {
             get
             {
-                if (_accumulatedText == null)
+                if (_accumulatedText is null)
                 {
                     _accumulatedText = new XamlText(_scannerStack.CurrentXmlSpacePreserve);
                 }
@@ -224,7 +224,7 @@ namespace MS.Internal.Xaml.Parser
 
         private bool HaveAccumulatedText
         {
-            get { return _accumulatedText != null && !_accumulatedText.IsEmpty; }
+            get { return _accumulatedText is not null && !_accumulatedText.IsEmpty; }
         }
 
         // ============= Element Processing ==================================
@@ -244,7 +244,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 Debug.Assert(_xmlReader.NodeType == XmlNodeType.Element);
                 XamlPropertyName name = XamlPropertyName.Parse(_xmlReader.Name, _xmlReader.NamespaceURI);
-                if (_scannerStack.CurrentType == null)
+                if (_scannerStack.CurrentType is null)
                 {
                     throw LineInfo(new XamlParseException(SR.Format(SR.ParentlessPropertyElement, _xmlReader.Name)));
                 }
@@ -280,7 +280,7 @@ namespace MS.Internal.Xaml.Parser
             // See app Paperboy
             Debug.Assert(_xmlReader.NodeType == XmlNodeType.Element);
             string xamlNs = _xmlReader.NamespaceURI;
-            if (xamlNs == null)
+            if (xamlNs is null)
             {
                 ReadObjectElement_NoNamespace(name, node);
             }
@@ -293,7 +293,7 @@ namespace MS.Internal.Xaml.Parser
                 //
                 XamlSchemaContext schemaContext = _parserContext.SchemaContext;
                 XamlMember dirProperty = schemaContext.GetXamlDirective(xamlNs, name.Name);
-                if (dirProperty != null)
+                if (dirProperty is not null)
                 {
                     ReadObjectElement_DirectiveProperty(dirProperty, node);
                 }
@@ -370,11 +370,11 @@ namespace MS.Internal.Xaml.Parser
             }
 
             IList<XamlTypeName> typeArgs = null;
-            if (_typeArgumentAttribute != null)
+            if (_typeArgumentAttribute is not null)
             {
                 string error;
                 typeArgs = XamlTypeName.ParseListInternal(_typeArgumentAttribute.Value, _parserContext.FindNamespaceByPrefix, out error);
-                if (typeArgs == null)
+                if (typeArgs is null)
                 {
                     throw new XamlParseException(_typeArgumentAttribute.LineNumber, _typeArgumentAttribute.LinePosition, error);
                 }
@@ -474,7 +474,7 @@ namespace MS.Internal.Xaml.Parser
 
             // if we are ending a property element tag clear the current property
             // if we are ending an element then pop off the current frame.
-            if (_scannerStack.CurrentProperty != null)
+            if (_scannerStack.CurrentProperty is not null)
             {
                 _scannerStack.CurrentProperty = null;
                 // List of Content is considered separately for each property.
@@ -555,7 +555,7 @@ namespace MS.Internal.Xaml.Parser
 
                 XamlPropertyName propName = XamlPropertyName.Parse(xmlName);
 
-                if (propName == null)
+                if (propName is null)
                 {
                     throw new XamlParseException(SR.Format(SR.InvalidXamlMemberName, xmlName));
                 }
@@ -597,7 +597,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     string attrNamespace = _parserContext.FindNamespaceByPrefix(attr.Name.Prefix);
                     XamlMember directiveProperty = _parserContext.ResolveDirectiveProperty(attrNamespace, attr.Name.Name);
-                    if (directiveProperty != null)
+                    if (directiveProperty is not null)
                     {
                         typeArgsIdx = i;
                         _typeArgumentAttribute = attr;
@@ -613,7 +613,7 @@ namespace MS.Internal.Xaml.Parser
 
         private void PostprocessAttributes(XamlScannerNode node)
         {
-            if (_attributes == null)
+            if (_attributes is null)
             {
                 return;
             }
@@ -622,7 +622,7 @@ namespace MS.Internal.Xaml.Parser
 
             // Attributes on Properties are errors
             // and don't need this detailed processing.
-            if (node.Type == null)
+            if (node.Type is null)
             {
                 if (_settings.IgnoreUidsOnPropertyElements)
                 {
@@ -655,7 +655,7 @@ namespace MS.Internal.Xaml.Parser
                         break;
 
                 case ScannerAttributeKind.CtorDirective:
-                    if (ctorDirectivesList == null)
+                    if (ctorDirectivesList is null)
                     {
                         ctorDirectivesList = new List<XamlAttribute>();
                     }
@@ -669,7 +669,7 @@ namespace MS.Internal.Xaml.Parser
                         _hasKeyAttribute = true;
                     }
 
-                    if (otherDirectivesList == null)
+                    if (otherDirectivesList is null)
                     {
                         otherDirectivesList = new List<XamlAttribute>();
                     }
@@ -677,7 +677,7 @@ namespace MS.Internal.Xaml.Parser
                     break;
 
                 default:
-                    if (otherPropertiesList == null)
+                    if (otherPropertiesList is null)
                     {
                         otherPropertiesList = new List<XamlAttribute>();
                     }
@@ -689,25 +689,25 @@ namespace MS.Internal.Xaml.Parser
             _attributes = new List<XamlAttribute>();
 
             // First the Construction Directives
-            if (ctorDirectivesList != null)
+            if (ctorDirectivesList is not null)
             {
                 _attributes.AddRange(ctorDirectivesList);
             }
 
-            if (otherDirectivesList != null)
+            if (otherDirectivesList is not null)
             {
                 _attributes.AddRange(otherDirectivesList);
             }
 
             // Next the aliased Name property before any other "real" properties.
             // (this is a WPF template requirement)
-            if (nameAttribute != null)
+            if (nameAttribute is not null)
             {
                 _attributes.Add(nameAttribute);
             }
 
             // Then everything else
-            if (otherPropertiesList != null)
+            if (otherPropertiesList is not null)
             {
                 _attributes.AddRange(otherPropertiesList);
             }
@@ -730,7 +730,7 @@ namespace MS.Internal.Xaml.Parser
 
         private bool HaveUnprocessedAttributes
         {
-            get { return _attributes != null; }
+            get { return _attributes is not null; }
         }
 
         private void EnqueueAnotherAttribute(bool isEmptyTag)
@@ -790,7 +790,7 @@ namespace MS.Internal.Xaml.Parser
             // the corresponding Glyphs.Indices property.
             XamlMember attrProperty = attr.Property;
             bool convertCRLFtoLF =
-                !(attrProperty != null &&
+                !(attrProperty is not null &&
                   attrProperty.Name == "UnicodeString" &&
                   attrProperty.DeclaringType.Name == "Glyphs");
 
@@ -823,7 +823,7 @@ namespace MS.Internal.Xaml.Parser
 
         private void EnqueueTextNode()
         {
-            Debug.Assert(_accumulatedText != null, "Creating unnecessary XamlText objects");
+            Debug.Assert(_accumulatedText is not null, "Creating unnecessary XamlText objects");
 
             // Don't send the text if it is Whitespace outside the root tag.
             if (!(_scannerStack.Depth == 0 && AccumulatedText.IsWhiteSpaceOnly))
@@ -858,7 +858,7 @@ namespace MS.Internal.Xaml.Parser
 
         XamlException LineInfo(XamlException e)
         {
-            if (_xmlLineInfo != null)
+            if (_xmlLineInfo is not null)
             {
                 e.SetLineInfo(_xmlLineInfo.LineNumber, _xmlLineInfo.LinePosition);
             }

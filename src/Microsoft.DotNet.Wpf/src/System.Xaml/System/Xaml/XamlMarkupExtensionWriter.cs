@@ -94,7 +94,7 @@ namespace System.Xaml
         {
             string prefix = xamlXmlWriter.LookupPrefix(type.GetXamlNamespaces(), out _);
 
-            if (prefix == null)
+            if (prefix is null)
             {
                 if (!meSettings.ContinueWritingWhenPrefixIsNotFound)
                 {
@@ -111,7 +111,7 @@ namespace System.Xaml
         {
             string prefix = xamlXmlWriter.LookupPrefix(property.GetXamlNamespaces(), out _);
 
-            if (prefix == null)
+            if (prefix is null)
             {
                 if (!meSettings.ContinueWritingWhenPrefixIsNotFound)
                 {
@@ -128,7 +128,7 @@ namespace System.Xaml
         {
             if (!settings.AssumeValidInput)
             {
-                if (objectNode.Members == null)
+                if (objectNode.Members is null)
                 {
                     objectNode.Members = new XamlPropertySet();
                 }
@@ -174,7 +174,7 @@ namespace System.Xaml
         {
             string s = value as string;
 
-            if (s == null)
+            if (s is null)
             {
                 throw new ArgumentException(SR.XamlMarkupExtensionWriterCannotWriteNonstringValue);
             }

@@ -81,7 +81,7 @@ namespace System.Xaml
             case XamlNodeType.EndObject:
             case XamlNodeType.EndMember:
             case XamlNodeType.GetObject:
-                Debug.Assert(data == null, "XamlNode ctor, Internal XamlNode data must be null for this Node type");
+                Debug.Assert(data is null, "XamlNode ctor, Internal XamlNode data must be null for this Node type");
                 break;
 
             default:

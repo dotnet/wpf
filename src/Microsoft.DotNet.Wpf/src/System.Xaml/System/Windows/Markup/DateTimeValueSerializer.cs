@@ -40,7 +40,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override object ConvertFromString(string value, IValueSerializerContext? context)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw GetConvertFromException(value);
             }
@@ -65,7 +65,7 @@ namespace System.Windows.Markup
         /// </summary>
         public override string ConvertToString(object? value, IValueSerializerContext? context)
         {
-            if (value == null || !(value is DateTime dateTime))
+            if (value is null || !(value is DateTime dateTime))
             {
                 throw GetConvertToException(value, typeof(string));
             }

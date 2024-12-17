@@ -837,11 +837,6 @@
         <target state="translated">'{1}' 個の引数を持つ '{0}' のコンストラクターが見つかりませんでした。</target>
         <note />
       </trans-unit>
-      <trans-unit id="NoDefaultConstructor">
-        <source>No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
-        <target state="translated">型 '{0}' に既定のコンストラクターが見つかりません。この型は、引数または FactoryMethod ディレクティブを使用して構築できます。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NoElementUsage">
         <source>'{0}' is not allowed in element usage.</source>
         <target state="translated">要素では '{0}' を使用できません。</target>

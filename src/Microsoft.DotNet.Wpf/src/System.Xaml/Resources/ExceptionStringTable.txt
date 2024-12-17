@@ -249,7 +249,6 @@ DeferredLoad=Deferred load threw an exception.
 DeferredSave=Save of deferred-load content threw an exception.
 FactoryReturnedNull=The factory method '{0}' that matches the specified binding constraints returned null.
 ConstructorInvocation=The invocation of the constructor on type '{0}' that matches the specified binding constraints threw an exception.
-NoDefaultConstructor=No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.
 NoConstructor=No matching constructor found on type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.
 DeferringLoaderInstanceNull=Cannot get a XamlDeferringLoader from XamlValueConverter '{0}' because its ConverterInstance property is null.
 TypeConverterFailed2=Failed to convert '{0}' to type '{1}'.

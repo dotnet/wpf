@@ -114,6 +114,10 @@ namespace System.Windows.Documents
                     This._forceWordSelection = false;
                     This.Selection.SelectParagraph(cursorPosition);
                 }
+                else
+                {
+                    This.Selection.Select(This.TextContainer.Start, This.TextContainer.End);
+                }
             }
         }
 

@@ -837,11 +837,6 @@
         <target state="translated">未找到“{0}”的带有“{1}”参数的构造函数。</target>
         <note />
       </trans-unit>
-      <trans-unit id="NoDefaultConstructor">
-        <source>No default constructor found for type '{0}'. You can use the Arguments or FactoryMethod directives to construct this type.</source>
-        <target state="translated">未找到类型“{0}”的默认构造函数。可以使用 Arguments 或 FactoryMethod 指令来构造此类型。</target>
-        <note />
-      </trans-unit>
       <trans-unit id="NoElementUsage">
         <source>'{0}' is not allowed in element usage.</source>
         <target state="translated">元素用法中不允许使用“{0}”。</target>

@@ -400,7 +400,7 @@ namespace MS.Internal.PtsHost
         }
 
         /// <summary>
-        /// Called when a UIElement-derived class which is hosted by a IContentHost changes it�s DesiredSize
+        /// Called when a UIElement-derived class which is hosted by a IContentHost changes its DesiredSize
         /// </summary>
         /// <param name="child">
         /// Child element whose DesiredSize has changed
@@ -1220,7 +1220,7 @@ namespace MS.Internal.PtsHost
         }
 
         /// <summary>
-        /// Called when a UIElement-derived class which is hosted by a IContentHost changes it�s DesiredSize
+        /// Called when a UIElement-derived class which is hosted by a IContentHost changes its DesiredSize
         /// </summary>
         /// <param name="child">
         /// Child element whose DesiredSize has changed

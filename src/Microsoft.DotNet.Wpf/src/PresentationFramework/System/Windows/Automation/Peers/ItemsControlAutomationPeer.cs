@@ -436,7 +436,7 @@ namespace System.Windows.Automation.Peers
             return _recyclableWrapperCache;
         }
 
-        // UpdateChildrenIntenal is called with ItemsInvalidateLimit to ensure we don�t fire unnecessary structure change events when items are just scrolled in/out of view in case of
+        // UpdateChildrenIntenal is called with ItemsInvalidateLimit to ensure we dont fire unnecessary structure change events when items are just scrolled in/out of view in case of
         // virtualized controls.
         override internal IDisposable UpdateChildren()
         {

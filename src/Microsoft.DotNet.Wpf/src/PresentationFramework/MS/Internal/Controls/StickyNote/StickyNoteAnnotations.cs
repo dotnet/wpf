@@ -12,26 +12,16 @@
 using MS.Internal;
 using MS.Internal.Annotations;
 using MS.Internal.Annotations.Component;
-using MS.Internal.Controls;
 using MS.Internal.Controls.StickyNote;
-using MS.Internal.KnownBoxes;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;                           // Assert
 using System.Globalization;
-using System.IO;
 using System.Windows;
 using System.Windows.Annotations;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using System.Xml;
-using System.Windows.Documents;
 using MS.Internal.Documents;
-using MS.Internal.Annotations.Anchoring; //TextSelectionHelper
 using System.Windows.Controls.Primitives;   // IScrollInfo
 using MS.Utility;
 
@@ -78,7 +68,7 @@ namespace MS.Internal.Controls.StickyNote
             s_xmlTokeFullNames = new Dictionary<XmlToken, string>();
 
             // Fill in the name dictionary.
-            foreach (XmlToken val in Enum.GetValues(typeof(XmlToken)))
+            foreach (XmlToken val in Enum.GetValues<XmlToken>())
             {
                 AddXmlTokenNames(val);
             }

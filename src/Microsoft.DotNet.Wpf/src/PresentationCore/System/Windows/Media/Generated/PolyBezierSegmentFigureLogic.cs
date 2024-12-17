@@ -12,21 +12,6 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Markup;
-using System.Windows.Media.Animation;
-using System.ComponentModel.Design.Serialization;
-using System.Windows.Media.Composition;
-using System.Reflection;
-using MS.Internal;
-using System.Security;
-
-using SR=MS.Internal.PresentationCore.SR;
-
 namespace System.Windows.Media
 {
     #region PolyBezierSegment

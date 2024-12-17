@@ -6,8 +6,6 @@
 // Description: Enum for UndoManager.Close method.
 //
 
-using System;
-
 namespace MS.Internal.Documents
 {
     /// <summary>

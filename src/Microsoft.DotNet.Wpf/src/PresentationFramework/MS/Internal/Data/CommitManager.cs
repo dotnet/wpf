@@ -6,15 +6,9 @@
 // Description: CommitManager provides global services for committing dirty bindings.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Media;
-
-using MS.Internal.Data;
 
 namespace MS.Internal.Data
 {

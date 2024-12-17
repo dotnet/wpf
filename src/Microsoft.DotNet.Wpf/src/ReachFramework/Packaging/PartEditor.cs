@@ -16,17 +16,9 @@
                                      
                                                                              
 --*/
-using System;
-using System.Diagnostics;
 using System.IO;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO.Packaging;
-using System.Windows;
-using System.Windows.Markup;
 using System.Xml;
-
-using MS.Internal.IO.Packaging.Extensions;
 
 namespace System.Windows.Xps.Packaging
 {

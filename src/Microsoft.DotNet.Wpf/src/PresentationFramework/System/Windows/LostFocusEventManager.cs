@@ -8,8 +8,6 @@
 //              pattern.  See WeakEventTable.cs for an overview.
 //
 
-using System;
-using System.Windows;       // WeakEventManager
 using MS.Internal;          // Helper
 
 namespace System.Windows

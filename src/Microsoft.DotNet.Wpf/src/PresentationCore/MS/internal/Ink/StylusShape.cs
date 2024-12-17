@@ -3,15 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Utility;
-using System;
-using System.IO;
-using System.Windows;
 using System.Windows.Media;
 using MS.Internal;
-using MS.Internal.Ink;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Ink
 {

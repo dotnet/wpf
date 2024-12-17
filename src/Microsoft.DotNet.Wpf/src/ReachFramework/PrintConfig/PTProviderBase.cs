@@ -13,11 +13,9 @@ Abstract:
  
 --*/
 
-using System;
 using System.IO;
 using System.Printing;
 using System.Printing.Interop;
-using System.Security;
 
 namespace MS.Internal.Printing.Configuration
 {

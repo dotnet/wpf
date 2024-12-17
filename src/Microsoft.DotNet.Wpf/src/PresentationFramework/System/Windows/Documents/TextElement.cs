@@ -11,7 +11,6 @@
 
 using System.Collections;
 using System.ComponentModel;
-using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Windows.Media;
 using MS.Internal;
@@ -647,7 +646,7 @@ namespace System.Windows.Documents
                         typeof(double),
                         typeof(TextElement),
                         new FrameworkPropertyMetadata(
-                                SystemFonts.MessageFontSize,
+                                SystemFonts.ThemeMessageFontSize,
                                 FrameworkPropertyMetadataOptions.AffectsMeasure | FrameworkPropertyMetadataOptions.AffectsRender | FrameworkPropertyMetadataOptions.Inherits),
                         new ValidateValueCallback(IsValidFontSize));
 

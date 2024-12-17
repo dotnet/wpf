@@ -4,9 +4,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.Diagnostics;
-
 namespace System.Xaml
 {
     // provides a place to Write a list of Xaml nodes
@@ -59,7 +56,7 @@ namespace System.Xaml
             {
                 throw new XamlException(SR.CloseXamlWriterBeforeReading);
             }
-            if (_writer.SchemaContext == null)
+            if (_writer.SchemaContext is null)
             {
                 throw new XamlException(SR.SchemaContextNotInitialized);
             }

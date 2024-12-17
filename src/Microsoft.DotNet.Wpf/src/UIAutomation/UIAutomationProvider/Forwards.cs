@@ -7,7 +7,6 @@
 // real assembly and the reference assembly.
 //
 
-using System;
 using System.Runtime.CompilerServices;
 
 [assembly: TypeForwardedTo(typeof(System.Windows.Automation.Provider.IRawElementProviderSimple))]

@@ -3,17 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows.Media;
 using System.Windows.Threading;
 using MS.Internal;
 
@@ -44,7 +40,7 @@ namespace System.Windows.Controls
         private const byte DATAGRIDROW_stateNullCode = 255;
 
         // Static arrays to handle state transitions:
-        private static byte[] _idealStateMapping = new byte[] {
+        private static ReadOnlySpan<byte> IdealStateMapping => [
             DATAGRIDROW_stateNormalCode,
             DATAGRIDROW_stateNormalCode,
             DATAGRIDROW_stateMouseOverCode,
@@ -61,9 +57,9 @@ namespace System.Windows.Controls
             DATAGRIDROW_stateNormalEditingFocusedCode,
             DATAGRIDROW_stateMouseOverEditingCode,
             DATAGRIDROW_stateMouseOverEditingFocusedCode
-        };
+        ];
 
-        private static byte[] _fallbackStateMapping = new byte[] {
+        private static ReadOnlySpan<byte> FallbackStateMapping => [
             DATAGRIDROW_stateNormalCode, //DATAGRIDROW_stateMouseOverCode's fallback
             DATAGRIDROW_stateMouseOverEditingFocusedCode, //DATAGRIDROW_stateMouseOverEditingCode's fallback
             DATAGRIDROW_stateNormalEditingFocusedCode, //DATAGRIDROW_stateMouseOverEditingFocusedCode's fallback
@@ -74,7 +70,7 @@ namespace System.Windows.Controls
             DATAGRIDROW_stateSelectedFocusedCode, //DATAGRIDROW_stateNormalEditingFocusedCode's fallback
             DATAGRIDROW_stateSelectedFocusedCode, //DATAGRIDROW_stateSelectedCode's fallback
             DATAGRIDROW_stateNormalCode //DATAGRIDROW_stateSelectedFocusedCode's fallback
-        };
+        ];
 
         private static string[] _stateNames = new string[] {
             VisualStates.DATAGRIDROW_stateMouseOver,
@@ -226,7 +222,7 @@ namespace System.Windows.Controls
                 idealStateMappingIndex += 1;
             }
 
-            byte stateCode = _idealStateMapping[idealStateMappingIndex];
+            byte stateCode = IdealStateMapping[idealStateMappingIndex];
             Debug.Assert(stateCode != DATAGRIDROW_stateNullCode);
 
             string storyboardName;
@@ -254,7 +250,7 @@ namespace System.Windows.Controls
                 else
                 {
                     // The state wasn't implemented so fall back to the next one
-                    stateCode = _fallbackStateMapping[stateCode];
+                    stateCode = FallbackStateMapping[stateCode];
                 }
             }
 

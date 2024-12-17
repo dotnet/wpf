@@ -12,7 +12,8 @@
 
   <PropertyGroup>
     <WpfConfig Condition="'$(WpfConfig)'==''">Debug</WpfConfig>
-    <RuntimeIdentifier>win-$(PlatformTarget)</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="'$(PlatformTarget)' == ''">win-x64</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="'$(PlatformTarget)' != ''">win-$(PlatformTarget)</RuntimeIdentifier>
     
     <WpfArtifactsPackagesCommonPath>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)\..\'))\artifacts\packaging</WpfArtifactsPackagesCommonPath>
     <WpfPlatformTargetArtifactsDirectory Condition="'$(PlatformTarget)'=='x64'">x64\</WpfPlatformTargetArtifactsDirectory>

@@ -22,9 +22,9 @@ namespace System.Xaml
             BeforePropertiesHandler = settings.BeforePropertiesHandler;
             AfterPropertiesHandler = settings.AfterPropertiesHandler;
             AfterEndInitHandler = settings.AfterEndInitHandler;
-#if !TARGETTING35SP1
+
             XamlSetValueHandler = settings.XamlSetValueHandler;
-#endif
+
             RootObjectInstance = settings.RootObjectInstance;
             IgnoreCanConvert = settings.IgnoreCanConvert;
             ExternalNameScope = settings.ExternalNameScope;
@@ -40,9 +40,7 @@ namespace System.Xaml
         public EventHandler<XamlObjectEventArgs> BeforePropertiesHandler { get; set; }
         public EventHandler<XamlObjectEventArgs> AfterPropertiesHandler { get; set; }
         public EventHandler<XamlObjectEventArgs> AfterEndInitHandler { get; set; }
-#if !TARGETTING35SP1
         public EventHandler<XamlSetValueEventArgs> XamlSetValueHandler { get; set; }
-#endif
 
         public Object RootObjectInstance { get; set; }
         public bool IgnoreCanConvert { get; set; }
@@ -65,15 +63,16 @@ namespace System.Xaml
 
         internal XamlObjectWriterSettings StripDelegates()
         {
-            XamlObjectWriterSettings result = new XamlObjectWriterSettings(this);
-            // We need better protection against leaking out these delegates
-            result.AfterBeginInitHandler = null;
-            result.AfterEndInitHandler = null;
-            result.AfterPropertiesHandler = null;
-            result.BeforePropertiesHandler = null;
-#if !TARGETTING35SP1
-            result.XamlSetValueHandler = null;
-#endif
+            XamlObjectWriterSettings result = new XamlObjectWriterSettings(this)
+            {
+                // We need better protection against leaking out these delegates
+                AfterBeginInitHandler = null,
+                AfterEndInitHandler = null,
+                AfterPropertiesHandler = null,
+                BeforePropertiesHandler = null,
+                XamlSetValueHandler = null
+            };
+
             return result;
         }
     }

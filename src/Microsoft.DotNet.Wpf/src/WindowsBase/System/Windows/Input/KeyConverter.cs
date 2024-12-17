@@ -2,34 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//
-//      KeyConverter : Converts a key string to the *Type* that the string represents and vice-versa
-//
-// Features:
-//
-//
-//
-// 
-
-using System;
-using System.ComponentModel;    // for TypeConverter
-using System.Globalization;     // for CultureInfo
-using System.Reflection;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Markup;
-using MS.Utility;
-using MS.Internal.WindowsBase;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace System.Windows.Input
 {
     /// <summary>
     /// Key Converter class for converting between a string and the Type of a Key
     /// </summary>
-    /// <ExternalAPI/> 
+    /// <ExternalAPI/>
     public class KeyConverter : TypeConverter
     {
         /// <summary>
@@ -215,7 +196,7 @@ namespace System.Windows.Input
                         case "PLAY": keyFound = Key.Play; break;
                         case "ZOOM": keyFound = Key.Zoom; break;
                         case "PA1": keyFound = Key.Pa1; break;
-                        default: keyFound = (Key)Enum.Parse(typeof(Key), keyToken, true); break;
+                        default: keyFound = Enum.Parse<Key>(keyToken, true); break;
                     }
 
                     if ((int)keyFound != -1)

@@ -9,25 +9,15 @@
 //
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows;
 using System.Windows.Markup;    // for XmlLanguage
 using System.Windows.Media;
 
 using MS.Win32;
-using MS.Utility;
-using MS.Internal;
 using MS.Internal.FontFace;
-using MS.Internal.PresentationCore;
 using MS.Internal.Shaping;
 
 // Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
@@ -39,7 +29,6 @@ namespace MS.Internal.FontCache
     /// FamilyCollection font cache element class is responsible for
     /// storing the mapping between a folder and font families in it
     /// </summary>
-    [FriendAccessAllowed]
     internal class FamilyCollection
     {
         //------------------------------------------------------

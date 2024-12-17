@@ -5,9 +5,6 @@
 //
 //
 
-using System;
-using System.Diagnostics;
-
 namespace System.Windows.Input
 {
     /// <summary>

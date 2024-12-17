@@ -9,17 +9,6 @@
 //              for Shell integration
 //
 
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
-using System.Text;
-using System.Windows;
-using System.Windows.Data;
-using MS.Internal.Data;
-using MS.Win32;
-
 namespace MS.Internal
 {
     /// <summary>

@@ -9,19 +9,13 @@
 //              CollectionView.mht
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Data;
-using MS.Internal;              // Invariant.Assert
-using MS.Internal.Controls;
 using System.Windows.Controls;
 using MS.Internal.Utility;
-using MS.Utility;
 using MS.Internal.Hashing.PresentationFramework;    // HashHelper
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings

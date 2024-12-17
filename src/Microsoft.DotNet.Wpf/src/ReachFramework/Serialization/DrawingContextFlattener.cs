@@ -3,21 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using System.Collections;
-using System.Collections.Specialized;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel;
-
-using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Windows.Media.Animation;
 using Microsoft.Internal.AlphaFlattener;
 
 using MS.Internal;
@@ -710,7 +700,6 @@ namespace System.Windows.Xps.Serialization
         //                      cPieces = -1 indicates that the arc degenerates to a point 
         //
         //--------------------------------------------------------------------------------------------------
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         public static PointCollection ArcToBezier(
             double xStart,     // X coordinate of the last point
             double yStart,     // Y coordinate of the last point

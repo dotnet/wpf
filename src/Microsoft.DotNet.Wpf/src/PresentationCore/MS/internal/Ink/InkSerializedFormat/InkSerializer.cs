@@ -4,24 +4,11 @@
 
 //#define OLD_ISF
 
-using MS.Utility;
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.IO;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
-using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Input;
 using System.Windows.Ink;
-using MS.Internal.IO.Packaging;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {
@@ -281,14 +268,13 @@ namespace MS.Internal.Ink.InkSerializedFormat
             return;
         }
 
-        private static readonly byte[] Base64HeaderBytes
-                                            = new byte[]{(byte)'b',
-                                                        (byte)'a',
-                                                        (byte)'s',
-                                                        (byte)'e',
-                                                        (byte)'6',
-                                                        (byte)'4',
-                                                        (byte)':'};
+        private static ReadOnlySpan<byte> Base64HeaderBytes => [(byte)'b',
+                                                                (byte)'a',
+                                                                (byte)'s',
+                                                                (byte)'e',
+                                                                (byte)'6',
+                                                                (byte)'4',
+                                                                (byte)':'];
 
 #if OLD_ISF
         /// <summary>
@@ -2113,15 +2099,14 @@ namespace MS.Internal.Ink.InkSerializedFormat
             long currentPosition = data.Position;
             try
             {
-                byte[] isfBase64PrefixBytes = Base64HeaderBytes;
-                if (data.Length < isfBase64PrefixBytes.Length)
+                if (data.Length < Base64HeaderBytes.Length)
                 {
                     return false;
                 }
 
-                for (int x = 0; x < isfBase64PrefixBytes.Length; x++)
+                for (int x = 0; x < Base64HeaderBytes.Length; x++)
                 {
-                    if ((byte)data.ReadByte() != isfBase64PrefixBytes[x])
+                    if ((byte)data.ReadByte() != Base64HeaderBytes[x])
                     {
                         return false;
                     }

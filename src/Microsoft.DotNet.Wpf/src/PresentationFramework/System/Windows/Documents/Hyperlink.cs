@@ -8,22 +8,16 @@
 //
 
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO.Packaging;
-using System.Security;
-using System.Text;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Markup;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using MS.Internal;
 using MS.Internal.AppModel;
 using System.Windows.Threading;
 
-using CommonDependencyProperty=MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
-using SecurityHelper=MS.Internal.PresentationFramework.SecurityHelper;
+using CommonDependencyProperty = MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
 
 namespace System.Windows.Documents
 {
@@ -366,7 +360,7 @@ namespace System.Windows.Documents
             // (Or, instead of setting NavigateUri=null, add a handler for Hyperlink.RequestNavigateEvent and
             //  set e.Handled=true.)
             //
-            if (s_criticalNavigateUriProtectee.Value == d.GetHashCode() && ShouldPreventUriSpoofing)
+            if (s_criticalNavigateUriProtectee == d.GetHashCode() && ShouldPreventUriSpoofing)
             {
                 value = DependencyProperty.UnsetValue;
             }
@@ -527,7 +521,7 @@ namespace System.Windows.Documents
         /// We keep one per thread in case multiple threads would be involved in the spoofing attack.
         /// </remarks>
         [ThreadStatic]
-        private static SecurityCriticalDataForSet<Uri> s_cachedNavigateUri;
+        private static Uri s_cachedNavigateUri;
 
         /// <summary>
         /// Identification code of the hyperlink element currently protected against spoofing attacks.
@@ -539,7 +533,7 @@ namespace System.Windows.Documents
         /// We keep one per thread in case multiple threads would be involved in the spoofing attack.
         /// </remarks>
         [ThreadStatic]
-        private static SecurityCriticalDataForSet<int?> s_criticalNavigateUriProtectee;
+        private static int? s_criticalNavigateUriProtectee;
 
         /// <summary>
         /// Caches a target URI for spoofing prevention.
@@ -553,7 +547,7 @@ namespace System.Windows.Documents
             //
             d.VerifyAccess();
 
-            s_cachedNavigateUri.Value = targetUri;
+            s_cachedNavigateUri = targetUri;
         }
 
         /// <summary>
@@ -575,7 +569,7 @@ namespace System.Windows.Documents
             //
             // Spoofing countermeasure makes sure the URI hasn't changed since display in the status bar.
             //
-            Uri cachedUri = Hyperlink.s_cachedNavigateUri.Value;
+            Uri cachedUri = Hyperlink.s_cachedNavigateUri;
             // ShouldPreventUriSpoofing is checked last in order to avoid incurring a first-chance SecurityException
             // in common scenarios.
             if (cachedUri == null || cachedUri.Equals(targetUri) || !ShouldPreventUriSpoofing)
@@ -623,7 +617,7 @@ namespace System.Windows.Documents
             // Keep the identification code for the element that's to be protected against spoofing
             // attacks because its URI is shown on the status bar.
             //
-            s_criticalNavigateUriProtectee.Value = dObject.GetHashCode();
+            s_criticalNavigateUriProtectee = dObject.GetHashCode();
 
             //
             // Cache URI for spoofing countermeasures.
@@ -664,7 +658,7 @@ namespace System.Windows.Documents
             //
             // Clear the identification code for the element that was protected against spoofing.
             //
-            s_criticalNavigateUriProtectee.Value = null;
+            s_criticalNavigateUriProtectee = null;
         }
 
         #endregion
@@ -831,14 +825,14 @@ namespace System.Windows.Documents
         {
             get
             {
-                if (!s_shouldPreventUriSpoofing.Value.HasValue)
+                if (!s_shouldPreventUriSpoofing.HasValue)
                 {
-                    s_shouldPreventUriSpoofing.Value = false;
+                    s_shouldPreventUriSpoofing = false;
                 }
-                return (bool)s_shouldPreventUriSpoofing.Value;
+                return (bool)s_shouldPreventUriSpoofing;
             }
         }
-        static SecurityCriticalDataForSet<bool?> s_shouldPreventUriSpoofing;
+        static bool? s_shouldPreventUriSpoofing;
 
         #endregion Private Properties
 

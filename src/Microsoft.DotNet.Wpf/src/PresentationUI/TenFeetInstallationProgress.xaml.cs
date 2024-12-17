@@ -3,16 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Reflection;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Threading;
 using System.Windows.TrustUI;
 using System.Windows.Input;
 using System.Globalization;
-using System.Resources;
-using MS.Internal.PresentationUI;
-using MS.Internal.AppModel;
 using System.Windows.Interop;
 
 namespace Microsoft.Internal.DeploymentUI
@@ -20,7 +15,6 @@ namespace Microsoft.Internal.DeploymentUI
     /// <summary>
     /// Interaction logic for TenFeetInstallationProgress.xaml
     /// </summary>
-    [FriendAccessAllowed] // Built into UI, used by Framework.
     internal partial class TenFeetInstallationProgress : IProgressPage
     {
         public TenFeetInstallationProgress()

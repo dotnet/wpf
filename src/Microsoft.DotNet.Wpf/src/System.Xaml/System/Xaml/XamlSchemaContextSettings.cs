@@ -17,7 +17,7 @@ namespace System.Xaml
 
         public XamlSchemaContextSettings(XamlSchemaContextSettings settings)
         {
-            if (settings != null)
+            if (settings is not null)
             {
                 SupportMarkupExtensionsWithDuplicateArity = settings.SupportMarkupExtensionsWithDuplicateArity;
                 FullyQualifyAssemblyNamesInClrNamespaces = settings.FullyQualifyAssemblyNamesInClrNamespaces;

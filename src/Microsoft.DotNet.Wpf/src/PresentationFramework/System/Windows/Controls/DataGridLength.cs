@@ -3,11 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.Windows;
-using MS.Internal;
 
 namespace System.Windows.Controls
 {

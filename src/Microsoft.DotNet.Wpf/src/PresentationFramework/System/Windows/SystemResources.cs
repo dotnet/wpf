@@ -5,18 +5,14 @@
 //
 //
 
-using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Security;
 using System.Windows.Threading;
 using System.Text;
 using MS.Utility;
@@ -24,11 +20,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using System.Windows.Diagnostics;
 using System.Windows.Documents;
-using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Resources;
-using System.Windows.Appearance;
 using MS.Win32;
 using MS.Internal;
 using MS.Internal.Ink;
@@ -36,6 +29,7 @@ using MS.Internal.Interop;
 using MS.Internal.PresentationFramework;                   // SafeSecurityHelper
 using System.Windows.Baml2006;
 using System.Xaml.Permissions;
+using System.Runtime.CompilerServices;
 
 // Disable pragma warnings to enable PREsharp pragmas
 #pragma warning disable 1634, 1691
@@ -819,7 +813,7 @@ namespace System.Windows
                     Type knownTypeHelper = assembly.GetType("Microsoft.Windows.Themes.KnownTypeHelper");
                     if (knownTypeHelper != null)
                     {
-                        MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(knownTypeHelper);
+                        RuntimeHelpers.RunClassConstructor(knownTypeHelper.TypeHandle);
                     }
                 }
 #pragma warning restore 6502
@@ -1045,7 +1039,7 @@ namespace System.Windows
                 _hwndNotify.Count == 0 ||
                 _hwndNotify.Keys.FirstOrDefault((hwndDpiContext) => hwndDpiContext.DpiAwarenessContextValue == ProcessDpiAwarenessContextValue) == null)
             {
-                _hwndNotify = new Dictionary<DpiUtil.HwndDpiInfo, SecurityCriticalDataClass<HwndWrapper>>();
+                _hwndNotify = new Dictionary<DpiUtil.HwndDpiInfo, HwndWrapper>();
                 _hwndNotifyHook = new Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook>();
                 _dpiAwarenessContextAndDpis = new List<DpiUtil.HwndDpiInfo>();
 
@@ -1139,10 +1133,10 @@ namespace System.Windows
                 Debug.Assert(!_hwndNotify.ContainsKey(hwndDpiInfo));
                 Debug.Assert(hwndDpiInfo.DpiAwarenessContextValue == dpiContextValue);
 
-                _hwndNotify[hwndDpiInfo] = new SecurityCriticalDataClass<HwndWrapper>(hwndNotify);
-                _hwndNotify[hwndDpiInfo].Value.Dispatcher.ShutdownFinished += OnShutdownFinished;
+                _hwndNotify[hwndDpiInfo] = hwndNotify;
+                _hwndNotify[hwndDpiInfo].Dispatcher.ShutdownFinished += OnShutdownFinished;
                 _hwndNotifyHook[hwndDpiInfo] = new HwndWrapperHook(SystemThemeFilterMessage);
-                _hwndNotify[hwndDpiInfo].Value.AddHook(_hwndNotifyHook[hwndDpiInfo]);
+                _hwndNotify[hwndDpiInfo].AddHook(_hwndNotifyHook[hwndDpiInfo]);
 
                 return hwndDpiInfo;
             }
@@ -1154,7 +1148,7 @@ namespace System.Windows
             {
                 foreach (var hwndDpiInfo in _dpiAwarenessContextAndDpis)
                 {
-                    _hwndNotify[hwndDpiInfo].Value.Dispose();
+                    _hwndNotify[hwndDpiInfo].Dispose();
                     _hwndNotifyHook[hwndDpiInfo] = null;
                 }
             }
@@ -1412,10 +1406,10 @@ namespace System.Windows
                     }
 
                     SystemParameters.InvalidateWindowFrameThicknessProperties();
-                    
-                    if(ThemeManager.IsFluentThemeEnabled)
+
+                    if(ThemeManager.IsFluentThemeEnabled || ThemeManager.FluentEnabledWindows.Count > 0)
                     {
-                        ThemeManager.ApplySystemTheme();
+                        ThemeManager.OnSystemThemeChanged();
                     }
                     break;
 
@@ -1434,6 +1428,12 @@ namespace System.Windows
 
                 case WindowMessage.WM_DWMCOLORIZATIONCOLORCHANGED:
                     SystemParameters.InvalidateWindowGlassColorizationProperties();
+
+                    if(SystemColors.InvalidateCache())
+                    {
+                        OnSystemValueChanged();
+                        InvalidateResources(true);
+                    }
                     break;
             }
 
@@ -1564,7 +1564,7 @@ namespace System.Windows
                 Debug.Assert(hwndDpiInfo != null);
 
                 // will throw when a match is not found, which should never happen because we just called Ensure...()
-                return _hwndNotify[hwndDpiInfo].Value;
+                return _hwndNotify[hwndDpiInfo];
             }
         }
 
@@ -1647,7 +1647,7 @@ namespace System.Windows
 
             if (EnsureResourceChangeListener(hwndDpiInfo))
             {
-                return _hwndNotify[hwndDpiInfo].Value;
+                return _hwndNotify[hwndDpiInfo];
             }
 
             return null;
@@ -1678,7 +1678,7 @@ namespace System.Windows
         /// </summary>
         [ThreadStatic] private static List<DpiUtil.HwndDpiInfo> _dpiAwarenessContextAndDpis;
 
-        [ThreadStatic] private static Dictionary<DpiUtil.HwndDpiInfo, SecurityCriticalDataClass<HwndWrapper>> _hwndNotify;
+        [ThreadStatic] private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapper> _hwndNotify;
         [ThreadStatic]  private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook> _hwndNotifyHook;
 
         private static Hashtable _resourceCache = new Hashtable();
@@ -1733,14 +1733,22 @@ namespace System.Windows
             // the dictionary else just retun the cached value
             if (_dictionary != null)
             {
-                bool canCache;
-                object value  = _dictionary.GetValue(_keyOrValue, out canCache);
+                object value  = _dictionary.GetValue(_keyOrValue, out bool canCache);
                 if (canCache)
                 {
                     // Note that we are replacing the _keyorValue field
                     // with the value and deleting the _dictionary field.
-                    _keyOrValue = value;
-                    RemoveFromDictionary();
+                    if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
+                    {
+                        _keyOrValue = value;
+                        RemoveFromDictionary();
+                    }
+                    else
+                    {
+                        RemoveFromDictionary();
+                        // Update after removal from dictionary as we need the key for proper removal
+                        _keyOrValue = value;
+                    }
                 }
 
                 // Freeze if this value originated from a style or template
@@ -1789,8 +1797,7 @@ namespace System.Windows
             {
                 // Take a peek at the element type of the ElementStartRecord
                 // within the ResourceDictionary's deferred content.
-                bool found;
-                return _dictionary.GetValueType(_keyOrValue, out found);
+                return _dictionary.GetValueType(_keyOrValue, out bool _);
             }
             else
             {
@@ -1803,7 +1810,14 @@ namespace System.Windows
         {
             if (_dictionary != null)
             {
-                _dictionary.DeferredResourceReferences.Remove(this);
+                if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
+                {
+                    _dictionary.WeakDeferredResourceReferences.Remove(this);
+                }
+                else
+                {
+                    _dictionary.DeferredResourceReferencesList.Remove(this);
+                }
                 _dictionary = null;
             }
         }
@@ -2032,9 +2046,124 @@ namespace System.Windows
 
         #endregion Properties
     }
+
+    internal class DeferredResourceReferenceList : IEnumerable<DeferredResourceReference>
+    {
+        private readonly object _syncRoot = new();
+        private readonly Dictionary<object, WeakReference<DeferredResourceReference>> _entries = new();
+        private int _potentiallyDeadEntryCount;
+
+        public void AddOrSet(DeferredResourceReference deferredResourceReference)
+        {
+            lock (_syncRoot)
+            {
+                _entries[deferredResourceReference.Key] = new WeakReference<DeferredResourceReference>(deferredResourceReference);
+            }
+        }
+
+        public void Remove(DeferredResourceReference deferredResourceReference)
+        {
+            lock (_syncRoot)
+            {
+                _entries.Remove(deferredResourceReference.Key);
+            }
+        }
+
+        internal DeferredResourceReference Get(object resourceKey)
+        {
+            lock (_syncRoot)
+            {
+                _entries.TryGetValue(resourceKey, out var weakReference);
+
+                if (weakReference is null)
+                {
+                    return null;
+                }
+
+                if (weakReference.TryGetTarget(out var deferredResourceReference))
+                {
+                    return deferredResourceReference;
+                }
+                else
+                {
+                    ++_potentiallyDeadEntryCount;
+                }
+            }
+
+            PurgeIfRequired();
+
+            return null;
+        }
+
+        internal void ChangeDictionary(ResourceDictionary resourceDictionary)
+        {
+            lock (_syncRoot)
+            {
+                foreach (WeakReference<DeferredResourceReference> weakReference in _entries.Values)
+                {
+                    if (weakReference.TryGetTarget(out var deferredResourceReference))
+                    {
+                        deferredResourceReference.Dictionary = resourceDictionary;
+                    }
+                    else
+                    {
+                        ++_potentiallyDeadEntryCount;
+                    }
+                }
+            }
+
+            PurgeIfRequired();
+        }
+
+        private void PurgeIfRequired()
+        {
+            if (_potentiallyDeadEntryCount > 25)
+            {
+                Purge();
+            }
+        }
+
+        private void Purge()
+        {
+            Purge(null);
+        }
+
+        private void Purge(List<DeferredResourceReference> aliveItems)
+        {
+            lock (_syncRoot)
+            {
+                List<object> deadKeys = new(Math.Min(_potentiallyDeadEntryCount, _entries.Count));
+                _potentiallyDeadEntryCount = 0;
+
+                foreach (KeyValuePair<object, WeakReference<DeferredResourceReference>> entry in _entries)
+                {
+                    if (entry.Value.TryGetTarget(out var item) is false)
+                    {
+                        deadKeys.Add(entry.Key);
+                    }
+                    else
+                    {
+                        aliveItems?.Add(item);
+                    }
+                }
+
+                foreach (object deadKey in deadKeys)
+                {
+                    _entries.Remove(deadKey);
+                }
+            }
+        }
+
+        public IEnumerator<DeferredResourceReference> GetEnumerator()
+        {
+            var aliveItems = new List<DeferredResourceReference>(_entries.Count);
+            Purge(aliveItems);
+            return aliveItems.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
+        }
+    }
 }
-
-
-
-
-

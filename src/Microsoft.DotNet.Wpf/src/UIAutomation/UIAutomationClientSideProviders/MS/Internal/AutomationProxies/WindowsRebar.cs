@@ -5,10 +5,7 @@
 // Description: HWND-based Rebar Proxy
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;

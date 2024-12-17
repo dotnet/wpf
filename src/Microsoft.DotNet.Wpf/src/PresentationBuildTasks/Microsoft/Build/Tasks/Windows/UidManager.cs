@@ -17,11 +17,8 @@ using System.Xml;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Runtime.InteropServices;
 
 using MS.Internal.Markup;

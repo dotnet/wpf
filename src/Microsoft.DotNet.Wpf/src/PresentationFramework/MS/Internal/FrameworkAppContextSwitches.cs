@@ -2,22 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-using MS.Internal.PresentationFramework.Interop;
-using System;
 using System.Runtime.CompilerServices;
-using System.Windows;
+using System;
+
+// When building PresentationFramework, 'LocalAppContext' from WindowsBase.dll conflicts
+// with 'LocalAppContext' from PresentationCore.dll since there is InternalsVisibleTo set
+#pragma warning disable CS0436 // Type conflicts with imported type
 
 namespace MS.Internal
 {
-    // There are cases where we have multiple assemblies that are going to import this file and
-    // if they are going to also have InternalsVisibleTo between them, there will be a compiler warning
-    // that the type is found both in the source and in a referenced assembly. The compiler will prefer
-    // the version of the type defined in the source
-    //
-    // In order to disable the warning for this type we are disabling this warning for this entire file.
-    #pragma warning disable 436
-
     internal static class FrameworkAppContextSwitches
     {
         internal const string DoNotApplyLayoutRoundingToMarginsAndBorderThicknessSwitchName = "Switch.MS.Internal.DoNotApplyLayoutRoundingToMarginsAndBorderThickness";
@@ -142,7 +135,20 @@ namespace MS.Internal
                 return LocalAppContext.GetCachedSwitchValue(DisableFluentThemeWindowBackdropSwitchName, ref _DisableFluentThemeWindowBackdrop);
             }
         }
-    }
 
-#pragma warning restore 436
+
+        // Switch to disable DynamicResource optimizations
+        internal const string DisableDynamicResourceOptimizationSwitchName = "Switch.System.Windows.Controls.DisableDynamicResourceOptimization";
+        private static int _DisableDynamicResourceOptimization;
+        public static bool DisableDynamicResourceOptimization
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                return LocalAppContext.GetCachedSwitchValue(DisableDynamicResourceOptimizationSwitchName, ref _DisableDynamicResourceOptimization);
+            }
+        }
+    }
 }
+
+#pragma warning restore CS0436 // Type conflicts with imported type

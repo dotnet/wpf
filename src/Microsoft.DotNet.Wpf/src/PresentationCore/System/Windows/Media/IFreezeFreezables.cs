@@ -5,8 +5,6 @@
 //
 //
 
-using System.Windows;
-
 namespace System.Windows.Media
 {
     internal interface IFreezeFreezables

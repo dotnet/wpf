@@ -3,4 +3,4 @@
 
 # These owners will be the default owners for everything in the repo,
 # and will automatically be added as reviewers to all pull requests.
-*       @dotnet/wpf-developers
+*       @dotnet/wpf-developers @dotnet/dotnet-coherency-qbs

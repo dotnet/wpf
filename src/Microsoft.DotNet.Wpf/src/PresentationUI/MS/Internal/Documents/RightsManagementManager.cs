@@ -11,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Packaging;
-using System.Security;
 using System.Security.RightsManagement;
 using System.Text;
 using System.Threading;
@@ -20,7 +19,6 @@ using System.Windows.Threading;
 using System.Windows.TrustUI;
 
 using MS.Internal.Documents.Application;
-using MS.Internal.PresentationUI;
 
 namespace MS.Internal.Documents
 {
@@ -31,7 +29,6 @@ namespace MS.Internal.Documents
     /// This class serves as the controller that is between the UI and the facade for
     /// the RM APIs.
     /// </remarks>
-    [FriendAccessAllowed]
     internal sealed class DocumentRightsManagementManager
     {
         #region Constructors
@@ -46,7 +43,7 @@ namespace MS.Internal.Documents
         {
             ArgumentNullException.ThrowIfNull(rmProvider);
 
-            _rmProviderCache.Value = rmProvider;
+            _rmProviderCache = rmProvider;
 
             //Create dictionary for Credential Management
             //used to map between CredManResources and RM Users
@@ -72,12 +69,12 @@ namespace MS.Internal.Documents
              Trace.SafeWrite(Trace.Rights, "Initializing RightsManagementManager");
 
              System.Diagnostics.Debug.Assert(
-                 _currentManager.Value == null,
+                 _currentManager == null,
                  "RightsManagementManager initialized twice.");
 
-             if (_currentManager.Value == null)
+             if (_currentManager == null)
              {
-                 _currentManager.Value = new DocumentRightsManagementManager(rmProvider);
+                 _currentManager = new DocumentRightsManagementManager(rmProvider);
              }
         }
 
@@ -717,7 +714,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _currentManager.Value;
+                return _currentManager;
             }
         }
 
@@ -1472,7 +1469,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _rmProviderCache.Value;
+                return _rmProviderCache;
             }
         }
 
@@ -1483,8 +1480,8 @@ namespace MS.Internal.Documents
         // Private Fields
         //------------------------------------------------------
 
-        private static SecurityCriticalDataForSet<DocumentRightsManagementManager> _currentManager;
-        private SecurityCriticalDataForSet<IRightsManagementProvider> _rmProviderCache;
+        private static DocumentRightsManagementManager _currentManager;
+        private IRightsManagementProvider _rmProviderCache;
 
         /// <summary>
         /// A handle to a currently open instance of the credential manager dialog

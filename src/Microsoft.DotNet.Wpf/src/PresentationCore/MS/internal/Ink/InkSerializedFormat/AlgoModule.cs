@@ -2,20 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Utility;
-using System;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Ink;
-using MS.Internal.Ink.InkSerializedFormat;
-using System.Collections.Generic;
-using System.Diagnostics;
-
-using SR = MS.Internal.PresentationCore.SR;
-
 namespace MS.Internal.Ink.InkSerializedFormat
 {
     internal class AlgoModule
@@ -457,7 +443,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         internal const byte DefaultBAACount = 8;
         internal const byte MaxBAACount = 10;
 
+        private static ReadOnlySpan<double> DefaultFirstSquareRoot => [1, 1, 1, 4, 9, 16, 36, 49];
 
-        private static readonly double[] DefaultFirstSquareRoot = { 1, 1, 1, 4, 9, 16, 36, 49};
     }
 }

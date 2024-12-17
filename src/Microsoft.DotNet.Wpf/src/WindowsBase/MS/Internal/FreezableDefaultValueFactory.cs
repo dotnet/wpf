@@ -2,14 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: DefaultvalueFactory for Freezables
-//
-
-using MS.Internal.WindowsBase;
-using System;
-using System.Diagnostics;
 using System.Windows;
 
 namespace MS.Internal
@@ -22,7 +14,6 @@ namespace MS.Internal
     // the default value is modified it is automatically promoted from default to 
     // local.
     // </summary>
-    [FriendAccessAllowed] // built into Base, used by Core + Framework
     internal class FreezableDefaultValueFactory : DefaultValueFactory
     {
         /// <summary>

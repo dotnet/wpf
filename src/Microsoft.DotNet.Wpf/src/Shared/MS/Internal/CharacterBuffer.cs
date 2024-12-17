@@ -16,15 +16,9 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
-using System.Windows;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using System.Runtime.InteropServices;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal
 {

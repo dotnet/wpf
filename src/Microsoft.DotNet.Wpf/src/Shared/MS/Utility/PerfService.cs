@@ -4,22 +4,12 @@
 
 // Description: Implements the Service class for perf diagnostics
 
-using System;
-using System.Text;
-using System.Windows;
-using System.Collections.Generic;
 using SRCS = System.Runtime.CompilerServices;
-
-using Microsoft.Win32;
-using MS.Internal.PresentationCore;
-using MS.Internal;
-using MS.Utility;
 using MS.Win32.PresentationCore;
 using System.Reflection;
 
 namespace MS.Utility
 {
-    [FriendAccessAllowed]
     static internal class PerfService
     {
         // Map of elements to IDs.  A couple of notes:

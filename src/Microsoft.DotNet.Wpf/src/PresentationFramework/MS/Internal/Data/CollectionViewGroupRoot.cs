@@ -9,13 +9,10 @@
 // See spec at Grouping.mht
 //
 
-using System;
 using System.Collections;       // IComparer
-using System.Collections.Generic;       // List<T>
 using System.Collections.ObjectModel;   // ObservableCollection
 using System.Collections.Specialized;   // INotifyCollectionChanged
 using System.ComponentModel;    // PropertyChangedEventArgs, GroupDescription
-using System.Diagnostics;       // Debug.Assert
 using System.Globalization;
 
 using System.Windows;

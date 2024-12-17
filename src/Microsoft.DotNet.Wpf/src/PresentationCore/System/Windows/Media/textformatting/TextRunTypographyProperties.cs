@@ -12,10 +12,7 @@
 //
 
 
-using System;
-using System.Windows;
 using MS.Internal.Text.TextInterface;
-using MS.Internal.Shaping;
 
 namespace System.Windows.Media.TextFormatting
 {

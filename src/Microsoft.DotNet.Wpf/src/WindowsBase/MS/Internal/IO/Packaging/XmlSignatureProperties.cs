@@ -2,32 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  Helper for XmlDigitalSignatureProcessor.
 //  Generates and consumes Metro-compliant SignatureProperties element within an
 //  XmlDSig signature.
-//
-//
-//
-//
-//
 
-using System;
-using System.Collections;
 using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
-using System.Security.Cryptography;
 using System.Security.Cryptography.Xml;
-using System.Security.Cryptography.X509Certificates;
 using System.Xml;
-using System.IO;
-using System.Windows;
-using System.IO.Packaging;
-using System.Diagnostics;
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal.IO.Packaging
 {
@@ -382,7 +364,7 @@ namespace MS.Internal.IO.Packaging
         /// <returns>-1 if not found</returns>
         private static int GetIndex(String format)
         {
-            for (int i = 0; i < _dateTimePatternMap.GetLength(0); i++)
+            for (int i = 0; i < _dateTimePatternMap.Length; i++)
             {
                 if (string.Equals(_dateTimePatternMap[i].Format, format, StringComparison.Ordinal))
                 {

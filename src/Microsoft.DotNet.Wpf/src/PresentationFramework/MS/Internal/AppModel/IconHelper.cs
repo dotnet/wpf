@@ -7,21 +7,13 @@
 //              implementation for the Window class.
 //
 
-using System;
-using System.Security;
-using System.Diagnostics;
 using System.Collections.ObjectModel;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 
 using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Media.Imaging;
 using System.Windows.Media;
-
-using MS.Internal;
 using MS.Internal.Interop;
-using MS.Internal.PresentationFramework;                   // SecurityHelper
 using MS.Win32;
 
 namespace MS.Internal.AppModel

@@ -2,6 +2,20 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using System.Globalization;
+using System.Threading;
+using System.Collections; // ArrayList
+using System.Runtime.InteropServices;
+using System.Windows.Threading;
+using System.Windows.Input;
+using System.Windows.Controls; // ScrollChangedEventArgs
+using System.Windows.Controls.Primitives;  // CharacterCasing, TextBoxBase
+using System.Windows.Markup;
+using MS.Win32;
+using MS.Internal.Documents;
+using MS.Internal.Commands; // CommandHelpers
+
 #pragma warning disable 1634, 1691 // To enable presharp warning disables (#pragma suppress) below.
 //
 // Description: Text editing service for controls.
@@ -9,26 +23,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Globalization;
-    using System.Threading;
-    using System.ComponentModel;
-    using System.Text;
-    using System.Collections; // ArrayList
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Windows.Threading;
-    using System.Windows.Input;
-    using System.Windows.Controls; // ScrollChangedEventArgs
-    using System.Windows.Controls.Primitives;  // CharacterCasing, TextBoxBase
-    using System.Windows.Media;
-    using System.Windows.Markup;
-
-    using MS.Utility;
-    using MS.Win32;
-    using MS.Internal.Documents;
-    using MS.Internal.Commands; // CommandHelpers
-
     /// <summary>
     /// Text editing service for controls.
     /// </summary>
@@ -1246,7 +1240,7 @@ namespace System.Windows.Documents
                     {
                         textData = textData.Substring(0, endOfFirstLine);
                     }
-                    endOfFirstLine = textData.IndexOfAny(TextPointerBase.NextLineCharacters);
+                    endOfFirstLine = textData.AsSpan().IndexOfAny(TextPointerBase.NextLineCharacters);
                     if (endOfFirstLine >= 0)
                     {
                         textData = textData.Substring(0, endOfFirstLine);

@@ -2,6 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using ISpellChecker = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellChecker;
+using ISpellCheckerChangedEventHandler = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellCheckerChangedEventHandler;
+
 //
 // Description: An implementation of ISpellCheckerChangedEventHandler
 //              that is exposed by MsSpellCheckLib.RCW. 
@@ -15,9 +18,6 @@ namespace System.Windows.Documents
 {
     namespace MsSpellCheckLib
     {
-        using ISpellChecker = RCW.ISpellChecker;
-        using ISpellCheckerChangedEventHandler = RCW.ISpellCheckerChangedEventHandler;
-
         internal partial class SpellChecker
         {
             /// <summary>

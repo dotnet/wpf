@@ -12,37 +12,21 @@
 //              See spec at StickyNoteControlSpec.mht
 //
 
-using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Diagnostics;                           // Assert
 using System.Globalization;
-using System.IO;
-using System.Reflection;
 using System.Xml;
-using System.Xml.Serialization;
-using Microsoft.Win32;              // SystemEvents
 using MS.Internal;
 using MS.Internal.Annotations.Component;
 using MS.Internal.Controls.StickyNote;
 using MS.Internal.Commands;
 using MS.Internal.KnownBoxes;
 using System.Windows.Threading;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Annotations;
-using System.Windows.Automation;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Shapes;
-using System.Text;
-using System.Text.RegularExpressions;
 using MS.Utility;
 
 

@@ -8,7 +8,6 @@
 //              and TextRenderingMode.
 //
 
-using System.Windows;
 using MS.Internal.Media;
 
 namespace System.Windows.Media

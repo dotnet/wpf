@@ -17,7 +17,6 @@ using System.Globalization;
 using System.Collections;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using System.ComponentModel;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClient.NativeMethodsSetLastError;
 
@@ -25,7 +24,7 @@ namespace MS.Internal.Automation
 {
     // Disable warning for obsolete types.  These are scheduled to be removed in M8.2 so
     // only need the warning to come out for components outside of APT.
-    #pragma warning disable 0618
+#pragma warning disable 0618
 
     // Base proxy for HWNDs. Provides HWND-based children, HWND properties such as Enabled, Visible etc.
     internal class HwndProxyElementProvider:

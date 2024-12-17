@@ -4,13 +4,10 @@
 
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
@@ -7220,7 +7217,7 @@ namespace System.Windows.Controls
                             // get the index of existing descriptor to replace it
                             for (int i = 0; i < Items.SortDescriptions.Count; i++)
                             {
-                                if (string.Compare(Items.SortDescriptions[i].PropertyName, sortPropertyName, StringComparison.Ordinal) == 0 &&
+                                if (string.Equals(Items.SortDescriptions[i].PropertyName, sortPropertyName, StringComparison.Ordinal) &&
                                     (GroupingSortDescriptionIndices == null ||
                                     !GroupingSortDescriptionIndices.Contains(i)))
                                 {

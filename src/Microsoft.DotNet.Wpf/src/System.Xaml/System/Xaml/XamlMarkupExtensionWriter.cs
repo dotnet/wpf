@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text;
 
 namespace System.Xaml
@@ -95,7 +94,7 @@ namespace System.Xaml
         {
             string prefix = xamlXmlWriter.LookupPrefix(type.GetXamlNamespaces(), out _);
 
-            if (prefix == null)
+            if (prefix is null)
             {
                 if (!meSettings.ContinueWritingWhenPrefixIsNotFound)
                 {
@@ -112,7 +111,7 @@ namespace System.Xaml
         {
             string prefix = xamlXmlWriter.LookupPrefix(property.GetXamlNamespaces(), out _);
 
-            if (prefix == null)
+            if (prefix is null)
             {
                 if (!meSettings.ContinueWritingWhenPrefixIsNotFound)
                 {
@@ -129,7 +128,7 @@ namespace System.Xaml
         {
             if (!settings.AssumeValidInput)
             {
-                if (objectNode.Members == null)
+                if (objectNode.Members is null)
                 {
                     objectNode.Members = new XamlPropertySet();
                 }
@@ -175,7 +174,7 @@ namespace System.Xaml
         {
             string s = value as string;
 
-            if (s == null)
+            if (s is null)
             {
                 throw new ArgumentException(SR.XamlMarkupExtensionWriterCannotWriteNonstringValue);
             }
@@ -412,7 +411,7 @@ namespace System.Xaml
                 {
                     writer.sb.Append(Delimiter);
                     WritePrefix(writer, writer.LookupPrefix(property));
-                    string local = property.DeclaringType.Name + "." + property.Name;
+                    string local = $"{property.DeclaringType.Name}.{property.Name}";
                     writer.sb.Append(local);
                 }
                 else

@@ -6,21 +6,15 @@
 // Description: Defines PropertyPathWorker object, workhorse for CLR bindings
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
 using System.Globalization;
 using System.Text;
-using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Controls;                      // Validation
 using System.Windows.Data;
 using System.Windows.Markup;
-using MS.Internal;
-using MS.Internal.Hashing.PresentationFramework;    // HashHelper
 
 namespace MS.Internal.Data
 {

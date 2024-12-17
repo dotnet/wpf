@@ -6,11 +6,7 @@
 
 // Purpose:  Helper functions that require elevation but are safe to use.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.Security;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -22,8 +18,8 @@ using MS.Win32;
 using TypeConverterHelper = System.Windows.Markup.TypeConverterHelper;
 #endif
 #if PRESENTATIONFRAMEWORK
-        using System.Windows;
-        using System.Windows.Media;
+using System.Windows;
+using System.Windows.Media;
 #endif
 
 // The SafeSecurityHelper class differs between assemblies and could not actually be
@@ -147,10 +143,10 @@ namespace System.Xaml
                 CultureInfo curCulture = curAsmName.CultureInfo;
                 byte[] curKeyToken = curAsmName.GetPublicKeyToken();
 
-                if ( (String.Compare(curAsmName.Name, assemblyName.Name, true, TypeConverterHelper.InvariantEnglishUS) == 0) &&
-                     (reqVersion == null || reqVersion.Equals(curVersion)) &&
-                     (reqCulture == null || reqCulture.Equals(curCulture)) &&
-                     (reqKeyToken == null || IsSameKeyToken(reqKeyToken, curKeyToken) ) )
+                if (string.Equals(curAsmName.Name, assemblyName.Name, StringComparison.InvariantCultureIgnoreCase) &&
+                     (reqVersion is null || reqVersion.Equals(curVersion)) &&
+                     (reqCulture is null || reqCulture.Equals(curCulture)) &&
+                     (reqKeyToken is null || IsSameKeyToken(reqKeyToken, curKeyToken)))
                 {
                     return assemblies[i];
                 }
@@ -164,7 +160,7 @@ namespace System.Xaml
             lock (syncObject)
             {
                 AssemblyName result;
-                if (_assemblies == null)
+                if (_assemblies is null)
                 {
                     _assemblies = new Dictionary<object, AssemblyName>();
                 }
@@ -203,7 +199,7 @@ namespace System.Xaml
                 foreach (object key in _assemblies.Keys)
                 {
                     WeakReference weakRef = key as WeakReference;
-                    if (weakRef == null)
+                    if (weakRef is null)
                     {
                         continue;
                     }
@@ -215,14 +211,14 @@ namespace System.Xaml
                     else
                     {
                         // The target has been collected, add it to our list of keys to remove
-                        if (keysToRemove == null)
+                        if (keysToRemove is null)
                         {
                             keysToRemove = new List<object>();
                         }
                         keysToRemove.Add(key);
                     }
                 }
-                if (keysToRemove != null)
+                if (keysToRemove is not null)
                 {
                     foreach (object key in keysToRemove)
                     {
@@ -255,12 +251,12 @@ namespace System.Xaml
         {
            bool isSame = false;
 
-           if (reqKeyToken == null && curKeyToken == null)
+           if (reqKeyToken is null && curKeyToken is null)
            {
                // Both Key Tokens are not set, treat them as same.
                isSame = true;
            }
-           else if (reqKeyToken != null && curKeyToken != null)
+           else if (reqKeyToken is not null && curKeyToken is not null)
            {
                // Both KeyTokens are set.
                if (reqKeyToken.Length == curKeyToken.Length)
@@ -281,85 +277,6 @@ namespace System.Xaml
            return isSame;
         }
 #endif //!REACHFRAMEWORK
-
-#if PRESENTATION_CORE || PRESENTATIONFRAMEWORK
-        // enum to choose between the various keys
-        internal enum KeyToRead
-        {
-             WebBrowserDisable = 0x01 ,
-             MediaAudioDisable = 0x02 ,
-             MediaVideoDisable = 0x04 ,
-             MediaImageDisable = 0x08 ,
-             MediaAudioOrVideoDisable = KeyToRead.MediaVideoDisable | KeyToRead.MediaAudioDisable  ,
-             ScriptInteropDisable = 0x10 ,
-        }
-
-        internal static bool IsFeatureDisabled(KeyToRead key)
-        {
-            string regValue = null;
-            bool fResult = false;
-
-            switch (key)
-            {
-                case KeyToRead.WebBrowserDisable:
-                    regValue = RegistryKeys.value_WebBrowserDisallow;
-                    break;
-                case KeyToRead.MediaAudioDisable:
-                    regValue = RegistryKeys.value_MediaAudioDisallow;
-                    break;
-                case KeyToRead.MediaVideoDisable:
-                    regValue = RegistryKeys.value_MediaVideoDisallow;
-                    break;
-                case KeyToRead.MediaImageDisable:
-                    regValue = RegistryKeys.value_MediaImageDisallow;
-                    break;
-                case KeyToRead.MediaAudioOrVideoDisable:
-                    regValue = RegistryKeys.value_MediaAudioDisallow;
-                    break;
-                case KeyToRead.ScriptInteropDisable:
-                    regValue = RegistryKeys.value_ScriptInteropDisallow;
-                    break;
-                default:// throw exception for invalid key
-                throw(new System.ArgumentException(key.ToString()));
-
-            }
-
-            RegistryKey featureKey;
-            object obj = null;
-            bool keyValue = false;
-            // open the key and read the value
-            featureKey = Registry.LocalMachine.OpenSubKey(RegistryKeys.WPF_Features);
-            if (featureKey != null)
-            {
-                // If key exists and value is 1 return true else false
-                obj = featureKey.GetValue(regValue);
-                keyValue = obj is int && ((int)obj == 1);
-                if (keyValue)
-                {
-                    fResult = true;
-                }
-
-                // special case for audio and video since they can be orred
-                // this is in the condition that audio is enabled since that is
-                // the path that MediaAudioVideoDisable defaults to
-                // This is purely to optimize perf on the number of calls to assert
-                // in the media or audio scenario.
-
-                if ((fResult == false) && (key == KeyToRead.MediaAudioOrVideoDisable))
-                {
-                    regValue = RegistryKeys.value_MediaVideoDisallow;
-                    // If key exists and value is 1 return true else false
-                    obj = featureKey.GetValue(regValue);
-                    keyValue = obj is int && ((int)obj == 1);
-                    if (keyValue)
-                    {
-                        fResult = true;
-                    }
-                }
-            }
-            return fResult;
-        }
-#endif //PRESENTATIONCORE||PRESENTATIONFRAMEWORK
 
 #if PRESENTATION_CORE
 
@@ -385,7 +302,7 @@ namespace System.Xaml
         public WeakRefKey(object target)
             :base(target)
         {
-            Debug.Assert(target != null);
+            Debug.Assert(target is not null);
             _hashCode = target.GetHashCode();
         }
 
@@ -397,12 +314,12 @@ namespace System.Xaml
         public override bool Equals(object o)
         {
             WeakRefKey weakRef = o as WeakRefKey;
-            if (weakRef != null)
+            if (weakRef is not null)
             {
                 object target1 = Target;
                 object target2 = weakRef.Target;
 
-                if (target1 != null && target2 != null)
+                if (target1 is not null && target2 is not null)
                 {
                     return (target1 == target2);
                 }

@@ -3,20 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
 using MS.Internal.KnownBoxes;
-using System;
-using System.ComponentModel;
-
-using System.Diagnostics;
-using System.Windows.Threading;
-
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Media;
 using System.Windows.Input;
-using System.Windows.Controls.Primitives;
-using System.Windows.Shapes;
 
 namespace System.Windows.Controls
 {

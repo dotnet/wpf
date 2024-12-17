@@ -2,26 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
 using MS.Internal;
-using MS.Internal.Media;
 using MS.Internal.Media3D;
-using System;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Diagnostics;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
 using System.Windows.Markup;
 using System.Windows.Media.Effects;
-
-using MS.Internal.PresentationCore;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Media3D
 {
@@ -867,7 +854,6 @@ namespace System.Windows.Media.Media3D
         // Because 2D Visuals and FEs do not participate in inheritance context
         // we allow this backdoor for a Viewport3D to set itself as the inheritance
         // context of the Visual3DCollection it exposes as Children.
-        [FriendAccessAllowed]
         internal void SetInheritanceContextForChildren(DependencyObject inheritanceContextForChildren)
         {
             _inheritanceContextForChildren = inheritanceContextForChildren;

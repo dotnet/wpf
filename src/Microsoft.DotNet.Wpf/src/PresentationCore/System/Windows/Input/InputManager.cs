@@ -3,19 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Threading;
 using System.Threading;
-using System.Windows;
-using System.Security;
-using MS.Win32;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using System;
-using System.Diagnostics;
 using System.Windows.Automation;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -33,7 +24,6 @@ namespace System.Windows.Input
         /// <summary>
         ///     A routed event indicating that an input report arrived.
         /// </summary>
-        [FriendAccessAllowed]
         internal static readonly RoutedEvent InputReportEvent = GlobalEventManager.RegisterRoutedEvent("InputReport", RoutingStrategy.Bubble, typeof(InputReportEventHandler), typeof(InputManager));
 
         /// <summary>
@@ -54,7 +44,6 @@ namespace System.Windows.Input
         ///</summary>
         internal static InputManager UnsecureCurrent
         {
-            [FriendAccessAllowed]
             get
             {
                 return GetCurrentInputManagerImpl();
@@ -207,12 +196,10 @@ namespace System.Windows.Input
         /// </summary>
         internal event KeyEventHandler TranslateAccelerator
         {
-            [FriendAccessAllowed] // Used by KeyboardNavigation.cs in Framework
             add
             {
                 _translateAccelerator += value;
             }
-            [FriendAccessAllowed] // Used by KeyboardNavigation.cs in Framework
             remove
             {
                 _translateAccelerator -= value;

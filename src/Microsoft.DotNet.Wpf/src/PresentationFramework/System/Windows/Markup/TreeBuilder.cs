@@ -8,18 +8,7 @@
 *
 \***************************************************************************/
 
-using System;
-using System.Xml;
-using System.IO;
-using System.Text;
-using System.Collections;
-using System.ComponentModel;
-
 using System.Diagnostics;
-using System.Reflection;
-
-using System.Runtime.InteropServices;
-using MS.Utility;
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup

@@ -9,8 +9,6 @@
 //              content.
 //
 
-using System.Diagnostics;
-
 namespace System.Windows.Media
 {
     /// <summary>

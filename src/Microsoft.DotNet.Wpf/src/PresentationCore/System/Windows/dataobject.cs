@@ -2,42 +2,32 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
+using MS.Win32;
+using System.Collections;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Formats.Nrbf;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
+using System.Text;
+using MS.Internal;
+
+using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
+
 // Description: Top-level class for data transfer for drag-drop and clipboard.
 //
 // See spec at http://avalon/uis/Data%20Transfer%20clipboard%20dragdrop/Avalon%20Data%20Transfer%20Object.htm
-//
-//
 
 
 namespace System.Windows
 {
-    using System;
-    using MS.Win32;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Collections.Specialized;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Runtime.Serialization;
-    using System.Runtime.Serialization.Formatters.Binary;
-    using System.Security;
-    using System.Windows.Interop;
-    using System.Windows.Media.Imaging;
-    using System.Text;
-    using MS.Internal;
-    using MS.Internal.PresentationCore;                        // SecurityHelper
-
-    using SR=MS.Internal.PresentationCore.SR;
-    using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
-
-// PreSharp uses message numbers that the C# compiler doesn't know about.
-// Disable the C# complaints, per the PreSharp documentation.
+    // PreSharp uses message numbers that the C# compiler doesn't know about.
+    // Disable the C# complaints, per the PreSharp documentation.
 #pragma warning disable 1634, 1691
 
     #region DataObject Class
@@ -332,7 +322,6 @@ namespace System.Windows
         /// to specify whether the
         /// data can be converted to another format.
         /// </summary>
-        [FriendAccessAllowed]
         public void SetData(string format, Object data, bool autoConvert)
         {
             ArgumentNullException.ThrowIfNull(format);
@@ -1679,12 +1668,25 @@ namespace System.Windows
                 using (binaryWriter = new BinaryWriter(stream))
                 {
                     binaryWriter.Write(_serializedObjectID);
+                    bool success = false;
+                    try
+                    {
+                        success = BinaryFormatWriter.TryWriteFrameworkObject(stream,data);
+                    }
+                    catch (Exception ex) when (!ex.IsCriticalException())
+                    {
+                        // Being extra cautious here, but the Try method above should never throw in normal circumstances.
+                        Debug.Fail($"Unexpected exception writing binary formatted data. {ex.Message}");
+                    }
 
-                    formatter = new BinaryFormatter();
-
-                    #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
-                    formatter.Serialize(stream, data);
-                    #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
+                    if(!success)
+                    {
+                        //Using Binary formatter
+                        formatter = new BinaryFormatter();
+                        #pragma warning disable SYSLIB0011 // BinaryFormatter is obsolete 
+                        formatter.Serialize(stream, data);
+                        #pragma warning restore SYSLIB0011 // BinaryFormatter is obsolete
+                    }
                     return SaveStreamToHandle(handle, stream, doNotReallocate);
                 }
             }
@@ -3027,8 +3029,24 @@ namespace System.Windows
 
                 if (isSerializedObject)
                 {
-                    BinaryFormatter formatter;
 
+                    long startPosition = stream.Position;
+                    try
+                    {
+                        if (NrbfDecoder.Decode(stream, leaveOpen: true).TryGetFrameworkObject(out object val))
+                        {
+                            return val;
+                        }
+                    }
+                    catch (Exception ex) when (!ex.IsCriticalException()) 
+                    {
+                        // Couldn't parse for some reason, let the BinaryFormatter try to handle it.
+                        
+                    }
+
+                    // Using Binary formatter
+                    stream.Position = startPosition;
+                    BinaryFormatter formatter;
                     formatter = new BinaryFormatter();
                     if (restrictDeserialization)
                     {
@@ -3043,6 +3061,7 @@ namespace System.Windows
                     catch (RestrictedTypeDeserializationException)
                     {
                         value = null;
+                        // Couldn't parse for some reason, then need to add a type converter that round trips with string or byte[]                     
                     }
                 }
                 else
@@ -3593,13 +3612,13 @@ namespace System.Windows
 
                 if (datalist == null)
                 {
-                    datalist = (DataStoreEntry[])Array.CreateInstance(typeof(DataStoreEntry), 1);
+                    datalist = new DataStoreEntry[1];
                 }
                 else
                 {
                     DataStoreEntry[] newlist;
 
-                    newlist = (DataStoreEntry[])Array.CreateInstance(typeof(DataStoreEntry), datalist.Length + 1);
+                    newlist = new DataStoreEntry[datalist.Length + 1];
                     datalist.CopyTo(newlist, 1);
                     datalist = newlist;
                 }

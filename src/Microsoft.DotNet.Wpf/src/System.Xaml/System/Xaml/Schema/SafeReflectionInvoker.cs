@@ -4,10 +4,7 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Security;
 
 namespace System.Xaml.Schema
 {
@@ -15,7 +12,6 @@ namespace System.Xaml.Schema
     {
         static readonly Assembly SystemXaml = typeof(SafeReflectionInvoker).Assembly;
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
         public static bool IsInSystemXaml(Type type)
         {
             if (type.Assembly == SystemXaml)
@@ -37,7 +33,6 @@ namespace System.Xaml.Schema
         // ^^^^^----- End of unused members.  -----^^^^^
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
         internal static bool IsSystemXamlNonPublic(MethodInfo method)
         {
             Type declaringType = method.DeclaringType;

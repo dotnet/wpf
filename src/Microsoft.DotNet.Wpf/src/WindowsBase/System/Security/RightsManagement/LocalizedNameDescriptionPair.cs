@@ -2,30 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: This class represents an immutable pair of Strings (Name, Description)
-// That are generally used to represent name and description of an unsigned publish license 
-// (a.k.a. template). Unsigned Publish License has property called LocalizedNameDescriptionDictionary
-// which holds a map of a local Id to a Name Description pair, in order to support scenarios of 
-// building locale specific template browsing applications.
-//
-//
-//
-//
-
-using System;
-using System.Collections;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows;
-using MS.Internal.Security.RightsManagement;
-using SecurityHelper=MS.Internal.WindowsBase.SecurityHelper; 
-
 // Allow use of presharp warning numbers [6506] and [6518] unknown to the compiler
 #pragma warning disable 1634, 1691
 
-namespace System.Security.RightsManagement 
+namespace System.Security.RightsManagement
 {
     /// <summary>
     /// LocalizedNameDescriptionPair class represent an immutable (Name, Description) pair of strings. This is 

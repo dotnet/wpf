@@ -9,25 +9,17 @@
 #pragma warning disable 1634, 1691
 
 using MS.Internal.Documents.Application;
-using MS.Internal.IO.Packaging;             // For PreloadedPackages
-using MS.Internal.PresentationUI;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;                // For IValueConverter
 using System.Globalization;                 // For localization of string conversion
 using System.IO;
-using System.IO.Packaging;                  // For Packages
 using System.Printing;                      // For PrintQueue
-using System.Security;
 using System.Windows;
 using System.Windows.Controls;              // For Page Ranges
-using System.Windows.Controls.Primitives;   // For ToggleButton
 using System.Windows.Data;                  // For data binding
 using System.Windows.Documents;             // For PresentationUIStyleResources
 using System.Windows.Documents.Serialization;             // For WritingCompletedEventArgs
 using System.Windows.Input;                 // For focus / input based events
 using System.Windows.Interop;               // For WindowInteropHelper
-using System.Windows.Navigation;            // For NavigationWindow
 using System.Windows.Markup;                // For MarkupExtension
 using System.Windows.Threading;             // For DispatcherPriority
 using System.Windows.TrustUI;               // For string resources
@@ -36,7 +28,6 @@ using System.Windows.Media;                 // Visual Stuff
 
 namespace MS.Internal.Documents
 {
-    [FriendAccessAllowed]
     internal sealed class DocumentApplicationDocumentViewer : DocumentViewer
     {
         //------------------------------------------------------
@@ -181,7 +172,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _rightsManagementPolicy.Value;
+                return _rightsManagementPolicy;
             }
         }
 
@@ -244,7 +235,7 @@ namespace MS.Internal.Documents
             _docSigManager.SignatureStatusChange += new DocumentSignatureManager.SignatureStatusChangeHandler(_digSigInfoBar.OnStatusChange);
 
             //We disallow all RM-protected actions until the RM Manager tells us otherwise.
-            _rightsManagementPolicy.Value = RightsManagementPolicy.AllowNothing;
+            _rightsManagementPolicy = RightsManagementPolicy.AllowNothing;
             CommandEnforcer.Enforce();
 
             _rmManager = rmManager;
@@ -1071,7 +1062,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _commandEnforcer.Value;
+                return _commandEnforcer;
             }
         }
 
@@ -1632,7 +1623,7 @@ namespace MS.Internal.Documents
             ArgumentNullException.ThrowIfNull(args);
 
             //Invoke the CommandEnforcer to enable/disable commands as appropriate.
-            _rightsManagementPolicy.Value = args.RMPolicy;
+            _rightsManagementPolicy = args.RMPolicy;
             CommandEnforcer.Enforce();
         }
 
@@ -2168,7 +2159,7 @@ namespace MS.Internal.Documents
             enforcer.AddBinding(new PolicyBinding(DocumentApplicationDocumentViewer.Sign, RightsManagementPolicy.AllowSign));
             enforcer.AddBinding(new PolicyBinding(DocumentApplicationDocumentViewer.RequestSigners, RightsManagementPolicy.AllowSign));
 
-            _commandEnforcer.Value = enforcer;
+            _commandEnforcer = enforcer;
         }
 
         #endregion Commands
@@ -2199,11 +2190,11 @@ namespace MS.Internal.Documents
         private StatusInfoItem                                      _rmInfoBar;
         private DocumentApplicationState                            _state;
         private const int                                           _invalidPageNumber = -1;
-        private SecurityCriticalDataForSet<RightsManagementPolicy>  _rightsManagementPolicy;
+        private RightsManagementPolicy                              _rightsManagementPolicy;
         private RightsManagementStatus                              _rightsManagementStatus;
 
         // The enforcer for RM
-        private SecurityCriticalDataForSet<CommandEnforcer>         _commandEnforcer;
+        private CommandEnforcer                                     _commandEnforcer;
 
         // Declare commands that are located on DocumentApplicationDocumentViewer
         private static RoutedUICommand                _focusToolBarCommand;

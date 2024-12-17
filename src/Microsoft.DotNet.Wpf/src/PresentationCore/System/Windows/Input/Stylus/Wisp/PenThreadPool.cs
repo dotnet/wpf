@@ -2,15 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
 using System.Windows.Input.Tracing;
-using System.Windows.Threading;
-using System.Security;
-using MS.Utility;
-using MS.Win32.Penimc;
 
 namespace System.Windows.Input
 {

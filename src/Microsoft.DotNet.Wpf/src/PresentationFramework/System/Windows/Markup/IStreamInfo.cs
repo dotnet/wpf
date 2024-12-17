@@ -9,7 +9,6 @@
 //   and consumed by the parser\Baml Loader.
 //
 
-using System;
 using System.Reflection;
 
 namespace System.Windows.Markup

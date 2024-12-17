@@ -3,16 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Utility;
-using System;
-using System.Windows;
 using System.Windows.Media;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using MS.Internal.Ink;
-using MS.Internal;
 using MS.Internal.PresentationCore;
 
 namespace System.Windows.Ink
@@ -27,7 +19,6 @@ namespace System.Windows.Ink
     /// and updates the visual state as necessary.
     /// </summary>
     ///
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal class Renderer
     {
         #region StrokeVisual

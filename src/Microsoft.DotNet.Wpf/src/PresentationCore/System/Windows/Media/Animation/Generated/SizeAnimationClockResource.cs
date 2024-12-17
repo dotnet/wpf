@@ -9,13 +9,7 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using System;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
 
 namespace System.Windows.Media.Animation
 {

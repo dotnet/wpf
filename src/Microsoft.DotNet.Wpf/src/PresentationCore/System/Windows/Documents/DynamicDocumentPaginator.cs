@@ -11,10 +11,9 @@
 //
 //
 
-using System.ComponentModel;        // AsyncCompletedEventArgs
 using MS.Internal.PresentationCore; // SR
 
-namespace System.Windows.Documents 
+namespace System.Windows.Documents
 {
     /// <summary>
     /// Defines advanced methods and properties for paginating layouts, such 

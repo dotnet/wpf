@@ -2,18 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //   The object for wrapping a data stream and its associated context
 //   information dictionary.
-//
-//
-//
-//
-//
 
-using System;
 using System.Collections;
 using System.IO;
 

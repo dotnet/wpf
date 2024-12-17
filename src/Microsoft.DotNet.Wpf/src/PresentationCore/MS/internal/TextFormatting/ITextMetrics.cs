@@ -12,11 +12,6 @@
 //
 //
 
-
-using System;
-using System.Windows.Media.TextFormatting;
-using System.Runtime.InteropServices;
-
 namespace MS.Internal.TextFormatting
 {
     /// <summary>

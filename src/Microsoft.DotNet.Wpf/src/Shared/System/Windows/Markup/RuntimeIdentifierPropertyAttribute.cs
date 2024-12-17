@@ -18,14 +18,13 @@ using SRCS = System.Runtime.CompilerServices;
 #if PBTCOMPILER
 namespace MS.Internal.Markup
 #elif WINDOWS_BASE
-using MS.Internal.WindowsBase;     // FriendAccessAllowed
 
 namespace System.Windows.Markup
 #else
 namespace System.Windows.Markup
 #endif
 {
-#if !PBTCOMPILER && !TARGETTING35SP1 && !WINDOWS_BASE
+#if !PBTCOMPILER && !WINDOWS_BASE
     /// <summary>
     /// This attribute is placed on a class to identify the property that will
     /// function as an Name for the given class
@@ -35,7 +34,7 @@ namespace System.Windows.Markup
     public sealed class RuntimeNamePropertyAttribute: Attribute
     {
         /// <summary/>
-        public RuntimeNamePropertyAttribute(string name)
+        public RuntimeNamePropertyAttribute(string? name)
         {
             Name = name;
         }
@@ -45,7 +44,7 @@ namespace System.Windows.Markup
         /// the class, this property needs to be of type string and have
         /// both get and set access
         /// </summary>
-        public string Name { get; }
+        public string? Name { get; }
     }
 #endif
 
@@ -64,7 +63,6 @@ namespace System.Windows.Markup
         //  the same rules, but the parser is able to give a better error message
         //  when it happens.
 #if !PBTCOMPILER
-        [FriendAccessAllowed] // Built into Base, used by Core and Framework.
         internal static bool NameValidationCallback(object candidateName)
         {
             string name = candidateName as string;
@@ -91,9 +89,6 @@ namespace System.Windows.Markup
         /// Validates the name to follow Naming guidelines
         /// </summary>
         /// <param name="name">string to validate</param>
-#if !PBTCOMPILER
-        [FriendAccessAllowed] // Built into Base, used by Core and Framework.
-#endif
         internal static bool IsValidIdentifierName(string name)
         {
             // Grammar:

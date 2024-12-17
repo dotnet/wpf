@@ -13,25 +13,14 @@
 //
 //
 
-using System;
-using System.IO;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
 using System.Windows;
 using System.Windows.Annotations;
 using System.Windows.Annotations.Storage;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
-using System.Windows.Markup;
 using System.Windows.Threading;
 using System.Xml;
-using MS.Internal;
-using MS.Utility;
 
 
 namespace MS.Internal.Annotations.Anchoring
@@ -1370,7 +1359,7 @@ namespace MS.Internal.Annotations.Anchoring
         private Hashtable _selectionProcessors;
 
         // Potential separators for subtree processor class names
-        private static readonly Char[] Separators = new Char[] { ',', ' ', ';' };
+        private static ReadOnlySpan<char> Separators => [',', ' ', ';'];
 
         // Optional store, used if passed in, otherwise we grab the service's store
         private AnnotationStore _internalStore = null;

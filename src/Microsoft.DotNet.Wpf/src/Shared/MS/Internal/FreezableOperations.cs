@@ -13,10 +13,7 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
 using System.Windows;
-
-using MS.Internal.PresentationCore;
 
 namespace MS.Internal
 {
@@ -24,7 +21,6 @@ namespace MS.Internal
     ///     Internal static class which provides helper methods for common
     ///     Freezable operations.
     /// </summary>
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal static class FreezableOperations
     {
         //------------------------------------------------------

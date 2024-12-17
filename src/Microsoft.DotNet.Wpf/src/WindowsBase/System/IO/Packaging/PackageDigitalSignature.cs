@@ -2,28 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  This class represents a PackageDigitalSignature.  It is immutable. 
-//
-//
-//
-//
-//
-
-using System;
-using System.Collections.Generic;
-using System.Windows;           // For Exception strings - SR
-using System.Text;              // for StringBuilder
-using System.Diagnostics;        // for Assert
-using System.Security;          // for SecurityCritical
-using System.Security.Cryptography.Xml;     // for Xml Signature classes
+using System.Security.Cryptography.Xml;
 using System.Security.Cryptography.X509Certificates;
-using System.Security.Cryptography;
-using MS.Internal.IO.Packaging;            // helper classes Certificate, HashStream
-using System.Collections.ObjectModel;       // for ReadOnlyCollection<>
-using MS.Internal.WindowsBase;
+using MS.Internal.IO.Packaging;
+using System.Collections.ObjectModel;
 
 namespace System.IO.Packaging
 {

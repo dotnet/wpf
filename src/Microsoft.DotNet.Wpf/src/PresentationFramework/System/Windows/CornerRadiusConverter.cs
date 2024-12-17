@@ -9,16 +9,11 @@
 //
 //
 
-using System;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Reflection;
-using System.Text;
-using System.Windows;
-using System.Security;
 using MS.Internal;
-using MS.Utility;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 

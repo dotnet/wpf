@@ -8,16 +8,7 @@
 //
 //
 
-using System;
 using System.Collections;
-using System.Security;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Threading;
-
-using MS.Internal.FontFace;
-using MS.Internal.Shaping;
 
 namespace MS.Internal.FontCache
 {

@@ -2,16 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows.Threading;
-using System.Threading;
-using System.Reflection;
 using System.Windows.Data;
 using System.Windows.Diagnostics;
 using System.Windows.Documents;
@@ -20,19 +14,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
-using System.Windows.Media.TextFormatting;
 using System.Windows.Navigation;
 using System.Windows.Markup;
 using System.Windows.Controls;
-using System.Windows.Automation;
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;    // SafeSecurityHelper
 using MS.Utility;
-using MS.Internal.Automation;
-using MS.Internal.PtsTable;                 // BodyContainerProxy
-using System.Security;
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and
@@ -707,6 +696,8 @@ namespace System.Windows
             }
             set
             {
+                bool invalidateResources = false;
+                
                 ResourceDictionary oldValue = ResourcesField.GetValue(this);
                 ResourcesField.SetValue(this, value);
 
@@ -727,6 +718,11 @@ namespace System.Windows
                     oldValue.RemoveOwner(this);
                 }
 
+                if(this is Window window)
+                {
+                    window.AddFluentDictionary(value, out invalidateResources);
+                }
+
                 if (value != null)
                 {
                     if (!value.ContainsOwner(this))
@@ -743,7 +739,7 @@ namespace System.Windows
                 // final invalidation & it is no worse than the old code that also did not invalidate in this case
                 // Removed the not-empty check to allow invalidations in the case that the old dictionary
                 // is replaced with a new empty dictionary
-                if (oldValue != value)
+                if (oldValue != value || invalidateResources)
                 {
                     TreeWalkHelper.InvalidateOnResourcesChange(this, null, new ResourcesChangeInfo(oldValue, value));
                 }
@@ -2404,7 +2400,7 @@ namespace System.Windows
 
             // Coerce Callback for font properties for responding to system themes
             TextElement.FontFamilyProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontFamily, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontFamily)));
-            TextElement.FontSizeProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontSize, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontSize)));
+            TextElement.FontSizeProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.ThemeMessageFontSize, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontSize)));
             TextElement.FontStyleProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontStyle, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontStyle)));
             TextElement.FontWeightProperty.OverrideMetadata(_typeofThis, new FrameworkPropertyMetadata(SystemFonts.MessageFontWeight, FrameworkPropertyMetadataOptions.Inherits, null, new CoerceValueCallback(CoerceFontWeight)));
 
@@ -5557,7 +5553,7 @@ namespace System.Windows
             // For root elements with default values, return current system metric if local value has not been set
             if (ShouldUseSystemFont((FrameworkElement)o, TextElement.FontSizeProperty))
             {
-                return SystemFonts.MessageFontSize;
+                return SystemFonts.ThemeMessageFontSize;
             }
 
             return value;

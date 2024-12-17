@@ -4,9 +4,7 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Security;
 using System.Xaml.MS.Impl;
 
 namespace System.Xaml.Schema
@@ -33,7 +31,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_Unknown == null)
+                if (s_Unknown is null)
                 {
                     s_Unknown = new XamlMemberInvoker();
                 }
@@ -55,7 +53,7 @@ namespace System.Xaml.Schema
         {
             ArgumentNullException.ThrowIfNull(instance);
             ThrowIfUnknown();
-            if (UnderlyingGetter == null)
+            if (UnderlyingGetter is null)
             {
                 throw new NotSupportedException(SR.Format(SR.CantGetWriteonlyProperty, _member));
             }
@@ -74,7 +72,7 @@ namespace System.Xaml.Schema
         {
             ArgumentNullException.ThrowIfNull(instance);
             ThrowIfUnknown();
-            if (UnderlyingSetter == null)
+            if (UnderlyingSetter is null)
             {
                 throw new NotSupportedException(SR.Format(SR.CantSetReadonlyProperty, _member));
             }
@@ -93,7 +91,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_Directive == null)
+                if (s_Directive is null)
                 {
                     s_Directive = new DirectiveMemberInvoker();
                 }
@@ -130,7 +128,7 @@ namespace System.Xaml.Schema
 
             // Invoke the method if we found one
             MethodInfo shouldSerializeMethod = _shouldSerializeMethod.Value;
-            if (shouldSerializeMethod != null)
+            if (shouldSerializeMethod is not null)
             {
                 bool result;
                 if (_member.IsAttachable)
@@ -148,7 +146,6 @@ namespace System.Xaml.Schema
         }
 
         // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Justification = "Retained per servicing policy.")]
         private static bool IsSystemXamlNonPublic(
             ref ThreeValuedBool methodIsSystemXamlNonPublic, MethodInfo method)
         {
@@ -163,7 +160,7 @@ namespace System.Xaml.Schema
 
         private bool IsUnknown
         {
-            get { return _member == null || _member.UnderlyingMember == null; }
+            get { return _member is null || _member.UnderlyingMember is null; }
         }
 
         private void ThrowIfUnknown()

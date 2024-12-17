@@ -9,7 +9,6 @@
 *
 *
 \***************************************************************************/
-using System;
 using System.ComponentModel;
 using System.Windows.Markup;
 using System.Windows.Data;
@@ -24,7 +23,6 @@ namespace System.Windows
     /// </summary>
     [XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")]
     [XamlSetTypeConverterAttribute("ReceiveTypeConverter")] 
-    [ContentProperty("Value")]
     public class Setter : SetterBase, ISupportInitialize
     {
         /// <summary>

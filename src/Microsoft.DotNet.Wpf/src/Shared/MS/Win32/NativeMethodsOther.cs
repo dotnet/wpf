@@ -2,37 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
+using System.Runtime.InteropServices;
+using System.Diagnostics;
+using Microsoft.Win32.SafeHandles;
+
 namespace MS.Win32
 {
-    using Accessibility;
-    using System;
-    using System.Runtime.ConstrainedExecution;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Collections;
-    using System.Diagnostics;
-    using System.IO;
-    using System.Text;
-    using MS.Win32;
-    using Microsoft.Win32.SafeHandles;
-
-
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif UIAUTOMATIONTYPES
-    using MS.Internal.UIAutomationTypes;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
-    using MS.Internal.YourAssemblyName;
-#endif
-
-    [FriendAccessAllowed]
     internal partial class NativeMethods
     {
         // Translates Win32 error codes into HRESULTs.

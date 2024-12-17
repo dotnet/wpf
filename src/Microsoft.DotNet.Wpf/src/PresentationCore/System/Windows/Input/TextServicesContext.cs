@@ -8,17 +8,11 @@
 //
 //
 
-using System;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Threading;
-using System.Security;
-using System.Diagnostics;
-using System.Collections;
-using MS.Utility;
 using MS.Win32;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 
 namespace System.Windows.Input
 {
@@ -116,30 +110,24 @@ namespace System.Windows.Input
                 // be added to WPF setup....
                 if (!appDomainShutdown || System.Environment.OSVersion.Version.Major >= 6)
                 {
-                    _threadManager.Value.Deactivate();
+                    _threadManager.Deactivate();
                 }
                 _istimactivated = false;
             }
 
             // Release the empty dim.
-            if (_dimEmpty != null)
+            if (_dimEmpty is not null)
             {
-                if (_dimEmpty.Value != null)
-                {
-                    Marshal.ReleaseComObject(_dimEmpty.Value);
-                }
+                Marshal.ReleaseComObject(_dimEmpty);
                 _dimEmpty = null;
             }
 
             // Release the ThreadManager.
             // We don't do this in UnregisterTextStore because someone may have
             // called get_ThreadManager after the last TextStore was unregistered.
-            if (_threadManager != null)
+            if (_threadManager is not null)
             {
-                if (_threadManager.Value != null)
-                {
-                    Marshal.ReleaseComObject(_threadManager.Value);
-                }
+                Marshal.ReleaseComObject(_threadManager);
                 _threadManager = null;
             }
         }
@@ -164,10 +152,12 @@ namespace System.Windows.Input
 
             // We delay load cicero until someone creates an ITextStore.
             // Or this thread may not have a ThreadMgr.
-            if ((_threadManager == null) || (_threadManager.Value == null))
+            if (_threadManager is null)
+            {
                 return false;
+            }
 
-            keystrokeMgr = _threadManager.Value as UnsafeNativeMethods.ITfKeystrokeMgr;
+            keystrokeMgr = _threadManager as UnsafeNativeMethods.ITfKeystrokeMgr;
 
             switch (op)
             {
@@ -216,13 +206,13 @@ namespace System.Windows.Input
                     // which is then stored in the critical data.
                     int clientIdTemp;
                     threadManager.Activate(out clientIdTemp);
-                    _clientId = new SecurityCriticalData<int>(clientIdTemp);
+                    _clientId = clientIdTemp;
                     _istimactivated = true;
                 }
 
                 // Create a TSF document.
                 threadManager.CreateDocumentMgr(out doc);
-                doc.CreateContext(_clientId.Value, 0 /* flags */, _defaultTextStore, out context, out editCookie);
+                doc.CreateContext(_clientId, 0 /* flags */, _defaultTextStore, out context, out editCookie);
                 doc.Push(context);
 
                 // Release any native resources we're done with.
@@ -277,21 +267,9 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// This is an internal, link demand protected method.
+        /// The ITfThreadMgr for this thread.
         /// </summary>
-        internal UnsafeNativeMethods.ITfThreadMgr ThreadManager
-        {
-            // The ITfThreadMgr for this thread.
-            get
-            {
-                if (_threadManager == null)
-                {
-                    _threadManager = new SecurityCriticalDataClass<UnsafeNativeMethods.ITfThreadMgr>(TextServicesLoader.Load());
-                }
-
-                return _threadManager.Value;
-            }
-        }
+        internal UnsafeNativeMethods.ITfThreadMgr ThreadManager => _threadManager ??= TextServicesLoader.Load();
 
         //------------------------------------------------------
         //
@@ -441,13 +419,16 @@ namespace System.Windows.Input
                     {
                         return null;
                     }
+
                     //creating temp variable to retrieve from call and store in security critical data
                     UnsafeNativeMethods.ITfDocumentMgr dimEmptyTemp;
+
                     // Create a TSF document.
                     threadManager.CreateDocumentMgr(out dimEmptyTemp);
-                    _dimEmpty = new SecurityCriticalDataClass<UnsafeNativeMethods.ITfDocumentMgr>(dimEmptyTemp);
+                    _dimEmpty = dimEmptyTemp;
                 }
-                return _dimEmpty.Value;
+
+                return _dimEmpty;
             }
         }
 
@@ -469,13 +450,13 @@ namespace System.Windows.Input
         private bool _istimactivated;
 
         // The root TSF object, created on demand.
-        private SecurityCriticalDataClass<UnsafeNativeMethods.ITfThreadMgr> _threadManager;
+        private UnsafeNativeMethods.ITfThreadMgr _threadManager;
 
         // TSF ClientId from Activate call.
-        private SecurityCriticalData<int> _clientId;
+        private int _clientId;
 
         // The empty dim for this thread. Created on demand.
-        private SecurityCriticalDataClass<UnsafeNativeMethods.ITfDocumentMgr> _dimEmpty;
+        private UnsafeNativeMethods.ITfDocumentMgr _dimEmpty;
 
         #endregion Private Fields
 

@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System.Diagnostics;
-
 namespace System.Xaml
 {
     public enum XamlNodeType:byte
@@ -83,7 +81,7 @@ namespace System.Xaml
             case XamlNodeType.EndObject:
             case XamlNodeType.EndMember:
             case XamlNodeType.GetObject:
-                Debug.Assert(data == null, "XamlNode ctor, Internal XamlNode data must be null for this Node type");
+                Debug.Assert(data is null, "XamlNode ctor, Internal XamlNode data must be null for this Node type");
                 break;
 
             default:
@@ -115,7 +113,7 @@ namespace System.Xaml
 
         public override string ToString()
         {
-            string str = String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}: ", NodeType);
+            string str = string.Create(TypeConverterHelper.InvariantEnglishUS, $"{NodeType}: ");
             switch(NodeType)
             {
             case XamlNodeType.StartObject:
@@ -150,7 +148,7 @@ namespace System.Xaml
                     break;
 
                 case InternalNodeType.LineInfo:
-                    str += "LineInfo: " + LineInfo.ToString();
+                    str += $"LineInfo: {LineInfo}";
                     break;
                 }
                 break;

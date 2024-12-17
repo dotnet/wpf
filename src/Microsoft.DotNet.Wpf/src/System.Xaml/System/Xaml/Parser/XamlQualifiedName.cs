@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System;
-
 namespace MS.Internal.Xaml.Parser
 {
     internal class XamlQualifiedName : XamlName
@@ -21,7 +19,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 return string.IsNullOrEmpty(Prefix) ?
                     Name :
-                    Prefix + ":" + Name;
+                    $"{Prefix}:{Name}";
             }
         }
 

@@ -6,9 +6,7 @@
 // Description: The root node of a TextBlock splay tree.
 //
 
-using System;
 using MS.Internal;
-using System.Collections;
 
 namespace System.Windows.Documents
 {

@@ -21,18 +21,13 @@ using System.IO;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-
-using System.Globalization;
 using System.Diagnostics;
-using System.Reflection;
-using System.Resources;
 using System.Xml;
 
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
 
 using MS.Utility;
-using MS.Internal.Tasks;
 
 // Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
 // We first need to disable warnings about unknown message numbers and unknown pragmas.
@@ -91,7 +86,7 @@ namespace Microsoft.Build.Tasks.Windows
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
         public override bool Execute()
         {
-            if (string.Compare(IncludePackageReferencesDuringMarkupCompilation, "false", StringComparison.OrdinalIgnoreCase) != 0)
+            if (!string.Equals(IncludePackageReferencesDuringMarkupCompilation, "false", StringComparison.OrdinalIgnoreCase))
             {
                 return ExecuteGenerateTemporaryTargetAssemblyWithPackageReferenceSupport();
             }
@@ -638,7 +633,7 @@ namespace Microsoft.Build.Tasks.Windows
             {
                 XmlElement nodeGroup = root.ChildNodes[i] as XmlElement;
 
-                if (nodeGroup != null && String.Compare(nodeGroup.Name, groupName, StringComparison.OrdinalIgnoreCase) == 0)
+                if (nodeGroup != null && string.Equals(nodeGroup.Name, groupName, StringComparison.OrdinalIgnoreCase))
                 {
                     //
                     // This is ItemGroup element.
@@ -651,7 +646,7 @@ namespace Microsoft.Build.Tasks.Windows
                         {
                             XmlElement nodeItem = nodeGroup.ChildNodes[j] as XmlElement;
 
-                            if (nodeItem != null && String.Compare(nodeItem.Name, sItemName, StringComparison.OrdinalIgnoreCase) == 0)
+                            if (nodeItem != null && string.Equals(nodeItem.Name, sItemName, StringComparison.OrdinalIgnoreCase))
                             {
                                 // This is the item that need to remove.
                                 // Add it into the temporary array list.
@@ -820,7 +815,7 @@ namespace Microsoft.Build.Tasks.Windows
                     XmlNode previousNodeImportProps = null;
                     XmlNode previousNodeImportTargets = null;
 
-                    foreach (string sdk in sdks.Split(_semicolonChar).Select(i => i.Trim()))
+                    foreach (string sdk in sdks.Split(s_semicolonChar).Select(i => i.Trim()))
                     {
                         //  <Project Sdk="Microsoft.NET.Sdk">
                         //  <Project Sdk="My.Custom.Sdk/1.0.0">
@@ -952,7 +947,7 @@ namespace Microsoft.Build.Tasks.Windows
 
         private const string WPFTMP = "wpftmp";
 
-        private static readonly char[] _semicolonChar = new char[] { ';' };
+        private static readonly char[] s_semicolonChar = [';'];
 
         #endregion Private Fields
 

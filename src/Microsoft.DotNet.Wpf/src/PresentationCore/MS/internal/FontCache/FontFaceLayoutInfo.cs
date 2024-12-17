@@ -8,21 +8,9 @@
 //
 //
 
-using System;
-using System.Diagnostics;
 using System.Globalization;
-using System.IO;
-using System.Security;
-using System.ComponentModel;
 using System.Collections;
-using System.Collections.Generic;
-using System.Windows;
 using System.Windows.Media;
-using System.Runtime.InteropServices;
-
-using MS.Win32;
-using MS.Utility;
-using MS.Internal;
 using MS.Internal.FontFace;
 using MS.Internal.Shaping;
 
@@ -30,7 +18,6 @@ using MS.Internal.PresentationCore;
 
 namespace MS.Internal.FontCache
 {
-    [FriendAccessAllowed]
     internal sealed class FontFaceLayoutInfo
     {
         private FontTechnology _fontTechnology;

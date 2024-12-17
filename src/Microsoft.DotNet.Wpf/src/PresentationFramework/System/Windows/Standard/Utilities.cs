@@ -4,6 +4,12 @@
 
 
 
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+
 // This file contains general utilities to aid in development.
 // Classes here generally shouldn't be exposed publicly since
 // they're not particular to any library functionality.
@@ -12,25 +18,9 @@
 
 namespace Standard
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
-    using System.IO;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Security.Cryptography;
-    using System.Text;
-    using System.Windows;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-
     internal static partial class Utility
     {
         private static readonly Version _osVersion = Environment.OSVersion.Version;
-        private static readonly Version _presentationFrameworkVersion = Assembly.GetAssembly(typeof(Window)).GetName().Version;
 
         /// <summary>Convert a native integer that represent a color with an alpha channel into a Color struct.</summary>
         /// <param name="color">The integer that represents the color.  Its bits are of the format 0xAARRGGBB.</param>
@@ -43,65 +33,50 @@ namespace Standard
                 (byte)((color & 0x0000FF00) >> 8),
                 (byte)((color & 0x000000FF) >> 0));
         }
-
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        
         public static int GET_X_LPARAM(IntPtr lParam)
         {
             // Avoid overflow for negative coordinates https://github.com/dotnet/wpf/issues/6777
             return LOWORD((int) lParam.ToInt64());
         }
 
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        
         public static int GET_Y_LPARAM(IntPtr lParam)
         {
             // Avoid overflow for negative coordinates https://github.com/dotnet/wpf/issues/6777
             return HIWORD((int) lParam.ToInt64());
         }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        
         public static int HIWORD(int i)
         {
             return (short)(i >> 16);
         }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        
         public static int LOWORD(int i)
         {
             return (short)(i & 0xFFFF);
         }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        
         public static bool IsFlagSet(int value, int mask)
         {
             return 0 != (value & mask);
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        }     
         public static bool IsFlagSet(uint value, uint mask)
         {
             return 0 != (value & mask);
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        }     
         public static bool IsFlagSet(long value, long mask)
         {
             return 0 != (value & mask);
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        }     
         public static bool IsFlagSet(ulong value, ulong mask)
         {
             return 0 != (value & mask);
         }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
         public static bool IsOSVistaOrNewer
         {
             get { return _osVersion >= new Version(6, 0); }
-        }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        }     
         public static bool IsOSWindows7OrNewer
         {
             get { return _osVersion >= new Version(6, 1); }
@@ -126,19 +101,6 @@ namespace Standard
         /// Whether the operating system version is greater than or equal to 11.0* (build 22621).
         /// </summary>
         public static bool IsWindows11_22H2OrNewer => _osVersion.Build >= 22621;
-
-
-        /// <summary>
-        /// Is this using WPF4?
-        /// </summary>
-        /// <remarks>
-        /// There are a few specific bugs in Window in 3.5SP1 and below that require workarounds
-        /// when handling WM_NCCALCSIZE on the HWND.
-        /// </remarks>
-        public static bool IsPresentationFrameworkVersionLessThan4
-        {
-            get { return _presentationFrameworkVersion < new Version(4, 0); }
-        }
 
         public static BitmapFrame GetBestMatch(IList<BitmapFrame> frames, int width, int height)
         {
@@ -222,8 +184,7 @@ namespace Standard
             return s_bitDepth;
         }
 
-        /// <summary>GDI's DeleteObject</summary>
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+        /// <summary>GDI's DeleteObject</summary>   
         public static void SafeDeleteObject(ref IntPtr gdiObject)
         {
             IntPtr p = gdiObject;
@@ -233,8 +194,7 @@ namespace Standard
                 NativeMethods.DeleteObject(p);
             }
         }
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+    
         public static void SafeDestroyWindow(ref IntPtr hwnd)
         {
             IntPtr p = hwnd;
@@ -244,10 +204,7 @@ namespace Standard
                 NativeMethods.DestroyWindow(p);
             }
         }
-
-
-        [SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
+        
         public static void SafeRelease<T>(ref T comObject) where T : class
         {
             T t = comObject;

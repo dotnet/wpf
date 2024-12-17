@@ -4,10 +4,8 @@
 
 // Description: Wraps some of IAccessible to support Focus and top-level window creates
 
-using System.Windows.Automation;
 using System;
 using Accessibility;
-using System.Text;
 using System.Diagnostics;
 using MS.Win32;
 

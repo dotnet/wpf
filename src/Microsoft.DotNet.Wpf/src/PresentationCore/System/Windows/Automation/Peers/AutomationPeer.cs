@@ -4,25 +4,11 @@
 
 //#define ENABLE_AUTOMATIONPEER_LOGGING   // uncomment to include logging of various activities
 
-using System;
 using System.Collections;
-using System.Diagnostics;
-using System.Security;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Threading;
-using System.Collections.Generic;
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-
 using MS.Internal;
 using MS.Internal.Automation;
-using MS.Internal.Media;
-using MS.Internal.PresentationCore;
-using MS.Win32;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Automation.Peers
 {
@@ -1466,7 +1452,7 @@ namespace System.Windows.Automation.Peers
         ///
         internal int[] GetRuntimeId()
         {
-            return new int [] { 7, SafeNativeMethods.GetCurrentProcessId(), this.GetHashCode() };
+            return new int [] { 7, Environment.ProcessId, this.GetHashCode() };
         }
 
         ///
@@ -1535,7 +1521,6 @@ namespace System.Windows.Automation.Peers
         }
 
         //
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal virtual InteropAutomationProvider GetInteropChild()
         {
             return null;
@@ -2033,7 +2018,6 @@ namespace System.Windows.Automation.Peers
         /// Is it possible that they turn around and reenter asking for new value while in event handler?
         //  If yes, we'll serve old value
         ///</remarks>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal void UpdateSubtree()
         {
             ContextLayoutManager lm = ContextLayoutManager.From(this.Dispatcher);
@@ -2500,7 +2484,7 @@ namespace System.Windows.Automation.Peers
         private static object IsKeyboardFocusable(AutomationPeer peer)      {   return peer.IsKeyboardFocusable();  }
         private static object IsEnabled(AutomationPeer peer)                {   return peer.IsEnabled();        }
         private static object GetBoundingRectangle(AutomationPeer peer)     {   return peer.GetBoundingRectangle(); }
-        private static object GetCurrentProcessId(AutomationPeer peer)      {   return SafeNativeMethods.GetCurrentProcessId(); }
+        private static object GetCurrentProcessId(AutomationPeer peer)      {   return Environment.ProcessId; }
         private static object GetRuntimeId(AutomationPeer peer)             {   return peer.GetRuntimeId();     }
         private static object GetClassName(AutomationPeer peer)             {   return peer.GetClassName();     }
         private static object GetHelpText(AutomationPeer peer)              {   return peer.GetHelpText();  }

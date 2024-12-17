@@ -3,12 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Windows;
 using System.Windows.Ink;
-using System.Windows.Media;
-using System.Collections.Generic;
-using System.Globalization;
 
 namespace MS.Internal.Ink
 {

@@ -5,22 +5,7 @@
 //
 //
 
-using System;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using MS.Internal;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Globalization;
-using System.Security;
-using System.Runtime.InteropServices;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
-using MS.Win32;
 
 namespace System.Windows.Media.Imaging
 {

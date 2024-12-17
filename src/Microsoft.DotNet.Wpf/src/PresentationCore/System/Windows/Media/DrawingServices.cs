@@ -8,9 +8,6 @@
 //              and hit-testing.
 //
 
-using System.Diagnostics;
-using System.Windows.Media.Animation;
-
 namespace System.Windows.Media
 {
     /// <summary>

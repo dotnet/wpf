@@ -2,32 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
 #pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
-using System;
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Win32;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Windows.Media;
 using System.Resources;
-using System.Security;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
 using System.Reflection;
-using System.Diagnostics;
 using System.Globalization;
-using Microsoft.Win32.SafeHandles;
 using System.Net;
-using System.IO.Packaging;
-using System.Windows.Navigation;
-using System.Diagnostics.CodeAnalysis;
 using System.Text;
 
-using SR = MS.Internal.PresentationCore.SR;
 using UnsafeNativeMethodsMilCoreApi = MS.Win32.PresentationCore.UnsafeNativeMethods;
 using IWICCC = MS.Win32.PresentationCore.UnsafeNativeMethods.IWICColorContext;
 
@@ -163,11 +149,7 @@ namespace System.Windows.Media
                     break;
             }
 
-
-            // SECURITY NOTE: This constructor does not set a Uri because the profile comes from raw file
-            //                data. Thus, we don't set _isProfileUriNotFromUser to true because we
-            //                don't want get_ProfileUri to demand permission to return null.
-            Debug.Assert(_profileUri.Value == null);
+            Debug.Assert(_profileUri is null);
         }
 
         /// <summary>
@@ -256,13 +238,13 @@ namespace System.Windows.Media
         {
             get
             {
-                Uri uri = _profileUri.Value;
+                Uri uri = _profileUri;
 
                 //
                 // If the user didn't give us the uri value, then the uri has
                 // to be a file path because we got it from GetStandardColorSpaceProfile
                 //
-                if (_isProfileUriNotFromUser.Value)
+                if (_isProfileUriNotFromUser)
                 {
                     Invariant.Assert(uri.IsFile);
                 }
@@ -510,8 +492,8 @@ namespace System.Windows.Media
                 throw new ArgumentException(SR.UriNotAbsolute, "profileUri");
             }
 
-            _profileUri = new SecurityCriticalData<Uri>(profileUri);
-            _isProfileUriNotFromUser = new SecurityCriticalDataForSet<bool>(isStandardProfileUriNotFromUser);
+            _profileUri = profileUri;
+            _isProfileUriNotFromUser = isStandardProfileUriNotFromUser;
 
             Stream profileStream = null;
 
@@ -805,9 +787,9 @@ namespace System.Windows.Media
 
         private int _numChannels;
 
-        private SecurityCriticalData<Uri> _profileUri;
+        private Uri _profileUri;
         
-        private SecurityCriticalDataForSet<bool> _isProfileUriNotFromUser;
+        private bool _isProfileUriNotFromUser;
 
         private AbbreviatedPROFILEHEADER _profileHeader;
 

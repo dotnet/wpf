@@ -3,6 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
+using System.Collections;
+
 // This was ripped from the BCL's WeakHashtable and the namespace was changed.
 //
 // This class doesn't work when the keys are value-types.
@@ -10,10 +12,6 @@
 
 namespace MS.Internal
 {
-    using System;
-    using System.Collections;
-    using System.Diagnostics;
-
     /// <devdoc>
     ///     This is a hashtable that stores object keys as weak references.
     ///     It monitors memory usage and will periodically scavenge the

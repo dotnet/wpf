@@ -21,9 +21,7 @@ using System.Windows.Media;
 using System.Windows.Navigation;
 using System.Windows.Resources;
 using System.Windows.Shapes;
-using System.Windows;
 using System.Xaml;
-using System;
 
 namespace System.Windows.Baml2006
 {

@@ -7,25 +7,15 @@
 //              Most text scenarios should use the FlowDocumentScrollViewer.
 //
 
-using System;
-using System.IO;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
-using System.Globalization;
-using System.Windows.Automation;
 using System.Windows.Threading;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Markup;
-
-using MS.Utility;
 using MS.Internal;                  // Invariant.Assert
-using MS.Internal.Automation;       // TextAdaptor
 using System.Windows.Automation.Peers;
 using MS.Internal.Text;
 using MS.Internal.Documents;

@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Xaml;
 
 namespace MS.Internal.Xaml.Parser
@@ -28,8 +26,8 @@ namespace MS.Internal.Xaml.Parser
             // we really shouldn't generate extraneous new namespaces
             string newPrefix;
             do {
-                newPrefix = "prefix" + n++;
-            } while (_nsResolver(newPrefix) != null);
+                newPrefix = $"prefix{n++}";
+            } while (_nsResolver(newPrefix) is not null);
             _newNamespaces.Add(new NamespaceDeclaration(ns, newPrefix));
             return newPrefix;
         }

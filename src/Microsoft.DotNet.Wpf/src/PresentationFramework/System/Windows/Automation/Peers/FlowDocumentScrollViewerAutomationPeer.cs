@@ -7,7 +7,6 @@
 // Description: AutomationPeer associated with FlowDocumentScrollViewer.
 //
 
-using System.Collections.Generic;           // List<T>
 using System.Windows.Automation.Provider;   // IScrollProvider
 using System.Windows.Controls;              // FlowDocumentScrollViewer
 using System.Windows.Documents;             // FlowDocument

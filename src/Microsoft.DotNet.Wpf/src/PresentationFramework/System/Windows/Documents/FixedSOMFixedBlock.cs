@@ -2,6 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Media;
+using System.Text;
+
 /*++                                                              
     Description:
         This class reprsents a table row on the page. It would contain several table cells           
@@ -9,13 +12,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Windows.Media;
-    using System.Globalization;
-    using System.Diagnostics;
-    using System.Text;
-    
     internal sealed class FixedSOMFixedBlock : FixedSOMPageElement
     {
         //--------------------------------------------------------------------

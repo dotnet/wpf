@@ -8,11 +8,7 @@
 //
 
 
-using MS.Internal;
-using MS.Internal.Media;
 using MS.Utility;
-using MS.Win32;
-using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -20,11 +16,8 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 
 namespace MS.Internal.Documents
 {

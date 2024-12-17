@@ -7,8 +7,6 @@
 //
 
 using System.ComponentModel;        // TypeConverter
-using System.Windows.Controls;      // TextBlock
-using MS.Internal;
 using MS.Internal.PtsHost.UnsafeNativeMethods; // PTS restrictions
 
 namespace System.Windows.Documents

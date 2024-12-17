@@ -4,9 +4,7 @@
 
 // Description: 
 //    DialogBaseForm:  Base class for all DRP dialogs
-using System;
 using System.Windows.Forms;
-using System.Drawing;
 using System.Globalization;
 using System.Windows.TrustUI;
 

@@ -5,8 +5,6 @@
 #nullable disable
 
 using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reflection;
 using System.Xaml.MS.Impl;
 using MS.Internal.Xaml.Parser;

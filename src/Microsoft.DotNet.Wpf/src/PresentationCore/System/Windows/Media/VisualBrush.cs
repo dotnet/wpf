@@ -11,20 +11,11 @@
 //
 //
 
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Windows.Threading;
-using MS.Internal;
 
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     /// <summary>
     /// VisualBrush - This TileBrush defines its content as a Visual

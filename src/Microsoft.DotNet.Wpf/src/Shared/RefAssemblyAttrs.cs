@@ -3,9 +3,6 @@
 
 // The C++ version of these definitions is in inc\BuildInfo.hxx.
 
-using System;
-using System.Text;
-
 #if WINDOWS_BASE
 namespace MS.Internal.WindowsBase
 #elif PRESENTATION_CORE

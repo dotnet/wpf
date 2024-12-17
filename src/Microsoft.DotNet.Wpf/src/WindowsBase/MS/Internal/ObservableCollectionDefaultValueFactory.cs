@@ -2,16 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: DefaultvalueFactory for ObservableCollection
-//
-
-using System;
-using System.Diagnostics;
 using System.Windows;
-using System.Collections.ObjectModel; // ObservableCollection
-using System.Collections.Specialized; // NotifyCollectionChangedEventHandler
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 
 namespace MS.Internal
 {

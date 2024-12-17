@@ -2,25 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
 using System.IO;
-using System.Security;
-using System.Collections;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
-using System.Diagnostics;
-using System.Windows.Media;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows.Markup;
-using MMCF = System.IO.Packaging;
-using SR=MS.Internal.PresentationCore.SR;
 using System.Windows.Media.Imaging;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
@@ -316,5 +303,3 @@ namespace System.Windows.Media
 
     #endregion // ImageSourceConverter
 }
-
-

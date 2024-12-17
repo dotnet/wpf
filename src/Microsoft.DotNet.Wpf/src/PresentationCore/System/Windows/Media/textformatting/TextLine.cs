@@ -11,12 +11,6 @@
 //
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media;
 using MS.Internal.TextFormatting;
 
 namespace System.Windows.Media.TextFormatting

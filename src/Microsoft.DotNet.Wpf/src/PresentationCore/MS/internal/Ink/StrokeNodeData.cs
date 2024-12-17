@@ -3,12 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Diagnostics;
 
 namespace MS.Internal.Ink
 {

@@ -5,9 +5,6 @@
 //  Microsoft Windows Presentation Foundation
 //
 
-
-using System.Windows.Media;
-
 namespace System.Windows.Media.Effects
 {
     internal partial class ImplicitInputBrush : Brush

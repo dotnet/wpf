@@ -8,11 +8,7 @@
 //
 
 
-using System;
 using System.Threading;
-using System.Windows;
-
-using MS.Internal;
 
 namespace MS.Internal.Utility
 {

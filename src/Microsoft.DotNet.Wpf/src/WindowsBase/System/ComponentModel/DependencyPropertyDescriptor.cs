@@ -3,13 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using MS.Internal.ComponentModel;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
-using System.Text;
-using System.Security;
 using System.Windows;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings

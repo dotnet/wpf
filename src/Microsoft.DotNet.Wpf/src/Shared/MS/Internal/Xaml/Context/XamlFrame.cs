@@ -4,11 +4,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Diagnostics;
-
 namespace MS.Internal.Xaml.Context
 {
     abstract class XamlFrame

@@ -5,13 +5,10 @@
 #nullable disable
 
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Security;
 using System.Text;
 using System.Windows.Markup;
 using System.Xaml.MS.Impl;
@@ -22,8 +19,6 @@ using MS.Internal.Xaml.Runtime;
 
 namespace System.Xaml
 {
-    using REPLACEMENT = Replacements;
-
     public class XamlObjectReader : XamlReader
     {
         XamlObjectReaderSettings settings;

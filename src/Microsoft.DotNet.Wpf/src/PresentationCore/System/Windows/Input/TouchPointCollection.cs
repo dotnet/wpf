@@ -5,7 +5,6 @@
 //
 //
 
-using System;
 using System.Collections.ObjectModel;
 
 namespace System.Windows.Input

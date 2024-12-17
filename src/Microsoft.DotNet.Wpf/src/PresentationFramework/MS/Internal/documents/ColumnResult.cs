@@ -7,11 +7,7 @@
 //              information for a column.
 //
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
 using System.Windows.Documents;
 using MS.Internal.PtsHost;

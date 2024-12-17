@@ -6,11 +6,7 @@
 // Description: Extension methods used by Data Services code
 //
 
-using System;
 using System.Collections;
-using System.Diagnostics;
-
-using System.Windows.Data;
 
 namespace MS.Internal.Data
 {

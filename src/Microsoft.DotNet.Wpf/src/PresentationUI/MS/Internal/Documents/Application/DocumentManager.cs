@@ -9,30 +9,29 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Security;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Exposes the basic operations that can be performed on documents. (Open,
-/// EnableEdit, Save)
-/// </summary>
-/// <remarks>
-/// Responsibility:
-/// The class is responsible for delegating the work to the appropriate
-/// controller(s) in the order needed based on document dependencies.
-/// 
-/// Design Comments:
-/// Packages are dependent on EncryptedPackages who are dependent on FileStreams
-/// however all these classes are very different in function.
-/// 
-/// By design once a controller has reported handling a document it will not be
-/// given to other controllers.  A controller should not see documents they are
-/// not in the dependency chain for.
-/// 
-/// Example: FileController should never see RightsDocument.
-/// </remarks>
-internal sealed class DocumentManager 
+    /// <summary>
+    /// Exposes the basic operations that can be performed on documents. (Open,
+    /// EnableEdit, Save)
+    /// </summary>
+    /// <remarks>
+    /// Responsibility:
+    /// The class is responsible for delegating the work to the appropriate
+    /// controller(s) in the order needed based on document dependencies.
+    /// 
+    /// Design Comments:
+    /// Packages are dependent on EncryptedPackages who are dependent on FileStreams
+    /// however all these classes are very different in function.
+    /// 
+    /// By design once a controller has reported handling a document it will not be
+    /// given to other controllers.  A controller should not see documents they are
+    /// not in the dependency chain for.
+    /// 
+    /// Example: FileController should never see RightsDocument.
+    /// </remarks>
+    internal sealed class DocumentManager 
     : ChainOfResponsiblity<IDocumentController, Document>
 {
     #region Constructors

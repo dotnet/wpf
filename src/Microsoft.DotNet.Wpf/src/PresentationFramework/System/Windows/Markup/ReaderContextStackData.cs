@@ -7,11 +7,6 @@
 *
 *
 \***************************************************************************/
-using System;
-using System.Collections;
-using System.Reflection;
-using System.Diagnostics;
-
 namespace System.Windows.Markup
 {
     // Data maintained on the reader's context stack.  The root of the tree is at the bottom

@@ -3,12 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text;
-using System.Windows;
 using MS.Internal.Text;
 
 namespace System.Windows.Controls

@@ -2,29 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  This class represents an OLE compound file that contains an encrypted package.
-//
-//
-//
-//
-
-using System;
-using System.Diagnostics;
-using System.IO;
-using System.IO.Packaging;
 using System.Runtime.InteropServices;
 using System.Security.RightsManagement;
-using System.Windows;
-using System.Collections;
-using System.Collections.Generic;
-
-using MS.Internal;                  // Invariant.Assert
+using MS.Internal;
 using MS.Internal.IO.Packaging;
-using MS.Internal.IO.Packaging.CompoundFile;    // RightsManagementEncryptionTransform
-using MS.Internal.WindowsBase;
+using MS.Internal.IO.Packaging.CompoundFile;
 
 namespace System.IO.Packaging
 {

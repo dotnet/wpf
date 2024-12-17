@@ -6,15 +6,12 @@
 // Description: Helper services for TextContainer.
 //
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Automation.Peers;            // AutomationPeer
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using MS.Internal.Text;
 
 namespace MS.Internal.Documents
 {

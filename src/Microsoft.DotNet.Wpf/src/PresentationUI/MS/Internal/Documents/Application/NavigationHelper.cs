@@ -7,10 +7,6 @@
 //  with Uri navigations.
 
 using System;
-using System.Security;
-using System.Windows.Interop;
-using System.Windows.TrustUI;
-using MS.Internal;
 
 namespace MS.Internal.Documents.Application
 {

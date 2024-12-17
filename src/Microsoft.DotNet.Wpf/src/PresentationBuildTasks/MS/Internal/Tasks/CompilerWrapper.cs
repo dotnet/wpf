@@ -18,10 +18,6 @@
 using System;
 using System.IO;
 using System.Collections;
-using System.Reflection;
-using System.Runtime.InteropServices;
-
-using MS.Internal.Markup;
 using Microsoft.Build.Utilities;
 using Microsoft.Build.Framework;
 using MS.Internal.Tasks;

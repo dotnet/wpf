@@ -2,25 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-
-using System;
-using System.IO;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Reflection;
 using MS.Internal;
-using System.Windows.Media;
-using System.Text;
-using System.Collections;
 using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Security;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
-{    
+{
     /// <summary>
     /// ColorConverter Parses a color.
     /// </summary>

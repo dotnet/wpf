@@ -3,16 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;              // for ArrayList
-using System.Diagnostics;
 
 using System.Windows;                  // for Rect                        WindowsBase.dll
 using System.Windows.Media;            // for Geometry, Brush, ImageData. PresentationCore.dll
 using System.Windows.Media.Imaging;
 using System.Printing;
-
-using System.Security;
 
 namespace Microsoft.Internal.AlphaFlattener
 {

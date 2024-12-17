@@ -4,9 +4,7 @@
 
 // Description: TreeScope flags for listening to events
 
-using System;
-
-namespace System.Windows.Automation 
+namespace System.Windows.Automation
 {
     /// <summary>
     /// TreeScope flags for listening to events

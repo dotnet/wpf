@@ -8,17 +8,11 @@
 //    users when a long, blocking operation on XPSViewer's main thread is
 //    running (and blocking).
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Security;
 using System.Threading;
 using System.Windows.Forms;
-using System.Windows.TrustUI;
-using MS.Internal.Documents.Application;
 
 namespace MS.Internal.Documents
-{    
+{
     internal sealed partial class ProgressDialog : DialogBaseForm
     {
         #region Constructors

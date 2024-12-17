@@ -4,10 +4,8 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Markup;
@@ -336,9 +334,9 @@ namespace System.Xaml.Schema
         protected static bool? GetFlag(int bitMask, int bitToCheck)
         {
             int validBit = GetValidMask(bitToCheck);
-            if (0 != (bitMask & validBit))
+            if ((bitMask & validBit) != 0)
             {
-                return 0 != (bitMask & bitToCheck);
+                return (bitMask & bitToCheck) != 0;
             }
             return null;
         }

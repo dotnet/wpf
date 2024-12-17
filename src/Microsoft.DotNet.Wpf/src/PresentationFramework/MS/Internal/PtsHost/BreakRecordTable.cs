@@ -8,8 +8,6 @@
 //
 
 
-using System;                           // WeakReference, ...
-using System.Collections.Generic;       // List<T>
 using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
 using System.Windows.Documents;         // FlowDocument, TextPointer
 using MS.Internal.Documents;            // TextDocumentView

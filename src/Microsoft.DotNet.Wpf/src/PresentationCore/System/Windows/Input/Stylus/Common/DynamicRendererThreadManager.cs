@@ -10,18 +10,8 @@
 //
 //
 
-using System;
-using System.Diagnostics;
-using System.Collections.Specialized;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Threading;
 using System.Windows.Threading;
-using MS.Utility;
-using System.Security;
-using MS.Internal;
 
 namespace System.Windows.Input.StylusPlugIns
 {

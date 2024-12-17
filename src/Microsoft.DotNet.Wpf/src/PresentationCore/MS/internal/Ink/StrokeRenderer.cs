@@ -4,16 +4,9 @@
 
 //#define DEBUG_RENDERING_FEEDBACK
 
-using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Media;
-using System.Windows.Input;
-using System.Diagnostics;
-
-using SR=MS.Internal.PresentationCore.SR;
-using MS.Internal;
 
 namespace MS.Internal.Ink
 {

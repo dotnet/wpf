@@ -8,20 +8,13 @@
 //
 
 
-using System;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Diagnostics;
 using System.Formats.Nrbf;
 using System.IO;
-using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Security;
-using MS.Internal.AppModel;
 using System.Windows;
-using System.Windows.Navigation;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 
 namespace MS.Internal.AppModel
 {

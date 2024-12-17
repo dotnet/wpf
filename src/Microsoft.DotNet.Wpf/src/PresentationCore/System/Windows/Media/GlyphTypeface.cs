@@ -8,18 +8,11 @@
 // Description: GlyphTypeface implementation
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
-using System.Security;
-
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Markup;
@@ -29,7 +22,7 @@ using MS.Internal.TextFormatting;
 using MS.Internal.FontCache;
 using MS.Internal.FontFace;
 using MS.Internal.PresentationCore;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 
 namespace System.Windows.Media

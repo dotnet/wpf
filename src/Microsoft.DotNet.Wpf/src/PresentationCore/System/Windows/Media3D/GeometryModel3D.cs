@@ -11,16 +11,7 @@
 //
 //
 
-using MS.Internal;
 using MS.Internal.Media3D;
-using System;
-using System.Collections;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Media3D;
-using System.Windows.Markup;
 
 namespace System.Windows.Media.Media3D
 {

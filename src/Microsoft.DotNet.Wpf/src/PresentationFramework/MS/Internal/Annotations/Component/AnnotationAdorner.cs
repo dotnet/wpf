@@ -8,9 +8,6 @@
 //      between the component and the adorner layer.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;

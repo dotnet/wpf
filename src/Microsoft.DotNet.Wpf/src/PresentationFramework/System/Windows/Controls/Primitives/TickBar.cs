@@ -3,28 +3,14 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Collections;
 using MS.Internal;
-using System.Windows.Threading;
-
-using System.Windows;
 using System.Windows.Data;
-
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using MS.Internal.KnownBoxes;
-
-using MS.Win32;
 
 
 // For typeconverter
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 
 namespace System.Windows.Controls.Primitives
 {

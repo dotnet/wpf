@@ -13,9 +13,7 @@
                                       
                                                                              
 --*/
-using System;
 using System.IO.Packaging;
-using System.Windows.Media;
 
 namespace System.Windows.Xps.Packaging
 {

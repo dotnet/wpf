@@ -2,20 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-
-using System;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using System.Text;
-using System.Collections;
-using System.Globalization;
-using System.Windows;
-using System.Windows.Media;
-using System.Runtime.InteropServices;
-using MS.Internal.WindowsBase;
-
 namespace System.Windows
 {
     /// <summary>

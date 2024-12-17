@@ -15,7 +15,6 @@
 //              This event is fired on navigation container and refired on the NavigationApplication
 //
 
-using System.ComponentModel;
 using System.Net;
 
 namespace System.Windows.Navigation

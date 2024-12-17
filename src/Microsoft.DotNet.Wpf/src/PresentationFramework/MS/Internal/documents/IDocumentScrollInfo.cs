@@ -7,17 +7,11 @@
 //              Spec:  03.01.01 API Design.PageGrid+.doc
 //
 
-using MS.Internal;
-using MS.Utility;
 using System.Collections.ObjectModel;
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
-using System.Windows.Media;
 using System.Windows;
-using System;
 
 namespace MS.Internal.Documents
 {

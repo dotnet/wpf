@@ -7,20 +7,7 @@
 //              Text, FlowDocument, TextRange
 //
 
-using System.Windows.Threading;
-
-using System.Collections;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Documents;
-using System.Windows.Controls;
-using System.ComponentModel;
-
 using MS.Internal.Text;
-using MS.Utility;
-
-using System;
 
 namespace System.Windows.Documents
 {

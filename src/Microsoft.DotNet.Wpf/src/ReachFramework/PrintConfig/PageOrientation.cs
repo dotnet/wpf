@@ -14,15 +14,9 @@ Abstract:
 
 --*/
 
-using System;
-using System.IO;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 using System.Printing;
-using MS.Internal.Printing.Configuration;
 
 namespace MS.Internal.Printing.Configuration
 {

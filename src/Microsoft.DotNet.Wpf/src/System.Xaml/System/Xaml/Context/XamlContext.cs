@@ -4,9 +4,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Reflection;
 using System.Xaml;
 using System.Xaml.Schema;
@@ -185,7 +182,7 @@ namespace MS.Internal.Xaml
                 XamlDirective directive = SchemaContext.GetXamlDirective(propUsageNamespace, propName.Name);
                 if (directive is not null)
                 {
-                    if (AllowedMemberLocations.None == (directive.AllowedLocation & AllowedMemberLocations.Attribute))
+                    if ((directive.AllowedLocation & AllowedMemberLocations.Attribute) == AllowedMemberLocations.None)
                     {
                         // Need a way to surface up this usage error now that
                         // we don't have UnknownProperty.Exception

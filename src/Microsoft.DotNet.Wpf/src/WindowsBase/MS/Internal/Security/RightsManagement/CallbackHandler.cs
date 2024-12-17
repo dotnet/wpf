@@ -2,19 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  These are the internal helpers that used to process callbacks from RM SDK 
-//
-//
-//
-//
 
-using System;
 using System.Threading;
 using System.Runtime.InteropServices;
-using System.Security;
 
 // Enable presharp pragma warning suppress directives.
 #pragma warning disable 1634, 1691

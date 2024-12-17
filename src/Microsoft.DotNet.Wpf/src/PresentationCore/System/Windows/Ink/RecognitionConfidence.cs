@@ -8,9 +8,6 @@
 //      The definition of RecognitionConfidence enum type
 //
 
-
-using System;
-
 namespace System.Windows.Ink
 {
     /// <summary>

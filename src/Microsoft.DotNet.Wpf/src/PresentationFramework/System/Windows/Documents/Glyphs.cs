@@ -8,27 +8,14 @@
 // Spec: Glyphs element and GlyphRun object.htm
 //
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.IO;
-using System.Windows.Threading;
-
-
-using System.Windows;
 using System.Windows.Media;
 using System.Windows.Navigation;
 using System.Windows.Markup;
 using System.ComponentModel;
-using System.Security;
-
-using MS.Utility;
-using MS.Internal.Navigation;
 using MS.Internal.Utility;
-using MS.Internal;
 
-using BuildInfo=MS.Internal.PresentationFramework.BuildInfo;
+using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 
 namespace System.Windows.Documents
 {

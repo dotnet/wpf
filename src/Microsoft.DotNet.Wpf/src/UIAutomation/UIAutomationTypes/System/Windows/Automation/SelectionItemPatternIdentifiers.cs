@@ -4,8 +4,6 @@
 
 // Description: Automation Identifiers for SelectionItem Pattern
 
-using System;
-using System.Collections;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation

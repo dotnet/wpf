@@ -4,14 +4,11 @@
 
 using MS.Internal;
 using MS.Win32;
-using System.Diagnostics;
 using System.Globalization;
-using System.Security;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusWisp
 {

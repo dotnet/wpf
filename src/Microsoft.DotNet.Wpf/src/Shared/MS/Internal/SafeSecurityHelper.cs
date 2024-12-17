@@ -6,11 +6,7 @@
 
 // Purpose:  Helper functions that require elevation but are safe to use.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.Security;
 using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -22,8 +18,8 @@ using MS.Win32;
 using TypeConverterHelper = System.Windows.Markup.TypeConverterHelper;
 #endif
 #if PRESENTATIONFRAMEWORK
-        using System.Windows;
-        using System.Windows.Media;
+using System.Windows;
+using System.Windows.Media;
 #endif
 
 // The SafeSecurityHelper class differs between assemblies and could not actually be

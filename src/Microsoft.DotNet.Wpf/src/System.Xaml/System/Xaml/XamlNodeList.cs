@@ -4,9 +4,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.Diagnostics;
-
 namespace System.Xaml
 {
     // provides a place to Write a list of Xaml nodes

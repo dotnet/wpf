@@ -6,21 +6,16 @@
 // Description: Extension methods for use with MsSpellCheckLib.RCW interfaces
 //
 
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security;
+using IEnumString = System.Windows.Documents.MsSpellCheckLib.RCW.IEnumString;
+using IEnumSpellingError = System.Windows.Documents.MsSpellCheckLib.RCW.IEnumSpellingError;
+using ISpellingError = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellingError;
+
+using SpellingError = System.Windows.Documents.MsSpellCheckLib.SpellChecker.SpellingError;
+using CorrectiveAction = System.Windows.Documents.MsSpellCheckLib.SpellChecker.CorrectiveAction;
 
 namespace System.Windows.Documents.MsSpellCheckLib
 {
-    using IEnumString = RCW.IEnumString;
-    using IEnumSpellingError = RCW.IEnumSpellingError;
-    using ISpellingError = RCW.ISpellingError;
-
-    using SpellingError = SpellChecker.SpellingError;
-    using CorrectiveAction = SpellChecker.CorrectiveAction;
-
     /// <summary>
     /// Extension methods for use with MsSpellCheckLib.RCW interfaces
     /// </summary>

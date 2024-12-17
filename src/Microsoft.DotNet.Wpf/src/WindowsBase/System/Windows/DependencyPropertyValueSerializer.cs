@@ -2,16 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
 //  Contents:  ValueSerializer for DependencyProperty
-//
-//
 
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Windows.Markup;
 
 namespace System.Windows

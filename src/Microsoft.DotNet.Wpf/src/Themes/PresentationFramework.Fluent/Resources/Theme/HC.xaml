@@ -83,7 +83,7 @@
 
     <SolidColorBrush x:Key="ControlSolidFillColorDefaultBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
 
-    <SolidColorBrush x:Key="SystemColorWindowColorBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="SubtleFillColorTransparentBrush" Color="Transparent" />
     <SolidColorBrush x:Key="SubtleFillColorSecondaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="SubtleFillColorTertiaryBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="SubtleFillColorDisabledBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
@@ -381,10 +381,12 @@
     <SolidColorBrush x:Key="LabelForeground" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <!--  ListBox  -->
+    <Color x:Key="SystemChromeMediumLowColor">#FF2B2B2B</Color>
     <SolidColorBrush x:Key="ListBoxBackground" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="ListBoxItemForeground" Color="{StaticResource SystemColorWindowTextColor}" />
     <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrush" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundPointerOverThemeBrush" Color="{StaticResource SystemColorButtonTextColor}" />
+    <SolidColorBrush x:Key="ListBoxItemBackgroundSelectedPressedThemeBrush" Color="{StaticResource SystemColorHighlightColor}"/>
     <SolidColorBrush x:Key="ListBoxItemSelectedForegroundThemeBrush" Color="{StaticResource SystemColorButtonFaceColor}" />
     <SolidColorBrush x:Key="ListBoxItemUnselectedBackgroundPointerOverThemeBrush" Color="{StaticResource SystemColorHighlightTextColor}" />
 
@@ -453,7 +455,7 @@
     <SolidColorBrush x:Key="RadioButtonBackground" Color="Transparent"/>
     <SolidColorBrush x:Key="RadioButtonBackgroundPointerOver" Color="Transparent"/>
     <SolidColorBrush x:Key="RadioButtonBackgroundPressed" Color="Transparent"/>
-    <SolidColorBrush x:Key="RadioButtonBackgroundDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
+    <SolidColorBrush x:Key="RadioButtonBackgroundDisabled" Color="Transparent" />
     <SolidColorBrush x:Key="RadioButtonBorderBrush" Color="Transparent"/>
     <SolidColorBrush x:Key="RadioButtonBorderBrushPointerOver" Color="Transparent"/>
     <SolidColorBrush x:Key="RadioButtonBorderBrushPressed" Color="Transparent"/>
@@ -471,7 +473,9 @@
     <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePointerOver" Color="{StaticResource SystemColorHighlightColor}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePressed" Color="{StaticResource SystemColorHighlightTextColor}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokeDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
-    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{StaticResource SystemColorHighlightColor}"/>
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{StaticResource SystemColorHighlightTextColor}"/>
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillDisabled" Color="{StaticResource SystemColorWindowColor}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokeDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
 
     <!--  RatingControl  -->
     <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="{StaticResource SystemColorHighlightColor}" />
@@ -532,6 +536,9 @@
     <SolidColorBrush x:Key="TextControlBorderBrushDisabled" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{StaticResource SystemColorGrayTextColor}" />
     <SolidColorBrush x:Key="TextControlButtonForeground" Color="{StaticResource SystemColorWindowTextColor}" />
+
+    <!--  ThumbRate  -->
+    <SolidColorBrush x:Key="ThumbRateForeground" Color="{StaticResource SystemColorHighlightColor}" />
 
     <!--  TimePicker  -->
     <SolidColorBrush x:Key="TimePickerButtonBackground" Color="{StaticResource SystemColorWindowColor}" />
@@ -634,9 +641,10 @@
     <Color x:Key="ControlStrongFillColorDefault">#2D3236</Color>
     <Color x:Key="ControlStrongFillColorDisabled">#2D3236</Color>
 
+    <Color x:Key="SystemColorWindowColor">Transparent</Color>
     <Color x:Key="ControlSolidFillColorDefault">#2D3236</Color>
 
-    <Color x:Key="SystemColorWindowColor">Transparent</Color>
+    <Color x:Key="SubtleFillColorTransparent">#2D3236</Color>
     <Color x:Key="SubtleFillColorSecondary">#2D3236</Color>
     <Color x:Key="SubtleFillColorTertiary">#2D3236</Color>
     <Color x:Key="SubtleFillColorDisabled">#2D3236</Color>

@@ -7,15 +7,7 @@
 //              paragraph in PTS world.
 //
 
-using System;
-using System.Collections.Generic; // ReadOnlyCollection
-using System.Collections;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
-using System.Windows.Documents; // TextPointer
-using System.Windows.Media;
-using MS.Internal;
 using MS.Internal.Documents; // ParagraphResult
 using MS.Internal.Text;
 

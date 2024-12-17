@@ -4,18 +4,9 @@
 
 // #define NESTED_OPERATIONS_CHECK
 
-using System;
-using System.Collections;
-using System.Diagnostics;
-using System.Globalization; // For CultureInfo.InvariantCulture
-using System.Reflection;
-
 using System.Windows.Threading;
-
 using MS.Utility;
 using MS.Internal;
-using MS.Internal.WindowsBase;
-using System.Windows.Markup;
 
 namespace System.Windows
 {

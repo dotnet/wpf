@@ -8,12 +8,7 @@
 //
 //
 
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-using System.Security;
-using System.Diagnostics;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {

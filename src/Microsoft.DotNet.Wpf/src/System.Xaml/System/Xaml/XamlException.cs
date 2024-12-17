@@ -5,7 +5,6 @@
 #nullable disable
 
 using System.Runtime.Serialization;
-using System.Security;
 using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml

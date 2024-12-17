@@ -8,8 +8,6 @@
 // Specs:       Data Styling.mht
 //
 
-using System;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;

@@ -4,17 +4,11 @@
 
 // Description: Main class used by Automation clients, represents a UI element
 
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System;
-using System.Runtime.Serialization;
 using System.Collections;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.ComponentModel;
-using MS.Win32;
 using MS.Internal.Automation;
-using System.Runtime.InteropServices;
 
 #if EVENT_TRACING_PROPERTY
 using Microsoft.Win32.Diagnostics;

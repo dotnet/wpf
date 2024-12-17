@@ -9,18 +9,9 @@
 //
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-
-using System.Windows;
-using System.Windows.Markup;
-
-using MS.Internal;              // Invariant.Assert
 using MS.Internal.Data;
-using MS.Utility;
-
-using System;
 
 namespace System.Windows.Data
 {

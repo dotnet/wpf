@@ -2,35 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  These are the internal helpers required to call into unmanaged 
 //  Promethium Rights Management SDK APIs 
-//
-//
-//
-//
 
-using System;
 using System.Collections;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security;
 using System.Security.RightsManagement;
-using SecurityHelper = MS.Internal.WindowsBase.SecurityHelper;
 using System.Text;
-using System.Globalization;                 // For CultureInfo
-// for Invariant
-using System.Windows;                       // for SR and SR
-
-using MS.Internal;
-using System.Runtime.InteropServices;
-
-using Microsoft.Win32; // for Registry and RegistryKey classes 
-
-using MS.Internal.WindowsBase;
+using System.Globalization;
+using Microsoft.Win32;
 
 namespace MS.Internal.Security.RightsManagement
 {

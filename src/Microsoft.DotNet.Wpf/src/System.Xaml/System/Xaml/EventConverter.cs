@@ -4,7 +4,6 @@
 
 using System.ComponentModel;
 using System.Globalization;
-using System.Xaml.Schema;
 
 namespace System.Xaml
 {

@@ -11,7 +11,6 @@ namespace MS.Internal.Markup
 #elif SYSTEM_XAML
 namespace System.Xaml
 #else
-
 namespace MS.Internal
 #endif
 {

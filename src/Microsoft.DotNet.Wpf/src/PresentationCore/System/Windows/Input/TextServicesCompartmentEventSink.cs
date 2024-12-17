@@ -8,23 +8,16 @@
 //
 //
 
-using System;
-using System.Runtime.InteropServices;
-using System.Windows.Threading;
-
-using System.Diagnostics;
-using System.Collections;
-using MS.Utility;
 using MS.Win32;
 
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     //------------------------------------------------------
     //
     //  TextServicesCompartmentManager class
     //
     //------------------------------------------------------
- 
+
     /// <summary>
     /// This is a class to have a real implement of ITfCompartmentEventSink.
     /// </summary>

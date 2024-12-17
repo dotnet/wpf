@@ -10,7 +10,6 @@
 //
 //
 
-using MS.Internal;
 using System.ComponentModel;
 using System.Globalization;
 using MS.Internal.PtsHost.UnsafeNativeMethods;     // PTS restrictions

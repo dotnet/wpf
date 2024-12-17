@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
@@ -83,7 +82,7 @@ namespace System.Xaml
             attachedProperties.SetProperty(instance, name, value);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1007")]
+        [SuppressMessage("Microsoft.Design", "CA1007", Justification = "Kept for compatibility.")]
         public static bool TryGetProperty(object instance, AttachableMemberIdentifier name, out object value)
         {
             return TryGetProperty<object>(instance, name, out value);

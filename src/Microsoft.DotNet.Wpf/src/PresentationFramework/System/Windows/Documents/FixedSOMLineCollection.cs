@@ -10,17 +10,11 @@
 
 namespace System.Windows.Documents
 {
-    using System.Collections.Generic;
-    using System.Windows.Shapes;
-    using System.Windows.Media;
-    using System.Diagnostics;
-    using System.Windows;
-
     //Stores a collection of horizontal and vertical lines sorted by y and x axis respectively
 
     // Needs performance review: It might be better to use a list while creating FixedSOMLineRanges and then convert them to an array
     //when consuming them, i.e. determinining separation etc. We are doing lots of indexed access at this stage
-    
+
     internal sealed class FixedSOMLineCollection
     {
         //--------------------------------------------------------------------

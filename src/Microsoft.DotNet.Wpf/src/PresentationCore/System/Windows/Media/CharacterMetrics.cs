@@ -2,19 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-//  Contents:  CharacterMetrics
-//
-//
-
-using System;
 using System.Globalization;
 using StringBuilder = System.Text.StringBuilder;
 using CompositeFontParser = MS.Internal.FontFace.CompositeFontParser;
 using Constants = MS.Internal.TextFormatting.Constants;
-using SR = MS.Internal.PresentationCore.SR;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 

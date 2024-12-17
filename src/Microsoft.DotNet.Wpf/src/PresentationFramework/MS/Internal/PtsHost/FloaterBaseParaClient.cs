@@ -8,17 +8,7 @@
 //              for floaters and UIElements 
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Security;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Documents;
 using MS.Internal.Documents;
-using MS.Internal.Text;
 
 using MS.Internal.PtsHost.UnsafeNativeMethods;
 

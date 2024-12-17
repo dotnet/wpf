@@ -7,17 +7,9 @@
 //   Attributes used by parser for Avalon
 //
 
-using System;
-using System.Xml;
-using System.IO;
 using System.Collections;
 using System.ComponentModel;
-using System.Globalization;
-
-using System.Diagnostics;
 using System.Reflection;
-
-using MS.Utility;
 
 #if !PBTCOMPILER
 

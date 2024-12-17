@@ -6,8 +6,6 @@
 // Description: Dirty text range describes change in the TextContainer. 
 //
 
-using System;
-using System.Windows.Controls;
 using System.Windows.Documents;
 
 namespace MS.Internal.PtsHost

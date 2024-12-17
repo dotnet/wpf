@@ -10,9 +10,7 @@
 //
 //
 
-using System;
 using System.Globalization;
-using System.Diagnostics;
 using MS.Internal.PresentationCore;
 using System.Windows.Markup;
 

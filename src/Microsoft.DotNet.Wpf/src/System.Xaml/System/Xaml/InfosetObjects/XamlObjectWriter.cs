@@ -6,9 +6,7 @@
 
 using System.Collections;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Text;
 using System.Xaml.MS.Impl;
 using System.Xaml.Schema;
@@ -1687,7 +1685,7 @@ namespace System.Xaml
             // or it is the live root instance. ME.ProvideValue must be invoked in each case, except where a ME is the
             // live root instance and _skipProvideValueOnRoot is true. This allows live root instances of templates to
             // remain as MEs where necessary.
-            Debug.Assert(parentInstance is not null || parentProperty is not null && parentProperty.IsDirective || ctx.LiveDepth == 1);
+            Debug.Assert(parentInstance is not null || (parentProperty is not null && parentProperty.IsDirective) || ctx.LiveDepth == 1);
             object value = me;
             if (ctx.LiveDepth != 1 || !_skipProvideValueOnRoot)
             {

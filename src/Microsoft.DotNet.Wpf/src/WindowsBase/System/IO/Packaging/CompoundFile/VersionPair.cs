@@ -11,7 +11,6 @@
 #pragma warning disable 1634, 1691
 
 using System;
-using System.Globalization;
 
 #if PBTCOMPILER
 using MS.Utility;     // For SR.cs

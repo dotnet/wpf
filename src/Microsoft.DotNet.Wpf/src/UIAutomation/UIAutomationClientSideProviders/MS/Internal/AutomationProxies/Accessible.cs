@@ -12,13 +12,10 @@
 
 using System;
 using System.Diagnostics;
-using System.Collections;
 using System.Globalization;
-using System.Threading;
 using System.Windows.Automation;
 using System.Windows;
 using Accessibility;
-using System.Text;
 using System.Runtime.InteropServices;
 using MS.Win32;
 

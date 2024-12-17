@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -707,7 +707,7 @@ namespace MS.Internal.TextFormatting
                 }
 
                 if (collapsingPropertiesList == null || collapsingPropertiesList.Length == 0)
-                    throw new ArgumentNullException("collapsingPropertiesList");
+                    throw new ArgumentNullException(nameof(collapsingPropertiesList));
 
                 TextCollapsingProperties collapsingProp = collapsingPropertiesList[0];
                 double constraintWidth = collapsingProp.Width;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -526,21 +526,21 @@ namespace System.Windows.Interop
             {
                 throw new ArgumentException(
                     SR.HwndTarget_InvalidWindowHandle,
-                    "hwnd"
+                    nameof(hwnd)
                     );
             }
             else if (processId != Environment.ProcessId)
             {
                 throw new ArgumentException(
                     SR.HwndTarget_InvalidWindowProcess,
-                    "hwnd"
+                    nameof(hwnd)
                     );
             }
             else if (threadId != SafeNativeMethods.GetCurrentThreadId())
             {
                 throw new ArgumentException(
                     SR.HwndTarget_InvalidWindowThread,
-                    "hwnd"
+                    nameof(hwnd)
                     );
             }
 

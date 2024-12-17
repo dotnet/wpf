@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -400,7 +400,7 @@ namespace MS.Internal.Documents
                 //Ensure we're within proper bounds.
                 if (index < 0 || index >= Count)
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
                 //First we have to get a DsObject out of the array (aObjects) of DsObjects.
@@ -436,7 +436,7 @@ namespace MS.Internal.Documents
                 //Ensure we're within proper bounds.
                 if (index < 0 || index >= Count)
                 {
-                    throw new ArgumentOutOfRangeException("index");
+                    throw new ArgumentOutOfRangeException(nameof(index));
                 }
 
                 //Now we calculate the offset of the specified array index.

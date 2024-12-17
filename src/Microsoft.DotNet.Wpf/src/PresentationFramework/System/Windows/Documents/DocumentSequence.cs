@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -106,7 +106,7 @@ namespace System.Windows.Documents
 
             if (docRef == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(DocumentReference)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(DocumentReference)), nameof(value));
             }
 
             if (docRef.IsInitialized)
@@ -246,7 +246,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.IDPNegativePageNumber);
             }
 
             DocumentPage innerDP = null;
@@ -271,7 +271,7 @@ namespace System.Windows.Documents
         {
             if (fixedDocPageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("fixedDocPageNumber", SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(fixedDocPageNumber), SR.IDPNegativePageNumber);
             }
 
             ArgumentNullException.ThrowIfNull(document);
@@ -296,7 +296,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.IDPNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.IDPNegativePageNumber);
             }
 
             ArgumentNullException.ThrowIfNull(userState);

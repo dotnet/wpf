@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -186,7 +186,7 @@ namespace System.Windows.Automation.Text
 
             if (value.GetType() != ai.Type)
             {
-                throw new ArgumentException(SR.Format(SR.TextAttributeValueWrongType, attribute, ai.Type.Name, value.GetType().Name), "value");
+                throw new ArgumentException(SR.Format(SR.TextAttributeValueWrongType, attribute, ai.Type.Name, value.GetType().Name), nameof(value));
             }
 
             // note: if we implement attributes whose values are logical elements, patterns,

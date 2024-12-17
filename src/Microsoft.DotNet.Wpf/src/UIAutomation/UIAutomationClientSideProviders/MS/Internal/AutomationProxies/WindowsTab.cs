@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -496,7 +496,7 @@ namespace MS.Internal.AutomationProxies
             }
             else if (horizontalPercent < 0 || horizontalPercent > 100)
             {
-                throw new ArgumentOutOfRangeException("horizontalPercent", SR.ScrollBarOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(horizontalPercent), SR.ScrollBarOutOfRange);
             }
 
             // Get up/down control's hwnd

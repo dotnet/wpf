@@ -200,7 +200,7 @@ namespace System.Windows.Input.Manipulations
                     ref this.translationBehavior,
                     value,
                     OnTranslationBehaviorChanged,
-                    "TranslationBehavior");
+                    nameof(TranslationBehavior));
             }
         }
 
@@ -223,7 +223,7 @@ namespace System.Windows.Input.Manipulations
                     ref this.rotationBehavior,
                     value,
                     OnRotationBehaviorChanged,
-                    "RotationBehavior");
+                    nameof(RotationBehavior));
             }
         }
 
@@ -239,7 +239,7 @@ namespace System.Windows.Input.Manipulations
                     ref this.expansionBehavior,
                     value,
                     OnExpansionBehaviorChanged,
-                    "ExpansionBehavior");
+                    nameof(ExpansionBehavior));
             }
         }
 
@@ -1028,7 +1028,7 @@ namespace System.Windows.Input.Manipulations
             {
                 // throw an exception,
                 // make sure that the outer method has parameter named "timestamp"
-                throw Exceptions.InvalidTimestamp("timestamp", timestamp);
+                throw Exceptions.InvalidTimestamp(nameof(timestamp), timestamp);
             }
 
             bool result = ExtrapolateAndRaiseEvents(timestamp, forceCompleted);

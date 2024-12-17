@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -91,7 +91,7 @@ namespace MS.Internal.Data
                     return _cachedIndex;
             }
 
-            // If item != cached item, that doesn�t mean that the enumerator
+            // If item != cached item, that doesn’t mean that the enumerator
             // is `blown, it just means we have to go find the item represented by item.
             index = -1;
             // only ask for fresh enumerator if current enumerator already was moved before
@@ -246,7 +246,7 @@ namespace MS.Internal.Data
                 if (moveBy != 0)
                 {
 #pragma warning suppress 6503   // "Property get methods should not throw exceptions."
-                    throw new ArgumentOutOfRangeException("index"); // validating the index argument
+                    throw new ArgumentOutOfRangeException(nameof(index)); // validating the index argument
                 }
 
                 CacheCurrentItem(index, _enumerator.Current);
@@ -324,7 +324,7 @@ namespace MS.Internal.Data
                     {
                         // The number of elements in the source ICollection is greater than
                         // the available space from index to the end of the destination array.
-                        throw new ArgumentException(SR.CopyToNotEnoughSpace, "index");
+                        throw new ArgumentException(SR.CopyToNotEnoughSpace, nameof(index));
                     }
                 }
             }

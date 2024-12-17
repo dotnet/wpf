@@ -44,9 +44,6 @@ dotnet_diagnostic.CA1310.severity = suggestion
 # CA1419: Provide a parameterless constructor that is as visible as the containing type for concrete types derived from 'System.Runtime.InteropServices.SafeHandle'
 dotnet_diagnostic.CA1419.severity = suggestion
 
-# CA1507: Use nameof in place of string
-dotnet_diagnostic.CA1507.severity = suggestion
-
 # CA1510: Use ArgumentNullException throw helper
 dotnet_diagnostic.CA1510.severity = suggestion
 

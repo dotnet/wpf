@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -45,7 +45,7 @@ namespace System.Windows.Ink
                 {
                     //clear and throw
                     items.Clear();
-                    throw new ArgumentException(SR.StrokeIsDuplicated, "strokes");
+                    throw new ArgumentException(SR.StrokeIsDuplicated, nameof(strokes));
                 }
                 items.Add(stroke);
             }
@@ -58,13 +58,13 @@ namespace System.Windows.Ink
             ArgumentNullException.ThrowIfNull(stream);
             if ( !stream.CanRead )
             {
-                throw new ArgumentException(SR.Image_StreamRead, "stream");
+                throw new ArgumentException(SR.Image_StreamRead, nameof(stream));
             }
 
             Stream seekableStream = GetSeekableStream(stream);
             if (seekableStream == null)
             {
-                throw new ArgumentException(SR.Invalid_isfData_Length, "stream");
+                throw new ArgumentException(SR.Invalid_isfData_Length, nameof(stream));
             }
 
             //this will init our stroke collection
@@ -82,7 +82,7 @@ namespace System.Windows.Ink
             ArgumentNullException.ThrowIfNull(stream);
             if ( !stream.CanWrite )
             {
-                throw new ArgumentException(SR.Image_StreamWrite, "stream");
+                throw new ArgumentException(SR.Image_StreamWrite, nameof(stream));
             }
             SaveIsf(stream, compress);
         }
@@ -183,7 +183,7 @@ namespace System.Windows.Ink
         {
             if ( propertyDataId == Guid.Empty )
             {
-                throw new ArgumentException(SR.InvalidGuid, "propertyDataId");
+                throw new ArgumentException(SR.InvalidGuid, nameof(propertyDataId));
             }
 
             return this.ExtendedProperties[propertyDataId];
@@ -221,7 +221,7 @@ namespace System.Windows.Ink
         {
             // Ensure that the transformMatrix is invertible.
             if ( false == transformMatrix.HasInverse )
-                throw new ArgumentException(SR.MatrixNotInvertible, "transformMatrix");
+                throw new ArgumentException(SR.MatrixNotInvertible, nameof(transformMatrix));
 
             // if transformMatrix is identity or the StrokeCollection is empty
             //      then no change will occur anyway
@@ -313,7 +313,7 @@ namespace System.Windows.Ink
             ArgumentNullException.ThrowIfNull(stroke);
             if ( this.IndexOf(stroke) != -1 )
             {
-                throw new ArgumentException(SR.StrokeIsDuplicated, "stroke");
+                throw new ArgumentException(SR.StrokeIsDuplicated, nameof(stroke));
             }
 
             base.InsertItem(index, stroke);
@@ -331,7 +331,7 @@ namespace System.Windows.Ink
             ArgumentNullException.ThrowIfNull(stroke);
             if ( IndexOf(stroke) != -1 )
             {
-                throw new ArgumentException(SR.StrokeIsDuplicated, "stroke");
+                throw new ArgumentException(SR.StrokeIsDuplicated, nameof(stroke));
             }
 
             Stroke removedStroke = this[index];
@@ -387,7 +387,7 @@ namespace System.Windows.Ink
             if ( indexes == null )
             {
                 // At least one stroke doesn't exist in our collection. We throw.
-                ArgumentException ae = new ArgumentException(SR.InvalidRemovedStroke, "strokes");
+                ArgumentException ae = new ArgumentException(SR.InvalidRemovedStroke, nameof(strokes));
                 //
                 // we add a tag here so we can check for this in EraserBehavior.OnPointEraseResultChanged
                 // to determine if this method is the origin of an ArgumentException we harden against
@@ -431,7 +431,7 @@ namespace System.Windows.Ink
                 Stroke stroke = strokes[x];
                 if ( this.IndexOf(stroke) != -1 )
                 {
-                    throw new ArgumentException(SR.StrokeIsDuplicated, "strokes");
+                    throw new ArgumentException(SR.StrokeIsDuplicated, nameof(strokes));
                 }
             }
 
@@ -479,7 +479,7 @@ namespace System.Windows.Ink
             int replaceCount = strokesToReplace.Count;
             if ( replaceCount == 0 )
             {
-                ArgumentException ae = new ArgumentException(SR.EmptyScToReplace, "strokesToReplace");
+                ArgumentException ae = new ArgumentException(SR.EmptyScToReplace, nameof(strokesToReplace));
                 //
                 // we add a tag here so we can check for this in EraserBehavior.OnPointEraseResultChanged
                 // to determine if this method is the origin of an ArgumentException we harden against
@@ -492,7 +492,7 @@ namespace System.Windows.Ink
             if ( indexes == null )
             {
                 // At least one stroke doesn't exist in our collection. We throw.
-                ArgumentException ae = new ArgumentException(SR.InvalidRemovedStroke, "strokesToReplace");
+                ArgumentException ae = new ArgumentException(SR.InvalidRemovedStroke, nameof(strokesToReplace));
                 //
                 // we add a tag here so we can check for this in EraserBehavior.OnPointEraseResultChanged
                 // to determine if this method is the origin of an ArgumentException we harden against
@@ -508,7 +508,7 @@ namespace System.Windows.Ink
                 Stroke stroke = strokesToReplaceWith[x];
                 if ( this.IndexOf(stroke) != -1 )
                 {
-                    throw new ArgumentException(SR.StrokeIsDuplicated, "strokesToReplaceWith");
+                    throw new ArgumentException(SR.StrokeIsDuplicated, nameof(strokesToReplaceWith));
                 }
             }
 
@@ -621,7 +621,7 @@ namespace System.Windows.Ink
         {
             if ( null == e )
             {
-                throw new ArgumentNullException("e", SR.EventArgIsNull);
+                throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
             //raise our internal event first.  This is used by
@@ -678,7 +678,7 @@ namespace System.Windows.Ink
         {
             if ( null == e )
             {
-                throw new ArgumentNullException("e", SR.EventArgIsNull);
+                throw new ArgumentNullException(nameof(e), SR.EventArgIsNull);
             }
 
             if ( this.PropertyDataChanged != null )

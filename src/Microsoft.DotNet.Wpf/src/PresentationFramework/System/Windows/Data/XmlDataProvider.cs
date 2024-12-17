@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -74,7 +74,7 @@ namespace System.Windows.Data
                     _domSetDocument = null;
                     _source = value;
 
-                    OnPropertyChanged(new PropertyChangedEventArgs("Source"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(Source)));
 
                     if (!IsRefreshDeferred)
                         Refresh();
@@ -115,7 +115,7 @@ namespace System.Windows.Data
                     _domSetDocument = value;
 
                     _source = null;
-                    OnPropertyChanged(new PropertyChangedEventArgs("Source"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(Source)));
 
                     ChangeDocument(value); // set immediately so that next get_Document returns this value,
                                        // even when data provider is in deferred or asynch mode
@@ -143,7 +143,7 @@ namespace System.Windows.Data
                 if (_xPath != value)
                 {
                     _xPath = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("XPath"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(XPath)));
 
                     if (!IsRefreshDeferred)
                         Refresh();
@@ -179,7 +179,7 @@ namespace System.Windows.Data
                 if (_nsMgr != value)
                 {
                     _nsMgr = value;
-                    OnPropertyChanged(new PropertyChangedEventArgs("XmlNamespaceManager"));
+                    OnPropertyChanged(new PropertyChangedEventArgs(nameof(XmlNamespaceManager)));
 
                     if (!IsRefreshDeferred)
                         Refresh();
@@ -707,7 +707,7 @@ namespace System.Windows.Data
                 if (_document != null)
                     Hook();
 
-                OnPropertyChanged(new PropertyChangedEventArgs("Document"));
+                OnPropertyChanged(new PropertyChangedEventArgs(nameof(Document)));
             }
         }
 

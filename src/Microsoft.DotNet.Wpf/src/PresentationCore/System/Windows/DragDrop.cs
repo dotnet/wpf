@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -391,7 +391,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "dragSource");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, nameof(dragSource));
             }
 
             dataObject = data as DataObject;
@@ -422,7 +422,7 @@ namespace System.Windows
             }
             else
             {
-                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, "dragSource");
+                throw new ArgumentException(SR.ScopeMustBeUIElementOrContent, nameof(dragSource));
             }
 
             return ret;
@@ -891,7 +891,7 @@ namespace System.Windows
         {
             if (handle == IntPtr.Zero)
             {
-                throw new ArgumentNullException("handle");
+                throw new ArgumentNullException(nameof(handle));
             }
 
             _windowHandle = handle;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -262,7 +262,7 @@ namespace MS.Internal.Annotations.Anchoring
 
             IServiceProvider provider = selection as IServiceProvider;
             if (provider == null)
-                throw new ArgumentException(SR.SelectionMustBeServiceProvider, "selection");
+                throw new ArgumentException(SR.SelectionMustBeServiceProvider, nameof(selection));
 
             ITextView textView = provider.GetService(typeof(ITextView)) as ITextView;
 

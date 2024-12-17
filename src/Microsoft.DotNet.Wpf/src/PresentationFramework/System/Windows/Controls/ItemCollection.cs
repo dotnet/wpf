@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -287,7 +287,7 @@ namespace System.Windows.Controls
         {
             ArgumentNullException.ThrowIfNull(array);
             if (array.Rank > 1)
-                throw new ArgumentException(SR.BadTargetArray, "array"); // array is multidimensional.
+                throw new ArgumentException(SR.BadTargetArray, nameof(array)); // array is multidimensional.
             ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             // use the view instead of the collection, because it may have special sort/filter
@@ -1720,9 +1720,9 @@ namespace System.Windows.Controls
             }
 
             // with a new view, we have new live shaping behavior
-            OnPropertyChanged(new PropertyChangedEventArgs("IsLiveSorting"));
-            OnPropertyChanged(new PropertyChangedEventArgs("IsLiveFiltering"));
-            OnPropertyChanged(new PropertyChangedEventArgs("IsLiveGrouping"));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLiveSorting)));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLiveFiltering)));
+            OnPropertyChanged(new PropertyChangedEventArgs(nameof(IsLiveGrouping)));
         }
 
         void ApplySortFilterAndGroup()

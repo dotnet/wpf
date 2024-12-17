@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -168,7 +168,7 @@ namespace System.Windows.Controls
         {
             if (string.IsNullOrEmpty(text))
             {
-                throw new ArgumentNullException("text");
+                throw new ArgumentNullException(nameof(text));
             }
 
             MemoryStream ms = new MemoryStream(text.Length);
@@ -255,7 +255,7 @@ namespace System.Windows.Controls
 
             if (string.IsNullOrEmpty(scriptName))
             {
-                throw new ArgumentNullException("scriptName");
+                throw new ArgumentNullException(nameof(scriptName));
             }
 
             UnsafeNativeMethods.IDispatchEx scriptObjectEx = null;
@@ -869,7 +869,7 @@ namespace System.Windows.Controls
 
             if (!source.IsAbsoluteUri)
             {
-                throw new ArgumentException(SR.AbsoluteUriOnly, "source");
+                throw new ArgumentException(SR.AbsoluteUriOnly, nameof(source));
             }
 
             // Resolve Pack://siteoforigin.

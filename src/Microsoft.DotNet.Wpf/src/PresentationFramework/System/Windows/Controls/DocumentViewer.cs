@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -130,7 +130,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new ArgumentOutOfRangeException("pagesAcross");
+                throw new ArgumentOutOfRangeException(nameof(pagesAcross));
             }
         }
 
@@ -1040,7 +1040,7 @@ namespace System.Windows.Controls
             }
             else
             {
-                throw new ArgumentOutOfRangeException("pagesAcross");
+                throw new ArgumentOutOfRangeException(nameof(pagesAcross));
             }
         }
 
@@ -1976,7 +1976,7 @@ namespace System.Windows.Controls
             // Argument wasn't a valid int, throw an exception.
             if (!isValidArg)
             {
-                throw new ArgumentException(SR.DocumentViewerArgumentMustBeInteger, "data");
+                throw new ArgumentException(SR.DocumentViewerArgumentMustBeInteger, nameof(data));
             }
 
             dv.OnFitToMaxPagesAcrossCommand(columnValue);
@@ -2009,7 +2009,7 @@ namespace System.Windows.Controls
             // Argument wasn't a valid percent, throw an exception.
             if (zoomValue == DependencyProperty.UnsetValue)
             {
-                throw new ArgumentException(SR.DocumentViewerArgumentMustBePercentage, "data");
+                throw new ArgumentException(SR.DocumentViewerArgumentMustBePercentage, nameof(data));
             }
             dv.Zoom = (double)zoomValue;
         }

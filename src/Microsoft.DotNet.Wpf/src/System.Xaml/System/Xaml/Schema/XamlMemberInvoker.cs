@@ -145,19 +145,6 @@ namespace System.Xaml.Schema
             return ShouldSerializeResult.Default;
         }
 
-        // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        private static bool IsSystemXamlNonPublic(
-            ref ThreeValuedBool methodIsSystemXamlNonPublic, MethodInfo method)
-        {
-            if (methodIsSystemXamlNonPublic == ThreeValuedBool.NotSet)
-            {
-                bool result = SafeReflectionInvoker.IsSystemXamlNonPublic(method);
-                methodIsSystemXamlNonPublic = result ? ThreeValuedBool.True : ThreeValuedBool.False;
-            }
-            return methodIsSystemXamlNonPublic == ThreeValuedBool.True;
-        }
-        // ^^^^^----- End of unused members.  -----^^^^^
-
         private bool IsUnknown
         {
             get { return _member is null || _member.UnderlyingMember is null; }

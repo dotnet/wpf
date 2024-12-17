@@ -772,12 +772,13 @@ namespace MS.Internal.Security.RightsManagement
             List<RightNameExpirationInfoPair> unboundRightsList =
                         GetRightsInfoFromUseLicense(serializedUseLicense, out rightsGroupName);
 
-            BoundLicenseParams boundLicenseParams = new BoundLicenseParams();
-
-            boundLicenseParams.uVersion = 0;
-            boundLicenseParams.hEnablingPrincipal = 0;
-            boundLicenseParams.hSecureStore = 0;
-            boundLicenseParams.wszRightsGroup = rightsGroupName;
+            BoundLicenseParams boundLicenseParams = new BoundLicenseParams
+            {
+                uVersion = 0,
+                hEnablingPrincipal = 0,
+                hSecureStore = 0,
+                wszRightsGroup = rightsGroupName
+            };
 
             string contentId;
             string contentIdType;
@@ -975,15 +976,17 @@ namespace MS.Internal.Security.RightsManagement
 
             if (url != null)
             {
-                activationServer = new ActivationServerInfo();
-                activationServer.PubKey = null;
-                activationServer.Url = url.AbsoluteUri;  // We are using Uri class as a basic validation mechanism. These URIs come from unmanaged 
-                // code libraries and go back as parameters into the unmanaged code libraries. 
-                // We use AbsoluteUri property as means of verifying that it is actually an absolute and 
-                // well formed Uri. If by any chance it happened to be a relative URI, an exception will 
-                // be thrown here. This will perform the necessary escaping.
+                activationServer = new ActivationServerInfo
+                {
+                    PubKey = null,
+                    Url = url.AbsoluteUri,  // We are using Uri class as a basic validation mechanism. These URIs come from unmanaged 
+                                            // code libraries and go back as parameters into the unmanaged code libraries. 
+                                            // We use AbsoluteUri property as means of verifying that it is actually an absolute and 
+                                            // well formed Uri. If by any chance it happened to be a relative URI, an exception will 
+                                            // be thrown here. This will perform the necessary escaping.
 
-                activationServer.Version = NativeConstants.DrmCallbackVersion;
+                    Version = NativeConstants.DrmCallbackVersion
+                };
             }
 
             int hr = SafeNativeMethods.DRMActivate(

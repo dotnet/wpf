@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -390,9 +390,10 @@ namespace System.Windows
             //
             // Generate the ParserContext from packUri
             //
-            ParserContext pc = new ParserContext();
-
-            pc.BaseUri = currentUri;
+            ParserContext pc = new ParserContext
+            {
+                BaseUri = currentUri
+            };
 
             bool bCloseStream = true;  // Whether or not to close the stream after LoadBaml is done.
 
@@ -497,9 +498,11 @@ namespace System.Windows
             ContentType contentType = new ContentType(part.ContentType);
             Stream stream = part.GetSeekableStream();
 
-            ParserContext pc = new ParserContext();
-            pc.BaseUri = packUri;
-            pc.SkipJournaledProperties = bSkipJournaledProperties;
+            ParserContext pc = new ParserContext
+            {
+                BaseUri = packUri,
+                SkipJournaledProperties = bSkipJournaledProperties
+            };
 
             //
             // The stream must be a BAML or XAML stream.
@@ -1597,8 +1600,10 @@ namespace System.Windows
                     // this support when we can do breaking change. We need to understand what scenarios require
                     // the Application StartupUri to load content other than xaml/baml in the app resource or content file.
                     // If there are no interesting ones, we should remove this support.
-                    NavService = new NavigationService(null);
-                    NavService.AllowWindowNavigation = true;
+                    NavService = new NavigationService(null)
+                    {
+                        AllowWindowNavigation = true
+                    };
                     NavService.PreBPReady += new BPReadyEventHandler(OnPreBPReady);
                     NavService.Navigate(StartupUri);
                 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -60,9 +60,11 @@ namespace System.Windows.Documents
             if (undoManager == null)
                 return;
 
-            record = new PropertyRecord();
-            record.Property = e.Property;
-            record.Value = e.OldValueSource == BaseValueSourceInternal.Local ? e.OldValue : DependencyProperty.UnsetValue;
+            record = new PropertyRecord
+            {
+                Property = e.Property,
+                Value = e.OldValueSource == BaseValueSourceInternal.Local ? e.OldValue : DependencyProperty.UnsetValue
+            };
 
             undoManager.Add(new TextTreePropertyUndoUnit(textContainer, element.TextElementNode.GetSymbolOffset(textContainer.Generation) + 1, record));
         }

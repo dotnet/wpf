@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -533,8 +533,10 @@ namespace MS.Internal.PtsHost
             Line line = new Line(StructuralCache.TextFormatterHost, paraClient, ParagraphStartCharacterPosition);
 #pragma warning restore 6518
 
-            Line.FormattingContext ctx = new Line.FormattingContext(true, fClearOnLeft, fClearOnRight, _textRunCache);
-            ctx.LineFormatLengthTarget = dcpLineIn;
+            Line.FormattingContext ctx = new Line.FormattingContext(true, fClearOnLeft, fClearOnRight, _textRunCache)
+            {
+                LineFormatLengthTarget = dcpLineIn
+            };
             FormatLineCore(line, pbrlineIn, ctx, dcp, durLine, durTrack, fTreatAsFirstInPara, dcp);
 
             // Retrieve line properties

@@ -169,8 +169,10 @@ namespace System.Xaml
                 XmlCompatibilityReader mcReader =
                         new XmlCompatibilityReader(givenXmlReader,
                                 new IsXmlNamespaceSupportedCallback(IsXmlNamespaceSupported)
-                        );
-                mcReader.Normalization = true;
+                        )
+                        {
+                            Normalization = true
+                        };
                 myXmlReader = mcReader;
             }
             else
@@ -217,8 +219,10 @@ namespace System.Xaml
 
             _endOfStreamNode = new XamlNode(XamlNode.InternalNodeType.EndOfStream);
 
-            _context = new XamlParserContext(schemaContext, _mergedSettings.LocalAssembly);
-            _context.AllowProtectedMembersOnRoot = _mergedSettings.AllowProtectedMembersOnRoot;
+            _context = new XamlParserContext(schemaContext, _mergedSettings.LocalAssembly)
+            {
+                AllowProtectedMembersOnRoot = _mergedSettings.AllowProtectedMembersOnRoot
+            };
             _context.AddNamespacePrefix(KnownStrings.XmlPrefix, XamlLanguage.Xml1998Namespace);
 
             Func<string, string> namespaceResolver = myXmlReader.LookupNamespace;

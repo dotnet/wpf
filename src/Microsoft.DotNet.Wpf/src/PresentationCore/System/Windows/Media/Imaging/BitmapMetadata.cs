@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1334,9 +1334,10 @@ namespace System.Windows.Media.Imaging
             set
             {
                 DateTime dt = System.Convert.ToDateTime(value, CultureInfo.InvariantCulture);
-                PROPVARIANT propVar= new PROPVARIANT();
-
-                propVar.varType = (ushort)VarEnum.VT_FILETIME;
+                PROPVARIANT propVar = new PROPVARIANT
+                {
+                    varType = (ushort)VarEnum.VT_FILETIME
+                };
                 long longFileTime = dt.ToFileTime();
                 propVar.filetime.dwLowDateTime = (Int32)longFileTime;
                 propVar.filetime.dwHighDateTime = (Int32)((longFileTime >> 32) & 0xFFFFFFFF);

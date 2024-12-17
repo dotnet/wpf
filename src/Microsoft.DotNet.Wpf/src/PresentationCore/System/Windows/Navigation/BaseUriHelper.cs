@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -199,12 +199,13 @@ namespace System.Windows.Navigation
         internal static Assembly GetLoadedAssembly(string assemblyName, string assemblyVersion, string assemblyKey)
         {
             Assembly assembly;
-            AssemblyName asmName = new AssemblyName(assemblyName);
-
-            // We always use the primary assembly (culture neutral) for resource manager.
-            // if the required resource lives in satellite assembly, ResourceManager can find
-            // the right satellite assembly later.
-            asmName.CultureInfo = new CultureInfo(String.Empty);
+            AssemblyName asmName = new AssemblyName(assemblyName)
+            {
+                // We always use the primary assembly (culture neutral) for resource manager.
+                // if the required resource lives in satellite assembly, ResourceManager can find
+                // the right satellite assembly later.
+                CultureInfo = new CultureInfo(String.Empty)
+            };
 
             if (!String.IsNullOrEmpty(assemblyVersion))
             {

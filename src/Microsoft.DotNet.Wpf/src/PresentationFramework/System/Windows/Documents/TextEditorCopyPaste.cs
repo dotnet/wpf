@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -440,8 +440,10 @@ namespace System.Windows.Documents
                 using (Stream xamlStream = wpfPayload.CreateXamlStream())
                 {
                     // Create XamlRtfConverter to process the converting from Rtf to Xaml
-                    XamlRtfConverter xamlRtfConverter = new XamlRtfConverter();
-                    xamlRtfConverter.WpfPayload = wpfPayload;
+                    XamlRtfConverter xamlRtfConverter = new XamlRtfConverter
+                    {
+                        WpfPayload = wpfPayload
+                    };
 
                     string xamlContent = xamlRtfConverter.ConvertRtfToXaml(rtfContent);
                     if (xamlContent != string.Empty)

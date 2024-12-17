@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -36,13 +36,14 @@ namespace MS.Internal.Printing.Configuration
         public XmlPrintCapReader(Stream xmlStream)
         {
             // Internally the XML PrintCapabilities reader uses XmlTextReader
-            _xmlReader = new XmlTextReader(xmlStream);
+            _xmlReader = new XmlTextReader(xmlStream)
+            {
+                // We need namespace support from the reader.
+                Namespaces = true,
 
-            // We need namespace support from the reader.
-            _xmlReader.Namespaces = true;
-
-            // Don't resolve external resources.
-            _xmlReader.XmlResolver = null;
+                // Don't resolve external resources.
+                XmlResolver = null
+            };
 
             // Verify root element is <PrintCapabilities> in our standard namespace
             if ((_xmlReader.MoveToContent() != XmlNodeType.Element) ||

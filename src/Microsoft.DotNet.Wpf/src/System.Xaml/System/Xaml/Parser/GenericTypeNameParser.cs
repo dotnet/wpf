@@ -260,8 +260,10 @@ namespace MS.Internal.Xaml.Parser
 
         void Callout_FoundName(string prefix, string name)
         {
-            TypeNameFrame frame = new TypeNameFrame();
-            frame.Name = name;
+            TypeNameFrame frame = new TypeNameFrame
+            {
+                Name = name
+            };
             string ns = _prefixResolver(prefix);
             frame.Namespace = ns ?? throw new TypeNameParserException(SR.Format(SR.PrefixNotFound, prefix));
             _stack.Push(frame);

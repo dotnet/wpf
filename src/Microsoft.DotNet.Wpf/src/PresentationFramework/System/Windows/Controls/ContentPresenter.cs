@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -60,8 +60,10 @@ namespace System.Windows.Controls
             // Default template for XmlNodes
             template = new DataTemplate();
             text = CreateTextBlockFactory();
-            binding = new Binding();
-            binding.XPath = ".";
+            binding = new Binding
+            {
+                XPath = "."
+            };
             text.SetBinding(TextBlock.TextProperty, binding);
             template.VisualTree = text;
             template.Seal();
@@ -699,14 +701,18 @@ namespace System.Windows.Controls
                 DataTemplate template = AccessTextFormattingTemplateField.GetValue(this);
                 if (template == null)
                 {
-                    Binding binding = new Binding();
-                    binding.StringFormat = ContentStringFormat;
+                    Binding binding = new Binding
+                    {
+                        StringFormat = ContentStringFormat
+                    };
 
                     FrameworkElementFactory text = CreateAccessTextFactory();
                     text.SetBinding(AccessText.TextProperty, binding);
 
-                    template = new DataTemplate();
-                    template.VisualTree = text;
+                    template = new DataTemplate
+                    {
+                        VisualTree = text
+                    };
                     template.Seal();
 
                     AccessTextFormattingTemplateField.SetValue(this, template);
@@ -722,14 +728,18 @@ namespace System.Windows.Controls
                 DataTemplate template = StringFormattingTemplateField.GetValue(this);
                 if (template == null)
                 {
-                    Binding binding = new Binding();
-                    binding.StringFormat = ContentStringFormat;
+                    Binding binding = new Binding
+                    {
+                        StringFormat = ContentStringFormat
+                    };
 
                     FrameworkElementFactory text = CreateTextBlockFactory();
                     text.SetBinding(TextBlock.TextProperty, binding);
 
-                    template = new DataTemplate();
-                    template.VisualTree = text;
+                    template = new DataTemplate
+                    {
+                        VisualTree = text
+                    };
                     template.Seal();
 
                     StringFormattingTemplateField.SetValue(this, template);
@@ -745,15 +755,19 @@ namespace System.Windows.Controls
                 DataTemplate template = XMLFormattingTemplateField.GetValue(this);
                 if (template == null)
                 {
-                    Binding binding = new Binding();
-                    binding.XPath = ".";
-                    binding.StringFormat = ContentStringFormat;
+                    Binding binding = new Binding
+                    {
+                        XPath = ".",
+                        StringFormat = ContentStringFormat
+                    };
 
                     FrameworkElementFactory text = CreateTextBlockFactory();
                     text.SetBinding(TextBlock.TextProperty, binding);
 
-                    template = new DataTemplate();
-                    template.VisualTree = text;
+                    template = new DataTemplate
+                    {
+                        VisualTree = text
+                    };
                     template.Seal();
 
                     XMLFormattingTemplateField.SetValue(this, template);

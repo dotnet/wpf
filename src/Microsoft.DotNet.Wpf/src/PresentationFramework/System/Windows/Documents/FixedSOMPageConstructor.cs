@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -222,8 +222,10 @@ namespace System.Windows.Documents
             Debug.Assert(fixedPage != null);
             _fixedPage = fixedPage;
             _pageIndex = pageIndex;
-            _fixedSOMPage  = new FixedSOMPage();
-            _fixedSOMPage.CultureInfo = _fixedPage.Language.GetCompatibleCulture();
+            _fixedSOMPage = new FixedSOMPage
+            {
+                CultureInfo = _fixedPage.Language.GetCompatibleCulture()
+            };
             _fixedNodes = new List<FixedNode>();
             _lines = new FixedSOMLineCollection();
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -66,9 +66,11 @@ namespace System.Windows.Markup
             _xamlTypeMapper = xamlTypeMapper;
 
             // Setup the assembly record for the known types of controls
-            _knownAssemblyInfoRecord = new BamlAssemblyInfoRecord();
-            _knownAssemblyInfoRecord.AssemblyId = -1;
-            _knownAssemblyInfoRecord.Assembly = ReflectionHelper.LoadAssembly(_frameworkAssembly, string.Empty);
+            _knownAssemblyInfoRecord = new BamlAssemblyInfoRecord
+            {
+                AssemblyId = -1,
+                Assembly = ReflectionHelper.LoadAssembly(_frameworkAssembly, string.Empty)
+            };
             _knownAssemblyInfoRecord.AssemblyFullName = _knownAssemblyInfoRecord.Assembly.FullName;
         }
 
@@ -489,8 +491,10 @@ namespace System.Windows.Markup
                     // we know that it is a known assembly for an Avalon known type.  We have to do
                     // this since some of the known types are not avalon types, such as Bool, Object,
                     // Double, and others...
-                    info = new BamlTypeInfoRecord();
-                    info.AssemblyId = GetAssemblyIdForType(KnownTypes.Types[-id]);
+                    info = new BamlTypeInfoRecord
+                    {
+                        AssemblyId = GetAssemblyIdForType(KnownTypes.Types[-id])
+                    };
                 }
 
                 info.TypeId = id;
@@ -626,9 +630,11 @@ namespace System.Windows.Markup
             if (id < 0)
             {
                 KnownProperties knownId = (KnownProperties)(-id);
-                BamlAttributeInfoRecord record = new BamlAttributeInfoRecord();
-                record.AttributeId = id;
-                record.OwnerTypeId = (short)-(short)KnownTypes.GetKnownElementFromKnownCommonProperty(knownId);
+                BamlAttributeInfoRecord record = new BamlAttributeInfoRecord
+                {
+                    AttributeId = id,
+                    OwnerTypeId = (short)-(short)KnownTypes.GetKnownElementFromKnownCommonProperty(knownId)
+                };
                 GetAttributeOwnerType(record); // This will update the OwnerType property
                 record.Name = GetAttributeNameFromKnownId(knownId);
 
@@ -1015,16 +1021,20 @@ namespace System.Windows.Markup
         {
             Debug.Assert(assemblyFullName.Length != 0, "empty assembly");
 
-            AssemblyInfoKey key = new AssemblyInfoKey();
-            key.AssemblyFullName = assemblyFullName;
+            AssemblyInfoKey key = new AssemblyInfoKey
+            {
+                AssemblyFullName = assemblyFullName
+            };
 
             BamlAssemblyInfoRecord bamlAssemblyInfoRecord =
                 (BamlAssemblyInfoRecord)GetHashTableData(key);
 
             if (null == bamlAssemblyInfoRecord)
             {
-                bamlAssemblyInfoRecord = new BamlAssemblyInfoRecord();
-                bamlAssemblyInfoRecord.AssemblyFullName = assemblyFullName;
+                bamlAssemblyInfoRecord = new BamlAssemblyInfoRecord
+                {
+                    AssemblyFullName = assemblyFullName
+                };
 
 #if PBTCOMPILER
                 try
@@ -1132,9 +1142,11 @@ namespace System.Windows.Markup
             // and this is not written out the the baml stream.
             if (record == null)
             {
-                record = new BamlAssemblyInfoRecord();
-                record.AssemblyFullName = fullName;
-                record.Assembly = asm;
+                record = new BamlAssemblyInfoRecord
+                {
+                    AssemblyFullName = fullName,
+                    Assembly = asm
+                };
                 ObjectHashTable[fullName] = record;
             }
 
@@ -1147,9 +1159,11 @@ namespace System.Windows.Markup
                                string assemblyFullName,
                                string typeFullName)
         {
-            TypeInfoKey key = new TypeInfoKey();
-            key.DeclaringAssembly = assemblyFullName;
-            key.TypeFullName = typeFullName;
+            TypeInfoKey key = new TypeInfoKey
+            {
+                DeclaringAssembly = assemblyFullName,
+                TypeFullName = typeFullName
+            };
             return key;
         }
 
@@ -1343,10 +1357,11 @@ namespace System.Windows.Markup
             if (null == bamlAttributeInfoRecord)
             {
                 // The property is new and needs a record created.
-                bamlAttributeInfoRecord = new BamlAttributeInfoRecord();
-
-                bamlAttributeInfoRecord.Name = fieldName;
-                bamlAttributeInfoRecord.OwnerTypeId = typeId;
+                bamlAttributeInfoRecord = new BamlAttributeInfoRecord
+                {
+                    Name = fieldName,
+                    OwnerTypeId = typeId
+                };
 
                 bamlAttributeInfoRecord.AttributeId = (short)AttributeIdMap.Add(bamlAttributeInfoRecord);
                 bamlAttributeInfoRecord.AttributeUsage = attributeUsage;
@@ -1685,13 +1700,14 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal BamlMapTable Clone()
         {
-            BamlMapTable table = new BamlMapTable(_xamlTypeMapper);
-
-            table._objectHashTable = (Hashtable)_objectHashTable.Clone();
-            table._assemblyIdToInfo = (ArrayList)_assemblyIdToInfo.Clone();
-            table._typeIdToInfo = (ArrayList)_typeIdToInfo.Clone();
-            table._attributeIdToInfo = (ArrayList)_attributeIdToInfo.Clone();
-            table._stringIdToInfo = (ArrayList)_stringIdToInfo.Clone();
+            BamlMapTable table = new BamlMapTable(_xamlTypeMapper)
+            {
+                _objectHashTable = (Hashtable)_objectHashTable.Clone(),
+                _assemblyIdToInfo = (ArrayList)_assemblyIdToInfo.Clone(),
+                _typeIdToInfo = (ArrayList)_typeIdToInfo.Clone(),
+                _attributeIdToInfo = (ArrayList)_attributeIdToInfo.Clone(),
+                _stringIdToInfo = (ArrayList)_stringIdToInfo.Clone()
+            };
             return table;
         }
 

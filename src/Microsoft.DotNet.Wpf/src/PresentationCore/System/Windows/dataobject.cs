@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2278,11 +2278,13 @@ namespace System.Windows
                         string format;
 
                         format = formats[i];
-                        temp = new FORMATETC();
-                        temp.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                        temp.dwAspect = DVASPECT.DVASPECT_CONTENT;
-                        temp.ptd = IntPtr.Zero;
-                        temp.lindex = -1;
+                        temp = new FORMATETC
+                        {
+                            cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                            dwAspect = DVASPECT.DVASPECT_CONTENT,
+                            ptd = IntPtr.Zero,
+                            lindex = -1
+                        };
 
                         if (IsFormatEqual(format, DataFormats.Bitmap))
                         {
@@ -2685,12 +2687,13 @@ namespace System.Windows
                 FORMATETC formatetc;
                 STGMEDIUM medium;
 
-                formatetc = new FORMATETC();
-
-                formatetc.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                formatetc.dwAspect = aspect;
-                formatetc.lindex = index;
-                formatetc.tymed = TYMED.TYMED_ISTREAM;
+                formatetc = new FORMATETC
+                {
+                    cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                    dwAspect = aspect,
+                    lindex = index,
+                    tymed = TYMED.TYMED_ISTREAM
+                };
 
                 object outData = null;
 
@@ -2857,12 +2860,13 @@ namespace System.Windows
                 STGMEDIUM medium;
                 Object data;
 
-                formatetc = new FORMATETC();
-
-                formatetc.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                formatetc.dwAspect = aspect;
-                formatetc.lindex = index;
-                formatetc.tymed = TYMED.TYMED_HGLOBAL;
+                formatetc = new FORMATETC
+                {
+                    cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                    dwAspect = aspect,
+                    lindex = index,
+                    tymed = TYMED.TYMED_HGLOBAL
+                };
 
                 data = null;
 
@@ -3234,10 +3238,12 @@ namespace System.Windows
                 FORMATETC formatetc;
                 int hr;
 
-                formatetc = new FORMATETC();
-                formatetc.cfFormat = (short)DataFormats.GetDataFormat(format).Id;
-                formatetc.dwAspect = aspect;
-                formatetc.lindex = index;
+                formatetc = new FORMATETC
+                {
+                    cfFormat = (short)DataFormats.GetDataFormat(format).Id,
+                    dwAspect = aspect,
+                    lindex = index
+                };
 
                 for (int i=0; i<ALLOWED_TYMEDS.Length; i++)
                 {

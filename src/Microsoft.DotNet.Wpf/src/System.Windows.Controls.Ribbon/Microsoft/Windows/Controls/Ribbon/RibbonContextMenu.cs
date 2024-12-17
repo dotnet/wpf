@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -332,12 +332,13 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static RibbonMenuItem GenerateAddGalleryToQATItem(RibbonContextMenu contextMenu)
         {
-            RibbonMenuItem addGalleryToQATItem = new RibbonMenuItem();
+            RibbonMenuItem addGalleryToQATItem = new RibbonMenuItem
+            {
+                Header = _addGalleryToQATText,
 
-            addGalleryToQATItem.Header = _addGalleryToQATText;
-
-            // Even for galleries in QAT, this menu item always binds the "add to QAT" command.
-            addGalleryToQATItem.Command = RibbonCommands.AddToQuickAccessToolBarCommand;
+                // Even for galleries in QAT, this menu item always binds the "add to QAT" command.
+                Command = RibbonCommands.AddToQuickAccessToolBarCommand
+            };
 
             Binding placementTargetBinding = new Binding("PlacementTarget") { Source = contextMenu };
             addGalleryToQATItem.SetBinding(RibbonMenuItem.CommandTargetProperty, placementTargetBinding);
@@ -372,12 +373,18 @@ namespace Microsoft.Windows.Controls.Ribbon
         {
             RibbonMenuItem qatPlacementItem = new RibbonMenuItem() { CanAddToQuickAccessToolBarDirectly = false };
 
-            Binding headerBinding = new Binding("PlacementTarget") { Source = contextMenu };
-            headerBinding.Converter = new PlacementTargetToQATPositionConverter(PlacementTargetToQATPositionConverter.ConverterMode.Header);
+            Binding headerBinding = new Binding("PlacementTarget")
+            {
+                Source = contextMenu,
+                Converter = new PlacementTargetToQATPositionConverter(PlacementTargetToQATPositionConverter.ConverterMode.Header)
+            };
             qatPlacementItem.SetBinding(RibbonMenuItem.HeaderProperty, headerBinding);
 
-            Binding commandBinding = new Binding("PlacementTarget") { Source = contextMenu };
-            commandBinding.Converter = new PlacementTargetToQATPositionConverter(PlacementTargetToQATPositionConverter.ConverterMode.Command);
+            Binding commandBinding = new Binding("PlacementTarget")
+            {
+                Source = contextMenu,
+                Converter = new PlacementTargetToQATPositionConverter(PlacementTargetToQATPositionConverter.ConverterMode.Command)
+            };
             qatPlacementItem.SetBinding(RibbonMenuItem.CommandProperty, commandBinding);
 
             Binding placementTargetBinding = new Binding("PlacementTarget") { Source = contextMenu };
@@ -442,8 +449,11 @@ namespace Microsoft.Windows.Controls.Ribbon
 
         private static RibbonMenuItem GenerateMinimizeTheRibbonItem(RibbonContextMenu contextMenu)
         {
-            RibbonMenuItem minimizeTheRibbonItem = new RibbonMenuItem() { CanAddToQuickAccessToolBarDirectly = false };
-            minimizeTheRibbonItem.Header = MinimizeTheRibbonText;
+            RibbonMenuItem minimizeTheRibbonItem = new RibbonMenuItem
+            {
+                CanAddToQuickAccessToolBarDirectly = false,
+                Header = MinimizeTheRibbonText
+            };
 
             PropertyPath path = new PropertyPath("(0).(1).(2)");
             path.PathParameters.Add(ContextMenuService.PlacementTargetProperty);
@@ -452,8 +462,12 @@ namespace Microsoft.Windows.Controls.Ribbon
 
             Binding isCheckedBinding = new Binding () { Source = contextMenu, Path = path };
             minimizeTheRibbonItem.SetBinding(RibbonMenuItem.IsCheckedProperty, isCheckedBinding);
-            Binding isMinimizedBinding = new Binding() { Source = contextMenu, Path = path };
-            isMinimizedBinding.Converter = new IsMinimizedToMinimizeOrMaximizeCommandConverter();
+            Binding isMinimizedBinding = new Binding
+            {
+                Source = contextMenu,
+                Path = path,
+                Converter = new IsMinimizedToMinimizeOrMaximizeCommandConverter()
+            };
             minimizeTheRibbonItem.SetBinding(RibbonMenuItem.CommandProperty, isMinimizedBinding);
             Binding placementTargetBinding = new Binding("PlacementTarget") { Source = contextMenu };
             minimizeTheRibbonItem.SetBinding(RibbonMenuItem.CommandTargetProperty, placementTargetBinding);

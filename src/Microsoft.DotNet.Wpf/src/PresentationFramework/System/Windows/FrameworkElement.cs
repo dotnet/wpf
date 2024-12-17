@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2041,8 +2041,10 @@ namespace System.Windows
         internal Expression GetExpressionCore(DependencyProperty dp, PropertyMetadata metadata)
         {
             this.IsRequestingExpression = true;
-            EffectiveValueEntry entry = new EffectiveValueEntry(dp);
-            entry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry entry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             this.EvaluateBaseValueCore(dp, metadata, ref entry);
             this.IsRequestingExpression = false;
 
@@ -3297,8 +3299,10 @@ namespace System.Windows
         /// </summary>
         public void BringIntoView(Rect targetRectangle)
         {
-            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, targetRectangle);
-            args.RoutedEvent=RequestBringIntoViewEvent;
+            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, targetRectangle)
+            {
+                RoutedEvent = RequestBringIntoViewEvent
+            };
             RaiseEvent(args);
         }
 
@@ -4791,14 +4795,16 @@ namespace System.Windows
         /// </summary>
         protected internal override void OnRenderSizeChanged(SizeChangedInfo sizeInfo)
         {
-            SizeChangedEventArgs localArgs = new SizeChangedEventArgs(this, sizeInfo);
-            localArgs.RoutedEvent = SizeChangedEvent;
+            SizeChangedEventArgs localArgs = new SizeChangedEventArgs(this, sizeInfo)
+            {
+                RoutedEvent = SizeChangedEvent
+            };
 
             //first, invalidate ActualWidth and/or ActualHeight
             //Note: if any handler of invalidation will dirtyfy layout,
             //subsequent handlers will run on effectively dirty layouts
             //we only guarantee cleaning between elements, not between handlers here
-            if(sizeInfo.WidthChanged)
+            if (sizeInfo.WidthChanged)
             {
                 HasWidthEverChanged = true;
                 NotifyPropertyChange(new DependencyPropertyChangedEventArgs(ActualWidthProperty, _actualWidthMetadata, sizeInfo.PreviousSize.Width, sizeInfo.NewSize.Width));
@@ -5151,10 +5157,12 @@ namespace System.Windows
 
             // Create a TransformCollection and make sure it does not participate
             // in the InheritanceContext treeness because it is internal operation only.
-            TransformCollection ts = new TransformCollection();
-            ts.CanBeInheritanceContext = false;
+            TransformCollection ts = new TransformCollection
+            {
+                CanBeInheritanceContext = false
+            };
 
-            if(additionalTransform != null)
+            if (additionalTransform != null)
                 ts.Add(additionalTransform);
 
             if(renderTransform != null)
@@ -5162,8 +5170,10 @@ namespace System.Windows
 
             ts.Add(layoutTransform);
 
-            TransformGroup group = new TransformGroup();
-            group.Children = ts;
+            TransformGroup group = new TransformGroup
+            {
+                Children = ts
+            };
 
             element.InternalSetTransformWorkaround(group);
         }
@@ -5217,8 +5227,10 @@ namespace System.Windows
                 {
                     // Create a TransformGroup and make sure it does not participate
                     // in the InheritanceContext treeness because it is internal operation only.
-                    t = new TransformGroup();
-                    t.CanBeInheritanceContext = false;
+                    t = new TransformGroup
+                    {
+                        CanBeInheritanceContext = false
+                    };
                     t.Children.CanBeInheritanceContext = false;
 
                     if (additionalTransform != null)

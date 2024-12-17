@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -68,9 +68,11 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal static PTS.FSPOINT ToTextPoint(Point point)
         {
-            PTS.FSPOINT fspoint = new PTS.FSPOINT();
-            fspoint.u = ToTextDpi(point.X);
-            fspoint.v = ToTextDpi(point.Y);
+            PTS.FSPOINT fspoint = new PTS.FSPOINT
+            {
+                u = ToTextDpi(point.X),
+                v = ToTextDpi(point.Y)
+            };
             return fspoint;
         }
 
@@ -79,9 +81,11 @@ namespace MS.Internal.Text
         // ------------------------------------------------------------------
         internal static PTS.FSVECTOR ToTextSize(Size size)
         {
-            PTS.FSVECTOR fsvector = new PTS.FSVECTOR();
-            fsvector.du = ToTextDpi(size.Width);
-            fsvector.dv = ToTextDpi(size.Height);
+            PTS.FSVECTOR fsvector = new PTS.FSVECTOR
+            {
+                du = ToTextDpi(size.Width),
+                dv = ToTextDpi(size.Height)
+            };
             return fsvector;
         }
 

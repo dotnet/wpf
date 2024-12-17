@@ -762,9 +762,10 @@ namespace MS.Internal
                 if (addMapping)
                 {
                     ClrNamespaceAssemblyPair namespaceMapping = new ClrNamespaceAssemblyPair(xamlPIMappingNode.ClrNamespace,
-                                                                                             xamlPIMappingNode.AssemblyName);
-
-                    namespaceMapping.LocalAssembly = true;
+                                                                                             xamlPIMappingNode.AssemblyName)
+                    {
+                        LocalAssembly = true
+                    };
                     XamlTypeMapper.PITable[xamlPIMappingNode.XmlNamespace] = namespaceMapping;
                     XamlTypeMapper.InvalidateMappingCache(xamlPIMappingNode.XmlNamespace);
                     if (!_pass2 && BamlRecordWriter != null)

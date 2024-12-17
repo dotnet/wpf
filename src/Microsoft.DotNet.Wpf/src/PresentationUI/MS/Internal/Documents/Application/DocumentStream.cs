@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -201,13 +201,14 @@ namespace MS.Internal.Documents.Application
             Trace.SafeWrite(Trace.File, "Performed a stream copy from source.");
         }
 
-        //----------------------------------------------------------------------
-        // Create the DocumentStream
-        result = new DocumentStream(copiesToken, target, this);
+            //----------------------------------------------------------------------
+            // Create the DocumentStream
+            result = new DocumentStream(copiesToken, target, this)
+            {
+                DeleteOnClose = false
+            };
 
-        result.DeleteOnClose = false;
-
-        Trace.SafeWrite(Trace.File, "Created copy to file {0}.", copiesToken.Location);
+            Trace.SafeWrite(Trace.File, "Created copy to file {0}.", copiesToken.Location);
 
         return result;
     }
@@ -291,14 +292,15 @@ namespace MS.Internal.Documents.Application
                 }
             }
 
-            //------------------------------------------------------------------
-            // Create the DocumentStream
-            result = new DocumentStream(
-                tempToken, temporary, this);
+                //------------------------------------------------------------------
+                // Create the DocumentStream
+                result = new DocumentStream(
+                    tempToken, temporary, this)
+                {
+                    DeleteOnClose = true
+                };
 
-            result.DeleteOnClose = true;
-
-            Trace.SafeWrite(Trace.File, "Created temporary file {0}.", tempToken.Location);
+                Trace.SafeWrite(Trace.File, "Created temporary file {0}.", tempToken.Location);
         }
         else
         {

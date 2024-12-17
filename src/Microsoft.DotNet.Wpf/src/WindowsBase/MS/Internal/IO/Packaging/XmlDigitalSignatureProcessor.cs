@@ -593,8 +593,10 @@ namespace MS.Internal.IO.Packaging
                 _signedXml = new CustomSignedXml();
 
                 // Load the XML
-                XmlDocument xmlDocument = new XmlDocument();
-                xmlDocument.PreserveWhitespace = true;
+                XmlDocument xmlDocument = new XmlDocument
+                {
+                    PreserveWhitespace = true
+                };
                 using (Stream s = SignaturePart.GetSeekableStream())
                 {
                     using (XmlTextReader xmlReader = new XmlTextReader(s))
@@ -740,8 +742,10 @@ namespace MS.Internal.IO.Packaging
 
             try
             {
-                _signedXml = new CustomSignedXml();
-                _signedXml.SigningKey = key;
+                _signedXml = new CustomSignedXml
+                {
+                    SigningKey = key
+                };
                 _signedXml.Signature.Id = signatureId;
 
                 if (BaseCompatibilityPreferences.MatchPackageSignatureMethodToPackagePartDigestMethod)
@@ -774,9 +778,11 @@ namespace MS.Internal.IO.Packaging
                 }
 
                 // add reference from SignedInfo to Package object tag
-                Reference objectReference = new Reference(XTable.Get(XTable.ID.OpcLinkAttrValue));
-                objectReference.Type = XTable.Get(XTable.ID.W3CSignatureNamespaceRoot) + "Object";
-                objectReference.DigestMethod = _hashAlgorithmName;
+                Reference objectReference = new Reference(XTable.Get(XTable.ID.OpcLinkAttrValue))
+                {
+                    Type = XTable.Get(XTable.ID.W3CSignatureNamespaceRoot) + "Object",
+                    DigestMethod = _hashAlgorithmName
+                };
                 _signedXml.AddReference(objectReference);
 
                 // add any custom object tags
@@ -1059,8 +1065,10 @@ namespace MS.Internal.IO.Packaging
         {
             // KeyInfo section
             KeyInfo keyInfo = new KeyInfo();
-            KeyInfoName keyInfoName = new KeyInfoName();
-            keyInfoName.Value = signer.Subject;
+            KeyInfoName keyInfoName = new KeyInfoName
+            {
+                Value = signer.Subject
+            };
             keyInfo.AddClause(keyInfoName);               // human readable Principal name
 
             // Include the public key information (if we are familiar with the algorithm type)
@@ -1090,9 +1098,11 @@ namespace MS.Internal.IO.Packaging
             xDoc.DocumentElement.AppendChild(XmlSignatureManifest.GenerateManifest(_manager, xDoc, hashAlgorithm, parts, relationshipSelectors));
             xDoc.DocumentElement.AppendChild(XmlSignatureProperties.AssembleSignatureProperties(xDoc, DateTime.Now, _manager.TimeFormat, signatureId));
 
-            DataObject dataObject = new DataObject();
-            dataObject.Data = xDoc.DocumentElement.ChildNodes;
-            dataObject.Id = XTable.Get(XTable.ID.OpcAttrValue);
+            DataObject dataObject = new DataObject
+            {
+                Data = xDoc.DocumentElement.ChildNodes,
+                Id = XTable.Get(XTable.ID.OpcAttrValue)
+            };
 
             return dataObject;
         }

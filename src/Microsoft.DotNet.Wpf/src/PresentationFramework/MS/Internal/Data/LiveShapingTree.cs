@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,8 +25,10 @@ namespace MS.Internal.Data
             {
                 if (_placeholderBlock == null)
                 {
-                    _placeholderBlock = new LiveShapingBlock(false);
-                    _placeholderBlock.Parent = this;
+                    _placeholderBlock = new LiveShapingBlock(false)
+                    {
+                        Parent = this
+                    };
                 }
                 return _placeholderBlock;
             }

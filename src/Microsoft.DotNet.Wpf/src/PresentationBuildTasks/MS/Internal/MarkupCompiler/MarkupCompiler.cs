@@ -510,17 +510,22 @@ namespace MS.Internal
                 _ccRoot = null;
                 _hasLocalEvent = false;
                 _codeContexts = new Stack();
-                _parserContext = new ParserContext();
-                _parserContext.XamlTypeMapper = _typeMapper;
+                _parserContext = new ParserContext
+                {
+                    XamlTypeMapper = _typeMapper
+                };
                 _hasEmittedEventSetterDeclaration = false;
 
                 bamlStream = new MemoryStream();
-                BamlRecordWriter bamlWriter = new BamlRecordWriter(bamlStream, _parserContext, true);
-                bamlWriter.DebugBamlStream = XamlDebuggingInformation;
+                BamlRecordWriter bamlWriter = new BamlRecordWriter(bamlStream, _parserContext, true)
+                {
+                    DebugBamlStream = XamlDebuggingInformation
+                };
 
-                xamlParser = new ParserExtension(this, _parserContext, bamlWriter, SourceFileInfo.Stream, pass2);
-
-                xamlParser.ParserHooks = ParserHooks;
+                xamlParser = new ParserExtension(this, _parserContext, bamlWriter, SourceFileInfo.Stream, pass2)
+                {
+                    ParserHooks = ParserHooks
+                };
 
                 try
                 {
@@ -630,10 +635,12 @@ namespace MS.Internal
                         ? s_hashSHA256Guid
                         : s_hashSHA1Guid;
 
-                    CodeChecksumPragma csPragma = new CodeChecksumPragma();
-                    csPragma.FileName = ParentFolderPrefix + SourceFileInfo.RelativeSourceFilePath + XAML;
-                    csPragma.ChecksumAlgorithmId = hashGuid;
-                    csPragma.ChecksumData = TaskFileService.GetChecksum(SourceFileInfo.OriginalFilePath, hashGuid);
+                    CodeChecksumPragma csPragma = new CodeChecksumPragma
+                    {
+                        FileName = ParentFolderPrefix + SourceFileInfo.RelativeSourceFilePath + XAML,
+                        ChecksumAlgorithmId = hashGuid,
+                        ChecksumData = TaskFileService.GetChecksum(SourceFileInfo.OriginalFilePath, hashGuid)
+                    };
                     ccu.StartDirectives.Add(csPragma);
 
                     if (cnsImports != _ccRoot.CodeNS)
@@ -693,9 +700,10 @@ namespace MS.Internal
                 // If SourceFileResolve event handler is not registered,  generate
                 // the default SourceFileInfo for this file.
                 //
-                sourceFileInfo = new SourceFileInfo(file);
-
-                sourceFileInfo.SourcePath = _compilationUnitSourcePath;
+                sourceFileInfo = new SourceFileInfo(file)
+                {
+                    SourcePath = _compilationUnitSourcePath
+                };
 
                 if (sourceFileInfo.IsXamlFile)
                 {
@@ -881,10 +889,12 @@ namespace MS.Internal
         {
             if (_ccRoot.StyleConnectorFn == null)
             {
-                _ccRoot.StyleConnectorFn = new CodeMemberMethod();
-                _ccRoot.StyleConnectorFn.Name = CONNECT;
-                _ccRoot.StyleConnectorFn.Attributes = MemberAttributes.Public | MemberAttributes.Final;
-                _ccRoot.StyleConnectorFn.PrivateImplementationType = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IStyleConnector]);
+                _ccRoot.StyleConnectorFn = new CodeMemberMethod
+                {
+                    Name = CONNECT,
+                    Attributes = MemberAttributes.Public | MemberAttributes.Final,
+                    PrivateImplementationType = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IStyleConnector])
+                };
 
                 // void IStyleConnector.Connect(int connectionId, object target) {
                 //
@@ -942,10 +952,12 @@ namespace MS.Internal
                 {
                     // if (connectionId == 1)
                     //
-                    ccsConnector = new CodeConditionStatement();
-                    ccsConnector.Condition = new CodeBinaryOperatorExpression(new CodeArgumentReferenceExpression(CONNECTIONID),
+                    ccsConnector = new CodeConditionStatement
+                    {
+                        Condition = new CodeBinaryOperatorExpression(new CodeArgumentReferenceExpression(CONNECTIONID),
                                                                               CodeBinaryOperatorType.ValueEquality,
-                                                                              new CodePrimitiveExpression(connectionId));
+                                                                              new CodePrimitiveExpression(connectionId))
+                    };
                 }
             }
             else if (!SwitchStatementSupported())
@@ -1113,10 +1125,12 @@ namespace MS.Internal
             //
             if (_ccRoot.HookupFn == null)
             {
-                _ccRoot.HookupFn = new CodeMemberMethod();
-                _ccRoot.HookupFn.Name = CONNECT;
-                _ccRoot.HookupFn.Attributes = MemberAttributes.Public | MemberAttributes.Final;
-                _ccRoot.HookupFn.PrivateImplementationType = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IComponentConnector]);
+                _ccRoot.HookupFn = new CodeMemberMethod
+                {
+                    Name = CONNECT,
+                    Attributes = MemberAttributes.Public | MemberAttributes.Final,
+                    PrivateImplementationType = new CodeTypeReference(KnownTypes.Types[(int)KnownElements.IComponentConnector])
+                };
 
                 // void IComponentConnector.Connect(int connectionId, object target) {
                 //
@@ -1172,10 +1186,12 @@ namespace MS.Internal
             {
                 // if (connectionId == 1)
                 //
-                ccsConnector = new CodeConditionStatement();
-                ccsConnector.Condition = new CodeBinaryOperatorExpression(new CodeArgumentReferenceExpression(CONNECTIONID),
+                ccsConnector = new CodeConditionStatement
+                {
+                    Condition = new CodeBinaryOperatorExpression(new CodeArgumentReferenceExpression(CONNECTIONID),
                                                                           CodeBinaryOperatorType.ValueEquality,
-                                                                          new CodePrimitiveExpression(connectionId));
+                                                                          new CodePrimitiveExpression(connectionId))
+                };
             }
 
 
@@ -2210,10 +2226,12 @@ namespace MS.Internal
                 return null;
             }
 
-            CodeMemberField field = new CodeMemberField();
-            field.Name = name;
-            field.Attributes = MemberAttributes.Assembly;
-            field.Type = cc.ElementTypeReference;
+            CodeMemberField field = new CodeMemberField
+            {
+                Name = name,
+                Attributes = MemberAttributes.Assembly,
+                Type = cc.ElementTypeReference
+            };
             field.CustomAttributes.Add(
                 new CodeAttributeDeclaration(
                          new CodeTypeReference("System.Diagnostics.CodeAnalysis.SuppressMessageAttribute"),
@@ -2448,8 +2466,10 @@ namespace MS.Internal
             // public class MyClass : BaseClass {
             //
             CodeTypeReference ctrBaseClass = null;
-            CodeTypeDeclaration ctdClass = new CodeTypeDeclaration();
-            ctdClass.Name = className;
+            CodeTypeDeclaration ctdClass = new CodeTypeDeclaration
+            {
+                Name = className
+            };
             if (baseClass != null)
             {
                 // At this point, we should only have fully open generic types if there is a typeargs list.
@@ -2529,13 +2549,17 @@ namespace MS.Internal
             // {
             Debug.Assert(_ccRoot == null);
             Debug.Assert(_codeContexts == null || _codeContexts.Count == 0, "mismatched CodeContexts");
-            CodeNamespace cns = new CodeNamespace();
-            cns.Name = ns;
+            CodeNamespace cns = new CodeNamespace
+            {
+                Name = ns
+            };
             cns.Types.Clear();
 
             CodeTypeDeclaration ctdClass = GenerateClass(className, ref modifier, baseClass, baseClassFullName);
-            CodeContext cc = new CodeContextRoot(ctdClass, cns, baseClass, _typeArgsList, baseClassFullName);
-            cc.ElementTypeReference = new CodeTypeReference(GetFullClassName(ns, className));
+            CodeContext cc = new CodeContextRoot(ctdClass, cns, baseClass, _typeArgsList, baseClassFullName)
+            {
+                ElementTypeReference = new CodeTypeReference(GetFullClassName(ns, className))
+            };
 
             return cc;
         }
@@ -2554,10 +2578,12 @@ namespace MS.Internal
             //     return Delegate.CreateDelegate(delegateType, this, handler);
             // }
             //
-            CodeMemberMethod cmmCD = new CodeMemberMethod();
-            cmmCD.Name = CREATEDELEGATEHELPER;
-            cmmCD.ReturnType = new CodeTypeReference(typeof(Delegate));
-            cmmCD.Attributes = MemberAttributes.Assembly | MemberAttributes.Final;
+            CodeMemberMethod cmmCD = new CodeMemberMethod
+            {
+                Name = CREATEDELEGATEHELPER,
+                ReturnType = new CodeTypeReference(typeof(Delegate)),
+                Attributes = MemberAttributes.Assembly | MemberAttributes.Final
+            };
             AddDebuggerNonUserCodeAttribute(cmmCD);
             AddGeneratedCodeAttribute(cmmCD);
             AddSuppressMessageAttribute(cmmCD, "Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode");
@@ -2568,8 +2594,10 @@ namespace MS.Internal
             cmmCD.Parameters.Add(param2);
 
             CodeMethodReferenceExpression cmreCD = new CodeMethodReferenceExpression(new CodeTypeReferenceExpression(typeof(Delegate)), "CreateDelegate");
-            CodeMethodInvokeExpression cmieCD = new CodeMethodInvokeExpression();
-            cmieCD.Method = cmreCD;
+            CodeMethodInvokeExpression cmieCD = new CodeMethodInvokeExpression
+            {
+                Method = cmreCD
+            };
             cmieCD.Parameters.Add(new CodeArgumentReferenceExpression(DELEGATETYPE));
             cmieCD.Parameters.Add(new CodeThisReferenceExpression());
             cmieCD.Parameters.Add(new CodeArgumentReferenceExpression(HANDLERARG));
@@ -2599,8 +2627,10 @@ namespace MS.Internal
             //         return;
             //     }
             //
-            CodeConditionStatement ccsCL = new CodeConditionStatement();
-            ccsCL.Condition = new CodeFieldReferenceExpression(null, CONTENT_LOADED);
+            CodeConditionStatement ccsCL = new CodeConditionStatement
+            {
+                Condition = new CodeFieldReferenceExpression(null, CONTENT_LOADED)
+            };
             ccsCL.TrueStatements.Add(new CodeMethodReturnStatement());
             if (!isApp)
             {
@@ -2680,9 +2710,10 @@ namespace MS.Internal
             //  System.Windows.Application.LoadComponent(this, resourceLocator);
             //
             CodeMethodReferenceExpression cmreLoadContent = new CodeMethodReferenceExpression(new CodeTypeReferenceExpression(KnownTypes.Types[(int)KnownElements.Application]), LOADCOMPONENT);
-            CodeMethodInvokeExpression cmieLoadContent = new CodeMethodInvokeExpression();
-
-            cmieLoadContent.Method = cmreLoadContent;
+            CodeMethodInvokeExpression cmieLoadContent = new CodeMethodInvokeExpression
+            {
+                Method = cmreLoadContent
+            };
 
             CodeVariableReferenceExpression cvreMemStm = new CodeVariableReferenceExpression(resVarname);
 
@@ -2695,10 +2726,12 @@ namespace MS.Internal
 
             // private bool _contentLoaded;
             //
-            CodeMemberField cmfCL = new CodeMemberField();
-            cmfCL.Name = CONTENT_LOADED;
-            cmfCL.Attributes = MemberAttributes.Private;
-            cmfCL.Type = new CodeTypeReference(typeof(bool));
+            CodeMemberField cmfCL = new CodeMemberField
+            {
+                Name = CONTENT_LOADED,
+                Attributes = MemberAttributes.Private,
+                Type = new CodeTypeReference(typeof(bool))
+            };
             _ccRoot.CodeClass.Members.Add(cmfCL);
 
             if (!isApp)
@@ -2722,15 +2755,19 @@ namespace MS.Internal
             // namespace XamlGeneratedNamespace
             // {
             //
-            CodeNamespace cns = new CodeNamespace();
-            cns.Name = XamlTypeMapper.GeneratedNamespace;
+            CodeNamespace cns = new CodeNamespace
+            {
+                Name = XamlTypeMapper.GeneratedNamespace
+            };
 
             //     [EditorBrowsable(EditorBrowsableState.Never)]
             //     public sealed class GeneratedInternalTypeHelper : InternalTypeHelper
             //     {
             //
-            CodeTypeDeclaration ctdClass = new CodeTypeDeclaration();
-            ctdClass.Name = XamlTypeMapper.GeneratedInternalTypeHelperClassName;
+            CodeTypeDeclaration ctdClass = new CodeTypeDeclaration
+            {
+                Name = XamlTypeMapper.GeneratedInternalTypeHelperClassName
+            };
             ctdClass.BaseTypes.Add(new CodeTypeReference("System.Windows.Markup.InternalTypeHelper"));
             ctdClass.TypeAttributes = TypeAttributes.Public | TypeAttributes.Sealed;
             AddDebuggerNonUserCodeAttribute(ctdClass);
@@ -2750,10 +2787,12 @@ namespace MS.Internal
             //                                             culture);
             //         }
             //
-            CodeMemberMethod cmmCI = new CodeMemberMethod();
-            cmmCI.Name = "CreateInstance";
-            cmmCI.Attributes = MemberAttributes.Family | MemberAttributes.Override;
-            cmmCI.ReturnType = new CodeTypeReference(typeof(Object));
+            CodeMemberMethod cmmCI = new CodeMemberMethod
+            {
+                Name = "CreateInstance",
+                Attributes = MemberAttributes.Family | MemberAttributes.Override,
+                ReturnType = new CodeTypeReference(typeof(Object))
+            };
 
             CodeParameterDeclarationExpression param1 = new CodeParameterDeclarationExpression(typeof(Type), TYPE);
             CodeParameterDeclarationExpression param4 = new CodeParameterDeclarationExpression(typeof(CultureInfo), CULTURE);
@@ -2761,8 +2800,10 @@ namespace MS.Internal
             cmmCI.Parameters.Add(param4);
 
             CodeMethodReferenceExpression cmreCI = new CodeMethodReferenceExpression(new CodeTypeReferenceExpression(typeof(Activator)), "CreateInstance");
-            CodeMethodInvokeExpression cmieCI = new CodeMethodInvokeExpression();
-            cmieCI.Method = cmreCI;
+            CodeMethodInvokeExpression cmieCI = new CodeMethodInvokeExpression
+            {
+                Method = cmreCI
+            };
             cmieCI.Parameters.Add(new CodeArgumentReferenceExpression(TYPE));
             CodeFieldReferenceExpression cfre1 = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(BindingFlags)), "Public");
             CodeFieldReferenceExpression cfre2 = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(BindingFlags)), "NonPublic");
@@ -2785,10 +2826,12 @@ namespace MS.Internal
             //             return propertyInfo.GetValue(target, BindingFlags.Default, null, null, culture);
             //         }
             //
-            CodeMemberMethod cmmGPV = new CodeMemberMethod();
-            cmmGPV.Name = "GetPropertyValue";
-            cmmGPV.Attributes = MemberAttributes.Family | MemberAttributes.Override;
-            cmmGPV.ReturnType = new CodeTypeReference(typeof(Object));
+            CodeMemberMethod cmmGPV = new CodeMemberMethod
+            {
+                Name = "GetPropertyValue",
+                Attributes = MemberAttributes.Family | MemberAttributes.Override,
+                ReturnType = new CodeTypeReference(typeof(Object))
+            };
 
             param1 = new CodeParameterDeclarationExpression(typeof(PropertyInfo), PROPINFO);
             CodeParameterDeclarationExpression param2 = new CodeParameterDeclarationExpression(typeof(object), TARGET);
@@ -2797,8 +2840,10 @@ namespace MS.Internal
             cmmGPV.Parameters.Add(param4);
 
             CodeMethodReferenceExpression cmreGPV = new CodeMethodReferenceExpression(new CodeArgumentReferenceExpression(PROPINFO), "GetValue");
-            CodeMethodInvokeExpression cmieGPV = new CodeMethodInvokeExpression();
-            cmieGPV.Method = cmreGPV;
+            CodeMethodInvokeExpression cmieGPV = new CodeMethodInvokeExpression
+            {
+                Method = cmreGPV
+            };
             cmieGPV.Parameters.Add(new CodeArgumentReferenceExpression(TARGET));
             cmieGPV.Parameters.Add(new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(BindingFlags)), DEFAULT));
             cmieGPV.Parameters.Add(new CodePrimitiveExpression(null));
@@ -2814,9 +2859,11 @@ namespace MS.Internal
             //             propertyInfo.SetValue(target, value, BindingFlags.Default, null, null, culture);
             //         }
             //
-            CodeMemberMethod cmmSPV = new CodeMemberMethod();
-            cmmSPV.Name = "SetPropertyValue";
-            cmmSPV.Attributes = MemberAttributes.Family | MemberAttributes.Override;
+            CodeMemberMethod cmmSPV = new CodeMemberMethod
+            {
+                Name = "SetPropertyValue",
+                Attributes = MemberAttributes.Family | MemberAttributes.Override
+            };
 
             CodeParameterDeclarationExpression param3 = new CodeParameterDeclarationExpression(typeof(object), VALUE);
             cmmSPV.Parameters.Add(param1);
@@ -2825,8 +2872,10 @@ namespace MS.Internal
             cmmSPV.Parameters.Add(param4);
 
             CodeMethodReferenceExpression cmreSPV = new CodeMethodReferenceExpression(new CodeArgumentReferenceExpression(PROPINFO), "SetValue");
-            CodeMethodInvokeExpression cmieSPV = new CodeMethodInvokeExpression();
-            cmieSPV.Method = cmreSPV;
+            CodeMethodInvokeExpression cmieSPV = new CodeMethodInvokeExpression
+            {
+                Method = cmreSPV
+            };
             cmieSPV.Parameters.Add(new CodeArgumentReferenceExpression(TARGET));
             cmieSPV.Parameters.Add(new CodeArgumentReferenceExpression(VALUE));
             cmieSPV.Parameters.Add(new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(BindingFlags)), DEFAULT));
@@ -2849,10 +2898,12 @@ namespace MS.Internal
             //                                                            new object[] { delegateType, handler });
             //         }
             //
-            CodeMemberMethod cmmCD = new CodeMemberMethod();
-            cmmCD.Name = "CreateDelegate";
-            cmmCD.Attributes = MemberAttributes.Family | MemberAttributes.Override;
-            cmmCD.ReturnType = new CodeTypeReference(typeof(Delegate));
+            CodeMemberMethod cmmCD = new CodeMemberMethod
+            {
+                Name = "CreateDelegate",
+                Attributes = MemberAttributes.Family | MemberAttributes.Override,
+                ReturnType = new CodeTypeReference(typeof(Delegate))
+            };
 
             param1 = new CodeParameterDeclarationExpression(typeof(Type), DELEGATETYPE);
             param3 = new CodeParameterDeclarationExpression(typeof(string), HANDLERARG);
@@ -2862,12 +2913,16 @@ namespace MS.Internal
 
             CodeArgumentReferenceExpression careTarget = new CodeArgumentReferenceExpression(TARGET);
             CodeMethodReferenceExpression cmreGetType = new CodeMethodReferenceExpression(careTarget, "GetType");
-            CodeMethodInvokeExpression cmieGetType = new CodeMethodInvokeExpression();
-            cmieGetType.Method = cmreGetType;
+            CodeMethodInvokeExpression cmieGetType = new CodeMethodInvokeExpression
+            {
+                Method = cmreGetType
+            };
 
             CodeMethodReferenceExpression cmreCD = new CodeMethodReferenceExpression(cmieGetType, "InvokeMember");
-            CodeMethodInvokeExpression cmieCD = new CodeMethodInvokeExpression();
-            cmieCD.Method = cmreCD;
+            CodeMethodInvokeExpression cmieCD = new CodeMethodInvokeExpression
+            {
+                Method = cmreCD
+            };
             cmieCD.Parameters.Add(new CodePrimitiveExpression(CREATEDELEGATEHELPER));
 
             CodeFieldReferenceExpression cfre5 = new CodeFieldReferenceExpression(new CodeTypeReferenceExpression(typeof(BindingFlags)), "InvokeMethod");
@@ -2896,9 +2951,11 @@ namespace MS.Internal
             //             eventInfo.AddEventHandler(target, handler);
             //         }
             //
-            CodeMemberMethod cmmAEH = new CodeMemberMethod();
-            cmmAEH.Name = "AddEventHandler";
-            cmmAEH.Attributes = MemberAttributes.Family | MemberAttributes.Override;
+            CodeMemberMethod cmmAEH = new CodeMemberMethod
+            {
+                Name = "AddEventHandler",
+                Attributes = MemberAttributes.Family | MemberAttributes.Override
+            };
 
             param1 = new CodeParameterDeclarationExpression(typeof(EventInfo), EVENTINFO);
             param3 = new CodeParameterDeclarationExpression(typeof(Delegate), HANDLERARG);
@@ -2907,8 +2964,10 @@ namespace MS.Internal
             cmmAEH.Parameters.Add(param3);
 
             CodeMethodReferenceExpression cmreAEH = new CodeMethodReferenceExpression(new CodeArgumentReferenceExpression(EVENTINFO), "AddEventHandler");
-            CodeMethodInvokeExpression cmieAEH = new CodeMethodInvokeExpression();
-            cmieAEH.Method = cmreAEH;
+            CodeMethodInvokeExpression cmieAEH = new CodeMethodInvokeExpression
+            {
+                Method = cmreAEH
+            };
             cmieAEH.Parameters.Add(new CodeArgumentReferenceExpression(TARGET));
             cmieAEH.Parameters.Add(new CodeArgumentReferenceExpression(HANDLERARG));
 
@@ -3166,8 +3225,10 @@ namespace MS.Internal
                 // public static void Main () {
                 //
 
-                cmmMain = new CodeEntryPointMethod();
-                cmmMain.Attributes = MemberAttributes.Public | MemberAttributes.Static;
+                cmmMain = new CodeEntryPointMethod
+                {
+                    Attributes = MemberAttributes.Public | MemberAttributes.Static
+                };
                 cmmMain.CustomAttributes.Add(new CodeAttributeDeclaration(typeof(STAThreadAttribute).FullName));
                 AddDebuggerNonUserCodeAttribute(cmmMain);
                 AddGeneratedCodeAttribute(cmmMain);
@@ -3204,8 +3265,10 @@ namespace MS.Internal
                     {
                         //   app.InitializeComponent();
                         //
-                        CodeMethodInvokeExpression cmieIT = new CodeMethodInvokeExpression();
-                        cmieIT.Method = new CodeMethodReferenceExpression(cvreApp, INITIALIZE_COMPONENT);
+                        CodeMethodInvokeExpression cmieIT = new CodeMethodInvokeExpression
+                        {
+                            Method = new CodeMethodReferenceExpression(cvreApp, INITIALIZE_COMPONENT)
+                        };
                         cmmMain.Statements.Add(new CodeExpressionStatement(cmieIT));
                     }
 
@@ -3214,8 +3277,10 @@ namespace MS.Internal
                         //   app.Run();
                         //
                         CodeMethodReferenceExpression cmreRun = new CodeMethodReferenceExpression(cvreApp, "Run");
-                        CodeMethodInvokeExpression cmieRun = new CodeMethodInvokeExpression();
-                        cmieRun.Method = cmreRun;
+                        CodeMethodInvokeExpression cmieRun = new CodeMethodInvokeExpression
+                        {
+                            Method = cmreRun
+                        };
 
                         CodeStatement csRun = new CodeExpressionStatement(cmieRun);
                         cmmMain.Statements.Add(csRun);
@@ -3421,9 +3486,11 @@ namespace MS.Internal
                 {
                     if (_initializeComponentFn == null)
                     {
-                        _initializeComponentFn = new CodeMemberMethod();
-                        _initializeComponentFn.Name = INITIALIZE_COMPONENT;
-                        _initializeComponentFn.Attributes = MemberAttributes.Public | MemberAttributes.Final;
+                        _initializeComponentFn = new CodeMemberMethod
+                        {
+                            Name = INITIALIZE_COMPONENT,
+                            Attributes = MemberAttributes.Public | MemberAttributes.Final
+                        };
                         AddDebuggerNonUserCodeAttribute(_initializeComponentFn);
                         AddGeneratedCodeAttribute(_initializeComponentFn);
                         MarkupCompiler.GenerateXmlComments(_initializeComponentFn, INITIALIZE_COMPONENT);

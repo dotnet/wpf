@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -206,8 +206,10 @@ namespace System.Windows.Media
 
             FinishSegment();
 
-            MIL_SEGMENT_ARC arcToSegment = new MIL_SEGMENT_ARC();
-            arcToSegment.Type = MIL_SEGMENT_TYPE.MilSegmentArc;
+            MIL_SEGMENT_ARC arcToSegment = new MIL_SEGMENT_ARC
+            {
+                Type = MIL_SEGMENT_TYPE.MilSegmentArc
+            };
 
             arcToSegment.Flags |= isStroked ? 0 : MILCoreSegFlags.SegIsAGap;
             arcToSegment.Flags |= isSmoothJoin ? MILCoreSegFlags.SegSmoothJoin : 0;

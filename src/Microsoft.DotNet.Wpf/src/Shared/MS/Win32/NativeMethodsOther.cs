@@ -1173,8 +1173,10 @@ namespace MS.Win32
             /// <returns></returns>
             public static HWND Cast(IntPtr h)
             {
-                HWND hTemp = new HWND();
-                hTemp.h = h;
+                HWND hTemp = new HWND
+                {
+                    h = h
+                };
                 return hTemp;
             }
 
@@ -1253,8 +1255,10 @@ namespace MS.Win32
             /// <returns></returns>
             public static HDC Cast(IntPtr h)
             {
-                HDC hTemp = new HDC();
-                hTemp.h = h;
+                HDC hTemp = new HDC
+                {
+                    h = h
+                };
                 return hTemp;
             }
 
@@ -1270,8 +1274,10 @@ namespace MS.Win32
             {
                 get
                 {
-                    HDC hTemp = new HDC();
-                    hTemp.h = IntPtr.Zero;
+                    HDC hTemp = new HDC
+                    {
+                        h = IntPtr.Zero
+                    };
                     return hTemp;
                 }
             }

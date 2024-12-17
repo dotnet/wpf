@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1572,15 +1572,16 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when TCITEM is a 64 bit structure
             static public explicit operator NativeMethods.TCITEM(TCITEM_32 item)
             {
-                NativeMethods.TCITEM nativeItem = new NativeMethods.TCITEM();
-
-                nativeItem.mask = item.mask;
-                nativeItem.dwState = item.dwState;
-                nativeItem.dwStateMask = item.dwStateMask;
-                nativeItem.pszText = new IntPtr(item.pszText);
-                nativeItem.cchTextMax = item.cchTextMax;
-                nativeItem.iImage = item.iImage;
-                nativeItem.lParam = new IntPtr(item.lParam);
+                NativeMethods.TCITEM nativeItem = new NativeMethods.TCITEM
+                {
+                    mask = item.mask,
+                    dwState = item.dwState,
+                    dwStateMask = item.dwStateMask,
+                    pszText = new IntPtr(item.pszText),
+                    cchTextMax = item.cchTextMax,
+                    iImage = item.iImage,
+                    lParam = new IntPtr(item.lParam)
+                };
 
                 return nativeItem;
             }
@@ -1614,15 +1615,16 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when TCITEM is a 32 bit structure
             static public explicit operator NativeMethods.TCITEM(TCITEM_64 item)
             {
-                NativeMethods.TCITEM nativeItem = new NativeMethods.TCITEM();
-
-                nativeItem.mask = item.mask;
-                nativeItem.dwState = item.dwState;
-                nativeItem.dwStateMask = item.dwStateMask;
-                nativeItem.pszText = IntPtr.Zero;
-                nativeItem.cchTextMax = item.cchTextMax;
-                nativeItem.iImage = item.iImage;
-                nativeItem.lParam = new IntPtr(unchecked((int)item.lParam));
+                NativeMethods.TCITEM nativeItem = new NativeMethods.TCITEM
+                {
+                    mask = item.mask,
+                    dwState = item.dwState,
+                    dwStateMask = item.dwStateMask,
+                    pszText = IntPtr.Zero,
+                    cchTextMax = item.cchTextMax,
+                    iImage = item.iImage,
+                    lParam = new IntPtr(unchecked((int)item.lParam))
+                };
 
                 return nativeItem;
             }
@@ -1662,19 +1664,20 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when HDITEM is a 64 bit structure
             static public explicit operator NativeMethods.HDITEM(HDITEM_32 item)
             {
-                NativeMethods.HDITEM nativeItem = new NativeMethods.HDITEM();
-
-                nativeItem.mask = item.mask;
-                nativeItem.cxy = item.cxy;
-                nativeItem.pszText = new IntPtr(item.pszText);
-                nativeItem.hbm = new IntPtr(item.hbm);
-                nativeItem.cchTextMax = item.cchTextMax;
-                nativeItem.fmt = item.fmt;
-                nativeItem.lParam = new IntPtr(item.lParam);
-                nativeItem.iImage = item.iImage;
-                nativeItem.iOrder = item.iOrder;
-                nativeItem.type = item.type;
-                nativeItem.pvFilter = new IntPtr(item.pvFilter);
+                NativeMethods.HDITEM nativeItem = new NativeMethods.HDITEM
+                {
+                    mask = item.mask,
+                    cxy = item.cxy,
+                    pszText = new IntPtr(item.pszText),
+                    hbm = new IntPtr(item.hbm),
+                    cchTextMax = item.cchTextMax,
+                    fmt = item.fmt,
+                    lParam = new IntPtr(item.lParam),
+                    iImage = item.iImage,
+                    iOrder = item.iOrder,
+                    type = item.type,
+                    pvFilter = new IntPtr(item.pvFilter)
+                };
 
                 return nativeItem;
             }
@@ -1714,19 +1717,20 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when HDITEM is a 32 bit structure
             static public explicit operator NativeMethods.HDITEM(HDITEM_64 item)
             {
-                NativeMethods.HDITEM nativeItem = new NativeMethods.HDITEM();
-
-                nativeItem.mask = item.mask;
-                nativeItem.cxy = item.cxy;
-                nativeItem.pszText = IntPtr.Zero;
-                nativeItem.hbm = IntPtr.Zero;
-                nativeItem.cchTextMax = item.cchTextMax;
-                nativeItem.fmt = item.fmt;
-                nativeItem.lParam = new IntPtr(unchecked((int)item.lParam));
-                nativeItem.iImage = item.iImage;
-                nativeItem.iOrder = item.iOrder;
-                nativeItem.type = item.type;
-                nativeItem.pvFilter = IntPtr.Zero;
+                NativeMethods.HDITEM nativeItem = new NativeMethods.HDITEM
+                {
+                    mask = item.mask,
+                    cxy = item.cxy,
+                    pszText = IntPtr.Zero,
+                    hbm = IntPtr.Zero,
+                    cchTextMax = item.cchTextMax,
+                    fmt = item.fmt,
+                    lParam = new IntPtr(unchecked((int)item.lParam)),
+                    iImage = item.iImage,
+                    iOrder = item.iOrder,
+                    type = item.type,
+                    pvFilter = IntPtr.Zero
+                };
 
                 return nativeItem;
             }
@@ -1764,18 +1768,19 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when LVITEM is a 64 bit structure
             static public explicit operator NativeMethods.LVITEM(LVITEM_32 item)
             {
-                NativeMethods.LVITEM nativeItem = new NativeMethods.LVITEM();
-
-                nativeItem.mask = item.mask;
-                nativeItem.iItem = item.iItem;
-                nativeItem.iSubItem = item.iSubItem;
-                nativeItem.state = item.state;
-                nativeItem.stateMask = item.stateMask;
-                nativeItem.pszText = new IntPtr(item.pszText);
-                nativeItem.cchTextMax = item.cchTextMax;
-                nativeItem.iImage = item.iImage;
-                nativeItem.lParam = new IntPtr(item.lParam);
-                nativeItem.iIndent = item.iIndent;
+                NativeMethods.LVITEM nativeItem = new NativeMethods.LVITEM
+                {
+                    mask = item.mask,
+                    iItem = item.iItem,
+                    iSubItem = item.iSubItem,
+                    state = item.state,
+                    stateMask = item.stateMask,
+                    pszText = new IntPtr(item.pszText),
+                    cchTextMax = item.cchTextMax,
+                    iImage = item.iImage,
+                    lParam = new IntPtr(item.lParam),
+                    iIndent = item.iIndent
+                };
 
                 return nativeItem;
             }
@@ -1815,18 +1820,19 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when LVITEM is a 32 bit structure
             static public explicit operator NativeMethods.LVITEM(LVITEM_64 item)
             {
-                NativeMethods.LVITEM nativeItem = new NativeMethods.LVITEM();
-
-                nativeItem.mask = item.mask;
-                nativeItem.iItem = item.iItem;
-                nativeItem.iSubItem = item.iSubItem;
-                nativeItem.state = item.state;
-                nativeItem.stateMask = item.stateMask;
-                nativeItem.pszText = IntPtr.Zero;
-                nativeItem.cchTextMax = item.cchTextMax;
-                nativeItem.iImage = item.iImage;
-                nativeItem.lParam = new IntPtr(unchecked((int)item.lParam));
-                nativeItem.iIndent = item.iIndent;
+                NativeMethods.LVITEM nativeItem = new NativeMethods.LVITEM
+                {
+                    mask = item.mask,
+                    iItem = item.iItem,
+                    iSubItem = item.iSubItem,
+                    state = item.state,
+                    stateMask = item.stateMask,
+                    pszText = IntPtr.Zero,
+                    cchTextMax = item.cchTextMax,
+                    iImage = item.iImage,
+                    lParam = new IntPtr(unchecked((int)item.lParam)),
+                    iIndent = item.iIndent
+                };
 
                 return nativeItem;
             }
@@ -1870,21 +1876,22 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when LVITEM_V6 is a 64 bit structure
             static public explicit operator NativeMethods.LVITEM_V6(LVITEM_V6_32 item)
             {
-                NativeMethods.LVITEM_V6 nativeItem = new NativeMethods.LVITEM_V6();
-
-                nativeItem.mask = item.mask;
-                nativeItem.iItem = item.iItem;
-                nativeItem.iSubItem = item.iSubItem;
-                nativeItem.state = item.state;
-                nativeItem.stateMask = item.stateMask;
-                nativeItem.pszText = new IntPtr(item.pszText);
-                nativeItem.cchTextMax = item.cchTextMax;
-                nativeItem.iImage = item.iImage;
-                nativeItem.lParam = new IntPtr(item.lParam);
-                nativeItem.iIndent = item.iIndent;
-                nativeItem.iGroupID = item.iGroupID;
-                nativeItem.cColumns = item.cColumns;
-                nativeItem.puColumns = new IntPtr(item.puColumns);
+                NativeMethods.LVITEM_V6 nativeItem = new NativeMethods.LVITEM_V6
+                {
+                    mask = item.mask,
+                    iItem = item.iItem,
+                    iSubItem = item.iSubItem,
+                    state = item.state,
+                    stateMask = item.stateMask,
+                    pszText = new IntPtr(item.pszText),
+                    cchTextMax = item.cchTextMax,
+                    iImage = item.iImage,
+                    lParam = new IntPtr(item.lParam),
+                    iIndent = item.iIndent,
+                    iGroupID = item.iGroupID,
+                    cColumns = item.cColumns,
+                    puColumns = new IntPtr(item.puColumns)
+                };
 
                 return nativeItem;
             }
@@ -1932,21 +1939,22 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when LVITEM_V6 is a 32 bit structure
             static public explicit operator NativeMethods.LVITEM_V6(LVITEM_V6_64 item)
             {
-                NativeMethods.LVITEM_V6 nativeItem = new NativeMethods.LVITEM_V6();
-
-                nativeItem.mask = item.mask;
-                nativeItem.iItem = item.iItem;
-                nativeItem.iSubItem = item.iSubItem;
-                nativeItem.state = item.state;
-                nativeItem.stateMask = item.stateMask;
-                nativeItem.pszText = IntPtr.Zero;
-                nativeItem.cchTextMax = item.cchTextMax;
-                nativeItem.iImage = item.iImage;
-                nativeItem.lParam = new IntPtr(unchecked((int)item.lParam));
-                nativeItem.iIndent = item.iIndent;
-                nativeItem.iGroupID = item.iGroupID;
-                nativeItem.cColumns = item.cColumns;
-                nativeItem.puColumns = IntPtr.Zero;
+                NativeMethods.LVITEM_V6 nativeItem = new NativeMethods.LVITEM_V6
+                {
+                    mask = item.mask,
+                    iItem = item.iItem,
+                    iSubItem = item.iSubItem,
+                    state = item.state,
+                    stateMask = item.stateMask,
+                    pszText = IntPtr.Zero,
+                    cchTextMax = item.cchTextMax,
+                    iImage = item.iImage,
+                    lParam = new IntPtr(unchecked((int)item.lParam)),
+                    iIndent = item.iIndent,
+                    iGroupID = item.iGroupID,
+                    cColumns = item.cColumns,
+                    puColumns = IntPtr.Zero
+                };
 
                 return nativeItem;
             }
@@ -1984,18 +1992,19 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when LVGROUP is a 64 bit structure
             static public explicit operator NativeMethods.LVGROUP(LVGROUP_32 item)
             {
-                NativeMethods.LVGROUP nativeItem = new NativeMethods.LVGROUP();
-
-                nativeItem.cbSize = Marshal.SizeOf(typeof(NativeMethods.LVGROUP));
-                nativeItem.mask = item.mask;
-                nativeItem.pszHeader = new IntPtr(item.pszHeader);
-                nativeItem.cchHeader = item.cchHeader;
-                nativeItem.pszFooter = new IntPtr(item.pszFooter);
-                nativeItem.cchFooter = item.cchFooter;
-                nativeItem.iGroupID = item.iGroupID;
-                nativeItem.stateMask = item.stateMask;
-                nativeItem.state = item.state;
-                nativeItem.align = item.align;
+                NativeMethods.LVGROUP nativeItem = new NativeMethods.LVGROUP
+                {
+                    cbSize = Marshal.SizeOf(typeof(NativeMethods.LVGROUP)),
+                    mask = item.mask,
+                    pszHeader = new IntPtr(item.pszHeader),
+                    cchHeader = item.cchHeader,
+                    pszFooter = new IntPtr(item.pszFooter),
+                    cchFooter = item.cchFooter,
+                    iGroupID = item.iGroupID,
+                    stateMask = item.stateMask,
+                    state = item.state,
+                    align = item.align
+                };
 
                 return nativeItem;
             }
@@ -2065,34 +2074,35 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when LVGROUP is a 64 bit structure
             static public explicit operator NativeMethods.LVGROUP_V6(LVGROUP_V6_32 item)
             {
-                NativeMethods.LVGROUP_V6 nativeItem = new NativeMethods.LVGROUP_V6();
+                NativeMethods.LVGROUP_V6 nativeItem = new NativeMethods.LVGROUP_V6
+                {
+                    cbSize = Marshal.SizeOf(typeof(NativeMethods.LVGROUP_V6)),
+                    mask = item.mask,
+                    pszHeader = new IntPtr(item.pszHeader),
+                    cchHeader = item.cchHeader,
+                    pszFooter = new IntPtr(item.pszFooter),
+                    cchFooter = item.cchFooter,
+                    iGroupID = item.iGroupID,
+                    stateMask = item.stateMask,
+                    state = item.state,
+                    align = item.align,
 
-                nativeItem.cbSize = Marshal.SizeOf(typeof(NativeMethods.LVGROUP_V6));
-                nativeItem.mask = item.mask;
-                nativeItem.pszHeader = new IntPtr(item.pszHeader);
-                nativeItem.cchHeader = item.cchHeader;
-                nativeItem.pszFooter = new IntPtr(item.pszFooter);
-                nativeItem.cchFooter = item.cchFooter;
-                nativeItem.iGroupID = item.iGroupID;
-                nativeItem.stateMask = item.stateMask;
-                nativeItem.state = item.state;
-                nativeItem.align = item.align;
-
-                // new stuff for v6
-                nativeItem.pszSubtitle = item.pszSubtitle;
-                nativeItem.cchSubtitle = item.cchSubtitle;
-                nativeItem.pszTask = item.pszTask;
-                nativeItem.cchTask = item.cchTask;
-                nativeItem.pszDescriptionTop = item.pszDescriptionTop;
-                nativeItem.cchDescriptionTop = item.cchDescriptionTop;
-                nativeItem.pszDescriptionBottom = item.pszDescriptionBottom;
-                nativeItem.cchDescriptionBottom = item.cchDescriptionBottom;
-                nativeItem.iTitleImage = item.iTitleImage;
-                nativeItem.iExtendedImage = item.iExtendedImage;
-                nativeItem.iFirstItem = item.iFirstItem;         // Read only
-                nativeItem.cItems = item.cItems;             // Read only
-                nativeItem.pszSubsetTitle = item.pszSubsetTitle; // NULL if group is not subset
-                nativeItem.cchSubsetTitle = item.cchSubsetTitle;
+                    // new stuff for v6
+                    pszSubtitle = item.pszSubtitle,
+                    cchSubtitle = item.cchSubtitle,
+                    pszTask = item.pszTask,
+                    cchTask = item.cchTask,
+                    pszDescriptionTop = item.pszDescriptionTop,
+                    cchDescriptionTop = item.cchDescriptionTop,
+                    pszDescriptionBottom = item.pszDescriptionBottom,
+                    cchDescriptionBottom = item.cchDescriptionBottom,
+                    iTitleImage = item.iTitleImage,
+                    iExtendedImage = item.iExtendedImage,
+                    iFirstItem = item.iFirstItem,         // Read only
+                    cItems = item.cItems,             // Read only
+                    pszSubsetTitle = item.pszSubsetTitle, // NULL if group is not subset
+                    cchSubsetTitle = item.cchSubsetTitle
+                };
 
                 return nativeItem;
             }
@@ -2132,18 +2142,19 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when LVGROUP is a 32 bit structure
             static public explicit operator NativeMethods.LVGROUP(LVGROUP_64 item)
             {
-                NativeMethods.LVGROUP nativeItem = new NativeMethods.LVGROUP();
-
-                nativeItem.cbSize = Marshal.SizeOf(typeof(NativeMethods.LVGROUP));
-                nativeItem.mask = item.mask;
-                nativeItem.pszHeader = IntPtr.Zero;
-                nativeItem.cchHeader = item.cchHeader;
-                nativeItem.pszFooter = IntPtr.Zero;
-                nativeItem.cchFooter = item.cchFooter;
-                nativeItem.iGroupID = item.iGroupID;
-                nativeItem.stateMask = item.stateMask;
-                nativeItem.state = item.state;
-                nativeItem.align = item.align;
+                NativeMethods.LVGROUP nativeItem = new NativeMethods.LVGROUP
+                {
+                    cbSize = Marshal.SizeOf(typeof(NativeMethods.LVGROUP)),
+                    mask = item.mask,
+                    pszHeader = IntPtr.Zero,
+                    cchHeader = item.cchHeader,
+                    pszFooter = IntPtr.Zero,
+                    cchFooter = item.cchFooter,
+                    iGroupID = item.iGroupID,
+                    stateMask = item.stateMask,
+                    state = item.state,
+                    align = item.align
+                };
 
                 return nativeItem;
             }
@@ -2215,34 +2226,35 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when LVGROUP is a 32 bit structure
             static public explicit operator NativeMethods.LVGROUP_V6(LVGROUP_V6_64 item)
             {
-                NativeMethods.LVGROUP_V6 nativeItem = new NativeMethods.LVGROUP_V6();
+                NativeMethods.LVGROUP_V6 nativeItem = new NativeMethods.LVGROUP_V6
+                {
+                    cbSize = Marshal.SizeOf(typeof(NativeMethods.LVGROUP_V6)),
+                    mask = item.mask,
+                    pszHeader = IntPtr.Zero,
+                    cchHeader = item.cchHeader,
+                    pszFooter = IntPtr.Zero,
+                    cchFooter = item.cchFooter,
+                    iGroupID = item.iGroupID,
+                    stateMask = item.stateMask,
+                    state = item.state,
+                    align = item.align,
 
-                nativeItem.cbSize = Marshal.SizeOf(typeof(NativeMethods.LVGROUP_V6));
-                nativeItem.mask = item.mask;
-                nativeItem.pszHeader = IntPtr.Zero;
-                nativeItem.cchHeader = item.cchHeader;
-                nativeItem.pszFooter = IntPtr.Zero;
-                nativeItem.cchFooter = item.cchFooter;
-                nativeItem.iGroupID = item.iGroupID;
-                nativeItem.stateMask = item.stateMask;
-                nativeItem.state = item.state;
-                nativeItem.align = item.align;
-
-                // new stuff for v6
-                nativeItem.pszSubtitle = IntPtr.Zero;
-                nativeItem.cchSubtitle = item.cchSubtitle;
-                nativeItem.pszTask = IntPtr.Zero;
-                nativeItem.cchTask = item.cchTask;
-                nativeItem.pszDescriptionTop = IntPtr.Zero;
-                nativeItem.cchDescriptionTop = item.cchDescriptionTop;
-                nativeItem.pszDescriptionBottom = IntPtr.Zero;
-                nativeItem.cchDescriptionBottom = item.cchDescriptionBottom;
-                nativeItem.iTitleImage = item.iTitleImage;
-                nativeItem.iExtendedImage = item.iExtendedImage;
-                nativeItem.iFirstItem = item.iFirstItem;         // Read only
-                nativeItem.cItems = item.cItems;             // Read only
-                nativeItem.pszSubsetTitle = IntPtr.Zero; // NULL if group is not subset
-                nativeItem.cchSubsetTitle = item.cchSubsetTitle;
+                    // new stuff for v6
+                    pszSubtitle = IntPtr.Zero,
+                    cchSubtitle = item.cchSubtitle,
+                    pszTask = IntPtr.Zero,
+                    cchTask = item.cchTask,
+                    pszDescriptionTop = IntPtr.Zero,
+                    cchDescriptionTop = item.cchDescriptionTop,
+                    pszDescriptionBottom = IntPtr.Zero,
+                    cchDescriptionBottom = item.cchDescriptionBottom,
+                    iTitleImage = item.iTitleImage,
+                    iExtendedImage = item.iExtendedImage,
+                    iFirstItem = item.iFirstItem,         // Read only
+                    cItems = item.cItems,             // Read only
+                    pszSubsetTitle = IntPtr.Zero, // NULL if group is not subset
+                    cchSubsetTitle = item.cchSubsetTitle
+                };
 
                 return nativeItem;
             }
@@ -2276,16 +2288,17 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when TBBUTTON is a 64 bit structure
             static public explicit operator NativeMethods.TBBUTTON(TBBUTTON_32 item)
             {
-                NativeMethods.TBBUTTON nativeItem = new NativeMethods.TBBUTTON();
-
-                nativeItem.iBitmap = item.iBitmap;
-                nativeItem.idCommand = item.idCommand;
-                nativeItem.fsState = item.fsState;
-                nativeItem.fsStyle = item.fsStyle;
-                nativeItem.bReserved0 = item.bReserved0;
-                nativeItem.bReserved1 = item.bReserved1;
-                nativeItem.dwData = item.dwData;
-                nativeItem.iString = new IntPtr(item.iString);
+                NativeMethods.TBBUTTON nativeItem = new NativeMethods.TBBUTTON
+                {
+                    iBitmap = item.iBitmap,
+                    idCommand = item.idCommand,
+                    fsState = item.fsState,
+                    fsStyle = item.fsStyle,
+                    bReserved0 = item.bReserved0,
+                    bReserved1 = item.bReserved1,
+                    dwData = item.dwData,
+                    iString = new IntPtr(item.iString)
+                };
 
                 return nativeItem;
             }
@@ -2321,16 +2334,17 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when TBBUTTON is a 32 bit structure
             static public explicit operator NativeMethods.TBBUTTON(TBBUTTON_64 item)
             {
-                NativeMethods.TBBUTTON nativeItem = new NativeMethods.TBBUTTON();
-
-                nativeItem.iBitmap = item.iBitmap;
-                nativeItem.idCommand = item.idCommand;
-                nativeItem.fsState = item.fsState;
-                nativeItem.fsStyle = item.fsStyle;
-                nativeItem.bReserved0 = item.bReserved0;
-                nativeItem.bReserved1 = item.bReserved1;
-                nativeItem.dwData = item.dwData;
-                nativeItem.iString = IntPtr.Zero;
+                NativeMethods.TBBUTTON nativeItem = new NativeMethods.TBBUTTON
+                {
+                    iBitmap = item.iBitmap,
+                    idCommand = item.idCommand,
+                    fsState = item.fsState,
+                    fsStyle = item.fsStyle,
+                    bReserved0 = item.bReserved0,
+                    bReserved1 = item.bReserved1,
+                    dwData = item.dwData,
+                    iString = IntPtr.Zero
+                };
 
                 return nativeItem;
             }
@@ -2374,18 +2388,19 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when TVITEM is a 64 bit structure
             static public explicit operator NativeMethods.TVITEM(TVITEM_32 item)
             {
-                NativeMethods.TVITEM nativeItem = new NativeMethods.TVITEM();
-
-                nativeItem.mask = item.mask;
-                nativeItem.hItem = new IntPtr(item.hItem);
-                nativeItem.state = item.state;
-                nativeItem.stateMask = item.stateMask;
-                nativeItem.pszText = new IntPtr(item.pszText);
-                nativeItem.cchTextMax = item.cchTextMax;
-                nativeItem.iImage = item.iImage;
-                nativeItem.iSelectedImage = item.iSelectedImage;
-                nativeItem.cChildren = item.cChildren;
-                nativeItem.lParam = new IntPtr(item.lParam);
+                NativeMethods.TVITEM nativeItem = new NativeMethods.TVITEM
+                {
+                    mask = item.mask,
+                    hItem = new IntPtr(item.hItem),
+                    state = item.state,
+                    stateMask = item.stateMask,
+                    pszText = new IntPtr(item.pszText),
+                    cchTextMax = item.cchTextMax,
+                    iImage = item.iImage,
+                    iSelectedImage = item.iSelectedImage,
+                    cChildren = item.cChildren,
+                    lParam = new IntPtr(item.lParam)
+                };
 
                 return nativeItem;
             }
@@ -2425,18 +2440,19 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when TVITEM is a 32 bit structure
             static public explicit operator NativeMethods.TVITEM(TVITEM_64 item)
             {
-                NativeMethods.TVITEM nativeItem = new NativeMethods.TVITEM();
-
-                nativeItem.mask = item.mask;
-                nativeItem.hItem = IntPtr.Zero;
-                nativeItem.state = item.state;
-                nativeItem.stateMask = item.stateMask;
-                nativeItem.pszText = IntPtr.Zero;
-                nativeItem.cchTextMax = item.cchTextMax;
-                nativeItem.iImage = item.iImage;
-                nativeItem.iSelectedImage = item.iSelectedImage;
-                nativeItem.cChildren = item.cChildren;
-                nativeItem.lParam = new IntPtr(unchecked((int)item.lParam));
+                NativeMethods.TVITEM nativeItem = new NativeMethods.TVITEM
+                {
+                    mask = item.mask,
+                    hItem = IntPtr.Zero,
+                    state = item.state,
+                    stateMask = item.stateMask,
+                    pszText = IntPtr.Zero,
+                    cchTextMax = item.cchTextMax,
+                    iImage = item.iImage,
+                    iSelectedImage = item.iSelectedImage,
+                    cChildren = item.cChildren,
+                    lParam = new IntPtr(unchecked((int)item.lParam))
+                };
 
                 return nativeItem;
             }
@@ -2460,10 +2476,12 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when TVHITTESTINFO is a 64 bit structure
             static public explicit operator NativeMethods.TVHITTESTINFO(TVHITTESTINFO_32 hitTestInfo)
             {
-                NativeMethods.TVHITTESTINFO nativeHitTestInfo = new NativeMethods.TVHITTESTINFO();
-                nativeHitTestInfo.pt = hitTestInfo.pt;
-                nativeHitTestInfo.flags = hitTestInfo.flags;
-                nativeHitTestInfo.hItem = new IntPtr(hitTestInfo.hItem);
+                NativeMethods.TVHITTESTINFO nativeHitTestInfo = new NativeMethods.TVHITTESTINFO
+                {
+                    pt = hitTestInfo.pt,
+                    flags = hitTestInfo.flags,
+                    hItem = new IntPtr(hitTestInfo.hItem)
+                };
 
                 return nativeHitTestInfo;
             }
@@ -2487,10 +2505,12 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when hitTestInfo is a 32 bit structure
             static public explicit operator NativeMethods.TVHITTESTINFO(TVHITTESTINFO_64 hitTestInfo64)
             {
-                NativeMethods.TVHITTESTINFO nativeHitTestInfo = new NativeMethods.TVHITTESTINFO();
-                nativeHitTestInfo.pt = hitTestInfo64.pt;
-                nativeHitTestInfo.flags = hitTestInfo64.flags;
-                nativeHitTestInfo.hItem = new IntPtr(hitTestInfo64.hItem);
+                NativeMethods.TVHITTESTINFO nativeHitTestInfo = new NativeMethods.TVHITTESTINFO
+                {
+                    pt = hitTestInfo64.pt,
+                    flags = hitTestInfo64.flags,
+                    hItem = new IntPtr(hitTestInfo64.hItem)
+                };
                 return nativeHitTestInfo;
             }
         }
@@ -2523,16 +2543,17 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when TOOLINFO is a 64 bit structure
             static public explicit operator NativeMethods.TOOLINFO(TOOLINFO_32 item)
             {
-                NativeMethods.TOOLINFO nativeItem = new NativeMethods.TOOLINFO();
-
-                nativeItem.cbSize = Marshal.SizeOf(typeof(NativeMethods.TOOLINFO));
-                nativeItem.uFlags = item.uFlags;
-                nativeItem.hwnd = new IntPtr(item.hwnd);
-                nativeItem.uId = item.uId;
-                nativeItem.rect = item.rect;
-                nativeItem.hinst = new IntPtr(item.hinst);
-                nativeItem.pszText = new IntPtr(item.pszText);
-                nativeItem.lParam = new IntPtr(item.lParam);
+                NativeMethods.TOOLINFO nativeItem = new NativeMethods.TOOLINFO
+                {
+                    cbSize = Marshal.SizeOf(typeof(NativeMethods.TOOLINFO)),
+                    uFlags = item.uFlags,
+                    hwnd = new IntPtr(item.hwnd),
+                    uId = item.uId,
+                    rect = item.rect,
+                    hinst = new IntPtr(item.hinst),
+                    pszText = new IntPtr(item.pszText),
+                    lParam = new IntPtr(item.lParam)
+                };
 
                 return nativeItem;
             }
@@ -2566,16 +2587,17 @@ namespace MS.Internal.AutomationProxies
             // This operator should only be called when LVGROUP is a 32 bit structure
             static public explicit operator NativeMethods.TOOLINFO(TOOLINFO_64 item)
             {
-                NativeMethods.TOOLINFO nativeItem = new NativeMethods.TOOLINFO();
-
-                nativeItem.cbSize = Marshal.SizeOf(typeof(NativeMethods.TOOLINFO));
-                nativeItem.uFlags = item.uFlags;
-                nativeItem.hwnd = IntPtr.Zero;
-                nativeItem.uId = item.uId;
-                nativeItem.rect = item.rect;
-                nativeItem.hinst = IntPtr.Zero;
-                nativeItem.pszText = IntPtr.Zero;
-                nativeItem.lParam = new IntPtr(unchecked((int)item.lParam));
+                NativeMethods.TOOLINFO nativeItem = new NativeMethods.TOOLINFO
+                {
+                    cbSize = Marshal.SizeOf(typeof(NativeMethods.TOOLINFO)),
+                    uFlags = item.uFlags,
+                    hwnd = IntPtr.Zero,
+                    uId = item.uId,
+                    rect = item.rect,
+                    hinst = IntPtr.Zero,
+                    pszText = IntPtr.Zero,
+                    lParam = new IntPtr(unchecked((int)item.lParam))
+                };
 
                 return nativeItem;
             }

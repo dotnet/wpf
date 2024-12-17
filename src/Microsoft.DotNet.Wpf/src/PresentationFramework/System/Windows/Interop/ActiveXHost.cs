@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -966,9 +966,11 @@ namespace System.Windows.Interop
 
         private NativeMethods.SIZE SetExtent(int width, int height)
         {
-            NativeMethods.SIZE sz = new NativeMethods.SIZE();
-            sz.cx = width;
-            sz.cy = height;
+            NativeMethods.SIZE sz = new NativeMethods.SIZE
+            {
+                cx = width,
+                cy = height
+            };
 
             bool resetExtents = false;
             try

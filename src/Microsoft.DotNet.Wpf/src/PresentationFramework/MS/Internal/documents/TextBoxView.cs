@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1133,8 +1133,10 @@ namespace System.Windows.Controls
                 // Start up a timer.  Until the timer fires, we'll disable
                 // all background layout.  This leaves the TextBox responsive
                 // to user input.
-                _throttleBackgroundTimer = new DispatcherTimer(DispatcherPriority.Background);
-                _throttleBackgroundTimer.Interval = new TimeSpan(0, 0, _throttleBackgroundSeconds);
+                _throttleBackgroundTimer = new DispatcherTimer(DispatcherPriority.Background)
+                {
+                    Interval = new TimeSpan(0, 0, _throttleBackgroundSeconds)
+                };
                 _throttleBackgroundTimer.Tick += new EventHandler(OnThrottleBackgroundTimeout);
             }
             else

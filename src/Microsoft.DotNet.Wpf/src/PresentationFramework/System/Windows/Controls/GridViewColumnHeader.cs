@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -843,11 +843,12 @@ namespace System.Windows.Controls
                 // map the appropriate area(viewbox) in the source header to visual brush
                 // to avoid a distorded image on the floating header.
                 Vector offsetVector = VisualTreeHelper.GetOffset(FloatSourceHeader);
-                VisualBrush visualBrush = new VisualBrush(FloatSourceHeader);
-
-                // set visual brush's mapping
-                visualBrush.ViewboxUnits = BrushMappingMode.Absolute;
-                visualBrush.Viewbox = new Rect(offsetVector.X, offsetVector.Y, FloatSourceHeader.ActualWidth, FloatSourceHeader.ActualHeight);
+                VisualBrush visualBrush = new VisualBrush(FloatSourceHeader)
+                {
+                    // set visual brush's mapping
+                    ViewboxUnits = BrushMappingMode.Absolute,
+                    Viewbox = new Rect(offsetVector.X, offsetVector.Y, FloatSourceHeader.ActualWidth, FloatSourceHeader.ActualHeight)
+                };
 
                 _floatingHeaderCanvas.Background = visualBrush;
                 FloatSourceHeader = null;

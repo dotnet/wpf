@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -487,9 +487,11 @@ namespace System.Windows.Documents
                 foreach (string suggestion in spellingError.Suggestions)
                 {
                     menuItem = new EditorMenuItem();
-                    TextBlock text = new TextBlock();
-                    text.FontWeight = FontWeights.Bold;
-                    text.Text = suggestion;
+                    TextBlock text = new TextBlock
+                    {
+                        FontWeight = FontWeights.Bold,
+                        Text = suggestion
+                    };
                     menuItem.Header = text;
                     menuItem.Command = EditingCommands.CorrectSpellingError;
                     menuItem.CommandParameter = suggestion;
@@ -501,17 +503,21 @@ namespace System.Windows.Documents
 
                 if (!addedSuggestion)
                 {
-                    menuItem = new EditorMenuItem();
-                    menuItem.Header = SR.TextBox_ContextMenu_NoSpellingSuggestions;
-                    menuItem.IsEnabled = false;
+                    menuItem = new EditorMenuItem
+                    {
+                        Header = SR.TextBox_ContextMenu_NoSpellingSuggestions,
+                        IsEnabled = false
+                    };
                     this.Items.Add(menuItem);
                 }
 
                 AddSeparator();
 
-                menuItem = new EditorMenuItem();
-                menuItem.Header = SR.TextBox_ContextMenu_IgnoreAll;
-                menuItem.Command = EditingCommands.IgnoreSpellingError;
+                menuItem = new EditorMenuItem
+                {
+                    Header = SR.TextBox_ContextMenu_IgnoreAll,
+                    Command = EditingCommands.IgnoreSpellingError
+                };
                 this.Items.Add(menuItem);
                 menuItem.CommandTarget = textEditor.UiScope;
 
@@ -572,9 +578,11 @@ namespace System.Windows.Documents
                         CandidateList.GetCandidate(i, out candString);
                         candString.GetString(out suggestion);
 
-                        menuItem = new ReconversionMenuItem(this, i);
-                        menuItem.Header = suggestion;
-                        menuItem.InputGestureText = GetMenuItemDescription(suggestion);
+                        menuItem = new ReconversionMenuItem(this, i)
+                        {
+                            Header = suggestion,
+                            InputGestureText = GetMenuItemDescription(suggestion)
+                        };
                         this.Items.Add(menuItem);
 
                         Marshal.ReleaseComObject(candString);
@@ -585,9 +593,11 @@ namespace System.Windows.Documents
                 // than 5 candidates.
                 if (count > 5)
                 {
-                    menuItem = new EditorMenuItem();
-                    menuItem.Header = SR.TextBox_ContextMenu_More;
-                    menuItem.Command = ApplicationCommands.CorrectionList;
+                    menuItem = new EditorMenuItem
+                    {
+                        Header = SR.TextBox_ContextMenu_More,
+                        Command = ApplicationCommands.CorrectionList
+                    };
                     this.Items.Add(menuItem);
                     menuItem.CommandTarget = textEditor.UiScope;
                 }
@@ -601,22 +611,28 @@ namespace System.Windows.Documents
             {
                 MenuItem menuItem;
 
-                menuItem = new EditorMenuItem();
-                menuItem.Header = SR.TextBox_ContextMenu_Cut;
-                menuItem.CommandTarget = textEditor.UiScope;
-                menuItem.Command = ApplicationCommands.Cut;
+                menuItem = new EditorMenuItem
+                {
+                    Header = SR.TextBox_ContextMenu_Cut,
+                    CommandTarget = textEditor.UiScope,
+                    Command = ApplicationCommands.Cut
+                };
                 this.Items.Add(menuItem);
 
-                menuItem = new EditorMenuItem();
-                menuItem.Header = SR.TextBox_ContextMenu_Copy;
-                menuItem.CommandTarget = textEditor.UiScope;
-                menuItem.Command = ApplicationCommands.Copy;
+                menuItem = new EditorMenuItem
+                {
+                    Header = SR.TextBox_ContextMenu_Copy,
+                    CommandTarget = textEditor.UiScope,
+                    Command = ApplicationCommands.Copy
+                };
                 this.Items.Add(menuItem);
 
-                menuItem = new EditorMenuItem();
-                menuItem.Header = SR.TextBox_ContextMenu_Paste;
-                menuItem.CommandTarget = textEditor.UiScope;
-                menuItem.Command = ApplicationCommands.Paste;
+                menuItem = new EditorMenuItem
+                {
+                    Header = SR.TextBox_ContextMenu_Paste,
+                    CommandTarget = textEditor.UiScope,
+                    Command = ApplicationCommands.Paste
+                };
                 this.Items.Add(menuItem);
 
                 return true;

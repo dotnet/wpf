@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1064,14 +1064,15 @@ namespace MS.Internal.Documents
         RightsManagementUser user,
         IList<ContentGrant> grantList)
     {
-        RightsManagementLicense rmLicense = new RightsManagementLicense();
+            RightsManagementLicense rmLicense = new RightsManagementLicense
+            {
+                LicensedUser = user,
+                LicensePermissions = RightsManagementPermissions.AllowNothing,
+                ValidFrom = DateTime.MinValue,
+                ValidUntil = DateTime.MaxValue
+            };
 
-        rmLicense.LicensedUser = user;
-        rmLicense.LicensePermissions = RightsManagementPermissions.AllowNothing;
-        rmLicense.ValidFrom = DateTime.MinValue;
-        rmLicense.ValidUntil = DateTime.MaxValue;        
-
-        AddReferralInfo(rmLicense);
+            AddReferralInfo(rmLicense);
 
         if (grantList != null)
         {

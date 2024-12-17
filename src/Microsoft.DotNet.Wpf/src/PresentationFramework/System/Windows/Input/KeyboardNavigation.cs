@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -495,8 +495,10 @@ namespace System.Windows.Input
                 Debug.Assert(adornedElement != null, "adornedElement should not be null");
                 Debug.Assert(focusVisualStyle != null, "focusVisual should not be null");
 
-                Control control = new Control();
-                control.Style = focusVisualStyle;
+                Control control = new Control
+                {
+                    Style = focusVisualStyle
+                };
                 _adorderChild = control;
                 IsClipEnabled = true;
                 IsHitTestVisible = false;
@@ -606,10 +608,12 @@ namespace System.Windows.Input
 
                                 rect = _hostToAdornedElement.TransformBounds(rect);
 
-                                Control control = new Control();
-                                control.Style = _focusVisualStyle;
-                                control.Width = rect.Width;
-                                control.Height = rect.Height;
+                                Control control = new Control
+                                {
+                                    Style = _focusVisualStyle,
+                                    Width = rect.Width,
+                                    Height = rect.Height
+                                };
                                 Canvas.SetLeft(control, rect.X);
                                 Canvas.SetTop(control, rect.Y);
                                 _canvasChildren.Add(control);
@@ -1063,8 +1067,10 @@ namespace System.Windows.Input
                 }
                 else // FocusNavigationDirection
                 {
-                    TraversalRequest tr = new TraversalRequest(request.FocusNavigationDirection);
-                    tr.Wrapped = true;
+                    TraversalRequest tr = new TraversalRequest(request.FocusNavigationDirection)
+                    {
+                        Wrapped = true
+                    };
                     traversed = inputSink.TabInto(tr);
                 }
 

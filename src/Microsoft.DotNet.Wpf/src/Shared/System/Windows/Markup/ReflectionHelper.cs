@@ -126,7 +126,7 @@ namespace System.Xaml
         internal static bool IsInternalType(Type type)
         {
             Type origType = type;
-            Debug.Assert(null != type, "Type passed to IsInternalType is null");
+            Debug.Assert(type != null, "Type passed to IsInternalType is null");
 
             // If this is an internal nested type or a parent nested public type, walk up the declaring types.
             while (type.IsNestedAssembly || type.IsNestedFamORAssem || (origType != type && type.IsNestedPublic))
@@ -147,7 +147,7 @@ namespace System.Xaml
         /// <returns>True if type is public</returns>
         internal static bool IsPublicType(Type type)
         {
-            Debug.Assert(null != type, "Type passed to IsPublicType is null");
+            Debug.Assert(type != null, "Type passed to IsPublicType is null");
 
             // If this is a nested internal type, walk up the declaring types.
             while (type.IsNestedPublic)

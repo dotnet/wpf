@@ -707,7 +707,7 @@ namespace System.Windows.Markup
                 XmlTextReader xmlTextReader = Reader as XmlTextReader;
 
                 // review, what if not the XmlTextReader.
-                if (null != xmlTextReader)
+                if (xmlTextReader != null)
                 {
                     xmlTextReader.Normalization = value;
                 }

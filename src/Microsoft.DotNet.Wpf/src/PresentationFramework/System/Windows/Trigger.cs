@@ -13,7 +13,7 @@ namespace System.Windows
     ///     A single Style property conditional dependency driver
     /// </summary>
     [ContentProperty("Setters")]
-    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")] 
+    [XamlSetTypeConverterAttribute("ReceiveTypeConverter")]
     public class Trigger : TriggerBase, IAddChild, ISupportInitialize
     {
         /// <summary>
@@ -213,7 +213,7 @@ namespace System.Windows
                     _property,
                     LogicalOp.Equals,
                     _value,
-_sourceName ?? StyleHelper.SelfName) };
+                    _sourceName ?? StyleHelper.SelfName) };
 
             // Set Condition for all property triggers
             for (int i = 0; i < PropertyValues.Count; i++)

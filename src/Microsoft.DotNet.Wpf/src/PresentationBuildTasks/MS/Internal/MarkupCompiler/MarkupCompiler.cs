@@ -203,7 +203,7 @@ namespace MS.Internal
         ///<summary>Complies list of file items comprising an Application.</summary>
         public void Compile(CompilationUnit cu)
         {
-            // KnownTypes, XamlTypeMapper, and ReflectionHelper all hold on to data statically that 
+            // KnownTypes, XamlTypeMapper, and ReflectionHelper all hold on to data statically that
             // must not be reused between compilations as different compilations can target different
             //
             // Defensively clear static data even though the prior compilation should have done it.
@@ -625,7 +625,7 @@ namespace MS.Internal
                     // } end namespace
                     CodeCompileUnit ccu = new CodeCompileUnit();
 
-                    // generate pragma checksum data  
+                    // generate pragma checksum data
                     Guid hashGuid = !string.IsNullOrEmpty(ChecksumAlgorithm) && ChecksumAlgorithm.Equals("SHA256", StringComparison.OrdinalIgnoreCase)
                         ? s_hashSHA256Guid
                         : s_hashSHA1Guid;
@@ -700,7 +700,7 @@ namespace MS.Internal
                 if (sourceFileInfo.IsXamlFile)
                 {
                     int fileExtIndex = file.Path.LastIndexOf(DOTCHAR);
-                    
+
                     sourceFileInfo.RelativeSourceFilePath = file.Path.Substring(0, fileExtIndex);
                 }
             }
@@ -849,9 +849,9 @@ namespace MS.Internal
                     case XmlNodeType.CDATA:
                     case XmlNodeType.Text:
                     {
-                            int lineNumber = 0;
+                        int lineNumber = 0;
 
-                            if (xmlReader is IXmlLineInfo xmlLineInfo)
+                        if (xmlReader is IXmlLineInfo xmlLineInfo)
                         {
                             lineNumber = xmlLineInfo.LineNumber;
                         }
@@ -1563,9 +1563,9 @@ namespace MS.Internal
                 {
                     //  During code generation, ParentFolderPrefix returns the relative path from a .g.cs file to its markup file.
                     //
-                    //      One example is generated #pragmas: #pragma checksum "..\..\..\..\Views\ExportNotificationView.xaml"  
+                    //      One example is generated #pragmas: #pragma checksum "..\..\..\..\Views\ExportNotificationView.xaml"
                     //
-                    //  The path information for a markup file is represented in SourceFileInfo: 
+                    //  The path information for a markup file is represented in SourceFileInfo:
                     //
                     //      SourceFileInfo.OriginalFilePath: "c:\\greenshot\\src\\Greenshot.Addons\\Views\\ExportNotificationView.xaml"
                     //      SourceFileInfo.TargetPath: "c:\\greenshot\\src\\Greenshot.Addons\\obj\\Debug\\net6.0-windows\\"
@@ -1582,23 +1582,23 @@ namespace MS.Internal
                     //
                     //  The relative path calculation must take in to account both the TargetPath and the RelativeFilePath:
                     //
-                    //      "c:\\greenshot\\src\\Greenshot.Addons\\obj\\Debug\\net6.0-windows\\" [SourceFileInfo.TargetPath]      
+                    //      "c:\\greenshot\\src\\Greenshot.Addons\\obj\\Debug\\net6.0-windows\\" [SourceFileInfo.TargetPath]
                     //      "Views\\ExportNotificationView" [SourceFileInfo.RelativeTargetPath]
                     //
                     //   TargetPath concatenated with the directory portion of the RelativeTargetPath is the location to the .g.cs file:
                     //
                     //      "c:\\greenshot\\src\\Greenshot.Addons\\obj\\Debug\\net6.0-windows\\Views"
-                    //      
+                    //
                     string pathOfRelativeSourceFilePath = System.IO.Path.GetDirectoryName(SourceFileInfo.RelativeSourceFilePath);
 
-                    // Return the parent folder of the target file with a trailing DirectorySeparatorChar.  
+                    // Return the parent folder of the target file with a trailing DirectorySeparatorChar.
                     // Return a relative path if possible.  Else, return an absolute path.
-                    #if NETFX 
+                    #if NETFX
                     string path = PathInternal.GetRelativePath(TargetPath + pathOfRelativeSourceFilePath, SourceFileInfo.SourcePath, StringComparison.OrdinalIgnoreCase);
 #else
                     string path = Path.GetRelativePath(TargetPath + pathOfRelativeSourceFilePath, SourceFileInfo.SourcePath);
 #endif
-                    // Always return a path with a trailing DirectorySeparatorChar.  
+                    // Always return a path with a trailing DirectorySeparatorChar.
                     return path.TrimEnd(Path.DirectorySeparatorChar) + Path.DirectorySeparatorChar;
                 }
                 else
@@ -1616,7 +1616,7 @@ namespace MS.Internal
                     }
 
                     return parentFolderPrefix;
-                } 
+                }
             }
         }
 
@@ -1850,7 +1850,7 @@ namespace MS.Internal
 
                             ce = cmie;
                         }
-                        else if (desc.MemberInfo is ConstructorInfo ci)
+                        else if (desc.MemberInfo is ConstructorInfo ci) // instance ctor invoke
                         {
                             ParameterInfo[] parameters = ci.GetParameters();
 
@@ -1938,10 +1938,10 @@ namespace MS.Internal
                 cDelExp = coce;
             }
 
-            		
+
 //            The bug that this chunk of code works around was fixed but
 //            exposes a different bug. To work around the second bug, we
-//            remove the workaround for the first one.  
+//            remove the workaround for the first one.
 //            Note that the initial bug was not fixed for VB, so the code block above remains.
 //            else if (Language == CompilerLanguage.JScript)
 //            {
@@ -2641,19 +2641,19 @@ namespace MS.Internal
             //   - Modify the AssemblyVersionAttribute to a wildcard string (e.g. "1.2.*")
             //   - Set Deterministic to false in the build
             // During MarkupCompilation, the AssemblyVersion property would not be set and WPF would correctly generate a resource URI without a version.
-            // In .NET Core/5 (or .NET Framework SDK-style projects), the same process can be used if GenerateAssemblyVersionAttribute is set to false in 
-            // the build.  However, this isn't really the idiomatic way to set the version for an assembly.  Instead, developers are more likely to use the 
-            // AssemblyVersion build property.  If a developer explicitly sets the AssemblyVersion build property to a wildcard version string, we would use 
-            // that as part of the URI here.  This results in an error in Version.Parse during InitializeComponent's call tree.  Instead, do as we would have 
+            // In .NET Core/5 (or .NET Framework SDK-style projects), the same process can be used if GenerateAssemblyVersionAttribute is set to false in
+            // the build.  However, this isn't really the idiomatic way to set the version for an assembly.  Instead, developers are more likely to use the
+            // AssemblyVersion build property.  If a developer explicitly sets the AssemblyVersion build property to a wildcard version string, we would use
+            // that as part of the URI here.  This results in an error in Version.Parse during InitializeComponent's call tree.  Instead, do as we would have
             // when the developer sets a wildcard version string via AssemblyVersionAttribute and use an empty string.
             string version = hasWildcard || String.IsNullOrEmpty(AssemblyVersion)
-                ? String.Empty 
+                ? String.Empty
                 : COMPONENT_DELIMITER + VER + AssemblyVersion;
 
-            string token = String.IsNullOrEmpty(AssemblyPublicKeyToken) 
-                ? String.Empty 
+            string token = String.IsNullOrEmpty(AssemblyPublicKeyToken)
+                ? String.Empty
                 : COMPONENT_DELIMITER + AssemblyPublicKeyToken;
-            
+
             uriPart = FORWARDSLASH + AssemblyName + version + token + COMPONENT_DELIMITER + COMPONENT + FORWARDSLASH + resourceID;
 
             //

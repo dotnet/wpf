@@ -291,9 +291,9 @@ namespace System.Windows
             // a subproperty invalidation on each context and fires any changed
             // handlers that have been registered.
 
-            // When a default value is being promoted to a local value the sub property 
-            // change that caused the promotion is being merged with the value promotion 
-            // change. This fix was implemented for DevDivBug#108642. It is required to 
+            // When a default value is being promoted to a local value the sub property
+            // change that caused the promotion is being merged with the value promotion
+            // change. This fix was implemented for DevDivBug#108642. It is required to
             // detect this case specially and propagate subproperty invalidations for it.
 
             if (!e.IsASubPropertyChange || e.OperationType == OperationType.ChangeMutableDefaultValue)
@@ -455,7 +455,7 @@ namespace System.Windows
                 {
                     EntryIndex entryIndex = new EntryIndex(i);
                     PropertyMetadata metadata = dp.GetMetadata(DependencyObjectType);
-                    
+
                     FreezeValueCallback freezeValueCallback = metadata.FreezeValueCallback;
                     if(!freezeValueCallback(this, dp, entryIndex, metadata, isChecking))
                     {
@@ -1909,7 +1909,7 @@ namespace System.Windows
         //
         //------------------------------------------------------
 
-        #region Debug 
+        #region Debug
 
         // Verify a clone.  If isDeepClone is true we make sure that the cloned object is not the same as the
         // original. GetAsFrozen and GetCurrentValueAsFrozen do not do deep clones since they will immediately
@@ -1940,7 +1940,7 @@ namespace System.Windows
                     for (int i = 0; i < cloneAsIList.Count; i++)
                     {
                         Freezable originalItemAsFreezable = originalAsIList[i] as Freezable;
-                        if (isDeepClone && cloneAsIList[i] is Freezable cloneItemAsFreezable && cloneItemAsFreezable != null)
+                        if (isDeepClone && cloneAsIList[i] is Freezable cloneItemAsFreezable)
                         {
                             Invariant.Assert(originalItemAsFreezable != cloneItemAsFreezable, "CloneCore didn't clone the elements in the list correctly.");
                         }
@@ -1979,7 +1979,7 @@ namespace System.Windows
 
                     for(int i = 0, count = ContextList.Count; i < count; i++)
                     {
-                        FreezableContextPair context = ContextList[i];                        
+                        FreezableContextPair context = ContextList[i];
                         DependencyObject owner = (DependencyObject) context.Owner.Target;
 
                         if (!context.Owner.IsAlive)
@@ -2023,11 +2023,11 @@ namespace System.Windows
                 //
                 //            (Pen.Brush)
                 //
-                //              .-----. 
+                //              .-----.
                 //             '       v
                 //           Pen      Brush
                 //             ^       .
-                //              '-----' 
+                //              '-----'
                 //
                 //              Context
                 //
@@ -2054,7 +2054,7 @@ namespace System.Windows
                     && owner.GetType().FullName != "System.Windows.Media.VisualBrush";    // ResourceDictionaries may not be owned by a VisualBrush.
 
 // Find a way to bring back context verification.
-//                
+//
 //                Invariant.Assert(effectiveValue == this || mayBeResourceDictionary,
 //                    String.Format(System.Globalization.CultureInfo.InvariantCulture,
 //                        "Detected context leak: Property '{0}.{1}' on {2}.  Expected '{3}', Actual '{4}'",
@@ -2067,7 +2067,7 @@ namespace System.Windows
         }
 
         #endregion Debug
- 
+
         //------------------------------------------------------
         //
         //  Private fields

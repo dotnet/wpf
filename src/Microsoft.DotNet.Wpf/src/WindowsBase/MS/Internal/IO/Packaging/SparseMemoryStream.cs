@@ -152,7 +152,7 @@ namespace MS.Internal.IO.Packaging
             }
             else
             {
-                throw new ArgumentOutOfRangeException("origin");
+                throw new ArgumentOutOfRangeException(nameof(origin));
             }
 
             if (newStreamPosition  < 0)

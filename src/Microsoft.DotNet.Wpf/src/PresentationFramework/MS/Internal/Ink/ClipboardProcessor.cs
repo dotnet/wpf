@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -281,7 +281,7 @@ namespace MS.Internal.Ink
                                 clipboardData = new TextClipboardData();
                                 break;
                             default:
-                                throw new ArgumentException(SR.InvalidClipboardFormat, "value");
+                                throw new ArgumentException(SR.InvalidClipboardFormat, nameof(value));
                         }
 
                         preferredData.Add(format, clipboardData);

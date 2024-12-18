@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -134,11 +134,11 @@ namespace System.Windows.Annotations
 
             if (id.Equals(Guid.Empty))
             {
-                throw new ArgumentException(SR.InvalidGuid, "id");
+                throw new ArgumentException(SR.InvalidGuid, nameof(id));
             }
             if (lastModificationTime.CompareTo(creationTime) < 0)
             {
-                throw new ArgumentException(SR.ModificationEarlierThanCreation, "lastModificationTime");
+                throw new ArgumentException(SR.ModificationEarlierThanCreation, nameof(lastModificationTime));
             }
             _id = id;
             _typeName = annotationType;

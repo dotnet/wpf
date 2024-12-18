@@ -109,19 +109,19 @@ namespace MS.Internal.IO.Packaging
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException("offset", SR.OffsetNegative);
+                throw new ArgumentOutOfRangeException(nameof(offset), SR.OffsetNegative);
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException("count", SR.ReadCountNegative);
+                throw new ArgumentOutOfRangeException(nameof(count), SR.ReadCountNegative);
             }
 
             checked     // catch any integer overflows
             {
                 if (offset + count > buffer.Length)
                 {
-                    throw new ArgumentException(SR.ReadBufferTooSmall, "buffer");
+                    throw new ArgumentException(SR.ReadBufferTooSmall, nameof(buffer));
                 }
             }
         }
@@ -143,18 +143,18 @@ namespace MS.Internal.IO.Packaging
 
             if (offset < 0)
             {
-                throw new ArgumentOutOfRangeException("offset", SR.OffsetNegative);
+                throw new ArgumentOutOfRangeException(nameof(offset), SR.OffsetNegative);
             }
 
             if (count < 0)
             {
-                throw new ArgumentOutOfRangeException("count", SR.WriteCountNegative);
+                throw new ArgumentOutOfRangeException(nameof(count), SR.WriteCountNegative);
             }
 
             checked
             {
                 if (offset + count > buffer.Length)
-                    throw new ArgumentException(SR.WriteBufferTooSmall, "buffer");
+                    throw new ArgumentException(SR.WriteBufferTooSmall, nameof(buffer));
             }
         }
 

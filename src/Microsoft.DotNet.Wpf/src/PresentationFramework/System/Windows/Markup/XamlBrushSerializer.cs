@@ -95,7 +95,7 @@ namespace System.Windows.Markup
         {
             if (writer == null)
             {
-                throw new ArgumentNullException("writer");
+                throw new ArgumentNullException(nameof(writer));
             }
 
             KnownColor knownColor = KnownColors.ColorStringToKnownColor(stringValue);

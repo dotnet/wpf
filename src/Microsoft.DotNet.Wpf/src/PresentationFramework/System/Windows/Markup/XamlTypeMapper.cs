@@ -1405,7 +1405,19 @@ namespace System.Windows.Markup
 
                             if (null != memberInfo)
                             {
-                                infoRecord?.SetPropertyMember(memberInfo);
+#pragma warning disable IDE0031
+                                if (infoRecord != null)
+                                {
+#if !PBTCOMPILER
+                                    // DP's aren't present in the PBT case
+                                    if (infoRecord.DP == null)
+                                    {
+                                        infoRecord.DP = MapTable.GetDependencyProperty(infoRecord);
+                                    }
+#endif
+                                    infoRecord.SetPropertyMember(memberInfo);
+                                }
+#pragma warning restore IDE0031
                             }
                         }
                     }
@@ -1537,10 +1549,22 @@ namespace System.Windows.Markup
                                 memberInfo = PropertyInfoFromName(localName, baseType, tryInternal, true, out isInternal);
                             }
 
+#pragma warning disable IDE0031
                             if (null != memberInfo)
                             {
-                                infoRecord?.SetPropertyMember(memberInfo);
+                                if (infoRecord != null)
+                                {
+#if !PBTCOMPILER
+                                    // DP's aren't present in the PBT case
+                                    if (infoRecord.DP == null)
+                                    {
+                                        infoRecord.DP = MapTable.GetDependencyProperty(infoRecord);
+                                    }
+#endif
+                                    infoRecord.SetPropertyMember(memberInfo);
+                                }
                             }
+#pragma warning restore IDE0031
                         }
                     }
                 }

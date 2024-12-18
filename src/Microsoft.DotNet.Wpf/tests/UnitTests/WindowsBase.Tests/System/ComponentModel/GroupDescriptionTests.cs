@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.Collections.ObjectModel;
@@ -309,8 +308,10 @@ public class GroupDescriptionTests
     [Fact]
     public void SortDescriptions_GetFirstTimeWithCustomSort_CallsPropertyChanged()
     {
-        var description = new SubGroupDescription();
-        description.CustomSort = StringComparer.CurrentCulture;
+        var description = new SubGroupDescription
+        {
+            CustomSort = StringComparer.CurrentCulture
+        };
         Assert.Equal(StringComparer.CurrentCulture, description.CustomSort);
 
         int callCount = 0;
@@ -357,7 +358,7 @@ public class GroupDescriptionTests
     {
         var description = new SubGroupDescription();
         var description1 = new SortDescription("Name1", ListSortDirection.Ascending);
-        var description2 = new SortDescription("Name2", ListSortDirection.Ascending);
+        _ = new SortDescription("Name2", ListSortDirection.Ascending);
 
         description.CustomSort = StringComparer.CurrentCulture;
         Assert.Equal(StringComparer.CurrentCulture, description.CustomSort);
@@ -372,8 +373,8 @@ public class GroupDescriptionTests
     public void SortDescriptions_ChangeNoCount_DoesNotClearCustomSort()
     {
         var description = new SubGroupDescription();
-        var description1 = new SortDescription("Name1", ListSortDirection.Ascending);
-        var description2 = new SortDescription("Name2", ListSortDirection.Ascending);
+        _ = new SortDescription("Name1", ListSortDirection.Ascending);
+        _ = new SortDescription("Name2", ListSortDirection.Ascending);
 
         description.CustomSort = StringComparer.CurrentCulture;
         Assert.Equal(StringComparer.CurrentCulture, description.CustomSort);
@@ -560,7 +561,7 @@ public class GroupDescriptionTests
     public void ShouldSerializeGroupNames_Invoke_ReturnsExpected()
     {
         var description = new SubGroupDescription();
-        PropertyDescriptor property = TypeDescriptor.GetProperties(typeof(GroupDescription))[nameof(GroupDescription.GroupNames)]!;
+        _ = TypeDescriptor.GetProperties(typeof(GroupDescription))[nameof(GroupDescription.GroupNames)]!;
         Assert.False(description.ShouldSerializeGroupNames());
 
         Assert.Empty(description.GroupNames);

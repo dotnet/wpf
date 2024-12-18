@@ -1,11 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Markup;
 using System.Windows.Media.Converters;
+using System.Windows.Tests;
 
 
 namespace System.Windows.Media.Tests;
@@ -208,7 +208,6 @@ public class MatrixTests
     [MemberData(nameof(Multiply_TestData))]
     public void Append_Invoke_ReturnsExpected(Matrix matrix1, Matrix matrix2, Matrix expected)
     {
-        Matrix copy1 = matrix1;
         Matrix copy2 = matrix2;
 
         matrix1.Append(matrix2);
@@ -1838,7 +1837,6 @@ public class MatrixTests
     public void Prepend_Invoke_ReturnsExpected(Matrix matrix1, Matrix matrix2, Matrix expected)
     {
         Matrix copy1 = matrix1;
-        Matrix copy2 = matrix2;
 
         matrix2.Prepend(matrix1);
         Assert.Equal(expected, matrix2);
@@ -4685,7 +4683,7 @@ public class MatrixTests
         }
 
         // Other cases.
-        yield return new object[] { new Matrix(2, 3, 4, 5, 6, 7), new Point[0], new Point[0] };
+        yield return new object[] { new Matrix(2, 3, 4, 5, 6, 7), Array.Empty<Point>(), Array.Empty<Point>() };
         yield return new object[] { new Matrix(2, 3, 4, 5, 6, 7), new Point[] { new Point(1, 2), new Point(2, 3) }, new Point[] { new Point(16, 20), new Point(22, 28) } };
         yield return new object?[] { new Matrix(2, 3, 4, 5, 6, 7), null, null };
     }
@@ -4778,7 +4776,7 @@ public class MatrixTests
         }
 
         // Other cases.
-        yield return new object[] { new Matrix(2, 3, 4, 5, 6, 7), new Vector[0], new Vector[0] };
+        yield return new object[] { new Matrix(2, 3, 4, 5, 6, 7), Array.Empty<Vector>(), Array.Empty<Vector>() };
         yield return new object[] { new Matrix(2, 3, 4, 5, 6, 7), new Vector[] { new Vector(1, 2), new Vector(2, 3) }, new Vector[] { new Vector(10, 13), new Vector(16, 21) } };
         yield return new object?[] { new Matrix(2, 3, 4, 5, 6, 7), null, null };
     }
@@ -5134,10 +5132,11 @@ public class MatrixTests
     [MemberData(nameof(Scale_SetToIdentity_TestData))]
     public void M11_SetScaleToIdentity_GetReturnsExpected(double value, bool expectedIsIdentity)
     {
-        var matrix = new Matrix(2, 0, 0, 1, 0, 0);
-
-        // Set.
-        matrix.M11 = value;
+        var matrix = new Matrix(2, 0, 0, 1, 0, 0)
+        {
+            // Set.
+            M11 = value
+        };
         Assert.Equal(value, matrix.M11);
         Assert.Equal(0, matrix.M12);
         Assert.Equal(0, matrix.M21);
@@ -5174,10 +5173,11 @@ public class MatrixTests
     [MemberData(nameof(MatrixElement_Set_TestData))]
     public void M11_Set_GetReturnsExpected(double value)
     {
-        var matrix = new Matrix(2, 3, 4, 5, 6, 7);
-
-        // Set.
-        matrix.M11 = value;
+        var matrix = new Matrix(2, 3, 4, 5, 6, 7)
+        {
+            // Set.
+            M11 = value
+        };
         Assert.Equal(value, matrix.M11);
         Assert.Equal(3, matrix.M12);
         Assert.Equal(4, matrix.M21);
@@ -5255,10 +5255,11 @@ public class MatrixTests
     [MemberData(nameof(NonScale_SetToIdentity_TestData))]
     public void M12_SetScaleToIdentity_GetReturnsExpected(double value, bool expectedIsIdentity)
     {
-        var matrix = new Matrix(1, 1, 0, 1, 0, 0);
-
-        // Set.
-        matrix.M12 = value;
+        var matrix = new Matrix(1, 1, 0, 1, 0, 0)
+        {
+            // Set.
+            M12 = value
+        };
         Assert.Equal(1, matrix.M11);
         Assert.Equal(value, matrix.M12);
         Assert.Equal(0, matrix.M21);
@@ -5282,10 +5283,11 @@ public class MatrixTests
     [MemberData(nameof(MatrixElement_Set_TestData))]
     public void M12_Set_GetReturnsExpected(double value)
     {
-        var matrix = new Matrix(2, 3, 4, 5, 6, 7);
-
-        // Set.
-        matrix.M12 = value;
+        var matrix = new Matrix(2, 3, 4, 5, 6, 7)
+        {
+            // Set.
+            M12 = value
+        };
         Assert.Equal(2, matrix.M11);
         Assert.Equal(value, matrix.M12);
         Assert.Equal(4, matrix.M21);
@@ -5334,10 +5336,11 @@ public class MatrixTests
     [MemberData(nameof(NonScale_SetToIdentity_TestData))]
     public void M21_SetScaleToIdentity_GetReturnsExpected(double value, bool expectedIsIdentity)
     {
-        var matrix = new Matrix(1, 0, 1, 1, 0, 0);
-
-        // Set.
-        matrix.M21 = value;
+        var matrix = new Matrix(1, 0, 1, 1, 0, 0)
+        {
+            // Set.
+            M21 = value
+        };
         Assert.Equal(1, matrix.M11);
         Assert.Equal(0, matrix.M12);
         Assert.Equal(value, matrix.M21);
@@ -5361,10 +5364,11 @@ public class MatrixTests
     [MemberData(nameof(MatrixElement_Set_TestData))]
     public void M21_Set_GetReturnsExpected(double value)
     {
-        var matrix = new Matrix(2, 3, 4, 5, 6, 7);
-
-        // Set.
-        matrix.M21 = value;
+        var matrix = new Matrix(2, 3, 4, 5, 6, 7)
+        {
+            // Set.
+            M21 = value
+        };
         Assert.Equal(2, matrix.M11);
         Assert.Equal(3, matrix.M12);
         Assert.Equal(value, matrix.M21);
@@ -5413,10 +5417,11 @@ public class MatrixTests
     [MemberData(nameof(Scale_SetToIdentity_TestData))]
     public void M22_SetScaleToIdentity_GetReturnsExpected(double value, bool expectedIsIdentity)
     {
-        var matrix = new Matrix(1, 0, 0, 2, 0, 0);
-
-        // Set.
-        matrix.M22 = value;
+        var matrix = new Matrix(1, 0, 0, 2, 0, 0)
+        {
+            // Set.
+            M22 = value
+        };
         Assert.Equal(1, matrix.M11);
         Assert.Equal(0, matrix.M12);
         Assert.Equal(0, matrix.M21);
@@ -5440,10 +5445,11 @@ public class MatrixTests
     [MemberData(nameof(MatrixElement_Set_TestData))]
     public void M22_Set_GetReturnsExpected(double value)
     {
-        var matrix = new Matrix(2, 3, 4, 5, 6, 7);
-
-        // Set.
-        matrix.M22 = value;
+        var matrix = new Matrix(2, 3, 4, 5, 6, 7)
+        {
+            // Set.
+            M22 = value
+        };
         Assert.Equal(2, matrix.M11);
         Assert.Equal(3, matrix.M12);
         Assert.Equal(4, matrix.M21);
@@ -5492,10 +5498,11 @@ public class MatrixTests
     [MemberData(nameof(NonScale_SetToIdentity_TestData))]
     public void OffsetX_SetScaleToIdentity_GetReturnsExpected(double value, bool expectedIsIdentity)
     {
-        var matrix = new Matrix(1, 0, 0, 1, 1, 0);
-
-        // Set.
-        matrix.OffsetX = value;
+        var matrix = new Matrix(1, 0, 0, 1, 1, 0)
+        {
+            // Set.
+            OffsetX = value
+        };
         Assert.Equal(1, matrix.M11);
         Assert.Equal(0, matrix.M12);
         Assert.Equal(0, matrix.M21);
@@ -5519,10 +5526,11 @@ public class MatrixTests
     [MemberData(nameof(MatrixElement_Set_TestData))]
     public void OffsetX_Set_GetReturnsExpected(double value)
     {
-        var matrix = new Matrix(2, 3, 4, 5, 6, 7);
-
-        // Set.
-        matrix.OffsetX = value;
+        var matrix = new Matrix(2, 3, 4, 5, 6, 7)
+        {
+            // Set.
+            OffsetX = value
+        };
         Assert.Equal(2, matrix.M11);
         Assert.Equal(3, matrix.M12);
         Assert.Equal(4, matrix.M21);
@@ -5571,10 +5579,11 @@ public class MatrixTests
     [MemberData(nameof(NonScale_SetToIdentity_TestData))]
     public void OffsetY_SetScaleToIdentity_GetReturnsExpected(double value, bool expectedIsIdentity)
     {
-        var matrix = new Matrix(1, 0, 0, 1, 0, 1);
-
-        // Set.
-        matrix.OffsetY = value;
+        var matrix = new Matrix(1, 0, 0, 1, 0, 1)
+        {
+            // Set.
+            OffsetY = value
+        };
         Assert.Equal(1, matrix.M11);
         Assert.Equal(0, matrix.M12);
         Assert.Equal(0, matrix.M21);
@@ -5598,10 +5607,11 @@ public class MatrixTests
     [MemberData(nameof(MatrixElement_Set_TestData))]
     public void OffsetY_Set_GetReturnsExpected(double value)
     {
-        var matrix = new Matrix(2, 3, 4, 5, 6, 7);
-
-        // Set.
-        matrix.OffsetY = value;
+        var matrix = new Matrix(2, 3, 4, 5, 6, 7)
+        {
+            // Set.
+            OffsetY = value
+        };
         Assert.Equal(2, matrix.M11);
         Assert.Equal(3, matrix.M12);
         Assert.Equal(4, matrix.M21);

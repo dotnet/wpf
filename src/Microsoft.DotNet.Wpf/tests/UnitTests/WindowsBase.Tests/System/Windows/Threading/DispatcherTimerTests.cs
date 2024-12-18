@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 
@@ -177,11 +176,13 @@ public class DispatcherTimerTests
     [MemberData(nameof(Interval_Set_TestData))]
     public void Interval_SetEnabled_GetReturnsExpected(TimeSpan value)
     {
-        var timer = new DispatcherTimer();
-        timer.IsEnabled = true;
-        
-        // Set.
-        timer.Interval = value;
+        var timer = new DispatcherTimer
+        {
+            IsEnabled = true,
+
+            // Set.
+            Interval = value
+        };
         Assert.Equal(value, timer.Interval);
 
         // Set same.
@@ -207,10 +208,11 @@ public class DispatcherTimerTests
     [MemberData(nameof(Tag_Set_TestData))]
     public void Tag_Set_GetReturnsExpected(object? value)
     {
-        var timer = new DispatcherTimer();
-
-        // Set.
-        timer.Tag = value;
+        var timer = new DispatcherTimer
+        {
+            // Set.
+            Tag = value
+        };
         Assert.Same(value, timer.Tag);
 
         // Set same.

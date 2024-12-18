@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Reflection;
 
@@ -389,24 +388,24 @@ public class WeakEventManagerTTests
 
         public void OnCustomEvent(object sender, EventArgs e) => _event?.Invoke(sender, e);
 
-        private static EventHandler? _staticEvent1;
+        private static EventHandler? s_staticEvent1;
 
         public static event EventHandler StaticEvent1
         {
-            add => _staticEvent1 += value;
-            remove => _staticEvent1 -= value;
+            add => s_staticEvent1 += value;
+            remove => s_staticEvent1 -= value;
         }
 
-        public static void OnStaticEvent1(object? sender, EventArgs e) => _staticEvent1?.Invoke(sender, e);
+        public static void OnStaticEvent1(object? sender, EventArgs e) => s_staticEvent1?.Invoke(sender, e);
 
-        private static EventHandler? _staticEvent2;
+        private static EventHandler? s_staticEvent2;
 
         public static event EventHandler StaticEvent2
         {
-            add => _staticEvent2 += value;
-            remove => _staticEvent2 -= value;
+            add => s_staticEvent2 += value;
+            remove => s_staticEvent2 -= value;
         }
 
-        public static void OnStaticEvent2(object? sender, EventArgs e) => _staticEvent2?.Invoke(sender, e);
+        public static void OnStaticEvent2(object? sender, EventArgs e) => s_staticEvent2?.Invoke(sender, e);
     }
 }

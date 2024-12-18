@@ -1,17 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.IO;
 using System.Runtime.ExceptionServices;
-using System.Text;
 using System.Threading;
-using System.Windows;
 using System.Windows.Media;
-using Xunit.Sdk;
+
+namespace System.Windows.Tests;
 
 public static class Helpers
 {
@@ -39,12 +34,9 @@ public static class Helpers
         t.Start();
         t.Join();
 
-        if (edi is not null)
-        {
-            edi.Throw();
-        }
+        edi?.Throw();
     }
-    
+
     public static T ExecuteOnDifferentThread<T>(Func<T> action, ApartmentState? state = null)
     {
         T? result = default;
@@ -70,7 +62,9 @@ public static class Helpers
         if (edi is not null)
         {
             edi.Throw();
+#pragma warning disable CA2201 // Do not raise reserved exception types
             throw new Exception("Not reachable.");
+#pragma warning restore CA2201 // Do not raise reserved exception types
         }
         else
         {

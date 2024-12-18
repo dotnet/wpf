@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Security.Cryptography.X509Certificates;
 
@@ -80,10 +79,11 @@ public class PackageDigitalSignatureManagerTests
     public void CertificateOption_Set_GetReturnsExpected(CertificateEmbeddingOption value)
     {
         var package = new CustomPackage(FileAccess.ReadWrite);
-        var manager = new PackageDigitalSignatureManager(package);
-
-        // Set.
-        manager.CertificateOption = value;
+        var manager = new PackageDigitalSignatureManager(package)
+        {
+            // Set.
+            CertificateOption = value
+        };
         Assert.Equal(value, manager.CertificateOption);
 
         // Set same.
@@ -108,10 +108,11 @@ public class PackageDigitalSignatureManagerTests
     public void HashAlgorithm_Set_GetReturnsExpected(string value)
     {
         var package = new CustomPackage(FileAccess.ReadWrite);
-        var manager = new PackageDigitalSignatureManager(package);
-
-        // Set.
-        manager.HashAlgorithm = value;
+        var manager = new PackageDigitalSignatureManager(package)
+        {
+            // Set.
+            HashAlgorithm = value
+        };
         Assert.Equal(value, manager.HashAlgorithm);
 
         // Set same.
@@ -147,10 +148,11 @@ public class PackageDigitalSignatureManagerTests
     public void ParentWindow_Set_GetReturnsExpected(IntPtr value)
     {
         var package = new CustomPackage(FileAccess.ReadWrite);
-        var manager = new PackageDigitalSignatureManager(package);
-
-        // Set.
-        manager.ParentWindow = value;
+        var manager = new PackageDigitalSignatureManager(package)
+        {
+            // Set.
+            ParentWindow = value
+        };
         Assert.Equal(value, manager.ParentWindow);
 
         // Set same.
@@ -168,10 +170,11 @@ public class PackageDigitalSignatureManagerTests
     public void TimeFormat_Set_GetReturnsExpected(string value)
     {
         var package = new CustomPackage(FileAccess.ReadWrite);
-        var manager = new PackageDigitalSignatureManager(package);
-
-        // Set.
-        manager.TimeFormat = value;
+        var manager = new PackageDigitalSignatureManager(package)
+        {
+            // Set.
+            TimeFormat = value
+        };
         Assert.Equal(value, manager.TimeFormat);
 
         // Set same.
@@ -219,7 +222,7 @@ public class PackageDigitalSignatureManagerTests
         var c = new X509Certificate();
 #pragma warning restore 0618
         Assert.Throws<InvalidOperationException>(() => manager.Countersign(c));
-        Assert.Throws<InvalidOperationException>(() => manager.Countersign(c, new Uri[0]));
+        Assert.Throws<InvalidOperationException>(() => manager.Countersign(c, Array.Empty<Uri>()));
     }
 
     [Fact]
@@ -228,7 +231,7 @@ public class PackageDigitalSignatureManagerTests
         var package = new CustomPackage(FileAccess.ReadWrite);
         var manager = new PackageDigitalSignatureManager(package);
         Assert.Throws<ArgumentNullException>("certificate", () => manager.Countersign(null));
-        Assert.Throws<ArgumentNullException>("certificate", () => manager.Countersign(null, new Uri[0]));
+        Assert.Throws<ArgumentNullException>("certificate", () => manager.Countersign(null, Array.Empty<Uri>()));
     }
 
     [Fact]

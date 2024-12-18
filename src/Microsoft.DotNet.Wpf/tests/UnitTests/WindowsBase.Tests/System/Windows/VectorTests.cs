@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Globalization;
@@ -85,10 +84,11 @@ public class VectorTests
     [InlineData(double.NaN)]
     public void X_Set_GetReturnsExpected(double value)
     {
-        var vector = new Vector();
-
-        // Set.
-        vector.X = value;
+        var vector = new Vector
+        {
+            // Set.
+            X = value
+        };
         Assert.Equal(value, vector.X);
 
         // Set same.
@@ -109,10 +109,11 @@ public class VectorTests
     [InlineData(double.NaN)]
     public void Y_Set_GetReturnsExpected(double value)
     {
-        var vector = new Vector();
-
-        // Set.
-        vector.Y = value;
+        var vector = new Vector
+        {
+            // Set.
+            Y = value
+        };
         Assert.Equal(value, vector.Y);
 
         // Set same.

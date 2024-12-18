@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 namespace System.Windows.Interop.Tests;
 
@@ -30,10 +29,11 @@ public class MSGTests
     [MemberData(nameof(IntPtr_TestData))]
     public void hwnd_Set_GetReturnsExpected(IntPtr value)
     {
-        var msg = new MSG();
-        
-        // Set.
-        msg.hwnd = value;
+        var msg = new MSG
+        {
+            // Set.
+            hwnd = value
+        };
         Assert.Equal(value, msg.hwnd);
 
         // Set same.
@@ -47,10 +47,11 @@ public class MSGTests
     [InlineData(1)]
     public void message_Set_GetReturnsExpected(int value)
     {
-        var msg = new MSG();
-        
-        // Set.
-        msg.message = value;
+        var msg = new MSG
+        {
+            // Set.
+            message = value
+        };
         Assert.Equal(value, msg.message);
 
         // Set same.
@@ -62,10 +63,11 @@ public class MSGTests
     [MemberData(nameof(IntPtr_TestData))]
     public void wParam_Set_GetReturnsExpected(IntPtr value)
     {
-        var msg = new MSG();
-        
-        // Set.
-        msg.wParam = value;
+        var msg = new MSG
+        {
+            // Set.
+            wParam = value
+        };
         Assert.Equal(value, msg.wParam);
 
         // Set same.
@@ -77,10 +79,11 @@ public class MSGTests
     [MemberData(nameof(IntPtr_TestData))]
     public void lParam_Set_GetReturnsExpected(IntPtr value)
     {
-        var msg = new MSG();
-        
-        // Set.
-        msg.lParam = value;
+        var msg = new MSG
+        {
+            // Set.
+            lParam = value
+        };
         Assert.Equal(value, msg.lParam);
 
         // Set same.
@@ -94,10 +97,11 @@ public class MSGTests
     [InlineData(1)]
     public void time_Set_GetReturnsExpected(int value)
     {
-        var msg = new MSG();
-        
-        // Set.
-        msg.time = value;
+        var msg = new MSG
+        {
+            // Set.
+            time = value
+        };
         Assert.Equal(value, msg.time);
 
         // Set same.
@@ -111,10 +115,11 @@ public class MSGTests
     [InlineData(1)]
     public void pt_x_Set_GetReturnsExpected(int value)
     {
-        var msg = new MSG();
-        
-        // Set.
-        msg.pt_x = value;
+        var msg = new MSG
+        {
+            // Set.
+            pt_x = value
+        };
         Assert.Equal(value, msg.pt_x);
 
         // Set same.
@@ -128,10 +133,11 @@ public class MSGTests
     [InlineData(1)]
     public void pt_y_Set_GetReturnsExpected(int value)
     {
-        var msg = new MSG();
-        
-        // Set.
-        msg.pt_y = value;
+        var msg = new MSG
+        {
+            // Set.
+            pt_y = value
+        };
         Assert.Equal(value, msg.pt_y);
 
         // Set same.

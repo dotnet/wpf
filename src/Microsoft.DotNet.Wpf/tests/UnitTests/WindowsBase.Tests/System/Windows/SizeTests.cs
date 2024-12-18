@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Globalization;
@@ -79,10 +78,11 @@ public class SizeTests
     [InlineData(double.NaN)]
     public void Width_Set_GetReturnsExpected(double value)
     {
-        var size = new Size();
-
-        // Set.
-        size.Width = value;
+        var size = new Size
+        {
+            // Set.
+            Width = value
+        };
         Assert.Equal(value, size.Width);
 
         // Set same.
@@ -120,10 +120,11 @@ public class SizeTests
     [InlineData(double.NaN)]
     public void Height_Set_GetReturnsExpected(double value)
     {
-        var size = new Size();
-
-        // Set.
-        size.Height = value;
+        var size = new Size
+        {
+            // Set.
+            Height = value
+        };
         Assert.Equal(value, size.Height);
 
         // Set same.

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Globalization;
@@ -73,10 +72,11 @@ public class Int32RectTests
     [InlineData(4   )]
     public void X_Set_GetReturnsExpected(int value)
     {
-        var rect = new Int32Rect(1, 2, 3, 4);
-
-        // Set.
-        rect.X = value;
+        var rect = new Int32Rect(1, 2, 3, 4)
+        {
+            // Set.
+            X = value
+        };
         Assert.Equal(value, rect.X);
         Assert.Equal(2, rect.Y);
         Assert.Equal(3, rect.Width);
@@ -104,10 +104,11 @@ public class Int32RectTests
     [InlineData(4   )]
     public void Y_Set_GetReturnsExpected(int value)
     {
-        var rect = new Int32Rect(1, 2, 3, 4);
-
-        // Set.
-        rect.Y = value;
+        var rect = new Int32Rect(1, 2, 3, 4)
+        {
+            // Set.
+            Y = value
+        };
         Assert.Equal(1, rect.X);
         Assert.Equal(value, rect.Y);
         Assert.Equal(3, rect.Width);
@@ -135,10 +136,11 @@ public class Int32RectTests
     [InlineData(4, true)]
     public void Width_Set_GetReturnsExpected(int value, bool expectedHasArea)
     {
-        var rect = new Int32Rect(1, 2, 3, 4);
-
-        // Set.
-        rect.Width = value;
+        var rect = new Int32Rect(1, 2, 3, 4)
+        {
+            // Set.
+            Width = value
+        };
         Assert.Equal(1, rect.X);
         Assert.Equal(2, rect.Y);
         Assert.Equal(value, rect.Width);
@@ -165,10 +167,11 @@ public class Int32RectTests
     [InlineData(4, true)]
     public void Height_Set_GetReturnsExpected(int value, bool expectedHasArea)
     {
-        var rect = new Int32Rect(1, 2, 3, 4);
-
-        // Set.
-        rect.Height = value;
+        var rect = new Int32Rect(1, 2, 3, 4)
+        {
+            // Set.
+            Height = value
+        };
         Assert.Equal(1, rect.X);
         Assert.Equal(2, rect.Y);
         Assert.Equal(3, rect.Width);

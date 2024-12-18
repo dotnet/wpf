@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Reflection;
 using System.Windows.Threading;
@@ -1395,18 +1394,24 @@ public class FreezableTests
         freezable.SetValue(SubFreezable.Property4, 40);
         freezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         freezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         freezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         freezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -1441,32 +1446,42 @@ public class FreezableTests
     [Fact]
     public void Clone_InvokeWithUnfreezableProperties_ThrowsInvalidOperationException()
     {
-        var freezable = new SubFreezable();
-        freezable.CreateInstanceCoreAction = () => new SubFreezable();
+        var freezable = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         freezable.SetValue(SubFreezable.Property1, 10);
         freezable.SetValue(SubFreezable.Property2, 20);
         freezable.SetCurrentValue(SubFreezable.Property3, 30);
         freezable.SetValue(SubFreezable.Property4, 40);
         freezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         freezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         freezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         freezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
 
-        var anotherFreezable4 = new CustomFreezable();
-        anotherFreezable4.CreateInstanceCoreAction = () => new CustomFreezable();
+        var anotherFreezable4 = new CustomFreezable
+        {
+            CreateInstanceCoreAction = () => new CustomFreezable()
+        };
         anotherFreezable4.SetValue(SubFreezable.Property1, 90);
         anotherFreezable4.FreezeCoreAction = (isChecking) => false;
         freezable.SetValue(SubFreezable.Property9, anotherFreezable4);
@@ -1499,8 +1514,10 @@ public class FreezableTests
     [Fact]
     public void Clone_InvokeWithReadOnlyProperty_DoesNotCopy()
     {
-        var freezable = new SubFreezable();
-        freezable.CreateInstanceCoreAction = () => new SubFreezable();
+        var freezable = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         DependencyPropertyKey propertyKey = DependencyProperty.RegisterReadOnly(nameof(FreezableTests) + MethodBase.GetCurrentMethod()!.Name, typeof(string), typeof(DependencyObject), new PropertyMetadata());
         freezable.SetValue(propertyKey, "value");
 
@@ -1513,8 +1530,10 @@ public class FreezableTests
     [Fact]
     public void Clone_InvokeFrozen_ReturnsExpected()
     {
-        var freezable = new SubFreezable();
-        freezable.CreateInstanceCoreAction = () => new SubFreezable();
+        var freezable = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         freezable.Freeze();
 
         SubFreezable clone = Assert.IsType<SubFreezable>(freezable.Clone());
@@ -1532,8 +1551,10 @@ public class FreezableTests
     [Fact]
     public void Clone_InvokeNullCreateInstanceCore_ThrowsNullReferenceException()
     {
-        var freezable = new CustomFreezable();
-        freezable.CreateInstanceCoreAction = () => null!;
+        var freezable = new CustomFreezable
+        {
+            CreateInstanceCoreAction = () => null!
+        };
         Assert.Throws<NullReferenceException>(() => freezable.Clone());
     }
 
@@ -1608,8 +1629,10 @@ public class FreezableTests
     [Fact]
     public void Clone_InvokeFrozenOnDifferentThread_ReturnsExpected()
     {
-        var freezable = new SubFreezable();
-        freezable.CreateInstanceCoreAction = () => new SubFreezable();
+        var freezable = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         freezable.Freeze();
         
         Helpers.ExecuteOnDifferentThread(() =>
@@ -1666,18 +1689,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -1762,18 +1791,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -1846,18 +1881,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -1924,18 +1965,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -2006,18 +2053,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -2090,18 +2143,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -2219,18 +2278,24 @@ public class FreezableTests
         freezable.SetValue(SubFreezable.Property4, 40);
         freezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         freezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         freezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         freezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -2265,32 +2330,42 @@ public class FreezableTests
     [Fact]
     public void CloneCurrentValue_InvokeWithUnfreezableProperties_ThrowsInvalidOperationException()
     {
-        var freezable = new SubFreezable();
-        freezable.CreateInstanceCoreAction = () => new SubFreezable();
+        var freezable = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         freezable.SetValue(SubFreezable.Property1, 10);
         freezable.SetValue(SubFreezable.Property2, 20);
         freezable.SetCurrentValue(SubFreezable.Property3, 30);
         freezable.SetValue(SubFreezable.Property4, 40);
         freezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         freezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         freezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         freezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
 
-        var anotherFreezable4 = new CustomFreezable();
-        anotherFreezable4.CreateInstanceCoreAction = () => new CustomFreezable();
+        var anotherFreezable4 = new CustomFreezable
+        {
+            CreateInstanceCoreAction = () => new CustomFreezable()
+        };
         anotherFreezable4.SetValue(SubFreezable.Property1, 90);
         anotherFreezable4.FreezeCoreAction = (isChecking) => false;
         freezable.SetValue(SubFreezable.Property9, anotherFreezable4);
@@ -2323,8 +2398,10 @@ public class FreezableTests
     [Fact]
     public void CloneCurrentValue_InvokeWithReadOnlyProperty_DoesNotCopy()
     {
-        var freezable = new SubFreezable();
-        freezable.CreateInstanceCoreAction = () => new SubFreezable();
+        var freezable = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         DependencyPropertyKey propertyKey = DependencyProperty.RegisterReadOnly(nameof(FreezableTests) + MethodBase.GetCurrentMethod()!.Name, typeof(string), typeof(DependencyObject), new PropertyMetadata());
         freezable.SetValue(propertyKey, "value");
 
@@ -2337,8 +2414,10 @@ public class FreezableTests
     [Fact]
     public void CloneCurrentValue_InvokeFrozen_ReturnsExpected()
     {
-        var freezable = new SubFreezable();
-        freezable.CreateInstanceCoreAction = () => new SubFreezable();
+        var freezable = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         freezable.Freeze();
 
         SubFreezable clone = Assert.IsType<SubFreezable>(freezable.CloneCurrentValue());
@@ -2356,8 +2435,10 @@ public class FreezableTests
     [Fact]
     public void CloneCurrentValue_InvokeNullCreateInstanceCore_ThrowsNullReferenceException()
     {
-        var freezable = new CustomFreezable();
-        freezable.CreateInstanceCoreAction = () => null!;
+        var freezable = new CustomFreezable
+        {
+            CreateInstanceCoreAction = () => null!
+        };
         Assert.Throws<NullReferenceException>(() => freezable.CloneCurrentValue());
     }
 
@@ -2429,8 +2510,10 @@ public class FreezableTests
     [Fact]
     public void CloneCurrentValue_InvokeFrozenOnDifferentThread_ReturnsExpected()
     {
-        var freezable = new SubFreezable();
-        freezable.CreateInstanceCoreAction = () => new SubFreezable();
+        var freezable = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         freezable.Freeze();
         
         Helpers.ExecuteOnDifferentThread(() =>
@@ -2487,18 +2570,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -2583,18 +2672,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -2667,18 +2762,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -2746,18 +2847,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -2829,18 +2936,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -2914,18 +3027,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -4294,18 +4413,24 @@ public class FreezableTests
         freezable.SetValue(SubFreezable.Property4, 40);
         freezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         freezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         freezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         freezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -4339,32 +4464,42 @@ public class FreezableTests
     [Fact]
     public void GetAsFrozen_InvokeWithUnfreezableProperties_ThrowsInvalidOperationException()
     {
-        var freezable = new SubFreezable();
-        freezable.CreateInstanceCoreAction = () => new SubFreezable();
+        var freezable = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         freezable.SetValue(SubFreezable.Property1, 10);
         freezable.SetValue(SubFreezable.Property2, 20);
         freezable.SetCurrentValue(SubFreezable.Property3, 30);
         freezable.SetValue(SubFreezable.Property4, 40);
         freezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         freezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         freezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         freezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
 
-        var anotherFreezable4 = new CustomFreezable();
-        anotherFreezable4.CreateInstanceCoreAction = () => new CustomFreezable();
+        var anotherFreezable4 = new CustomFreezable
+        {
+            CreateInstanceCoreAction = () => new CustomFreezable()
+        };
         anotherFreezable4.SetValue(SubFreezable.Property1, 90);
         anotherFreezable4.FreezeCoreAction = (isChecking) => false;
         freezable.SetValue(SubFreezable.Property9, anotherFreezable4);
@@ -4397,8 +4532,10 @@ public class FreezableTests
     [Fact]
     public void GetAsFrozen_InvokeWithReadOnlyProperty_DoesNotCopy()
     {
-        var freezable = new SubFreezable();
-        freezable.CreateInstanceCoreAction = () => new SubFreezable();
+        var freezable = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         DependencyPropertyKey propertyKey = DependencyProperty.RegisterReadOnly(nameof(FreezableTests) + MethodBase.GetCurrentMethod()!.Name, typeof(string), typeof(DependencyObject), new PropertyMetadata());
         freezable.SetValue(propertyKey, "value");
 
@@ -4419,8 +4556,10 @@ public class FreezableTests
     [Fact]
     public void GetAsFrozen_InvokeNullCreateInstanceCore_ThrowsNullReferenceException()
     {
-        var freezable = new CustomFreezable();
-        freezable.CreateInstanceCoreAction = () => null!;
+        var freezable = new CustomFreezable
+        {
+            CreateInstanceCoreAction = () => null!
+        };
         Assert.Throws<NullReferenceException>(() => freezable.GetAsFrozen());
     }
 
@@ -4534,18 +4673,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -4630,18 +4775,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -4714,18 +4865,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -4793,18 +4950,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -4876,18 +5039,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -4961,18 +5130,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -5087,18 +5262,24 @@ public class FreezableTests
         freezable.SetValue(SubFreezable.Property4, 40);
         freezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         freezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         freezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         freezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -5132,32 +5313,42 @@ public class FreezableTests
     [Fact]
     public void GetCurrentValueAsFrozen_InvokeWithUnfreezableProperties_ThrowsInvalidOperationException()
     {
-        var freezable = new SubFreezable();
-        freezable.CreateInstanceCoreAction = () => new SubFreezable();
+        var freezable = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         freezable.SetValue(SubFreezable.Property1, 10);
         freezable.SetValue(SubFreezable.Property2, 20);
         freezable.SetCurrentValue(SubFreezable.Property3, 30);
         freezable.SetValue(SubFreezable.Property4, 40);
         freezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         freezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         freezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         freezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
 
-        var anotherFreezable4 = new CustomFreezable();
-        anotherFreezable4.CreateInstanceCoreAction = () => new CustomFreezable();
+        var anotherFreezable4 = new CustomFreezable
+        {
+            CreateInstanceCoreAction = () => new CustomFreezable()
+        };
         anotherFreezable4.SetValue(SubFreezable.Property1, 90);
         anotherFreezable4.FreezeCoreAction = (isChecking) => false;
         freezable.SetValue(SubFreezable.Property9, anotherFreezable4);
@@ -5190,8 +5381,10 @@ public class FreezableTests
     [Fact]
     public void GetCurrentValueAsFrozen_InvokeWithReadOnlyProperty_DoesNotCopy()
     {
-        var freezable = new SubFreezable();
-        freezable.CreateInstanceCoreAction = () => new SubFreezable();
+        var freezable = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         DependencyPropertyKey propertyKey = DependencyProperty.RegisterReadOnly(nameof(FreezableTests) + MethodBase.GetCurrentMethod()!.Name, typeof(string), typeof(DependencyObject), new PropertyMetadata());
         freezable.SetValue(propertyKey, "value");
 
@@ -5212,8 +5405,10 @@ public class FreezableTests
     [Fact]
     public void GetCurrentValueAsFrozen_InvokeNullCreateInstanceCore_ThrowsNullReferenceException()
     {
-        var freezable = new CustomFreezable();
-        freezable.CreateInstanceCoreAction = () => null!;
+        var freezable = new CustomFreezable
+        {
+            CreateInstanceCoreAction = () => null!
+        };
         Assert.Throws<NullReferenceException>(() => freezable.GetCurrentValueAsFrozen());
     }
 
@@ -5327,18 +5522,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -5423,18 +5624,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -5507,18 +5714,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -5586,18 +5799,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -5669,18 +5888,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);
@@ -5753,18 +5978,24 @@ public class FreezableTests
         sourceFreezable.SetValue(SubFreezable.Property4, 40);
         sourceFreezable.SetCurrentValue(SubFreezable.Property5, 50);
 
-        var anotherFreezable1 = new SubFreezable();
-        anotherFreezable1.CreateInstanceCoreAction = () => new SubFreezable();
+        var anotherFreezable1 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable1.SetValue(SubFreezable.Property1, 60);
         sourceFreezable.SetValue(SubFreezable.Property6, anotherFreezable1);
-        
-        var anotherFreezable2 = new SubFreezable();
-        anotherFreezable2.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable2 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable2.SetValue(SubFreezable.Property1, 70);
         sourceFreezable.SetCurrentValue(SubFreezable.Property7, anotherFreezable2);
-        
-        var anotherFreezable3 = new SubFreezable();
-        anotherFreezable3.CreateInstanceCoreAction = () => new SubFreezable();
+
+        var anotherFreezable3 = new SubFreezable
+        {
+            CreateInstanceCoreAction = () => new SubFreezable()
+        };
         anotherFreezable3.SetValue(SubFreezable.Property1, 80);
         anotherFreezable3.Freeze();
         sourceFreezable.SetCurrentValue(SubFreezable.Property8, anotherFreezable3);

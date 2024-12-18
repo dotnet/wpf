@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 
@@ -37,10 +36,11 @@ public class TraversalRequestTests
     [InlineData(false)]
     public void Wrapped_Set_GetReturnsExpected(bool value)
     {
-        var request = new TraversalRequest(FocusNavigationDirection.Next);
-
-        // Set.
-        request.Wrapped = value;
+        var request = new TraversalRequest(FocusNavigationDirection.Next)
+        {
+            // Set.
+            Wrapped = value
+        };
         Assert.Equal(value, request.Wrapped);
 
         // Set same.

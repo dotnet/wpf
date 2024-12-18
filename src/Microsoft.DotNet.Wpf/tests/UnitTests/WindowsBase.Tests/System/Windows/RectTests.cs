@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Globalization;
@@ -396,10 +395,11 @@ public class RectTests
     [MemberData(nameof(Location_Set_TestData))]
     public void Location_Set_GetReturnsExpected(Point value)
     {
-        var rect = new Rect(1, 2, 3, 4);
-
-        // Set.
-        rect.Location = value;
+        var rect = new Rect(1, 2, 3, 4)
+        {
+            // Set.
+            Location = value
+        };
         Assert.Equal(value.X, rect.X);
         Assert.Equal(value.Y, rect.Y);
         Assert.Equal(3, rect.Width);
@@ -467,10 +467,11 @@ public class RectTests
     [MemberData(nameof(Size_Set_TestData))]
     public void Size_Set_GetReturnsExpected(Size value)
     {
-        var rect = new Rect(1, 2, 3, 4);
-
-        // Set.
-        rect.Size = value;
+        var rect = new Rect(1, 2, 3, 4)
+        {
+            // Set.
+            Size = value
+        };
         Assert.Equal(1, rect.X);
         Assert.Equal(2, rect.Y);
         Assert.Equal(value.Width, rect.Width);
@@ -517,10 +518,11 @@ public class RectTests
     [Fact]
     public void Size_SetEmpty_Success()
     {
-        var rect = new Rect(1, 2, 3, 4);
-
-        // Set.
-        rect.Size = Size.Empty;
+        var rect = new Rect(1, 2, 3, 4)
+        {
+            // Set.
+            Size = Size.Empty
+        };
         Assert.Equal(double.PositiveInfinity, rect.X);
         Assert.Equal(double.PositiveInfinity, rect.Y);
         Assert.Equal(double.NegativeInfinity, rect.Width);
@@ -588,10 +590,11 @@ public class RectTests
     [MemberData(nameof(X_Set_TestData))]
     public void X_Set_GetReturnsExpected(double value)
     {
-        var rect = new Rect(1, 2, 3, 4);
-
-        // Set.
-        rect.X = value;
+        var rect = new Rect(1, 2, 3, 4)
+        {
+            // Set.
+            X = value
+        };
         Assert.Equal(value, rect.X);
         Assert.Equal(2, rect.Y);
         Assert.Equal(3, rect.Width);
@@ -660,10 +663,11 @@ public class RectTests
     [MemberData(nameof(Y_Set_TestData))]
     public void Y_Set_GetReturnsExpected(double value)
     {
-        var rect = new Rect(1, 2, 3, 4);
-
-        // Set.
-        rect.Y = value;
+        var rect = new Rect(1, 2, 3, 4)
+        {
+            // Set.
+            Y = value
+        };
         Assert.Equal(1, rect.X);
         Assert.Equal(value, rect.Y);
         Assert.Equal(3, rect.Width);
@@ -729,10 +733,11 @@ public class RectTests
     [MemberData(nameof(Width_Set_TestData))]
     public void Width_Set_GetReturnsExpected(double value)
     {
-        var rect = new Rect(1, 2, 3, 4);
-
-        // Set.
-        rect.Width = value;
+        var rect = new Rect(1, 2, 3, 4)
+        {
+            // Set.
+            Width = value
+        };
         Assert.Equal(1, rect.X);
         Assert.Equal(2, rect.Y);
         Assert.Equal(value, rect.Width);
@@ -810,10 +815,11 @@ public class RectTests
     [MemberData(nameof(Height_Set_TestData))]
     public void Height_Set_GetReturnsExpected(double value)
     {
-        var rect = new Rect(1, 2, 3, 4);
-
-        // Set.
-        rect.Height = value;
+        var rect = new Rect(1, 2, 3, 4)
+        {
+            // Set.
+            Height = value
+        };
         Assert.Equal(1, rect.X);
         Assert.Equal(2, rect.Y);
         Assert.Equal(3, rect.Width);

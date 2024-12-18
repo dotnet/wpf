@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Threading;
@@ -110,10 +109,11 @@ public class DataSourceProviderTests
     [MemberData(nameof(Dispatcher_Set_TestData))]
     public void Dispatcher_Set_GetReturnsExpected(Dispatcher value)
     {
-        var provider = new SubDataSourceProvider();
-        
-        // Set.
-        provider.Dispatcher = value;
+        var provider = new SubDataSourceProvider
+        {
+            // Set.
+            Dispatcher = value
+        };
         Assert.Same(value, provider.Dispatcher);
         
         // Set same.
@@ -156,10 +156,11 @@ public class DataSourceProviderTests
     [InlineData(false)]
     public void IsInitialLoadEnabled_Set_GetReturnsExpected(bool value)
     {
-        var provider = new SubDataSourceProvider();
-
-        // Set.
-        provider.IsInitialLoadEnabled = value;
+        var provider = new SubDataSourceProvider
+        {
+            // Set.
+            IsInitialLoadEnabled = value
+        };
         Assert.Equal(value, provider.IsInitialLoadEnabled);
 
         // Set same.
@@ -1234,7 +1235,9 @@ public class DataSourceProviderTests
     public void OnQueryFinished_InvokeSimpleWithError_Success(object? newData)
     {
         var provider = new SubDataSourceProvider();
+#pragma warning disable CA2201 // Do not raise reserved exception types
         provider.OnQueryFinished(new object(), new Exception(), e => e, new object());
+#pragma warning restore CA2201 // Do not raise reserved exception types
 
         // Invoke.
         provider.OnQueryFinished(newData!);
@@ -1449,7 +1452,9 @@ public class DataSourceProviderTests
     public void OnQueryFinished_InvokeComplexWithError_Success(object? newData)
     {
         var provider = new SubDataSourceProvider();
+#pragma warning disable CA2201 // Do not raise reserved exception types
         var error = new Exception();
+#pragma warning restore CA2201 // Do not raise reserved exception types
 
         // Invoke.
         provider.OnQueryFinished(newData!, error, null!, null!);
@@ -1525,7 +1530,9 @@ public class DataSourceProviderTests
         var provider = new CustomBeginQueryDataSourceProvider();
         int callCount = 0;
         provider.BeginQueryAction = () => callCount++;
+#pragma warning disable CA2201 // Do not raise reserved exception types
         var error = new Exception();
+#pragma warning restore CA2201 // Do not raise reserved exception types
 
         provider.InitialLoad();
         Assert.Equal(1, callCount);
@@ -1653,8 +1660,12 @@ public class DataSourceProviderTests
         };
         ((INotifyPropertyChanged)provider).PropertyChanged += handler;
 
+#pragma warning disable CA2201 // Do not raise reserved exception types
         var error1 = new Exception();
+#pragma warning restore CA2201 // Do not raise reserved exception types
+#pragma warning disable CA2201 // Do not raise reserved exception types
         var error2 = new Exception();
+#pragma warning restore CA2201 // Do not raise reserved exception types
 
         // Call.
         newData = new object();
@@ -1818,7 +1829,9 @@ public class DataSourceProviderTests
         {
             try
             { 
+#pragma warning disable CA2201 // Do not raise reserved exception types
                 provider.OnQueryFinished(new object(), new Exception(), e => e, new object());
+#pragma warning restore CA2201 // Do not raise reserved exception types
                 success = true;
             }
             catch

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Reflection;
 using System.Windows.Threading;
@@ -43,8 +42,10 @@ public class WeakEventManagerTests : WeakEventManager
     [Fact]
     public void Item_Get_ReturnsExpected()
     {
-        var manager = new SubWeakEventManager();
-        manager.StartListeningAction = (source) => {};
+        var manager = new SubWeakEventManager
+        {
+            StartListeningAction = (source) => { }
+        };
 
         var source = new object();
         var listener = new CustomWeakEventListener();
@@ -68,8 +69,10 @@ public class WeakEventManagerTests : WeakEventManager
     [MemberData(nameof(Item_GetNoSuchSource_TestData))]
     public void Item_GetNoSuchSourceNotEmpty_ReturnsExpected(object source)
     {
-        var manager = new SubWeakEventManager();
-        manager.StartListeningAction = (source) => {};
+        var manager = new SubWeakEventManager
+        {
+            StartListeningAction = (source) => { }
+        };
 
         manager.ProtectedAddListener(new object(), new CustomWeakEventListener());
         Assert.Null(manager[source]);
@@ -142,27 +145,33 @@ public class WeakEventManagerTests : WeakEventManager
     [MemberData(nameof(DeliverEvent_TestData))]
     public void DeliverEvent_InvokeWithListeners_Success(EventArgs args)
     {
-        var manager = new SubWeakEventManager();
-        manager.StartListeningAction = (source) => {};
+        var manager = new SubWeakEventManager
+        {
+            StartListeningAction = (source) => { }
+        };
         var source = new object();
         var events = new List<string>();
-        var listener1 = new CustomWeakEventListener();
-        listener1.ReceiveWeakEventAction = (t, s, e) =>
+        var listener1 = new CustomWeakEventListener
+        {
+            ReceiveWeakEventAction = (t, s, e) =>
         {
             Assert.Same(typeof(SubWeakEventManager), t);
             Assert.Same(source, s);
             Assert.Same(args, e);
             events.Add("listener1");
             return true;
+        }
         };
-        var listener2 = new CustomWeakEventListener();
-        listener2.ReceiveWeakEventAction = (t, s, e) =>
+        var listener2 = new CustomWeakEventListener
+        {
+            ReceiveWeakEventAction = (t, s, e) =>
         {
             Assert.Same(typeof(SubWeakEventManager), t);
             Assert.Same(source, s);
             Assert.Same(args, e);
             events.Add("listener2");
             return true;
+        }
         };
         manager.ProtectedAddListener(source, listener1);
         manager.ProtectedAddListener(source, listener2);
@@ -175,23 +184,29 @@ public class WeakEventManagerTests : WeakEventManager
     [MemberData(nameof(DeliverEvent_TestData))]
     public void DeliverEvent_InvokeWithHandlers_Success(EventArgs args)
     {
-        var manager = new SubWeakEventManager();
-        manager.StartListeningAction = (source) => {};
+        var manager = new SubWeakEventManager
+        {
+            StartListeningAction = (source) => { }
+        };
         var source = new object();
         var events = new List<string>();
-        var listener1 = new CustomWeakEventListener();
-        listener1.HandlerAction = (s, e) =>
+        var listener1 = new CustomWeakEventListener
+        {
+            HandlerAction = (s, e) =>
         {
             Assert.Same(source, s);
             Assert.Same(args, e);
             events.Add("handler1");
+        }
         };
-        var listener2 = new CustomWeakEventListener();
-        listener2.HandlerAction = (s, e) =>
+        var listener2 = new CustomWeakEventListener
+        {
+            HandlerAction = (s, e) =>
         {
             Assert.Same(source, s);
             Assert.Same(args, e);
             events.Add("handler2");
+        }
         };
         Delegate handler1 = Delegate.CreateDelegate(typeof(EventHandler), listener1, nameof(CustomWeakEventListener.Handler));
         Delegate handler2 = Delegate.CreateDelegate(typeof(EventHandler), listener2, nameof(CustomWeakEventListener.Handler));
@@ -207,41 +222,51 @@ public class WeakEventManagerTests : WeakEventManager
     [MemberData(nameof(DeliverEvent_TestData))]
     public void DeliverEvent_InvokeWithListenersAndHandlers_Success(EventArgs args)
     {
-        var manager = new SubWeakEventManager();
-        manager.StartListeningAction = (source) => {};
+        var manager = new SubWeakEventManager
+        {
+            StartListeningAction = (source) => { }
+        };
         var source = new object();
         var events = new List<string>();
-        var listener1 = new CustomWeakEventListener();
-        listener1.HandlerAction = (s, e) =>
+        var listener1 = new CustomWeakEventListener
+        {
+            HandlerAction = (s, e) =>
         {
             Assert.Same(source, s);
             Assert.Same(args, e);
             events.Add("handler1");
+        }
         };
-        var listener2 = new CustomWeakEventListener();
-        listener2.ReceiveWeakEventAction = (t, s, e) =>
+        var listener2 = new CustomWeakEventListener
+        {
+            ReceiveWeakEventAction = (t, s, e) =>
         {
             Assert.Same(typeof(SubWeakEventManager), t);
             Assert.Same(source, s);
             Assert.Same(args, e);
             events.Add("listener1");
             return true;
+        }
         };
-        var listener3 = new CustomWeakEventListener();
-        listener3.HandlerAction = (s, e) =>
+        var listener3 = new CustomWeakEventListener
+        {
+            HandlerAction = (s, e) =>
         {
             Assert.Same(source, s);
             Assert.Same(args, e);
             events.Add("handler2");
+        }
         };
-        var listener4 = new CustomWeakEventListener();
-        listener4.ReceiveWeakEventAction = (t, s, e) =>
+        var listener4 = new CustomWeakEventListener
+        {
+            ReceiveWeakEventAction = (t, s, e) =>
         {
             Assert.Same(typeof(SubWeakEventManager), t);
             Assert.Same(source, s);
             Assert.Same(args, e);
             events.Add("listener2");
             return true;
+        }
         };
         Delegate handler1 = Delegate.CreateDelegate(typeof(EventHandler), listener1, nameof(CustomWeakEventListener.Handler));
         Delegate handler2 = Delegate.CreateDelegate(typeof(EventHandler), listener3, nameof(CustomWeakEventListener.Handler));
@@ -258,28 +283,34 @@ public class WeakEventManagerTests : WeakEventManager
     [MemberData(nameof(DeliverEvent_TestData))]
     public void DeliverEvent_InvokeMultipleSources_Success(EventArgs args)
     {
-        var manager = new SubWeakEventManager();
-        manager.StartListeningAction = (source) => {};
+        var manager = new SubWeakEventManager
+        {
+            StartListeningAction = (source) => { }
+        };
         var source1 = new object();
         var source2 = new object();
         var events = new List<string>();
-        var listener1 = new CustomWeakEventListener();
-        listener1.ReceiveWeakEventAction = (t, s, e) =>
+        var listener1 = new CustomWeakEventListener
+        {
+            ReceiveWeakEventAction = (t, s, e) =>
         {
             Assert.Same(typeof(SubWeakEventManager), t);
             Assert.Same(source1, s);
             Assert.Same(args, e);
             events.Add("listener1");
             return true;
+        }
         };
-        var listener2 = new CustomWeakEventListener();
-        listener2.ReceiveWeakEventAction = (t, s, e) =>
+        var listener2 = new CustomWeakEventListener
+        {
+            ReceiveWeakEventAction = (t, s, e) =>
         {
             Assert.Same(typeof(SubWeakEventManager), t);
             Assert.Same(source2, s);
             Assert.Same(args, e);
             events.Add("listener2");
             return true;
+        }
         };
         manager.ProtectedAddListener(source1, listener1);
         manager.ProtectedAddListener(source2, listener2);
@@ -295,8 +326,10 @@ public class WeakEventManagerTests : WeakEventManager
     [MemberData(nameof(DeliverEvent_TestData))]
     public void DeliverEvent_InvokeWithInvalidHandlerAction_ThrowsInvalidCastException(EventArgs args)
     {
-        var manager = new SubWeakEventManager();
-        manager.StartListeningAction = (source) => {};
+        var manager = new SubWeakEventManager
+        {
+            StartListeningAction = (source) => { }
+        };
         var source = new object();
         Delegate handler = () => {};
         manager.ProtectedAddHandler(source, handler);
@@ -308,10 +341,12 @@ public class WeakEventManagerTests : WeakEventManager
     [MemberData(nameof(DeliverEvent_TestData))]
     public void DeliverEvent_InvokeWithInvalidHandlerFunc_ThrowsInvalidCastException(EventArgs args)
     {
-        var manager = new SubWeakEventManager();
-        manager.StartListeningAction = (source) => {};
+        var manager = new SubWeakEventManager
+        {
+            StartListeningAction = (source) => { }
+        };
         var source = new object();
-        bool EventHandler(object sender, EventArgs args) => true;
+        static bool EventHandler(object sender, EventArgs args) => true;
         manager.ProtectedAddHandler(source, EventHandler);
 
         Assert.Throws<InvalidCastException>(() => manager.DeliverEvent(source, args));
@@ -321,8 +356,10 @@ public class WeakEventManagerTests : WeakEventManager
     [MemberData(nameof(DeliverEvent_TestData))]
     public void DeliverEvent_InvokeWithInvalidHandlerGenericEventArgs_ThrowsInvalidCastException(EventArgs args)
     {
-        var manager = new SubWeakEventManager();
-        manager.StartListeningAction = (source) => {};
+        var manager = new SubWeakEventManager
+        {
+            StartListeningAction = (source) => { }
+        };
         var source = new object();
         var target = new CustomWeakEventListener();
         Delegate handler = Delegate.CreateDelegate(typeof(EventHandler<EventArgs>), target, nameof(CustomWeakEventListener.Handler));
@@ -344,15 +381,19 @@ public class WeakEventManagerTests : WeakEventManager
     [MemberData(nameof(DeliverEvent_TestData))]
     public void DeliverEvent_InvokeNotEmptyNoSuchSource_Success(EventArgs args)
     {
-        var manager = new SubWeakEventManager();
-        manager.StartListeningAction = (source) => {};
+        var manager = new SubWeakEventManager
+        {
+            StartListeningAction = (source) => { }
+        };
         var source1 = new object();
         var events = new List<string>();
-        var listener = new CustomWeakEventListener();
-        listener.ReceiveWeakEventAction = (t, s, e) =>
+        var listener = new CustomWeakEventListener
+        {
+            ReceiveWeakEventAction = (t, s, e) =>
         {
             events.Add("listener1");
             return true;
+        }
         };
         manager.ProtectedAddListener(source1, listener);
 
@@ -399,23 +440,27 @@ public class WeakEventManagerTests : WeakEventManager
 
         var list = new ListenerList();
         var events = new List<string>();
-        var listener1 = new CustomWeakEventListener();
-        listener1.ReceiveWeakEventAction = (t, s, e) =>
+        var listener1 = new CustomWeakEventListener
+        {
+            ReceiveWeakEventAction = (t, s, e) =>
         {
             Assert.Equal(typeof(SubWeakEventManager), t);
             Assert.Same(sender, s);
             Assert.Same(args, e);
             events.Add("listener1");
             return true;
+        }
         };
-        var listener2 = new CustomWeakEventListener();
-        listener2.ReceiveWeakEventAction = (t, s, e) =>
+        var listener2 = new CustomWeakEventListener
+        {
+            ReceiveWeakEventAction = (t, s, e) =>
         {
             Assert.Equal(typeof(SubWeakEventManager), t);
             Assert.Same(sender, s);
             Assert.Same(args, e);
             events.Add("listener2");
             return true;
+        }
         };
         list.Add(listener1);
         list.Add(listener2);
@@ -432,19 +477,23 @@ public class WeakEventManagerTests : WeakEventManager
 
         var list = new ListenerList();
         var events = new List<string>();
-        var listener1 = new CustomWeakEventListener();
-        listener1.HandlerAction = (s, e) =>
+        var listener1 = new CustomWeakEventListener
+        {
+            HandlerAction = (s, e) =>
         {
             Assert.Same(sender, s);
             Assert.Same(args, e);
             events.Add("handler1");
+        }
         };
-        var listener2 = new CustomWeakEventListener();
-        listener2.HandlerAction = (s, e) =>
+        var listener2 = new CustomWeakEventListener
+        {
+            HandlerAction = (s, e) =>
         {
             Assert.Same(sender, s);
             Assert.Same(args, e);
             events.Add("handler2");
+        }
         };
         Delegate handler1 = Delegate.CreateDelegate(typeof(EventHandler), listener1, nameof(CustomWeakEventListener.Handler));
         Delegate handler2 = Delegate.CreateDelegate(typeof(EventHandler), listener2, nameof(CustomWeakEventListener.Handler));
@@ -463,37 +512,45 @@ public class WeakEventManagerTests : WeakEventManager
 
         var list = new ListenerList();
         var events = new List<string>();
-        var listener1 = new CustomWeakEventListener();
-        listener1.HandlerAction = (s, e) =>
+        var listener1 = new CustomWeakEventListener
+        {
+            HandlerAction = (s, e) =>
         {
             Assert.Same(sender, s);
             Assert.Same(args, e);
             events.Add("handler1");
+        }
         };
-        var listener2 = new CustomWeakEventListener();
-        listener2.ReceiveWeakEventAction = (t, s, e) =>
+        var listener2 = new CustomWeakEventListener
+        {
+            ReceiveWeakEventAction = (t, s, e) =>
         {
             Assert.Equal(typeof(SubWeakEventManager), t);
             Assert.Same(sender, s);
             Assert.Same(args, e);
             events.Add("listener1");
             return true;
+        }
         };
-        var listener3 = new CustomWeakEventListener();
-        listener3.HandlerAction = (s, e) =>
+        var listener3 = new CustomWeakEventListener
+        {
+            HandlerAction = (s, e) =>
         {
             Assert.Same(sender, s);
             Assert.Same(args, e);
             events.Add("handler2");
+        }
         };
-        var listener4 = new CustomWeakEventListener();
-        listener4.ReceiveWeakEventAction = (t, s, e) =>
+        var listener4 = new CustomWeakEventListener
+        {
+            ReceiveWeakEventAction = (t, s, e) =>
         {
             Assert.Equal(typeof(SubWeakEventManager), t);
             Assert.Same(sender, s);
             Assert.Same(args, e);
             events.Add("listener2");
             return true;
+        }
         };
         Delegate handler1 = Delegate.CreateDelegate(typeof(EventHandler), listener1, nameof(CustomWeakEventListener.Handler));
         Delegate handler2 = Delegate.CreateDelegate(typeof(EventHandler), listener3, nameof(CustomWeakEventListener.Handler));
@@ -562,7 +619,7 @@ public class WeakEventManagerTests : WeakEventManager
         var manager = new SubWeakEventManager();
 
         var list = new ListenerList();
-        bool EventHandler(object sender, EventArgs args) => true;
+        static bool EventHandler(object sender, EventArgs args) => true;
         list.AddHandler(EventHandler);
 
         Assert.Throws<InvalidCastException>(() => manager.DeliverEventToList(sender, args, list));
@@ -610,11 +667,13 @@ public class WeakEventManagerTests : WeakEventManager
         
         var list = new CustomListenerList();
         var events = new List<string>();
-        var listener = new CustomWeakEventListener();
-        listener.ReceiveWeakEventAction = (t, s, e) =>
+        var listener = new CustomWeakEventListener
+        {
+            ReceiveWeakEventAction = (t, s, e) =>
         {
             events.Add("listener1");
             return true;
+        }
         };
         list.Add(listener);
         int deliverEventCallCount = 0;
@@ -647,11 +706,13 @@ public class WeakEventManagerTests : WeakEventManager
 
         var list = new CustomListenerList();
         var events = new List<string>();
-        var listener = new CustomWeakEventListener();
-        listener.ReceiveWeakEventAction = (t, s, e) =>
+        var listener = new CustomWeakEventListener
+        {
+            ReceiveWeakEventAction = (t, s, e) =>
         {
             events.Add("listener1");
             return true;
+        }
         };
         list.Add(listener);
         int deliverEventCallCount = 0;
@@ -3054,7 +3115,6 @@ public class WeakEventManagerTests : WeakEventManager
             Assert.True(list.IsEmpty);
 
             // Invoke again.
-            ListenerList newList = list;
             Assert.False(ListenerList.PrepareForWriting(ref list));
             Assert.NotSame(originalList, list);
             Assert.Equal(0, list.Count);
@@ -3101,7 +3161,6 @@ public class WeakEventManagerTests : WeakEventManager
             Assert.True(list.IsEmpty);
 
             // Invoke again.
-            ListenerList newList = list;
             Assert.False(ListenerList.PrepareForWriting(ref list));
             Assert.Same(originalList, list);
             Assert.Equal(0, list.Count);
@@ -3196,7 +3255,6 @@ public class WeakEventManagerTests : WeakEventManager
             Assert.Same(listener2, list[1]);
 
             // Invoke again.
-            ListenerList newList = list;
             Assert.False(ListenerList.PrepareForWriting(ref list));
             Assert.Same(originalList, list);
             Assert.Equal(2, list.Count);
@@ -3302,7 +3360,6 @@ public class WeakEventManagerTests : WeakEventManager
         {
             var list = new SubListenerList(capacity);
             var listener1 = new CustomWeakEventListener();
-            var listener2 = new CustomWeakEventListener();
             list.Add(listener1);
             Assert.Same(listener1, list[0]);
         }
@@ -4247,23 +4304,27 @@ public class WeakEventManagerTests : WeakEventManager
         {
             var list = new SubListenerList();
             var events = new List<string>();
-            var listener1 = new CustomWeakEventListener();
-            listener1.ReceiveWeakEventAction = (t, s, e) =>
+            var listener1 = new CustomWeakEventListener
             {
-                Assert.Same(managerType, t);
-                Assert.Same(sender, s);
-                Assert.Same(args, e);
-                events.Add("listener1");
-                return true;
+                ReceiveWeakEventAction = (t, s, e) =>
+                {
+                    Assert.Same(managerType, t);
+                    Assert.Same(sender, s);
+                    Assert.Same(args, e);
+                    events.Add("listener1");
+                    return true;
+                }
             };
-            var listener2 = new CustomWeakEventListener();
-            listener2.ReceiveWeakEventAction = (t, s, e) =>
+            var listener2 = new CustomWeakEventListener
             {
-                Assert.Same(managerType, t);
-                Assert.Same(sender, s);
-                Assert.Same(args, e);
-                events.Add("listener2");
-                return true;
+                ReceiveWeakEventAction = (t, s, e) =>
+                {
+                    Assert.Same(managerType, t);
+                    Assert.Same(sender, s);
+                    Assert.Same(args, e);
+                    events.Add("listener2");
+                    return true;
+                }
             };
             list.Add(listener1);
             list.Add(listener2);
@@ -4278,19 +4339,23 @@ public class WeakEventManagerTests : WeakEventManager
         {
             var list = new SubListenerList();
             var events = new List<string>();
-            var listener1 = new CustomWeakEventListener();
-            listener1.HandlerAction = (s, e) =>
+            var listener1 = new CustomWeakEventListener
             {
-                Assert.Same(sender, s);
-                Assert.Same(args, e);
-                events.Add("handler1");
+                HandlerAction = (s, e) =>
+                {
+                    Assert.Same(sender, s);
+                    Assert.Same(args, e);
+                    events.Add("handler1");
+                }
             };
-            var listener2 = new CustomWeakEventListener();
-            listener2.HandlerAction = (s, e) =>
+            var listener2 = new CustomWeakEventListener
+            {
+                HandlerAction = (s, e) =>
             {
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("handler2");
+            }
             };
             Delegate handler1 = Delegate.CreateDelegate(typeof(EventHandler), listener1, nameof(CustomWeakEventListener.Handler));
             Delegate handler2 = Delegate.CreateDelegate(typeof(EventHandler), listener2, nameof(CustomWeakEventListener.Handler));
@@ -4307,37 +4372,45 @@ public class WeakEventManagerTests : WeakEventManager
         {
             var list = new SubListenerList();
             var events = new List<string>();
-            var listener1 = new CustomWeakEventListener();
-            listener1.HandlerAction = (s, e) =>
+            var listener1 = new CustomWeakEventListener
+            {
+                HandlerAction = (s, e) =>
             {
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("handler1");
+            }
             };
-            var listener2 = new CustomWeakEventListener();
-            listener2.ReceiveWeakEventAction = (t, s, e) =>
+            var listener2 = new CustomWeakEventListener
+            {
+                ReceiveWeakEventAction = (t, s, e) =>
             {
                 Assert.Same(managerType, t);
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("listener1");
                 return true;
+            }
             };
-            var listener3 = new CustomWeakEventListener();
-            listener3.HandlerAction = (s, e) =>
+            var listener3 = new CustomWeakEventListener
+            {
+                HandlerAction = (s, e) =>
             {
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("handler2");
+            }
             };
-            var listener4 = new CustomWeakEventListener();
-            listener4.ReceiveWeakEventAction = (t, s, e) =>
+            var listener4 = new CustomWeakEventListener
+            {
+                ReceiveWeakEventAction = (t, s, e) =>
             {
                 Assert.Same(managerType, t);
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("listener2");
                 return true;
+            }
             };
             Delegate handler1 = Delegate.CreateDelegate(typeof(EventHandler), listener1, nameof(CustomWeakEventListener.Handler));
             Delegate handler2 = Delegate.CreateDelegate(typeof(EventHandler), listener3, nameof(CustomWeakEventListener.Handler));
@@ -4400,7 +4473,7 @@ public class WeakEventManagerTests : WeakEventManager
         public void DeliverEvent_InvokeWithInvalidHandlerFunc_ThrowsInvalidCastException(object sender, EventArgs args, Type managerType)
         {
             var list = new SubListenerList();
-            bool EventHandler(object sender, EventArgs args) => true;
+            static bool EventHandler(object sender, EventArgs args) => true;
             list.AddHandler(EventHandler);
 
             Assert.Throws<InvalidCastException>(() => list.DeliverEvent(sender, args, managerType));
@@ -5727,23 +5800,27 @@ public class WeakEventManagerTests : WeakEventManager
         {
             var list = new SubListenerList<EventArgs>();
             var events = new List<string>();
-            var listener1 = new CustomWeakEventListener();
-            listener1.ReceiveWeakEventAction = (t, s, e) =>
+            var listener1 = new CustomWeakEventListener
+            {
+                ReceiveWeakEventAction = (t, s, e) =>
             {
                 Assert.Same(managerType, t);
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("listener1");
                 return true;
+            }
             };
-            var listener2 = new CustomWeakEventListener();
-            listener2.ReceiveWeakEventAction = (t, s, e) =>
+            var listener2 = new CustomWeakEventListener
+            {
+                ReceiveWeakEventAction = (t, s, e) =>
             {
                 Assert.Same(managerType, t);
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("listener2");
                 return true;
+            }
             };
             list.Add(listener1);
             list.Add(listener2);
@@ -5758,26 +5835,32 @@ public class WeakEventManagerTests : WeakEventManager
         {
             var list = new SubListenerList<EventArgs>();
             var events = new List<string>();
-            var listener1 = new CustomWeakEventListener();
-            listener1.HandlerAction = (s, e) =>
+            var listener1 = new CustomWeakEventListener
+            {
+                HandlerAction = (s, e) =>
             {
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("handler1");
+            }
             };
-            var listener2 = new CustomWeakEventListener();
-            listener2.HandlerAction = (s, e) =>
+            var listener2 = new CustomWeakEventListener
+            {
+                HandlerAction = (s, e) =>
             {
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("handler2");
+            }
             };
-            var listener3 = new CustomWeakEventListener();
-            listener3.HandlerAction = (s, e) =>
+            var listener3 = new CustomWeakEventListener
+            {
+                HandlerAction = (s, e) =>
             {
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("handler3");
+            }
             };
             Delegate handler1 = Delegate.CreateDelegate(typeof(EventHandler<EventArgs>), listener1, nameof(CustomWeakEventListener.Handler));
             Delegate handler2 = Delegate.CreateDelegate(typeof(EventHandler<EventArgs>), listener2, nameof(CustomWeakEventListener.Handler));
@@ -5796,44 +5879,54 @@ public class WeakEventManagerTests : WeakEventManager
         {
             var list = new SubListenerList<EventArgs>();
             var events = new List<string>();
-            var listener1 = new CustomWeakEventListener();
-            listener1.HandlerAction = (s, e) =>
+            var listener1 = new CustomWeakEventListener
+            {
+                HandlerAction = (s, e) =>
             {
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("handler1");
+            }
             };
-            var listener2 = new CustomWeakEventListener();
-            listener2.ReceiveWeakEventAction = (t, s, e) =>
+            var listener2 = new CustomWeakEventListener
+            {
+                ReceiveWeakEventAction = (t, s, e) =>
             {
                 Assert.Same(managerType, t);
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("listener1");
                 return true;
+            }
             };
-            var listener3 = new CustomWeakEventListener();
-            listener3.HandlerAction = (s, e) =>
+            var listener3 = new CustomWeakEventListener
+            {
+                HandlerAction = (s, e) =>
             {
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("handler2");
+            }
             };
-            var listener4 = new CustomWeakEventListener();
-            listener4.ReceiveWeakEventAction = (t, s, e) =>
+            var listener4 = new CustomWeakEventListener
+            {
+                ReceiveWeakEventAction = (t, s, e) =>
             {
                 Assert.Same(managerType, t);
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("listener2");
                 return true;
+            }
             };
-            var listener5 = new CustomWeakEventListener();
-            listener5.HandlerAction = (s, e) =>
+            var listener5 = new CustomWeakEventListener
+            {
+                HandlerAction = (s, e) =>
             {
                 Assert.Same(sender, s);
                 Assert.Same(args, e);
                 events.Add("handler3");
+            }
             };
             Delegate handler1 = Delegate.CreateDelegate(typeof(EventHandler<EventArgs>), listener1, nameof(CustomWeakEventListener.Handler));
             Delegate handler2 = Delegate.CreateDelegate(typeof(EventHandler<EventArgs>), listener3, nameof(CustomWeakEventListener.Handler));
@@ -5898,7 +5991,7 @@ public class WeakEventManagerTests : WeakEventManager
         public void DeliverEvent_InvokeWithInvalidHandlerFunc_ThrowsInvalidCastException(object sender, EventArgs args, Type managerType)
         {
             var list = new SubListenerList<EventArgs>();
-            bool EventHandler(object sender, EventArgs args) => true;
+            static bool EventHandler(object sender, EventArgs args) => true;
             list.AddHandler(EventHandler);
 
             Assert.Throws<InvalidCastException>(() => list.DeliverEvent(sender, args, managerType));
@@ -6012,7 +6105,7 @@ public class WeakEventManagerTests : WeakEventManager
 
         public new void DeliverEventToList(object sender, EventArgs args, ListenerList list) => base.DeliverEventToList(sender, args, list);
 
-        public new static WeakEventManager GetCurrentManager(Type managerType) => WeakEventManager.GetCurrentManager(managerType);
+        public static new WeakEventManager GetCurrentManager(Type managerType) => WeakEventManager.GetCurrentManager(managerType);
 
         public new ListenerList NewListenerList() => base.NewListenerList();
 
@@ -6028,7 +6121,7 @@ public class WeakEventManagerTests : WeakEventManager
 
         public new void Remove(object source) => base.Remove(source);
 
-        public new static void SetCurrentManager(Type managerType, WeakEventManager? newManager) => WeakEventManager.SetCurrentManager(managerType, newManager);
+        public static new void SetCurrentManager(Type managerType, WeakEventManager? newManager) => WeakEventManager.SetCurrentManager(managerType, newManager);
 
         public new void ScheduleCleanup() => base.ScheduleCleanup();
 

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 namespace System.Windows.Input.Tests;
 
@@ -478,11 +477,11 @@ public class KeyInteropTests
     private const int VK_PAUSE = 0x13;
     private const int VK_CAPITAL = 0x14;
     private const int VK_KANA = 0x15;
-    private const int VK_HANGEUL = 0x15;
-    private const int VK_HANGUL = 0x15;
+    // private const int VK_HANGEUL = 0x15;
+    // private const int VK_HANGUL = 0x15;
     private const int VK_JUNJA = 0x17;
     private const int VK_FINAL = 0x18;
-    private const int VK_HANJA = 0x19;
+    // private const int VK_HANJA = 0x19;
     private const int VK_KANJI = 0x19;
     private const int VK_ESCAPE = 0x1B;
     private const int VK_CONVERT = 0x1C;
@@ -544,7 +543,7 @@ public class KeyInteropTests
     private const int VK_LWIN = 0x5B;
     private const int VK_RWIN = 0x5C;
     private const int VK_APPS = 0x5D;
-    private const int VK_POWER = 0x5E;
+    // private const int VK_POWER = 0x5E;
     private const int VK_SLEEP = 0x5F;
     private const int VK_NUMPAD0 = 0x60;
     private const int VK_NUMPAD1 = 0x61;
@@ -589,7 +588,7 @@ public class KeyInteropTests
     private const int VK_NUMLOCK = 0x90;
     private const int VK_SCROLL = 0x91;
     private const int VK_OEM_NEC_EQUAL = 0x92;
-    private const int VK_OEM_FJ_JISHO = 0x92;
+    // private const int VK_OEM_FJ_JISHO = 0x92;
     private const int VK_OEM_FJ_MASSHOU = 0x93;
     private const int VK_OEM_FJ_TOUROKU = 0x94;
     private const int VK_OEM_FJ_LOYA = 0x95;

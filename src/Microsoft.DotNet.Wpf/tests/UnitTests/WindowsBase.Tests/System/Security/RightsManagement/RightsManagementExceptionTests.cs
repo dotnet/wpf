@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Runtime.Serialization;
 
@@ -64,8 +63,12 @@ public class RightsManagementExceptionTests
     public static IEnumerable<object?[]> Ctor_RightsManagementFailureCode_Exception_TestData()
     {
         yield return new object?[] { RightsManagementFailureCode.Success, null };
+#pragma warning disable CA2201 // Do not raise reserved exception types
         yield return new object?[] { RightsManagementFailureCode.ServerError, new Exception() };
+#pragma warning restore CA2201 // Do not raise reserved exception types
+#pragma warning disable CA2201 // Do not raise reserved exception types
         yield return new object?[] { RightsManagementFailureCode.Success - 1, new Exception() };
+#pragma warning restore CA2201 // Do not raise reserved exception types
     }
 
     [Theory]
@@ -114,7 +117,9 @@ public class RightsManagementExceptionTests
     public static IEnumerable<object?[]> Ctor_String_Exception_TestData()
     {
         yield return new object?[] { "", null };
+#pragma warning disable CA2201 // Do not raise reserved exception types
         yield return new object?[] { "message", new Exception() };
+#pragma warning restore CA2201 // Do not raise reserved exception types
     }
 
     [Theory]
@@ -133,7 +138,9 @@ public class RightsManagementExceptionTests
     public static IEnumerable<object?[]> Ctor_String_Exception_Null_TestData()
     {
         yield return new object?[] { null };
+#pragma warning disable CA2201 // Do not raise reserved exception types
         yield return new object?[] { new Exception() };
+#pragma warning restore CA2201 // Do not raise reserved exception types
     }
 
     [Theory]
@@ -152,8 +159,12 @@ public class RightsManagementExceptionTests
     public static IEnumerable<object?[]> Ctor_RightsManagementFailureCode_String_Exception_TestData()
     {
         yield return new object?[] { RightsManagementFailureCode.Success, "", null };
+#pragma warning disable CA2201 // Do not raise reserved exception types
         yield return new object?[] { RightsManagementFailureCode.ServerError, "message", new Exception() };
+#pragma warning restore CA2201 // Do not raise reserved exception types
+#pragma warning disable CA2201 // Do not raise reserved exception types
         yield return new object?[] { RightsManagementFailureCode.Success - 1, "message", new Exception() };
+#pragma warning restore CA2201 // Do not raise reserved exception types
     }
 
     [Theory]
@@ -172,8 +183,12 @@ public class RightsManagementExceptionTests
     public static IEnumerable<object?[]> Ctor_RightsManagementFailureCode_String_Exception_Null_TestData()
     {
         yield return new object?[] { RightsManagementFailureCode.Success, null };
+#pragma warning disable CA2201 // Do not raise reserved exception types
         yield return new object?[] { RightsManagementFailureCode.ServerError, new Exception() };
+#pragma warning restore CA2201 // Do not raise reserved exception types
+#pragma warning disable CA2201 // Do not raise reserved exception types
         yield return new object?[] { RightsManagementFailureCode.Success - 1, new Exception() };
+#pragma warning restore CA2201 // Do not raise reserved exception types
     }
 
     [Theory]

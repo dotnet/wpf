@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Collections;
 using System.ComponentModel;
@@ -607,7 +606,7 @@ namespace System.Windows.Markup.Primitives.Tests.InternalClasses
 
     public class IEnumerableWrapper : IEnumerable
     {
-        private IEnumerable _enumerable;
+        private readonly IEnumerable _enumerable;
 
         public IEnumerableWrapper(IEnumerable enumerable)
         {

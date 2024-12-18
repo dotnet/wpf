@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.Globalization;
@@ -56,10 +55,11 @@ public class PointTests
     [InlineData(double.NaN)]
     public void X_Set_GetReturnsExpected(double value)
     {
-        var point = new Point();
-
-        // Set.
-        point.X = value;
+        var point = new Point
+        {
+            // Set.
+            X = value
+        };
         Assert.Equal(value, point.X);
 
         // Set same.
@@ -80,10 +80,11 @@ public class PointTests
     [InlineData(double.NaN)]
     public void Y_Set_GetReturnsExpected(double value)
     {
-        var point = new Point();
-
-        // Set.
-        point.Y = value;
+        var point = new Point
+        {
+            // Set.
+            Y = value
+        };
         Assert.Equal(value, point.Y);
 
         // Set same.

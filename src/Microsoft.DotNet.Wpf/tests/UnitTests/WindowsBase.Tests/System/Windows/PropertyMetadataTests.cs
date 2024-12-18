@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Reflection;
 
@@ -161,10 +160,11 @@ public class PropertyMetadataTests
     [InlineData(1)]
     public void DefaultValue_Set_GetReturnsExpected(object? value)
     {
-        var metadata = new PropertyMetadata();
-        
-        // Set value.
-        metadata.DefaultValue = value;
+        var metadata = new PropertyMetadata
+        {
+            // Set value.
+            DefaultValue = value
+        };
         Assert.Equal(value, metadata.DefaultValue);
 
         // Set same.
@@ -507,7 +507,7 @@ public class PropertyMetadataTests
         Assert.Throws<InvalidOperationException>(() => metadata.Merge(new PropertyMetadata(), null!));
     }
 
-    private static DependencyProperty s_property = DependencyProperty.Register(nameof(PropertyMetadataTests), typeof(string), typeof(DependencyObject));
+    private static readonly DependencyProperty s_property = DependencyProperty.Register(nameof(PropertyMetadataTests), typeof(string), typeof(DependencyObject));
 
     public static IEnumerable<object?[]> OnApply_TestData()
     {

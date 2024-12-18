@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 namespace System.ComponentModel.Tests;
 
@@ -29,10 +28,11 @@ public class CurrentChangingEventArgsTests
     [InlineData(false)]
     public void Cancel_Set_GetReturnsExpected(bool value)
     {
-        var args = new CurrentChangingEventArgs();
-
-        // Set.
-        args.Cancel = value;
+        var args = new CurrentChangingEventArgs
+        {
+            // Set.
+            Cancel = value
+        };
         Assert.Equal(value, args.Cancel);
 
         // Set same.
@@ -47,10 +47,11 @@ public class CurrentChangingEventArgsTests
     [Fact]
     public void Cancel_SetFalseNotCancellable_Success()
     {
-        var args = new CurrentChangingEventArgs(false);
-
-        // Set.
-        args.Cancel = false;
+        var args = new CurrentChangingEventArgs(false)
+        {
+            // Set.
+            Cancel = false
+        };
         Assert.False(args.Cancel);
     }
 

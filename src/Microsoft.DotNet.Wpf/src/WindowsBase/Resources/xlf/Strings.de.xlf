@@ -827,26 +827,6 @@
         <target state="translated">Teil-URI ist gemäß den in den Open Packaging-Konventionen definierten Regeln ungültig.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionLevel">
-        <source>Permission level is not valid.</source>
-        <target state="translated">Ungültige Berechtigungsebene.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionState">
-        <source>Permission state is not valid.</source>
-        <target state="translated">Ungültiger Berechtigungszustand.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">Der PermissionState-Wert "{0}" ist für diese Berechtigung nicht gültig.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Ungültiger Berechtigungstyp. Erwartet wurde "{0}".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPriority">
         <source>Specified priority is not valid.</source>
         <target state="translated">Die angegebene Priorität ist ungültig.</target>
@@ -2240,16 +2220,6 @@
       <trans-unit id="StringEmpty">
         <source>Parameter cannot be a zero-length string.</source>
         <target state="translated">Der Parameter darf keine Zeichenfolge mit der Länge Null sein.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TargetNotMediaPermissionLevel">
-        <source>Target is not a MediaPermission.</source>
-        <target state="translated">Das Ziel ist kein MediaPermission-Objekt.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="TargetNotWebBrowserPermissionLevel">
-        <source>Target is not a WebBrowserPermission.</source>
-        <target state="translated">Das Ziel ist kein WebBrowserPermission-Objekt.</target>
         <note />
       </trans-unit>
       <trans-unit id="ThreadMayNotWaitOnOperationsAlreadyExecutingOnTheSameThread">

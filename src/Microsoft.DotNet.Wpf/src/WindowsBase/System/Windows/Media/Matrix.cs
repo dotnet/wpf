@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using MS.Internal;
 
@@ -44,6 +43,24 @@ namespace System.Windows.Media
     ///</summary>
     public partial struct Matrix: IFormattable
     {
+        internal double _m11;
+        internal double _m12;
+        internal double _m21;
+        internal double _m22;
+        internal double _offsetX;
+        internal double _offsetY;
+        internal MatrixTypes _type;
+
+        // This field is only used by unmanaged code which isn't detected by the compiler.
+#pragma warning disable 0414
+        // Matrix in blt'd to unmanaged code, so this is padding 
+        // to align structure.
+        //
+        // Testing note: Validate that this blt will work on 64-bit
+        //
+        internal int _padding;
+#pragma warning restore 0414
+
         // the transform is identity by default
         // Actually fill in the fields - some (internal) code uses the fields directly for perf.
         private static Matrix s_identity = CreateIdentity();
@@ -60,12 +77,12 @@ namespace System.Windows.Media
                       double m21, double m22,
                       double offsetX, double offsetY)
         {
-            this._m11 = m11;
-            this._m12 = m12;
-            this._m21 = m21;
-            this._m22 = m22;
-            this._offsetX = offsetX;
-            this._offsetY = offsetY;
+            _m11 = m11;
+            _m12 = m12;
+            _m21 = m21;
+            _m22 = m22;
+            _offsetX = offsetX;
+            _offsetY = offsetY;
             _type = MatrixTypes.TRANSFORM_IS_UNKNOWN;
             _padding = 0;
 
@@ -334,7 +351,7 @@ namespace System.Windows.Media
         public Point Transform(Point point)
         {
             Point newPoint = point;
-            MultiplyPoint(ref newPoint._x, ref newPoint._y);
+            newPoint.Transform(in this);
             return newPoint;
         }
 
@@ -348,7 +365,7 @@ namespace System.Windows.Media
             {
                 for (int i = 0; i < points.Length; i++)
                 {
-                    MultiplyPoint(ref points[i]._x, ref points[i]._y);
+                    points[i].Transform(ref this);
                 }
             }
         }
@@ -363,7 +380,7 @@ namespace System.Windows.Media
         public Vector Transform(Vector vector)
         {
             Vector newVector = vector;
-            MultiplyVector(ref newVector._x, ref newVector._y);
+            newVector.Transform(in this);
             return newVector;
         }
 
@@ -377,7 +394,7 @@ namespace System.Windows.Media
             {
                 for (int i = 0; i < vectors.Length; i++)
                 {
-                    MultiplyVector(ref vectors[i]._x, ref vectors[i]._y);
+                    vectors[i].Transform(in this);
                 }
             }
         }
@@ -690,62 +707,62 @@ namespace System.Windows.Media
 
         #region Internal Methods
         /// <summary>
-        /// MultiplyVector
+        ///  Multiply Vector
         /// </summary>
-        internal void MultiplyVector(ref double x, ref double y)
+        internal readonly void MultiplyVector(ref double x, ref double y)
         {
             switch (_type)
             {
-            case MatrixTypes.TRANSFORM_IS_IDENTITY:
-            case MatrixTypes.TRANSFORM_IS_TRANSLATION:
-                return;
-            case MatrixTypes.TRANSFORM_IS_SCALING:
-            case MatrixTypes.TRANSFORM_IS_SCALING | MatrixTypes.TRANSFORM_IS_TRANSLATION:
-                x *= _m11;
-                y *= _m22;
-                break;
-            default:
-                double xadd = y * _m21;
-                double yadd = x * _m12;
-                x *= _m11;
-                x += xadd;
-                y *= _m22;
-                y += yadd;
-                break;
+                case MatrixTypes.TRANSFORM_IS_IDENTITY:
+                case MatrixTypes.TRANSFORM_IS_TRANSLATION:
+                    return;
+                case MatrixTypes.TRANSFORM_IS_SCALING:
+                case MatrixTypes.TRANSFORM_IS_SCALING | MatrixTypes.TRANSFORM_IS_TRANSLATION:
+                    x *= _m11;
+                    y *= _m22;
+                    break;
+                default:
+                    double xadd = y * _m21;
+                    double yadd = x * _m12;
+                    x *= _m11;
+                    x += xadd;
+                    y *= _m22;
+                    y += yadd;
+                    break;
             }
         }
 
         /// <summary>
         /// MultiplyPoint
         /// </summary>
-        internal void MultiplyPoint(ref double x, ref double y)
+        internal readonly void MultiplyPoint(ref double x, ref double y)
         {
             switch (_type)
             {
-            case MatrixTypes.TRANSFORM_IS_IDENTITY:
-                return;
-            case MatrixTypes.TRANSFORM_IS_TRANSLATION:
-                x += _offsetX;
-                y += _offsetY;
-                return;
-            case MatrixTypes.TRANSFORM_IS_SCALING:
-                x *= _m11;
-                y *= _m22;
-                return;
-            case MatrixTypes.TRANSFORM_IS_SCALING | MatrixTypes.TRANSFORM_IS_TRANSLATION:
-                x *= _m11;
-                x += _offsetX;
-                y *= _m22;
-                y += _offsetY;
-                break;
-            default:
-                double xadd = y * _m21 + _offsetX;
-                double yadd = x * _m12 + _offsetY;
-                x *= _m11;
-                x += xadd;
-                y *= _m22;
-                y += yadd;
-                break;
+                case MatrixTypes.TRANSFORM_IS_IDENTITY:
+                    return;
+                case MatrixTypes.TRANSFORM_IS_TRANSLATION:
+                    x += _offsetX;
+                    y += _offsetY;
+                    return;
+                case MatrixTypes.TRANSFORM_IS_SCALING:
+                    x *= _m11;
+                    y *= _m22;
+                    return;
+                case MatrixTypes.TRANSFORM_IS_SCALING | MatrixTypes.TRANSFORM_IS_TRANSLATION:
+                    x *= _m11;
+                    x += _offsetX;
+                    y *= _m22;
+                    y += _offsetY;
+                    break;
+                default:
+                    double xadd = y * _m21 + _offsetX;
+                    double yadd = x * _m12 + _offsetY;
+                    x *= _m11;
+                    x += xadd;
+                    y *= _m22;
+                    y += yadd;
+                    break;
             }
         }
 
@@ -877,13 +894,13 @@ namespace System.Windows.Media
                                double offsetX, double offsetY,
                                MatrixTypes type)
         {
-            this._m11 = m11;
-            this._m12 = m12;
-            this._m21 = m21;
-            this._m22 = m22;
-            this._offsetX = offsetX;
-            this._offsetY = offsetY;
-            this._type = type;
+            _m11 = m11;
+            _m12 = m12;
+            _m21 = m21;
+            _m22 = m22;
+            _offsetX = offsetX;
+            _offsetY = offsetY;
+            _type = type;
         }
 
         /// <summary>
@@ -954,7 +971,7 @@ namespace System.Windows.Media
         }
 
 #endregion Private Methods
-    
+
 #region Private Properties and Fields
 
         /// <summary>
@@ -973,25 +990,6 @@ namespace System.Windows.Media
         // The hash code for a matrix is the xor of its element's hashes.
         // Since the identity matrix has 2 1's and 4 0's its hash is 0.
         private const int c_identityHashCode = 0;
-    
 #endregion Private Properties and Fields
-
-        internal double _m11;
-        internal double _m12;
-        internal double _m21;
-        internal double _m22;
-        internal double _offsetX;
-        internal double _offsetY;
-        internal MatrixTypes _type;
-
-// This field is only used by unmanaged code which isn't detected by the compiler.
-#pragma warning disable 0414
-        // Matrix in blt'd to unmanaged code, so this is padding 
-        // to align structure.
-        //
-        // Testing note: Validate that this blt will work on 64-bit
-        //
-        internal Int32 _padding;
-#pragma warning restore 0414
     }
 }

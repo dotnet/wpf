@@ -1,0 +1,25 @@
+# Tests to add
+- System.ComponentModel.DependencyPropertyDescriptor
+- System.IO.Packaging.EncryptedPackageEnvelope
+- System.IO.Packaging.PackageDigitalSignature
+- System.IO.Packaging.PackageDigitalSignatureManager
+- System.IO.Packaging.RightsManagementInformation
+- System.Security.RightsManagement.CryptoProvider
+- System.Security.RightsManagement.PublishLicense
+- System.Security.RightsManagement.SecureEnvironment
+- System.Security.RightsManagement.UnsignedPublishLicense
+- System.Security.RightsManagement.UseLicense
+- System.Windows.Interop.ComponentDispatcher
+- System.Windows.Threading.Dispatcher
+- System.Windows.Threading.DispatcherEventArgs
+- System.Windows.Threading.DispatcherUnhandledExceptionEventArgs
+- System.Windows.Threading.DispatcherUnhandledExceptionFilterEventArgs
+- System.Windows.Threading.DispatcherFrame
+- System.Windows.Threading.DispatcherHooks
+- System.Windows.Threading.DispatcherOperation
+- System.Windows.Threading.DispatcherSynchronizationContext
+- System.Windows.Threading.DispatcherTimer
+- System.Windows.AttachedPropertyBrowsableForTypeAttribute
+- System.Windows.AttachedPropertyBrowsableWhenAttributePresentAttribute
+- System.Windows.DependencyProperty
+- System.Windows.SplashScreen

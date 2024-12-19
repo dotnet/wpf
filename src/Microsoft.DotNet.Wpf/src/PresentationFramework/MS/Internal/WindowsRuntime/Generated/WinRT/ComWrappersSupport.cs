@@ -61,7 +61,7 @@ namespace WinRT
 
             Type type = o.GetType();
             ObjectReferenceWrapperAttribute objRefWrapper = type.GetCustomAttribute<ObjectReferenceWrapperAttribute>();
-            if (objRefWrapper is object)
+            if (objRefWrapper is not null)
             {
                 objRef = (IObjectReference)type.GetField(objRefWrapper.ObjectReferenceField, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly).GetValue(o);
                 return true;
@@ -69,7 +69,7 @@ namespace WinRT
 
             ProjectedRuntimeClassAttribute projectedClass = type.GetCustomAttribute<ProjectedRuntimeClassAttribute>();
 
-            if (projectedClass is object)
+            if (projectedClass is not null)
             {
                 return TryUnwrapObject(
                     type.GetProperty(projectedClass.DefaultInterfaceProperty, BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.DeclaredOnly).GetValue(o),

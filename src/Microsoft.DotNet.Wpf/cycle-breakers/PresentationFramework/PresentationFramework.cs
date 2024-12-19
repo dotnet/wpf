@@ -405,9 +405,8 @@ namespace System.Windows
         PageRight = 2,
     }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.FigureLengthConverter))]
-    public partial struct FigureLength : System.IEquatable<System.Windows.FigureLength>
+    public readonly partial struct FigureLength : System.IEquatable<System.Windows.FigureLength>
     {
-        private int _dummyPrimitive;
         public FigureLength(double pixels) { throw null; }
         public FigureLength(double value, System.Windows.FigureUnitType type) { throw null; }
         public System.Windows.FigureUnitType FigureUnitType { get { throw null; } }

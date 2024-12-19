@@ -50,7 +50,6 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\FreezableOperations.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\PointUtil.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\MimeTypeMapper.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\Pair.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\PartialList.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\LegacyPriorityQueue.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SequentialUshortCollection.cs" />

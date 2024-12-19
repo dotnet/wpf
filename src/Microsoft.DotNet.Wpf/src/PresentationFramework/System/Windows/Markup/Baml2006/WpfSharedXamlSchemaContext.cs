@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -47,7 +47,7 @@ namespace System.Windows.Baml2006
             Type runtimeType = typeof(object).GetType();
             if (!runtimeType.IsAssignableFrom(type.GetType()))
             {
-                throw new ArgumentException(SR.Format(SR.RuntimeTypeRequired, type), "type");
+                throw new ArgumentException(SR.Format(SR.RuntimeTypeRequired, type), nameof(type));
             }
         }
 

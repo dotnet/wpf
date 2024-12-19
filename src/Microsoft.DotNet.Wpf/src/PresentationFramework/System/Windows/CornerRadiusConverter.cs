@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -134,7 +134,7 @@ namespace System.Windows
             if (!(value is CornerRadius))
             {
                 #pragma warning suppress 6506 // value is obviously not null
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(CornerRadius)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(CornerRadius)), nameof(value));
             }
 
             CornerRadius cr = (CornerRadius)value;

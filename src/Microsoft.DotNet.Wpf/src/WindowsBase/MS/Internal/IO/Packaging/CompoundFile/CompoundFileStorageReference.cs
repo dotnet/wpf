@@ -117,7 +117,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 //  it is not necessary since PathSeparatorAsString is a path symbol
                 if (fullName.StartsWith(ContainerUtilities.PathSeparatorAsString, StringComparison.Ordinal))
                     throw new ArgumentException(
-                        SR.DelimiterLeading, "fullName");
+                        SR.DelimiterLeading, nameof(fullName));
 
                 _fullName = fullName;
 
@@ -125,7 +125,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 string[] strings = ContainerUtilities.ConvertBackSlashPathToStringArrayPath(_fullName);
                 if (strings.Length == 0)
                     throw new ArgumentException (
-                        SR.CompoundFilePathNullEmpty, "fullName");
+                        SR.CompoundFilePathNullEmpty, nameof(fullName));
             }
         }
 

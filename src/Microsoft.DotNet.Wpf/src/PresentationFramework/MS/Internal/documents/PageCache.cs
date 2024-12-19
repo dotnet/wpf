@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -462,7 +462,7 @@ namespace MS.Internal.Documents
 
             if (args == null)
             {
-                throw new ArgumentOutOfRangeException("parameter");
+                throw new ArgumentOutOfRangeException(nameof(parameter));
             }
 
             //set our IsPaginationCompleted flag since we're done paginating.
@@ -503,7 +503,7 @@ namespace MS.Internal.Documents
 
             if (args == null)
             {
-                throw new ArgumentOutOfRangeException("parameter");
+                throw new ArgumentOutOfRangeException(nameof(parameter));
             }
 
             //Validate incoming parameters
@@ -586,7 +586,7 @@ namespace MS.Internal.Documents
 
             if (args == null)
             {
-                throw new ArgumentOutOfRangeException("parameter");
+                throw new ArgumentOutOfRangeException(nameof(parameter));
             }
 
             //Check to see if the page has been destroyed, and remove it from the Watcher.

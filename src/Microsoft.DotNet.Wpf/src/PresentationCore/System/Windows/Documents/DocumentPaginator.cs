@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -75,7 +75,7 @@ namespace System.Windows.Documents
             // Page number cannot be negative.
             if (pageNumber < 0)
             {
-                throw new ArgumentOutOfRangeException("pageNumber", SR.PaginatorNegativePageNumber);
+                throw new ArgumentOutOfRangeException(nameof(pageNumber), SR.PaginatorNegativePageNumber);
             }
 
             page = GetPage(pageNumber);

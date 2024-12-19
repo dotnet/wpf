@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -87,10 +87,10 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
             if (!ContainsCore(position))
             {
-                throw new ArgumentOutOfRangeException("position");
+                throw new ArgumentOutOfRangeException(nameof(position));
             }
             _owner.EnsureValidVisuals();
 
@@ -115,8 +115,8 @@ namespace MS.Internal.Documents
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
 
-            ValidationHelper.VerifyPosition(_textContainer, startPosition, "startPosition");
-            ValidationHelper.VerifyPosition(_textContainer, endPosition, "endPosition");
+            ValidationHelper.VerifyPosition(_textContainer, startPosition, nameof(startPosition));
+            ValidationHelper.VerifyPosition(_textContainer, endPosition, nameof(endPosition));
 
             _owner.EnsureValidVisuals();
 
@@ -231,10 +231,10 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
             if (!ContainsCore(position))
             {
-                throw new ArgumentOutOfRangeException("position");
+                throw new ArgumentOutOfRangeException(nameof(position));
             }
 
             _owner.EnsureValidVisuals();
@@ -282,10 +282,10 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
             if (!ContainsCore(position))
             {
-                throw new ArgumentOutOfRangeException("position");
+                throw new ArgumentOutOfRangeException(nameof(position));
             }
 
             return IsAtCaretUnitBoundary(Columns, FloatingElements, position);
@@ -301,11 +301,11 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
             ValidationHelper.VerifyDirection(direction, "direction");
             if (!ContainsCore(position))
             {
-                throw new ArgumentOutOfRangeException("position");
+                throw new ArgumentOutOfRangeException(nameof(position));
             }
 
             return GetNextCaretUnitPosition(Columns, FloatingElements, position, direction);
@@ -321,10 +321,10 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
             if (!ContainsCore(position))
             {
-                throw new ArgumentOutOfRangeException("position");
+                throw new ArgumentOutOfRangeException(nameof(position));
             }
 
             return GetBackspaceCaretUnitPosition(Columns, FloatingElements, position);
@@ -340,10 +340,10 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
             if (!ContainsCore(position))
             {
-                throw new ArgumentOutOfRangeException("position");
+                throw new ArgumentOutOfRangeException(nameof(position));
             }
 
             return GetLineRangeFromPosition(Columns, FloatingElements, position);
@@ -361,16 +361,16 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, start, "start");
-            ValidationHelper.VerifyPosition(_textContainer, end, "end");
+            ValidationHelper.VerifyPosition(_textContainer, start, nameof(start));
+            ValidationHelper.VerifyPosition(_textContainer, end, nameof(end));
             ValidationHelper.VerifyPositionPair(start, end);
             if (!ContainsCore(start))
             {
-                throw new ArgumentOutOfRangeException("start");
+                throw new ArgumentOutOfRangeException(nameof(start));
             }
             if (!ContainsCore(end))
             {
-                throw new ArgumentOutOfRangeException("end");
+                throw new ArgumentOutOfRangeException(nameof(end));
             }
 
             GetGlyphRuns(glyphRuns, start, end, Columns, FloatingElements);
@@ -388,7 +388,7 @@ namespace MS.Internal.Documents
             {
                 throw new InvalidOperationException(SR.TextViewInvalidLayout);
             }
-            ValidationHelper.VerifyPosition(_textContainer, position, "position");
+            ValidationHelper.VerifyPosition(_textContainer, position, nameof(position));
             return ContainsCore(position);
         }
 

@@ -529,7 +529,7 @@ namespace System.Windows.Ink
             {
                 // Find or create a container visual for highlighter strokes of the color
                 ContainerVisual parent = GetContainerVisual(visual.Stroke.DrawingAttributes);
-                Debug.Assert(visual is StrokeVisual);
+                Debug.Assert(visual is not null);
 
                 //insert StrokeVisuals under any non-StrokeVisuals used for dynamic inking
                 int i = 0;

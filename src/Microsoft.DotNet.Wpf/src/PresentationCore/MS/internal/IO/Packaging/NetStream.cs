@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -139,7 +139,7 @@ namespace MS.Internal.IO.Packaging
             checked
             {
                 if (offset + count > buffer.Length)
-                    throw new ArgumentException(SR.IOBufferOverflow, "buffer");
+                    throw new ArgumentException(SR.IOBufferOverflow, nameof(buffer));
 
                 // make sure some data is in the stream - block until it is
                 int bytesAvailable = GetData(new Block(_position, count));
@@ -248,7 +248,7 @@ namespace MS.Internal.IO.Packaging
 
                     default:
                         {
-                            throw new ArgumentOutOfRangeException("origin", SR.SeekOriginInvalid);
+                            throw new ArgumentOutOfRangeException(nameof(origin), SR.SeekOriginInvalid);
                         }
                 }
             }

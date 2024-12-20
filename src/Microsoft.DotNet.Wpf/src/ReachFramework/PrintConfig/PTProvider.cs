@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -234,7 +234,7 @@ namespace MS.Internal.Printing.Configuration
                                       PrintSchemaTags.Framework.PrintTicketRoot,
                                       PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed"),
                                       errorMsg),
-                                      "printTicket");
+                                      nameof(printTicket));
                     }
                     else
                     {
@@ -500,7 +500,7 @@ namespace MS.Internal.Printing.Configuration
                               PrintSchemaTags.Framework.PrintTicketRoot,
                               PTUtility.GetTextFromResource("FormatException.XMLNotWellFormed"),
                               errorMsg),
-                              "printTicket");
+                              nameof(printTicket));
             }
 
             throw new PrintQueueException((int)hResult,

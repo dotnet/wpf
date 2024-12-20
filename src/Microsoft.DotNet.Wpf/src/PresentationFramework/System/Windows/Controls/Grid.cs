@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -77,7 +77,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            throw (new ArgumentException(SR.Format(SR.Grid_UnexpectedParameterType, value.GetType(), typeof(UIElement)), "value"));
+            throw (new ArgumentException(SR.Format(SR.Grid_UnexpectedParameterType, value.GetType(), typeof(UIElement)), nameof(value)));
         }
 
         /// <summary>
@@ -317,7 +317,7 @@ namespace System.Windows.Controls
             {
                 if (_gridLinesRenderer == null)
                 {
-                    throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                    throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
                 }
                 return _gridLinesRenderer;
             }

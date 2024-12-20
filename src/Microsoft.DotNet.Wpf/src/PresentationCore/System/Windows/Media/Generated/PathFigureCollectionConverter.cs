@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -52,7 +52,7 @@ namespace System.Windows.Media
                 {
                     if (!(context.Instance is PathFigureCollection))
                     {
-                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "PathFigureCollection"), "context");
+                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "PathFigureCollection"), nameof(context));
                     }
 
                     PathFigureCollection value = (PathFigureCollection)context.Instance;

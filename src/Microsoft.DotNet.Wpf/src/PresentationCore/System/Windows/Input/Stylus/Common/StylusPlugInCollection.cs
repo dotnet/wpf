@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -169,12 +169,12 @@ namespace System.Windows.Input.StylusPlugIns
 
             if (null == plugIn)
             {
-                throw new ArgumentNullException("plugIn", SR.Stylus_PlugInIsNull);
+                throw new ArgumentNullException(nameof(plugIn), SR.Stylus_PlugInIsNull);
             }
 
             if (IndexOf(plugIn) != -1)
             {
-                throw new ArgumentException(SR.Stylus_PlugInIsDuplicated, "plugIn");
+                throw new ArgumentException(SR.Stylus_PlugInIsDuplicated, nameof(plugIn));
             }
 
             // Disable processing of the queue during blocking operations to prevent unrelated reentrancy

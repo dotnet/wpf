@@ -66,7 +66,7 @@ namespace System.Xaml.Schema
                 // Passes inherit=true for reasons explained in comment on XamlType.TryGetAttributeString
                 checkedInherited = true;
 
-                object[] attributes = CustomAttributeProvider.GetCustomAttributes(attributeType, true /*inherit*/);
+                object[] attributes = CustomAttributeProvider.GetCustomAttributes(attributeType, inherit: true);
                 if (attributes.Length == 0)
                 {
                     return null;

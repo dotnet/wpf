@@ -152,7 +152,7 @@ namespace MS.Internal.Xaml.Parser
                 if (propName.IsDotted)
                 {
                     XamlType attachedOwnerType = new XamlType(string.Empty, propName.OwnerName, null, context.SchemaContext);
-                    unknownProperty = new XamlMember(propName.Name, attachedOwnerType, true /*isAttachable*/);
+                    unknownProperty = new XamlMember(propName.Name, attachedOwnerType, isAttachable: true);
                 }
                 else
                 {

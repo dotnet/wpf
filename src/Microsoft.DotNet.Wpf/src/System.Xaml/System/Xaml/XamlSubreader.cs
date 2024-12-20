@@ -8,12 +8,12 @@ namespace System.Xaml
 {
     internal class XamlSubreader : XamlReader, IXamlLineInfo
     {
-        XamlReader _reader;
-        IXamlLineInfo _lineInfoReader;
-        bool _done;
-        bool _firstRead;
-        bool _rootIsStartMember;
-        int _depth;
+        private XamlReader _reader;
+        private IXamlLineInfo _lineInfoReader;
+        private bool _done;
+        private bool _firstRead;
+        private bool _rootIsStartMember;
+        private int _depth;
 
         public XamlSubreader(XamlReader reader)
         {

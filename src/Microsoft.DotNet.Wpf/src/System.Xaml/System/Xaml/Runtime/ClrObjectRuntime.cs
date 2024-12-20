@@ -15,7 +15,7 @@ using XAML3 = System.Windows.Markup;
 
 namespace MS.Internal.Xaml.Runtime
 {
-    class ClrObjectRuntime : XamlRuntime
+    internal class ClrObjectRuntime : XamlRuntime
     {
         private bool _ignoreCanConvert;
         private bool _isWriter;

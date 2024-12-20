@@ -8,8 +8,8 @@ namespace System.Xaml
 {
     public class AttachableMemberIdentifier : IEquatable<AttachableMemberIdentifier>
     {
-        readonly Type declaringType;
-        readonly string memberName;
+        private readonly Type declaringType;
+        private readonly string memberName;
 
         public AttachableMemberIdentifier(Type declaringType, string memberName)
         {

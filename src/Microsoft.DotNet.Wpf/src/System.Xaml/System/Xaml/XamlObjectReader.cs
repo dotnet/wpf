@@ -529,7 +529,7 @@ namespace System.Xaml
 
             static MemberMarkupInfo ForSequence(object source, XamlMember property, SerializerContext context, bool isAttachable)
             {
-                var itemsInfo = ForSequenceItems(source, isAttachable ? null : property, property.Type, context, false /*allowReadOnly*/);
+                var itemsInfo = ForSequenceItems(source, isAttachable ? null : property, property.Type, context, allowReadOnly: false);
                 if (itemsInfo is not null && itemsInfo.Children.Count != 0)
                 {
                     return new MemberMarkupInfo
@@ -1197,7 +1197,7 @@ namespace System.Xaml
                 }
                 else if (xamlType.IsCollection)
                 {
-                    propertyInfo = MemberMarkupInfo.ForSequenceItems(value, null, xamlType, context, true /*allowReadOnly*/);
+                    propertyInfo = MemberMarkupInfo.ForSequenceItems(value, null, xamlType, context, allowReadOnly: true);
                 }
 
                 if (propertyInfo is not null && propertyInfo.Children.Count != 0)
@@ -2485,7 +2485,7 @@ namespace System.Xaml
                 prefixToNamespaceMap = new Dictionary<string, string>();
                 ReferenceTable = new ReferenceTable(null);
                 this.schemaContext = schemaContext;
-                runtime = new ClrObjectRuntime(null, false /*isWriter*/);
+                runtime = new ClrObjectRuntime(null, isWriter: false);
                 this.settings = settings;
             }
 

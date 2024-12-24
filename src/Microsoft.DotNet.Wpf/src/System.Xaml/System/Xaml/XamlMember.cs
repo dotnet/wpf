@@ -45,7 +45,7 @@ namespace System.Xaml
         }
 
         public XamlMember(PropertyInfo propertyInfo, XamlSchemaContext schemaContext, XamlMemberInvoker invoker)
-            : this(propertyInfo, schemaContext, invoker, new MemberReflector(false /*isEvent*/))
+            : this(propertyInfo, schemaContext, invoker, new MemberReflector(isEvent: false))
         {
         }
 
@@ -68,7 +68,7 @@ namespace System.Xaml
         }
 
         public XamlMember(EventInfo eventInfo, XamlSchemaContext schemaContext, XamlMemberInvoker invoker)
-            :this(eventInfo, schemaContext, invoker, new MemberReflector(true /*isEvent*/))
+            :this(eventInfo, schemaContext, invoker, new MemberReflector(isEvent: true))
         {
         }
 
@@ -93,7 +93,7 @@ namespace System.Xaml
 
         public XamlMember(string attachablePropertyName, MethodInfo getter, MethodInfo setter,
             XamlSchemaContext schemaContext, XamlMemberInvoker invoker)
-            :this(attachablePropertyName, getter, setter, schemaContext, invoker, new MemberReflector(getter, setter, false /*isEvent*/))
+            :this(attachablePropertyName, getter, setter, schemaContext, invoker, new MemberReflector(getter, setter, isEvent: false))
         {
         }
 
@@ -126,7 +126,7 @@ namespace System.Xaml
 
         public XamlMember(string attachableEventName, MethodInfo adder, XamlSchemaContext schemaContext,
             XamlMemberInvoker invoker)
-            : this(attachableEventName, adder, schemaContext, invoker, new MemberReflector(null, adder, true /*isEvent*/))
+            : this(attachableEventName, adder, schemaContext, invoker, new MemberReflector(null, adder, isEvent: true))
         {
         }
 

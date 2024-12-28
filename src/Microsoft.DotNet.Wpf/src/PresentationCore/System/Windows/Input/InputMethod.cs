@@ -2,31 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
 // Description: Manage Input Methods (EA-IME, TextServicesFramework).
-//
-//
 
 using System.Runtime.InteropServices;
-using System.Collections;
-using System.Diagnostics;
 using System.Globalization;
 using System.Threading;
 using System.Windows.Threading;
 using System.Windows.Interop;
-using System.Windows.Media;
-using System.Security;
-using MS.Utility;
 using MS.Win32;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 
-using System;
-
-using SR=MS.Internal.PresentationCore.SR;
-
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     //------------------------------------------------------
     //

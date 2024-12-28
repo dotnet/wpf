@@ -6,8 +6,6 @@
 // Description: UIElement layout island.
 //
 
-using System;
-using System.Collections.Generic;       // List<T>
 using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
 using System.Windows;                   // UIElement
 using System.Windows.Media;             // Visual

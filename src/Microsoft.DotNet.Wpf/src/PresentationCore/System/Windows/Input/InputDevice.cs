@@ -5,8 +5,6 @@
 
 using System.Windows.Threading;
 
-using System;
-
 namespace System.Windows.Input
 {
     /// <summary>

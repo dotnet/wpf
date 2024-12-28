@@ -2,21 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;                                // Console
-using System.Collections.Generic;            // List<T>
-using MS.Win32;                              // win32 interop
-using System.Windows.Interop;                // ComponentDispatcher & MSG
-using Microsoft.Win32;                       // Registry
-using System.Security;                       // CAS
-using System.Diagnostics;                    // Debug
-using MS.Utility;                            // EventTrace
-using System.Reflection;                     // Assembly
-using System.Runtime.InteropServices;        // SEHException
-using MS.Internal;                           // SecurityCriticalData, TextServicesInterop
-using MS.Internal.Interop;                   // WM
-using MS.Internal.WindowsBase;               // SecurityHelper
+using MS.Win32;
+using System.Windows.Interop;
+using MS.Utility;
+using System.Runtime.InteropServices;
+using MS.Internal;
+using MS.Internal.Interop;
 using System.Threading;
-using System.ComponentModel;                 // EditorBrowsableAttribute, BrowsableAttribute
+using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 

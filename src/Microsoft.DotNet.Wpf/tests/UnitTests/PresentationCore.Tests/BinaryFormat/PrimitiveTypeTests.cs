@@ -3,11 +3,6 @@
 
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
-using System.Collections.Generic;
-using System.Windows;
-using FluentAssertions;
-using System.IO;
-using PresentationCore.Tests.TestUtilities;
 using System.Globalization;
 using System.Runtime.Serialization;
 using System.Runtime.CompilerServices;

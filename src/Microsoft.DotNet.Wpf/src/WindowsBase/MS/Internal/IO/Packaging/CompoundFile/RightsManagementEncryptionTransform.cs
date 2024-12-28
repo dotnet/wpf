@@ -2,35 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  This class implements the RM data transform for a compound file.
-//
-//
-//
-
-
 // Allow use of presharp warning numbers [6518] unknown to the compiler
 #pragma warning disable 1634, 1691
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.IO.Packaging;
 using System.Text;
-using System.Windows;
 using System.Security.RightsManagement;
 
-using MS.Internal.IO.Packaging.CompoundFile;
-using MS.Internal.Utility;
-
 using CU = MS.Internal.IO.Packaging.CompoundFile.ContainerUtilities;
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
@@ -649,11 +631,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// If the RM information in this file cannot be read by the current version of
         /// this class.
         /// </exception>
-        internal void
-        EnumUseLicenseStreams(
-            UseLicenseStreamCallback callback,
-            object param
-            )
+        internal void EnumUseLicenseStreams(UseLicenseStreamCallback callback, object param)
         {
             ArgumentNullException.ThrowIfNull(callback);
 
@@ -662,11 +640,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             foreach (StreamInfo si in _useLicenseStorage.GetStreams())
             {
                 // Stream names: we preserve casing, but do case-insensitive comparison (Native CompoundFile API behavior)
-                if (String.CompareOrdinal(
-                                LicenseStreamNamePrefix.ToUpperInvariant(), 0,
-                                si.Name.ToUpperInvariant(), 0,
-                                LicenseStreamNamePrefixLength
-                                ) == 0)
+                if (si.Name.StartsWith(LicenseStreamNamePrefix, StringComparison.OrdinalIgnoreCase))
                 {
                     callback(this, si, param, ref stop);
                     if (stop)
@@ -741,9 +715,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // If the type-prefixed name is not in a valid format, a FileFormatException
             // will be thrown.
             //
-            AuthenticationType authenticationType;
-            string userName;
-            ParseTypePrefixedUserName(typePrefixedUserName, out authenticationType, out userName);
+            ParseTypePrefixedUserName(typePrefixedUserName, out AuthenticationType authenticationType, out string userName);
             user = new ContentUser(userName, authenticationType);
 
             //
@@ -872,11 +844,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// SaveUseLicense has removed any existing use licenses for this
         /// user before calling this internal function.
         /// </remarks>
-        internal void
-        SaveUseLicenseForUser(
-            ContentUser user,
-            UseLicense useLicense
-            )
+        internal void SaveUseLicenseForUser(ContentUser user, UseLicense useLicense)
         {
             //
             // Generate a unique name for the use license stream, and create the stream.
@@ -1007,10 +975,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <remarks>
         /// This function dose NOT produce a proper Base32Encoding since it will NOT produce proper padding.
         /// </remarks>
-        private static char[]
-        Base32EncodeWithoutPadding(
-            byte[] bytes
-            )
+        private static ReadOnlySpan<char> Base32EncodeWithoutPadding(ReadOnlySpan<byte> bytes, Span<char> initialBuffer)
         {
             int numBytes = bytes.Length;
             int numBits  = checked (numBytes * 8);
@@ -1020,7 +985,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             if (numBits % 5 != 0)
                 ++numChars;
 
-            char[] chars = new char[numChars];
+            Span<char> chars = initialBuffer.Length >= numChars ? initialBuffer.Slice(0, numChars) : new char[numChars];
 
             for (int iChar = 0; iChar < numChars; ++iChar)
             {
@@ -1055,8 +1020,10 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// </summary>
         private static string MakeUseLicenseStreamName()
         {
-            return LicenseStreamNamePrefix +
-                       new string(Base32EncodeWithoutPadding(Guid.NewGuid().ToByteArray()));
+            Span<byte> guidBytes = stackalloc byte[16];
+            Guid.NewGuid().TryWriteBytes(guidBytes);
+
+            return string.Concat(LicenseStreamNamePrefix, Base32EncodeWithoutPadding(guidBytes, stackalloc char[26]));
         }
 
         /// <summary>
@@ -1088,21 +1055,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <param name="userName">
         /// The user's ID.
         /// </param>
-        private static void
-        ParseTypePrefixedUserName(
-            string typePrefixedUserName,
-            out AuthenticationType authenticationType,
-            out string userName
-            )
+        private static void ParseTypePrefixedUserName(string typePrefixedUserName, out AuthenticationType authenticationType, out string userName)
         {
-            //
             // We don't actually know the authentication type yet, and we might find that
             // the type-prefixed user name doesn't even specify a valid authentication
             // type. But we have to assign to authenticationType because it's an out
             // parameter.
-            //
-            authenticationType = AuthenticationType.Windows;
-
             int colonIndex = typePrefixedUserName.IndexOf(':');
             if (colonIndex < 1 || colonIndex >= typePrefixedUserName.Length - 1)
             {
@@ -1112,33 +1070,15 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // No need to use checked{} here since colonIndex cannot be >= to (max int - 1)
             userName = typePrefixedUserName.Substring(colonIndex + 1);
 
-            string authenticationTypeString = typePrefixedUserName.Substring(0, colonIndex);
-            bool validEnum = false;
+            // Usernames: Case-Insensitive comparison
+            ReadOnlySpan<char> authenticationSpan = typePrefixedUserName.AsSpan(0, colonIndex);
 
-            // user names: case-insensitive comparison
-            if (string.Equals(authenticationTypeString, nameof(AuthenticationType.Windows), StringComparison.OrdinalIgnoreCase))
-            {
+            if (authenticationSpan.Equals(nameof(AuthenticationType.Windows), StringComparison.OrdinalIgnoreCase))
                 authenticationType = AuthenticationType.Windows;
-                validEnum = true;
-            }
-            else if (string.Equals(authenticationTypeString, nameof(AuthenticationType.Passport), StringComparison.OrdinalIgnoreCase))
-            {
+            else if (authenticationSpan.Equals(nameof(AuthenticationType.Passport), StringComparison.OrdinalIgnoreCase))
                 authenticationType = AuthenticationType.Passport;
-                validEnum = true;
-            }
-
-            //
-            // Didn't find a matching enumeration constant.
-            //
-            if (!validEnum)
-            {
-                throw new FileFormatException(
-                                SR.Format(
-                                    SR.InvalidAuthenticationTypeString,
-                                    typePrefixedUserName
-                                    )
-                                );
-            }
+            else // Didn't find a matching enumeration constant.
+                throw new FileFormatException(SR.Format(SR.InvalidAuthenticationTypeString, typePrefixedUserName));
         }
 
         /// <summary>
@@ -1215,9 +1155,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // If the type-prefixed name is not in a valid format, a FileFormatException
             // will be thrown.
             //
-            AuthenticationType authenticationType;
-            string userName;
-            ParseTypePrefixedUserName(typePrefixedUserName, out authenticationType, out userName);
+            ParseTypePrefixedUserName(typePrefixedUserName, out AuthenticationType authenticationType, out string userName);
             return new ContentUser(userName, authenticationType);
         }
 
@@ -1378,7 +1316,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         // All use licenses reside in streams whose names begin with this prefix:
         //
         private const string LicenseStreamNamePrefix = "EUL-";
-        private static readonly int    LicenseStreamNamePrefixLength = LicenseStreamNamePrefix.Length;
 
         //
         // The RM version information for the current version of this class.

@@ -7,9 +7,6 @@
 // Description: Resource key for a DataTemplate
 //
 
-using System;
-using System.Reflection;
-
 namespace System.Windows
 {
     /// <summary> Resource key for a DataTemplate</summary>

@@ -7,10 +7,7 @@
 
 
 using System;
-using System.Collections;
-using System.Text;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;
@@ -1647,7 +1644,7 @@ namespace MS.Internal.AutomationProxies
         private bool InStartMenu()
         {
             string className = Misc.GetClassName(Misc.GetParent(_hwnd));
-            return string.Compare(className, "DesktopSFTBarHost", StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Equals(className, "DesktopSFTBarHost", StringComparison.OrdinalIgnoreCase);
         }
 
         private bool SetScrollPercent(double fScrollPos, int sbFlag, int cPelsAll, out int delta)

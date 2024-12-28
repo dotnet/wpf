@@ -4,15 +4,10 @@
 
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Automation.Provider;
 using System.Windows.Data;
@@ -25,13 +20,11 @@ using System.Text;
 using Accessibility;
 using MS.Internal;
 using MS.Internal.Controls;
-using MS.Internal.Data;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Interop;
-using MS.Utility;
 using MS.Win32;
 
-using CommonDependencyProperty=MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
+using CommonDependencyProperty = MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
 
 // Disable pragma warnings to enable PREsharp pragmas
 #pragma warning disable 1634, 1691
@@ -3211,7 +3204,7 @@ namespace System.Windows.Controls.Primitives
                 {
                     if (UnsafeNativeMethods.GetClassName(new HandleRef(null, lastHwnd), sb, NativeMethods.MAX_PATH) != 0)
                     {
-                        if (String.Compare(sb.ToString(), WebOCWindowClassName, StringComparison.OrdinalIgnoreCase) == 0)
+                        if (string.Equals(sb.ToString(), WebOCWindowClassName, StringComparison.OrdinalIgnoreCase))
                         {
                             break;
                         }
@@ -3400,7 +3393,7 @@ namespace System.Windows.Controls.Primitives
             private static IntPtr GetHandle(HwndSource hwnd)
             {
                 // add hook to the popup's window
-                return (hwnd!=null ? hwnd.CriticalHandle : IntPtr.Zero);
+                return (hwnd!=null ? hwnd.Handle : IntPtr.Zero);
             }
 
             private static IntPtr GetParentHandle(HwndSource hwnd)

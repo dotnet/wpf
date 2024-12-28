@@ -18,9 +18,8 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.Security;
 
-    
+
 namespace MS.Internal
 {
     // <summary>

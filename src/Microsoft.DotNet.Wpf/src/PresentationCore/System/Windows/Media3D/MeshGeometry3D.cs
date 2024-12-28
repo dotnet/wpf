@@ -11,14 +11,8 @@
 //
 //
 
-using MS.Internal;
 using MS.Internal.Media3D;
-using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
-using System.Diagnostics;
-using System.Windows.Markup;
-using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {

@@ -11,7 +11,6 @@ namespace MS.Internal.Markup
 #elif SYSTEM_XAML
 namespace System.Xaml
 #else
-
 namespace MS.Internal
 #endif
 {
@@ -48,7 +47,7 @@ namespace MS.Internal
         {
             // for certain types of exceptions, we care more about the inner
             // exception
-            while (ex.InnerException != null &&
+            while (ex.InnerException is not null &&
                     (   ex is System.Reflection.TargetInvocationException
                     ))
             {

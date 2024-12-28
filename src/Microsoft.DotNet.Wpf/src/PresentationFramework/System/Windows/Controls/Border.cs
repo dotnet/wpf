@@ -11,10 +11,6 @@
 using MS.Internal;
 using MS.Internal.PresentationFramework;
 using MS.Internal.Telemetry.PresentationFramework;
-using MS.Utility;
-using System;
-using System.Diagnostics;
-using System.Windows.Threading;
 using System.Windows.Media;
 
 namespace System.Windows.Controls

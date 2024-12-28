@@ -2,27 +2,23 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using System.Threading;
+using System.Windows.Threading;
+using System.Globalization;
+using System.Collections;
+using System.Windows.Controls;
+using System.Windows.Markup; // XmlLanguage
+using System.Windows.Input;
+using System.IO;
+using System.Windows.Navigation;
+
 //
 // Description: Spell checking component for the TextEditor.
 //
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Threading;
-    using System.Windows.Threading;
-    using System.Globalization;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Security;
-    using System.Runtime.InteropServices;
-    using MS.Win32;
-    using System.Windows.Controls;
-    using System.Windows.Markup; // XmlLanguage
-    using System.Windows.Input;
-    using System.IO;
-    using System.Windows.Navigation;
-
     // Spell checking component for the TextEditor.
     // Class is marked as partial to allow for definition of TextMapOffsetLogger in a separate
     // source file. When TextMapOffsetLogger is removed, the partial declaration can
@@ -241,7 +237,7 @@ namespace System.Windows.Documents
                         {
                             string error = TextRangeBase.GetTextInternal(errorStart, errorEnd, ref charArray);
 
-                            if (String.Compare(word, error, true /* ignoreCase */, _defaultCulture) == 0)
+                            if (string.Compare(word, error, ignoreCase: true, _defaultCulture) == 0)
                             {
                                 _statusTable.MarkCleanRange(errorStart, errorEnd);
                             }

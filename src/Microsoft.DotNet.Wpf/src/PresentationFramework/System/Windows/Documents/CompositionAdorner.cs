@@ -2,22 +2,19 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections; // ArrayList
+using System.Windows.Media; // Brush, Transform
+using System.Windows.Controls.Primitives; // TextBoxBase
+using System.Windows.Input; // InputLanguageManager
+using MS.Win32;             // TextServices
+using MS.Internal; // Invariant
+
 //
 // Description: Composition adorner to render the composition display attribute.
 // 
 
 namespace System.Windows.Documents
 {
-    using System.Collections; // ArrayList
-    using System.Diagnostics;
-    using System.Windows.Media; // Brush, Transform
-    using System.Windows.Controls; // TextBox
-    using System.Windows.Controls.Primitives; // TextBoxBase
-    using System.Windows.Input; // InputLanguageManager
-    using System.Windows.Threading; // Dispatcher
-    using MS.Win32;             // TextServices
-    using MS.Internal; // Invariant
-
     internal class CompositionAdorner : Adorner
     {
         //------------------------------------------------------

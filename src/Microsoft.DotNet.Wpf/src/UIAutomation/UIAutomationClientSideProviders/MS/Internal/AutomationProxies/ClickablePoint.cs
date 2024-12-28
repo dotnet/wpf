@@ -3,11 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
-using System.Runtime.InteropServices;
 using System.Collections;
-using System.ComponentModel;
 using MS.Win32;
 
 // PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.

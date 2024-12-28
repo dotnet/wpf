@@ -9,13 +9,9 @@
 //
 
 
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Documents;
-using MS.Internal.Documents;
 using MS.Internal.Text;
 
 using MS.Internal.PtsHost.UnsafeNativeMethods;

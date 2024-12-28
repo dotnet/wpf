@@ -3,18 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using MS.Utility;
-using System.Windows.Threading;
 using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
-using System.Windows.Media;
 using System.Windows.Input;
-using System.Windows;
 using System.Windows.Data;
 
 using System.Windows.Controls.Primitives;

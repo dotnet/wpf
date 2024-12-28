@@ -2,6 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal.Documents;
+using System.Windows.Automation;
+using System.Windows.Controls;
+using System.Windows.Markup;    // for XmlLanguage
+using System.Windows.Navigation;
+using System.Globalization;
+using System.Text;
+
 //
 // Description:
 //      FixedElement represents a flow element/object in the Fixed Document.
@@ -9,22 +17,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal.Documents;
-    using System.Windows;
-    using System.Windows.Automation;
-    using System.Windows.Controls;
-    using System.Windows.Shapes;
-    using System.Windows.Markup;    // for XmlLanguage
-    using System.Windows.Media;
-    using System.Windows.Navigation;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Text;
-    using System.Security;
-
     /// <summary>
     /// FixedElement represents a flow element/object in the Fixed Document.
     /// Its children collection is used for DependencyProperty evaluation.

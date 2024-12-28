@@ -4,9 +4,7 @@
 
 #nullable disable
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Security;
 using System.Windows.Markup;
@@ -53,7 +51,7 @@ namespace MS.Internal.Xaml.Runtime
             set
             {
                 _transparentRuntime.LineInfo = value;
-                if (_elevatedRuntime != null)
+                if (_elevatedRuntime is not null)
                 {
                     _elevatedRuntime.LineInfo = value;
                 }
@@ -415,7 +413,7 @@ namespace MS.Internal.Xaml.Runtime
 
         private void EnsureElevatedRuntime()
         {
-            if (_elevatedRuntime == null)
+            if (_elevatedRuntime is null)
             {
                 _elevatedRuntime = new DynamicMethodRuntime(
                     _transparentRuntime.GetSettings(), _schemaContext, _accessLevel);

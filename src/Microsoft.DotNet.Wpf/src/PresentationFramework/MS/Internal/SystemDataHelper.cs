@@ -6,9 +6,7 @@
 // Description: Helper methods for code that uses types from System.Data.
 //
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
 
 namespace MS.Internal

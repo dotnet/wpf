@@ -11,9 +11,6 @@
 //
 //
 
-using System.Diagnostics;               // Debug
-using System.Windows.Controls;          // Control
-using System.Windows.Media.Animation;   // Timeline
 using System.Windows.Navigation;        // PageFunctionBase
 using System.ComponentModel;            // DesignerSerializationVisibilityAttribute & DefaultValue
 using System.Windows.Markup;     // DependsOnAttribute

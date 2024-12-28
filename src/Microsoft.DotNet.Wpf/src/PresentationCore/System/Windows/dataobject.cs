@@ -2,41 +2,32 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
+using MS.Win32;
+using System.Collections;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Formats.Nrbf;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Windows.Interop;
+using System.Windows.Media.Imaging;
+using System.Text;
+using MS.Internal;
+
+using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
+
 // Description: Top-level class for data transfer for drag-drop and clipboard.
 //
 // See spec at http://avalon/uis/Data%20Transfer%20clipboard%20dragdrop/Avalon%20Data%20Transfer%20Object.htm
-//
-//
 
 
 namespace System.Windows
 {
-    using System;
-    using MS.Win32;
-    using System.Collections;
-    using System.Collections.Specialized;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Formats.Nrbf;
-    using System.IO;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Runtime.Serialization;
-    using System.Runtime.Serialization.Formatters.Binary;
-    using System.Security;
-    using System.Windows.Interop;
-    using System.Windows.Media.Imaging;
-    using System.Text;
-    using MS.Internal;
-
-    using SR=MS.Internal.PresentationCore.SR;
-    using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
-
-// PreSharp uses message numbers that the C# compiler doesn't know about.
-// Disable the C# complaints, per the PreSharp documentation.
+    // PreSharp uses message numbers that the C# compiler doesn't know about.
+    // Disable the C# complaints, per the PreSharp documentation.
 #pragma warning disable 1634, 1691
 
     #region DataObject Class
@@ -1262,27 +1253,21 @@ namespace System.Windows
         /// <summary>
         /// Retrieves a list of distinct strings from the array.
         /// </summary>
-        private static string[] GetDistinctStrings(string[] formats)
+        private static string[] GetDistinctStrings(List<string> formats)
         {
-            ArrayList distinct;
-            string[] distinctStrings;
+            List<string> distinct = new(formats.Count);
 
-            distinct = new ArrayList();
-            for (int i=0; i<formats.Length; i++)
+            for (int i = 0; i < formats.Count; i++)
             {
-                string formatString;
+                string formatString = formats[i];
 
-                formatString = formats[i];
                 if (!distinct.Contains(formatString))
                 {
                     distinct.Add(formatString);
                 }
             }
 
-            distinctStrings = new string[distinct.Count];
-            distinct.CopyTo(distinctStrings, 0);
-
-            return distinctStrings;
+            return distinct.ToArray();
         }
 
         /// <summary>
@@ -2479,25 +2464,15 @@ namespace System.Windows
 
             public string[] GetFormats(bool autoConvert)
             {
+                IEnumFORMATETC enumFORMATETC = EnumFormatEtcInner(DATADIR.DATADIR_GET);
+                List<string> formats = [];
 
-                IEnumFORMATETC enumFORMATETC;
-                ArrayList formats;
-                string[] temp;
-
-                enumFORMATETC = null;
-                formats = new ArrayList();
-
-                enumFORMATETC = EnumFormatEtcInner(DATADIR.DATADIR_GET);
-
-                if (enumFORMATETC != null)
+                if (enumFORMATETC is not null)
                 {
-                    FORMATETC []formatetc;
-                    int[] retrieved;
+                    FORMATETC[] formatetc = [new FORMATETC()];
+                    int[] retrieved = [1];
 
                     enumFORMATETC.Reset();
-
-                    formatetc = new FORMATETC[] { new FORMATETC() };
-                    retrieved = new int[] {1};
 
                     while (retrieved[0] > 0)
                     {
@@ -2505,15 +2480,13 @@ namespace System.Windows
 
                         if (enumFORMATETC.Next(1, formatetc, retrieved) == NativeMethods.S_OK && retrieved[0] > 0)
                         {
-                            string name;
+                            string name = DataFormats.GetDataFormat(formatetc[0].cfFormat).Name;
 
-                            name = DataFormats.GetDataFormat(formatetc[0].cfFormat).Name;
                             if (autoConvert)
                             {
-                                string[] mappedFormats;
+                                string[] mappedFormats = GetMappedFormats(name);
 
-                                mappedFormats = GetMappedFormats(name);
-                                for (int i=0; i<mappedFormats.Length; i++)
+                                for (int i = 0; i < mappedFormats.Length; i++)
                                 {
                                     formats.Add(mappedFormats[i]);
                                 }
@@ -2537,9 +2510,7 @@ namespace System.Windows
                     }
                 }
 
-                temp = new string[formats.Count];
-                formats.CopyTo(temp, 0);
-                return GetDistinctStrings(temp);
+                return GetDistinctStrings(formats);
             }
 
             public void SetData(string format, Object data)
@@ -3399,10 +3370,7 @@ namespace System.Windows
 
                 if (autoConvert)
                 {
-                    ArrayList formats;
-                    string[] temp;
-
-                    formats = new ArrayList();
+                    List<string> formats = [];
 
                     for (int baseFormatIndex = 0; baseFormatIndex < baseVar.Length; baseFormatIndex++)
                     {
@@ -3453,15 +3421,13 @@ namespace System.Windows
                         else
                         {
                              if (!serializationCheckFailedForThisFunction)
-                            {
+                             {
                                 formats.Add(baseVar[baseFormatIndex]);
-                            }
+                             }
                         }
                     }
 
-                    temp = new string[formats.Count];
-                    formats.CopyTo(temp, 0);
-                    baseVar = GetDistinctStrings(temp);
+                    baseVar = GetDistinctStrings(formats);
                 }
 
                 return baseVar;

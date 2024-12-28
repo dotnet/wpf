@@ -5,11 +5,6 @@
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
-using MS.Utility;
-using MS.Internal;
 using MS.Internal.Interop;
 using MS.Win32;
 

@@ -6,8 +6,6 @@
 // Description: DependencyProperty/value pair struct used by TextContainer undo.
 //
 
-using System;
-
 namespace System.Windows.Documents
 {
     // This struct records DependencyProperty/value pairs. We use the struct

@@ -4,24 +4,11 @@
 
 //#define ENABLE_AUTOMATIONPEER_LOGGING   // uncomment to include logging of various activities
 
-using System;
 using System.Collections;
-using System.Diagnostics;
-using System.Security;
-using System.Windows;
-using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Threading;
-using System.Collections.Generic;
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-
 using MS.Internal;
 using MS.Internal.Automation;
-using MS.Internal.Media;
-using MS.Win32;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Automation.Peers
 {

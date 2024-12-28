@@ -7,30 +7,19 @@
 //
 
 
-using System;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Threading;
 using System.Threading;
 using System.Globalization;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using MS.Internal;
-using System.Windows.Controls;
 using System.Windows.Markup;        // for XmlLanguage
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Documents;
 using MS.Internal.Documents;
-using System.Security;
 using MS.Win32;
-
-using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows.Documents
 {

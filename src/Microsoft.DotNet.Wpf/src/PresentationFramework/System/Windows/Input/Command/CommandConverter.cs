@@ -8,18 +8,13 @@
 // For type converter spec please reference typeconverter.asp
 //
 
-using System;
 using System.ComponentModel; // for TypeConverter
 using System.Globalization; // for CultureInfo
 using System.Reflection;
-using MS.Utility;
-using MS.Internal;
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using System.Windows.Documents; // EditingCommands
-using System.ComponentModel.Design.Serialization;
 
 namespace System.Windows.Input
 {

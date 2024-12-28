@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  ContentType class parses and validates the content-type string.
 //  It provides functionality to compare the type/subtype values.
@@ -41,17 +39,8 @@
 // CRLF           = CR LF
 // Linear white space (LWS) MUST NOT be used between the type and subtype, nor 
 // between an attribute and its value. Leading and trailing LWS are prohibited.
-// 
-//
-//
-//
 
-using System;
-using System.Collections.Generic;   // For Dictionary<string, string>
-using System.Text;                  // For StringBuilder
-using System.Windows;               // For Exception strings - SR
-using MS.Internal.WindowsBase;
-using System.Diagnostics;           // For Debug.Assert
+using System.Text;
 
 namespace MS.Internal
 {
@@ -336,13 +325,11 @@ namespace MS.Internal
             }            
 
             /// <summary>
-            /// We lower case the results of ToString() because it returns the original
-            /// casing passed into the constructor.  ContentTypes that are equal (which
-            /// ignores casing) must have the same hash code.
+            /// ContentTypes that are equal (which ignores casing) must have the same hash code.
             /// </summary>
             public int GetHashCode(ContentType obj)
             {
-                return obj.ToString().ToUpperInvariant().GetHashCode();
+                return StringComparer.OrdinalIgnoreCase.GetHashCode(obj.ToString());
             }
         }
 
@@ -365,13 +352,11 @@ namespace MS.Internal
             }
 
             /// <summary>
-            /// We lower case the results of ToString() because it returns the original
-            /// casing passed into the constructor.  ContentTypes that are equal (which
-            /// ignores casing) must have the same hash code.
+            /// ContentTypes that are equal (which ignores casing) must have the same hash code.
             /// </summary>
             public int GetHashCode(ContentType obj)
             {
-                return obj._type.ToUpperInvariant().GetHashCode() ^ obj._subType.ToUpperInvariant().GetHashCode();
+                return StringComparer.OrdinalIgnoreCase.GetHashCode(obj._type) ^ StringComparer.OrdinalIgnoreCase.GetHashCode(obj._subType);
             }
         }
         #endregion Nested Classes

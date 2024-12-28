@@ -7,21 +7,13 @@
 //  This class handles IMM32 IME's composition string and support level 3 input to TextBox and RichTextBox.
 //
 
-using System;
 using System.Runtime.InteropServices;
-using System.Threading;
 using System.Collections;
-using System.Diagnostics;
 using System.Windows.Media;
 using System.Windows.Input;
-using System.Windows.Documents;
 using System.Windows.Interop;
-using System.Windows.Threading;
-using System.Security;
-using System.Text;
 using MS.Win32;
 using MS.Internal.Documents;
-using MS.Internal.PresentationFramework;
 using MS.Internal;
 using MS.Internal.Interop;
 

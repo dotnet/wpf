@@ -4,10 +4,6 @@
 
 // Description: Selection pattern provider interface
 
-using System;
-using System.Collections;
-using System.Windows.Automation;
-using System.ComponentModel;
 using System.Runtime.InteropServices;
 
 namespace System.Windows.Automation.Provider

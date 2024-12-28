@@ -10,11 +10,8 @@
 //
 // 06/30/05     jdmack      Created
 
-using System;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows.Input;
-using SecurityHelper=MS.Internal.SecurityHelper; 
 
 namespace System.Windows.Interop
 {

@@ -576,7 +576,7 @@
     <SolidColorBrush x:Key="RadioButtonBackground" Color="{StaticResource SubtleFillColorTransparent}"/>
     <SolidColorBrush x:Key="RadioButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorTransparent}"/>
     <SolidColorBrush x:Key="RadioButtonBackgroundPressed" Color="{StaticResource SubtleFillColorTransparent}"/>
-    <SolidColorBrush x:Key="RadioButtonBackgroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
+    <SolidColorBrush x:Key="RadioButtonBackgroundDisabled" Color="{StaticResource ControlFillColorTransparent}" />
     <SolidColorBrush x:Key="RadioButtonBorderBrush" Color="{StaticResource SubtleFillColorTransparent}"/>
     <SolidColorBrush x:Key="RadioButtonBorderBrushPointerOver" Color="{StaticResource SubtleFillColorTransparent}"/>
     <SolidColorBrush x:Key="RadioButtonBorderBrushPressed" Color="{StaticResource SubtleFillColorTransparent}"/>
@@ -595,6 +595,8 @@
     <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePressed" Color="{StaticResource ControlStrongStrokeColorDisabled}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokeDisabled" Color="{StaticResource ControlStrongStrokeColorDisabled}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{StaticResource SystemAccentColorDark1}"/>
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillDisabled" Color="{StaticResource AccentFillColorDisabled}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokeDisabled" Color="{StaticResource AccentFillColorDisabled}" />
 
     <!--  RatingControl  -->
     <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="{StaticResource SystemAccentColorDark1}" />

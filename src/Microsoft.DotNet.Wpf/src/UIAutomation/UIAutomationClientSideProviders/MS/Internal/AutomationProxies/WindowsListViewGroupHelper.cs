@@ -7,12 +7,8 @@
 
 
 using System;
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
-using System.Windows;
 using System.Collections;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies

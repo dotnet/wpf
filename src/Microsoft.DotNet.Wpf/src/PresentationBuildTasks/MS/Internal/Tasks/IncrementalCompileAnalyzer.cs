@@ -12,16 +12,12 @@
 
 using System;
 using System.IO;
-using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 
 using Microsoft.Build.Tasks.Windows;
 using Microsoft.Build.Framework;
-using Microsoft.Build.Utilities;
-using MS.Utility;
 
 namespace MS.Internal.Tasks
 {
@@ -350,7 +346,7 @@ namespace MS.Internal.Tasks
                 }
                 else  // Both source and target strings are not empty.
                 {
-                    IsSettingModified = String.Compare(textSource, textTarget, StringComparison.OrdinalIgnoreCase) == 0 ? false : true;
+                    IsSettingModified = !string.Equals(textSource, textTarget, StringComparison.OrdinalIgnoreCase);
                 }
             }
 
@@ -426,7 +422,7 @@ namespace MS.Internal.Tasks
                     {
                         for (int j = 0; j < numLocalTypeXamls; j++)
                         {
-                            if (String.Compare(xamlfile.Path, CompilerLocalReference.LocalMarkupPages[j].FilePath, StringComparison.OrdinalIgnoreCase) == 0)
+                            if (string.Equals(xamlfile.Path, CompilerLocalReference.LocalMarkupPages[j].FilePath, StringComparison.OrdinalIgnoreCase))
                             {
                                 addToList = false;
                                 break;

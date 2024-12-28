@@ -7,14 +7,10 @@
 // Provides a method to turn a baml stream into an object.
 //
 
-using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
-using MS.Internal.Controls;
-using MS.Internal.Navigation;
-using MS.Internal.Utility;
 using MS.Internal.Resources;
 using System.IO.Packaging;
 using System.ComponentModel;

@@ -12,10 +12,6 @@
 //
 //
 
-using System;
-using MS.Internal;
-using System.Security;
-
 namespace MS.Internal.FontCache
 {
     internal sealed class CanonicalFontFamilyReference

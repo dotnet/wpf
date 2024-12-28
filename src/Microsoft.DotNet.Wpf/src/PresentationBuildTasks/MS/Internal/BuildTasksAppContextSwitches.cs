@@ -7,11 +7,6 @@ using System.Runtime.CompilerServices;
 
 namespace MS.Internal
 {
-    // WPF's builds are seeing warnings as a result of using LocalAppContext in mutliple assemblies.
-    // that have internalsVisibleTo attribute set between them - which results in the warning.
-    // We don't have a way of suppressing this warning effectively until the shared copies of LocalAppContext and
-    // AppContextDefaultValues have pragmas added to suppress warning 436
-#pragma warning disable 436
     internal static class BuildTasksAppContextSwitches
     {
         #region DoNotUseSha256ForMarkupCompilerChecksumAlgorithm
@@ -30,5 +25,4 @@ namespace MS.Internal
 
         #endregion
     }
-#pragma warning restore 436
 }

@@ -8,17 +8,11 @@
 // ResourcePart is an implementation of the abstract PackagePart class. It contains an override for GetStreamCore.
 //
 
-using System;
 using System.IO.Packaging;
 using System.Windows;
-using System.Windows.Resources;
 using System.IO;
-using System.Resources;
-using System.Globalization;
-using System.Security;
 
 using MS.Internal.Resources;
-using MS.Internal;
 
 //In order to avoid generating warnings about unknown message numbers and 
 //unknown pragmas when compiling your C# source code with the actual C# compiler, 
@@ -132,12 +126,12 @@ namespace MS.Internal.AppModel
                 {
                     // We do not allow the use of .baml in any Avalon public APIs. This is the code pass needed to go through for loading baml file.
                     // Throw here we will catch all those cases.
-                    if (String.Compare(Path.GetExtension(_name), ResourceContainer.BamlExt, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(Path.GetExtension(_name), ResourceContainer.BamlExt, StringComparison.OrdinalIgnoreCase))
                     {
                         throw new IOException(SR.Format(SR.UnableToLocateResource, _name));
                     }
 
-                    if (String.Compare(Path.GetExtension(_name), ResourceContainer.XamlExt, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(Path.GetExtension(_name), ResourceContainer.XamlExt, StringComparison.OrdinalIgnoreCase))
                     {
                         // try baml extension first since it's our most common senario.
                         string newName = Path.ChangeExtension(_name, ResourceContainer.BamlExt);

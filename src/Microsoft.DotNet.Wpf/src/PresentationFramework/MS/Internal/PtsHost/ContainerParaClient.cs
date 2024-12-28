@@ -9,12 +9,7 @@
 //
 
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Documents;

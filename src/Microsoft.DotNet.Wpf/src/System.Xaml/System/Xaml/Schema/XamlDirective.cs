@@ -4,10 +4,8 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
 using System.Xaml.Schema;
 
@@ -42,7 +40,7 @@ namespace System.Xaml
             List<string> nsList = new List<string>(xamlNamespaces);
             foreach (string ns in nsList)
             {
-                if (ns == null)
+                if (ns is null)
                 {
                     throw new ArgumentException(SR.CollectionCannotContainNulls, nameof(xamlNamespaces));
                 }
@@ -65,7 +63,7 @@ namespace System.Xaml
 
         public override int GetHashCode()
         {
-            int result = (Name == null) ? 0 : Name.GetHashCode();
+            int result = (Name is null) ? 0 : Name.GetHashCode();
 
             ReadOnlyCollection<string> ns = _xamlNamespaces;
             for (int i = 0; i < ns.Count; i++)

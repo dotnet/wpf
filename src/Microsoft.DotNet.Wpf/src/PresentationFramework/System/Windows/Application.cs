@@ -21,39 +21,26 @@
 //warnings 1634 and 1691. (From PreSharp Documentation)
 #pragma warning disable 1634, 1691
 
-using System;
-
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Resources;
 using System.Threading;
 
 using System.IO.Packaging;
 using System.Windows.Threading;
 using System.Windows.Navigation;
-using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Resources;
 using System.Windows.Markup;
 using System.Net;
-using System.Text;
 
 using MS.Internal;
 using MS.Internal.AppModel;
 using MS.Internal.IO.Packaging;
 using MS.Internal.Interop;
-using MS.Internal.Navigation;
-using MS.Internal.Telemetry;
 using MS.Internal.Utility;
-using MS.Internal.Resources;
 using MS.Utility;
 using MS.Win32;
 using Microsoft.Win32;
@@ -2438,7 +2425,7 @@ namespace System.Windows
                     Invariant.Assert(fileInBamlConvert != null, "fileInBamlConvert should not be null");
                     Invariant.Assert(fileCurrent != null, "fileCurrent should not be null");
 
-                    if (String.Compare(fileInBamlConvert, fileCurrent, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(fileInBamlConvert, fileCurrent, StringComparison.OrdinalIgnoreCase))
                     {
                         //
                         // This is the root element of the xaml page which is being loaded to creat a tree
@@ -2465,7 +2452,7 @@ namespace System.Windows
                         if (Math.Abs(diff) == 1)
                         {
                             // Check whether the file name is the same.
-                            if (String.Compare(bamlConvertUriSegments[l - 1], curUriSegments[m - 1], StringComparison.OrdinalIgnoreCase) == 0)
+                            if (string.Equals(bamlConvertUriSegments[l - 1], curUriSegments[m - 1], StringComparison.OrdinalIgnoreCase))
                             {
                                 string component = (diff == 1) ? bamlConvertUriSegments[1] : curUriSegments[1];
 

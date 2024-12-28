@@ -9,13 +9,8 @@
 //
 //
 
-using System;
 using System.ComponentModel;
 using System.Globalization;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-
-using System.Windows;
 
 namespace System.Windows.Markup
 {

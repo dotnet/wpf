@@ -3,25 +3,15 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-
 using System.ComponentModel;
-
-using System.Collections;
 using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Globalization;
 using System.Windows.Threading;
-
-using System.Windows;
 using System.Windows.Automation.Peers;
-using System.Security;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Documents;
 using System.Windows.Interop;
 using System.Windows.Controls.Primitives;
-using System.Windows.Markup;
 using System.Windows.Shapes;
 
 using MS.Internal.KnownBoxes;

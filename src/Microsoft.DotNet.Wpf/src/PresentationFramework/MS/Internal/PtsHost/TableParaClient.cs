@@ -8,16 +8,10 @@
 //
 
 
-using MS.Internal;
 using MS.Internal.PtsTable;
 using MS.Internal.Text;
 using MS.Internal.Documents;
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Security;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;

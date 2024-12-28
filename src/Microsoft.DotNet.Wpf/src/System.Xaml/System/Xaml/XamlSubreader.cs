@@ -79,7 +79,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_lineInfoReader == null)
+                if (_lineInfoReader is null)
                 {
                     return false;
                 }
@@ -92,7 +92,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_lineInfoReader == null)
+                if (_lineInfoReader is null)
                 {
                     return 0;
                 }
@@ -104,7 +104,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_lineInfoReader == null)
+                if (_lineInfoReader is null)
                 {
                     return 0;
                 }

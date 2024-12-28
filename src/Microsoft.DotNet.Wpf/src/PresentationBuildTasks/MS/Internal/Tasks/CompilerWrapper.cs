@@ -18,10 +18,6 @@
 using System;
 using System.IO;
 using System.Collections;
-using System.Reflection;
-using System.Runtime.InteropServices;
-
-using MS.Internal.Markup;
 using Microsoft.Build.Utilities;
 using Microsoft.Build.Framework;
 using MS.Internal.Tasks;
@@ -261,7 +257,7 @@ namespace MS.Internal
 
                     if (asmReference != null)
                     {
-                        if (String.Compare(asmReference.AssemblyName, assemblyName, StringComparison.OrdinalIgnoreCase) == 0)
+                        if (string.Equals(asmReference.AssemblyName, assemblyName, StringComparison.OrdinalIgnoreCase))
                         {
                             // Set the local assembly file to markupCompiler
                             _mc.LocalAssemblyFile = asmReference;

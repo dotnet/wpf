@@ -6,10 +6,8 @@
 //              element operations, and manange the current request.
 //
 
-using System;
 using System.Collections;
 using System.Diagnostics;
-using System.Windows.Automation;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation

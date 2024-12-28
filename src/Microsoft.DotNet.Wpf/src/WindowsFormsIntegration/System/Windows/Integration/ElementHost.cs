@@ -1,8 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
-using System.Collections.Generic;
+
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Diagnostics;
@@ -13,7 +12,6 @@ using System.Windows.Documents;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
-using System.Security;
 using MS.Win32;
 using MS.Internal;
 using System.Runtime.Versioning;
@@ -24,7 +22,6 @@ using SWF = System.Windows.Forms;
 
 using SW = System.Windows;
 using SWC = System.Windows.Controls;
-using SWM = System.Windows.Media;
 using SWMI = System.Windows.Media.Imaging;
 using SWI = System.Windows.Input;
 using SWT = System.Windows.Threading;

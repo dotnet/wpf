@@ -5,10 +5,7 @@
 // Description: Implementation of a provider for the Classic Start Menu
 
 using System;
-using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {

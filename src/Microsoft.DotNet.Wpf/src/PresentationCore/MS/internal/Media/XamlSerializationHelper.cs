@@ -7,33 +7,31 @@
 //
 
 using System;
-using System.IO; 
-using System.Collections; 
-using System.Globalization; // CultureInfo 
+using System.IO;
 
 #if PRESENTATION_CORE
 using MS.Internal.PresentationCore;
 #elif PRESENTATIONFRAMEWORK
 using MS.Internal.PresentationFramework; 
-#endif 
+#endif
 
 #if PBTCOMPILER
-using System.Collections.Generic; 
+using System.Collections.Generic;
 using TypeConverterHelper = MS.Internal.Markup;
 
 namespace MS.Internal.Markup
 #else
-using System.Windows; 
-using System.Windows.Media ; 
-using System.Windows.Media.Media3D; 
+using System.Windows;
+using System.Windows.Media;
+using System.Windows.Media.Media3D;
 using TypeConverterHelper = System.Windows.Markup;
 
 namespace MS.Internal.Media
 #endif
 {
-#if PBTCOMPILER     
+#if PBTCOMPILER
 
-    
+
     //
     // Internal class used during serialization of Point3D, or Vectors. 
     //

@@ -3,10 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Security;
-using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
-using System.Windows.Automation;
 using Microsoft.Win32.SafeHandles;
 using MS.Win32;
 

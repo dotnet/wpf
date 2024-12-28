@@ -10,12 +10,8 @@
 
 \***************************************************************************/
 
-using System;
-using System.Globalization;
-using System.Security;
-using System.Reflection;
-using System.Windows.Media ; 
-using System.Windows; 
+using System.Windows.Media;
+using System.Windows;
 
 //****************
 //

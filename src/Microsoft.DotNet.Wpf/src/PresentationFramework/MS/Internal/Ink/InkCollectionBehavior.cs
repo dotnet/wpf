@@ -11,20 +11,11 @@
 //
 
 
-using System;
-using System.Collections;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Windows.Ink;
-using System.Windows.Interop;
-using System.ComponentModel;
-using System.Collections.Specialized;
-using Swi = System.Windows.Ink;
-using System.Windows.Documents;
 
 namespace MS.Internal.Ink
 {

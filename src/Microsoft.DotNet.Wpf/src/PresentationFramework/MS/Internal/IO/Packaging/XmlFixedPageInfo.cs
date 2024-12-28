@@ -8,11 +8,8 @@
 //              The class functions as an array of XmlGlyphRunInfo's in markup order.
 //
 
-using System;
 using System.Windows;                   // For ExceptionStringTable
 using System.Xml;                       // For DOM objects
-using System.Diagnostics;               // For Assert
-using System.Globalization;             // For CultureInfo
 
 namespace MS.Internal.IO.Packaging
 {

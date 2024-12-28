@@ -4,7 +4,6 @@
 
 //                                             
 
-using System;
 using System.Windows.Media.Animation;
 
 namespace MS.Internal

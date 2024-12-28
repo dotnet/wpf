@@ -6,7 +6,6 @@
 // Description: Undo unit for TextContainer.InsertElement calls.
 //
 
-using System;
 using MS.Internal;
 
 namespace System.Windows.Documents

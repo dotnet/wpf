@@ -6,10 +6,7 @@
 // Description: The arguments sent when a TextChangedEvent is fired in a TextContainer.
 //
 
-using System;
-using System.Windows;
 using System.Windows.Controls;
-using System.Collections.Generic;
 
 namespace System.Windows.Documents
 {

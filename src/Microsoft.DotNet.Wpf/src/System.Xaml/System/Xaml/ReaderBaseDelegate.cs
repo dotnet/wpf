@@ -77,7 +77,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_currentLineInfo != null)
+                if (_currentLineInfo is not null)
                 {
                     return _currentLineInfo.LineNumber;
                 }
@@ -92,7 +92,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_currentLineInfo != null)
+                if (_currentLineInfo is not null)
                 {
                     return _currentLineInfo.LinePosition;
                 }

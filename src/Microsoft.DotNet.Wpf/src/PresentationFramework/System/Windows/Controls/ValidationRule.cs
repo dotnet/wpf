@@ -13,7 +13,6 @@
 // See specs at Validation.mht
 //
 
-using System;
 using System.Globalization;
 using System.Windows.Data;
 

@@ -3,26 +3,18 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using System.Collections;
-using System.Collections.Specialized;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using System.IO;
 using System.Xml;
 using System.ComponentModel;
-
-using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Xps.Packaging;
 using Microsoft.Internal.AlphaFlattener;
-
-using System.Security;
 using MS.Utility;
 
 namespace System.Windows.Xps.Serialization

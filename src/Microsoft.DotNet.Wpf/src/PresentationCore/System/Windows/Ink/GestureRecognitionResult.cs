@@ -7,9 +7,6 @@
 // Description:
 //      The implementation of GestureRecognitionResult class
 
-
-using System;
-
 namespace System.Windows.Ink
 {
     /// <summary>

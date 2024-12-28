@@ -11,9 +11,7 @@
 using Microsoft.Win32.SafeHandles;
 using MS.Win32;
 using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Automation;

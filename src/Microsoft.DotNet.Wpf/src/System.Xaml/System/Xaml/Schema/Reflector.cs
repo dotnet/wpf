@@ -4,10 +4,8 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Markup;
@@ -44,14 +42,14 @@ namespace System.Xaml.Schema
 
         public bool IsAttributePresent(Type attributeType)
         {
-            if (CustomAttributeProvider != null)
+            if (CustomAttributeProvider is not null)
             {
                 return CustomAttributeProvider.IsDefined(attributeType, false);
             }
             try
             {
                 CustomAttributeData cad = GetAttribute(attributeType);
-                return (cad != null);
+                return (cad is not null);
             }
             catch (CustomAttributeFormatException)
             {
@@ -63,7 +61,7 @@ namespace System.Xaml.Schema
         // Returns null if attribute wasn't found, string.Empty if attribute string was null or empty
         public string GetAttributeString(Type attributeType, out bool checkedInherited)
         {
-            if (CustomAttributeProvider != null)
+            if (CustomAttributeProvider is not null)
             {
                 // Passes inherit=true for reasons explained in comment on XamlType.TryGetAttributeString
                 checkedInherited = true;
@@ -114,7 +112,7 @@ namespace System.Xaml.Schema
                 checkedInherited = false;
 
                 CustomAttributeData cad = GetAttribute(attributeType);
-                if (cad == null)
+                if (cad is null)
                 {
                     return null;
                 }
@@ -129,7 +127,7 @@ namespace System.Xaml.Schema
 
         public IReadOnlyDictionary<char,char> GetBracketCharacterAttributes(Type attributeType)
         {
-            if (CustomAttributeProvider != null)
+            if (CustomAttributeProvider is not null)
             {
                 object[] attributes = CustomAttributeProvider.GetCustomAttributes(attributeType, false);
                 if (attributes.Length == 0)
@@ -163,7 +161,7 @@ namespace System.Xaml.Schema
 
         public T? GetAttributeValue<T>(Type attributeType) where T : struct
         {
-            if (CustomAttributeProvider != null)
+            if (CustomAttributeProvider is not null)
             {
                 object[] attributes = CustomAttributeProvider.GetCustomAttributes(attributeType, false);
                 if (attributes.Length == 0)
@@ -186,7 +184,7 @@ namespace System.Xaml.Schema
             try
             {
                 CustomAttributeData cad = GetAttribute(attributeType);
-                if (cad == null)
+                if (cad is null)
                 {
                     return null;
                 }
@@ -201,7 +199,7 @@ namespace System.Xaml.Schema
 
         public Type GetAttributeType(Type attributeType)
         {
-            if (CustomAttributeProvider != null)
+            if (CustomAttributeProvider is not null)
             {
                 object[] attributes = CustomAttributeProvider.GetCustomAttributes(attributeType, false);
                 if (attributes.Length == 0)
@@ -227,7 +225,7 @@ namespace System.Xaml.Schema
             try
             {
                 CustomAttributeData cad = GetAttribute(attributeType);
-                if (cad == null)
+                if (cad is null)
                 {
                     return null;
                 }
@@ -242,7 +240,7 @@ namespace System.Xaml.Schema
 
         public Type[] GetAttributeTypes(Type attributeType, int count)
         {
-            if (CustomAttributeProvider != null)
+            if (CustomAttributeProvider is not null)
             {
                 object[] attributes = CustomAttributeProvider.GetCustomAttributes(attributeType, false);
                 if (attributes.Length == 0)
@@ -259,7 +257,7 @@ namespace System.Xaml.Schema
             try
             {
                 CustomAttributeData cad = GetAttribute(attributeType);
-                if (cad == null)
+                if (cad is null)
                 {
                     return null;
                 }
@@ -274,7 +272,7 @@ namespace System.Xaml.Schema
 
         public List<T> GetAllAttributeContents<T>(Type attributeType)
         {
-            if (CustomAttributeProvider != null)
+            if (CustomAttributeProvider is not null)
             {
                 object[] attributes = CustomAttributeProvider.GetCustomAttributes(attributeType, false);
                 if (attributes.Length == 0)
@@ -336,9 +334,9 @@ namespace System.Xaml.Schema
         protected static bool? GetFlag(int bitMask, int bitToCheck)
         {
             int validBit = GetValidMask(bitToCheck);
-            if (0 != (bitMask & validBit))
+            if ((bitMask & validBit) != 0)
             {
-                return 0 != (bitMask & bitToCheck);
+                return (bitMask & bitToCheck) != 0;
             }
             return null;
         }
@@ -416,7 +414,7 @@ namespace System.Xaml.Schema
             {
                 result = ExtractType(cad.ConstructorArguments[0]);
             }
-            if (result == null)
+            if (result is null)
             {
                 ThrowInvalidMetadata(cad, 1, typeof(Type));
             }
@@ -433,7 +431,7 @@ namespace System.Xaml.Schema
             for (int i = 0; i < count; i++)
             {
                 result[i] = ExtractType(cad.ConstructorArguments[i]);
-                if (result[i] == null)
+                if (result[i] is null)
                 {
                     ThrowInvalidMetadata(cad, count, typeof(Type));
                 }
@@ -472,7 +470,7 @@ namespace System.Xaml.Schema
 
         protected void EnsureAttributeData()
         {
-            if (_attributeData == null)
+            if (_attributeData is null)
             {
                 _attributeData = CustomAttributeData.GetCustomAttributes(Member);
             }

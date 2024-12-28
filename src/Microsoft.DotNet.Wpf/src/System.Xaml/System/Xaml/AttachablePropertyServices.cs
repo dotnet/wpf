@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 
@@ -16,13 +15,13 @@ namespace System.Xaml
 
         public static int GetAttachedPropertyCount(object instance)
         {
-            if (instance == null)
+            if (instance is null)
             {
                 return 0;
             }
 
             IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap != null)
+            if (ap is not null)
             {
                 return ap.PropertyCount;
             }
@@ -32,13 +31,13 @@ namespace System.Xaml
 
         public static void CopyPropertiesTo(object instance, KeyValuePair<AttachableMemberIdentifier, object>[] array, int index)
         {
-            if (instance == null)
+            if (instance is null)
             {
                 return;
             }
 
             IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap != null)
+            if (ap is not null)
             {
                 ap.CopyPropertiesTo(array, index);
             }
@@ -50,13 +49,13 @@ namespace System.Xaml
 
         public static bool RemoveProperty(object instance, AttachableMemberIdentifier name)
         {
-            if (instance == null)
+            if (instance is null)
             {
                 return false;
             }
 
             IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap != null)
+            if (ap is not null)
             {
                 return ap.RemoveProperty(name);
             }
@@ -66,7 +65,7 @@ namespace System.Xaml
 
         public static void SetProperty(object instance, AttachableMemberIdentifier name, object value)
         {
-            if (instance == null)
+            if (instance is null)
             {
                 return;
             }
@@ -74,7 +73,7 @@ namespace System.Xaml
             ArgumentNullException.ThrowIfNull(name);
 
             IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap != null)
+            if (ap is not null)
             {
                 ap.SetProperty(name, value);
                 return;
@@ -83,7 +82,7 @@ namespace System.Xaml
             attachedProperties.SetProperty(instance, name, value);
         }
 
-        [SuppressMessage("Microsoft.Design", "CA1007")]
+        [SuppressMessage("Microsoft.Design", "CA1007", Justification = "Kept for compatibility.")]
         public static bool TryGetProperty(object instance, AttachableMemberIdentifier name, out object value)
         {
             return TryGetProperty<object>(instance, name, out value);
@@ -91,14 +90,14 @@ namespace System.Xaml
 
         public static bool TryGetProperty<T>(object instance, AttachableMemberIdentifier name, out T value)
         {
-            if (instance == null)
+            if (instance is null)
             {
                 value = default(T);
                 return false;
             }
 
             IAttachedPropertyStore ap = instance as IAttachedPropertyStore;
-            if (ap != null)
+            if (ap is not null)
             {
                 object obj;
                 bool result = ap.TryGetProperty(name, out obj);

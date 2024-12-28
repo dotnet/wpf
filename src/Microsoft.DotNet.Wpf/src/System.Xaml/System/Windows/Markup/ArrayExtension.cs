@@ -80,7 +80,7 @@ namespace System.Windows.Markup
         /// <returns>The Array containing all the objects added to this extension.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            if (Type == null)
+            if (Type is null)
             {
                 throw new InvalidOperationException(SR.MarkupExtensionArrayType);
             }

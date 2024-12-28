@@ -8,14 +8,10 @@
 //              object of type System.IO.Stream.
 //
 
-using System;
 using System.IO;
-using System.Diagnostics;                           // for Assert
-using System.IO.Packaging;                          // for native APIs
 using System.Runtime.InteropServices;               // for Marshal, COMException, etc.
 using System.Runtime.InteropServices.ComTypes;      // for IStream
 using System.Windows;                               // for ExceptionStringTable
-using System.Security;                              // for SecurityCritical
 
 using MS.Win32;                                     // for NativeMethods
 

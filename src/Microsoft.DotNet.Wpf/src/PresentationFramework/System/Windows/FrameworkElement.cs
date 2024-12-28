@@ -2,16 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows.Threading;
-using System.Threading;
-using System.Reflection;
 using System.Windows.Data;
 using System.Windows.Diagnostics;
 using System.Windows.Documents;
@@ -20,19 +14,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Media3D;
-using System.Windows.Media.TextFormatting;
 using System.Windows.Navigation;
 using System.Windows.Markup;
 using System.Windows.Controls;
-using System.Windows.Automation;
 
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;    // SafeSecurityHelper
 using MS.Utility;
-using MS.Internal.Automation;
-using MS.Internal.PtsTable;                 // BodyContainerProxy
-using System.Security;
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and

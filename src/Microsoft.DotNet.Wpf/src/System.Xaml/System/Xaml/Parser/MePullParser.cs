@@ -2,9 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+#nullable disable
+
 using System.Xaml;
 using MS.Internal.Xaml.Context;
 
@@ -29,7 +28,7 @@ namespace MS.Internal.Xaml.Parser
         }
 
         // MarkupExtension ::= '{' TYPENAME Arguments? '}'
-        //    Arguments    ::= (PositionalArgs ( ',' NamedArgs)?) | NamedArgs 
+        //    Arguments    ::= (PositionalArgs ( ',' NamedArgs)?) | NamedArgs
         //    NamedArgs    ::= NamedArg ( ',' NamedArg )*
         //    NamedArg     ::= PROPERTYNAME '=' (STRING | QUOTEDMARKUPEXTENSION | MarkupExtension)
         //  PositionalArgs ::= (Value (',' PositionalArgs)?) | NamedArg
@@ -144,18 +143,18 @@ namespace MS.Internal.Xaml.Parser
         }
 
         ////////////////////////////////
-        // Arguments ::= (PositionalArgs ( ',' NamedArgs)?) | NamedArgs 
+        // Arguments ::= (PositionalArgs ( ',' NamedArgs)?) | NamedArgs
         //
         private IEnumerable<XamlNode> P_Arguments(Found f)
         {
             Found f2 = new Found();
-            // Arguments ::= @ (PositionalArgs ( ',' NamedArgs)?) | NamedArgs 
+            // Arguments ::= @ (PositionalArgs ( ',' NamedArgs)?) | NamedArgs
             switch (_tokenizer.Token)
             {
             case MeTokenType.Close:  // not found
                 break;
 
-            // Arguments ::= (@ PositionalArgs ( ',' NamedArgs)?) | NamedArgs 
+            // Arguments ::= (@ PositionalArgs ( ',' NamedArgs)?) | NamedArgs
             case MeTokenType.String:
             case MeTokenType.QuotedMarkupExtension:
             case MeTokenType.Open:
@@ -172,13 +171,13 @@ namespace MS.Internal.Xaml.Parser
                     }
                 }
 
-                // Arguments ::= (PositionalArgs @ ( ',' NamedArgs)?) | NamedArgs 
+                // Arguments ::= (PositionalArgs @ ( ',' NamedArgs)?) | NamedArgs
                 while (_tokenizer.Token == MeTokenType.Comma)
                 {
-                    // Arguments ::= (PositionalArgs ( @ ',' NamedArgs)?) | NamedArgs 
+                    // Arguments ::= (PositionalArgs ( @ ',' NamedArgs)?) | NamedArgs
                     NextToken();
 
-                    // Arguments ::= (PositionalArgs ( ',' @ NamedArgs)?) | NamedArgs 
+                    // Arguments ::= (PositionalArgs ( ',' @ NamedArgs)?) | NamedArgs
                     foreach (XamlNode node in P_NamedArgs(f2))
                     {
                         yield return node;
@@ -186,7 +185,7 @@ namespace MS.Internal.Xaml.Parser
                 }
                 break;
 
-            // Arguments ::= (PositionalArgs ( ',' NamedArgs)?) | @ NamedArgs 
+            // Arguments ::= (PositionalArgs ( ',' NamedArgs)?) | @ NamedArgs
             case MeTokenType.PropertyName:
                 foreach (XamlNode node in P_NamedArgs(f2))
                 {
@@ -200,7 +199,7 @@ namespace MS.Internal.Xaml.Parser
                 break;
             }
         }
-    
+
         ////////////////////////////////
         //  PositionalArgs ::= (Value (',' PositionalArgs)?) | NamedArg
         //
@@ -406,7 +405,7 @@ namespace MS.Internal.Xaml.Parser
                 case MeTokenType.PropertyName:
                     {
                         string error;
-                        if (_context.CurrentMember == null)
+                        if (_context.CurrentMember is null)
                         {
                             error = SR.Format(SR.MissingComma1,  _tokenizer.TokenText);
                         }

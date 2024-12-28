@@ -2,19 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.ComponentModel;
-using System.Windows.Threading;
-
-using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
 
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
-
-using MS.Utility;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 

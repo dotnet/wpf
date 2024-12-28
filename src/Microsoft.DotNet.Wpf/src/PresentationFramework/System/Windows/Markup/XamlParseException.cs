@@ -8,17 +8,9 @@
 //
 
 using System;
-using System.Xml;
-using System.IO;
-using System.Collections;
-using System.Diagnostics;
 using System.Reflection;
 using System.Text;
-using System.Globalization;
-using System.ComponentModel;
-using System.Security;
 using System.Runtime.Serialization;
-using MS.Utility;
 using MS.Internal;
 
 #if PBTCOMPILER
@@ -454,7 +446,7 @@ namespace System.Windows.Markup
                                                         currentXamlObjectIds,
                                                         objectType);
 
-            message = message + "  " + contextMessage;
+            message = $"{message}  {contextMessage}";
 
 #endif
 

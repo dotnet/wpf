@@ -8,17 +8,6 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Windows.Media.Media3D;
-
-using MS.Internal.PresentationFramework;
-
 namespace System.Windows.Media.Animation
 {
     /// <summary>
@@ -140,11 +129,8 @@ namespace System.Windows.Media.Animation
             Thickness baseValue, 
             double keyFrameProgress)
         {
-            if (   keyFrameProgress < 0.0
-                || keyFrameProgress > 1.0)
-            {
-                throw new ArgumentOutOfRangeException("keyFrameProgress");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(keyFrameProgress);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(keyFrameProgress, 1.0);
 
             return InterpolateValueCore(baseValue, keyFrameProgress);
         }

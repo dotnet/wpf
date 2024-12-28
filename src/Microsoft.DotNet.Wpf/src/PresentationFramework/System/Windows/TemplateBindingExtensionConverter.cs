@@ -10,12 +10,9 @@
 //
 //
 
-using System;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
-using System.Windows;
-using System.Security;
 
 namespace System.Windows
 {

@@ -6,9 +6,6 @@
 // Description:
 //   Provides methods used internally by the StyleBamlReader
 //
-using System;
-using System.Windows;
-
 namespace System.Windows.Markup
 {
     /// <summary>

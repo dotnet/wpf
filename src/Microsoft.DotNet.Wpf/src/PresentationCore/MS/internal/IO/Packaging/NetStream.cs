@@ -37,16 +37,10 @@
 #define TRACE
 #endif
 
-using System;
 using System.IO;
 using System.Net;
-using System.Runtime.InteropServices;
 using System.Threading;
 using System.Collections;               // for IComparer
-using System.Diagnostics;               // for Debug.Assert
-using System.Security;                  // SecurityCritical, SecurityTreatAsSafe
-using System.IO.IsolatedStorage;        // for IsolatedStorageFileStream
-using MS.Internal.IO.Packaging;         // ByteRangeDownloader
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 
 namespace MS.Internal.IO.Packaging
@@ -496,8 +490,7 @@ namespace MS.Internal.IO.Packaging
         /// </summary>
         private void CheckDisposed()
         {
-            if (_disposed)
-                throw new ObjectDisposedException("Stream");
+            ObjectDisposedException.ThrowIf(_disposed, typeof(Stream));
         }
 
 

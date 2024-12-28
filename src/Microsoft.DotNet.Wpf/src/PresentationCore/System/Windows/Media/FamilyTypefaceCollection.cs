@@ -2,20 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-//  Contents:  FamilyTypefaceCollection
-//
-//
-
-using System;
-using System.Globalization;
-using SC=System.Collections;
-using System.Collections.Generic;
-using MS.Internal.FontFace;
-
-using SR=MS.Internal.PresentationCore.SR;
+using SC = System.Collections;
 
 namespace System.Windows.Media
 {
@@ -247,8 +234,8 @@ namespace System.Windows.Media
             VerifyChangeable();
 
             // Validate the index.
-            if (index < 0 || index > Count)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, Count);
 
             // We can't have two items with same style, weight, stretch.
             if (FindItem(item) >= 0)
@@ -354,8 +341,8 @@ namespace System.Windows.Media
 
         private void RangeCheck(int index)
         {
-            if (index < 0 || index >= _count)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _count);
         }
 
         private void VerifyChangeable()

@@ -4,11 +4,9 @@
 
 // Description: Manages the listeners for one accessibility aid or test application.
 
-using System.Windows;
 using System.Collections;
 using System.Diagnostics;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using MS.Win32;
 
 using System;
@@ -18,8 +16,8 @@ using System;
 
 namespace MS.Internal.Automation
 {
-     // Manages the listeners for one accessibility aid or test application.  Locking
-     // is used in all public methods to allow for multiple threads in a client process.
+    // Manages the listeners for one accessibility aid or test application.  Locking
+    // is used in all public methods to allow for multiple threads in a client process.
     internal static class ClientEventManager
     {
         //------------------------------------------------------

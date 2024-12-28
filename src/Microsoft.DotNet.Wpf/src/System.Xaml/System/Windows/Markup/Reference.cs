@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Xaml;
 
 namespace System.Windows.Markup
@@ -25,7 +27,7 @@ namespace System.Windows.Markup
         {
             ArgumentNullException.ThrowIfNull(serviceProvider);
             IXamlNameResolver nameResolver = serviceProvider.GetService(typeof(IXamlNameResolver)) as IXamlNameResolver;
-            if (nameResolver == null)
+            if (nameResolver is null)
             {
                 throw new InvalidOperationException(SR.MissingNameResolver);
             }
@@ -34,7 +36,7 @@ namespace System.Windows.Markup
                 throw new InvalidOperationException(SR.MustHaveName);
             }
             object obj = nameResolver.Resolve(Name);
-            if (obj == null)
+            if (obj is null)
             {
                 string[] names = new string[] { Name };
                 obj = nameResolver.GetFixupToken(names, true);

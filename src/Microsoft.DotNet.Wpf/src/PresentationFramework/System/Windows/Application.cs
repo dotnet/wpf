@@ -22,40 +22,30 @@
 #pragma warning disable 1634, 1691
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Resources;
 using System.Threading;
 
 using System.IO.Packaging;
 using System.Windows.Threading;
 using System.Windows.Navigation;
-using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Resources;
 using System.Windows.Markup;
 using System.Net;
-using System.Text;
 
 using MS.Internal;
 using MS.Internal.AppModel;
 using MS.Internal.IO.Packaging;
 using MS.Internal.Interop;
-using MS.Internal.Navigation;
-using MS.Internal.Telemetry;
 using MS.Internal.Utility;
-using MS.Internal.Resources;
 using MS.Utility;
 using MS.Win32;
 using Microsoft.Win32;
 using MS.Internal.Telemetry.PresentationFramework;
+using System.Diagnostics.CodeAnalysis;
 
 using PackUriHelper = System.IO.Packaging.PackUriHelper;
 
@@ -929,6 +919,16 @@ namespace System.Windows
                     oldValue.RemoveOwner(this);
                 }
 
+                if(_reloadFluentDictionary && !_resourcesInitialized)
+                {
+                    if(value != null && ThemeMode != ThemeMode.None)
+                    {
+                        value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
+                    }
+                    _reloadFluentDictionary = false;
+                    invalidateResources = true;
+                }
+
                 if (value != null)
                 {
                     if (!value.ContainsOwner(this))
@@ -954,6 +954,74 @@ namespace System.Windows
         {
             get { return Resources; }
             set { Resources = value; }
+        }
+
+        /// <summary>
+        /// Gets or sets the Fluent theme mode of the application.
+        /// </summary>
+        /// <remarks>
+        /// Setting this property controls if Fluent theme is loaded in Light, Dark or System mode. 
+        /// It also controls the application of backdrop and darkmode on window.
+        /// The four values for the ThemeMode enum are :
+        ///     <see cref="ThemeMode.None"/> - No Fluent theme is loaded.
+        ///     <see cref="ThemeMode.System"/> - Fluent theme is loaded based on the system theme.
+        ///     <see cref="ThemeMode.Light"/> - Fluent theme is loaded in Light mode.
+        ///     <see cref="ThemeMode.Dark"/> - Fluent theme is loaded in Dark mode.
+        ///
+        /// These values are predefined in <see cref="ThemeMode"/> struct
+        ///
+        /// The default value is <see cref="ThemeMode.None"/>.
+        ///     <see cref="ThemeMode"/> and <see cref="Resources"/> are designed to be in sync with each other.
+        ///     Syncing is done in order to avoid UI inconsistencies, for example, if the application is in dark mode 
+        ///     but the windows are in light mode or vice versa. 
+        ///     
+        ///     Setting this property loads the Fluent theme dictionaries in the application resources.
+        ///     So, if you set this property, it is preferrable to not include Fluent theme dictionaries
+        ///     in the application resources manually. If you do, the Fluent theme dictionaries added in the application
+        ///     resources will take precedence over the ones added by setting this property.
+        ///     
+        ///     This property is experimental and may be removed in future versions.
+        /// </remarks>
+        [Experimental("WPF0001")]
+        [TypeConverter(typeof(ThemeModeConverter))]
+        public ThemeMode ThemeMode
+        {
+            get
+            {
+                return _themeMode;
+            }
+            set
+            {
+                VerifyAccess();
+                if (!ThemeManager.IsValidThemeMode(value))
+                {
+                    throw new ArgumentException(string.Format("ThemeMode value {0} is invalid. Use None, System, Light or Dark", value));
+                }
+                
+                ThemeMode oldValue = _themeMode;
+                _themeMode = value;
+
+                if(!_resourcesInitialized)
+                {
+
+                    ThemeManager.OnApplicationThemeChanged(oldValue, value);
+
+                    // If the resources are not initializd, fluent dictionary
+                    // included in this operation will be reset.
+                    // Hence, we need to reload the fluent dictionary.
+                    _reloadFluentDictionary = true;
+
+                    // OnApplicationThemeChanged will trigger InvalidateResourceReferences
+                    // which will mark _resourcesInitialized = true, however since 
+                    // the value earlier was false, it means that Resources may not have been
+                    // parsed from BAML yet. Hence, we need to reset the value to false.
+                    _resourcesInitialized = false;
+
+                    return;
+                }
+
+                ThemeManager.OnApplicationThemeChanged(oldValue, value);
+            }
         }
 
         bool IQueryAmbient.IsAmbientPropertyAvailable(string propertyName)
@@ -1687,6 +1755,19 @@ namespace System.Windows
 
         internal void InvalidateResourceReferences(ResourcesChangeInfo info)
         {
+            _resourcesInitialized = true;
+            
+            // Sync needs to be performed only under the following conditions:
+            //  - the resource change event raised is due to a collection change
+            //      i.e. it is not a IsIndividualResourceAddOperation
+            //  - the event is not raised due to the change in Application.ThemeMode
+            //      i.e. SkipAppThemeModeSyncing is set to true
+            if (!info.IsIndividualResourceChange
+                    && !ThemeManager.SkipAppThemeModeSyncing)
+            {
+                ThemeManager.SyncApplicationThemeMode();
+            }
+            
             // Invalidate ResourceReference properties on all the windows.
             // we Clone() the collection b/c if we don't then some other thread can be
             // modifying the collection while we iterate over it
@@ -1825,8 +1906,8 @@ namespace System.Windows
         //This will be cleaned up with the RootBrowserWindow cleanup.
         internal MimeType MimeType
         {
-            get { return _appMimeType.Value; }
-            set { _appMimeType = new SecurityCriticalDataForSet<MimeType>(value); }
+            get { return _appMimeType; }
+            set { _appMimeType = value; }
         }
 
         // this is called from ApplicationProxyInternal, ProgressBarAppHelper, and ContainerActivationHelper.
@@ -1984,7 +2065,7 @@ namespace System.Windows
             MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmMime, htmlxappFactoryDelegate);
             MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmlMime, htmlxappFactoryDelegate);
             MimeObjectFactory.RegisterCore(MimeTypeMapper.XbapMime, htmlxappFactoryDelegate);
- 
+
         }
 
         // This function returns the resource stream including resource and content file.
@@ -2002,7 +2083,7 @@ namespace System.Windows
 
             Uri packageUri = PackUriHelper.GetPackageUri(resolvedUri);
             Uri partUri = PackUriHelper.GetPartUri(resolvedUri);
-            
+
             //
             // ResourceContainer must have been added into the package cache, the code should just
             // take use of that ResourceContainer instance, instead of creating a new instance here.
@@ -2029,7 +2110,7 @@ namespace System.Windows
             {
                 Uri packUri = PackUriHelper.Create(packageUri);
                 Invariant.Assert(packUri == BaseUriHelper.PackAppBaseUri || packUri == BaseUriHelper.SiteOfOriginBaseUri,
-                                "Unknown packageUri passed: "+packageUri);
+                    $"Unknown packageUri passed: {packageUri}");
 
                 Invariant.Assert(IsApplicationObjectShuttingDown);
                 throw new InvalidOperationException(SR.ApplicationShuttingDown);
@@ -2284,7 +2365,7 @@ namespace System.Windows
         private string GetSystemSound(string soundName)
         {
             string soundFile = null;
-            string regPath = string.Format(CultureInfo.InvariantCulture, SYSTEM_SOUNDS_REGISTRY_LOCATION, soundName);
+            string regPath = $@"AppEvents\Schemes\Apps\Explorer\{soundName}\.current\";
             try
             {
                 using (RegistryKey soundKey = Registry.CurrentUser.OpenSubKey(regPath))
@@ -2344,7 +2425,7 @@ namespace System.Windows
                     Invariant.Assert(fileInBamlConvert != null, "fileInBamlConvert should not be null");
                     Invariant.Assert(fileCurrent != null, "fileCurrent should not be null");
 
-                    if (String.Compare(fileInBamlConvert, fileCurrent, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(fileInBamlConvert, fileCurrent, StringComparison.OrdinalIgnoreCase))
                     {
                         //
                         // This is the root element of the xaml page which is being loaded to creat a tree
@@ -2371,7 +2452,7 @@ namespace System.Windows
                         if (Math.Abs(diff) == 1)
                         {
                             // Check whether the file name is the same.
-                            if (String.Compare(bamlConvertUriSegments[l - 1], curUriSegments[m - 1], StringComparison.OrdinalIgnoreCase) == 0)
+                            if (string.Equals(bamlConvertUriSegments[l - 1], curUriSegments[m - 1], StringComparison.OrdinalIgnoreCase))
                             {
                                 string component = (diff == 1) ? bamlConvertUriSegments[1] : curUriSegments[1];
 
@@ -2428,7 +2509,11 @@ namespace System.Windows
         private bool                        _ownDispatcherStarted;
         private NavigationService           _navService;
 
-        private SecurityCriticalDataForSet<MimeType> _appMimeType;
+        private ThemeMode                   _themeMode = ThemeMode.None;
+        private bool                        _resourcesInitialized = false;
+        private bool                        _reloadFluentDictionary = false;
+
+        private MimeType                    _appMimeType;
         private IServiceProvider            _serviceProvider;
 
         private bool                        _appIsShutdown;
@@ -2451,7 +2536,6 @@ namespace System.Windows
                                                                             SafeNativeMethods.PlaySoundFlags.SND_NODEFAULT |
                                                                             SafeNativeMethods.PlaySoundFlags.SND_ASYNC |
                                                                             SafeNativeMethods.PlaySoundFlags.SND_NOSTOP;
-        private const string SYSTEM_SOUNDS_REGISTRY_LOCATION            = @"AppEvents\Schemes\Apps\Explorer\{0}\.current\";
         private const string SYSTEM_SOUNDS_REGISTRY_BASE                = @"HKEY_CURRENT_USER\AppEvents\Schemes\Apps\Explorer\";
         private const string SOUND_NAVIGATING                           = "Navigating";
         private const string SOUND_COMPLETE_NAVIGATION                  = "ActivatingDocument";

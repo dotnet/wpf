@@ -12,9 +12,6 @@
 
 using System;
 using System.Xml;
-using System.IO;
-using System.Collections;
-using System.ComponentModel;
 
 using System.Diagnostics;
 using System.Reflection;
@@ -26,20 +23,19 @@ using System.Windows.Threading;
 
 #endif
 
-using MS.Utility;
 
 #if PBTCOMPILER
 namespace MS.Internal.Markup
 #else
 namespace System.Windows.Markup
 #endif
-{   
-        #region XamlNodeTypeDefitions
+{
+    #region XamlNodeTypeDefitions
 
-        /// <summary>
-        /// Identifier for XamlNodes
-        /// </summary>
-        internal enum XamlNodeType
+    /// <summary>
+    /// Identifier for XamlNodes
+    /// </summary>
+    internal enum XamlNodeType
         {
             /// <summary>
             /// Unknown Node

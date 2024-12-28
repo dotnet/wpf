@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 namespace System.Xaml
 {
     internal class XamlSubreader : XamlReader, IXamlLineInfo
@@ -25,10 +27,7 @@ namespace System.Xaml
 
         public override bool Read()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlReader");  // can't say "XamlSubreader" it's an internal class.
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlReader)); // Can't say XamlSubreader because its internal.
             if (!_firstRead)
             {
                 return LimitedRead();
@@ -80,7 +79,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_lineInfoReader == null)
+                if (_lineInfoReader is null)
                 {
                     return false;
                 }
@@ -93,7 +92,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_lineInfoReader == null)
+                if (_lineInfoReader is null)
                 {
                     return 0;
                 }
@@ -105,7 +104,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_lineInfoReader == null)
+                if (_lineInfoReader is null)
                 {
                     return 0;
                 }

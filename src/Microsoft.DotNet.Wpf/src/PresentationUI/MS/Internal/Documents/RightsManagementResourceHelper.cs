@@ -2,19 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 using System;
-using System.Collections;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.TrustUI;
 using System.Globalization;                 // For localization of string conversion
-using System.Security.Cryptography.X509Certificates;
 
 using System.Security.RightsManagement;
-using System.Security;
 
 namespace MS.Internal.Documents
 {
@@ -116,7 +111,7 @@ namespace MS.Internal.Documents
             if (_brushResources == null)
             {
                 // Get the entire list of RightsManagementStatus values.
-                Array statusList = Enum.GetValues(typeof(RightsManagementStatus));
+                RightsManagementStatus[] statusList = Enum.GetValues<RightsManagementStatus>();
 
                 // Construct the array to hold brush references.
                 _brushResources = new DrawingBrush[statusList.Length];
@@ -138,7 +133,7 @@ namespace MS.Internal.Documents
                 {
                     // Determine resource name.
                     string resourceName = "PUIRMStatus"
-                        + Enum.GetName(typeof(RightsManagementStatus), status)
+                        + Enum.GetName(status)
                         + "BrushKey";
 
                     // Acquire reference to the brush.

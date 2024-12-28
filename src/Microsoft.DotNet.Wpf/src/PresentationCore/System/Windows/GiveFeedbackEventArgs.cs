@@ -9,9 +9,6 @@
 // 
 //
 
-using System;
-using System.Diagnostics;
-
 namespace System.Windows
 {
     /// <summary>

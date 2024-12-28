@@ -9,25 +9,17 @@
 #pragma warning disable 1634, 1691
 
 using MS.Internal.Documents.Application;
-using MS.Internal.IO.Packaging;             // For PreloadedPackages
-using MS.Internal.PresentationUI;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;                // For IValueConverter
 using System.Globalization;                 // For localization of string conversion
 using System.IO;
-using System.IO.Packaging;                  // For Packages
 using System.Printing;                      // For PrintQueue
-using System.Security;
 using System.Windows;
 using System.Windows.Controls;              // For Page Ranges
-using System.Windows.Controls.Primitives;   // For ToggleButton
 using System.Windows.Data;                  // For data binding
 using System.Windows.Documents;             // For PresentationUIStyleResources
 using System.Windows.Documents.Serialization;             // For WritingCompletedEventArgs
 using System.Windows.Input;                 // For focus / input based events
 using System.Windows.Interop;               // For WindowInteropHelper
-using System.Windows.Navigation;            // For NavigationWindow
 using System.Windows.Markup;                // For MarkupExtension
 using System.Windows.Threading;             // For DispatcherPriority
 using System.Windows.TrustUI;               // For string resources
@@ -36,7 +28,6 @@ using System.Windows.Media;                 // Visual Stuff
 
 namespace MS.Internal.Documents
 {
-    [FriendAccessAllowed]
     internal sealed class DocumentApplicationDocumentViewer : DocumentViewer
     {
         //------------------------------------------------------
@@ -70,7 +61,7 @@ namespace MS.Internal.Documents
                 // Setup the CommandEnforcer before any of the UI is prepared.
                 CreateEnforcer();
             }
-        }        
+        }
 
         #endregion Constructors
 
@@ -181,12 +172,12 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _rightsManagementPolicy.Value;
+                return _rightsManagementPolicy;
             }
         }
 
         /// <summary>
-        /// Exposes XPSViewer's RootBrowserWindow as an IWin32Window for use in parenting Winforms 
+        /// Exposes XPSViewer's RootBrowserWindow as an IWin32Window for use in parenting Winforms
         /// dialogs.
         /// </summary>
         public System.Windows.Forms.IWin32Window RootBrowserWindow
@@ -216,7 +207,7 @@ namespace MS.Internal.Documents
             {
                 return _singletonInstance;
             }
-        }      
+        }
 
         #endregion Public Properties
 
@@ -225,7 +216,7 @@ namespace MS.Internal.Documents
         //  Public Methods
         //
         //------------------------------------------------------
-        #region Public Methods       
+        #region Public Methods
 
         /// <summary>
         /// Used to initialize the UI controls.
@@ -244,7 +235,7 @@ namespace MS.Internal.Documents
             _docSigManager.SignatureStatusChange += new DocumentSignatureManager.SignatureStatusChangeHandler(_digSigInfoBar.OnStatusChange);
 
             //We disallow all RM-protected actions until the RM Manager tells us otherwise.
-            _rightsManagementPolicy.Value = RightsManagementPolicy.AllowNothing;
+            _rightsManagementPolicy = RightsManagementPolicy.AllowNothing;
             CommandEnforcer.Enforce();
 
             _rmManager = rmManager;
@@ -306,7 +297,7 @@ namespace MS.Internal.Documents
                     SR.RightsManagementExceptionNoRightsForOperation);
             }
         }
-        
+
         /// <summary>
         /// Handler for the CancelPrint command.
         /// </summary>
@@ -358,7 +349,7 @@ namespace MS.Internal.Documents
 #endif // DONOTREFPRINTINGASMMETA
         }
         /// <summary>
-        /// This is a copy of DocumentViewerBase OnPrintCommand modified to 
+        /// This is a copy of DocumentViewerBase OnPrintCommand modified to
         /// handle page ranges
         /// </summary>
         private  void OnPrintCommandPageRangeOverride()
@@ -431,17 +422,17 @@ namespace MS.Internal.Documents
         }
 
         /// <summary>
-        /// This method finds the URI to pages from the document 
+        /// This method finds the URI to pages from the document
         /// specified in the page range.  Deserializes a copy of the pages from
         /// a package stored in the PreloadedPackages and generates a new
-        /// doucment with these pages.  This is serialized to the provided
+        /// document with these pages.  This is serialized to the provided
         /// document writer.
         /// </summary>
         private
         void
-        WritePageSelection( 
+        WritePageSelection(
             XpsDocumentWriter docWriter,
-            DocumentPaginator docPaginator, 
+            DocumentPaginator docPaginator,
             System.Windows.Controls.PageRange pageRange,
             PrintDocumentImageableArea ia
             )
@@ -562,7 +553,7 @@ namespace MS.Internal.Documents
 
         /// <summary>
         /// Called when ContextMenuOpening is raised on this element.
-        /// We use this opportunity to make sure the ScrollViewer's ContextMenu is invoked.  
+        /// We use this opportunity to make sure the ScrollViewer's ContextMenu is invoked.
         /// </summary>
         /// <param name="e">Event arguments</param>
         protected override void OnContextMenuOpening(ContextMenuEventArgs e)
@@ -570,9 +561,9 @@ namespace MS.Internal.Documents
             // Raise the ContextMenu command on the ScrollViewer if the ContextMenu
             // was invoked via the Menu key.
             // A negative offset for e.CursorLeft means the user invoked
-            // the menu with a hotkey (shift-F10).            
+            // the menu with a hotkey (shift-F10).
             if (_scrollViewer != null && DoubleUtil.LessThan(e.CursorLeft, 0))
-            {                            
+            {
                 this.ContextMenu = ScrollViewer.ContextMenu;
             }
 
@@ -603,7 +594,7 @@ namespace MS.Internal.Documents
             }
 
             base.OnKeyDown(e);
-        }  
+        }
 
         /// <summary>
         /// Returns the current UI state
@@ -806,7 +797,7 @@ namespace MS.Internal.Documents
                 return _pageDownButton;
             }
         }
-         
+
         /// <summary>
         /// Used to view document at 100%
         /// </summary>
@@ -822,7 +813,7 @@ namespace MS.Internal.Documents
                 return _actualSizeButton;
             }
         }
-        
+
         /// <summary>
         /// Used to view document at page width
         /// </summary>
@@ -838,7 +829,7 @@ namespace MS.Internal.Documents
                 return _pageWidthButton;
             }
         }
-          
+
         /// <summary>
         /// Used to view document at 1 whole page at a time
         /// </summary>
@@ -854,8 +845,8 @@ namespace MS.Internal.Documents
                 return _wholePageButton;
             }
         }
-        
-          
+
+
         /// <summary>
         /// Used to view document at 2 pages at a time
         /// </summary>
@@ -871,7 +862,7 @@ namespace MS.Internal.Documents
                 return _twoPageButton;
             }
         }
-        
+
         /// <summary>
         /// Used to view document in a 'tiled' or 'thumbnail' view
         /// </summary>
@@ -903,7 +894,7 @@ namespace MS.Internal.Documents
                 return _rmButton;
             }
         }
-        
+
         /// <summary>
         /// Used to spawn the Save As dialog
         /// </summary>
@@ -919,7 +910,7 @@ namespace MS.Internal.Documents
                 return _saveAsButton;
             }
         }
-        
+
         /// <summary>
         /// Menu to hold the DigSig options
         /// </summary>
@@ -975,7 +966,7 @@ namespace MS.Internal.Documents
         }
 
         /// <summary>
-        /// Used to display DigSig information and to launch the 
+        /// Used to display DigSig information and to launch the
         /// summary dialog
         /// </summary>
         private Button InfoBarDigSigButton
@@ -1000,7 +991,7 @@ namespace MS.Internal.Documents
         }
 
         /// <summary>
-        /// Used to display RM information and to launch the 
+        /// Used to display RM information and to launch the
         /// a dialog with more information
         /// </summary>
         private Button InfoBarRMButton
@@ -1071,7 +1062,7 @@ namespace MS.Internal.Documents
         {
             get
             {
-                return _commandEnforcer.Value;
+                return _commandEnforcer;
             }
         }
 
@@ -1350,13 +1341,13 @@ namespace MS.Internal.Documents
         }
 
         /// <summary>
-        /// Central handler for QueryEnabled events fired by Commands directed at DocumentViewer.       
+        /// Central handler for QueryEnabled events fired by Commands directed at DocumentViewer.
         /// </summary>
         /// <param name="target">The target of this Command, expected to be DocumentViewer</param>
         /// <param name="args">The event arguments for this event.</param>
         private static void OnApplicationCommandQuery(object target, CanExecuteRoutedEventArgs e)
         {
-            
+
             // Check if arguments are valid, fail silently otherwise.
             if ((e != null) && (e.Command != null))
             {
@@ -1632,7 +1623,7 @@ namespace MS.Internal.Documents
             ArgumentNullException.ThrowIfNull(args);
 
             //Invoke the CommandEnforcer to enable/disable commands as appropriate.
-            _rightsManagementPolicy.Value = args.RMPolicy;
+            _rightsManagementPolicy = args.RMPolicy;
             CommandEnforcer.Enforce();
         }
 
@@ -1691,7 +1682,7 @@ namespace MS.Internal.Documents
                 {
                     ComboBoxItem cbItem = ZoomComboBox.SelectedItem as ComboBoxItem;
                     // Check if a selection is made (when an item is selected from the list the
-                    // SelectedItem will be non-null)                
+                    // SelectedItem will be non-null)
                     if (cbItem != null &&
                         cbItem.Content is ZoomComboBoxItem)
                     {
@@ -2168,7 +2159,7 @@ namespace MS.Internal.Documents
             enforcer.AddBinding(new PolicyBinding(DocumentApplicationDocumentViewer.Sign, RightsManagementPolicy.AllowSign));
             enforcer.AddBinding(new PolicyBinding(DocumentApplicationDocumentViewer.RequestSigners, RightsManagementPolicy.AllowSign));
 
-            _commandEnforcer.Value = enforcer;
+            _commandEnforcer = enforcer;
         }
 
         #endregion Commands
@@ -2199,11 +2190,11 @@ namespace MS.Internal.Documents
         private StatusInfoItem                                      _rmInfoBar;
         private DocumentApplicationState                            _state;
         private const int                                           _invalidPageNumber = -1;
-        private SecurityCriticalDataForSet<RightsManagementPolicy>  _rightsManagementPolicy;
-        private RightsManagementStatus                              _rightsManagementStatus;        
+        private RightsManagementPolicy                              _rightsManagementPolicy;
+        private RightsManagementStatus                              _rightsManagementStatus;
 
         // The enforcer for RM
-        private SecurityCriticalDataForSet<CommandEnforcer>         _commandEnforcer;
+        private CommandEnforcer                                     _commandEnforcer;
 
         // Declare commands that are located on DocumentApplicationDocumentViewer
         private static RoutedUICommand                _focusToolBarCommand;
@@ -2510,7 +2501,7 @@ namespace MS.Internal.Documents
                         pageBounds = scale.TransformBounds(pageBounds);
                     }
 
-                    // 
+                    //
                     // Now center the result
                     //
                     double left = (_ia.MediaSizeWidth - pageBounds.Width) / 2.0;

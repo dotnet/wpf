@@ -7,23 +7,9 @@
 * Purpose:  Public api for writing baml records to a stream
 *
 \***************************************************************************/
-using System;
-using System.Xml;
 using System.IO;
-using System.Windows;
-using System.Text;
 using System.Collections;
-using System.ComponentModel;
-using MS.Internal.Utility;
-using MS.Internal;
-
-using System.Diagnostics;
 using System.Reflection;
-using System.Windows.Controls;
-using System.Windows.Documents;
-using System.Windows.Threading;
-
-using MS.Utility;
 
 namespace System.Windows.Markup
 {
@@ -116,7 +102,7 @@ namespace System.Windows.Markup
             // so that we'll find MarkupExtension subclasses.
             if (typeAndSerializer == null)
             {
-                typeAndSerializer = _xamlTypeMapper.GetTypeAndSerializer(namespaceURI, localName + "Extension", null);
+                typeAndSerializer = _xamlTypeMapper.GetTypeAndSerializer(namespaceURI, $"{localName}Extension", null);
             }
 
             if (typeAndSerializer != null &&
@@ -1213,7 +1199,7 @@ namespace System.Windows.Markup
     {
         MethodInfo memberInfo = null;
 
-        memberInfo = ownerType.GetMethod("Set" + propName,
+        memberInfo = ownerType.GetMethod($"Set{propName}",
                                             BindingFlags.Public |
                                             BindingFlags.Static |
                                             BindingFlags.FlattenHierarchy);
@@ -1225,7 +1211,7 @@ namespace System.Windows.Markup
         // Try read-only case (Getter only)
         if (memberInfo == null)
         {
-            memberInfo = ownerType.GetMethod("Get" + propName,
+            memberInfo = ownerType.GetMethod($"Get{propName}",
                                                 BindingFlags.Public |
                                                 BindingFlags.Static |
                                                 BindingFlags.FlattenHierarchy);

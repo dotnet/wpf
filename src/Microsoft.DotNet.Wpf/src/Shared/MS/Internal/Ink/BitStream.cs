@@ -2,16 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Utility;
-using System;
-using System.IO;
-using System.Collections;
-using System.Collections.Generic;
-using System.Windows;
-using System.Diagnostics;
-
-using SR=MS.Internal.PresentationCore.SR;
-
 namespace MS.Internal.Ink
 {
     /// <summary>
@@ -45,10 +35,9 @@ namespace MS.Internal.Ink
         {
             Debug.Assert(buffer != null);
 
-            if (startIndex < 0 || startIndex >= buffer.Length)
-            {
-                throw new ArgumentOutOfRangeException("startIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(startIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(startIndex, buffer.Length);
+
             _byteArray = buffer;
             _byteArrayIndex = startIndex;
             _bufferLengthInBits = (uint)(buffer.Length - startIndex) * (uint)Native.BitsPerByte;

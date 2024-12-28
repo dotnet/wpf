@@ -7,30 +7,19 @@
 //
 
 
-using System;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Windows.Threading;
 using System.Threading;
 using System.Globalization;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.IO;
 using MS.Internal;
-using System.Windows.Controls;
 using System.Windows.Markup;        // for XmlLanguage
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Documents;
 using MS.Internal.Documents;
-using System.Security;
 using MS.Win32;
-
-using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows.Documents
 {
@@ -1245,9 +1234,9 @@ namespace System.Windows.Documents
             GetCompositionPositions(view, out start, out end);
 
             // The call to MarkCultureProperty or SetText (which calls MarkCultureProperty)
-            // modifies the start and end TextPointers in the case of a multiple characters being replaced by 
+            // modifies the start and end TextPointers in the case of a multiple characters being replaced by
             // input from the IMEPad in a langugage different than that of the current text.
-            // startOffsetBefore, endOffsetBefore and _lastCompositionText are stored in a 
+            // startOffsetBefore, endOffsetBefore and _lastCompositionText are stored in a
             // CompositionEventRecord to be later replayed in RaiseCompositionEvents (after releasing the lock).
             // Store these variables based off of the original start and end TextPointers.
             int startOffsetBefore = start.Offset;
@@ -2113,17 +2102,8 @@ namespace System.Windows.Documents
         // The pointer to ITfDocumentMgr.
         internal UnsafeNativeMethods.ITfDocumentMgr DocumentManager
         {
-            get
-            {
-                if (_documentmanager == null)
-                {
-                    return null;
-                }
-
-                return _documentmanager.Value;
-            }
-
-            set { _documentmanager = new SecurityCriticalDataClass<UnsafeNativeMethods.ITfDocumentMgr>(value); }
+            get => _documentmanager;
+            set => _documentmanager = value;
         }
 
         // Cookie for ITfThreadFocusSink.
@@ -2401,7 +2381,7 @@ namespace System.Windows.Documents
 
                             // The next call to HandleCompositionEvents involves firing events
                             // that could result in a reentrancy. By initializing these TextPointers
-                            // we are being prepared for such an eventuality. 
+                            // we are being prepared for such an eventuality.
                             _previousCompositionStart = (_previousCompositionStartOffset == -1) ? null : textEditor.TextContainer.CreatePointerAtOffset(_previousCompositionStartOffset, LogicalDirection.Backward);
                             _previousCompositionEnd = (_previousCompositionEndOffset == -1) ? null : textEditor.TextContainer.CreatePointerAtOffset(_previousCompositionEndOffset, LogicalDirection.Forward);
                         }
@@ -2822,13 +2802,13 @@ namespace System.Windows.Documents
                     case AttributeStyle.InputScope:
                         object obj = new InputScopeAttribute(inputScope);
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_UNKNOWN;
-                        attrval.val.data1.Value = Marshal.GetIUnknownForObject(obj);
+                        attrval.val.data1 = Marshal.GetIUnknownForObject(obj);
                         break;
 
                     case AttributeStyle.Font_Style_Height:
                         // We always evaluate the font size and returns a value.
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_I4;
-                        attrval.val.data1.Value = (IntPtr)(int)fontSize;
+                        attrval.val.data1 = (IntPtr)(int)fontSize;
                         break;
 
                     case AttributeStyle.Font_FaceName:
@@ -2837,24 +2817,24 @@ namespace System.Windows.Documents
                             if (familyName != null)
                             {
                                 attrval.val.vt = (short)NativeMethods.tagVT.VT_BSTR;
-                                attrval.val.data1.Value = Marshal.StringToBSTR(familyName);
+                                attrval.val.data1 = Marshal.StringToBSTR(familyName);
                             }
                         }
                         break;
 
                     case AttributeStyle.Font_SizePts:
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_I4;
-                        attrval.val.data1.Value = (IntPtr)(int)(fontSize / 96.0 * 72.0);
+                        attrval.val.data1 = (IntPtr)(int)(fontSize / 96.0 * 72.0);
                         break;
 
                     case AttributeStyle.Text_ReadOnly:
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_BOOL;
-                        attrval.val.data1.Value = IsReadOnly ? (IntPtr)1 : (IntPtr)0;
+                        attrval.val.data1 = IsReadOnly ? (IntPtr)1 : (IntPtr)0;
                         break;
 
                     case AttributeStyle.Text_Orientation:
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_I4;
-                        attrval.val.data1.Value = (IntPtr)0;
+                        attrval.val.data1 = (IntPtr)0;
 
                         // Get the transformation that is relative from source.
                         PresentationSource source = null;
@@ -2889,7 +2869,7 @@ namespace System.Windows.Documents
                                         else
                                             angle = 360 - angleCos;
 
-                                        attrval.val.data1.Value = (IntPtr)((int)angle * 10);
+                                        attrval.val.data1 = (IntPtr)((int)angle * 10);
                                     }
                                 }
                             }
@@ -2901,7 +2881,7 @@ namespace System.Windows.Documents
                         //     the vertical writing is not supported yet
                         //
                         attrval.val.vt = (short)NativeMethods.tagVT.VT_BOOL;
-                        attrval.val.data1.Value = (IntPtr)0;
+                        attrval.val.data1 = (IntPtr)0;
                         break;
                 }
 
@@ -4272,8 +4252,8 @@ namespace System.Windows.Documents
         {
             internal MouseSink(UnsafeNativeMethods.ITfRangeACP range, UnsafeNativeMethods.ITfMouseSink sink, int cookie)
             {
-                _range = new SecurityCriticalDataClass<UnsafeNativeMethods.ITfRangeACP>(range);
-                _sink = new SecurityCriticalDataClass<UnsafeNativeMethods.ITfMouseSink>(sink);
+                _range = range;
+                _sink = sink;
                 _cookie = cookie;
             }
 
@@ -4282,16 +4262,18 @@ namespace System.Windows.Documents
                 Invariant.Assert(!_locked);
 
                 // In case Dispose comes twice.
-                if (_range != null)
+                if (_range is not null)
                 {
-                    Marshal.ReleaseComObject(_range.Value);
+                    Marshal.ReleaseComObject(_range);
                     _range = null;
                 }
-                if (_sink != null)
+
+                if (_sink is not null)
                 {
-                    Marshal.ReleaseComObject(_sink.Value);
+                    Marshal.ReleaseComObject(_sink);
                     _sink = null;
                 }
+
                 _cookie = UnsafeNativeMethods.TF_INVALID_COOKIE;
                 GC.SuppressFinalize(this);
             }
@@ -4333,21 +4315,15 @@ namespace System.Windows.Documents
                 }
             }
 
-            internal UnsafeNativeMethods.ITfRangeACP Range
-            {
-                get {return _range.Value;}
-            }
+            internal UnsafeNativeMethods.ITfRangeACP Range => _range;
 
-            internal UnsafeNativeMethods.ITfMouseSink Sink
-            {
-                get {return _sink.Value;}
-            }
+            internal UnsafeNativeMethods.ITfMouseSink Sink => _sink;
 
             internal int Cookie {get{return _cookie;}}
 
-            private SecurityCriticalDataClass<UnsafeNativeMethods.ITfRangeACP> _range;
+            private UnsafeNativeMethods.ITfRangeACP _range;
 
-            private SecurityCriticalDataClass<UnsafeNativeMethods.ITfMouseSink> _sink;
+            private UnsafeNativeMethods.ITfMouseSink _sink;
 
             private int _cookie;
 
@@ -4589,7 +4565,7 @@ namespace System.Windows.Documents
         private const int _viewCookie = 0;
 
         // The TSF document object.  This is a native resource.
-        private SecurityCriticalDataClass<UnsafeNativeMethods.ITfDocumentMgr> _documentmanager;
+        private UnsafeNativeMethods.ITfDocumentMgr _documentmanager;
 
         // The ITfThreadFocusSink cookie.
         private int _threadFocusCookie;
@@ -5265,8 +5241,7 @@ namespace System.Windows.Documents
 
             public override string ToString()
             {
-                return String.Format(CultureInfo.InvariantCulture, "{0} {1} {2} {3} {4} {5}",
-                    OpDepth, NetCharCount, IMECharCount, Op, EventState, Detail);
+                return string.Create(CultureInfo.InvariantCulture, $"{OpDepth} {NetCharCount} {IMECharCount} {Op} {EventState} {Detail}");
             }
 
             internal void Write(BinaryWriter writer)

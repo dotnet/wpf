@@ -2,27 +2,23 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using System.Threading;
+using System.Windows.Threading;
+using System.Globalization;
+using System.Collections;
+using System.Windows.Controls;
+using System.Windows.Markup; // XmlLanguage
+using System.Windows.Input;
+using System.IO;
+using System.Windows.Navigation;
+
 //
 // Description: Spell checking component for the TextEditor.
 //
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Threading;
-    using System.Windows.Threading;
-    using System.Globalization;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Security;
-    using System.Runtime.InteropServices;
-    using MS.Win32;
-    using System.Windows.Controls;
-    using System.Windows.Markup; // XmlLanguage
-    using System.Windows.Input;
-    using System.IO;
-    using System.Windows.Navigation;
-
     // Spell checking component for the TextEditor.
     // Class is marked as partial to allow for definition of TextMapOffsetLogger in a separate
     // source file. When TextMapOffsetLogger is removed, the partial declaration can
@@ -53,6 +49,7 @@ namespace System.Windows.Documents
 
             _defaultCulture = InputLanguageManager.Current != null ? InputLanguageManager.Current.CurrentInputLanguage :
                                                                      Thread.CurrentThread.CurrentCulture;
+            _defaultComparer = StringComparer.Create(_defaultCulture, true);
         }
 
         #endregion Constructors
@@ -176,17 +173,8 @@ namespace System.Windows.Documents
         // for an error range.
         // This method actually runs the speller on the specified text,
         // re-evaluating the error from scratch.
-        internal IList GetSuggestionsForError(SpellingError error)
+        internal List<string> GetSuggestionsForError(SpellingError error)
         {
-            ITextPointer contextStart;
-            ITextPointer contextEnd;
-            ITextPointer contentStart;
-            ITextPointer contentEnd;
-            TextMap textMap;
-            ArrayList suggestions;
-
-            suggestions = new ArrayList(1);
-
             //
             // IMPORTANT!!
             //
@@ -194,18 +182,15 @@ namespace System.Windows.Documents
             // calculate the exact same error.  Keep the two methods in sync!
             //
 
-            XmlLanguage language;
-            CultureInfo culture = GetCurrentCultureAndLanguage(error.Start, out language);
-            if (culture == null || !_spellerInterop.CanSpellCheck(culture))
-            {
-                // Return an empty list.
-            }
-            else
-            {
-                ExpandToWordBreakAndContext(error.Start, LogicalDirection.Backward, language, out contentStart, out contextStart);
-                ExpandToWordBreakAndContext(error.End, LogicalDirection.Forward, language, out contentEnd, out contextEnd);
+            List<string> suggestions = new(4);
+            CultureInfo culture = GetCurrentCultureAndLanguage(error.Start, out XmlLanguage language);
 
-                textMap = new TextMap(contextStart, contextEnd, contentStart, contentEnd);
+            if (culture is not null && _spellerInterop.CanSpellCheck(culture))
+            {
+                ExpandToWordBreakAndContext(error.Start, LogicalDirection.Backward, language, out ITextPointer contentStart, out ITextPointer contextStart);
+                ExpandToWordBreakAndContext(error.End, LogicalDirection.Forward, language, out ITextPointer contentEnd, out ITextPointer contextEnd);
+
+                TextMap textMap = new(contextStart, contextEnd, contentStart, contentEnd);
 
                 SetCulture(culture);
 
@@ -224,17 +209,15 @@ namespace System.Windows.Documents
         // implement this as a process-wide list.
         internal void IgnoreAll(string word)
         {
-            if (_ignoredWordsList == null)
-            {
-                _ignoredWordsList = new ArrayList(1);
-            }
+            if (_ignoredWordsList is null)
+                _ignoredWordsList = new List<string>(1);
 
-            int index = _ignoredWordsList.BinarySearch(word, new CaseInsensitiveComparer(_defaultCulture));
+            int index = _ignoredWordsList.BinarySearch(word, _defaultComparer);
 
+            // If we didn't find the word, we're gonna add it to ignore list
             if (index < 0)
             {
                 // This is a new word to ignore.
-
                 // Add it the list so we don't flag it later.
                 _ignoredWordsList.Insert(~index, word);
 
@@ -254,7 +237,7 @@ namespace System.Windows.Documents
                         {
                             string error = TextRangeBase.GetTextInternal(errorStart, errorEnd, ref charArray);
 
-                            if (String.Compare(word, error, true /* ignoreCase */, _defaultCulture) == 0)
+                            if (string.Compare(word, error, ignoreCase: true, _defaultCulture) == 0)
                             {
                                 _statusTable.MarkCleanRange(errorStart, errorEnd);
                             }
@@ -377,7 +360,7 @@ namespace System.Windows.Documents
             }
             catch(Exception e)
             {
-                System.Diagnostics.Trace.Write(string.Format(CultureInfo.InvariantCulture, "Unloading dictionary failed. Original Uri:{0}, file Uri:{1}, exception:{2}", uri.ToString(), info.PathUri.ToString(), e.ToString()));
+                System.Diagnostics.Trace.Write(string.Create(CultureInfo.InvariantCulture, $"Unloading dictionary failed. Original Uri:{uri}, file Uri:{info.PathUri}, exception:{e}"));
                 throw;
             }
             UriMap.Remove(uri);
@@ -851,20 +834,24 @@ namespace System.Windows.Documents
                             if (status.TimeoutPosition.CompareTo(start) <= 0)
                             {
                                 // Diagnostic info for bug 1577085.
-                                string debugMessage = "Speller is not advancing! \n" +
-                                                      "Culture = " + culture + "\n" +
-                                                      "Start offset = " + start.Offset + " parent = " + start.ParentType.Name + "\n" +
-                                                      "ContextStart offset = " + contextStart.Offset + " parent = " + contextStart.ParentType.Name + "\n" +
-                                                      "ContentStart offset = " + contentStart.Offset + " parent = " + contentStart.ParentType.Name + "\n" +
-                                                      "ContentEnd offset = " + contentEnd.Offset + " parent = " + contentEnd.ParentType.Name + "\n" +
-                                                      "ContextEnd offset = " + contextEnd.Offset + " parent = " + contextEnd.ParentType.Name + "\n" +
-                                                      "Timeout offset = " + status.TimeoutPosition.Offset + " parent = " + status.TimeoutPosition.ParentType.Name + "\n" +
-                                                      "textMap TextLength = " + textMap.TextLength + " text = " + new string(textMap.Text) + "\n" +
-                                                      "Document = " + start.TextContainer.Parent.GetType().Name + "\n";
+                                string debugMessage =
+                                    $"""
+                                     Speller is not advancing!
+                                     Culture = {culture}
+                                     Start offset = {start.Offset} parent = {start.ParentType.Name}
+                                     ContextStart offset = {contextStart.Offset} parent = {contextStart.ParentType.Name}
+                                     ContentStart offset = {contentStart.Offset} parent = {contentStart.ParentType.Name}
+                                     ContentEnd offset = {contentEnd.Offset} parent = {contentEnd.ParentType.Name}
+                                     ContextEnd offset = {contextEnd.Offset} parent = {contextEnd.ParentType.Name}
+                                     Timeout offset = {status.TimeoutPosition.Offset} parent = {status.TimeoutPosition.ParentType.Name}
+                                     textMap TextLength = {textMap.TextLength} text = {new string(textMap.Text)}
+                                     Document = {start.TextContainer.Parent.GetType().Name}
+
+                                     """;
 
                                 if (start is TextPointer)
                                 {
-                                    debugMessage += "Xml = " + new TextRange((TextPointer)start.TextContainer.Start, (TextPointer)start.TextContainer.End).Xml;
+                                    debugMessage += $"Xml = {new TextRange((TextPointer)start.TextContainer.Start, (TextPointer)start.TextContainer.End).Xml}";
                                 }
 
                                 Invariant.Assert(false, debugMessage);
@@ -912,7 +899,7 @@ namespace System.Windows.Documents
             {
                 if (textSegment.SubSegments.Count == 0)
                 {
-                    ArrayList suggestions = (ArrayList)data.Data;
+                    List<string> suggestions = (List<string>)data.Data;
                     if(textSegment.Suggestions.Count > 0)
                     {
                         foreach(string suggestion in textSegment.Suggestions)
@@ -940,7 +927,6 @@ namespace System.Windows.Documents
         {
             TextMapCallbackData data = (TextMapCallbackData)o;
             SpellerInteropBase.ITextRange sTextRange = textSegment.TextRange;
-            char[] word;
 
             // Check if this segment falls outside the content range.
             // The region before/after the content is only for context --
@@ -959,8 +945,7 @@ namespace System.Windows.Documents
             if (sTextRange.Length > 1) // Ignore single letter errors.
             {
                 // Check if the segment has been marked "ignore" by the user.
-                word = new char[sTextRange.Length];
-                Array.Copy(data.TextMap.Text, sTextRange.Start, word, 0, sTextRange.Length);
+                string word = new(data.TextMap.Text, sTextRange.Start, sTextRange.Length);
 
                 if (!IsIgnoredWord(word))
                 {
@@ -1434,17 +1419,7 @@ namespace System.Windows.Documents
         }
 
         // Returns true if a user has tagged the specified word with "Ignore All".
-        private bool IsIgnoredWord(char[] word)
-        {
-            bool isIgnoredWord = false;
-
-            if (_ignoredWordsList != null)
-            {
-                isIgnoredWord = _ignoredWordsList.BinarySearch(new string(word), new CaseInsensitiveComparer(_defaultCulture)) >= 0;
-            }
-
-            return isIgnoredWord;
-        }
+        private bool IsIgnoredWord(string word) => _ignoredWordsList?.BinarySearch(word, _defaultComparer) >= 0;
 
         // Returns true if we have an engine capable of proofing the specified
         // language.
@@ -1564,7 +1539,7 @@ namespace System.Windows.Documents
             Uri fileUri;
             if (!uri.IsAbsoluteUri)
             {
-                fileUri = new Uri(new Uri(Directory.GetCurrentDirectory() + "/"), uri);
+                fileUri = new Uri(new Uri($"{Directory.GetCurrentDirectory()}/"), uri);
             }
             else
             {
@@ -1614,7 +1589,7 @@ namespace System.Windows.Documents
                 }
                 catch (Exception e)
                 {
-                    System.Diagnostics.Trace.Write(string.Format(CultureInfo.InvariantCulture, "Failure to delete temporary file with custom dictionary data. file Uri:{0},exception:{1}", tempLocationUri.ToString(), e.ToString()));
+                    System.Diagnostics.Trace.Write(string.Create(CultureInfo.InvariantCulture, $"Failure to delete temporary file with custom dictionary data. file Uri:{tempLocationUri},exception:{e}"));
                     throw;
                 }
             }
@@ -2048,11 +2023,12 @@ namespace System.Windows.Documents
         private bool _pendingCaretMovedCallback;
 
         // List of words tagged by the user as non-errors.
-        private ArrayList _ignoredWordsList;
+        private List<string> _ignoredWordsList;
 
         // The CultureInfo associated with this speller.
         // Used for ignored words comparison, and plain text controls (TextBox).
         private readonly CultureInfo _defaultCulture;
+        private readonly IComparer<string> _defaultComparer;
 
         // Set true if the nl6 library is unavailable.
         private bool _failedToInit;

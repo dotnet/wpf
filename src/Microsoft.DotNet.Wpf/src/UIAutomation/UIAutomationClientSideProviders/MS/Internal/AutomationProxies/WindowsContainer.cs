@@ -5,13 +5,8 @@
 // Description: Windows Container Proxy
 
 using System;
-using System.Windows;
-using System.Collections;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Text;
 using MS.Win32;
 
 
@@ -61,11 +56,7 @@ namespace MS.Internal.AutomationProxies
         private static IRawElementProviderSimple Create(IntPtr hwnd, int idChild)
         {
             // Something is wrong if idChild is not zero 
-            if (idChild != 0)
-            {
-                System.Diagnostics.Debug.Assert(idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             return new WindowsContainer(hwnd, null, 0);
         }

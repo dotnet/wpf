@@ -2,8 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Diagnostics;
+#nullable disable
+
 using System.Text;
 using System.Xaml;
 
@@ -82,7 +82,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     // (GetFixedDocumentSequence raises Exception "UnicodeString property does not contain
                     // enough characters to correspond to the contents of Indices property.")
-                    // 
+                    //
                     // Convert CRLF into just LF.  Including attribute text values.
                     // Attribute text is internal set to "preserve" to prevent (other) processing.
                     // We processing attribute values in this way because 3.x did it.

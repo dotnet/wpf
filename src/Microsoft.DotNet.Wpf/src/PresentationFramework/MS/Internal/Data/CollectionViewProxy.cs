@@ -9,9 +9,7 @@
 //              doesn't already have it.
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -351,8 +349,7 @@ namespace MS.Internal.Data
         public override object GetItemAt(int index)
         {
             // only check lower bound because Count could be expensive
-            if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
             return EnumerableWrapper[index];
         }
 

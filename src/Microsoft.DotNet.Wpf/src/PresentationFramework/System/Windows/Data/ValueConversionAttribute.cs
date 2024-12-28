@@ -10,8 +10,6 @@
 // Specs:       Data Binding.mht
 //
 
-using System;
-
 namespace System.Windows.Data
 {
     /// <summary>

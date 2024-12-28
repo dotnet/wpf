@@ -8,13 +8,8 @@
 // Description: Facade class that contains client configutation options (eg. proxies)
 //
 
-using System.Windows.Automation;
-using System;
-using System.Runtime.InteropServices;
 using System.Reflection;
-using System.Diagnostics;
 using MS.Internal.Automation;
-using MS.Win32;
 
 namespace System.Windows.Automation
 {

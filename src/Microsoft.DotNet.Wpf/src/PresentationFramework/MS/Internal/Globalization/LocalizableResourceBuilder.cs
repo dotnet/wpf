@@ -3,21 +3,17 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Globalization;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Markup.Localizer;
-using System.Diagnostics;
 using System.Text;
 
 namespace MS.Internal.Globalization
 {
     ///<summary>
     /// this class is builds the BamlLocalizableResources
-    /// it handles all the localizability attribute reading, and inheritance resolution in the tree. 
-    ///</summary>     
+    /// it handles all the localizability attribute reading, and inheritance resolution in the tree.
+    ///</summary>
     internal sealed class LocalizableResourceBuilder
     {
         internal LocalizableResourceBuilder(InternalBamlLocalizabilityResolver resolver)
@@ -27,12 +23,12 @@ namespace MS.Internal.Globalization
 
         /// <summary>
         /// build a localizable resource from a baml tree node
-        /// </summary>        
+        /// </summary>
         internal BamlLocalizableResource BuildFromNode(BamlLocalizableResourceKey key, BamlTreeNode node)
         {
             if (node.Formatted)
             {
-                // the content of the node has been formatted to be part of 
+                // the content of the node has been formatted to be part of
                 // parents' content, so no need to create a seperate entry for the
                 // element
                 return null;
@@ -42,15 +38,15 @@ namespace MS.Internal.Globalization
             LocalizabilityAttribute localizability = null;
             string formattingTag;
 
-            // 
+            //
             // variable controling what comments gets applied
             //
             BamlStartElementNode commentNode = null;  // node containing comment
-            string commentTargetName = null;  // the target of the comment, e.g. $Content, FontSize, etc.            
+            string commentTargetName = null;  // the target of the comment, e.g. $Content, FontSize, etc.
 
             //
             // step 1: Get the localizability attribute from the source files
-            //        
+            //
             switch (node.NodeType)
             {
                 case BamlNodeType.StartElement:
@@ -82,7 +78,7 @@ namespace MS.Internal.Globalization
                             return null;
                         }
 
-                        // For property                    
+                        // For property
                         GetLocalizabilityForPropertyNode(propertyNode, out localizability);
 
                         commentTargetName = propertyNode.PropertyName;
@@ -109,7 +105,7 @@ namespace MS.Internal.Globalization
 
             //
             // Step 3: We finalized the localizability values. We now apply.
-            //            
+            //
             string content = null;
 
             if (localizability.Category != LocalizationCategory.NeverLocalize
@@ -134,7 +130,7 @@ namespace MS.Internal.Globalization
         /// This builds the localizable string from the baml tree node
         /// </summary>
         /// <return>
-        /// return true when the node has valid localizable content, false otherwise. 
+        /// return true when the node has valid localizable content, false otherwise.
         /// </return>
         internal bool TryGetContent(BamlLocalizableResourceKey key, BamlTreeNode currentNode, out string content)
         {
@@ -149,7 +145,7 @@ namespace MS.Internal.Globalization
                         content = BamlResourceContentUtil.EscapeString(propertyNode.Value);
 
                         //
-                        // Markup extensions are not localizable values, e.g. {x:Type SolidColorBrush}. 
+                        // Markup extensions are not localizable values, e.g. {x:Type SolidColorBrush}.
                         // So if the string can be parsed as Markup extensions, we will exclude it unless
                         // the user sets localization comments explicitly to localize this value.
                         //
@@ -172,7 +168,7 @@ namespace MS.Internal.Globalization
                         content = BamlResourceContentUtil.EscapeString(
                             ((BamlLiteralContentNode)currentNode).Content
                             );
-                        return true; // succeed                       
+                        return true; // succeed
                     }
                 case BamlNodeType.StartElement:
                     {
@@ -247,17 +243,14 @@ namespace MS.Internal.Globalization
                 // write opening tag
                 if (node.Uid != null)
                 {
-                    contentBuilder.AppendFormat(
+                    contentBuilder.Append(
                         TypeConverterHelper.InvariantEnglishUS,
-                        "<{0} {1}=\"{2}\">",
-                        formattingTag,
-                        XamlReaderHelper.DefinitionUid,
-                        BamlResourceContentUtil.EscapeString(node.Uid)
-                        );
+                        $"<{formattingTag} {XamlReaderHelper.DefinitionUid}=\"{BamlResourceContentUtil.EscapeString(node.Uid)}\">"
+                    );
                 }
                 else
                 {
-                    contentBuilder.AppendFormat(TypeConverterHelper.InvariantEnglishUS, "<{0}>", formattingTag);
+                    contentBuilder.Append(TypeConverterHelper.InvariantEnglishUS, $"<{formattingTag}>");
                 }
 
                 // recurisively call down to format the content
@@ -269,11 +262,11 @@ namespace MS.Internal.Globalization
                     contentBuilder.Append(childContent);
 
                     // write closing tag
-                    contentBuilder.AppendFormat(TypeConverterHelper.InvariantEnglishUS, "</{0}>", formattingTag);
+                    contentBuilder.Append(TypeConverterHelper.InvariantEnglishUS, $"</{formattingTag}>");
 
                     // remeber that we format this element so that we don't format the value again.
                     // e.g. <Text x:Uid="t"> <Bold x:Uid="b"> ... </Bold> </Text>
-                    // if <Bold> is already inlined in Text element's contennt, we don't need to 
+                    // if <Bold> is already inlined in Text element's contennt, we don't need to
                     // have a seperate entry for <Bold> anymore
                     node.Formatted = true;
                     content = contentBuilder.ToString();
@@ -288,13 +281,9 @@ namespace MS.Internal.Globalization
 
                 if (node.Uid != null)
                 {
-                    content = string.Format(
+                    content = string.Create(
                         TypeConverterHelper.InvariantEnglishUS,
-                        "{0}{1}{2}",
-                        BamlConst.ChildStart,
-                        BamlResourceContentUtil.EscapeString(node.Uid),
-                        BamlConst.ChildEnd
-                        );
+                        $"{BamlConst.ChildStart}{BamlResourceContentUtil.EscapeString(node.Uid)}{BamlConst.ChildEnd}");
                 }
                 else
                 {
@@ -363,7 +352,7 @@ namespace MS.Internal.Globalization
             if (className == null || className.Length == 0)
             {
                 // class name can be empty or null. For example, <Set PropertyPath="...">
-                // We will use the parent node's value.  
+                // We will use the parent node's value.
                 string formattingTag;
                 GetLocalizabilityForElementNode((BamlStartElementNode)node.Parent, out localizability, out formattingTag);
                 return;
@@ -387,13 +376,13 @@ namespace MS.Internal.Globalization
         }
 
         /// <summary>
-        /// Combine inheritable attributes, and propegate it down the tree.        
+        /// Combine inheritable attributes, and propegate it down the tree.
         /// </summary>
         /// <param name="node">current node</param>
         /// <param name="localizabilityFromSource">localizability defined in source code</param>
         /// <returns>
-        /// The LocalizabilityAttribute to used for this node. It is not the same as the 
-        /// inheritable attributes of the node when the node is set to Ignore.    
+        /// The LocalizabilityAttribute to used for this node. It is not the same as the
+        /// inheritable attributes of the node when the node is set to Ignore.
         /// </returns>
         /// <remarks>We always walk the baml tree in depth-first order</remarks>
         private LocalizabilityAttribute CombineAndPropagateInheritanceValues(
@@ -413,9 +402,9 @@ namespace MS.Internal.Globalization
                 return (!node.IsIgnored) ? node.InheritableAttribute : LocalizabilityIgnore;
             }
 
-            // To test wether the current node needs to inherit values from parents. 
-            // It inherits values if: 
-            // o This node is set to Ignore, in which case it propagates parent values. 
+            // To test wether the current node needs to inherit values from parents.
+            // It inherits values if:
+            // o This node is set to Ignore, in which case it propagates parent values.
             // o Some of its attributes set to Inherit.
             if (localizabilityFromSource.Category != LocalizationCategory.Ignore
               && localizabilityFromSource.Category != LocalizationCategory.Inherit
@@ -435,7 +424,7 @@ namespace MS.Internal.Globalization
 
             if (inheritableAttribute == null)
             {
-                // if ancestor's inheritable value isn't resolved yet, we recursively 
+                // if ancestor's inheritable value isn't resolved yet, we recursively
                 // resolve it here.
                 BamlStartElementNode elementNode = ancestor as BamlStartElementNode;
                 if (elementNode != null)
@@ -497,8 +486,8 @@ namespace MS.Internal.Globalization
                     {
                         ILocalizabilityInheritable parent = (ILocalizabilityInheritable)treeNode.Parent;
 
-                        // Find the mininum localizability of the containing class and 
-                        // parent property. Parent property means the proeprty from parent node that 
+                        // Find the mininum localizability of the containing class and
+                        // parent property. Parent property means the proeprty from parent node that
                         // has the same name.
                         LocalizabilityAttribute inheritedAttribute = CombineMinimumLocalizability(
                             inheritableAttribute,
@@ -512,9 +501,9 @@ namespace MS.Internal.Globalization
 
                         if (parent.IsIgnored && localizabilityFromSource.Category == LocalizationCategory.Inherit)
                         {
-                            // If the parent node is Ignore and this property is set to inherit, then 
+                            // If the parent node is Ignore and this property is set to inherit, then
                             // this property node is to be ignore as well. We set the the "Ignore" flag so that
-                            // the node will always be ignored without looking at the source localizability again. 
+                            // the node will always be ignored without looking at the source localizability again.
                             node.IsIgnored = true;
                             return LocalizabilityIgnore;
                         }
@@ -531,7 +520,7 @@ namespace MS.Internal.Globalization
         }
 
         /// <summary>
-        /// Create the inherited localizability attribute 
+        /// Create the inherited localizability attribute
         /// </summary>
         /// <param name="source">localizability attribute defined in source</param>
         /// <param name="inheritable">localizability attribute inheritable from above</param>
@@ -564,7 +553,7 @@ namespace MS.Internal.Globalization
 
 
         /// <summary>
-        /// It combines the min values of two localizability attributes. 
+        /// It combines the min values of two localizability attributes.
         /// </summary>
         /// <param name="first">first </param>
         /// <param name="second">second</param>

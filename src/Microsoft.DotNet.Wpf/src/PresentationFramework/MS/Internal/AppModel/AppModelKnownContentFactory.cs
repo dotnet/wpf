@@ -7,18 +7,12 @@
 // Provides a method to turn a baml stream into an object.
 //
 
-using System;
 using System.IO;
-using System.Security;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Navigation;
-using MS.Internal.Controls;
-using MS.Internal.Navigation;
-using MS.Internal.Utility;
 using MS.Internal.Resources;
 using System.IO.Packaging;
-using MS.Internal.PresentationFramework;
 using System.ComponentModel;
 using System.Windows.Controls;
 
@@ -81,7 +75,7 @@ namespace MS.Internal.AppModel
 
             if (sandboxExternalContent)
             {
-                if (SecurityHelper.AreStringTypesEqual(baseUri.Scheme, BaseUriHelper.PackAppBaseUri.Scheme))
+                if (string.Equals(baseUri.Scheme, BaseUriHelper.PackAppBaseUri.Scheme, StringComparison.OrdinalIgnoreCase))
                 {
                     baseUri = BaseUriHelper.ConvertPackUriToAbsoluteExternallyVisibleUri(baseUri);
                 }
@@ -146,7 +140,7 @@ namespace MS.Internal.AppModel
                 return null;
             }
 
-            if (SecurityHelper.AreStringTypesEqual(baseUri.Scheme, BaseUriHelper.PackAppBaseUri.Scheme))
+            if (string.Equals(baseUri.Scheme, BaseUriHelper.PackAppBaseUri.Scheme, StringComparison.OrdinalIgnoreCase))
             {
                 baseUri = BaseUriHelper.ConvertPackUriToAbsoluteExternallyVisibleUri(baseUri);
             }

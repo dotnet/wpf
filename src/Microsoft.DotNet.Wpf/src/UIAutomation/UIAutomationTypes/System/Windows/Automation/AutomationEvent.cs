@@ -4,7 +4,6 @@
 
 // Description: Identifier for Automation Events
 
-using System;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation

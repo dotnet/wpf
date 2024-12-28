@@ -7,10 +7,7 @@
 // Description: ListItemParagraph represents a single list item.
 //
 
-using System;
 using System.Windows;
-using System.Windows.Documents;
-using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {

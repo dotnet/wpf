@@ -9,11 +9,10 @@ using System;
 using System.Collections.Generic;
 using System.DirectoryServices;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.ComTypes;
 using System.Windows.TrustUI;
-
-using MS.Internal.PresentationUI;
 
 namespace MS.Internal.Documents
 {
@@ -462,7 +461,7 @@ namespace MS.Internal.Documents
             /// </summary>
             private void ThrowIfDisposed()
             {
-                if (_isDisposed) throw new ObjectDisposedException("DsObjectNamesWrapper");
+                ObjectDisposedException.ThrowIf(_isDisposed, typeof(DsObjectNamesWrapper));
             }
 
             /// <summary>
@@ -513,7 +512,7 @@ namespace MS.Internal.Documents
             /// DsObjects array.
             /// </summary>
             private static readonly int _dsObjectArrayFieldOffset = 
-                Marshal.SizeOf(typeof(Guid)) + Marshal.SizeOf(typeof(UInt32));
+                Unsafe.SizeOf<Guid>() + sizeof(UInt32);
 
             /// <summary>
             /// The size of a DsObject.

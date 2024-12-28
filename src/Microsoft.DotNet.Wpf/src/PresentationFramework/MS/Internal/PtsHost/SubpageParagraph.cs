@@ -8,16 +8,11 @@
 //
 
 #pragma warning disable 1634, 1691  // avoid generating warnings about unknown 
-                                    // message numbers and unknown pragmas for PRESharp contol
+// message numbers and unknown pragmas for PRESharp contol
 
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
-using MS.Internal.Documents;
 using MS.Internal.Text;
 
 using MS.Internal.PtsHost.UnsafeNativeMethods;

@@ -11,12 +11,8 @@
 \***************************************************************************/
 using MS.Internal;
 using MS.Utility;
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Documents;
 using System.Windows.Media;
 
 namespace System.Windows
@@ -456,6 +452,17 @@ namespace System.Windows
             ResourcesChangeInfo     info)
         {
             Debug.Assert(fe != null || fce != null, "Node with the resources change notification must be an FE or an FCE.");
+
+            // Here we are syncing the window's Theme mode if resource dictionary changes.
+            // The IgnoreWindowResourcesChange is a flag set to make sure the ThemeMode change does not cause an infinite loop of resource changes.
+            if(fe is Window currentWindow)
+            {
+                currentWindow.AreResourcesInitialized = true;
+                if(!ThemeManager.IgnoreWindowResourcesChange)
+                {
+                    ThemeManager.SyncWindowThemeMode(currentWindow);
+                }
+            }
 
             // We're interested in changes to the Template property that occur during
             // the walk - if the template has changed we don't need to invalidate

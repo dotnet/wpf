@@ -10,12 +10,9 @@
 // PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
 #pragma warning disable 1634, 1691
 
-using System;
-using System.Collections;
 using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation.Text
@@ -290,7 +287,7 @@ namespace System.Windows.Automation.Text
         /// <returns>The text of the range possibly truncated to the specified limit.</returns>
         public string GetText(int maxLength)
         {
-            Misc.ValidateArgumentInRange(maxLength >= -1, "maxLength");
+            ArgumentOutOfRangeException.ThrowIfLessThan(maxLength, -1);
             return UiaCoreApi.TextRange_GetText(_hTextRange, maxLength);
         }
 

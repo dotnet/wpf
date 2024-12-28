@@ -11,21 +11,19 @@
 #pragma warning disable 1634, 1691
 
 using System;
-using System.Globalization;
 
 #if PBTCOMPILER
 using MS.Utility;     // For SR.cs
 #else
 using System.Windows;
 using System.Text;
-using MS.Internal.WindowsBase; // FriendAccessAllowed
+using MS.Internal.WindowsBase;
 #endif
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
     ///<summary>Class for a version pair which consists of major and minor numbers</summary>
 #if !PBTCOMPILER
-    [FriendAccessAllowed]
     internal    class VersionPair : IComparable
 #else
     internal  class VersionPair

@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 namespace System.Xaml
 {
     // This is the simplest implementation of a Node based XamlReader.
@@ -25,10 +27,7 @@ namespace System.Xaml
 
         public override bool Read()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlReader"); // Can't say ReaderDelegate because its internal.
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlReader)); // Can't say ReaderDelegate because its internal.
             do
             {
                 _currentNode = _nextDelegate();

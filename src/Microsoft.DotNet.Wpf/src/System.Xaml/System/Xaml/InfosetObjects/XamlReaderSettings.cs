@@ -2,7 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics;
+#nullable disable
+
 using System.Reflection;
 
 namespace System.Xaml
@@ -23,7 +24,7 @@ namespace System.Xaml
 
         public XamlReaderSettings(XamlReaderSettings settings) : this()
         {
-            if (settings != null)
+            if (settings is not null)
             {
                 AllowProtectedMembersOnRoot = settings.AllowProtectedMembersOnRoot;
                 ProvideLineInfo = settings.ProvideLineInfo;

@@ -2,20 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-//  Contents:  FontFamilyMapCollection
-//
-//
-
-using System;
-using System.Globalization;
-using SC=System.Collections;
-using System.Collections.Generic;
+using SC = System.Collections;
 using MS.Internal.FontFace;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {
@@ -268,8 +256,8 @@ namespace System.Windows.Media
                 throw new InvalidOperationException(SR.CompositeFont_TooManyFamilyMaps);
 
             // Validate the index.
-            if (index < 0 || index > Count)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, Count);
 
             // PrepareToAddFamilyMap validates the familyName and updates the internal state
             // of the CompositeFontInfo object.
@@ -361,8 +349,8 @@ namespace System.Windows.Media
 
         private void RangeCheck(int index)
         {
-            if (index < 0 || index >= _count)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _count);
         }
 
         private void VerifyChangeable()

@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using Xunit;
 
@@ -12,7 +11,7 @@ public class XamlSetTypeConverterAttributeTests
     [InlineData(null)]
     [InlineData("")]
     [InlineData("xamlSetTypeConverterHandler")]
-    public void Ctor_String(string xamlSetTypeConverterHandler)
+    public void Ctor_String(string? xamlSetTypeConverterHandler)
     {
         var attribute = new XamlSetTypeConverterAttribute(xamlSetTypeConverterHandler);
         Assert.Equal(xamlSetTypeConverterHandler, attribute.XamlSetTypeConverterHandler);

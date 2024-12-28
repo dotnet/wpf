@@ -1052,11 +1052,6 @@
         <target state="translated">Поток узла XAML: отсутствует EndMember для "{0}.{1}" перед StartMember "{2}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Значение параметра должно быть больше или равно 0.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
         <source>The property element '{0}' is not contained by an object element.</source>
         <target state="translated">Элемент свойства "{0}" не содержится в элементе объекта.</target>

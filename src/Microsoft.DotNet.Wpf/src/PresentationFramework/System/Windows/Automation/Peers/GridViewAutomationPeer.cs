@@ -2,25 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
-using System.Windows.Interop;
 using System.Windows.Media;
 
 using MS.Internal;
 using MS.Internal.Automation;
-using MS.Win32;
 
 namespace System.Windows.Automation.Peers
 {
@@ -203,14 +191,10 @@ namespace System.Windows.Automation.Peers
         /// </summary>
         IRawElementProviderSimple IGridProvider.GetItem(int row, int column)
         {
-            if (row < 0 || row >= ((IGridProvider)this).RowCount)
-            {
-                throw new ArgumentOutOfRangeException("row");
-            }
-            if (column < 0 || column >= ((IGridProvider)this).ColumnCount)
-            {
-                throw new ArgumentOutOfRangeException("column");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(row);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(row, ((IGridProvider)this).RowCount);
+            ArgumentOutOfRangeException.ThrowIfNegative(column);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(column, ((IGridProvider)this).ColumnCount);
 
             ListViewItem lvi = _listview.ItemContainerGenerator.ContainerFromIndex(row) as ListViewItem;
             //If item is virtualized, try to de-virtualize it

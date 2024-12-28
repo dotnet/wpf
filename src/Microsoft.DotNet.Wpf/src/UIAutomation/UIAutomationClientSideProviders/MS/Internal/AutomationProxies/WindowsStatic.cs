@@ -5,9 +5,6 @@
 // Description: Windows Static Proxy
 
 using System;
-using System.Text;
-using System.Collections;
-using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using MS.Win32;
@@ -59,10 +56,9 @@ namespace MS.Internal.AutomationProxies
         {
             // This proxy should not be created with idChild != 0,
             // unless it is a link label.
-            if (idChild != 0 && !IsLinkLabel(hwnd))
+            if (!IsLinkLabel(hwnd))
             {
-                System.Diagnostics.Debug.Assert(idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
+                ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
             }
 
             StaticType type;

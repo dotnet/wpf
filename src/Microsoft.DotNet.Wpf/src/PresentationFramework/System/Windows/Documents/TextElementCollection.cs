@@ -2,18 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections; // IList
+using System.Windows.Controls; // TextBlock, ContentControl and AccessText
+using MS.Internal; // Invariant
+
 // 
 // Description: Generic type for TextElement collections
 //
 
 namespace System.Windows.Documents
 {
-    using System.Collections; // IList
-    using System.Collections.Generic; // ICollection<T>
-    using System.Windows.Controls; // TextBlock, ContentControl and AccessText
-    using MS.Internal; // Invariant
-    using MS.Internal.Documents; // FlowDocumentView
-
     /// <summary>
     /// </summary>
     public class TextElementCollection<TextElementType> : IList, ICollection<TextElementType> where TextElementType : TextElement
@@ -605,10 +603,7 @@ namespace System.Windows.Documents
                 throw new ArgumentException("array");
             }
 
-            if (arrayIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException("arrayIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
 
             if (arrayIndex > array.Length)
             {

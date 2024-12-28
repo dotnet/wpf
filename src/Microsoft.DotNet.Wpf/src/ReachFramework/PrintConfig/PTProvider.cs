@@ -15,28 +15,19 @@ Abstract:
 
 --*/
 
-using System;
 using System.IO;
-using System.Security;
 using System.Globalization;
-using System.Collections.Specialized;
 using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
-using System.Runtime.ConstrainedExecution;
 
 using System.Printing.Interop;
 using System.Printing;
-using Microsoft.Internal;
 
 using System.Windows.Xps;
 using System.Windows.Xps.Serialization;
 using MS.Utility;
 using System.Runtime.InteropServices.ComTypes;
-using System.Windows.Threading;
-using System.Collections.Generic;
 using System.Threading;
-using System.Diagnostics;
-using MS.Internal.PrintWin32Thunk; 
+using MS.Internal.PrintWin32Thunk;
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -564,10 +555,7 @@ namespace MS.Internal.Printing.Configuration
 
         private void VerifyAccess()
         {
-            if (_providerHandle == null)
-            {
-                throw new ObjectDisposedException("PTProvider");
-            }
+            ObjectDisposedException.ThrowIf(_providerHandle is null, typeof(PTProvider));
 
             if(_thread != Thread.CurrentThread)
             {

@@ -17,11 +17,8 @@ using System.Xml;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Runtime.InteropServices;
 
 using MS.Internal.Markup;
@@ -1118,10 +1115,7 @@ namespace Microsoft.Build.Tasks.Windows
         {
             // construct the attribute name, e.g. x:Uid
             // "x" will be the resolved namespace prefix for the definition namespace
-            string attributeName =
-                (uid.NamespacePrefix == null) ?
-                 _collector.NamespaceAddedForMissingUid + ":" + XamlReaderHelper.DefinitionUid
-               : uid.NamespacePrefix + ":" + XamlReaderHelper.DefinitionUid;
+            string attributeName = $"{uid.NamespacePrefix ?? _collector.NamespaceAddedForMissingUid}:{XamlReaderHelper.DefinitionUid}";
 
             // escape all the Xml entities in the value
             string attributeValue = EscapedXmlEntities.Replace(

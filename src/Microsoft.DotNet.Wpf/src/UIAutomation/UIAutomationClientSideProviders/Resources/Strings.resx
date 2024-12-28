@@ -330,9 +330,6 @@
   <data name="SetFocusFailed" xml:space="preserve">
     <value>Target element cannot receive focus.</value>
   </data>
-  <data name="ShouldBeZero" xml:space="preserve">
-    <value>Must be zero.</value>
-  </data>
   <data name="ValueReadonly" xml:space="preserve">
     <value>Value is read-only.</value>
   </data>

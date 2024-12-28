@@ -16,9 +16,7 @@
    Brian Adleberg (brianad ) 12-July-2005 Reach -> Xps
 ---*/
 
-using System;
 using System.IO.Packaging;
-using System.Windows.Media;
 
 namespace System.Windows.Xps.Packaging
 {

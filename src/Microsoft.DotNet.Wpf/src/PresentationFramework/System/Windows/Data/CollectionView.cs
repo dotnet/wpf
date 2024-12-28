@@ -10,17 +10,13 @@
 //
 
 
-using System;
 using System.ComponentModel;
 using System.Globalization;
 using System.Reflection;
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Windows;
 using System.Threading;
 using System.Windows.Threading;
 using MS.Internal.Data;
@@ -545,8 +541,8 @@ namespace System.Windows.Data
         {
             VerifyRefreshNotDeferred();
 
-            if (position < -1 || position > Count)
-                throw new ArgumentOutOfRangeException("position");
+            ArgumentOutOfRangeException.ThrowIfLessThan(position, -1);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(position, Count);
 
             // ignore request to move onto the placeholder
             IEditableCollectionView ecv = this as IEditableCollectionView;
@@ -662,8 +658,7 @@ namespace System.Windows.Data
         public virtual object GetItemAt(int index)
         {
             // only check lower bound because Count could be expensive
-            if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             return EnumerableWrapper[index];
         }

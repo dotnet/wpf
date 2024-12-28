@@ -33,7 +33,7 @@ GdiSafeHandle^ CGDIDevice::ConvertBrush(COLORREF colorRef)
         }
         else
         {
-            Debug::Assert(false, "CreateSolidBrush failed");
+            Debug::Fail("CreateSolidBrush failed");
         }
     }
 

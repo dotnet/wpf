@@ -17,7 +17,6 @@ using System.Globalization;
 using System.Collections;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using System.ComponentModel;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClient.NativeMethodsSetLastError;
 
@@ -25,7 +24,7 @@ namespace MS.Internal.Automation
 {
     // Disable warning for obsolete types.  These are scheduled to be removed in M8.2 so
     // only need the warning to come out for components outside of APT.
-    #pragma warning disable 0618
+#pragma warning disable 0618
 
     // Base proxy for HWNDs. Provides HWND-based children, HWND properties such as Enabled, Visible etc.
     internal class HwndProxyElementProvider:
@@ -402,8 +401,7 @@ namespace MS.Internal.Automation
 
         bool IWindowProvider.WaitForInputIdle( int milliseconds )
         {
-           if( milliseconds < 0 )
-               throw new ArgumentOutOfRangeException( "milliseconds" );
+            ArgumentOutOfRangeException.ThrowIfNegative(milliseconds);
 
             // Implementation note:  This method is usually used in response to handling a WindowPattern.WindowOpenedEvent.
             // In this case it works for both legacy and WCP windows. This is because the WindowOpenedEvent uses a private

@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System;
 using System.Xml;
 using System.Xml.Schema;
@@ -13,7 +15,7 @@ namespace MS.Internal.Markup
 #elif SYSTEM_XAML
 namespace System.Xaml
 #else
-namespace System.Windows.Markup 
+namespace System.Windows.Markup
 #endif
 {
     internal class XmlWrappingReader : XmlReader, IXmlLineInfo, IXmlNamespaceResolver {
@@ -23,12 +25,12 @@ namespace System.Windows.Markup
         protected XmlReader               _reader;
         protected IXmlLineInfo            _readerAsIXmlLineInfo;
         protected IXmlNamespaceResolver   _readerAsResolver;
-    
-// 
+
+//
 // Constructor
 //
         internal XmlWrappingReader( XmlReader baseReader ) {
-            Debug.Assert( baseReader != null );
+            Debug.Assert( baseReader is not null);
             Reader = baseReader;
         }
 
@@ -105,7 +107,7 @@ namespace System.Windows.Markup
         public override void Close() {
             _reader.Close();
         }
-        
+
         public override void Skip() {
             _reader.Skip();
         }
@@ -115,11 +117,11 @@ namespace System.Windows.Markup
         }
 
         string IXmlNamespaceResolver.LookupPrefix( string namespaceName ) {
-            return (_readerAsResolver == null) ? null : _readerAsResolver.LookupPrefix( namespaceName );
+            return (_readerAsResolver is null) ? null : _readerAsResolver.LookupPrefix( namespaceName );
         }
 
         IDictionary<string,string> IXmlNamespaceResolver.GetNamespacesInScope ( XmlNamespaceScope scope ) {
-            return (_readerAsResolver == null) ? null : _readerAsResolver.GetNamespacesInScope( scope );
+            return (_readerAsResolver is null) ? null : _readerAsResolver.GetNamespacesInScope( scope );
         }
 
         public override void ResolveEntity() {
@@ -151,18 +153,18 @@ namespace System.Windows.Markup
 // IXmlLineInfo members
 //
         public virtual bool HasLineInfo() {
-            return ( _readerAsIXmlLineInfo == null ) ? false : _readerAsIXmlLineInfo.HasLineInfo();
+            return ( _readerAsIXmlLineInfo is null ) ? false : _readerAsIXmlLineInfo.HasLineInfo();
         }
 
         public virtual int LineNumber {
             get {
-                return ( _readerAsIXmlLineInfo == null ) ? 0 : _readerAsIXmlLineInfo.LineNumber;
+                return ( _readerAsIXmlLineInfo is null ) ? 0 : _readerAsIXmlLineInfo.LineNumber;
             }
         }
 
-        public virtual int LinePosition { 
+        public virtual int LinePosition {
             get {
-                return ( _readerAsIXmlLineInfo == null ) ? 0 : _readerAsIXmlLineInfo.LinePosition;
+                return ( _readerAsIXmlLineInfo is null ) ? 0 : _readerAsIXmlLineInfo.LinePosition;
             }
         }
 
@@ -181,5 +183,5 @@ namespace System.Windows.Markup
         }
     }
 }
-    
+
 

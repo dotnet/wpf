@@ -2,7 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections.Generic;
+#nullable disable
+
 using System.Diagnostics.CodeAnalysis;
 
 namespace System.Xaml
@@ -27,7 +28,7 @@ namespace System.Xaml
         //  this 'name' then returns false. If the value of the attached property
         //  for this instance with this 'name' cannot be cast to T then returns
         //  false.
-        [SuppressMessage("Microsoft.Design", "CA1007")]
+        [SuppressMessage("Microsoft.Design", "CA1007", Justification = "Kept for compatibility.")]
         bool TryGetProperty(AttachableMemberIdentifier attachableMemberIdentifier, out object value);
     }
 }

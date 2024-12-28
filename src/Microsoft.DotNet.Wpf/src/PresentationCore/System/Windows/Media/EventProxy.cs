@@ -5,16 +5,9 @@
 //
 #pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
-using System.Windows.Media;
-using System;
 using MS.Internal;
 using MS.Win32;
-using System.Reflection;
-using System.Collections;
-using System.Diagnostics;
-using System.Security;
 using System.Runtime.InteropServices;
-using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media
 {
@@ -80,18 +73,6 @@ namespace System.Windows.Media
 
         #endregion
 
-        #region Verify
-
-        private void Verify()
-        {
-            if (target == null)
-            {
-                throw new System.ObjectDisposedException("EventProxyWrapper");
-            }
-        }
-
-        #endregion
-
         #region Public methods
 
         public int RaiseEvent(byte[] buffer, uint cb)
@@ -99,7 +80,7 @@ namespace System.Windows.Media
 #pragma warning disable 6500
             try
             {
-                Verify();
+                ObjectDisposedException.ThrowIf(target == null, typeof(EventProxyWrapper));
                 IInvokable invokable = (IInvokable)target.Target;
                 if (invokable != null)
                 {

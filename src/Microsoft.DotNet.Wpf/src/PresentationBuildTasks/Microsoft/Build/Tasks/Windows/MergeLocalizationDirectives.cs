@@ -12,7 +12,6 @@
 using System;
 using System.IO;
 using System.Text;
-using System.Xml;
 using System.Runtime.InteropServices;
 
 using Microsoft.Build.Framework;
@@ -73,7 +72,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                         Log.LogMessageFromResources(nameof(SR.CommentFileGenerating), _outputFile);
 
-                        streamWriter.WriteLine("<" + LocComments.LocDocumentRoot + ">");
+                        streamWriter.WriteLine($"<{LocComments.LocDocumentRoot}>");
 
                         // keep things simple and fast. Just keep appending the
                         // xml fragments that are already outputed.
@@ -86,7 +85,7 @@ namespace Microsoft.Build.Tasks.Windows
                             }
                         }
 
-                        streamWriter.WriteLine("</" + LocComments.LocDocumentRoot + ">");
+                        streamWriter.WriteLine($"</{LocComments.LocDocumentRoot}>");
                         Log.LogMessageFromResources(nameof(SR.CommentFileGenerated), _outputFile);
                     }
                 }

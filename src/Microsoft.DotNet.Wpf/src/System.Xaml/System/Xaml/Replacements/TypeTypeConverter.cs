@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Markup;
@@ -19,10 +21,10 @@ namespace System.Xaml.Replacements
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (context != null && value is string typeName)
+            if (context is not null && value is string typeName)
             {
                 IXamlTypeResolver typeResolver = GetService<IXamlTypeResolver>(context);
-                if (typeResolver != null)
+                if (typeResolver is not null)
                 {
                     return typeResolver.Resolve(typeName);
                 }
@@ -36,10 +38,10 @@ namespace System.Xaml.Replacements
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (context != null && value is Type type && destinationType == typeof(string))
+            if (context is not null && value is Type type && destinationType == typeof(string))
             {
                 string result = ConvertTypeToString(context, type);
-                if (result != null)
+                if (result is not null)
                 {
                     return result;
                 }
@@ -51,17 +53,17 @@ namespace System.Xaml.Replacements
         private static string ConvertTypeToString(ITypeDescriptorContext context, Type type)
         {
             IXamlSchemaContextProvider schemaContextProvider = GetService<IXamlSchemaContextProvider>(context);
-            if (schemaContextProvider == null)
+            if (schemaContextProvider is null)
             {
                 return null;
             }
-            if (schemaContextProvider.SchemaContext == null)
+            if (schemaContextProvider.SchemaContext is null)
             {
                 return null;
             }
 
             XamlType xamlType = schemaContextProvider.SchemaContext.GetXamlType(type);
-            if (xamlType == null)
+            if (xamlType is null)
             {
                 return null;
             }

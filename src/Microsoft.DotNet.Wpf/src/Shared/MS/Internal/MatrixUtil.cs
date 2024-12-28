@@ -2,33 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-//
 // Description: This file contains the implementation of MatrixUtil, which 
 //              provides matrix multiply code.
-// 
-//  
-//
-//
 
-using System;
 using System.Windows;
 using System.Windows.Media;
-using System.Diagnostics;
-using System.Security;
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
-using MS.Internal.YourAssemblyName;
-#endif
 
 namespace MS.Internal
 {
@@ -42,7 +20,6 @@ namespace MS.Internal
         TRANSFORM_IS_UNKNOWN     = 4
     }
 
-    [FriendAccessAllowed]
     internal static class MatrixUtil
     {
         /// <summary>

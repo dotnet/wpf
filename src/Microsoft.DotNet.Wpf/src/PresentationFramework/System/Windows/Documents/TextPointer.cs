@@ -6,12 +6,7 @@
 // Description: TextPointer object representing a location in formatted text.
 //
 
-using System;
 using MS.Internal;
-using System.Threading;
-using System.Windows;
-using System.Windows.Media;
-using System.Collections;
 using System.Windows.Controls; // doc comments
 
 namespace System.Windows.Documents
@@ -1486,7 +1481,7 @@ namespace System.Windows.Documents
         public override string ToString()
         {
 #if DEBUG
-            return "TextPointer Id=" + _debugId + " NodeId=" + _node.DebugId + " Edge=" + this.Edge;
+            return $"TextPointer Id={_debugId} NodeId={_node.DebugId} Edge={this.Edge}";
 #else
             return base.ToString();
 #endif // DEBUG

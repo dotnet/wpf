@@ -5,16 +5,12 @@
 // Description: HWND-based Edit Box proxy
 
 using System;
-using System.Collections;
 using System.Diagnostics;
-using System.Globalization;
 using System.Text;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Windows.Automation.Text;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
 
@@ -83,11 +79,7 @@ namespace MS.Internal.AutomationProxies
             // AutomationElement.LogicalMapping, BUT user still can get "edit"
             // from Hwnd
             // Something is wrong if idChild is not zero
-            if (idChild != 0)
-            {
-                System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             return new WindowsEditBox(hwnd, null, 0);
         }

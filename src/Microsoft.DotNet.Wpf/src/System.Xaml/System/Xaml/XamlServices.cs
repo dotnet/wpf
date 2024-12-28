@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Globalization;
 using System.IO;
 using System.Xml;
@@ -99,8 +101,8 @@ namespace System.Xaml
             IXamlLineInfo xamlLineInfo = xamlReader as IXamlLineInfo;
             IXamlLineInfoConsumer xamlLineInfoConsumer = xamlWriter as IXamlLineInfoConsumer;
             bool shouldPassLineNumberInfo = false;
-            if ((xamlLineInfo != null && xamlLineInfo.HasLineInfo)
-                && (xamlLineInfoConsumer != null && xamlLineInfoConsumer.ShouldProvideLineInfo))
+            if ((xamlLineInfo is not null && xamlLineInfo.HasLineInfo)
+                && (xamlLineInfoConsumer is not null && xamlLineInfoConsumer.ShouldProvideLineInfo))
             {
                 shouldPassLineNumberInfo = true;
             }

@@ -4,16 +4,13 @@
 
 // Description: Client-side wrapper for Window Pattern
 
-using System;
-using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
-using System.Runtime.InteropServices;
 
 namespace System.Windows.Automation
 {
     // Disable warning for obsolete types.  These are scheduled to be removed in M8.2 so
     // only need the warning to come out for components outside of APT.
-    #pragma warning disable 0618
+#pragma warning disable 0618
 
     ///<summary>wrapper class for Window pattern </summary>
 #if (INTERNAL_COMPILE)

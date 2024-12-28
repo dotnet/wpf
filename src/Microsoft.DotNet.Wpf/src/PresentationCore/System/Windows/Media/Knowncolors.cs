@@ -172,7 +172,7 @@ namespace System.Windows.Media
 
         static KnownColors()
         {
-            Array knownColorValues = Enum.GetValues(typeof(KnownColor));
+            KnownColor[] knownColorValues = Enum.GetValues<KnownColor>();
             foreach (KnownColor colorValue in knownColorValues)
             {
                 string aRGBString = String.Format("#{0,8:X8}", (uint)colorValue);

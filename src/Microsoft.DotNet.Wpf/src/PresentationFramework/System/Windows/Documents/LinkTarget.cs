@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections;
+
 //
 // Description:
 //      Implements the LinkTargetCollection as holder for a collection
@@ -10,15 +12,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Collections.Specialized;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Windows.Threading;
-    using System.Windows.Markup;
-
     //=====================================================================
     /// <summary>
     /// LinkTarget is the class that keep name that a named element exist in document

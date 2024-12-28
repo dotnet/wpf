@@ -38,11 +38,7 @@
         3. Fingers.  Short-lived pointers to a position within the data structure.
 */
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Text;
 using System.Windows;   // SR
 using TypeConverterHelper = System.Windows.Markup.TypeConverterHelper;
@@ -182,10 +178,7 @@ namespace MS.Internal.Data
                 // the goal of 3-way pivoting is to swap items so as to divide the list
                 // into three pieces:
                 //  "red" (item < pivot), "green" (item == pivot), "blue" (item > pivot)
-                // This is the famous "Dutch National Flag" problem, named by Dijkstra
-                // in honor of his country's flag, which has three vertical stripes
-                // of different colors (I don't remember the Dutch colors, so I'm using
-                // red, greeen, and blue, like the bits in a pixel color.)
+                // This is the famous "Dutch National Flag" problem, coined by Dijkstra.
                 //
                 // The following algorithm seems to be the best in practice.  It's not
                 // widely known - I reinvented it based on memories of a conversation
@@ -575,8 +568,7 @@ namespace MS.Internal.Data
         public void CopyTo(T[] array, int arrayIndex)
         {
             ArgumentNullException.ThrowIfNull(array);
-            if (arrayIndex < 0)
-                throw new ArgumentOutOfRangeException("arrayIndex");
+            ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
             if (arrayIndex + Count > array.Length)
                 throw new ArgumentException(SR.Argument_InvalidOffLen);
 
@@ -629,8 +621,8 @@ namespace MS.Internal.Data
 
         void VerifyIndex(int index, int delta = 0)
         {
-            if (index < 0 || index >= Count + delta)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, Count + delta);
         }
 
         #endregion IList<T>

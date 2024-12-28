@@ -11,17 +11,20 @@
 using MS.Internal.WindowsBase;
 #elif PRESENTATION_CORE
 using MS.Internal.PresentationCore;
+using System;
+using System.Reflection;
+
 #elif PRESENTATIONFRAMEWORK
 using MS.Internal.WindowsRuntime;
+using System;
+using System.Reflection;
+
 #elif REACHFRAMEWORK
 using MS.Internal.ReachFramework;
 #else
 using MS.Internal;
 #endif
 
-using System;
-using System.Runtime.InteropServices;
-using System.Security;
 
 #if WINDOWS_BASE
 namespace MS.Internal.WindowsBase
@@ -35,10 +38,6 @@ namespace MS.Internal
 {
     namespace WindowsRuntime
     {
-        using System;
-        using System.Collections.Generic;
-        using System.Reflection;
-
         internal static class ReflectionHelper
         {
             /// <summary>
@@ -310,7 +309,7 @@ namespace MS.Internal
                 ConstructorInfo constructor = type.GetConstructor(Type.EmptyTypes);
                 if (constructor == null)
                 {
-                    string constructorName = type.FullName + "." + type.Name  + "()";
+                    string constructorName = $"{type.FullName}.{type.Name}()";
                     throw new MissingMethodException(constructorName);
                 }
 
@@ -335,7 +334,7 @@ namespace MS.Internal
                 ConstructorInfo constructor = type.GetConstructor(new Type[] { typeof(TArg1) });
                 if (constructor == null)
                 {
-                    string constructorName = string.Format("{0}.{1}({2})", type.FullName, type.Name, typeof(TArg1).Name);
+                    string constructorName = $"{type.FullName}.{type.Name}({typeof(TArg1).Name})";
                     throw new MissingMethodException(constructorName);
                 }
 
@@ -362,7 +361,7 @@ namespace MS.Internal
                 ConstructorInfo constructor = type.GetConstructor(new Type[] { typeof(TArg1), typeof(TArg2) });
                 if (constructor == null)
                 {
-                    string constructorName = string.Format("{0}.{1}({2},{3})", type.FullName, type.Name, typeof(TArg1).Name, typeof(TArg2).Name);
+                    string constructorName = $"{type.FullName}.{type.Name}({typeof(TArg1).Name},{typeof(TArg2).Name})";
                     throw new MissingMethodException(constructorName);
                 }
 

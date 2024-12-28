@@ -11,24 +11,21 @@
 *
 \***************************************************************************/
 using System.Collections;               // DictionaryEntry
-using System.Collections.Generic;       // List<T>
 using System.Collections.Specialized;   // HybridDictionary
 using System.ComponentModel;            // PropertyDescriptor
-using System.Diagnostics;               // Debug.Assert
 using System.Reflection;                // PropertyInfo
 
 using System.Windows.Controls;          // MediaElement
-using System.Windows.Documents;         // TableTemplate
 using System.Windows.Markup;            // INameScope
 using MS.Internal;                      // Helper
 using MS.Utility;                       // FrugalMap
 
 namespace System.Windows.Media.Animation
 {
-/// <summary>
-/// A Storyboard coordinates a set of actions in a time-dependent manner.
-/// </summary>
-public class Storyboard : ParallelTimeline
+    /// <summary>
+    /// A Storyboard coordinates a set of actions in a time-dependent manner.
+    /// </summary>
+    public class Storyboard : ParallelTimeline
 {
     static Storyboard()
     {
@@ -574,7 +571,7 @@ public class Storyboard : ParallelTimeline
         object mappedObject = clockMappings[mappingKey];
 
         Debug.Assert( mappedObject == null || mappedObject is AnimationClock || mappedObject is List<AnimationClock>,
-            "Internal error - clockMappings table contains an unexpected object " + ((mappedObject == null ) ? "" : mappedObject.GetType().ToString()) );
+            $"Internal error - clockMappings table contains an unexpected object {((mappedObject == null) ? "" : mappedObject.GetType().ToString())}");
 
         if( mappedObject == null )
         {
@@ -615,7 +612,7 @@ public class Storyboard : ParallelTimeline
             List<AnimationClock> clockList;
 
             Debug.Assert( value is AnimationClock || value is List<AnimationClock> ,
-                "Internal error - clockMappings table contains unexpected object of type" + value.GetType() );
+                $"Internal error - clockMappings table contains unexpected object of type{value.GetType()}");
 
             if( value is AnimationClock )
             {

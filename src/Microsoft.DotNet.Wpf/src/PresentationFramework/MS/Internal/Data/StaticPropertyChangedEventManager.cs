@@ -7,12 +7,9 @@
 //              pattern.  See WeakEventTable.cs for an overview.
 //
 
-using System;
 using System.Collections;       // ICollection
-using System.Collections.Generic; // List<T>
 using System.Collections.Specialized;   // HybridDictionary
 using System.ComponentModel;    // INotifyPropertyChanged
-using System.Diagnostics;       // Debug
 using System.Reflection;        // EventInfo
 using System.Windows;           // WeakEventManager
 
@@ -604,7 +601,7 @@ namespace MS.Internal.Data
 
             public void StartListening(Type type)
             {
-                string eventName = _propertyName + "Changed";
+                string eventName = $"{_propertyName}Changed";
                 EventInfo eventInfo = type.GetEvent(eventName, BindingFlags.Public | BindingFlags.Static);
                 if (eventInfo != null)
                 {
@@ -615,7 +612,7 @@ namespace MS.Internal.Data
 
             public void StopListening(Type type)
             {
-                string eventName = _propertyName + "Changed";
+                string eventName = $"{_propertyName}Changed";
                 EventInfo eventInfo = type.GetEvent(eventName, BindingFlags.Public | BindingFlags.Static);
                 if (eventInfo != null)
                 {

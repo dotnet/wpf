@@ -2,21 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //   This class provides file versioning support for streams provided by 
 //   IDataTransform implementations.
-//
-//
-//
-//
 
-using System;
-using System.IO;                                // for Stream
-using System.Windows;                           // ExceptionStringTable
-using System.Globalization;                     // for CultureInfo
-using MS.Internal.WindowsBase;
+using System.IO;
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {
@@ -99,8 +89,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             CheckDisposed();
 
-            if (newLength < 0)
-                throw new ArgumentOutOfRangeException("newLength");
+            ArgumentOutOfRangeException.ThrowIfNegative(newLength);
 
             _versionOwner.WriteAttempt();
             _stream.SetLength(newLength);

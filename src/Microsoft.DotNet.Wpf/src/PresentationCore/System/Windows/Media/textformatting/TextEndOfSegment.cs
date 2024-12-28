@@ -11,14 +11,6 @@
 //
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Media;
-
-using SR=MS.Internal.PresentationCore.SR;
-
 namespace System.Windows.Media.TextFormatting
 {
     /// <summary>
@@ -37,8 +29,7 @@ namespace System.Windows.Media.TextFormatting
         /// <param name="length">number of characters</param>
         public TextEndOfSegment(int length)
         {
-            if (length <= 0)
-                throw new ArgumentOutOfRangeException("length", SR.ParameterMustBeGreaterThanZero);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
 
             _length = length;
         }

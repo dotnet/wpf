@@ -2,12 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-
 namespace System.Windows.Shell
 {
-    using System.Windows;
-
     public class ThumbButtonInfoCollection : FreezableCollection<ThumbButtonInfo>
     {
         protected override Freezable CreateInstanceCore()

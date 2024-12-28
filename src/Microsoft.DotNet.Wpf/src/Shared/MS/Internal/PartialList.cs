@@ -16,10 +16,7 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace MS.Internal
 {
@@ -151,8 +148,7 @@ namespace MS.Internal
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            if (arrayIndex < 0)
-                throw new ArgumentOutOfRangeException("arrayIndex");
+            ArgumentOutOfRangeException.ThrowIfNegative(arrayIndex);
 
             for (int i = 0; i < _count; ++i)
                 array[arrayIndex + i] = this[i];

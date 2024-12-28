@@ -1052,11 +1052,6 @@
         <target state="translated">XAML-Knotenstream: EndMember für "{0}.{1}" fehlt vor StartMember "{2}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Der Parameter muss größer oder gleich null sein.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
         <source>The property element '{0}' is not contained by an object element.</source>
         <target state="translated">Das Eigenschaftenelement "{0}" ist nicht in einem Objektelement enthalten.</target>

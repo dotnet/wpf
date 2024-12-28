@@ -2,18 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//
-
-
-using Microsoft.Win32;                       // Registry & ComponentDispatcher & MSG
-using System.Security;                       // CAS
-using System.Runtime.InteropServices;        // SEHException
-using System.Diagnostics;                    // Debug & Debugger
 using System.Threading;
-using MS.Internal.WindowsBase;
 
 namespace System.Windows.Threading
 {

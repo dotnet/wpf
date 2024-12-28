@@ -2,22 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Windows;
-
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
-using MS.Internal.YourAssemblyName;
-#endif
 
 // Disable pragma warnings to enable PREsharp pragmas
 #pragma warning disable 1634, 1691
@@ -35,7 +20,6 @@ namespace MS.Internal
     ///    This should not be a problem unless the caller stops enumerating
     ///    before the end of the list AND holds the enumerator alive forever.
     /// </remarks>
-    [FriendAccessAllowed]
     internal struct WeakReferenceListEnumerator : IEnumerator
     {
         public WeakReferenceListEnumerator( ArrayList List)

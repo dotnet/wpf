@@ -9,9 +9,7 @@
 
 namespace System.Windows.Documents
 {
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    
+
     internal abstract class FixedSOMPageElement :FixedSOMContainer
     {
         //--------------------------------------------------------------------

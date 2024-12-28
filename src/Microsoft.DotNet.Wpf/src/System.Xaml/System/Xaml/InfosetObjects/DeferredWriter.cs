@@ -2,7 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics;
+#nullable disable
+
 using MS.Internal.Xaml.Context;
 
 namespace System.Xaml
@@ -138,7 +139,7 @@ namespace System.Xaml
             switch (_mode)
             {
             case DeferringMode.Off:
-                if (property.DeferringLoader != null)
+                if (property.DeferringLoader is not null)
                 {
                     _mode = DeferringMode.TemplateStarting;
 
@@ -250,7 +251,7 @@ namespace System.Xaml
             {
                 if (disposing && !IsDisposed)
                 {
-                    if (_deferredWriter != null)
+                    if (_deferredWriter is not null)
                     {
                         _deferredWriter.Close();
                         _deferredWriter = null;
@@ -289,7 +290,7 @@ namespace System.Xaml
                 goto case DeferringMode.TemplateDeferring;
 
             case DeferringMode.TemplateDeferring:
-                if (_deferredLineInfoConsumer != null)
+                if (_deferredLineInfoConsumer is not null)
                 {
                     _deferredLineInfoConsumer.SetLineInfo(lineNumber, linePosition);
                 }
@@ -310,7 +311,7 @@ namespace System.Xaml
         private void StartDeferredList()
         {
             // the list may have been created already by SetLineInfo
-            if (_deferredList == null)
+            if (_deferredList is null)
             {
                 _deferredList = new XamlNodeList(_context.SchemaContext);
                 _deferredWriter = _deferredList.Writer;

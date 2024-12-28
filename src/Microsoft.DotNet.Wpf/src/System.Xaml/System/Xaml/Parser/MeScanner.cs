@@ -2,9 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+#nullable disable
+
 using System.Text;
 using System.Xaml;
 using System.Xaml.MS.Impl;
@@ -35,7 +34,7 @@ namespace MS.Internal.Xaml.Parser
     // 3) All strings are trimmed of whitespace front and back unless they were quoted.
     // 4) Quote characters can only appear at the start and end of strings.
     // 5) TypeNames cannot be quoted.
-    
+
     internal class MeScanner
     {
         public const char Space = ' ';
@@ -204,8 +203,8 @@ namespace MS.Internal.Xaml.Parser
 
             if(readString)
             {
-                if (_context.CurrentType.IsMarkupExtension 
-                    && _context.CurrentBracketModeParseParameters != null 
+                if (_context.CurrentType.IsMarkupExtension
+                    && _context.CurrentBracketModeParseParameters is not null
                     && _context.CurrentBracketModeParseParameters.IsConstructorParsingMode)
                 {
                     int currentCtrParam = _context.CurrentBracketModeParseParameters.CurrentConstructorParam;
@@ -241,8 +240,8 @@ namespace MS.Internal.Xaml.Parser
             if (value.StartsWith("{}", StringComparison.OrdinalIgnoreCase))
             {
                 value = value.Substring(2);
-            } 
-            
+            }
+
             if (!value.Contains(Backslash))
             {
                 return value;
@@ -284,19 +283,19 @@ namespace MS.Internal.Xaml.Parser
         {
             string error;
             XamlTypeName typeName = XamlTypeName.ParseInternal(longName, _context.FindNamespaceByPrefix, out error);
-            if (typeName == null)
+            if (typeName is null)
             {
                 throw new XamlParseException(this, error);
             }
-            
+
             // In curly form, we search for TypeName + 'Extension' before TypeName
             string bareTypeName = typeName.Name;
             typeName.Name = typeName.Name + KnownStrings.Extension;
             XamlType xamlType = _context.GetXamlType(typeName, false);
             // This would be cleaner if we moved the Extension fallback logic out of XSC
-            if (xamlType == null || 
+            if (xamlType is null ||
                 // Guard against Extension getting added twice
-                (xamlType.UnderlyingType != null && 
+                (xamlType.UnderlyingType is not null &&
                  KS.Eq(xamlType.UnderlyingType.Name, typeName.Name + KnownStrings.Extension)))
             {
                 typeName.Name = bareTypeName;
@@ -310,7 +309,7 @@ namespace MS.Internal.Xaml.Parser
         private void ResolvePropertyName(string longName)
         {
             XamlPropertyName propName = XamlPropertyName.Parse(longName);
-            if (propName == null)
+            if (propName is null)
             {
                 throw new ArgumentException(SR.MalformedPropertyName);
             }
@@ -374,8 +373,8 @@ namespace MS.Internal.Xaml.Parser
                     }
                 }
                 // If we are inside of MarkupExtensionBracketCharacters for a particular property or position parameter,
-                // scoop up everything inside one by one, and keep track of nested Bracket Characters in the stack. 
-                else if (_context.CurrentBracketModeParseParameters != null && _context.CurrentBracketModeParseParameters.IsBracketEscapeMode)
+                // scoop up everything inside one by one, and keep track of nested Bracket Characters in the stack.
+                else if (_context.CurrentBracketModeParseParameters is not null && _context.CurrentBracketModeParseParameters.IsBracketEscapeMode)
                 {
                     Stack<char> bracketCharacterStack = _context.CurrentBracketModeParseParameters.BracketCharacterStack;
                     if (_currentSpecialBracketCharacters.StartsEscapeSequence(ch))
@@ -461,7 +460,7 @@ namespace MS.Internal.Xaml.Parser
                         break;
 
                     default:  // All other character (including whitespace)
-                        if (_currentSpecialBracketCharacters != null && _currentSpecialBracketCharacters.StartsEscapeSequence(ch))
+                        if (_currentSpecialBracketCharacters is not null && _currentSpecialBracketCharacters.StartsEscapeSequence(ch))
                         {
                             Stack<char> bracketCharacterStack =
                                 _context.CurrentBracketModeParseParameters.BracketCharacterStack;
@@ -551,7 +550,7 @@ namespace MS.Internal.Xaml.Parser
 
             if (ch == KnownStrings.WhitespaceChars[0] ||
                 ch == KnownStrings.WhitespaceChars[1] ||
-                ch == KnownStrings.WhitespaceChars[2] || 
+                ch == KnownStrings.WhitespaceChars[2] ||
                 ch == KnownStrings.WhitespaceChars[3] ||
                 ch == KnownStrings.WhitespaceChars[4])
             {
@@ -588,7 +587,7 @@ namespace MS.Internal.Xaml.Parser
         private SpecialBracketCharacters GetBracketCharacterForProperty(string propertyName)
         {
             SpecialBracketCharacters bracketCharacters = null;
-            if (_context.CurrentEscapeCharacterMapForMarkupExtension != null && 
+            if (_context.CurrentEscapeCharacterMapForMarkupExtension is not null &&
                 _context.CurrentEscapeCharacterMapForMarkupExtension.ContainsKey(propertyName))
             {
                 bracketCharacters = _context.CurrentEscapeCharacterMapForMarkupExtension[propertyName];
@@ -605,7 +604,7 @@ namespace MS.Internal.Xaml.Parser
             CurrentConstructorParam = 0;
             IsBracketEscapeMode = false;
             BracketCharacterStack = new Stack<char>();
-            if (context.CurrentLongestConstructorOfMarkupExtension != null)
+            if (context.CurrentLongestConstructorOfMarkupExtension is not null)
             {
                 IsConstructorParsingMode = context.CurrentLongestConstructorOfMarkupExtension.Length > 0;
                 MaxConstructorParams = context.CurrentLongestConstructorOfMarkupExtension.Length;

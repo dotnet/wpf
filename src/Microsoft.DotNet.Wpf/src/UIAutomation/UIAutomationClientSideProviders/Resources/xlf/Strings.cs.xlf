@@ -357,11 +357,6 @@
         <target state="translated">Cílový element nemůže být vybrán.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ShouldBeZero">
-        <source>Must be zero.</source>
-        <target state="translated">Musí mít hodnotu nula.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ValueReadonly">
         <source>Value is read-only.</source>
         <target state="translated">Hodnota je pouze pro čtení.</target>

@@ -2,19 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
-using System.Security;
 using System.Text;
 using System.Threading;
 using System.Xaml.MS.Impl;
 using System.Xaml.Schema;
 using MS.Internal.Xaml.Parser;
-#if !TARGETTING35SP1
 using System.Collections.Concurrent;
-#endif
 
 namespace System.Xaml
 {
@@ -36,8 +34,8 @@ namespace System.Xaml
         private readonly ReadOnlyCollection<Assembly> _referenceAssemblies;
 
         // take this lock when iterating new assemblies in the AppDomain/RefAssm
-        object _syncExaminingAssemblies;               
-        
+        object _syncExaminingAssemblies;
+
         #endregion
 
         #region Constructors
@@ -53,13 +51,13 @@ namespace System.Xaml
 
         public XamlSchemaContext(IEnumerable<Assembly> referenceAssemblies, XamlSchemaContextSettings settings)
         {
-            if (referenceAssemblies != null)
+            if (referenceAssemblies is not null)
             {
                 // ReadOnlyCollection wants an IList but we have an IEnumerable.
                 List<Assembly> listOfAssemblies = new List<Assembly>(referenceAssemblies);
                 _referenceAssemblies = new ReadOnlyCollection<Assembly>(listOfAssemblies);
             }
-            _settings = (settings != null)
+            _settings = (settings is not null)
                 ? new XamlSchemaContextSettings(settings)
                 : new XamlSchemaContextSettings();
             _syncExaminingAssemblies = new Object();
@@ -75,7 +73,7 @@ namespace System.Xaml
         {
             try
             {
-                if (_assemblyLoadHandler != null && !Environment.HasShutdownStarted)
+                if (_assemblyLoadHandler is not null && !Environment.HasShutdownStarted)
                 {
                     _assemblyLoadHandler.Unhook();
                 }
@@ -105,7 +103,7 @@ namespace System.Xaml
         {
             UpdateXmlNsInfo();
             IList<string> result = _nonClrNamespaces;
-            if (result == null)
+            if (result is null)
             {
                 // To avoid a race condition when assigning this list, don't allow any additional
                 // namespaces to be added while we're iterating the current list
@@ -138,7 +136,7 @@ namespace System.Xaml
         {
             ArgumentNullException.ThrowIfNull(xmlns);
             UpdateXmlNsInfo();
-            if (_preferredPrefixes == null)
+            if (_preferredPrefixes is null)
             {
                 InitializePreferredPrefixes();
             }
@@ -183,7 +181,7 @@ namespace System.Xaml
             if (sb.Length > 0)
             {
                 string result = sb.ToString();
-                
+
                 if (KS.Eq(result, XamlLanguage.PreferredPrefix))
                 {
                     // Prevent this algorithm from stealing 'x'
@@ -264,11 +262,11 @@ namespace System.Xaml
         public XamlType GetXamlType(XamlTypeName xamlTypeName)
         {
             ArgumentNullException.ThrowIfNull(xamlTypeName);
-            if (xamlTypeName.Name == null)
+            if (xamlTypeName.Name is null)
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "xamlTypeName.Name"), nameof(xamlTypeName));
             }
-            if (xamlTypeName.Namespace == null)
+            if (xamlTypeName.Namespace is null)
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "xamlTypeName.Namespace"), nameof(xamlTypeName));
             }
@@ -279,12 +277,12 @@ namespace System.Xaml
                 typeArgs = new XamlType[xamlTypeName.TypeArguments.Count];
                 for (int i = 0; i < xamlTypeName.TypeArguments.Count; i++)
                 {
-                    if (xamlTypeName.TypeArguments[i] == null)
+                    if (xamlTypeName.TypeArguments[i] is null)
                     {
                         throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "xamlTypeName.TypeArguments"));
                     }
                     typeArgs[i] = GetXamlType(xamlTypeName.TypeArguments[i]);
-                    if (typeArgs[i] == null)
+                    if (typeArgs[i] is null)
                     {
                         return null;
                     }
@@ -297,15 +295,15 @@ namespace System.Xaml
         {
             ArgumentNullException.ThrowIfNull(xamlNamespace);
             ArgumentNullException.ThrowIfNull(name);
-            if (typeArguments != null)
+            if (typeArguments is not null)
             {
                 foreach (XamlType typeArg in typeArguments)
                 {
-                    if (typeArg == null)
+                    if (typeArg is null)
                     {
                         throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "typeArguments"));
                     }
-                    if (typeArg.UnderlyingType == null)
+                    if (typeArg.UnderlyingType is null)
                     {
                         return null;
                     }
@@ -313,10 +311,10 @@ namespace System.Xaml
             }
 
             XamlType result = null;
-            if (typeArguments == null || typeArguments.Length == 0)
+            if (typeArguments is null || typeArguments.Length == 0)
             {
                 result = XamlLanguage.LookupXamlType(xamlNamespace, name);
-                if (result != null)
+                if (result is not null)
                 {
                     if (FullyQualifyAssemblyNamesInClrNamespaces)
                     {
@@ -331,7 +329,7 @@ namespace System.Xaml
             XamlNamespace ns = GetXamlNamespace(xamlNamespace);
             int revision = ns.RevisionNumber;
             result = ns.GetXamlType(name, typeArguments);
-            if (result == null && !ns.IsClrNamespace)
+            if (result is null && !ns.IsClrNamespace)
             {
                 UpdateXmlNsInfo();
                 if (ns.RevisionNumber > revision)
@@ -350,12 +348,12 @@ namespace System.Xaml
         // Laziy init, always access through property
         private ConcurrentDictionary<string, string> _xmlNsCompatDict;
 
-        // Thread-safe cache - always use TryAdd or TryUpdate to write 
+        // Thread-safe cache - always use TryAdd or TryUpdate to write
         private ConcurrentDictionary<string, string> XmlNsCompatDict
         {
             get
             {
-                if (_xmlNsCompatDict == null)
+                if (_xmlNsCompatDict is null)
                     Interlocked.CompareExchange(ref _xmlNsCompatDict, CreateDictionary<string, string>(), null);
                 return _xmlNsCompatDict;
             }
@@ -376,13 +374,13 @@ namespace System.Xaml
             {
                 return true;
             }
-            
+
             // Then look for XmlnsCompatAttributes
             UpdateXmlNsInfo();
             compatibleNamespace = GetCompatibleNamespace(xamlNamespace);
-            
+
             // Fall back to just using the requested namespace;
-            if (compatibleNamespace == null)
+            if (compatibleNamespace is null)
             {
                 compatibleNamespace = xamlNamespace;
             }
@@ -415,14 +413,14 @@ namespace System.Xaml
                 foreach (XmlNsInfo nsInfo in EnumerateXmlnsInfos())
                 {
                     Assembly curAssembly = nsInfo.Assembly;
-                    if (curAssembly == null)
+                    if (curAssembly is null)
                     {
                         continue;
                     }
                     IDictionary<string, string> oldToNewNs = null;
 
                     // When trawling the entire AppDomain, suppress exceptions from assemblies with bad attributes
-                    if (ReferenceAssemblies == null)
+                    if (ReferenceAssemblies is null)
                     {
                         try
                         {
@@ -446,7 +444,7 @@ namespace System.Xaml
                     string newNs;
                     if (oldToNewNs.TryGetValue(oldNs, out newNs))
                     {
-                        if (result != null && result != newNs)
+                        if (result is not null && result != newNs)
                         {
                             throw new XamlSchemaException(SR.Format(SR.DuplicateXmlnsCompatAcrossAssemblies,
                                 resultAssembly.FullName, curAssembly.FullName, oldNs));
@@ -469,51 +467,51 @@ namespace System.Xaml
         private ConcurrentDictionary<ReferenceEqualityTuple<MemberInfo, MemberInfo>, XamlMember> _masterMemberList;
         private ConcurrentDictionary<XamlType, Dictionary<string,SpecialBracketCharacters> > _masterBracketCharacterCache;
 
-        // Security note: all of these ConcurrentDictionaries use Reference Equality to prevent spoofing of 
+        // Security note: all of these ConcurrentDictionaries use Reference Equality to prevent spoofing of
         // RuntimeTypes/Members by other custom derived descendants of System.Type/MemberInfo.
         // E.g. if a user called GetXamlType(Type) and passed in a custom descendant of System.Type
         // that reported itself as Equal to some real type, then when we went to look up the real
         // type, we would get the spoofed one instead. Using reference equality avoids that.
 
-        // Thread-safe cache - always use TryAdd or TryUpdate to write 
+        // Thread-safe cache - always use TryAdd or TryUpdate to write
         private ConcurrentDictionary<XamlType, Dictionary<string, SpecialBracketCharacters> > MasterBracketCharacterCache
         {
             get
             {
-                if (_masterBracketCharacterCache == null)
+                if (_masterBracketCharacterCache is null)
                     Interlocked.CompareExchange(ref _masterBracketCharacterCache, CreateDictionary<XamlType, Dictionary<string, SpecialBracketCharacters>>(), null);
                 return _masterBracketCharacterCache;
             }
         }
 
-        // Thread-safe cache - always use TryAdd or TryUpdate to write 
+        // Thread-safe cache - always use TryAdd or TryUpdate to write
         private ConcurrentDictionary<Type, XamlType> MasterTypeList
         {
             get
             {
-                if (_masterTypeList == null)
+                if (_masterTypeList is null)
                     Interlocked.CompareExchange(ref _masterTypeList, CreateDictionary<Type, XamlType>(ReferenceEqualityComparer.Instance), null);
                 return _masterTypeList;
             }
         }
 
-        // Thread-safe cache - always use TryAdd or TryUpdate to write 
+        // Thread-safe cache - always use TryAdd or TryUpdate to write
         private ConcurrentDictionary<ReferenceEqualityTuple<Type, XamlType, Type>, object> MasterValueConverterList
         {
             get
             {
-                if (_masterValueConverterList == null)
+                if (_masterValueConverterList is null)
                     Interlocked.CompareExchange(ref _masterValueConverterList, CreateDictionary<ReferenceEqualityTuple<Type, XamlType, Type>, object>(), null);
                 return _masterValueConverterList;
             }
         }
 
-        // Thread-safe cache - always use TryAdd or TryUpdate to write 
+        // Thread-safe cache - always use TryAdd or TryUpdate to write
         private ConcurrentDictionary<ReferenceEqualityTuple<MemberInfo, MemberInfo>, XamlMember> MasterMemberList
         {
             get
             {
-                if (_masterMemberList == null)
+                if (_masterMemberList is null)
                     Interlocked.CompareExchange(ref _masterMemberList, CreateDictionary<ReferenceEqualityTuple<MemberInfo, MemberInfo>, XamlMember>(), null);
                 return _masterMemberList;
             }
@@ -539,7 +537,7 @@ namespace System.Xaml
         }
 
         /// <summary>
-        /// Constructs a cache of all the members in this particular type that have 
+        /// Constructs a cache of all the members in this particular type that have
         /// MarkupExtensionBracketCharactersAttribute set on them. This cache is added to a master
         /// cache which stores the BracketCharacter cache for each type.
         /// </summary>
@@ -556,7 +554,7 @@ namespace System.Xaml
                     bracketCharacterCache = TryAdd(MasterBracketCharacterCache, type, bracketCharacterCache);
                 }
             }
-            
+
             return bracketCharacterCache;
         }
 
@@ -573,10 +571,10 @@ namespace System.Xaml
                 string constructorArgumentName = member.ConstructorArgument;
                 string propertyName = member.Name;
                 IReadOnlyDictionary<char,char> markupExtensionBracketCharactersList = member.MarkupExtensionBracketCharacters;
-                SpecialBracketCharacters splBracketCharacters = markupExtensionBracketCharactersList != null && markupExtensionBracketCharactersList.Count > 0
+                SpecialBracketCharacters splBracketCharacters = markupExtensionBracketCharactersList is not null && markupExtensionBracketCharactersList.Count > 0
                     ? new SpecialBracketCharacters(markupExtensionBracketCharactersList)
                     : null;
-                if (splBracketCharacters != null)
+                if (splBracketCharacters is not null)
                 {
                     splBracketCharacters.EndInit();
                     map.Add(propertyName, splBracketCharacters);
@@ -588,7 +586,7 @@ namespace System.Xaml
             }
 
             return map.Count > 0 ? map : null;
-        } 
+        }
 
         protected internal XamlValueConverter<TConverterBase> GetValueConverter<TConverterBase>(
             Type converterType, XamlType targetType)
@@ -694,7 +692,7 @@ namespace System.Xaml
 
         // take this lock when modifying _unexaminedAssemblies or _isGCCallbackPending
         // Acquisition order: If also taking _syncExaminingAssemblies, take it first
-        object _syncAccessingUnexaminedAssemblies;     
+        object _syncAccessingUnexaminedAssemblies;
 
         // This dictionary is also thread-safe for single reads and writes, but if you're
         // iterating them, lock on _syncExaminingAssemblies to ensure consistent results
@@ -702,7 +700,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_xmlnsInfo == null)
+                if (_xmlnsInfo is null)
                     Interlocked.CompareExchange(ref _xmlnsInfo, CreateDictionary<Assembly, XmlNsInfo>(ReferenceEqualityComparer.Instance), null);
                 return _xmlnsInfo;
             }
@@ -713,7 +711,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_xmlnsInfoForDynamicAssemblies == null)
+                if (_xmlnsInfoForDynamicAssemblies is null)
                     Interlocked.CompareExchange(ref _xmlnsInfoForDynamicAssemblies, CreateDictionary<WeakRefKey, XmlNsInfo>(), null);
                 return _xmlnsInfoForDynamicAssemblies;
             }
@@ -725,7 +723,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_namespaceByUriList == null)
+                if (_namespaceByUriList is null)
                     Interlocked.CompareExchange(ref _namespaceByUriList,  CreateDictionary<string, XamlNamespace>(), null);
                 return _namespaceByUriList;
             }
@@ -739,7 +737,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_xmlnsInfoForUnreferencedAssemblies == null)
+                if (_xmlnsInfoForUnreferencedAssemblies is null)
                 {
                     Interlocked.CompareExchange(ref _xmlnsInfoForUnreferencedAssemblies, CreateDictionary<Assembly, XmlNsInfo>(ReferenceEqualityComparer.Instance), null);
                 }
@@ -766,7 +764,7 @@ namespace System.Xaml
                 if (friend.Name == toAssemblyName.Name)
                 {
                     byte[] expectedToken = friend.GetPublicKeyToken();
-                    if (expectedToken == null)
+                    if (expectedToken is null)
                     {
                         // InternalsVisibleToAttribute doesn't specify a public key, so don't check it
                         return true;
@@ -784,7 +782,7 @@ namespace System.Xaml
         {
             WeakReference weakRef = (WeakReference)schemaContextWeakRef;
             XamlSchemaContext schemaContext = weakRef.Target as XamlSchemaContext;
-            if (schemaContext != null)
+            if (schemaContext is not null)
             {
                 schemaContext.CleanupCollectedAssemblies();
             }
@@ -806,7 +804,7 @@ namespace System.Xaml
                     for (int i = _unexaminedAssemblies.Count - 1; i >= 0; i--)
                     {
                         Assembly assembly = _unexaminedAssemblies[i];
-                        if (assembly == null)
+                        if (assembly is null)
                         {
                             _unexaminedAssemblies.RemoveAt(i);
                         }
@@ -819,7 +817,7 @@ namespace System.Xaml
             }
             lock (_syncExaminingAssemblies)
             {
-                if (_xmlnsInfoForDynamicAssemblies != null)
+                if (_xmlnsInfoForDynamicAssemblies is not null)
                 {
                     foreach (WeakRefKey weakRefKey in _xmlnsInfoForDynamicAssemblies.Keys)
                     {
@@ -844,7 +842,7 @@ namespace System.Xaml
         private void RegisterAssemblyCleanup()
         {
             // Locking around this check prevents multiple threads from redundantly registering
-            // callbacks at the same time. 
+            // callbacks at the same time.
             // We could use either the examining or unexamined lock, since clenaup touches both;
             // we use the unexamined because it has a shorter blocking time.
             lock (_syncAccessingUnexaminedAssemblies)
@@ -859,7 +857,7 @@ namespace System.Xaml
 
         private IEnumerable<XmlNsInfo> EnumerateXmlnsInfos()
         {
-            if (_xmlnsInfoForDynamicAssemblies == null)
+            if (_xmlnsInfoForDynamicAssemblies is null)
             {
                 return XmlnsInfo.Values;
             }
@@ -890,14 +888,14 @@ namespace System.Xaml
         internal ReadOnlyCollection<string> GetXamlNamespaces(XamlType type)
         {
             Type clrType = type.UnderlyingType;
-            if (clrType == null || clrType.Assembly == null)
+            if (clrType is null || clrType.Assembly is null)
             {
                 return null;
             }
 
             if (XamlLanguage.AllTypes.Contains(type))
             {
-                // We need a read-only list which combines the directive namespace(s) with the 
+                // We need a read-only list which combines the directive namespace(s) with the
                 // the namespaces(s) that this type supports through standard CLR binding rules
                 IList<string> clrBoundNamespaces = GetXmlNsMappings(clrType.Assembly, clrType.Namespace);
                 List<string> combinedList = new List<string>();
@@ -939,9 +937,9 @@ namespace System.Xaml
             XmlNsInfo result;
 
             if (XmlnsInfo.TryGetValue(assembly, out result) ||
-                (_xmlnsInfoForDynamicAssemblies != null && assembly.IsDynamic &&
+                (_xmlnsInfoForDynamicAssemblies is not null && assembly.IsDynamic &&
                  _xmlnsInfoForDynamicAssemblies.TryGetValue(new WeakRefKey(assembly), out result)) ||
-                (_xmlnsInfoForUnreferencedAssemblies != null && _xmlnsInfoForUnreferencedAssemblies.TryGetValue(assembly, out result)))
+                (_xmlnsInfoForUnreferencedAssemblies is not null && _xmlnsInfoForUnreferencedAssemblies.TryGetValue(assembly, out result)))
             {
                 return result;
             }
@@ -960,7 +958,7 @@ namespace System.Xaml
             // 3. ReflectionOnly assemblies and custom derivations of System.Assembly are in
             //    XmlnsInfoForUnreferencedAssemblies, so that they don't pollute the 'real' cache.
             bool isReferenced = false;
-            if (_referenceAssemblies != null)
+            if (_referenceAssemblies is not null)
             {
                 foreach (var asm in _referenceAssemblies)
                 {
@@ -981,7 +979,7 @@ namespace System.Xaml
             result = new XmlNsInfo(assembly, FullyQualifyAssemblyNamesInClrNamespaces);
             if (isReferenced)
             {
-                if (assembly.IsDynamic && _referenceAssemblies == null)
+                if (assembly.IsDynamic && _referenceAssemblies is null)
                 {
                     result = TryAdd(XmlnsInfoForDynamicAssemblies, new WeakRefKey(assembly), result);
                     // Ensure we clean up the cache if dynamic assemblies are collected
@@ -1024,7 +1022,7 @@ namespace System.Xaml
         private void InitializeAssemblyLoadHook()
         {
             _syncAccessingUnexaminedAssemblies = new Object();
-            if (ReferenceAssemblies == null)
+            if (ReferenceAssemblies is null)
             {
 
                 _assemblyLoadHandler = new AssemblyLoadHandler(this);
@@ -1088,11 +1086,11 @@ namespace System.Xaml
 
                 // If we're trawling thorugh all assemblies in the AppDomain, then we'll ignore
                 //  any exceptions from invalid attributes
-                bool throwOnError = (ReferenceAssemblies != null);
+                bool throwOnError = (ReferenceAssemblies is not null);
                 for (int i = 0; i < unexaminedAssembliesCopy.Count; i++)
                 {
                     var assembly = unexaminedAssembliesCopy[i];
-                    if (assembly == null)
+                    if (assembly is null)
                     {
                         // The assembly is a collectible dynamic assembly, and has been GC'ed. Ignore it.
                         continue;
@@ -1112,7 +1110,7 @@ namespace System.Xaml
                         if (throwOnError || CriticalExceptions.IsCriticalException(ex))
                         {
                             // The assemblies after the i'th one in unexaminedAssembliesCopy have not been examined (including the i'th assembly).
-                            // So we need to add them back to _unexaminedAssemblies while also keeping the assemblies that might have been added 
+                            // So we need to add them back to _unexaminedAssemblies while also keeping the assemblies that might have been added
                             // to _unexaminedAssemblies in parallel.
                             lock (_syncAccessingUnexaminedAssemblies)
                             {
@@ -1126,7 +1124,7 @@ namespace System.Xaml
                     }
                 }
 
-                if (foundNew && _nonClrNamespaces != null)
+                if (foundNew && _nonClrNamespaces is not null)
                 {
                     // invalidate this and force it to be re-evaluated
                     _nonClrNamespaces = null;
@@ -1138,7 +1136,7 @@ namespace System.Xaml
         private bool UpdateXmlNsInfo(XmlNsInfo nsInfo)
         {
             bool foundNew = UpdateNamespaceByUriList(nsInfo);
-            if (_preferredPrefixes != null)
+            if (_preferredPrefixes is not null)
             {
                 UpdatePreferredPrefixes(nsInfo, _preferredPrefixes);
             }
@@ -1221,7 +1219,7 @@ namespace System.Xaml
             {
                 return null;
             }
-            if (_referenceAssemblies != null)
+            if (_referenceAssemblies is not null)
             {
                 return ResolveReferenceAssembly(assemblyName);
             }
@@ -1234,7 +1232,7 @@ namespace System.Xaml
         private Assembly ResolveReferenceAssembly(string assemblyName)
         {
             AssemblyName parsedAsmName = new AssemblyName(assemblyName);
-            if (_referenceAssemblyNames == null)
+            if (_referenceAssemblyNames is null)
             {
                 AssemblyName[] asmNames = new AssemblyName[_referenceAssemblies.Count];
                 Interlocked.CompareExchange(ref _referenceAssemblyNames, asmNames, null);
@@ -1242,7 +1240,7 @@ namespace System.Xaml
             for (int i = 0; i < _referenceAssemblies.Count; i++)
             {
                 AssemblyName refAsmName = _referenceAssemblyNames[i];
-                if (_referenceAssemblyNames[i] == null)
+                if (_referenceAssemblyNames[i] is null)
                 {
                     // Multiple threads may be simultaneously populating this array.
                     // That's okay; we're inserting identical data, so duplicate writes are harmless.
@@ -1262,16 +1260,16 @@ namespace System.Xaml
             {
                 return false;
             }
-            if (reference.Version != null && !reference.Version.Equals(assemblyName.Version))
+            if (reference.Version is not null && !reference.Version.Equals(assemblyName.Version))
             {
                 return false;
             }
-            if (reference.CultureInfo != null && !reference.CultureInfo.Equals(assemblyName.CultureInfo))
+            if (reference.CultureInfo is not null && !reference.CultureInfo.Equals(assemblyName.CultureInfo))
             {
                 return false;
             }
             byte[] requiredToken = reference.GetPublicKeyToken();
-            if (requiredToken != null)
+            if (requiredToken is not null)
             {
                 byte[] actualToken = assemblyName.GetPublicKeyToken();
                 if (!SafeSecurityHelper.IsSameKeyToken(requiredToken, actualToken))
@@ -1290,7 +1288,7 @@ namespace System.Xaml
             // below, using Assembly.Load.
             AssemblyName parsedAsmName = new AssemblyName(assemblyName);
             Assembly result = SafeSecurityHelper.GetLoadedAssembly(parsedAsmName);
-            if (result != null)
+            if (result is not null)
             {
                 return result;
             }
@@ -1298,7 +1296,7 @@ namespace System.Xaml
             try
             {
                 byte[] publicKeyToken = parsedAsmName.GetPublicKeyToken();
-                if (parsedAsmName.Version != null || parsedAsmName.CultureInfo != null || publicKeyToken != null)
+                if (parsedAsmName.Version is not null || parsedAsmName.CultureInfo is not null || publicKeyToken is not null)
                 {
                     try
                     {
@@ -1314,7 +1312,7 @@ namespace System.Xaml
                         }
                         // Version tolerance: fall back to the short name (+ public key, if specified)
                         AssemblyName shortName = new AssemblyName(parsedAsmName.Name);
-                        if (publicKeyToken != null)
+                        if (publicKeyToken is not null)
                         {
                             shortName.SetPublicKeyToken(publicKeyToken);
                         }
@@ -1353,23 +1351,17 @@ namespace System.Xaml
             private void OnAssemblyLoad(object sender, AssemblyLoadEventArgs args)
             {
                 XamlSchemaContext schemaContext = (XamlSchemaContext)schemaContextRef.Target;
-                if (schemaContext != null)
+                if (schemaContext is not null)
                 {
                     schemaContext.SchemaContextAssemblyLoadEventHandler(sender, args);
                 }
             }
 
-#if TARGETTING35SP1
-#else
-#endif
             public void Hook()
             {
                 AppDomain.CurrentDomain.AssemblyLoad += OnAssemblyLoad;
             }
 
-#if TARGETTING35SP1
-#else
-#endif
             public void Unhook()
             {
                 AppDomain.CurrentDomain.AssemblyLoad -= OnAssemblyLoad;

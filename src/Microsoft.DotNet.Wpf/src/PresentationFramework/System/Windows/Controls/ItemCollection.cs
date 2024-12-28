@@ -10,20 +10,11 @@
 //
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-
-using System.Windows;
 using System.Windows.Data;  // for CollectionContainer
-using System.Windows.Markup;
-
-using MS.Utility;
-using MS.Internal;
 using MS.Internal.Controls;
 using MS.Internal.Data;     // for IndexedEnumerable
 using MS.Internal.KnownBoxes; // for BooleanBoxes
@@ -297,8 +288,7 @@ namespace System.Windows.Controls
             ArgumentNullException.ThrowIfNull(array);
             if (array.Rank > 1)
                 throw new ArgumentException(SR.BadTargetArray, "array"); // array is multidimensional.
-            if (index < 0)
-                throw new ArgumentOutOfRangeException("index");
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
 
             // use the view instead of the collection, because it may have special sort/filter
             if (!EnsureCollectionView())
@@ -340,23 +330,21 @@ namespace System.Windows.Controls
         /// </exception>
         public override object GetItemAt(int index)
         {
-                // only check lower bound because Count could be expensive
-                if (index < 0)
-                    throw new ArgumentOutOfRangeException("index");
+            // only check lower bound because Count could be expensive
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
 
-                VerifyRefreshNotDeferred();
+            VerifyRefreshNotDeferred();
 
-                if (!EnsureCollectionView())
-                    throw new InvalidOperationException(SR.ItemCollectionHasNoCollection);
+            if (!EnsureCollectionView())
+                throw new InvalidOperationException(SR.ItemCollectionHasNoCollection);
 
-                if (_collectionView == _internalView)
-                {
-                    // check upper bound here because we know it's not expensive
-                    if (index >= _internalView.Count)
-                        throw new ArgumentOutOfRangeException("index");
-                }
+            if (_collectionView == _internalView)
+            {
+                // check upper bound here because we know it's not expensive
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _internalView.Count);
+            }
 
-                return _collectionView.GetItemAt(index);
+            return _collectionView.GetItemAt(index);
         }
 
 
@@ -535,8 +523,8 @@ namespace System.Windows.Controls
             {
                 CheckIsUsingInnerView();
 
-                if (index < 0 || index >= _internalView.Count)
-                    throw new ArgumentOutOfRangeException("index");
+                ArgumentOutOfRangeException.ThrowIfNegative(index);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _internalView.Count);
 
                 _internalView[index] = value;
             }

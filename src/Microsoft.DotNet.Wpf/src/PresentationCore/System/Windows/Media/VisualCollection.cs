@@ -2,26 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //      The VisualCollection implementation is based on the
 //      CLR's Lightning ArrayList implementation.
-//
 
-using MS.Win32;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Threading;
-
-using System;
-using System.Diagnostics;
 using System.Collections;
 using MS.Internal;
-using System.Runtime.InteropServices;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 //------------------------------------------------------------------------------
 //  - There is an exception thrown inside of ConnectChild which could render
@@ -194,11 +180,8 @@ namespace System.Windows.Media
                 throw new ArgumentException(SR.Collection_BadRank);
             }
 
-            if ((index < 0) ||
-                (array.Length - index < _size))
-            {
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _size);
 
             // System.Array does not have a CopyTo method that takes a count. Therefore
             // the loop is programmed here out.
@@ -220,11 +203,8 @@ namespace System.Windows.Media
 
             ArgumentNullException.ThrowIfNull(array);
 
-            if ((index < 0) ||
-                (array.Length - index < _size))
-            {
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - _size);
 
             // System.Array does not have a CopyTo method that takes a count. Therefore
             // the loop is programmed here out.
@@ -343,7 +323,8 @@ namespace System.Windows.Media
                 // get methods
 
 #pragma warning disable 6503
-                if (index < 0 || index >= _size) throw new ArgumentOutOfRangeException(nameof(index));
+                ArgumentOutOfRangeException.ThrowIfNegative(index);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _size);
                 return _items[index];
 #pragma warning restore 6503
             }
@@ -351,7 +332,8 @@ namespace System.Windows.Media
             {
                 VerifyAPIReadWrite(value);
 
-                if (index < 0 || index >= _size) throw new ArgumentOutOfRangeException(nameof(index));
+                ArgumentOutOfRangeException.ThrowIfNegative(index);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _size);
 
                 Visual child = _items[index];
 
@@ -709,10 +691,8 @@ namespace System.Windows.Media
         {
             VerifyAPIReadWrite(visual);
 
-            if (index < 0 || index > _size)
-            {
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, _size);
 
             if ((visual != null) &&
                 ((visual._parent != null)   // Only visuals that are not connected to another tree
@@ -761,10 +741,8 @@ namespace System.Windows.Media
         {
             VerifyAPIReadWrite();
 
-            if (index < 0 || index >= _size)
-            {
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, _size);
 
             InternalRemove(_items[index]);
         }
@@ -794,18 +772,9 @@ namespace System.Windows.Media
             VerifyAPIReadWrite();
 
             // Do we really need this extra check index >= _size.
-            if (index < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
-            if (count < 0)
-            {
-                throw new ArgumentOutOfRangeException(nameof(count));
-            }
-            if (_size - index < count)
-            {
-                throw new ArgumentOutOfRangeException(nameof(index));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfNegative(count);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(count, _size - index);
 
             if (count > 0)
             {

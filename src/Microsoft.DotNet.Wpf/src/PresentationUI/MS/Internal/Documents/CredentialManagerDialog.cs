@@ -6,15 +6,8 @@
 //    CredentialManagerDialog is the Forms dialog that allows users to select RM Creds.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Forms;
 using System.Windows.TrustUI;
-using System.Security;
-
-using System.Security.RightsManagement;
 
 
 namespace MS.Internal.Documents

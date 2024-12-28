@@ -2,12 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.ComponentModel;
 using System.Threading;
 
 namespace System.Xaml.Schema
 {
-    public class XamlValueConverter<TConverterBase> : IEquatable<XamlValueConverter<TConverterBase>> 
+    public class XamlValueConverter<TConverterBase> : IEquatable<XamlValueConverter<TConverterBase>>
         where TConverterBase : class
     {
         // Assignment should be idempotent
@@ -27,7 +29,7 @@ namespace System.Xaml.Schema
 
         public XamlValueConverter(Type converterType, XamlType targetType, string name)
         {
-            if (converterType == null && targetType == null && name == null)
+            if (converterType is null && targetType is null && name is null)
             {
                 throw new ArgumentException(SR.Format(SR.ArgumentRequired, $"{nameof(converterType)}, {nameof(targetType)}, {nameof(name)}"));
             }
@@ -59,7 +61,7 @@ namespace System.Xaml.Schema
             {
                 if (_isPublic == ThreeValuedBool.NotSet)
                 {
-                    _isPublic = (ConverterType == null || ConverterType.IsVisible) ? ThreeValuedBool.True : ThreeValuedBool.False;
+                    _isPublic = (ConverterType is null || ConverterType.IsVisible) ? ThreeValuedBool.True : ThreeValuedBool.False;
                 }
 
                 return _isPublic == ThreeValuedBool.True;
@@ -69,11 +71,11 @@ namespace System.Xaml.Schema
         protected virtual TConverterBase CreateInstance()
         {
             if (ConverterType == typeof(EnumConverter) &&
-                TargetType.UnderlyingType != null && TargetType.UnderlyingType.IsEnum)
+                TargetType.UnderlyingType is not null && TargetType.UnderlyingType.IsEnum)
             {
                 return (TConverterBase)(object)new EnumConverter(TargetType.UnderlyingType);
             }
-            else if (ConverterType != null)
+            else if (ConverterType is not null)
             {
                 if (!typeof(TConverterBase).IsAssignableFrom(ConverterType))
                 {
@@ -89,11 +91,11 @@ namespace System.Xaml.Schema
 
         private string GetDefaultName()
         {
-            if (ConverterType != null)
+            if (ConverterType is not null)
             {
-                if (TargetType != null)
+                if (TargetType is not null)
                 {
-                    return ConverterType.Name + "(" + TargetType.Name + ")";
+                    return $"{ConverterType.Name}({TargetType.Name})";
                 }
 
                 return ConverterType.Name;
@@ -116,11 +118,11 @@ namespace System.Xaml.Schema
         public override int GetHashCode()
         {
             int result = Name.GetHashCode();
-            if (ConverterType != null)
+            if (ConverterType is not null)
             {
                 result ^= ConverterType.GetHashCode();
             }
-            if (TargetType != null)
+            if (TargetType is not null)
             {
                 result ^= TargetType.GetHashCode();
             }

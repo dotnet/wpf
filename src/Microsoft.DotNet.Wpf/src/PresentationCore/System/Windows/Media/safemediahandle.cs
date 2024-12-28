@@ -5,20 +5,9 @@
 //
 //
 
-using System;
-using System.IO;
-using System.Security;
-using System.Collections;
-using System.Reflection;
 using MS.Internal;
-using MS.Win32;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Runtime.InteropServices;
-using System.Runtime.CompilerServices;
-using Microsoft.Win32.SafeHandles;
 
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
 {

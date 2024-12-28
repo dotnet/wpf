@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using Xunit;
 
@@ -21,12 +20,12 @@ public class XmlnsPrefixAttributeTests
     [Fact]
     public void Ctor_NullXmlNamespace_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>("xmlNamespace", () => new XmlnsPrefixAttribute(null, "prefix"));
+        Assert.Throws<ArgumentNullException>("xmlNamespace", () => new XmlnsPrefixAttribute(null!, "prefix"));
     }
 
     [Fact]
     public void Ctor_NullPrefix_ThrowsArgumentNullException()
     {
-        Assert.Throws<ArgumentNullException>("prefix", () => new XmlnsPrefixAttribute("xmlNamespace", null));
+        Assert.Throws<ArgumentNullException>("prefix", () => new XmlnsPrefixAttribute("xmlNamespace", null!));
     }
 }

@@ -3,20 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Xml;
-using System.IO;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Reflection;
-using System.Threading;
 using System.Globalization;
-using System.Security;
 using MS.Utility;
-using System.Collections.Specialized;
-using System.Runtime.InteropServices;
 using MS.Internal.Xaml.Parser;
 
 #if PBTCOMPILER
@@ -143,7 +136,7 @@ namespace System.Windows.Markup
             string returnString = literalString;
             if (!String.IsNullOrEmpty(returnString) && returnString[0] == '{')
             {
-                returnString = "{}" + returnString;
+                returnString = $"{{}}{returnString}";
             }
 
             return returnString;

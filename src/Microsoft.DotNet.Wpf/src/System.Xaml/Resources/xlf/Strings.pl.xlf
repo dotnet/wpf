@@ -1052,11 +1052,6 @@
         <target state="translated">Strumień węzłów XAML: brak metody EndMember dla elementu {0}.{1} przed metodą StartMember „{2}”.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">Parametr musi być większy lub równy zeru.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParentlessPropertyElement">
         <source>The property element '{0}' is not contained by an object element.</source>
         <target state="translated">Element właściwości „{0}” nie jest zawarty w elemencie obiektu.</target>

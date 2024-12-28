@@ -11,13 +11,6 @@
 //
 //
 
-
-using System;
-using System.Collections;
-using System.Windows;
-
-using SR=MS.Internal.PresentationCore.SR;
-
 namespace System.Windows.Media.TextFormatting
 {
     /// <summary>
@@ -38,10 +31,7 @@ namespace System.Windows.Media.TextFormatting
             int     length
             )
         {
-            if (length <= 0)
-            {
-                throw new ArgumentOutOfRangeException("length", SR.ParameterMustBeGreaterThanZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
 
             _length = length;
         }

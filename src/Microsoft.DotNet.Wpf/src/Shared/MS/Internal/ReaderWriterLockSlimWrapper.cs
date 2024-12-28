@@ -2,15 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description: Wrapper that allows ReaderWriterLockSlim to detect potential 
 //              error conditions like (i) calling into Dispose() of the lock object
 //              when it is already held, and (ii) attempts to acquire the lock after 
 //              it has been disposed.
 
-
-using System;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Threading;
@@ -339,10 +335,7 @@ namespace MS.Internal
 
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException(nameof(ReaderWriterLockSlimWrapper));
-            }
+            ObjectDisposedException.ThrowIf(_disposed, typeof(ReaderWriterLockSlimWrapper));
 
             try
             {

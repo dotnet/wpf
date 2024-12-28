@@ -8,11 +8,8 @@
 //              The class functions as an array of XmlGlyphRunInfo's in markup order.
 //
 
-using System;
 using System.Windows;                   // For ExceptionStringTable
 using System.Xml;                       // For DOM objects
-using System.Diagnostics;               // For Assert
-using System.Globalization;             // For CultureInfo
 
 namespace MS.Internal.IO.Packaging
 {
@@ -38,7 +35,7 @@ namespace MS.Internal.IO.Packaging
             Debug.Assert(_pageNode != null);
             if (_pageNode.LocalName != _fixedPageName || _pageNode.NamespaceURI != ElementTableKey.FixedMarkupNamespace)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedXmlNodeInXmlFixedPageInfoConstructor, 
+                throw new ArgumentException(SR.Format(SR.UnexpectedXmlNodeInXmlFixedPageInfoConstructor,
                     _pageNode.NamespaceURI, _pageNode.LocalName,
                     ElementTableKey.FixedMarkupNamespace, _fixedPageName));
             }
@@ -82,8 +79,8 @@ namespace MS.Internal.IO.Packaging
         /// <summary>
         /// Indicates the number of glyph runs on the page.
         /// </summary>
-        internal override int GlyphRunCount 
-        { 
+        internal override int GlyphRunCount
+        {
             get
             {
                 return GlyphRunList.Length;
@@ -131,9 +128,7 @@ namespace MS.Internal.IO.Packaging
             {
                 if (_nodeList == null)
                 {
-                    string glyphRunQuery = String.Format(CultureInfo.InvariantCulture, ".//*[namespace-uri()='{0}' and local-name()='{1}']",
-                        ElementTableKey.FixedMarkupNamespace,
-                        _glyphRunName);
+                    string glyphRunQuery = $".//*[namespace-uri()='{ElementTableKey.FixedMarkupNamespace}' and local-name()='{_glyphRunName}']";
                     _nodeList = _pageNode.SelectNodes(glyphRunQuery);
                 }
                 return _nodeList;
@@ -146,7 +141,7 @@ namespace MS.Internal.IO.Packaging
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
         #region Constants

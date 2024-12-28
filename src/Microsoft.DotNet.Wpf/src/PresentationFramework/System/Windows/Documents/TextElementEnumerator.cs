@@ -7,13 +7,7 @@
 //
 // 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using MS.Internal;
-using System.Text;
-using MS.Utility;
-using System.Windows.Controls;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 

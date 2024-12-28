@@ -11,19 +11,9 @@
 //
 //
 
-using MS.Internal;
-using System;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Markup;
 
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     /// <summary>
     /// GradientStop - The gradient stop is a tuple consisting of an offset and a color.

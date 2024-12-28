@@ -13,15 +13,9 @@ using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Net;
-using System.Net.Sockets;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Text;
-using System.Windows;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClient.NativeMethodsSetLastError;
 
 namespace MS.Internal.Automation
@@ -182,15 +176,6 @@ namespace MS.Internal.Automation
             if (!cond)
             {
                 throw new ArgumentException(SR.GetResourceString(reason, null));
-            }
-        }
-
-        // Check that specified condition is true; if not, throw exception
-        internal static void ValidateArgumentInRange(bool cond, string argName)
-        {
-            if (!cond)
-            {
-                throw new ArgumentOutOfRangeException(argName);
             }
         }
 

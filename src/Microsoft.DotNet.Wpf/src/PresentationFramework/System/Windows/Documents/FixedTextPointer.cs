@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+
 //
 // Description:
 //      FixedTextPointer is an implementation of TextPointer/TextNavigator
@@ -13,13 +15,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Utility;
-    using System.Windows;
-    using System;
-    using System.Diagnostics;
-    using MS.Internal;
-
-
     /// <summary>
     ///  FixedTextPointer is an implementation of TextPointer/TextNavigator
     ///  for Fixed Document. 
@@ -55,11 +50,7 @@ namespace System.Windows.Documents
         /// </summary>
         public override string ToString()
         {
-            return  "FTP"
-                    + DebugId + " "
-                    +  (this._isFrozen? "NV " : "PO ")
-                    +  _flowPosition.ToString()
-                    +  " " + this._gravity;
+            return $"FTP{DebugId} {(this._isFrozen ? "NV " : "PO ")}{_flowPosition} {this._gravity}";
         }
 #endif // DEBUG
 

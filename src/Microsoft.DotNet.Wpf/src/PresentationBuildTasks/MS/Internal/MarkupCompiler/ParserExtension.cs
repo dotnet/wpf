@@ -19,8 +19,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.CodeDom;
-using System.CodeDom.Compiler;
-using System.ComponentModel;
 using MS.Utility;   // for SR
 
 namespace MS.Internal
@@ -497,7 +495,7 @@ namespace MS.Internal
                             {
                                 // This direct comparison is ok to do in pass2 as it has already been validated in pass1.
                                 // This is to avoid a costly instantiation of the CodeDomProvider in pass2.
-                                _isInternalRoot = string.Compare("public", xmlReader.Value.Trim(), StringComparison.OrdinalIgnoreCase) != 0;
+                                _isInternalRoot = !string.Equals("public", xmlReader.Value.Trim(), StringComparison.OrdinalIgnoreCase);
                             }
                         }
                     }
@@ -520,7 +518,7 @@ namespace MS.Internal
             else if (!_compiler.IsBamlNeeded && !_compiler.ProcessingRootContext && _compiler.IsCompilingEntryPointClass && xmlReader.Depth > 0)
             {
                 if ((!localName.Equals(MarkupCompiler.CODETAG) &&
-                     !localName.Equals(MarkupCompiler.CODETAG + "Extension")) ||
+                     !localName.Equals($"{MarkupCompiler.CODETAG}Extension")) ||
                     !namespaceUri.Equals(XamlReaderHelper.DefinitionNamespaceURI))
                 {
                     _compiler.IsBamlNeeded = true;
@@ -666,7 +664,7 @@ namespace MS.Internal
                     if (MemberAttributes.Private != _fieldModifier &&
                         MemberAttributes.Assembly != _fieldModifier)
                     {
-                        MarkupCompiler.GenerateXmlComments(_nameField, _nameField.Name + " Name Field");
+                        MarkupCompiler.GenerateXmlComments(_nameField, $"{_nameField.Name} Name Field");
                     }
 
                     _nameField.Attributes = _fieldModifier;

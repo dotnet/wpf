@@ -59,18 +59,11 @@
 
 \***************************************************************************/
 
-using System;
-using System.Diagnostics;           // Debug
-using System.Collections;           // Hashtable
-using System.Collections.Generic;   // List<T>
 using System.Reflection;            // MethodInfo
 using System.Threading;             // Interlocked
-using System.Security;              // 
-using System.Windows;               // SR
 using System.Windows.Threading;     // DispatcherObject
 using MS.Utility;                   // FrugalList
 using MS.Internal;                  // Invariant
-using MS.Internal.WindowsBase;      // [FriendAccessAllowed]
 
 namespace System.Windows
 {
@@ -463,7 +456,6 @@ namespace System.Windows
 
         // for use by test programs (e.g. leak detectors) that want to force
         // a cleanup pass.
-        [FriendAccessAllowed]   // defined in Base, used by Framework
         internal static bool Cleanup()
         {
             return WeakEventTable.Cleanup();
@@ -471,7 +463,6 @@ namespace System.Windows
 
         // for use by test programs (e.g. perf tests) that want to disable
         // cleanup passes temporarily.
-        [FriendAccessAllowed]   // defined in Base, used by Framework
         internal static void SetCleanupEnabled(bool value)
         {
             WeakEventTable.CurrentWeakEventTable.IsCleanupEnabled = value;

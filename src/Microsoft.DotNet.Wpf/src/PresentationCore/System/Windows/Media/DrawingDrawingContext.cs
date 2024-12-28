@@ -2,27 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-//
-//
-// Description: Creates a Drawing representation of the Draw calls made
-//              to this DrawingContext.
-//
-
 using MS.Internal;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
 using System.Windows.Media.Effects;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-using System.Windows.Threading;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {
@@ -1133,7 +1115,7 @@ namespace System.Windows.Media
         public override void Close()
         {
             // Throw an exception if this object has already been closed/disposed.
-            VerifyNotDisposed();
+            ObjectDisposedException.ThrowIf(_disposed, typeof(DrawingDrawingContext));
 
             // Close this object
             ((IDisposable)this).Dispose();
@@ -1242,7 +1224,7 @@ namespace System.Windows.Media
         {
             base.VerifyApiNonstructuralChange();
 
-            VerifyNotDisposed();
+            ObjectDisposedException.ThrowIf(_disposed, typeof(DrawingDrawingContext));
         }
 
         #endregion Protected Methods
@@ -1272,17 +1254,6 @@ namespace System.Windows.Media
         #endregion Internal Properties
 
         #region Private Methods
-
-        /// <summary>
-        /// Throws an exception if this object is already disposed.
-        /// </summary>
-        private void VerifyNotDisposed()
-        {
-            if (_disposed)
-            {
-                throw new ObjectDisposedException("DrawingDrawingContext");
-            }
-        }
 
         /// <summary>
         /// Freezes the given freezable if the fFreeze flag is true.  Used by

@@ -4,27 +4,18 @@
 
 #region Using directives
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Text;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Markup;
 using System.Xml;
 using System.IO;
 using System.IO.Packaging;
-using System.Xml.Schema;
-using System.Net;
 using System.Resources;
 using System.Reflection;
-using System.Globalization;
-using System.Security;
 using MS.Internal;
 
 #endregion
 
-using InternalPackUriHelper = MS.Internal.IO.Packaging.PackUriHelper;
 
 namespace System.Windows.Documents
 {
@@ -274,7 +265,7 @@ namespace System.Windows.Documents
         }
 
 
-        public virtual void ValidateRelationships(SecurityCriticalData<Package> package, Uri packageUri, Uri partUri, ContentType mimeType)
+        public virtual void ValidateRelationships(Package package, Uri packageUri, Uri partUri, ContentType mimeType)
         {
         }
 
@@ -574,9 +565,9 @@ namespace System.Windows.Documents
                     );
         }
 
-        public override void ValidateRelationships(SecurityCriticalData<Package> package, Uri packageUri, Uri partUri, ContentType mimeType)
+        public override void ValidateRelationships(Package package, Uri packageUri, Uri partUri, ContentType mimeType)
         {
-            PackagePart part = package.Value.GetPart(partUri);
+            PackagePart part = package.GetPart(partUri);
             PackageRelationshipCollection checkRels;
             int count;
 
@@ -595,7 +586,7 @@ namespace System.Windows.Documents
                 Uri targetUri = PackUriHelper.ResolvePartUri(partUri, rel.TargetUri);
                 Uri absTargetUri = PackUriHelper.Create(packageUri, targetUri);
 
-                PackagePart targetPart = package.Value.GetPart(targetUri);
+                PackagePart targetPart = package.GetPart(targetUri);
 
                 if (!_printTicketContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)))
                 {
@@ -617,7 +608,7 @@ namespace System.Windows.Documents
                 Uri targetUri = PackUriHelper.ResolvePartUri(partUri, rel.TargetUri);
                 Uri absTargetUri = PackUriHelper.Create(packageUri, targetUri);
 
-                PackagePart targetPart = package.Value.GetPart(targetUri);
+                PackagePart targetPart = package.GetPart(targetUri);
 
                 if (!_jpgContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)) &&
                     !_pngContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)))
@@ -637,7 +628,7 @@ namespace System.Windows.Documents
                     Uri targetUri = PackUriHelper.ResolvePartUri(partUri, rel.TargetUri);
                     Uri absTargetUri = PackUriHelper.Create(packageUri, targetUri);
 
-                    PackagePart targetPart = package.Value.GetPart(targetUri);
+                    PackagePart targetPart = package.GetPart(targetUri);
 
                     if (!_fontContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)) &&
                             !_obfuscatedContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)))
@@ -651,7 +642,7 @@ namespace System.Windows.Documents
             if (_fixedDocumentSequenceContentType.AreTypeAndSubTypeEqual(mimeType))
             {
                 // This is the XPS payload root part. We also should check if the Package only has at most one discardcontrol...
-                checkRels = package.Value.GetRelationshipsByType(_discardControlRel);
+                checkRels = package.GetRelationshipsByType(_discardControlRel);
                 count = 0;
                 foreach (PackageRelationship rel in checkRels)
                 {
@@ -665,7 +656,7 @@ namespace System.Windows.Documents
                     Uri targetUri = PackUriHelper.ResolvePartUri(partUri, rel.TargetUri);
                     Uri absTargetUri = PackUriHelper.Create(packageUri, targetUri);
 
-                    PackagePart targetPart = package.Value.GetPart(targetUri);
+                    PackagePart targetPart = package.GetPart(targetUri);
 
                     if (!_discardControlContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)))
                     {
@@ -674,7 +665,7 @@ namespace System.Windows.Documents
                 }
 
                 // This is the XPS payload root part. We also should check if the Package only has at most one thumbnail...
-                checkRels = package.Value.GetRelationshipsByType(_thumbnailRel);
+                checkRels = package.GetRelationshipsByType(_thumbnailRel);
                 count = 0;
                 foreach (PackageRelationship rel in checkRels)
                 {
@@ -688,7 +679,7 @@ namespace System.Windows.Documents
                     Uri targetUri = PackUriHelper.ResolvePartUri(partUri, rel.TargetUri);
                     Uri absTargetUri = PackUriHelper.Create(packageUri, targetUri);
 
-                    PackagePart targetPart = package.Value.GetPart(targetUri);
+                    PackagePart targetPart = package.GetPart(targetUri);
 
                     if (!_jpgContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)) &&
                         !_pngContentType.AreTypeAndSubTypeEqual(new ContentType(targetPart.ContentType)))

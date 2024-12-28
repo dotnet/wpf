@@ -2,10 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
+#nullable disable
+
 using System.Text;
-using System.Diagnostics;
 using System.Globalization;
 
 namespace MS.Internal.Xaml.Context
@@ -25,7 +24,7 @@ namespace MS.Internal.Xaml.Context
             _creationDelegate = creationDelegate;
             Grow();
             _depth = 0;
-            Debug.Assert(CurrentFrame != null);
+            Debug.Assert(CurrentFrame is not null);
             Debug.Assert(CurrentFrame.Depth == Depth);
         }
 
@@ -41,14 +40,14 @@ namespace MS.Internal.Xaml.Context
             {
                 T iteratorFrame = source.CurrentFrame;
                 T lastFrameInNewStack = null;
-                while (iteratorFrame != null)
+                while (iteratorFrame is not null)
                 {
                     T newFrame = (T)iteratorFrame.Clone();
-                    if (_currentFrame == null)
+                    if (_currentFrame is null)
                     {
                         _currentFrame = newFrame;
                     }
-                    if (lastFrameInNewStack != null)
+                    if (lastFrameInNewStack is not null)
                     {
                         lastFrameInNewStack.Previous = newFrame;
                     }
@@ -84,7 +83,7 @@ namespace MS.Internal.Xaml.Context
         public T GetFrame(int depth)
         {
             T iteratorFrame = _currentFrame;
-            Debug.Assert(iteratorFrame != null);
+            Debug.Assert(iteratorFrame is not null);
             while (iteratorFrame.Depth > depth)
             {
                 iteratorFrame = (T)iteratorFrame.Previous;
@@ -96,7 +95,7 @@ namespace MS.Internal.Xaml.Context
         // or we'll grab one from our recycled linked list.
         public void PushScope()
         {
-            if (_recycledFrame == null)
+            if (_recycledFrame is null)
             {
                 Grow();
             }
@@ -111,7 +110,7 @@ namespace MS.Internal.Xaml.Context
             Debug.Assert(CurrentFrame.Depth == Depth);
         }
 
-        //Consumers of this stack call PopScope, and we'll move the currentFrame from the main 
+        //Consumers of this stack call PopScope, and we'll move the currentFrame from the main
         // linked list to the recylced linked list and call .Reset
         public void PopScope()
         {
@@ -142,7 +141,7 @@ namespace MS.Internal.Xaml.Context
             {
                 StringBuilder sb = new StringBuilder();
                 T iteratorFrame = _currentFrame;
-                sb.AppendLine("Stack: " + (_currentFrame == null ? -1 : _currentFrame.Depth + 1).ToString(CultureInfo.InvariantCulture) + " frames");
+                sb.AppendLine(CultureInfo.InvariantCulture, $"Stack: {(_currentFrame is null ? -1 : _currentFrame.Depth + 1)} frames");
                 ShowFrame(sb, _currentFrame);
                 return sb.ToString();
             }
@@ -150,11 +149,11 @@ namespace MS.Internal.Xaml.Context
 
         private void ShowFrame(StringBuilder sb, T iteratorFrame)
         {
-            if (iteratorFrame == null)
+            if (iteratorFrame is null)
                 return;
-            if (iteratorFrame.Previous != null)
+            if (iteratorFrame.Previous is not null)
                 ShowFrame(sb, (T)iteratorFrame.Previous);
-            sb.AppendLine("  " + iteratorFrame.Depth + " " + iteratorFrame.ToString());
+            sb.AppendLine($"  {iteratorFrame.Depth} {iteratorFrame}");
         }
     }
 }

@@ -16,15 +16,9 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
-using System.Windows;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Text;
 using System.Runtime.InteropServices;
-using System.Security;
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal
 {
@@ -387,11 +381,8 @@ namespace MS.Internal
                 throw new ArgumentNullException("characterString");
             }
 
-            if (length <= 0)
-            {
-                throw new ArgumentOutOfRangeException("length", SR.ParameterValueMustBeGreaterThanZero);
-            }
-            
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(length);
+
             _unsafeString = characterString;
             _length = length;
         }
@@ -403,8 +394,9 @@ namespace MS.Internal
         public override char this[int characterOffset]
         {
             get {
-                if (characterOffset >= _length || characterOffset < 0)
-                    throw new ArgumentOutOfRangeException("characterOffset", SR.Format(SR.ParameterMustBeBetween,0,_length));
+                ArgumentOutOfRangeException.ThrowIfNegative(characterOffset);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(characterOffset, _length);
+
                 return _unsafeString[characterOffset];
             }
             set { throw new NotSupportedException(); }
@@ -459,15 +451,11 @@ namespace MS.Internal
             )
         {
 
-            if (characterOffset >= _length || characterOffset < 0)
-            {
-                throw new ArgumentOutOfRangeException("characterOffset", SR.Format(SR.ParameterMustBeBetween,0,_length));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(characterOffset);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(characterOffset, _length);
 
-            if (characterLength < 0 || characterOffset + characterLength > _length)
-            {
-                throw new ArgumentOutOfRangeException("characterLength", SR.Format(SR.ParameterMustBeBetween,0, _length - characterOffset));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(characterLength);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(characterLength, _length - characterOffset);
 
             stringBuilder.Append(new string(_unsafeString, characterOffset, characterLength));
         }

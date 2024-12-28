@@ -147,9 +147,6 @@
   <data name="ReferenceIsNull" xml:space="preserve">
     <value>Value cannot be null. Object reference: '{0}'.</value>
   </data>
-  <data name="ParameterMustBeBetween" xml:space="preserve">
-    <value>The parameter value must be between '{0}' and '{1}'.</value>
-  </data>
   <data name="Freezable_UnregisteredHandler" xml:space="preserve">
     <value>Handler has not been registered with this event.</value>
   </data>
@@ -1766,9 +1763,6 @@
   </data>
   <data name="StringEmpty" xml:space="preserve">
     <value>Parameter cannot be a zero-length string.</value>
-  </data>
-  <data name="ParameterCannotBeNegative" xml:space="preserve">
-    <value>Parameter must be greater than or equal to zero.</value>
   </data>
   <data name="Freezable_CantBeFrozen" xml:space="preserve">
     <value>Specified value of type '{0}' must have IsFrozen set to false to modify.</value>

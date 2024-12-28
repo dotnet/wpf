@@ -4002,9 +4002,6 @@ Do you want to replace it?</value>
   <data name="InvalidPermissionType" xml:space="preserve">
     <value>Permission type is not valid. Expected '{0}'.</value>
   </data>
-  <data name="ParameterCannotBeNegative" xml:space="preserve">
-    <value>Parameter must be greater than or equal to zero.</value>
-  </data>
   <data name="SecurityExceptionForSettingSandboxExternalToTrue" xml:space="preserve">
     <value>Cannot set SandboxExternalContent to true in partial trust.</value>
   </data>

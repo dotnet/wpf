@@ -3,12 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
 
 namespace System.Windows.Controls
 {
@@ -383,12 +379,10 @@ namespace System.Windows.Controls
         {
             get
             {
-                if ((index >= 0) && (index < Count))
-                {
-                    return GetCellInfoFromIndex(_owner, _regions, index);
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(index);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, Count);
 
-                throw new ArgumentOutOfRangeException("index");
+                return GetCellInfoFromIndex(_owner, _regions, index);
             }
 
             set

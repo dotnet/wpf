@@ -4,14 +4,10 @@
 
 // Description: Unsafe P/Invokes used by UIAutomation
 
-using System.Threading;
 using System;
 using Accessibility;
 using System.Runtime.InteropServices;
-using System.Collections;
-using System.IO;
 using System.Text;
-using Microsoft.Win32.SafeHandles;
 using System.Diagnostics;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
 
@@ -33,8 +29,6 @@ namespace MS.Win32
         [DllImport(ExternDll.Kernel32, SetLastError = true)]
         internal static extern IntPtr OpenProcess(int flags, bool inherit, uint dwProcessId);
 
-        [DllImport(ExternDll.Kernel32)]
-        public static extern uint GetCurrentProcessId();
         [DllImport(ExternDll.Kernel32)]
         internal static extern void GetSystemInfo(out NativeMethods.SYSTEM_INFO SystemInfo);
         [DllImport(ExternDll.Kernel32, SetLastError = true)]

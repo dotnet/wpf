@@ -2,8 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Diagnostics;
+#nullable disable
+
 using System.Xaml;
 using System.Xaml.MS.Impl;
 using System.Xml;
@@ -29,7 +29,7 @@ namespace MS.Internal.Xaml.Parser
             Name = propName;
             Value = val;
             Kind = ScannerAttributeKind.Property;  // non-"namespace" default;
-            if (lineInfo != null)
+            if (lineInfo is not null)
             {
                 LineNumber = lineInfo.LineNumber;
                 LinePosition = lineInfo.LinePosition;
@@ -94,7 +94,7 @@ namespace MS.Internal.Xaml.Parser
         }
 
 
-        // FxCop says this is not called 
+        // FxCop says this is not called
         //public bool IsXamlNsDefinition
         //{
         //    get { return (!String.IsNullOrEmpty(_xmlnsDefinitionUri)); }
@@ -124,7 +124,7 @@ namespace MS.Internal.Xaml.Parser
                 uri = Value;
                 definingPrefix = !Name.IsDotted
                     ? Name.Name
-                    : Name.OwnerName + "." + Name.Name;
+                    : $"{Name.OwnerName}.{Name.Name}";
                 return true;
             }
             // case where:  xmlns="ValueUri"
@@ -146,7 +146,7 @@ namespace MS.Internal.Xaml.Parser
             string ns = context.GetAttributeNamespace(propName, tagNamespace);
 
             // No Namespace, == Unknown Property
-            if (ns == null)
+            if (ns is null)
             {
                 XamlMember unknownProperty;
                 if (propName.IsDotted)

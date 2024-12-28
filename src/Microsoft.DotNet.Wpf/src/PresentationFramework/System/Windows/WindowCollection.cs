@@ -9,12 +9,11 @@
 //          that have been opened in the current application.
 // 
 using System.Collections;
-using System.Diagnostics;
 
 namespace System.Windows
 {
     #region WindowCollection class
-    
+
     /// <summary>
     /// WindowCollection can be used to interate over all the windows that have been 
     /// opened in the current application.

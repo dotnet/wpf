@@ -2,9 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+#nullable disable
+
 using System.Runtime.Serialization;
 using System.Xaml.Schema;
 
@@ -154,7 +153,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 P_RepeatingSubscript();
             }
-            
+
             Callout_EndOfType();
         }
 
@@ -274,7 +273,7 @@ namespace MS.Internal.Xaml.Parser
             XamlTypeName typeName = new XamlTypeName(frame.Namespace, frame.Name, frame.TypeArgs);
 
             frame = _stack.Peek();
-            if (frame.TypeArgs == null)
+            if (frame.TypeArgs is null)
             {
                 frame.AllocateTypeArgs();
             }

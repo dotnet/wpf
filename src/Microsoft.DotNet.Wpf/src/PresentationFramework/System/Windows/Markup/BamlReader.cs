@@ -9,24 +9,14 @@
 *
 \***************************************************************************/
 
-using System;
 using System.Xml;
 using System.IO;
-using System.Windows;
-using System.Windows.Navigation;
 using System.Text;
 using System.Collections;
-using System.Collections.Specialized;
-using System.Collections.Generic;
 using System.ComponentModel;
-
-using System.Diagnostics;
 using System.Reflection;
-using System.Windows.Threading;
 
 using System.Globalization;
-using MS.Utility;
-using MS.Internal;
 
 namespace System.Windows.Markup
 {
@@ -182,7 +172,7 @@ namespace System.Windows.Markup
             _properties = new ArrayList();
             _haveUnprocessedRecord = false;
             _deferableContentBlockDepth = -1;
-            _nodeStack = new Stack();
+            _nodeStack = new Stack<BamlNodeInfo>();
             _reverseXmlnsTable = new Dictionary<String, List<String>>();
         }
 
@@ -827,9 +817,9 @@ namespace System.Windows.Markup
             info.AssemblyName = string.Empty;
             info.Prefix = "xmlns";
             info.LocalName = bamlRecord.Prefix == null ? string.Empty : bamlRecord.Prefix;
-            info.Name = (bamlRecord.Prefix == null || bamlRecord.Prefix == string.Empty) ?
+            info.Name = string.IsNullOrEmpty(bamlRecord.Prefix) ?
                                           "xmlns" :
-                                          "xmlns:" + bamlRecord.Prefix;
+                                          $"xmlns:{bamlRecord.Prefix}";
             info.RecordType = BamlRecordType.XmlnsProperty;
 
             AddToPropertyInfoCollection(info);
@@ -1050,7 +1040,7 @@ namespace System.Windows.Markup
                 Type declaringType = null;
                 _propertyDP = _bamlRecordReader.GetCustomDependencyPropertyValue(bamlRecord, out declaringType);
                 declaringType = declaringType == null ? _propertyDP.OwnerType : declaringType;
-                info.Value = declaringType.Name + "." + _propertyDP.Name;
+                info.Value = $"{declaringType.Name}.{_propertyDP.Name}";
 
                 string xmlns = _parserContext.XamlTypeMapper.GetXmlNamespace(declaringType.Namespace,
                                                                              declaringType.Assembly.FullName);
@@ -1058,7 +1048,7 @@ namespace System.Windows.Markup
                 string prefix = GetXmlnsPrefix(xmlns);
                 if (prefix != string.Empty)
                 {
-                    info.Value = prefix + ":" + info.Value;
+                    info.Value = $"{prefix}:{info.Value}";
                 }
 
                 if (!_propertyDP.PropertyType.IsEnum)
@@ -1297,7 +1287,7 @@ namespace System.Windows.Markup
                         string typeExtensionName;
                         if (typeExtensionPrefix != string.Empty)
                         {
-                            typeExtensionName = "{" + typeExtensionPrefix + ":Type ";
+                            typeExtensionName = $"{{{typeExtensionPrefix}:Type ";
                         }
                         else
                         {
@@ -1312,11 +1302,11 @@ namespace System.Windows.Markup
                         GetAssemblyAndPrefixAndXmlns(typeInfo, out assemblyName, out prefix, out xmlNamespace);
                         if (prefix != string.Empty)
                         {
-                            typeName = typeExtensionName + prefix + ":" + typeName + "}";
+                            typeName = $"{typeExtensionName}{prefix}:{typeName}}}";
                         }
                         else
                         {
-                            typeName = typeExtensionName + typeName + "}";
+                            typeName = $"{typeExtensionName}{typeName}}}";
                         }
 
                         // Add information to the key list to indicate we have a x:Key
@@ -1432,11 +1422,11 @@ namespace System.Windows.Markup
             GetAssemblyAndPrefixAndXmlns(typeInfo, out assemblyName, out prefix, out xmlNamespace);
             if (prefix != string.Empty)
             {
-                markupString = "{" + prefix + ":" + markupString + " ";
+                markupString = $"{{{prefix}:{markupString} ";
             }
             else
             {
-                markupString = "{" + markupString + " ";
+                markupString = $"{{{markupString} ";
             }
 
             bool notDone = true;
@@ -1447,9 +1437,9 @@ namespace System.Windows.Markup
             // track of when we have entered a constructor parameter section and when
             // we have written out the first parameter to handle adding commas between
             // constructor parameters.
-            Stack readProperty = new Stack();
-            Stack readConstructor = new Stack();
-            Stack readFirstConstructor = new Stack();
+            Stack<bool> readProperty = new();
+            Stack<bool> readConstructor = new();
+            Stack<bool> readFirstConstructor = new();
             readProperty.Push(false);         // Property has not yet been read
             readConstructor.Push(false);      // Constructor section has not been read
             readFirstConstructor.Push(false); // First constructor parameter has not been read
@@ -1493,12 +1483,12 @@ namespace System.Windows.Markup
 
                     case BamlRecordType.PropertyComplexStart:
                         ReadPropertyComplexStartRecord();
-                        nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
-                        if ((bool)readProperty.Pop())
+                        nodeInfo = _nodeStack.Pop();
+                        if (readProperty.Pop())
                         {
                             markupString += ", ";
                         }
-                        markupString += nodeInfo.LocalName + "=";
+                        markupString += $"{nodeInfo.LocalName}=";
                         readProperty.Push(true);
                         break;
 
@@ -1520,12 +1510,12 @@ namespace System.Windows.Markup
                         // If the text contains '{' or '}' then we have to escape these
                         // so that it won't be interpreted as a MarkupExtension
                         string escapedString = EscapeString(((BamlTextRecord)_currentBamlRecord).Value);
-                        if ((bool)readFirstConstructor.Peek())
+                        if (readFirstConstructor.Peek())
                         {
                             markupString += ", ";
                         }
                         markupString += escapedString;
-                        if ((bool)readConstructor.Peek())
+                        if (readConstructor.Peek())
                         {
                             readFirstConstructor.Pop();
                             readFirstConstructor.Push(true);
@@ -1534,11 +1524,11 @@ namespace System.Windows.Markup
 
                     case BamlRecordType.ElementStart:
                         // Process commas between constructor parameters
-                        if ((bool)readFirstConstructor.Peek())
+                        if (readFirstConstructor.Peek())
                         {
                             markupString += ", ";
                         }
-                        if ((bool)readConstructor.Peek())
+                        if (readConstructor.Peek())
                         {
                             readFirstConstructor.Pop();
                             readFirstConstructor.Push(true);
@@ -1556,11 +1546,11 @@ namespace System.Windows.Markup
                         GetAssemblyAndPrefixAndXmlns(elementTypeInfo, out assemblyName, out prefix, out xmlNamespace);
                         if (prefix != string.Empty)
                         {
-                            markupString += "{" + prefix + ":" + typename + " ";
+                            markupString += $"{{{prefix}:{typename} ";
                         }
                         else
                         {
-                            markupString = "{" + typename + " ";
+                            markupString = $"{{{typename} ";
                         }
                         break;
 
@@ -1585,11 +1575,11 @@ namespace System.Windows.Markup
 
                     case BamlRecordType.ConstructorParameterType:
                         // Process commas between constructor parameters
-                        if ((bool)readFirstConstructor.Peek())
+                        if (readFirstConstructor.Peek())
                         {
                             markupString += ", ";
                         }
-                        if ((bool)readConstructor.Peek())
+                        if (readConstructor.Peek())
                         {
                             readFirstConstructor.Pop();
                             readFirstConstructor.Push(true);
@@ -1603,11 +1593,11 @@ namespace System.Windows.Markup
                         {
                             string value = ((BamlPropertyRecord)_currentBamlRecord).Value;
                             BamlPropertyInfo propertyInfo = ReadPropertyRecordCore(value);
-                            if ((bool)readProperty.Pop())
+                            if (readProperty.Pop())
                             {
                                 markupString += ", ";
                             }
-                            markupString += propertyInfo.LocalName + "=" + propertyInfo.Value;
+                            markupString += $"{propertyInfo.LocalName}={propertyInfo.Value}";
                             readProperty.Push(true);
                         }
                         break;
@@ -1615,11 +1605,11 @@ namespace System.Windows.Markup
                     case BamlRecordType.PropertyCustom:
                         {
                             BamlPropertyInfo propertyInfo = GetPropertyCustomRecordInfo();
-                            if ((bool)readProperty.Pop())
+                            if (readProperty.Pop())
                             {
                                 markupString += ", ";
                             }
-                            markupString += propertyInfo.LocalName + "=" + propertyInfo.Value;
+                            markupString += $"{propertyInfo.LocalName}={propertyInfo.Value}";
                             readProperty.Push(true);
                         }
                         break;
@@ -1628,11 +1618,11 @@ namespace System.Windows.Markup
                         {
                             string value = MapTable.GetStringFromStringId(((BamlPropertyStringReferenceRecord)_currentBamlRecord).StringId);
                             BamlPropertyInfo propertyInfo = ReadPropertyRecordCore(value);
-                            if ((bool)readProperty.Pop())
+                            if (readProperty.Pop())
                             {
                                 markupString += ", ";
                             }
-                            markupString += propertyInfo.LocalName + "=" + propertyInfo.Value;
+                            markupString += $"{propertyInfo.LocalName}={propertyInfo.Value}";
                             readProperty.Push(true);
                         }
                         break;
@@ -1642,11 +1632,11 @@ namespace System.Windows.Markup
                             string value = GetTypeValueString(((BamlPropertyTypeReferenceRecord)_currentBamlRecord).TypeId);
                             string attributeName = MapTable.GetAttributeNameFromId(
                                                           ((BamlPropertyTypeReferenceRecord)_currentBamlRecord).AttributeId);
-                            if ((bool)readProperty.Pop())
+                            if (readProperty.Pop())
                             {
                                 markupString += ", ";
                             }
-                            markupString += attributeName + "=" + value;
+                            markupString += $"{attributeName}={value}";
                             readProperty.Push(true);
                         }
                         break;
@@ -1656,11 +1646,11 @@ namespace System.Windows.Markup
                             string value = GetExtensionValueString((BamlPropertyWithExtensionRecord)_currentBamlRecord);
                             string attributeName = MapTable.GetAttributeNameFromId(
                                                           ((BamlPropertyWithExtensionRecord)_currentBamlRecord).AttributeId);
-                            if ((bool)readProperty.Pop())
+                            if (readProperty.Pop())
                             {
                                 markupString += ", ";
                             }
-                            markupString += attributeName + "=" + value;
+                            markupString += $"{attributeName}={value}";
                             readProperty.Push(true);
                         }
                         break;
@@ -1842,7 +1832,7 @@ namespace System.Windows.Markup
         {
             // Pop information off the node stack to ensure we have matched all the
             // start and end nodes and have nothing left but the start document node.
-            BamlNodeInfo nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
+            BamlNodeInfo nodeInfo = _nodeStack.Pop();
             if (nodeInfo.RecordType != BamlRecordType.DocumentStart)
             {
                 throw new InvalidOperationException(SR.Format(SR.BamlScopeError,
@@ -2025,7 +2015,7 @@ namespace System.Windows.Markup
             // Pop information off the node stack that tells us what element this
             // is the end of.  Check to make sure the record on the stack is for a
             // start element.
-            BamlNodeInfo nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
+            BamlNodeInfo nodeInfo = _nodeStack.Pop();
             if (nodeInfo.RecordType != BamlRecordType.ElementStart)
             {
                 throw new InvalidOperationException(SR.Format(SR.BamlScopeError,
@@ -2112,7 +2102,7 @@ namespace System.Windows.Markup
             // Pop information off the node info stack that tells us what the starting
             // record was for this ending record.  Check to make sure it is the
             // correct type.  If not, throw an exception.
-            BamlNodeInfo nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
+            BamlNodeInfo nodeInfo = _nodeStack.Pop();
             BamlRecordType expectedType;
             switch (nodeInfo.RecordType)
             {
@@ -2240,7 +2230,7 @@ namespace System.Windows.Markup
             // Pop information off the node stack that tells us what element this
             // is the end of.  Check to make sure the record on the stack is for a
             // start element.
-            BamlNodeInfo nodeInfo = (BamlNodeInfo)_nodeStack.Pop();
+            BamlNodeInfo nodeInfo = _nodeStack.Pop();
             if (nodeInfo.RecordType != BamlRecordType.ConstructorParametersStart)
             {
                 throw new InvalidOperationException(SR.Format(SR.BamlScopeError,
@@ -2349,7 +2339,7 @@ namespace System.Windows.Markup
 
             // Fill node info record with this data.
             nodeInfo.LocalName = attrInfo.Name;
-            nodeInfo.Name = typeInfo.TypeFullName + "." + nodeInfo.LocalName;
+            nodeInfo.Name = $"{typeInfo.TypeFullName}.{nodeInfo.LocalName}";
             string assembly, prefix, namespaceUri;
             GetAssemblyAndPrefixAndXmlns(typeInfo, out assembly, out prefix, out namespaceUri);
             nodeInfo.AssemblyName = assembly;
@@ -2411,10 +2401,10 @@ namespace System.Windows.Markup
             }
             else
             {
-                valueString += valuePrefix + ":" + typeName;
+                valueString += $"{valuePrefix}:{typeName}";
             }
 
-            valueString += "." + propName + "}";
+            valueString += $".{propName}}}";
             return valueString;
         }
 
@@ -2428,7 +2418,7 @@ namespace System.Windows.Markup
 
             if (extensionPrefix != string.Empty)
             {
-                valueString = "{" + extensionPrefix + ":Static ";
+                valueString = $"{{{extensionPrefix}:Static ";
             }
             else
             {
@@ -2446,9 +2436,9 @@ namespace System.Windows.Markup
 
                 memberId = SystemResourceKey.GetSystemResourceKeyIdFromBamlId(memberId, out isKey);
 
-                if (Enum.IsDefined(typeof(SystemResourceKeyID), (int)memberId))
+                SystemResourceKeyID keyId = (SystemResourceKeyID)memberId;
+                if (Enum.IsDefined(keyId))
                 {
-                    SystemResourceKeyID keyId = (SystemResourceKeyID)memberId;
                     typeName = SystemKeyConverter.GetSystemClassName(keyId);
 
                     if (isKey)
@@ -2486,10 +2476,10 @@ namespace System.Windows.Markup
             }
             else
             {
-                valueString += valuePrefix + ":" + typeName;
+                valueString += $"{valuePrefix}:{typeName}";
             }
 
-            valueString += "." + propName + "}";
+            valueString += $".{propName}}}";
             return valueString;
         }
 
@@ -2500,11 +2490,11 @@ namespace System.Windows.Markup
 
             if (!string.IsNullOrEmpty(extensionPrefix))
             {
-                valueString = "{" + extensionPrefix + ":" + extensionName + " ";
+                valueString = $"{{{extensionPrefix}:{extensionName} ";
             }
             else
             {
-                valueString = "{" + extensionName + " ";
+                valueString = $"{{{extensionName} ";
             }
 
             return valueString;
@@ -2528,7 +2518,7 @@ namespace System.Windows.Markup
                 valueString = MapTable.GetStringFromStringId(memberId);
             }
 
-            return valueString + "}";
+            return $"{valueString}}}";
         }
 
         private string GetExtensionValueString(IOptimizedMarkupExtension optimizedMarkupExtensionRecord)
@@ -2577,7 +2567,7 @@ namespace System.Windows.Markup
             string valueString;
             if (typeExtensionPrefix != string.Empty)
             {
-                valueString = "{" + typeExtensionPrefix + ":Type ";
+                valueString = $"{{{typeExtensionPrefix}:Type ";
             }
             else
             {
@@ -2597,7 +2587,7 @@ namespace System.Windows.Markup
             }
             else
             {
-                valueString += valuePrefix + ":" + typeName;
+                valueString += $"{valuePrefix}:{typeName}";
             }
             valueString +="}";
 
@@ -2666,7 +2656,7 @@ namespace System.Windows.Markup
         // store the all XmlNs UIRs that map to each CLRNamespace + AssemblyName
         private void SetXmlNamespace(string clrNamespace, string assemblyFullName, string xmlNs)
         {
-            String fullName = clrNamespace + "#" + assemblyFullName;
+            String fullName = $"{clrNamespace}#{assemblyFullName}";
             List<String> list;
             if(_reverseXmlnsTable.ContainsKey(fullName))
             {
@@ -2684,7 +2674,7 @@ namespace System.Windows.Markup
         // Retrieve the XmlNs UIRs that map to a CLRNamespace + AssemblyName
         private List<String> GetXmlNamespaceList(string clrNamespace, string assemblyFullName)
         {
-            String fullName = clrNamespace + "#" + assemblyFullName;
+            String fullName = $"{clrNamespace}#{assemblyFullName}";
             List<String> xmlnsList=null;
 
             if (_reverseXmlnsTable.ContainsKey(fullName))
@@ -2842,7 +2832,7 @@ namespace System.Windows.Markup
         private BamlAttributeUsage _attributeUsage;
 
         // Stack of node information about the element tree being built.
-        private Stack _nodeStack;
+        private readonly Stack<BamlNodeInfo> _nodeStack;
 
         // Context information used when reading baml file.  This contains the XamlTypeMapper used
         // for resolving binary property information into strings.

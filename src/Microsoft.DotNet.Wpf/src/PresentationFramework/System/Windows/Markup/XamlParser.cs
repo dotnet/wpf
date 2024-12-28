@@ -12,15 +12,11 @@
 using System;
 using System.Xml;
 using System.IO;
-using System.Text;
 using System.Collections;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Globalization;
 using MS.Utility;
-using System.Runtime.InteropServices;
-using MS.Internal;
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and
@@ -241,9 +237,9 @@ namespace System.Windows.Markup
                             lineNumber = xamlNode.LineNumber;
                             linePosition = xamlNode.LinePosition;
                         }
-                        newMessage = e.Message + " " + SR.Format(SR.ParserLineAndOffset,
-                                                  lineNumber.ToString(CultureInfo.CurrentCulture),
-                                                  linePosition.ToString(CultureInfo.CurrentCulture));
+                        newMessage = $"{e.Message} {SR.Format(SR.ParserLineAndOffset,
+                            lineNumber.ToString(CultureInfo.CurrentCulture),
+                            linePosition.ToString(CultureInfo.CurrentCulture))}";
                     }
                     XamlParseException parseException = new XamlParseException(newMessage, lineNumber, linePosition, e);
                     ParseError(parseException);

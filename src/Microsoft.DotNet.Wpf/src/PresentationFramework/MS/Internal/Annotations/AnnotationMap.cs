@@ -8,12 +8,6 @@
 //      map between annotation id and attached annotations used by the service
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Annotations;
-
 namespace MS.Internal.Annotations
 {
     /// <summary>
@@ -81,7 +75,7 @@ namespace MS.Internal.Annotations
                 return _emptyList;
             }
 
-            Debug.Assert(list != null, "there should be an attached annotation list for the annotationId: " + annotationId.ToString());
+            Debug.Assert(list != null, $"there should be an attached annotation list for the annotationId: {annotationId}");
             return list;
         }
 
@@ -108,7 +102,7 @@ namespace MS.Internal.Annotations
             return result;
         }
 
-        // hash table to hold annotation id to AttachedAnnotations list 
+        // hash table to hold annotation id to AttachedAnnotations list
         private Dictionary<Guid, List<IAttachedAnnotation>> _annotationIdToAttachedAnnotations = new Dictionary<Guid, List<IAttachedAnnotation>>();
 
         // a readonly empty list - cached for performance reasons

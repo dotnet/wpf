@@ -14,17 +14,10 @@
 #define TRACE
 #endif
 
-using System;
 using System.IO;
 using System.IO.Packaging;
 using System.Net;
 using System.Net.Cache;                 // for RequestCachePolicy
-using System.Runtime.Serialization;
-using System.Diagnostics;               // For Assert
-using MS.Utility;                       // for EventTrace
-using MS.Internal.IO.Packaging;         // for PackageCacheEntry
-using MS.Internal.PresentationCore;     // for SR exception strings
-using MS.Internal;
 
 namespace MS.Internal.IO.Packaging
 {
@@ -278,9 +271,11 @@ namespace MS.Internal.IO.Packaging
             }
             set
             {
-                // negative time that is not -1 (infinite) is an error case
-                if (value < 0 && value != System.Threading.Timeout.Infinite)
-                    throw new ArgumentOutOfRangeException("value");
+                if (value != System.Threading.Timeout.Infinite)
+                {
+                    // negative time that is not -1 (infinite) is an error case
+                    ArgumentOutOfRangeException.ThrowIfNegative(value);
+                }
 
                 _timeout = value;
             }

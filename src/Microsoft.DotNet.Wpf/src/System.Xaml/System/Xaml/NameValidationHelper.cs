@@ -2,7 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// Used to store mapping information for names occuring 
+#nullable disable
+
+// Used to store mapping information for names occuring
 // within the logical tree section.
 
 using System.Globalization;

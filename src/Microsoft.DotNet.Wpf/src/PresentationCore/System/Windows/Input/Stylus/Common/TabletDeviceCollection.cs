@@ -2,10 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
 using System.Collections;
-using System.Collections.Generic;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -33,8 +30,7 @@ namespace System.Windows.Input
         {
             get
             {
-                if (TabletDevices == null)
-                    throw new ObjectDisposedException(nameof(TabletDeviceCollection));
+                ObjectDisposedException.ThrowIf(TabletDevices == null, typeof(TabletDeviceCollection));
 
                 return TabletDevices.Count;
             }

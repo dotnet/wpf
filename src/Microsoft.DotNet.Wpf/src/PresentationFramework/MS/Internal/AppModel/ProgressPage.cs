@@ -8,11 +8,9 @@
 //      the managed one from up to v3.5. See Host\DLL\ProgressPage.hxx for details.
 //
 
-using System;
 using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows.Threading;
-using System.Security;
 
 // Disambiguate MS.Internal.HRESULT...
 using HR = MS.Internal.Interop.HRESULT;

@@ -7,15 +7,11 @@
 // Description: FontStretch structure. 
 //
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
 
 using MS.Internal;
 
-using SR=MS.Internal.PresentationCore.SR;
-
-namespace System.Windows 
+namespace System.Windows
 {
     /// <summary>
     /// FontStretch structure describes relative change from the normal aspect ratio
@@ -43,8 +39,8 @@ namespace System.Windows
         // Important note: when changing this method signature please make sure to update FontStretchConverter accordingly.
         public static FontStretch FromOpenTypeStretch(int stretchValue)
         {
-            if (stretchValue < 1 || stretchValue > 9)
-                throw new ArgumentOutOfRangeException("stretchValue", SR.Format(SR.ParameterMustBeBetween, 1, 9));
+            ArgumentOutOfRangeException.ThrowIfLessThan(stretchValue, 1);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(stretchValue, 9);
             return new FontStretch(stretchValue);
         }
 

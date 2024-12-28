@@ -6,9 +6,6 @@
 
 using System;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
-using System.Text;
-using System.Collections;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;

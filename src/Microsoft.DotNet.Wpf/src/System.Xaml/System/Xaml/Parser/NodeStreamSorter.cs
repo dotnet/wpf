@@ -2,10 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
+#nullable disable
+
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Xaml;
 using System.Xaml.MS.Impl;
 using MS.Internal.Xaml.Context;
@@ -84,7 +83,7 @@ namespace MS.Internal.Xaml
 #if DEBUG
             public override string ToString()
             {
-                return String.Format(TypeConverterHelper.InvariantEnglishUS, "Depth[{0}] {1}", Depth, XamlNodeType);
+                return string.Create(TypeConverterHelper.InvariantEnglishUS, $"Depth[{Depth}] {XamlNodeType}");
             }
 #endif
         }
@@ -201,13 +200,13 @@ namespace MS.Internal.Xaml
 
         private void EnqueueInitialExtraXmlNses()
         {
-            if (_xmlnsDictionary != null)
+            if (_xmlnsDictionary is not null)
             {
                 foreach (string prefix in _xmlnsDictionary.Keys)
                 {
                     // Skip any prefixes in the settings that were already defined
                     // in the XML text (on the root node)
-                    if (_context.FindNamespaceByPrefixInParseStack(prefix) == null)
+                    if (_context.FindNamespaceByPrefixInParseStack(prefix) is null)
                     {
                         string uriString = _xmlnsDictionary[prefix];
                         XamlNode node = new XamlNode(XamlNodeType.NamespaceDeclaration, new NamespaceDeclaration(uriString, prefix));
@@ -231,7 +230,7 @@ namespace MS.Internal.Xaml
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Lang, _settings.XmlLang);
             }
-            if (_settings.BaseUri != null)
+            if (_settings.BaseUri is not null)
             {
                 EnqueueOneXmlDirectiveProperty(XamlLanguage.Base, _settings.BaseUri.ToString());
             }
@@ -270,7 +269,7 @@ namespace MS.Internal.Xaml
             // then dig in and correct the stream.
             //
             //if (HaveSeenOutOfOrderCtorDirective)
-            if(_moveList != null)
+            if(_moveList is not null)
             {
                 SortContentsOfReadAheadBuffer();
             }
@@ -399,7 +398,7 @@ namespace MS.Internal.Xaml
                 if (HaveSeenInstancingProperty)
                 {
                     HaveSeenOutOfOrderCtorDirective = true;
-                    if (_moveList == null)
+                    if (_moveList is null)
                     {
                         _moveList = new List<int>();
                     }
@@ -653,18 +652,18 @@ namespace MS.Internal.Xaml
             Debug.Assert(length1 > 0 && length2 > 0);
 
             ReorderInfo[] temp = new ReorderInfo[length1];
-            
+
             // Copy first half into temp storage.
             //             srcArray,      srcIdx, destArray, destIdx, length
             Array.Copy(_sortingInfoArray, beginning, temp,       0,      length1);
 
             // Copy second half up where the first half was.
             //             srcArray,      srcIdx,    destArray,     destIdx,  length
-            Array.Copy(_sortingInfoArray, middle, _sortingInfoArray, beginning,  length2); 
+            Array.Copy(_sortingInfoArray, middle, _sortingInfoArray, beginning,  length2);
 
             // Copy first half out of temp storage in after the first half
             //        srcArray, srcIdx, destArray,        destIdx,         length
-            Array.Copy(temp,      0,  _sortingInfoArray, beginning + length2, length1); 
+            Array.Copy(temp,      0,  _sortingInfoArray, beginning + length2, length1);
         }
 
         private bool AdvanceTo(int start, XamlNodeType nodeType, int searchDepth, out int end)

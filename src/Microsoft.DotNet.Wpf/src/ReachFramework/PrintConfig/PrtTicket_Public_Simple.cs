@@ -12,15 +12,8 @@ Abstract:
 
 --*/
 
-using System;
-using System.Xml;
 using System.IO;
-using System.Collections;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
 using System.Globalization;
-
-using System.Printing;
 using MS.Internal.Printing.Configuration;
 
 namespace System.Printing
@@ -1380,7 +1373,6 @@ namespace System.Printing
         /// <summary>
         /// Gets a boolean to indicate whether or not public setting in the PrinTicket has been changed by the client.
         /// </summary>
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         internal bool IsSettingChanged
         {
             get

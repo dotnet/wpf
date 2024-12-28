@@ -6,12 +6,7 @@
 // Description: RowCache caches information about Row layouts used by DocumentGrid.
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Documents;
 
 namespace MS.Internal.Documents
 {
@@ -243,10 +238,8 @@ namespace MS.Internal.Documents
         /// <returns>The requested row.</returns>
         public RowInfo GetRow(int index)
         {
-            if (index < 0 || index > _rowCache.Count)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, _rowCache.Count);
 
             return _rowCache[index];
         }
@@ -259,10 +252,8 @@ namespace MS.Internal.Documents
         /// <returns>The requested row.</returns>
         public RowInfo GetRowForPageNumber(int pageNumber)
         {
-            if (pageNumber < 0 || pageNumber > LastPageInCache)
-            {
-                throw new ArgumentOutOfRangeException("pageNumber");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(pageNumber);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(pageNumber, LastPageInCache);
 
             return _rowCache[GetRowIndexForPageNumber(pageNumber)];
         }
@@ -275,10 +266,8 @@ namespace MS.Internal.Documents
         /// <returns>The requested row index</returns>
         public int GetRowIndexForPageNumber(int pageNumber)
         {
-            if (pageNumber < 0 || pageNumber > LastPageInCache)
-            {
-                throw new ArgumentOutOfRangeException("pageNumber");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(pageNumber);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(pageNumber, LastPageInCache);
 
             //Search our cache for the row that contains the page.
             //NOTE: Future perf item:
@@ -307,10 +296,8 @@ namespace MS.Internal.Documents
         /// <returns>The index of the row that lives at the offset.</returns>
         public int GetRowIndexForVerticalOffset(double offset)
         {
-            if (offset < 0 || offset > ExtentHeight)
-            {
-                throw new ArgumentOutOfRangeException("offset");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(offset);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(offset, ExtentHeight);
 
             //If we have no rows we'll return 0 (the top of the non-existent document)
             if (_rowCache.Count == 0)
@@ -399,10 +386,7 @@ namespace MS.Internal.Documents
             startRowIndex = 0;
             rowCount = 0;
 
-            if (endOffset < startOffset)
-            {
-                throw new ArgumentOutOfRangeException("endOffset");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(endOffset, startOffset);
 
             //If the offsets we're given are out of range we'll just return now
             //because we have no rows to find at this offset.
@@ -514,16 +498,12 @@ namespace MS.Internal.Documents
             }
 
             //Throw exception for illegal values
-            if (pivotPage < 0 || pivotPage > PageCache.PageCount)
-            {
-                throw new ArgumentOutOfRangeException("pivotPage");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(pivotPage);
+            //Throw exception for illegal values
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(pivotPage, PageCache.PageCount);
 
             //Can't lay out fewer than 1 column of pages.
-            if (columns < 1)
-            {
-                throw new ArgumentOutOfRangeException("columns");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(columns, 1);
 
             //Store off the requested layout parameters.
             _layoutColumns = columns;
@@ -657,16 +637,11 @@ namespace MS.Internal.Documents
         private int RecalcRowsForDynamicPageSizes(int pivotPage, int columns)
         {
             //Throw exception for illegal values
-            if (pivotPage < 0 || pivotPage >= PageCache.PageCount)
-            {
-                throw new ArgumentOutOfRangeException("pivotPage");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(pivotPage);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(pivotPage, PageCache.PageCount);
 
             //Can't lay out fewer than 1 column of pages.
-            if (columns < 1)
-            {
-                throw new ArgumentOutOfRangeException("columns");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(columns, 1);
 
             //Adjust the pivot page as necessary so that the to-be-computed layout has the specified number
             //of columns on the row.
@@ -744,10 +719,7 @@ namespace MS.Internal.Documents
         /// <returns></returns>
         private RowInfo CreateDynamicRow(int startPage, double rowWidth, bool createForward)
         {
-            if (startPage >= PageCache.PageCount)
-            {
-                throw new ArgumentOutOfRangeException("startPage");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(startPage, PageCache.PageCount);
 
             //Given a starting page for this row, and the specified
             //width for each row, figure out how many pages will fit on this row
@@ -820,16 +792,11 @@ namespace MS.Internal.Documents
         private int RecalcRowsForFixedPageSizes(int startPage, int columns)
         {
             //Throw exception for illegal values
-            if (startPage < 0 || startPage > PageCache.PageCount)
-            {
-                throw new ArgumentOutOfRangeException("startPage");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(startPage);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(startPage, PageCache.PageCount);
 
             //Can't lay out fewer than 1 column of pages.
-            if (columns < 1)
-            {
-                throw new ArgumentOutOfRangeException("columns");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(columns, 1);
 
             //Since all pages in the document have been determined to be
             //the same size, we can use a simple algorithm to create our row layout.
@@ -857,15 +824,9 @@ namespace MS.Internal.Documents
         /// <returns></returns>
         private RowInfo CreateFixedRow(int startPage, int columns)
         {
-            if (startPage >= PageCache.PageCount)
-            {
-                throw new ArgumentOutOfRangeException("startPage");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(startPage, PageCache.PageCount);
 
-            if (columns < 1)
-            {
-                throw new ArgumentOutOfRangeException("columns");
-            }
+            ArgumentOutOfRangeException.ThrowIfLessThan(columns, 1);
 
             //Given a starting page for this row and the number of columns in the row
             //calculate the width & height and return the resulting RowInfo struct

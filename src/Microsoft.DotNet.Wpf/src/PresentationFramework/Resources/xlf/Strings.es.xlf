@@ -3608,11 +3608,6 @@ Do you want to replace it?</source>
         <target state="translated">"{0}" se debe proporcionar al crear la instancia de "{1}".</target>
         <note />
       </trans-unit>
-      <trans-unit id="ParameterCannotBeNegative">
-        <source>Parameter must be greater than or equal to zero.</source>
-        <target state="translated">El parámetro debe ser mayor que o igual a cero.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ParameterMustBeLogicalNode">
         <source>Parameter must be FrameworkElement or FrameworkContentElement.</source>
         <target state="translated">El parámetro debe ser FrameworkElement o FrameworkContentElement.</target>
@@ -4820,7 +4815,7 @@ Do you want to replace it?</source>
       </trans-unit>
       <trans-unit id="ScrollBar_ContextMenu_Top">
         <source>Top</source>
-        <target state="translated">Top</target>
+        <target state="translated">Arriba</target>
         <note />
       </trans-unit>
       <trans-unit id="ScrollViewer_CannotBeNaN">

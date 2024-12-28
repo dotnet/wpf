@@ -24,10 +24,10 @@ namespace System.Windows.Markup
     public sealed class XmlLangPropertyAttribute : Attribute
     {
         /// <summary>
-        /// Creates a new XmlLangPropertyAttribute with the given string 
+        /// Creates a new XmlLangPropertyAttribute with the given string
         /// as the property name.
         /// </summary>
-        public XmlLangPropertyAttribute(string name)
+        public XmlLangPropertyAttribute(string? name)
         {
             Name = name;
         }
@@ -35,6 +35,6 @@ namespace System.Windows.Markup
         /// <summary>
         /// The name of the property that is designated to accept the xml:lang value
         /// </summary>
-        public string Name { get; }
-    }    
+        public string? Name { get; }
+    }
 }

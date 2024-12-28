@@ -7,13 +7,6 @@
 // Description: OptimalBreakSession is unmanaged resouce handle to TextParagraphCache
 //
 
-using System;
-using System.Collections;
-using System.Windows;
-using System.Security;                  // SecurityCritical
-using System.Windows.Documents;
-using MS.Internal.Text;
-using MS.Internal.PtsHost.UnsafeNativeMethods;
 using System.Windows.Media.TextFormatting;
 
 namespace MS.Internal.PtsHost

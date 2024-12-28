@@ -5,23 +5,14 @@
 
 using System.ComponentModel;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Windows.Threading;
 using System.Windows.Data;
-using System.Windows;
 using System.Windows.Automation.Peers;
-using System.Windows.Automation.Provider;
 using System.Windows.Input;
-using MS.Utility;
 using MS.Internal;
 using MS.Internal.Data;
 using MS.Internal.KnownBoxes;
-using MS.Internal.Hashing.PresentationFramework;    // HashHelper
-
-using System;
-using System.Diagnostics;
 using MS.Internal.Controls;
 
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
@@ -256,7 +247,7 @@ namespace System.Windows.Controls.Primitives
         /// Whether this Selector should keep SelectedItem in sync with the ItemCollection's current item.
         /// </summary>
         [Bindable(true), Category("Behavior")]
-        [TypeConverter("System.Windows.NullableBoolConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.NullableBoolConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         [Localizability(LocalizationCategory.NeverLocalize)] // not localizable
         public bool? IsSynchronizedWithCurrentItem
         {

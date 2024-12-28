@@ -5,11 +5,6 @@
 // Description: 
 //    RMEnrollmentPage2 is page 2 of the RM enrollment wizard.
 
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Windows.Forms;
 using System.Windows.TrustUI;
 
 

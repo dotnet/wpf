@@ -9,19 +9,11 @@
 \***************************************************************************/
 
 using System;
-using System.Xml;
 using System.IO;
-using System.Globalization;
-using System.Text;
 using System.Collections;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Reflection;
-
-using MS.Utility;
-using MS.Internal;
 
 #if PBTCOMPILER
 using MS.Internal.Markup;
@@ -129,7 +121,7 @@ namespace System.Windows.Markup
             {
                 int probe = (high + low) / 2;
                 Type probeType = KnownTypes.Types[probe];
-                int cmp = String.CompareOrdinal(typeShortName, probeType.Name);
+                int cmp = string.CompareOrdinal(typeShortName, probeType.Name);
                 if (cmp == 0)
                 {
                     // Found a potential match.  Now compare the namespaces & assembly to be sure
@@ -839,7 +831,7 @@ namespace System.Windows.Markup
             {
                 if (propName == null)
                 {
-                    propName = attributeInfo.OwnerType.FullName + "." + attributeInfo.Name;
+                    propName = $"{attributeInfo.OwnerType.FullName}.{attributeInfo.Name}";
                 }
 
                 ThrowException(nameof(SR.ParserNoPropType), propName);
@@ -1285,7 +1277,7 @@ namespace System.Windows.Markup
         {
             Debug.Assert(ownerTypeName != null);
             Debug.Assert(attributeName != null);
-            return ownerTypeName + "." + attributeName;
+            return $"{ownerTypeName}.{attributeName}";
         }
 
         // Return the attribute info record that corresponds to the passed type and field name.

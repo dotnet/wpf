@@ -11,7 +11,6 @@
 //
 
 
-using System;
 using System.Runtime.InteropServices;
 using MS.Internal.IO.Packaging;
 

@@ -357,11 +357,6 @@
         <target state="translated">O elemento de destino não pode receber o foco.</target>
         <note />
       </trans-unit>
-      <trans-unit id="ShouldBeZero">
-        <source>Must be zero.</source>
-        <target state="translated">Deve ser zero.</target>
-        <note />
-      </trans-unit>
       <trans-unit id="ValueReadonly">
         <source>Value is read-only.</source>
         <target state="translated">O valor é somente leitura.</target>

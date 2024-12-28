@@ -7,11 +7,9 @@
 // Description: Base class for DataTemplateKey, TableTemplateKey.
 //
 
-using System;
 using System.Reflection;
 using System.ComponentModel;
 using System.Windows.Markup;
-using MS.Internal.Data;         // DataBindEngine.EnglishUSCulture
 
 namespace System.Windows
 {
@@ -119,10 +117,8 @@ namespace System.Windows
         {
             Type type = DataType as Type;
             return (DataType != null)
-                    ?   String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}({1})",
-                                    this.GetType().Name, DataType)
-                    :   String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}(null)",
-                                    this.GetType().Name);
+                    ?   string.Create(TypeConverterHelper.InvariantEnglishUS, $"{this.GetType().Name}({DataType})")
+                    :   string.Create(TypeConverterHelper.InvariantEnglishUS, $"{this.GetType().Name}(null)");
         }
 
         /// <summary>

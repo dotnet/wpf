@@ -9,9 +9,7 @@
 
 using System;
 using System.Collections;
-using System.Reflection;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using MS.Win32;
@@ -199,7 +197,7 @@ namespace MS.Internal.AutomationProxies
         //     to find a match.
         //     Call the delegate associated with the hwnd to create a raw element.
         //     Call the automation code to queue a new notification for the client.
-        private static void WinEventProc (int winEventHook, int eventId, IntPtr hwnd, int idObject, int idChild, int eventThread, uint eventTime)
+        private static void WinEventProc(int winEventHook, int eventId, IntPtr hwnd, int idObject, int idChild, int eventThread, uint eventTime)
         {
             if (hwnd == IntPtr.Zero)
             {
@@ -210,7 +208,7 @@ namespace MS.Internal.AutomationProxies
 
             try
             {
-                int evt = Array.BinarySearch(_eventIdToIndex, eventId);
+                int evt = EventIdToIndex.BinarySearch(eventId);
                 if (evt < 0)
                     return; // negative means this event is unknown so ignore it
 
@@ -353,7 +351,7 @@ namespace MS.Internal.AutomationProxies
                     EvtIdProperty evtIdProp = aEvtIdProp[i];
 
                     // Map a property into a WinEventHookProperty
-                    int evt = Array.BinarySearch (_eventIdToIndex, evtIdProp._evtId);
+                    int evt = EventIdToIndex.BinarySearch(evtIdProp._evtId);
 
                     // add the window to the list
                     if (evt >= 0)
@@ -532,7 +530,7 @@ namespace MS.Internal.AutomationProxies
         }
 
         // Maps WinEvents ID to indices in _ahp 
-        private static readonly int[] _eventIdToIndex = new int[] {
+        private static ReadOnlySpan<int> EventIdToIndex => [
             NativeMethods.EventSystemSound,
             NativeMethods.EventSystemAlert,
             NativeMethods.EventSystemForeground,
@@ -584,7 +582,7 @@ namespace MS.Internal.AutomationProxies
             NativeMethods.EventObjectAcceleratorChange,
             NativeMethods.EventObjectInvoke,
             NativeMethods.EventObjectTextSelectionChanged
-        };
+        ];
 
         // WinEventHooks must be processed in the same thread that created them.
         // Use a seperate thread to manage the hooks
@@ -596,7 +594,7 @@ namespace MS.Internal.AutomationProxies
         // Each element in the array list is a struct EventCreateParams that contains 
         // the hwnd and the other parameters needed to call the Proxy and then 
         // the client notification
-        private static Hashtable[] _ahp = new Hashtable[_eventIdToIndex.Length];
+        private static Hashtable[] _ahp = new Hashtable[EventIdToIndex.Length];
 
         private static uint _globalEventKey = 0;
         

@@ -2,6 +2,20 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal.Documents;
+using System.Windows.Controls;      // UIElementCollection
+using System.Windows.Media;
+using System.Windows.Automation;
+using System.Windows.Documents.DocumentStructures;
+using System.Collections;
+using System.Globalization;
+using System.Text;
+using System.IO;
+using System.Xml;
+using Path = System.Windows.Shapes.Path;
+
+using MS.Utility;
+
 //
 // Description:
 //      FixedTextBuilder contains heuristics to map fixed document elements
@@ -10,26 +24,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal.Documents;
-    using System.Windows.Controls;      // UIElementCollection
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Markup;
-    using System.Windows.Shapes;       // Glyphs
-    using System.Windows.Automation;
-    using System.Windows.Documents.DocumentStructures;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Text;
-    using System.IO;
-    using System.Xml;
-    using Path=System.Windows.Shapes.Path;
-
-    using MS.Utility;
-
     //=====================================================================
     /// <summary>
     /// FixedTextBuilder contains heuristics to map fixed document elements
@@ -91,8 +85,8 @@ namespace System.Windows.Documents
         // NOTE it is okay to not getting accurate list as long as
         // we deal with common cases since this is used in heuristic
         // algorithm!
-        internal static char[] HyphenSet =
-        {
+        internal static ReadOnlySpan<char> HyphenSet =>
+        [
             '\x002D',     // Hyphen-Minus
             '\x2010',     // Hyphen
             '\x2011',     // Non-breaking Hyphen
@@ -100,19 +94,9 @@ namespace System.Windows.Documents
             '\x2013',     // En-dash
             '\x2212',     // Minus Sign
             '\x00AD'      // Soft-Hyphen
-        };
+        ];
 
-        internal static bool IsHyphen(char target)
-        {
-            foreach (char hyphen in HyphenSet)
-            {
-                if (hyphen == target)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        internal static bool IsHyphen(char target) => HyphenSet.Contains(target);
 
         // Space that was used in the heuristic algorithm.
         internal static bool IsSpace(char target)
@@ -172,7 +156,7 @@ namespace System.Windows.Documents
         internal void AddVirtualPage()
         {
 #if DEBUG
-            DocumentsTrace.FixedTextOM.Builder.Trace(string.Format("AppendVirtualPage {0}", _pageStructures.Count));
+            DocumentsTrace.FixedTextOM.Builder.Trace($"AppendVirtualPage {_pageStructures.Count}");
 #endif
             FixedPageStructure pageStructure = new FixedPageStructure(_pageStructures.Count);
 #if DEBUG
@@ -230,7 +214,7 @@ namespace System.Windows.Documents
                         pageStructure.FixedSOMPage = pageConstructor.FixedSOMPage;
                     }
 
-                    DocumentsTrace.FixedTextOM.Builder.Trace(string.Format("_EnsureTextOMForPage Loading..."));
+                    DocumentsTrace.FixedTextOM.Builder.Trace("_EnsureTextOMForPage Loading...");
                     _CreateFixedMappingAndElementForPage(pageStructure, page, constructSOM);
 
 #if DEBUG
@@ -946,7 +930,7 @@ namespace System.Windows.Documents
         {
             int pageIndex = pageStructure.PageIndex;
 
-            DocumentsTrace.FixedTextOM.Builder.Trace(string.Format("_FlowOrderAnalysis P{0}-L[{0}]", pageIndex, nestingLevel));
+            DocumentsTrace.FixedTextOM.Builder.Trace($"_FlowOrderAnalysis P{pageIndex}-L[{pageIndex}]");
 
             int currentScopeId = _NewScopeId();
 
@@ -1678,13 +1662,13 @@ namespace System.Windows.Documents
 
                         if (i>0 && _builder._IsNonContiguous(_textRuns[i-1], run, comparison))
                         {
-                            _textRuns[i-1].Text = _textRuns[i-1].Text + " ";
+                            _textRuns[i-1].Text = $"{_textRuns[i - 1].Text} ";
                             textRunLength++;
                         }
                     }
                     if (addSpace && run.Text.Length>0 && !run.Text.EndsWith(" ", StringComparison.Ordinal) && !IsHyphen(run.Text[run.Text.Length - 1]))
                     {
-                        run.Text = run.Text + " ";
+                        run.Text = $"{run.Text} ";
                         textRunLength ++;
                     }
 

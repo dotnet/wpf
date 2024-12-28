@@ -4,16 +4,13 @@
 
 // Description: Defines the interface for participating in the document lifecycle.
 
-using System;
-using System.Collections.Generic;
-
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Defines the interface for participating in the document lifecycle.
-/// <seealso cref="MS.Internal.Documents.Application.DocumentManager"/>
-/// </summary>
-internal interface IDocumentController : IChainOfResponsibiltyNode<Document>
+    /// <summary>
+    /// Defines the interface for participating in the document lifecycle.
+    /// <seealso cref="MS.Internal.Documents.Application.DocumentManager"/>
+    /// </summary>
+    internal interface IDocumentController : IChainOfResponsibiltyNode<Document>
 {
     /// <summary>
     /// Implementors should prepare Document.Workspace for editing purposes

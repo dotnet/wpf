@@ -8,24 +8,16 @@
 //
 //
 
-using System;
-using System.Security;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using MS.Utility;
-using MS.Internal;
 using MS.Internal.Generic;
 using MS.Internal.FontCache;
 using MS.Internal.FontFace;
 using MS.Internal.TextFormatting;
 using System.Runtime.InteropServices;
-
-using FontFace = MS.Internal.FontFace;
 
 
 namespace MS.Internal.Shaping
@@ -120,7 +112,7 @@ namespace MS.Internal.Shaping
                         (char*)ptext.ToPointer(),
                         (uint)stringLength,
                         culture,
-                        MS.Internal.FontCache.DWriteFactory.Instance,
+                        (MS.Internal.Text.TextInterface.Native.IDWriteFactory*)MS.Internal.FontCache.DWriteFactory.Instance.DWriteFactory,
                         isRightToLeftParagraph,
                         digitCulture,
                         ignoreUserOverride,

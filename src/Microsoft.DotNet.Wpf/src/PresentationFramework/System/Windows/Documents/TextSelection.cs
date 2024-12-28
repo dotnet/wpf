@@ -2,25 +2,22 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using System.Globalization;
+using System.Windows.Controls.Primitives;  // TextBoxBase
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
+using System.IO;
+using MS.Win32;
+using System.Windows.Controls;
+
 //
 // Description: Holds and manipulates the text selection state for TextEditor.
 //
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Windows.Controls.Primitives;  // TextBoxBase
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-    using System.Threading;
-    using System.Security;
-    using System.IO;
-    using MS.Win32;
-    using System.Windows.Controls;
-
     /// <summary>
     /// The TextSelection class encapsulates selection state for the RichTextBox
     /// control.  It has no public constructor, but is exposed via a public
@@ -841,12 +838,12 @@ namespace System.Windows.Documents
                 if (anchorWordRange.Start.CompareTo(cursorWordRange.Start) <= 0)
                 {
                     startPosition = anchorWordRange.Start.GetFrozenPointer(LogicalDirection.Forward);
-                    movingPosition = cursorWordRange.End.GetFrozenPointer(LogicalDirection.Backward); ;
+                    movingPosition = cursorWordRange.End.GetFrozenPointer(LogicalDirection.Backward);
                 }
                 else
                 {
                     startPosition = anchorWordRange.End.GetFrozenPointer(LogicalDirection.Backward);
-                    movingPosition = cursorWordRange.Start.GetFrozenPointer(LogicalDirection.Forward); ;
+                    movingPosition = cursorWordRange.Start.GetFrozenPointer(LogicalDirection.Forward);
                 }
 
                 // Note that we use includeCellAtMovingPosition=true because we want that hit-tested table cell

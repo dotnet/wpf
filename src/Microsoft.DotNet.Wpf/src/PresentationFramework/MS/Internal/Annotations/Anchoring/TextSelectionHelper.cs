@@ -10,22 +10,13 @@
 //
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Windows;
 using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
-using MS.Internal.Annotations.Component;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Xml;
 using MS.Internal.Documents;
-using MS.Utility;
 
 
 namespace MS.Internal.Annotations.Anchoring
@@ -79,10 +70,10 @@ namespace MS.Internal.Annotations.Anchoring
             TextAnchor secondAnchor = anchor2 as TextAnchor;
 
             if ((anchor1 != null) && (firstAnchor == null))
-                throw new ArgumentException(SR.WrongSelectionType, "anchor1: type = " + anchor1.GetType().ToString());
+                throw new ArgumentException(SR.WrongSelectionType, $"anchor1: type = {anchor1.GetType()}");
 
             if ((anchor2 != null) && (secondAnchor == null))
-                throw new ArgumentException(SR.WrongSelectionType, "Anchor2: type = " + anchor2.GetType().ToString());
+                throw new ArgumentException(SR.WrongSelectionType, $"Anchor2: type = {anchor2.GetType()}");
 
             if (firstAnchor == null)
             {

@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal.Documents;
+
 //
 // Description:
 //      Represent a node in the doubly linked list a DocumentSequenceTextContainer
@@ -11,11 +13,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal.Documents;
-    using System;
-    using System.Diagnostics;
-
-
     //=====================================================================
     /// <summary>
     /// Represent a node in the doubly linked list a DocumentSequenceTextContainer
@@ -226,7 +223,7 @@ namespace System.Windows.Documents
             {
                 _ClearStatus(BlockStatus.UnloadedBlock);
 
-                DocumentsTrace.FixedDocumentSequence.TextOM.Trace("Loading TextContainer " + _docRef.ToString());
+                DocumentsTrace.FixedDocumentSequence.TextOM.Trace($"Loading TextContainer {_docRef}");
                 // Load the TextContainer
                 IDocumentPaginatorSource idp = _docRef.GetDocument(false /*forceReload*/);
                 IServiceProvider isp = idp as IServiceProvider;

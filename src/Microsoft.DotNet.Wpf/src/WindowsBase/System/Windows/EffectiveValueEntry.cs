@@ -11,13 +11,8 @@
 *
 \***************************************************************************/
 
-using MS.Internal.WindowsBase;  // FriendAccessAllowed
-using System.Collections;       // IDictionary
-using System.Diagnostics;       // Debug.Assert
-
 namespace System.Windows
 {
-    [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
     internal struct EffectiveValueEntry
     {
         #region InternalMethods
@@ -588,7 +583,6 @@ namespace System.Windows
     }
 
 
-    [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
     internal enum FullValueSource : short
     {
         // Bit used to store BaseValueSourceInternal = 0x01
@@ -603,7 +597,7 @@ namespace System.Windows
         IsCoerced           = 0x0040,
         IsPotentiallyADeferredReference = 0x0080,
         HasExpressionMarker = 0x0100,
-        IsCoercedWithCurrentValue = 0x200,
+        IsCoercedWithCurrentValue = 0x0200,
     }
 
     // Note that these enum values are arranged in the reverse order of
@@ -611,7 +605,6 @@ namespace System.Windows
     // precedence and Default value has the least. Note that we do not
     // store default values in the _effectiveValues cache unless it is
     // being coerced/animated.
-    [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
     internal enum BaseValueSourceInternal : short
     {
         Unknown                 = 0,
@@ -628,7 +621,6 @@ namespace System.Windows
         Local                   = 11,
     }
 
-    [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
     internal class ModifiedValue
     {
         #region InternalProperties

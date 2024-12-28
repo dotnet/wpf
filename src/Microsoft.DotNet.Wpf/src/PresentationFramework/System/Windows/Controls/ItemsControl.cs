@@ -3,30 +3,21 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
-using System.Windows;
 using System.Windows.Media;
 using System.Windows.Markup;
 using System.Windows.Input;
 using System.Windows.Automation.Peers;
-
-using MS.Utility;
 using MS.Internal;
 using MS.Internal.Controls;
 using MS.Internal.Data;
-using MS.Internal.Hashing.PresentationFramework;    // HashHelper
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
-using MS.Internal.Utility;
 
 namespace System.Windows.Controls
 {

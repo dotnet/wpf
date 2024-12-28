@@ -7,14 +7,6 @@
 //
 // Description: GlyphInfoList class
 
-
-using System;
-using System.Diagnostics;
-using System.Windows.Media.TextFormatting;
-using System.Security;
-using MS.Internal;
-using MS.Internal.PresentationCore;
-
 namespace MS.Internal.Shaping
 {
     /// <summary>

@@ -10,7 +10,6 @@
 // See specs at ItemsControl.mht
 //
 
-using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -462,8 +461,8 @@ namespace MS.Internal.Controls
         /// <returns>true if <seealso cref="CollectionView.CurrentItem"/> points to an item within the view.</returns>
         public override bool MoveCurrentToPosition(int position)
         {
-            if (position < -1 || position > ViewCount)
-                throw new ArgumentOutOfRangeException("position");
+            ArgumentOutOfRangeException.ThrowIfLessThan(position, -1);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(position, ViewCount);
 
             if (position != CurrentPosition && OKToChangeCurrent())
             {

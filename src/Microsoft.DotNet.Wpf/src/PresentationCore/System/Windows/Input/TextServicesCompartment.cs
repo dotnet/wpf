@@ -8,25 +8,17 @@
 //
 //
 
-using System;
 using System.Runtime.InteropServices;
-using System.Windows.Threading;
-
-using System.Security;
-using System.Diagnostics;
-using System.Collections;
-using MS.Utility;
 using MS.Win32;
-using MS.Internal;
 
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     //------------------------------------------------------
     //
     //  TextServicesCompartment class
     //
     //------------------------------------------------------
- 
+
     internal class TextServicesCompartment
     {
         //------------------------------------------------------
@@ -38,7 +30,7 @@ namespace System.Windows.Input
         internal TextServicesCompartment(Guid guid, UnsafeNativeMethods.ITfCompartmentMgr compartmentmgr)
         {
             _guid = guid;
-            _compartmentmgr = new SecurityCriticalData<UnsafeNativeMethods.ITfCompartmentMgr>(compartmentmgr);
+            _compartmentmgr = compartmentmgr;
             _cookie = UnsafeNativeMethods.TF_INVALID_COOKIE;
         }
 
@@ -133,7 +125,7 @@ namespace System.Windows.Input
         internal UnsafeNativeMethods.ITfCompartment GetITfCompartment()
         {
             UnsafeNativeMethods.ITfCompartment itfcompartment;
-            _compartmentmgr.Value.GetCompartment(ref _guid, out itfcompartment);
+            _compartmentmgr.GetCompartment(ref _guid, out itfcompartment);
             return itfcompartment;
         }
 
@@ -236,7 +228,7 @@ namespace System.Windows.Input
                 
         #region Private Fields
 
-        private readonly SecurityCriticalData<UnsafeNativeMethods.ITfCompartmentMgr> _compartmentmgr;
+        private readonly UnsafeNativeMethods.ITfCompartmentMgr _compartmentmgr;
 
         private Guid _guid;
         private int _cookie;

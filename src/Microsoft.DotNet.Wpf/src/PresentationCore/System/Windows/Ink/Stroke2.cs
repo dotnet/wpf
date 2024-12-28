@@ -4,20 +4,11 @@
 
 //#define DEBUG_RENDERING_FEEDBACK
 
-using MS.Utility;
-using System;
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using MS.Internal;
 using MS.Internal.Ink;
-
-using SR=MS.Internal.PresentationCore.SR;
-using MS.Internal.PresentationCore;
 
 // Primary root namespace for TabletPC/Ink/Handwriting/Recognition in .NET
 
@@ -464,7 +455,7 @@ namespace System.Windows.Ink
 
             bool geometricallyEqual = DrawingAttributes.GeometricallyEqual(drawingAttributes, this.DrawingAttributes);
 
-            // need to recalculate the PathGemetry if the DA passed in is "geometrically" different from
+            // need to recalculate the PathGeometry if the DA passed in is "geometrically" different from
             // this DA, or if the cached PathGeometry is dirty.
             if (false == geometricallyEqual || (true == geometricallyEqual && null == _cachedGeometry))
             {
@@ -509,7 +500,6 @@ namespace System.Windows.Ink
         /// so we can assume the correct opacity has already been pushed on dc. The flag drawAsHollow is set
         /// to true when this function is called from Renderer and this.IsSelected == true.
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal void DrawInternal(DrawingContext dc, DrawingAttributes DrawingAttributes, bool drawAsHollow)
         {
             if (drawAsHollow == true)
@@ -538,7 +528,6 @@ namespace System.Windows.Ink
         /// <summary>
         /// Used by Inkcanvas to draw selected stroke as hollow.
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal bool IsSelected
         {
             get { return _isSelected; }

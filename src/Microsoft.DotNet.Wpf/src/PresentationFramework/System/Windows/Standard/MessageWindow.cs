@@ -4,17 +4,14 @@
 
 
 
+using System.Runtime.ConstrainedExecution;
+using System.Runtime.InteropServices;
+using System.Windows;
+using System.Windows.Threading;
+using System.Diagnostics.CodeAnalysis;
+
 namespace Standard
 {
-    using System;
-    using System.Runtime.ConstrainedExecution;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Windows;
-    using System.Windows.Threading;
-    using System.Collections.Generic;
-    using System.Diagnostics.CodeAnalysis;
-
     internal sealed class MessageWindow : CriticalFinalizerObject
     {
         static MessageWindow()
@@ -38,12 +35,11 @@ namespace Standard
             private set; 
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public MessageWindow(CS classStyle, WS style, WS_EX exStyle, Rect location, string name, WndProc callback)
         {
             // A null callback means just use DefWindowProc.
             _wndProcCallback = callback;
-            _className = "MessageWindowClass+" + Guid.NewGuid().ToString();
+            _className = $"MessageWindowClass+{Guid.NewGuid()}";
 
             var wc = new WNDCLASSEX
             {

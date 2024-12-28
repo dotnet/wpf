@@ -2,17 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using System.Windows.Controls; // TextBox, TextBlock
+using System.Windows.Media; // Brush
+
 //
 // Description: A static class providing information about text content schema
 //
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Collections.Generic;
-    using System.Windows.Controls; // TextBox, TextBlock
-    using System.Windows.Media; // Brush
-
     /// <summary>
     /// Provides an information about text structure schema.
     /// The schema is used in editing operations for maintaining

@@ -8,21 +8,15 @@
 // See spec at CollectionView.mht
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;        // ConstructorInfo
-
-using System.Windows;
 using System.Windows.Threading;
 
 using MS.Internal;
 using MS.Internal.Data;
-using MS.Utility;
 
 namespace System.Windows.Data
 {
@@ -199,8 +193,8 @@ namespace System.Windows.Data
         {
             VerifyRefreshNotDeferred();
 
-            if (position < -1 || position > InternalCount)
-                throw new ArgumentOutOfRangeException("position");
+            ArgumentOutOfRangeException.ThrowIfLessThan(position, -1);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(position, InternalCount);
 
 
             if (position != CurrentPosition || !IsCurrentInSync)

@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 namespace System.Xaml
 {
     public interface IXamlIndexingReader
@@ -38,10 +40,7 @@ namespace System.Xaml
 
         public override bool Read()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlReader"); // Can't say ReaderMultiIndexDelegate because its internal.
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlReader)); // Can't say ReaderMultiIndexDelegate because its internal.
             do
             {
                 if (_idx < _count - 1)
@@ -52,7 +51,7 @@ namespace System.Xaml
                         return true;   // This is the common/fast path
                     }
                     // else do the NONE node stuff.
-                    if (_currentNode.LineInfo != null)
+                    if (_currentNode.LineInfo is not null)
                     {
                         _currentLineInfo = _currentNode.LineInfo;
                     }

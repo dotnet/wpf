@@ -2,7 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics;
+#nullable disable
+
 using System.Threading;
 
 namespace System.Xaml
@@ -31,7 +32,7 @@ namespace System.Xaml
         bool _wrappedReaderHasLineInfo;
         int _lineNumber;
         int _linePosition;
-        
+
         Thread _thread;
         Exception _caughtException;
 
@@ -82,7 +83,7 @@ namespace System.Xaml
 
         public void StartThread(string threadName)
         {
-            if (_thread != null)
+            if (_thread is not null)
             {
                 throw new InvalidOperationException(SR.ThreadAlreadyStarted);
             }
@@ -167,10 +168,7 @@ namespace System.Xaml
 
         private XamlNode Next()
         {
-            if (IsDisposed)
-            {
-                throw new ObjectDisposedException("XamlBackgroundReader");
-            }
+            ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlBackgroundReader));
             if (OutgoingEmpty)
             {
                 // This is for users that read PAST the EOF record.
@@ -187,13 +185,13 @@ namespace System.Xaml
 
             if (_currentNode.IsEof)
             {
-                if (_thread != null)
+                if (_thread is not null)
                 {
                     // If the input ended due to an (caught) exception on the background thread,
                     // then at the end of reading the input re-throw the exception on the
                     // foreground thread.
                     _thread.Join();
-                    if (_caughtException != null)
+                    if (_caughtException is not null)
                     {
                         Exception ex = _caughtException;
                         _caughtException = null;
@@ -230,8 +228,8 @@ namespace System.Xaml
             IXamlLineInfo xamlLineInfo = reader as IXamlLineInfo;
             IXamlLineInfoConsumer xamlLineInfoConsumer = writer as IXamlLineInfoConsumer;
             bool shouldPassLineNumberInfo = false;
-            if ((xamlLineInfo != null && xamlLineInfo.HasLineInfo)
-                && (xamlLineInfoConsumer != null && xamlLineInfoConsumer.ShouldProvideLineInfo))
+            if ((xamlLineInfo is not null && xamlLineInfo.HasLineInfo)
+                && (xamlLineInfoConsumer is not null && xamlLineInfoConsumer.ShouldProvideLineInfo))
             {
                 shouldPassLineNumberInfo = true;
             }

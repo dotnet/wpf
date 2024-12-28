@@ -9,19 +9,10 @@
 //
 //
 
-using System;
-using System.Security;
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.TextFormatting;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using MS.Internal.Shaping;
-using MS.Internal.FontCache;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal.TextFormatting
 {
@@ -807,10 +798,7 @@ namespace MS.Internal.TextFormatting
             int     textLength
             )
         {
-            if (textLength == 0)
-            {
-                throw new ArgumentOutOfRangeException("textLength", SR.ParameterMustBeGreaterThanZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfZero(textLength);
 
             if (textLength < 0)
             {

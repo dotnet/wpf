@@ -8,25 +8,16 @@
 // Specs:      Data Styling.mht
 //
 
-using System;
-using System.Diagnostics;
 using System.ComponentModel;
-using System.Reflection;
-
-using System.Windows.Threading;
-
-using System.Windows.Shapes;
 using System.Windows.Media;
 using System.Windows.Data;
 using System.Windows.Markup;
 using MS.Internal;
-using MS.Internal.Data;
 using MS.Internal.KnownBoxes;
 using System.Windows.Documents;
 
 using MS.Utility;
 using MS.Internal.PresentationFramework;
-using System.Collections.Specialized;
 
 namespace System.Windows.Controls
 {
@@ -1053,7 +1044,7 @@ namespace System.Windows.Controls
                 {
                     if (tracingEnabled)
                     {
-                        EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientStringEnd, EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Info, String.Format(System.Globalization.CultureInfo.InvariantCulture, "ContentPresenter.BuildVisualTree for CP {0}", container.GetHashCode()));
+                        EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientStringEnd, EventTrace.Keyword.KeywordGeneral, EventTrace.Level.Info, string.Create(System.Globalization.CultureInfo.InvariantCulture, $"ContentPresenter.BuildVisualTree for CP {container.GetHashCode()}"));
                     }
                 }
             }

@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics;
+#nullable disable
 
 namespace System.Xaml
 {
@@ -20,7 +20,7 @@ namespace System.Xaml
 
     internal delegate void XamlNodeAddDelegate(XamlNodeType nodeType, object data);
     internal delegate void XamlLineInfoAddDelegate(int lineNumber, int linePosition);
-    internal delegate XamlNode XamlNodeNextDelegate();     
+    internal delegate XamlNode XamlNodeNextDelegate();
     internal delegate XamlNode XamlNodeIndexDelegate(int idx);
 
     [DebuggerDisplay("{ToString()}")]
@@ -34,7 +34,7 @@ namespace System.Xaml
 
         public XamlNodeType NodeType
         {
-            get { return _nodeType; } 
+            get { return _nodeType; }
         }
 
         public XamlNode(XamlNodeType nodeType)
@@ -81,7 +81,7 @@ namespace System.Xaml
             case XamlNodeType.EndObject:
             case XamlNodeType.EndMember:
             case XamlNodeType.GetObject:
-                Debug.Assert(data == null, "XamlNode ctor, Internal XamlNode data must be null for this Node type");
+                Debug.Assert(data is null, "XamlNode ctor, Internal XamlNode data must be null for this Node type");
                 break;
 
             default:
@@ -113,7 +113,7 @@ namespace System.Xaml
 
         public override string ToString()
         {
-            string str = String.Format(TypeConverterHelper.InvariantEnglishUS, "{0}: ", NodeType);
+            string str = string.Create(TypeConverterHelper.InvariantEnglishUS, $"{NodeType}: ");
             switch(NodeType)
             {
             case XamlNodeType.StartObject:
@@ -148,7 +148,7 @@ namespace System.Xaml
                     break;
 
                 case InternalNodeType.LineInfo:
-                    str += "LineInfo: " + LineInfo.ToString();
+                    str += $"LineInfo: {LineInfo}";
                     break;
                 }
                 break;

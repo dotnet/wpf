@@ -2,38 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
-using System.Threading;
-using System.Security;
-using System.Diagnostics;
-using System.ComponentModel;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
+using MS.Internal.PresentationCore;
 using MS.Win32;
 using System.IO.Packaging;
-using System.Windows.Media.Animation;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using System.Windows.Navigation;
-using System.Runtime.InteropServices;
-using System.IO;
-using System.Security.AccessControl;//for semaphore access permissions
-using System.Net;
-using Microsoft.Win32;
-using SR=MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
-//
-// Disable the warnings that C# emmits when it finds pragmas it does not recognize, this is to
-// get rid of false positive PreSharp warning
-//
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
+
 #pragma warning disable 1634, 1691
-
 
 namespace System.Windows.Media
 {
@@ -262,10 +241,8 @@ namespace System.Windows.Media
             set
             {
                 VerifyAPI();
-                if (Double.IsNaN(value))
-                {
-                    throw new ArgumentException(SR.ParameterValueCannotBeNaN, "value");
-                }
+
+                ArgumentOutOfRangeException.ThrowIfEqual(value, double.NaN);
 
                 if (DoubleUtil.GreaterThanOrClose(value, 1))
                 {
@@ -312,10 +289,8 @@ namespace System.Windows.Media
             set
             {
                 VerifyAPI();
-                if (Double.IsNaN(value))
-                {
-                    throw new ArgumentException(SR.ParameterValueCannotBeNaN, "value");
-                }
+
+                ArgumentOutOfRangeException.ThrowIfEqual(value, double.NaN);
 
                 if (DoubleUtil.GreaterThanOrClose(value, 1))
                 {
@@ -932,10 +907,7 @@ namespace System.Windows.Media
             {
                 VerifyAPI();
 
-                if (Double.IsNaN(value))
-                {
-                    throw new ArgumentException(SR.ParameterValueCannotBeNaN, "value");
-                }
+                ArgumentOutOfRangeException.ThrowIfEqual(value, double.NaN);
 
                 HRESULT.Check(MILMedia.SetRate(_nativeMedia, value));
             }

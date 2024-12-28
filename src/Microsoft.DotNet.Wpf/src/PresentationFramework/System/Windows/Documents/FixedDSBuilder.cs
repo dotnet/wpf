@@ -2,6 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Controls;
+using System.Windows.Markup;
+using System.Windows.Shapes;
+using System.Windows.Documents.DocumentStructures;
+using Ds = System.Windows.Documents.DocumentStructures;
+using System.Collections;
+
 //
 // Description:
 //      FixedTextBuilder contains heuristics to map fixed document elements
@@ -10,21 +17,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal.Documents;
-    using System.Windows.Controls;     
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Markup;
-    using System.Windows.Shapes;
-    using System.Windows.Documents.DocumentStructures;
-    using Ds=System.Windows.Documents.DocumentStructures;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Text;
-
     //=====================================================================
     /// <summary>
     /// FixedTextBuilder contains heuristics to map fixed document elements

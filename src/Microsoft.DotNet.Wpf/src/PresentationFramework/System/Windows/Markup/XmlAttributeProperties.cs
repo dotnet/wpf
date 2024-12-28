@@ -7,17 +7,9 @@
 //   Attributes used by parser for Avalon
 //
 
-using System;
-using System.Xml;
-using System.IO;
 using System.Collections;
 using System.ComponentModel;
-using System.Globalization;
-
-using System.Diagnostics;
 using System.Reflection;
-
-using MS.Utility;
 
 #if !PBTCOMPILER
 
@@ -296,14 +288,14 @@ namespace System.Windows.Markup
         /// </remarks>
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         [AttachedPropertyBrowsableForType(typeof(DependencyObject))]
-        public static string GetXmlNamespaceMaps(DependencyObject dependencyObject)
+        public static Hashtable GetXmlNamespaceMaps(DependencyObject dependencyObject)
         {
             if (dependencyObject == null)
             {
                 throw new ArgumentNullException( "dependencyObject" );
             }
 
-            return (string)dependencyObject.GetValue(XmlNamespaceMapsProperty);
+            return (Hashtable)dependencyObject.GetValue(XmlNamespaceMapsProperty);
         }
 
         /// <summary>
@@ -312,7 +304,7 @@ namespace System.Windows.Markup
         /// <remarks>
         /// XmlNamespaceMaps map xml namespace uri to Assembly/CLR namespaces
         /// </remarks>
-        public static void SetXmlNamespaceMaps(DependencyObject dependencyObject, string value)
+        public static void SetXmlNamespaceMaps(DependencyObject dependencyObject, Hashtable value)
         {
             if (dependencyObject == null)
             {

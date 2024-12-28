@@ -12,17 +12,13 @@
 //  web requests. This class is used by ByteWrapper (unmanaged code) to make additional
 //  web requests other than through WININET
 
-using System;
 using System.Collections;
 using System.ComponentModel;              // For Win32Exception
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.IO.IsolatedStorage;        // For IsolatedStorage temp file
 using System.Net;
 using System.Net.Cache;                     // For RequestCachePolicy
 using System.Runtime.InteropServices;   // For Marshal
-using System.Security;                  // SecurityCritical, SecurityTreatAsSafe
 using System.Threading;                  // For Mutex
 using Microsoft.Win32.SafeHandles;
 using MS.Internal.PresentationCore;
@@ -36,7 +32,6 @@ namespace MS.Internal.IO.Packaging
     /// For now, we will only process one batch of requests at a time. We will most likely
     ///  want to spin multiple threads and do multiple batches at a time in the future
     /// </remarks>
-    [FriendAccessAllowed]
     internal class ByteRangeDownloader : IDisposable
     {
          //------------------------------------------------------

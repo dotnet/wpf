@@ -7,7 +7,6 @@
 //              and can be made Read-Only.  Created for ObjectDataProvider.
 //
 
-using System;
 using System.Collections;   // IList
 using System.Collections.ObjectModel;   // Collection<T>
 using System.Windows;   // SR

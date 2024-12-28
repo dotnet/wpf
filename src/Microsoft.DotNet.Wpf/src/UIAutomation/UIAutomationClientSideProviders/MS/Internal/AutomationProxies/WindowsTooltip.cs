@@ -8,13 +8,9 @@
 #pragma warning disable 1634, 1691
 
 using System;
-using System.Globalization;
-using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows;
-using System.Runtime.InteropServices;
-using System.ComponentModel;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
@@ -55,11 +51,7 @@ namespace MS.Internal.AutomationProxies
         private static IRawElementProviderSimple Create(IntPtr hwnd, int idChild)
         {
             // Something is wrong if idChild is not zero 
-            if (idChild != 0)
-            {
-                System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             return new WindowsTooltip(hwnd, null, idChild);
         }
@@ -184,20 +176,20 @@ namespace MS.Internal.AutomationProxies
 
             string className = Misc.ProxyGetClassName(hwnd);
 
-            return String.Compare(className, "tooltips_class32", StringComparison.OrdinalIgnoreCase) == 0 ||
-                String.Compare(className, CLASS_TITLEBAR_TOOLTIP, StringComparison.OrdinalIgnoreCase) == 0 ||
-                String.Compare(className, "VBBubble", StringComparison.OrdinalIgnoreCase) == 0;
+            return string.Equals(className, "tooltips_class32", StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(className, CLASS_TITLEBAR_TOOLTIP, StringComparison.OrdinalIgnoreCase) ||
+                   string.Equals(className, "VBBubble", StringComparison.OrdinalIgnoreCase);
         }
 
         private string GetText()
         {
             string className = Misc.ProxyGetClassName(_hwnd);
 
-            if (String.Compare(className, CLASS_TITLEBAR_TOOLTIP, StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals(className, CLASS_TITLEBAR_TOOLTIP, StringComparison.OrdinalIgnoreCase))
             {
                 return GetTitleBarToolTipText();
             }
-            else if (String.Compare(className, "VBBubble", StringComparison.OrdinalIgnoreCase) == 0)
+            else if (string.Equals(className, "VBBubble", StringComparison.OrdinalIgnoreCase))
             {
                 // The WM_GETTEXT should work for VBBubble.  It seems that the string being returned is having
                 // a problem with Unicode covertion and therefore trunk'ing the string after the first character.

@@ -6,21 +6,13 @@
 // Description: The stock password control.
 //
 
-using System.Diagnostics;
-using System.Collections;
 using System.ComponentModel;
-using System.Globalization;
 using System.Security;
-using System.Text;
 using System.Windows.Media;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
@@ -63,7 +55,7 @@ namespace System.Windows.Controls
             PasswordCharProperty.OverrideMetadata(typeof(PasswordBox),
                     new FrameworkPropertyMetadata(new PropertyChangedCallback(OnPasswordCharChanged)));
 
-            // Declaree listener for Padding property
+            // Declare listener for Padding property
             Control.PaddingProperty.OverrideMetadata(typeof(PasswordBox),
                 new FrameworkPropertyMetadata(new PropertyChangedCallback(OnPaddingChanged)));
 
@@ -854,7 +846,7 @@ namespace System.Windows.Controls
             // PasswordBox only accepts plain text, so change TextEditor's default to that.
             _textEditor.AcceptsRichContent = false;
 
-            // PasswordBox does not accetps tabs.
+            // PasswordBox does not accepts tabs.
             _textEditor.AcceptsTab = false;
         }
 
@@ -1077,15 +1069,8 @@ namespace System.Windows.Controls
             ITextPointer selectionEnd;
 
             //             VerifyAccess();
-            if (start < 0)
-            {
-                throw new ArgumentOutOfRangeException("start", SR.ParameterCannotBeNegative);
-            }
-
-            if (length < 0)
-            {
-                throw new ArgumentOutOfRangeException("length", SR.ParameterCannotBeNegative);
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(start);
+            ArgumentOutOfRangeException.ThrowIfNegative(length);
 
             // Identify new selection start position
             selectionStart = this.TextContainer.Start.CreatePointer();

@@ -2,23 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-
-using System;
-using System.Diagnostics;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using System.Text;
-using System.Collections;
-using System.Globalization;
-using MS.Internal;
-using System.Windows;
-using System.Windows.Media;
-using System.Runtime.InteropServices;
-using System.Security;
-using MS.Internal.WindowsBase;
-
 namespace System.Windows
 {
     /// <summary>
@@ -79,25 +62,12 @@ namespace System.Windows
         // concerns prevent this until a side-by-side release.
         internal void ValidateForDirtyRect(string paramName, int width, int height)
         {
-            if (_x < 0)
-            {
-                throw new ArgumentOutOfRangeException(paramName, SR.ParameterCannotBeNegative);
-            }
-
-            if (_y < 0)
-            {
-                throw new ArgumentOutOfRangeException(paramName, SR.ParameterCannotBeNegative);
-            }            
-            
-            if (_width < 0 || _width > width)
-            {
-                throw new ArgumentOutOfRangeException(paramName, SR.Format(SR.ParameterMustBeBetween, 0, width));
-            }
-
-            if (_height < 0 || _height > height)
-            {
-                throw new ArgumentOutOfRangeException(paramName, SR.Format(SR.ParameterMustBeBetween, 0, height));
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(_x, paramName);
+            ArgumentOutOfRangeException.ThrowIfNegative(_y, paramName);
+            ArgumentOutOfRangeException.ThrowIfNegative(_width, paramName);
+            ArgumentOutOfRangeException.ThrowIfNegative(_height, paramName);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(_width, width, paramName);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(_height, height, paramName);
         }
 
         private readonly static Int32Rect s_empty = new Int32Rect(0,0,0,0);

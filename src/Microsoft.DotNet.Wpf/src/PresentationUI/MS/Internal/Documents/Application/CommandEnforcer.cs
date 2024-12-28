@@ -4,13 +4,10 @@
 
 // Description: Manager for Enforcing RM Permissions on DocumentApplication-specific RoutedUICommands.
 
-using MS.Internal.Documents;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows.Input;
-using System.Windows.TrustUI;
 
 namespace MS.Internal.Documents.Application
 {

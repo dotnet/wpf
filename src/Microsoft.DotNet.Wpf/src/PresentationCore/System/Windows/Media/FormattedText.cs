@@ -2,28 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Implementation of FormattedText class. The FormattedText class is targeted at programmers
-// needing to add some simple text to a MIL visual.
-//
-//
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using System.Runtime.InteropServices;
 using MS.Internal;
 using MS.Internal.TextFormatting;
-using MS.Internal.FontFace;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 #pragma warning disable 1634, 1691
 //Allow suppression of Presharp warnings
@@ -290,14 +274,9 @@ namespace System.Windows.Media
 
         private static void ValidateFontSize(double emSize)
         {
-            if (emSize <= 0)
-                throw new ArgumentOutOfRangeException("emSize", SR.ParameterMustBeGreaterThanZero);
-
-            if (emSize > MaxFontEmSize)
-                throw new ArgumentOutOfRangeException("emSize", SR.Format(SR.ParameterCannotBeGreaterThan, MaxFontEmSize));
-
-            if (double.IsNaN(emSize))
-                throw new ArgumentOutOfRangeException("emSize", SR.ParameterValueCannotBeNaN);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(emSize);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(emSize, MaxFontEmSize);
+            ArgumentOutOfRangeException.ThrowIfEqual(emSize, double.NaN);
         }
 
         private static void ValidateFlowDirection(FlowDirection flowDirection, string parameterName)
@@ -308,8 +287,8 @@ namespace System.Windows.Media
 
         private int ValidateRange(int startIndex, int count)
         {
-            if (startIndex < 0 || startIndex > _text.Length)
-                throw new ArgumentOutOfRangeException("startIndex");
+            ArgumentOutOfRangeException.ThrowIfNegative(startIndex);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(startIndex, _text.Length);
 
             int limit = startIndex + count;
 
@@ -1276,8 +1255,7 @@ namespace System.Windows.Media
         {
             set
             {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException("value", SR.ParameterCannotBeNegative);
+                ArgumentOutOfRangeException.ThrowIfNegative(value);
 
                 _defaultParaProps.SetLineHeight(value);
                 InvalidateMetrics();
@@ -1300,8 +1278,7 @@ namespace System.Windows.Media
         {
             set
             {
-                if (value < 0)
-                    throw new ArgumentOutOfRangeException("value", SR.ParameterCannotBeNegative);
+                ArgumentOutOfRangeException.ThrowIfNegative(value);
                 _maxTextWidth = value;
                 InvalidateMetrics();
             }
@@ -1376,8 +1353,7 @@ namespace System.Windows.Media
         {
             set
             {
-                if (value <= 0)
-                    throw new ArgumentOutOfRangeException("value", SR.ParameterMustBeGreaterThanZero);
+                ArgumentOutOfRangeException.ThrowIfNegativeOrZero(value);
                 _maxLineCount = value;
                 InvalidateMetrics();
             }

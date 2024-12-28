@@ -1,0 +1,48 @@
+﻿<!-- Fluent -->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>None</ResolveAssemblyWarnOrErrorOnTargetArchitectureMismatch>
+    <Platforms>x86;x64;arm64</Platforms>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+
+    <!-- THEME_Fluent #DEFINE is used in KnownTypeHelper.cs -->
+    <DefineConstants>$(DefineConstants);THEME_Fluent</DefineConstants>
+    <!-- Explicitly include source files to compile -->
+    <EnableDefaultItems>false</EnableDefaultItems>
+
+    <!-- Enable Markup compilation using our own internally build PresentationBuildTasks.dll -->
+    <InternalMarkupCompilation>true</InternalMarkupCompilation>
+    <NoInternalTypeHelper>true</NoInternalTypeHelper>
+    <GenerateDependencyFile>false</GenerateDependencyFile>
+  </PropertyGroup>
+
+  <!-- Compile Targets -->
+  <ItemGroup>
+    <Page Include="**\*.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+
+  <!-- Compile Items -->
+  <ItemGroup>
+    <Compile Include="Controls\AnimationFactorToValueConverter.cs" />
+    <Compile Include="Controls\FallbackBrushConverter.cs" />
+  </ItemGroup>
+
+  <!-- Project References -->
+  <ItemGroup>
+    <ProjectReference Include="$(WpfSourceDir)PresentationUI\PresentationUI.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)System.Xaml\System.Xaml.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)WindowsBase\WindowsBase.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationCore\PresentationCore.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)PresentationFramework\PresentationFramework.csproj" />
+    <ProjectReference Include="$(WpfSourceDir)Themes\PresentationFramework.Fluent\ref\PresentationFramework.Fluent-ref.csproj">
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\Menu.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+</Project>

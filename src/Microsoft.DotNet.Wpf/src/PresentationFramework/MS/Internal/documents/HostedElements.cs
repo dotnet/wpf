@@ -7,11 +7,7 @@
 //
 
 using System.Collections;
-using MS.Internal.Documents;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System;
-using System.Diagnostics;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -68,10 +64,7 @@ namespace System.Windows.Documents
         public bool MoveNext()
         {
             // If _textSegments has been disposed, throw exception
-            if (_textSegments == null)
-            {
-                throw new ObjectDisposedException("HostedElements");
-            }
+            ObjectDisposedException.ThrowIf(_textSegments == null, typeof(HostedElements));
 
             if (_textSegments.Count == 0)
                 return false;

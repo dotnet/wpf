@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Runtime.InteropServices;
-using System.Security;
 
 namespace System.IO.Compression
 {
@@ -235,8 +234,7 @@ namespace System.IO.Compression
 
             private void EnsureNotDisposed()
             {
-                if (InitializationState == State.Disposed)
-                    throw new ObjectDisposedException(GetType().ToString());
+                ObjectDisposedException.ThrowIf(InitializationState == State.Disposed, this);
             }
 
 

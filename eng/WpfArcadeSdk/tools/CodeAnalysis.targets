@@ -1,10 +1,17 @@
 <Project>
-  <ItemGroup Condition="'$(IsTestProject)'!='true' AND '$(EnableAnalyzers)'=='true'">
-    <EditorConfigFiles Include="$(MSBuildThisFileDirectory)CodeAnalysis\CodeAnalysis.src.globalconfig" />
-    <!-- Managed Code Reference analyzers -->
-    <PackageReference Include="Microsoft.DotNet.CodeAnalysis" Version="$(MicrosoftDotNetCodeAnalysisPackageVersion)" />
+  <ItemGroup Condition="'$(EnableAnalyzers)'=='true'">
+    <!-- Managed Code analyzers -->
+
+    <!-- https://github.com/DotNetAnalyzers/StyleCopAnalyzers -->
+    <PackageReference Include="StyleCop.Analyzers" Version="$(StyleCopAnalyzersVersion)" PrivateAssets="all" />
+
+    <!-- https://github.com/dotnet/roslyn-analyzers -->
     <PackageReference Include="Microsoft.CodeAnalysis.NetAnalyzers" Version="$(MicrosoftCodeAnalysisNetAnalyzersVersion)" PrivateAssets="all" />
-    <PackageReference Include="System.Runtime.Analyzers" Version="1.1.0" />
-    <PackageReference Include="System.Runtime.InteropServices.Analyzers" Version="1.1.0" />
+
+    <!-- https://github.com/DotNetAnalyzers/DocumentationAnalyzers -->
+    <PackageReference Include="DotNetAnalyzers.DocumentationAnalyzers" Version="$(DotNetAnalyzersDocumentationAnalyzersVersion)" PrivateAssets="all" />
+
+    <!-- https://github.com/AArnott/CSharpIsNull -->
+    <PackageReference Include="CSharpIsNullAnalyzer" Version="$(CSharpIsNullAnalyzersVersion)" PrivateAssets="all" />
   </ItemGroup>
 </Project>

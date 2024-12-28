@@ -3,8 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using System.Globalization;
 
 namespace System.Windows.Controls
@@ -214,7 +212,7 @@ namespace System.Windows.Controls
                 bool isRightToLeft = fe.FlowDirection==FlowDirection.RightToLeft;
                 int decadeRight = isRightToLeft?decade:(decade+9);
                 int decadeLeft =  isRightToLeft?(decade+9):decade;
-                result = decadeLeft.ToString(format) + "-" + decadeRight.ToString(format);
+                result = $"{decadeLeft.ToString(format)}-{decadeRight.ToString(format)}";
             }
 
             return result;

@@ -2,18 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-using System;
-using System.Windows;
 using System.ComponentModel;
-using System.Windows.Ink;
 using MS.Internal.Ink.InkSerializedFormat;
 using System.Windows.Media;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using MS.Utility;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -349,10 +341,8 @@ namespace System.Windows.Input
         /// <returns></returns>
         internal StylusPointCollection Clone(int count)
         {
-            if (count > this.Count || count < 1)
-            {
-                throw new ArgumentOutOfRangeException("count");
-            }
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(count, this.Count);
+            ArgumentOutOfRangeException.ThrowIfNegativeOrZero(count);
 
             return this.Clone(System.Windows.Media.Transform.Identity, this.Description, count);
 }

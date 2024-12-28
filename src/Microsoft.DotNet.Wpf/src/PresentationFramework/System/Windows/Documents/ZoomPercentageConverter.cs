@@ -10,19 +10,16 @@
 // Used to support the warnings disabled below
 #pragma warning disable 1634, 1691
 
-using System;
 using System.Globalization;
 using System.Windows.Data;
 
 namespace System.Windows.Documents
 {
-/// <summary>
-/// ValueConverter for DocumentViewer's ZoomPercentage property
-/// </summary>
-public sealed class ZoomPercentageConverter : IValueConverter
+    /// <summary>
+    /// ValueConverter for DocumentViewer's ZoomPercentage property
+    /// </summary>
+    public sealed class ZoomPercentageConverter : IValueConverter
 {
-    internal const string ZoomPercentageConverterStringFormat = "{0:0.##}%";
-    
     //------------------------------------------------------
     //
     //  Constructors
@@ -91,8 +88,7 @@ public sealed class ZoomPercentageConverter : IValueConverter
                 else
                 {
                     // Ensure output string is formatted to current globalization standards.
-                    return String.Format(CultureInfo.CurrentCulture,
-                        ZoomPercentageConverterStringFormat, percent);
+                    return $"{percent:0.##}%";
                 }
             }
 

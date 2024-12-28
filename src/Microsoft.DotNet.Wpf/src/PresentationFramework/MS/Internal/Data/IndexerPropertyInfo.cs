@@ -8,7 +8,6 @@
 //      property in SourceValueInfo is really a named indexed property (from VB).
 //
 
-using System;
 using System.Reflection;
 
 namespace MS.Internal.Data

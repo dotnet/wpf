@@ -2,25 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+
 // 
 // Description: Context menu for DocumentGrid
 //
 
 namespace MS.Internal.Documents
 {
-    using MS.Internal;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using MS.Internal.Documents;
-    using MS.Win32;
-    using System.Windows.Interop;
-
     // A Component of DocumentViewer supporting the default ContextMenu.
     internal static class DocumentGridContextMenu
     {
@@ -219,7 +211,7 @@ namespace MS.Internal.Documents
                     menuItem.InputGestureText = inputGestureText;
                 }
 
-                menuItem.Name = "ViewerContextMenu_" + command.Name; // does not require localization
+                menuItem.Name = $"ViewerContextMenu_{command.Name}"; // does not require localization
                 this.Items.Add(menuItem);
             }
         }

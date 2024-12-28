@@ -3,13 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -2150,10 +2146,8 @@ namespace System.Windows.Controls
                 return;
             }
 
-            if (index < 0 || index >= parentDataGrid.Columns.Count)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, parentDataGrid.Columns.Count);
 
             // if the column widths aren't known, try again when they are
             if (parentDataGrid.InternalColumns.ColumnWidthsComputationPending)

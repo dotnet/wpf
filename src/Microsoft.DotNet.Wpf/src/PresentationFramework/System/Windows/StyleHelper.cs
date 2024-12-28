@@ -12,22 +12,16 @@
 using MS.Internal;                      // Helper
 using MS.Utility;                       // ItemStructList<ChildValueLookup>
 using System.Collections;               // Hashtable
-using System.Collections.Generic;       // List<T>
 using System.Collections.Specialized;   // HybridDictionary
 using System.ComponentModel;            // TypeConverter, TypeDescriptor
-using System.Diagnostics;               // Debug.Assert
 using System.Runtime.CompilerServices;  // ConditionalWeakTable
 using System.Windows.Controls;          // Control, ContentPresenter
 using System.Windows.Data;              // BindingExpression
-using System.Windows.Documents;         // TableRowGroup,TableRow
 using System.Windows.Media;             // VisualCollection
 using System.Windows.Media.Animation;   // Storyboard
 using System.Windows.Markup;            // MarkupExtension
-using System.Windows.Threading;         // DispatcherObject
 using System.Threading;                 // Interlocked
 using MS.Internal.Data;                 // BindingValueChangedEventArgs
-using System.Globalization;
-using System.Reflection;
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and
@@ -185,7 +179,7 @@ namespace System.Windows
 
                 themeStyleKey = fe.DefaultStyleKey;
                 overridesDefaultStyle = fe.OverridesDefaultStyle;
-              
+
                 oldThemeStyle = fe.ThemeStyle;
             }
             else
@@ -196,7 +190,7 @@ namespace System.Windows
 
                 themeStyleKey = fce.DefaultStyleKey;
                 overridesDefaultStyle = fce.OverridesDefaultStyle;
-               
+
                 oldThemeStyle = fce.ThemeStyle;
             }
 
@@ -1835,7 +1829,7 @@ namespace System.Windows
                         label = container.GetHashCode().ToString(System.Globalization.CultureInfo.InvariantCulture);
 
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientParseInstVisTreeEnd, EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose,
-                                                         String.Format(System.Globalization.CultureInfo.InvariantCulture, "Style.InstantiateSubTree for {0} {1}", container.GetType().Name, label));
+                        $"Style.InstantiateSubTree for {container.GetType().Name} {label}");
                 }
             }
 
@@ -1875,7 +1869,7 @@ namespace System.Windows
                         label = container.GetHashCode().ToString(System.Globalization.CultureInfo.InvariantCulture);
 
                     EventTrace.EventProvider.TraceEvent(EventTrace.Event.WClientParseInstVisTreeEnd, EventTrace.Keyword.KeywordXamlBaml, EventTrace.Level.Verbose,
-                                                         String.Format(System.Globalization.CultureInfo.InvariantCulture, "Style.InstantiateSubTree for {0} {1}", container.GetType().Name, label));
+                        $"Style.InstantiateSubTree for {container.GetType().Name} {label}");
                 }
             }
 
@@ -3080,7 +3074,8 @@ namespace System.Windows
                                         // Check for property trigger presence & applicability
                                         for (int j = 0; j < conditions.Length; j++)
                                         {
-                                            Debug.Assert(!StyleHelper.IsSetOnContainer(conditions[j].Property, ref containerDependents, true), "Style trigger condition property " + conditions[j].Property + " is set via a template trigger on the container. This is a cyclic reference and is illegal.");
+                                            Debug.Assert(!StyleHelper.IsSetOnContainer(conditions[j].Property, ref containerDependents, true),
+                                                $"Style trigger condition property {conditions[j].Property} is set via a template trigger on the container. This is a cyclic reference and is illegal.");
                                         }
                                     }
                                     break;
@@ -4349,9 +4344,8 @@ namespace System.Windows
                 }
                 else
                 {
-                    Debug.Assert(candidateTrigger is List<TriggerBase>, "Internal data structure error: The FrugalMap [Style/Template].PropertyTriggersWithActions " +
-                        "is expected to hold a single TriggerBase or a List<T> of them.  An object of type " +
-                        candidateTrigger.GetType().ToString() + " is not expected.  Where did this object come from?");
+                    Debug.Assert(candidateTrigger is List<TriggerBase>,
+                        $"Internal data structure error: The FrugalMap [Style/Template].PropertyTriggersWithActions is expected to hold a single TriggerBase or a List<T> of them.  An object of type {candidateTrigger.GetType()} is not expected.  Where did this object come from?");
 
                     List<TriggerBase> triggerList = (List<TriggerBase>)candidateTrigger;
 
@@ -5062,7 +5056,7 @@ namespace System.Windows
                 else
                 {
                     Debug.Assert( existing is List<TriggerBase>,
-                        "FrugalMap for holding List<TriggerBase> is holding an instance of unexpected type " + existing.GetType() );
+                        $"FrugalMap for holding List<TriggerBase> is holding an instance of unexpected type {existing.GetType()}");
 
                     List<TriggerBase> existingList = (List<TriggerBase>)existing;
 
@@ -5108,7 +5102,7 @@ namespace System.Windows
                 else
                 {
                     Debug.Assert( existing is List<TriggerBase>,
-                        "HybridDictionary for holding List<TriggerBase> is holding an instance of unexpected type " + existing.GetType() );
+                        $"HybridDictionary for holding List<TriggerBase> is holding an instance of unexpected type {existing.GetType()}");
 
                     List<TriggerBase> existingList = (List<TriggerBase>)existing;
 
@@ -5280,9 +5274,8 @@ namespace System.Windows
                     }
                     else
                     {
-                        Debug.Assert(candidateTrigger is List<TriggerBase>, "Internal data structure error: The HybridDictionary [Style/Template].DataTriggersWithActions " +
-                            "is expected to hold a single TriggerBase or a List<T> of them.  An object of type " +
-                            candidateTrigger.GetType().ToString() + " is not expected.  Where did this object come from?");
+                        Debug.Assert(candidateTrigger is List<TriggerBase>,
+                            $"Internal data structure error: The HybridDictionary [Style/Template].DataTriggersWithActions is expected to hold a single TriggerBase or a List<T> of them.  An object of type {candidateTrigger.GetType()} is not expected.  Where did this object come from?");
 
                         List<TriggerBase> triggerList = (List<TriggerBase>)candidateTrigger;
 
@@ -5443,10 +5436,7 @@ namespace System.Windows
                 return null;
             }
 
-            if (childIndex < 0)
-            {
-                throw new ArgumentOutOfRangeException("childIndex");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(childIndex);
 
             DependencyObject child = styledChildren[childIndex - 1];
 
@@ -5478,7 +5468,7 @@ namespace System.Windows
                                 new AlternativeExpressionStorageCallback(GetExpressionCore),
                                 out _getExpression);
             }
-            
+
         }
 
         private static Expression GetExpressionCore(

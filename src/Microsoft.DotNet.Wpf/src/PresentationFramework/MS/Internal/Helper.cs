@@ -7,25 +7,16 @@
 //      Implements some helper functions.
 //
 
-using MS.Internal.Utility;
-using System;
 using System.Collections;
 using System.Collections.ObjectModel; // Collection<T>
 using System.ComponentModel;
-
-using System.Diagnostics;
-using System.IO.Packaging;
 
 using System.Reflection;
 using System.Windows;
 using System.Windows.Data; // BindingBase
 using System.Windows.Markup; // IProvideValueTarget
 using System.Windows.Media;
-using System.Security;
-
-using MS.Internal.AppModel;
 using System.Windows.Threading;
-using System.Collections.Generic;
 using MS.Internal.Hashing.PresentationFramework;
 using System.Windows.Controls.Primitives;
 using System.Windows.Controls;
@@ -750,7 +741,7 @@ namespace MS.Internal
             if (stringFormat.IndexOf('{') < 0)
             {
                 // convenience syntax - build a composite format string with one parameter
-                stringFormat = @"{0:" + stringFormat + @"}";
+                stringFormat = $@"{{0:{stringFormat}}}";
             }
 
             return stringFormat;

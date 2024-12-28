@@ -2,23 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 using MS.Utility;
 using MS.Internal;
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows;
-using MS.Internal.PresentationCore;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Media3D
 {
@@ -105,10 +94,8 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         public void RemoveAt(int index)
         {
-            if (index < 0 || index >= InternalCount)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, InternalCount);
 
             VerifyAPIReadWrite(_collection[index]);
 
@@ -150,10 +137,9 @@ namespace System.Windows.Media.Media3D
             // The extra "index >= array.Length" check in because even if _collection.Count
             // is 0 the index is not allowed to be equal or greater than the length
             // (from the MSDN ICollection docs)
-            if (index < 0 || index >= array.Length || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, array.Length);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - Count);
 
             _collection.CopyTo(array, index);
         }
@@ -167,10 +153,9 @@ namespace System.Windows.Media.Media3D
             // The extra "index >= array.Length" check in because even if _collection.Count
             // is 0 the index is not allowed to be equal or greater than the length
             // (from the MSDN ICollection docs)
-            if (index < 0 || index >= array.Length || (index + _collection.Count) > array.Length)
-            {
-                throw new ArgumentOutOfRangeException("index");
-            }
+            ArgumentOutOfRangeException.ThrowIfNegative(index);
+            ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, array.Length);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(index, array.Length - Count);
 
             if (array.Rank != 1)
             {
@@ -263,10 +248,8 @@ namespace System.Windows.Media.Media3D
             }
             set
             {
-                if (index < 0 || index >= InternalCount)
-                {
-                    throw new ArgumentOutOfRangeException("index");
-                }
+                ArgumentOutOfRangeException.ThrowIfNegative(index);
+                ArgumentOutOfRangeException.ThrowIfGreaterThanOrEqual(index, InternalCount);
 
                 VerifyAPIForAdd(value);
 

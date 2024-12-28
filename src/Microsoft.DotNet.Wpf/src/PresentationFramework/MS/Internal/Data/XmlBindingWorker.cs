@@ -6,20 +6,14 @@
 // Description: Defines XmlBindingWorker object, workhorse for XML bindings
 //
 
-using System;
 using System.Xml;
 using System.Xml.XPath;
 using System.Collections;
 using System.ComponentModel;
-using System.Reflection;
-using System.Windows.Threading;
-using System.Threading;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Controls;      // IGeneratorHost
 using System.Windows.Markup;
-using MS.Internal.Data;
 
 namespace MS.Internal.Data
 {
@@ -551,8 +545,7 @@ namespace MS.Internal.Data
             if (node == null)
                 return "<null>";
 
-            return String.Format(TypeConverterHelper.InvariantEnglishUS, "{0} ({1})",
-                                    node.GetType().Name, node.Name);
+            return $"{node.GetType().Name} ({node.Name})";
         }
 
         private string IdentifyNodeList(XmlNodeList nodeList)
@@ -560,8 +553,7 @@ namespace MS.Internal.Data
             if (nodeList == null)
                 return "<null>";
 
-            return String.Format(TypeConverterHelper.InvariantEnglishUS, "{0} (hash={1} Count={2})",
-                                    nodeList.GetType().Name, AvTrace.GetHashCodeHelper(nodeList), nodeList.Count);
+            return string.Create(TypeConverterHelper.InvariantEnglishUS, $"{nodeList.GetType().Name} (hash={AvTrace.GetHashCodeHelper(nodeList)} Count={nodeList.Count})");
         }
 
         // 90% of the XPaths used in practice are very simple - consisting of a

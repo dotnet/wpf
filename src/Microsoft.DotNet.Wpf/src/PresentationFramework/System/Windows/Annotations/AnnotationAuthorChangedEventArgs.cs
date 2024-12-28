@@ -12,7 +12,6 @@
 //     Spec: Simplifying Store Cache Model.doc
 //
 
-using System;
 using System.ComponentModel;
 
 namespace System.Windows.Annotations

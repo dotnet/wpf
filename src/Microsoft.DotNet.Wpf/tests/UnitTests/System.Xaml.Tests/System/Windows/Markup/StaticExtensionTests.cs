@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
@@ -123,12 +122,12 @@ public class StaticExtensionTests
     [Theory]
     [InlineData(1)]
     [InlineData(null)]
-    public void ProvideValue_InvalidTypeResolver_ThrowsArgumentException(object service)
+    public void ProvideValue_InvalidTypeResolver_ThrowsArgumentException(object? service)
     {
         var extension = new StaticExtension("type.member");
         var provider = new CustomServiceProvider
         {
-            ServiceAction = serviceType => service
+            ServiceAction = serviceType => service!
         };
         Assert.Throws<ArgumentException>(() => extension.ProvideValue(provider));
     }
@@ -202,7 +201,7 @@ public class StaticExtensionTests
     [InlineData(typeof(string), true)]
     [InlineData(typeof(int), false)]
     [InlineData(null, false)]
-    public void StaticExtensionConverter_CanConvertTo_ReturnsExpected(Type type, bool expected)
+    public void StaticExtensionConverter_CanConvertTo_ReturnsExpected(Type? type, bool expected)
     {
         var extension = new StaticExtension("member");
         TypeConverter converter = TypeDescriptor.GetConverter(extension);
@@ -224,7 +223,7 @@ public class StaticExtensionTests
     {
         var extension = new StaticExtension("member");
         TypeConverter converter = TypeDescriptor.GetConverter(extension);
-        InstanceDescriptor descriptor = Assert.IsType<InstanceDescriptor>(converter.ConvertTo(extension, typeof(InstanceDescriptor)));
+        Assert.IsType<InstanceDescriptor>(converter.ConvertTo(extension, typeof(InstanceDescriptor)));
         Assert.Equal(extension.ToString(), converter.ConvertTo(extension, typeof(string)));
     }
 
@@ -243,54 +242,56 @@ public class StaticExtensionTests
         TypeConverter converter = TypeDescriptor.GetConverter(extension);
         Assert.Throws<NotSupportedException>(() => converter.ConvertTo(extension, typeof(int)));
     }
-    
+
     private class CustomServiceProvider : IServiceProvider
     {
         public Func<Type, object>? ServiceAction { get; set; }
 
-        public object GetService(Type serviceType)
-        {
-            if (ServiceAction is null)
-            {
-                throw new NotImplementedException();
-            }
-
-            return ServiceAction(serviceType);
-        }
+        public object GetService(Type serviceType) =>
+            ServiceAction is null ? throw new NotImplementedException() : ServiceAction(serviceType);
     }
 
     private class CustomXamlTypeResolver : IXamlTypeResolver
     {
         public Func<string, Type>? ResolveAction { get; set; }
-        
-        public Type Resolve(string qualifiedTypeName)
-        {
-            if (ResolveAction is null)
-            {
-                throw new NotImplementedException();
-            }
 
-            return ResolveAction(qualifiedTypeName);
-        }
+        public Type Resolve(string qualifiedTypeName) =>
+            ResolveAction is null ? throw new NotImplementedException() : ResolveAction(qualifiedTypeName);
     }
 
     public class BaseType
     {
+#pragma warning disable CA2211 // Non-constant fields should not be visible
         public static int s_inheritedField = 1;
+#pragma warning disable IDE1006 // Naming Styles
         public static int InheritedProperty = 2;
+#pragma warning restore IDE1006
+#pragma warning restore CA2211
     }
 
 #pragma warning disable 0169
+#pragma warning disable CA1051 // Do not declare visible instance fields
     public class CustomType : BaseType
     {
+#pragma warning disable CA2211 // Non-constant fields should not be visible
         public static int s_field = 3;
+#pragma warning restore CA2211
         public static int StaticProperty { get; set; } = 4;
 
+#pragma warning disable CA1823 // Avoid unused private fields
+#pragma warning disable IDE0044 // Add readonly modifier
+#pragma warning disable IDE0051 // Remove unused private members
         private static int s_privateField;
+#pragma warning restore IDE0051
+#pragma warning restore IDE0044
+#pragma warning restore CA1823
         public int _field;
 
+#pragma warning disable IDE0051 // Remove unused private members
         private static int PrivateStaticProperty { get; set; }
+#pragma warning restore IDE0051
         public int Property { get; set; }
     }
+#pragma warning restore CA1051
 #pragma warning restore 0169
 }

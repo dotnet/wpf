@@ -10,23 +10,14 @@
 //
 //
 
-using System;
 using System.IO;
 using System.IO.IsolatedStorage;
-using MS.Internal.WindowsBase;  // FriendAccessAllowed
-using System.Xml;               // For XmlReader
-using System.Diagnostics;       // For Debug.Assert
-using System.Text;              // For Encoding
-using System.Windows;           // For Exception strings - SR
-using System.Security;                  // for SecurityCritical
-using Microsoft.Win32;                  // for Registry classes
-
-
-using MS.Internal;
+using System.Xml;
+using System.Text;
+using Microsoft.Win32;
 
 namespace MS.Internal.IO.Packaging
 {
-    [FriendAccessAllowed] // Built into Base, used by Framework and Core
     internal static class PackagingUtilities
     {
         //------------------------------------------------------
@@ -332,8 +323,8 @@ namespace MS.Internal.IO.Packaging
         internal static Stream CreateUserScopedIsolatedStorageFileStreamWithRandomName(int retryCount, out String fileName)
         {
             // negative is illegal and place an upper limit of 100
-            if (retryCount < 0 || retryCount > 100)
-                throw new ArgumentOutOfRangeException("retryCount");
+            ArgumentOutOfRangeException.ThrowIfNegative(retryCount);
+            ArgumentOutOfRangeException.ThrowIfGreaterThan(retryCount, 100);
 
             Stream s = null;
             fileName = null;
@@ -417,8 +408,7 @@ namespace MS.Internal.IO.Packaging
             //MoveToNextAttribute is the same as MoveToFirstAttribute.
             while (reader.MoveToNextAttribute())
             {
-                if (String.CompareOrdinal(reader.Name, XmlNamespace) != 0 &&
-                    String.CompareOrdinal(reader.Prefix, XmlNamespace) != 0)
+                if (!string.Equals(reader.Name, XmlNamespace, StringComparison.Ordinal) && !string.Equals(reader.Prefix, XmlNamespace, StringComparison.Ordinal))
                     readerCount++;
             }
 
@@ -803,8 +793,7 @@ namespace MS.Internal.IO.Packaging
 
             void CheckDisposed()
             {
-                if (_disposed)
-                    throw new ObjectDisposedException("ReliableIsolatedStorageFileFolder");
+                ObjectDisposedException.ThrowIf(_disposed, typeof(ReliableIsolatedStorageFileFolder));
             }
 
             //------------------------------------------------------

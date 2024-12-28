@@ -2,18 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Implements the base Avalon Window class
-//
-
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Runtime.InteropServices;
-using System.Security;
+using System.Windows.Appearance;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -26,9 +19,12 @@ using MS.Internal.AppModel;
 using MS.Internal.Interop;
 using MS.Internal.KnownBoxes;
 using MS.Win32;
+using System.Diagnostics.CodeAnalysis;
 
-using HRESULT = MS.Internal.Interop.HRESULT;
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
+using SNM = Standard.NativeMethods;
+using HRESULT = MS.Internal.Interop.HRESULT;
+using Win32Error = MS.Internal.Interop.Win32Error;
 
 //In order to avoid generating warnings about unknown message numbers and
 //unknown pragmas when compiling your C# source code with the actual C# compiler,
@@ -37,9 +33,6 @@ using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 
 namespace System.Windows
 {
-    /// <summary>
-    ///
-    /// </summary>
     [Localizability(LocalizationCategory.Ignore)]
     public class Window : ContentControl, IWindowService
     {
@@ -262,8 +255,8 @@ namespace System.Windows
                     // and WM_LBUTTONUP return value just signify whether the WndProc handled the
                     // message or not, so they are not interesting
 #pragma warning disable 6523
-                    UnsafeNativeMethods.SendMessage( CriticalHandle, WindowMessage.WM_SYSCOMMAND, (IntPtr)NativeMethods.SC_MOUSEMOVE, IntPtr.Zero);
-                    UnsafeNativeMethods.SendMessage( CriticalHandle, WindowMessage.WM_LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
+                    UnsafeNativeMethods.SendMessage( Handle, WindowMessage.WM_SYSCOMMAND, (IntPtr)NativeMethods.SC_MOUSEMOVE, IntPtr.Zero);
+                    UnsafeNativeMethods.SendMessage( Handle, WindowMessage.WM_LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
 #pragma warning restore 6523
                 }
             }
@@ -351,12 +344,12 @@ namespace System.Windows
             Debug.Assert(_threadWindowHandles == null, "_threadWindowHandles must be null before enumerating the thread windows");
 
             // NOTE:
-            // _threadWindowHandles is created here.  This reference is nulled out in EnableThreadWindows
-            // when it is called with a true parameter.  Please do not null it out anywhere else.
-            // EnableThreadWindow(true) is called when dialog is going away.  Once dialog is closed and
-            // thread windows have been enabled, then there no need to keep the array list around.
+            // _threadWindowHandles is created here. This reference is nulled out in EnableThreadWindows
+            // when it is called with a true parameter. Please do not null it out anywhere else.
+            // EnableThreadWindow(true) is called when dialog is going away. Once dialog is closed and
+            // thread windows have been enabled, then there no need to keep the list around.
             // Please see BUG 929740 before making any changes to how _threadWindowHandles works.
-            _threadWindowHandles = new ArrayList();
+            _threadWindowHandles = new List<IntPtr>();
             //Get visible and enabled windows in the thread
             // If the callback function returns true for all windows in the thread, the return value is true.
             // If the callback function returns false on any enumerated window, or if there are no windows
@@ -510,7 +503,7 @@ namespace System.Windows
                 return false;
             }
 
-            return UnsafeNativeMethods.SetForegroundWindow(new HandleRef(null, CriticalHandle));
+            return UnsafeNativeMethods.SetForegroundWindow(new HandleRef(null, Handle));
         }
         #region LogicalTree
         /// <summary>
@@ -555,6 +548,74 @@ namespace System.Windows
         //
         //---------------------------------------------------
         #region Public Properties
+
+        /// <summary>
+        /// Gets or sets the Fluent theme mode of the window.
+        /// </summary>
+        /// <remarks>
+        /// Setting this property controls if Fluent theme is loaded in Light, Dark or System mode.
+        /// It also controls the application of backdrop and darkmode on window.
+        /// The four values for the ThemeMode enum are :
+        ///     <see cref="ThemeMode.None"/> - No Fluent theme is loaded. However, if <see cref="Application.ThemeMode"/> is not None,
+        ///         then the window will appear as defined in <see cref="Application.ThemeMode"/>.
+        ///     <see cref="ThemeMode.System"/> - Fluent theme is loaded based on the system theme.
+        ///     <see cref="ThemeMode.Light"/> - Fluent theme is loaded in Light mode.
+        ///     <see cref="ThemeMode.Dark"/> - Fluent theme is loaded in Dark mode.
+        ///
+        /// These values are predefined in <see cref="ThemeMode"/> struct.
+        ///
+        /// The default value is <see cref="ThemeMode.None"/>.
+        ///
+        /// <see cref="ThemeMode"/> and <see cref="Resources"/> are designed to be in sync with each other.
+        ///     Syncing is done in order to avoid UI inconsistencies, for example, if the application is in dark mode
+        ///     but the windows are in light mode or vice versa.
+        ///
+        ///     Setting this property loads the Fluent theme dictionaries in the window resources.
+        ///     So, if you set this property, it is preferrable to not include Fluent theme dictionaries
+        ///     in the window resources manually. If you do, the Fluent theme dictionaries added in the window
+        ///     resources will take precedence over the ones added by setting this property.
+        ///
+        ///     This property is experimental and may be removed in future versions.
+        /// </remarks>
+        [Experimental("WPF0001")]
+        [TypeConverter(typeof(ThemeModeConverter))]
+        public ThemeMode ThemeMode
+        {
+            get
+            {
+                VerifyContextAndObjectState();
+                return _themeMode;
+            }
+            set
+            {
+                VerifyContextAndObjectState();
+
+                if(!ThemeManager.IsValidThemeMode(value))
+                {
+                    throw new ArgumentException(string.Format("ThemeMode value {0} is invalid. Use None, System, Light or Dark", value));
+                }
+
+                ThemeMode oldTheme = _themeMode;
+                _themeMode = value;
+
+                if(!AreResourcesInitialized)
+                {
+                    ThemeManager.OnWindowThemeChanged(this, oldTheme, value);
+                    AreResourcesInitialized = false;
+
+                    _reloadFluentDictionary = true;
+                }
+
+                if(IsSourceWindowNull)
+                {
+                    _deferThemeLoading = true;
+                }
+                else
+                {
+                    ThemeManager.OnWindowThemeChanged(this, oldTheme, value);
+                }
+            }
+        }
 
         /// <summary>
         /// DependencyProperty for TaskbarItemInfo
@@ -913,7 +974,7 @@ namespace System.Windows
         ///     PositiveInfinity, NegativeInfinity: These are invalid inputs.
         /// </remarks>
         /// <value></value>
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         public double Top
         {
             get
@@ -964,7 +1025,7 @@ namespace System.Windows
         ///     PositiveInfinity, NegativeInfinity: These are invalid inputs.
         /// </remarks>
         /// <value></value>
-        [TypeConverter("System.Windows.LengthConverter, PresentationFramework, Version=" + BuildInfo.WCP_VERSION + ", Culture=neutral, PublicKeyToken=" + BuildInfo.WCP_PUBLIC_KEY_TOKEN + ", Custom=null")]
+        [TypeConverter($"System.Windows.LengthConverter, PresentationFramework, Version={BuildInfo.WCP_VERSION}, Culture=neutral, PublicKeyToken={BuildInfo.WCP_PUBLIC_KEY_TOKEN}, Custom=null")]
         public double Left
         {
             get
@@ -1023,7 +1084,7 @@ namespace System.Windows
                     return Rect.Empty;
                 }
 
-                return GetNormalRectLogicalUnits(CriticalHandle);
+                return GetNormalRectLogicalUnits(Handle);
             }
         }
 
@@ -1240,7 +1301,7 @@ namespace System.Windows
                     return;
                 }
 
-                SetOwnerHandle(_ownerWindow != null ? _ownerWindow.CriticalHandle: IntPtr.Zero);
+                SetOwnerHandle(_ownerWindow != null ? _ownerWindow.Handle: IntPtr.Zero);
 
                 // Update OwnerWindows of the new owner
                 if (_ownerWindow != null)
@@ -1898,25 +1959,29 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnSourceInitialized(...) for
+        ///     the event. If you override this method - you need to call base.OnSourceInitialized(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         /// <param name="e"></param>
         protected virtual void OnSourceInitialized(EventArgs e)
         {
             VerifyContextAndObjectState();
+
+            // Setting WindowBackdrop
+            WindowBackdropManager.SetBackdrop(this, WindowBackdropType);
+
             EventHandler handler = (EventHandler)Events[EVENT_SOURCEINITIALIZED];
             if (handler != null) handler(this, e);
         }
 
         /// <summary>
-        ///     This even fires when window is activated. This event is non cancelable and is
+        ///     This event fires when window is activated. This event is non cancelable and is
         ///     for user infromational purposes
         /// </summary>
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnActivated(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         /// <param name="e"></param>
@@ -1934,7 +1999,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnDeactivated(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnDeactivated(EventArgs e)
@@ -1952,7 +2017,7 @@ namespace System.Windows
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers
         ///     that subclass the event. If you override this method - you need to call
-        ///     Base.OnClosed(...) for the corresponding event to be raised.
+        ///     base.OnStateChanged(...) for the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnStateChanged(EventArgs e)
         {
@@ -1968,7 +2033,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnLocationChanged(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnLocationChanged(EventArgs e)
@@ -1986,7 +2051,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosing(...) for
+        ///     the event. If you override this method - you need to call base.OnClosing(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnClosing(CancelEventArgs e)
@@ -2003,7 +2068,7 @@ namespace System.Windows
         /// <remarks>
         ///     This method follows the .Net programming guideline of having a protected virtual
         ///     method that raises an event, to provide a convenience for developers that subclass
-        ///     the event. If you override this method - you need to call Base.OnClosed(...) for
+        ///     the event. If you override this method - you need to call base.OnClosed(...) for
         ///     the corresponding event to be raised.
         /// </remarks>
         protected virtual void OnClosed(EventArgs e)
@@ -2076,6 +2141,22 @@ namespace System.Windows
             Invariant.Assert(IsCompositionTargetInvalid == false, "IsCompositionTargetInvalid is supposed to be false here");
             Point ptDeviceUnits = _swh.CompositionTarget.TransformToDevice.Transform(ptLogicalUnits);
             return ptDeviceUnits;
+        }
+
+        internal void AddFluentDictionary(ResourceDictionary value, out bool invalidateResources)
+        {
+            invalidateResources = false;
+
+            if(_reloadFluentDictionary && !AreResourcesInitialized)
+            {
+                if(value != null && ThemeMode != ThemeMode.None)
+                {
+                    value.MergedDictionaries.Insert(0, ThemeManager.GetThemeDictionary(ThemeMode));
+                    invalidateResources = true;
+                }
+
+                _reloadFluentDictionary = false;
+            }
         }
 
         internal static bool VisibilityToBool(Visibility v)
@@ -2182,7 +2263,7 @@ namespace System.Windows
                 // return value just signify whether the WndProc handled the
                 // message or not, so it is not interesting
 #pragma warning disable 6523
-                UnsafeNativeMethods.UnsafeSendMessage(CriticalHandle, WindowMessage.WM_CLOSE, new IntPtr(), new IntPtr());
+                UnsafeNativeMethods.UnsafeSendMessage(Handle, WindowMessage.WM_CLOSE, new IntPtr(), new IntPtr());
 #pragma warning enable 6523
             }
         }
@@ -2311,6 +2392,11 @@ namespace System.Windows
                 Utilities.SafeDispose(ref _currentLargeIconHandle);
                 Utilities.SafeDispose(ref _currentSmallIconHandle);
                 Utilities.SafeRelease(ref _taskbarList);
+
+                if(ThemeMode != ThemeMode.None)
+                {
+                    ThemeManager.FluentEnabledWindows.Remove(this);
+                }
             }
             finally
             {
@@ -2505,8 +2591,22 @@ namespace System.Windows
                 // SECURITY_MANDATORY_LOW_RID, so don't propagate failed error codes.
                 // It's not the end of the world if this fails: Shell integration simply won't work.
                 MSGFLTINFO info;
-                UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.CriticalHandle, WM_TASKBARBUTTONCREATED, MSGFLT.ALLOW, out info);
-                UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.CriticalHandle, WindowMessage.WM_COMMAND, MSGFLT.ALLOW, out info);
+                UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.Handle, WM_TASKBARBUTTONCREATED, MSGFLT.ALLOW, out info);
+                UnsafeNativeMethods.ChangeWindowMessageFilterEx(_swh.Handle, WindowMessage.WM_COMMAND, MSGFLT.ALLOW, out info);
+            }
+
+            if (Standard.Utility.IsOSWindows10OrNewer)
+            {
+                if (ThemeManager.IsFluentThemeEnabled)
+                {
+                    ThemeManager.ApplyStyleOnWindow(this);
+                }
+
+                if (_deferThemeLoading)
+                {
+                    _deferThemeLoading = false;
+                    ThemeManager.OnWindowThemeChanged(this, ThemeMode.None, ThemeMode);
+                }
             }
 
             // Sub classes can have different intialization. RBW does very minimalistic
@@ -2515,6 +2615,23 @@ namespace System.Windows
 
             // Fire SourceInitialized event
             OnSourceInitialized(EventArgs.Empty);
+        }
+
+        internal void SetImmersiveDarkMode(bool useDarkMode)
+        {
+            if(!Standard.Utility.IsOSWindows11OrNewer) return;
+
+            if(_useDarkMode == useDarkMode) return;
+
+            IntPtr handle = Handle;
+            if (handle != IntPtr.Zero)
+            {
+                bool succeeded = SNM.DwmSetWindowAttributeUseImmersiveDarkMode(handle, useDarkMode);
+                if(succeeded)
+                {
+                    _useDarkMode = useDarkMode;
+                }
+            }
         }
 
         internal virtual HwndSourceParameters CreateHwndSourceParameters()
@@ -2733,7 +2850,7 @@ namespace System.Windows
             {
                 if (WindowState == WindowState.Normal)
                 {
-                    UnsafeNativeMethods.SetWindowPos(new HandleRef(this, CriticalHandle),
+                    UnsafeNativeMethods.SetWindowPos(new HandleRef(this, Handle),
                         new HandleRef(null, IntPtr.Zero),
                         DoubleUtil.DoubleToInt(xDeviceUnits),
                         DoubleUtil.DoubleToInt(yDeviceUnits),
@@ -2816,7 +2933,7 @@ namespace System.Windows
                     {
                         if (WindowState == WindowState.Normal)
                         {
-                            UnsafeNativeMethods.SetWindowPos(new HandleRef(this, CriticalHandle),
+                            UnsafeNativeMethods.SetWindowPos(new HandleRef(this, Handle),
                                 new HandleRef(null, IntPtr.Zero),
                                 DoubleUtil.DoubleToInt(xDeviceUnits),
                                 DoubleUtil.DoubleToInt(yDeviceUnits),
@@ -2904,7 +3021,7 @@ namespace System.Windows
             // Adding check for IsCompositionTargetInvalid
             if ( IsSourceWindowNull == false && IsCompositionTargetInvalid == false)
             {
-                UnsafeNativeMethods.SetWindowText(new HandleRef(this, CriticalHandle), title);
+                UnsafeNativeMethods.SetWindowText(new HandleRef(this, Handle), title);
             }
         }
 
@@ -2917,7 +3034,7 @@ namespace System.Windows
             Debug.Assert( IsSourceWindowNull == false , "IsSourceWindowNull cannot be true when calling this function");
 
             Point ptDeviceUnits = LogicalToDeviceUnits(new Point(widthLogicalUnits, heightLogicalUnits));
-            UnsafeNativeMethods.SetWindowPos(new HandleRef(this, CriticalHandle),
+            UnsafeNativeMethods.SetWindowPos(new HandleRef(this, Handle),
                         new HandleRef(null, IntPtr.Zero),
                         0,
                         0,
@@ -3012,6 +3129,42 @@ namespace System.Windows
         //----------------------------------------------
         #region Internal Properties
 
+        /// <summary>
+        /// Gets or sets a value determining preferred backdrop type for current <see cref="Window"/>.
+        /// </summary>
+        internal WindowBackdropType WindowBackdropType
+        {
+            get => (WindowBackdropType)GetValue(WindowBackdropTypeProperty);
+            set => SetValue(WindowBackdropTypeProperty, value);
+        }
+
+        /// <summary>
+        /// Property for <see cref="WindowBackdropType"/>.
+        /// </summary>
+        internal static readonly DependencyProperty WindowBackdropTypeProperty = DependencyProperty.Register(
+            nameof(WindowBackdropType),
+            typeof(WindowBackdropType),
+            typeof(Window),
+            new PropertyMetadata(
+                WindowBackdropType.MainWindow,
+                new PropertyChangedCallback(OnBackdropTypeChanged)));
+
+        private static void OnBackdropTypeChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            if (d is not Window window)
+            {
+                return;
+            }
+
+            if (e.OldValue == e.NewValue)
+            {
+                return;
+            }
+
+            WindowBackdropManager.SetBackdrop(window, (WindowBackdropType)e.NewValue);
+        }
+
+
         internal bool HwndCreatedButNotShown
         {
             get
@@ -3046,14 +3199,14 @@ namespace System.Windows
         ///     Exposes the hwnd of the window. This property is used by the WindowInteropHandler
         ///     class
         /// </summary>
-        internal IntPtr CriticalHandle
+        internal IntPtr Handle
         {
             get
             {
                 VerifyContextAndObjectState();
                 if (_swh != null)
                 {
-                    return _swh.CriticalHandle;
+                    return _swh.Handle;
                 }
                 else
                 return IntPtr.Zero;
@@ -3116,11 +3269,11 @@ namespace System.Windows
             {
                 if (Manager != null)
                 {
-                    return _styleDoNotUse.Value;
+                    return _styleDoNotUse;
 }
                 else if ( IsSourceWindowNull )
                 {
-                    return _styleDoNotUse.Value;
+                    return _styleDoNotUse;
 }
                 else
                 {
@@ -3129,7 +3282,7 @@ namespace System.Windows
             }
             set
             {
-                _styleDoNotUse= new SecurityCriticalDataForSet<int>(value);
+                _styleDoNotUse = value;
                 Manager.Dirty = true;
             }
         }
@@ -3140,11 +3293,11 @@ namespace System.Windows
             {
                 if (Manager != null)
                 {
-                    return _styleExDoNotUse.Value;
+                    return _styleExDoNotUse;
 }
                 else if (IsSourceWindowNull == true  )
                 {
-                    return _styleExDoNotUse.Value;
+                    return _styleExDoNotUse;
 }
                 else
                 {
@@ -3153,7 +3306,7 @@ namespace System.Windows
                 }
             set
             {
-                _styleExDoNotUse= new SecurityCriticalDataForSet<int>((int)value);
+                _styleExDoNotUse = value;
                 Manager.Dirty = true;
             }
         }
@@ -3168,6 +3321,19 @@ namespace System.Windows
         {
             get { return false; }
         }
+
+        internal bool AreResourcesInitialized
+        {
+            get
+            {
+                return _resourcesInitialized;
+            }
+            set
+            {
+                _resourcesInitialized = value;
+            }
+        }
+
         #endregion Internal Properties
 
         //----------------------------------------------
@@ -3476,7 +3642,7 @@ namespace System.Windows
 
             for (int i = 0; i < _threadWindowHandles.Count; i++)
             {
-                IntPtr hWnd = (IntPtr)_threadWindowHandles[i];
+                IntPtr hWnd = _threadWindowHandles[i];
 
                 if (UnsafeNativeMethods.IsWindow(new HandleRef(null, hWnd)))
                 {
@@ -3672,7 +3838,7 @@ namespace System.Windows
                         // because it is possible that the hwnd is created (WIH.EnsureHandle) but it is not shown yet; layout has not
                         // happen; ActualWidth/Height is not calculated yet.
                         // If the owner hwnd is not yet created, we use Owner.Width/Height.
-                        if (Owner.CriticalHandle == IntPtr.Zero)
+                        if (Owner.Handle == IntPtr.Zero)
                         {
                             ownerSizeDeviceUnits = Owner.LogicalToDeviceUnits(new Point(Owner.Width, Owner.Height));
                         }
@@ -3762,8 +3928,8 @@ namespace System.Windows
             double workAreaWidthDeviceUnits = workAreaRectDeviceUnits.right - workAreaRectDeviceUnits.left;
             double workAreaHeightDeviceUnits = workAreaRectDeviceUnits.bottom - workAreaRectDeviceUnits.top;
 
-            Debug.Assert(workAreaWidthDeviceUnits >= 0, String.Format(CultureInfo.InvariantCulture, "workAreaWidth ({0})for monitor ({1}) is negative", hMonitor, workAreaWidthDeviceUnits));
-            Debug.Assert(workAreaHeightDeviceUnits >= 0, String.Format(CultureInfo.InvariantCulture, "workAreaHeight ({0}) for monitor ({1}) is negative", hMonitor, workAreaHeightDeviceUnits));
+            Debug.Assert(workAreaWidthDeviceUnits >= 0, string.Create(CultureInfo.InvariantCulture, $"workAreaWidth ({hMonitor})for monitor ({workAreaWidthDeviceUnits}) is negative"));
+            Debug.Assert(workAreaHeightDeviceUnits >= 0, string.Create(CultureInfo.InvariantCulture, $"workAreaHeight ({hMonitor}) for monitor ({workAreaHeightDeviceUnits}) is negative"));
 
             leftDeviceUnits = (workAreaRectDeviceUnits.left + ((workAreaWidthDeviceUnits - currentSizeDeviceUnits.Width) / 2));
             topDeviceUnits = (workAreaRectDeviceUnits.top + ((workAreaHeightDeviceUnits - currentSizeDeviceUnits.Height) / 2));
@@ -3956,7 +4122,7 @@ namespace System.Windows
             // We'll keep track of the true count separately.
             var iconWindows = new HandleRef[]
             {
-                new HandleRef(this, CriticalHandle),
+                new HandleRef(this, Handle),
                 default(HandleRef)
             };
             int iconWindowsCount = 1;
@@ -4030,7 +4196,7 @@ namespace System.Windows
 
             if (IsSourceWindowNull == false)
             {
-                UnsafeNativeMethods.SetWindowLong(new HandleRef(null, CriticalHandle),
+                UnsafeNativeMethods.SetWindowLong(new HandleRef(null, Handle),
                     NativeMethods.GWL_HWNDPARENT,
                     _ownerHandle);
 
@@ -4038,7 +4204,7 @@ namespace System.Windows
                 // We want to do this because once we are passed in the IntPtr for
                 // the parent window, the Owner window is not the parent anymore.
 
-                if ((_ownerWindow != null) && (_ownerWindow.CriticalHandle != _ownerHandle))
+                if ((_ownerWindow != null) && (_ownerWindow.Handle != _ownerHandle))
                 {
                     _ownerWindow.OwnedWindowsInternal.Remove(this);
                     _ownerWindow = null;
@@ -4989,7 +5155,7 @@ namespace System.Windows
                 // It is recommended to hide the window, chnage the style bits and then show it again.
                 if (_isVisible)
                 {
-                    UnsafeNativeMethods.SetWindowPos(new HandleRef(this, CriticalHandle), NativeMethods.NullHandleRef, 0, 0, 0, 0,
+                    UnsafeNativeMethods.SetWindowPos(new HandleRef(this, Handle), NativeMethods.NullHandleRef, 0, 0, 0, 0,
                                        NativeMethods.SWP_NOMOVE |
                                        NativeMethods.SWP_NOSIZE |
                                        NativeMethods.SWP_NOZORDER |
@@ -5006,7 +5172,7 @@ namespace System.Windows
                 // it won't break this code.
                 if (fHideWindow)
                 {
-                    UnsafeNativeMethods.SetWindowPos(new HandleRef(this, CriticalHandle), NativeMethods.NullHandleRef, 0, 0, 0, 0,
+                    UnsafeNativeMethods.SetWindowPos(new HandleRef(this, Handle), NativeMethods.NullHandleRef, 0, 0, 0, 0,
                                                     NativeMethods.SWP_NOMOVE |
                                                     NativeMethods.SWP_NOSIZE |
                                                     NativeMethods.SWP_NOZORDER |
@@ -5047,7 +5213,7 @@ namespace System.Windows
             {
                 if (_isVisible == true)
                 {
-                    HandleRef hr = new HandleRef(this,  CriticalHandle);
+                    HandleRef hr = new HandleRef(this,  Handle);
 
                     int style = _Style;
 
@@ -5188,7 +5354,7 @@ namespace System.Windows
             if (IsSourceWindowNull == false  && IsCompositionTargetInvalid == false)
             {
                 HandleRef hWnd = topmost ? NativeMethods.HWND_TOPMOST : NativeMethods.HWND_NOTOPMOST;
-                UnsafeNativeMethods.SetWindowPos(new HandleRef(null, CriticalHandle),
+                UnsafeNativeMethods.SetWindowPos(new HandleRef(null, Handle),
                        hWnd,
                        0, 0, 0, 0,
                        NativeMethods.SWP_NOMOVE | NativeMethods.SWP_NOSIZE | NativeMethods.SWP_NOACTIVATE);
@@ -5407,14 +5573,14 @@ namespace System.Windows
                     (nCmd == NativeMethods.SW_SHOW || nCmd == NativeMethods.SW_SHOWNA))
                 {
                     int flags = (nCmd == NativeMethods.SW_SHOWNA) ? NativeMethods.SWP_NOACTIVATE : 0;
-                    UnsafeNativeMethods.SetWindowPos(new HandleRef(this, CriticalHandle),
+                    UnsafeNativeMethods.SetWindowPos(new HandleRef(this, Handle),
                         NativeMethods.HWND_TOPMOST,
                         0, 0, 0, 0,
                         flags | NativeMethods.SWP_NOMOVE | NativeMethods.SWP_NOSIZE | NativeMethods.SWP_NOOWNERZORDER | NativeMethods.SWP_SHOWWINDOW);
                 }
                 else
                 {
-                    UnsafeNativeMethods.ShowWindow(new HandleRef(this, CriticalHandle), nCmd);
+                    UnsafeNativeMethods.ShowWindow(new HandleRef(this, Handle), nCmd);
                 }
 
                 // We already did a ShowWindow upabove and then because of the using, we will flush which
@@ -5767,7 +5933,7 @@ namespace System.Windows
 
             NativeMethods.WINDOWPLACEMENT wp = new NativeMethods.WINDOWPLACEMENT();
             wp.length = Marshal.SizeOf(typeof(NativeMethods.WINDOWPLACEMENT));
-            UnsafeNativeMethods.GetWindowPlacement(new HandleRef(this, CriticalHandle), ref wp);
+            UnsafeNativeMethods.GetWindowPlacement(new HandleRef(this, Handle), ref wp);
 
             double convertedValue = (LogicalToDeviceUnits(new Point(newValue, 0))).X;
             switch (specifiedRestoreBounds)
@@ -5818,7 +5984,7 @@ namespace System.Windows
                     wp.rcNormalPosition_right = wp.rcNormalPosition_left + currentWidth;
                     break;
                 default:
-                    Debug.Assert(false, String.Format("specifiedRestoreBounds can't be {0}", specifiedRestoreBounds));
+                    Debug.Assert(false, $"specifiedRestoreBounds can't be {specifiedRestoreBounds}");
                     break;
             }
 
@@ -5833,7 +5999,7 @@ namespace System.Windows
             }
 
 
-            UnsafeNativeMethods.SetWindowPlacement(new HandleRef(this, CriticalHandle), ref wp);
+            UnsafeNativeMethods.SetWindowPlacement(new HandleRef(this, Handle), ref wp);
         }
 
         // deltaX = workAreaOriginValue - screenOriginValue (both in virtual co-ods)
@@ -5846,7 +6012,7 @@ namespace System.Windows
 
             // First we get the monitor on which the window is on.  [Get/Set]WindowPlacement
             // co-ods are dependent on the monitor on which the window is on.
-            IntPtr hMonitor = SafeNativeMethods.MonitorFromWindow(new HandleRef(this, CriticalHandle), NativeMethods.MONITOR_DEFAULTTONULL);
+            IntPtr hMonitor = SafeNativeMethods.MonitorFromWindow(new HandleRef(this, Handle), NativeMethods.MONITOR_DEFAULTTONULL);
 
             if (hMonitor != IntPtr.Zero)
             {
@@ -6088,7 +6254,7 @@ namespace System.Windows
 
             Point ptDeviceUnits = LogicalToDeviceUnits(new Point(leftLogicalUnits, topLogicalUnits));
 
-            UnsafeNativeMethods.SetWindowPos(new HandleRef(this, CriticalHandle),
+            UnsafeNativeMethods.SetWindowPos(new HandleRef(this, Handle),
                         new HandleRef(null, IntPtr.Zero),
                         DoubleUtil.DoubleToInt(ptDeviceUnits.X),
                         DoubleUtil.DoubleToInt(ptDeviceUnits.Y),
@@ -6262,7 +6428,7 @@ namespace System.Windows
 
         private void OnTaskbarRetryTimerTick(object sender, EventArgs e)
         {
-            UnsafeNativeMethods.PostMessage(new HandleRef(this, CriticalHandle), WM_APPLYTASKBARITEMINFO, IntPtr.Zero, IntPtr.Zero);
+            UnsafeNativeMethods.PostMessage(new HandleRef(this, Handle), WM_APPLYTASKBARITEMINFO, IntPtr.Zero, IntPtr.Zero);
         }
 
         private void ApplyTaskbarItemInfo()
@@ -6401,7 +6567,7 @@ namespace System.Windows
                 }
             }
 
-            HRESULT hr = _taskbarList.SetProgressState(CriticalHandle, tbpf);
+            HRESULT hr = _taskbarList.SetProgressState(Handle, tbpf);
             if (hr.Succeeded)
             {
                 // Explicitly update this in case this property being set
@@ -6431,7 +6597,7 @@ namespace System.Windows
             Debug.Assert(0 <= taskbarInfo.ProgressValue && taskbarInfo.ProgressValue <= 1);
 
             var intValue = (ulong)(taskbarInfo.ProgressValue * precisionValue);
-            return _taskbarList.SetProgressValue(CriticalHandle, intValue, precisionValue);
+            return _taskbarList.SetProgressValue(Handle, intValue, precisionValue);
         }
 
         private HRESULT UpdateTaskbarOverlay()
@@ -6451,7 +6617,7 @@ namespace System.Windows
                     hicon = IconHelper.CreateIconHandleFromImageSource(taskbarInfo.Overlay, _overlaySize);
                 }
 
-                return _taskbarList.SetOverlayIcon(CriticalHandle, hicon, null);
+                return _taskbarList.SetOverlayIcon(Handle, hicon, null);
             }
             finally
             {
@@ -6471,7 +6637,7 @@ namespace System.Windows
                 tooltip = taskbarInfo.Description ?? "";
             }
 
-            return _taskbarList.SetThumbnailTooltip(CriticalHandle, tooltip);
+            return _taskbarList.SetThumbnailTooltip(Handle, tooltip);
         }
 
 
@@ -6491,7 +6657,7 @@ namespace System.Windows
 
             // Don't count on Window properties being in sync at the time of this call.
             // Just use native methods to check
-            if (UnsafeNativeMethods.IsIconic(CriticalHandle))
+            if (UnsafeNativeMethods.IsIconic(Handle))
             {
                 // If the window is minimized then don't try to update the clip.
                 return HRESULT.S_FALSE;
@@ -6506,7 +6672,7 @@ namespace System.Windows
                 Thickness margin = taskbarInfo.ThumbnailClipMargin;
                 // Use the native GetClientRect.  Window.ActualWidth and .ActualHeight include the non-client areas.
                 NativeMethods.RECT physicalClientRc = default(NativeMethods.RECT);
-                SafeNativeMethods.GetClientRect(new HandleRef(this, CriticalHandle), ref physicalClientRc);
+                SafeNativeMethods.GetClientRect(new HandleRef(this, Handle), ref physicalClientRc);
                 var logicalClientRc = new Rect(
                     DeviceToLogicalUnits(new Point(physicalClientRc.left, physicalClientRc.top)),
                     DeviceToLogicalUnits(new Point(physicalClientRc.right, physicalClientRc.bottom)));
@@ -6527,7 +6693,7 @@ namespace System.Windows
                 }
             }
 
-            return _taskbarList.SetThumbnailClip(CriticalHandle, interopRc);
+            return _taskbarList.SetThumbnailClip(Handle, interopRc);
         }
 
         private HRESULT RegisterTaskbarThumbButtons()
@@ -6550,7 +6716,7 @@ namespace System.Windows
 
             // If this gets called (successfully) more than once it usually returns E_INVALIDARG.  It's not really
             // a failure and we potentially want to retry this operation.
-            HRESULT hr = _taskbarList.ThumbBarAddButtons(CriticalHandle, (uint)nativeButtons.Length, nativeButtons);
+            HRESULT hr = _taskbarList.ThumbBarAddButtons(Handle, (uint)nativeButtons.Length, nativeButtons);
             if (hr == HRESULT.E_INVALIDARG)
             {
                 hr = HRESULT.S_FALSE;
@@ -6661,7 +6827,7 @@ namespace System.Windows
                 }
 
                 // Finally, apply the update.
-                return _taskbarList.ThumbBarUpdateButtons(CriticalHandle, (uint)nativeButtons.Length, nativeButtons);
+                return _taskbarList.ThumbBarUpdateButtons(Handle, (uint)nativeButtons.Length, nativeButtons);
             }
             finally
             {
@@ -6714,12 +6880,12 @@ namespace System.Windows
             //    this instance of the Manager.
             //
             HwndStyleManager manager = Manager;
-            if (manager.Dirty && CriticalHandle != IntPtr.Zero)
+            if (manager.Dirty && Handle != IntPtr.Zero)
             {
-                UnsafeNativeMethods.CriticalSetWindowLong(new HandleRef(this,CriticalHandle), NativeMethods.GWL_STYLE, (IntPtr)_styleDoNotUse.Value);
-                UnsafeNativeMethods.CriticalSetWindowLong(new HandleRef(this,CriticalHandle), NativeMethods.GWL_EXSTYLE, (IntPtr)_styleExDoNotUse.Value);
+                UnsafeNativeMethods.CriticalSetWindowLong(new HandleRef(this,Handle), NativeMethods.GWL_STYLE, (IntPtr)_styleDoNotUse);
+                UnsafeNativeMethods.CriticalSetWindowLong(new HandleRef(this,Handle), NativeMethods.GWL_EXSTYLE, (IntPtr)_styleExDoNotUse);
 
-                UnsafeNativeMethods.SetWindowPos(new HandleRef(this, CriticalHandle), NativeMethods.NullHandleRef, 0, 0, 0, 0,
+                UnsafeNativeMethods.SetWindowPos(new HandleRef(this, Handle), NativeMethods.NullHandleRef, 0, 0, 0, 0,
                                                NativeMethods.SWP_NOMOVE |
                                                NativeMethods.SWP_NOSIZE |
                                                NativeMethods.SWP_NOZORDER |
@@ -7091,6 +7257,8 @@ namespace System.Windows
 
         private SourceWindowHelper  _swh;                               // object that will hold the window
         private Window              _ownerWindow;                       // owner window
+        private bool _reloadFluentDictionary = false;
+        private bool _resourcesInitialized = false;
 
         // keeps track of the owner hwnd
         // we need this one b/c a owner/parent
@@ -7098,7 +7266,7 @@ namespace System.Windows
         // which is different than the owner Window object
         private IntPtr              _ownerHandle = IntPtr.Zero;   // no need to dispose this
         private WindowCollection    _ownedWindows;
-        private ArrayList           _threadWindowHandles;
+        private List<IntPtr>        _threadWindowHandles;
 
         private bool                _updateHwndSize     = true;
         private bool                _updateHwndLocation = true;
@@ -7134,6 +7302,11 @@ namespace System.Windows
 
         private double              _actualLeft = Double.NaN;
 
+
+        private ThemeMode           _themeMode = ThemeMode.None;
+        internal bool               _deferThemeLoading = false;
+        private bool                _useDarkMode = false;
+
         //Never expose this at any cost
         private bool                        _inTrustedSubWindow;
 
@@ -7158,8 +7331,8 @@ namespace System.Windows
 
         // These should never be used directly, access only through property accessors
 
-        private SecurityCriticalDataForSet<int>                 _styleDoNotUse;
-        private SecurityCriticalDataForSet<int>                 _styleExDoNotUse;
+        private int                 _styleDoNotUse;
+        private int                 _styleExDoNotUse;
         private HwndStyleManager    _manager;
 
         // reference to Resize Grip control; this is used to find out whether
@@ -7237,13 +7410,13 @@ namespace System.Windows
                     }
                 }
 
-                internal IntPtr CriticalHandle
+                internal IntPtr Handle
                 {
                     get
                     {
                         if (_sourceWindow != null)
                         {
-                            return _sourceWindow.CriticalHandle;
+                            return _sourceWindow.Handle;
                         }
                         else
                         {
@@ -7263,7 +7436,7 @@ namespace System.Windows
                         NativeMethods.MONITORINFOEX monitorInfo = new NativeMethods.MONITORINFOEX();
                         monitorInfo.cbSize = Marshal.SizeOf(typeof(NativeMethods.MONITORINFOEX));
 
-                        monitor = SafeNativeMethods.MonitorFromWindow( new HandleRef( this, CriticalHandle), NativeMethods.MONITOR_DEFAULTTONEAREST  );
+                        monitor = SafeNativeMethods.MonitorFromWindow( new HandleRef( this, Handle), NativeMethods.MONITOR_DEFAULTTONEAREST  );
                         if ( monitor != IntPtr.Zero )
                         {
                             SafeNativeMethods.GetMonitorInfo( new HandleRef ( this, monitor ) , monitorInfo);
@@ -7278,7 +7451,7 @@ namespace System.Windows
                     get
                     {
                         NativeMethods.RECT rc = new NativeMethods.RECT(0,0,0,0);
-                        SafeNativeMethods.GetClientRect(new HandleRef(this, CriticalHandle), ref rc);
+                        SafeNativeMethods.GetClientRect(new HandleRef(this, Handle), ref rc);
 
                         return rc;
                     }
@@ -7289,7 +7462,7 @@ namespace System.Windows
                     get
                     {
                         NativeMethods.RECT rc = new NativeMethods.RECT(0,0,0,0);
-                        SafeNativeMethods.GetWindowRect(new HandleRef(this, CriticalHandle), ref rc);
+                        SafeNativeMethods.GetWindowRect(new HandleRef(this, Handle), ref rc);
 
                         return rc;
                     }
@@ -7305,12 +7478,12 @@ namespace System.Windows
                         NativeMethods.RECT rc = new NativeMethods.RECT(0, 0, 0, 0);
 
                         // with RTL window, GetClientRect returns reversed coordinates
-                        SafeNativeMethods.GetClientRect(new HandleRef(this, CriticalHandle), ref rc);
+                        SafeNativeMethods.GetClientRect(new HandleRef(this, Handle), ref rc);
 
                         // note that we use rc.right here for the RTL case and client to screen that point
                         pt = new NativeMethods.POINT(rc.right, rc.top);
                     }
-                    UnsafeNativeMethods.ClientToScreen(new HandleRef(this, _sourceWindow.CriticalHandle), ref pt);
+                    UnsafeNativeMethods.ClientToScreen(new HandleRef(this, _sourceWindow.Handle), ref pt);
 
                     return pt;
                 }
@@ -7340,7 +7513,7 @@ namespace System.Windows
                 {
                     get
                     {
-                        return (_sourceWindow.CriticalHandle == UnsafeNativeMethods.GetActiveWindow());
+                        return (_sourceWindow.Handle == UnsafeNativeMethods.GetActiveWindow());
                     }
                 }
 
@@ -7390,7 +7563,7 @@ namespace System.Windows
                     {
                         // Should never be called when Handle is non-null
                         Debug.Assert( IsSourceWindowNull == false , "Should only be invoked when we know Handle is non-null" );
-                        return UnsafeNativeMethods.GetWindowLong(new HandleRef(this,CriticalHandle), NativeMethods.GWL_EXSTYLE);
+                        return UnsafeNativeMethods.GetWindowLong(new HandleRef(this,Handle), NativeMethods.GWL_EXSTYLE);
                     }
                 }
 
@@ -7400,7 +7573,7 @@ namespace System.Windows
                     {
                         // Should never be called when Handle is non-null
                         Debug.Assert( IsSourceWindowNull == false , "Should only be invoked when we know Handle is non-null" );
-                        return UnsafeNativeMethods.GetWindowLong(new HandleRef(this,CriticalHandle), NativeMethods.GWL_STYLE);
+                        return UnsafeNativeMethods.GetWindowLong(new HandleRef(this,Handle), NativeMethods.GWL_STYLE);
                     }
                 }
 
@@ -7800,8 +7973,6 @@ namespace System.Windows
 
         #endregion DTypeThemeStyleKey
     }
-
-
 
     #region Enums
 

@@ -5,12 +5,8 @@
 // Description: HWND-based ProgressBar Proxy
 
 using System;
-using System.Collections;
-using System.Text;
-using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Windows;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
@@ -48,11 +44,7 @@ namespace MS.Internal.AutomationProxies
         private static IRawElementProviderSimple Create(IntPtr hwnd, int idChild)
         {
             // Something is wrong if idChild is not zero 
-            if (idChild != 0)
-            {
-                System.Diagnostics.Debug.Assert (idChild == 0, "Invalid Child Id, idChild != 0");
-                throw new ArgumentOutOfRangeException("idChild", idChild, SR.ShouldBeZero);
-            }
+            ArgumentOutOfRangeException.ThrowIfNotEqual(idChild, 0);
 
             return new WindowsProgressBar(hwnd, null, 0);
         }

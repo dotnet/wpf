@@ -2,9 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#nullable disable
+
 using System.ComponentModel;
 using System.Globalization;
-using System.Windows.Markup;
 
 namespace System.Xaml.Replacements
 {
@@ -20,7 +21,7 @@ namespace System.Xaml.Replacements
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (context != null && value is string typeList)
+            if (context is not null && value is string typeList)
             {
                 string[] tl = StringHelpers.SplitTypeList(typeList);
                 Type[] types = new Type[tl.Length];

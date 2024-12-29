@@ -121,6 +121,7 @@ public class XamlNodeQueueTests
         Assert.Throws<ObjectDisposedException>(() => writer.WriteGetObject());
     }
 
+#if !DEBUG // This triggers a Debug.Assert.
     public static IEnumerable<object?[]> Writer_WriteStartObject_TestData()
     {
         yield return new object?[] { XamlLanguage.Object };
@@ -146,6 +147,7 @@ public class XamlNodeQueueTests
         Assert.Null(reader.Value);
         Assert.Null(reader.Member);
     }
+#endif
 
     [Fact]
     public void Writer_WriteStartObjectWhenDisposed_ThrowsObjectDisposedException()
@@ -186,6 +188,7 @@ public class XamlNodeQueueTests
         Assert.Throws<ObjectDisposedException>(() => writer.WriteEndObject());
     }
 
+#if !DEBUG // This triggers a Debug.Assert.
     public static IEnumerable<object?[]> Writer_WriteStartMember_TestData()
     {
         yield return new object?[] { XamlLanguage.Key };
@@ -211,6 +214,7 @@ public class XamlNodeQueueTests
         Assert.Null(reader.Value);
         Assert.Equal(member, reader.Member);
     }
+#endif
 
     [Fact]
     public void Writer_WriteStartMemberWhenDisposed_ThrowsObjectDisposedException()
@@ -287,6 +291,7 @@ public class XamlNodeQueueTests
         Assert.Throws<ObjectDisposedException>(() => writer.WriteValue(null));
     }
 
+#if !DEBUG // This triggers a Debug.Assert.
     public static IEnumerable<object?[]> Writer_WriteNamespace_TestData()
     {
         yield return new object?[] { new NamespaceDeclaration("namespace", "prefix") };
@@ -312,6 +317,7 @@ public class XamlNodeQueueTests
         Assert.Null(reader.Value);
         Assert.Null(reader.Member);
     }
+#endif
 
     [Fact]
     public void Writer_WriteNamespaceWhenDisposed_ThrowsObjectDisposedException()

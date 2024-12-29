@@ -98,7 +98,6 @@ public class XamlValueConverterTests
     public static IEnumerable<object?[]> Equals_TestData()
     {
         var type1 = new XamlType("unknownTypeNamespace", "unknownTypeName1", null, new XamlSchemaContext());
-        var type2 = new XamlType("unknownTypeNamespace", "unknownTypeName2", null, new XamlSchemaContext());
         var converter = new XamlValueConverter<string>(typeof(int), type1, "name");
 
         yield return new object?[] { converter, converter, true };

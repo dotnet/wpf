@@ -2,10 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+#pragma warning disable IDE0005 
 using System.Linq;
 using System.Reflection;
 using System.Xaml.Tests.Common;
 using Xunit;
+#pragma warning restore IDE0005 
 
 namespace System.Xaml.Tests;
 
@@ -59,6 +61,7 @@ public class XamlBackgroundReaderTests
         Assert.Throws<ArgumentNullException>("schemaContext", () => new XamlBackgroundReader(new SubXamlReaderWithLineInfo()));
     }
 
+#if !DEBUG // This triggers a Debug.Assert.
     [Fact]
     public void Read_Started_Success()
     {
@@ -160,6 +163,7 @@ public class XamlBackgroundReaderTests
         Assert.False(reader.Read());
         Assert.False(reader.Read());
     }
+#endif
 
     [Fact]
     public void Read_ThrowsException_RethrowsException()

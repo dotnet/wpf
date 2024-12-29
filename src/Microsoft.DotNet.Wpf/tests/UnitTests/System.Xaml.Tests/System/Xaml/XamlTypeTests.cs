@@ -926,12 +926,14 @@ public class XamlTypeTests
         AssertEqualXamlMembers(expectedLookup, type.LookupAllAttachableMembersEntry());
     }
 
+#if !DEBUG // This triggers a Debug.Assert.
     [Fact]
     public void LookupAllAttachableMembers_MembersNotCalled_ThrowsNullReferenceException()
     {
         var type = new SubXamlType(typeof(string), new XamlSchemaContext());
         Assert.Throws<NullReferenceException>(() => type.LookupAllAttachableMembersEntry());
     }
+#endif
     
     private static MethodInfo GetUnderlyingGetter(XamlMember member)
     {
@@ -1240,12 +1242,14 @@ public class XamlTypeTests
         Assert.Equal(expectedLookup?.OrderBy(m => m.Name), type.LookupAllMembersEntry()?.OrderBy(m => m.Name));
     }
 
+#if !DEBUG // This triggers a Debug.Assert.
     [Fact]
     public void LookupAllMembers_MembersNotCalled_ThrowsNullReferenceException()
     {
         var type = new SubXamlType(typeof(string), new XamlSchemaContext());
         Assert.Throws<NullReferenceException>(() => type.LookupAllMembersEntry());
     }
+#endif
 
 #pragma warning disable IDE0060, IDE0051 // Remove unused parameter, Remove unused member
     public class MembersDataClass

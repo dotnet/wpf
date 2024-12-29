@@ -42,7 +42,7 @@ public class XamlReaderTests
         Assert.Equal(expectedReadCount, reader.ReadCount);
     }
 
-#if DEBUG
+#if DEBUG // This is a nop in release builds.
     [Theory]
     [InlineData(XamlNodeType.StartObject)]
     [InlineData(XamlNodeType.StartMember)]

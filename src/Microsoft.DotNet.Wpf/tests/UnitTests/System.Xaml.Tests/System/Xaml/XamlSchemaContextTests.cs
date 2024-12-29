@@ -185,7 +185,7 @@ public class XamlSchemaContextTests
         var context = new XamlSchemaContext();
         Assert.Equal("p", context.GetPreferredPrefix("noSuchNamespace"));
 
-        AssemblyBuilder dynamicAssembly = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName("Name"), AssemblyBuilderAccess.Run, new CustomAttributeBuilder[]
+        AssemblyBuilder _ = AssemblyBuilder.DefineDynamicAssembly(new AssemblyName("Name"), AssemblyBuilderAccess.Run, new CustomAttributeBuilder[]
         {
             new CustomAttributeBuilder(
                 typeof(XmlnsPrefixAttribute).GetConstructors()[0],

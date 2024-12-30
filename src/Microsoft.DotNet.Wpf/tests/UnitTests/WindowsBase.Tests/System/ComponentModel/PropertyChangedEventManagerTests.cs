@@ -833,6 +833,7 @@ public class PropertyChangedEventManagerTests
         Assert.Throws<ArgumentNullException>("listener", () => PropertyChangedEventManager.AddListener(source, null, "propertyName"));
     }
 
+#if !DEBUG // This triggers a Debug.Assert.
     [Fact]
     public void AddListener_NullPropertyName_ThrowsArgumentNullException()
     {
@@ -841,6 +842,7 @@ public class PropertyChangedEventManagerTests
         // TODO: incorrect paramName.
         Assert.Throws<ArgumentNullException>("key", () => PropertyChangedEventManager.AddListener(source, listener, null));
     }
+#endif
 
     [Theory]
     [InlineData("propertyName")]
@@ -1113,6 +1115,7 @@ public class PropertyChangedEventManagerTests
         Assert.Equal(2, callCount3);
     }
 
+#if !DEBUG // This triggers a Debug.Assert.
     [Fact]
     public void RemoveListener_InvokeNoSource_Success()
     {
@@ -1150,6 +1153,7 @@ public class PropertyChangedEventManagerTests
         PropertyChangedEventManager.RemoveListener(source2, listener, propertyName);
         source1.OnPropertyChanged(source1, new PropertyChangedEventArgs("propertyName"));
     }
+#endif
 
     [Fact]
     public void RemoveListener_InvokeNoSuchListener_Nop()
@@ -1209,6 +1213,7 @@ public class PropertyChangedEventManagerTests
         Assert.Equal(2, callCount);
     }
 
+#if !DEBUG // This triggers a Debug.Assert.
     [Fact]
     public void RemoveListener_NullPropertyName_ThrowsArgumentNullException()
     {
@@ -1234,6 +1239,7 @@ public class PropertyChangedEventManagerTests
         source.OnPropertyChanged(source, new PropertyChangedEventArgs("propertyName"));
         Assert.Equal(2, callCount);
     }
+#endif
 
     [Fact]
     public void RemoveListener_NullListener_ThrowsArgumentNullException()

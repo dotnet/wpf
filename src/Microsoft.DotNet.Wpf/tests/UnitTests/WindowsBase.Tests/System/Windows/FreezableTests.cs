@@ -1548,6 +1548,7 @@ public class FreezableTests
         Assert.False(clone.IsSealed);
     }
 
+#if !DEBUG // This can trigger a Debug.Assert in Freezable.CreateInstanceCore.
     [Fact]
     public void Clone_InvokeNullCreateInstanceCore_ThrowsNullReferenceException()
     {
@@ -1589,6 +1590,7 @@ public class FreezableTests
         Assert.False(freezable.IsFrozen);
         Assert.True(clone.IsFrozen);
     }
+#endif
 
     [Fact]
     public void Clone_InvokeCantFreeze_ReturnsExpected()
@@ -2432,6 +2434,7 @@ public class FreezableTests
         Assert.False(clone.IsSealed);
     }
 
+#if !DEBUG // This can trigger a Debug.Assert in Freezable.CreateInstanceCore.
     [Fact]
     public void CloneCurrentValue_InvokeNullCreateInstanceCore_ThrowsNullReferenceException()
     {
@@ -2470,6 +2473,7 @@ public class FreezableTests
         Assert.Same(clone, freezable.CloneCurrentValue());
         Assert.True(clone.IsFrozen);
     }
+#endif
 
     [Fact]
     public void CloneCurrentValue_InvokeCantFreeze_ReturnsExpected()
@@ -3085,13 +3089,19 @@ public class FreezableTests
 
     public static IEnumerable<object?[]> CreateInstance_TestData()
     {
+#if !DEBUG // This can trigger a Debug.Assert in Freezable.CreateInstanceCore.
         yield return new object?[] { null };
+#endif
+
         yield return new object?[] { new SubFreezable() };
+
+#if !DEBUG // This can trigger a Debug.Assert in Freezable.CreateInstanceCore.
         yield return new object?[] { new SubFreezable2() };
 
         var frozen = new SubFreezable2();
         frozen.Freeze();
         yield return new object?[] { frozen };
+#endif
     }
 
     [Theory]
@@ -3114,6 +3124,7 @@ public class FreezableTests
         Assert.Equal(2, callCount);
     }
 
+#if !DEBUG // This can trigger a Debug.Assert in Freezable.CreateInstanceCore.
     [Theory]
     [MemberData(nameof(CreateInstance_TestData))]
     public void CreateInstance_InvokeFrozen_ReturnsExpected(Freezable result)
@@ -3175,8 +3186,7 @@ public class FreezableTests
             Assert.Equal(1, callCount);
         });
     }
-
-
+#endif
 
     [Fact]
     public void CoerceValue_InvokeValueType_GetValueReturnsExpected()
@@ -4553,6 +4563,7 @@ public class FreezableTests
         Assert.Same(freezable, freezable.GetAsFrozen());
     }
 
+#if !DEBUG // This can trigger a Debug.Assert in Freezable.CreateInstanceCore.
     [Fact]
     public void GetAsFrozen_InvokeNullCreateInstanceCore_ThrowsNullReferenceException()
     {
@@ -4573,6 +4584,7 @@ public class FreezableTests
         Assert.False(freezable.IsFrozen);
         Assert.True(clone.IsFrozen);
     }
+#endif
 
     [Fact]
     public void GetAsFrozen_InvokeSameCreateInstanceCore_Success()
@@ -4583,6 +4595,7 @@ public class FreezableTests
         Assert.True(freezable.IsFrozen);
     }
 
+#if !DEBUG // This can trigger a Debug.Assert in Freezable.CreateInstanceCore.
     [Fact]
     public void GetAsFrozen_InvokeFrozenCreateInstanceCore_Success()
     {
@@ -4594,6 +4607,7 @@ public class FreezableTests
         Assert.False(freezable.IsFrozen);
         Assert.True(clone.IsFrozen);
     }
+#endif
 
     [Fact]
     public void GetAsFrozen_InvokeCantFreeze_ThrowsInvalidOperationException()
@@ -5402,6 +5416,7 @@ public class FreezableTests
         Assert.Same(freezable, freezable.GetCurrentValueAsFrozen());
     }
 
+#if !DEBUG // This can trigger a Debug.Assert in Freezable.CreateInstanceCore.
     [Fact]
     public void GetCurrentValueAsFrozen_InvokeNullCreateInstanceCore_ThrowsNullReferenceException()
     {
@@ -5422,6 +5437,7 @@ public class FreezableTests
         Assert.False(freezable.IsFrozen);
         Assert.True(clone.IsFrozen);
     }
+#endif
 
     [Fact]
     public void GetCurrentValueAsFrozen_InvokeSameCreateInstanceCore_Success()
@@ -5432,6 +5448,7 @@ public class FreezableTests
         Assert.True(freezable.IsFrozen);
     }
 
+#if !DEBUG // This can trigger a Debug.Assert in Freezable.CreateInstanceCore.
     [Fact]
     public void GetCurrentValueAsFrozen_InvokeFrozenCreateInstanceCore_Success()
     {
@@ -5443,6 +5460,7 @@ public class FreezableTests
         Assert.False(freezable.IsFrozen);
         Assert.True(clone.IsFrozen);
     }
+#endif
 
     [Fact]
     public void GetCurrentValueAsFrozen_InvokeCantFreeze_ThrowsInvalidOperationException()

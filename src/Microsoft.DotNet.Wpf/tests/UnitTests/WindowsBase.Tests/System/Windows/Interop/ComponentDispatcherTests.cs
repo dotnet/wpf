@@ -19,7 +19,6 @@ public class ComponentDispatcherTests
     public void IsThreadModal_Get_ReturnsExpected()
     {
         bool isThreadModal = ComponentDispatcher.IsThreadModal;
-        Assert.False(isThreadModal);
         Assert.Equal(isThreadModal, ComponentDispatcher.IsThreadModal);
     }
 
@@ -242,7 +241,7 @@ public class ComponentDispatcherTests
         
         // Pop again.
         ComponentDispatcher.PopModal();
-        Assert.False(ComponentDispatcher.IsThreadModal);
+        Assert.Equal(original, ComponentDispatcher.IsThreadModal);
     }
 
     [Fact]

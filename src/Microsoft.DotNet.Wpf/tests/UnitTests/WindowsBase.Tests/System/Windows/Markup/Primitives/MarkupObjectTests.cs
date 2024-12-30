@@ -482,15 +482,21 @@ public class MarkupObjectTests
         }
     }
 
+#pragma warning disable IDE0060 // Remove unused parameter
     [TypeConverter(typeof(CustomTypeConverter))]
     private class MarkupExtensionWithTypeConverter : MarkupExtension
     {
         public MarkupExtensionWithTypeConverter()
         {
         }
+        
+        public MarkupExtensionWithTypeConverter(int x, int y)
+        {
+        }
 
         public override object ProvideValue(IServiceProvider serviceProvider) => throw new NotImplementedException();
     }
+#pragma warning restore IDE0060 // Remove unused parameter
 
     private class CustomClass
     {

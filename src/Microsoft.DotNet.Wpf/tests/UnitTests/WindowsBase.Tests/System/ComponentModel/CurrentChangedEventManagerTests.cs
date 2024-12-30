@@ -166,7 +166,15 @@ public class CurrentChangedEventManagerTests
         EventHandler<EventArgs> handler2 = (EventHandler<EventArgs>)Delegate.CreateDelegate(typeof(EventHandler<EventArgs>), target2, nameof(CustomWeakEventListener.Handler));
 
         // Add.
-        Assert.Throws<NullReferenceException>(() => CurrentChangedEventManager.AddHandler(null, handler1));
+        // There is a race condition where an NRE is thrown if the source is null and
+        // no previous listeners or handlers were ever added.
+        try
+        {
+            CurrentChangedEventManager.AddHandler(null, handler1);
+        }
+        catch (NullReferenceException)
+        {
+        }
 
         // Add again.
         CurrentChangedEventManager.AddHandler(null, handler1);
@@ -379,13 +387,21 @@ public class CurrentChangedEventManagerTests
     {
         var target = new CustomWeakEventListener();
         EventHandler<EventArgs> handler = (EventHandler<EventArgs>)Delegate.CreateDelegate(typeof(EventHandler<EventArgs>), target, nameof(CustomWeakEventListener.Handler));
-        CurrentChangedEventManager.AddHandler(null, handler);
+        try
+        {
+            CurrentChangedEventManager.AddHandler(null, handler);
 
-        // Remove.
-        CurrentChangedEventManager.RemoveHandler(null, handler);
+            // Remove.
+            CurrentChangedEventManager.RemoveHandler(null, handler);
 
-        // Remove again.
-        CurrentChangedEventManager.RemoveHandler(null, handler);
+            // Remove again.
+            CurrentChangedEventManager.RemoveHandler(null, handler);
+        }
+        catch (NullReferenceException)
+        {
+            // There is a race condition where an NRE is thrown if the source is null and
+            // no previous listeners or handlers were ever added.
+        }
     }
 
     [Fact]

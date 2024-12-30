@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -156,6 +156,16 @@ namespace System.Windows
         public static MessageBoxResult Show(string messageBoxText) 
         {
             return ShowCore(IntPtr.Zero, messageBoxText, String.Empty, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
+        }
+
+        /// <devdoc>
+        ///    <para>
+        ///       Displays a message box with the string representation of the specified object.
+        ///    </para>
+        /// </devdoc>
+        public static MessageBoxResult Show(object messageBoxObject)
+        {
+            return ShowCore(IntPtr.Zero, messageBoxObject.ToString(), String.Empty, MessageBoxButton.OK, MessageBoxImage.None, 0, 0);
         }
         #endregion
 

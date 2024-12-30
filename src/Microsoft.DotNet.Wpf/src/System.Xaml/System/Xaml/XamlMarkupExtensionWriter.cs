@@ -136,6 +136,7 @@ namespace System.Xaml
                 {
                     throw new InvalidOperationException(SR.Format(SR.XamlMarkupExtensionWriterDuplicateMember, property.Name));
                 }
+
                 objectNode.Members.Add(property);
             }
         }
@@ -189,16 +190,19 @@ namespace System.Xaml
                 get;
                 set;
             }
+
             public XamlPropertySet Members
             {
                 get;
                 set;
             }
+
             public XamlNodeType NodeType
             {
                 get;
                 set;
             }
+
             public XamlType XamlType
             {
                 get;
@@ -263,6 +267,7 @@ namespace System.Xaml
                     {
                         sb.Append('\\');
                     }
+
                     sb.Append(s[i]);
                 }
 
@@ -285,6 +290,7 @@ namespace System.Xaml
                 {
                     value = FormatStringInCorrectSyntax(value);
                 }
+
                 writer.sb.Append(value);
             }
         }
@@ -298,6 +304,7 @@ namespace System.Xaml
             Start()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -432,6 +439,7 @@ namespace System.Xaml
             InObjectBeforeMember()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -462,6 +470,7 @@ namespace System.Xaml
             InObjectAfterMember()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -511,6 +520,7 @@ namespace System.Xaml
             InPositionalParametersBeforeValue()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -528,6 +538,7 @@ namespace System.Xaml
             InPositionalParametersAfterValue()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -546,6 +557,7 @@ namespace System.Xaml
                 {
                     throw new InvalidOperationException(SR.XamlMarkupExtensionWriterInputInvalid);
                 }
+
                 writer.currentState = InObjectAfterMember.State;
             }
         }
@@ -556,6 +568,7 @@ namespace System.Xaml
             InMember()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -575,6 +588,7 @@ namespace System.Xaml
                     writer.failed = true;
                     return;
                 }
+
                 string prefix = writer.LookupPrefix(type);
 
                 writer.sb.Append('{');
@@ -592,6 +606,7 @@ namespace System.Xaml
             InMemberAfterValueOrEndObject()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }

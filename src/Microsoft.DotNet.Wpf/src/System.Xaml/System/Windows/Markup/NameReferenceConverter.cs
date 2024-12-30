@@ -37,12 +37,14 @@ namespace System.Windows.Markup
             {
                 throw new InvalidOperationException(SR.MustHaveName);
             }
+
             object obj = nameResolver.Resolve(name);
             if (obj is null)
             {
                 string[] names = new string[] { name };
                 obj = nameResolver.GetFixupToken(names, true);
             }
+
             return obj;
         }
 
@@ -59,7 +61,6 @@ namespace System.Windows.Markup
             }
 
             return base.CanConvertTo(context, destinationType);
-
         }
 
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)

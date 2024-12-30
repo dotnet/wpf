@@ -58,6 +58,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     return text.Remove(0, ME_ESCAPE.Length);
                 }
+
                 return text;
             }
         }
@@ -101,6 +102,7 @@ namespace MS.Internal.Xaml.Parser
                     // See XamlScanner.EnqueueAnotherAttribute for the fixed call.
                     text = text.Replace(RETURN_STRING, "");
                 }
+
                 _sb.Append(text);
             }
             else if (newTextIsWhitespace)
@@ -145,6 +147,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     _sb.Append(SPACE);
                 }
+
                 _sb.Append(trimmed);
 
                 // Always leave trailing WS, if it was present.
@@ -155,6 +158,7 @@ namespace MS.Internal.Xaml.Parser
                     _sb.Append(SPACE);
                 }
             }
+
             _isWhiteSpaceOnly = _isWhiteSpaceOnly && newTextIsWhitespace;
         }
 
@@ -169,6 +173,7 @@ namespace MS.Internal.Xaml.Parser
                         return false;
                     return true;
                 }
+
                 return false;
             }
         }
@@ -182,6 +187,7 @@ namespace MS.Internal.Xaml.Parser
                 if (!IsWhitespaceChar(text[i]))
                     return false;
             }
+
             return true;
         }
 
@@ -232,13 +238,16 @@ namespace MS.Internal.Xaml.Parser
                             }
                         }
                     }
+
                     if (!skipSpace)
                     {
                         sb.Append(SPACE);
                     }
                 }
+
                 firstIdx = advancingIdx;
             }
+
             return sb.ToString();
         }
 
@@ -289,6 +298,7 @@ namespace MS.Internal.Xaml.Parser
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -312,6 +322,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 unicodeScalarValue = text[takeOneIdx];
             }
+
             return unicodeScalarValue;
         }
 
@@ -365,6 +376,7 @@ namespace MS.Internal.Xaml.Parser
                         return true;
                 }
             }
+
             return false;
         }
     }

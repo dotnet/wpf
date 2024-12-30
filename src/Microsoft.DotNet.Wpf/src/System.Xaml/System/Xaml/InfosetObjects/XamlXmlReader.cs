@@ -179,19 +179,23 @@ namespace System.Xaml
                 // Or have already processed the markup compat and want that extra perf.
                 myXmlReader = givenXmlReader;
             }
+
             // Pick up the XmlReader settings to override the "settings" defaults.
             if (!String.IsNullOrEmpty(myXmlReader.BaseURI))
             {
                 _mergedSettings.BaseUri = new Uri(myXmlReader.BaseURI);
             }
+
             if (myXmlReader.XmlSpace == XmlSpace.Preserve)
             {
                 _mergedSettings.XmlSpacePreserve = true;
             }
+
             if (!String.IsNullOrEmpty(myXmlReader.XmlLang))
             {
                 _mergedSettings.XmlLang = myXmlReader.XmlLang;
             }
+
             IXmlNamespaceResolver myXmlReaderNS = myXmlReader as IXmlNamespaceResolver;
             Dictionary<string, string> xmlnsDictionary = null;
             if (myXmlReaderNS is not null)
@@ -205,6 +209,7 @@ namespace System.Xaml
                         {
                             xmlnsDictionary = new Dictionary<string, string>();
                         }
+
                         xmlnsDictionary[ns.Key] = ns.Value;
                     }
                 }
@@ -262,7 +267,8 @@ namespace System.Xaml
                     _current = _endOfStreamNode;
                     break;
                 }
-            } while (_current.NodeType == XamlNodeType.None);
+            }
+            while (_current.NodeType == XamlNodeType.None);
             return !IsEof;
         }
 
@@ -355,7 +361,6 @@ namespace System.Xaml
             {
                 newXmlNamespace = string.Empty;
             }
-
 
             // we need to treat all namespaces inside of XmlDataIslands as Supported.
             // we need to tree Freeze as known, if it is around... don't hardcode.

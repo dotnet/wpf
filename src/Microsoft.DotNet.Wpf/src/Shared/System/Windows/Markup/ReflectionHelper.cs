@@ -447,6 +447,7 @@ namespace System.Xaml
                         // LoadFile will only override your request only if it is in the GAC
                         retassem = Assembly.LoadFile(assemblyPath);
                     }
+
                     //
                     // At compile time, the build task should always pass the full path of the referenced assembly, even if it
                     // comes from GAC. But below code snippet can run if parser wants to try loading an assembly w/o a path.
@@ -573,4 +574,3 @@ namespace System.Xaml
         #endregion Assembly Loading
     }
 }
-

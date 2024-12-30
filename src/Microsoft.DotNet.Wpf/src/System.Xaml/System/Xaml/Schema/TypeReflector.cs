@@ -112,6 +112,7 @@ namespace System.Xaml.Schema
                 {
                     s_UnknownReflector = new TypeReflector();
                 }
+
                 return s_UnknownReflector;
             }
         }
@@ -125,11 +126,13 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             if (visibility == TypeVisibility.Internal &&
                 !schemaContext.AreInternalsVisibleTo(type.Assembly, accessingAssembly))
             {
                 return false;
             }
+
             if (type.IsGenericType)
             {
                 foreach (Type typeArg in type.GetGenericArguments())
@@ -144,6 +147,7 @@ namespace System.Xaml.Schema
             {
                 return IsVisibleTo(type.GetElementType(), accessingAssembly, schemaContext);
             }
+
             return true;
         }
 
@@ -172,6 +176,7 @@ namespace System.Xaml.Schema
                     Interlocked.CompareExchange(ref _attachableMemberCache,
                         new ThreadSafeDictionary<string, XamlMember>(), null);
                 }
+
                 return _attachableMemberCache;
             }
         }
@@ -243,6 +248,7 @@ namespace System.Xaml.Schema
                     Interlocked.CompareExchange(ref _nonAttachableMemberCache,
                         new ThreadSafeDictionary<string, XamlMember>(), null);
                 }
+
                 return _nonAttachableMemberCache;
             }
         }
@@ -296,6 +302,7 @@ namespace System.Xaml.Schema
                 Interlocked.CompareExchange(ref _positionalParameterTypes,
                     new ThreadSafeDictionary<int, IList<XamlType>>(), null);
             }
+
             return _positionalParameterTypes.TryGetValue(paramCount, out result);
         }
 
@@ -312,6 +319,7 @@ namespace System.Xaml.Schema
             {
                 return true;
             }
+
             bool result = false;
             if (directive == XamlLanguage.Key)
             {
@@ -337,6 +345,7 @@ namespace System.Xaml.Schema
             {
                 result = _aliasedProperties.TryGetValue(directive, out member);
             }
+
             return result;
         }
 
@@ -366,6 +375,7 @@ namespace System.Xaml.Schema
                     var dict = XamlSchemaContext.CreateDictionary<XamlDirective, XamlMember>();
                     Interlocked.CompareExchange(ref _aliasedProperties, dict, null);
                 }
+
                 _aliasedProperties.TryAdd(directive, member);
             }
         }
@@ -396,6 +406,7 @@ namespace System.Xaml.Schema
             {
                 return null;
             }
+
             // We only check this once, at the root of the doc, and only in ObjectWriter.
             // So it's fine to use live reflection here.
             object obj = GetCustomAttribute(typeof(XAML3.NameScopePropertyAttribute), xamlType.UnderlyingType);
@@ -414,8 +425,10 @@ namespace System.Xaml.Schema
                 {
                     prop = xamlType.GetMember(propertyName);
                 }
+
                 return prop;
             }
+
             return null;
         }
 
@@ -429,6 +442,7 @@ namespace System.Xaml.Schema
             {
                 pi = null;
             }
+
             return pi;
         }
 
@@ -441,6 +455,7 @@ namespace System.Xaml.Schema
             {
                 ei = null;
             }
+
             return ei;
         }
 
@@ -476,6 +491,7 @@ namespace System.Xaml.Schema
                 {
                     continue;
                 }
+
                 XamlMember knownMember;
                 if (_nonAttachableMemberCache.TryGetValue(currentProp.Name, out knownMember))
                 {
@@ -485,6 +501,7 @@ namespace System.Xaml.Schema
                         {
                             knownMembers.Add(knownMember);
                         }
+
                         continue;
                     }
                     else if (skipKnownNegatives)
@@ -501,6 +518,7 @@ namespace System.Xaml.Schema
                         // replace less-derived with more-derived prop
                         result[currentProp.Name] = currentProp;
                     }
+
                     // else currentProp is the less-derived one; ignore it
                 }
                 else
@@ -516,6 +534,7 @@ namespace System.Xaml.Schema
             {
                 return null;
             }
+
             List<PropertyInfo> filteredResult = new List<PropertyInfo>(result.Count);
             foreach (PropertyInfo property in result.Values)
             {
@@ -524,6 +543,7 @@ namespace System.Xaml.Schema
                     filteredResult.Add(property);
                 }
             }
+
             return filteredResult;
         }
 
@@ -540,6 +560,7 @@ namespace System.Xaml.Schema
                     {
                         knownMembers.Add(knownMember);
                     }
+
                     continue;
                 }
 
@@ -551,6 +572,7 @@ namespace System.Xaml.Schema
                         // replace less-derived with more-derived event
                         result[currentEvent.Name] = currentEvent;
                     }
+
                     // else currentEvent is the less-derived one; ignore it
                 }
                 else
@@ -566,6 +588,7 @@ namespace System.Xaml.Schema
             {
                 return null;
             }
+
             List<EventInfo> filteredResult = new List<EventInfo>(result.Count);
             foreach (EventInfo evt in result.Values)
             {
@@ -574,6 +597,7 @@ namespace System.Xaml.Schema
                     filteredResult.Add(evt);
                 }
             }
+
             return filteredResult;
         }
 
@@ -592,6 +616,7 @@ namespace System.Xaml.Schema
                     }
                 }
             }
+
             return mostDerived;
         }
 
@@ -600,6 +625,7 @@ namespace System.Xaml.Schema
             return IsPrivateOrNull(pi.GetGetMethod(true)) &&
                 IsPrivateOrNull(pi.GetSetMethod(true));
         }
+
         private static bool IsPrivate(EventInfo ei)
         {
             return IsPrivateOrNull(ei.GetAddMethod(true));
@@ -675,6 +701,7 @@ namespace System.Xaml.Schema
                     }
                 }
             }
+
             return null;
         }
 
@@ -703,6 +730,7 @@ namespace System.Xaml.Schema
             {
                 return null;
             }
+
             return PickAttachableEventAdder(adders);
         }
 
@@ -791,6 +819,7 @@ namespace System.Xaml.Schema
                         {
                             preferredAccessors = new List<MethodInfo>();
                         }
+
                         preferredAccessors.Add(accessor);
                     }
                     else if (!accessor.IsPrivate && IsAttachablePropertyAccessor(isEvent, isGetter, accessor))
@@ -799,6 +828,7 @@ namespace System.Xaml.Schema
                         {
                             otherAccessors = new List<MethodInfo>();
                         }
+
                         otherAccessors.Add(accessor);
                     }
                 }
@@ -813,6 +843,7 @@ namespace System.Xaml.Schema
                         {
                             preferredAccessors = new List<MethodInfo>();
                         }
+
                         preferredAccessors.Add(accessor);
                     }
                 }
@@ -853,6 +884,7 @@ namespace System.Xaml.Schema
                             // which we are adding to the list
                             list.Clear();
                         }
+
                         list.Add(value);
                     }
                     else
@@ -883,10 +915,12 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             if (!IsAttachablePropertyGetter(mi))
             {
                 return false;
             }
+
             name = mi.Name.Substring(KnownStrings.Get.Length);
             return true;
         }
@@ -905,10 +939,12 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             if (!IsAttachablePropertySetter(mi))
             {
                 return false;
             }
+
             name = mi.Name.Substring(KnownStrings.Set.Length);
             return true;
         }
@@ -927,10 +963,12 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             if (!IsAttachableEventAdder(mi))
             {
                 return false;
             }
+
             name = mi.Name.Substring(KnownStrings.Add.Length,
                 mi.Name.Length - KnownStrings.Add.Length - KnownStrings.Handler.Length);
             return true;
@@ -985,6 +1023,7 @@ namespace System.Xaml.Schema
                         member = null;
                     }
                 }
+
                 if (member is not null)
                 {
                     result.Add(member);
@@ -999,6 +1038,7 @@ namespace System.Xaml.Schema
                 {
                     member = schemaContext.GetAttachableProperty(name, nameAndGetterList.Value[0], null);
                 }
+
                 result.Add(member);
             }
         }
@@ -1015,6 +1055,7 @@ namespace System.Xaml.Schema
                     MethodInfo adder = PickAttachableEventAdder(nameAndAdderList.Value);
                     member = schemaContext.GetAttachableEvent(name, adder);
                 }
+
                 if (member is not null)
                 {
                     result.Add(member);
@@ -1051,12 +1092,14 @@ namespace System.Xaml.Schema
             {
                 return null;
             }
+
             if (objs.Length > 1)
             {
                 string message = SR.Format(SR.TooManyAttributesOnType,
                                                     reflectedType.Name, attrType.Name);
                 throw new XamlSchemaException(message);
             }
+
             return objs[0];
         }
 
@@ -1075,8 +1118,10 @@ namespace System.Xaml.Schema
                     // Not public or internal
                     return TypeVisibility.NotVisible;
                 }
+
                 type = type.DeclaringType;
             }
+
             bool outerTypeIsInternal = type.IsNotPublic;
             return (outerTypeIsInternal || nestedTypeIsInternal) ? TypeVisibility.Internal : TypeVisibility.Public;
         }
@@ -1131,8 +1176,10 @@ namespace System.Xaml.Schema
                         {
                             Add(name, member);
                         }
+
                         result = member;
                     }
+
                     return result;
                 }
             }
@@ -1150,9 +1197,11 @@ namespace System.Xaml.Schema
                         {
                             listOfNulls = new List<K>();
                         }
+
                         listOfNulls.Add(pair.Key);
                     }
                 }
+
                 if (listOfNulls is not null)
                 {
                     for (int i = 0; i < listOfNulls.Count; i++)
@@ -1160,6 +1209,7 @@ namespace System.Xaml.Schema
                         Remove(listOfNulls[i]);
                     }
                 }
+
                 _isComplete = true;
             }
         }

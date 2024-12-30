@@ -33,6 +33,7 @@ namespace System.Xaml.MS.Impl
                 {
                     _nsDefs = LoadNsDefs();
                 }
+
                 return _nsDefs;
             }
         }
@@ -47,6 +48,7 @@ namespace System.Xaml.MS.Impl
                 {
                     _clrToXmlNs = LoadClrToXmlNs();
                 }
+
                 return _clrToXmlNs;
             }
         }
@@ -60,6 +62,7 @@ namespace System.Xaml.MS.Impl
                 {
                     _internalsVisibleTo = LoadInternalsVisibleTo();
                 }
+
                 return _internalsVisibleTo;
             }
         }
@@ -73,6 +76,7 @@ namespace System.Xaml.MS.Impl
                 {
                     _oldToNewNs = LoadOldToNewNs();
                 }
+
                 return _oldToNewNs;
             }
         }
@@ -86,6 +90,7 @@ namespace System.Xaml.MS.Impl
                 {
                     _prefixes = LoadPrefixes();
                 }
+
                 return _prefixes;
             }
         }
@@ -99,6 +104,7 @@ namespace System.Xaml.MS.Impl
                 {
                     _rootNamespace = LoadRootNamespace() ?? string.Empty;
                 }
+
                 return _rootNamespace;
             }
         }
@@ -139,6 +145,7 @@ namespace System.Xaml.MS.Impl
             {
                 return prefix1;
             }
+
             return prefix2;
         }
 
@@ -151,6 +158,7 @@ namespace System.Xaml.MS.Impl
             {
                 return result;
             }
+
             if (assembly.ReflectionOnly)
             {
                 EnsureReflectionOnlyAttributeData();
@@ -178,6 +186,7 @@ namespace System.Xaml.MS.Impl
                     LoadNsDefHelper(result, xmlns, clrns, assembly);
                 }
             }
+
             return result;
         }
 
@@ -201,6 +210,7 @@ namespace System.Xaml.MS.Impl
             {
                 return result;
             }
+
             foreach (XmlNsDefinition nsDef in NsDefs)
             {
                 IList<string> xmlNamespaceList;
@@ -209,6 +219,7 @@ namespace System.Xaml.MS.Impl
                     xmlNamespaceList = new List<string>();
                     result.TryAdd(nsDef.ClrNamespace, xmlNamespaceList);
                 }
+
                 xmlNamespaceList.Add(nsDef.XmlNamespace);
             }
 
@@ -224,6 +235,7 @@ namespace System.Xaml.MS.Impl
                 string clrNsUri = ClrNamespaceUriParser.GetUri(clrToXmlNs.Key, assemblyName);
                 nsList.Add(clrNsUri);
             }
+
             // Convert to read-only lists so we can safely return these from public API
             MakeListsImmutable(result);
             return result;
@@ -238,6 +250,7 @@ namespace System.Xaml.MS.Impl
             {
                 return result;
             }
+
             if (assembly.ReflectionOnly)
             {
                 EnsureReflectionOnlyAttributeData();
@@ -259,6 +272,7 @@ namespace System.Xaml.MS.Impl
                     LoadInternalsVisibleToHelper(result, ivAttrib.AssemblyName, assembly);
                 }
             }
+
             return result;
         }
 
@@ -268,6 +282,7 @@ namespace System.Xaml.MS.Impl
             {
                 throw new XamlSchemaException(SR.Format(SR.BadInternalsVisibleTo1, assembly.FullName));
             }
+
             try
             {
                 result.Add(new AssemblyName(assemblyName));
@@ -276,6 +291,7 @@ namespace System.Xaml.MS.Impl
             {
                 throw new XamlSchemaException(SR.Format(SR.BadInternalsVisibleTo2, assemblyName, assembly.FullName), ex);
             }
+
             // AssemblyName.ctor throws FLE on malformed assembly name
             catch (FileLoadException ex)
             {
@@ -292,6 +308,7 @@ namespace System.Xaml.MS.Impl
             {
                 return result;
             }
+
             if (assembly.ReflectionOnly)
             {
                 EnsureReflectionOnlyAttributeData();
@@ -331,6 +348,7 @@ namespace System.Xaml.MS.Impl
             {
                 throw new XamlSchemaException(SR.Format(SR.DuplicateXmlnsCompat, assembly.FullName, oldns));
             }
+
             result.Add(oldns, newns);
         }
 
@@ -343,6 +361,7 @@ namespace System.Xaml.MS.Impl
             {
                 return result;
             }
+
             if (assembly.ReflectionOnly)
             {
                 EnsureReflectionOnlyAttributeData();
@@ -366,6 +385,7 @@ namespace System.Xaml.MS.Impl
                     LoadPrefixesHelper(result, xmlnsPrefixAttr.XmlNamespace, xmlnsPrefixAttr.Prefix, assembly);
                 }
             }
+
             return result;
         }
 
@@ -391,6 +411,7 @@ namespace System.Xaml.MS.Impl
             {
                 return null;
             }
+
             if (assembly.ReflectionOnly)
             {
                 EnsureReflectionOnlyAttributeData();
@@ -402,6 +423,7 @@ namespace System.Xaml.MS.Impl
                         return cad.ConstructorArguments[0].Value as string;
                     }
                 }
+
                 return null;
             }
             else
@@ -421,7 +443,6 @@ namespace System.Xaml.MS.Impl
             {
                 dict[key] = new ReadOnlyCollection<string>(dict[key]);
             }
-
         }
 
         private class NamespaceComparer
@@ -451,6 +472,7 @@ namespace System.Xaml.MS.Impl
                         {
                             throw new XamlSchemaException(SR.Format(SR.XmlnsCompatCycle, assembly.FullName, ns));
                         }
+
                         IncrementSubsumeCount(ns);
                         ns = GetNewNs(ns);
                     }
@@ -464,6 +486,7 @@ namespace System.Xaml.MS.Impl
                 {
                     return 0;
                 }
+
                 const int Prefer_NS1 = -1;
                 const int Prefer_NS2 = 1;
 
@@ -475,8 +498,10 @@ namespace System.Xaml.MS.Impl
                     {
                         return Prefer_NS2;
                     }
+
                     newNs = GetNewNs(newNs);
                 }
+
                 newNs = GetNewNs(ns2);
                 while (newNs is not null)
                 {
@@ -484,6 +509,7 @@ namespace System.Xaml.MS.Impl
                     {
                         return Prefer_NS1;
                     }
+
                     newNs = GetNewNs(newNs);
                 }
 

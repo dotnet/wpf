@@ -61,6 +61,7 @@ namespace MS.Internal.Xaml.Context
             {
                 _namespaces.Clear();
             }
+
             if (namespaces is not null)
             {
                 foreach (KeyValuePair<string, string> ns in namespaces)
@@ -76,6 +77,7 @@ namespace MS.Internal.Xaml.Context
             {
                 return true;
             }
+
             xamlNs = null;
             return false;
         }
@@ -87,6 +89,7 @@ namespace MS.Internal.Xaml.Context
             {
                 _namespaceDeclarations.Add(new NamespaceDeclaration(kvp.Value, kvp.Key));
             }
+
             return _namespaceDeclarations;
         }
     }

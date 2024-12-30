@@ -106,6 +106,7 @@ namespace System.Xaml
             {
                 throw new ArgumentNullException(SR.GetterOrSetterRequired, (Exception)null);
             }
+
             _name = attachablePropertyName ?? throw new ArgumentNullException(nameof(attachablePropertyName));
 
             ValidateGetter(getter, nameof(getter));
@@ -165,6 +166,7 @@ namespace System.Xaml
                 {
                     _reflector.Invoker = LookupInvoker() ?? XamlMemberInvoker.UnknownInvoker;
                 }
+
                 return _reflector.Invoker;
             }
         }
@@ -198,6 +200,7 @@ namespace System.Xaml
                 {
                     _isNameValid = XamlName.IsValidXamlName(_name) ? ThreeValuedBool.True : ThreeValuedBool.False;
                 }
+
                 return _isNameValid == ThreeValuedBool.True;
             }
         }
@@ -211,6 +214,7 @@ namespace System.Xaml
                 {
                     return namespaces[0];
                 }
+
                 return null;
             }
         }
@@ -223,6 +227,7 @@ namespace System.Xaml
                 {
                     return _declaringType;
                 }
+
                 EnsureReflector();
                 if (_reflector.TargetType is null)
                 {
@@ -230,8 +235,10 @@ namespace System.Xaml
                     {
                         return XamlLanguage.Object;
                     }
+
                     _reflector.TargetType = LookupTargetType() ?? XamlLanguage.Object;
                 }
+
                 return _reflector.TargetType;
             }
         }
@@ -245,6 +252,7 @@ namespace System.Xaml
                 {
                     _reflector.Type = LookupType() ?? XamlLanguage.Object;
                 }
+
                 return _reflector.Type;
             }
         }
@@ -258,6 +266,7 @@ namespace System.Xaml
                 {
                     _reflector.TypeConverter = LookupTypeConverter();
                 }
+
                 return _reflector.TypeConverter;
             }
         }
@@ -271,6 +280,7 @@ namespace System.Xaml
                 {
                     _reflector.ValueSerializer = LookupValueSerializer();
                 }
+
                 return _reflector.ValueSerializer;
             }
         }
@@ -284,6 +294,7 @@ namespace System.Xaml
                 {
                     _reflector.DeferringLoader = LookupDeferringLoader();
                 }
+
                 return _reflector.DeferringLoader;
             }
         }
@@ -296,6 +307,7 @@ namespace System.Xaml
                 {
                     _underlyingMember.SetIfNull(LookupUnderlyingMember());
                 }
+
                 return _underlyingMember.Value;
             }
         }
@@ -348,6 +360,7 @@ namespace System.Xaml
                 {
                     _reflector.DependsOn = LookupDependsOn() ?? XamlType.EmptyList<XamlMember>.Value;
                 }
+
                 return _reflector.DependsOn;
             }
         }
@@ -366,6 +379,7 @@ namespace System.Xaml
                 {
                     _reflector.SerializationVisibility = LookupSerializationVisibility();
                 }
+
                 return _reflector.SerializationVisibility ?? DesignerSerializationVisibility.Visible;
             }
         }
@@ -400,6 +414,7 @@ namespace System.Xaml
                 {
                     _reflector.ConstructorArgument = LookupConstructorArgument();
                 }
+
                 return _reflector.ConstructorArgument;
             }
         }
@@ -423,6 +438,7 @@ namespace System.Xaml
                 {
                     _reflector.Getter = LookupUnderlyingGetter();
                 }
+
                 return _reflector.Getter;
             }
         }
@@ -446,6 +462,7 @@ namespace System.Xaml
                 {
                     _reflector.SerializationVisibility = LookupSerializationVisibility();
                 }
+
                 return _reflector.SerializationVisibility.HasValue;
             }
         }
@@ -459,6 +476,7 @@ namespace System.Xaml
                 {
                     _reflector.Setter = LookupUnderlyingSetter();
                 }
+
                 return _reflector.Setter;
             }
         }
@@ -477,6 +495,7 @@ namespace System.Xaml
             {
                 return true;
             }
+
             MethodInfo getter = Getter;
             if (getter is not null)
             {
@@ -484,6 +503,7 @@ namespace System.Xaml
                     (MemberReflector.IsInternalVisibleTo(getter, accessingAssembly, SchemaContext) ||
                     MemberReflector.IsProtectedVisibleTo(getter, accessingType, SchemaContext));
             }
+
             return false;
         }
 
@@ -494,6 +514,7 @@ namespace System.Xaml
             {
                 return true;
             }
+
             MethodInfo setter = Setter;
             if (setter is not null)
             {
@@ -501,6 +522,7 @@ namespace System.Xaml
                     (MemberReflector.IsInternalVisibleTo(setter, accessingAssembly, SchemaContext) ||
                     MemberReflector.IsProtectedVisibleTo(setter, accessingType, SchemaContext));
             }
+
             return false;
         }
 
@@ -512,6 +534,7 @@ namespace System.Xaml
             {
                 return new XamlMemberInvoker(this);
             }
+
             return null;
         }
 
@@ -530,10 +553,12 @@ namespace System.Xaml
                     return SchemaContext.GetValueConverter<XamlDeferringLoader>(loaderTypes[0], null);
                 }
             }
+
             if (Type is not null)
             {
                 return Type.DeferringLoader;
             }
+
             return null;
         }
 
@@ -543,6 +568,7 @@ namespace System.Xaml
             {
                 return null;
             }
+
             List<string> doPropertyNames = _reflector.GetAllAttributeContents<string>(typeof(DependsOnAttribute));
             if (doPropertyNames is null || doPropertyNames.Count == 0)
             {
@@ -561,6 +587,7 @@ namespace System.Xaml
                     result.Add(member);
                 }
             }
+
             return XamlType.GetReadOnly(result);
         }
 
@@ -572,6 +599,7 @@ namespace System.Xaml
                 result = _reflector.GetAttributeValue<DesignerSerializationVisibility>(
                     typeof(DesignerSerializationVisibilityAttribute));
             }
+
             return result;
         }
 
@@ -581,6 +609,7 @@ namespace System.Xaml
             {
                 return _reflector.IsAttributePresent(typeof(AmbientAttribute));
             }
+
             return GetDefaultFlag(BoolMemberBits.Ambient);
         }
 
@@ -598,6 +627,7 @@ namespace System.Xaml
             {
                 return false;
             }
+
             return !IsWriteOnly;
         }
 
@@ -607,6 +637,7 @@ namespace System.Xaml
             {
                 return (Setter is null);
             }
+
             return GetDefaultFlag(BoolMemberBits.ReadOnly);
         }
 
@@ -616,6 +647,7 @@ namespace System.Xaml
             {
                 return _reflector.IsUnknown;
             }
+
             return UnderlyingMember is null;
         }
 
@@ -625,6 +657,7 @@ namespace System.Xaml
             {
                 return (Getter is null);
             }
+
             return GetDefaultFlag(BoolMemberBits.WriteOnly);
         }
 
@@ -637,6 +670,7 @@ namespace System.Xaml
             {
                 return false;
             }
+
             return !IsReadOnly;
         }
 
@@ -654,8 +688,10 @@ namespace System.Xaml
                         return SchemaContext.GetXamlType(result);
                     }
                 }
+
                 return XamlLanguage.Object;
             }
+
             return _declaringType;
         }
 
@@ -670,6 +706,7 @@ namespace System.Xaml
                     result = SchemaContext.GetValueConverter<TypeConverter>(converterType, null);
                 }
             }
+
             if (result is null && Type is not null)
             {
                 result = Type.TypeConverter;
@@ -689,10 +726,12 @@ namespace System.Xaml
                     result = SchemaContext.GetValueConverter<ValueSerializer>(converterType, null);
                 }
             }
+
             if (result is null && Type is not null)
             {
                 result = Type.ValueSerializer;
             }
+
             return result;
         }
 
@@ -711,6 +750,7 @@ namespace System.Xaml
                     _reflector.MarkupExtensionBracketCharactersArgument = bracketCharactersList;
                 }
             }
+
             return _reflector.MarkupExtensionBracketCharactersArgument;
         }
 
@@ -729,6 +769,7 @@ namespace System.Xaml
             {
                 return _reflector.Getter;
             }
+
             PropertyInfo pi = UnderlyingMember as PropertyInfo;
             return (pi is not null) ? pi.GetGetMethod(true) : null;
         }
@@ -742,6 +783,7 @@ namespace System.Xaml
             {
                 return _reflector.Setter;
             }
+
             PropertyInfo pi = UnderlyingMember as PropertyInfo;
             if (pi is not null)
             {
@@ -774,6 +816,7 @@ namespace System.Xaml
                     result = LookupIsReadPublic();
                     _reflector.SetFlag(BoolMemberBits.ReadPublic, result.Value);
                 }
+
                 return result.Value;
             }
         }
@@ -789,6 +832,7 @@ namespace System.Xaml
                     result = LookupIsWritePublic();
                     _reflector.SetFlag(BoolMemberBits.WritePublic, result.Value);
                 }
+
                 return result.Value;
             }
         }
@@ -799,6 +843,7 @@ namespace System.Xaml
             {
                 return;
             }
+
             if ((method.GetParameters().Length != 1) || (method.ReturnType == typeof(void)))
             {
                 throw new ArgumentException(SR.IncorrectGetterParamNum, argumentName);
@@ -836,8 +881,10 @@ namespace System.Xaml
                         // _underlyingMember is initialized, so it's safe to access the field directly below.
                         _reflector.UnderlyingMember = UnderlyingMember;
                     }
+
                     _reflector.SetCustomAttributeProviderVolatile(attrProvider);
                 }
+
                 return _reflector.CustomAttributeProvider is not null || UnderlyingMemberInternal.Value is not null;
             }
         }
@@ -875,6 +922,7 @@ namespace System.Xaml
                         defaultValueAttrib = (DefaultValueAttribute)attribs[0];
                     }
                 }
+
                 if (defaultValueAttrib is not null)
                 {
                     _reflector.DefaultValue = defaultValueAttrib.Value;
@@ -904,6 +952,7 @@ namespace System.Xaml
                 result = LookupBooleanValue(flagBit);
                 _reflector.SetFlag(flagBit, result.Value);
             }
+
             return result.Value;
         }
 
@@ -935,6 +984,7 @@ namespace System.Xaml
                     result = GetDefaultFlag(flag);
                     break;
             }
+
             return result;
         }
 
@@ -945,6 +995,7 @@ namespace System.Xaml
             {
                 result = _reflector.GetAttributeString(typeof(ConstructorArgumentAttribute), out _);
             }
+
             return result;
         }
 
@@ -956,11 +1007,13 @@ namespace System.Xaml
             {
                 return pi.PropertyType;
             }
+
             EventInfo ei = underlyingMember as EventInfo;
             if (ei is not null)
             {
                 return ei.EventHandlerType;
             }
+
             MethodInfo mi = underlyingMember as MethodInfo;
             if (mi is not null)
             {
@@ -968,12 +1021,14 @@ namespace System.Xaml
                 {
                     return mi.ReturnType;
                 }
+
                 ParameterInfo[] parameters = mi.GetParameters();
                 if (parameters.Length == 2)
                 {
                     return parameters[1].ParameterType;
                 }
             }
+
             return null;
         }
 
@@ -1002,14 +1057,17 @@ namespace System.Xaml
             {
                 return true;
             }
+
             if (xamlMember1 is null || xamlMember2 is null)
             {
                 return false;
             }
+
             if (xamlMember1._memberType != xamlMember2._memberType || xamlMember1.Name != xamlMember2.Name)
             {
                 return false;
             }
+
             if (xamlMember1.IsDirective)
             {
                 Debug.Assert(xamlMember2.IsDirective);

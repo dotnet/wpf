@@ -93,7 +93,6 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-
         // FxCop says this is not called
         //public bool IsXamlNsDefinition
         //{
@@ -127,6 +126,7 @@ namespace MS.Internal.Xaml.Parser
                     : $"{Name.OwnerName}.{Name.Name}";
                 return true;
             }
+
             // case where:  xmlns="ValueUri"
             if (String.IsNullOrEmpty(Name.Prefix) && KS.Eq(Name.Name, KnownStrings.XmlNsPrefix))
             {
@@ -134,6 +134,7 @@ namespace MS.Internal.Xaml.Parser
                 definingPrefix = string.Empty;
                 return true;
             }
+
             return false;
         }
 
@@ -158,6 +159,7 @@ namespace MS.Internal.Xaml.Parser
                 {
                     unknownProperty = new XamlMember(propName.Name, tagType, false);
                 }
+
                 return unknownProperty;
             }
 

@@ -28,6 +28,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 _ignoreCanConvert = settings.IgnoreCanConvert;
             }
+
             _isWriter = isWriter;
         }
 
@@ -37,6 +38,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 return e.InnerException;
             }
+
             return e;
         }
 
@@ -46,6 +48,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 throw CreateException(SR.Format(SR.CannotCreateBadType, xamlType.Name));
             }
+
             try
             {
                 return CreateInstanceWithCtor(xamlType, args);
@@ -60,6 +63,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.ConstructorInvocation, xamlType.UnderlyingType), UnwrapTargetInvocationException(ex));
             }
         }
@@ -76,6 +80,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 throw CreateException((SR.Format(SR.CannotResolveTypeForFactoryMethod, xamlType, methodName)));
             }
+
             object instance = null;
             try
             {
@@ -97,6 +102,7 @@ namespace MS.Internal.Xaml.Runtime
                 string qMethodName = $"{type}.{methodName}";
                 throw CreateException(SR.Format(SR.FactoryReturnedNull, qMethodName));
             }
+
             return instance;
         }
 
@@ -113,6 +119,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 factory = type.GetMethod(methodName, flags, null, Type.EmptyTypes, null);
             }
+
             if (factory is null)
             {
                 // We go down this path even if there are no args, because we might match a params array
@@ -123,9 +130,11 @@ namespace MS.Internal.Xaml.Runtime
                     methods = new MethodBase[members.Length];
                     Array.Copy(members, methods, members.Length);
                 }
+
                 // This method throws if it can't find a match, so factory will never be null
                 factory = (MethodInfo)BindToMethod(flags, methods, args);
             }
+
             return factory;
         }
 
@@ -162,6 +171,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.TypeConverterFailed2, instance, typeof(string)), ex);
             }
         }
@@ -178,6 +188,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.CanConvertFromFailed, typeof(T), converter.GetType()), ex);
             }
         }
@@ -194,6 +205,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.CanConvertToFailed, type, converter.GetType()), ex);
             }
         }
@@ -210,6 +222,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.TypeConverterFailed2, instance, typeof(string)), ex);
             }
         }
@@ -226,6 +239,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.TypeConverterFailed2, instance, typeof(T)), ex);
             }
         }
@@ -261,8 +275,10 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.GetValue, property), UnwrapTargetInvocationException(e));
             }
+
             return value;
         }
 
@@ -279,6 +295,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     return;
                 }
+
                 SetValue(property, inst, value);
             }
             catch(Exception e)
@@ -287,6 +304,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.SetValue, property), UnwrapTargetInvocationException(e));
             }
         }
@@ -308,6 +326,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.AddCollection, collectionType), UnwrapTargetInvocationException(e));
             }
         }
@@ -324,6 +343,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.AddDictionary, dictionaryType), UnwrapTargetInvocationException(e));
             }
         }
@@ -346,8 +366,10 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.GetItemsException, collectionType), ex);
             }
+
             return result;
         }
 
@@ -391,6 +413,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.GetItemsException, dictionaryType), ex);
             }
         }
@@ -407,6 +430,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.APSException, instance));
             }
         }
@@ -422,6 +446,7 @@ namespace MS.Internal.Xaml.Runtime
                     result = new KeyValuePair<AttachableMemberIdentifier, object>[count];
                     AttachablePropertyServices.CopyPropertiesTo(instance, result, 0);
                 }
+
                 return result;
             }
             catch (Exception ex)
@@ -430,6 +455,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.APSException, instance));
             }
         }
@@ -450,6 +476,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.SetConnectionId, e);
             }
         }
@@ -477,6 +504,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.InitializationGuard, xamlType), e);
             }
         }
@@ -494,6 +522,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.ProvideValue, me.GetType()), e);
             }
         }
@@ -514,6 +543,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.AddDictionary, xamlType), e);
             }
         }
@@ -534,6 +564,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 throw new XamlInternalException(SR.Format(SR.XmlValueNotReader, property.Name));
             }
+
             try
             {
                 iXmlSerial.ReadXml(reader);
@@ -544,6 +575,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.SetXmlInstance, property), e);
             }
         }
@@ -564,6 +596,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw new XamlObjectWriterException(SR.Format(SR.DeferringLoaderInstanceNull, deferringLoader));
                 }
+
                 return converter.Load(deferredContent, serviceContext);
             }
             catch (Exception e)
@@ -574,10 +607,12 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     indexingReader.CurrentIndex = -1;
                 }
+
                 if (CriticalExceptions.IsCriticalException(e) || e is XamlException)
                 {
                     throw;
                 }
+
                 throw CreateException(SR.DeferredLoad, e);
             }
         }
@@ -593,6 +628,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw new XamlObjectWriterException(SR.Format(SR.DeferringLoaderInstanceNull, deferringLoader));
                 }
+
                 return converter.Save(value, serviceContext);
             }
             catch (Exception e)
@@ -601,6 +637,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.DeferredSave, e);
             }
         }
@@ -617,6 +654,7 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.ShouldSerializeFailed, member));
             }
         }
@@ -682,6 +720,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 ex = new XamlObjectReaderException(message, innerException);
             }
+
             return (LineInfo is not null) ? LineInfo.WithLineInfo(ex) : ex;
         }
 
@@ -698,12 +737,15 @@ namespace MS.Internal.Xaml.Runtime
                 {
                     throw;
                 }
+
                 throw CreateException(SR.Format(SR.GetItemsException, collectionType), UnwrapTargetInvocationException(ex));
             }
+
             if (result is null)
             {
                 throw CreateException(SR.Format(SR.GetItemsReturnedNull, collectionType));
             }
+
             return result;
         }
 

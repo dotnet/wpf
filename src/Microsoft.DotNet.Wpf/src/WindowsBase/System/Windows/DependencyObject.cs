@@ -1089,7 +1089,7 @@ namespace System.Windows
                     entryIndex,
                     dp,
                     metadata,
-                    new EffectiveValueEntry() /* oldEntry */,
+                    oldEntry: new EffectiveValueEntry(),
                     ref newEntry,
                     coerceWithDeferredReference: false,
                     coerceWithCurrentValue: false,
@@ -1186,7 +1186,7 @@ namespace System.Windows
                     LookupEntry(dp.GlobalIndex),
                     dp,
                     dp.GetMetadata(DependencyObjectType),
-                    new EffectiveValueEntry() /* oldEntry */,
+                    oldEntry: new EffectiveValueEntry(),
                     ref newEntry,
                     coerceWithDeferredReference: false,
                     coerceWithCurrentValue: false,
@@ -3049,7 +3049,7 @@ namespace System.Windows
 
             if (iHi <= 0)
             {
-                return new EntryIndex(0, false /* Found */);
+                return new EntryIndex(0, found: false);
             }
 
             // Do a binary search to find the value
@@ -3091,7 +3091,7 @@ namespace System.Windows
             }
             while (iLo < iHi);
 
-            return new EntryIndex(iLo, false /* Found */);
+            return new EntryIndex(iLo, found: false);
         }
 
         // insert the given entry at the given index

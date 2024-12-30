@@ -807,7 +807,7 @@ namespace System.IO.Packaging
                 targetInstance.transformPrimaryStream =
                     new DirtyStateTrackingStream (new MemoryStream
                             (Array.Empty<byte>(), 
-                            false /* Not writable */));
+                            writable: false));
             }
             else
             {
@@ -1353,7 +1353,7 @@ namespace System.IO.Packaging
                                 //  NOTE: Building MemoryStream directly on top of
                                 //  instanceData byte array because we want it to be
                                 //  NOT resizable and NOT writable.                    
-                                instanceDataStream = new MemoryStream(instanceData, false /* Not writable */);
+                                instanceDataStream = new MemoryStream(instanceData, writable: false);
                             }
                             else
                             {

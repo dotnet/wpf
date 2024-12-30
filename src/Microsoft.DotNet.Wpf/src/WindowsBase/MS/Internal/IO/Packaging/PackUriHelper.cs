@@ -575,9 +575,9 @@ namespace MS.Internal.IO.Packaging
             //need to use the private constructor to initialize this particular partUri as we need this in the 
             //IsRelationshipPartUri, that is called from the constructor.
             private static readonly Uri   _containerRelationshipNormalizedPartUri = new ValidatedPartUri("/_RELS/.RELS", 
-                                                                                                         true /*isnormalized*/, 
-                                                                                                         false /*computeIsRelationship*/,
-                                                                                                         true /*IsRelationship*/);
+                                                                                                         isNormalized: true,
+                                                                                                         computeIsRelationship: false,
+                                                                                                         isRelationshipPartUri: true);
 
             private static ReadOnlySpan<char> ForwardSlashSeparator => ['/'];
 

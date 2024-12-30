@@ -57,6 +57,7 @@ namespace System.Xaml
                 List<Assembly> listOfAssemblies = new List<Assembly>(referenceAssemblies);
                 _referenceAssemblies = new ReadOnlyCollection<Assembly>(listOfAssemblies);
             }
+
             _settings = (settings is not null)
                 ? new XamlSchemaContextSettings(settings)
                 : new XamlSchemaContextSettings();
@@ -117,10 +118,12 @@ namespace System.Xaml
                             result.Add(ns.Key);
                         }
                     }
+
                     result = new ReadOnlyCollection<string>(result);
                     _nonClrNamespaces = result;
                 }
             }
+
             return result;
         }
 
@@ -140,6 +143,7 @@ namespace System.Xaml
             {
                 InitializePreferredPrefixes();
             }
+
             string result;
             if (!_preferredPrefixes.TryGetValue(xmlns, out result))
             {
@@ -159,8 +163,10 @@ namespace System.Xaml
                         result = KnownStrings.DefaultPrefix;
                     }
                 }
+
                 result = TryAdd(_preferredPrefixes, xmlns, result);
             }
+
             return result;
         }
 
@@ -170,6 +176,7 @@ namespace System.Xaml
             {
                 return KnownStrings.LocalPrefix;
             }
+
             var sb = new StringBuilder();
             foreach (string segment in clrNs.Split('.'))
             {
@@ -178,6 +185,7 @@ namespace System.Xaml
                     sb.Append(Char.ToLower(segment[0], TypeConverterHelper.InvariantEnglishUS));
                 }
             }
+
             if (sb.Length > 0)
             {
                 string result = sb.ToString();
@@ -214,6 +222,7 @@ namespace System.Xaml
                 {
                     UpdatePreferredPrefixes(nsInfo, preferredPrefixes);
                 }
+
                 _preferredPrefixes = preferredPrefixes;
             }
         }
@@ -228,6 +237,7 @@ namespace System.Xaml
                 {
                     existingPrefix = TryAdd(prefixDict, nsToPrefix.Key, preferredPrefix);
                 }
+
                 while (existingPrefix != preferredPrefix)
                 {
                     preferredPrefix = XmlNsInfo.GetPreferredPrefix(existingPrefix, preferredPrefix);
@@ -256,6 +266,7 @@ namespace System.Xaml
             {
                 return XamlLanguage.LookupXmlDirective(name);
             }
+
             return null;
         }
 
@@ -266,6 +277,7 @@ namespace System.Xaml
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "xamlTypeName.Name"), nameof(xamlTypeName));
             }
+
             if (xamlTypeName.Namespace is null)
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "xamlTypeName.Namespace"), nameof(xamlTypeName));
@@ -281,6 +293,7 @@ namespace System.Xaml
                     {
                         throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "xamlTypeName.TypeArguments"));
                     }
+
                     typeArgs[i] = GetXamlType(xamlTypeName.TypeArguments[i]);
                     if (typeArgs[i] is null)
                     {
@@ -288,6 +301,7 @@ namespace System.Xaml
                     }
                 }
             }
+
             return GetXamlType(xamlTypeName.Namespace, xamlTypeName.Name, typeArgs);
         }
 
@@ -303,6 +317,7 @@ namespace System.Xaml
                     {
                         throw new ArgumentException(SR.Format(SR.CollectionCannotContainNulls, "typeArguments"));
                     }
+
                     if (typeArg.UnderlyingType is null)
                     {
                         return null;
@@ -322,6 +337,7 @@ namespace System.Xaml
                         // has FullyQualifyAssemblyNamesInClrNamespaces set to false
                         result = GetXamlType(result.UnderlyingType);
                     }
+
                     return result;
                 }
             }
@@ -417,6 +433,7 @@ namespace System.Xaml
                     {
                         continue;
                     }
+
                     IDictionary<string, string> oldToNewNs = null;
 
                     // When trawling the entire AppDomain, suppress exceptions from assemblies with bad attributes
@@ -432,6 +449,7 @@ namespace System.Xaml
                             {
                                 throw;
                             }
+
                             // just skip to the next assembly
                             continue;
                         }
@@ -449,11 +467,13 @@ namespace System.Xaml
                             throw new XamlSchemaException(SR.Format(SR.DuplicateXmlnsCompatAcrossAssemblies,
                                 resultAssembly.FullName, curAssembly.FullName, oldNs));
                         }
+
                         result = newNs;
                         resultAssembly = curAssembly;
                     }
                 }
             }
+
             return result;
         }
 
@@ -533,6 +553,7 @@ namespace System.Xaml
                 xamlType = new XamlType(alias, type, this, null, null);
                 xamlType = TryAdd(MasterTypeList, type, xamlType);
             }
+
             return xamlType;
         }
 
@@ -599,6 +620,7 @@ namespace System.Xaml
                 result = new XamlValueConverter<TConverterBase>(converterType, targetType);
                 result = TryAdd(MasterValueConverterList, key, result);
             }
+
             return (XamlValueConverter<TConverterBase>)result;
         }
 
@@ -611,6 +633,7 @@ namespace System.Xaml
                 member = new XamlMember(pi, this);
                 member = TryAdd(MasterMemberList, xpik, member);
             }
+
             return member;
         }
 
@@ -623,6 +646,7 @@ namespace System.Xaml
                 member = new XamlMember(ei, this);
                 member = TryAdd(MasterMemberList, xpik, member);
             }
+
             return member;
         }
 
@@ -636,6 +660,7 @@ namespace System.Xaml
                 property = new XamlMember(name, getter, setter, this);
                 property = TryAdd(MasterMemberList, xpik, property);
             }
+
             return property;
         }
 
@@ -648,6 +673,7 @@ namespace System.Xaml
                 property = new XamlMember(name, adder, this);
                 property = TryAdd(MasterMemberList, xpik, property);
             }
+
             return property;
         }
 
@@ -741,6 +767,7 @@ namespace System.Xaml
                 {
                     Interlocked.CompareExchange(ref _xmlnsInfoForUnreferencedAssemblies, CreateDictionary<Assembly, XmlNsInfo>(ReferenceEqualityComparer.Instance), null);
                 }
+
                 return _xmlnsInfoForUnreferencedAssemblies;
             }
         }
@@ -751,12 +778,14 @@ namespace System.Xaml
             {
                 return true;
             }
+
             XmlNsInfo nsInfo = GetXmlNsInfo(fromAssembly);
             ICollection<AssemblyName> friends = nsInfo.InternalsVisibleTo;
             if (friends.Count == 0)
             {
                 return false;
             }
+
             // Not using Assembly.GetName() because it doesn't work in partial-trust
             AssemblyName toAssemblyName = new AssemblyName(toAssembly.FullName);
             foreach (AssemblyName friend in friends)
@@ -769,10 +798,12 @@ namespace System.Xaml
                         // InternalsVisibleToAttribute doesn't specify a public key, so don't check it
                         return true;
                     }
+
                     byte[] actualToken = toAssemblyName.GetPublicKeyToken();
                     return SafeSecurityHelper.IsSameKeyToken(expectedToken, actualToken);
                 }
             }
+
             return false;
         }
 
@@ -815,6 +846,7 @@ namespace System.Xaml
                     }
                 }
             }
+
             lock (_syncExaminingAssemblies)
             {
                 if (_xmlnsInfoForDynamicAssemblies is not null)
@@ -833,6 +865,7 @@ namespace System.Xaml
                     }
                 }
             }
+
             if (foundLiveDynamicAssemblies)
             {
                 RegisterAssemblyCleanup();
@@ -873,6 +906,7 @@ namespace System.Xaml
             {
                 yield return result;
             }
+
             foreach (XmlNsInfo result in XmlnsInfoForDynamicAssemblies.Values)
             {
                 yield return result;
@@ -928,6 +962,7 @@ namespace System.Xaml
                 // unresolved namespace
                 xamlNamespace = new XamlNamespace(this);
             }
+
             xamlNamespace = TryAdd(NamespaceByUriList, xmlns, xamlNamespace);
             return xamlNamespace;
         }
@@ -1016,6 +1051,7 @@ namespace System.Xaml
                 result = list.AsReadOnly();
                 TryAdd(assemblyMappings, clrNs, result);
             }
+
             return (ReadOnlyCollection<string>)result;
         }
 
@@ -1024,7 +1060,6 @@ namespace System.Xaml
             _syncAccessingUnexaminedAssemblies = new Object();
             if (ReferenceAssemblies is null)
             {
-
                 _assemblyLoadHandler = new AssemblyLoadHandler(this);
                 _assemblyLoadHandler.Hook();
                 lock (_syncAccessingUnexaminedAssemblies)
@@ -1040,6 +1075,7 @@ namespace System.Xaml
                             foundDynamic = true;
                         }
                     }
+
                     if (foundDynamic)
                     {
                         // Ensure we clean up the cache if dynamic assemblies are collected
@@ -1095,6 +1131,7 @@ namespace System.Xaml
                         // The assembly is a collectible dynamic assembly, and has been GC'ed. Ignore it.
                         continue;
                     }
+
                     XmlNsInfo nsInfo = GetXmlNsInfo(assembly);
                     bool foundNewInThisAssembly = false;
                     try
@@ -1119,6 +1156,7 @@ namespace System.Xaml
                                     _unexaminedAssemblies.Add(unexaminedAssembliesCopy[j]);
                                 }
                             }
+
                             throw;
                         }
                     }
@@ -1140,6 +1178,7 @@ namespace System.Xaml
             {
                 UpdatePreferredPrefixes(nsInfo, _preferredPrefixes);
             }
+
             return foundNew;
         }
 
@@ -1156,6 +1195,7 @@ namespace System.Xaml
                 ns.AddAssemblyNamespacePair(pair);
                 foundNew = true;
             }
+
             return foundNew;
         }
 
@@ -1219,6 +1259,7 @@ namespace System.Xaml
             {
                 return null;
             }
+
             if (_referenceAssemblies is not null)
             {
                 return ResolveReferenceAssembly(assemblyName);
@@ -1237,6 +1278,7 @@ namespace System.Xaml
                 AssemblyName[] asmNames = new AssemblyName[_referenceAssemblies.Count];
                 Interlocked.CompareExchange(ref _referenceAssemblyNames, asmNames, null);
             }
+
             for (int i = 0; i < _referenceAssemblies.Count; i++)
             {
                 AssemblyName refAsmName = _referenceAssemblyNames[i];
@@ -1246,11 +1288,13 @@ namespace System.Xaml
                     // That's okay; we're inserting identical data, so duplicate writes are harmless.
                     _referenceAssemblyNames[i] = new AssemblyName(_referenceAssemblies[i].FullName);
                 }
+
                 if (AssemblySatisfiesReference(_referenceAssemblyNames[i], parsedAsmName))
                 {
                     return _referenceAssemblies[i];
                 }
             }
+
             return null;
         }
 
@@ -1260,14 +1304,17 @@ namespace System.Xaml
             {
                 return false;
             }
+
             if (reference.Version is not null && !reference.Version.Equals(assemblyName.Version))
             {
                 return false;
             }
+
             if (reference.CultureInfo is not null && !reference.CultureInfo.Equals(assemblyName.CultureInfo))
             {
                 return false;
             }
+
             byte[] requiredToken = reference.GetPublicKeyToken();
             if (requiredToken is not null)
             {
@@ -1277,6 +1324,7 @@ namespace System.Xaml
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -1310,12 +1358,14 @@ namespace System.Xaml
                         {
                             throw;
                         }
+
                         // Version tolerance: fall back to the short name (+ public key, if specified)
                         AssemblyName shortName = new AssemblyName(parsedAsmName.Name);
                         if (publicKeyToken is not null)
                         {
                             shortName.SetPublicKeyToken(publicKeyToken);
                         }
+
                         return Assembly.Load(shortName);
                     }
                 }
@@ -1331,6 +1381,7 @@ namespace System.Xaml
                 {
                     throw;
                 }
+
                 // We don't want to throw if the assembly can't be found, we just treat it as unresolved
                 return null;
             }
@@ -1411,6 +1462,7 @@ namespace System.Xaml
                         return true;
                     }
                 }
+
                 return false;
             }
 

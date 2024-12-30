@@ -156,9 +156,9 @@ namespace MS.Internal.Xaml
                     throw new ArgumentException(SR.Format(SR.ValueInArrayIsNull, "types"));
                 }
             }
+
             return _xamlContext.ServiceProvider_GetFirstAmbientValue(types);
         }
-
 
         IEnumerable<AmbientPropertyValue> IAmbientProvider.GetAllAmbientValues(
                                                     IEnumerable<XamlType> ceilingTypes,
@@ -286,6 +286,7 @@ namespace MS.Internal.Xaml
             {
                 return null;
             }
+
             var token = new NameFixupToken();
             token.CanAssignDirectly = canAssignDirectly;
             token.NeededNames.AddRange(names);
@@ -360,7 +361,6 @@ namespace MS.Internal.Xaml
             return token;
         }
 
-
         IEnumerable<KeyValuePair<string, object>> IXamlNameResolver.GetAllNamesAndValuesInScope()
         {
             return _xamlContext.GetAllNamesAndValuesInScope();
@@ -374,7 +374,6 @@ namespace MS.Internal.Xaml
             }
             remove
             {
-
                 _xamlContext.RemoveNameScopeInitializationCompleteSubscriber(value);
             }
         }

@@ -47,10 +47,12 @@ namespace MS.Internal.Xaml.Context
                     {
                         _currentFrame = newFrame;
                     }
+
                     if (lastFrameInNewStack is not null)
                     {
                         lastFrameInNewStack.Previous = newFrame;
                     }
+
                     lastFrameInNewStack = newFrame;
                     iteratorFrame = (T)iteratorFrame.Previous;
                 }
@@ -88,6 +90,7 @@ namespace MS.Internal.Xaml.Context
             {
                 iteratorFrame = (T)iteratorFrame.Previous;
             }
+
             return iteratorFrame;
         }
 
@@ -106,6 +109,7 @@ namespace MS.Internal.Xaml.Context
                 _recycledFrame = (T)_recycledFrame.Previous;
                 _currentFrame.Previous = lastFrame;
             }
+
             _depth++;
             Debug.Assert(CurrentFrame.Depth == Depth);
         }

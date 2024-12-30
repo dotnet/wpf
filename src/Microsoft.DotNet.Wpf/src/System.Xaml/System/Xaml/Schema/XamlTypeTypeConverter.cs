@@ -60,6 +60,7 @@ namespace System.Xaml.Schema
             {
                 return null;
             }
+
             XamlTypeName typeName = new XamlTypeName(xamlType);
             return typeName.ToString(prefixLookup);
         }
@@ -71,16 +72,19 @@ namespace System.Xaml.Schema
             {
                 return null;
             }
+
             XamlTypeName xamlTypeName = XamlTypeName.Parse(typeName, namespaceResolver);
             var schemaContextProvider = GetService<IXamlSchemaContextProvider>(context);
             if (schemaContextProvider is null)
             {
                 return null;
             }
+
             if (schemaContextProvider.SchemaContext is null)
             {
                 return null;
             }
+
             return GetXamlTypeOrUnknown(schemaContextProvider.SchemaContext, xamlTypeName);
         }
 
@@ -96,6 +100,7 @@ namespace System.Xaml.Schema
             {
                 return result;
             }
+
             XamlType[] typeArgs = null;
             if (typeName.HasTypeArgs)
             {
@@ -105,6 +110,7 @@ namespace System.Xaml.Schema
                     typeArgs[i] = GetXamlTypeOrUnknown(schemaContext, typeName.TypeArguments[i]);
                 }
             }
+
             result = new XamlType(typeName.Namespace, typeName.Name, typeArgs, schemaContext);
             return result;
         }

@@ -311,29 +311,17 @@ dotnet_diagnostic.SA1121.severity = suggestion
 # SA1129: Do not use default value type constructor
 dotnet_diagnostic.SA1129.severity = suggestion
 
-# SA1206: Keyword ordering
-dotnet_diagnostic.SA1206.severity = suggestion
+# SA1131: Constant values should appear on the right-hand side of comparisons
+dotnet_diagnostic.SA1131.severity = suggestion
 
 # SA1400: Member should declare an access modifier
 dotnet_diagnostic.SA1400.severity = suggestion
 
-# SA1500: Braces for multi-line statements should not share line
-dotnet_diagnostic.SA1500.severity = suggestion
+# SA1404: Code analysis suppression should have justification
+dotnet_diagnostic.SA1404.severity = suggestion
 
-# SA1505: An opening brace should not be followed by a blank line
-dotnet_diagnostic.SA1505.severity = suggestion
-
-# SA1507: Code should not contain multiple blank lines in a row
-dotnet_diagnostic.SA1507.severity = suggestion
-
-# SA1508: A closing brace should not be preceded by a blank line
-dotnet_diagnostic.SA1508.severity = suggestion
-
-# SA1513: Closing brace should be followed by blank line
-dotnet_diagnostic.SA1513.severity = suggestion
-
-# SA1518: Code should not contain blank lines at the end of the file
-dotnet_diagnostic.SA1518.severity = suggestion
+# SA1408: Conditional expressions should declare precedence
+dotnet_diagnostic.SA1408.severity = suggestion
 
 # SYSLIB1045: Convert to 'GeneratedRegexAttribute'.
 dotnet_diagnostic.SYSLIB1045.severity = suggestion

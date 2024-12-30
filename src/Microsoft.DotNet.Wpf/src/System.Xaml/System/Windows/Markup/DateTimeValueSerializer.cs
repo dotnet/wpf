@@ -44,6 +44,7 @@ namespace System.Windows.Markup
             {
                 throw GetConvertFromException(value);
             }
+
             if (value.Length == 0)
             {
                 return DateTime.MinValue;
@@ -58,7 +59,6 @@ namespace System.Windows.Markup
                       | DateTimeStyles.AllowTrailingWhite;
             return DateTime.Parse(value, dateTimeFormatInfo, DateTimeStyles);
         }
-
 
         /// <summary>
         /// Converts the given value object to a <see cref="T:System.DateTime"></see> using the arguments.

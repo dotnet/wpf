@@ -129,7 +129,8 @@ namespace System.Windows.Markup
                 }
 
                 currentType = currentType.BaseType;
-            } while(currentType is not null);
+            }
+            while(currentType is not null);
 
             currentType = type;
             do
@@ -142,7 +143,8 @@ namespace System.Windows.Markup
                 }
 
                 currentType = currentType.BaseType;
-            } while(currentType is not null);
+            }
+            while(currentType is not null);
 
             value = null;
             return false;

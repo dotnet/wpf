@@ -15,7 +15,6 @@ using MS.Internal.Xaml.Parser;
 using MS.Internal.Xaml.Runtime;
 using XAML3 = System.Windows.Markup;
 
-
 namespace System.Xaml
 {
     public class XamlObjectWriter : XamlWriter, IXamlLineInfoConsumer, IAddLineInfo, ICheckIfInitialized
@@ -63,6 +62,7 @@ namespace System.Xaml
             {
                 throw new ArgumentException(SR.SavedContextSchemaContextNull, nameof(savedContext));
             }
+
             Initialize(savedContext.SchemaContext, savedContext, settings);
         }
 
@@ -109,6 +109,7 @@ namespace System.Xaml
             {
                 throw _context.WithLineInfo(new XamlInternalException());
             }
+
             _context.IsInitializedCallback = this;
 
             _deferringWriter = new DeferringWriter(_context);
@@ -127,10 +128,12 @@ namespace System.Xaml
                     result = new PartialTrustTolerantRuntime(runtimeSettings, settings.AccessLevel, schemaContext);
                 }
             }
+
             if (result is null)
             {
                 result = new ClrObjectRuntime(runtimeSettings, true /*isWriter*/);
             }
+
             result.LineInfo = this;
             return result;
         }
@@ -181,6 +184,7 @@ namespace System.Xaml
                 _xamlSetValueHandler(eventSender, e);
                 return e.Handled;
             }
+
             return false;
         }
 
@@ -192,6 +196,7 @@ namespace System.Xaml
                 {
                     _nameFixupGraph = new NameFixupGraph();
                 }
+
                 return _nameFixupGraph;
             }
         }
@@ -202,6 +207,7 @@ namespace System.Xaml
             {
                 return false;
             }
+
             return _nameFixupGraph.HasUnresolvedChildren(parent);
         }
 
@@ -259,6 +265,7 @@ namespace System.Xaml
                 string err = SR.ValueMustBeFollowedByEndMember;
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
+
             XamlMember parentProperty = (_context.CurrentType is null && _context.Depth > 1)
                 ? _context.ParentProperty
                 : _context.CurrentProperty;  // there is a push frame below making this the parent property.
@@ -328,6 +335,7 @@ namespace System.Xaml
                 string err = SR.ValueMustBeFollowedByEndMember;
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
+
             if (xamlType.IsUnknown)
             {
                 string err = SR.Format(SR.CantCreateUnknownType, xamlType.GetQualifiedName());
@@ -368,14 +376,15 @@ namespace System.Xaml
                     throw new XamlParseException(SR.Format(SR.CantAssignRootInstance,
                         rootType.GetQualifiedName(), xamlType.GetQualifiedName()));
                 }
+
                 _context.CurrentInstance = _rootObjectInstance;
                 if (_context.CurrentType.IsCollection || _context.CurrentType.IsDictionary)
                 {
                     _context.CurrentCollection = _rootObjectInstance;
                 }
+
                 Logic_BeginInit(_context);
             }
-
         }
 
         public override void WriteEndObject()
@@ -394,6 +403,7 @@ namespace System.Xaml
                     _context.PushScope();
                     _context.CurrentInstance = (XamlReader)templateList.GetReader();
                 }
+
                 return;
             }
 
@@ -404,11 +414,13 @@ namespace System.Xaml
                 string err = SR.ValueMustBeFollowedByEndMember;
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
+
             if (_context.CurrentType is null)
             {
                 string err = SR.NoTypeInCurrentFrame_EO;
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
+
             if (_context.CurrentProperty is not null)
             {
                 string err = SR.Format(SR.OpenPropertyInCurrentFrame_EO, _context.CurrentType.ToString(),
@@ -457,8 +469,10 @@ namespace System.Xaml
                             {
                                 TriggerNameResolution(instance, _context.CurrentInstanceRegisteredName);
                             }
+
                             _context.CurrentInstanceRegisteredName = null;
                         }
+
                         instance = _context.CurrentInstance;
                         isFixupToken = instance is NameFixupToken;
                         hasUnresolvedChildren = !isFixupToken && HasUnresolvedChildren(instance);
@@ -509,6 +523,7 @@ namespace System.Xaml
                                             _context.ParentType));
                 }
             }
+
             _lastInstance = _context.CurrentInstance;
             string name = _context.CurrentInstanceRegisteredName;
 
@@ -639,6 +654,7 @@ namespace System.Xaml
                     {
                         throw _context.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.SettingPropertiesIsNotAllowed, property.Name)));
                     }
+
                     // We don't allow attachable properties either, if the the Type Converter returned
                     // a NameFixupToken. We could consider allowing this in the future by storing the
                     // APs on the token.
@@ -650,6 +666,7 @@ namespace System.Xaml
                     }
                 }
             }
+
             if (property.IsDirective && property != XamlLanguage.Items && property != XamlLanguage.PositionalParameters)
             {
                 // Creates the container for x:Arguments  (possible other future directives)  If this was
@@ -686,6 +703,7 @@ namespace System.Xaml
             {
                 property = _context.ParentProperty;
             }
+
             // In the Object value case we pop'ed and assigned the value already.
             else
             {
@@ -732,6 +750,7 @@ namespace System.Xaml
                     value = _context.CurrentInstance;
                     _context.PopScope();
                 }
+
                 Logic_ValidateXClass(_context, value);
             }
             else if (_context.CurrentType is null)
@@ -762,6 +781,7 @@ namespace System.Xaml
                             Logic_AssignProvidedValue(_context);
                             shouldSetValue = false;
                         }
+
                         // If the MarkupExtension's provided value is not assigned to the property, the MarkupExtension will be assigned directly.
                     }
                     else  // normal TC case.
@@ -782,11 +802,13 @@ namespace System.Xaml
                         }
                     }
                 }
+
                 _lastInstance = _context.CurrentInstance;
                 if (shouldSetValue)
                 {
                     Logic_DoAssignmentToParentProperty(_context);
                 }
+
                 _context.PopScope();  // Value Node Scope
             }
 
@@ -813,6 +835,7 @@ namespace System.Xaml
                     _context.PushScope();
                     _context.CurrentInstance = (XamlReader)templateList.GetReader();
                 }
+
                 return;
             }
 
@@ -876,6 +899,7 @@ namespace System.Xaml
             {
                 throw new ArgumentException(SR.NamespaceDeclarationPrefixCannotBeNull);
             }
+
             if(namespaceDeclaration.Namespace is null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationNamespaceCannotBeNull);
@@ -896,6 +920,7 @@ namespace System.Xaml
                 string err = SR.ValueMustBeFollowedByEndMember;
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
+
             if (_context.CurrentType is not null && _context.CurrentProperty is null)
             {
                 string err = SR.Format(SR.NoPropertyInCurrentFrame_NS, namespaceDeclaration.Prefix,
@@ -909,6 +934,7 @@ namespace System.Xaml
             {
                 _context.PushScope();
             }
+
             _context.AddNamespacePrefix(namespaceDeclaration.Prefix, namespaceDeclaration.Namespace);
         }
 
@@ -919,6 +945,7 @@ namespace System.Xaml
             {
                 _context.PopScope();
             }
+
             _rootNamescope = null;
             _nextNodeMustBeEndMember = false;
             _deferringWriter.Clear();
@@ -941,9 +968,11 @@ namespace System.Xaml
                             {
                                 WriteEndMember();
                             }
+
                             WriteEndObject();
                         }
                     }
+
                     _deferringWriter.Close();
                     _deferringWriter = null;
 
@@ -1047,6 +1076,7 @@ namespace System.Xaml
             {
                 throw lineInfo.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.MissingKey, instanceType.Name)));
             }
+
             object key = Runtime.GetValue(instance, keyProperty);
             return key;
         }
@@ -1059,6 +1089,7 @@ namespace System.Xaml
                 throw new InvalidOperationException(SR.Format(SR.ObjectWriterTypeNotAllowed,
                     SchemaContext.GetType(), clrType));
             }
+
             return result;
         }
 
@@ -1092,6 +1123,7 @@ namespace System.Xaml
             {
                 return true;
             }
+
             if (xamlMember == XamlLanguage.Uid)
             {
                 if (xamlType.GetAliasedProperty(XamlLanguage.Uid) is null)
@@ -1099,6 +1131,7 @@ namespace System.Xaml
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -1171,6 +1204,7 @@ namespace System.Xaml
                     throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.NotAssignableFrom, currentType.GetQualifiedName(), instType.GetQualifiedName())));
                 }
             }
+
             ctx.CurrentCtorArgs = null;
             ctx.CurrentInstance = inst;
             if (currentType.IsCollection || currentType.IsDictionary)
@@ -1246,10 +1280,12 @@ namespace System.Xaml
                 string err = SR.Format(SR.CantCreateUnknownType, xamlType.GetQualifiedName());
                 throw ctx.WithLineInfo(new XamlObjectWriterException(err));
             }
+
             if (ts is null)
             {
                 throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.InitializationSyntaxWithoutTypeConverter, xamlType.GetQualifiedName())));
             }
+
             inst = Logic_CreateFromValue(ctx, ts, value, null, xamlType.Name);
 
             // Pop off the Text Frame.
@@ -1264,6 +1300,7 @@ namespace System.Xaml
                 {
                     ctx.CurrentCollection = inst;
                 }
+
                 Logic_ApplyCurrentPreconstructionPropertyValues(ctx, true);
             }
         }
@@ -1289,6 +1326,7 @@ namespace System.Xaml
                 {
                     throw;
                 }
+
                 string err = SR.Format(SR.TypeConverterFailed, targetName, value);
                 throw lineInfo.WithLineInfo(new XamlObjectWriterException(err, ex));
             }
@@ -1337,6 +1375,7 @@ namespace System.Xaml
                 {
                     converter = grandParentXamlType.KeyType.TypeConverter;
                 }
+
                 if (converter is not null && converter.ConverterType is not null && converter != BuiltInValueConverter.String)
                 {
                     TypeConverter typeConverter = Runtime.GetConverterInstance(converter);
@@ -1370,6 +1409,7 @@ namespace System.Xaml
                 // so pass it through to be set to the property value later.
                 inst = value;
             }
+
             ctx.CurrentInstance = inst;
             return true;
         }
@@ -1394,10 +1434,12 @@ namespace System.Xaml
             {
                 return true;
             }
+
             if (ctx.GrandParentShouldNotConvertChildKeys)
             {
                 return false;
             }
+
             XamlType dictionaryType = ctx.GrandParentType;
             if (dictionaryType is not null && dictionaryType.IsDictionary &&
                 typeof(IDictionary).IsAssignableFrom(dictionaryType.UnderlyingType) &&
@@ -1405,6 +1447,7 @@ namespace System.Xaml
             {
                 return false;
             }
+
             ctx.GrandParentShouldConvertChildKeys = true;
             return true;
         }
@@ -1415,6 +1458,7 @@ namespace System.Xaml
             {
                 return false;
             }
+
             Type openGeneric = type.GetGenericTypeDefinition();
             return openGeneric == typeof(Dictionary<,>) ||
                 openGeneric == typeof(SortedDictionary<,>) ||
@@ -1677,6 +1721,7 @@ namespace System.Xaml
                     }
                 }
             }
+
             // The Service Provider Interface IProvideValueTarget requires that we can supply ProvideValue with the
             // instance of the left-hand side of the property assignment. Markup extensions that are assigned to
             // directives are allowed to have a null left-hand instance.
@@ -1710,12 +1755,14 @@ namespace System.Xaml
                 {
                     ctx.CurrentType = ctx.ParentProperty.Type;
                 }
+
                 ctx.CurrentInstance = value;
             }
             else
             {
                 ctx.CurrentInstance = value;
             }
+
             return false;
         }
 
@@ -1768,6 +1815,7 @@ namespace System.Xaml
                         // interfaces, because this is collection not a scalar property.
                         value = Runtime.CallProvideValue(me, ctx.ServiceProviderContext);
                     }
+
                     Runtime.Add(parentCollection, collectionType, value, currentType);
                 }
             }
@@ -1777,6 +1825,7 @@ namespace System.Xaml
                 {
                     currentType = value is null ? collectionType.ItemType : GetXamlType(value.GetType());
                 }
+
                 object key = ctx.CurrentKey;
                 bool keyIsSet = ctx.CurrentIsKeySet;
                 if (!Logic_PendAssignmentToParentCollection(ctx, key, keyIsSet))
@@ -1785,6 +1834,7 @@ namespace System.Xaml
                     {
                         key = GetKeyFromInstance(value, currentType, this);
                     }
+
                     Logic_AddToParentDictionary(ctx, key, value);
                 }
             }
@@ -1817,6 +1867,7 @@ namespace System.Xaml
             {
                 return true;
             }
+
             return false;
         }
 
@@ -1846,6 +1897,7 @@ namespace System.Xaml
                         {
                             throw;
                         }
+
                         if (Debugger.IsLogging())
                         {
                             Debug.WriteLine(SR.Format(SR.DictionaryFirstChanceException, ctx.ParentType, key, ctx.ParentType.KeyType));
@@ -1856,6 +1908,7 @@ namespace System.Xaml
                     // keys on this dictionary instance.
                     ctx.ParentShouldConvertChildKeys = true;
                 }
+
                 // Else, this is a deferred add, where the uncoverted key was saved earlier,
                 // before the parent's ShouldConvertChildKeys flag was set. So we skip the
                 // Add up above, and go directly to the conversion below.
@@ -1891,6 +1944,7 @@ namespace System.Xaml
             {
                 PendingCollectionAdds.TryGetValue(parentCollection, out pendingCollection);
             }
+
             if (pendingCollection is null &&
                 (keyToken is not null || valueToken is not null ||
                 HasUnresolvedChildren(key) || HasUnresolvedChildren(value)))
@@ -1902,6 +1956,7 @@ namespace System.Xaml
                 pendingCollection = new List<PendingCollectionAdd>();
                 PendingCollectionAdds.Add(parentCollection, pendingCollection);
             }
+
             if (keyToken is not null)
             {
                 // Set KeyHolder to null since the item is no longer on the stack,
@@ -1909,11 +1964,13 @@ namespace System.Xaml
                 keyToken.Target.KeyHolder = null;
                 keyToken.Target.TemporaryCollectionIndex = pendingCollection.Count;
             }
+
             if (valueToken is not null)
             {
                 Logic_PendCurrentFixupToken_SetValue(ctx, valueToken);
                 valueToken.Target.TemporaryCollectionIndex = pendingCollection.Count;
             }
+
             if (pendingCollection is not null)
             {
                 PendingCollectionAdd pendingAdd = new PendingCollectionAdd
@@ -1936,8 +1993,10 @@ namespace System.Xaml
                         PendingKeyConversionContexts.Add(parentCollection, new ObjectWriterContext(savedContext, null, null, Runtime));
                     }
                 }
+
                 return true;
             }
+
             return false;
         }
 
@@ -1959,11 +2018,13 @@ namespace System.Xaml
                     string msg = SR.Format(SR.ForwardRefDirectives, names);
                     throw ctx.WithLineInfo(new XamlObjectWriterException(msg));
                 }
+
                 if (parentProperty == XamlLanguage.PositionalParameters)
                 {
                     ctx.CurrentType = XamlLanguage.PositionalParameterDescriptor;
                     ctx.CurrentInstance = new PositionalParameterDescriptor(value, false);
                 }
+
                 Logic_DoAssignmentToParentCollection(ctx);
             }
             else
@@ -1983,6 +2044,7 @@ namespace System.Xaml
                                                 ctx.ParentProperty,
                                                 ctx.ParentType));
                     }
+
                     ctx.ParentIsPropertyValueSet = true;
                     if (value is NameFixupToken)
                     {
@@ -1996,6 +2058,7 @@ namespace System.Xaml
                                 string msg = SR.Format(SR.ForwardRefDirectives, names);
                                 throw ctx.WithLineInfo(new XamlObjectWriterException(msg));
                             }
+
                             Logic_PendKeyFixupToken(ctx, token);
                         }
                         else
@@ -2021,6 +2084,7 @@ namespace System.Xaml
                             {
                                 ctx.ParentKey = value;
                             }
+
                             // The other aliases of Uid, Lang, don't have special processing.
                         }
                     }
@@ -2038,7 +2102,6 @@ namespace System.Xaml
                         }
                         else
                         {
-
                             if (value is NameFixupToken)
                             {
                                 // Only the key directive may be assigned a reference.
@@ -2049,6 +2112,7 @@ namespace System.Xaml
                                     string msg = SR.Format(SR.ForwardRefDirectives, names);
                                     throw ctx.WithLineInfo(new XamlObjectWriterException(msg));
                                 }
+
                                 Logic_PendKeyFixupToken(ctx, (NameFixupToken)value);
                             }
                             else if (parentProperty == XamlLanguage.Key)
@@ -2137,6 +2201,7 @@ namespace System.Xaml
                     {
                         throw;
                     }
+
                     throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.NameScopeException, ex.Message), ex));
                 }
             }
@@ -2167,11 +2232,13 @@ namespace System.Xaml
             {
                 throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.DirectiveNotAtRoot, XamlLanguage.Class)));
             }
+
             string className = value as string;
             if (className is null)
             {
                 throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.DirectiveMustBeString, XamlLanguage.Class)));
             }
+
             object curInstance = ctx.CurrentInstance;
             Type rootInstanceType = (curInstance is not null) ? curInstance.GetType() : ctx.CurrentType.UnderlyingType;
             if (rootInstanceType.FullName != className)
@@ -2181,6 +2248,7 @@ namespace System.Xaml
                 {
                     className = $"{rootNamespace}.{className}";
                 }
+
                 if (rootInstanceType.FullName != className)
                 {
                     throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.XClassMustMatchRootInstance, className, rootInstanceType.FullName)));
@@ -2227,6 +2295,7 @@ namespace System.Xaml
             {
                 token.FixupType = FixupType.UnresolvedChildren;
             }
+
             token.ReferencedObject = childThatHasUnresolvedChildren;
             token.Target.Property = property;
             return token;
@@ -2251,8 +2320,10 @@ namespace System.Xaml
                     {
                         unresolvedRefs = new List<NameFixupToken>();
                     }
+
                     unresolvedRefs.Add(token);
                 }
+
                 // Only process if we haven't found any unresolved references. If we have,
                 // we're going to throw, so no point in processing.
                 else if (unresolvedRefs is null)
@@ -2268,6 +2339,7 @@ namespace System.Xaml
                     _nameFixupGraph.AddEndOfParseDependency(token.ReferencedObject, token.Target);
                 }
             }
+
             if (unresolvedRefs is not null)
             {
                 ThrowUnresolvedRefs(unresolvedRefs);
@@ -2306,6 +2378,7 @@ namespace System.Xaml
                 {
                     exceptionMessage.AppendLine();
                 }
+
                 exceptionMessage.Append(SR.Format(SR.UnresolvedForwardReferences, token.NeededNames[0]));
                 if (token.LineNumber != 0)
                 {
@@ -2313,10 +2386,13 @@ namespace System.Xaml
                     {
                         exceptionMessage.Append(SR.Format(SR.LineNumberAndPosition, string.Empty, token.LineNumber, token.LinePosition));
                     }
+
                     exceptionMessage.Append(SR.Format(SR.LineNumberOnly, string.Empty, token.LineNumber));
                 }
+
                 first = false;
             }
+
             throw new XamlObjectWriterException(exceptionMessage.ToString());
         }
 
@@ -2370,6 +2446,7 @@ namespace System.Xaml
             {
                 return true;
             }
+
             if (_context.LiveDepth > 0)
             {
                 // An object is fully initialized if it's off the stack, and has no uninitialized children
@@ -2377,6 +2454,7 @@ namespace System.Xaml
                 {
                     return false;
                 }
+
                 return _nameFixupGraph is null || !_nameFixupGraph.HasUnresolvedOrPendingChildren(instance);
             }
             else
@@ -2466,6 +2544,7 @@ namespace System.Xaml
                     {
                         return;
                     }
+
                     break;
                 case FixupType.MarkupExtensionRerun:
                     // Logic_ProvideValue already ran the first time, no need to rerun it
@@ -2485,6 +2564,7 @@ namespace System.Xaml
                         // created by the TypeConverter. So register it now.
                         Logic_RegisterName_OnCurrent(token.TargetContext, token.TargetContext.CurrentInstanceRegisteredName);
                     }
+
                     break;
             }
 
@@ -2540,6 +2620,7 @@ namespace System.Xaml
                 Debug.Assert(token.Target.KeyHolder.Key == token);
                 token.Target.KeyHolder.Key = key;
             }
+
             // if the index is less than 0, the target's not a dictionary, so throw away the key
             else if (token.Target.TemporaryCollectionIndex >= 0)
             {
@@ -2584,6 +2665,7 @@ namespace System.Xaml
                                 pendingAdd.Key = GetKeyFromInstance(pendingAdd.Item, itemType, pendingAdd);
                                 pendingAdd.KeyIsSet = true;
                             }
+
                             if (pendingAdd.KeyIsUnconverted)
                             {
                                 // If the Add of the unconverted key fails, we will need to convert the key.
@@ -2610,6 +2692,7 @@ namespace System.Xaml
                         Runtime.LineInfo = oldLineInfo;
                     }
                 }
+
                 PendingCollectionAdds.Remove(instance);
                 if (_pendingKeyConversionContexts is not null && _pendingKeyConversionContexts.ContainsKey(instance))
                 {
@@ -2636,6 +2719,7 @@ namespace System.Xaml
                 {
                     ex.SetLineInfo(LineNumber, LinePosition);
                 }
+
                 return ex;
             }
         }

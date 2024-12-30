@@ -447,7 +447,7 @@ namespace System.Windows.Annotations
                     }
                     else
                     {
-                        return new HostedElements(new ReadOnlyCollection<TextSegment>(new List<TextSegment>(0)));
+                        return new HostedElements(ReadOnlyCollection<TextSegment>.Empty);
                     }
                 }
             }
@@ -463,7 +463,7 @@ namespace System.Windows.Annotations
                 }
                 else
                 {
-                    return new ReadOnlyCollection<Rect>(new List<Rect>(0));
+                    return ReadOnlyCollection<Rect>.Empty;
                 }
             }
 

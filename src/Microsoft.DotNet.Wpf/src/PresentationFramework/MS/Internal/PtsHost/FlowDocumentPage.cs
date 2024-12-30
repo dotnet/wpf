@@ -367,7 +367,7 @@ namespace MS.Internal.PtsHost
                 else
                 {
                     // Return empty collection
-                    return new HostedElements(new ReadOnlyCollection<TextSegment>(new List<TextSegment>(0)));
+                    return new HostedElements(ReadOnlyCollection<TextSegment>.Empty);
                 }
             }
         }
@@ -572,7 +572,7 @@ namespace MS.Internal.PtsHost
 
             if (trackDetails.cParas == 0)
             {
-                return new ReadOnlyCollection<ParagraphResult>(new List<ParagraphResult>(0));
+                return ReadOnlyCollection<ParagraphResult>.Empty;
             }
 
             PTS.FSPARADESCRIPTION[] arrayParaDesc;

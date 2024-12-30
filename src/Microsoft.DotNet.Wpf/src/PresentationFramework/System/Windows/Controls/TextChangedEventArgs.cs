@@ -86,7 +86,7 @@ namespace System.Windows.Controls
         /// <param name="id">event id</param>
         /// <param name="action">UndoAction</param>
         public TextChangedEventArgs(RoutedEvent id, UndoAction action)
-            : this(id, action, new ReadOnlyCollection<TextChange>(new List<TextChange>()))
+            : this(id, action, ReadOnlyCollection<TextChange>.Empty)
         {
         }
 

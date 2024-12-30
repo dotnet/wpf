@@ -37,7 +37,7 @@ namespace MS.Internal.Xaml.Runtime
 
         public PartialTrustTolerantRuntime(XamlRuntimeSettings runtimeSettings, XamlAccessLevel accessLevel, XamlSchemaContext schemaContext)
         {
-            _transparentRuntime = new ClrObjectRuntime(runtimeSettings, true /*isWriter*/);
+            _transparentRuntime = new ClrObjectRuntime(runtimeSettings, isWriter: true);
             _accessLevel = accessLevel;
             _schemaContext = schemaContext;
         }

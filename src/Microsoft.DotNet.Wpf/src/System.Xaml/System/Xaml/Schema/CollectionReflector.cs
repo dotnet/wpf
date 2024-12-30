@@ -67,12 +67,12 @@ namespace System.Xaml.Schema
             }
 
             // If the type doesn't match any of the interfaces, check for Add methods
-            if (TryGetDictionaryAdder(type, false /*mayBeIDictionary*/, out addMethod))
+            if (TryGetDictionaryAdder(type, mayBeIDictionary: false, out addMethod))
             {
                 return XamlCollectionKind.Dictionary;
             }
 
-            if (TryGetCollectionAdder(type, false /*mayBeICollection*/, out addMethod))
+            if (TryGetCollectionAdder(type, mayBeICollection: false, out addMethod))
             {
                 return XamlCollectionKind.Collection;
             }
@@ -86,7 +86,7 @@ namespace System.Xaml.Schema
             switch (collectionKind)
             {
                 case XamlCollectionKind.Collection:
-                    bool isCollection = TryGetCollectionAdder(type, true /*mayBeICollection*/, out result);
+                    bool isCollection = TryGetCollectionAdder(type, mayBeICollection: true, out result);
                     if (isCollection && result is null)
                     {
                         throw new XamlSchemaException(SR.Format(SR.AmbiguousCollectionItemType, type));
@@ -94,7 +94,7 @@ namespace System.Xaml.Schema
 
                     break;
                 case XamlCollectionKind.Dictionary:
-                    bool isDictionary = TryGetDictionaryAdder(type, true /*mayBeIDictionary*/, out result);
+                    bool isDictionary = TryGetDictionaryAdder(type, mayBeIDictionary: true, out result);
                     if (isDictionary && result is null)
                     {
                         throw new XamlSchemaException(SR.Format(SR.AmbiguousDictionaryItemType, type));

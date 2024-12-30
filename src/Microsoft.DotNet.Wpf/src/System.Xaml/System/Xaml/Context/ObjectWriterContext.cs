@@ -173,7 +173,7 @@ namespace MS.Internal.Xaml.Context
 
         internal AmbientPropertyValue ServiceProvider_GetFirstAmbientValue(IEnumerable<XamlType> ceilingTypes, XamlMember[] properties)
         {
-            List<AmbientPropertyValue> valueList = FindAmbientValues(ceilingTypes, /*searchLiveStackOnly*/false, /*types*/null, properties, true);
+            List<AmbientPropertyValue> valueList = FindAmbientValues(ceilingTypes, searchLiveStackOnly: false, types: null, properties, true);
             return (valueList.Count == 0) ? null : valueList[0];
         }
 
@@ -185,7 +185,7 @@ namespace MS.Internal.Xaml.Context
 
         internal IEnumerable<AmbientPropertyValue> ServiceProvider_GetAllAmbientValues(IEnumerable<XamlType> ceilingTypes, XamlMember[] properties)
         {
-            List<AmbientPropertyValue> valueList = FindAmbientValues(ceilingTypes, /*searchLiveStackOnly*/false, /*types*/null, properties, /*stopAfterFirst*/ false);
+            List<AmbientPropertyValue> valueList = FindAmbientValues(ceilingTypes, searchLiveStackOnly: false, types: null, properties, stopAfterFirst: false);
             return valueList;
         }
 

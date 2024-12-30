@@ -126,7 +126,7 @@ namespace MS.Internal.Xaml.Runtime
 
         internal DynamicMethodRuntime(XamlRuntimeSettings settings, XamlSchemaContext schemaContext,
             XamlAccessLevel accessLevel)
-            : base(settings, true /*isWriter*/)
+            : base(settings, isWriter: true)
         {
             Debug.Assert(schemaContext is not null);
             Debug.Assert(accessLevel is not null);
@@ -134,7 +134,7 @@ namespace MS.Internal.Xaml.Runtime
             _localAssembly = Assembly.Load(accessLevel.AssemblyAccessToAssemblyName);
             if (accessLevel.PrivateAccessToTypeName is not null)
             {
-                _localType = _localAssembly.GetType(accessLevel.PrivateAccessToTypeName, true /*throwOnError*/);
+                _localType = _localAssembly.GetType(accessLevel.PrivateAccessToTypeName, throwOnError: true);
             }
         }
 

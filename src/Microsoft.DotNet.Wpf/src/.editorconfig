@@ -311,17 +311,8 @@ dotnet_diagnostic.SA1121.severity = suggestion
 # SA1129: Do not use default value type constructor
 dotnet_diagnostic.SA1129.severity = suggestion
 
-# SA1131: Constant values should appear on the right-hand side of comparisons
-dotnet_diagnostic.SA1131.severity = suggestion
-
 # SA1400: Member should declare an access modifier
 dotnet_diagnostic.SA1400.severity = suggestion
-
-# SA1404: Code analysis suppression should have justification
-dotnet_diagnostic.SA1404.severity = suggestion
-
-# SA1408: Conditional expressions should declare precedence
-dotnet_diagnostic.SA1408.severity = suggestion
 
 # SYSLIB1045: Convert to 'GeneratedRegexAttribute'.
 dotnet_diagnostic.SYSLIB1045.severity = suggestion

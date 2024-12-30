@@ -353,7 +353,7 @@ namespace System.Xaml
             XamlMember result;
             if (!_reflector.Members.TryGetValue(name, out result) && !_reflector.Members.IsComplete)
             {
-                result = LookupMember(name, false /*skipReadOnlyCheck*/);
+                result = LookupMember(name, skipReadOnlyCheck: false);
                 result = _reflector.Members.TryAdd(name, result);
             }
 
@@ -806,8 +806,8 @@ namespace System.Xaml
                 {
                     return null;
                 }
-
-                return GetPropertyOrUnknown(contentPropertyName, false /*skipReadOnlyCheck*/);
+                
+                return GetPropertyOrUnknown(contentPropertyName, skipReadOnlyCheck: false);
             }
 
             if (BaseType is not null)
@@ -1538,7 +1538,7 @@ namespace System.Xaml
             XamlMember result = skipReadOnlyCheck ? LookupMember(propertyName, true) : GetMember(propertyName);
             if (result is null)
             {
-                result = new XamlMember(propertyName, this /*declaringType*/, false /*isAttachable*/);
+                result = new XamlMember(propertyName, declaringType: this, isAttachable: false);
             }
 
             return result;

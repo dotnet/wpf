@@ -327,7 +327,7 @@ namespace MS.Internal.Xaml.Parser
 
             if (propName.IsDotted)
             {
-                prop = _context.GetDottedProperty(tagType, tagNamespace, propName, false /*tagIsRoot*/);
+                prop = _context.GetDottedProperty(tagType, tagNamespace, propName, tagIsRoot: false);
             }
 
             // Regular property p
@@ -335,7 +335,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 string ns = _context.GetAttributeNamespace(propName, Namespace);
                 declaringType = _context.CurrentType;
-                prop = _context.GetNoDotAttributeProperty(declaringType, propName, Namespace, ns, false /*tagIsRoot*/);
+                prop = _context.GetNoDotAttributeProperty(declaringType, propName, Namespace, ns, tagIsRoot: false);
             }
 
             _tokenProperty = prop;

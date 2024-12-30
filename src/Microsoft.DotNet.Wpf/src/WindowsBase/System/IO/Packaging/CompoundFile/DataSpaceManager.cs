@@ -39,9 +39,9 @@ namespace System.IO.Packaging
     private static readonly string DataSpaceVersionIdentifier = "Microsoft.Container.DataSpaces";
 
     // Version Writer - 1.0, Reader - 1.0, Updater - 1.0
-    private static readonly VersionPair DataSpaceCurrentWriterVersion  = new VersionPair(1 /*major*/, 0 /*minor*/);
-    private static readonly VersionPair DataSpaceCurrentReaderVersion  = new VersionPair(1 /*major*/, 0 /*minor*/);
-    private static readonly VersionPair DataSpaceCurrentUpdaterVersion = new VersionPair(1 /*major*/, 0 /*minor*/);
+    private static readonly VersionPair DataSpaceCurrentWriterVersion  = new VersionPair(major: 1, minor: 0);
+    private static readonly VersionPair DataSpaceCurrentReaderVersion  = new VersionPair(major: 1, minor: 0);
+    private static readonly VersionPair DataSpaceCurrentUpdaterVersion = new VersionPair(major: 1, minor: 0);
 
     // The version information we read from the file
     private FormatVersion _fileFormatVersion;

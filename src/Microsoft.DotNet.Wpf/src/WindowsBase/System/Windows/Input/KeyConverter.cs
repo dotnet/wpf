@@ -1,17 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: KeyConverter - Converts a Key string
-// to the *Type* that the string represents and vice-versa
-//
-
 using System.ComponentModel;    // for TypeConverter
 using System.Globalization;     // for CultureInfo
-
-using MS.Internal.WindowsBase;
 
 namespace System.Windows.Input
 {
@@ -25,7 +17,7 @@ namespace System.Windows.Input
         ///</summary>
         ///<param name="context">ITypeDescriptorContext</param>
         ///<param name="sourceType">type to convert from</param>
-        ///<returns><see langword="true"/> if the given <paramref name="sourceType"/> can be converted from, <see langword="false"/> otherwise.</returns>
+        ///<returns><see langword="true"/> if the given <paramref name="sourceType"/> can be converted, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             // We can only handle string
@@ -52,7 +44,7 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// Converts <paramref name="source"/> of <see langword="string"/> type to its <see cref="Key"/> represensation.
+        /// Converts <paramref name="source"/> of <see langword="string"/> type to its <see cref="Key"/> representation.
         /// </summary>
         /// <param name="context">Parser Context</param>
         /// <param name="culture">Culture Info</param>
@@ -68,7 +60,7 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// Converts a <paramref name="value"/> of <see cref="Key"/> to its <see langword="string"/> represensation.
+        /// Converts a <paramref name="value"/> of <see cref="Key"/> type to its <see langword="string"/> representation.
         /// </summary>
         /// <param name="context">Serialization Context</param>
         /// <param name="culture">Culture Info</param>

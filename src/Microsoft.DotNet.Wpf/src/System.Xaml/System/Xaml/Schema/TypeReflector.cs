@@ -754,7 +754,7 @@ namespace System.Xaml.Schema
             string adderName = KnownStrings.Add + name + KnownStrings.Handler;
             MemberInfo[] adders = UnderlyingType.GetMember(adderName, MemberTypes.Method, AttachableProperties_BF);
             List<MethodInfo> preferredAdders, otherAdders;
-            PrioritizeAccessors(adders, true /*isEvent*/, false /*isGetter*/, out preferredAdders, out otherAdders);
+            PrioritizeAccessors(adders, isEvent: true, isGetter: false, out preferredAdders, out otherAdders);
             return preferredAdders ?? otherAdders;
         }
 
@@ -762,7 +762,7 @@ namespace System.Xaml.Schema
         {
             MemberInfo[] getters = UnderlyingType.GetMember(KnownStrings.Get + name, MemberTypes.Method, AttachableProperties_BF);
             List<MethodInfo> preferredGetters, otherGetters;
-            PrioritizeAccessors(getters, false /*isEvent*/, true /*isGetter*/, out preferredGetters, out otherGetters);
+            PrioritizeAccessors(getters, isEvent: false, isGetter: true, out preferredGetters, out otherGetters);
             return preferredGetters ?? otherGetters;
         }
 
@@ -770,7 +770,7 @@ namespace System.Xaml.Schema
         {
             MemberInfo[] setters = UnderlyingType.GetMember(KnownStrings.Set + name, MemberTypes.Method, AttachableProperties_BF);
             List<MethodInfo> preferredSetters, otherSetters;
-            PrioritizeAccessors(setters, false /*isEvent*/, false /*isGetter*/, out preferredSetters, out otherSetters);
+            PrioritizeAccessors(setters, isEvent: false, isGetter: false, out preferredSetters, out otherSetters);
             return preferredSetters ?? otherSetters;
         }
 

@@ -170,7 +170,7 @@ namespace System.Xaml
             return result;
         }
 
-        string GetPrefixForClrNs(string clrNs, string assemblyName)
+        private string GetPrefixForClrNs(string clrNs, string assemblyName)
         {
             if (string.IsNullOrEmpty(assemblyName))
             {
@@ -178,11 +178,12 @@ namespace System.Xaml
             }
 
             var sb = new StringBuilder();
-            foreach (string segment in clrNs.Split('.'))
+            ReadOnlySpan<char> values = clrNs.AsSpan();
+            foreach (Range segment in values.Split('.'))
             {
-                if (!string.IsNullOrEmpty(segment))
+                if (!values[segment].IsEmpty)
                 {
-                    sb.Append(Char.ToLower(segment[0], TypeConverterHelper.InvariantEnglishUS));
+                    sb.Append(char.ToLower(values[segment][0], TypeConverterHelper.InvariantEnglishUS));
                 }
             }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 //
@@ -81,7 +81,7 @@ namespace MS.Internal.FontCache
             {
                 List<IFontSource> fontSources;
                 if (_uri.IsFile)
-                {              
+                {
                     if (_isFileSystemFolder)
                     {
                         if (_tryGetCompositeFontsOnly)
@@ -90,7 +90,7 @@ namespace MS.Internal.FontCache
                             fontSources = new List<IFontSource>(files.Length);
 
                             foreach (string file in files)
-                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), _isWindowsFonts, true));
+                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), true));
                         }
                         else
                         {
@@ -99,7 +99,7 @@ namespace MS.Internal.FontCache
                             foreach (string file in Util.EnumerateFontsInDirectory(_uri.LocalPath))
                             {
                                 bool isComposite = Util.IsCompositeFont(file);
-                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), _isWindowsFonts, isComposite));
+                                fontSources.Add(new FontSource(new Uri(file, UriKind.Absolute), isComposite));
                             }
                         }
                     }
@@ -107,7 +107,7 @@ namespace MS.Internal.FontCache
                     {
                         fontSources = new List<IFontSource>(1);
                         if (Util.IsSupportedFontExtension(Path.GetExtension(_uri.LocalPath.AsSpan()), out bool isComposite))
-                            fontSources.Add(new FontSource(new Uri(_uri.LocalPath, UriKind.Absolute), _isWindowsFonts, isComposite));
+                            fontSources.Add(new FontSource(new Uri(_uri.LocalPath, UriKind.Absolute), isComposite));
                     }
                 }
                 else
@@ -145,7 +145,7 @@ namespace MS.Internal.FontCache
             }
         }
 
-        
+
         #region IEnumerable<FontSource> Members
 
         IEnumerator<IFontSource> IEnumerable<IFontSource>.GetEnumerator()
@@ -164,8 +164,7 @@ namespace MS.Internal.FontCache
             return _fontSources.GetEnumerator();
         }
 
-        #endregion
-    
+        #endregion  
 
         private Uri                          _uri;
 

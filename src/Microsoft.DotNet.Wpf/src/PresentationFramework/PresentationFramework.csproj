@@ -119,7 +119,6 @@
     <Compile Include="MS\Internal\AppModel\JournalNavigationScope.cs" />
     <Compile Include="MS\Internal\AppModel\MimeObjectFactory.cs" />
     <Compile Include="MS\Internal\AppModel\NavigationHelper.cs" />
-    <Compile Include="MS\Internal\AppModel\OleCmdHelper.cs" />
     <Compile Include="MS\Internal\AppModel\ProgressPage.cs" />
     <Compile Include="MS\Internal\AppModel\RequestStatusBarUpdateEventArgs.cs" />
     <Compile Include="MS\Internal\AppModel\ResourceContainer.cs" />

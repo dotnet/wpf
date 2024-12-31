@@ -877,7 +877,7 @@ namespace MS.Internal.Data
                 }
             }
 
-            System.Collections.Generic.List<CollectionViewGroupInternal> _toRemove;
+            private List<CollectionViewGroupInternal> _toRemove;
         }
 
         #endregion Private classes

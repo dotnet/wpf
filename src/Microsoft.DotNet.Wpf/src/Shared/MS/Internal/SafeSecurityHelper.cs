@@ -166,12 +166,12 @@ namespace System.Xaml
                     _assemblies = new Dictionary<object, AssemblyName>();
                 }
                 else
-	            {
+                {
                     if (_assemblies.TryGetValue(key, out result))
                     {
                         return result;
                     }
-	            }
+                }
 
                 //
                 // We use AssemblyName ctor here because GetName demands FileIOPermission

@@ -149,7 +149,7 @@ namespace MS.Internal.Xaml
             // If prefix is "" then
             // Normal Properties resolve to the ownerType namespace
             // Attachable properties resolve to the actual "" namespace
-            if (String.IsNullOrEmpty(propName.Prefix) && !propName.IsDotted)
+            if (string.IsNullOrEmpty(propName.Prefix) && !propName.IsDotted)
             {
                 ns = tagNamespace;
             }

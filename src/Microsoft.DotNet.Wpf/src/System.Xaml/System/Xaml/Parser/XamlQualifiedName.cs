@@ -81,7 +81,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 prefix = longName.Substring(start, colonIdx);
 
-                if (String.IsNullOrEmpty(prefix) || !IsNameValid(prefix))
+                if (string.IsNullOrEmpty(prefix) || !IsNameValid(prefix))
                 {
                     return false;
                 }
@@ -94,7 +94,7 @@ namespace MS.Internal.Xaml.Parser
             // we allow Internal type name (ie. Foo+Bar) on "trival" ie. "non-generic" type names.
             // This is back compat with 3.0.
             // Don't want to allow it in any of the new type name syntax.  (including trival typeArgs)
-            if (String.IsNullOrEmpty(name) || !IsNameValid_WithPlus(name))
+            if (string.IsNullOrEmpty(name) || !IsNameValid_WithPlus(name))
             {
                 return false;
             }

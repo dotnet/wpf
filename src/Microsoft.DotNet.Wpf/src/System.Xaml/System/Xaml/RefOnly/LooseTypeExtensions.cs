@@ -133,7 +133,7 @@ namespace System.Xaml
 
             if (AssemblyQualifiedNameEquals(t1, t2))
             {
-                return false; //strictly testing for sub-class
+                return false; // strictly testing for sub-class
             }
 
             for(Type baseType = t1.BaseType; baseType is not null; baseType = baseType.BaseType)

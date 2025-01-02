@@ -9,7 +9,7 @@ using System.Globalization;
 
 namespace MS.Internal.Xaml.Context
 {
-    //This stack has the following features:
+    // This stack has the following features:
     //  1) it recycles frames
     //  2) it is <T>, and avoids activator.createinstance with the creationDelegate
     class XamlContextStack<T> where T : XamlFrame
@@ -59,7 +59,7 @@ namespace MS.Internal.Xaml.Context
             }
         }
 
-        //allocate a new frame as the new currentFrame;
+        // allocate a new frame as the new currentFrame;
         private void Grow()
         {
             T lastFrame = _currentFrame;
@@ -94,7 +94,7 @@ namespace MS.Internal.Xaml.Context
             return iteratorFrame;
         }
 
-        //Consumers of this stack call PushScope, and we'll either allocate a new frame
+        // Consumers of this stack call PushScope, and we'll either allocate a new frame
         // or we'll grab one from our recycled linked list.
         public void PushScope()
         {
@@ -102,7 +102,7 @@ namespace MS.Internal.Xaml.Context
             {
                 Grow();
             }
-            else //use recycled frame
+            else // use recycled frame
             {
                 T lastFrame = _currentFrame;
                 _currentFrame = _recycledFrame;
@@ -114,7 +114,7 @@ namespace MS.Internal.Xaml.Context
             Debug.Assert(CurrentFrame.Depth == Depth);
         }
 
-        //Consumers of this stack call PopScope, and we'll move the currentFrame from the main
+        // Consumers of this stack call PopScope, and we'll move the currentFrame from the main
         // linked list to the recylced linked list and call .Reset
         public void PopScope()
         {
@@ -133,7 +133,7 @@ namespace MS.Internal.Xaml.Context
             set { _depth = value; }
         }
 
-        //In case the stack needs to survive and you don't want to keep the recylced frames around.
+        // In case the stack needs to survive and you don't want to keep the recylced frames around.
         public void Trim()
         {
             _recycledFrame = null;

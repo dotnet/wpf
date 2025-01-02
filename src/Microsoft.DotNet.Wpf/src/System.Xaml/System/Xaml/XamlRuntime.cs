@@ -25,7 +25,7 @@ namespace MS.Internal.Xaml.Runtime
 
         public abstract object CreateWithFactoryMethod(XamlType xamlType, string methodName, object[] args);
 
-        //CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
+        // CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
         public abstract object CreateFromValue(ServiceProviderContext serviceContext, XamlValueConverter<TypeConverter> ts,
                                                object value, XamlMember property);
 

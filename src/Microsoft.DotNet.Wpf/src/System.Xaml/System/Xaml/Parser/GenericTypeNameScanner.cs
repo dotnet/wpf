@@ -145,7 +145,7 @@ namespace MS.Internal.Xaml.Parser
                 pos++;
             }
             while (pos < subscript.Length);
-            //unterminated string
+            // unterminated string
             return 0;
         }
 
@@ -337,7 +337,7 @@ namespace MS.Internal.Xaml.Parser
     {
         protected const char NullChar = '\0';
 
-        protected String _inputText;
+        protected string _inputText;
         protected int _idx;
 
         public Sample_StringParserBase(string text)

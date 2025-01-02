@@ -29,12 +29,12 @@ namespace MS.Internal.Xaml.Context
 
         // -----  abstracts overriden from XamlContext.
 
-        public override void AddNamespacePrefix(String prefix, string xamlNS)
+        public override void AddNamespacePrefix(string prefix, string xamlNS)
         {
             _prescopeNamespaces.Add(prefix, xamlNS);
         }
 
-        public string FindNamespaceByPrefixInParseStack(String prefix)
+        public string FindNamespaceByPrefixInParseStack(string prefix)
         {
             string xamlNs;
 
@@ -60,7 +60,7 @@ namespace MS.Internal.Xaml.Context
             return null;
         }
 
-        public override string FindNamespaceByPrefix(String prefix)
+        public override string FindNamespaceByPrefix(string prefix)
         {
             // For proper operation of some corner senarios the XmlNamespaceResolver
             // must be set.   But if it isn't we fall back to a look in our own stack.
@@ -185,10 +185,10 @@ namespace MS.Internal.Xaml.Context
         }
 
         // FxCop says this is never called
-        //public int Depth
-        //{
+        // public int Depth
+        // {
         //    get { return _stack.Depth; }
-        //}
+        // }
 
         public XamlType CurrentType
         {
@@ -229,10 +229,10 @@ namespace MS.Internal.Xaml.Context
         }
 
         // FxCop says this is not called
-        //public XamlType ParentType
-        //{
+        // public XamlType ParentType
+        // {
         //    get { return _stack.PreviousFrame.XamlType; }
-        //}
+        // }
 
         public XamlMember CurrentMember
         {
@@ -241,10 +241,10 @@ namespace MS.Internal.Xaml.Context
         }
 
         // FxCop says this is not called
-        //public XamlProperty MemberProperty
-        //{
+        // public XamlProperty MemberProperty
+        // {
         //    get { return _stack.PreviousFrame.Member; }
-        //}
+        // }
 
         public int CurrentArgCount
         {

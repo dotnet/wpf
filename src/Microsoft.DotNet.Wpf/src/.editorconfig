@@ -290,27 +290,6 @@ dotnet_diagnostic.IDE0300.severity = suggestion
 # IDE1006: Naming Styles
 dotnet_diagnostic.IDE1006.severity = suggestion
 
-# SA1001: Commas should not be preceded by whitespace
-dotnet_diagnostic.SA1001.severity = suggestion
-
-# SA1005: Single line comment should begin with a space
-dotnet_diagnostic.SA1005.severity = suggestion
-
-# SA1014: Opening generic brackets should not be preceded by a space
-dotnet_diagnostic.SA1014.severity = suggestion
-
-# SA1027: Tabs and spaces should be used correctly
-dotnet_diagnostic.SA1027.severity = suggestion
-
-# SA1028: Code should not contain trailing whitespace
-dotnet_diagnostic.SA1028.severity = suggestion
-
-# SA1121: Use built-in type alias
-dotnet_diagnostic.SA1121.severity = suggestion
-
-# SA1129: Do not use default value type constructor
-dotnet_diagnostic.SA1129.severity = suggestion
-
 # SA1400: Member should declare an access modifier
 dotnet_diagnostic.SA1400.severity = suggestion
 

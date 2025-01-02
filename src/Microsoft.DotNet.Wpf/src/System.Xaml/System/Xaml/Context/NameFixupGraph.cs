@@ -35,7 +35,7 @@ namespace MS.Internal.Xaml.Context
         // and remove those dependencies. But we still want to be able to inform MEs/TCs that
         // the named objects they're getting aren't actually fully initialized. So we save this list
         // of incompletely initialized objects at the point we start completing references.
-        HashSet <object> _uninitializedObjectsAtParseEnd;
+        HashSet<object> _uninitializedObjectsAtParseEnd;
 
         public NameFixupGraph()
         {

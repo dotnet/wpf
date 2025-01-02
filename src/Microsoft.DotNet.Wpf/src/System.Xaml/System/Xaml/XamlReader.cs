@@ -48,7 +48,7 @@ namespace System.Xaml
         #region IDisposable
 
         // See Framework Design Guidelines, pp. 248-260.
-        
+
         void IDisposable.Dispose()
         {
             Dispose(true);

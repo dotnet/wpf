@@ -56,7 +56,7 @@ namespace MS.Internal.Xaml.Parser
             }
 
             string ns = prefixResolver(prefix);
-            if (String.IsNullOrEmpty(ns))
+            if (string.IsNullOrEmpty(ns))
             {
                 error = SR.Format(SR.PrefixNotFound, prefix);
                 return null;
@@ -89,7 +89,7 @@ namespace MS.Internal.Xaml.Parser
             }
 
             XamlTypeName typeName = null;
-            if (String.IsNullOrEmpty(error))
+            if (string.IsNullOrEmpty(error))
             {
                 typeName = CollectNameFromStack();
             }
@@ -119,7 +119,7 @@ namespace MS.Internal.Xaml.Parser
             }
 
             IList<XamlTypeName> typeNameList = null;
-            if (String.IsNullOrEmpty(error))
+            if (string.IsNullOrEmpty(error))
             {
                 typeNameList = CollectNameListFromStack();
             }

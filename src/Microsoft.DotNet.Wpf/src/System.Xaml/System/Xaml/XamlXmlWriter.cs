@@ -679,8 +679,8 @@ namespace System.Xaml
 
         class Frame
         {
-            Dictionary<string, string> namespaceMap = new Dictionary<string, string>(); //namespace to prefix map
-            Dictionary<string, string> prefixMap = new Dictionary<string, string>(); //prefix to namespace map
+            Dictionary<string, string> namespaceMap = new Dictionary<string, string>(); // namespace to prefix map
+            Dictionary<string, string> prefixMap = new Dictionary<string, string>(); // prefix to namespace map
 
             public XamlType Type
             {
@@ -1277,7 +1277,7 @@ namespace System.Xaml
                     if (HasSignificantWhitespace(value))
                     {
                         XamlType containingXamlType = GetContainingXamlType(writer);
-                        //Treat unknown types as WhitespaceSignificantCollections
+                        // Treat unknown types as WhitespaceSignificantCollections
                         if (containingXamlType is not null && !containingXamlType.IsWhitespaceSignificantCollection)
                         {
                             WriteXmlSpaceOrThrow(writer, value);
@@ -1622,7 +1622,7 @@ namespace System.Xaml
 
             public override void WriteObject(XamlXmlWriter writer, XamlType type, bool isObjectFromMember)
             {
-                //  We should remove the !type.IsGeneric check once
+                // We should remove the !type.IsGeneric check once
                 //  XamlReader is fixed to handle Generic MEs.
                 if (type is not null && type.IsMarkupExtension && !type.IsGeneric)
                 {

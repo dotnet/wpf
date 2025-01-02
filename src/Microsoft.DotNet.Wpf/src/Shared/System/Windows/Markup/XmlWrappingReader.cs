@@ -136,7 +136,7 @@ namespace System.Windows.Markup
             return (_readerAsResolver is null) ? null : _readerAsResolver.LookupPrefix( namespaceName );
         }
 
-        IDictionary<string,string> IXmlNamespaceResolver.GetNamespacesInScope ( XmlNamespaceScope scope )
+        IDictionary<string, string> IXmlNamespaceResolver.GetNamespacesInScope ( XmlNamespaceScope scope )
         {
             return (_readerAsResolver is null) ? null : _readerAsResolver.GetNamespacesInScope( scope );
         }

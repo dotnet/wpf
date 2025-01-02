@@ -138,7 +138,7 @@ namespace System.Windows.Markup
                 PropertyInfo prop = currentType.GetProperty(name, BindingFlags.Public | BindingFlags.Static);
                 if (prop is not null)
                 {
-                    value = prop.GetValue(null,null);
+                    value = prop.GetValue(null, null);
                     return true;
                 }
 

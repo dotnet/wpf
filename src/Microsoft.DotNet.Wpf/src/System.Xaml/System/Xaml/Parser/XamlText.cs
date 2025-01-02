@@ -12,13 +12,13 @@ namespace MS.Internal.Xaml.Parser
     [DebuggerDisplay("{Text}")]
     internal class XamlText
     {
-        private const Char SPACE = ' ';
-        private const Char NEWLINE = '\n';
-        private const Char RETURN = '\r';
-        private const Char TAB = '\t';
-        private const Char OPENCURLIE = '{';
-        private const Char CLOSECURLIE = '}';
-        private const String ME_ESCAPE = "{}";
+        private const char SPACE = ' ';
+        private const char NEWLINE = '\n';
+        private const char RETURN = '\r';
+        private const char TAB = '\t';
+        private const char OPENCURLIE = '{';
+        private const char CLOSECURLIE = '}';
+        private const string ME_ESCAPE = "{}";
         private const string RETURN_STRING = "\r";
 
         private StringBuilder _sb;
@@ -53,7 +53,7 @@ namespace MS.Internal.Xaml.Parser
         {
             get
             {
-                String text = Text;
+                string text = Text;
                 if (text.StartsWith(ME_ESCAPE, false, TypeConverterHelper.InvariantEnglishUS))
                 {
                     return text.Remove(0, ME_ESCAPE.Length);
@@ -191,7 +191,7 @@ namespace MS.Internal.Xaml.Parser
             return true;
         }
 
-        static bool IsWhitespaceChar(Char ch)
+        static bool IsWhitespaceChar(char ch)
         {
             return (ch == SPACE || ch == TAB || ch == NEWLINE || ch == RETURN);
         }
@@ -307,11 +307,11 @@ namespace MS.Internal.Xaml.Parser
             int unicodeScalarValue=0;
             bool isSurrogate = false;
 
-            Char highChar = text[takeTwoIdx];
-            if (Char.IsHighSurrogate(highChar))
+            char highChar = text[takeTwoIdx];
+            if (char.IsHighSurrogate(highChar))
             {
-                Char lowChar = text[takeTwoIdx + 1];
-                if (Char.IsLowSurrogate(lowChar))
+                char lowChar = text[takeTwoIdx + 1];
+                if (char.IsLowSurrogate(lowChar))
                 {
                     isSurrogate = true;
                     unicodeScalarValue = (((highChar & 0x03FF) << 10) | (lowChar & 0x3FF)) + 0x1000;

@@ -40,7 +40,7 @@ namespace MS.Internal.Xaml.Parser
         internal XamlScanner(XamlParserContext context, XmlReader xmlReader, XamlXmlReaderSettings settings)
         {
             _xmlReader = xmlReader;
-            _xmlLineInfo = settings.ProvideLineInfo ? (xmlReader as IXmlLineInfo) : null;  //consider removing the "settings" check
+            _xmlLineInfo = settings.ProvideLineInfo ? (xmlReader as IXmlLineInfo) : null;  // consider removing the "settings" check
 
             _parserContext = context;
 

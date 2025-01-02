@@ -137,7 +137,7 @@ namespace System.Xaml
             return sw.ToString();
         }
 
-        public static void Save(String fileName, object instance)
+        public static void Save(string fileName, object instance)
         {
             ArgumentNullException.ThrowIfNull(fileName);
             //

@@ -4,7 +4,7 @@
 
 #nullable disable
 
-//  Description: Specifies that the whitespace surrounding an element should be trimmed.
+// Description: Specifies that the whitespace surrounding an element should be trimmed.
 
 using System;
 using System.IO;
@@ -333,7 +333,7 @@ namespace System.Xaml
                 if (constructorArguments.Count == 1 && !noArgs)
                 {
                     CustomAttributeTypedArgument tca = constructorArguments[0];
-                    attrValue = tca.Value as String;
+                    attrValue = tca.Value as string;
 #if PBTCOMPILER
                     if (attrValue == null && allowTypeAlso && tca.ArgumentType == GetMscorlibType(typeof(Type)))
 #else
@@ -433,12 +433,12 @@ namespace System.Xaml
                 // Check if the current AppDomain has this assembly loaded for some other reason.
                 // If so, then just use that assembly and don't attempt to load another copy of it.
                 // Only do this if no path is provided.
-                if (String.IsNullOrEmpty(assemblyPath))
+                if (string.IsNullOrEmpty(assemblyPath))
                     retassem = SafeSecurityHelper.GetLoadedAssembly(assemblyName);
 
                 if (retassem is null)
                 {
-                    if (!String.IsNullOrEmpty(assemblyPath))
+                    if (!string.IsNullOrEmpty(assemblyPath))
                     {
                         // assemblyPath is set, Load the assembly from this specified place.
                         // the path must be full file path which contains directory, file name and extension.

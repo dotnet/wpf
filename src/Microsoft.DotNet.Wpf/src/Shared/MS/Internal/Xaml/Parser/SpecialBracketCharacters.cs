@@ -4,7 +4,7 @@
 
 #nullable disable
 
-//  Description: Data model for the Bracket characters specified on a Markup Extension property.
+// Description: Data model for the Bracket characters specified on a Markup Extension property.
 
 using System;
 using System.Collections.Generic;
@@ -31,7 +31,7 @@ namespace MS.Internal.Xaml.Parser
             BeginInit();
         }
 
-        internal SpecialBracketCharacters(IReadOnlyDictionary<char,char> attributeList)
+        internal SpecialBracketCharacters(IReadOnlyDictionary<char, char> attributeList)
         {
             BeginInit();
             if (attributeList is not null && attributeList.Count > 0)
@@ -53,7 +53,7 @@ namespace MS.Internal.Xaml.Parser
             }
         }
 
-        private void Tokenize(IReadOnlyDictionary<char,char> attributeList)
+        private void Tokenize(IReadOnlyDictionary<char, char> attributeList)
         {
             if (_initializing)
             {

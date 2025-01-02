@@ -737,9 +737,9 @@ namespace System.Xaml.Schema
         private void LookupAllStaticAccessors(out Dictionary<string, List<MethodInfo>> getters,
             out Dictionary<string, List<MethodInfo>> setters, out Dictionary<string, List<MethodInfo>> adders)
         {
-            getters = new Dictionary<string,List<MethodInfo>>();
-            setters = new Dictionary<string,List<MethodInfo>>();
-            adders = new Dictionary<string,List<MethodInfo>>();
+            getters = new Dictionary<string, List<MethodInfo>>();
+            setters = new Dictionary<string, List<MethodInfo>>();
+            adders = new Dictionary<string, List<MethodInfo>>();
 
             MethodInfo[] allMethods = UnderlyingType.GetMethods(AttachableProperties_BF);
 
@@ -753,7 +753,7 @@ namespace System.Xaml.Schema
             }
         }
 
-        private void LookupAllStaticAccessorsHelper(MethodInfo[] allMethods, Dictionary<string,List<MethodInfo>> getters,
+        private void LookupAllStaticAccessorsHelper(MethodInfo[] allMethods, Dictionary<string, List<MethodInfo>> getters,
             Dictionary<string, List<MethodInfo>> setters, Dictionary<string, List<MethodInfo>> adders, bool isUnderlyingTypePublic)
         {
             foreach (MethodInfo method in allMethods)
@@ -1133,7 +1133,7 @@ namespace System.Xaml.Schema
             Public
         }
 
-        internal class ThreadSafeDictionary<K,V> : Dictionary<K, V> where V : class
+        internal class ThreadSafeDictionary<K, V> : Dictionary<K, V> where V : class
         {
             bool _isComplete;
 

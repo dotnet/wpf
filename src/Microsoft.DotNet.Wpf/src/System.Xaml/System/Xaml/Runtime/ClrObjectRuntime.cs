@@ -144,7 +144,7 @@ namespace MS.Internal.Xaml.Runtime
                 bindingFlags, candidates, ref args, null, null, null, out _);
         }
 
-        //CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
+        // CreateFromValue is expected to convert the provided value via any applicable converter (on property or type) or provide the original value if there is no converter
         public override object CreateFromValue(
                                     ServiceProviderContext serviceContext,
                                     XamlValueConverter<TypeConverter> ts, object value,
@@ -667,7 +667,7 @@ namespace MS.Internal.Xaml.Runtime
             object obj;
             if (typeConverter is not null)
             {
-                //We sometimes ignoreCanConvert for WPFv3 Compatibility (but only if a string is coming in)
+                // We sometimes ignoreCanConvert for WPFv3 Compatibility (but only if a string is coming in)
                 if (_ignoreCanConvert && value.GetType() == typeof(string))
                 {
                     obj = typeConverter.ConvertFrom(serviceContext, TypeConverterHelper.InvariantEnglishUS, value);
@@ -680,14 +680,14 @@ namespace MS.Internal.Xaml.Runtime
                     }
                     else
                     {
-                        //let the value passthrough (to be set as the property value later).
+                        // let the value passthrough (to be set as the property value later).
                         obj = value;
                     }
                 }
             }
             else
             {
-                //let the value passthrough (to be set as the property value later).
+                // let the value passthrough (to be set as the property value later).
                 obj = value;
             }
 

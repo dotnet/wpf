@@ -69,8 +69,8 @@ namespace System.Xaml
         void Initialize(XamlSchemaContext schemaContext, XamlSavedContext savedContext, XamlObjectWriterSettings settings)
         {
             _inDispose = false;
-            //ObjectWriter must be passed in a non-null SchemaContext.  We check that here, since the CreateContext method
-            //will create one if a null SchemaContext was passed in.
+            // ObjectWriter must be passed in a non-null SchemaContext.  We check that here, since the CreateContext method
+            // will create one if a null SchemaContext was passed in.
             ArgumentNullException.ThrowIfNull(schemaContext);
             if (savedContext is not null && schemaContext != savedContext.SchemaContext)
             {
@@ -285,7 +285,7 @@ namespace System.Xaml
             // Real processing begins here.
             //
 
-            //The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
+            // The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
             _lastInstance = null;
 
             // A Frame is pushed by either a AddNamespace or a WriteGet/StartObject
@@ -352,7 +352,7 @@ namespace System.Xaml
             // Real processing begins here.
             //
 
-            //The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
+            // The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
             _lastInstance = null;
 
             // A Frame is pushed by either a AddNamespace or a WriteGet/StartObject
@@ -723,7 +723,7 @@ namespace System.Xaml
             //
             _nextNodeMustBeEndMember = false;
 
-            //The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
+            // The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
             _lastInstance = null;
 
             if (property == XamlLanguage.Arguments)
@@ -851,7 +851,7 @@ namespace System.Xaml
                 throw _context.WithLineInfo(new XamlObjectWriterException(err));
             }
 
-            //The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
+            // The first node (T, SO, or EP) after an EndObject should null out _lastInstance.
             _lastInstance = null;
 
             _context.PushScope();
@@ -1013,8 +1013,8 @@ namespace System.Xaml
             }
         }
 
-        //Result should return the _lastInstance when called after an EO.  Otherwise, it should return null.
-        //Currently we null out _lastInstance in the nodes that can come after EO (T, SO, EP). Can an NS come,
+        // Result should return the _lastInstance when called after an EO.  Otherwise, it should return null.
+        // Currently we null out _lastInstance in the nodes that can come after EO (T, SO, EP). Can an NS come,
         // what should we do?
         public virtual object Result
         {
@@ -2014,7 +2014,7 @@ namespace System.Xaml
                 if (value is NameFixupToken && parentProperty != XamlLanguage.Items)
                 {
                     NameFixupToken token = value as NameFixupToken;
-                    string names = String.Join(',', token.NeededNames.ToArray());
+                    string names = string.Join(',', token.NeededNames.ToArray());
                     string msg = SR.Format(SR.ForwardRefDirectives, names);
                     throw ctx.WithLineInfo(new XamlObjectWriterException(msg));
                 }
@@ -2054,7 +2054,7 @@ namespace System.Xaml
                             // Only the key directive may be assigned a reference.
                             if (parentProperty != XamlLanguage.Key)
                             {
-                                string names = String.Join(',', token.NeededNames.ToArray());
+                                string names = string.Join(',', token.NeededNames.ToArray());
                                 string msg = SR.Format(SR.ForwardRefDirectives, names);
                                 throw ctx.WithLineInfo(new XamlObjectWriterException(msg));
                             }
@@ -2108,7 +2108,7 @@ namespace System.Xaml
                                 if (parentProperty != XamlLanguage.Key)
                                 {
                                     NameFixupToken token = (NameFixupToken)value;
-                                    string names = String.Join(',', token.NeededNames.ToArray());
+                                    string names = string.Join(',', token.NeededNames.ToArray());
                                     string msg = SR.Format(SR.ForwardRefDirectives, names);
                                     throw ctx.WithLineInfo(new XamlObjectWriterException(msg));
                                 }

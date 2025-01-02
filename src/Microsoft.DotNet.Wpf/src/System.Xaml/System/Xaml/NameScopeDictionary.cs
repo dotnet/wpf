@@ -164,7 +164,7 @@ namespace System.Xaml
                     if (_underlyingNameScope is not null)
                     {
                         string name = _names[index];
-                        return new KeyValuePair<string,object>(name, _underlyingNameScope.FindName(name));
+                        return new KeyValuePair<string, object>(name, _underlyingNameScope.FindName(name));
                     }
                     else
                     {

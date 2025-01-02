@@ -3996,15 +3996,6 @@ Do you want to replace it?</value>
   <data name="Freezable_CantBeFrozen" xml:space="preserve">
     <value>Specified value of type '{0}' must have IsFrozen set to false to modify.</value>
   </data>
-  <data name="InvalidPermissionStateValue" xml:space="preserve">
-    <value>PermissionState value '{0}' is not valid for this Permission.</value>
-  </data>
-  <data name="InvalidPermissionType" xml:space="preserve">
-    <value>Permission type is not valid. Expected '{0}'.</value>
-  </data>
-  <data name="SecurityExceptionForSettingSandboxExternalToTrue" xml:space="preserve">
-    <value>Cannot set SandboxExternalContent to true in partial trust.</value>
-  </data>
   <data name="StringEmpty" xml:space="preserve">
     <value>Parameter cannot be a zero-length string.</value>
   </data>

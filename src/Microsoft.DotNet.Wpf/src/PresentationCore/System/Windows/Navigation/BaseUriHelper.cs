@@ -6,17 +6,11 @@
 //
 //
 
-using System;
-using System.Diagnostics;
-using System.IO.Packaging;
 using System.Globalization;
-using System.Net;
 using System.Text;
-using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Media;
 using System.Reflection;
-using System.IO;
 
 using MS.Internal;
 using MS.Internal.AppModel;

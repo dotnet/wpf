@@ -8,17 +8,8 @@
 //
 //
 
-using System;
-using System.ComponentModel;
-
-using System.Windows;
-using System.Windows.Controls.Primitives;
-
-using System.Windows.Navigation;
-using System.Windows.Media;
-
-namespace System.Windows 
-{  
+namespace System.Windows
+{
     /// <summary>
     /// 
     /// </summary>

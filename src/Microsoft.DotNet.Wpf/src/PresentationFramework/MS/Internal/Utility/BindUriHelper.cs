@@ -7,28 +7,12 @@
 //  Description:    BindUriHelper class. Allows bindToObject, bindToStream
 //
 
-using System;
-using System.IO;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Text; 
-using MS.Win32; 
 
 #if PRESENTATIONFRAMEWORK
 
 using System.Windows;
 using System.Windows.Navigation;
-using System.Windows.Media;
-using MS.Internal.PresentationFramework;
 using MS.Internal.AppModel;
-using System.Windows.Controls;
-using MS.Internal ; 
-using System.Security; 
-using System.IO.Packaging; 
-using System.Reflection;
-using MS.Internal.Utility;
-using System.Net;
 
 // In order to avoid generating warnings about unknown message numbers and 
 // unknown pragmas when compiling your C# source code with the actual C# compiler, 

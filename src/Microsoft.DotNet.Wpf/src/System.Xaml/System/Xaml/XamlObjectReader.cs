@@ -5,13 +5,10 @@
 #nullable disable
 
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Security;
 using System.Text;
 using System.Windows.Markup;
 using System.Xaml.MS.Impl;
@@ -22,8 +19,6 @@ using MS.Internal.Xaml.Runtime;
 
 namespace System.Xaml
 {
-    using REPLACEMENT = Replacements;
-
     public class XamlObjectReader : XamlReader
     {
         XamlObjectReaderSettings settings;
@@ -99,6 +94,7 @@ namespace System.Xaml
                 {
                     currentXamlNode = new XamlNode(XamlNode.InternalNodeType.EndOfStream);
                 }
+
                 return false;
             }
 
@@ -106,11 +102,11 @@ namespace System.Xaml
             currentXamlNode = node.XamlNode;
 
             ObjectMarkupInfo objectNode = node as ObjectMarkupInfo;
-            currentInstance = objectNode != null ? objectNode.Object : null;
+            currentInstance = objectNode is not null ? objectNode.Object : null;
 
             var subNodes = node.Decompose();
 
-            if (subNodes != null)
+            if (subNodes is not null)
             {
                 // we want to push the nodes onto the stack in reverse order
                 subNodes.Reverse();
@@ -210,6 +206,7 @@ namespace System.Xaml
                 value = result.DefaultValue;
                 return true;
             }
+
             value = null;
             return false;
         }
@@ -235,14 +232,14 @@ namespace System.Xaml
 
         class ObjectReferenceEqualityComparer : IEqualityComparer<object>
         {
-            new public bool Equals(object x, object y)
+            public new bool Equals(object x, object y)
             {
                 return ReferenceEquals(x, y);
             }
 
             public int GetHashCode(object obj)
             {
-                if (obj == null) { return 0; }
+                if (obj is null) { return 0; }
                 return obj.GetHashCode();
             }
         }
@@ -283,7 +280,7 @@ namespace System.Xaml
                     }
 
                     ObjectMarkupInfo r = children[0] as ObjectMarkupInfo;
-                    return (r != null && r.IsAttributableMarkupExtension);
+                    return (r is not null && r.IsAttributableMarkupExtension);
                 }
             }
 
@@ -302,6 +299,7 @@ namespace System.Xaml
                                 return false;
                             }
                         }
+
                         return true;
                     }
 
@@ -312,7 +310,7 @@ namespace System.Xaml
                     if (Children.Count == 0 || Children[0] is ValueMarkupInfo) { return true; }
 
                     ObjectMarkupInfo r = Children[0] as ObjectMarkupInfo;
-                    if (r == null)
+                    if (r is null)
                     {
                         throw new InvalidOperationException(SR.ExpectedObjectMarkupInfo);
                     }
@@ -345,7 +343,7 @@ namespace System.Xaml
                 object propertyValue, XamlValueConverter<XamlDeferringLoader> deferringLoader, SerializerContext context)
             {
                 XamlDeferringLoader converter = deferringLoader.ConverterInstance;
-                if (converter == null)
+                if (converter is null)
                 {
                     throw new XamlObjectReaderException(SR.Format(SR.DeferringLoaderInstanceNull, deferringLoader));
                 }
@@ -388,6 +386,7 @@ namespace System.Xaml
                         return ForSequence(value, attachedProperty, context, true);
                     }
                 }
+
                 return null;
             }
 
@@ -401,10 +400,10 @@ namespace System.Xaml
                 object propertyValue;
                 // Type sourceType;
 
-                if (property != null)
+                if (property is not null)
                 {
                     propertyValue = context.Runtime.GetValue(sourceOrValue, property);
-                    if (propertyValue == null) { return null; }
+                    if (propertyValue is null) { return null; }
                     // sourceType = sourceOrValue.GetType();
                 }
                 else
@@ -442,12 +441,12 @@ namespace System.Xaml
                     ObjectOrValueMarkupInfo keyValue;
 
                     XamlType actualKeyType = null;
-                    if (entry.Key != null)
+                    if (entry.Key is not null)
                     {
                         actualKeyType = context.GetXamlType(entry.Key.GetType());
                     }
 
-                    if (entry.Key != null && actualKeyType != keyType)
+                    if (entry.Key is not null && actualKeyType != keyType)
                     {
                         TypeConverter tc = TypeConverterExtensions.GetConverterInstance(actualKeyType.TypeConverter);
                         keyValue = ObjectMarkupInfo.ForObject(entry.Key, context, tc);
@@ -476,20 +475,20 @@ namespace System.Xaml
 
             public static bool ShouldOmitKey(DictionaryEntry entry, SerializerContext context)
             {
-                if (entry.Value != null)
+                if (entry.Value is not null)
                 {
                     XamlType typeOfValue = context.GetXamlType(entry.Value.GetType());
                     XamlMember dkp = typeOfValue.GetAliasedProperty(XamlLanguage.Key);
 
-                    if (dkp != null)
+                    if (dkp is not null)
                     {
                         if (ObjectMarkupInfo.CanPropertyXamlRoundtrip(dkp, context))
                         {
                             object dkpObject = context.Runtime.GetValue(entry.Value, dkp);
 
-                            if (dkpObject == null)
+                            if (dkpObject is null)
                             {
-                                return entry.Key == null;
+                                return entry.Key is null;
                             }
                             else if (dkpObject.Equals(entry.Key))
                             {
@@ -498,6 +497,7 @@ namespace System.Xaml
                         }
                     }
                 }
+
                 return false;
             }
 
@@ -534,8 +534,8 @@ namespace System.Xaml
 
             static MemberMarkupInfo ForSequence(object source, XamlMember property, SerializerContext context, bool isAttachable)
             {
-                var itemsInfo = ForSequenceItems(source, isAttachable ? null : property, property.Type, context, false /*allowReadOnly*/);
-                if (itemsInfo != null && itemsInfo.Children.Count != 0)
+                var itemsInfo = ForSequenceItems(source, isAttachable ? null : property, property.Type, context, allowReadOnly: false);
+                if (itemsInfo is not null && itemsInfo.Children.Count != 0)
                 {
                     return new MemberMarkupInfo
                     {
@@ -563,7 +563,7 @@ namespace System.Xaml
             static MemberMarkupInfo ForDictionary(object source, XamlMember property, SerializerContext context, bool isAttachable)
             {
                 var itemsInfo = ForDictionaryItems(source, isAttachable ? null : property, property.Type, context);
-                if (itemsInfo != null && itemsInfo.Children.Count != 0)
+                if (itemsInfo is not null && itemsInfo.Children.Count != 0)
                 {
                     return new MemberMarkupInfo
                     {
@@ -590,7 +590,7 @@ namespace System.Xaml
             static MemberMarkupInfo ForXmlSerializable(object source, XamlMember property, SerializerContext context)
             {
                 var serializer = (IXmlSerializable)context.Runtime.GetValue(source, property);
-                if (serializer == null) { return null; }
+                if (serializer is null) { return null; }
 
                 var sb = new StringBuilder();
                 var writerSettings = new XmlWriterSettings
@@ -675,25 +675,23 @@ namespace System.Xaml
                     if (memberInfo.Children.Count == 1)
                     {
                         var objectInfo = memberInfo.Children[0] as ObjectMarkupInfo;
-                        if (objectInfo != null && objectInfo.Properties.Count == 1 && memberType == objectInfo.XamlNode.XamlType)
+                        if (objectInfo is not null && objectInfo.Properties.Count == 1 && memberType == objectInfo.XamlNode.XamlType)
                         {
-
                             if (objectInfo.Properties[0].XamlNode.Member == XamlLanguage.Items)
                             {
                                 var itemsMemberInfo = objectInfo.Properties[0] as MemberMarkupInfo;
-                                if(itemsMemberInfo != null && itemsMemberInfo.Children.Count > 0)
+                                if(itemsMemberInfo is not null && itemsMemberInfo.Children.Count > 0)
                                 {
                                     // Check if the first element of the collection/dictionary is a ME and replace the SO with GO only if it is not an ME.
                                     // This is to handle cases where the first element is, say, null. If we remove the SO, then there is no way to
                                     // know if the collection is null or the first element is null.
                                     var itemInfo = itemsMemberInfo.Children[0] as ObjectMarkupInfo;
-                                    if(itemInfo == null || itemInfo.XamlNode.XamlType == null || !itemInfo.XamlNode.XamlType.IsMarkupExtension)
+                                    if(itemInfo is null || itemInfo.XamlNode.XamlType is null || !itemInfo.XamlNode.XamlType.IsMarkupExtension)
                                     {
                                         // change the member to GetObject
                                         objectInfo.XamlNode = new XamlNode(XamlNodeType.GetObject);
                                     }
                                 }
-
                             }
                         }
                     }
@@ -708,17 +706,17 @@ namespace System.Xaml
             {
                 object propertyValue;
 
-                if (property != null)
+                if (property is not null)
                 {
                     propertyValue = context.Runtime.GetValue(sourceOrValue, property);
-                    if (propertyValue == null) { return null; }
+                    if (propertyValue is null) { return null; }
                 }
                 else
                 {
                     propertyValue = sourceOrValue;
                 }
 
-                if (!allowReadOnly && xamlType.IsReadOnlyMethod != null)
+                if (!allowReadOnly && xamlType.IsReadOnlyMethod is not null)
                 {
                     bool isReadOnly = (bool)xamlType.IsReadOnlyMethod.Invoke(propertyValue, null);
                     if (isReadOnly)
@@ -749,9 +747,9 @@ namespace System.Xaml
 
                     ObjectOrValueMarkupInfo unwrappedItemInfo = null;
 
-                    if (xamlType.ContentWrappers != null)
+                    if (xamlType.ContentWrappers is not null)
                     {
-                        if (itemInfo.Properties != null && itemInfo.Properties.Count == 1)
+                        if (itemInfo.Properties is not null && itemInfo.Properties.Count == 1)
                         {
                             var memberInfo = (MemberMarkupInfo)itemInfo.Properties[0];
                             if (memberInfo.XamlNode.Member == itemInfo.XamlNode.XamlType.ContentProperty)
@@ -795,6 +793,7 @@ namespace System.Xaml
                     {
                         isPreviousItemValue = false;
                     }
+
                     itemsInfo.Children.Add(unwrappedItemInfo ?? itemInfo);
                 }
 
@@ -847,7 +846,7 @@ namespace System.Xaml
                 return GetPropertyValueInfoInternal(propertyValue,
                     TypeConverterExtensions.GetConverterInstance(xamlProperty.ValueSerializer),
                     TypeConverterExtensions.GetConverterInstance(xamlProperty.TypeConverter),
-                    xamlProperty != null && xamlProperty.DeferringLoader != null,
+                    xamlProperty is not null && xamlProperty.DeferringLoader is not null,
                     xamlProperty,
                     context);
             }
@@ -858,7 +857,7 @@ namespace System.Xaml
                 ObjectOrValueMarkupInfo valueInfo = null;
 
                 context.Instance = propertyValue;
-                if (isXamlTemplate && propertyValue != null)
+                if (isXamlTemplate && propertyValue is not null)
                 {
                     valueInfo = ConvertToXamlReader(propertyValue, xamlProperty.DeferringLoader, context);
                 }
@@ -876,12 +875,12 @@ namespace System.Xaml
 
                         valueInfo = new ValueMarkupInfo() { XamlNode = new XamlNode(XamlNodeType.Value, propertyValue) };
                     }
-                    else if (propertyConverter != null && context.TryConvertToMarkupExtension(propertyConverter, ref propertyValue))
+                    else if (propertyConverter is not null && context.TryConvertToMarkupExtension(propertyConverter, ref propertyValue))
                     {
                         context.Instance = null;
                         valueInfo = ObjectMarkupInfo.ForObject(propertyValue, context);
                     }
-                    else if (propertyConverter != null && context.TryTypeConvertToString(propertyConverter, ref propertyValue))
+                    else if (propertyConverter is not null && context.TryTypeConvertToString(propertyConverter, ref propertyValue))
                     {
                         ThrowIfPropertiesAreAttached(context.Instance, xamlProperty, context);
                         context.Instance = null;
@@ -902,15 +901,16 @@ namespace System.Xaml
                         valueInfo = ObjectMarkupInfo.ForObject(propertyValue, context, propertyConverter);
                     }
                 }
+
                 return valueInfo;
             }
 
             static void ThrowIfPropertiesAreAttached(object value, XamlMember property, SerializerContext context)
             {
                 var props = context.Runtime.GetAttachedProperties(value);
-                if (props != null)
+                if (props is not null)
                 {
-                    if (property != null)
+                    if (property is not null)
                     {
                         throw new InvalidOperationException(SR.Format(SR.AttachedPropertyOnTypeConvertedOrStringProperty, property.Name, value.ToString(), props[0].Key.ToString()));
                     }
@@ -1030,7 +1030,7 @@ namespace System.Xaml
                 List<MarkupInfo> removedProperties;
                 SelectAndRemovePropertiesWithDO(out removedProperties);
 
-                if (removedProperties != null)
+                if (removedProperties is not null)
                 {
                     InsertPropertiesWithDO(removedProperties);
                 }
@@ -1068,6 +1068,7 @@ namespace System.Xaml
                         return false;
                     }
                 }
+
                 return true;
             }
 
@@ -1082,8 +1083,10 @@ namespace System.Xaml
                     {
                         break;
                     }
+
                     namesOfAttributableProperties.Add(memberInfo.XamlNode.Member.Name);
                 }
+
                 posOfFirstNonAttributableProperty = i;
                 return namesOfAttributableProperties;
             }
@@ -1098,10 +1101,11 @@ namespace System.Xaml
                     var property = properties[i];
                     if (property.XamlNode.Member.DependsOn.Count > 0)
                     {
-                        if (propertiesWithDO == null)
+                        if (propertiesWithDO is null)
                         {
                             propertiesWithDO = new PartiallyOrderedList<string, MarkupInfo>();
                         }
+
                         string dependentPropertyName = property.XamlNode.Member.Name;
 
                         propertiesWithDO.Add(dependentPropertyName, property);
@@ -1118,14 +1122,13 @@ namespace System.Xaml
                     }
                 }
 
-                if (propertiesWithDO == null)
+                if (propertiesWithDO is null)
                 {
                     return;
                 }
 
                 removedProperties = new List<MarkupInfo>(propertiesWithDO);
                 return;
-
             }
 
             public virtual bool IsAttributableMarkupExtension
@@ -1153,6 +1156,7 @@ namespace System.Xaml
                             return false;
                         }
                     }
+
                     isAttributableMarkupExtension = true;
                     return true;
                 }
@@ -1180,7 +1184,7 @@ namespace System.Xaml
 
             void FindNamespaceForTypeArguments(IList<XamlType> types, SerializerContext context)
             {
-                if (types == null || types.Count == 0)
+                if (types is null || types.Count == 0)
                 {
                     return;
                 }
@@ -1202,10 +1206,10 @@ namespace System.Xaml
                 }
                 else if (xamlType.IsCollection)
                 {
-                    propertyInfo = MemberMarkupInfo.ForSequenceItems(value, null, xamlType, context, true /*allowReadOnly*/);
+                    propertyInfo = MemberMarkupInfo.ForSequenceItems(value, null, xamlType, context, allowReadOnly: true);
                 }
 
-                if (propertyInfo != null && propertyInfo.Children.Count != 0)
+                if (propertyInfo is not null && propertyInfo.Children.Count != 0)
                 {
                     properties.Add(propertyInfo);
                 }
@@ -1216,10 +1220,11 @@ namespace System.Xaml
                 ParameterInfo[] methodParams = null;
                 MethodBase method = memberInfo as MethodBase;
 
-                if (method != null)
+                if (method is not null)
                 {
                     methodParams = method.GetParameters();
                 }
+
                 return methodParams;
             }
 
@@ -1227,7 +1232,7 @@ namespace System.Xaml
             {
                 methodParams = null;
 
-                if (memberInfo == null)
+                if (memberInfo is null)
                 {
                     // default ctor
                     methodParams = Array.Empty<ParameterInfo>();
@@ -1259,10 +1264,11 @@ namespace System.Xaml
                 }
                 else if (valueType.IsValueType)
                 {
-                    if (arguments != null && arguments.Count > 0)
+                    if (arguments is not null && arguments.Count > 0)
                     {
                         throw new XamlObjectReaderException(SR.ObjectReaderInstanceDescriptorIncompatibleArguments);
                     }
+
                     return;
                 }
                 else
@@ -1270,7 +1276,7 @@ namespace System.Xaml
                     throw new XamlObjectReaderException(SR.ObjectReaderInstanceDescriptorInvalidMethod);
                 }
 
-                if (arguments != null)
+                if (arguments is not null)
                 {
                     if (arguments.Count != methodParams.Length)
                     {
@@ -1281,7 +1287,7 @@ namespace System.Xaml
                     foreach (var argument in arguments)
                     {
                         var parameterInfo = methodParams[argPos++];
-                        if (argument == null)
+                        if (argument is null)
                         {
                             if (parameterInfo.ParameterType.IsValueType)
                             {
@@ -1302,7 +1308,7 @@ namespace System.Xaml
 
             void AddArgumentsMembers(ICollection arguments, SerializerContext context)
             {
-                if (arguments != null && arguments.Count > 0)
+                if (arguments is not null && arguments.Count > 0)
                 {
                     var itemsProperty = new MemberMarkupInfo
                     {
@@ -1325,7 +1331,7 @@ namespace System.Xaml
 
             bool TryAddPositionalParameters(XamlType xamlType, MemberInfo member, ICollection arguments, SerializerContext context)
             {
-                if (arguments != null && arguments.Count > 0)
+                if (arguments is not null && arguments.Count > 0)
                 {
                     ParameterInfo[] cstrParams = GetMethodParams(member);
 
@@ -1346,14 +1352,14 @@ namespace System.Xaml
                         object meObject = argument;
 
                         context.Instance = argument;
-                        if (converter != null && valueSerializer != null && context.CanRoundtripUsingValueSerializer(valueSerializer, converter, argument))
+                        if (converter is not null && valueSerializer is not null && context.CanRoundtripUsingValueSerializer(valueSerializer, converter, argument))
                         {
                             // ValueSerializer is always preferred over TypeConverters
                             string stringValue = context.ConvertToString(valueSerializer, argument);
                             context.Instance = null;
                             positionalParametersProperty.Children.Add(new ValueMarkupInfo { XamlNode = new XamlNode(XamlNodeType.Value, stringValue) });
                         }
-                        else if ((converter != null && context.TryConvertToMarkupExtension(converter, ref meObject)) || meObject is MarkupExtension)
+                        else if ((converter is not null && context.TryConvertToMarkupExtension(converter, ref meObject)) || meObject is MarkupExtension)
                         {
                             context.Instance = null;
                             objectInfo = ForObject(meObject, context);
@@ -1361,9 +1367,10 @@ namespace System.Xaml
                             {
                                 return false;
                             }
+
                             positionalParametersProperty.Children.Add(objectInfo);
                         }
-                        else if (converter != null && context.CanRoundTripString(converter))
+                        else if (converter is not null && context.CanRoundTripString(converter))
                         {
                             var stringValue = context.ConvertTo<string>(converter, argument);
                             context.Instance = null;
@@ -1384,6 +1391,7 @@ namespace System.Xaml
                     Properties.Add(positionalParametersProperty);
                     return true;
                 }
+
                 return false;
             }
 
@@ -1400,11 +1408,12 @@ namespace System.Xaml
                 isComplete = false;
 
                 context.Instance = value;
-                if (converter != null && context.CanConvertTo(converter, typeof(InstanceDescriptor)))
+                if (converter is not null && context.CanConvertTo(converter, typeof(InstanceDescriptor)))
                 {
                     ConvertToInstanceDescriptor(context, value, converter, out member, out arguments, out isComplete);
                     result = true;
                 }
+
                 return result;
             }
 
@@ -1418,7 +1427,6 @@ namespace System.Xaml
                 arguments = descriptor.Arguments;
                 isComplete = descriptor.IsComplete;
             }
-
 
             bool TryGetDefaultConstructorInfo(XamlType type, out MemberInfo member, out ICollection arguments, out bool isComplete)
             {
@@ -1434,7 +1442,7 @@ namespace System.Xaml
                 var valueXamlType = context.GetXamlType(valueType);
 
                 context.Instance = value;
-                if (converter == null || !context.CanConvertTo(converter, typeof(InstanceDescriptor)))
+                if (converter is null || !context.CanConvertTo(converter, typeof(InstanceDescriptor)))
                 {
                     context.Instance = null;
                     converter = TypeConverterExtensions.GetConverterInstance(valueXamlType.TypeConverter);
@@ -1450,7 +1458,7 @@ namespace System.Xaml
                 // we will need to enumerate the properties if we have a runtimeNamePropertyName
                 //
                 if (!isComplete ||
-                    valueXamlType.GetAliasedProperty(XamlLanguage.Name) != null ||
+                    valueXamlType.GetAliasedProperty(XamlLanguage.Name) is not null ||
                     context.Runtime.AttachedPropertyCount(value) > 0)
                 {
                     AddRecordMembers(
@@ -1485,7 +1493,7 @@ namespace System.Xaml
                     // Attempt to create a MemberMarkupInfo for the property, being unable to create
                     // one is indicative that we're done with it
                     var propertyInfo = MemberMarkupInfo.ForProperty(value, property, context);
-                    if (propertyInfo == null)
+                    if (propertyInfo is null)
                     {
                         continue;
                     }
@@ -1578,6 +1586,7 @@ namespace System.Xaml
                         {
                             GetConstructorInfo(value, valueXamlType, context, out member, out arguments, out isComplete);
                         }
+
                         AddArgumentsMembers(arguments, context);
                     }
                 }
@@ -1595,12 +1604,14 @@ namespace System.Xaml
                 {
                     return false;
                 }
+
                 if (propertyInfo.IsAtomic)
                 {
                     // we do not want type-converted properties as content properties
                     // to conform with 3.0
                     return XamlLanguage.String.CanAssignTo(property.Type);
                 }
+
                 return true;
             }
 
@@ -1626,6 +1637,7 @@ namespace System.Xaml
                         ctorArgProps.Add(p);
                     }
                 }
+
                 foreach (XamlMember p in readOnlyProperties)
                 {
                     if (context.IsPropertyReadVisible(p) && !string.IsNullOrEmpty(GetConstructorArgument(p)))
@@ -1662,7 +1674,7 @@ namespace System.Xaml
                         // At least one of the arguments has no matching property... break out of the loop and
                         // we'll move on to the next constructor.
                         //
-                        if (matchingProperty == null) { break; }
+                        if (matchingProperty is null) { break; }
 
                         constructorArguments.Add(context.Runtime.GetValue(value, matchingProperty));
                     }
@@ -1691,12 +1703,13 @@ namespace System.Xaml
                     }
                 }
 
-                if (member == null && !valueXamlType.UnderlyingType.IsValueType)
+                if (member is null && !valueXamlType.UnderlyingType.IsValueType)
                 {
                     if (ctorArgProps.Count == 0)
                     {
                         throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderNoDefaultConstructor, value.GetType()));
                     }
+
                     throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderNoMatchingConstructor, value.GetType()));
                 }
             }
@@ -1730,7 +1743,7 @@ namespace System.Xaml
 
             public void AssignName(SerializerContext context)
             {
-                if (Name == null)
+                if (Name is null)
                 {
                     Name = context.AllocateIdentifier();
                     AddNameProperty(context);
@@ -1739,7 +1752,7 @@ namespace System.Xaml
 
             public void AssignName(string name, SerializerContext context)
             {
-                if (Name == null)
+                if (Name is null)
                 {
                     Name = name;
 
@@ -1763,7 +1776,7 @@ namespace System.Xaml
                 // the object, we need to add the object node back
                 if (XamlNode.NodeType == XamlNodeType.GetObject)
                 {
-                    Debug.Assert(Object != null);
+                    Debug.Assert(Object is not null);
                     var xamlType = context.LocalAssemblyAwareGetXamlType(Object.GetType());
                     XamlNode = new XamlNode(XamlNodeType.StartObject, xamlType);
                 }
@@ -1864,7 +1877,7 @@ namespace System.Xaml
             static void AddAttachedProperties(object value, ObjectMarkupInfo objectInfo, SerializerContext context)
             {
                 var props = context.Runtime.GetAttachedProperties(value);
-                if (props != null)
+                if (props is not null)
                 {
                     foreach (var ap in props)
                     {
@@ -1873,9 +1886,10 @@ namespace System.Xaml
                         {
                             continue;
                         }
+
                         XamlMember attachedProperty = owningType.GetAttachableMember(ap.Key.MemberName);
 
-                        if (attachedProperty == null)
+                        if (attachedProperty is null)
                         {
                             throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderAttachedPropertyNotFound, owningType, ap.Key.MemberName));
                         }
@@ -1886,7 +1900,7 @@ namespace System.Xaml
                         }
 
                         var propertyInfo = MemberMarkupInfo.ForAttachedProperty(value, attachedProperty, ap.Value, context);
-                        if (propertyInfo != null)
+                        if (propertyInfo is not null)
                         {
                             objectInfo.Properties.Add(propertyInfo);
                         }
@@ -1901,13 +1915,13 @@ namespace System.Xaml
 
             public static ObjectMarkupInfo ForObject(object value, SerializerContext context, TypeConverter instanceConverter = null, bool isRoot = false)
             {
-                if (value == null)
+                if (value is null)
                 {
                     return ForNull();
                 }
 
                 ObjectMarkupInfo existingInfo = context.ReferenceTable.Find(value);
-                if (existingInfo != null)
+                if (existingInfo is not null)
                 {
                     existingInfo.AssignName(context);
                     return new ReferenceMarkupInfo(existingInfo);
@@ -1923,7 +1937,7 @@ namespace System.Xaml
                 // }
 
                 var valueAsArray = value as Array;
-                if (valueAsArray != null)
+                if (valueAsArray is not null)
                 {
                     return ForArray(valueAsArray, context);
                 }
@@ -1933,7 +1947,7 @@ namespace System.Xaml
                 ValueSerializer valueSerializer = null;
                 TypeConverter converter = null;
 
-                if (valueType.ContentProperty == null ||
+                if (valueType.ContentProperty is null ||
                     (valueType.ContentProperty.TypeConverter != BuiltInValueConverter.String &&
                      valueType.ContentProperty.TypeConverter != BuiltInValueConverter.Object))
                 {
@@ -1943,22 +1957,23 @@ namespace System.Xaml
 
                 context.Instance = value;
                 ObjectMarkupInfo objectInfo;
-                if (valueType.DeferringLoader != null)
+                if (valueType.DeferringLoader is not null)
                 {
                     objectInfo = MemberMarkupInfo.ConvertToXamlReader(value, valueType.DeferringLoader, context);
                 }
-                else if (converter != null && valueSerializer != null && context.CanRoundtripUsingValueSerializer(valueSerializer, converter, value))
+                else if (converter is not null && valueSerializer is not null && context.CanRoundtripUsingValueSerializer(valueSerializer, converter, value))
                 {
                     if (isRoot)
                     {
                         context.ReserveDefaultPrefixForRootObject(value);
                     }
+
                     // ValueSerializer is always preferred over TypeConverters
                     string stringValue = context.ConvertToString(valueSerializer, value);
                     context.Instance = null;
                     objectInfo = ForTypeConverted((string)stringValue, value, context);
                 }
-                else if (converter != null && context.TryConvertToMarkupExtension(converter, ref value))
+                else if (converter is not null && context.TryConvertToMarkupExtension(converter, ref value))
                 {
                     context.Instance = null;
 
@@ -1974,12 +1989,13 @@ namespace System.Xaml
                     context.Instance = null;
                     objectInfo = ForObject(new TypeExtension(type), context);
                 }
-                else if (converter != null && context.CanRoundTripString(converter))
+                else if (converter is not null && context.CanRoundTripString(converter))
                 {
                     if (isRoot)
                     {
                         context.ReserveDefaultPrefixForRootObject(value);
                     }
+
                     var stringValue = context.ConvertTo<string>(converter, value);
                     context.Instance = null;
                     objectInfo = ForTypeConverted((string)stringValue, value, context);
@@ -1995,13 +2011,14 @@ namespace System.Xaml
                     {
                         context.ReserveDefaultPrefixForRootObject(value);
                     }
+
                     context.Instance = null;
                     objectInfo = ForObjectInternal(value, context, instanceConverter);
                 }
 
                 // check if any type converter has asked for the name of the current object
                 string assignedName = context.ReferenceTable.FindInServiceProviderTable(value);
-                if (assignedName != null)
+                if (assignedName is not null)
                 {
                     objectInfo.AssignName(assignedName, context);
                 }
@@ -2100,7 +2117,7 @@ namespace System.Xaml
 
             static bool PropertyUsedInMethodSignature(XamlMember property, ParameterInfo[] methodParameters)
             {
-                if (methodParameters != null)
+                if (methodParameters is not null)
                 {
                     if (!string.IsNullOrEmpty(GetConstructorArgument(property)))
                     {
@@ -2131,6 +2148,7 @@ namespace System.Xaml
                         return name;
                     }
                 }
+
                 XamlMember property = propertyInfo.XamlNode.Member;
                 throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderXamlNamePropertyMustBeString, property.Name, property.DeclaringType));
             }
@@ -2326,6 +2344,7 @@ namespace System.Xaml
                         propertyList.Add(property);
                     }
                 }
+
                 return propertyList;
             }
         }
@@ -2350,6 +2369,7 @@ namespace System.Xaml
 
                 return base.Decompose();
             }
+
         // public override bool IsAttributableMarkupExtension
         //    {
         //        get
@@ -2435,10 +2455,11 @@ namespace System.Xaml
 
             public void AddToServiceProviderTable(object value, string name)
             {
-                if (serviceProviderTable == null)
+                if (serviceProviderTable is null)
                 {
                     serviceProviderTable = new Dictionary<object, string>(new ObjectReferenceEqualityComparer());
                 }
+
                 serviceProviderTable.Add(value, name);
             }
 
@@ -2448,8 +2469,9 @@ namespace System.Xaml
                 if (!objectGraphTable.TryGetValue(value, out result))
                 {
                     // this is a recursive search, because objects in the parent namescopes are still visible
-                    if (parent != null) { return parent.Find(value); }
+                    if (parent is not null) { return parent.Find(value); }
                 }
+
                 return result;
             }
 
@@ -2457,7 +2479,7 @@ namespace System.Xaml
             {
                 string result = null;
 
-                if (serviceProviderTable != null)
+                if (serviceProviderTable is not null)
                 {
                     serviceProviderTable.TryGetValue(value, out result);
                 }
@@ -2490,7 +2512,7 @@ namespace System.Xaml
                 prefixToNamespaceMap = new Dictionary<string, string>();
                 ReferenceTable = new ReferenceTable(null);
                 this.schemaContext = schemaContext;
-                runtime = new ClrObjectRuntime(null, false /*isWriter*/);
+                runtime = new ClrObjectRuntime(null, isWriter: false);
                 this.settings = settings;
             }
 
@@ -2577,6 +2599,7 @@ namespace System.Xaml
                     {
                         return true;
                     }
+
                     return false;
                 }
 
@@ -2601,7 +2624,7 @@ namespace System.Xaml
                     prefix = string.Empty;
                 }
 
-                if (prefix == null)
+                if (prefix is null)
                 {
                     prefix = basePrefix;
 
@@ -2627,11 +2650,12 @@ namespace System.Xaml
             public XamlType GetXamlType(Type clrType)
             {
                 XamlType result = schemaContext.GetXamlType(clrType);
-                if (result == null)
+                if (result is null)
                 {
                     throw new XamlObjectReaderException(SR.Format(SR.ObjectReaderTypeNotAllowed,
                         schemaContext.GetType(), clrType));
                 }
+
                 return result;
             }
 
@@ -2642,6 +2666,7 @@ namespace System.Xaml
                 {
                     throw new XamlObjectReaderException(SR.Format(SR.ObjectReader_TypeNotVisible, clrType.FullName));
                 }
+
                 return result;
             }
 
@@ -2656,6 +2681,7 @@ namespace System.Xaml
                 {
                     return false;
                 } // ReferenceConverter lies.
+
                 return Runtime.CanConvertFrom<string>(TypeDescriptorContext, converter) &&
                     Runtime.CanConvertTo(TypeDescriptorContext, converter, typeof(string));
             }
@@ -2663,8 +2689,8 @@ namespace System.Xaml
             public bool CanRoundtripUsingValueSerializer(ValueSerializer valueSerializer, TypeConverter typeConverter, object value)
             {
                 // ValueSerializer must know how to convert to string and the TypeConverter must know how to convert from string
-                return (valueSerializer != null &&
-                    typeConverter != null &&
+                return (valueSerializer is not null &&
+                    typeConverter is not null &&
                     Runtime.CanConvertToString(ValueSerializerContext, valueSerializer, value) &&
                     Runtime.CanConvertFrom<string>(TypeDescriptorContext, typeConverter));
             }
@@ -2681,7 +2707,7 @@ namespace System.Xaml
 
             public bool TryValueSerializeToString(ValueSerializer valueSerializer, TypeConverter propertyConverter, SerializerContext context, ref object value)
             {
-                if (value == null) { return false; }
+                if (value is null) { return false; }
 
                 // skip using ValueSerializer if value is string
                 if (value is string) { return true; }
@@ -2699,7 +2725,7 @@ namespace System.Xaml
 
             public bool TryTypeConvertToString(TypeConverter converter, ref object value)
             {
-                if (value == null) { return false; }
+                if (value is null) { return false; }
 
                 // Regardless of what the type converter says, if the value of the property is now a string, then
                 // we can just write the string straight in.
@@ -2713,7 +2739,7 @@ namespace System.Xaml
 
             public bool TryConvertToMarkupExtension(TypeConverter converter, ref object value)
             {
-                if (value == null) { return false; }
+                if (value is null) { return false; }
                 if (!Runtime.CanConvertTo(TypeDescriptorContext, converter, typeof(MarkupExtension))) { return false; }
 
                 value = ConvertTo<MarkupExtension>(converter, value);
@@ -2733,19 +2759,19 @@ namespace System.Xaml
                 XamlType type = GetXamlType(objectToName.GetType());
                 XamlMember runtimeNameProperty = type.GetAliasedProperty(XamlLanguage.Name);
 
-                if (runtimeNameProperty != null)
+                if (runtimeNameProperty is not null)
                 {
                     runtimeName = Runtime.GetValue(objectToName, runtimeNameProperty) as string;
                 }
 
-                if (runtimeName != null)
+                if (runtimeName is not null)
                 {
                     return runtimeName;
                 }
 
                 // Is the object already being referenced?
                 ObjectMarkupInfo existingInfo = ReferenceTable.Find(objectToName);
-                if (existingInfo != null)
+                if (existingInfo is not null)
                 {
                     existingInfo.AssignName(this);
                     return existingInfo.Name;
@@ -2755,7 +2781,7 @@ namespace System.Xaml
                 string allocatedName = null;
                 allocatedName = ReferenceTable.FindInServiceProviderTable(objectToName);
 
-                if (allocatedName == null)
+                if (allocatedName is null)
                 {
                     // the object has not been seen at the current stage due to either
                     // 1. the object is present in other parts of the object graph yet to be constructed
@@ -2766,6 +2792,7 @@ namespace System.Xaml
                     allocatedName = AllocateIdentifier();
                     ReferenceTable.AddToServiceProviderTable(objectToName, allocatedName);
                 }
+
                 return allocatedName;
             }
 
@@ -2776,6 +2803,7 @@ namespace System.Xaml
                 {
                     allowProtectedMemberOnType = RootType;
                 }
+
                 return property.IsReadVisibleTo(LocalAssembly, allowProtectedMemberOnType);
             }
 
@@ -2786,6 +2814,7 @@ namespace System.Xaml
                 {
                     allowProtectedMemberOnType = RootType;
                 }
+
                 return property.IsWriteVisibleTo(LocalAssembly, allowProtectedMemberOnType);
             }
         }
@@ -2988,6 +3017,7 @@ namespace System.Xaml
                 {
                     nodes.Insert(objectPosition, property);
                 }
+
                 return nodes;
             }
 
@@ -3026,7 +3056,7 @@ namespace System.Xaml
                 public override bool Equals(object obj)
                 {
                     Entry other = obj as Entry;
-                    return other != null && other.Key.Equals(Key);
+                    return other is not null && other.Key.Equals(Key);
                 }
 
                 public override int GetHashCode()
@@ -3070,6 +3100,7 @@ namespace System.Xaml
                     result = _entries.Count;
                     _entries.Add(entry);
                 }
+
                 return result;
             }
 
@@ -3084,10 +3115,11 @@ namespace System.Xaml
                 Entry keyEntry = _entries[keyIndex];
 
                 // add the constraint
-                if (keyEntry.Predecessors == null)
+                if (keyEntry.Predecessors is null)
                 {
                     keyEntry.Predecessors = new List<int>();
                 }
+
                 keyEntry.Predecessors.Add(predIndex);
 
                 // mark the list to force a sort before the next
@@ -3129,7 +3161,7 @@ namespace System.Xaml
                     _entries[index].Link = Entry.INDFS;
 
                     // search the predecessors
-                    if (_entries[index].Predecessors != null)
+                    if (_entries[index].Predecessors is not null)
                     {
                         foreach (int predIndex in _entries[index].Predecessors)
                         {
@@ -3150,6 +3182,7 @@ namespace System.Xaml
 
                     _lastIndex = index;
                 }
+
                 /* Note: if it is desired to detect cycles, this is the
                    place to do it.
                 else if (_entries[index].Link == Entry.INDFS)
@@ -3177,7 +3210,7 @@ namespace System.Xaml
                 while (index >= 0)
                 {
                     Entry entry = _entries[index];
-                    if (entry.Value != null)
+                    if (entry.Value is not null)
                         yield return entry.Value;
 
                     index = entry.Link;
@@ -3200,7 +3233,7 @@ namespace System.Xaml
         {
             public static TConverter GetConverterInstance<TConverter>(XamlValueConverter<TConverter> converter) where TConverter : class
             {
-                return (converter == null) ? null : converter.ConverterInstance;
+                return (converter is null) ? null : converter.ConverterInstance;
             }
         }
 
@@ -3216,11 +3249,13 @@ namespace System.Xaml
                 {
                     return member;
                 }
+
                 MethodInfo accessor = member.Getter ?? member.Setter;
-                if (accessor == null || !accessor.IsVirtual)
+                if (accessor is null || !accessor.IsVirtual)
                 {
                     return member;
                 }
+
                 Type baseDeclaringType = accessor.GetBaseDefinition().DeclaringType;
                 if (member.DeclaringType.UnderlyingType == baseDeclaringType)
                 {
@@ -3228,27 +3263,31 @@ namespace System.Xaml
                 }
 
                 XamlType baseType = member.DeclaringType.BaseType;
-                while (baseType != null && baseType != XamlLanguage.Object)
+                while (baseType is not null && baseType != XamlLanguage.Object)
                 {
                     XamlMember baseMember = baseType.GetMember(member.Name);
-                    if (baseMember == null)
+                    if (baseMember is null)
                     {
                         baseMember = GetExcludedReadOnlyMember(baseType, member.Name);
-                        if (baseMember == null)
+                        if (baseMember is null)
                         {
                             break;
                         }
                     }
+
                     if (MeetsCriterion(baseMember, criterion))
                     {
                         return baseMember;
                     }
+
                     if (baseType.UnderlyingType == baseDeclaringType)
                     {
                         break;
                     }
+
                     baseType = baseMember.DeclaringType.BaseType;
                 }
+
                 return member;
             }
 
@@ -3261,6 +3300,7 @@ namespace System.Xaml
                         return member;
                     }
                 }
+
                 return null;
             }
 
@@ -3269,7 +3309,7 @@ namespace System.Xaml
                 switch (criterion)
                 {
                     case GetNearestBaseMemberCriterion.HasConstructorArgument:
-                        return member.ConstructorArgument != null;
+                        return member.ConstructorArgument is not null;
                     case GetNearestBaseMemberCriterion.HasDefaultValue:
                         return member.HasDefaultValue;
                     case GetNearestBaseMemberCriterion.HasSerializationVisibility:

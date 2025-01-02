@@ -16,29 +16,10 @@
 #pragma warning disable 1634, 1691
 
 using System;
-using System.Xml;
 using System.IO;
 using System.Text;
-using System.Reflection;
-using System.Globalization;
-using System.ComponentModel;
-using System.Security.Cryptography;
-
-using System.CodeDom;
-using System.CodeDom.Compiler;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel.Design.Serialization;
 
 using System.Diagnostics;
-using System.Diagnostics.CodeAnalysis;
-
-using System.Threading;
-using MS.Internal.Markup;
-using MS.Internal.Tasks;
-using MS.Utility;   // for SR
-using Microsoft.Build.Utilities;
-using Microsoft.Build.Tasks.Windows;
 using System.Runtime.CompilerServices;
 
 namespace MS.Internal

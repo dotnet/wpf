@@ -2,11 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-namespace System.Windows 
+namespace System.Windows
 {
-    using System;
-
     /// <summary>
     ///     This class declares that an attached property is browsable only 
     ///     for dependency objects that derive from the given type.  If more 

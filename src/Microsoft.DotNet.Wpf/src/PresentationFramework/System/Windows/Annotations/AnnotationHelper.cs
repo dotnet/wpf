@@ -4,28 +4,16 @@
 
 #pragma warning disable 1634, 1691
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Windows.Threading;
-using System.IO;
-using System.Windows;
-using System.Windows.Annotations.Storage;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Markup;
 using System.Xml;
-using System.Diagnostics;
 using MS.Internal;
 using MS.Internal.Annotations;
 using MS.Internal.Annotations.Anchoring;
 using MS.Internal.Annotations.Component;
-using MS.Internal.Documents;
 using MS.Utility;
 
 namespace System.Windows.Annotations

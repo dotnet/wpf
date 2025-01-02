@@ -11,19 +11,11 @@
 //
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Controls;
-using MS.Utility;
 using MS.Internal;              // Invariant.Assert
 using MS.Internal.Utility;
 using MS.Internal.Data;         // IndexedEnumerable
-
-using System;
 
 namespace System.Windows.Data
 {

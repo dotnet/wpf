@@ -15,14 +15,8 @@
 // internal on pupose.
 //***************************************************************************
 
-using Accessibility;
 using System.Runtime.InteropServices;
 using System;
-using System.Collections;
-using System.Diagnostics;
-using System.IO;
-using System.Text;
-using System.Security;
 using System.Windows;
 
 namespace MS.Win32

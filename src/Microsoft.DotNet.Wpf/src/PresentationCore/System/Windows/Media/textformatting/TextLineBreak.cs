@@ -2,28 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
 //  Contents:  Text properties and state at the point where text is broken 
 //             by the line breaking process, which may need to be carried over 
 //             when formatting the next line.
-//
-//  Spec:      Text Formatting API.doc
-//
-//
 
-using System;
-using System.Security;
-using System.Collections;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Media;
-using MS.Internal;
 using MS.Internal.TextFormatting;
-
-using SR = MS.Internal.PresentationCore.SR;
-
 
 namespace System.Windows.Media.TextFormatting
 {

@@ -2,25 +2,24 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
+using MS.Win32;
+using MS.Internal.Interop;
+
+// Some COM interfaces and Win32 structures are already declared in the framework.
+// Interesting ones to remember in System.Runtime.InteropServices.ComTypes are:
+using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
 
 // Interfaces and enums are taken from ShObjIdl.idl
 
 namespace MS.Internal.AppModel
 {
-    using System;
-    using System.Runtime.CompilerServices;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Security;
-    using System.Text;
-    using MS.Win32;
-    using MS.Internal.Interop;
-
-    // Some COM interfaces and Win32 structures are already declared in the framework.
-    // Interesting ones to remember in System.Runtime.InteropServices.ComTypes are:
-    using FILETIME = System.Runtime.InteropServices.ComTypes.FILETIME;
-    using IPersistFile = System.Runtime.InteropServices.ComTypes.IPersistFile;
-    using IStream = System.Runtime.InteropServices.ComTypes.IStream;
+    // There are THREE definitions of HRESULT. Two in ErrorCodes, and one in wgx_render.cs.
+    // wgx_render.cs wins if we don't put this inside of the namespace.
+    using Win32Error = MS.Internal.Interop.Win32Error;
+    using HRESULT = MS.Internal.Interop.HRESULT;
 
     #region Structs
 
@@ -652,7 +651,7 @@ namespace MS.Internal.AppModel
     ]
     internal interface IApplicationDestinations
     {
-        // Set the App User Model ID for the application removing destinations from its list.  If an AppID is not provided 
+        // Set the App User Model ID for the application removing destinations from its list.  If an AppID is not provided
         // via this method, the system will use a heuristically determined ID.  This method must be called before
         // RemoveDestination or RemoveAllDestinations.
         void SetAppID([MarshalAs(UnmanagedType.LPWStr)] string pszAppID);
@@ -676,14 +675,14 @@ namespace MS.Internal.AppModel
     {
         /// <summary>
         /// Set the App User Model ID for the application retrieving this list.  If an AppID is not provided via this method,
-        /// the system will use a heuristically determined ID.  This method must be called before GetList. 
+        /// the system will use a heuristically determined ID.  This method must be called before GetList.
         /// </summary>
         /// <param name="pszAppID">App Id.</param>
         void SetAppID([MarshalAs(UnmanagedType.LPWStr)] string pszAppID);
 
         /// <summary>
-        /// Retrieve an IEnumObjects or IObjectArray for IShellItems and/or IShellLinks. 
-        /// Items may appear in both the frequent and recent lists.  
+        /// Retrieve an IEnumObjects or IObjectArray for IShellItems and/or IShellLinks.
+        /// Items may appear in both the frequent and recent lists.
         /// </summary>
         /// <param name="listtype">Which of the known list types to retrieve</param>
         /// <param name="cItemsDesired">The number of items desired.</param>
@@ -739,7 +738,7 @@ namespace MS.Internal.AppModel
     };
 
     /// <summary>
-    /// Provides access to the ProgID associated with an object 
+    /// Provides access to the ProgID associated with an object
     /// </summary>
     [
         ComImport,

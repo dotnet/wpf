@@ -506,6 +506,7 @@
     <SolidColorBrush x:Key="LabelForeground" Color="{StaticResource TextFillColorPrimary}" />
 
     <!--  ListBox  -->
+    <Color x:Key="SystemChromeMediumLowColor">#FF2B2B2B</Color>
     <SolidColorBrush x:Key="ListBoxBackground" Color="{StaticResource CardBackgroundFillColorDefault}" />
     <SolidColorBrush x:Key="ListBoxItemForeground" Color="{StaticResource TextFillColorPrimary}" />
     <SolidColorBrush x:Key="ListBoxItemSelectedBackgroundThemeBrush" Color="{StaticResource SystemAccentColor}" Opacity="0.6" />
@@ -578,7 +579,7 @@
     <SolidColorBrush x:Key="RadioButtonBackground" Color="{StaticResource SubtleFillColorTransparent}"/>
     <SolidColorBrush x:Key="RadioButtonBackgroundPointerOver" Color="{StaticResource SubtleFillColorTransparent}"/>
     <SolidColorBrush x:Key="RadioButtonBackgroundPressed" Color="{StaticResource SubtleFillColorTransparent}"/>
-    <SolidColorBrush x:Key="RadioButtonBackgroundDisabled" Color="{StaticResource TextFillColorDisabled}" />
+    <SolidColorBrush x:Key="RadioButtonBackgroundDisabled" Color="{StaticResource ControlFillColorTransparent}" />
     <SolidColorBrush x:Key="RadioButtonBorderBrush" Color="{StaticResource SubtleFillColorTransparent}"/>
     <SolidColorBrush x:Key="RadioButtonBorderBrushPointerOver" Color="{StaticResource SubtleFillColorTransparent}"/>
     <SolidColorBrush x:Key="RadioButtonBorderBrushPressed" Color="{StaticResource SubtleFillColorTransparent}"/>
@@ -597,6 +598,8 @@
     <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokePressed" Color="{StaticResource ControlStrongStrokeColorDisabled}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseStrokeDisabled" Color="{StaticResource ControlStrongStrokeColorDisabled}" />
     <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFill" Color="{StaticResource SystemAccentColorLight2}"/>
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedFillDisabled" Color="{StaticResource AccentFillColorDisabled}" />
+    <SolidColorBrush x:Key="RadioButtonOuterEllipseCheckedStrokeDisabled" Color="{StaticResource AccentFillColorDisabled}" />
 
     <!--  RatingControl  -->
     <SolidColorBrush x:Key="RatingControlSelectedForeground" Color="{StaticResource SystemAccentColorLight2}" />

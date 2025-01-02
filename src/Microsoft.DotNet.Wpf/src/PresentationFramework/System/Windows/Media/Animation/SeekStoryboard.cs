@@ -11,15 +11,14 @@
 *
 \***************************************************************************/
 using System.ComponentModel;            // DefaultValueAttribute
-using System.Diagnostics;               // Debug.Assert
 
 namespace System.Windows.Media.Animation
 {
-/// <summary>
-/// SeekStoryboard will call seek on its Storyboard reference when
-///  it is triggered.
-/// </summary>
-public sealed class SeekStoryboard : ControllableStoryboardAction
+    /// <summary>
+    /// SeekStoryboard will call seek on its Storyboard reference when
+    ///  it is triggered.
+    /// </summary>
+    public sealed class SeekStoryboard : ControllableStoryboardAction
 {
     /// <summary>
     ///     A time offset to use for this action.  If it is never explicitly

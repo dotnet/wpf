@@ -55,6 +55,7 @@ namespace System.Xaml
                     return false;
                 }
             }
+
             return true;
         }
     }

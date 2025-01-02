@@ -6,10 +6,8 @@
 // Description: MoveSizeWinEventHandler implementation.
 //
 
-using System;
 using System.Collections;
 using System.Runtime.InteropServices;
-using System.Security;
 using MS.Win32;
 using MS.Internal;
 

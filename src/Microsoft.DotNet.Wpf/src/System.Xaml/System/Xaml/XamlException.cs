@@ -5,7 +5,6 @@
 #nullable disable
 
 using System.Runtime.Serialization;
-using System.Security;
 using MS.Internal.Xaml.Parser;
 
 namespace System.Xaml
@@ -24,7 +23,7 @@ namespace System.Xaml
             : base(message, innerException)
         {
             XamlException xex = innerException as XamlException;
-            if (xex != null)
+            if (xex is not null)
             {
                 LineNumber = xex.LineNumber;
                 LinePosition = xex.LinePosition;
@@ -47,8 +46,10 @@ namespace System.Xaml
                     {
                         return SR.Format(SR.LineNumberAndPosition, base.Message, LineNumber, LinePosition);
                     }
+
                     return SR.Format(SR.LineNumberOnly, base.Message, LineNumber);
                 }
+
                 return base.Message;
             }
         }
@@ -144,7 +145,7 @@ namespace System.Xaml
         public XamlDuplicateMemberException() { }
 
         public XamlDuplicateMemberException(XamlMember member, XamlType type)
-            : base(SR.Format(SR.DuplicateMemberSet, (member != null) ? member.Name : null, (type != null) ? type.Name : null))
+            : base(SR.Format(SR.DuplicateMemberSet, (member is not null) ? member.Name : null, (type is not null) ? type.Name : null))
         {
             DuplicateMember = member;
             ParentType = type;

@@ -2,32 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
-//  This class provides api's to add/remove/verify signatures on an MMCF container. 
-//
-//
-//
-//
+//  This class provides api's to add/remove/verify signatures on an MMCF container.
 
 // Allow use of presharp warning numbers [6506] unknown to the compiler
 #pragma warning disable 1634, 1691
 
-using System;
-using System.Collections.Generic;
-using System.Windows;                                   // For Exception strings - SR
-using System.Text;                                      // for StringBuilder
-using System.Diagnostics;                               // for Assert
-using System.Security;                                  // for SecurityCritical tag
 using System.Security.Cryptography.Xml;                 // for SignedXml
 using System.Security.Cryptography.X509Certificates;    // for X509Certificate
 using MS.Internal.IO.Packaging;                         // for internal helpers
 using System.Collections.ObjectModel;                   // for ReadOnlyCollection<>
 using MS.Internal;                                      // for ContentType
-using MS.Internal.WindowsBase;
-
-using Package = System.IO.Packaging.Package;
 using MS.Internal.IO.Packaging.Extensions;
 
 namespace System.IO.Packaging

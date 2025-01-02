@@ -8,9 +8,7 @@
 //              The class functions as an array of XmlGlyphRunInfo's in markup order.
 //
 
-using System;
 using System.Xml;                       // For DOM objects
-using System.Diagnostics;               // For Assert
 using System.Globalization;             // For CultureInfo
 using System.Windows;                   // For ExceptionStringTable
 using Windows = System.Windows;         // For Windows.Point (as distinct from System.Drawing.Point)

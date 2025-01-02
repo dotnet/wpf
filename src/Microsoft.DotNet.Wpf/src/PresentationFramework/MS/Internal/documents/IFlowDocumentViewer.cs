@@ -3,12 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;                       // Object, IServiceProvider
 using System.Windows;               // Rect, Point
 using System.Windows.Documents;     // ITextSelection
 using System.Windows.Controls;      // FlowDocumentScrollViewer
-using System.Windows.Controls.Primitives;   // IScrollInfo
-using System.Windows.Input;         // UICommand
 using System.Windows.Threading;     // Dispatcher
 using MS.Internal.KnownBoxes;       // BooleanBoxes
 

@@ -9,9 +9,7 @@
 //
 
 
-using System;
 using System.Windows;
-using System.Security;
 using System.Windows.Documents;
 using System.Windows.Media;
 using MS.Internal.Text;

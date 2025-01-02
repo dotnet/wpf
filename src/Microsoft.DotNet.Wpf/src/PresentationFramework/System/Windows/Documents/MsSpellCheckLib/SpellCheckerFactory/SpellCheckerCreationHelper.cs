@@ -10,8 +10,6 @@
 //
 
 using MS.Internal;
-using System.Collections.Generic;
-using System.Security;
 
 namespace System.Windows.Documents
 {

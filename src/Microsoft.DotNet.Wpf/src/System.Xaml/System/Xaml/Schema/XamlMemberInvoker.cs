@@ -4,9 +4,7 @@
 
 #nullable disable
 
-using System.Diagnostics.CodeAnalysis;
 using System.Reflection;
-using System.Security;
 using System.Xaml.MS.Impl;
 
 namespace System.Xaml.Schema
@@ -33,10 +31,11 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_Unknown == null)
+                if (s_Unknown is null)
                 {
                     s_Unknown = new XamlMemberInvoker();
                 }
+
                 return s_Unknown;
             }
         }
@@ -55,7 +54,7 @@ namespace System.Xaml.Schema
         {
             ArgumentNullException.ThrowIfNull(instance);
             ThrowIfUnknown();
-            if (UnderlyingGetter == null)
+            if (UnderlyingGetter is null)
             {
                 throw new NotSupportedException(SR.Format(SR.CantGetWriteonlyProperty, _member));
             }
@@ -74,7 +73,7 @@ namespace System.Xaml.Schema
         {
             ArgumentNullException.ThrowIfNull(instance);
             ThrowIfUnknown();
-            if (UnderlyingSetter == null)
+            if (UnderlyingSetter is null)
             {
                 throw new NotSupportedException(SR.Format(SR.CantSetReadonlyProperty, _member));
             }
@@ -93,10 +92,11 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_Directive == null)
+                if (s_Directive is null)
                 {
                     s_Directive = new DirectiveMemberInvoker();
                 }
+
                 return s_Directive;
             }
         }
@@ -125,12 +125,13 @@ namespace System.Xaml.Schema
                     flags |= BindingFlags.Instance;
                     args = Type.EmptyTypes;
                 }
+
                 _shouldSerializeMethod.Value = declaringType.GetMethod(methodName, flags, null, args, null);
             }
 
             // Invoke the method if we found one
             MethodInfo shouldSerializeMethod = _shouldSerializeMethod.Value;
-            if (shouldSerializeMethod != null)
+            if (shouldSerializeMethod is not null)
             {
                 bool result;
                 if (_member.IsAttachable)
@@ -144,25 +145,13 @@ namespace System.Xaml.Schema
 
                 return result ? ShouldSerializeResult.True : ShouldSerializeResult.False;
             }
+
             return ShouldSerializeResult.Default;
         }
 
-        // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        private static bool IsSystemXamlNonPublic(
-            ref ThreeValuedBool methodIsSystemXamlNonPublic, MethodInfo method)
-        {
-            if (methodIsSystemXamlNonPublic == ThreeValuedBool.NotSet)
-            {
-                bool result = SafeReflectionInvoker.IsSystemXamlNonPublic(method);
-                methodIsSystemXamlNonPublic = result ? ThreeValuedBool.True : ThreeValuedBool.False;
-            }
-            return methodIsSystemXamlNonPublic == ThreeValuedBool.True;
-        }
-        // ^^^^^----- End of unused members.  -----^^^^^
-
         private bool IsUnknown
         {
-            get { return _member == null || _member.UnderlyingMember == null; }
+            get { return _member is null || _member.UnderlyingMember is null; }
         }
 
         private void ThrowIfUnknown()

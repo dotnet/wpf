@@ -10,10 +10,6 @@
 //
 //------------------------------------------------------------------------------
 
-using System;
-using System.IO;
-using System.Collections;
-
 namespace MS.Internal.Tasks
 {
     #region SharedStrings class

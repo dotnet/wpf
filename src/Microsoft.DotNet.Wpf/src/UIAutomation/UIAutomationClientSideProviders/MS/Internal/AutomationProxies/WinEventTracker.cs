@@ -9,9 +9,7 @@
 
 using System;
 using System.Collections;
-using System.Reflection;
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 using MS.Win32;

@@ -10,14 +10,8 @@
 //
 //
 
-using System;
 using System.ComponentModel;    // for TypeConverter
 using System.Globalization;     // for CultureInfo
-using System.Reflection;
-using MS.Internal;
-using System.Windows;
-using System.Windows.Input;
-using MS.Utility;
 
 namespace System.Windows.Input
 {

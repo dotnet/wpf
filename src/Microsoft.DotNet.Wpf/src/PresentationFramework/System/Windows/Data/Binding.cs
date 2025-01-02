@@ -8,22 +8,14 @@
 // See spec at Data Binding.mht
 //
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Diagnostics;
 using System.ComponentModel;
 using System.Xml;
-
-using System.Windows;
 using System.Windows.Controls;  // Validation
-using System.Windows.Markup;
-using MS.Utility;
 using MS.Internal; // Invariant.Assert
 using MS.Internal.Controls; // Validation
 using MS.Internal.Data;
-using MS.Internal.KnownBoxes;
 
 namespace System.Windows.Data
 {

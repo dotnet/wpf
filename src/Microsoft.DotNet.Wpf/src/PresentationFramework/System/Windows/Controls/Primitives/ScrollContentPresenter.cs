@@ -8,20 +8,10 @@
 
 using MS.Internal;
 using MS.Utility;
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Markup;
 
 namespace System.Windows.Controls
 {

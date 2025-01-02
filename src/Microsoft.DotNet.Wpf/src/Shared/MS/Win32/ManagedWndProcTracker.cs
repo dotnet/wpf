@@ -4,28 +4,10 @@
 
 //#define LOGGING
 
-using System;
 using System.Collections;
-using System.Threading;
-
 using System.Runtime.InteropServices;
 using MS.Internal;
 using MS.Internal.Interop;
-using System.Security;
-
-// The SecurityHelper class differs between assemblies and could not actually be
-//  shared, so it is duplicated across namespaces to prevent name collision.
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-#error Attempt to use a class (duplicated across multiple namespaces) from an unknown assembly.
-#endif
 
 namespace MS.Win32
 {

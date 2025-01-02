@@ -6,7 +6,6 @@
 // Description: Undo unit for TextContainer.SetValue, etc. calls.
 //
 
-using System;
 using MS.Internal;
 
 namespace System.Windows.Documents

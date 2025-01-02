@@ -7,13 +7,9 @@
 //     AttachedAnnotation defines the IAttachedAnnotation interface
 //
 
-using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Annotations;
 using System.Windows.Annotations.Storage;
-using System.Windows.Media;
-using MS.Utility;
 
 namespace MS.Internal.Annotations
 {

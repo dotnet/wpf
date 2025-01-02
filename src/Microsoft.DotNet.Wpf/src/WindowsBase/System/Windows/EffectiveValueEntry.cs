@@ -11,9 +11,6 @@
 *
 \***************************************************************************/
 
-using System.Collections;       // IDictionary
-using System.Diagnostics;       // Debug.Assert
-
 namespace System.Windows
 {
     internal struct EffectiveValueEntry

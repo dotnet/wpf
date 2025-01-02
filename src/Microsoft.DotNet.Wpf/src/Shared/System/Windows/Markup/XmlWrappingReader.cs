@@ -18,7 +18,8 @@ namespace System.Xaml
 namespace System.Windows.Markup
 #endif
 {
-    internal class XmlWrappingReader : XmlReader, IXmlLineInfo, IXmlNamespaceResolver {
+    internal class XmlWrappingReader : XmlReader, IXmlLineInfo, IXmlNamespaceResolver
+    {
 //
 // Fields
 //
@@ -29,8 +30,9 @@ namespace System.Windows.Markup
 //
 // Constructor
 //
-        internal XmlWrappingReader( XmlReader baseReader ) {
-            Debug.Assert( baseReader != null );
+        internal XmlWrappingReader( XmlReader baseReader )
+        {
+            Debug.Assert( baseReader is not null);
             Reader = baseReader;
         }
 
@@ -64,78 +66,96 @@ namespace System.Windows.Markup
         public override bool HasAttributes          { get { return _reader.HasAttributes; } }
         public override XmlNameTable NameTable      { get { return _reader.NameTable; } }
 
-        public override string GetAttribute( string name ) {
+        public override string GetAttribute( string name )
+        {
             return _reader.GetAttribute( name );
         }
 
-        public override string GetAttribute( string name, string namespaceURI ) {
+        public override string GetAttribute( string name, string namespaceURI )
+        {
             return _reader.GetAttribute( name, namespaceURI );
         }
 
-        public override string GetAttribute( int i ) {
+        public override string GetAttribute( int i )
+        {
             return _reader.GetAttribute( i );
         }
 
-        public override bool MoveToAttribute( string name ) {
+        public override bool MoveToAttribute( string name )
+        {
             return _reader.MoveToAttribute( name );
         }
 
-        public override bool MoveToAttribute( string name, string ns ) {
+        public override bool MoveToAttribute( string name, string ns )
+        {
             return _reader.MoveToAttribute( name, ns );
         }
 
-        public override void MoveToAttribute( int i ) {
+        public override void MoveToAttribute( int i )
+        {
             _reader.MoveToAttribute( i );
         }
 
-        public override bool MoveToFirstAttribute() {
+        public override bool MoveToFirstAttribute()
+        {
             return _reader.MoveToFirstAttribute();
         }
 
-        public override bool MoveToNextAttribute() {
+        public override bool MoveToNextAttribute()
+        {
             return _reader.MoveToNextAttribute();
         }
 
-        public override bool MoveToElement() {
+        public override bool MoveToElement()
+        {
             return _reader.MoveToElement();
         }
 
-        public override bool Read() {
+        public override bool Read()
+        {
             return _reader.Read();
         }
 
-        public override void Close() {
+        public override void Close()
+        {
             _reader.Close();
         }
 
-        public override void Skip() {
+        public override void Skip()
+        {
             _reader.Skip();
         }
 
-        public override string LookupNamespace( string prefix ) {
+        public override string LookupNamespace( string prefix )
+        {
             return _reader.LookupNamespace( prefix );
         }
 
-        string IXmlNamespaceResolver.LookupPrefix( string namespaceName ) {
-            return (_readerAsResolver == null) ? null : _readerAsResolver.LookupPrefix( namespaceName );
+        string IXmlNamespaceResolver.LookupPrefix( string namespaceName )
+        {
+            return (_readerAsResolver is null) ? null : _readerAsResolver.LookupPrefix( namespaceName );
         }
 
-        IDictionary<string, string> IXmlNamespaceResolver.GetNamespacesInScope ( XmlNamespaceScope scope ) {
-            return (_readerAsResolver == null) ? null : _readerAsResolver.GetNamespacesInScope( scope );
+        IDictionary<string, string> IXmlNamespaceResolver.GetNamespacesInScope ( XmlNamespaceScope scope )
+        {
+            return (_readerAsResolver is null) ? null : _readerAsResolver.GetNamespacesInScope( scope );
         }
 
-        public override void ResolveEntity() {
+        public override void ResolveEntity()
+        {
             _reader.ResolveEntity();
         }
 
-        public override bool ReadAttributeValue() {
+        public override bool ReadAttributeValue()
+        {
             return _reader.ReadAttributeValue();
         }
 
 //
 // IDisposable interface
 //
-        protected override void Dispose(bool disposing) {
+        protected override void Dispose(bool disposing)
+        {
             try
             {
                 if(disposing)
@@ -152,30 +172,38 @@ namespace System.Windows.Markup
 //
 // IXmlLineInfo members
 //
-        public virtual bool HasLineInfo() {
-            return ( _readerAsIXmlLineInfo == null ) ? false : _readerAsIXmlLineInfo.HasLineInfo();
+        public virtual bool HasLineInfo()
+        {
+            return ( _readerAsIXmlLineInfo is null ) ? false : _readerAsIXmlLineInfo.HasLineInfo();
         }
 
-        public virtual int LineNumber {
-            get {
-                return ( _readerAsIXmlLineInfo == null ) ? 0 : _readerAsIXmlLineInfo.LineNumber;
+        public virtual int LineNumber
+        {
+            get
+            {
+                return ( _readerAsIXmlLineInfo is null ) ? 0 : _readerAsIXmlLineInfo.LineNumber;
             }
         }
 
-        public virtual int LinePosition {
-            get {
-                return ( _readerAsIXmlLineInfo == null ) ? 0 : _readerAsIXmlLineInfo.LinePosition;
+        public virtual int LinePosition
+        {
+            get
+            {
+                return ( _readerAsIXmlLineInfo is null ) ? 0 : _readerAsIXmlLineInfo.LinePosition;
             }
         }
 
 //
 //  Protected methods
 //
-        protected XmlReader Reader {
-            get {
+        protected XmlReader Reader
+        {
+            get
+            {
                 return _reader;
             }
-            set {
+            set
+            {
                 _reader = value;
                 _readerAsIXmlLineInfo = value as IXmlLineInfo;
                 _readerAsResolver = value as IXmlNamespaceResolver;
@@ -183,5 +211,3 @@ namespace System.Windows.Markup
         }
     }
 }
-
-

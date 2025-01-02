@@ -5,14 +5,8 @@
 
 using Microsoft.Win32;
 using MS.Win32;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows.Input.StylusWisp;
 using System.Windows.Input.Tracing;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusWisp
 {

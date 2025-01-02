@@ -6,17 +6,7 @@
 //  Contents:  BamlLocalizationDictionary and BamlLocalizationDictionaryEnumerator
 //
 
-using System;
-using System.IO;
-using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Collections;
-using System.Collections.Generic;
-using System.Windows.Markup;
-using System.Diagnostics;
-using System.Text;
-using System.Windows;
-using System.Windows.Input;
 
 namespace System.Windows.Markup.Localizer
 {

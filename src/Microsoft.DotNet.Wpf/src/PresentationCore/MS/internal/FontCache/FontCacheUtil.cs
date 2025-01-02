@@ -7,32 +7,16 @@
 // Description: Miscellaneous utility functions for font handling code.
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
 using System.IO.Packaging;
-using System.Reflection;
-using System.Resources;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using System.Threading;
-using System.Windows;
 using System.Windows.Markup;    // for XmlLanguage
-using System.Windows.Media;
 using System.Windows.Navigation;
-using System.Windows.Threading;
 
 using MS.Win32;
-using MS.Internal;
-using MS.Internal.FontFace;
 using MS.Internal.PresentationCore;
-using MS.Internal.Resources;
-using MS.Utility;
 
 using Microsoft.Win32.SafeHandles;
 

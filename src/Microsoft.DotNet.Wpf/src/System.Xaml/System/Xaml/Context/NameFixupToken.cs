@@ -4,9 +4,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Xaml;
 using MS.Internal.Xaml.Runtime;
 using XAML3 = System.Windows.Markup;
@@ -20,7 +17,7 @@ namespace MS.Internal.Xaml.Context
         PropertyValue,             // A TC on a property that returned a FixupToken
         ObjectInitializationValue, // A TC on an object that returned a FixupToken
         UnresolvedChildren,        // An object that can't be EndInited because it has pending fixups on its properties
-    };
+    }
 
     internal class FixupTargetKeyHolder
     {
@@ -96,6 +93,7 @@ namespace MS.Internal.Xaml.Context
             {
                 ex.SetLineInfo(EndInstanceLineNumber, EndInstanceLinePosition);
             }
+
             return ex;
         }
     }
@@ -128,7 +126,7 @@ namespace MS.Internal.Xaml.Context
             get { return _runtime; }
             set
             {
-                Debug.Assert(_runtime == null);
+                Debug.Assert(_runtime is null);
                 _runtime = value;
             }
         }
@@ -138,10 +136,11 @@ namespace MS.Internal.Xaml.Context
         {
             get
             {
-                if (_targetContext == null)
+                if (_targetContext is null)
                 {
                     _targetContext = new ObjectWriterContext(SavedContext, null, null, Runtime);
                 }
+
                 return _targetContext;
             }
         }
@@ -180,7 +179,7 @@ namespace MS.Internal.Xaml.Context
                 foreach (XAML3.INameScopeDictionary nameScope in NameScopeDictionaryList)
                 {
                     namedObject = nameScope.FindName(name);
-                    if (namedObject != null)
+                    if (namedObject is not null)
                     {
                         break;
                     }
@@ -191,6 +190,7 @@ namespace MS.Internal.Xaml.Context
                 TargetContext.IsInitializedCallback = null;
                 namedObject = TargetContext.ResolveName(name, out _);
             }
+
             return namedObject;
         }
 
@@ -200,6 +200,7 @@ namespace MS.Internal.Xaml.Context
             {
                 ex.SetLineInfo(LineNumber, LinePosition);
             }
+
             return ex;
         }
     }

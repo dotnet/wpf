@@ -7,20 +7,11 @@
 *  Class for converting a given DependencyProperty to and from a string
 *
 \***************************************************************************/
-using System;
 using System.ComponentModel;        // for TypeConverter
 using System.Globalization;               // for CultureInfo
-using System.Reflection;
-using MS.Utility;
-using MS.Internal;
-using System.Windows;
-using System.ComponentModel.Design.Serialization;
-using System.Windows.Documents;
-using System.Diagnostics;
 using System.Xaml;
 using System.IO;
 using System.Windows.Controls;
-using System.Collections.Generic;
 using System.Windows.Baml2006;
 
 namespace System.Windows.Markup

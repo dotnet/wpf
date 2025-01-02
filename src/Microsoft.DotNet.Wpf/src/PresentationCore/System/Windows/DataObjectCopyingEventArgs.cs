@@ -7,8 +7,6 @@
 // Description: DataObject.Copying event arguments
 //
 
-using System;
-
 namespace System.Windows
 {
     /// <summary>

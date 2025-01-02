@@ -20,9 +20,6 @@
 //              management.
 //
 
-using System;                                   // IntPtr
-using System.Collections.Generic;               // List<T>
-using System.Security;                          // SecurityCritical, SecurityTreatAsSafe
 using System.Threading;                         // Interlocked
 using System.Windows;                           // WrapDirection
 using System.Windows.Media.TextFormatting;      // TextFormatter

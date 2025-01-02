@@ -5,13 +5,6 @@
 //
 // 
 
-using System;
-using System.Collections;
-using System.Windows;
-using System.Windows.Media;
-using System.Security;
-using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
 using MS.Win32; // VK translation.
 
 namespace System.Windows.Input

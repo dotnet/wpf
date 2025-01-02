@@ -4,11 +4,7 @@
 
 #nullable disable
 
-//
-//
-//
-//  Description: Specifies that the whitespace surrounding an element should be trimmed.
-//
+// Description: Specifies that the whitespace surrounding an element should be trimmed.
 
 using System;
 using System.IO;
@@ -105,7 +101,7 @@ namespace System.Xaml
             }
 
             // If we can't load the assembly, just return null.
-            if (a == null)
+            if (a is null)
             {
                 return null;
             }
@@ -130,7 +126,7 @@ namespace System.Xaml
         internal static bool IsInternalType(Type type)
         {
             Type origType = type;
-            Debug.Assert(null != type, "Type passed to IsInternalType is null");
+            Debug.Assert(type is not null, "Type passed to IsInternalType is null");
 
             // If this is an internal nested type or a parent nested public type, walk up the declaring types.
             while (type.IsNestedAssembly || type.IsNestedFamORAssem || (origType != type && type.IsNestedPublic))
@@ -151,7 +147,7 @@ namespace System.Xaml
         /// <returns>True if type is public</returns>
         internal static bool IsPublicType(Type type)
         {
-            Debug.Assert(null != type, "Type passed to IsPublicType is null");
+            Debug.Assert(type is not null, "Type passed to IsPublicType is null");
 
             // If this is a nested internal type, walk up the declaring types.
             while (type.IsNestedPublic)
@@ -234,7 +230,7 @@ namespace System.Xaml
         {
             IList<CustomAttributeData> list = CustomAttributeData.GetCustomAttributes(mi);
             string attrValue = GetCustomAttributeData(list, attrType, out typeValue, true, false);
-            return attrValue == null ? string.Empty : attrValue;
+            return attrValue is null ? string.Empty : attrValue;
         }
 
 #if PBTCOMPILER
@@ -260,7 +256,7 @@ namespace System.Xaml
             for (int j = 0; j < list.Count; j++)
             {
                 attrValue = GetCustomAttributeData(list[j], attrType, out typeValue, allowTypeAlso, false, allowZeroArgs);
-                if (attrValue != null)
+                if (attrValue is not null)
                 {
                     break;
                 }
@@ -286,7 +282,7 @@ namespace System.Xaml
             string attributeDataString = null;
             CustomAttributeData cad;
 
-            while (currentType != null && !attributeDataFound)
+            while (currentType is not null && !attributeDataFound)
             {
                 IList<CustomAttributeData> list = CustomAttributeData.GetCustomAttributes(currentType);
 
@@ -341,14 +337,14 @@ namespace System.Xaml
 #if PBTCOMPILER
                     if (attrValue == null && allowTypeAlso && tca.ArgumentType == GetMscorlibType(typeof(Type)))
 #else
-                    if (attrValue == null && allowTypeAlso && tca.ArgumentType == typeof(Type))
+                    if (attrValue is null && allowTypeAlso && tca.ArgumentType == typeof(Type))
 #endif
                     {
                         typeValue = tca.Value as Type;
                         attrValue = typeValue.AssemblyQualifiedName;
                     }
 
-                    if (attrValue == null)
+                    if (attrValue is null)
                     {
                         throw new ArgumentException(SR.Format(SR.ParserAttributeArgsLow, attrType.Name));
                     }
@@ -419,9 +415,9 @@ namespace System.Xaml
             // Check if the assembly has already been loaded.
             Assembly retassem = (Assembly)_loadedAssembliesHash[assemblyShortName];
 
-            if (retassem != null)
+            if (retassem is not null)
             {
-                if (assemblyName.Version != null)
+                if (assemblyName.Version is not null)
                 {
                     AssemblyName cachedName = new AssemblyName(retassem.FullName);
                     if (!AssemblyName.ReferenceMatchesDefinition(assemblyName, cachedName))
@@ -440,7 +436,7 @@ namespace System.Xaml
                 if (string.IsNullOrEmpty(assemblyPath))
                     retassem = SafeSecurityHelper.GetLoadedAssembly(assemblyName);
 
-                if (retassem == null)
+                if (retassem is null)
                 {
                     if (!string.IsNullOrEmpty(assemblyPath))
                     {
@@ -451,6 +447,7 @@ namespace System.Xaml
                         // LoadFile will only override your request only if it is in the GAC
                         retassem = Assembly.LoadFile(assemblyPath);
                     }
+
                     //
                     // At compile time, the build task should always pass the full path of the referenced assembly, even if it
                     // comes from GAC. But below code snippet can run if parser wants to try loading an assembly w/o a path.
@@ -472,7 +469,7 @@ namespace System.Xaml
                 }
 
                 // Cache the assembly
-                if (retassem != null)
+                if (retassem is not null)
                 {
                     _loadedAssembliesHash[assemblyShortName] = retassem;
                 }
@@ -577,4 +574,3 @@ namespace System.Xaml
         #endregion Assembly Loading
     }
 }
-

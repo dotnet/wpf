@@ -8,8 +8,6 @@
 // See spec at Cross-thread Collections.docx
 //
 
-using System;
-
 namespace System.Windows.Data
 {
     public class CollectionViewRegisteringEventArgs : EventArgs

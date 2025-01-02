@@ -4,7 +4,6 @@
 
 using System.ComponentModel;
 using System.Globalization;
-using System.Xaml.Schema;
 
 namespace System.Xaml
 {
@@ -22,6 +21,7 @@ namespace System.Xaml
             {
                 return true;
             }
+
             return base.CanConvertFrom(context, sourceType);
         }
 
@@ -31,11 +31,12 @@ namespace System.Xaml
             {
                 GetRootObjectAndDelegateType(context, out object? rootObject, out Type? delegateType);
 
-                if (rootObject != null && delegateType != null)
+                if (rootObject is not null && delegateType is not null)
                 {
                     return Delegate.CreateDelegate(delegateType, rootObject, valueString);
                 }
             }
+
             return base.ConvertFrom(context, culture, value);
         }
 
@@ -44,23 +45,25 @@ namespace System.Xaml
             rootObject = null;
             delegateType = null;
 
-            if (context == null)
+            if (context is null)
             {
                 return;
             }
 
             IRootObjectProvider? rootObjectService = context.GetService(typeof(IRootObjectProvider)) as IRootObjectProvider;
-            if (rootObjectService == null)
+            if (rootObjectService is null)
             {
                 return;
             }
+
             rootObject = rootObjectService.RootObject;
 
             IDestinationTypeProvider? targetService = context.GetService(typeof(IDestinationTypeProvider)) as IDestinationTypeProvider;
-            if (targetService == null)
+            if (targetService is null)
             {
                 return;
             }
+
             delegateType = targetService.GetDestinationType();
         }
     }

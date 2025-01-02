@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
 using System.Reflection;
 using System.Xaml;
 using MS.Internal.Xaml.Parser;
@@ -40,7 +38,7 @@ namespace MS.Internal.Xaml.Context
         {
             string xamlNs;
 
-            if (null != _prescopeNamespaces)
+            if (_prescopeNamespaces is not null)
             {
                 if (_prescopeNamespaces.TryGetValue(prefix, out xamlNs))
                 {
@@ -55,8 +53,10 @@ namespace MS.Internal.Xaml.Context
                 {
                     return xamlNs;
                 }
+
                 frame = (XamlParserFrame)frame.Previous;
             }
+
             return null;
         }
 
@@ -70,10 +70,11 @@ namespace MS.Internal.Xaml.Context
             //     in the Xml node stream the XAML parser sees.
             // But for normal XAML the XmlNamespaceResolver does not need to be used.
 
-            if (XmlNamespaceResolver != null)
+            if (XmlNamespaceResolver is not null)
             {
                 return XmlNamespaceResolver(prefix);
             }
+
             return FindNamespaceByPrefixInParseStack(prefix);
         }
 
@@ -83,7 +84,7 @@ namespace MS.Internal.Xaml.Context
             HashSet<string> keys = new HashSet<string>();
             while (frame.Depth > 0)
             {
-                if (frame._namespaces != null)
+                if (frame._namespaces is not null)
                 {
                     foreach (NamespaceDeclaration namespaceDeclaration in frame.GetNamespacePrefixes())
                     {
@@ -93,10 +94,11 @@ namespace MS.Internal.Xaml.Context
                         }
                     }
                 }
+
                 frame = (XamlParserFrame)frame.Previous;
             }
 
-            if (_prescopeNamespaces != null)
+            if (_prescopeNamespaces is not null)
             {
                 foreach (KeyValuePair<string, string> kvp in _prescopeNamespaces)
                 {
@@ -111,13 +113,13 @@ namespace MS.Internal.Xaml.Context
         // Only pass rootObjectType if the member is being looked up on the root object
         internal override bool IsVisible(XamlMember member, XamlType rootObjectType)
         {
-            if (member == null)
+            if (member is null)
             {
                 return false;
             }
 
             Type allowProtectedForType = null;
-            if (AllowProtectedMembersOnRoot && rootObjectType != null)
+            if (AllowProtectedMembersOnRoot && rootObjectType is not null)
             {
                 allowProtectedForType = rootObjectType.UnderlyingType;
             }
@@ -130,7 +132,7 @@ namespace MS.Internal.Xaml.Context
 
             // If the property setter is not visible, but the property getter is, treat the property
             // as if it were read-only
-            if (member.IsReadOnly || (member.Type != null && member.Type.IsUsableAsReadOnly))
+            if (member.IsReadOnly || (member.Type is not null && member.Type.IsUsableAsReadOnly))
             {
                 return member.IsReadVisibleTo(LocalAssembly, allowProtectedForType);
             }
@@ -296,12 +298,13 @@ namespace MS.Internal.Xaml.Context
             {
                 allowProtectedForType = CurrentType.UnderlyingType;
             }
+
             return CurrentMember.IsWriteVisibleTo(LocalAssembly, allowProtectedForType);
         }
 
         public bool CurrentTypeIsRoot
         {
-            get { return _stack.CurrentFrame.XamlType != null && _stack.Depth == 1; }
+            get { return _stack.CurrentFrame.XamlType is not null && _stack.Depth == 1; }
         }
     }
 }

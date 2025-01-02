@@ -12,16 +12,12 @@
 //     B.  Main assembly for non-localizable resource.
 // 
 
-using System;
-using System.IO.Packaging;
 using System.IO;
 using System.Collections;
-using System.Windows.Resources;
 using System.Resources;
 using System.Reflection;
 using System.Globalization;
 using MS.Internal.PresentationCore;                   // SafeSecurityHelper
-using System.Windows;
 
 namespace MS.Internal.Resources
 {

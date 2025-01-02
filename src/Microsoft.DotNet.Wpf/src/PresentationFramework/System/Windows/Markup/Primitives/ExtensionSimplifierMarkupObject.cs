@@ -3,14 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Text;
-using System.Windows.Markup;
-using System.Globalization;
 
 namespace System.Windows.Markup.Primitives
 {

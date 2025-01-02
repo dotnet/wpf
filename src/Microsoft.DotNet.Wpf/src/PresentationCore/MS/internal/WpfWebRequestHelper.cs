@@ -11,16 +11,13 @@
 //      type from filename.
 //
 
-using System;
 using System.Net;
 using System.Net.Cache;
-using System.Security;
 using System.IO;
 
 using System.Windows.Navigation;
 using System.IO.Packaging;
 using MS.Internal.AppModel;
-using MS.Internal.Utility;
 using MS.Internal.PresentationCore;
 
 //From Presharp documentation:
@@ -31,24 +28,24 @@ using MS.Internal.PresentationCore;
 
 namespace MS.Internal
 {
-/// <summary>
-/// Helper class for handling all web requests/responses in the framework. Using it ensures consisent handling 
-/// and support for special features: cookies, NTLM authentication, caching, inferring MIME type from filename.
-/// 
-/// Only two methods are mandatory: 
-///   - CreateRequest. (PackWebRequestFactory.CreateWebRequest is an allowed alternative. It delegates to 
-///     this CreateRequest for non-pack URIs.)
-///   - HandleWebResponse. 
-/// The remaining methods just automate the entire request process, up to the point of getting the response
-/// stream. Using the SecurityTreatAsSafe ones helps avoid making other code SecurityCritical.
-/// 
-/// Related types:
-///   - BaseUriHelper
-///   - BindUriHelper (built into Framework, subset into Core)
-///   - PackWebRequestFactory
-///   - MimeObjectFactory
-/// </summary>
-static class WpfWebRequestHelper
+    /// <summary>
+    /// Helper class for handling all web requests/responses in the framework. Using it ensures consisent handling 
+    /// and support for special features: cookies, NTLM authentication, caching, inferring MIME type from filename.
+    /// 
+    /// Only two methods are mandatory: 
+    ///   - CreateRequest. (PackWebRequestFactory.CreateWebRequest is an allowed alternative. It delegates to 
+    ///     this CreateRequest for non-pack URIs.)
+    ///   - HandleWebResponse. 
+    /// The remaining methods just automate the entire request process, up to the point of getting the response
+    /// stream. Using the SecurityTreatAsSafe ones helps avoid making other code SecurityCritical.
+    /// 
+    /// Related types:
+    ///   - BaseUriHelper
+    ///   - BindUriHelper (built into Framework, subset into Core)
+    ///   - PackWebRequestFactory
+    ///   - MimeObjectFactory
+    /// </summary>
+    static class WpfWebRequestHelper
 {
     internal static WebRequest CreateRequest(Uri uri)
     {

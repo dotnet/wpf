@@ -6,8 +6,6 @@
 // Description: Root of the RB tree used for live shaping.
 //
 
-using System;
-using System.Collections;
 using System.Collections.Specialized;
 
 namespace MS.Internal.Data

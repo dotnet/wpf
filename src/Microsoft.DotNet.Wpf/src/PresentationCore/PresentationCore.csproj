@@ -22,6 +22,7 @@
   <ItemGroup>
     <Compile Include="$(WpfCommonDir)\src\System\LocalAppContext.cs" />
     <Compile Include="$(WpfCommonDir)\src\System\AppContextDefaultValues.cs" />
+    <Compile Include="GlobalUsings.cs" />
     <Compile Include="System\AppContextDefaultValues.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -47,10 +48,8 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\DecoderFallbackWithFailureFlag.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\FloatUtil.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\FreezableOperations.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\HashHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\PointUtil.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\MimeTypeMapper.cs" />
-    <Compile Include="$(WpfSharedDir)\MS\Internal\Pair.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\PartialList.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\LegacyPriorityQueue.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SequentialUshortCollection.cs" />

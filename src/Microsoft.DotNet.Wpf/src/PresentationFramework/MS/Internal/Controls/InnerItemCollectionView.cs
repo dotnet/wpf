@@ -10,7 +10,6 @@
 // See specs at ItemsControl.mht
 //
 
-using System;
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;

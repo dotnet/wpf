@@ -4,8 +4,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -54,7 +52,7 @@ namespace System.Xaml
         {
             ArgumentNullException.ThrowIfNull(stream);
 
-            if (settings != null && settings.CloseOutput)
+            if (settings is not null && settings.CloseOutput)
             {
                 InitializeXamlXmlWriter(XmlWriter.Create(stream, new XmlWriterSettings { CloseOutput = true }), schemaContext, settings);
             }
@@ -73,7 +71,7 @@ namespace System.Xaml
         {
             ArgumentNullException.ThrowIfNull(textWriter);
 
-            if (settings != null && settings.CloseOutput)
+            if (settings is not null && settings.CloseOutput)
             {
                 InitializeXamlXmlWriter(XmlWriter.Create(textWriter, new XmlWriterSettings { CloseOutput = true }), schemaContext, settings);
             }
@@ -100,7 +98,7 @@ namespace System.Xaml
             this.schemaContext = schemaContext ?? throw new ArgumentNullException(nameof(schemaContext));
 
             output = xmlWriter;
-            this.settings = settings == null ? new XamlXmlWriterSettings() : settings.Copy() as XamlXmlWriterSettings;
+            this.settings = settings is null ? new XamlXmlWriterSettings() : settings.Copy() as XamlXmlWriterSettings;
 
             currentState = Start.State;
 
@@ -128,6 +126,7 @@ namespace System.Xaml
                     {
                         Flush();
                     }
+
                     ((IDisposable)meWriter).Dispose();
                 }
             }
@@ -171,7 +170,7 @@ namespace System.Xaml
 
             currentState.WriteObject(this, type, false);
 
-            if (type.TypeArguments != null)
+            if (type.TypeArguments is not null)
             {
                 WriteTypeArguments(type);
             }
@@ -206,7 +205,7 @@ namespace System.Xaml
         public override void WriteValue(object value)
         {
             CheckIsDisposed();
-            if (value == null)
+            if (value is null)
             {
                 WriteStartObject(XamlLanguage.Null);
                 WriteEndObject();
@@ -214,10 +213,11 @@ namespace System.Xaml
             else
             {
                 string s = value as string;
-                if (s == null)
+                if (s is null)
                 {
                     throw new ArgumentException(SR.XamlXmlWriterCannotWriteNonstringValue, nameof(value));
                 }
+
                 currentState.WriteValue(this, s);
             }
         }
@@ -228,12 +228,12 @@ namespace System.Xaml
 
             ArgumentNullException.ThrowIfNull(namespaceDeclaration);
 
-            if (namespaceDeclaration.Prefix == null)
+            if (namespaceDeclaration.Prefix is null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationPrefixCannotBeNull, nameof(namespaceDeclaration));
             }
 
-            if (namespaceDeclaration.Namespace == null)
+            if (namespaceDeclaration.Namespace is null)
             {
                 throw new ArgumentException(SR.NamespaceDeclarationNamespaceCannotBeNull, nameof(namespaceDeclaration));
             }
@@ -270,10 +270,12 @@ namespace System.Xaml
             {
                 return false;
             }
+
             if (s[0] == '{')
             {
                 return true;
             }
+
             return false;
         }
 
@@ -293,6 +295,7 @@ namespace System.Xaml
             {
                 return false;
             }
+
             return ContainsLeadingSpace(s)
                 || ContainsTrailingSpace(s)
                 || ContainsConsecutiveInnerSpaces(s)
@@ -318,6 +321,7 @@ namespace System.Xaml
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -330,6 +334,7 @@ namespace System.Xaml
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -348,7 +353,7 @@ namespace System.Xaml
                 if (enumerator.Current.AllocatingNodeType == XamlNodeType.StartMember
                     && enumerator.Current.Member != XamlLanguage.Items)
                 {
-                    containingXamlType = (enumerator.Current.Member == null) || enumerator.Current.Member.IsUnknown ? null : enumerator.Current.Member.Type;
+                    containingXamlType = (enumerator.Current.Member is null) || enumerator.Current.Member.IsUnknown ? null : enumerator.Current.Member.Type;
                     break;
                 }
                 else if (enumerator.Current.AllocatingNodeType == XamlNodeType.StartObject)
@@ -357,6 +362,7 @@ namespace System.Xaml
                     break;
                 }
             }
+
             return containingXamlType;
         }
 
@@ -380,8 +386,8 @@ namespace System.Xaml
 
         bool IsShadowed(string ns, string prefix)
         {
-            Debug.Assert(ns != null);
-            Debug.Assert(prefix != null);
+            Debug.Assert(ns is not null);
+            Debug.Assert(prefix is not null);
 
             string registeredNamespace;
             foreach (Frame frame in namespaceScopes)
@@ -405,7 +411,7 @@ namespace System.Xaml
         {
             string prefix = LookupPrefix(namespaces, out chosenNamespace);
 
-            if (prefix == null)
+            if (prefix is null)
             {
                 chosenNamespace = namespaces[0];
                 prefix = DefinePrefix(chosenNamespace);
@@ -442,6 +448,7 @@ namespace System.Xaml
                     }
                 }
             }
+
             return null;
         }
 
@@ -502,7 +509,7 @@ namespace System.Xaml
                 Debug.Assert(objectFrame.AllocatingNodeType == XamlNodeType.StartObject ||
                              objectFrame.AllocatingNodeType == XamlNodeType.GetObject);
 
-                if (objectFrame.Members == null)
+                if (objectFrame.Members is null)
                 {
                     objectFrame.Members = new XamlPropertySet();
                 }
@@ -510,6 +517,7 @@ namespace System.Xaml
                 {
                     throw new XamlXmlWriterException(SR.Format(SR.XamlXmlWriterDuplicateMember, property.Name));
                 }
+
                 objectFrame.Members.Add(property);
             }
         }
@@ -551,7 +559,7 @@ namespace System.Xaml
             var namespaces = type.GetXamlNamespaces();
             string prefix = LookupPrefix(namespaces, out chosenNamespace);
 
-            if (prefix == null)
+            if (prefix is null)
             {
                 chosenNamespace = namespaces[0];
                 prefix = DefinePrefix(chosenNamespace);
@@ -563,7 +571,7 @@ namespace System.Xaml
                 currentState.WriteNamespace(this, new NamespaceDeclaration(chosenNamespace, prefix));
             }
 
-            if (type.TypeArguments != null)
+            if (type.TypeArguments is not null)
             {
                 foreach (XamlType arg in type.TypeArguments)
                 {
@@ -577,7 +585,7 @@ namespace System.Xaml
             string chosenNamespace;
             string prefix = LookupPrefix(type.GetXamlNamespaces(), out chosenNamespace);
 
-            if (prefix == null || IsShadowed(chosenNamespace, prefix))
+            if (prefix is null || IsShadowed(chosenNamespace, prefix))
             {
                 // if we found a namespace that is not previously defined,
                 // or a namespace with prefix that is shadowed
@@ -585,7 +593,7 @@ namespace System.Xaml
                 return true;
             }
 
-            if (type.TypeArguments != null)
+            if (type.TypeArguments is not null)
             {
                 foreach (XamlType arg in type.TypeArguments)
                 {
@@ -633,7 +641,7 @@ namespace System.Xaml
             typeNamePrefixed = GenericTypeNameScanner.StripSubscript(typeNamePrefixed, out subscript);
 
             builder.Append(typeNamePrefixed);
-            if (type.TypeArguments != null)
+            if (type.TypeArguments is not null)
             {
                 bool added = false;
                 builder.Append('(');
@@ -643,26 +651,29 @@ namespace System.Xaml
                     {
                         builder.Append(", ");
                     }
+
                     ConvertXamlTypeToStringHelper(arg, builder);
                     added = true;
                 }
+
                 builder.Append(')');
             }
 
             // re-attach the subscript
-            if (subscript != null)
+            if (subscript is not null)
             {
                 builder.Append(subscript);
             }
         }
 
-        static internal string GetTypeName(XamlType type)
+        internal static string GetTypeName(XamlType type)
         {
             string typeName = type.Name;
             if (type.IsMarkupExtension && type.Name.EndsWith("Extension", false, TypeConverterHelper.InvariantEnglishUS))
             {
                 typeName = type.Name.Substring(0, type.Name.Length - "Extension".Length);
             }
+
             return typeName;
         }
 
@@ -714,6 +725,7 @@ namespace System.Xaml
                     prefix = "xml";
                     return true;
                 }
+
                 return namespaceMap.TryGetValue(ns, out prefix);
             }
 
@@ -724,6 +736,7 @@ namespace System.Xaml
                     ns = XamlLanguage.Xml1998Namespace;
                     return true;
                 }
+
                 return prefixMap.TryGetValue(prefix, out ns);
             }
 
@@ -756,6 +769,7 @@ namespace System.Xaml
                 {
                     prefixMapList.Add(pair);
                 }
+
                 prefixMapList.Sort(CompareByKey);
                 return prefixMapList;
             }
@@ -848,6 +862,7 @@ namespace System.Xaml
                     {
                         local = $"{GetTypeName(property.DeclaringType)}.{property.Name}";
                     }
+
                     WriteStartAttribute(writer, prefix, local, ns);
                 }
                 else
@@ -898,6 +913,7 @@ namespace System.Xaml
                         {
                             type = frame.Member.Type;
                         }
+
                         writer.currentState.WriteObject(writer, type, true);
                         break;
 
@@ -932,6 +948,7 @@ namespace System.Xaml
             Start()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -967,6 +984,7 @@ namespace System.Xaml
             End()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -979,6 +997,7 @@ namespace System.Xaml
             InRecord()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -1012,10 +1031,11 @@ namespace System.Xaml
                         Type = writer.namespaceScopes.Peek().Type,
                     });
                 }
+
                 writer.namespaceScopes.Peek().Member = property;
 
                 XamlType parentType = writer.namespaceScopes.Peek().Type;
-                if ((property == XamlLanguage.Items && parentType != null && parentType.IsWhitespaceSignificantCollection) ||
+                if ((property == XamlLanguage.Items && parentType is not null && parentType.IsWhitespaceSignificantCollection) ||
                     (property == XamlLanguage.UnknownContent))
                 {
                     writer.isFirstElementOfWhitespaceSignificantCollection = true;
@@ -1056,7 +1076,7 @@ namespace System.Xaml
 
                     // but in order to expand parameters, the markup extension needs to have a default constructor
 
-                    if (containingType != null && containingType.ConstructionRequiresArguments)
+                    if (containingType is not null && containingType.ConstructionRequiresArguments)
                     {
                         throw new XamlXmlWriterException(SR.ExpandPositionalParametersinTypeWithNoDefaultConstructor);
                     }
@@ -1103,6 +1123,7 @@ namespace System.Xaml
             InRecordTryAttributes()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -1119,7 +1140,7 @@ namespace System.Xaml
             public override void WriteStartMember(XamlXmlWriter writer, XamlMember property)
             {
                 XamlType parentType = writer.namespaceScopes.Peek().Type;
-                if ((property == XamlLanguage.Items && parentType != null && parentType.IsWhitespaceSignificantCollection) ||
+                if ((property == XamlLanguage.Items && parentType is not null && parentType.IsWhitespaceSignificantCollection) ||
                     (property == XamlLanguage.UnknownContent))
                 {
                     writer.isFirstElementOfWhitespaceSignificantCollection = true;
@@ -1130,7 +1151,7 @@ namespace System.Xaml
                     string chosenNamespace;
                     string prefix = writer.LookupPrefix(property.GetXamlNamespaces(), out chosenNamespace);
 
-                    if (prefix == null || writer.IsShadowed(chosenNamespace, prefix))
+                    if (prefix is null || writer.IsShadowed(chosenNamespace, prefix))
                     {
                         // if the property's prefix is not already defined, or it's shadowed
                         // we need to write this property as an element so that the prefix can be defined in the property's scope.
@@ -1164,7 +1185,7 @@ namespace System.Xaml
                     writer.namespaceScopes.Pop();
                     // but in order to expand properties, the markup extension needs to have a default constructor
 
-                    if (containingType != null && containingType.ConstructionRequiresArguments)
+                    if (containingType is not null && containingType.ConstructionRequiresArguments)
                     {
                         throw new XamlXmlWriterException(SR.ExpandPositionalParametersinTypeWithNoDefaultConstructor);
                     }
@@ -1183,7 +1204,7 @@ namespace System.Xaml
                 {
                     writer.currentState = TryContentPropertyInTryAttributesState.State;
                 }
-                else if (property.IsDirective && (property.Type != null && (property.Type.IsCollection || property.Type.IsDictionary)))
+                else if (property.IsDirective && (property.Type is not null && (property.Type.IsCollection || property.Type.IsDictionary)))
                 {
                     writer.WriteDeferredNamespaces(XamlNodeType.StartObject);
                     WriteMemberAsElement(writer);
@@ -1196,7 +1217,6 @@ namespace System.Xaml
                     //
                     writer.currentState = InMemberTryAttributes.State;
                 }
-
             }
 
             public override void WriteEndObject(XamlXmlWriter writer)
@@ -1215,6 +1235,7 @@ namespace System.Xaml
             InMember()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -1228,6 +1249,7 @@ namespace System.Xaml
                 {
                     writer.namespaceScopes.Push(new Frame { AllocatingNodeType = XamlNodeType.StartObject });
                 }
+
                 writer.AssignNamespacePrefix(namespaceDeclaration.Namespace, namespaceDeclaration.Prefix);
             }
 
@@ -1256,7 +1278,7 @@ namespace System.Xaml
                     {
                         XamlType containingXamlType = GetContainingXamlType(writer);
                         // Treat unknown types as WhitespaceSignificantCollections
-                        if (containingXamlType != null && !containingXamlType.IsWhitespaceSignificantCollection)
+                        if (containingXamlType is not null && !containingXamlType.IsWhitespaceSignificantCollection)
                         {
                             WriteXmlSpaceOrThrow(writer, value);
                             writer.output.WriteValue(value);
@@ -1284,6 +1306,7 @@ namespace System.Xaml
                                 writer.output.WriteValue(value);
                                 writer.currentState = InMemberAfterValue.State;
                             }
+
                             if (ContainsTrailingSpace(value))
                             {
                                 writer.deferredValue = value;
@@ -1302,6 +1325,7 @@ namespace System.Xaml
                         writer.currentState = InMemberAfterValue.State;
                     }
                 }
+
                 if (writer.currentState != InMemberAfterValueWithSignificantWhitespace.State)
                 {
                     writer.isFirstElementOfWhitespaceSignificantCollection = false;
@@ -1331,20 +1355,24 @@ namespace System.Xaml
                     {
                         continue;
                     }
+
                     if (frame.AllocatingNodeType == XamlNodeType.StartMember)
                     {
                         if (frame.IsContent)
                         {
                             continue;
                         }
+
                         var member = frame.Member;
                         if (IsImplicit(member))
                         {
                             continue;
                         }
                     }
+
                     break;
                 }
+
                 return frameEnumerator.Current;
             }
 
@@ -1376,7 +1404,7 @@ namespace System.Xaml
                     if (frame.AllocatingNodeType == XamlNodeType.StartMember)
                     {
                         XamlType memberType = frame.Member.Type;
-                        if (memberType != null && !memberType.IsCollection && !memberType.IsDictionary)
+                        if (memberType is not null && !memberType.IsCollection && !memberType.IsDictionary)
                         {
                             throw new InvalidOperationException(SR.XamlXmlWriterIsObjectFromMemberSetForArraysOrNonCollections);
                         }
@@ -1389,7 +1417,6 @@ namespace System.Xaml
                     WriteStartElementForObject(writer, type);
                     writer.currentState = InRecordTryAttributes.State;
                  }
-
             }
         }
 
@@ -1402,6 +1429,7 @@ namespace System.Xaml
             InMemberAfterValue()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -1424,6 +1452,7 @@ namespace System.Xaml
                 {
                     writer.output.WriteEndElement();
                 }
+
                 writer.currentState = InRecord.State;
             }
 
@@ -1445,6 +1474,7 @@ namespace System.Xaml
             InMemberAfterValueWithSignificantWhitespace()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -1493,6 +1523,7 @@ namespace System.Xaml
             InMemberAfterEndObject()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -1530,6 +1561,7 @@ namespace System.Xaml
             InMemberAttributedMember()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -1547,7 +1579,6 @@ namespace System.Xaml
                     writer.output.WriteValue(writer.deferredValue);
                 }
 
-
                 Debug.Assert(writer.namespaceScopes.Count > 0);
                 Frame memberFrame = writer.namespaceScopes.Pop();
                 Debug.Assert(memberFrame.AllocatingNodeType == XamlNodeType.StartMember ||
@@ -1564,6 +1595,7 @@ namespace System.Xaml
             InMemberTryAttributes()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -1592,7 +1624,7 @@ namespace System.Xaml
             {
                 // We should remove the !type.IsGeneric check once
                 //  XamlReader is fixed to handle Generic MEs.
-                if (type != null && type.IsMarkupExtension && !type.IsGeneric)
+                if (type is not null && type.IsMarkupExtension && !type.IsGeneric)
                 {
                     writer.meWriter.Reset();
                     writer.meNodesStack.Push(new List<XamlNode>());
@@ -1607,6 +1639,7 @@ namespace System.Xaml
                     writer.currentState = InMember.State;
                     writer.currentState.WriteObject(writer, type, isObjectFromMember);
                 }
+
                 writer.isFirstElementOfWhitespaceSignificantCollection = false;
             }
         }
@@ -1622,6 +1655,7 @@ namespace System.Xaml
             InMemberTryAttributesAfterValue()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -1667,6 +1701,7 @@ namespace System.Xaml
             TryContentProperty()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -1691,6 +1726,7 @@ namespace System.Xaml
                     writer.namespaceScopes.Peek().IsContent = false;
                     WriteMemberAsElement(writer);
                 }
+
                 writer.currentState = InMember.State;
                 writer.currentState.WriteValue(writer, value);
             }
@@ -1709,6 +1745,7 @@ namespace System.Xaml
             TryContentPropertyInTryAttributesState()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -1737,7 +1774,7 @@ namespace System.Xaml
                 }
                 else
                 {
-                    Debug.Assert(value != null);
+                    Debug.Assert(value is not null);
                     writer.namespaceScopes.Peek().IsContent = false;
                     writer.currentState = InMemberTryAttributes.State;
                     writer.currentState.WriteValue(writer, value);
@@ -1759,6 +1796,7 @@ namespace System.Xaml
             TryCurlyForm()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -1809,7 +1847,7 @@ namespace System.Xaml
                 }
 
                 // Did writing the markup extension succeed?
-                if (writer.meWriter.MarkupExtensionString != null)
+                if (writer.meWriter.MarkupExtensionString is not null)
                 {
                     writer.meNodesStack.Pop();
                     writer.deferredValue = writer.meWriter.MarkupExtensionString;
@@ -1885,10 +1923,10 @@ namespace System.Xaml
                 Debug.Assert(frame.AllocatingNodeType == XamlNodeType.StartObject);
 
                 XamlType objectXamlType = frame.Type;
-                Debug.Assert(objectXamlType != null);
+                Debug.Assert(objectXamlType is not null);
 
                 Type objectClrType = objectXamlType.UnderlyingType;
-                if (objectClrType == null)
+                if (objectClrType is null)
                 {
                     throw new XamlXmlWriterException(SR.Format(
                         SR.ExpandPositionalParametersWithoutUnderlyingType, objectXamlType.GetQualifiedName()));
@@ -1920,18 +1958,19 @@ namespace System.Xaml
                         }
                     }
 
-                    if (matchingProperty == null)
+                    if (matchingProperty is null)
                     {
                         throw new XamlXmlWriterException(SR.ConstructorNotFoundForGivenPositionalParameters);
                     }
 
                     XamlMember member = objectXamlType.GetMember(matchingProperty.Name);
-                    Debug.Assert(member != null);
+                    Debug.Assert(member is not null);
 
                     if (member.IsReadOnly)
                     {
                         throw new XamlXmlWriterException(SR.ExpandPositionalParametersWithReadOnlyProperties);
                     }
+
                     writer.ppStateInfo.NodesList[i].Insert(0, new XamlNode(XamlNodeType.StartMember, member));
                     writer.ppStateInfo.NodesList[i].Add(new XamlNode(XamlNodeType.EndMember));
                 }
@@ -1941,7 +1980,7 @@ namespace System.Xaml
             {
                 IList<XamlType> paramXamlTypes = objectXamlType.GetPositionalParameters(numOfParameters);
 
-                if (paramXamlTypes == null)
+                if (paramXamlTypes is null)
                 {
                     throw new XamlXmlWriterException(SR.ConstructorNotFoundForGivenPositionalParameters);
                 }
@@ -1952,7 +1991,7 @@ namespace System.Xaml
                 foreach (var xamlType in paramXamlTypes)
                 {
                     Type underlyingType = xamlType.UnderlyingType;
-                    if (underlyingType != null)
+                    if (underlyingType is not null)
                     {
                         paramClrTypes[i++] = underlyingType;
                     }
@@ -1964,7 +2003,7 @@ namespace System.Xaml
 
                 ConstructorInfo constructor = objectXamlType.GetConstructor(paramClrTypes);
 
-                if (constructor == null)
+                if (constructor is null)
                 {
                     throw new XamlXmlWriterException(SR.ConstructorNotFoundForGivenPositionalParameters);
                 }
@@ -1987,6 +2026,7 @@ namespace System.Xaml
                         ctorArgProps.Add(p);
                     }
                 }
+
                 foreach (XamlMember p in readOnlyProperties)
                 {
                     if (!string.IsNullOrEmpty(XamlObjectReader.GetConstructorArgument(p)))
@@ -1994,6 +2034,7 @@ namespace System.Xaml
                         ctorArgProps.Add(p);
                     }
                 }
+
                 return ctorArgProps;
             }
 

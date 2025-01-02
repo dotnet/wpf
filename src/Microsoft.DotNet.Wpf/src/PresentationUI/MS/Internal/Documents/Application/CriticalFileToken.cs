@@ -7,29 +7,28 @@
 //  user has authorized us to manipulate.
 
 using System;
-using System.Security;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// The CriticalFileToken class ensures file represented is the one the
-/// user has authorized us to manipulate.
-/// </summary>
-/// <remarks>
-/// Responsibility:
-/// Allow XpsViewer to safely pass around information on which file the user
-/// has authorized us to manipulate on thier behalf.  Ensure that the creator
-/// of the object has the privledge to manipulate the file represented.
-/// 
-/// Design Comments:
-/// Many classes need to perform privledged operations files on behalf of the
-/// user.  However only DocObjHost and FilePresentation can assert it is user
-/// sourced data.
-///
-/// As such we need them to create this 'token' which will will use as the only
-/// source of authoritative information for which files we are manipulating.
-/// </remarks>
-internal sealed class CriticalFileToken
+    /// <summary>
+    /// The CriticalFileToken class ensures file represented is the one the
+    /// user has authorized us to manipulate.
+    /// </summary>
+    /// <remarks>
+    /// Responsibility:
+    /// Allow XpsViewer to safely pass around information on which file the user
+    /// has authorized us to manipulate on thier behalf.  Ensure that the creator
+    /// of the object has the privledge to manipulate the file represented.
+    /// 
+    /// Design Comments:
+    /// Many classes need to perform privledged operations files on behalf of the
+    /// user.  However only DocObjHost and FilePresentation can assert it is user
+    /// sourced data.
+    ///
+    /// As such we need them to create this 'token' which will will use as the only
+    /// source of authoritative information for which files we are manipulating.
+    /// </remarks>
+    internal sealed class CriticalFileToken
 {
     #region Constructors
     //--------------------------------------------------------------------------

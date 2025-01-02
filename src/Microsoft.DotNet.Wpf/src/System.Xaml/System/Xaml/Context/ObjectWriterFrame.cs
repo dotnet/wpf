@@ -4,11 +4,7 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Xaml;
-using System.Xaml.MS.Impl;
 using XAML3 = System.Windows.Markup;
 
 namespace MS.Internal.Xaml.Context
@@ -25,21 +21,22 @@ namespace MS.Internal.Xaml.Context
             : base()
         { }
 
-
         public ObjectWriterFrame(ObjectWriterFrame source)
             : base(source)
         {
             // Calling the getter will instantiate new Dictionaries.
             // So we just check the field instead to verify that it isn't
             // being used.
-            if (source._preconstructionPropertyValues != null)
+            if (source._preconstructionPropertyValues is not null)
             {
                 _preconstructionPropertyValues = new Dictionary<XamlMember, object>(source.PreconstructionPropertyValues);
             }
-            if (source._assignedProperties != null)
+
+            if (source._assignedProperties is not null)
             {
                 _assignedProperties = new HashSet<XamlMember>(source.AssignedProperties);
             }
+
             _key = source._key;
             _flags = source._flags;
             Instance = source.Instance;
@@ -72,10 +69,10 @@ namespace MS.Internal.Xaml.Context
 
         public override string ToString()
         {
-            string type = (XamlType == null) ? string.Empty : XamlType.Name;
-            string prop = (Member == null) ? "-" : Member.Name;
-            string inst = (Instance == null) ? "-" : ((Instance is string) ? Instance.ToString() : "*");
-            string coll = (Collection == null) ? "-" : "*";
+            string type = (XamlType is null) ? string.Empty : XamlType.Name;
+            string prop = (Member is null) ? "-" : Member.Name;
+            string inst = (Instance is null) ? "-" : ((Instance is string) ? Instance.ToString() : "*");
+            string coll = (Collection is null) ? "-" : "*";
             string res = string.Create(TypeConverterHelper.InvariantEnglishUS, $"{type}.{prop} inst={inst} coll={coll}");
             return res;
         }
@@ -142,10 +139,11 @@ namespace MS.Internal.Xaml.Context
                 // We use a special KeyHolder in some x:Reference scenarios.
                 // We need to unwrap this when returning.
                 FixupTargetKeyHolder ftkh = _key as FixupTargetKeyHolder;
-                if (ftkh != null)
+                if (ftkh is not null)
                 {
                     return ftkh.Key;
                 }
+
                 return _key;
             }
             set
@@ -169,17 +167,18 @@ namespace MS.Internal.Xaml.Context
         {
             get
             {
-                if (_preconstructionPropertyValues == null)
+                if (_preconstructionPropertyValues is null)
                 {
                     _preconstructionPropertyValues = new Dictionary<XamlMember, object>();
                 }
+
                 return _preconstructionPropertyValues;
             }
         }
 
         public bool HasPreconstructionPropertyValuesDictionary
         {
-            get { return _preconstructionPropertyValues != null; }
+            get { return _preconstructionPropertyValues is not null; }
         }
 
         /// <summary>
@@ -189,10 +188,11 @@ namespace MS.Internal.Xaml.Context
         {
             get
             {
-                if (_assignedProperties == null)
+                if (_assignedProperties is null)
                 {
                     _assignedProperties = new HashSet<XamlMember>();
                 }
+
                 return _assignedProperties;
             }
         }

@@ -5,18 +5,11 @@
 //
 //
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security;
-using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Input.Manipulations;
 using System.Windows.Media;
 using System.Windows.Threading;
 using MS.Win32;
 using MS.Internal;
-using MS.Internal.PresentationCore;
 
 namespace System.Windows.Input
 {

@@ -7,7 +7,6 @@
 // Description: Data model for the Bracket characters specified on a Markup Extension property.
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -22,7 +21,7 @@ namespace MS.Internal.Xaml.Parser
     {
         private string _startChars;
         private string _endChars;
-        private readonly static ISet<char> _restrictedCharSet = new SortedSet<char>((new char[] { '=', ',', '\'', '"', '{', '}', '\\' }));
+        private static readonly ISet<char> _restrictedCharSet = new SortedSet<char>((new char[] { '=', ',', '\'', '"', '{', '}', '\\' }));
         private bool _initializing;
         private StringBuilder _startCharactersStringBuilder;
         private StringBuilder _endCharactersStringBuilder;
@@ -35,7 +34,7 @@ namespace MS.Internal.Xaml.Parser
         internal SpecialBracketCharacters(IReadOnlyDictionary<char, char> attributeList)
         {
             BeginInit();
-            if (attributeList != null && attributeList.Count > 0)
+            if (attributeList is not null && attributeList.Count > 0)
             {
                 Tokenize(attributeList);
             }

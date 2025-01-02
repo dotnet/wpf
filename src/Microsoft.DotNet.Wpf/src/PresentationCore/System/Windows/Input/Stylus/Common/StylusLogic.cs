@@ -6,24 +6,14 @@
 using Microsoft.Win32; // for RegistryKey class
 using MS.Internal;
 using MS.Internal.Interop;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using MS.Utility;
 using MS.Win32; // for *NativeMethods
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.StylusPointer;
 using System.Windows.Input.StylusWisp;
 using System.Windows.Input.Tracing;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
-using SR = MS.Internal.PresentationCore.SR;
 
 
 namespace System.Windows.Input

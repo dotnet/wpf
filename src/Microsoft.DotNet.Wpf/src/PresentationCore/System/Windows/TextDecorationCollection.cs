@@ -9,14 +9,10 @@
 //
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Globalization;
 
 using System.Windows.Media.Animation;
-using System.Windows.Markup;
 
 namespace System.Windows
 {

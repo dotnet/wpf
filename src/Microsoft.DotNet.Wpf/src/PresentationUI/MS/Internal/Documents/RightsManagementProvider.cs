@@ -7,26 +7,24 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Packaging;
-using System.Security;
 using System.Security.RightsManagement;
-using System.Windows.TrustUI;
 
 using MS.Internal.Documents.Application;
 
 using Microsoft.Win32;
 
-using SR=System.Windows.TrustUI.SR;
+using SR = System.Windows.TrustUI.SR;
 
 namespace MS.Internal.Documents
 {
-/// <summary>
-/// RightsManagementProvider is used to connect DRP to RM APIs 
-/// </summary>
-/// <remarks>
-/// This class is a facade for the RM APIs. It is the model between the Manager
-/// and the EncryptedPackageEnvelope and System.Security.RightsManagement classes.
-/// </remarks>
-internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
+    /// <summary>
+    /// RightsManagementProvider is used to connect DRP to RM APIs 
+    /// </summary>
+    /// <remarks>
+    /// This class is a facade for the RM APIs. It is the model between the Manager
+    /// and the EncryptedPackageEnvelope and System.Security.RightsManagement classes.
+    /// </remarks>
+    internal class RightsManagementProvider : IRightsManagementProvider, IDisposable
 {
     #region Constructors
     //--------------------------------------------------------------------------

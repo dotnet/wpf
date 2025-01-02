@@ -4,8 +4,6 @@
 
 // Description: Automation Identifiers for Text pattern
 
-using System;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using MS.Internal.Automation;
 

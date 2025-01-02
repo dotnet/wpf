@@ -5,19 +5,8 @@
 //
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Security;
-using System.Threading;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Threading;
-using MS.Internal;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {

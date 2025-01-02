@@ -5,8 +5,6 @@
 //
 //
 
-using MS.Utility;
-using System;
 using System.ComponentModel;    // InvalidEnumArgumentException
 using System.Windows.Data;      // UpdateSourceTrigger
 

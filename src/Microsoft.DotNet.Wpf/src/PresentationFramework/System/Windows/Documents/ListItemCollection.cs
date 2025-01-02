@@ -8,8 +8,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal; // Invariant
-
     /// <summary>
     /// Collection of ListItem elements
     /// </summary>

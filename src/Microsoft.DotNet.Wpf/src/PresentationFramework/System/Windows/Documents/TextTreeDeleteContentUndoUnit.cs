@@ -7,12 +7,10 @@
 //
 
 using MS.Internal;
-using System;
 using System.IO;
 using System.Windows.Controls;
 using System.Windows.Markup;
 using System.Xml;
-using System.Security;
 
 namespace System.Windows.Documents
 {

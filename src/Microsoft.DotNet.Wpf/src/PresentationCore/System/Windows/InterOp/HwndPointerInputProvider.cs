@@ -3,15 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
 using MS.Internal.Interop;
 using MS.Win32.Pointer;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows.Input;
-using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.StylusPointer;
 using System.Windows.Media;
 using System.Windows.Threading;
@@ -80,7 +75,7 @@ namespace System.Windows.Interop
             _pointerLogic.PlugInManagers[_source] = new PointerStylusPlugInManager(_source);
 
             // Store if this window is enabled or disabled
-            int style = MS.Win32.UnsafeNativeMethods.GetWindowLong(new HandleRef(this, source.CriticalHandle), MS.Win32.NativeMethods.GWL_STYLE);
+            int style = MS.Win32.UnsafeNativeMethods.GetWindowLong(new HandleRef(this, source.Handle), MS.Win32.NativeMethods.GWL_STYLE);
             IsWindowEnabled = (style & MS.Win32.NativeMethods.WS_DISABLED) == 0;
         }
 

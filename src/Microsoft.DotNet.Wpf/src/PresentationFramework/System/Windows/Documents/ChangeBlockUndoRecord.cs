@@ -7,8 +7,6 @@
 //              TextContainer.
 //
 
-using System;
-using System.Windows;
 using MS.Internal;
 using MS.Internal.Documents;
 

@@ -3,10 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Collections;
-using System.IO.Packaging;
-using System.Security.RightsManagement;
-using System.Security;
 
 namespace MS.Internal.Documents
 {

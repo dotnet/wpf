@@ -24,12 +24,12 @@ using System.Diagnostics.CodeAnalysis;
 #endregion
 
 #region Microsoft.Performance suppressions
-[assembly: SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Scope = "type", Target = "MS.Internal.Xaml.Context.ObjectWriterFrame")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Scope = "type", Target = "MS.Internal.Xaml.Context.ObjectWriterFrame", Justification = "Non-Breaking")]
 
 // New since v4 RTM:
 
 // this is used by subclasses, bad FxCop detection
-[assembly: SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Scope = "type", Target = "System.Xaml.MS.Impl.FrugalObjectList`1+Compacter")]
+[assembly: SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", Scope = "type", Target = "System.Xaml.MS.Impl.FrugalObjectList`1+Compacter", Justification = "Non-Breaking")]
 #endregion
 
 #region Microsoft.Naming Suppressions
@@ -42,39 +42,39 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Scope = "member", Target = "System.Windows.Markup.ArrayExtension.#Type", Justification = "Kept for compatibility.")]
 [assembly: SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Scope = "member", Target = "System.Windows.Markup.TypeExtension.#Type", Justification = "Kept for compatibility.")]
 [assembly: SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Scope = "member", Target = "System.Windows.Markup.NameScopePropertyAttribute.#Type", Justification = "Kept for compatibility.")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Uid", Scope = "type", Target = "System.Windows.Markup.UidPropertyAttribute")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Uid", Scope = "member", Target = "System.Xaml.XamlLanguage.#Uid")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Namescope", Scope = "member", Target = "System.Xaml.XamlObjectWriterSettings.#RegisterNamesOnExternalNamescope")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Uids", Scope = "member", Target = "System.Xaml.XamlReaderSettings.#IgnoreUidsOnPropertyElements")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Arity", Scope = "member", Target = "System.Xaml.XamlSchemaContext.#SupportMarkupExtensionsWithDuplicateArity")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Arity", Scope = "member", Target = "System.Xaml.XamlSchemaContextSettings.#SupportMarkupExtensionsWithDuplicateArity")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", MessageId = "Arity", Scope = "resource", Target = "ExceptionStringTable.resources")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#String")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Double")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Int32")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Object")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Char")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Single")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Int16")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Int64")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Decimal")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Uid", Scope = "type", Target = "System.Windows.Markup.UidPropertyAttribute", Justification = "Short for unique identifiers.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Uid", Scope = "member", Target = "System.Xaml.XamlLanguage.#Uid", Justification = "Short for unique identifiers.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Namescope", Scope = "member", Target = "System.Xaml.XamlObjectWriterSettings.#RegisterNamesOnExternalNamescope", Justification ="Will require changes in public API contract.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Uids", Scope = "member", Target = "System.Xaml.XamlReaderSettings.#IgnoreUidsOnPropertyElements", Justification = "Short for unique identifiers.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Arity", Scope = "member", Target = "System.Xaml.XamlSchemaContext.#SupportMarkupExtensionsWithDuplicateArity", Justification ="Will require changes in public API contract.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Arity", Scope = "member", Target = "System.Xaml.XamlSchemaContextSettings.#SupportMarkupExtensionsWithDuplicateArity", Justification ="Will require changes in public API contract.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1703:ResourceStringsShouldBeSpelledCorrectly", MessageId = "Arity", Scope = "resource", Target = "ExceptionStringTable.resources", Justification="Alligns with other instances of same resource.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#String", Justification="Will require changes in public API contract.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Double", Justification="Will require changes in public API contract.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Int32", Justification="Will require changes in public API contract.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Object", Justification="Will require changes in public API contract.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Char", Justification="Will require changes in public API contract.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Single", Justification="Will require changes in public API contract.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Int16", Justification="Will require changes in public API contract.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Int64", Justification="Will require changes in public API contract.")]
+[assembly: SuppressMessage("Microsoft.Naming", "CA1720:IdentifiersShouldNotContainTypeNames", Scope = "member", Target = "System.Xaml.XamlLanguage.#Decimal", Justification="Will require changes in public API contract.")]
 #endregion
 
 #region Microsoft.Usage Suppressions
-[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.ThreeItemList`1.Promote(System.Xaml.MS.Impl.ThreeItemList`1<T>):System.Void")]
-[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.ThreeItemList`1.SetCount(System.Int32):System.Void")]
-[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.ThreeItemList`1.Promote(System.Xaml.MS.Impl.FrugalListBase`1<T>):System.Void")]
-[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.ArrayItemList`1.Promote(System.Xaml.MS.Impl.SixItemList`1<T>):System.Void")]
-[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.ArrayItemList`1.SetCount(System.Int32):System.Void")]
-[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.SingleItemList`1.SetCount(System.Int32):System.Void")]
-[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.SixItemList`1.Promote(System.Xaml.MS.Impl.SixItemList`1<T>):System.Void")]
-[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.SixItemList`1.Promote(System.Xaml.MS.Impl.ThreeItemList`1<T>):System.Void")]
-[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.SixItemList`1.SetCount(System.Int32):System.Void")]
-[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.SixItemList`1.Promote(System.Xaml.MS.Impl.FrugalListBase`1<T>):System.Void")]
+[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.ThreeItemList`1.Promote(System.Xaml.MS.Impl.ThreeItemList`1<T>):System.Void", Justification = "Kept for compatibility.")]
+[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.ThreeItemList`1.SetCount(System.Int32):System.Void", Justification = "Kept for compatibility.")]
+[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.ThreeItemList`1.Promote(System.Xaml.MS.Impl.FrugalListBase`1<T>):System.Void", Justification = "Kept for compatibility.")]
+[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.ArrayItemList`1.Promote(System.Xaml.MS.Impl.SixItemList`1<T>):System.Void", Justification = "Kept for compatibility.")]
+[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.ArrayItemList`1.SetCount(System.Int32):System.Void", Justification = "Kept for compatibility.")]
+[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.SingleItemList`1.SetCount(System.Int32):System.Void", Justification = "Kept for compatibility.")]
+[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.SixItemList`1.Promote(System.Xaml.MS.Impl.SixItemList`1<T>):System.Void", Justification = "Kept for compatibility.")]
+[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.SixItemList`1.Promote(System.Xaml.MS.Impl.ThreeItemList`1<T>):System.Void", Justification = "Kept for compatibility.")]
+[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.SixItemList`1.SetCount(System.Int32):System.Void", Justification = "Kept for compatibility.")]
+[assembly: SuppressMessage("Microsoft.Usage", "CA2208:InstantiateArgumentExceptionsCorrectly", Scope = "member", Target = "System.Xaml.MS.Impl.SixItemList`1.Promote(System.Xaml.MS.Impl.FrugalListBase`1<T>):System.Void", Justification = "Kept for compatibility.")]
 #endregion
 
 #region Microsoft.Reliablity Suppressions
 [module: SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", Scope = "member", Target = "System.Xaml.Schema.ClrNamespace.#ParseClrNamespaceUri(System.String)", MessageId = "System.Reflection.Assembly.LoadWithPartialName", Justification = "Back compat.")]
-[module: SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFile", Scope = "member", Target = "System.Xaml.ReflectionHelper.#LoadAssemblyHelper(System.String,System.String)")]
+[module: SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadFile", Scope = "member", Target = "System.Xaml.ReflectionHelper.#LoadAssemblyHelper(System.String,System.String)", Justification = "Kept for compatibility.")]
 [module: SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods", MessageId = "System.Reflection.Assembly.LoadWithPartialName", Scope = "member", Target = "System.Xaml.XamlSchemaContext.#ResolveAssembly(System.String)", Justification = "Need to support load of assemblies from GAC by short name.")]
 #endregion

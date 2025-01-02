@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System.Diagnostics;
 using System.Reflection;
 
 namespace System.Xaml
@@ -25,7 +24,7 @@ namespace System.Xaml
 
         public XamlReaderSettings(XamlReaderSettings settings) : this()
         {
-            if (settings != null)
+            if (settings is not null)
             {
                 AllowProtectedMembersOnRoot = settings.AllowProtectedMembersOnRoot;
                 ProvideLineInfo = settings.ProvideLineInfo;

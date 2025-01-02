@@ -28,6 +28,7 @@ namespace System.Xaml
             {
                 stack.CurrentFrame.Instance = null;
             }
+
             BaseUri = owContext.BaseUri;
         }
 

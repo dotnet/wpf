@@ -7,10 +7,8 @@
 //      IAnnotationComponent
 //
 
-using System;
 using System.Collections;
 using System.Windows;
-using System.Windows.Annotations;
 using System.Windows.Media;
 
 namespace MS.Internal.Annotations.Component

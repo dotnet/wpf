@@ -10,9 +10,7 @@
 
 using System.Xml;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
 using System.Windows.Data;
-using System.Windows.Markup;
 
 namespace MS.Internal.Data
 {

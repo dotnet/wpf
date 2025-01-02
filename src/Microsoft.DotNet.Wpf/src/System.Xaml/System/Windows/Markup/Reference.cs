@@ -27,20 +27,23 @@ namespace System.Windows.Markup
         {
             ArgumentNullException.ThrowIfNull(serviceProvider);
             IXamlNameResolver nameResolver = serviceProvider.GetService(typeof(IXamlNameResolver)) as IXamlNameResolver;
-            if (nameResolver == null)
+            if (nameResolver is null)
             {
                 throw new InvalidOperationException(SR.MissingNameResolver);
             }
+
             if (string.IsNullOrEmpty(Name))
             {
                 throw new InvalidOperationException(SR.MustHaveName);
             }
+
             object obj = nameResolver.Resolve(Name);
-            if (obj == null)
+            if (obj is null)
             {
                 string[] names = new string[] { Name };
                 obj = nameResolver.GetFixupToken(names, true);
             }
+
             return obj;
         }
     }

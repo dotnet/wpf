@@ -9,17 +9,9 @@
 *
 *
 \***************************************************************************/
-using System;
-using System.Collections;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Diagnostics;
-using System.Windows.Documents;
 using System.Windows.Markup;
-using System.Reflection;
-using MS.Internal;
 using System.Xaml;
-using System.Collections.Generic;
 
 namespace System.Windows
 {

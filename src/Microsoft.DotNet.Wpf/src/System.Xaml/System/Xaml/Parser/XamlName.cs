@@ -82,6 +82,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 return true;
             }
+
             return false;
         }
 

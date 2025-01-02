@@ -3,13 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Globalization;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Markup;
 using System.Windows.Markup.Localizer;
-using System.Diagnostics;
 using System.Text;
 
 namespace MS.Internal.Globalization

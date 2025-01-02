@@ -635,7 +635,7 @@ namespace MS.Internal.AutomationProxies
                 children = new Accessible[1];
                 children[0] = AccessibleFromObject(obj, _acc);
             }
-            else if (obj is object)
+            else if (obj is not null)
             {
                 children = new Accessible[1];
                 children[0] = AccessibleFromObject(obj, _acc);

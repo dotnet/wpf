@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,8 +13,6 @@ Abstract:
 --*/
 
 using System.Xml;
-
-#pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages
 
 namespace MS.Internal.Printing.Configuration
 {
@@ -309,16 +307,15 @@ namespace MS.Internal.Printing.Configuration
                     param._defaultValue = reader.GetCurrentPropertyIntValueWithException();
                 }
                 // We want to catch internal FormatException to skip recoverable XML content syntax error
-                #pragma warning suppress 56502
-                #if _DEBUG
+#if _DEBUG
                 catch (FormatException e)
-                #else
+#else
                 catch (FormatException)
-                #endif
+#endif
                 {
-                    #if _DEBUG
+#if _DEBUG
                     Trace.WriteLine("-Error- " + e.Message);
-                    #endif
+#endif
                 }
             }
             else if (reader.CurrentElementPSFNameAttrValue == PrintSchemaTags.Keywords.ParameterProps.MaxValue)
@@ -328,16 +325,15 @@ namespace MS.Internal.Printing.Configuration
                     param._maxValue = reader.GetCurrentPropertyIntValueWithException();
                 }
                 // We want to catch internal FormatException to skip recoverable XML content syntax error
-                #pragma warning suppress 56502
-                #if _DEBUG
+#if _DEBUG
                 catch (FormatException e)
-                #else
+#else
                 catch (FormatException)
-                #endif
+#endif
                 {
-                    #if _DEBUG
+#if _DEBUG
                     Trace.WriteLine("-Error- " + e.Message);
-                    #endif
+#endif
                 }
             }
             else if (reader.CurrentElementPSFNameAttrValue == PrintSchemaTags.Keywords.ParameterProps.MinValue)
@@ -347,16 +343,15 @@ namespace MS.Internal.Printing.Configuration
                     param._minValue = reader.GetCurrentPropertyIntValueWithException();
                 }
                 // We want to catch internal FormatException to skip recoverable XML content syntax error
-                #pragma warning suppress 56502
-                #if _DEBUG
+#if _DEBUG
                 catch (FormatException e)
-                #else
+#else
                 catch (FormatException)
-                #endif
+#endif
                 {
-                    #if _DEBUG
+#if _DEBUG
                     Trace.WriteLine("-Error- " + e.Message);
-                    #endif
+#endif
                 }
             }
             else

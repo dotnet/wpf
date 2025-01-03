@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -147,15 +147,6 @@ namespace MS.Internal.Controls
                     cancel = true;
                 }
             }
-        }
-
-        /// <summary>
-        /// Determines whether a URI has a recognized and allowed URI scheme that we shouldn't block on navigation
-        /// attempts from the browser, regardless of whether we are partial trust or not.
-        /// </summary>
-        private static bool IsAllowedScriptScheme(Uri uri)
-        {
-            return uri != null && (uri.Scheme == "javascript" || uri.Scheme == "vbscript");
         }
 
         /// <summary>

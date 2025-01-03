@@ -1123,8 +1123,8 @@ namespace System.IO.Packaging
                 //copy the stream
 
                 PackagingUtilities.CopyStream(packageStream, _packageStream,
-                                                Int64.MaxValue, /*bytes to copy*/
-                                                4096 /*buffer size */);
+                                                bytesToCopy: Int64.MaxValue,
+                                                bufferSize: 4096);
                 _package = Package.Open(_packageStream, FileMode.Open, this.FileOpenAccess);
             }
             else

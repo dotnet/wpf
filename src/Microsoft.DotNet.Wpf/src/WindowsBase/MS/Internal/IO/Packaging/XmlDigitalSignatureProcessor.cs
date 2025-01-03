@@ -94,7 +94,7 @@ namespace MS.Internal.IO.Packaging
 
             // Validate the Reference tags in the SignedInfo as per the 
             // restrictions imposed by the OPC spec
-            ValidateReferences(xmlSig.SignedInfo.References, true /*allowPackageSpecificReference*/);
+            ValidateReferences(xmlSig.SignedInfo.References, allowPackageSpecificReferences: true);
 
             // verify "standard" XmlSignature portions
             result = xmlSig.CheckSignature(signer, true);
@@ -498,8 +498,8 @@ namespace MS.Internal.IO.Packaging
 
                 // generate a valid Relationship tag according to the Opc schema
                 InternalRelationshipCollection.WriteRelationshipsAsXml(writer, relationships,
-                        true,  /* systematically write target mode */
-                        false  /* not in streaming production */
+                        alwaysWriteTargetModeAttribute: true,
+                        inStreamingProduction: false
                         );
 
                 // end of Relationships tag
@@ -900,7 +900,7 @@ namespace MS.Internal.IO.Packaging
             {
                 // Validate the Reference tags in the SignedInfo as per the 
                 // restrictions imposed by the OPC spec
-                ValidateReferences(objectReferences, false /*allowPackageSpecificReference*/);
+                ValidateReferences(objectReferences, allowPackageSpecificReferences: false);
 
                 foreach (Reference reference in objectReferences)
                 {

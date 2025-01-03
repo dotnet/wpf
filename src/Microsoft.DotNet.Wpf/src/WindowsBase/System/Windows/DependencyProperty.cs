@@ -367,7 +367,7 @@ namespace System.Windows
             }
 
             ValidateDefaultValueCommon(defaultMetadata.DefaultValue, propertyType,
-                propertyName, validateValueCallback, /*checkThreadAffinity = */ true);
+                propertyName, validateValueCallback, checkThreadAffinity: true);
         }
 
         // Validate the given default value, used by PropertyMetadata.GetDefaultValue()

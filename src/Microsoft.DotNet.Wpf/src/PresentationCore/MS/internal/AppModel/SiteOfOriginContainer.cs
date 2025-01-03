@@ -25,14 +25,14 @@ namespace MS.Internal.AppModel
         }
 
         /// <summary>
-        /// Retrieves the site of origin, derived from <see cref="AppDomain.CurrentDomain.BaseDirectory"/>.
+        /// Retrieves the site of origin, derived from <see cref="AppContext.BaseDirectory"/>.
         /// </summary>
         internal static Uri SiteOfOrigin
         {
             get
             {
                 // Calling FixFileUri because BaseDirectory will be a c:\\ style path
-                Uri siteOfOrigin = BaseUriHelper.FixFileUri(new Uri(AppDomain.CurrentDomain.BaseDirectory));
+                Uri siteOfOrigin = BaseUriHelper.FixFileUri(new Uri(AppContext.BaseDirectory));
 #if DEBUG
                 if (TraceSwitchEnabled)
                 {

@@ -111,7 +111,6 @@
     <Compile Include="MS\Internal\AppModel\BamlStream.cs" />
     <Compile Include="MS\Internal\AppModel\ComGuids.cs" />
     <Compile Include="MS\Internal\AppModel\ContentFilePart.cs" />
-    <Compile Include="MS\Internal\AppModel\IBrowserHostServices.cs" />
     <Compile Include="MS\Internal\AppModel\IconHelper.cs" />
     <Compile Include="MS\Internal\AppModel\IContentContainer.cs" />
     <Compile Include="MS\Internal\AppModel\INavigator.cs" />

@@ -45,7 +45,7 @@ namespace System.Windows.Markup
             }
             else if (_objDict[serviceType] != service)
             {
-                throw new ArgumentException(SR.ServiceTypeAlreadyAdded, "serviceType");
+                throw new ArgumentException(SR.ServiceTypeAlreadyAdded, nameof(serviceType));
             }
         }
 

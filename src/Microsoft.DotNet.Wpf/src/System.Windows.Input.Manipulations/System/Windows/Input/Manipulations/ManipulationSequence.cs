@@ -125,7 +125,7 @@ namespace System.Windows.Input.Manipulations
                 // Make sure that the timestamp is advancing during the processing of manipulations.
                 if (unchecked(timestamp - this.currentManipulationState.Timestamp) < 0)
                 {
-                    throw Exceptions.InvalidTimestamp("timestamp", timestamp);
+                    throw Exceptions.InvalidTimestamp(nameof(timestamp), timestamp);
                 }
             }
             // NOTE: null and empty are both valid for manipulators.
@@ -145,7 +145,7 @@ namespace System.Windows.Input.Manipulations
                 // Make sure that the timestamp is advancing during the processing of manipulations.
                 if (unchecked(timestamp - this.currentManipulationState.Timestamp) < 0)
                 {
-                    throw Exceptions.InvalidTimestamp("timestamp", timestamp);
+                    throw Exceptions.InvalidTimestamp(nameof(timestamp), timestamp);
                 }
             }
 

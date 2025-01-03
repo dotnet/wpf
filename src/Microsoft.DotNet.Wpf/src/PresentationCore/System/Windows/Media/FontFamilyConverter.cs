@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -124,7 +124,7 @@ namespace System.Windows.Media
             FontFamily fontFamily = value as FontFamily;
             if (fontFamily == null)
             {
-                throw new ArgumentException(SR.Format(SR.General_Expected_Type, "FontFamily"), "value");
+                throw new ArgumentException(SR.Format(SR.General_Expected_Type, "FontFamily"), nameof(value));
             }
 
             ArgumentNullException.ThrowIfNull(destinationType);

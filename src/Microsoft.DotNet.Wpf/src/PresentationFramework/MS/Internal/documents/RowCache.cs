@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -669,7 +669,7 @@ namespace MS.Internal.Documents
             //at the top and work our way down, we might not end up with the
             //same pages on this row.
 
-            //Store off the rows we calculate here, we’ll need them later.            
+            //Store off the rows we calculate here, weâ€™ll need them later.            
             List<RowInfo> tempRows = new List<RowInfo>(pivotPage / columns);
             int currentPage = pivotPage;
             while (currentPage > 0)
@@ -680,7 +680,7 @@ namespace MS.Internal.Documents
                 tempRows.Add(newRow);
             }
 
-            //We’ve made it to the top.
+            //Weâ€™ve made it to the top.
             //Now we can calculate the offsets of each row and add them to the Row cache.                       
             for (int i = tempRows.Count - 1; i >= 0; i--)
             {
@@ -704,7 +704,7 @@ namespace MS.Internal.Documents
                 AddRow(newRow);
             }
 
-            //And we’re done.  Whew.
+            //And weâ€™re done.  Whew.
             return pivotRowIndex;
         }
 
@@ -728,7 +728,7 @@ namespace MS.Internal.Documents
             //Populate the struct with initial data.
             RowInfo newRow = new RowInfo();
 
-            //Each row is guaranteed to have at least one page, even if it’s wider
+            //Each row is guaranteed to have at least one page, even if itâ€™s wider
             //than the allotted size, so we add it here.        
             Size pageSize = GetScaledPageSize(startPage);
             newRow.AddPage(pageSize);
@@ -743,7 +743,7 @@ namespace MS.Internal.Documents
                     //Grab the next page.
                     pageSize = GetScaledPageSize(startPage + newRow.PageCount);
 
-                    //We’re out of pages, or out of space.
+                    //Weâ€™re out of pages, or out of space.
                     if (startPage + newRow.PageCount >= PageCache.PageCount ||
                         newRow.RowSize.Width + pageSize.Width > rowWidth)
                     {
@@ -755,7 +755,7 @@ namespace MS.Internal.Documents
                     //Grab the previous page.
                     pageSize = GetScaledPageSize(startPage - newRow.PageCount);
 
-                    //We’re out of pages, or out of space.
+                    //Weâ€™re out of pages, or out of space.
                     if (startPage - newRow.PageCount < 0 ||
                         newRow.RowSize.Width + pageSize.Width > rowWidth)
                     {
@@ -840,7 +840,7 @@ namespace MS.Internal.Documents
             // - add the appropriate number of pages            
             for (int i = startPage; i < startPage + columns; i++)
             {
-                //We’re out of pages.
+                //Weâ€™re out of pages.
                 if (i > PageCache.PageCount - 1)
                     break;
 
@@ -1266,7 +1266,7 @@ namespace MS.Internal.Documents
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException("args");
+                            throw new ArgumentOutOfRangeException(nameof(args));
                     }
                 }
 

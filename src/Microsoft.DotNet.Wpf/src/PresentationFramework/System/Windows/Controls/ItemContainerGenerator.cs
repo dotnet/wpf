@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -166,7 +166,7 @@ namespace System.Windows.Controls
         ItemContainerGenerator IItemContainerGenerator.GetItemContainerGeneratorForPanel(Panel panel)
         {
             if (!panel.IsItemsHost)
-                throw new ArgumentException(SR.PanelIsNotItemsHost, "panel");
+                throw new ArgumentException(SR.PanelIsNotItemsHost, nameof(panel));
 
             // if panel came from an ItemsPresenter, use its generator
             ItemsPresenter ip = ItemsPresenter.FromPanel(panel);
@@ -270,9 +270,9 @@ namespace System.Windows.Controls
         private void Remove(GeneratorPosition position, int count, bool isRecycling)
         {
             if (position.Offset != 0)
-                throw new ArgumentException(SR.Format(SR.RemoveRequiresOffsetZero, position.Index, position.Offset), "position");
+                throw new ArgumentException(SR.Format(SR.RemoveRequiresOffsetZero, position.Index, position.Offset), nameof(position));
             if (count <= 0)
-                throw new ArgumentException(SR.Format(SR.RemoveRequiresPositiveCount, count), "count");
+                throw new ArgumentException(SR.Format(SR.RemoveRequiresPositiveCount, count), nameof(count));
 
             if (_itemMap == null)
             {

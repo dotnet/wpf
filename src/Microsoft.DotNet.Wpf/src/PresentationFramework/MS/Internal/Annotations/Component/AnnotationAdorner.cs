@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -41,7 +41,7 @@ namespace MS.Internal.Annotations.Component
             }
             else
             {
-                throw new ArgumentException(SR.AnnotationAdorner_NotUIElement, "component");
+                throw new ArgumentException(SR.AnnotationAdorner_NotUIElement, nameof(component));
             }
         }
 
@@ -102,7 +102,7 @@ namespace MS.Internal.Annotations.Component
         {
             if (index != 0 || _annotationComponent == null)
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
 
             return (UIElement)_annotationComponent;

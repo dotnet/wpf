@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -649,7 +649,7 @@ namespace System.Windows.Data
                         }
                     }
 
-                    OnPropertyChanged("NewItemPlaceholderPosition");
+                    OnPropertyChanged(nameof(NewItemPlaceholderPosition));
                 }
             }
         }
@@ -1030,9 +1030,9 @@ namespace System.Windows.Data
             {
                 _newItem = item;
 
-                OnPropertyChanged("CurrentAddItem");
-                OnPropertyChanged("IsAddingNew");
-                OnPropertyChanged("CanRemove");
+                OnPropertyChanged(nameof(CurrentAddItem));
+                OnPropertyChanged(nameof(IsAddingNew));
+                OnPropertyChanged(nameof(CanRemove));
             }
         }
 
@@ -1159,7 +1159,7 @@ namespace System.Windows.Data
             VerifyRefreshNotDeferred();
 
             if (item == NewItemPlaceholder)
-                throw new ArgumentException(SR.CannotEditPlaceholder, "item");
+                throw new ArgumentException(SR.CannotEditPlaceholder, nameof(item));
 
             if (IsAddingNew)
             {
@@ -1362,12 +1362,12 @@ namespace System.Windows.Data
             {
                 _editItem = item;
 
-                OnPropertyChanged("CurrentEditItem");
-                OnPropertyChanged("IsEditingItem");
-                OnPropertyChanged("CanCancelEdit");
-                OnPropertyChanged("CanAddNew");
-                OnPropertyChanged("CanAddNewItem");
-                OnPropertyChanged("CanRemove");
+                OnPropertyChanged(nameof(CurrentEditItem));
+                OnPropertyChanged(nameof(IsEditingItem));
+                OnPropertyChanged(nameof(CanCancelEdit));
+                OnPropertyChanged(nameof(CanAddNew));
+                OnPropertyChanged(nameof(CanAddNewItem));
+                OnPropertyChanged(nameof(CanRemove));
             }
         }
 
@@ -1408,14 +1408,14 @@ namespace System.Windows.Data
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
 
                 if (value != _isLiveSorting)
                 {
                     _isLiveSorting = value;
                     RebuildLocalArray();
 
-                    OnPropertyChanged("IsLiveSorting");
+                    OnPropertyChanged(nameof(IsLiveSorting));
                 }
             }
         }
@@ -1432,14 +1432,14 @@ namespace System.Windows.Data
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
 
                 if (value != _isLiveFiltering)
                 {
                     _isLiveFiltering = value;
                     RebuildLocalArray();
 
-                    OnPropertyChanged("IsLiveFiltering");
+                    OnPropertyChanged(nameof(IsLiveFiltering));
                 }
             }
         }
@@ -1456,14 +1456,14 @@ namespace System.Windows.Data
             set
             {
                 if (value == null)
-                    throw new ArgumentNullException("value");
+                    throw new ArgumentNullException(nameof(value));
 
                 if (value != _isLiveGrouping)
                 {
                     _isLiveGrouping = value;
                     RebuildLocalArray();
 
-                    OnPropertyChanged("IsLiveGrouping");
+                    OnPropertyChanged(nameof(IsLiveGrouping));
                 }
             }
         }
@@ -1685,7 +1685,7 @@ namespace System.Windows.Data
                     case NotifyCollectionChangedAction.Reset:
                     case NotifyCollectionChangedAction.Add:
                     case NotifyCollectionChangedAction.Replace:
-                        OnPropertyChanged("CanAddNew");
+                        OnPropertyChanged(nameof(CanAddNew));
                         break;
                 }
             }

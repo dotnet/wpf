@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -113,7 +113,7 @@ namespace System.Windows.Media.Imaging
             ArgumentNullException.ThrowIfNull(pixels);
 
             if (pixels.Rank != 1)
-                throw new ArgumentException(SR.Collection_BadRank, "pixels");
+                throw new ArgumentException(SR.Collection_BadRank, nameof(pixels));
 
             int elementSize = -1;
 
@@ -394,7 +394,7 @@ namespace System.Windows.Media.Imaging
             {
                 throw new System.ArgumentException(
                         SR.Format(SR.Effect_PixelFormat, pixelFormat),
-                        "pixelFormat"
+                        nameof(pixelFormat)
                         );
             }
 

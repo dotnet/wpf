@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -68,7 +68,7 @@ namespace System.Windows.Ink
         {
             if (Double.IsNaN(diameter) || diameter < DrawingAttributes.MinWidth || diameter > DrawingAttributes.MaxWidth)
             {
-                throw new ArgumentOutOfRangeException("diameter", SR.InvalidDiameter);
+                throw new ArgumentOutOfRangeException(nameof(diameter), SR.InvalidDiameter);
             }
             return PointHitTest(point, new EllipseStylusShape(diameter, diameter));
         }
@@ -86,7 +86,7 @@ namespace System.Windows.Ink
             ArgumentNullException.ThrowIfNull(lassoPoints);
             if ((percentageWithinLasso < 0) || (percentageWithinLasso > 100))
             {
-                throw new System.ArgumentOutOfRangeException("percentageWithinLasso");
+                throw new System.ArgumentOutOfRangeException(nameof(percentageWithinLasso));
             }
 
             if (IEnumerablePointHelper.GetCount(lassoPoints) < 3)
@@ -156,7 +156,7 @@ namespace System.Windows.Ink
             // Check the input parameters
             if ((percentageWithinBounds < 0) || (percentageWithinBounds > 100))
             {
-                throw new System.ArgumentOutOfRangeException("percentageWithinBounds");
+                throw new System.ArgumentOutOfRangeException(nameof(percentageWithinBounds));
             }
             if (bounds.IsEmpty)
             {
@@ -438,7 +438,7 @@ namespace System.Windows.Ink
         {
             if ((percentageWithinLasso < 0) || (percentageWithinLasso > 100))
             {
-                throw new System.ArgumentOutOfRangeException("percentageWithinLasso");
+                throw new System.ArgumentOutOfRangeException(nameof(percentageWithinLasso));
             }
             return new IncrementalLassoHitTester(this, percentageWithinLasso);
         }

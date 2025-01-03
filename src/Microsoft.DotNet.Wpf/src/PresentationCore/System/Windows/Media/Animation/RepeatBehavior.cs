@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -43,7 +43,7 @@ namespace System.Windows.Media.Animation
                 || double.IsNaN(count)
                 || count < 0.0)
             {
-                throw new ArgumentOutOfRangeException("count", SR.Format(SR.Timing_RepeatBehaviorInvalidIterationCount, count));
+                throw new ArgumentOutOfRangeException(nameof(count), SR.Format(SR.Timing_RepeatBehaviorInvalidIterationCount, count));
             }
 
             _repeatDuration = new TimeSpan(0);
@@ -60,7 +60,7 @@ namespace System.Windows.Media.Animation
         {
             if (duration < new TimeSpan(0))
             {
-                throw new ArgumentOutOfRangeException("duration", SR.Format(SR.Timing_RepeatBehaviorInvalidRepeatDuration, duration));
+                throw new ArgumentOutOfRangeException(nameof(duration), SR.Format(SR.Timing_RepeatBehaviorInvalidRepeatDuration, duration));
             }
 
             _iterationCount = 0.0;

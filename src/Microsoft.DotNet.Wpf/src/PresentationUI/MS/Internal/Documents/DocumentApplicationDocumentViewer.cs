@@ -4,10 +4,6 @@
 
 // Description: The main DocumentViewer subclass that drives the MongooseUI
 
-
-// Used to support the warnings disabled below
-#pragma warning disable 1634, 1691
-
 using MS.Internal.Documents.Application;
 using System;
 using System.Globalization;                 // For localization of string conversion

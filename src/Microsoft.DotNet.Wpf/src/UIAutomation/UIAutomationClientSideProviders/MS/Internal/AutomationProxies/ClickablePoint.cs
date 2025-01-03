@@ -263,13 +263,10 @@ namespace MS.Internal.AutomationProxies
                         return true;
                     }
                 }
-// PRESHARP: Warning - Catch statements should not have empty bodies
-#pragma warning disable 6502
                 catch (TimeoutException)
                 {
                     // Ignore this timeout error.  Avalon HwndWrappers have a problem with this WM_NCHITTEST call sometimes.
                 }
-#pragma warning restore 6502
             }
 
             // Copy the output bits

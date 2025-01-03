@@ -134,7 +134,6 @@ namespace MS.Internal.AppModel
                         }
                     }
                 }
-#pragma warning disable 6502 // PRESharp - Catch statements should not have empty bodies
                 catch (System.Resources.MissingManifestResourceException)
                 {
                     // When the main assembly doesn't contain any resource (all the resources must come from satellite assembly)
@@ -144,8 +143,6 @@ namespace MS.Internal.AppModel
                     // If the main assembly does contain resource, but the resource with above _name does't exist, the above GetStream( )
                     // just returns null without exception.
                 }
-#pragma warning restore 6502
-
             }
 
             // Do not attempt to load the original file name here.  If the .baml does not exist or if this resource not

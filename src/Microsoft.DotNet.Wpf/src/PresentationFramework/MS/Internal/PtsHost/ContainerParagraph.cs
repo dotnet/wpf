@@ -428,14 +428,12 @@ namespace MS.Internal.PtsHost
         internal override void CreateParaclient(
             out IntPtr paraClientHandle)        // OUT: opaque to PTS paragraph client
         {
-#pragma warning disable 6518
-            // Disable PRESharp warning 6518. ContainerParaClient is an UnmamangedHandle, that adds itself
+            // ContainerParaClient is an UnmamangedHandle, that adds itself
             // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and 
             // calls DestroyParaclient to get rid of it. DestroyParaclient will call Dispose() on the object
             // and remove it from HandleMapper.
             ContainerParaClient paraClient =  new ContainerParaClient(this);
             paraClientHandle = paraClient.Handle;
-#pragma warning restore 6518
         }
 
         //-------------------------------------------------------------------

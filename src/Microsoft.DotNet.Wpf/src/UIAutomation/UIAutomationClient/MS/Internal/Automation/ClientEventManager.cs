@@ -174,13 +174,10 @@ namespace MS.Internal.Automation
                                 {
                                     ec.EventHandle.Dispose(); // Calls UiaCoreApi.UiaRemoveEvent
                                 }
-// PRESHARP: Warning - Catch statements should not have empty bodies
-#pragma warning disable 6502
                                 catch (ElementNotAvailableException)
                                 {
                                     // the element is gone already; continue on and remove the listener
                                 }
-#pragma warning restore 6502
                                 finally
                                 {
                                     ec.Dispose();

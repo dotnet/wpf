@@ -480,11 +480,6 @@ namespace System.IO.Packaging
             if (certificate is not X509Certificate2 exSigner)
                 exSigner = new X509Certificate2(certificate.Handle);
 
-            //PRESHARP: Parameter to this public method must be validated:  A null-dereference can occur here.
-            //      Parameter 'exSigner' to this public method must be validated:  A null-dereference can occur here. 
-            //This is a false positive as the checks above can gurantee no null dereference will occur  
-#pragma warning disable 6506
-
             PackageDigitalSignature signature = null;
             PackagePart newSignaturePart = null;
             try
@@ -552,7 +547,6 @@ namespace System.IO.Packaging
                 newSignaturePart.CreateRelationship(certificatePartName, TargetMode.Internal, CertificatePart.RelationshipType);
                 signature.SetCertificatePart(certPart);
             }
-#pragma warning restore 6506
 
             _container.Flush();
 

@@ -302,11 +302,7 @@ namespace System.Windows.Media.Imaging
                 }
                 catch(Exception e)
                 {
-                    #pragma warning disable 6500
-
                     return ExceptionCallback(e);
-
-                    #pragma warning restore 6500
                 }
             }
 

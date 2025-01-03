@@ -198,9 +198,7 @@ namespace System.Windows.Media.Media3D
                 return -1;
             }
 
-#pragma warning disable 56506 // Suppress presharp warning: Parameter 'value' to this public method must be validated:  A null-dereference can occur here.
             return value.ParentIndex;
-#pragma warning restore 56506
         }
 
         /// <summary>

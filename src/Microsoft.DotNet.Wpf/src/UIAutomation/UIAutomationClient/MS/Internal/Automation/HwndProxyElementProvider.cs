@@ -1408,13 +1408,10 @@ namespace MS.Internal.Automation
                     }
                 }
             }
-// PRESHARP: Warning - Catch statements should not have empty bodies
-#pragma warning disable 6502
             catch (ElementNotAvailableException)
             {
                 // the subtree or its children are gone so quit trying to work with this UI
             }
-#pragma warning restore 6502
 
             if (SanityLoopCount == 0)
             {

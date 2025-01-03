@@ -1457,7 +1457,6 @@ namespace System.Windows.Interop
 
                 return AutomationInteropProvider.ReturnRawElementProvider(handle, wparam, lparam, el);
             }
-#pragma warning disable 56500
             catch (Exception e)
             {
                 if(CriticalExceptions.IsCriticalException(e))
@@ -1467,7 +1466,6 @@ namespace System.Windows.Interop
 
                 return new IntPtr(Marshal.GetHRForException(e));
             }
-#pragma warning restore 56500
         }
 
         /// <summary>

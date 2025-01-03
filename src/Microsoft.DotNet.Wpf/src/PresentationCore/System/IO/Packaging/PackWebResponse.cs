@@ -441,9 +441,8 @@ namespace System.IO.Packaging
         /// <remarks>assumes caller has locked the syncObject and that we are not disposed</remarks>
         private void AbortResponse()
         {
-// Disable the PreSharp warning about empty catch blocks - we need this one because sub-classes of WebResponse may or may
-// not implement Abort() and we want to silently ignore this if they don't.
-#pragma warning disable 56502
+            // We need this one because sub-classes of WebResponse may or may
+            // not implement Abort() and we want to silently ignore this if they don't.
             // Close was called - abort the response if necessary
             try
             {
@@ -458,7 +457,6 @@ namespace System.IO.Packaging
             {
                 // Ignore - innerRequest class chose to implement BeginGetResponse but not Abort.  This is allowed.
             }
-#pragma warning restore 56502
         }
 
         protected override void Dispose(bool disposing)

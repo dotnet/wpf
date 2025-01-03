@@ -263,7 +263,6 @@ namespace MS.Internal
                     }
                 }
             }
-#pragma warning disable 6502
             catch (NotImplementedException)
             {
                 // this is a valid result and indicates that the subclass chose not to implement this property
@@ -272,7 +271,6 @@ namespace MS.Internal
             {
                 // this is a valid result and indicates that the subclass chose not to implement this property
             }
-#pragma warning restore 6502
         }
 
         // DevDiv2 29007 - IE9 - pack://siteoforigin:,,,/ Uris fail for standalone applications

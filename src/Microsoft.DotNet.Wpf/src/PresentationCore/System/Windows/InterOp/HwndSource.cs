@@ -2515,13 +2515,12 @@ namespace System.Windows.Interop
                         {
                             Disposed(this, EventArgs.Empty);
                         }
-#pragma warning disable 56500
                         // We can't tolerate an exception thrown by third-party code to
                         // abort our Dispose half-way through.  So we just eat it.
                         catch
                         {
                         }
-#pragma warning restore 56500
+
                         Disposed = null;
                     }
 

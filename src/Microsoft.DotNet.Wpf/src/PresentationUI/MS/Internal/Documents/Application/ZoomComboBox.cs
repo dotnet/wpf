@@ -467,14 +467,8 @@ namespace MS.Internal.Documents.Application
                         SR.ZoomPercentageConverterStringFormat, zoomValue);
                     return true;
                 }
-                // Allow empty catch statements.
-#pragma warning disable 56502
-
                 catch (ArgumentNullException) { }
                 catch (FormatException) { }
-
-                // Disallow empty catch statements.
-#pragma warning restore 56502
             }
 
             // Invalid zoom value encountered.

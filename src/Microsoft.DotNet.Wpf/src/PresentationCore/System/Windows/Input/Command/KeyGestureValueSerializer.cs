@@ -43,11 +43,9 @@ namespace System.Windows.Input
         {
             KeyGesture keyGesture = value as KeyGesture;
 
-            #pragma warning disable 6506
             return (keyGesture != null) 
                 && ModifierKeysConverter.IsDefinedModifierKeys(keyGesture.Modifiers)
                 && KeyGestureConverter.IsDefinedKey(keyGesture.Key);
-            #pragma warning restore 6506
         }
 
         /// <summary>

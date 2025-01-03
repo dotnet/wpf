@@ -129,7 +129,6 @@ namespace Microsoft.Build.Tasks.Windows
                     Log.LogMessageFromResources(MessageImportance.Low, nameof(SR.CompilationDone));
                 }
             }
-#pragma warning disable 6500
             catch (Exception e)
             {
                 string message;
@@ -154,7 +153,6 @@ namespace Microsoft.Build.Tasks.Windows
 
                 _nErrors++;
             }
-#pragma warning restore 6500
 
             if (_nErrors > 0)
             {

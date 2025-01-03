@@ -1549,11 +1549,9 @@ namespace System.Windows.Controls.Primitives
                     {
                         pageNumber = Convert.ToInt32(args.Parameter, System.Globalization.CultureInfo.CurrentCulture);
                     }
-#pragma warning disable 56502 // Allow empty catch statements.
                     catch (InvalidCastException) { }
                     catch (OverflowException) { }
                     catch (FormatException) { }
-#pragma warning restore 56502
 
                     if (pageNumber >= 0)
                     {

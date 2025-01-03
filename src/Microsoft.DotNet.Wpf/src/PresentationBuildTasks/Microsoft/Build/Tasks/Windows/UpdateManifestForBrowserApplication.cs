@@ -131,7 +131,6 @@ namespace Microsoft.Build.Tasks.Windows
             }
             catch (Exception e)
             {
-                // PreSharp Complaint 6500 - do not handle null-ref or SEH exceptions.
                 if (e is NullReferenceException || e is SEHException)
                 {
                     throw;
@@ -142,14 +141,11 @@ namespace Microsoft.Build.Tasks.Windows
                     successful = false;
                 }
             }
-#pragma warning disable 6500
             catch   // Non-cls compliant errors
             {
                 Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
                 successful = false;
             }
-#pragma warning restore 6500
-
 
             return successful;
         }

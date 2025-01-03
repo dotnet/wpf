@@ -1007,10 +1007,6 @@ namespace System.Windows
 
         #region Value Changes
 
-        // The hwndNotify is referenced by the _hwndNotify static field, but
-        // PreSharp will think that the hwndNotify is local and should be disposed.
-#pragma warning disable 6518
-
         /// <summary>
         /// Ensures that a a notify-window is created corresponding to <see cref="ProcessDpiAwarenessContextValue"/>
         /// This is the default HWND used to listen for theme-change messages.
@@ -1183,8 +1179,6 @@ namespace System.Windows
 
             return dpiScale;
         }
-
-#pragma warning restore 6518
 
     private static void OnThemeChanged()
         {

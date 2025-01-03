@@ -53,7 +53,6 @@ namespace System.Security.RightsManagement
         /// </summary>
         public override bool Equals(object obj)
         {
-
             if ((obj == null) || (obj.GetType() != GetType()))
             {
                 return false;
@@ -61,13 +60,9 @@ namespace System.Security.RightsManagement
 
             LocalizedNameDescriptionPair localizedNameDescr = obj as LocalizedNameDescriptionPair;
             
-            //PRESHARP:Parameter to this public method must be validated:  A null-dereference can occur here. 
-            //This is a false positive as the checks above can gurantee no null dereference will occur  
-#pragma warning disable 6506
             return (string.Equals(localizedNameDescr.Name, Name, StringComparison.Ordinal))
                         &&
                     (string.Equals(localizedNameDescr.Description, Description, StringComparison.Ordinal));
-#pragma warning restore 6506
         }        
             
         /// <summary>

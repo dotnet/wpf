@@ -21,10 +21,6 @@ using MS.Utility;
 using MS.Internal;
 using MS.Internal.Tasks;
 
-// Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
-// We first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 namespace Microsoft.Build.Tasks.Windows
 {
     public sealed class ResourcesGenerator : Task

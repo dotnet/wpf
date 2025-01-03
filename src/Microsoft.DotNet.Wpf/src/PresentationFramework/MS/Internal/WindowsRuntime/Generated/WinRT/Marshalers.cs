@@ -314,15 +314,12 @@ namespace WinRT
         public static unsafe void CopyManagedArray(Array array, IntPtr data)
         {
             if (array is null)
-            {
                 return;
-            }
-            var length = array.Length;
-            var byte_length = length * Marshal.SizeOf<T>();
-            var array_handle = GCHandle.Alloc(array, GCHandleType.Pinned);
-            var array_data = array_handle.AddrOfPinnedObject();
-            Buffer.MemoryCopy(array_data.ToPointer(), data.ToPointer(), byte_length, byte_length);
-            array_handle.Free();
+
+            int byte_length = array.Length * Marshal.SizeOf<T>();
+
+            fixed (void* array_data = &MemoryMarshal.GetArrayDataReference(array))
+                Buffer.MemoryCopy(array_data, data.ToPointer(), byte_length, byte_length);
         }
 
         public static void DisposeMarshalerArray(object box)

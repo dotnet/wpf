@@ -20,8 +20,6 @@ using System.Globalization;
 
 using System.Printing;
 
-#pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages
-
 namespace MS.Internal.Printing.Configuration
 {
     /// <summary>
@@ -223,20 +221,19 @@ namespace MS.Internal.Printing.Configuration
                                 convertOK = true;
                             }
                             // We want to catch internal FormatException to skip recoverable XML content syntax error
-                            #pragma warning suppress 56502
-                            #if _DEBUG
+#if _DEBUG
                             catch (FormatException e)
-                            #else
+#else
                             catch (FormatException)
-                            #endif
+#endif
                             {
-                                #if _DEBUG
+#if _DEBUG
                                 Trace.WriteLine("-Error- Invalid int value '" +
                                                 reader.CurrentElementTextValue +
                                                 "' at line number " + reader._xmlReader.LineNumber +
                                                 ", line position " + reader._xmlReader.LinePosition +
                                                 ": " + e.Message);
-                                #endif
+#endif
                             }
 
                             if (convertOK)

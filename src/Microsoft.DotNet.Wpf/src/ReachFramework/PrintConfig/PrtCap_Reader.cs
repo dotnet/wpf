@@ -17,8 +17,6 @@ using System.Xml;
 using System.IO;
 using System.Globalization;
 
-#pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages
-
 namespace MS.Internal.Printing.Configuration
 {
     /// <summary>

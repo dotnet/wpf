@@ -1,13 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Win32 ListView Item proxy
 //
-
-
-// PRESHARP: In order to avoid generating warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using System;
 using System.Windows.Automation;
@@ -744,10 +740,6 @@ namespace MS.Internal.AutomationProxies
 
         internal static void SetValue (string val, IntPtr hwnd, int item)
         {
-            // PerSharp/PreFast will flag this as warning 6507/56507: Prefer 'string.IsNullOrEmpty(val)' over checks for null and/or emptiness.
-            // An empty strings is valued here, while a null string is not.
-            // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
-#pragma warning suppress 6507
             ArgumentNullException.ThrowIfNull(val);
 
             if (!WindowsListView.ListViewEditable (hwnd))

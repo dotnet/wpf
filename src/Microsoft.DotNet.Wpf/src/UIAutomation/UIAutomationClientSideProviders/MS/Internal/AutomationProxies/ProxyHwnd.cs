@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,9 +14,6 @@
 //              Class ProxyHwnd: ProxyFragment, IRawElementProviderAdviseEvents
 //                  AdviseEventAdded
 //                  AdviseEventRemoved
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using System;
 using System.Windows;
@@ -176,10 +173,8 @@ namespace MS.Internal.AutomationProxies
                 // Only hwnd's can be labeled.
                 name = LocalizedName;
 
-                // PerSharp/PreFast will flag this as a warning 6507/56507: Prefer 'string.IsNullOrEmpty(name)' over checks for null and/or emptiness.
                 // It is valid to set LocalizedName to an empty string.  LocalizedName being an
                 // empty string will prevent the SendMessage(WM_GETTEXT) call.
-#pragma warning suppress 6507
                 if (name == null && GetParent() == null)
                 {
                     if (_fControlHasLabel)

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -236,11 +236,11 @@ namespace System.Windows.Media.Animation
 
 
         /// <summary>
-        /// Gets a value indicating whether the Clock’s current time is inside the Active period
+        /// Gets a value indicating whether the Clockâ€™s current time is inside the Active period
         /// (meaning properties may change frame to frame), inside the Fill period, or Stopped.
         /// </summary>
         /// <remarks>
-        /// You can tell whether you’re in FillBegin or FillEnd by the value of CurrentProgress
+        /// You can tell whether youâ€™re in FillBegin or FillEnd by the value of CurrentProgress
         /// (0 for FillBegin, 1 for FillEnd).
         /// </remarks>
         public ClockState CurrentState
@@ -3968,8 +3968,6 @@ namespace System.Windows.Media.Animation
             /// </summary>
             ~SubtreeFinalizer()
             {
-#pragma warning disable 1634, 1691
-#pragma warning suppress 6525
                 _timeManager.ScheduleClockCleanup();
             }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,14 +28,10 @@ namespace System.Windows.Ink
             Rect bounds = Rect.Empty;
             foreach (Stroke stroke in this)
             {
-                // samgeo - Presharp issue
                 // Presharp gives a warning when get methods might deref a null.  It's complaining
                 // here that 'stroke'' could be null, but StrokeCollection never allows nulls to be added
                 // so this is not possible
-#pragma warning disable 1634, 1691
-#pragma warning suppress 6506
                 bounds.Union(stroke.GetBounds());
-#pragma warning restore 1634, 1691
             }
             return bounds;
         }
@@ -167,17 +163,13 @@ namespace System.Windows.Ink
             StrokeCollection hits = new StrokeCollection();
             foreach (Stroke stroke in this)
             {
-                // samgeo - Presharp issue
                 // Presharp gives a warning when get methods might deref a null.  It's complaining
                 // here that 'stroke'' could be null, but StrokeCollection never allows nulls to be added
                 // so this is not possible
-#pragma warning disable 1634, 1691
-#pragma warning suppress 6506
                 if (true == stroke.HitTest(bounds, percentageWithinBounds))
                 {
                     hits.Add(stroke);
                 }
-#pragma warning restore 1634, 1691
             }
             return hits;
         }
@@ -209,18 +201,14 @@ namespace System.Windows.Ink
             StrokeCollection hits = new StrokeCollection();
             foreach (Stroke stroke in this)
             {
-                // samgeo - Presharp issue
                 // Presharp gives a warning when get methods might deref a null.  It's complaining
                 // here that 'stroke'' could be null, but StrokeCollection never allows nulls to be added
                 // so this is not possible
-#pragma warning disable 1634, 1691
-#pragma warning suppress 6506
                 if (erasingBounds.IntersectsWith(stroke.GetBounds()) &&
                     erasingStroke.HitTest(StrokeNodeIterator.GetIterator(stroke, stroke.DrawingAttributes)))
                 {
                     hits.Add(stroke);
                 }
-#pragma warning restore 1634, 1691
             }
 
             return hits;

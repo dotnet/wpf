@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,9 +8,6 @@ using System.Globalization;
 using System.Windows.Media.TextFormatting;
 using MS.Internal;
 using MS.Internal.TextFormatting;
-
-#pragma warning disable 1634, 1691
-//Allow suppression of Presharp warnings
 
 namespace System.Windows.Media
 {

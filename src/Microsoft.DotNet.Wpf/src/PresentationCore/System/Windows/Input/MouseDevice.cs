@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,8 +9,6 @@ using System.Windows.Threading;
 using MS.Internal;
 using MS.Win32;
 using System.Runtime.InteropServices;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 // There's a choice of where to send MouseWheel events - to the element under
 // the mouse (like IE does) or to the element with keyboard focus (like Win32
@@ -309,7 +307,6 @@ namespace System.Windows.Input
             {
                 UIElement e = element as UIElement;
 
-                #pragma warning suppress 6506 // e is obviously not null
                 if(e.IsVisible && e.IsEnabled)
                 {
                     success = true;
@@ -319,7 +316,6 @@ namespace System.Windows.Input
             {
                 ContentElement ce = element as ContentElement;
 
-                #pragma warning suppress 6506 // ce is obviosuly not null
                 if(ce.IsEnabled) // There is no IsVisible property for ContentElement
                 {
                     success = true;
@@ -329,7 +325,6 @@ namespace System.Windows.Input
             {
                 UIElement3D e = element as UIElement3D;
 
-                #pragma warning suppress 6506 // e is obviously not null
                 if(e.IsVisible && e.IsEnabled)
                 {
                     success = true;

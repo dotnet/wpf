@@ -249,10 +249,8 @@ namespace System.Windows
                     // SendMessage's return value is dependent on the message send.  WM_SYSCOMMAND
                     // and WM_LBUTTONUP return value just signify whether the WndProc handled the
                     // message or not, so they are not interesting
-#pragma warning disable 6523
                     UnsafeNativeMethods.SendMessage( Handle, WindowMessage.WM_SYSCOMMAND, (IntPtr)NativeMethods.SC_MOUSEMOVE, IntPtr.Zero);
                     UnsafeNativeMethods.SendMessage( Handle, WindowMessage.WM_LBUTTONUP, IntPtr.Zero, IntPtr.Zero);
-#pragma warning restore 6523
                 }
             }
             else

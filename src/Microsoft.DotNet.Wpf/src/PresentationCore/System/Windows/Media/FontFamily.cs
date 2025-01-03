@@ -518,8 +518,6 @@ namespace System.Windows.Media
                 return fontFamily;
             }
             // The method returns null in case of malformed/non-existent fonts and we fall back to the next font.
-            // Therefore, we can disable PreSharp warning about empty catch bodies.
-#pragma warning disable 6502
             catch (FileFormatException)
             {
                 // malformed font file
@@ -545,7 +543,7 @@ namespace System.Windows.Media
             {
                 // canonical name points to a malformed Uri
             }
-#pragma warning restore 6502
+
             // we want to fall back to the default fallback font instead of crashing
             return null;
         }

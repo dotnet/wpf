@@ -72,11 +72,7 @@ namespace System.Windows.Automation.Peers
                 if(windowHandle != IntPtr.Zero) //it is Zero on a window that was just closed
                 {
                     try { SafeNativeMethods.GetWindowRect(new HandleRef(null, windowHandle), ref rc); }
-// Allow empty catch statements.
-#pragma warning disable 56502
                     catch(Win32Exception) {}
-// Disallow empty catch statements.
-#pragma warning restore 56502
                 }        
                 bounds = new Rect(rc.left, rc.top, rc.right - rc.left, rc.bottom - rc.top);
             }

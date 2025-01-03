@@ -221,10 +221,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             FormatVersion v = (FormatVersion) obj;
 
-            //PRESHARP:Parameter to this public method must be validated:  A null-dereference can occur here. 
-            //    Parameter 'v' to this public method must be validated:  A null-dereference can occur here. 
-            //This is a false positive as the checks above can gurantee no null dereference will occur  
-#pragma warning disable 6506
             if (!string.Equals(_featureIdentifier, v.FeatureIdentifier, StringComparison.OrdinalIgnoreCase)
                 || _reader != v.ReaderVersion
                 || _writer != v.WriterVersion
@@ -232,7 +228,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 return false;
             }
-#pragma warning restore 6506
 
             return true;
         }
@@ -301,10 +296,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                 // Suppress 56518 Local IDisposable object not disposed: 
                 // Reason: The stream is not owned by the BlockManager, therefore we can 
                 // close the BinaryWriter as it will Close the stream underneath.        
-#pragma warning disable 6518
                 int len = 0;
                 BinaryWriter binarywriter = null;
-#pragma warning restore 6518
+
                 if (stream != null)
                 {
                     binarywriter = new BinaryWriter(stream, System.Text.Encoding.Unicode);
@@ -519,9 +513,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // Suppress 56518 Local IDisposable object not disposed: 
             // Reason: The stream is not owned by the BlockManager, therefore we can 
             // close the BinaryWriter as it will Close the stream underneath.
-#pragma warning disable 6518
             BinaryReader streamReader = new BinaryReader(stream, System.Text.Encoding.Unicode);
-#pragma warning restore 6518
 
             return LoadFromBinaryReader(streamReader, out bytesRead);
         }

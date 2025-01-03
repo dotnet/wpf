@@ -251,15 +251,10 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             VersionPair v = (VersionPair) obj;
 
-            //PRESHARP:Parameter to this public method must be validated:  A null-dereference can occur here. 
-            //    Parameter 'v' to this public method must be validated:  A null-dereference can occur here. 
-            //This is a false positive as the checks above can gurantee no null dereference will occur  
-#pragma warning disable 6506
             if (this != v)
             {
                 return false;
             }
-#pragma warning restore 6506
 
             return true;
         }
@@ -294,10 +289,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
             VersionPair v = (VersionPair) obj;
 
-            //PRESHARP:Parameter to this public method must be validated:  A null-dereference can occur here. 
-            //    Parameter 'v' to this public method must be validated:  A null-dereference can occur here. 
-            //This is a false positive as the checks above can gurantee no null dereference will occur  
-#pragma warning disable 6506
             if (this.Equals(obj))   // equal
             {
                 return 0;
@@ -307,7 +298,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 return -1;
             }
-#pragma warning restore 6506
+
             // greater than
             return 1;
         }

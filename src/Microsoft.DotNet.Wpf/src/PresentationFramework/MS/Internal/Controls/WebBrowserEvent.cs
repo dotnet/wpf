@@ -108,9 +108,6 @@ namespace MS.Internal.Controls
                     cancelRequested = e.Cancel;
                 }
             }
-            // We disable this to suppress FXCop warning since in this case we really want to catch all exceptions
-            // please refer to comment below
-#pragma warning disable 6502
             catch
             {
                 // This is an interesting pattern of putting a try catch block around this that catches everything,
@@ -120,7 +117,6 @@ namespace MS.Internal.Controls
                 // There fore I catch all exceptions and cancel navigation 
                 cancelRequested = true;
             }
-#pragma warning restore 6502
             finally
             {
                 // Clean the WebBrowser control state if navigation cancelled.

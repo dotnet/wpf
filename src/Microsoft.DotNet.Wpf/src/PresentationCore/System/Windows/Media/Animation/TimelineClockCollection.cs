@@ -231,9 +231,7 @@ namespace System.Windows.Media.Animation
             else
             {
                 // Both are non-null.
-#pragma warning disable 56506 // Suppress presharp warning: Parameter 'objA' to this public method must be validated:  A null-dereference can occur here.
                 return objA._owner == objB._owner;
-#pragma warning restore 56506
             }
         }
 

@@ -156,9 +156,7 @@ namespace System.Windows.Controls
                 VerifyAccess();
                 if (WindowService == null)
                 {
-#pragma warning disable 6503
                     throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
-#pragma warning restore 6503
                 }
                 return WindowService.Title;
             }
@@ -213,9 +211,7 @@ namespace System.Windows.Controls
                 VerifyAccess();
                 if (WindowService == null)
                 {
-#pragma warning disable 6503
                     throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
-#pragma warning restore 6503
                 }                
                 return WindowService.Height;
             }
@@ -267,9 +263,7 @@ namespace System.Windows.Controls
                 VerifyAccess();
                 if (WindowService == null)
                 {
-#pragma warning disable 6503
                     throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
-#pragma warning restore 6503
                 }                
                 return WindowService.Width;
             }
@@ -365,9 +359,7 @@ namespace System.Windows.Controls
                 VerifyAccess();
                 if (WindowService == null)
                 {
-#pragma warning disable 6503
                     throw new InvalidOperationException(SR.CannotQueryPropertiesWhenPageNotInTreeWithWindow);
-#pragma warning restore 6503
                 }
 
                 // Return false if it is not NavigationWindow.

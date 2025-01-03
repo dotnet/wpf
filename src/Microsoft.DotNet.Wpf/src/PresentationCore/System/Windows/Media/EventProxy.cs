@@ -74,7 +74,6 @@ namespace System.Windows.Media
 
         public int RaiseEvent(byte[] buffer, uint cb)
         {
-#pragma warning disable 6500
             try
             {
                 ObjectDisposedException.ThrowIf(target == null, typeof(EventProxyWrapper));
@@ -94,7 +93,6 @@ namespace System.Windows.Media
             {
                 return Marshal.GetHRForException(e);
             }
-#pragma warning restore 6500
 
             return NativeMethods.S_OK;
         }

@@ -1519,25 +1519,21 @@ namespace MS.Internal.PtsHost
                 {
                     TextBreakpoint textBreakpoint = textBreakpoints[breakIndex];
 
-#pragma warning disable 56518
-                    // Disable PRESharp warning 56518. LineBreakpoint is an UnmamangedHandle, that adds itself
+                    // LineBreakpoint is an UnmamangedHandle, that adds itself
                     // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and 
                     // calls Destroyline to get rid of it. Destroyline will call Dispose() on the object
                     // and remove it from HandleMapper.
                     LineBreakpoint lineBreakpoint = new LineBreakpoint(optimalBreakSession, textBreakpoint);
-#pragma warning restore 56518
 
                     TextLineBreak textLineBreakOut = textBreakpoint.GetTextLineBreak();
 
                     if(textLineBreakOut != null)
                     {
-#pragma warning disable 56518
-                // Disable PRESharp warning 6518. Line is an UnmamangedHandle, that adds itself
+                //Line is an UnmamangedHandle, that adds itself
                 // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and
                 // calls DestroyLineBreakRecord to get rid of it. DestroyLineBreakRecord will call Dispose() on the object
                 // and remove it from HandleMapper.
                         LineBreakRecord lineBreakRecord = new LineBreakRecord(optimalBreakSession.PtsContext, textLineBreakOut);
-#pragma warning disable 56518
 
                         rgfslinevariant[breakIndex].pfsbreakreclineclient = lineBreakRecord.Handle;
                     }

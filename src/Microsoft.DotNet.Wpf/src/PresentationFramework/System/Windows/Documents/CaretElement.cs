@@ -1129,10 +1129,7 @@ namespace System.Windows.Documents
         {
             Invariant.Assert(_isSelectionActive, "Blink animation should only be required for an owner with active selection.");
 
-            // Disable PreSharp#6523 - Win32 GetCaretBlinkTime can return "0"
-            // without the error if SetCaretBlinkTime set as "0".
-#pragma warning disable 6523
-
+            // Win32 GetCaretBlinkTime can return "0" without the error if SetCaretBlinkTime set as "0".
             int caretBlinkTime = (int)SafeNativeMethods.GetCaretBlinkTime();
             if (caretBlinkTime == 0)
             {
@@ -1140,8 +1137,6 @@ namespace System.Windows.Documents
                 // exception.
                 return -1;
             }
-
-#pragma warning restore 6523
 
             return caretBlinkTime;
         }

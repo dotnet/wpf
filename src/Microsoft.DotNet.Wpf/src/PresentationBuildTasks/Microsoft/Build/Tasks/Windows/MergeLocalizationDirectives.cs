@@ -97,13 +97,11 @@ namespace Microsoft.Build.Tasks.Windows
                         return false;
                     }
                 }
-#pragma warning disable 6500
                 catch // Non-CLS compliant errors
                 {
                     Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
                     return false;
                 }
-#pragma warning restore 6500
             }
 
             return true;

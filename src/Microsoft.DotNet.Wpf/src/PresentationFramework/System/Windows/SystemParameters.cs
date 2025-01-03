@@ -89,13 +89,6 @@ namespace System.Windows
             return true;
         }
 
-// Disable Warning 6503 Property get methods should not throw exceptions.
-// By design properties below throw Win32Exception if there is an error when calling the native method
-#pragma warning disable 6503
-
-// Win32Exception will get the last Win32 error code in case of errors, so we don't have to.
-#pragma warning disable 6523
-
         #region Accessibility Parameters
 
         /// <summary>

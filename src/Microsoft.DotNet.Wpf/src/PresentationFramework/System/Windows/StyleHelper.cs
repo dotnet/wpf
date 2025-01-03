@@ -103,7 +103,6 @@ namespace System.Windows
                 newThemeStyle.CheckTargetType(d);
                 newThemeStyle.Seal();
 
-#pragma warning disable 6503
                 // Check if the theme style has the OverridesDefaultStyle  property set on the target tag or any of its
                 // visual triggers. It is an error to specify the OverridesDefaultStyle  in your own ThemeStyle.
                 if (StyleHelper.IsSetOnContainer(FrameworkElement.OverridesDefaultStyleProperty, ref newThemeStyle.ContainerDependents, true))
@@ -116,7 +115,6 @@ namespace System.Windows
                 {
                     throw new InvalidOperationException(SR.CannotHaveEventHandlersInThemeStyle);
                 }
-#pragma warning restore 6503
             }
 
             themeStyleCache = newThemeStyle;

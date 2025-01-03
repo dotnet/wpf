@@ -175,7 +175,6 @@ namespace Microsoft.Build.Tasks.Windows
                 }
 
             }
-#pragma warning disable 6500
             catch (Exception e)
             {
                 string message;
@@ -198,7 +197,6 @@ namespace Microsoft.Build.Tasks.Windows
                 Log.LogErrorWithCodeFromResources(nameof(SR.NonClsError));
                 _nErrors++;
             }
-#pragma warning restore 6500
 
             if (_nErrors > 0)
             {

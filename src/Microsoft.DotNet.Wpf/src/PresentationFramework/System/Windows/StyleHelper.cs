@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -22,12 +22,6 @@ using System.Windows.Media.Animation;   // Storyboard
 using System.Windows.Markup;            // MarkupExtension
 using System.Threading;                 // Interlocked
 using MS.Internal.Data;                 // BindingValueChangedEventArgs
-
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows
 {
@@ -109,7 +103,6 @@ namespace System.Windows
                 newThemeStyle.CheckTargetType(d);
                 newThemeStyle.Seal();
 
-#pragma warning disable 6503
                 // Check if the theme style has the OverridesDefaultStyle  property set on the target tag or any of its
                 // visual triggers. It is an error to specify the OverridesDefaultStyle  in your own ThemeStyle.
                 if (StyleHelper.IsSetOnContainer(FrameworkElement.OverridesDefaultStyleProperty, ref newThemeStyle.ContainerDependents, true))
@@ -122,7 +115,6 @@ namespace System.Windows
                 {
                     throw new InvalidOperationException(SR.CannotHaveEventHandlersInThemeStyle);
                 }
-#pragma warning restore 6503
             }
 
             themeStyleCache = newThemeStyle;
@@ -5908,14 +5900,6 @@ namespace System.Windows
                     TypeConverter typeConverter = DefaultValueConverter.GetConverter(stateType);
                     if (typeConverter != null && typeConverter.CanConvertFrom(typeof(String)))
                     {
-                        // PreSharp uses message numbers that the C# compiler doesn't know about.
-                        // Disable the C# complaints, per the PreSharp documentation.
-                        #pragma warning disable 1634, 1691
-
-                        // PreSharp complains about catching NullReference (and other) exceptions.
-                        // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-                        #pragma warning disable 56500
-
                         try
                         {
                             cachedValue = typeConverter.ConvertFromString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS, referenceString);
@@ -5930,9 +5914,6 @@ namespace System.Windows
                         {
                             // if the conversion failed, just use the unconverted value
                         }
-
-                        #pragma warning restore 56500
-                        #pragma warning restore 1634, 1691
                     }
 
                     // cache the converted value

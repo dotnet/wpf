@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,8 +11,6 @@ using System.Windows.Markup;    // For ValueSerializerAttribute
 using MS.Internal.WindowsBase;
 using System.Windows.Threading; // For DispatcherObject
 using System.Runtime.CompilerServices;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows
 {
@@ -143,8 +141,6 @@ namespace System.Windows
             }
 
             // Authorize registering type for read-only access, create key.
-            #pragma warning suppress 6506 // typeMetadata is never null, since we generate default metadata if none is provided.
-
             // Apply type-specific metadata to owner type only
             property.OverrideMetadata(ownerType, typeMetadata, authorizationKey);
 

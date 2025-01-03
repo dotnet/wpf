@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -185,10 +185,9 @@ namespace System.Windows.Forms.Integration
             set
             {
                 UIElement oldValue = Child;
-#pragma warning disable 1634, 1691
-#pragma warning disable 56526
+
                 _child = value;
-#pragma warning restore 1634, 1691, 56526
+
                 HostContainerInternal.Children.Clear();
                 if (_child != null)
                 {

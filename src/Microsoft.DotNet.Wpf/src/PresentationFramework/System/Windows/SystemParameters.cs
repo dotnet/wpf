@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,9 +11,6 @@ using System.Windows.Media;
 using MS.Win32;
 using MS.Internal;
 using MS.Internal.Interop;
-
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
 
 namespace System.Windows
 {
@@ -91,13 +88,6 @@ namespace System.Windows
             OnPropertiesChanged(name);
             return true;
         }
-
-// Disable Warning 6503 Property get methods should not throw exceptions.
-// By design properties below throw Win32Exception if there is an error when calling the native method
-#pragma warning disable 6503
-
-// Win32Exception will get the last Win32 error code in case of errors, so we don't have to.
-#pragma warning disable 6523
 
         #region Accessibility Parameters
 

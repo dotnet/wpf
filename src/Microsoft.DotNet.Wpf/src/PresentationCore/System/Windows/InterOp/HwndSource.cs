@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,8 +12,6 @@ using MS.Utility;
 using MS.Internal;
 using MS.Internal.Interop;
 using System.ComponentModel;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Interop
 {
@@ -2503,13 +2501,12 @@ namespace System.Windows.Interop
                         {
                             Disposed(this, EventArgs.Empty);
                         }
-#pragma warning disable 56500
                         // We can't tolerate an exception thrown by third-party code to
                         // abort our Dispose half-way through.  So we just eat it.
                         catch
                         {
                         }
-#pragma warning restore 56500
+
                         Disposed = null;
                     }
 

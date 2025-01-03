@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,10 +25,6 @@ using MS.Internal.Interop;
 using MS.Win32;
 
 using CommonDependencyProperty = MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
-
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
-
 
 namespace System.Windows.Controls.Primitives
 {
@@ -2707,9 +2703,6 @@ namespace System.Windows.Controls.Primitives
             }
         }
 
-        // Not interested in the unmanaged error codes. Error return values detected and handled. Extended error information not needed.
-#pragma warning disable 6523
-
         /// <summary>
         ///     Returns information about the mouse cursor size.
         /// </summary>
@@ -2849,8 +2842,6 @@ namespace System.Windows.Controls.Primitives
         {
             return _secHelper.GetWindowRect();
         }
-
-#pragma warning restore 6523
 
         #endregion Positioning
 
@@ -3282,10 +3273,6 @@ namespace System.Windows.Controls.Primitives
                 return root as Visual;
             }
 
-// newWindow is referenced by the _window static field, but
-// PreSharp will think that newWindow is local and should be disposed.
-#pragma warning disable 6518
-
             internal void BuildWindow(int x, int y, Visual placementTarget,
                 bool transparent, HwndSourceHook hook, AutoResizedEventHandler handler, HwndDpiChangedEventHandler dpiChangedHandler)
             {
@@ -3367,8 +3354,6 @@ namespace System.Windows.Controls.Primitives
                 // add the DpiChagnedEventHandler
                 newWindow.DpiChanged += dpiChangedHandler;
             }
-
-#pragma warning restore 6518
 
             private static bool ConnectedToForegroundWindow(IntPtr window)
             {

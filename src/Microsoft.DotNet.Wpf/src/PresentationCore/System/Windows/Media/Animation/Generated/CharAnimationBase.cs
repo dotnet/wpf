@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,9 +8,6 @@
 //
 // Please see MilCodeGen.html for more information.
 //
-
-// Allow use of presharp: #pragma warning suppress <nnnn>
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Media.Animation
 {
@@ -134,10 +131,6 @@ namespace System.Windows.Media.Animation
 
             ArgumentNullException.ThrowIfNull(animationClock);
 
-            // We check for null above but presharp doesn't notice so we suppress the 
-            // warning here.
-
-#pragma warning suppress 6506
             if (animationClock.CurrentState == ClockState.Stopped)
             {
                 return defaultDestinationValue;

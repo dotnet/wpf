@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,9 +30,6 @@ using MS.Internal.PresentationFramework;                   // SafeSecurityHelper
 using System.Windows.Baml2006;
 using System.Xaml.Permissions;
 using System.Runtime.CompilerServices;
-
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
 
 namespace System.Windows
 {
@@ -1008,10 +1005,6 @@ namespace System.Windows
 
         #region Value Changes
 
-        // The hwndNotify is referenced by the _hwndNotify static field, but
-        // PreSharp will think that the hwndNotify is local and should be disposed.
-#pragma warning disable 6518
-
         /// <summary>
         /// Ensures that a a notify-window is created corresponding to <see cref="ProcessDpiAwarenessContextValue"/>
         /// This is the default HWND used to listen for theme-change messages.
@@ -1184,8 +1177,6 @@ namespace System.Windows
 
             return dpiScale;
         }
-
-#pragma warning restore 6518
 
     private static void OnThemeChanged()
         {

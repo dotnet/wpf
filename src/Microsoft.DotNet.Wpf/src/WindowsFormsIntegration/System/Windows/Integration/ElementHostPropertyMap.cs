@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,10 +16,8 @@ namespace System.Windows.Forms.Integration
     internal sealed class ElementHostPropertyMap : PropertyMap
     {
         //Since the host controls our lifetime, we shouldn't be disposing it.
-#pragma warning disable 1634, 1691
-#pragma warning disable 56524
         private ElementHost _host;
-#pragma warning restore 1634, 1691, 56524
+
         public ElementHostPropertyMap(ElementHost host)
             : base(host)
         {

@@ -1,9 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using System.Windows.Automation;
 using Microsoft.Win32.SafeHandles;
@@ -24,8 +21,6 @@ namespace MS.Internal.Automation
 
             // Get process id...
             // GetWindowThreadProcessId does use SetLastError().  So a call to GetLastError() would be meanless.
-            // Disabling the PreSharp warning.
-#pragma warning suppress 6523
             if (SafeNativeMethods.GetWindowThreadProcessId(hwnd, out processId) == 0)
             {
                 throw new ElementNotAvailableException();

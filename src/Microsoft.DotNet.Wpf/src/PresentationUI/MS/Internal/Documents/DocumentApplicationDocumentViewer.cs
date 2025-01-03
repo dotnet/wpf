@@ -1,12 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: The main DocumentViewer subclass that drives the MongooseUI
-
-
-// Used to support the warnings disabled below
-#pragma warning disable 1634, 1691
 
 using MS.Internal.Documents.Application;
 using System;
@@ -1879,17 +1875,11 @@ namespace MS.Internal.Documents
                     isValidArg = true;
                 }
             }
-            // Allow empty catch statements.
-#pragma warning disable 56502
-
             // Catch only the expected parse exceptions
             catch (ArgumentOutOfRangeException) { }
             catch (ArgumentNullException) { }
             catch (FormatException) { }
             catch (OverflowException) { }
-
-            // Disallow empty catch statements.
-#pragma warning restore 56502
 
             return isValidArg;
         }
@@ -1977,16 +1967,10 @@ namespace MS.Internal.Documents
                     return int.Parse(pageNumberString, culture);
                 }
             }
-// Allow empty catch statements.
-#pragma warning disable 56502
-
             // Catch only the expected parse exceptions
             catch (ArgumentNullException) { }
             catch (FormatException) { }
             catch (OverflowException) { }
-
-// Disallow empty catch statements.
-#pragma warning restore 56502
 
             return _invalidPageNumber;
         }

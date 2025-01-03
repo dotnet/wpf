@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,8 +6,6 @@ using System.ComponentModel;
 using System.Runtime.InteropServices;
 using System.Text;
 using MS.Internal;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media
 {
@@ -411,7 +409,6 @@ namespace System.Windows.Media
                 Color c1 = new Color();
                 c1.context = color1.context;
                 
-                #pragma warning suppress 6506 // c1.context is obviously not null - both color1.context AND color2.context are not null
                 c1.nativeColorValue = new float[c1.context.NumChannels];
                 for (int i = 0; i < c1.nativeColorValue.Length; i++)
                 {
@@ -530,7 +527,6 @@ namespace System.Windows.Media
                 Color c1 = new Color();
                 c1.context = color1.context;
 
-                #pragma warning suppress 6506 // c1.context is obviously not null - both color1.context AND color2.context are not null
                 c1.nativeColorValue = new float[c1.context.NumChannels];
                 for (int i = 0; i < c1.nativeColorValue.Length; i++)
                 {
@@ -639,7 +635,6 @@ namespace System.Windows.Media
             {
                 c1.context = color.context;
 
-                #pragma warning suppress 6506 // c1.context is obviously not null
                 c1.ComputeNativeValues(c1.context.NumChannels);
             }
 

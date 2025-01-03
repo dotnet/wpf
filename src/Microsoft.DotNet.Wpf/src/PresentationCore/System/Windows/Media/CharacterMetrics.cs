@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,8 +6,6 @@ using System.Globalization;
 using StringBuilder = System.Text.StringBuilder;
 using CompositeFontParser = MS.Internal.FontFace.CompositeFontParser;
 using Constants = MS.Internal.TextFormatting.Constants;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Media
 {
@@ -275,9 +273,6 @@ namespace System.Windows.Media
         {
             CharacterMetrics other = obj as CharacterMetrics;
 
-            // Suppress PRESharp warning that other can be null; apparently PRESharp
-            // doesn't understand short circuit evaluation of operator &&.
-            #pragma warning disable 6506
             return other != null &&
                 other._blackBoxWidth == _blackBoxWidth &&
                 other._blackBoxHeight == _blackBoxHeight &&
@@ -285,7 +280,6 @@ namespace System.Windows.Media
                 other._rightSideBearing == _rightSideBearing &&
                 other._topSideBearing == _topSideBearing &&
                 other._bottomSideBearing == _bottomSideBearing;
-            #pragma warning restore 6506
         }
 
         /// <summary>

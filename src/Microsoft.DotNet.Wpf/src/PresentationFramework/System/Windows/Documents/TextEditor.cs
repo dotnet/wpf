@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -15,11 +15,6 @@ using System.Windows.Markup;
 using MS.Win32;
 using MS.Internal.Documents;
 using MS.Internal.Commands; // CommandHelpers
-
-#pragma warning disable 1634, 1691 // To enable presharp warning disables (#pragma suppress) below.
-//
-// Description: Text editing service for controls.
-//
 
 namespace System.Windows.Documents
 {

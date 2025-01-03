@@ -101,9 +101,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         [[inline]]
                             [[Helpers.ManagedStyle.WriteFileHeader(fileName)]]
 
-                            // Allow use of presharp: #pragma warning suppress <nnnn>
-                            #pragma warning disable 1634, 1691
-
                             using MS.Internal;
 
                             using System;
@@ -329,10 +326,6 @@ namespace MS.Internal.MilCodeGen.ResourceModel
                         throw new ArgumentNullException("animationClock");
                     }
                     
-                    // We check for null above but presharp doesn't notice so we suppress the 
-                    // warning here.
-                    
-                    #pragma warning suppress 6506
                     if (animationClock.CurrentState == ClockState.Stopped)
                     {
                         return defaultDestinationValue;

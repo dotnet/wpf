@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -74,13 +74,8 @@ namespace MS.Internal.Controls
                 {
                     return _content;
                 }
-
-#pragma warning disable 1634 // about to use PreSharp message numbers - unknown to C#
-                // Fall through -- can't enumerate (before beginning or after end)
-#pragma warning suppress 6503   
+                // Exception is part of the IEnumerator.Current contract when moving beyond begin/end
                 throw new InvalidOperationException(SR.EnumeratorInvalidOperation);
-                // above exception is part of the IEnumerator.Current contract when moving beyond begin/end
-#pragma warning restore 1634
             }
         }
 

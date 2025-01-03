@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -16,9 +16,6 @@ using MS.Internal.KnownBoxes;
 using MS.Internal.Controls;
 
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
-
-// Disable CS3001: Warning as Error: not CLS-compliant
-#pragma warning disable 3001
 
 namespace System.Windows.Controls.Primitives
 {

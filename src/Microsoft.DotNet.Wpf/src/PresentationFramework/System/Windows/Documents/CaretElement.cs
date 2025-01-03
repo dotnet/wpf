@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -18,9 +18,6 @@ using System.Windows.Controls.Primitives;
 
 namespace System.Windows.Documents
 {
-    // Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
-
     /// <summary>
     /// This class is sealed because it calls OnVisualChildrenChanged virtual in the
     /// constructor and it does not override it, but derived classes could.
@@ -1132,10 +1129,7 @@ namespace System.Windows.Documents
         {
             Invariant.Assert(_isSelectionActive, "Blink animation should only be required for an owner with active selection.");
 
-            // Disable PreSharp#6523 - Win32 GetCaretBlinkTime can return "0"
-            // without the error if SetCaretBlinkTime set as "0".
-#pragma warning disable 6523
-
+            // Win32 GetCaretBlinkTime can return "0" without the error if SetCaretBlinkTime set as "0".
             int caretBlinkTime = (int)SafeNativeMethods.GetCaretBlinkTime();
             if (caretBlinkTime == 0)
             {
@@ -1143,8 +1137,6 @@ namespace System.Windows.Documents
                 // exception.
                 return -1;
             }
-
-#pragma warning restore 6523
 
             return caretBlinkTime;
         }

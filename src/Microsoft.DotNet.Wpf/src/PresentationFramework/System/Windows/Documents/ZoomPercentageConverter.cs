@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,9 +6,6 @@
 // Description: Contains the ZoomPercentageConverter: TypeConverter for the
 //                ZoomPercentage property of DocumentViewer.
 //
-
-// Used to support the warnings disabled below
-#pragma warning disable 1634, 1691
 
 using System.Globalization;
 using System.Windows.Data;
@@ -188,8 +185,6 @@ namespace System.Windows.Documents
                         isValidArg = true;
                     }
                 }
-// Allow empty catch statements.
-#pragma warning disable 56502
 
                 // Catch only the expected parse exceptions
                 catch (ArgumentOutOfRangeException) { }
@@ -197,8 +192,6 @@ namespace System.Windows.Documents
                 catch (FormatException) { }
                 catch (OverflowException) { }
 
-// Disallow empty catch statements.
-#pragma warning restore 56502
             }
 
             // Argument wasn't a valid percent, set error value.

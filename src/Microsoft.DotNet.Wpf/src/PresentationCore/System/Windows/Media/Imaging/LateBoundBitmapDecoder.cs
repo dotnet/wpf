@@ -1,10 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-//
-//
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
 using System.IO;
 using System.Collections.ObjectModel;
@@ -306,11 +302,7 @@ namespace System.Windows.Media.Imaging
                 }
                 catch(Exception e)
                 {
-                    #pragma warning disable 6500
-
                     return ExceptionCallback(e);
-
-                    #pragma warning restore 6500
                 }
             }
 

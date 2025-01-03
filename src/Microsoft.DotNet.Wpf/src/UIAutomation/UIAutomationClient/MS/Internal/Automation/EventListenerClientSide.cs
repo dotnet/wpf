@@ -5,9 +5,7 @@
 // Description: This class wraps an event listener object on the client side.
 
 using System;
-using System.Diagnostics;
 using System.Windows.Automation;
-using System.ComponentModel;    // needed by AsyncOperation
 using System.Runtime.InteropServices;
 using MS.Win32;
 

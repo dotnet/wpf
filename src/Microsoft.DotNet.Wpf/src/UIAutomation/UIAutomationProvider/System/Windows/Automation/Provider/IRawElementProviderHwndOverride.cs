@@ -4,8 +4,6 @@
 
 // Description: Provider interface that allows for overriding HWND-based UI
 
-using System;
-using System.Windows.Automation;
 using System.Runtime.InteropServices;
 
 

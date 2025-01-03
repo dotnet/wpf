@@ -12,19 +12,12 @@
 //
 
 using MS.Win32;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Windows.Threading;
-using System.Security;
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 
-using SR=MS.Internal.PresentationCore.SR;
 using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace System.Windows

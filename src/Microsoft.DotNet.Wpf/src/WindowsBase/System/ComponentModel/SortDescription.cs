@@ -2,17 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-// Description: Defines property and direction to sort.
-//
-
-using System;
-using System.ComponentModel;
-using System.Windows;           // SR
-using MS.Internal.WindowsBase;
-
 namespace System.ComponentModel
 {
     /// <summary>

@@ -3,23 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Threading;
 using System.Windows.Data;
-using System.ComponentModel;
 using System.Windows.Input;
-
-using System.Collections;
 using MS.Win32;
 using System.Globalization;
-using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using System.Windows.Markup;    // for XmlLanguage
-using System.Windows.Media;
-using System.Text;
-using System.Collections.Generic;
 using MS.Internal;
 using MS.Internal.Data;
 
@@ -211,8 +200,7 @@ namespace System.Windows.Controls
             //     Fallback search is if they type "bob" and then press "b"
             //     we'll look for "bobb" and when we don't find it we should
             //     find the next item starting with "bob".
-            if (_charsEntered.Count > 0
-                && (String.Compare(_charsEntered[_charsEntered.Count - 1], nextChar, true, GetCulture(_attachedTo))==0))
+            if (_charsEntered.Count > 0 && string.Compare(_charsEntered[_charsEntered.Count - 1], nextChar, true, GetCulture(_attachedTo)) == 0)
             {
                 repeatedChar = true;
             }

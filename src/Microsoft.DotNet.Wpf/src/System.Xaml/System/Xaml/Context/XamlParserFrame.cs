@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Reflection;
 using System.Xaml;
 using MS.Internal.Xaml.Parser;

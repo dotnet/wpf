@@ -4,14 +4,8 @@
 
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Text;
 using System.Windows.Forms;
-using System.Collections;
 using System.Windows.TrustUI;
-using System.Security;
-using System.Security.RightsManagement;
 
 using MS.Internal.Documents.Application;
 
@@ -172,7 +166,7 @@ namespace MS.Internal.Documents
         private void requestFromLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             // Navigate to the cached referral URI
-            NavigationHelper.Navigate(new SecurityCriticalData<Uri>(_referralUri));
+            NavigationHelper.Navigate(_referralUri);
         }
 
         /// <summary>

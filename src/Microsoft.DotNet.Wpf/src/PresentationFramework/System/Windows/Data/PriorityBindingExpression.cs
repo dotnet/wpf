@@ -10,27 +10,20 @@
 // See spec at Data Binding.mht
 //
 
-using System;
-using System.Collections;
 using System.Collections.ObjectModel;   // Collection<T>
-using System.Diagnostics;
-using System.Threading;
 using System.Windows.Controls;          // ValidationStep
-using System.Windows.Threading;
-using System.Windows.Markup;
 using MS.Internal;
 using MS.Internal.Data;
-using MS.Utility;
 
 namespace System.Windows.Data
 {
-/// <summary>
-///  Describes a collection of BindingExpressions attached to a single property.
-///     These behave as "priority" BindingExpressions, meaning that the property
-///     receives its value from the first BindingExpression in the collection that
-///     can produce a legal value.
-/// </summary>
-public sealed class PriorityBindingExpression : BindingExpressionBase
+    /// <summary>
+    ///  Describes a collection of BindingExpressions attached to a single property.
+    ///     These behave as "priority" BindingExpressions, meaning that the property
+    ///     receives its value from the first BindingExpression in the collection that
+    ///     can produce a legal value.
+    /// </summary>
+    public sealed class PriorityBindingExpression : BindingExpressionBase
 {
     //------------------------------------------------------
     //

@@ -8,8 +8,6 @@
 //              
 //
 
-using System;
-
 namespace System.Windows.Media.Media3D
 {
     /// <summary>

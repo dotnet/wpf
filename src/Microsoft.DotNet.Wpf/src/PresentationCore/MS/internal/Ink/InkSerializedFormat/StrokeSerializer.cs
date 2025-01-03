@@ -4,18 +4,11 @@
 
 //#define OLD_ISF
 
-using System;
 using System.IO;
-using System.Security;
-using System.Diagnostics;
-using System.Windows;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Ink;
-using MS.Internal.Ink;
-using MS.Internal.IO.Packaging;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {

@@ -6,8 +6,6 @@
 // Description: TextView implementation for collection of DocumentPageTextViews. 
 //
 
-using System;                               // InvalidOperationException, ...
-using System.Collections.Generic;           // List<T>
 using System.Collections.ObjectModel;       // ReadOnlyCollection
 using System.Windows;                       // Point, Rect, ...
 using System.Windows.Controls;              // FlowDocumentPageViewer, DocumentViewer

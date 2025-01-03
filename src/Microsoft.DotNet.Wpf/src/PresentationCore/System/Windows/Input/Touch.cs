@@ -5,10 +5,6 @@
 //
 //
 
-using System;
-using System.Windows;
-using System.Windows.Input;
-
 namespace System.Windows.Input
 {
     public static class Touch

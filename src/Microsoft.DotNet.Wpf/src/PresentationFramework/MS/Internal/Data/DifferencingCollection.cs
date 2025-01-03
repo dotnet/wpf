@@ -29,13 +29,10 @@
     flexibility of the previous paragraph comes into play.
 \***************************************************************************/
 
-using System;
 using System.Collections;               // IEnumerable
-using System.Collections.Generic;       // IList<T>
 using System.Collections.ObjectModel;   // ObservableCollection
 using System.Collections.Specialized;   // INotifyCollectionChanged
 using System.ComponentModel;            // PropertyChangedEventArgs
-using MS.Internal;                      // Invariant.Assert
 
 namespace MS.Internal.Data
 {

@@ -9,7 +9,6 @@
 *
 *
 \***************************************************************************/
-using System;
 using System.ComponentModel; // EditorBrowsableAttribute
 
 namespace System.Windows

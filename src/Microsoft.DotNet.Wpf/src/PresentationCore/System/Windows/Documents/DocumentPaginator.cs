@@ -12,10 +12,9 @@
 //
 
 using System.ComponentModel;        // AsyncCompletedEventArgs
-using System.Windows.Media;         // Visual
 using MS.Internal.PresentationCore; // SR
 
-namespace System.Windows.Documents 
+namespace System.Windows.Documents
 {
     /// <summary>
     /// This is the abstract base class for all paginating layouts. It 

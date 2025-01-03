@@ -4,20 +4,11 @@
 
 
 
-using System;
-using System.Collections;
 using System.ComponentModel;
 using System.Windows.Threading;
-
-using System.Windows;
 using System.Windows.Automation.Peers;
-using System.Windows.Controls.Primitives;
 
 using System.Windows.Input;
-using System.Windows.Media;
-
-using MS.Win32;
-using MS.Utility;
 
 namespace System.Windows.Controls.Primitives
 {

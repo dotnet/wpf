@@ -2,23 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Security;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 using System.Windows.Media;
-using System.Collections.Generic;
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
-
 using MS.Internal;
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Automation.Peers
 {
-    /// 
     public class UIElementAutomationPeer: AutomationPeer
     {
         ///

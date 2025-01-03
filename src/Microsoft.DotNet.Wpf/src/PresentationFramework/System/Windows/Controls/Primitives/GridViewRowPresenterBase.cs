@@ -5,11 +5,7 @@
 
 
 using System.Collections;               // IEnumerator
-using System.Collections.Generic;       // List<T>
 using System.Collections.Specialized;   // NotifyCollectionChangedEventHandler
-using System.Collections.ObjectModel;   // Collection
-using System.ComponentModel;            // PropertyChangedEventArgs
-using System.Diagnostics;               // Debug
 using System.Windows.Media;             // VisualOperations
 
 using MS.Internal.Controls;             // EmptyEnumerator

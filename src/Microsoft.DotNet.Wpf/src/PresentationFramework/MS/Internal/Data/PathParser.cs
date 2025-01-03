@@ -6,7 +6,6 @@
 // Description: Parser for the Path of a (CLR) binding
 //
 
-using System;
 using System.Collections;
 using System.Text;          // StringBuilder
 using System.Windows;

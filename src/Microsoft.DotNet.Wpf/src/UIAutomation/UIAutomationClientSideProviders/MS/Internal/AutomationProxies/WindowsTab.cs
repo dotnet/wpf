@@ -13,11 +13,9 @@
 
 using System;
 using System.Collections;
-using System.Text;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Input;
 using MS.Win32;

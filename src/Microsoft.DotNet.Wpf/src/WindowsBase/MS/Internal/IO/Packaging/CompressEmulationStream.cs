@@ -2,24 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  Abstract base class that provides a fully functional Stream on top of different
 //  various compression implementations.
-//
-//
-//
 
-
-using System;
 using System.IO;
-using System.IO.Compression;                // for DeflateStream
-using System.Diagnostics;
-
-using System.IO.Packaging;
-using System.Windows;
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal.IO.Packaging
 {

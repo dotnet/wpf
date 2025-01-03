@@ -8,16 +8,6 @@
 //              that forwards all of it's calls to a DrawingContext.
 //
 
-using MS.Internal;
-using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Imaging;
-using System.Windows.Media.Media3D;
-
 namespace System.Windows.Media
 {
     /// <summary>

@@ -9,17 +9,10 @@
 //
 //
 
-using System.Security;
 using System.Collections;
 using System.Globalization;
-using System.Windows.Threading;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
 
 using MS.Win32;
-using MS.Utility;
 
 namespace System.Windows.Input
 {
@@ -28,7 +21,7 @@ namespace System.Windows.Input
     //  InputLanguageSource class
     //
     //------------------------------------------------------
- 
+
     /// <summary>
     /// This is an internal. The source for input languages.
     /// </summary>
@@ -130,11 +123,8 @@ namespace System.Windows.Input
                 EnsureInputProcessorProfile();
 
                 if (_ipp == null)
-                {
-                    ArrayList al = new ArrayList();
-                    al.Add(CurrentInputLanguage);
-                    return al;
-                }
+                    return new CultureInfo[1] { CurrentInputLanguage };
+
                 return _ipp.InputLanguageList;
              }
         }

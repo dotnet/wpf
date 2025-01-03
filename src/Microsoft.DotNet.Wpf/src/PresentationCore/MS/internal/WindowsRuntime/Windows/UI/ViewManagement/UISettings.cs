@@ -1,12 +1,6 @@
-using System;
 using System.IO;
-using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Windows.Interop;
 using System.Windows.Media;
-using MS.Internal.PresentationCore.WindowsRuntime;
 
 namespace MS.Internal.WindowsRuntime
 {

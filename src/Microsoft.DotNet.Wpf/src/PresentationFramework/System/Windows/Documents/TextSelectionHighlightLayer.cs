@@ -6,10 +6,8 @@
 // Description: Highlight rendering for the TextSelection.
 //
 
-using System;
 using MS.Internal;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace System.Windows.Documents

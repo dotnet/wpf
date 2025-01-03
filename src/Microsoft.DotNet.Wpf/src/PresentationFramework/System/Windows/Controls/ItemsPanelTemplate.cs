@@ -7,11 +7,6 @@
 //     that manages layout of containers for an ItemsControl.
 //
 
-using System.ComponentModel;
-using System.Windows.Controls;
-using System.Windows.Markup;
-using System.Diagnostics;
-
 namespace System.Windows.Controls
 {
     /// <summary>

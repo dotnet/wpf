@@ -7,13 +7,6 @@
 //      A class which is used as the selection adorner of the InkCanvas selection
 //
 
-using MS.Internal;
-using MS.Internal.Controls;
-using MS.Internal.Ink;
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;

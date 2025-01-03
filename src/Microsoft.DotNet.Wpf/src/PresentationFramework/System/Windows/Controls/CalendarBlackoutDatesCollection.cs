@@ -3,10 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Threading;
 
 namespace System.Windows.Controls

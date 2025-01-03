@@ -4,8 +4,6 @@
 
 // Description: 
 //    RMStatus enum for overall status of document RM.
-using System;
-
 namespace MS.Internal.Documents
 {
     /// <summary>

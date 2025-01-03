@@ -2,6 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal.Documents;
+using System.Windows.Media;                 // Brush
+using System.Windows.Media.TextFormatting;  // CharacterHit
+using System.Windows.Shapes;                // Glyphs
+using System.Windows.Controls;              // Image
+
 //
 // Description:
 //      Implements FixedHighlight 
@@ -9,17 +15,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal.Documents;
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Windows.Media;                 // Brush
-    using System.Windows.Media.TextFormatting;  // CharacterHit
-    using System.Windows.Shapes;                // Glyphs
-    using System.Windows.Controls;              // Image
-
-
-
     //=====================================================================
     /// <summary>
     /// FixedHighlight represents partial glyph run that is highlighted on a fixed document. 

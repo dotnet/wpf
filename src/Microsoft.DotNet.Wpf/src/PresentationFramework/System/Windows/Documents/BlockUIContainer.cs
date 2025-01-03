@@ -7,7 +7,6 @@
 //    flow content block collections
 //
 
-using System.ComponentModel;        // DesignerSerializationVisibility
 using System.Windows.Markup; // ContentProperty
 
 namespace System.Windows.Documents

@@ -11,22 +11,19 @@
 //
 //
 
-using System;
 using System.Collections;   // In order to use IEnumerator
-using System.Diagnostics;
-using MS.Utility;           // In order to use SR
 
 namespace System.Windows
 {
-/*
-    public delegate bool ParentTraversalCallback(FrameworkElement parentFE, FrameworkContentElement parentFCE, object data);
-    public delegate bool ChildTraversalCallback(FrameworkElement childFE, FrameworkContentElement childFCE, object child, object data);
-*/
-    
-/// <summary>
-/// Static helper functions for dealing with the logical tree
-/// </summary>
-public static class LogicalTreeHelper
+    /*
+        public delegate bool ParentTraversalCallback(FrameworkElement parentFE, FrameworkContentElement parentFCE, object data);
+        public delegate bool ChildTraversalCallback(FrameworkElement childFE, FrameworkContentElement childFCE, object child, object data);
+    */
+
+    /// <summary>
+    /// Static helper functions for dealing with the logical tree
+    /// </summary>
+    public static class LogicalTreeHelper
 {
     //------------------------------------------------------
     //

@@ -3,22 +3,15 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Controls.Primitives;   // IItemContainerGenerator
-using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Markup; // IAddChild, ContentPropertyAttribute
-using System.Windows.Threading;
-using MS.Internal;
 using MS.Internal.Controls;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
-using MS.Utility;
 
 namespace System.Windows.Controls
 {

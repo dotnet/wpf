@@ -10,16 +10,10 @@
 //
 
 using MS.Internal;
-using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationCore;
 using MS.Utility;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Input;
-using System.Windows.Media.Animation;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -498,7 +492,6 @@ namespace System.Windows
         /// </remarks>
         internal EventHandlersStore EventHandlersStore
         {
-            [FriendAccessAllowed] // Built into Core, also used by Framework.
             get
             {
                 if(!ReadFlag(CoreFlags.ExistsEventHandlersStore))
@@ -513,7 +506,6 @@ namespace System.Windows
         ///     Ensures that EventHandlersStore will return
         ///     non-null when it is called.
         /// </summary>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal void EnsureEventHandlersStore()
         {
             if (EventHandlersStore == null)

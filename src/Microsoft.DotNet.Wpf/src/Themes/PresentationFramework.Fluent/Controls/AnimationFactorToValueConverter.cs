@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Globalization;
 
@@ -17,7 +13,7 @@ namespace Fluent.Controls
                 return 0.0;
             }
 
-            if (values[1] is not double factor)
+            if (values[1] is not double factor || factor == double.NaN)
             {
                 return 0.0;
             }

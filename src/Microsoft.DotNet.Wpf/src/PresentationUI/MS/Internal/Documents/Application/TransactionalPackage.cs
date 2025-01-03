@@ -18,32 +18,27 @@
 
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using System.IO.Packaging;
-using System.Text;
-using System.Security;
 using System.Windows.TrustUI;
-
-using MS.Internal;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// This class represents a Package which does not alter the original
-/// and writes the changes to a temporary package (when provided) as a
-/// type of change log; leaving the original untouched.
-/// </summary>
-/// <remarks>
-/// In the descriptions below the following terms are used:
-/// 
-///   Proxy: This is the reference being given to callers that
-///   contains underlying objects.
-///   Active: The underlying object that the proxy should pass calls to.
-///   Temp: This is the writeable object that contains changes.
-///   Original: This is the read only object that has the source data.
-/// </remarks>
-internal class TransactionalPackage : Package, IDisposable
+    /// <summary>
+    /// This class represents a Package which does not alter the original
+    /// and writes the changes to a temporary package (when provided) as a
+    /// type of change log; leaving the original untouched.
+    /// </summary>
+    /// <remarks>
+    /// In the descriptions below the following terms are used:
+    /// 
+    ///   Proxy: This is the reference being given to callers that
+    ///   contains underlying objects.
+    ///   Active: The underlying object that the proxy should pass calls to.
+    ///   Temp: This is the writeable object that contains changes.
+    ///   Original: This is the read only object that has the source data.
+    /// </remarks>
+    internal class TransactionalPackage : Package, IDisposable
 {
     #region Constructors
     //--------------------------------------------------------------------------
@@ -68,8 +63,8 @@ internal class TransactionalPackage : Package, IDisposable
 
         Package originalPackage = Package.Open(original);
 
-        _originalPackage = new SecurityCriticalDataForSet<Package>(originalPackage);
-        _tempPackage = new SecurityCriticalDataForSet<Package>(null);
+        _originalPackage = originalPackage;
+        _tempPackage = null;
     }
     #endregion Constructors
 
@@ -93,7 +88,7 @@ internal class TransactionalPackage : Package, IDisposable
         Package temporaryPackage = Package.Open(
             workspace, FileMode.Create, FileAccess.ReadWrite);
 
-        _tempPackage = new SecurityCriticalDataForSet<Package>(temporaryPackage);
+        _tempPackage = temporaryPackage;
     }
 
     /// <exception cref="System.ArgumentNullException" />
@@ -107,12 +102,12 @@ internal class TransactionalPackage : Package, IDisposable
             throw new InvalidOperationException();
         }
 
-        if (_tempPackage.Value != null)
+        if (_tempPackage != null)
         {
             Package destination = Package.Open(
                 target, FileMode.Open, FileAccess.ReadWrite);
 
-            foreach (PackagePart part in _tempPackage.Value.GetParts())
+            foreach (PackagePart part in _tempPackage.GetParts())
             {
                 if (destination.PartExists(part.Uri))
                 {
@@ -150,8 +145,8 @@ internal class TransactionalPackage : Package, IDisposable
         ArgumentNullException.ThrowIfNull(newOriginal);
 
         // close this as we will open a new one
-        _originalPackage.Value.Close();
-        _trashCan.Add(_originalPackage.Value);
+        _originalPackage.Close();
+        _trashCan.Add(_originalPackage);
         _isDirty = false;
 
         Package newPackage = Package.Open(newOriginal, FileMode.Open, FileAccess.Read);
@@ -166,7 +161,7 @@ internal class TransactionalPackage : Package, IDisposable
             }
         }
 
-        _originalPackage.Value = newPackage;
+        _originalPackage = newPackage;
     }
 
     #endregion Internal Methods
@@ -220,7 +215,7 @@ internal class TransactionalPackage : Package, IDisposable
         EnsureTempPackage();
 
         // the underlying temp package does all the physical work
-        PackagePart result = _tempPackage.Value.CreatePart(
+        PackagePart result = _tempPackage.CreatePart(
             partUri, contentType, compressionOption);
 
         Uri normalizedPartUri = PackUriHelper.GetNormalizedPartUri(partUri);
@@ -268,9 +263,9 @@ internal class TransactionalPackage : Package, IDisposable
     protected override void DeletePartCore(Uri partUri)
     {
         // Skipping parameter validation as it is done by CreatePart.
-        if (_tempPackage.Value.PartExists(partUri))
+        if (_tempPackage.PartExists(partUri))
         {
-            _tempPackage.Value.DeletePart(partUri);
+            _tempPackage.DeletePart(partUri);
 
             Trace.SafeWrite(Trace.Packaging, "Part {0} deleted.", partUri);
         }
@@ -292,16 +287,16 @@ internal class TransactionalPackage : Package, IDisposable
 
         if (disposing)
         {
-            if (_tempPackage.Value != null)
+            if (_tempPackage != null)
             {
-                ((IDisposable)_tempPackage.Value).Dispose();
-                _tempPackage.Value = null;
+                ((IDisposable)_tempPackage).Dispose();
+                _tempPackage = null;
             }
 
-            if (_originalPackage.Value != null)
+            if (_originalPackage != null)
             {
-                ((IDisposable)_originalPackage.Value).Dispose();
-                _originalPackage.Value = null;
+                ((IDisposable)_originalPackage).Dispose();
+                _originalPackage = null;
             }
 
             _activeParts.Clear();
@@ -319,9 +314,9 @@ internal class TransactionalPackage : Package, IDisposable
     /// </remarks>
     protected override void FlushCore()
     {
-        if (_tempPackage.Value != null)
+        if (_tempPackage != null)
         {
-            _tempPackage.Value.Flush();
+            _tempPackage.Flush();
         }
     }
 
@@ -382,9 +377,9 @@ internal class TransactionalPackage : Package, IDisposable
         // or the temporary package, this method will return null.
 
         bool canGetFromTempPackage =
-            (_tempPackage.Value != null) && (_tempPackage.Value.PartExists(partUri));
+            (_tempPackage != null) && (_tempPackage.PartExists(partUri));
         bool canGetFromOriginalPackage =
-            canGetFromTempPackage ? false : _originalPackage.Value.PartExists(partUri);
+            canGetFromTempPackage ? false : _originalPackage.PartExists(partUri);
 
         if (_activeParts.ContainsKey(normalizedPartUri)
             && (canGetFromTempPackage || canGetFromOriginalPackage))
@@ -393,7 +388,7 @@ internal class TransactionalPackage : Package, IDisposable
         }
         else if (canGetFromTempPackage)
         {
-            result = _tempPackage.Value.GetPart(partUri);
+            result = _tempPackage.GetPart(partUri);
 
             result = new WriteableOnDemandPackagePart(
                 this, result, TempPackagePartFactory);
@@ -409,7 +404,7 @@ internal class TransactionalPackage : Package, IDisposable
         }
         else if (canGetFromOriginalPackage)
         {
-            PackagePart original = _originalPackage.Value.GetPart(partUri);
+            PackagePart original = _originalPackage.GetPart(partUri);
             result = new WriteableOnDemandPackagePart(
                 this, original, TempPackagePartFactory);
 
@@ -438,7 +433,7 @@ internal class TransactionalPackage : Package, IDisposable
     protected override PackagePart[] GetPartsCore()
     {
         // need to call get parts from the underlying reading package
-        PackagePartCollection parts = _originalPackage.Value.GetParts();
+        PackagePartCollection parts = _originalPackage.GetParts();
         // // a temporary list of proxied package parts which will be use to fill return value
         List<PackagePart> _proxiedParts = new List<PackagePart>();
 
@@ -462,7 +457,7 @@ internal class TransactionalPackage : Package, IDisposable
     // Protected Properties
     //-------------------------------------------------------------------------
 
-    protected SecurityCriticalDataForSet<Package> TempPackage
+    protected Package TempPackage
     {
         get
         {
@@ -496,13 +491,13 @@ internal class TransactionalPackage : Package, IDisposable
     private void EnsureTempPackage()
     {
         // if we can not edit ask for it
-        if (_tempPackage.Value == null)
+        if (_tempPackage == null)
         {
             DocumentManager.CreateDefault().EnableEdit(null);
         }
 
         // if we still don't have it fail
-        if (_tempPackage.Value == null)
+        if (_tempPackage == null)
         {
             throw new InvalidOperationException(
                 SR.PackagingWriteNotSupported);
@@ -532,7 +527,7 @@ internal class TransactionalPackage : Package, IDisposable
 
         PackagePart temp = null;
 
-        if (!_tempPackage.Value.PartExists(partUri))
+        if (!_tempPackage.PartExists(partUri))
         {
             Trace.SafeWrite(
                 Trace.Packaging,
@@ -541,7 +536,7 @@ internal class TransactionalPackage : Package, IDisposable
 
             _isDirty = true;
 
-            temp = _tempPackage.Value.CreatePart(
+            temp = _tempPackage.CreatePart(
                 partUri,
                 packagePart.ContentType,
                 packagePart.CompressionOption);
@@ -556,7 +551,7 @@ internal class TransactionalPackage : Package, IDisposable
         }
         else
         {
-            temp = _tempPackage.Value.GetPart(partUri);
+            temp = _tempPackage.GetPart(partUri);
 
             Trace.SafeWrite(
                 Trace.Packaging,
@@ -584,11 +579,11 @@ internal class TransactionalPackage : Package, IDisposable
     /// <summary>
     /// The original Package; this one is to be treated as read-only.
     /// </summary>
-    private SecurityCriticalDataForSet<Package> _originalPackage;
+    private Package _originalPackage;
     /// <summary>
     /// The temporary Package; this is the one we work in.
     /// </summary>
-    private SecurityCriticalDataForSet<Package> _tempPackage;
+    private Package _tempPackage;
 
     private List<Package> _trashCan = new List<Package>();
 

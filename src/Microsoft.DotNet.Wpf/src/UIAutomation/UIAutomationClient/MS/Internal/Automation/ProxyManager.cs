@@ -8,7 +8,6 @@
 #pragma warning disable 1634, 1691
 
 using System;
-using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Text;
@@ -17,8 +16,6 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using System.Reflection;
 using System.Diagnostics;
-using System.Runtime.Serialization;
-using System.ComponentModel;
 using MS.Win32;
 
 namespace MS.Internal.Automation
@@ -270,7 +267,7 @@ namespace MS.Internal.Automation
 
             foreach (string str in BadImplClassnames)
             {
-                if (String.Compare(className, str, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(className, str, StringComparison.OrdinalIgnoreCase))
                     return true;
             }
 

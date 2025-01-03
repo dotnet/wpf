@@ -11,11 +11,8 @@ using System;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Xml;
-using MS.Utility;
-using System.Diagnostics;
 using MS.Internal.Xaml.Parser;
 
 #if PBTCOMPILER
@@ -397,9 +394,9 @@ namespace System.Windows.Markup
         // 
         internal Assembly StreamCreatedAssembly 
         {
-            get { return _streamCreatedAssembly.Value; }
+            get { return _streamCreatedAssembly; }
 
-            set { _streamCreatedAssembly.Value = value; }
+            set { _streamCreatedAssembly = value; }
         }
 #endif
 
@@ -654,7 +651,7 @@ namespace System.Windows.Markup
             context._xamlTypeMapper = _xamlTypeMapper;
             context._targetType = _targetType;
 
-            context._streamCreatedAssembly.Value = _streamCreatedAssembly.Value;
+            context._streamCreatedAssembly = _streamCreatedAssembly;
             context._rootElement = _rootElement;
             context._styleConnector = _styleConnector;
 
@@ -830,7 +827,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         private bool                    _skipJournaledProperties;
-        private SecurityCriticalDataForSet<Assembly> _streamCreatedAssembly;
+        private Assembly                _streamCreatedAssembly;
         private bool                    _ownsBamlStream;
         private ProvideValueServiceProvider _provideValueServiceProvider;
         private IStyleConnector _styleConnector;

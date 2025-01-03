@@ -5,7 +5,6 @@
 //
 //
 
-using System;
 using MS.Internal;
 
 namespace System.Windows.Media.Media3D

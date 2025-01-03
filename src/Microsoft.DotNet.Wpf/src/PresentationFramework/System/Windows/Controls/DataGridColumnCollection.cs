@@ -3,13 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Threading;
 using MS.Internal;
 
@@ -201,8 +197,7 @@ namespace System.Windows.Controls
                 {
                     OnCellsPanelHorizontalOffsetChanged(e);
                 }
-                else if (e.Property == DataGrid.HorizontalScrollOffsetProperty ||
-                         string.Compare(propertyName, "ViewportWidth", StringComparison.Ordinal) == 0)
+                else if (e.Property == DataGrid.HorizontalScrollOffsetProperty || string.Equals(propertyName, "ViewportWidth", StringComparison.Ordinal))
                 {
                     InvalidateColumnRealization(false);
                 }

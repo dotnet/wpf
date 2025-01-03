@@ -7,19 +7,11 @@
 //              a PTS host (FlowDocument).
 //
 
-using System;
-using System.IO;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections;
-using System.Diagnostics;
 using System.Threading;
-using System.Security;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Documents;
-using System.Windows.Threading;         // Dispatcher
 using MS.Internal.Documents;
 using MS.Internal.Text;
 

@@ -6,11 +6,7 @@
 // Description: PageCache caches information about individual pages in a document.
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 using System.Windows.Documents;

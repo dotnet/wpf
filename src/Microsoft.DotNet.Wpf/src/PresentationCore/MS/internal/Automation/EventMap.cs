@@ -2,23 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-// Description:
-// Accessibility event map classes are used to determine if, and how many
-// listeners there are for events and property changes.
-//
-//
-
-using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Threading;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal.Automation
 {

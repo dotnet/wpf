@@ -10,8 +10,6 @@
 // 
 //
 
-using System.Security;
-
 namespace System.Windows
 {
     #region IDataObject interface

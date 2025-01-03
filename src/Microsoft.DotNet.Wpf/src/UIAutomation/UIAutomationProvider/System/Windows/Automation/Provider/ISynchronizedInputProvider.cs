@@ -4,14 +4,12 @@
 
 // Description: SynchronizedInput control pattern provider interface
 
-using System;
-using System.Windows.Automation;
 using System.Runtime.InteropServices;
 
 namespace System.Windows.Automation.Provider
 {
 
-   
+
     /// <summary>
     /// Interface implemented by peers which support synchronized input
     /// </summary>

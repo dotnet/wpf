@@ -2,6 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Win32;
+using MS.Internal; // Invariant
+
 //
 // Description: Word breaker used for TextSelection's auto-word selection and
 //              ctl-arrow navigation.
@@ -9,9 +12,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Win32;
-    using MS.Internal; // Invariant
-
     // Word breaker used for TextSelection's auto-word selection and ctl-arrow
     // navigation.
     //

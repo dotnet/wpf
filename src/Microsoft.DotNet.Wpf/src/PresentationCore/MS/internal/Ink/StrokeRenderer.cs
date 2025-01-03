@@ -4,17 +4,9 @@
 
 //#define DEBUG_RENDERING_FEEDBACK
 
-using System;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Media;
-using System.Windows.Input;
-using System.Diagnostics;
-
-using SR=MS.Internal.PresentationCore.SR;
-using MS.Internal;
-using MS.Internal.PresentationCore;
 
 namespace MS.Internal.Ink
 {
@@ -203,7 +195,6 @@ namespace MS.Internal.Ink
         /// strokenodes is very expensive later when MIL renders it, so this method has been optimized
         /// to only add strokenodes when either pressure changes, or the angle of the stroke changes.
         /// </summary>
-        [FriendAccessAllowed]
         internal static void CalcGeometryAndBounds(StrokeNodeIterator iterator,
                                                    DrawingAttributes drawingAttributes,
 #if DEBUG_RENDERING_FEEDBACK

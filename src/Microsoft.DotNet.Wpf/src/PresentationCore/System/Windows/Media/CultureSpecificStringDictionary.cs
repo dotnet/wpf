@@ -2,22 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-//  Contents:  LanguageSpecificStringDictionary
-//
-//
-
-using System;
-using System.ComponentModel;    // for TypeConverter
-using System.Globalization;
-using SC=System.Collections;
-using System.Collections.Generic;
-using System.Windows.Markup;    // for XmlLanguage and XmlLanguageConverter
-
-using MS.Internal.PresentationCore;
-using SR=MS.Internal.PresentationCore.SR;
+using SC = System.Collections;
+using System.Windows.Markup;
 
 namespace System.Windows.Media
 {

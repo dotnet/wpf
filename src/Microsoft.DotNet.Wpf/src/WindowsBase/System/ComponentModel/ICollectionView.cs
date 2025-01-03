@@ -2,31 +2,23 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
 // Description: Manages a view of a collection of data items.
 //
 // See spec at http://avalon/connecteddata/Specs/CollectionView.mht
-//
-//
 
-using System;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
-using System.Windows;
 
 namespace System.ComponentModel
 {
-/// <summary>
-/// ICollectionView is an interface that applications writing their own
-/// collections can implement to enable current record management, sorting,
-/// filtering, grouping etc in a custom way.
-/// </summary>
-public interface ICollectionView : IEnumerable, INotifyCollectionChanged
+    /// <summary>
+    /// ICollectionView is an interface that applications writing their own
+    /// collections can implement to enable current record management, sorting,
+    /// filtering, grouping etc in a custom way.
+    /// </summary>
+    public interface ICollectionView : IEnumerable, INotifyCollectionChanged
 {
     /// <summary>
     /// Culture contains the CultureInfo used in any operations of the

@@ -10,11 +10,6 @@
 \***************************************************************************/
 
 using System;
-using System.Xml;
-using System.IO;
-using System.Text;
-using System.Collections;
-using System.ComponentModel;
 
 using System.Diagnostics;
 using System.Reflection;
@@ -711,6 +706,14 @@ namespace System.Windows.Markup
 #else
                     _inEventSetter = true;
 #endif
+                }
+                else if ((depth == 2 && _setterElementEncountered) ||
+                         (depth == 3 && _setterPropertyEncountered))
+                {
+                    ThrowException(nameof(SR.ParserNoSetterChild),
+                                   xamlElementStartNode.TypeFullName,
+                                   xamlElementStartNode.LineNumber,
+                                   xamlElementStartNode.LinePosition);
                 }
             }
 

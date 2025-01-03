@@ -11,8 +11,6 @@
 //    reproduced from a round-trip serialization/deserialization.
 //
 
-using System;
-
 namespace MS.Internal.Annotations
 {
     /// <summary>

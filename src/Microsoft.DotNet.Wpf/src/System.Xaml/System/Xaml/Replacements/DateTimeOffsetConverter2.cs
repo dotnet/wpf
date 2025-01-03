@@ -8,7 +8,6 @@ using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Globalization;
 using System.Reflection;
-using System.Security;
 
 namespace System.Xaml.Replacements
 {
@@ -58,7 +57,8 @@ namespace System.Xaml.Replacements
                     });
                     return new InstanceDescriptor(
                         constructor,
-                        new object[] {
+                        new object[]
+                        {
                             dtOffset.Year,
                             dtOffset.Month,
                             dtOffset.Day,

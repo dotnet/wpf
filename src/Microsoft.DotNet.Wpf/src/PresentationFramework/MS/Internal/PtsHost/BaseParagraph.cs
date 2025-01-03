@@ -7,8 +7,6 @@
 //              of a text based content.
 //
 
-using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
 using MS.Internal.Documents;

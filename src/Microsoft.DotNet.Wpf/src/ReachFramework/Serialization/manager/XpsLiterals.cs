@@ -13,16 +13,6 @@
                                                                        
 --*/
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.IO.Packaging;
-using System.Security.Cryptography.X509Certificates;
-using System.Windows.Media;
-using System.Windows.Xps.Serialization;
-
 using MS.Internal;
 
 namespace System.Windows.Xps.Packaging

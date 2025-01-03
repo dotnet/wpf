@@ -2,11 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
-using System.Drawing;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Collections.Generic;
-using System.Windows;
-using FluentAssertions;
 using PresentationCore.Tests.TestUtilities;
 using PresentationCore.Tests.FluentAssertions;
 using System.Formats.Nrbf;

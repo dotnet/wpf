@@ -6,16 +6,15 @@
 
 
 using System.IO;
-using System.Security;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Extends Document with a support for StreamProxy versus simply stream.
-/// </summary>
-/// <typeparam name="T">The type of stream to back the document with.
-/// </typeparam>
-internal class StreamDocument<T> : Document where T : StreamProxy
+    /// <summary>
+    /// Extends Document with a support for StreamProxy versus simply stream.
+    /// </summary>
+    /// <typeparam name="T">The type of stream to back the document with.
+    /// </typeparam>
+    internal class StreamDocument<T> : Document where T : StreamProxy
 {
     #region Constructors
     //--------------------------------------------------------------------------
@@ -37,7 +36,7 @@ internal class StreamDocument<T> : Document where T : StreamProxy
     /// </summary>
     internal override Stream Destination
     {
-        get { return _destination.Value; }
+        get { return _destination; }
     }
     
     /// <summary>
@@ -45,8 +44,8 @@ internal class StreamDocument<T> : Document where T : StreamProxy
     /// </summary>
     internal T DestinationProxy
     {
-        get { return _destination.Value; }
-        set { _destination.Value = value; }
+        get { return _destination; }
+        set { _destination = value; }
     }
 
     /// <summary>
@@ -54,7 +53,7 @@ internal class StreamDocument<T> : Document where T : StreamProxy
     /// </summary>
     internal override Stream Source
     {
-        get { return _source.Value; }
+        get { return _source; }
     }
 
     /// <summary>
@@ -62,8 +61,8 @@ internal class StreamDocument<T> : Document where T : StreamProxy
     /// </summary>
     internal T SourceProxy
     {
-        get { return _source.Value; }
-        set { _source.Value = value; }
+        get { return _source; }
+        set { _source = value; }
     }
 
     /// <summary>
@@ -71,7 +70,7 @@ internal class StreamDocument<T> : Document where T : StreamProxy
     /// </summary>
     internal override Stream Workspace
     {
-        get { return _workspace.Value; }
+        get { return _workspace; }
     }
 
     /// <summary>
@@ -79,8 +78,8 @@ internal class StreamDocument<T> : Document where T : StreamProxy
     /// </summary>
     internal T WorkspaceProxy
     {
-        get { return _workspace.Value; }
-        set { _workspace.Value = value; }
+        get { return _workspace; }
+        set { _workspace = value; }
     }
 
     #endregion Internal Properties
@@ -160,12 +159,9 @@ internal class StreamDocument<T> : Document where T : StreamProxy
     // Private Fields
     //--------------------------------------------------------------------------
 
-    private SecurityCriticalDataForSet<T> _destination =
-        new SecurityCriticalDataForSet<T>();
-    private SecurityCriticalDataForSet<T> _source =
-        new SecurityCriticalDataForSet<T>();
-    private SecurityCriticalDataForSet<T> _workspace =
-        new SecurityCriticalDataForSet<T>();
+    private T _destination;
+    private T _source;
+    private T _workspace;
     #endregion Private Fields
 }
 }

@@ -6,8 +6,6 @@
 // Description: Helper methods for code that uses types from System.Core.
 //
 
-using System;
-
 namespace MS.Internal
 {
     internal static class SystemCoreHelper

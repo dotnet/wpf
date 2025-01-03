@@ -6,7 +6,6 @@
 
 using System.ComponentModel;
 using System.Globalization;
-using System.Windows.Markup;
 
 namespace System.Xaml.Replacements
 {
@@ -22,7 +21,7 @@ namespace System.Xaml.Replacements
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            if (context != null && value is string typeList)
+            if (context is not null && value is string typeList)
             {
                 string[] tl = StringHelpers.SplitTypeList(typeList);
                 Type[] types = new Type[tl.Length];

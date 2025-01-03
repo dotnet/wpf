@@ -2,13 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Abstract base class for all default value factories
-//
-
-using MS.Internal.WindowsBase;  // FriendAccessAllowed
-using System;
 using System.Windows;
 
 namespace MS.Internal
@@ -28,7 +21,6 @@ namespace MS.Internal
     // This is done by simply creating a new instance of the default value type in 
     // the call to CreateDefaultValue.  
     // </summary>
-    [FriendAccessAllowed] // Built into Base, also used by Framework.
     internal abstract class DefaultValueFactory
     {
         /// <summary>
@@ -36,7 +28,8 @@ namespace MS.Internal
         /// </summary>
         internal abstract object DefaultValue 
         {
-            get;   }
+            get;   
+}
 
         /// <summary>
         ///     See PropertyMetadata.CreateDefaultValue

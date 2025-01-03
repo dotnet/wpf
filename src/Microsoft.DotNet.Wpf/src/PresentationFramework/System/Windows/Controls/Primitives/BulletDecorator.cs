@@ -5,15 +5,9 @@
 
 
 using MS.Internal;
-using MS.Utility;
 using MS.Internal.Documents;
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
 using System.Windows.Documents;
 using System.Windows.Media;
 

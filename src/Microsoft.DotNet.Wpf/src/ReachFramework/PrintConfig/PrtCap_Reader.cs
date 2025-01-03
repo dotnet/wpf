@@ -13,14 +13,9 @@ Abstract:
 
 --*/
 
-using System;
 using System.Xml;
 using System.IO;
-using System.Diagnostics;
 using System.Globalization;
-
-using System.Printing;
-using MS.Internal.Printing.Configuration;
 
 #pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages
 

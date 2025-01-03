@@ -7,10 +7,6 @@
 // This file was generated, please do not edit it directly.
 //
 
-using System;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
-
 namespace System.Windows.Media
 {
     /// <summary>

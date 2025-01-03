@@ -3,13 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 using MS.Utility;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Printing;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
@@ -377,8 +372,6 @@ namespace System.Windows.Xps.Serialization
         {
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXReleaseWriterStart);
 
-            signalReleaseToFontService(writerType);
-
             //
             // Allow the packaging policy to release the stream
             //
@@ -394,6 +387,7 @@ namespace System.Windows.Xps.Serialization
                 }
             }
 
+            signalReleaseToFontService(writerType);
             Toolbox.EmitEvent(EventTrace.Event.WClientDRXReleaseWriterEnd);
         }
 

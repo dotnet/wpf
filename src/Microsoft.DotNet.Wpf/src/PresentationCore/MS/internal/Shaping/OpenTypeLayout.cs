@@ -4,12 +4,7 @@
 
 
 
-using System;
-using System.Security;
 using System.IO;
-using System.Diagnostics;
-
-using MS.Internal.FontCache;
 
 namespace MS.Internal.Shaping
 {

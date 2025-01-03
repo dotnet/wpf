@@ -5,14 +5,8 @@
 //
 //
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Security;
-using System.Windows;
 using System.Windows.Input.Manipulations;
-using System.Windows.Media;
 using MS.Internal.PresentationCore;
 
 namespace System.Windows.Input

@@ -7,17 +7,10 @@
 //      Defined our Delegates, EventHandlers and EventArgs
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Documents;
 using System.Windows.Ink;
 using Swi = System.Windows.Ink;
-using MS.Utility;
 
 namespace System.Windows.Controls
 {

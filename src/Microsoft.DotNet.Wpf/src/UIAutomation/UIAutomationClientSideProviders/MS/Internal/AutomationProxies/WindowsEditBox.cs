@@ -5,16 +5,12 @@
 // Description: HWND-based Edit Box proxy
 
 using System;
-using System.Collections;
 using System.Diagnostics;
-using System.Globalization;
 using System.Text;
 using System.Runtime.InteropServices;
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Windows.Automation.Text;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
 

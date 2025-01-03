@@ -1,7 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-#nullable disable
+
 using Xunit;
 
 namespace System.Windows.Markup.Tests;
@@ -25,7 +24,7 @@ public class StringValueSerializerTests
     [Theory]
     [InlineData(null)]
     [InlineData("value")]
-    public void GetSerializerFor_StringConvertToString_ReturnsValue(object value)
+    public void GetSerializerFor_StringConvertToString_ReturnsValue(object? value)
     {
         ValueSerializer serializer = ValueSerializer.GetSerializerFor(typeof(string))!;
         Assert.Equal(value, serializer.ConvertToString(value, null));
@@ -41,9 +40,9 @@ public class StringValueSerializerTests
     [Theory]
     [InlineData(null)]
     [InlineData("value")]
-    public void GetSerializerFor_StringConvertFromString_ReturnsValue(string value)
+    public void GetSerializerFor_StringConvertFromString_ReturnsValue(string? value)
     {
         ValueSerializer serializer = ValueSerializer.GetSerializerFor(typeof(string))!;
-        Assert.Equal(value, serializer.ConvertFromString(value, null));
+        Assert.Equal(value, serializer.ConvertFromString(value!, null));
     }
 }

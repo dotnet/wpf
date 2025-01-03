@@ -2,6 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using MS.Internal.Documents;
+using MS.Internal.Utility;
+using System.Windows.Navigation;
+using System.Windows.Markup;
+using System.Windows.Threading;               // Dispatcher
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.IO;
+
+using MS.Utility;
+
 //
 // Description:
 //      Implements the PageContent element
@@ -9,32 +21,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using MS.Internal.AppModel;
-    using MS.Internal.Documents;
-    using MS.Internal.Utility;
-    using MS.Internal.Navigation;
-    using MS.Internal.PresentationFramework; // SecurityHelper
-    using System.Reflection;
-    using System.Windows;                // DependencyID etc.
-    using System.Windows.Controls;
-    using System.Windows.Media;
-    using System.Windows.Navigation;
-    using System.Windows.Markup;
-    using System.Windows.Threading;               // Dispatcher
-    using System;
-    using System.Collections.Specialized;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.IO;
-    using System.IO.Packaging;
-    using System.Net;
-    using System.Security;
-    using System.Globalization;
-
-    using MS.Utility;
-
     //=====================================================================
     /// <summary>
     /// PageContent is the class that references or directly hosts a page stream.

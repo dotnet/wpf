@@ -7,30 +7,9 @@
 // Description: Implementation of the class StreamGeometry
 //
 
-using System;
 using MS.Internal;
-using MS.Internal.PresentationCore;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Reflection;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using System.Globalization;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-using System.Windows;
-using System.Text.RegularExpressions;
-using System.Windows.Media.Animation;
-using System.Windows.Markup;
-using System.Windows.Converters;
-using System.Runtime.InteropServices;
-using System.Security;
-using MS.Win32;
-
-using SR=MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
 {

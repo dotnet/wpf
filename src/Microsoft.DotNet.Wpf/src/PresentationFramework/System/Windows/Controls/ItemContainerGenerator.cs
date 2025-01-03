@@ -8,9 +8,7 @@
 // Specs:       Data Styling.mht
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
@@ -19,13 +17,9 @@ using System.Globalization;     // for CultureInfo.InvariantCulture (event traci
 using System.Windows.Media;
 using System.Windows.Controls.Primitives;   // IItemContainerGenerator
 using System.Windows.Data;
-using System.Windows.Markup;
-using System.Diagnostics;
 using System.Text;
 using MS.Internal;
 using MS.Internal.Controls;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Utility;
 using MS.Utility;
 
 
@@ -2061,7 +2055,8 @@ namespace System.Windows.Controls
 
             // add it to the list of placeholder items (this keeps it from being GC'd)
             if (_emptyGroupItems == null)
-                _emptyGroupItems = new ArrayList();
+                _emptyGroupItems = new List<EmptyGroupItem>();
+
             _emptyGroupItems.Add(emptyGroupItem);
         }
 
@@ -2798,7 +2793,7 @@ namespace System.Windows.Controls
         private ReadOnlyCollection<object> _itemsReadOnly;
         private GroupStyle      _groupStyle;
         private ItemContainerGenerator _parent;
-        private ArrayList       _emptyGroupItems;
+        private List<EmptyGroupItem> _emptyGroupItems;
         private int             _alternationCount;
 
         private Type            _containerType;     // type of containers on the recycle queue

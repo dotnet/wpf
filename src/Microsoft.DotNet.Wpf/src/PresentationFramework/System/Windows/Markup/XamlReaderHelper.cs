@@ -14,20 +14,14 @@
 
 using System;
 using System.Xml;
-using System.Xml.Serialization;
-using System.IO;
 using System.Text;
 using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Globalization;
 using MS.Utility;
 using System.Collections.Specialized;
-using Microsoft.Win32;
-using System.Runtime.InteropServices;
-using MS.Internal;
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and
@@ -2507,7 +2501,7 @@ namespace System.Windows.Markup
             public bool TokenEquals(string value)
             {
                 int len = _current - _start;
-                return len == value.Length && String.CompareOrdinal(value, 0, _text, _start, len) == 0;
+                return len == value.Length && string.CompareOrdinal(value, 0, _text, _start, len) == 0;
             }
 
             public int Start { get { return _start; } }

@@ -1,10 +1,4 @@
-using System;
 using System.Windows.Media;
-using System.Windows.Appearance;
-
-using MS.Internal;
-using Microsoft.Win32;
-using System.Runtime.InteropServices;
 using MS.Internal.WindowsRuntime.Windows.UI.ViewManagement;
 
 

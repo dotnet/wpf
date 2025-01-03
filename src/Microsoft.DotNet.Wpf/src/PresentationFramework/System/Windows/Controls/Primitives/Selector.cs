@@ -5,23 +5,14 @@
 
 using System.ComponentModel;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Windows.Threading;
 using System.Windows.Data;
-using System.Windows;
 using System.Windows.Automation.Peers;
-using System.Windows.Automation.Provider;
 using System.Windows.Input;
-using MS.Utility;
 using MS.Internal;
 using MS.Internal.Data;
 using MS.Internal.KnownBoxes;
-using MS.Internal.Hashing.PresentationFramework;    // HashHelper
-
-using System;
-using System.Diagnostics;
 using MS.Internal.Controls;
 
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;

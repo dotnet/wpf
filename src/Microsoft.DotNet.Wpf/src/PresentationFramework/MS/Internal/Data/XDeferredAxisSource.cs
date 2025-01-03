@@ -31,8 +31,6 @@
     dependency on XLinq.  Reflection saves the day.
 \***************************************************************************/
 
-using System;
-using System.Diagnostics;
 using System.Collections;
 using System.Collections.ObjectModel;       // ReadOnlyObservableCollection
 using System.Collections.Specialized;       // HybridDictionary

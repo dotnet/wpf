@@ -12,9 +12,6 @@ Abstract:
 
 --*/
 
-using System;
-using System.Diagnostics;
-using System.IO;
 using System.Xml;
 
 #pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages

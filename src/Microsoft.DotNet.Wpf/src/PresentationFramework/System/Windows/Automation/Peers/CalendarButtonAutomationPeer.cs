@@ -3,12 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using System.Windows.Input;
 
 namespace System.Windows.Automation.Peers
 {

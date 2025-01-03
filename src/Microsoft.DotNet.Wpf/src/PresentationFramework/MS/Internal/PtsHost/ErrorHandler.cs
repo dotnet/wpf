@@ -7,7 +7,6 @@
 //
 
 
-using System;
 using System.Globalization;
 
 namespace MS.Internal.PtsHost

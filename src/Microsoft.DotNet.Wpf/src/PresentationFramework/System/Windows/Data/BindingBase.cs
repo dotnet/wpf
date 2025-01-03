@@ -9,10 +9,8 @@
 // See spec at Data Binding.mht
 //
 
-using System;
 using System.Collections.ObjectModel;   // Collection<T>
 using System.ComponentModel;    // [DefaultValue]
-using System.Diagnostics;       // Debug.Assert
 using System.Globalization;     // CultureInfo
 using System.Windows.Markup;    // MarkupExtension
 using System.Windows.Controls;  // ValidationRule

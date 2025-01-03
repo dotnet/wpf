@@ -5,14 +5,10 @@
 //
 //
 
-using System;
-using System.Security;
 using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
 using System.Windows.Threading;
 using MS.Internal.WindowsRuntime.Windows.UI.ViewManagement;
 

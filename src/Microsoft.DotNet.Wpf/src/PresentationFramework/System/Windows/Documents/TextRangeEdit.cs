@@ -2,6 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using MS.Internal.PtsHost.UnsafeNativeMethods; // PTS restrictions to obtain TextIndent valid value range.
+
 //
 // Description: Static internal class providing a set of
 //              helpoer methods for text editing operations
@@ -9,11 +12,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-    using MS.Internal;
-    using System.Windows.Controls;
-    using MS.Internal.PtsHost.UnsafeNativeMethods; // PTS restrictions to obtain TextIndent valid value range.
-
     /// <summary>
     /// The TextRange class represents a pair of TextPositions, with many
     /// rich text editing operations exposed.

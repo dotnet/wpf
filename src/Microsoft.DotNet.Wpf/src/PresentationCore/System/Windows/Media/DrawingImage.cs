@@ -11,17 +11,6 @@
 //
 //
 
-using MS.Internal;
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Media.Imaging;
-
 namespace System.Windows.Media
 {
     /// <summary>

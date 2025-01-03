@@ -2,12 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-namespace System.ComponentModel 
+namespace System.ComponentModel
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-
     /// <summary>
     ///     This attribute is a "query" attribute.  It is
     ///     an attribute that causes the type description provider
@@ -129,7 +125,6 @@ namespace System.ComponentModel
         ///     what should be done if the attribute is not defined.
         ///     Our default is to return all properties.
         /// </summary>
-        [SuppressMessage("Microsoft.Security", "CA2104:DoNotDeclareReadOnlyMutableReferenceTypes")]
         public static readonly PropertyFilterAttribute Default = new PropertyFilterAttribute(PropertyFilterOptions.All);
 
         #endregion Public Fields

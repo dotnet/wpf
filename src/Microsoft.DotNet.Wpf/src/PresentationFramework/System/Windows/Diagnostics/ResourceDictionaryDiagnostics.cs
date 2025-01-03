@@ -11,14 +11,8 @@
 //      iii. Notifies listeners when themed ResourceDictionary instances get
 //           unloaded (generic ResourceDictionary instances are never unloaded)
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Reflection;
-using System.Security;
-using System.Windows;
 using System.Windows.Threading;
 using MS.Internal;
 using MS.Internal.Utility;

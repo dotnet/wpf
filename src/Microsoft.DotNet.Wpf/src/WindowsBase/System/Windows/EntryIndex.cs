@@ -12,11 +12,9 @@
 *
 \***************************************************************************/
 
-using MS.Internal.WindowsBase;  // FriendAccessAllowed
 
 namespace System.Windows
 {
-    [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
     internal struct EntryIndex
     {
         public EntryIndex(uint index)

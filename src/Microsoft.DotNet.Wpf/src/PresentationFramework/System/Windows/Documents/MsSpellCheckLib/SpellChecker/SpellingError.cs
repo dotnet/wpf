@@ -11,15 +11,11 @@
 //              is CorrectiveAction.GetSuggestions. 
 //
 
-using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Security;
+using ISpellingError = System.Windows.Documents.MsSpellCheckLib.RCW.ISpellingError;
 
 namespace System.Windows.Documents.MsSpellCheckLib
 {
-    using ISpellingError = RCW.ISpellingError;
-
     internal partial class SpellChecker
     {
         /// <summary>

@@ -4,9 +4,6 @@
 
 
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Runtime.InteropServices;       // SafeHandle
-using System.Security;                      // 
 using System.Windows.Automation.Peers;      // AutomationPeer
 using System.Windows.Controls.Primitives;   // ButtonBase
 using System.Windows.Input;                 // MouseButtonEventArgs
@@ -14,7 +11,6 @@ using System.Windows.Media;                 // VisualBrush
 
 using MS.Internal;                          // DoubleUtil
 using MS.Internal.KnownBoxes;               // BooleanBoxes
-using MS.Win32;                             // SafeNativeMethods
 
 
 namespace System.Windows.Controls

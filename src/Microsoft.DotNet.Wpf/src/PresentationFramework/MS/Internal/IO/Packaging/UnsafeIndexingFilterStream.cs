@@ -12,13 +12,11 @@
 //                  in Adam Nathan's ".Net and COM".
 //
 
-using System;
 using System.IO;
 using System.Runtime.InteropServices;           // For Marshal
 using System.Windows;                           // for ExceptionStringTable
 using MS.Win32;                                 // For NativeMethods
 using MS.Internal.Interop;	                // for IStream
-using System.Security;                          // For SecurityCritical
 
 
 namespace MS.Internal.IO.Packaging

@@ -2,10 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Xaml;
 using System.Xaml.Schema;
-using System.Collections.Generic;
 
 namespace System.Windows.Baml2006
 {
@@ -8844,7 +8842,6 @@ namespace System.Windows.Baml2006
                                               typeof(System.Windows.Setter),
                                               isBamlType, useV3Rules);
             bamlType.DefaultConstructor = delegate() { return new System.Windows.Setter(); };
-            bamlType.ContentPropertyName = "Value";
             bamlType.Freeze();
             return bamlType;
         }

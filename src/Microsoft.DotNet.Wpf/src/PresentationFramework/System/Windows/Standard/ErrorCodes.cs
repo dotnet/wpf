@@ -2,18 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
+using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Reflection;
+using System.Runtime.InteropServices;
 
 namespace Standard
 {
-    using System;
-    using System.ComponentModel;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
-    using System.Security;
-
     /// <summary>
     /// Wrapper for common Win32 status codes.
     /// </summary>
@@ -66,6 +62,10 @@ namespace Standard
         public static readonly Win32Error ERROR_CLASS_ALREADY_EXISTS = new Win32Error(1410);
         /// <summary>The specified datatype is invalid.</summary>
         public static readonly Win32Error ERROR_INVALID_DATATYPE = new Win32Error(1804);
+        /// <summary>Invalid window handle.</summary>
+        public static readonly Win32Error ERROR_INVALID_WINDOW_HANDLE = new Win32Error(1400);
+        /// <summary>This operation returned because the timeout period expired.</summary>
+        public static readonly Win32Error ERROR_TIMEOUT = new Win32Error(1460);
 
         /// <summary>
         /// Create a new Win32 error.
@@ -101,7 +101,6 @@ namespace Standard
 
         /// <summary>Performs the equivalent of Win32's GetLastError()</summary>
         /// <returns>A Win32Error instance with the result of the native GetLastError</returns>
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
         public static Win32Error GetLastError()
         {
             return new Win32Error(Marshal.GetLastWin32Error());
@@ -388,15 +387,7 @@ namespace Standard
             ThrowIfFailed(null);
         }
 
-        [
-            SuppressMessage(
-                "Microsoft.Usage",
-                "CA2201:DoNotRaiseReservedExceptionTypes",
-                Justification="Only recreating Exceptions that were already raised."),
-            SuppressMessage(
-                "Microsoft.Security",
-                "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")
-        ]
+        [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes", Justification="Only recreating Exceptions that were already raised.")]
         public void ThrowIfFailed(string message)
         {
             if (Failed)

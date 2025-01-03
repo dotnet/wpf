@@ -6,9 +6,6 @@
 // Description: See <summary> for RetryHelper class below.
 //
 
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 using MS.Internal;
 
 namespace System.Windows.Documents.MsSpellCheckLib

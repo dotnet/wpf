@@ -2,30 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//+----------------------------------------------------------------------------
-//
-//
 //  Abstract:
 //     Media system holds the relation between an application
 //     domain and the underlying transport system.
-//
-
-using System;
-using System.Windows.Threading;
 
 using System.Collections;
-using System.Diagnostics;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using Microsoft.Win32;
+using System.Windows.Threading;
 using MS.Internal;
-using MS.Internal.FontCache;
-using MS.Win32;
-using System.Security;
 
-using SR=MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods.MilCoreApi;
-using SafeNativeMethods=MS.Win32.PresentationCore.SafeNativeMethods;
+using SafeNativeMethods = MS.Win32.PresentationCore.SafeNativeMethods;
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods.MilCoreApi;
 
 namespace System.Windows.Media
 {

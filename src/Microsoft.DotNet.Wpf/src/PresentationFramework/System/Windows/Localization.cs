@@ -9,8 +9,6 @@
 //
 //
 
-using System.Collections;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;  // ConditionalWeakTable
 using MS.Internal.Globalization;
 

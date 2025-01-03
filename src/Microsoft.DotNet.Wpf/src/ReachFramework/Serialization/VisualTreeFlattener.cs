@@ -3,17 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
 using System.IO;
 using System.Xml;
 using System.ComponentModel;
-using System.Security;
-
-using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
@@ -27,22 +20,6 @@ using System.Windows.Xps.Packaging;
 
 namespace MS.Internal.ReachFramework
 {
-    [AttributeUsage(
-    AttributeTargets.Class |
-    AttributeTargets.Property |
-    AttributeTargets.Method |
-    AttributeTargets.Struct |
-    AttributeTargets.Enum |
-    AttributeTargets.Interface |
-    AttributeTargets.Delegate |
-    AttributeTargets.Constructor,
-    AllowMultiple = false,
-    Inherited = true)
-    ]
-    internal sealed class FriendAccessAllowedAttribute : Attribute
-    {
-    }
-
     internal class MyColorTypeConverter : ColorTypeConverter
     {
         public
@@ -316,7 +293,6 @@ namespace System.Windows.Xps.Serialization
     /// Main class for converting visual tree to fixed DrawingContext primitives
     /// </summary>
     #region public class VisualTreeFlattener
-    [MS.Internal.ReachFramework.FriendAccessAllowed]
     internal class VisualTreeFlattener
     {
         #region Private Fields
@@ -784,7 +760,6 @@ namespace System.Windows.Xps.Serialization
         /// <param name="resWriter"></param>
         /// <param name="bodyWriter"></param>
         /// <param name="fileName"></param>
-        [MS.Internal.ReachFramework.FriendAccessAllowed]
         static internal void SaveAsXml(Visual visual, System.Xml.XmlWriter resWriter, System.Xml.XmlWriter bodyWriter, String fileName)
         {
             // Check for testing hooks

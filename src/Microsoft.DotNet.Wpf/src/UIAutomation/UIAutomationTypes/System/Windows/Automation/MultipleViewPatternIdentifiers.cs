@@ -4,12 +4,11 @@
 
 // Description: Automation Identifiers for MultipleView Pattern
 
-using System;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation
 {
-       
+
     ///<summary>wrapper class for MultipleView pattern </summary>
 #if (INTERNAL_COMPILE)
     internal static class MultipleViewPatternIdentifiers

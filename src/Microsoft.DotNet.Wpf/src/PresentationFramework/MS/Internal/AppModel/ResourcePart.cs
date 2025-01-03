@@ -8,17 +8,11 @@
 // ResourcePart is an implementation of the abstract PackagePart class. It contains an override for GetStreamCore.
 //
 
-using System;
 using System.IO.Packaging;
 using System.Windows;
-using System.Windows.Resources;
 using System.IO;
-using System.Resources;
-using System.Globalization;
-using System.Security;
 
 using MS.Internal.Resources;
-using MS.Internal;
 
 //In order to avoid generating warnings about unknown message numbers and 
 //unknown pragmas when compiling your C# source code with the actual C# compiler, 
@@ -49,7 +43,7 @@ namespace MS.Internal.AppModel
                 throw new ArgumentNullException("rmWrapper");
             }
 
-            _rmWrapper.Value = rmWrapper;
+            _rmWrapper = rmWrapper;
             _name = name;
         }
 
@@ -74,7 +68,7 @@ namespace MS.Internal.AppModel
             {
                 // Start looking for resources using the current ui culture.
                 // The resource manager will fall back to invariant culture automatically.
-                stream = _rmWrapper.Value.GetStream(_name);
+                stream = _rmWrapper.GetStream(_name);
 
                 if (stream == null)
                 {
@@ -90,7 +84,7 @@ namespace MS.Internal.AppModel
 
             if (MimeTypeMapper.BamlMime.AreTypeAndSubTypeEqual(curContent))
             {
-                BamlStream bamlStream = new BamlStream(stream, _rmWrapper.Value.Assembly);
+                BamlStream bamlStream = new BamlStream(stream, _rmWrapper.Assembly);
 
                 stream = bamlStream;
             }
@@ -132,18 +126,18 @@ namespace MS.Internal.AppModel
                 {
                     // We do not allow the use of .baml in any Avalon public APIs. This is the code pass needed to go through for loading baml file.
                     // Throw here we will catch all those cases.
-                    if (String.Compare(Path.GetExtension(_name), ResourceContainer.BamlExt, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(Path.GetExtension(_name), ResourceContainer.BamlExt, StringComparison.OrdinalIgnoreCase))
                     {
                         throw new IOException(SR.Format(SR.UnableToLocateResource, _name));
                     }
 
-                    if (String.Compare(Path.GetExtension(_name), ResourceContainer.XamlExt, StringComparison.OrdinalIgnoreCase) == 0)
+                    if (string.Equals(Path.GetExtension(_name), ResourceContainer.XamlExt, StringComparison.OrdinalIgnoreCase))
                     {
                         // try baml extension first since it's our most common senario.
                         string newName = Path.ChangeExtension(_name, ResourceContainer.BamlExt);
 
                         // Get resource from resource manager wrapper.
-                        stream = _rmWrapper.Value.GetStream(newName);
+                        stream = _rmWrapper.GetStream(newName);
                         if (stream != null)
                         {
                             // Remember that we have .baml for next time GetStreamCore is called.
@@ -182,7 +176,7 @@ namespace MS.Internal.AppModel
 
         #region Private Members
 
-        private SecurityCriticalDataForSet<ResourceManagerWrapper> _rmWrapper;
+        private ResourceManagerWrapper _rmWrapper;
         private bool _ensureResourceIsCalled = false;
         private string _name;
         private readonly Object _globalLock = new Object();

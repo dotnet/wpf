@@ -2,36 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Security;
-using System.Collections.Generic;
+using System.Globalization;
+using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Threading;
-using System.Runtime.InteropServices;
-using System.Diagnostics;
 using MS.Internal;
 using MS.Internal.Interop;
-using System.Globalization; // CultureInfo.InvariantCulture
-
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
-using MS.Internal.YourAssemblyName;
-#endif
 
 // Disable pragma warnings to enable PREsharp pragmas
 #pragma warning disable 1634, 1691
 
 namespace MS.Win32
 {
-    [FriendAccessAllowed]
     internal class HwndWrapper : DispatcherObject, IDisposable
     {
         static HwndWrapper()
@@ -51,7 +33,7 @@ namespace MS.Win32
             IntPtr parent,
             HwndWrapperHook[] hooks)
         {
-            _ownerThreadID = new SecurityCriticalDataForSet<int>(Environment.CurrentManagedThreadId);
+            _ownerThreadID = Environment.CurrentManagedThreadId;
 
 
             // First, add the set of hooks.  This allows the hooks to receive the
@@ -66,12 +48,12 @@ namespace MS.Win32
             }
 
 
-            _wndProc = new SecurityCriticalData<HwndWrapperHook>(new HwndWrapperHook(WndProc));
+            _wndProc = new HwndWrapperHook(WndProc);
 
             // We create the HwndSubclass object so that we can use its
             // window proc directly.  We will not be "subclassing" the
             // window we create.
-            HwndSubclass hwndSubclass = new HwndSubclass(_wndProc.Value);
+            HwndSubclass hwndSubclass = new(_wndProc);
             
             // Register a unique window class for this instance.
             NativeMethods.WNDCLASSEX_D wc_d = new NativeMethods.WNDCLASSEX_D();
@@ -95,10 +77,11 @@ namespace MS.Win32
             // Register will fail if the string gets over 255 in length.
             // So limit each part to a reasonable amount.
             string appName;
-            if(null != AppDomain.CurrentDomain.FriendlyName && 128 <= AppDomain.CurrentDomain.FriendlyName.Length)
-                appName = AppDomain.CurrentDomain.FriendlyName.Substring(0, 128);
+            string currentDomainFriendlyName = AppDomain.CurrentDomain.FriendlyName;
+            if (null != currentDomainFriendlyName && 128 <= currentDomainFriendlyName.Length)
+                appName = currentDomainFriendlyName[..128];
             else
-                appName = AppDomain.CurrentDomain.FriendlyName;
+                appName = currentDomainFriendlyName;
 
             string threadName;
             if(null != Thread.CurrentThread.Name && 64 <= Thread.CurrentThread.Name.Length)
@@ -133,23 +116,23 @@ namespace MS.Win32
             // call CreateWindow
             _isInCreateWindow = true;
             try {
-                _handle = new SecurityCriticalDataClass<IntPtr>(UnsafeNativeMethods.CreateWindowEx(exStyle,
-                                                         className,
-                                                         name,
-                                                         style,
-                                                         x,
-                                                         y,
-                                                         width,
-                                                         height,
-                                                         new HandleRef(null,parent),
-                                                         new HandleRef(null,IntPtr.Zero),
-                                                         new HandleRef(null,IntPtr.Zero),
-                                                         null));
+                _handle = UnsafeNativeMethods.CreateWindowEx(exStyle,
+                    className,
+                    name,
+                    style,
+                    x,
+                    y,
+                    width,
+                    height,
+                    new HandleRef(null,parent),
+                    new HandleRef(null,IntPtr.Zero),
+                    new HandleRef(null,IntPtr.Zero),
+                    null);
             }
             finally
             {
                 _isInCreateWindow = false;
-                if(_handle == null || _handle.Value == IntPtr.Zero)
+                if(_handle == 0)
                 {
                     // Because the HwndSubclass is pinned, but the HWND creation failed,
                     // we need to manually clean it up.
@@ -208,13 +191,13 @@ namespace MS.Win32
                 // so we'll ask the Dispatcher to do it later when the window is gone.
                 Dispatcher.BeginInvoke(DispatcherPriority.Normal, (DispatcherOperationCallback)UnregisterClass, _classAtom);
             }
-            else if (_handle != null && _handle.Value != IntPtr.Zero)
+            else if (_handle != 0)
             {
                 // The window isn't in the process of being destroyed and it hasn't been destroyed yet
                 // (we know this since we're listening for WM_NCDESTROY).  Since we're being disposed
                 // we destroy it now.
 
-                if(Environment.CurrentManagedThreadId == _ownerThreadID.Value)
+                if(Environment.CurrentManagedThreadId == _ownerThreadID)
                 {
                     // We are the owner thread, we can safely destroy the window and unregister
                     // the class
@@ -232,56 +215,26 @@ namespace MS.Win32
 
          
             _classAtom = 0;
-            _handle = null;
+            _handle = default;
         }
-            
-        public IntPtr Handle {
-            get 
-            {
-                // This could be called from other threads, so snap the member.
-                SecurityCriticalDataClass<IntPtr> handle = _handle;
-                
-                if (handle != null)
-                {
-                    return handle.Value;
-                }
-                else
-                {
-                    return IntPtr.Zero;
-                }
-            }
-        }
+
+        public IntPtr Handle => _handle;
 
         public event EventHandler Disposed;
 
         public void AddHook(HwndWrapperHook hook)
         {
-            //VerifyAccess();
-            if(_hooks == null)
-            {
-                _hooks = new SecurityCriticalDataClass<WeakReferenceList>(new WeakReferenceList());
-            }
-
-            _hooks.Value.Insert(0, hook);
+            _hooks ??= [];
+            _hooks.Insert(0, hook);
         }
 
         internal void AddHookLast(HwndWrapperHook hook)
         {
-            if(_hooks == null)
-            {
-                _hooks = new SecurityCriticalDataClass<WeakReferenceList>(new WeakReferenceList());
-            }
-            _hooks.Value.Add(hook);
+            _hooks ??= [];
+            _hooks.Add(hook);
         }
 
-        public void RemoveHook(HwndWrapperHook hook)
-        {
-            //VerifyAccess();
-            if (_hooks != null)
-            {
-                _hooks.Value.Remove(hook);
-            }
-        }
+        public void RemoveHook(HwndWrapperHook hook) => _hooks?.Remove(hook);
 
         private IntPtr WndProc(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
         {
@@ -290,9 +243,9 @@ namespace MS.Win32
             WindowMessage message = (WindowMessage)msg;
         
             // Call all of the hooks
-            if(_hooks != null)
+            if(_hooks is not null)
             {
-                foreach(HwndWrapperHook hook in _hooks.Value)
+                foreach(HwndWrapperHook hook in _hooks)
                 {
                     result = hook(hwnd, msg, wParam, lParam, ref handled);
 
@@ -355,13 +308,13 @@ namespace MS.Win32
         /// <param name="args">A DestrowWindowParams instance</param>
         internal static object DestroyWindow(object args)
         {
-            SecurityCriticalDataClass<IntPtr> handle = ((DestroyWindowArgs)args).Handle;
+            nint handle = ((DestroyWindowArgs)args).Handle;
             ushort classAtom = ((DestroyWindowArgs)args).ClassAtom;
 
-            Invariant.Assert(handle != null && handle.Value != IntPtr.Zero,
+            Invariant.Assert(handle != 0,
                "Attempting to destroy an invalid hwnd");
 
-            UnsafeNativeMethods.DestroyWindow(new HandleRef(null, handle.Value));
+            UnsafeNativeMethods.DestroyWindow(new HandleRef(null, handle));
 
             UnregisterClass((object)classAtom);
 
@@ -391,39 +344,27 @@ namespace MS.Win32
         // in order for it to be called by a DispatcherOperationCallback
         internal class DestroyWindowArgs
         {
-            public DestroyWindowArgs(SecurityCriticalDataClass<IntPtr> handle, ushort classAtom)
+            public DestroyWindowArgs(IntPtr handle, ushort classAtom)
             {
                 _handle = handle;
                 _classAtom = classAtom;
             }
 
-            public SecurityCriticalDataClass<IntPtr> Handle
-            {
-                get
-                {
-                    return _handle;
-                }
-            }
+            public IntPtr Handle => _handle;
 
-            public ushort ClassAtom
-            {
-                get
-                {
-                    return _classAtom;
-                }
-            }
+            public ushort ClassAtom => _classAtom;
 
-            private SecurityCriticalDataClass<IntPtr> _handle;
-            private ushort _classAtom;
+            private readonly IntPtr _handle;
+            private readonly ushort _classAtom;
         }
         
 
-        private SecurityCriticalDataClass<IntPtr> _handle;
+        private IntPtr _handle;
         private UInt16 _classAtom;
-        private SecurityCriticalDataClass<WeakReferenceList> _hooks;
-        private SecurityCriticalDataForSet<int> _ownerThreadID;
+        private WeakReferenceList _hooks;
+        private int _ownerThreadID;
         
-        private SecurityCriticalData<HwndWrapperHook> _wndProc;
+        private HwndWrapperHook _wndProc;
         private bool _isDisposed;
 
         private bool _isInCreateWindow = false;     // debugging variable (temporary)

@@ -6,10 +6,9 @@
 // 
 // Description: Predefined FontWeight structures that correspond to common font weights. 
 //
-using System;
 using System.Globalization;
 
-namespace System.Windows 
+namespace System.Windows
 {
     /// <summary>
     /// FontWeights contains predefined font weight structures for common font weights.

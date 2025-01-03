@@ -2,42 +2,17 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Threading;
 using System.ComponentModel;
-using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Text;
+using Microsoft.Win32.SafeHandles;
+using MS.Internal;
+using MS.Internal.Interop;
+
+using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 
 namespace MS.Win32
 {
-    using Accessibility;
-    using SRCS = System.Runtime.CompilerServices;
-    using System.Runtime.ConstrainedExecution;
-    using System.Runtime.InteropServices;
-    using System;
-    using System.Collections;
-    using System.IO;
-    using System.Text;
-    using System.Security;
-    using Microsoft.Win32.SafeHandles;
-    using MS.Internal;
-    using MS.Internal.Interop;
-    using MS.Utility;
-
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
-    using MS.Internal.YourAssemblyName;
-#endif
-
-    using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
-
-    [FriendAccessAllowed]
     internal partial class UnsafeNativeMethods
     {
         [DllImport(ExternDll.Kernel32, CharSet=CharSet.Unicode, SetLastError=true, EntryPoint="GetTempFileName")]

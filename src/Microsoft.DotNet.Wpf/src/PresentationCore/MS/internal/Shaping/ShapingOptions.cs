@@ -9,8 +9,6 @@
 //
 //
 
-using System;
-
 namespace MS.Internal.Shaping
 {
     /// <summary>

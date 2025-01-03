@@ -9,8 +9,6 @@
 //      composition targets with the MediaContext.
 //
 
-using System;
-using System.Diagnostics;
 using System.Windows.Media.Composition;
 
 namespace System.Windows.Media

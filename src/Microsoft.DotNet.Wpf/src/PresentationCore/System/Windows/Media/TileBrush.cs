@@ -11,19 +11,10 @@
 //              are described by classes derived from TileBrush.
 //
 //
-    
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Security;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using MS.Internal;
-using System.Runtime.InteropServices;
 
-namespace System.Windows.Media 
+using System.Windows.Media.Composition;
+
+namespace System.Windows.Media
 {
     /// <summary>
     /// TileBrush

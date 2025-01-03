@@ -11,24 +11,11 @@
 *
 \***************************************************************************/
 using MS.Internal;
-using MS.Internal.PresentationFramework;
-using MS.Utility;
-using System;
-using System.Collections;
 using System.ComponentModel;            // DefaultValueAttribute
 using System.IO;
-using System.IO.Packaging;
 using System.Media;
-using System.Net;
-using System.Windows;
-using System.Windows.Documents;
-using System.Windows.Markup;
-using System.Windows.Media;
 using System.Windows.Navigation;
 using System.Windows.Threading;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Threading.Tasks;
 
 namespace System.Windows.Controls

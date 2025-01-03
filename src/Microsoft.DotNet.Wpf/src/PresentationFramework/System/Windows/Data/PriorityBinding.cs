@@ -9,24 +9,20 @@
 // See spec at Data Binding.mht
 //
 
-using System;
-using System.Collections;
 using System.Collections.ObjectModel;   // Collection<T>
 using System.ComponentModel;
-using System.Globalization;
 using System.Windows.Markup;
 using MS.Internal.Data;
-using MS.Utility;
 
 namespace System.Windows.Data
 {
-/// <summary>
-///  Describes a collection of bindings attached to a single property.
-///     These behave as "priority" bindings, meaning that the property
-///     receives its value from the first binding in the collection that
-///     can produce a legal value.
-/// </summary>
-[ContentProperty("Bindings")]
+    /// <summary>
+    ///  Describes a collection of bindings attached to a single property.
+    ///     These behave as "priority" bindings, meaning that the property
+    ///     receives its value from the first binding in the collection that
+    ///     can produce a legal value.
+    /// </summary>
+    [ContentProperty("Bindings")]
 public class PriorityBinding : BindingBase, IAddChild
 {
     //------------------------------------------------------

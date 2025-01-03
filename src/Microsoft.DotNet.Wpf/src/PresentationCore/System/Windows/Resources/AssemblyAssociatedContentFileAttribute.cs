@@ -10,8 +10,6 @@
 //              
 //
 
-using System;
-
 namespace System.Windows.Resources
 {
     /// <summary>

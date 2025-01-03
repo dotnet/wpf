@@ -5,11 +5,6 @@
 //
 //
 
-using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Input;
-
 namespace System.Windows.Input
 {
     public class TouchEventArgs : InputEventArgs

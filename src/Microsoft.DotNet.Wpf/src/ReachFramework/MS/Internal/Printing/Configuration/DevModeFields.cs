@@ -9,8 +9,6 @@ All rights reserved.
 
 namespace MS.Internal.Printing.Configuration
 {
-    using System;
-
     /// <remarks>
     /// From http://msdn.microsoft.com/en-us/library/cc244659(PROT.13).aspx
     /// </remarks>

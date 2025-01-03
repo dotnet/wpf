@@ -4,14 +4,9 @@
 
 
 
-using System;
-using System.Diagnostics;
-using System.Collections;              // for ArrayList
 using System.Windows;                  // for Rect                        WindowsBase.dll
 using System.Windows.Media;            // for Geometry, Brush, ImageData. PresentationCore.dll
 using System.Globalization;
-using System.Text;
-using System.Collections.Generic;
 
 namespace Microsoft.Internal.AlphaFlattener
 {

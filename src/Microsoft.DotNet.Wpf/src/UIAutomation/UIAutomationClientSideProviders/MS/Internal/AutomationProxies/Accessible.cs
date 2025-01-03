@@ -12,13 +12,10 @@
 
 using System;
 using System.Diagnostics;
-using System.Collections;
 using System.Globalization;
-using System.Threading;
 using System.Windows.Automation;
 using System.Windows;
 using Accessibility;
-using System.Text;
 using System.Runtime.InteropServices;
 using MS.Win32;
 
@@ -164,7 +161,7 @@ namespace MS.Internal.AutomationProxies
             // DuplicateHandle back to this process.)
             IntPtr wParam = IntPtr.Zero;
             if(Environment.OSVersion.Version.Major >= 6)
-                wParam = new IntPtr(UnsafeNativeMethods.GetCurrentProcessId());
+                wParam = new IntPtr(Environment.ProcessId);
 
             // send the window a WM_GETOBJECT message requesting the specific object id.
             IntPtr lResult = Misc.ProxySendMessage(hwnd, NativeMethods.WM_GETOBJECT, wParam, new IntPtr(idObject));

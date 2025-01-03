@@ -8,15 +8,7 @@
 //      a data error in the source item itself as exposed by INotifyDataErrorInfo.
 //
 
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using MS.Internal;
 
 namespace System.Windows.Controls
 {

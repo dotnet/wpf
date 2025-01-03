@@ -9,8 +9,6 @@
 //              glyph run information from a fixed-format page.
 //
 
-using System;
-
 namespace MS.Internal
 {
     /// <summary>

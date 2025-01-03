@@ -8,12 +8,7 @@
 //              Source copied from AxContainer.cs
 //
 
-using System;
-using System.Collections;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using Microsoft.Win32;
-using System.Security;
 
 using MS.Win32;
 

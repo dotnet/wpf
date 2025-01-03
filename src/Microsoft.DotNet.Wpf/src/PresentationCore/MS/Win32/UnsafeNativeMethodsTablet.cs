@@ -3,14 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Text;
-using System.Security;
 using System.Runtime.InteropServices;
-using System.Runtime.ConstrainedExecution;
 using System.Windows.Ink;
-using System.Diagnostics;
-using MS.Win32;
 
 namespace MS.Win32.Recognizer
 {

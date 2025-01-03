@@ -14,23 +14,15 @@
 // BindingExpression.GetReference correctly
 //#define USE_ITEM_REFERENCE
 
-using System;
-using System.Collections.Generic;   // List<T>
 using System.Collections.ObjectModel;   // Collection<T>
 using System.ComponentModel;        // TypeConverter
-using System.Diagnostics;           // StackTrace
 using System.Globalization;         // CultureInfo
 using System.Threading;             // Thread
-
-using System.Windows;               // FrameworkElement
 using System.Windows.Controls;      // Validation
 using System.Windows.Markup;        // XmlLanguage
 using System.Windows.Threading;     // Dispatcher
 using MS.Internal;                  // Invariant.Assert
-using MS.Internal.Controls;         // ValidationErrorCollection
 using MS.Internal.Data;             // DataBindEngine
-using MS.Internal.KnownBoxes;       // BooleanBoxes
-using MS.Internal.Utility;          // TraceLog
 
 namespace System.Windows.Data
 {

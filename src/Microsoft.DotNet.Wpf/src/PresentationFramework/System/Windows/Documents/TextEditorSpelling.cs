@@ -2,19 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using System.Windows.Input;
+using MS.Internal.Commands;
+using System.Windows.Controls;
+using System.Windows.Markup; // XmlLanguage
+
 // 
 // Description: A Component of TextEditor supporting spelling.
 //
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Windows;
-    using System.Windows.Input;
-    using MS.Internal.Commands;
-    using System.Windows.Controls;
-    using System.Windows.Markup; // XmlLanguage
-
     // A Component of TextEditor supporting spelling.
     internal static class TextEditorSpelling
     {

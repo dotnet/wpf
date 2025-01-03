@@ -11,14 +11,11 @@
 //             [As of this creation, C# has no real generic type system]
 //
 
-using System.Windows;
-using System;
 using System.Collections;
 using MS.Utility;
-using System.Diagnostics;
 
 namespace MS.Internal
-{    
+{
     /// <summary>
     /// VECTOR: A series of spans
     /// </summary>

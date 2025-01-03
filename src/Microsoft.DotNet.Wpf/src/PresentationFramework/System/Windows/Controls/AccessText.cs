@@ -6,12 +6,10 @@
 using System.Collections;
 using System.ComponentModel;
 using System.Globalization;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Markup;
-using System.Diagnostics;
 using System.Xml;
 
 using MS.Internal;

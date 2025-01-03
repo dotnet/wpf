@@ -6,10 +6,6 @@
 // Description: the TextComposition class
 //
 
-using System;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
 using System.Windows.Input;
 
 namespace System.Windows.Documents

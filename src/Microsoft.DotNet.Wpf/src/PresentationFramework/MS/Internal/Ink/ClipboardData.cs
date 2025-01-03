@@ -11,9 +11,7 @@
 //
 
 
-using System;
 using System.Windows;
-using System.Security;
 
 namespace MS.Internal.Ink
 {

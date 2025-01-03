@@ -2,16 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
+using System.Runtime.InteropServices;
+using Windows.Win32;
+using Windows.Win32.Foundation;
 
 namespace MS.Internal
 {
-    using System;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using MS.Win32;
-
     /// <summary>
     /// General utility class for macro-type functions.
     /// </summary>
@@ -43,9 +39,8 @@ namespace MS.Internal
                     return false;
                 }
 
-                Int32 isDesktopCompositionEnabled = 0;
-                UnsafeNativeMethods.HRESULT.Check(UnsafeNativeMethods.DwmIsCompositionEnabled(out isDesktopCompositionEnabled));
-                return isDesktopCompositionEnabled != 0;
+                PInvoke.DwmIsCompositionEnabled(out BOOL isDesktopCompositionEnabled).ThrowOnFailure();
+                return isDesktopCompositionEnabled;
             }
         }
 

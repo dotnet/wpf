@@ -14,13 +14,7 @@ using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Text;
-using MS.Internal;
 using MS.Utility;
-using Microsoft.Win32;
-using System.Globalization;
 #if PBTCOMPILER
 using MS.Internal.PresentationBuildTasks;
 #else

@@ -9,16 +9,9 @@
 // Specs:       UIBind.mht
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Markup;
 using System.Windows.Data;
-using MS.Utility;
-using MS.Internal;
 
 namespace MS.Internal.Data
 {

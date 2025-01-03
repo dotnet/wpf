@@ -6,11 +6,7 @@
 // Description: Node in a red-black tree.
 //
 
-using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
 using System.Text;
 using TypeConverterHelper = System.Windows.Markup.TypeConverterHelper;
 

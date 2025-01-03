@@ -9,26 +9,17 @@
 *
 \***************************************************************************/
 
-using System;
 using System.Xml;
 using System.Xml.Serialization;
 using System.IO;
-using System.Text;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
-using System.Threading;
 using System.Globalization;
 using MS.Utility;
 using MS.Internal;
-using System.Runtime.InteropServices;
 using MS.Internal.Utility;
-using System.Windows;
 using System.Windows.Navigation;
-using System.Windows.Documents;
-using System.Windows.Controls;
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and

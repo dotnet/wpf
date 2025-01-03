@@ -10,7 +10,6 @@
 // See spec at GetValueSource.mht
 //
 
-using System;
 using MS.Internal;
 
 namespace System.Windows

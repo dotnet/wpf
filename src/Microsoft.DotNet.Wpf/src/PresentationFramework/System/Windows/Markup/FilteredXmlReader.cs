@@ -37,15 +37,11 @@
 //  prefix within this chunk of XML is not allowed.
 //
 
-using System;       // InvalidOperationException
-using System.IO;    // TextReader
 using System.Xml;   // XmlTextReader
-
-using MS.Utility;   // ExceptionStringTable
 
 namespace System.Windows.Markup
 {
-internal class FilteredXmlReader : XmlTextReader
+    internal class FilteredXmlReader : XmlTextReader
 {
     //------------------------------------------------------
     //

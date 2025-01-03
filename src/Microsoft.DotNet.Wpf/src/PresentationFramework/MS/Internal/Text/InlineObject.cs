@@ -7,13 +7,10 @@
 //
 
 
-using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using MS.Internal;
 
 namespace MS.Internal.Text
 {

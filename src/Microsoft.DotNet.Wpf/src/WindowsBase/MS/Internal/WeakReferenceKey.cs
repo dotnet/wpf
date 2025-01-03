@@ -2,20 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  This file defines a class that holds a weak reference to an object.  It preserves the hashcode 
-//  of the object and is intended to be used as a key in hashtables or dictionaries.
-//
-
-
-using System;
-using MS.Internal;
-
 namespace MS.Internal.Utility
 {
-	/// <summary>
+    /// <summary>
     /// Helper class that allows using a weak reference to an item as a key in a hash table.
     /// </summary>
     internal class WeakReferenceKey<T>

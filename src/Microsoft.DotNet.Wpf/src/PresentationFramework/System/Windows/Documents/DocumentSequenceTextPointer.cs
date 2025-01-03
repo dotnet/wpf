@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+
 //
 // Description:
 //      DocumentSequenceTextPointer is an implementation of ITextPointer/ITextPointer
@@ -13,14 +15,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal.Documents;
-    using MS.Utility;
-    using MS.Internal;
-    using System.Windows;
-    using System;
-    using System.Diagnostics;
-
-
     /// <summary>
     /// DocumentSequenceTextPointer is an implementation of ITextPointer for FixedDocumentSequence
     /// </summary>

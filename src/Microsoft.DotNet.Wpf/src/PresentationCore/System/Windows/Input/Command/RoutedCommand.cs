@@ -2,20 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
-using System.Security;
 using System.ComponentModel;
-using System.Collections;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Markup;
-
 using MS.Internal.PresentationCore;
-
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -444,17 +433,17 @@ namespace System.Windows.Input
         {
             if (value)
             {
-                _flags.Value |= bit;
+                _flags |= bit;
             }
             else
             {
-                _flags.Value &= ~bit;
+                _flags &= ~bit;
             }
         }
 
         private bool ReadPrivateFlag(PrivateFlags bit)
         {
-            return (_flags.Value & bit) != 0;
+            return (_flags & bit) != 0;
         }
 
         #endregion PrivateMethods
@@ -463,7 +452,7 @@ namespace System.Windows.Input
 
         private string _name;
 
-        private MS.Internal.SecurityCriticalDataForSet<PrivateFlags> _flags;
+        private PrivateFlags _flags;
 
         private enum PrivateFlags : byte
         {

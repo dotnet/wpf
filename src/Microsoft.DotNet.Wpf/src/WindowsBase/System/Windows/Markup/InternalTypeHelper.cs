@@ -2,18 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//   Defines a class that Provides methods used internally by the BamlReader to access
-//   allowed internal types, properties and events in Partial Trust. The markup compiler
-//   will generate a subclass of this class that provides an appropriate implementation
-//   in the user's code context.
-//
-//
-
-using System;
-using System.Windows;
 using System.Reflection;
 using System.ComponentModel;
 using System.Globalization;
@@ -24,7 +12,7 @@ namespace System.Windows.Markup
     /// Class that provides methods used internally by the BamlReader to access allowed
     /// internal types, properties and events in Partial Trust. The markup compiler
     /// will generate a subclass of this class that provides an appropriate implementation
-    /// in the user's code context. 
+    /// in the user's code context.
     /// </summary>
     [EditorBrowsable(EditorBrowsableState.Never)]
     public abstract class InternalTypeHelper

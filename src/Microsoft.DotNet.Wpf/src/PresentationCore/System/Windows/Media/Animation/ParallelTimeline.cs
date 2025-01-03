@@ -4,11 +4,6 @@
 
 
 using MS.Internal;
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.ComponentModel;
 
 namespace System.Windows.Media.Animation

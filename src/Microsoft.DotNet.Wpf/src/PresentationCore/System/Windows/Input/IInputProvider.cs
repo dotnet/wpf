@@ -4,9 +4,7 @@
 
 using System.Windows.Media;
 
-using System;
-
-namespace System.Windows.Input 
+namespace System.Windows.Input
 {
     /// <summary>
     ///     An interface implemented by all input providers.

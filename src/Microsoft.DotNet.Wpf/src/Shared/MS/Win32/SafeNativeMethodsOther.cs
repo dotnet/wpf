@@ -2,36 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace MS.Win32 {
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System;
-    using System.Security;
-    using System.Collections;
-    using System.IO;
-    using System.Text;
-    using System.ComponentModel;
-    using System.Diagnostics;   
+using System.ComponentModel;
+using System.Runtime.InteropServices;
 
-
-    using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
-
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
-    using MS.Internal.YourAssemblyName;
-#endif
-
-    [FriendAccessAllowed]
+namespace MS.Win32
+{
     internal partial class SafeNativeMethods
-    {        
+    {
         //////////////////////////////
         // from Framework
 

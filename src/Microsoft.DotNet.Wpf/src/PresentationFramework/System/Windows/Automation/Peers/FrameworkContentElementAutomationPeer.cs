@@ -6,7 +6,6 @@
 // Description: AutomationPeer associated with FrameworkContnetElement.
 //
 
-using System.Windows.Markup;                // DefinitionProperties
 using System.Windows.Controls;              // Label
 
 namespace System.Windows.Automation.Peers

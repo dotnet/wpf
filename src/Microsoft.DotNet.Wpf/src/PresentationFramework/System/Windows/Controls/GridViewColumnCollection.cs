@@ -3,13 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System.Collections.Generic;       // List<T>
 using System.Collections.ObjectModel;   // ObservableCollection<T>
 using System.Collections.Specialized;   // NotifyCollectionChangedEventHandler
 using System.ComponentModel;            // DesignerSerializationVisibility
-using System.Diagnostics;               // Debug
 using System.Runtime.CompilerServices;
-using System.Windows.Data;              // Binding.IndexerName
 
 using MS.Internal;                      // Helper
 

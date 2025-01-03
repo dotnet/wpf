@@ -7,9 +7,6 @@
 //      A class which is used as the feedback adorner of the InkCanvas selection
 //
 
-using MS.Internal;
-using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;

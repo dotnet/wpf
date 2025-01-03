@@ -2,18 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//  Microsoft Windows Presentation Foudnation
-//
-
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Threading;
 using System.Windows.Media.Media3D;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Animation;
-using System.Security;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {

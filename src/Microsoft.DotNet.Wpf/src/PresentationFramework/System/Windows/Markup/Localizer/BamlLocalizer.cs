@@ -6,16 +6,7 @@
 //  Contents:  BamlLocalizer class, part of Baml Localization API
 //
 
-using System;
 using System.IO;
-using System.Globalization;
-using System.Runtime.InteropServices;
-using System.Collections;
-using System.Windows.Markup;
-using System.Diagnostics;
-using System.Text;
-using System.Reflection;
-using System.Windows;
 
 using MS.Internal.Globalization;
 

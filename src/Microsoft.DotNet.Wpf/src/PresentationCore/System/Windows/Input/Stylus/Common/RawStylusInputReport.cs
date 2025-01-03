@@ -2,18 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.ComponentModel;
-using System.Windows;
-using System.Windows.Threading;
-using System.Windows.Media;
 using System.Windows.Input.StylusPlugIns;
-using System.Security;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using MS.Internal;
-
-using SR = MS.Internal.PresentationCore.SR;
-using System.Windows.Input.StylusWisp;
 
 namespace System.Windows.Input
 {
@@ -63,7 +53,7 @@ namespace System.Windows.Input
         /// <summary>
         /// The raw input used for stylus plugins
         /// </summary>
-        SecurityCriticalDataForSet<RawStylusInput> _rawStylusInput;
+        RawStylusInput _rawStylusInput;
 
         /// <summary>
         /// Set from StylusDevice.Synchronize.
@@ -82,9 +72,9 @@ namespace System.Windows.Input
 
         internal RawStylusInput RawStylusInput
         {
-            get { return _rawStylusInput.Value; }
+            get { return _rawStylusInput; }
 
-            set { _rawStylusInput.Value = value; }
+            set { _rawStylusInput = value; }
         }
 
         internal bool Synchronized

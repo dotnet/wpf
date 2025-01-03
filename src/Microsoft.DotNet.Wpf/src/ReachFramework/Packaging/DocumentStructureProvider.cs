@@ -11,12 +11,6 @@
                 
 
 --*/
-using System;
-using System.Windows.Documents;
-using System.IO.Packaging;
-using System.Security.Cryptography.X509Certificates;
-using System.Collections.Generic;
-
 namespace System.Windows.Xps.Packaging
 {
     /// <summary>

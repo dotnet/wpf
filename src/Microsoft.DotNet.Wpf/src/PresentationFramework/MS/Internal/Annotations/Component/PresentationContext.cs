@@ -7,9 +7,7 @@
 //      PresentationContext
 //
 
-using System;
 using System.Windows;
-using System.Windows.Media;
 
 namespace MS.Internal.Annotations.Component
 {

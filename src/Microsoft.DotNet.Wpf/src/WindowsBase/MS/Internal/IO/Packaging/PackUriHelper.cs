@@ -2,26 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  This is a helper class for pack:// Uris. This is a part of the 
 //  Metro Packaging Layer
-//
-//
-//
-//
 
 // Allow use of presharp warning numbers [6506] unknown to the compiler
 #pragma warning disable 1634, 1691
 
-using System;
 using System.IO;                        // for Path class
-using System.Security;
-using System.Diagnostics;
-using System.Windows;                   // For Exception strings - SR
-using System.Collections.Generic;       // For IEqualityComparer<>
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal.IO.Packaging
 {

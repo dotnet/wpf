@@ -8,22 +8,7 @@
 *
 \***************************************************************************/
 
-using System;
-using System.Xml;
-using System.Xml.Serialization;
-using System.IO;
-using System.Text;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Reflection;
-using System.Globalization;
-using MS.Utility;
-using System.Collections.Specialized;
-using Microsoft.Win32;
-using System.Runtime.InteropServices;
-using MS.Internal;
 
 
 #if !PBTCOMPILER

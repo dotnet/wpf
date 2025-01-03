@@ -5,18 +5,9 @@
 //
 //
 
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Input.Manipulations;
 using System.Windows.Media;
-using System.Windows.Threading;
-using System.Security;
-using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Utility;
 
 

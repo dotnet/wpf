@@ -10,7 +10,6 @@
 //              respect to user opt-in for CEIP. 
 //
 
-using MS.Internal.Telemetry;
 using System.Collections;
 using System.Diagnostics.Tracing;
 

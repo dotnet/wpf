@@ -5,8 +5,6 @@
 // Description: Client-side wrapper for TableItem Pattern
 
 
-using System;
-using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation

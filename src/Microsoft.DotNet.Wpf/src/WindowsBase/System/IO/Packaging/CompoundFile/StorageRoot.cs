@@ -2,36 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//  The root object for manipulating the WPP container.
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-using System;
-using System.IO;
 using System.Runtime.InteropServices;
-
-using System.Windows;    // For exception string lookup table
-
-using MS.Internal;                          // for Invariant
+using MS.Internal;
 using MS.Internal.IO.Packaging.CompoundFile;
-using MS.Internal.WindowsBase;
 
 namespace System.IO.Packaging
 {
-/// <summary>
-/// The main container class, one instance per compound file
-/// </summary>
-internal  class StorageRoot : StorageInfo
+    /// <summary>
+    /// The main container class, one instance per compound file
+    /// </summary>
+    internal  class StorageRoot : StorageInfo
 {
     /***********************************************************************/
     // Default values to use for the StorageRoot.Open shortcuts

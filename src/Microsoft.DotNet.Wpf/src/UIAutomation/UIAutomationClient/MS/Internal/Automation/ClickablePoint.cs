@@ -4,10 +4,7 @@
 
 // Description: Class to get a point that some can click on
 
-using System.Windows.Automation;
-using MS.Internal.Automation;
 using MS.Win32;
-using System;
 
 namespace System.Windows.Automation
 {

@@ -2,13 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Security;
 using System.Runtime.InteropServices;
 
 namespace MS.Win32
 {
-internal static class WinInet
+    internal static class WinInet
 {
     /// <summary>
     /// Will return the location of the internet cache folder.

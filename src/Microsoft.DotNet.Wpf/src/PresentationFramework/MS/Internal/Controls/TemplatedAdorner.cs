@@ -12,17 +12,10 @@
 // See specs at Specs/Validation.mht
 //
 
-using System;
-using System.Collections;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Media;
 using System.Windows;
-using System.Windows.Data;
 using System.Windows.Controls;
 using System.Windows.Documents;
-using MS.Utility;
 
 namespace MS.Internal.Controls
 {

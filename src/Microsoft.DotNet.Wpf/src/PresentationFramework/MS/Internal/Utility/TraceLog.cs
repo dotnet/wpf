@@ -14,7 +14,6 @@
 //  the debugger).  Log entries are timestamped.
 //
 
-using System;
 using System.Collections;
 using System.Globalization;
 

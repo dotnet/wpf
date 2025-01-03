@@ -5,13 +5,8 @@
 //
 //
 
-using System;
 using System.Reflection;
-using System.Text;
-using System.Windows;
-using System.Windows.Markup;
 using System.ComponentModel;
-using System.Diagnostics;
 
 namespace System.Windows
 {

@@ -4,12 +4,10 @@
 
 
 
+using System.Runtime.InteropServices;
+
 namespace MS.Internal.Printing.Configuration
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Security;
-
     /// <summary>
     ///     Represents a printer handle used in spooler API's like OpenPrinter
     /// </summary>

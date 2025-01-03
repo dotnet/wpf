@@ -6,15 +6,13 @@
 
 using System;
 using System.IO;
-using System.Security;
-using System.Windows.TrustUI;
 
-using SR=System.Windows.TrustUI.SR;
+using SR = System.Windows.TrustUI.SR;
 
 namespace MS.Internal.Documents.Application
 {
 
-internal sealed class RightsManagementSuppressedStream : StreamProxy
+    internal sealed class RightsManagementSuppressedStream : StreamProxy
 {
     #region Constructors
     //--------------------------------------------------------------------------
@@ -32,7 +30,7 @@ internal sealed class RightsManagementSuppressedStream : StreamProxy
     internal RightsManagementSuppressedStream(Stream targetOfProxy, bool isWriteAllowed)
         : base(targetOfProxy, true)
     {
-        _allowWrite.Value = isWriteAllowed;
+        _allowWrite = isWriteAllowed;
     }
 
     #endregion Constructors
@@ -182,7 +180,7 @@ internal sealed class RightsManagementSuppressedStream : StreamProxy
     {
         get
         {
-            return _allowWrite.Value;
+            return _allowWrite;
         }
     }
 
@@ -196,7 +194,7 @@ internal sealed class RightsManagementSuppressedStream : StreamProxy
     /// <summary>
     /// Whether or not the proxy should enforce that the stream is read-only.
     /// </summary>
-    private SecurityCriticalDataForSet<bool> _allowWrite;
+    private bool _allowWrite;
 
     #endregion Private Fields
 }

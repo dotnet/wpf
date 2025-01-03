@@ -8,8 +8,6 @@
 //              a GlyphRun.
 //
 
-using System.Diagnostics;
-
 namespace System.Windows.Media
 {
     /// <summary>

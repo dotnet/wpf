@@ -9,9 +9,7 @@
 //
 //
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Markup;
 using MS.Internal;
 
@@ -278,10 +276,17 @@ namespace System.Windows
                     }
                 }
 
-                // This will inflate the deferred reference, causing it
-                // to be removed from the list.  The list may also be
-                // purged of dead references.
-                deferredResourceReference.GetValue(BaseValueSourceInternal.Unknown);
+                if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
+                {
+                    deferredResourceReference.RemoveFromDictionary();
+                }
+                else
+                {
+                    // This will inflate the deferred reference, causing it
+                    // to be removed from the list.  The list may also be
+                    // purged of dead references.
+                    deferredResourceReference.GetValue(BaseValueSourceInternal.Unknown);
+                }
             }
 
             StopListeningForFreezableChanges(resource);

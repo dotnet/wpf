@@ -2,28 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-
-using MS.Internal;
-using System;
-using System.IO;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Reflection;
-using System.Windows.Threading;
 using System.Threading;
 using System.Runtime.InteropServices;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Markup;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
 using System.Windows.Media.Imaging;
-using System.Security;
-using MS.Internal.PresentationCore;
-
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media.Effects
 {

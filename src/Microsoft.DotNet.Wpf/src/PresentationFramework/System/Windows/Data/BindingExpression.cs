@@ -8,25 +8,16 @@
 // See spec at Data Binding.mht
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Threading;
 using System.Threading;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Markup;
-using MS.Utility;
 using MS.Internal;
-using MS.Internal.Controls; // Validation
 using MS.Internal.Data;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Utility;  // TraceLog
 
 namespace System.Windows.Data
 {

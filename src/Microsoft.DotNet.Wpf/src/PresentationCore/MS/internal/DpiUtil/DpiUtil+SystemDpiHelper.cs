@@ -3,17 +3,12 @@
 // See the LICENSE file in the project root for more information.
 
 
+using MS.Win32;
+using System.Runtime.InteropServices;
+using System.Windows;
+
 namespace MS.Internal
 {
-    using MS.Win32;
-    using System;
-    using System.ComponentModel;
-    using System.Runtime.InteropServices;
-    using System.Windows;
-    using System.Security;
-
-    using PROCESS_DPI_AWARENESS = MS.Win32.NativeMethods.PROCESS_DPI_AWARENESS;
-
     /// <content>
     /// Contains definition of <see cref="SystemDpiHelper"/>
     /// </content>

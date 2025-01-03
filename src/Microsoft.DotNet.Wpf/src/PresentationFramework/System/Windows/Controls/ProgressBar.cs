@@ -7,14 +7,7 @@
 // Implementation of ProgressBar control.
 //
 
-using System;
-using System.Collections.Specialized;
-using System.Threading;
-
 using System.Windows.Automation.Peers;
-using System.Windows.Automation.Provider;
-
-using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Media.Animation;

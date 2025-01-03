@@ -8,19 +8,7 @@
 //
 //
 
-using System;
-using System.Diagnostics;
-using System.Security;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.TextFormatting;
-
-using MS.Utility;
-using MS.Internal;
-using MS.Internal.Shaping;
 using MS.Internal.FontCache;
-using MS.Internal.TextFormatting;
 
 namespace MS.Internal.FontFace
 {

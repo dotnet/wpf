@@ -10,9 +10,6 @@
 //      notification on change.
 //
 
-using System;
-using System.Diagnostics;
-
 namespace System.Windows.Media
 {
     /// <summary>

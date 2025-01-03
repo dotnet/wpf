@@ -9,7 +9,6 @@
 *
 *
 \***************************************************************************/
-using System;
 using System.ComponentModel;
 using System.Windows.Markup;
 using System.Windows.Data;
@@ -24,7 +23,6 @@ namespace System.Windows
     /// </summary>
     [XamlSetMarkupExtensionAttribute("ReceiveMarkupExtension")]
     [XamlSetTypeConverterAttribute("ReceiveTypeConverter")] 
-    [ContentProperty("Value")]
     public class Setter : SetterBase, ISupportInitialize
     {
         /// <summary>
@@ -161,7 +159,6 @@ namespace System.Windows
         /// </summary>
         [System.Windows.Markup.DependsOn("Property")]
         [System.Windows.Markup.DependsOn("TargetName")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         [Localizability(LocalizationCategory.None, Readability = Readability.Unreadable)] // Not localizable by-default
         [TypeConverter(typeof(System.Windows.Markup.SetterTriggerConditionValueConverter))]
         public object Value

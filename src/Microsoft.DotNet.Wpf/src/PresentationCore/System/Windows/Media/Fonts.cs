@@ -10,21 +10,8 @@
 //
 //
 
-using System;
-using System.Text;
-using System.IO;
-using System.Globalization;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows;
-
-using MS.Internal;
 using MS.Internal.FontCache;
-using MS.Internal.FontFace;
 using MS.Internal.PresentationCore;
-using MS.Internal.Shaping;
-using System.Security;
 
 namespace System.Windows.Media
 {

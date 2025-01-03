@@ -13,21 +13,12 @@
 //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 //
 
-using System;
-using System.Collections;
-using System.Diagnostics;
-using System.Globalization;
-using System.Security;
-using Microsoft.Win32;
-using System.IO.Packaging;
 using System.Windows;
 using System.Windows.Interop;
 using MS.Internal.Utility;
 using MS.Win32;
 using System.Runtime.InteropServices;
 using MS.Internal.Documents.Application;
-
-using SecurityHelper = MS.Internal.SecurityHelper;
 
 namespace MS.Internal.AppModel
 {
@@ -88,7 +79,7 @@ namespace MS.Internal.AppModel
                                    (Object.ReferenceEquals(destinationUri.Scheme, Uri.UriSchemeHttps)) ||
                                    destinationUri.IsFile;
 
-            bool fIsMailTo = String.Compare(destinationUri.Scheme, Uri.UriSchemeMailto, StringComparison.OrdinalIgnoreCase) == 0;
+            bool fIsMailTo = string.Equals(destinationUri.Scheme, Uri.UriSchemeMailto, StringComparison.OrdinalIgnoreCase);
 
             // We elevate to navigate the browser iff: 
             //  We are user initiated AND
@@ -350,7 +341,7 @@ namespace MS.Internal.AppModel
                 _secMgr.ProcessUrlAction(targetString,
                                             NativeMethods.URLACTION_FEATURE_ZONE_ELEVATION,
                                             (byte*)&policy,
-                                            Marshal.SizeOf(typeof(int)),
+                                            sizeof(int),
                                             null,
                                             0,
                                             NativeMethods.PUAF_NOUI,

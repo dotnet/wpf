@@ -2,18 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Diagnostics;
 using System.Runtime.CompilerServices;
 using MS.Internal.KnownBoxes;
-using MS.Internal.WindowsBase;  // for FriendAccessAllowed
 
 namespace System.Windows
 {
-    /// <summary>
-    ///
-    /// </summary>
-    [FriendAccessAllowed] // Built into Base, used by Core and Framework
     internal class UncommonField<T>
     {
         /// <summary>

@@ -4,13 +4,7 @@
 
 //#define DEBUG_RENDERING_FEEDBACK
 
-using System;
-using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Ink;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Diagnostics;
 
 namespace MS.Internal.Ink
 {

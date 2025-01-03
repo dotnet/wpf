@@ -8,9 +8,6 @@
 // Specs:       Asynchronous Data Model.mht
 //
 
-using System;
-using System.Windows.Data;
-
 namespace MS.Internal.Data
 {
     /// <summary> Interface for the asynchronous data dispatcher. </summary>

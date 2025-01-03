@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -41,10 +40,11 @@ namespace System.Windows.Markup
         /// </summary>
         public override object ConvertFromString(string value, IValueSerializerContext? context)
         {
-            if (value == null)
+            if (value is null)
             {
                 throw GetConvertFromException(value);
             }
+
             if (value.Length == 0)
             {
                 return DateTime.MinValue;
@@ -60,13 +60,12 @@ namespace System.Windows.Markup
             return DateTime.Parse(value, dateTimeFormatInfo, DateTimeStyles);
         }
 
-
         /// <summary>
         /// Converts the given value object to a <see cref="T:System.DateTime"></see> using the arguments.
         /// </summary>
         public override string ConvertToString(object? value, IValueSerializerContext? context)
         {
-            if (value == null || !(value is DateTime dateTime))
+            if (value is null || !(value is DateTime dateTime))
             {
                 throw GetConvertToException(value, typeof(string));
             }

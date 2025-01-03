@@ -4,10 +4,7 @@
 
 // Description: PropertyChanged event args class
 
-using System;
-using System.Windows.Automation;
-
-namespace System.Windows.Automation 
+namespace System.Windows.Automation
 {
     /// <summary>
     /// Delegate to handle Automation Property change events

@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  This class provides access to the package properties of an RM-protected OPC
 //  document. The "package properties" are a subset of the standard OLE property
@@ -23,24 +21,13 @@
 //  It is the responsibility of the application to ensure that the properties in
 //  the OLE property set streams are synchronized with the properties in the
 //  OPC package.
-//
-//
-//
-//
-//
 
-using System;
 using System.IO;
 using System.IO.Packaging;
 using System.Runtime.InteropServices;
-using System.Windows;
-using System.Security; // SecurityCritical
-using System.Text;      //For UTF-8 encoding.
-
-using MS.Internal;
-using MS.Internal.Interop;
+using System.Text;
 using MS.Internal.IO.Packaging.CompoundFile;
-using MS.Internal.WindowsBase;  //for SecurityHelper.
+using MS.Internal.WindowsBase;
 
 // Enable presharp pragma warning suppress directives.
 #pragma warning disable 1634, 1691

@@ -7,29 +7,20 @@
 //
 
 
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Xml;
-using MS.Utility;
 using MS.Internal;
 
 #if PBTCOMPILER
 using System.Reflection;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 
 namespace MS.Internal.Markup
 #else
 
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Media3D; 
-using MS.Internal.Media; 
+using System.Windows.Media.Media3D;
+using MS.Internal.Media;
 
 namespace System.Windows.Markup
 #endif

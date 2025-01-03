@@ -4,17 +4,14 @@
 
 
 
+using System.Globalization;
+using System.IO;
+using System.Printing;
+using System.Text;
+using System.Xml;
+
 namespace MS.Internal.Printing.Configuration
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.IO;
-    using System.Printing;
-    using System.Security;
-    using System.Text;
-    using System.Xml;
-
     /// <summary>
     /// Xml Stream base API for writing print capability documents
     /// </summary>

@@ -12,15 +12,9 @@
 //
 
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows.Annotations.Storage;
 using System.Xml;
 using System.Xml.Schema;
 using System.Xml.Serialization;

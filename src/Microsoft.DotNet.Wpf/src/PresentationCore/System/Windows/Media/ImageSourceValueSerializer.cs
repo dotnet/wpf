@@ -10,11 +10,6 @@
 //
 #pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Text;
-
 using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 

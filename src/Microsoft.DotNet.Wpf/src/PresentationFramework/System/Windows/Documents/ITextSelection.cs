@@ -10,14 +10,6 @@
 
 namespace System.Windows.Documents
 {
-    using System.Diagnostics;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Windows.Input;
-    using System.Threading;
-    using MS.Internal.Documents;
-    using MS.Win32;
-
     /// <summary>
     /// The TextSelection class encapsulates selection state for the TextEditor
     /// class.  It has no public constructor, but is exposed via a public property

@@ -6,8 +6,6 @@
 // Description: HighlightLayer.Changed event handler.
 //
 
-using System.Collections;
-
 namespace System.Windows.Documents
 {
     /// <summary>

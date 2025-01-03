@@ -10,9 +10,7 @@
 //
 //
 
-using System;
 using System.Globalization;
-using System.Diagnostics;
 using MS.Internal.PresentationCore;
 using System.Windows.Markup;
 
@@ -60,7 +58,7 @@ namespace MS.Internal.TextFormatting
                             try
                             {
                                 CultureInfo culture = CultureInfo.CreateSpecificCulture(cultureName);
-                                specificCulture = SafeSecurityHelper.GetCultureInfoByIetfLanguageTag(culture.IetfLanguageTag);
+                                specificCulture = CultureInfo.GetCultureInfoByIetfLanguageTag(culture.IetfLanguageTag);
                             }
                             catch (ArgumentException)
                             {

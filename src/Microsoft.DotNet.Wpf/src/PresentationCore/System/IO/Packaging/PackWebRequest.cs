@@ -12,16 +12,10 @@
 #define TRACE
 #endif
 
-using System;
-using System.IO;
 using System.Net;
 using System.Net.Cache;                 // for RequestCachePolicy
-using System.Runtime.Serialization;
-using System.Diagnostics;               // For Assert
-using MS.Utility;                       // for EventTrace
 using MS.Internal.IO.Packaging;         // for PackageCacheEntry
 using MS.Internal.PresentationCore;     // for SR exception strings
-using System.Security;                  // for SecurityCritical
 using MS.Internal;
 
 namespace System.IO.Packaging

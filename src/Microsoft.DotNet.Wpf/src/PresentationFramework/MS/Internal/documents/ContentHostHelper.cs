@@ -7,10 +7,7 @@
 //              useful for performing common tasks with IContentHost.
 //
 
-using System;                               // Object
-using System.Collections.Generic;           // List<T>
 using System.Windows;                       // IContentHost
-using System.Windows.Controls;              // TextBlock
 using System.Windows.Controls.Primitives;   // DocumentPageView
 using System.Windows.Documents;             // FlowDocument
 using System.Windows.Media;                 // Visual

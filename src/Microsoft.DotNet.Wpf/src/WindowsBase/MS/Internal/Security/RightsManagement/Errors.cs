@@ -2,22 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //  This file contains Error Constants defined by the promethium SDK and an exception mapping mechanism
-//
-//
-//
-//
-//
 
-using System;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Security.RightsManagement;
-using System.Windows;
-using MS.Internal.WindowsBase;
 
 // Enable presharp pragma warning suppress directives.
 #pragma warning disable 1634, 1691

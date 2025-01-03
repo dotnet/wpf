@@ -2,19 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-// Description: Base class for group descriptions.
-//
-// See spec at http://avalon/connecteddata/Specs/Grouping.mht
-//
-
-using System.Collections;               // IComparer
-using System.Collections.ObjectModel;   // ObservableCollection
-using System.Collections.Specialized;   // NotifyCollectionChangedEvent*
-using System.Globalization;             // CultureInfo
-using MS.Internal;                      // Invariant.Assert
+using System.Collections;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Globalization;
+using MS.Internal;
 
 namespace System.ComponentModel
 {

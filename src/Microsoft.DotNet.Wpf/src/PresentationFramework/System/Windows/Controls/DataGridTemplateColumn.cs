@@ -3,10 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Data;
 
 namespace System.Windows.Controls
@@ -206,17 +202,16 @@ namespace System.Windows.Controls
         /// <param name="propertyName"></param>
         protected internal override void RefreshCellContent(FrameworkElement element, string propertyName)
         {
-            DataGridCell cell = element as DataGridCell;
-            if (cell != null)
+            if (element is DataGridCell cell)
             {
                 bool isCellEditing = cell.IsEditing;
 
                 if ((!isCellEditing &&
-                        ((string.Compare(propertyName, "CellTemplate", StringComparison.Ordinal) == 0) ||
-                        (string.Compare(propertyName, "CellTemplateSelector", StringComparison.Ordinal) == 0))) ||
+                        (string.Equals(propertyName, "CellTemplate", StringComparison.Ordinal) ||
+                        string.Equals(propertyName, "CellTemplateSelector", StringComparison.Ordinal))) ||
                     (isCellEditing &&
-                        ((string.Compare(propertyName, "CellEditingTemplate", StringComparison.Ordinal) == 0) ||
-                        (string.Compare(propertyName, "CellEditingTemplateSelector", StringComparison.Ordinal) == 0))))
+                        (string.Equals(propertyName, "CellEditingTemplate", StringComparison.Ordinal) ||
+                        string.Equals(propertyName, "CellEditingTemplateSelector", StringComparison.Ordinal))))
                 {
                     cell.BuildVisualTree();
                     return;

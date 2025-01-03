@@ -2,10 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description: services for code that potentially loads uncommon assemblies.
-//
 
 /*
     Most of the WPF codebase uses types from WPF's own assemblies or from certain
@@ -22,16 +19,11 @@
     loading the extension assembly.
 */
 
-using System;
-using System.IO;                    // FileNotFoundException
-using System.Reflection;            // Assembly
-using System.Security;              // 
-
-using MS.Internal.WindowsBase;      // [FriendAccessAllowed] // BuildInfo
+using System.Reflection;
+using MS.Internal.WindowsBase;
 
 namespace MS.Internal
 {
-    [FriendAccessAllowed]
     internal enum UncommonAssembly
     {
         // Each enum name must match the assembly name, with dots replaced by underscores
@@ -42,7 +34,6 @@ namespace MS.Internal
         System_Linq_Expressions,
     }
 
-    [FriendAccessAllowed]
     internal static class AssemblyHelper
     {
         #region Constructors
@@ -93,7 +84,6 @@ namespace MS.Internal
 
         #region Internal Methods
 
-        [FriendAccessAllowed]
         internal static bool IsLoaded(UncommonAssembly assemblyEnum)
         {
             // this method is typically called by WPF code on a UI thread.

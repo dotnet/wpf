@@ -50,8 +50,9 @@ namespace System.Xaml
                     {
                         return true;   // This is the common/fast path
                     }
+
                     // else do the NONE node stuff.
-                    if (_currentNode.LineInfo != null)
+                    if (_currentNode.LineInfo is not null)
                     {
                         _currentLineInfo = _currentNode.LineInfo;
                     }
@@ -67,7 +68,8 @@ namespace System.Xaml
                     _currentLineInfo = null;
                     break;
                 }
-            } while (_currentNode.NodeType == XamlNodeType.None);
+            }
+            while (_currentNode.NodeType == XamlNodeType.None);
             return !IsEof;
         }
 

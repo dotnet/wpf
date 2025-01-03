@@ -9,15 +9,9 @@
         the Xps Serialization APIs for serializing fonts
         to a Xps package.                                                                            
 --*/
-using System;
-using System.Collections;
 using System.IO;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Collections.Generic;
-using System.IO.Packaging;
 using System.Windows.Xps.Packaging;
-using System.Security;
 using MS.Internal.Utility;
 using MS.Internal.IO.Packaging;
 

@@ -1,7 +1,13 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
+
+
+#region Using declarations
+
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls
@@ -9,14 +15,6 @@ namespace System.Windows.Controls
 namespace Microsoft.Windows.Controls
 #endif
 {
-
-    #region Using declarations
-
-    using System;
-    using System.Windows;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon;
-    using Microsoft.Windows.Controls;
 #else
     using Microsoft.Windows.Controls.Ribbon;
 #endif

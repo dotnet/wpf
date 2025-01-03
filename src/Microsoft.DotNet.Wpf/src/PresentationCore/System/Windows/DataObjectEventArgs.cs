@@ -7,8 +7,6 @@
 // Description: Base class for DataObject events arguments
 //
 
-using System;
-
 namespace System.Windows
 {
     /// <summary>

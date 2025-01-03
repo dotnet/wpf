@@ -4,7 +4,6 @@
 #nullable enable
 using System.Globalization;
 using System.IO;
-using System.Collections.Generic;
 
 namespace System.Windows
 {

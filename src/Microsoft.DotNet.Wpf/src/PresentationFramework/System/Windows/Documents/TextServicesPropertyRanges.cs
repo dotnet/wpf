@@ -3,16 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Runtime.InteropServices;
-using System.Windows.Threading;
-using System.Security;
-
-using System.Collections;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows.Documents;
 using MS.Win32;
 
 namespace System.Windows.Documents

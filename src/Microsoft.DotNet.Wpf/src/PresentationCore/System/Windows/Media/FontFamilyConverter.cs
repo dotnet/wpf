@@ -2,25 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//+-----------------------------------------------------------------------
-//
-//
-//
-//  Contents:  FontFamilyConverter implementation
-//
-//  Spec:      Fonts.htm
-//
-//
-
-using System;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Navigation;
 using System.Windows.Markup;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 // Allow suppression of presharp warnings
 #pragma warning disable 1634, 1691

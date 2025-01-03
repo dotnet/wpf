@@ -7,23 +7,15 @@
 // Description: AnnotationComponent that visualizes highlights
 //
 
-using System;
-using MS.Internal;
-using System.Diagnostics;
 using System.Collections;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Shapes;
-using MS.Internal.Text;
 using System.Xml;
 using System.IO;
 using System.Windows.Annotations;
-using System.Reflection;
-using System.Windows.Annotations.Storage;
 using System.Windows.Controls;
-using MS.Internal.Annotations.Anchoring;
 using MS.Utility;
 
 

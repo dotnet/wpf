@@ -6,12 +6,9 @@
 // Description: Default async scheduler for data operations.
 //
 
-using System;
 using System.Collections;
 using System.Threading;
 using System.Windows;
-using System.Windows.Data;
-using MS.Internal;
 
 namespace MS.Internal.Data
 {

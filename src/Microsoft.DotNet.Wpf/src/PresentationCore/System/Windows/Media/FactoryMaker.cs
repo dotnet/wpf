@@ -5,15 +5,8 @@
 //
 //
 
-using System;
-using System.Security;
-using System.Diagnostics;
 using MS.Internal;
-using MS.Win32;
-using System.Windows.Media.Composition;
-
-using SR=MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
 {

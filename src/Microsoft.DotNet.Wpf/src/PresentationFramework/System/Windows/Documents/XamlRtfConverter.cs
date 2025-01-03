@@ -6,9 +6,6 @@
 // Description: Xaml-Rtf Converter.
 //
 
-using System.IO;
-using System.Text;
-
 namespace System.Windows.Documents
 {
     /// <summary>

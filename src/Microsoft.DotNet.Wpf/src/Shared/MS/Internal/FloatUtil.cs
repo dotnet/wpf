@@ -18,8 +18,6 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
-
 namespace MS.Internal
 {
     internal static class FloatUtil

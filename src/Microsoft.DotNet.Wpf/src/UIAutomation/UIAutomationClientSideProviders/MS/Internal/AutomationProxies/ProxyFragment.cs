@@ -36,9 +36,6 @@
 using System;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.ComponentModel;
-using System.Collections;
-using System.Runtime.InteropServices;
 
 namespace MS.Internal.AutomationProxies
 {

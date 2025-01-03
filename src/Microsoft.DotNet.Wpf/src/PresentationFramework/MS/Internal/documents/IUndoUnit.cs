@@ -8,8 +8,6 @@
 //              See spec at Undo spec.htm 
 //
 
-using System;
-
 namespace MS.Internal.Documents
 {
     /// <summary>

@@ -4,22 +4,10 @@
 
 //#define OLD_ISF
 
-using MS.Utility;
-using System;
 using System.IO;
-using System.Security;
-using System.Diagnostics;
-using System.Collections;
 using System.Runtime.InteropServices;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using MS.Internal.Ink.InkSerializedFormat;
-using System.Windows;
 using System.Windows.Ink;
 using System.Windows.Media;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal.Ink.InkSerializedFormat
 {

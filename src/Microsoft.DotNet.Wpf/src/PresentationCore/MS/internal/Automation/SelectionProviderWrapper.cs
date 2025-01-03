@@ -9,15 +9,9 @@
 //
 //
 
-using System;
 using System.Windows.Threading;
-
-using System.Windows.Media;
-using System.Collections;
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Peers;
-using System.ComponentModel;
 
 namespace MS.Internal.Automation
 {

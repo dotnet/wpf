@@ -9,18 +9,13 @@
 //              for Data Binding and Styling
 //
 
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
-using System.Text;
 using System.Windows;
 using System.Windows.Data;
 using System.Windows.Diagnostics;
 using System.Windows.Markup;
-using MS.Internal.Data;
-using MS.Win32;
 
 namespace MS.Internal
 {

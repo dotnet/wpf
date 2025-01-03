@@ -5,11 +5,9 @@
 //
 //
 
-using System;
 using System.Reflection;
 using System.Windows.Resources;
 using System.Windows.Navigation;
-using System.Collections.Generic;
 
 namespace MS.Internal.Resources
 {

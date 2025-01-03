@@ -6,7 +6,6 @@
 // Description: Utility that handles parsing Baml Resource Content
 // 
 
-using System;
 using System.Text;
 using System.Diagnostics;
 using System.Collections.Generic;

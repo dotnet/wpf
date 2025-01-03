@@ -8,30 +8,20 @@
 //
 
 using System;
-using System.Xml;
 using System.IO;
-using System.Text;
+using MS.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.ComponentModel;
 using System.Collections.Specialized;
+using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Reflection;
-using MS.Utility;
 
 #if !PBTCOMPILER
 
-using System.Windows;
-using System.Windows.Markup;
-using System.Windows.Resources;
-using System.Windows.Threading;
-using SecurityHelper=MS.Internal.PresentationFramework.SecurityHelper;
 using MS.Internal;  // CriticalExceptions
-
-#else
-
-using System.Runtime.CompilerServices;
 
 #endif
 
@@ -406,24 +396,24 @@ namespace System.Windows.Markup
 
         private void PreLoadDefaultAssemblies(string asmName, string asmPath)
         {
-            if (AssemblyWB == null && string.Compare(asmName, _assemblyNames[0], StringComparison.OrdinalIgnoreCase) == 0)
+            if (AssemblyWB == null && string.Equals(asmName, _assemblyNames[0], StringComparison.OrdinalIgnoreCase))
             {
                 AssemblyWB = ReflectionHelper.LoadAssembly(asmName, asmPath);
             }
-            else if (AssemblyPC == null && string.Compare(asmName, _assemblyNames[1], StringComparison.OrdinalIgnoreCase) == 0)
+            else if (AssemblyPC == null && string.Equals(asmName, _assemblyNames[1], StringComparison.OrdinalIgnoreCase))
             {
                 AssemblyPC = ReflectionHelper.LoadAssembly(asmName, asmPath);
             }
-            else if (AssemblyPF == null && string.Compare(asmName, _assemblyNames[2], StringComparison.OrdinalIgnoreCase) == 0)
+            else if (AssemblyPF == null && string.Equals(asmName, _assemblyNames[2], StringComparison.OrdinalIgnoreCase))
             {
                 AssemblyPF = ReflectionHelper.LoadAssembly(asmName, asmPath);
             }
-            else if (string.Compare(asmName, "SYSTEM.XML", StringComparison.OrdinalIgnoreCase) == 0)
+            else if (string.Equals(asmName, "SYSTEM.XML", StringComparison.OrdinalIgnoreCase))
             {
                 // make sure System.Xml is at least loaded as ReflectionOnly
                 ReflectionHelper.LoadAssembly(asmName, asmPath);
             }
-            else if (string.Compare(asmName, "SYSTEM", StringComparison.OrdinalIgnoreCase) == 0)
+            else if (string.Equals(asmName, "SYSTEM", StringComparison.OrdinalIgnoreCase))
             {
                 // make sure System is at least loaded as ReflectionOnly
                 ReflectionHelper.LoadAssembly(asmName, asmPath);
@@ -2010,7 +2000,7 @@ namespace System.Windows.Markup
             // Force load the Statics by walking up the hierarchy and running class constructors
             while (null != currentType)
             {
-                MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(currentType);
+                RuntimeHelpers.RunClassConstructor(currentType.TypeHandle);
                 currentType = GetCachedBaseType(currentType);
             }
 

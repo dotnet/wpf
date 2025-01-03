@@ -4,9 +4,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.Serialization;
 using System.Xaml.Schema;
 
@@ -59,11 +56,12 @@ namespace MS.Internal.Xaml.Parser
             }
 
             string ns = prefixResolver(prefix);
-            if (String.IsNullOrEmpty(ns))
+            if (string.IsNullOrEmpty(ns))
             {
                 error = SR.Format(SR.PrefixNotFound, prefix);
                 return null;
             }
+
             XamlTypeName xamlTypeName = new XamlTypeName(ns, simpleName);
             return xamlTypeName;
         }
@@ -91,10 +89,11 @@ namespace MS.Internal.Xaml.Parser
             }
 
             XamlTypeName typeName = null;
-            if (String.IsNullOrEmpty(error))
+            if (string.IsNullOrEmpty(error))
             {
                 typeName = CollectNameFromStack();
             }
+
             return typeName;
         }
 
@@ -120,10 +119,11 @@ namespace MS.Internal.Xaml.Parser
             }
 
             IList<XamlTypeName> typeNameList = null;
-            if (String.IsNullOrEmpty(error))
+            if (string.IsNullOrEmpty(error))
             {
                 typeNameList = CollectNameListFromStack();
             }
+
             return typeNameList;
         }
 
@@ -143,6 +143,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 ThrowOnBadInput();
             }
+
             P_SimpleTypeName();
 
             // Optional
@@ -159,7 +160,6 @@ namespace MS.Internal.Xaml.Parser
 
             Callout_EndOfType();
         }
-
 
         // SimpleTypeName   ::= (Prefix ‘:’)? TypeName
         //
@@ -183,10 +183,11 @@ namespace MS.Internal.Xaml.Parser
                 {
                     ThrowOnBadInput();
                 }
+
                 name = _scanner.MultiCharTokenText;
                 _scanner.Read();
-
             }
+
             Callout_FoundName(prefix, name);
         }
 
@@ -206,6 +207,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 ThrowOnBadInput();
             }
+
             _scanner.Read();
         }
 
@@ -276,10 +278,11 @@ namespace MS.Internal.Xaml.Parser
             XamlTypeName typeName = new XamlTypeName(frame.Namespace, frame.Name, frame.TypeArgs);
 
             frame = _stack.Peek();
-            if (frame.TypeArgs == null)
+            if (frame.TypeArgs is null)
             {
                 frame.AllocateTypeArgs();
             }
+
             frame.TypeArgs.Add(typeName);
         }
 

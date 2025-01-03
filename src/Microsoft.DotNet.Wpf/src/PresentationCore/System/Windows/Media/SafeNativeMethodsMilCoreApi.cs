@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Runtime.InteropServices;
+
 //
 //  ABOUT THIS FILE:
 //   -- This file contains native methods which are deemed SAFE for partial trust callers
@@ -13,19 +15,6 @@
 
 namespace MS.Win32.PresentationCore
 {
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System;
-    using System.Security;
-    using System.Collections;
-    using System.IO;
-    using System.Text;
-    using System.Windows.Media.Composition;
-    using MS.Internal.PresentationCore;
-
-    using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
-    using DllImport=MS.Internal.PresentationCore.DllImport;
-    
     internal static partial class SafeNativeMethods
     {
        internal static int MilCompositionEngine_InitializePartitionManager(int nPriority)

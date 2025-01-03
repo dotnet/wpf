@@ -2,12 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
 namespace Microsoft.Win32
 {
-    using System;
-    using System.Globalization;
-
     /// <summary>
     /// A union of KnownFolders and file paths that can be placed into FileDialog's Favorites pane.
     /// </summary>

@@ -9,12 +9,9 @@
 //              WCP DataSources.mht
 //
 
-using System;
 using System.Collections; // IEnumerator
-using System.Collections.Generic; // ICollection<T>
 using System.Xml;
 using System.Windows.Markup;
-using MS.Utility;
 
 namespace System.Windows.Data
 {

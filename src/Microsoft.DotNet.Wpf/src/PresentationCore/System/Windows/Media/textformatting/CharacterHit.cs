@@ -16,8 +16,6 @@
 
 #region Using directives
 
-using System;
-
 #endregion
 
 namespace System.Windows.Media.TextFormatting

@@ -75,7 +75,7 @@ namespace System.Xaml
                 {
                     _addDelegate(XamlNodeType.None, XamlNode.InternalNodeType.EndOfStream);
                     _addDelegate = delegate { throw new XamlException(SR.WriterIsClosed); };
-                    if (_addLineInfoDelegate != null)
+                    if (_addLineInfoDelegate is not null)
                     {
                         _addLineInfoDelegate = delegate { throw new XamlException(SR.WriterIsClosed); };
                     }
@@ -109,7 +109,7 @@ namespace System.Xaml
             get
             {
                 ThrowIsDisposed();
-                return _addLineInfoDelegate != null;
+                return _addLineInfoDelegate is not null;
             }
         }
         #endregion
@@ -118,6 +118,5 @@ namespace System.Xaml
         {
             ObjectDisposedException.ThrowIf(IsDisposed, typeof(XamlWriter)); // Can't say ReaderMultiIndexDelegate because its internal.
         }
-
     }
 }

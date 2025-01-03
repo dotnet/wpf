@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,41 +7,18 @@
 //              This class should be used by most - if not all - MIL parsers.
 //
 
-using System;
-using System.Collections;
-using System.Diagnostics;
-using System.ComponentModel;
 using System.Globalization;
 
-#if !PBTCOMPILER
-using System.Windows;
-#endif
-
-#if WINDOWS_BASE
-    using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-    using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-    using MS.Internal.PresentationFramework;
-#elif PBTCOMPILER 
-    using MS.Utility ;     
-    using MS.Internal.Markup;
-#elif DRT
-    using MS.Internal.Drt;
-#else
-#error Attempt to use FriendAccessAllowedAttribute from an unknown assembly.
-using MS.Internal.YourAssemblyName;
-#endif
-
 #if PBTCOMPILER
+using System;
+using System.Diagnostics;
+using MS.Utility;
+
 namespace MS.Internal.Markup
 #else
 namespace MS.Internal
 #endif
 {
-#if !PBTCOMPILER 
-    [FriendAccessAllowed]
-#endif
     internal class TokenizerHelper
     {
         /// <summary>

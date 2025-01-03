@@ -3,9 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 
+using System.Runtime.CompilerServices;
+
 namespace System.Windows.Markup
 {
-    using System.Runtime.CompilerServices;
     /// <summary>
     /// This is an interface that should be implemented by classes that wish to provide 
     /// fallback values for one or more of their properties.

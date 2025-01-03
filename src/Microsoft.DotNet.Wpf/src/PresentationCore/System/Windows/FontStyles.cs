@@ -7,11 +7,7 @@
 // Description: Predefined FontStyle structures that correspond to common font styles. 
 //
 
-
-using System;
-using System.Globalization;
-
-namespace System.Windows 
+namespace System.Windows
 {
     /// <summary>
     /// FontStyles contains predefined font style structures for common font styles.

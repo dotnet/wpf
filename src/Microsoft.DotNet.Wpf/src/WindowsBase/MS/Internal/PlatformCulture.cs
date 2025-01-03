@@ -2,24 +2,13 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-//
-//  Contents: Internal class that exposes the culture the platform is localized to.
-//
-//
-
-using System;
 using System.Globalization;
-using System.Windows;
-using MS.Internal.WindowsBase;      
 
 namespace MS.Internal
 {
     /// <summary>
     /// Exposes the CultureInfo for the culture the platform is localized to.
-    /// </summary>    
-    [FriendAccessAllowed]
+    /// </summary>
     internal static class PlatformCulture
     {
         /// <summary>

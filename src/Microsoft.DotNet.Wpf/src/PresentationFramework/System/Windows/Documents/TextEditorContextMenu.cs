@@ -2,24 +2,22 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
+using System.Runtime.InteropServices;
+using MS.Win32;
+using System.Windows.Interop;
+
 //
 // Description: A Component of TextEditor supporting the default ContextMenu.
 //
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using MS.Win32;
-    using System.Windows.Interop;
-
     // A Component of TextEditor supporting the default ContextMenu.
     internal static class TextEditorContextMenu
     {
@@ -552,7 +550,7 @@ namespace System.Windows.Documents
                 }
 
                 ReleaseCandidateList(null);
-                _candidateList = new  SecurityCriticalDataClass<UnsafeNativeMethods.ITfCandidateList>(textStore.GetReconversionCandidateList());
+                _candidateList = textStore.GetReconversionCandidateList();
                 if (CandidateList == null)
                 {
                     GC.SuppressFinalize(this);
@@ -648,23 +646,12 @@ namespace System.Windows.Documents
 
             // ReconversionMenuItem uses this to finalzie the candidate string.
 
-            internal UnsafeNativeMethods.ITfCandidateList CandidateList
-            {
-                 get
-                 {
-                     if ( _candidateList == null)
-                     {
-                         return null;
-                     }
-
-                     return _candidateList.Value;
-                 }
-            }
+            internal UnsafeNativeMethods.ITfCandidateList CandidateList => _candidateList;
 
             // The candidate list for Cicero Reconversion.
             // We need to use same ITfCandidateList object for both listing up and finalizing because
             // the index of the candidate string needs to match.
-            private SecurityCriticalDataClass<UnsafeNativeMethods.ITfCandidateList> _candidateList;
+            private UnsafeNativeMethods.ITfCandidateList _candidateList;
         }
 
         // Default EditorContextMenu item base class.

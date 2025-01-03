@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Globalization;
+
 //
 // Description:
 //      FixedPosition represents a hit-testable position in a fixed document's tree.
@@ -9,13 +11,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal.Documents;
-    using System;
-    using System.Collections;
-    using System.Diagnostics;
-    using System.Globalization;
-
-
     //=====================================================================
     /// <summary>
     ///      FixedPosition represents a hit-testable position in a fixed document's tree.

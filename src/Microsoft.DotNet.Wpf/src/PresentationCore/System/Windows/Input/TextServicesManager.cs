@@ -15,9 +15,6 @@ using System.Windows.Threading;
 using MS.Internal;
 using MS.Win32;
 
-using System;
-using System.Security;
-
 namespace System.Windows.Input
 {
     internal class TextServicesManager : DispatcherObject

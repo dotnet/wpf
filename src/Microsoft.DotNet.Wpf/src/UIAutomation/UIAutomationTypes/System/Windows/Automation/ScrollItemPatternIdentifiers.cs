@@ -4,9 +4,7 @@
 
 // Description: Automation Identifiers for ScrollItem Pattern
 
-using System;
 using MS.Internal.Automation;
-using System.Runtime.InteropServices;
 
 namespace System.Windows.Automation
 {

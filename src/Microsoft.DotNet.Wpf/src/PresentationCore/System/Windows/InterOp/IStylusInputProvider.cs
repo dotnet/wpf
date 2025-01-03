@@ -3,19 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
 using MS.Internal.Interop;
-using MS.Internal.PresentationCore;
-using MS.Win32.Pointer;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows.Input;
-using System.Windows.Input.StylusPlugIns;
-using System.Windows.Input.StylusPointer;
-using System.Windows.Media;
-using System.Windows.Threading;
 
 namespace System.Windows.Interop
 {

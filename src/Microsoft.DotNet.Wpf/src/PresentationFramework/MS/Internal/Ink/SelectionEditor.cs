@@ -11,24 +11,9 @@
 //#define TRACE_MAJOR         // DO NOT LEAVE ENABLED IN CHECKED IN CODE
 //#define TRACE_ADDITIONAL    // DO NOT LEAVE ENABLED IN CHECKED IN CODE
 
-using MS.Internal;
-using MS.Internal.Controls;
-using System;
-using System.Security;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Controls;
-using System.Windows.Markup;
-using System.Threading;
-using System.Windows.Ink;
 
 namespace MS.Internal.Ink
 {

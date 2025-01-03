@@ -8,10 +8,7 @@
 //      conversion failure, as there is no actual ValidationRule.
 //
 
-using System;
-using System.Windows;
 using System.Globalization;
-using System.Windows.Controls;
 
 namespace System.Windows.Controls
 {

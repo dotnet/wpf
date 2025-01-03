@@ -15,8 +15,6 @@
 
 using System.IO;
 
-using System;
-
 namespace System.Windows.Resources
 {
     /// <summary>

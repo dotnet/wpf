@@ -15,14 +15,6 @@
 //              straightforward to construct this straightforward panel.
 //
 
-
-using System;
-using System.ComponentModel;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
-
-
 namespace System.Windows.Controls.Primitives
 {
     /// <summary>

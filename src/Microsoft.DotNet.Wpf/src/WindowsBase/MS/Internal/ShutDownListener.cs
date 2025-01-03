@@ -2,8 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
+
 // Description: Listen for shut down events on behalf of a target, in a way that
 //          does not leak the target.  ShutDown events include:
 //                  AppDomain.DomainUnload
@@ -28,15 +27,11 @@
 //          Shutdown is a "one-time" process.  When the ShutDownListener receives
 //          any one of the desired events, it stops listening to all events.
 
-using System;
-using System.Security;              // 
 using System.Threading;             // Interlocked
 using System.Windows.Threading;     // Dispatcher
-using MS.Internal.WindowsBase;      // [FriendAccessAllowed]
 
 namespace MS.Internal
 {
-    [FriendAccessAllowed]   // defined in Base, also used in Framework
     [Flags]
     internal enum ShutDownEvents : ushort
     {
@@ -48,7 +43,6 @@ namespace MS.Internal
         All                 = AppDomain | DispatcherShutdown,
     }
 
-    [FriendAccessAllowed]   // defined in Base, also used in Framework
     internal abstract class ShutDownListener : WeakReference
     {
         internal ShutDownListener(object target)

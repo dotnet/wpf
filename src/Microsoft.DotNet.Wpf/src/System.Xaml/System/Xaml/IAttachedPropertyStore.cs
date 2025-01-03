@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 
 namespace System.Xaml
@@ -29,7 +28,7 @@ namespace System.Xaml
         //  this 'name' then returns false. If the value of the attached property
         //  for this instance with this 'name' cannot be cast to T then returns
         //  false.
-        [SuppressMessage("Microsoft.Design", "CA1007")]
+        [SuppressMessage("Microsoft.Design", "CA1007", Justification = "Kept for compatibility.")]
         bool TryGetProperty(AttachableMemberIdentifier attachableMemberIdentifier, out object value);
     }
 }

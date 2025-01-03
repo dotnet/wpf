@@ -9,7 +9,6 @@
 //              is an EncryptedPackageEnvelope.
 //
 
-using System;
 using System.Windows;
 using System.Runtime.InteropServices;
 using System.IO.Packaging;

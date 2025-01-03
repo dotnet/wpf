@@ -8,7 +8,6 @@
 #pragma warning disable 1634, 1691
 
 using System;
-using System.Security;
 using System.Runtime.InteropServices;
 using System.Windows;
 using System.Windows.Automation;

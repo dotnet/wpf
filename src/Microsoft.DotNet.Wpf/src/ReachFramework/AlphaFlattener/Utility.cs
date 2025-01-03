@@ -3,27 +3,16 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections;              // for ArrayList
-using System.Collections.Generic;
-using System.Diagnostics;
-
 using System.Windows;                  // for Rect                        WindowsBase.dll
 using System.Windows.Media;            // for Geometry, Brush, ImageData. PresentationCore.dll
-using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
-
-using Microsoft.Internal;
 using System.Runtime.CompilerServices;
-using MS.Internal.ReachFramework;
-
-using System.Security;
 using System.Windows.Xps.Serialization;
 using MS.Utility;
 
 using BuildInfo = MS.Internal.ReachFramework.BuildInfo;
 
-[assembly: InternalsVisibleTo(       "System.Printing, PublicKey=" + BuildInfo.WCP_PUBLIC_KEY_STRING)]
+[assembly: InternalsVisibleTo("System.Printing, PublicKey=" + BuildInfo.WCP_PUBLIC_KEY_STRING)]
 
 // This code is debug only until we decide to go all the way with enforcements.
 #if ENFORCEMENT
@@ -32,7 +21,7 @@ using BuildInfo = MS.Internal.ReachFramework.BuildInfo;
 namespace Microsoft.Internal.AlphaFlattener
 {
 #if DEBUG
-	internal static class StopWatch
+    internal static class StopWatch
 	{
 		static double   s_total; // = 0;
 		static DateTime s_startTime;
@@ -455,7 +444,6 @@ namespace Microsoft.Internal.AlphaFlattener
             return false;
         }
 
-        [FriendAccessAllowed]
         static public PathGeometry GetAsPathGeometry(Geometry geo)
         {
             PathGeometry pg = geo as PathGeometry;
@@ -468,7 +456,6 @@ namespace Microsoft.Internal.AlphaFlattener
             return pg;
         }
 
-        [FriendAccessAllowed]
         static public bool IsRectangle(Geometry geometry)
         {
             if (geometry.Transform != null && !IsScaleTranslate(geometry.Transform.Value))
@@ -886,7 +873,6 @@ namespace Microsoft.Internal.AlphaFlattener
             return estimatedPoints;
         }
 
-        [FriendAccessAllowed]
         public static int GetGeometryDataPointCount(Geometry.PathGeometryData geometryData)
         {
             int pointCount;
@@ -896,7 +882,6 @@ namespace Microsoft.Internal.AlphaFlattener
             return pointCount;
         }
 
-        [FriendAccessAllowed]
         public static int GetPathPointCount(PathGeometry geometry)
         {
             int size = 0;
@@ -914,7 +899,6 @@ namespace Microsoft.Internal.AlphaFlattener
             return size;
         }
 
-        [FriendAccessAllowed]
         public static int GetPathPointCount(PathFigure figure)
         {
             int size = 2;     // For the startpoint and endpoint
@@ -932,7 +916,6 @@ namespace Microsoft.Internal.AlphaFlattener
             return size;
         }
 
-        [FriendAccessAllowed]
         public static int GetPathPointCount(PathSegment segment)
         {
             Type typ = segment.GetType();
@@ -1775,7 +1758,6 @@ namespace Microsoft.Internal.AlphaFlattener
 
         #region Font
 
-        [FriendAccessAllowed]
         public static Uri GetFontUri(GlyphTypeface typeface)
         {
             return typeface.FontUri;
@@ -2348,7 +2330,6 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <remarks>
         /// Accessed by GDIExporter!CGDIDevice.HrEndPage.
         /// </remarks>
-        [FriendAccessAllowed]
         public static bool DisplayPageDebugHeader
         {
             get

@@ -1107,8 +1107,7 @@ namespace System.Windows.Markup
         XmlDataProvider_XmlSerializer,
         MaxProperty,
         TextBox_IsReadOnly,
-        RichTextBox_IsReadOnly,
-        Setter_Value
+        RichTextBox_IsReadOnly
     }
 
 #if !BAMLDASM
@@ -2787,9 +2786,6 @@ namespace System.Windows.Markup
                 case KnownElements.ToolBarTray:
                     name = "ToolBars";
                     break;
-                case KnownElements.Setter:
-                    name = "Value";
-                    break;
                 case KnownElements.ControlTemplate:
                 case KnownElements.DataTemplate:
                 case KnownElements.FrameworkTemplate:
@@ -3679,10 +3675,6 @@ namespace System.Windows.Markup
                 case KnownElements.XmlDataProvider:
                     if (string.Equals(fieldName, "XmlSerializer", StringComparison.Ordinal))
                         return (short)KnownProperties.XmlDataProvider_XmlSerializer;
-                    break;
-                case KnownElements.Setter:
-                    if (string.Equals(fieldName, "Value", StringComparison.Ordinal))
-                        return (short)KnownProperties.Setter_Value;
                     break;
             }
             return 0;

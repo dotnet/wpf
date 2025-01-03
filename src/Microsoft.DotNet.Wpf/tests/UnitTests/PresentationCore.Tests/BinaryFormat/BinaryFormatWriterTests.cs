@@ -1,10 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Runtime.Serialization.Formatters.Binary;
-using PresentationCore.Tests.TestUtilities;
 using PresentationCore.Tests.FluentAssertions;
 using System.Formats.Nrbf;
 
@@ -104,7 +102,7 @@ public class BinaryFormatWriterTests
     }
 
     public static IEnumerable<object[]?> TryWriteObject_SupportedObjects_TestData =>
-        HashtableTests.Hashtables_TestData.Concat(
+        ((IEnumerable<object[]?>)HashtableTests.Hashtables_TestData).Concat(
             ListTests.PrimitiveLists_TestData).Concat(
             ListTests.ArrayLists_TestData).Concat(
             PrimitiveTypeTests.Primitive_Data).Concat(
@@ -112,7 +110,7 @@ public class BinaryFormatWriterTests
             ArrayTests.Array_TestData);
 
     public static IEnumerable<object[]?> TryWriteObject_UnsupportedObjects_TestData =>
-        HashtableTests.Hashtables_UnsupportedTestData.Concat(
+        ((IEnumerable<object[]?>)HashtableTests.Hashtables_UnsupportedTestData).Concat(
             ListTests.Lists_UnsupportedTestData).Concat(
             ListTests.ArrayLists_UnsupportedTestData).Concat(
             ArrayTests.Array_UnsupportedTestData);

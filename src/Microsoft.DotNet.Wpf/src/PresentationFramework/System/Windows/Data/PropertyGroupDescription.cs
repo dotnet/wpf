@@ -9,12 +9,9 @@
 // See spec at Grouping.mht
 //
 
-using System;                   // StringComparison
 using System.Collections;       // IComparer
 using System.ComponentModel;    // [DefaultValue]
 using System.Globalization;     // CultureInfo
-using System.Reflection;        // PropertyInfo
-using System.Windows;           // SR
 using MS.Internal;              // XmlHelper
 
 namespace System.Windows.Data

@@ -8,14 +8,8 @@
 //
 
 
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using MS.Internal.Text;
 using MS.Internal.Documents;
@@ -23,7 +17,7 @@ using MS.Internal.Documents;
 using MS.Internal.PtsHost.UnsafeNativeMethods;
 
 #pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-                                    // message numbers and unknown pragmas for PRESharp contol
+// message numbers and unknown pragmas for PRESharp contol
 
 namespace MS.Internal.PtsHost
 {

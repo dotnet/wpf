@@ -2,27 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-// Description: the CompositionManager class
-//
-//
-
-using System;
-using System.Diagnostics;
-using System.Globalization;
-using System.Security;
 using System.Text;
 using System.Windows.Threading;
-using System.Windows;
 using System.Runtime.InteropServices;
-
 using MS.Win32;
-using Microsoft.Win32; // for RegistryKey class
-using MS.Internal ; 
-using MS.Internal.PresentationCore;                        // SecurityHelper
-
-using SR=MS.Internal.PresentationCore.SR;
+using Microsoft.Win32;
 
 namespace System.Windows.Input
 {

@@ -4,26 +4,9 @@
 
 //                                             
 
-using System;                   
-using MS.Internal;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
-using System.Collections;
-using System.Text;
-using System.Globalization;
-using System.Windows.Media;
-using System.Windows;
-using System.Text.RegularExpressions;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
-using System.Diagnostics;
-using System.Runtime.InteropServices; 
-using System.Security;
 
-using SR=MS.Internal.PresentationCore.SR;
-
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     /// <summary>
     /// This is the Geometry class for Lines. 

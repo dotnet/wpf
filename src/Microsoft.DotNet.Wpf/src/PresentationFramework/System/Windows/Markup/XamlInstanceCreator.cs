@@ -7,9 +7,7 @@
 //   A base class that allows storing parser records for later instantiation.
 //
 
-using System;
-
-namespace System.Windows.Markup 
+namespace System.Windows.Markup
 {
     /// <summary>
     ///     A base class that allows storing parser records for later instantiation.

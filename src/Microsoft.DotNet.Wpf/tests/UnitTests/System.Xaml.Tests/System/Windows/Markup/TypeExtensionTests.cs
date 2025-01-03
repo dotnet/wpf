@@ -1,8 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-#nullable disable
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
 using System.Linq;
@@ -95,12 +93,12 @@ public class TypeExtensionTests
     [Theory]
     [InlineData(1)]
     [InlineData(null)]
-    public void ProvideValue_InvalidTypeResolver_ThrowsInvalidOperationException(object service)
+    public void ProvideValue_InvalidTypeResolver_ThrowsInvalidOperationException(object? service)
     {
         var extension = new TypeExtension("typeName");
         var provider = new CustomServiceProvider
         {
-            ServiceAction = serviceType => service
+            ServiceAction = serviceType => service!
         };
         Assert.Throws<InvalidOperationException>(() => extension.ProvideValue(provider));
     }
@@ -164,7 +162,7 @@ public class TypeExtensionTests
     [InlineData(typeof(string), true)]
     [InlineData(typeof(int), false)]
     [InlineData(null, false)]
-    public void TypeExtensionConverter_CanConvertTo_ReturnsExpected(Type type, bool expected)
+    public void TypeExtensionConverter_CanConvertTo_ReturnsExpected(Type? type, bool expected)
     {
         var extension = new TypeExtension("member");
         TypeConverter converter = TypeDescriptor.GetConverter(extension);
@@ -186,7 +184,7 @@ public class TypeExtensionTests
     {
         var extension = new TypeExtension("member");
         TypeConverter converter = TypeDescriptor.GetConverter(extension);
-        InstanceDescriptor descriptor = Assert.IsType<InstanceDescriptor>(converter.ConvertTo(extension, typeof(InstanceDescriptor)));
+        Assert.IsType<InstanceDescriptor>(converter.ConvertTo(extension, typeof(InstanceDescriptor)));
         Assert.Equal(extension.ToString(), converter.ConvertTo(extension, typeof(string)));
     }
 
@@ -208,31 +206,17 @@ public class TypeExtensionTests
 
     private class CustomServiceProvider : IServiceProvider
     {
-        public Func<Type, object> ServiceAction { get; set; }
+        public Func<Type, object>? ServiceAction { get; set; }
 
-        public object GetService(Type serviceType)
-        {
-            if (ServiceAction is null)
-            {
-                throw new NotImplementedException();
-            }
-
-            return ServiceAction(serviceType);
-        }
+        public object GetService(Type serviceType) =>
+            ServiceAction is null ? throw new NotImplementedException() : ServiceAction(serviceType);
     }
 
     private class CustomXamlTypeResolver : IXamlTypeResolver
     {
-        public Func<string, Type> ResolveAction { get; set; }
+        public Func<string, Type>? ResolveAction { get; set; }
 
-        public Type Resolve(string qualifiedTypeName)
-        {
-            if (ResolveAction is null)
-            {
-                throw new NotImplementedException();
-            }
-
-            return ResolveAction(qualifiedTypeName);
-        }
+        public Type Resolve(string qualifiedTypeName) =>
+            ResolveAction is null ? throw new NotImplementedException() : ResolveAction(qualifiedTypeName);
     }
 }

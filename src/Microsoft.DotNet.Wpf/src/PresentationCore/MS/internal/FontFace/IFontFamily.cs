@@ -9,11 +9,7 @@
 //
 //
 
-using System;
-using System.Diagnostics;
 using System.Globalization;
-using System.Collections;
-using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Markup;    // for XmlLanguage
 using System.Windows.Media;

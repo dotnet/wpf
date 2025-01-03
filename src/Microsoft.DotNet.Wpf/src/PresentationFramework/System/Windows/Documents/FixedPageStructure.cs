@@ -2,6 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Media;
+using System.Windows.Shapes;
+using System.Windows.Controls;
+using MS.Internal.Documents;
+using CultureInfo = System.Globalization.CultureInfo;
+
 //
 // Description:
 //      FixedPageStructure represents deduced information (such as boundary,
@@ -10,18 +16,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Windows.Media;
-    using System.Windows.Shapes;
-    using System.Windows.Controls;
-    using System.Windows.Markup;
-    using System.Windows.Documents.DocumentStructures;
-    using MS.Internal.Documents;
-    using CultureInfo = System.Globalization.CultureInfo;
-
     //=====================================================================
     /// <summary>
     /// FixedPageStructure represents deduced information (such as boundary,

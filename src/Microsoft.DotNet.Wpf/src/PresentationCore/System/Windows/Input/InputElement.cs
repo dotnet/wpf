@@ -3,13 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Windows.Media;
-using MS.Win32;
 using MS.Internal;
-using System.Security;
-using System.Runtime.InteropServices;
 using System.Windows.Interop;
 using System.Windows.Media.Media3D;
-using System;
 
 namespace System.Windows.Input
 {
@@ -276,8 +272,8 @@ namespace System.Windows.Input
                             HwndSource sourceTo = PresentationSource.CriticalFromVisual(rootTo) as HwndSource;
 
 
-                            if(sourceFrom != null && sourceFrom.CriticalHandle != IntPtr.Zero && sourceFrom.CompositionTarget != null &&
-                               sourceTo != null && sourceTo.CriticalHandle != IntPtr.Zero && sourceTo.CompositionTarget != null)
+                            if(sourceFrom != null && sourceFrom.Handle != IntPtr.Zero && sourceFrom.CompositionTarget != null &&
+                               sourceTo != null && sourceTo.Handle != IntPtr.Zero && sourceTo.CompositionTarget != null)
                             {
                                 // Translate the point into client coordinates.
                                 ptTranslated = PointUtil.RootToClient(ptTranslated, sourceFrom);

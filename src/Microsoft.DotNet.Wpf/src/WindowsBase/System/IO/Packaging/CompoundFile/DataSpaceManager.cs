@@ -2,41 +2,21 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//   The object for manipulating data spaces within the WPP Package.
-//
-//
-//
-//
-//
-//
-//
-
-using System;
 using System.Collections;
-using System.Diagnostics;           // For Debug.Assert
 using System.Globalization;
-using System.IO;
-using System.Reflection;            // For finding transform objects & their constructor
-using System.Collections.Generic;
-
-using System.Windows;               // ExceptionStringTable
 using MS.Internal.IO.Packaging;
 using MS.Internal.IO.Packaging.CompoundFile;
 using CU = MS.Internal.IO.Packaging.CompoundFile.ContainerUtilities;
-using MS.Internal.WindowsBase;
 
 namespace System.IO.Packaging
 {
-/// <summary>
-/// This class is used to manipulate the data spaces within a specific instance
-/// of the Avalon container.  This is how data transform modules are plugged
-/// into the container to enable features like data compression and data
-/// encryption.
-/// </summary>
-internal class DataSpaceManager
+    /// <summary>
+    /// This class is used to manipulate the data spaces within a specific instance
+    /// of the Avalon container.  This is how data transform modules are plugged
+    /// into the container to enable features like data compression and data
+    /// encryption.
+    /// </summary>
+    internal class DataSpaceManager
 {
     /***********************************************************************/
     // Constants

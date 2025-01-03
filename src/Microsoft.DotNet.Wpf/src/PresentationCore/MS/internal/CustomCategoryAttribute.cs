@@ -5,7 +5,6 @@
 //
 //
 
-using System;
 using System.ComponentModel;
 using MS.Internal.PresentationCore;
 

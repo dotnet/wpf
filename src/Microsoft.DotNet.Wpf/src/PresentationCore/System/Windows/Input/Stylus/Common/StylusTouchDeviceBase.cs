@@ -5,8 +5,6 @@
 //
 //
 
-using MS.Internal;
-using System.Security;
 using System.Windows.Media;
 
 namespace System.Windows.Input

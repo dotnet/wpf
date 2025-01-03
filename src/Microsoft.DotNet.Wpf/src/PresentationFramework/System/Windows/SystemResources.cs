@@ -5,18 +5,14 @@
 //
 //
 
-using System;
-using System.Diagnostics;
 using System.IO;
 using System.Reflection;
 using System.Resources;
 using System.Runtime.InteropServices;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
-using System.Security;
 using System.Windows.Threading;
 using System.Text;
 using MS.Utility;
@@ -24,11 +20,8 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Markup;
 using System.Windows.Diagnostics;
 using System.Windows.Documents;
-using System.Windows.Media;
 using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Resources;
-using System.Windows.Appearance;
 using MS.Win32;
 using MS.Internal;
 using MS.Internal.Ink;
@@ -36,6 +29,7 @@ using MS.Internal.Interop;
 using MS.Internal.PresentationFramework;                   // SafeSecurityHelper
 using System.Windows.Baml2006;
 using System.Xaml.Permissions;
+using System.Runtime.CompilerServices;
 
 // Disable pragma warnings to enable PREsharp pragmas
 #pragma warning disable 1634, 1691
@@ -819,7 +813,7 @@ namespace System.Windows
                     Type knownTypeHelper = assembly.GetType("Microsoft.Windows.Themes.KnownTypeHelper");
                     if (knownTypeHelper != null)
                     {
-                        MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(knownTypeHelper);
+                        RuntimeHelpers.RunClassConstructor(knownTypeHelper.TypeHandle);
                     }
                 }
 #pragma warning restore 6502
@@ -1045,7 +1039,7 @@ namespace System.Windows
                 _hwndNotify.Count == 0 ||
                 _hwndNotify.Keys.FirstOrDefault((hwndDpiContext) => hwndDpiContext.DpiAwarenessContextValue == ProcessDpiAwarenessContextValue) == null)
             {
-                _hwndNotify = new Dictionary<DpiUtil.HwndDpiInfo, SecurityCriticalDataClass<HwndWrapper>>();
+                _hwndNotify = new Dictionary<DpiUtil.HwndDpiInfo, HwndWrapper>();
                 _hwndNotifyHook = new Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook>();
                 _dpiAwarenessContextAndDpis = new List<DpiUtil.HwndDpiInfo>();
 
@@ -1139,10 +1133,10 @@ namespace System.Windows
                 Debug.Assert(!_hwndNotify.ContainsKey(hwndDpiInfo));
                 Debug.Assert(hwndDpiInfo.DpiAwarenessContextValue == dpiContextValue);
 
-                _hwndNotify[hwndDpiInfo] = new SecurityCriticalDataClass<HwndWrapper>(hwndNotify);
-                _hwndNotify[hwndDpiInfo].Value.Dispatcher.ShutdownFinished += OnShutdownFinished;
+                _hwndNotify[hwndDpiInfo] = hwndNotify;
+                _hwndNotify[hwndDpiInfo].Dispatcher.ShutdownFinished += OnShutdownFinished;
                 _hwndNotifyHook[hwndDpiInfo] = new HwndWrapperHook(SystemThemeFilterMessage);
-                _hwndNotify[hwndDpiInfo].Value.AddHook(_hwndNotifyHook[hwndDpiInfo]);
+                _hwndNotify[hwndDpiInfo].AddHook(_hwndNotifyHook[hwndDpiInfo]);
 
                 return hwndDpiInfo;
             }
@@ -1154,7 +1148,7 @@ namespace System.Windows
             {
                 foreach (var hwndDpiInfo in _dpiAwarenessContextAndDpis)
                 {
-                    _hwndNotify[hwndDpiInfo].Value.Dispose();
+                    _hwndNotify[hwndDpiInfo].Dispose();
                     _hwndNotifyHook[hwndDpiInfo] = null;
                 }
             }
@@ -1570,7 +1564,7 @@ namespace System.Windows
                 Debug.Assert(hwndDpiInfo != null);
 
                 // will throw when a match is not found, which should never happen because we just called Ensure...()
-                return _hwndNotify[hwndDpiInfo].Value;
+                return _hwndNotify[hwndDpiInfo];
             }
         }
 
@@ -1653,7 +1647,7 @@ namespace System.Windows
 
             if (EnsureResourceChangeListener(hwndDpiInfo))
             {
-                return _hwndNotify[hwndDpiInfo].Value;
+                return _hwndNotify[hwndDpiInfo];
             }
 
             return null;
@@ -1684,7 +1678,7 @@ namespace System.Windows
         /// </summary>
         [ThreadStatic] private static List<DpiUtil.HwndDpiInfo> _dpiAwarenessContextAndDpis;
 
-        [ThreadStatic] private static Dictionary<DpiUtil.HwndDpiInfo, SecurityCriticalDataClass<HwndWrapper>> _hwndNotify;
+        [ThreadStatic] private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapper> _hwndNotify;
         [ThreadStatic]  private static Dictionary<DpiUtil.HwndDpiInfo, HwndWrapperHook> _hwndNotifyHook;
 
         private static Hashtable _resourceCache = new Hashtable();
@@ -1744,9 +1738,17 @@ namespace System.Windows
                 {
                     // Note that we are replacing the _keyorValue field
                     // with the value and deleting the _dictionary field.
-                    RemoveFromDictionary();
-                    // Update after removal from dictionary as we need the key for proper removal
-                    _keyOrValue = value;
+                    if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
+                    {
+                        _keyOrValue = value;
+                        RemoveFromDictionary();
+                    }
+                    else
+                    {
+                        RemoveFromDictionary();
+                        // Update after removal from dictionary as we need the key for proper removal
+                        _keyOrValue = value;
+                    }
                 }
 
                 // Freeze if this value originated from a style or template
@@ -1804,11 +1806,18 @@ namespace System.Windows
         }
 
         // remove this DeferredResourceReference from its ResourceDictionary
-        protected virtual void RemoveFromDictionary()
+        internal virtual void RemoveFromDictionary()
         {
             if (_dictionary != null)
             {
-                _dictionary.DeferredResourceReferences.Remove(this);
+                if (FrameworkAppContextSwitches.DisableDynamicResourceOptimization)
+                {
+                    _dictionary.WeakDeferredResourceReferences.Remove(this);
+                }
+                else
+                {
+                    _dictionary.DeferredResourceReferencesList.Remove(this);
+                }
                 _dictionary = null;
             }
         }
@@ -1974,7 +1983,7 @@ namespace System.Windows
         }
 
         // remove this DeferredResourceReference from its ResourceDictionary
-        protected override void RemoveFromDictionary()
+        internal override void RemoveFromDictionary()
         {
             // DeferredThemeResourceReferences are never added to the dictionary's
             // list of deferred references, so they don't need to be removed.

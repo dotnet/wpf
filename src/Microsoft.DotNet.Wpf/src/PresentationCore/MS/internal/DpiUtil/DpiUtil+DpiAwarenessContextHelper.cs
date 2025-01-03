@@ -3,16 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 
+using MS.Utility;
+using MS.Win32;
+
+using PROCESS_DPI_AWARENESS = MS.Win32.NativeMethods.PROCESS_DPI_AWARENESS;
+
 namespace MS.Internal
 {
-    using MS.Utility;
-    using MS.Win32;
-    using System;
-    using System.Collections.Generic;
-    using System.Security;
-
-    using PROCESS_DPI_AWARENESS = MS.Win32.NativeMethods.PROCESS_DPI_AWARENESS;
-
     /// <content>
     /// Contains definition of <see cref="DpiAwarenessContextHelper"/>
     /// </content>

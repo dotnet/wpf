@@ -8,12 +8,8 @@
 // Description: Automation element for ContentElements
 //
 
-using System;                           // Object
-using System.Collections.Generic;       // List<T>
 using System.Windows.Input;             // AccessKeyManager
 using MS.Internal.PresentationCore;     // SR
-using System.Windows.Automation.Provider;
-using System.Windows.Automation;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation.Peers

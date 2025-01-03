@@ -4,11 +4,8 @@
 
 //#define POINTS_FILTER_TRACE
 
-using System;
 using System.Windows;
 using System.Windows.Ink;
-using System.Windows.Media;
-using System.Collections.Generic;
 
 
 namespace MS.Internal.Ink

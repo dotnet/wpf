@@ -2,7 +2,7 @@
   <PropertyGroup>
     <ProjectGuid>9a7e395b-e859-40e2-809d-efb72cf3a2ee</ProjectGuid>
     
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
   </PropertyGroup>
 
   <PropertyGroup>

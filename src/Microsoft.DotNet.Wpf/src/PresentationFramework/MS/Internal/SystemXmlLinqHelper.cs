@@ -6,7 +6,6 @@
 // Description: Helper methods for code that uses types from System.Xml.Linq.
 //
 
-using System;
 using System.ComponentModel;
 
 namespace MS.Internal

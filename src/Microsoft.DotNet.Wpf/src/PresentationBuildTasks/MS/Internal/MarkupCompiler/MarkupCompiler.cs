@@ -19,7 +19,6 @@ using System.Text;
 using System.Reflection;
 using System.Globalization;
 using System.ComponentModel;
-using System.Security.Cryptography;
 
 using System.CodeDom;
 using System.CodeDom.Compiler;
@@ -29,14 +28,11 @@ using System.ComponentModel.Design.Serialization;
 
 using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-
-using System.Threading;
 using MS.Internal.Markup;
 using MS.Internal.Tasks;
 using MS.Utility;   // for SR
 using Microsoft.Build.Utilities;
 using Microsoft.Build.Tasks.Windows;
-using System.Runtime.CompilerServices;
 
 namespace MS.Internal
 {
@@ -1364,14 +1360,14 @@ namespace MS.Internal
 
         private bool SwitchStatementSupported()
         {
-            return (IsLanguageCSharp || (CompilerInfo != null && (string.Compare(CompilerInfo.GetLanguages()[0], JSCRIPT, StringComparison.OrdinalIgnoreCase) == 0)));
+            return IsLanguageCSharp || (CompilerInfo != null && string.Equals(CompilerInfo.GetLanguages()[0], JSCRIPT, StringComparison.OrdinalIgnoreCase));
         }
 
         private bool IsInternalAccessSupported
         {
             get
             {
-                return (CompilerInfo == null || (string.Compare(CompilerInfo.GetLanguages()[0], JSHARP, StringComparison.OrdinalIgnoreCase) != 0));
+                return CompilerInfo == null || !string.Equals(CompilerInfo.GetLanguages()[0], JSHARP, StringComparison.OrdinalIgnoreCase);
             }
         }
 
@@ -2112,7 +2108,7 @@ namespace MS.Internal
         private bool IsLanguageSupported(string language)
         {
             _language = language;
-            _isLangCSharp = string.Compare(language, CSHARP, StringComparison.OrdinalIgnoreCase) == 0;
+            _isLangCSharp = string.Equals(language, CSHARP, StringComparison.OrdinalIgnoreCase);
 
             if (IsLanguageCSharp)
             {
@@ -2121,7 +2117,7 @@ namespace MS.Internal
             }
             else
             {
-                _isLangVB = string.Compare(language, VB, StringComparison.OrdinalIgnoreCase) == 0;
+                _isLangVB = string.Equals(language, VB, StringComparison.OrdinalIgnoreCase);
                 if (IsLanguageVB)
                 {
                     _codeProvider = new Microsoft.VisualBasic.VBCodeProvider();

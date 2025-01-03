@@ -9,9 +9,7 @@
 //
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Windows.Media.Animation;
-using System.Windows.Markup;
 
 namespace System.Windows.Media
 {

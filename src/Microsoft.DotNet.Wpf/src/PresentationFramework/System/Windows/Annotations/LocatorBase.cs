@@ -12,11 +12,7 @@
 //     Spec: Simplifying Store Cache Model.doc
 //
 
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Xml;
 
 using MS.Internal.Annotations;
 

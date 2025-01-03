@@ -13,27 +13,10 @@
 //you need to disable warnings 1634 and 1691. (Presharp Documentation)
 #pragma warning disable 1634, 1691
 
-using MS.Internal.PtsHost;
 using MS.Internal.PtsTable;
-using MS.Utility;
-
-using System;
-using System.Collections;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Media;
 using System.Windows.Markup;
-using System.Collections.Generic;
 using MS.Internal.Documents;
-
-using MS.Internal;
-using MS.Internal.Data;
-using MS.Internal.PtsHost.UnsafeNativeMethods;
 
 namespace System.Windows.Documents
 {

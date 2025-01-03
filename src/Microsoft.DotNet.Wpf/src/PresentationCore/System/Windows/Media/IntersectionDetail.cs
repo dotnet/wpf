@@ -9,11 +9,7 @@
 //
 //
 
-using System.Runtime.InteropServices;
-
-using System;
-
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     /// <summary>
     /// IntersectionDetail - Indicates detailed information on the nature

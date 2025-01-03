@@ -3,8 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Diagnostics;
 using System.ComponentModel;
 using System.Windows.Markup;
 using System.Runtime.InteropServices;

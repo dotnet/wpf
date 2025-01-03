@@ -2,20 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//   Proivde a implementation for IServiceProvider and method to add services
-//
-//
-
-using System;
-using System.ComponentModel;
-using System.Collections.Generic;
-using MS.Internal.WindowsBase;
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
 namespace System.Windows.Markup
 {
     /// <summary>

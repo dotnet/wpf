@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+
 //
 // Description:
 //      TextNavigator implementation for NullTextContainer
@@ -12,11 +14,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-    using System.Diagnostics;
-    using System.Windows;
-    using MS.Internal;
-
     /// <summary>
     /// NullTextPointer is an implementation of ITextPointer for NullTextContainer
     /// </summary>

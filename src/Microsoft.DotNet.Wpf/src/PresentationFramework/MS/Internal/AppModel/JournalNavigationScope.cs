@@ -13,10 +13,7 @@
 //      NavigationService.
 //
 
-using System;
 using System.Collections;
-using System.Security;
-using System.Diagnostics;
 
 using System.Windows;
 using System.Windows.Navigation;

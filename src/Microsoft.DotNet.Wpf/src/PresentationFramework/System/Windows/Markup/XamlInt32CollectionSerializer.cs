@@ -8,20 +8,11 @@
 //
 
 using System;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Globalization;
 using System.IO;
-using System.Xml;
-using MS.Utility;
-using MS.Internal;
 
 #if PBTCOMPILER
 using System.Reflection;
-using System.Collections.Generic; 
+using System.Collections.Generic;
 using TypeConverterHelper = MS.Internal.Markup.TypeConverterHelper;
 
 namespace MS.Internal.Markup
@@ -29,8 +20,8 @@ namespace MS.Internal.Markup
 
 using System.Windows;
 using System.Windows.Media;
-using System.Windows.Media.Media3D; 
-using MS.Internal.Media; 
+using System.Windows.Media.Media3D;
+using MS.Internal.Media;
 using TypeConverterHelper = System.Windows.Markup.TypeConverterHelper;
 
 namespace System.Windows.Markup

@@ -2,18 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
 // This class is used by the StreamGeometry class to generate an inlined,
 // flattened geometry stream.
-//
-
-using MS.Internal;
 
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Security;
-
 
 #if !PBTCOMPILER 
 using System.Runtime.InteropServices;
@@ -26,24 +19,22 @@ using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
 using System.Windows.Media.Media3D;
 using System.Diagnostics;
-using SR=MS.Internal.PresentationCore.SR;
 
 using MS.Internal.PresentationCore;
 
 namespace System.Windows.Media
 
-#elif PBTCOMPILER 
+#elif PBTCOMPILER
 
-using MS.Internal.Markup; 
-
+using MS.Internal.Markup;
 
 namespace MS.Internal.Markup
 #endif 
 {
     /// <summary>
     ///     StreamGeometryContext
-    /// </summary>    
-#if ! PBTCOMPILER 
+    /// </summary>
+#if !PBTCOMPILER
     public abstract class StreamGeometryContext : DispatcherObject, IDisposable
 #else
     internal abstract class StreamGeometryContext : IDisposable

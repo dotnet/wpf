@@ -12,13 +12,8 @@
 //
 
 using MS.Internal;
-using MS.Utility;
 using System.ComponentModel;
-using System.Windows;
-using System;
-using System.Security;
 using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
 using System.Windows.Markup;

@@ -10,14 +10,11 @@
 // Generated on Mon Mar 19 09:23:40 2007
 //
 
-using MS.Internal;
-using System.Windows;
-
 namespace MS.Internal
 {
 
 
-// Script tags
+    // Script tags
 
     internal enum ScriptTags
     {

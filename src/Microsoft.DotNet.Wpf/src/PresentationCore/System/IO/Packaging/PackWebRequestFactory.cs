@@ -13,12 +13,9 @@
 #define TRACE
 #endif
 
-using System;
 using System.Net;
-using System.Diagnostics;               // for Assert
 using MS.Internal.IO.Packaging;         // for PackageCache
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
-using System.Security;
 using MS.Internal;
 
 namespace System.IO.Packaging
@@ -136,7 +133,6 @@ namespace System.IO.Packaging
         // However, these two functions regress 700k working set in System.dll and System.xml.dll
         //  which is mostly for logging and config.
         // This helper function provides a way to bypass the regression
-        [FriendAccessAllowed]
         internal static WebRequest CreateWebRequest(Uri uri)
         {
             if (string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.Ordinal))

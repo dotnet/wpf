@@ -4,16 +4,8 @@
 
 
 
-using System.Windows;
-using System;
-using MS.Internal.TextFormatting;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
-using System.Security;
 using System.Windows.Media.TextFormatting;
-using MS.Internal;
 
 namespace MS.Internal.TextFormatting
 {

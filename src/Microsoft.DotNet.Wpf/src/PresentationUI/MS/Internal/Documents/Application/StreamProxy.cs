@@ -10,18 +10,17 @@
 
 using System;
 using System.IO;
-using System.Security;
 using System.Windows.TrustUI;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// Implements the Proxy pattern from Design Patterns for Stream.  The intended
-/// usage is to control access to the Stream; specifically to allow one to 
-/// replace the underlying stream.  The StreamProxy can also ensure, if
-/// desired, that the underlying stream is readonly.
-/// </summary>
-internal class StreamProxy : Stream
+    /// <summary>
+    /// Implements the Proxy pattern from Design Patterns for Stream.  The intended
+    /// usage is to control access to the Stream; specifically to allow one to 
+    /// replace the underlying stream.  The StreamProxy can also ensure, if
+    /// desired, that the underlying stream is readonly.
+    /// </summary>
+    internal class StreamProxy : Stream
 {
     #region Constructors
     //--------------------------------------------------------------------------
@@ -49,8 +48,8 @@ internal class StreamProxy : Stream
     /// to read-only.</param>
     internal StreamProxy(Stream targetOfProxy, bool isTargetReadOnly)
     {
-        _proxy.Value = targetOfProxy;
-        _isTargetReadOnly.Value = isTargetReadOnly;
+        _proxy = targetOfProxy;
+        _isTargetReadOnly = isTargetReadOnly;
     }
 
     #endregion Constructors
@@ -65,7 +64,7 @@ internal class StreamProxy : Stream
     /// </summary>
     public override bool CanRead
     {
-        get { return _proxy.Value.CanRead; }
+        get { return _proxy.CanRead; }
     }
 
     /// <summary>
@@ -73,7 +72,7 @@ internal class StreamProxy : Stream
     /// </summary>
     public override bool CanSeek
     {
-        get { return _proxy.Value.CanSeek; }
+        get { return _proxy.CanSeek; }
     }
 
     /// <summary>
@@ -83,7 +82,7 @@ internal class StreamProxy : Stream
     {
         get
         {
-            return _proxy.Value.CanTimeout;
+            return _proxy.CanTimeout;
         }
     }
 
@@ -92,7 +91,7 @@ internal class StreamProxy : Stream
     /// </summary>
     public override bool CanWrite
     {
-        get { return _proxy.Value.CanWrite; }
+        get { return _proxy.CanWrite; }
     }
 
     /// <summary>
@@ -100,7 +99,7 @@ internal class StreamProxy : Stream
     /// </summary>
     public override void Close()
     {
-        _proxy.Value.Close();
+        _proxy.Close();
     }
 
     /// <summary>
@@ -108,7 +107,7 @@ internal class StreamProxy : Stream
     /// </summary>
     public override void Flush()
     {
-        _proxy.Value.Flush();
+        _proxy.Flush();
     }
 
     /// <summary>
@@ -116,7 +115,7 @@ internal class StreamProxy : Stream
     /// </summary>
     public override long Length
     {
-        get { return _proxy.Value.Length; }
+        get { return _proxy.Length; }
     }
 
     /// <summary>
@@ -126,11 +125,11 @@ internal class StreamProxy : Stream
     {
         get
         {
-            return _proxy.Value.Position;
+            return _proxy.Position;
         }
         set
         {
-            _proxy.Value.Position = value;
+            _proxy.Position = value;
         }
     }
 
@@ -139,7 +138,7 @@ internal class StreamProxy : Stream
     /// </summary>
     public override int Read(byte[] buffer, int offset, int count)
     {
-        return _proxy.Value.Read(buffer, offset, count);
+        return _proxy.Read(buffer, offset, count);
     }
 
     /// <summary>
@@ -149,11 +148,11 @@ internal class StreamProxy : Stream
     {
         get
         {
-            return _proxy.Value.ReadTimeout;
+            return _proxy.ReadTimeout;
         }
         set
         {
-            _proxy.Value.ReadTimeout = value;
+            _proxy.ReadTimeout = value;
         }
     }
 
@@ -162,7 +161,7 @@ internal class StreamProxy : Stream
     /// </summary>
     public override long Seek(long offset, SeekOrigin origin)
     {
-        return _proxy.Value.Seek(offset, origin);
+        return _proxy.Seek(offset, origin);
     }
 
     /// <summary>
@@ -170,7 +169,7 @@ internal class StreamProxy : Stream
     /// </summary>
     public override void SetLength(long value)
     {
-        _proxy.Value.SetLength(value);
+        _proxy.SetLength(value);
     }
 
     /// <summary>
@@ -178,7 +177,7 @@ internal class StreamProxy : Stream
     /// </summary>
     public override void Write(byte[] buffer, int offset, int count)
     {
-        _proxy.Value.Write(buffer, offset, count);
+        _proxy.Write(buffer, offset, count);
     }
 
     /// <summary>
@@ -188,11 +187,11 @@ internal class StreamProxy : Stream
     {
         get
         {
-            return _proxy.Value.WriteTimeout;
+            return _proxy.WriteTimeout;
         }
         set
         {
-            _proxy.Value.WriteTimeout = value;
+            _proxy.WriteTimeout = value;
         }
     }
 
@@ -210,10 +209,10 @@ internal class StreamProxy : Stream
         }
         finally
         {
-            if (disposing && _proxy.Value != null)
+            if (disposing && _proxy != null)
             {
-                _proxy.Value.Dispose();
-                _proxy.Value = null;
+                _proxy.Dispose();
+                _proxy = null;
             }
         }
     }
@@ -230,7 +229,7 @@ internal class StreamProxy : Stream
     /// </summary>
     public override int GetHashCode()
     {
-        return _proxy.Value.GetHashCode();
+        return _proxy.GetHashCode();
     }
 
     /// <summary>
@@ -238,7 +237,7 @@ internal class StreamProxy : Stream
     /// </summary>
     public override bool Equals(object obj)
     {
-        return _proxy.Value.Equals(obj);
+        return _proxy.Equals(obj);
     }
 
     #endregion Object Overrides
@@ -250,12 +249,12 @@ internal class StreamProxy : Stream
 
     internal Stream Target
     {
-        get { return _proxy.Value; }
+        get { return _proxy; }
 
         set {
-            if (!_isTargetReadOnly.Value)
+            if (!_isTargetReadOnly)
             {
-                _proxy.Value = value;
+                _proxy = value;
             }
             else
             {
@@ -271,8 +270,8 @@ internal class StreamProxy : Stream
     // Private Fields
     //--------------------------------------------------------------------------
 
-    SecurityCriticalDataForSet<Stream> _proxy;
-    SecurityCriticalDataForSet<bool> _isTargetReadOnly;
+    Stream _proxy;
+    bool _isTargetReadOnly;
 
     #endregion Private Fields
 }

@@ -2,21 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Windows.Shapes;
 using System.Windows.Controls;
-using System.Diagnostics;
-using System.Threading;
-
-using System.ComponentModel;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using MS.Internal;
 
 using System;
-
-using System.Runtime.InteropServices;
-using System.Security;
 
 namespace Microsoft.Windows.Themes
 {

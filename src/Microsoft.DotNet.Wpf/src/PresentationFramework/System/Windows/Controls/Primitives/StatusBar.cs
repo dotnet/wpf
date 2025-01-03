@@ -3,10 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Windows.Automation.Peers;
-using System.Windows.Media;
-using System.Windows.Threading;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 

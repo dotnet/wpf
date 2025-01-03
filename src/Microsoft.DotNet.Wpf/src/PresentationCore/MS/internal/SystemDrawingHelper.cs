@@ -7,9 +7,7 @@
 // Description: Helper methods for code that uses types from System.Drawing.
 //
 
-using System;
 using System.IO;
-using System.Security;
 
 namespace MS.Internal
 {

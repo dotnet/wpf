@@ -7,23 +7,8 @@
 // Description: Implementation of GeometryCollection
 //
 
-using System;
-using MS.Internal;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Reflection;
 using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using System.Globalization;
-using System.Windows.Media;
-using System.Windows;
-using System.Windows.Media.Composition;
-using System.Text.RegularExpressions;
 using System.Windows.Media.Animation;
-using System.Windows.Markup;
-using System.Runtime.InteropServices;
 
 namespace System.Windows.Media
 {

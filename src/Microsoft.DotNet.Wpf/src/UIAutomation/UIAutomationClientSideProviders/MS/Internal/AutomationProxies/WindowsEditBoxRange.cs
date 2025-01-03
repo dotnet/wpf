@@ -11,13 +11,10 @@
 using System;
 using System.Collections;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows.Input;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Text;
-using System.ComponentModel;
 using MS.Win32;
 
 namespace MS.Internal.AutomationProxies

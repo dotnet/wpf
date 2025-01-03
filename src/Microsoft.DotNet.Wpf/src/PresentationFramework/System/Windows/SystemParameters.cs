@@ -2,19 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
 using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
-using Microsoft.Win32;
 using MS.Win32;
 using MS.Internal;
 using MS.Internal.Interop;
-using MS.Internal.KnownBoxes;
 
 // Disable pragma warnings to enable PREsharp pragmas
 #pragma warning disable 1634, 1691

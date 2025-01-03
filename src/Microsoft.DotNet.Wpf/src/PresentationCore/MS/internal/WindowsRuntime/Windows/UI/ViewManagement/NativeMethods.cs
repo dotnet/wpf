@@ -5,11 +5,7 @@
 //
 //
 
-using System;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Security;
-using MS.Internal.PresentationCore;
 
 namespace MS.Internal.WindowsRuntime
 {

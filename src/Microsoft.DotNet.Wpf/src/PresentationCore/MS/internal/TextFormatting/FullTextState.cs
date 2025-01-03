@@ -5,15 +5,9 @@
 
 
 
-using System;
-using System.Security;
 using System.Globalization;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
-using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using MS.Internal.Shaping;
 using MS.Internal.Generic;
 
 

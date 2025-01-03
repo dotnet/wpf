@@ -13,11 +13,6 @@
 //
 
 
-using System;
-using System.Security;
-
-using MS.Internal;
-using MS.Internal.PresentationCore;
 using MS.Internal.TextFormatting;
 
 
@@ -32,7 +27,6 @@ namespace System.Windows.Media.TextFormatting
 #if OPTIMALBREAK_API
     public abstract class TextBreakpoint : ITextMetrics, IDisposable
 #else
-    [FriendAccessAllowed]   // used by Framework
     internal abstract class TextBreakpoint : ITextMetrics, IDisposable
 #endif
     {
@@ -72,7 +66,7 @@ namespace System.Windows.Media.TextFormatting
         /// We would make a correspondent call to notify our unmanaged wrapper to release them from duty of managing this 
         /// resource. 
         /// </remarks>
-        internal abstract SecurityCriticalDataForSet<IntPtr> GetTextPenaltyResource();
+        internal abstract IntPtr GetTextPenaltyResource();
 
 
         /// <summary>

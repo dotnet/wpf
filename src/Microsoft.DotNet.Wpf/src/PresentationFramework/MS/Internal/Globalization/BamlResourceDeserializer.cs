@@ -5,15 +5,8 @@
 // Internal class that build the baml tree for localization
 
 
-using System;
 using System.IO;
-using System.Globalization;
-using System.Runtime.InteropServices;
 using System.Collections;
-using System.Collections.Generic;
-
-using System.Diagnostics;
-using System.Text;
 
 using System.Windows;
 using System.Windows.Markup;

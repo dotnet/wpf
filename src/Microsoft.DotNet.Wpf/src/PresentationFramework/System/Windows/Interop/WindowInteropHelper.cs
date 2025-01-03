@@ -8,13 +8,7 @@
 //
 
 
-using System;
-using System.Windows;
-using System.Windows.Interop;
-using System.Security;
-using System.Diagnostics;
 using MS.Internal;
-using MS.Win32;
 
 namespace System.Windows.Interop
 {
@@ -55,23 +49,12 @@ namespace System.Windows.Interop
         /// <summary>
         /// Get the Handle of the window
         /// </summary>
-        /// <remarks>
-        ///     Callers must have UIPermission(UIPermissionWindow.AllWindows) to call this API.
-        /// </remarks>
         public IntPtr Handle
         {
             get
             {
-                return CriticalHandle;
-            }
-        }
-
-        internal IntPtr CriticalHandle
-        {
-            get
-            {
                 Invariant.Assert(_window != null, "Cannot be null since we verify in the constructor");
-                return _window.CriticalHandle;
+                return _window.Handle;
             }
         }
 
@@ -111,12 +94,12 @@ namespace System.Windows.Interop
         public IntPtr EnsureHandle()
         {
 
-            if (CriticalHandle == IntPtr.Zero)
+            if (Handle == IntPtr.Zero)
             {
                 _window.CreateSourceWindow(false /*create hwnd during show*/);
             }
 
-            return CriticalHandle;
+            return Handle;
         }
 
         #endregion Public Methods

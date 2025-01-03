@@ -2,23 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// 
-//
 // Description: TextRange provider wrapper for WCP
-//
-//
 
-using System;
-using System.Collections;
 using System.Windows.Threading;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation.Text;
 using System.Windows.Automation.Peers;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace MS.Internal.Automation
 {

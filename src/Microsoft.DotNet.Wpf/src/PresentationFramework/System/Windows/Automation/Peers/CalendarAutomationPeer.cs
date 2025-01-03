@@ -3,15 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Security;
-using System.Windows;
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Windows.Controls;
-using System.Windows.Controls.Primitives;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation.Peers

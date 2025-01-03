@@ -5,9 +5,7 @@
 // Description: Read-only collection of AutomationElements - effectively a
 // wrapper for Array
 
-using System;
 using System.Collections;
-using MS.Internal.Automation;
 
 namespace System.Windows.Automation
 {

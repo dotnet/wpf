@@ -10,7 +10,6 @@
 #pragma warning disable 1634, 1691
 
 using System;
-using System.ComponentModel;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
 using System.Runtime.InteropServices;

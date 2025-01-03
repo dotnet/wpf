@@ -8,15 +8,11 @@
 //              that is expressed in terms of .NET types.
 //
 
-using System;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Security;
+using IOptionDescription = System.Windows.Documents.MsSpellCheckLib.RCW.IOptionDescription;
 
 namespace System.Windows.Documents.MsSpellCheckLib
 {
-    using IOptionDescription = RCW.IOptionDescription;
-
     internal partial class SpellChecker
     {
         /// <summary>

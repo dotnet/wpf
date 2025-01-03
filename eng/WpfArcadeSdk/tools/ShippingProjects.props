@@ -22,6 +22,7 @@
       System.Printing;
       System.Windows.Controls.Ribbon;
       System.Windows.Presentation;
+      System.Windows.Primitives;
       PresentationFramework.Aero;
       PresentationFramework.Aero2;
       PresentationFramework.AeroLite;
@@ -40,12 +41,12 @@
       $(InternalShippingLibProjects);
       bilinearspan
     </InternalShippingLibProjects>
-    
+
     <InternalShippingProjects>
     $(InternalShippingLibProjects);
       PresentationNative;
     </InternalShippingProjects>
-    
+
     <ShippingProjects>
       $(ExternalShippingProjects);
       $(InternalShippingProjects)
@@ -79,7 +80,7 @@
       Reference assembly projects are categorized by what repo they are shipping in.
       If this changes, say due to open sourcing, they must move accordingly or they 
       will not be including in the ref pack.
-      
+
       See: ReferenceAssembly.targets/CopyHandCraftedReferenceProjectsToRefDir
     -->
     <ExternalHandCraftedReferenceProjects>
@@ -104,6 +105,7 @@
       System.Printing-ref;
       System.Windows.Controls.Ribbon-ref;
       System.Windows.Presentation-ref;
+      System.Windows.Primitives-ref;
       WindowsFormsIntegration-ref;
     </ExternalHandCraftedReferenceProjects>
 
@@ -145,6 +147,8 @@
       ReachFramework-ref;
       System.Printing;
       System.Printing-ref;
+      System.Windows.Primitives;
+      System.Windows.Primitives-ref;
       UIAutomationClient;
       UIAutomationClient-ref;
       UIAutomationClientsideProviders;

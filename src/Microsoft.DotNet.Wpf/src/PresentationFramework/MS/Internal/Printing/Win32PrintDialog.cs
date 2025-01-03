@@ -5,11 +5,9 @@
 #if !DONOTREFPRINTINGASMMETA
 
 
-using System;
 using System.Printing.Interop;
 using System.Printing;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows.Controls;
 
 namespace MS.Internal.Printing
@@ -64,7 +62,7 @@ namespace MS.Internal.Printing
             {
                 System.Windows.Interop.WindowInteropHelper helper =
                     new System.Windows.Interop.WindowInteropHelper(System.Windows.Application.Current.MainWindow);
-                owner = helper.CriticalHandle;
+                owner = helper.Handle;
             }
 
             try

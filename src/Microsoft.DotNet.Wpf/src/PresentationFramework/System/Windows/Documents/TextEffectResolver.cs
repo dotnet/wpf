@@ -6,16 +6,12 @@
 // Description: Text Effect Setter
 // 
 
-using System.Collections.Generic;
-
-using System.Windows.Controls;
-using System.Windows.Documents;
 using System.Windows.Media;
 
 using MS.Internal.Text;
 
 namespace System.Windows.Documents
-{   
+{
     /// <summary>
     /// Helper class to help set text effects into the Text container
     /// </summary>

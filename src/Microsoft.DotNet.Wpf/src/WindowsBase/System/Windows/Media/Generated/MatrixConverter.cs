@@ -9,20 +9,8 @@
 // Please see MilCodeGen.html for more information.
 //
 
-using MS.Internal;
-using MS.Internal.WindowsBase;
-using System;
-using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.ComponentModel.Design.Serialization;
-using System.Windows.Markup;
-using System.Windows.Media.Converters;
-using System.Windows;
-using System.Windows.Media;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 

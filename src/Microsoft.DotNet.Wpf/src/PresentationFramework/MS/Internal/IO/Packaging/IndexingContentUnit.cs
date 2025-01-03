@@ -9,7 +9,6 @@
 //
 
 
-using System;
 using MS.Internal.Interop;  // for CHUNK_BREAKTYPE
 
 namespace MS.Internal.IO.Packaging

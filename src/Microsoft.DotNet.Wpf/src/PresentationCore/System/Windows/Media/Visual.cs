@@ -2,35 +2,18 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //      Defines a node in the composition scene graph.
-//
 
-using System;
-using System.Security;
 using System.Windows.Threading;
-using MS.Win32;
 using System.Windows.Diagnostics;
-using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Windows.Media.Animation;
 using System.Windows.Media.Composition;
 using System.Windows.Media.Effects;
-using System.Diagnostics;
-using System.Collections;
 using System.Windows.Interop;
-using System.Collections.Generic;
 using MS.Internal;
 using MS.Internal.Media;
 using MS.Internal.Media3D;
-using System.Resources;
-using MS.Utility;
-using System.Runtime.InteropServices;
-using MS.Internal.PresentationCore;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 //------------------------------------------------------------------------------
 // This section lists various things that we could improve on the Visual class.
@@ -319,10 +302,8 @@ namespace System.Windows.Media
         // This flag is set during a descendents walk, for property invalidation.
         internal bool IsVisualChildrenIterationInProgress
         {
-            [FriendAccessAllowed]
             get { return CheckFlagsAnd(VisualFlags.IsVisualChildrenIterationInProgress); }
 
-            [FriendAccessAllowed]
             set { SetFlags(value, VisualFlags.IsVisualChildrenIterationInProgress); }
         }
 
@@ -2718,7 +2699,6 @@ namespace System.Windows.Media
         /// Note: must do invalidation without removing / adding
         /// to avoid loosing focused element by input system
         /// </summary>
-        [FriendAccessAllowed]
         internal void InvalidateZOrder()
         {
             //  if we don't have any children, there is nothing to do
@@ -2795,12 +2775,10 @@ namespace System.Windows.Media
         // These 2 method will be REMOVED once Hamid is back and can
         // explain why Window needs to Bypass layout for setting Flow Direction.
         // These methods are only called from InternalSetLayoutTransform which is called only from Window
-        [FriendAccessAllowed]
         internal void InternalSetOffsetWorkaround(Vector offset)
         {
             VisualOffset = offset;
         }
-        [FriendAccessAllowed]
         internal void InternalSetTransformWorkaround(Transform transform)
         {
             VisualTransform = transform;

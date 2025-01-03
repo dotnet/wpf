@@ -10,7 +10,6 @@
 //
 
 
-using System;
 using System.Windows.Media.TextFormatting;
 using MS.Internal.Generic;
 

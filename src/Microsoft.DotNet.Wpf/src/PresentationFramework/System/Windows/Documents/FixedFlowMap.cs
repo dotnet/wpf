@@ -2,20 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Collections;
+
 //
 // Description: Implements Fixed/Flow structural mapping
 //
 
 namespace System.Windows.Documents
 {
-    using MS.Internal.Documents;
-    using System;
-    using System.Diagnostics;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Text;
-
     //--------------------------------------------------------------------
     //
     // Internal Enums

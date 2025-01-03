@@ -8,8 +8,6 @@
 //      The definition of ApplicationGesture enum type
 //
 
-using System;
-
 namespace System.Windows.Ink
 {
     /// <summary>

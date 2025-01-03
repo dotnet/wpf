@@ -11,22 +11,12 @@
 //
 //
 
-using System;
-using System.Collections;
-using System.Diagnostics;
-using System.IO;
 using System.IO.Packaging;
-using System.Globalization;
 using System.Runtime.Serialization;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Security ;
-using System.Windows.Markup;
 
 using MS.Internal.AppModel;
 using MS.Internal;
 using MS.Internal.Utility;
-
-using System.Windows.Controls.Primitives;
 
 //In order to avoid generating warnings about unknown message numbers and
 //unknown pragmas when compiling your C# source code with the actual C# compiler,
@@ -340,13 +330,11 @@ namespace System.Windows.Navigation
                 return uri.ToString();
             }
 
-            bool isPack = String.Compare(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase) == 0;
             string displayName;
-
-            if (isPack)
+            if (string.Equals(uri.Scheme, PackUriHelper.UriSchemePack, StringComparison.OrdinalIgnoreCase))
             {
                 Uri relative = BaseUriHelper.MakeRelativeToSiteOfOriginIfPossible(uri);
-                if (! relative.IsAbsoluteUri)
+                if (!relative.IsAbsoluteUri)
                 {
                     displayName = (new Uri(siteOfOrigin, relative)).ToString();
                 }

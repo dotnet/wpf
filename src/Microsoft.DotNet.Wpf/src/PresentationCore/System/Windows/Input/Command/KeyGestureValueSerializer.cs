@@ -10,11 +10,7 @@
 //
 //
 
-using System;
 using System.ComponentModel;    // for TypeConverter
-using System.Globalization;     // for CultureInfo
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Markup;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings

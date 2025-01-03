@@ -2,13 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
 
-namespace MS.Internal.ComponentModel 
+namespace MS.Internal.ComponentModel
 {
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-
     // This is a hashcode comparer we use to key property descriptors.  We
     // want property descriptors keyed off of reference equality.
     // 

@@ -23,9 +23,7 @@
 //               during Run and Dispose. 
 
 
-using System;
 using System.Globalization;
-using System.Security;
 using System.Threading;
 
 namespace MS.Internal

@@ -3,28 +3,18 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Threading;
-using System.Threading;
-using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Interop;
 using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
-using System.Security;
-using MS.Utility;
-using MS.Internal.Controls;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
-using Microsoft.Win32;
 
-using CommonDependencyProperty=MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
+using CommonDependencyProperty = MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
 
 namespace System.Windows.Input
 {

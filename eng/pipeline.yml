@@ -5,6 +5,7 @@
 parameters:
   runAsPublic: true
   repoName: dotnet/wpf
+  TSAEnabled: true
 jobs:
 - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
   - template: /eng/common/templates-official/job/onelocbuild.yml@self
@@ -45,6 +46,10 @@ jobs:
       variables:
       - name: Codeql.Enabled
         value: true
+      - name: Codeql.TSAEnabled
+        value: ${{ parameters.TSAEnabled }}
+      - name: Codeql.TSAOptionsPath
+        value: $(Build.SourcesDirectory)/eng/tsaoptions.json
       - name: _TeamName
         value: DotNetCore
       - name: _SignType

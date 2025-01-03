@@ -7,9 +7,6 @@
 // Description: Debug helpers for TextFlow. 
 //
 
-using System;
-using System.Diagnostics;
-
 namespace MS.Internal.PtsHost
 {
 #if TEXTPANELLAYOUTDEBUG

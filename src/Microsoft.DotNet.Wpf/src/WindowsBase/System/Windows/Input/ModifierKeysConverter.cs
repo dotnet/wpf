@@ -2,28 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-	//
-//
-// Description:
-//
-//      ModifierKeysConverter : Converts a Modifier string to the *Type* that the string represents and vice-versa.
-//
-// Features:
-//
-//
-//
-// 
-
-using System;
-using System.ComponentModel;    // for TypeConverter
-using System.Globalization;     // for CultureInfo
-using System.Reflection;
-using MS.Internal;
-using System.Windows;
-using System.Windows.Input;
-using System.Windows.Markup;
-using MS.Utility;
-using MS.Internal.WindowsBase;
+using System.ComponentModel;
+using System.Globalization;
 
 namespace System.Windows.Input
 {

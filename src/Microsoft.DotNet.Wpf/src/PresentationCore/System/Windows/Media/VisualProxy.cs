@@ -10,14 +10,6 @@
 
 namespace System.Windows.Media.Composition
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Media;
-
-
     /// <summary>
     /// Mapping between a visual and its handles on different channels.
     /// </summary>

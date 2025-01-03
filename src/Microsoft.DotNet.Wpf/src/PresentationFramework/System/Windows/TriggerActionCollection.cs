@@ -11,9 +11,7 @@
 *
 \***************************************************************************/
 using System.Collections;           // IList
-using System.Collections.Generic;   // IList<T>
 using MS.Internal;
-using System.Diagnostics;
 
 namespace System.Windows
 {

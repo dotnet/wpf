@@ -11,16 +11,11 @@
 *
 \***************************************************************************/
 
-using System;
-using System.Windows;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Globalization;
 using System.Windows.Markup;
 using System.ComponentModel;
-using System.Collections.Generic;
 using MS.Internal;
-using MS.Internal.WindowsBase;
 using System.Runtime.CompilerServices;
 
 namespace System.Windows

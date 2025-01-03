@@ -2,27 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-using MS.Utility;
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Windows;
 using System.Windows.Media;
-using System.Runtime.CompilerServices;
-using System.Runtime.InteropServices;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
-using System.Runtime.Serialization;
 using MS.Internal.Ink.InkSerializedFormat;
 using MS.Internal;
 using MS.Internal.Ink;
-using System.Reflection;
 using System.Windows.Input;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 // Primary root namespace for TabletPC/Ink/Handwriting/Recognition in .NET
 

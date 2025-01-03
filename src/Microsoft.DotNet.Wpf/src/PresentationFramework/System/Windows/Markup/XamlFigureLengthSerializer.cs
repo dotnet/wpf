@@ -7,17 +7,8 @@
 //   XamlSerializer used to persist FigureLength structures in Baml
 //
 
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Xml;
-using System.Windows;
-using MS.Utility;
 using MS.Internal;
 
 #if PBTCOMPILER
@@ -186,13 +177,12 @@ namespace System.Windows.Markup
             out double       value,
             out FigureUnitType unit)
         {
-            string goodString = s.Trim().ToLowerInvariant();
+            ReadOnlySpan<char> valueSpan = s.AsSpan().Trim();
 
             value = 0.0;
             unit = FigureUnitType.Pixel;
 
             int i;
-            int strLen = goodString.Length;
             int strLenUnit = 0;
             double unitFactor = 1.0;
 
@@ -200,7 +190,7 @@ namespace System.Windows.Markup
             //  peel [unit] off the end of the string
             i = 0;
 
-            if (goodString == UnitStrings[i].Name)
+            if (valueSpan.Equals(UnitStrings[i].Name, StringComparison.OrdinalIgnoreCase))
             {
                 strLenUnit = UnitStrings[i].Name.Length;
                 unit = UnitStrings[i].UnitType;
@@ -211,7 +201,7 @@ namespace System.Windows.Markup
                 {
                     //  Note: this is NOT a culture specific comparison.
                     //  this is by design: we want the same unit string table to work across all cultures.
-                    if (goodString.EndsWith(UnitStrings[i].Name, StringComparison.Ordinal))
+                    if (valueSpan.EndsWith(UnitStrings[i].Name, StringComparison.OrdinalIgnoreCase))
                     {
                         strLenUnit = UnitStrings[i].Name.Length;
                         unit = UnitStrings[i].UnitType;
@@ -224,23 +214,20 @@ namespace System.Windows.Markup
             //  try again with a converter-only unit (a pixel equivalent).
             if (i >= UnitStrings.Length)
             {
-                for (i = 0; i < PixelUnitStrings.Length; ++i)
+                PixelUnit pixelUnit;
+                if (PixelUnit.TryParsePixelPerInch(valueSpan, out pixelUnit)
+                    || PixelUnit.TryParsePixelPerCentimeter(valueSpan, out pixelUnit)
+                    || PixelUnit.TryParsePixelPerPoint(valueSpan, out pixelUnit))
                 {
-                    //  Note: this is NOT a culture specific comparison.
-                    //  this is by design: we want the same unit string table to work across all cultures.
-                    if (goodString.EndsWith(PixelUnitStrings[i], StringComparison.Ordinal))
-                    {
-                        strLenUnit = PixelUnitStrings[i].Length;
-                        unitFactor = PixelUnitFactors[i];
-                        break;
-                    }
+                    strLenUnit = pixelUnit.Name.Length;
+                    unitFactor = pixelUnit.Factor;
                 }
             }
 
             //  this is where we would handle leading whitespace on the input string.
             //  this is also where we would handle whitespace between [value] and [unit].
             //  check if we don't have a [value].  This is acceptable for certain UnitTypes.
-            if (strLen == strLenUnit && unit != FigureUnitType.Pixel)
+            if (valueSpan.Length == strLenUnit && unit != FigureUnitType.Pixel)
 
             {
                 value = 1;
@@ -251,7 +238,7 @@ namespace System.Windows.Markup
                 Debug.Assert(   unit == FigureUnitType.Pixel 
                             ||  DoubleUtil.AreClose(unitFactor, 1.0)    );
 
-                ReadOnlySpan<char> valueString = goodString.AsSpan(0, strLen - strLenUnit);
+                ReadOnlySpan<char> valueString = valueSpan.Slice(0, valueSpan.Length - strLenUnit);
                 value = double.Parse(valueString, provider: cultureInfo) * unitFactor;
             }
         }
@@ -281,15 +268,6 @@ namespace System.Windows.Markup
             new FigureUnitTypeStringConvert("columns", FigureUnitType.Column),
             new FigureUnitTypeStringConvert("content", FigureUnitType.Content),
             new FigureUnitTypeStringConvert("page",    FigureUnitType.Page)
-        };
-
-        //  this array contains strings for unit types that are not present in the FigureUnitType enum
-        static private string[] PixelUnitStrings = { "in", "cm", "pt" };
-        static private double[] PixelUnitFactors = 
-        { 
-            96.0,             // Pixels per Inch
-            96.0 / 2.54,      // Pixels per Centimeter
-            96.0 / 72.0,      // Pixels per Point
         };
 
 #endregion Fields

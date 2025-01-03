@@ -1,6 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
 // ------------------------------------------------------------------------------
 // Changes to this file must follow the http://aka.ms/api-review process.
 // ------------------------------------------------------------------------------
@@ -512,7 +512,7 @@ namespace System.Windows
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
         public string Name { get { throw null; } set { } }
         public bool OverridesDefaultStyle { get { throw null; } set { } }
-        public new System.Windows.DependencyObject Parent { get { throw null; } }
+        public System.Windows.DependencyObject Parent { get { throw null; } }
         [System.Windows.Markup.AmbientAttribute]
         public System.Windows.ResourceDictionary Resources { get { throw null; } set { } }
         public System.Windows.Style Style { get { throw null; } set { } }

@@ -9,19 +9,11 @@
 \***************************************************************************/
 
 using System;
-using System.Xml;
 using System.IO;
-using System.Globalization;
-using System.Text;
 using System.Collections;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System.Reflection;
-
-using MS.Utility;
-using MS.Internal;
 
 #if PBTCOMPILER
 using MS.Internal.Markup;
@@ -129,7 +121,7 @@ namespace System.Windows.Markup
             {
                 int probe = (high + low) / 2;
                 Type probeType = KnownTypes.Types[probe];
-                int cmp = String.CompareOrdinal(typeShortName, probeType.Name);
+                int cmp = string.CompareOrdinal(typeShortName, probeType.Name);
                 if (cmp == 0)
                 {
                     // Found a potential match.  Now compare the namespaces & assembly to be sure

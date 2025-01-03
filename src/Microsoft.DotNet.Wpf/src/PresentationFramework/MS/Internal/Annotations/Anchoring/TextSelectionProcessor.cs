@@ -12,22 +12,12 @@
 //     Spec: Anchoring Namespace Spec.doc
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows;
 using System.Windows.Annotations;
-using System.Windows.Annotations.Storage;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
-using System.Windows.Media;
 using System.Xml;
-using MS.Utility;
-
-using MS.Internal.Documents;
 
 namespace MS.Internal.Annotations.Anchoring
 {

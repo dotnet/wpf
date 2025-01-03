@@ -9,8 +9,6 @@
 //              that enable setting, getting a typed value that's 
 //              passed between Pagefunctions. 
 //
-using System;
-
 namespace System.Windows.Navigation
 {
     ///<summary>

@@ -2,6 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal.Documents;
+using MS.Internal;
+using System.Collections.ObjectModel;
+using System.Windows.Media;
+
 //
 // Description:
 //      DocumentSequenceTextView implements TextView for DocumentSequence
@@ -10,19 +15,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal.Documents;
-    using MS.Internal;
-    using MS.Utility;
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Media;
-    using System.Windows.Shapes;
-
-
     /// <summary>
     /// DocumentSequenceTextView implements TextView for DocumentSequence
     /// to support text editing (e.g Selection).

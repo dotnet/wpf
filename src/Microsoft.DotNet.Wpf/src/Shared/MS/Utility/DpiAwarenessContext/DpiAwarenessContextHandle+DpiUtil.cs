@@ -2,13 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Win32;
 
 namespace MS.Utility
 {
-    using MS.Utility;
-    using MS.Win32;
-    using System;
-
     /// <content>
     /// Contains inner class <see cref="DpiUtil"/>
     /// </content>

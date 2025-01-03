@@ -4,10 +4,7 @@
 
 // Description: Client-side wrapper for VirtualizedItem Pattern
 
-using System;
-using System.Windows.Automation.Provider;
 using MS.Internal.Automation;
-using System.Runtime.InteropServices;
 
 namespace System.Windows.Automation
 {

@@ -11,14 +11,6 @@
 //
 //
 
-using System;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using MS.Internal;
-using System.ComponentModel.Design.Serialization;
-using System.Windows.Markup;
-
 namespace System.Windows.Media.Media3D
 {
     /// <summary>

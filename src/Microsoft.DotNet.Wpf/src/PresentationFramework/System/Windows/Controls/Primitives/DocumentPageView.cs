@@ -6,17 +6,13 @@
 // Description: Provides a view port for a page of content for a DocumentPage.
 //
 
-using System.Windows.Automation;            // AutomationPattern
 using System.Windows.Automation.Peers;      // AutomationPeer
-using System.Windows.Controls;              // StretchDirection
-using System.Windows.Controls.Primitives;   // DocumentViewerBase
 using System.Windows.Documents;             // DocumentPaginator
 using System.Windows.Media;                 // Visual
 using System.Windows.Media.Imaging;         // RenderTargetBitmap
 using System.Windows.Threading;             // Dispatcher
 using MS.Internal;                          // Invariant
 using MS.Internal.Documents;                // DocumentPageHost, DocumentPageTextView
-using MS.Internal.Automation;               // TextAdaptor
 using MS.Internal.KnownBoxes;               // BooleanBoxes
 
 

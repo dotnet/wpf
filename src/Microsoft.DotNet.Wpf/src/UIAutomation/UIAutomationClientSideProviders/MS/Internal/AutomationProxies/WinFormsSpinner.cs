@@ -5,8 +5,6 @@
 // Description: Spinner Proxy
 
 using System;
-using System.Collections;
-using System.Text;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Automation;

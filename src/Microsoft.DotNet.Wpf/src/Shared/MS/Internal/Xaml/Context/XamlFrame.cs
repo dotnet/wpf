@@ -4,11 +4,6 @@
 
 #nullable disable
 
-using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Diagnostics;
-
 namespace MS.Internal.Xaml.Context
 {
     abstract class XamlFrame
@@ -54,7 +49,7 @@ namespace MS.Internal.Xaml.Context
             set
             {
                 _previous = value;
-                _depth = (_previous == null) ? 0 : _previous._depth + 1;
+                _depth = (_previous is null) ? 0 : _previous._depth + 1;
             }
         }
     }

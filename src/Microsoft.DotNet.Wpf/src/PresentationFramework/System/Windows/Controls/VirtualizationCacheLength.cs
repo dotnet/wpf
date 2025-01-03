@@ -6,7 +6,6 @@
 // Description: Virtualization cache length implementation
 //
 
-using MS.Internal;
 using System.ComponentModel;
 using System.Globalization;
 

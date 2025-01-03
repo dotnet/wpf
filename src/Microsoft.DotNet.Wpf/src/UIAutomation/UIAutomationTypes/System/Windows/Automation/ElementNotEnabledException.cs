@@ -5,10 +5,7 @@
 // Description: Exception thrown when client attemps to interact with a non-
 // enabled control (eg. Invoke a non-enabled button)
 
-using System.Windows.Automation;
-using System;
 using System.Runtime.Serialization;
-using System.Security;
 using MS.Internal.Automation;
 
 namespace System.Windows.Automation

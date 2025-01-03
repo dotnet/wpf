@@ -6,7 +6,6 @@
 // Description: An abstract interface describing a linear text document.
 //
 
-using System;
 using MS.Internal.Documents;
 
 namespace System.Windows.Documents

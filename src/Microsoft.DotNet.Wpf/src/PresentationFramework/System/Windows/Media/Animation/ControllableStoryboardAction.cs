@@ -12,19 +12,16 @@
 *
 \***************************************************************************/
 using System.ComponentModel;            // DefaultValueAttribute
-using System.Diagnostics;               // Debug.Assert
-
-using System.Windows.Documents;         // TableTemplate
 using System.Windows.Markup;            // INameScope
 
 namespace System.Windows.Media.Animation
 {
-/// <summary>
-///     A controllable storyboard action associates a trigger action with a 
-/// Storyboard.  The association from this object is a string that is the name
-/// of the Storyboard in a resource dictionary.
-/// </summary>
-public abstract class ControllableStoryboardAction : TriggerAction
+    /// <summary>
+    ///     A controllable storyboard action associates a trigger action with a 
+    /// Storyboard.  The association from this object is a string that is the name
+    /// of the Storyboard in a resource dictionary.
+    /// </summary>
+    public abstract class ControllableStoryboardAction : TriggerAction
 {
     /// <summary>
     ///     Internal constructor - nobody is supposed to ever create an instance

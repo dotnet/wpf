@@ -4,8 +4,6 @@
 
 // Description: Basic Provider-side interface for 1-level UI
 
-using System;
-using System.Windows.Automation;
 using System.Runtime.InteropServices;
 
 

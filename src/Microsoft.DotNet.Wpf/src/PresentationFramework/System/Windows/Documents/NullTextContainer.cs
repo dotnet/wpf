@@ -2,6 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal.Documents;
+using MS.Internal;
+
 //
 // Description:
 //      NullTextContainer is an immutable empty TextContainer that contains 
@@ -11,13 +14,6 @@
 
 namespace System.Windows.Documents
 {
-    using System;
-    using System.Diagnostics;
-    using System.Windows.Threading;
-    using System.Windows;                // DependencyID etc.
-    using MS.Internal.Documents;
-    using MS.Internal;
-
     //=====================================================================
     /// <summary>
     /// NullTextContainer is an immutable empty TextContainer that contains 

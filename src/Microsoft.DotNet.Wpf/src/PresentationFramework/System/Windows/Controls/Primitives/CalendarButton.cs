@@ -3,10 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System.Windows;
 using System.Windows.Automation.Peers;
-using System.Windows.Controls;
-using System.Windows.Data;
 
 namespace System.Windows.Controls.Primitives
 {

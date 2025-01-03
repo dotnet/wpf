@@ -3,13 +3,11 @@
 // See the LICENSE file in the project root for more information.
 
 
+using MS.Utility;
+using MS.Win32;
+
 namespace MS.Internal
 {
-    using MS.Utility;
-    using MS.Win32;
-    using System;
-    using System.Security;
-
     /// <content>
     /// Contains inner type <see cref="DpiAwarenessScope"/>
     /// </content>

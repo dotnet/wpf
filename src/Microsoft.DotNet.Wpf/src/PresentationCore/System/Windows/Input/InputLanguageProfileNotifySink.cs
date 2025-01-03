@@ -10,14 +10,6 @@
 //
 
 using MS.Win32;
-using System.Collections;
-using System.Globalization;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Interop;
-using System.Runtime.InteropServices;
-
-using System;
 
 namespace System.Windows.Input
 {
@@ -26,7 +18,7 @@ namespace System.Windows.Input
     //  InputLanguageProfileNotifySink
     //
     //------------------------------------------------------
- 
+
     /// <summary>
     ///     This is an internal. This is an implementation of ITfLanguageProfileNotifySink.
     /// </summary>

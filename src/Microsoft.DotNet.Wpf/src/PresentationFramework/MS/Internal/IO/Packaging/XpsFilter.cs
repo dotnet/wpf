@@ -12,19 +12,13 @@
 //              ContainerFilterImpl and IndexingFilterMarshaler.
 //
 
-using System;
 using System.IO;
 using System.IO.Packaging;
-using System.Diagnostics;                       // For Assert
 using System.Runtime.InteropServices;           // For Marshal.ThrowExceptionForHR
-using System.Globalization;                     // For CultureInfo
 using System.Windows;                           // for ExceptionStringTable
-using System.Security;                          // For SecurityCritical
 
 using MS.Win32;
 using MS.Internal.Interop;                      // For STAT_CHUNK, etc.
-using MS.Internal.IO.Packaging;                 // For ManagedIStream
-using MS.Internal;
 
 namespace MS.Internal.IO.Packaging
 {

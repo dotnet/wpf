@@ -5,12 +5,7 @@
 // Description: Class to create a queue on its own thread.
 
 using System.Windows.Automation;
-using System.Windows.Automation.Provider;
 using System;
-using System.Collections;
-using System.ComponentModel;
-using MS.Internal.Automation;
-using MS.Win32;
 
 namespace MS.Internal.Automation
 {

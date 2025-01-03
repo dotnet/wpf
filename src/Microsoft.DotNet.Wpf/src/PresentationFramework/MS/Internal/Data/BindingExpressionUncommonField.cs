@@ -7,7 +7,6 @@
 // Description: Defines an UncommonField of type BindingExpression.
 //
 
-using System;
 using System.Windows;
 using System.Windows.Data;
 

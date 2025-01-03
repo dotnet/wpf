@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using MS.Internal.WindowsBase;
 using System.IO;
 using System.IO.Packaging;
 
@@ -11,7 +10,6 @@ namespace MS.Internal.IO.Packaging
     /// <summary>
     /// Extensions to provide wrappers for functionality that no longer exists in System.IO.Packaging.PackagePart
     /// </summary>
-    [FriendAccessAllowed]
     internal static class PackagePartExtensions
     {
         /// <summary>

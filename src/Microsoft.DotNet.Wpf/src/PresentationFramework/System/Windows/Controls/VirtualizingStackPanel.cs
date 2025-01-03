@@ -8,21 +8,16 @@
 using MS.Internal;
 using MS.Internal.Controls;
 using MS.Utility;
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Globalization;
-using System.Diagnostics;
 using System.IO;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
 using System.Windows.Threading;
 using System.Windows.Input;
 using System.Windows.Data;
-using MS.Internal.Data;
 
 namespace System.Windows.Controls
 {

@@ -9,12 +9,7 @@
 //
 
 
-using System;
-using System.Diagnostics;
-using System.Security;
-using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Media;
 
 
 namespace MS.Internal.FontFace

@@ -2,12 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Diagnostics;
-using MS.Internal.PresentationCore;
-using MS.Utility;
-using SR=MS.Internal.PresentationCore.SR;
-
 namespace System.Windows
 {
     /// <summary>
@@ -250,7 +244,6 @@ namespace System.Windows
         /// <returns>
         ///     Matching <see cref="RoutedEvent"/>
         /// </returns>
-        [FriendAccessAllowed]
         internal static RoutedEvent GetRoutedEventFromName(string name, Type ownerType)
         {
             ArgumentNullException.ThrowIfNull(name);

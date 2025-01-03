@@ -3,22 +3,10 @@
 // See the LICENSE file in the project root for more information.
 
 
-using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-using MS.Utility;
-using MS.Win32;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusPointer
 {
@@ -35,7 +23,7 @@ namespace System.Windows.Input.StylusPointer
 
         internal PointerStylusPlugInManager(PresentationSource source)
         {
-            _inputSource = new SecurityCriticalData<PresentationSource>(source);
+            _inputSource = source;
         }
 
         #endregion
@@ -68,7 +56,7 @@ namespace System.Windows.Input.StylusPointer
         /// <returns>A matrix from the tablet to the screen</returns>
         private Matrix GetTabletToViewTransform(TabletDevice tablet)
         {
-            Matrix matrix = (_inputSource.Value as HwndSource)?.CompositionTarget?.TransformToDevice ?? Matrix.Identity;
+            Matrix matrix = (_inputSource as HwndSource)?.CompositionTarget?.TransformToDevice ?? Matrix.Identity;
 
             matrix.Invert();
             matrix *= tablet.TabletDeviceImpl.TabletToScreen;
@@ -656,7 +644,7 @@ namespace System.Windows.Input.StylusPointer
             }
         }
 
-        internal SecurityCriticalData<PresentationSource> _inputSource;
+        internal PresentationSource _inputSource;
 
         List<StylusPlugInCollection> _plugInCollectionList = new List<StylusPlugInCollection>();
 

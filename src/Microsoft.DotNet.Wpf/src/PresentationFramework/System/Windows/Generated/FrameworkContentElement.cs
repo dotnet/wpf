@@ -13,17 +13,11 @@
 
 using MS.Internal;
 using MS.Utility;
-
-using System;
 using System.Collections;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Controls;
 using System.Windows.Diagnostics;
 using System.Windows.Media;
 using System.Windows.Markup;
-
-using SR=System.Windows.SR;
 
 namespace System.Windows
 {

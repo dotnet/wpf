@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Windows.Documents;
+
 //
 // Description: An override class representing a movable
 //              position within a PasswordTextContainer.
@@ -9,12 +11,6 @@
 
 namespace System.Windows.Controls
 {
-    using System;
-    using System.Windows.Threading;
-    using System.Diagnostics;
-    using System.Windows.Documents;
-    using MS.Internal;
-
     // TextNavigator implementation for the PasswordTextContainer.
     internal sealed class PasswordTextPointer : ITextPointer
     {

@@ -3,19 +3,14 @@
 // See the LICENSE file in the project root for more information.
 
 
-
-//
 // A consolidated file of native values and enums.
 //
 // The naming convention for enums is to use the native prefix of common types
 // as the enum name, where this makes sense to do.
 // One exception is WM_, which is called WindowMessage here.
-//
 
 namespace MS.Internal.Interop
 {
-    using System;
-
     /// <summary>
     /// APPDOCLISTTYPE.  ADLT_*
     /// </summary>

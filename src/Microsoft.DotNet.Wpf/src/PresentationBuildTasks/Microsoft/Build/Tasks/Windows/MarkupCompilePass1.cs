@@ -13,16 +13,8 @@
 using System;
 using System.IO;
 using System.Collections;
-using System.Security;
 
 using System.Globalization;
-using System.Diagnostics;
-using System.Reflection;
-using System.Resources;
-using System.Runtime.InteropServices;
-
-using System.CodeDom;
-using System.CodeDom.Compiler;
 
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
@@ -30,7 +22,6 @@ using Microsoft.Build.Utilities;
 using MS.Utility;
 using MS.Internal;
 using MS.Internal.Tasks;
-using MS.Internal.Markup;
 
 // Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
 // We first need to disable warnings about unknown message numbers and unknown pragmas.
@@ -1545,7 +1536,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                 string xamlInputFullPath = TaskHelper.CreateFullFilePath(inputXamlItem.ItemSpec, SourceDir);
 
-                if (String.Compare(localTypeXamlFile, xamlInputFullPath, StringComparison.OrdinalIgnoreCase) == 0)
+                if (string.Equals(localTypeXamlFile, xamlInputFullPath, StringComparison.OrdinalIgnoreCase))
                 {
                     //
                     // Got this file from the original XamlFile TaskItem list.
@@ -1710,27 +1701,19 @@ namespace Microsoft.Build.Tasks.Windows
         //
         private bool IsItemLocalizable(ITaskItem ti)
         {
-            bool bIsLocalizable;
+            // if UICulture is not set, all baml files are not localizable.
+            // The Localizable metadata value is ignored for this case.
+            bool bIsLocalizable = false;
 
-            if (String.IsNullOrEmpty(UICulture))
-            {
-                // if UICulture is not set, all baml files are not localizable.
-                // The Localizable metadate value is ignored for this case.
-                bIsLocalizable = false;
-            }
-            else
-            {
-                string strLocalizable;
+            if (!string.IsNullOrEmpty(UICulture))
+            { 
+                string strLocalizable = ti.GetMetadata(SharedStrings.Localizable);
 
                 // if UICulture is set, by default all the baml files are localizable unless
                 // an explicit value "false" is set to Localizable metadata.
-                bIsLocalizable = true;
-
-                strLocalizable = ti.GetMetadata(SharedStrings.Localizable);
-
-                if (strLocalizable != null && String.Compare(strLocalizable, "false", StringComparison.OrdinalIgnoreCase) == 0)
+                if (!string.Equals(strLocalizable, "false", StringComparison.OrdinalIgnoreCase))
                 {
-                    bIsLocalizable = false;
+                    bIsLocalizable = true;
                 }
             }
 

@@ -19,12 +19,9 @@
 //                  12/11/03 - brucemac - adapted from ResponseStream
 //                  15/10/04 - brucemac - adapted from ContainerResponseStream
 
-using System;
-using System.Diagnostics;
 using System.IO;
 using System.IO.Packaging;      // for PackWebResponse
 using MS.Utility;
-using System.Windows;
 
 namespace MS.Internal.IO.Packaging
 {

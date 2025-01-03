@@ -18,9 +18,7 @@
 //  The stream is read only
 
 
-using System;
 using System.IO;
-using System.IO.Packaging;
 
 using MS.Internal.PresentationCore;     // for ExceptionStringTable
 

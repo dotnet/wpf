@@ -2,25 +2,14 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description:
-//   Implementation of the CompoundFileReference base class.
-//
-
 // Notes:
 //  Persistence of specific classes is mostly hard-coded in this base class because
 //  the persistence must follow a shared binary implementation with Office.  It is
 //  also intentionally not polymorphic because we don't allow arbitrary subclasses
 //  to participate.
 
-using System;
-using System.Collections.Specialized;       // for StringCollection class
+using System.Collections.Specialized;
 using System.IO;
-using System.Diagnostics;                   // for Debug.Assert
-using System.Windows;                       // for SR error message lookup
-
-using MS.Internal.WindowsBase;
 
 namespace MS.Internal.IO.Packaging.CompoundFile
 {

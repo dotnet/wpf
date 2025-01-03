@@ -3,15 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 
+using MS.Utility;
+using MS.Win32;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+
 namespace MS.Internal
 {
-    using MS.Utility;
-    using MS.Win32;
-    using System;
-    using System.ComponentModel;
-    using System.Runtime.InteropServices;
-    using System.Security;
-
     internal static partial class DpiUtil
     {
         /// <summary>

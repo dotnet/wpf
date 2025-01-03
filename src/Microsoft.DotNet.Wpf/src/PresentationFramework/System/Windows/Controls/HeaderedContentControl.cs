@@ -3,18 +3,13 @@
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Threading;
 using System.Windows.Media;
-
-using MS.Utility;
 using MS.Internal;
 using MS.Internal.Controls;
-using MS.Internal.Data;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
 

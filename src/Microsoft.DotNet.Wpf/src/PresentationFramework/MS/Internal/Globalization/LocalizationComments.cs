@@ -8,9 +8,7 @@
 
 using System;
 using System.Diagnostics;
-using System.IO;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Collections.Generic;
 
 #if !PBTCOMPILER
@@ -368,7 +366,7 @@ namespace MS.Internal.Globalization
 
                 for (int i = 0; i < _enumNames.Length; i++)
                 {
-                    if (string.Compare(enumName, _enumNames[i], StringComparison.Ordinal) == 0)
+                    if (string.Equals(enumName, _enumNames[i], StringComparison.Ordinal))
                     {
                         enumIndex = i;
                         return true;

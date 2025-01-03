@@ -12,21 +12,14 @@
 
 using System;
 using System.IO;
-using System.Collections;
-using System.Text;
-using System.Runtime.InteropServices;
 
 using System.Globalization;
 using System.Diagnostics;
 using System.Reflection;
-using System.Resources;
 
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-
-using Microsoft.Build.Tasks;
 using MS.Utility;
-using System.Collections.Generic;
 
 
 namespace MS.Internal.Tasks

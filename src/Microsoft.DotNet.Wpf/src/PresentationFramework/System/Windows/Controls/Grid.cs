@@ -23,8 +23,6 @@ using System.Threading;
 using System.Windows.Media;
 using System.Windows.Markup;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows.Controls
 {
     /// <summary>
@@ -3922,12 +3920,12 @@ namespace System.Windows.Controls
                 {
                     if (_currentEnumerator == -1)
                     {
-                        #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                        // IEnumerator.Current is documented to throw this exception
                         throw new InvalidOperationException(SR.EnumeratorNotStarted);
                     }
                     if (_currentEnumerator >= 3)
                     {
-                        #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                        // IEnumerator.Current is documented to throw this exception
                         throw new InvalidOperationException(SR.EnumeratorReachedEnd);
                     }
 

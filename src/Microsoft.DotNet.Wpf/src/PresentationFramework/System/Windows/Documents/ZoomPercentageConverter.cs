@@ -7,9 +7,6 @@
 //                ZoomPercentage property of DocumentViewer.
 //
 
-// Used to support the warnings disabled below
-#pragma warning disable 1634, 1691
-
 using System.Globalization;
 using System.Windows.Data;
 

@@ -18,9 +18,6 @@ using System.Windows.Controls.Primitives;
 
 namespace System.Windows.Documents
 {
-    // Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
-
     /// <summary>
     /// This class is sealed because it calls OnVisualChildrenChanged virtual in the
     /// constructor and it does not override it, but derived classes could.

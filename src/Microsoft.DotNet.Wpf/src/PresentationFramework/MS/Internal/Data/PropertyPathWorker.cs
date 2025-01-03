@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -533,13 +533,6 @@ namespace MS.Internal.Data
         {
             bool result = false;
 
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-#pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-#pragma warning disable 56500
             try
             {
                 result = (pi != null) && pi.GetIndexParameters().Length > 0;
@@ -550,9 +543,6 @@ namespace MS.Internal.Data
                 if (CriticalExceptions.IsCriticalApplicationException(ex))
                     throw;
             }
-
-#pragma warning restore 56500
-#pragma warning restore 1634, 1691
 
             return result;
         }
@@ -1372,14 +1362,6 @@ namespace MS.Internal.Data
                         return false;
                 }
 
-                // PreSharp uses message numbers that the C# compiler doesn't know about.
-                // Disable the C# complaints, per the PreSharp documentation.
-#pragma warning disable 1634, 1691
-
-                // PreSharp complains about catching NullReference (and other) exceptions.
-                // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-#pragma warning disable 56500
-
                 try
                 {
                     object arg = null;
@@ -1436,9 +1418,6 @@ namespace MS.Internal.Data
                 {
                     return false;
                 }
-
-#pragma warning restore 56500
-#pragma warning restore 1634, 1691
             }
 
             // common case is IList - one arg of type Int32.  Wrap the arg so
@@ -1535,14 +1514,6 @@ namespace MS.Internal.Data
                     }
                 }
 
-                // PreSharp uses message numbers that the C# compiler doesn't know about.
-                // Disable the C# complaints, per the PreSharp documentation.
-#pragma warning disable 1634, 1691
-
-                // PreSharp complains about catching NullReference (and other) exceptions.
-                // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-#pragma warning disable 56500
-
                 try
                 {
                     o = GetValue(item, k);
@@ -1571,9 +1542,6 @@ namespace MS.Internal.Data
                     if (_host != null)
                         _host.ReportGetValueError(k, item, new ArgumentOutOfRangeException("index"));
                 }
-
-#pragma warning restore 56500
-#pragma warning restore 1634, 1691
 
                 return o;
             }
@@ -1643,14 +1611,6 @@ namespace MS.Internal.Data
             // the (arbitrary) exception they throw, and just use the result of
             // CanWrite.
 
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-#pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-#pragma warning disable 56500
-
             // CanWrite says whether we're even allowed to call SetValue
             // (there's no try-block here - if a custom property doesn't even
             // implement CanWrite, we just fail).
@@ -1686,9 +1646,6 @@ namespace MS.Internal.Data
             // if we get here, the property has CanWrite=true, and a non-public
             // setter. Returning true causes the caller to throw.
             return true;
-
-#pragma warning restore 56500
-#pragma warning restore 1634, 1691
         }
 
         // see whether DBNull is a valid value for update, and cache the answer

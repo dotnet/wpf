@@ -12,9 +12,6 @@ using MS.Win32;
 using MS.Internal;
 using MS.Internal.Interop;
 
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
-
 namespace System.Windows
 {
     /// <summary>

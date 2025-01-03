@@ -2,16 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-// In order to disable Presharp warning 6507 - Prefer 'string.IsNullOrEmpty(value)' over checks for null and/or emptiness,
-// we have to disable warnings 1634 and 1691 to make the compiler happy first.
-#pragma warning disable 1634, 1691
-
-//
-// Description: Implementation of StickyNoteControl control.
-//
-//              See spec at StickyNoteControlSpec.mht
-//
-
 using System.Globalization;
 using System.Xml;
 using MS.Internal;
@@ -28,7 +18,6 @@ using System.Windows.Ink;
 using System.Windows.Input;
 using System.Windows.Media;
 using MS.Utility;
-
 
 namespace System.Windows.Controls
 {

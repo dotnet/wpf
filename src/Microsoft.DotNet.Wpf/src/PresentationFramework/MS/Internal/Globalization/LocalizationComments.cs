@@ -17,12 +17,6 @@ using System.Windows;
 
 using MS.Utility;
 
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
-
 namespace MS.Internal.Globalization
 {
     /// <remarks>

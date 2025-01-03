@@ -2,19 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-//
-// Description: ContainerParagraph represents continuous piece of backing 
-//              storage and consists of other paragraphs. Collection of 
-//              these paragraphs is stored  as double-linked list of 
-//              Paragraph objects. 
-//              A container paragraph is associated with a block element 
-//              and can be hosted by a section or another container paragraph.
-//
-
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown 
-// message numbers and unknown pragmas for PRESharp contol
-
 using System.Windows;
 using System.Windows.Documents;
 using MS.Internal.Documents;
@@ -1332,6 +1319,3 @@ namespace MS.Internal.PtsHost
         private bool _firstParaValidInUpdateMode;
     }
 }
-
-#pragma warning enable 1634, 1691
-

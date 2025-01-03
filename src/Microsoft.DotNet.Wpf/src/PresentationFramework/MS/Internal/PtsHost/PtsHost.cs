@@ -14,15 +14,6 @@
 *
 **************************************************************************/
 
-
-//
-// Description: Provides PTS callbacks implementation / forwarding. 
-//
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown 
-// message numbers and unknown pragmas for PRESharp contol
-
-#pragma warning disable 6500        // Specifically disable warning about unhandled null reference and SEH exceptions.
-
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media.TextFormatting;
@@ -4190,7 +4181,3 @@ namespace MS.Internal.PtsHost
         #endregion PTS callbacks
     }
 }
-
-#pragma warning enable 6500
-#pragma warning enable 1634, 1691
-

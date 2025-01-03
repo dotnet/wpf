@@ -23,8 +23,6 @@ using MS.Internal.Controls;
 using MS.Internal.PresentationFramework;
 using MS.Internal.Telemetry.PresentationFramework;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows.Controls
 {
     /// <summary>
@@ -1851,7 +1849,7 @@ Debug.Assert(lineCount == LineCount);
             {
                 if(CheckFlags(Flags.ContentChangeInProgress))
                 {
-                    #pragma warning suppress 6503 // IEnumerator.Current is documented to throw this exception
+                    // IEnumerator.Current is documented to throw this exception
                     throw new InvalidOperationException(SR.TextContainerChangingReentrancyInvalid);
                 }
 

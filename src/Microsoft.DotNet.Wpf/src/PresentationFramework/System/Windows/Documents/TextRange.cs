@@ -2,16 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Description: a high-level tool for editing text based FrameworkElements.
-//
-
 using MS.Internal;
 using System.Xml;
 using System.IO;
 using System.Windows.Markup; // Parser
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Documents
 {
@@ -788,7 +782,6 @@ namespace System.Windows.Documents
             if (!TextSchema.IsCharacterProperty(formattingProperty) &&
                 !TextSchema.IsParagraphProperty(formattingProperty))
             {
-                #pragma warning suppress 6506 // formattingProperty is obviously not null
                 throw new ArgumentException(SR.Format(SR.TextEditorPropertyIsNotApplicableForTextFormatting, formattingProperty.Name));
             }
 
@@ -857,7 +850,6 @@ namespace System.Windows.Documents
             if (!TextSchema.IsCharacterProperty(formattingProperty) &&
                 !TextSchema.IsParagraphProperty(formattingProperty))
             {
-                #pragma warning suppress 6506 // formattingProperty is obviously not null
                 throw new ArgumentException(SR.Format(SR.TextEditorPropertyIsNotApplicableForTextFormatting, formattingProperty.Name));
             }
 

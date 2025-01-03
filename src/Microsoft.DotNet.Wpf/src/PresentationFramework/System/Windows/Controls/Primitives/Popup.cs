@@ -26,10 +26,6 @@ using MS.Win32;
 
 using CommonDependencyProperty = MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
 
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
-
-
 namespace System.Windows.Controls.Primitives
 {
     /// <summary>

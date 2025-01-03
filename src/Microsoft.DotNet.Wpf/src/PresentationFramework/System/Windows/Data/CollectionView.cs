@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1415,9 +1415,6 @@ namespace System.Windows.Data
         // and throw if that is the case.
         internal void VerifyRefreshNotDeferred()
         {
-            #pragma warning disable 1634, 1691 // about to use PreSharp message numbers - unknown to C#
-            #pragma warning disable 6503
-
             if (AllowsCrossThreadChanges)
                 VerifyAccess();
 
@@ -1427,9 +1424,6 @@ namespace System.Windows.Data
 
             if (IsRefreshDeferred)
                 throw new InvalidOperationException(SR.NoCheckOrChangeWhenDeferred);
-
-            #pragma warning restore 6503
-            #pragma warning restore 1634, 1691
         }
 
         internal void InvalidateEnumerableWrapper()

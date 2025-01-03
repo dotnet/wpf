@@ -2,15 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-//
-// Description: TextParagraph is a Paragraph representing continuous sequence
-//              of lines.
-//
-
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-// message numbers and unknown pragmas for PRESharp contol
-
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media.TextFormatting;
@@ -1788,6 +1779,3 @@ namespace MS.Internal.PtsHost
         #endregion Private Fields
     }
 }
-
-#pragma warning enable 1634, 1691
-

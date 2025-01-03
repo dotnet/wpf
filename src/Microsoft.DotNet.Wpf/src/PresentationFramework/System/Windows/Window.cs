@@ -26,11 +26,6 @@ using SNM = Standard.NativeMethods;
 using HRESULT = MS.Internal.Interop.HRESULT;
 using Win32Error = MS.Internal.Interop.Win32Error;
 
-//In order to avoid generating warnings about unknown message numbers and
-//unknown pragmas when compiling your C# source code with the actual C# compiler,
-//you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
-
 namespace System.Windows
 {
     [Localizability(LocalizationCategory.Ignore)]
@@ -355,12 +350,11 @@ namespace System.Windows
             // If the callback function returns false on any enumerated window, or if there are no windows
             // found in the thread, the return value is false.
             // No need for use to actually check the return value.
-#pragma warning disable 6523
             UnsafeNativeMethods.EnumThreadWindows(SafeNativeMethods.GetCurrentThreadId(),
                                                   new NativeMethods.EnumThreadWindowsCallback(ThreadWindowsCallback),
                                                   NativeMethods.NullHandleRef);
-#pragma warning enable 6523
-            //disable those windows
+
+            // Disable those windows
             EnableThreadWindows(false);
 
             IntPtr hWndCapture = SafeNativeMethods.GetCapture();
@@ -2264,9 +2258,7 @@ namespace System.Windows
                 // SendMessage's return value is dependent on the message send.  WM_CLOSE
                 // return value just signify whether the WndProc handled the
                 // message or not, so it is not interesting
-#pragma warning disable 6523
                 UnsafeNativeMethods.UnsafeSendMessage(Handle, WindowMessage.WM_CLOSE, new IntPtr(), new IntPtr());
-#pragma warning enable 6523
             }
         }
 
@@ -2543,9 +2535,8 @@ namespace System.Windows
                 // Window sends WM_CLOSE (which in turn sends WM_DESTROY) to the hwnd when
                 // Window.Close() is called.  Thus, this HwndSource created by window is always
                 // disposed by HwndSource itself
-#pragma warning disable 56518
                 HwndSource source = new HwndSource(param);
-#pragma warning enable 56518
+
                 _swh = new SourceWindowHelper(source);
                 source.SizeToContentChanged += new EventHandler(OnSourceSizeToContentChanged);
 
@@ -3654,10 +3645,7 @@ namespace System.Windows
                 {
                     // Calls EnableWindow which returns the previous Window state
                     // (enable/disable) and we don't care about that here
-#pragma warning disable 6523
                     UnsafeNativeMethods.EnableWindowNoThrow(new HandleRef(null, hWnd), state);
-#pragma warning enable 6523
-
                 }
             }
 

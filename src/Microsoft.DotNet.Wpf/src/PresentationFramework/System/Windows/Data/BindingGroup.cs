@@ -1249,14 +1249,6 @@ namespace System.Windows.Data
                 IEditableObject ieo = items[i] as IEditableObject;
                 if (ieo != null)
                 {
-                    // PreSharp uses message numbers that the C# compiler doesn't know about.
-                    // Disable the C# complaints, per the PreSharp documentation.
-                    #pragma warning disable 1634, 1691
-
-                    // PreSharp complains about catching NullReference (and other) exceptions.
-                    // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-                    #pragma warning disable 56500
-
                     try
                     {
                         ieo.EndEdit();
@@ -1270,9 +1262,6 @@ namespace System.Windows.Data
                         AddValidationError(error);
                         result = false;
                     }
-
-                    #pragma warning restore 56500
-                    #pragma warning restore 1634, 1691
                 }
             }
             return result;

@@ -1,230 +1,321 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.ComponentModel;
-using System.Globalization;
+using System.ComponentModel;    // for TypeConverter
+using System.Globalization;     // for CultureInfo
 
 namespace System.Windows.Input
 {
     /// <summary>
-    /// Key Converter class for converting between a string and the Type of a Key
+    /// Converter class for converting between a <see langword="string"/> and <see cref="Key"/>.
     /// </summary>
-    /// <ExternalAPI/>
     public class KeyConverter : TypeConverter
     {
-        /// <summary>
-        /// CanConvertFrom()
-        /// </summary>
-        /// <param name="context"></param>
-        /// <param name="sourceType"></param>
-        /// <returns></returns>
-        /// <ExternalAPI/> 
+        ///<summary>
+        /// Used to check whether we can convert a <see langword="string"/> into a <see cref="Key"/>.
+        ///</summary>
+        ///<param name="context">ITypeDescriptorContext</param>
+        ///<param name="sourceType">type to convert from</param>
+        ///<returns><see langword="true"/> if the given <paramref name="sourceType"/> can be converted, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            // We can only handle string
+            return sourceType == typeof(string);
         }
 
         /// <summary>
-        /// TypeConverter method override. 
+        /// Used to check whether we can convert specified value to <see langword="string"/>.
         /// </summary>
         /// <param name="context">ITypeDescriptorContext</param>
         /// <param name="destinationType">Type to convert to</param>
-        /// <returns>true if conversion is possible</returns>
+        /// <returns><see langword="true"/> if conversion to <see langword="string"/> is possible, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
-            // We can convert to a string.
-            // We can convert to an InstanceDescriptor or to a string.
-            if (destinationType == typeof(string))
-            {
-                // When invoked by the serialization engine we can convert to string only for known type
-                if (context != null && context.Instance != null)
-                {
-                    Key key = (Key)context.Instance;
-                    return ((int)key >= (int)Key.None && (int)key <= (int)Key.DeadCharProcessed);
-                }
-            }
-            return false;
+            // We can convert to a string
+            if (destinationType != typeof(string))
+                return false;
+
+            // When invoked by the serialization engine we can convert to string only for known type
+            if (context is null || context.Instance is null)
+                return false;
+
+            return IsDefinedKey((Key)context.Instance);
         }
 
         /// <summary>
-        /// ConvertFrom()
+        /// Converts <paramref name="source"/> of <see langword="string"/> type to its <see cref="Key"/> representation.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="source"></param>
-        /// <returns></returns>
-        /// <ExternalAPI/> 
+        /// <param name="context">Parser Context</param>
+        /// <param name="culture">Culture Info</param>
+        /// <param name="source">Key String</param>
+        /// <returns>A <see cref="Key"/> representing the <see langword="string"/> specified by <paramref name="source"/>.</returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
-            if (source is string)
-            {
-                string fullName = ((string)source).Trim();
-                object key = GetKey(fullName, CultureInfo.InvariantCulture);
-                if (key != null)
-                {
-                    return ((Key)key);
-                }
-                else
-                {
-                    throw new NotSupportedException(SR.Format(SR.Unsupported_Key, fullName));
-                }
-            }
-            throw GetConvertFromException(source);
+            if (source is not string stringSource)
+                throw GetConvertFromException(source);
+
+            ReadOnlySpan<char> fullName = stringSource.AsSpan().Trim();
+            return GetKeyFromString(fullName);
         }
 
         /// <summary>
-        /// ConvertTo()
+        /// Converts a <paramref name="value"/> of <see cref="Key"/> type to its <see langword="string"/> representation.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="value"></param>
-        /// <param name="destinationType"></param>
-        /// <returns></returns>
-        /// <ExternalAPI/> 
+        /// <param name="context">Serialization Context</param>
+        /// <param name="culture">Culture Info</param>
+        /// <param name="value">Key value </param>
+        /// <param name="destinationType">Type to Convert</param>
+        /// <returns>A <see langword="string"/> representing the <see cref="Key"/> specified by <paramref name="value"/>.</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (destinationType == typeof(string) && value != null)
+            if (value is null || destinationType != typeof(string))
+                throw GetConvertToException(value, destinationType);
+
+            Key key = (Key)value;
+            return key switch
             {
-                Key key = (Key)value;
-                if (key == Key.None)
-                {
-                    return String.Empty;
-                }
-
-                if (key >= Key.D0 && key <= Key.D9)
-                {
-                    return Char.ToString((char)(int)(key - Key.D0 + '0'));
-                }
-
-                if (key >= Key.A && key <= Key.Z)
-                {
-                    return Char.ToString((char)(int)(key - Key.A + 'A'));
-                }
-
-                String strKey = MatchKey(key, culture);
-                if (strKey != null)
-                {
-                    return strKey;
-                }
-            }
-            throw GetConvertToException(value, destinationType);
+                Key.None => string.Empty,
+                // This is a fast path for common keys before resort to Enum<Key>.ToString()
+                >= Key.D0 and <= Key.D9 => char.ToString((char)(key - Key.D0 + '0')),
+                >= Key.A and <= Key.Z => char.ToString((char)(key - Key.A + 'A')),
+                // We format some keys differently than defined in the enum
+                Key.Back => "Backspace",
+                Key.LineFeed => "Clear",
+                Key.Escape => "Esc",
+                // We will add some heavily used interned strings (F10-F12)
+                Key.F10 => "F10",
+                Key.F11 => "F11",
+                Key.F12 => "F12",
+                // Last resort, use Enum<Key>.ToString() if the range is defined
+                _ when IsDefinedKey(key) => key.ToString(),
+                // Everything else failed, we throw an exception
+                _ => throw GetConvertToException(value, destinationType)
+            };
         }
 
-        private object GetKey(string keyToken, CultureInfo culture)
+        /// <summary>
+        /// Helper function that performs the conversion of <paramref name="keyToken"/> to the <see cref="Key"/> enum.
+        /// </summary>
+        /// <param name="keyToken">The string to convert from.</param>
+        /// <returns>A <see cref="Key"/> value corresponding to the specified string, <see cref="Key.None"/> if <paramref name="keyToken"/> was empty.</returns>
+        private static Key GetKeyFromString(ReadOnlySpan<char> keyToken)
         {
-            if (keyToken.Length == 0)
-            {
+            // If the token is empty, we presume "None" as our value but it is a success
+            if (keyToken.IsEmpty)
                 return Key.None;
-            }
-            else
-            {
-                keyToken = keyToken.ToUpper(culture);
-                if (keyToken.Length == 1 && Char.IsLetterOrDigit(keyToken[0]))
-                {
-                    if (Char.IsDigit(keyToken[0]) && (keyToken[0] >= '0' && keyToken[0] <= '9'))
-                    {
-                        return ((int)(Key)(Key.D0 + keyToken[0] - '0'));
-                    }
-                    else if (Char.IsLetter(keyToken[0]) && (keyToken[0] >= 'A' && keyToken[0] <= 'Z'))
-                    {
-                        return ((int)(Key)(Key.A + keyToken[0] - 'A'));
-                    }
-                    else
-                    {
-                        throw new ArgumentException(SR.Format(SR.CannotConvertStringToType, keyToken, typeof(Key)));
-                    }
-                }
-                else
-                {
-                    Key keyFound = (Key)(-1);
-                    switch (keyToken)
-                    {
-                        case "ENTER": keyFound = Key.Return; break;
-                        case "ESC": keyFound = Key.Escape; break;
-                        case "PGUP": keyFound = Key.PageUp; break;
-                        case "PGDN": keyFound = Key.PageDown; break;
-                        case "PRTSC": keyFound = Key.PrintScreen; break;
-                        case "INS": keyFound = Key.Insert; break;
-                        case "DEL": keyFound = Key.Delete; break;
-                        case "WINDOWS": keyFound = Key.LWin; break;
-                        case "WIN": keyFound = Key.LWin; break;
-                        case "LEFTWINDOWS": keyFound = Key.LWin; break;
-                        case "RIGHTWINDOWS": keyFound = Key.RWin; break;
-                        case "APPS": keyFound = Key.Apps; break;
-                        case "APPLICATION": keyFound = Key.Apps; break;
-                        case "BREAK": keyFound = Key.Cancel; break;
-                        case "BACKSPACE": keyFound = Key.Back; break;
-                        case "BKSP": keyFound = Key.Back; break;
-                        case "BS": keyFound = Key.Back; break;
-                        case "SHIFT": keyFound = Key.LeftShift; break;
-                        case "LEFTSHIFT": keyFound = Key.LeftShift; break;
-                        case "RIGHTSHIFT": keyFound = Key.RightShift; break;
-                        case "CONTROL": keyFound = Key.LeftCtrl; break;
-                        case "CTRL": keyFound = Key.LeftCtrl; break;
-                        case "LEFTCTRL": keyFound = Key.LeftCtrl; break;
-                        case "RIGHTCTRL": keyFound = Key.RightCtrl; break;
-                        case "ALT": keyFound = Key.LeftAlt; break;
-                        case "LEFTALT": keyFound = Key.LeftAlt; break;
-                        case "RIGHTALT": keyFound = Key.RightAlt; break;
-                        case "SEMICOLON": keyFound = Key.OemSemicolon; break;
-                        case "PLUS": keyFound = Key.OemPlus; break;
-                        case "COMMA": keyFound = Key.OemComma; break;
-                        case "MINUS": keyFound = Key.OemMinus; break;
-                        case "PERIOD": keyFound = Key.OemPeriod; break;
-                        case "QUESTION": keyFound = Key.OemQuestion; break;
-                        case "TILDE": keyFound = Key.OemTilde; break;
-                        case "OPENBRACKETS": keyFound = Key.OemOpenBrackets; break;
-                        case "PIPE": keyFound = Key.OemPipe; break;
-                        case "CLOSEBRACKETS": keyFound = Key.OemCloseBrackets; break;
-                        case "QUOTES": keyFound = Key.OemQuotes; break;
-                        case "BACKSLASH": keyFound = Key.OemBackslash; break;
-                        case "FINISH": keyFound = Key.OemFinish; break;
-                        case "ATTN": keyFound = Key.Attn; break;
-                        case "CRSEL": keyFound = Key.CrSel; break;
-                        case "EXSEL": keyFound = Key.ExSel; break;
-                        case "ERASEEOF": keyFound = Key.EraseEof; break;
-                        case "PLAY": keyFound = Key.Play; break;
-                        case "ZOOM": keyFound = Key.Zoom; break;
-                        case "PA1": keyFound = Key.Pa1; break;
-                        default: keyFound = Enum.Parse<Key>(keyToken, true); break;
-                    }
 
-                    if ((int)keyFound != -1)
-                    {
-                        return keyFound;
-                    }
-                    return null;
-                }
+            // In case we're dealing with a lowercase character, we uppercase it
+            char firstChar = keyToken[0];
+            if (firstChar >= 'a' && firstChar <= 'z')
+                firstChar ^= (char)0x20;
+
+            // If this is a single-character we're dealing with, match digits/letters
+            if (keyToken.Length == 1 && char.IsLetterOrDigit(firstChar))
+            {
+                // Match an ASCII digit or an ASCII letter (lower/uppercase)
+                if (char.IsAsciiDigit(firstChar)) // 0 - 9
+                    return Key.D0 + firstChar - '0';
+                else if (char.IsAsciiLetterUpper(firstChar)) // A - Z
+                    return Key.A + firstChar - 'A';
+                else
+                    throw new ArgumentException(SR.Format(SR.CannotConvertStringToType, keyToken.ToString(), typeof(Key)));
             }
+
+            // It is a special key or an invalid one, we're gonna find out
+            switch (keyToken.Length)
+            {
+                case 2:
+                    // Special path for F1-F9 (switch would take 600 B in code size for no benefit)
+                    char secondChar = keyToken[1];
+                    if (firstChar == 'F' && (secondChar > '0' && secondChar <= '9'))
+                        return Key.F1 + secondChar - '1';
+                    // We've got one more special case for Key.Back/Backspace -> "BS"
+                    if (firstChar == 'B' && (secondChar is 'S' or 's'))
+                        return Key.Back;
+                    break;
+                case 3:
+                    switch (firstChar)
+                    {
+                        case 'A':
+                            if (keyToken.Equals("Alt", StringComparison.OrdinalIgnoreCase))
+                                return Key.LeftAlt;
+                            break;
+                        case 'D':
+                            if (keyToken.Equals("Del", StringComparison.OrdinalIgnoreCase))
+                                return Key.Delete;
+                            break;
+                        case 'E':
+                            if (keyToken.Equals("Esc", StringComparison.OrdinalIgnoreCase))
+                                return Key.Escape;
+                            break;
+                        case 'F':
+                            if (keyToken.Equals("F10", StringComparison.OrdinalIgnoreCase))
+                                return Key.F10;
+                            if (keyToken.Equals("F11", StringComparison.OrdinalIgnoreCase))
+                                return Key.F11;
+                            if (keyToken.Equals("F12", StringComparison.OrdinalIgnoreCase))
+                                return Key.F12;
+                            break;
+                        case 'I':
+                            if (keyToken.Equals("INS", StringComparison.OrdinalIgnoreCase))
+                                return Key.Insert;
+                            break;
+                        case 'P':
+                            if (keyToken.Equals("Pa1", StringComparison.OrdinalIgnoreCase))
+                                return Key.Pa1;
+                            break;
+                        case 'W':
+                            if (keyToken.Equals("Win", StringComparison.OrdinalIgnoreCase))
+                                return Key.LWin;
+                            break;
+                    }
+                    break;
+                case 4:
+                    switch (firstChar)
+                    {
+                        case 'A':
+                            if (keyToken.Equals("Apps", StringComparison.OrdinalIgnoreCase))
+                                return Key.Apps;
+                            if (keyToken.Equals("Attn", StringComparison.OrdinalIgnoreCase))
+                                return Key.Attn;
+                            break;
+                        case 'B':
+                            if (keyToken.Equals("BKSP", StringComparison.OrdinalIgnoreCase))
+                                return Key.Back;
+                            break;
+                        case 'C':
+                            if (keyToken.Equals("Ctrl", StringComparison.OrdinalIgnoreCase))
+                                return Key.LeftCtrl;
+                            break;
+                        case 'P':
+                            if (keyToken.Equals("PGDN", StringComparison.OrdinalIgnoreCase))
+                                return Key.PageDown;
+                            if (keyToken.Equals("PGUP", StringComparison.OrdinalIgnoreCase))
+                                return Key.PageUp;
+                            if (keyToken.Equals("Pipe", StringComparison.OrdinalIgnoreCase))
+                                return Key.OemPipe;
+                            if (keyToken.Equals("Play", StringComparison.OrdinalIgnoreCase))
+                                return Key.Play;
+                            if (keyToken.Equals("Plus", StringComparison.OrdinalIgnoreCase))
+                                return Key.OemPlus;
+                            break;
+                        case 'Z':
+                            if (keyToken.Equals("Zoom", StringComparison.OrdinalIgnoreCase))
+                                return Key.Zoom;
+                            break;
+                    }
+                    break;
+                case 5:
+                    switch (firstChar)
+                    {
+                        case 'B':
+                            if (keyToken.Equals("Break", StringComparison.OrdinalIgnoreCase))
+                                return Key.Cancel;
+                            break;
+                        case 'C':
+                            if (keyToken.Equals("Comma", StringComparison.OrdinalIgnoreCase))
+                                return Key.OemComma;
+                            if (keyToken.Equals("CrSel", StringComparison.OrdinalIgnoreCase))
+                                return Key.CrSel;
+                            break;
+                        case 'E':
+                            if (keyToken.Equals("Enter", StringComparison.OrdinalIgnoreCase))
+                                return Key.Return;
+                            if (keyToken.Equals("ExSel", StringComparison.OrdinalIgnoreCase))
+                                return Key.ExSel;
+                            break;
+                        case 'M':
+                            if (keyToken.Equals("Minus", StringComparison.OrdinalIgnoreCase))
+                                return Key.OemMinus;
+                            break;
+                        case 'P':
+                            if (keyToken.Equals("PRTSC", StringComparison.OrdinalIgnoreCase))
+                                return Key.PrintScreen;
+                            break;
+                        case 'S':
+                            if (keyToken.Equals("Shift", StringComparison.OrdinalIgnoreCase))
+                                return Key.LeftShift;
+                            break;
+                        case 'T':
+                            if (keyToken.Equals("Tilde", StringComparison.OrdinalIgnoreCase))
+                                return Key.OemTilde;
+                            break;
+                    }
+                    break;
+                case 6:
+                    if (keyToken.Equals("Finish", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemFinish;
+                    if (keyToken.Equals("Period", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemPeriod;
+                    if (keyToken.Equals("Quotes", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemQuotes;
+                    break;
+                case 7:
+                    if (keyToken.Equals("Control", StringComparison.OrdinalIgnoreCase))
+                        return Key.LeftCtrl;
+                    if (keyToken.Equals("LeftAlt", StringComparison.OrdinalIgnoreCase))
+                        return Key.LeftAlt;
+                    if (keyToken.Equals("Windows", StringComparison.OrdinalIgnoreCase))
+                        return Key.LWin;
+                    break;
+                case 8:
+                    if (keyToken.Equals("EraseEof", StringComparison.OrdinalIgnoreCase))
+                        return Key.EraseEof;
+                    if (keyToken.Equals("LeftCtrl", StringComparison.OrdinalIgnoreCase))
+                        return Key.LeftCtrl;
+                    if (keyToken.Equals("Question", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemQuestion;
+                    if (keyToken.Equals("RightAlt", StringComparison.OrdinalIgnoreCase))
+                        return Key.RightAlt;
+                    break;
+                case 9:
+                    if (keyToken.Equals("Backslash", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemBackslash;
+                    if (keyToken.Equals("Backspace", StringComparison.OrdinalIgnoreCase))
+                        return Key.Back;
+                    if (keyToken.Equals("LeftShift", StringComparison.OrdinalIgnoreCase))
+                        return Key.LeftShift;
+                    if (keyToken.Equals("RightCtrl", StringComparison.OrdinalIgnoreCase))
+                        return Key.RightCtrl;
+                    if (keyToken.Equals("Semicolon", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemSemicolon;
+                    break;
+                case 10:
+                    if (keyToken.Equals("RightShift", StringComparison.OrdinalIgnoreCase))
+                        return Key.RightShift;
+                    break;
+                case 11:
+                    if (keyToken.Equals("Application", StringComparison.OrdinalIgnoreCase))
+                        return Key.Apps;
+                    if (keyToken.Equals("LeftWindows", StringComparison.OrdinalIgnoreCase))
+                        return Key.LWin;
+                    break;
+                case 12:
+                    if (keyToken.Equals("OpenBrackets", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemOpenBrackets;
+                    if (keyToken.Equals("RightWindows", StringComparison.OrdinalIgnoreCase))
+                        return Key.RWin;
+                    break;
+                case 13:
+                    if (keyToken.Equals("CloseBrackets", StringComparison.OrdinalIgnoreCase))
+                        return Key.OemCloseBrackets;
+                    break;
+            }
+
+            return Enum.Parse<Key>(keyToken, true);
         }
 
-        private static string MatchKey(Key key, CultureInfo culture)
+        /// <summary>
+        /// Helper function similar to <see cref="Enum.IsDefined{Key}(Key)"/>, just lighter and faster.
+        /// </summary>
+        /// <param name="key">The value to test against.</param>
+        /// <returns><see langword="true"/> if <paramref name="key"/> falls in enumeration range, <see langword="false"/> otherwise.</returns>
+        private static bool IsDefinedKey(Key key)
         {
-            if (key == Key.None)
-                return String.Empty;
-            else
-            {
-                switch (key)
-                {
-                    case Key.Back: return "Backspace";
-                    case Key.LineFeed: return "Clear";
-                    case Key.Escape: return "Esc";
-                }
-            }
-            if ((int)key >= (int)Key.None && (int)key <= (int)Key.DeadCharProcessed)
-                return key.ToString();
-            else
-                return null;
+            return key >= Key.None && key <= Key.DeadCharProcessed;
         }
     }
 }

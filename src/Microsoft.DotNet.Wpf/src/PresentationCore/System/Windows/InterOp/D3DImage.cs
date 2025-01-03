@@ -735,14 +735,10 @@ namespace System.Windows.Interop
         /// </summary>
         private object SetIsFrontBufferAvailable(object isAvailableVersionPair)
         {
-            Pair pair = (Pair)isAvailableVersionPair;
-            uint version = (uint)pair.Second;
+            (bool isFrontBufferAvailable, uint version) = (Tuple<bool, uint>)isAvailableVersionPair;
 
-            if (version == _version)
-            {
-                bool isFrontBufferAvailable = (bool)pair.First;
+            if (_version == version)
                 SetValue(IsFrontBufferAvailablePropertyKey, isFrontBufferAvailable);
-            }
 
             // ...just because DispatcherOperationCallback requires returning an object
             return null;
@@ -759,11 +755,9 @@ namespace System.Windows.Interop
         // NOTE: Called from the render thread!We must execute the reaction on the UI thread.
         private void Callback(bool isFrontBufferAvailable, uint version)
         {
-            Dispatcher.BeginInvoke(
-                DispatcherPriority.Normal,
-                new DispatcherOperationCallback(SetIsFrontBufferAvailable),
-                new Pair(BooleanBoxes.Box(isFrontBufferAvailable), version)
-                );
+            Tuple<bool, uint> parameters = new(isFrontBufferAvailable, version);
+
+            Dispatcher.BeginInvoke(DispatcherPriority.Normal, new DispatcherOperationCallback(SetIsFrontBufferAvailable), parameters);
         }
 
         internal override void UpdateResource(DUCE.Channel channel, bool skipOnChannelCheck)

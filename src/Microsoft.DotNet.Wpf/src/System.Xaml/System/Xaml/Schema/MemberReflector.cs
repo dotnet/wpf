@@ -48,6 +48,7 @@ namespace System.Xaml.Schema
             {
                 _memberBits = (int)BoolMemberBits.Event;
             }
+
             _memberBits |= GetValidMask((int)BoolMemberBits.Event);
         }
 
@@ -77,7 +78,7 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_UnknownReflector == null)
+                if (s_UnknownReflector is null)
                 {
                     s_UnknownReflector = new MemberReflector();
                     s_UnknownReflector._designerSerializationVisibility = DesignerSerializationVisibility.Visible;
@@ -95,6 +96,7 @@ namespace System.Xaml.Schema
                     s_UnknownReflector.Invoker = XamlMemberInvoker.UnknownInvoker;
                     s_UnknownReflector.Type = XamlLanguage.Object;
                 }
+
                 return s_UnknownReflector;
             }
         }
@@ -113,7 +115,7 @@ namespace System.Xaml.Schema
             get { return _constructorArgument.IsSet; }
         }
 
-        internal IReadOnlyDictionary<char,char> MarkupExtensionBracketCharactersArgument { get; set; }
+        internal IReadOnlyDictionary<char, char> MarkupExtensionBracketCharactersArgument { get; set; }
 
         internal bool MarkupExtensionBracketCharactersArgumentIsSet { get; set; }
 
@@ -218,10 +220,11 @@ namespace System.Xaml.Schema
         // Assumes method type args (if any) are visible
         internal static bool IsInternalVisibleTo(MethodInfo method, Assembly accessingAssembly, XamlSchemaContext schemaContext)
         {
-            if (accessingAssembly == null)
+            if (accessingAssembly is null)
             {
                 return false;
             }
+
             if (method.IsAssembly || method.IsFamilyOrAssembly)
             {
                 if (TypeReflector.IsInternal(method.DeclaringType))
@@ -229,9 +232,11 @@ namespace System.Xaml.Schema
                     // We've already done an internals visibility check for the declaring type
                     return true;
                 }
+
                 return schemaContext.AreInternalsVisibleTo(
                     method.DeclaringType.Assembly, accessingAssembly);
             }
+
             return false;
         }
 
@@ -239,7 +244,7 @@ namespace System.Xaml.Schema
         // Assumes method type args (if any) are visible
         internal static bool IsProtectedVisibleTo(MethodInfo method, Type derivedType, XamlSchemaContext schemaContext)
         {
-            if (derivedType == null)
+            if (derivedType is null)
             {
                 return false;
             }
@@ -250,10 +255,12 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             if (method.IsFamily || method.IsFamilyOrAssembly)
             {
                 return true;
             }
+
             if (method.IsFamilyAndAssembly)
             {
                 if (TypeReflector.IsInternal(method.DeclaringType))
@@ -261,9 +268,11 @@ namespace System.Xaml.Schema
                     // We've already done an internals visibility check for the declaring type
                     return true;
                 }
+
                 return schemaContext.AreInternalsVisibleTo(
                     method.DeclaringType.Assembly, derivedType.Assembly);
             }
+
             return false;
         }
 
@@ -279,9 +288,9 @@ namespace System.Xaml.Schema
                     }
                 }
             }
+
             return true;
         }
-
 
         // Used by Reflector for attribute lookups
         protected override MemberInfo Member

@@ -21,6 +21,7 @@ namespace System.Xaml
             {
                 return true;
             }
+
             return base.CanConvertFrom(context, sourceType);
         }
 
@@ -30,11 +31,12 @@ namespace System.Xaml
             {
                 GetRootObjectAndDelegateType(context, out object? rootObject, out Type? delegateType);
 
-                if (rootObject != null && delegateType != null)
+                if (rootObject is not null && delegateType is not null)
                 {
                     return Delegate.CreateDelegate(delegateType, rootObject, valueString);
                 }
             }
+
             return base.ConvertFrom(context, culture, value);
         }
 
@@ -43,7 +45,7 @@ namespace System.Xaml
             rootObject = null;
             delegateType = null;
 
-            if (context == null)
+            if (context is null)
             {
                 return;
             }
@@ -52,12 +54,14 @@ namespace System.Xaml
             {
                 return;
             }
+
             rootObject = rootObjectService.RootObject;
 
             if (context.GetService(typeof(IDestinationTypeProvider)) is not IDestinationTypeProvider targetService)
             {
                 return;
             }
+
             delegateType = targetService.GetDestinationType();
         }
     }

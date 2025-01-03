@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//  Description: Specifies that the whitespace surrounding an element should be trimmed.
+// Description: Specifies that the whitespace surrounding an element should be trimmed.
 
 using System;
 using System.Reflection;
@@ -123,7 +123,7 @@ namespace System.Windows.Markup
             {
                 converterType = ReflectionHelper.GetQualifiedType(converterName);
 
-                if (converterType != null)
+                if (converterType is not null)
                 {
                     // Validate that this is an accessible type converter.
                     if (!ReflectionHelper.IsPublicType(converterType))
@@ -444,10 +444,10 @@ namespace System.Windows.Markup
 
             TypeConverter? typeConverter = GetCoreConverterFromCoreType(type);
 
-            if (typeConverter == null)
+            if (typeConverter is null)
             {
                 Type? converterType = GetConverterType(type);
-                if (converterType != null)
+                if (converterType is not null)
                 {
                     typeConverter = Activator.CreateInstance(converterType,
                                                              BindingFlags.Instance | BindingFlags.CreateInstance | BindingFlags.Public,

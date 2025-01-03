@@ -35,7 +35,7 @@ namespace MS.Internal.Xaml.Context
         // and remove those dependencies. But we still want to be able to inform MEs/TCs that
         // the named objects they're getting aren't actually fully initialized. So we save this list
         // of incompletely initialized objects at the point we start completing references.
-        HashSet <object> _uninitializedObjectsAtParseEnd;
+        HashSet<object> _uninitializedObjectsAtParseEnd;
 
         public NameFixupGraph()
         {
@@ -52,12 +52,12 @@ namespace MS.Internal.Xaml.Context
         public void AddDependency(NameFixupToken fixupToken)
         {
             // Need to special case a deferred ProvideValue at the root, because it has no parent
-            if (fixupToken.Target.Property == null)
+            if (fixupToken.Target.Property is null)
             {
-                Debug.Assert(fixupToken.Target.Instance == null &&
-                    fixupToken.Target.InstanceType == null &&
+                Debug.Assert(fixupToken.Target.Instance is null &&
+                    fixupToken.Target.InstanceType is null &&
                     fixupToken.FixupType == FixupType.MarkupExtensionFirstRun);
-                Debug.Assert(_deferredRootProvideValue == null);
+                Debug.Assert(_deferredRootProvideValue is null);
                 _deferredRootProvideValue = fixupToken;
                 return;
             }
@@ -67,11 +67,11 @@ namespace MS.Internal.Xaml.Context
             // - Initialization, in which case FixupTarget.Instance is the object whose property the
             //   initialized object will be assigned to; and
             // - Key, in which case the FixupTarget.Instance is the dictionary
-            Debug.Assert(parentObject != null);
+            Debug.Assert(parentObject is not null);
 
             AddToMultiDict(_dependenciesByParentObject, parentObject, fixupToken);
 
-            if (fixupToken.ReferencedObject != null)
+            if (fixupToken.ReferencedObject is not null)
             {
                 Debug.Assert(fixupToken.FixupType == FixupType.UnresolvedChildren ||
                     fixupToken.FixupType == FixupType.MarkupExtensionFirstRun);
@@ -95,10 +95,11 @@ namespace MS.Internal.Xaml.Context
 
         public bool HasUnresolvedChildren(object parent)
         {
-            if (parent == null)
+            if (parent is null)
             {
                 return false;
             }
+
             return _dependenciesByParentObject.ContainsKey(parent);
         }
 
@@ -108,6 +109,7 @@ namespace MS.Internal.Xaml.Context
             {
                 return true;
             }
+
             foreach (NameFixupToken pendingToken in _resolvedTokensPendingProcessing)
             {
                 if (pendingToken.Target.Instance == instance)
@@ -115,6 +117,7 @@ namespace MS.Internal.Xaml.Context
                     return true;
                 }
             }
+
             return false;
         }
 
@@ -134,6 +137,7 @@ namespace MS.Internal.Xaml.Context
             {
                 return;
             }
+
             for (int i = 0; i < dependencies.Count; i++)
             {
                 NameFixupToken token = dependencies[i];
@@ -142,7 +146,7 @@ namespace MS.Internal.Xaml.Context
                 {
                     GetDependentNames(token.ReferencedObject, result);
                 }
-                else if (token.NeededNames != null)
+                else if (token.NeededNames is not null)
                 {
                     foreach (string name in token.NeededNames)
                     {
@@ -162,7 +166,7 @@ namespace MS.Internal.Xaml.Context
         {
             // Remove any dependency on this instance
             NameFixupToken token = null;
-            if (instance != null)
+            if (instance is not null)
             {
                 if (_dependenciesByChildObject.Remove(instance, out token))
                 {
@@ -174,7 +178,7 @@ namespace MS.Internal.Xaml.Context
             // Remove any dependencies on this name, and return any tokens whose dependencies
             // have all been resolved.
             FrugalObjectList<NameFixupToken> nameDependencies;
-            if (name != null && _dependenciesByName.TryGetValue(name, out nameDependencies))
+            if (name is not null && _dependenciesByName.TryGetValue(name, out nameDependencies))
             {
                 int i = 0;
                 while (i < nameDependencies.Count)
@@ -195,12 +199,14 @@ namespace MS.Internal.Xaml.Context
                         // For simple fixups, we need to return the resolved object
                         token.ReferencedObject = instance;
                     }
+
                     token.NeededNames.Remove(name);
                     nameDependencies.RemoveAt(i);
                     if (nameDependencies.Count == 0)
                     {
                         _dependenciesByName.Remove(name);
                     }
+
                     if (token.NeededNames.Count == 0)
                     {
                         RemoveTokenByParent(token);
@@ -269,11 +275,13 @@ namespace MS.Internal.Xaml.Context
                         i++;
                         continue;
                     }
+
                     dependencies.RemoveAt(i);
                     if (dependencies.Count == 0)
                     {
                         _dependenciesByName.Remove(name);
                     }
+
                     RemoveTokenByParent(token);
                     yield return token;
                 }
@@ -346,6 +354,7 @@ namespace MS.Internal.Xaml.Context
                     markupExtensionTokens.Add(curToken);
                 }
             }
+
             while (markupExtensionTokens.Count > 0)
             {
                 bool found = false;
@@ -359,6 +368,7 @@ namespace MS.Internal.Xaml.Context
                         i++;
                         continue;
                     }
+
                     // Iterate the list in backwards order, so we return the deepest first
                     for (int j = dependencies.Count - 1; j >= 0; j--)
                     {
@@ -366,9 +376,11 @@ namespace MS.Internal.Xaml.Context
                         RemoveTokenByParent(token);
                         yield return token;
                     }
+
                     found = true;
                     markupExtensionTokens.RemoveAt(i);
                 }
+
                 if (!found)
                 {
                     // We have MEs left, but they all have dependencies on other MEs.
@@ -386,6 +398,7 @@ namespace MS.Internal.Xaml.Context
                     startNodeOutEdges = list;
                     break;
                 }
+
                 for (int i = 0; i < startNodeOutEdges.Count; i++)
                 {
                     List<NameFixupToken> dependencies = new List<NameFixupToken>();
@@ -401,7 +414,7 @@ namespace MS.Internal.Xaml.Context
             }
 
             // Finally, if there was a deferred ProvideValue at the root, return it
-            if (_deferredRootProvideValue != null)
+            if (_deferredRootProvideValue is not null)
             {
                 yield return _deferredRootProvideValue;
             }
@@ -416,14 +429,16 @@ namespace MS.Internal.Xaml.Context
                 // Cycle, skip it
                 return true;
             }
+
             alreadyTraversed.Add(inEdge);
             FrugalObjectList<NameFixupToken> outEdges;
-            if (inEdge.ReferencedObject == null ||
+            if (inEdge.ReferencedObject is null ||
                 !_dependenciesByParentObject.TryGetValue(inEdge.ReferencedObject, out outEdges))
             {
                 // No dependencies, we're done with this subgraph
                 return true;
             }
+
             for (int i = 0; i < outEdges.Count; i++)
             {
                 NameFixupToken outEdge = outEdges[i];
@@ -431,12 +446,14 @@ namespace MS.Internal.Xaml.Context
                 {
                     return false;
                 }
+
                 Debug.Assert(outEdge.FixupType == FixupType.UnresolvedChildren);
                 if (!FindDependencies(outEdge, alreadyTraversed))
                 {
                     return false;
                 }
             }
+
             return true;
         }
 
@@ -465,6 +482,7 @@ namespace MS.Internal.Xaml.Context
                 tokenList = new FrugalObjectList<NameFixupToken>(1);
                 dict.Add(key, tokenList);
             }
+
             tokenList.Add(value);
         }
 
@@ -492,6 +510,7 @@ namespace MS.Internal.Xaml.Context
                     exceptionMessage.Append(meName);
                 }
             }
+
             throw new XamlObjectWriterException(exceptionMessage.ToString());
         }
     }

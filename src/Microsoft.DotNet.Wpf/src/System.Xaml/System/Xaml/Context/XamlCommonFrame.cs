@@ -16,7 +16,7 @@ namespace MS.Internal.Xaml.Context
         {
             get
             {
-                if (_namespaces == null)
+                if (_namespaces is null)
                     _namespaces = new Dictionary<string, string>();
                 return _namespaces;
             }
@@ -31,7 +31,7 @@ namespace MS.Internal.Xaml.Context
             XamlType = source.XamlType;
             Member = source.Member;
 
-            if (source._namespaces != null)
+            if (source._namespaces is not null)
             {
                 SetNamespaces(source._namespaces);
             }
@@ -41,7 +41,7 @@ namespace MS.Internal.Xaml.Context
         {
             XamlType = null;
             Member = null;
-            if (_namespaces != null)
+            if (_namespaces is not null)
             {
                 _namespaces.Clear();
             }
@@ -57,11 +57,12 @@ namespace MS.Internal.Xaml.Context
 
         public void SetNamespaces(Dictionary<string, string> namespaces)
         {
-            if (_namespaces != null)
+            if (_namespaces is not null)
             {
                 _namespaces.Clear();
             }
-            if (namespaces != null)
+
+            if (namespaces is not null)
             {
                 foreach (KeyValuePair<string, string> ns in namespaces)
                 {
@@ -72,10 +73,11 @@ namespace MS.Internal.Xaml.Context
 
         public bool TryGetNamespaceByPrefix(string prefix, out string xamlNs)
         {
-            if (_namespaces != null && _namespaces.TryGetValue(prefix, out xamlNs))
+            if (_namespaces is not null && _namespaces.TryGetValue(prefix, out xamlNs))
             {
                 return true;
             }
+
             xamlNs = null;
             return false;
         }
@@ -87,6 +89,7 @@ namespace MS.Internal.Xaml.Context
             {
                 _namespaceDeclarations.Add(new NamespaceDeclaration(kvp.Value, kvp.Key));
             }
+
             return _namespaceDeclarations;
         }
     }

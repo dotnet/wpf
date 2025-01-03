@@ -11,7 +11,7 @@ namespace MS.Internal.Xaml.Parser
         private XamlPropertyName(XamlName owner, string prefix, string name)
             : base(name)
         {
-            if (owner != null)
+            if (owner is not null)
             {
                 Owner = owner;
                 _prefix = owner.Prefix ?? string.Empty;
@@ -24,7 +24,7 @@ namespace MS.Internal.Xaml.Parser
 
         public static XamlPropertyName Parse(string longName)
         {
-            if(String.IsNullOrEmpty(longName))
+            if(string.IsNullOrEmpty(longName))
             {
                 return null;
             }
@@ -45,7 +45,7 @@ namespace MS.Internal.Xaml.Parser
             {
                 owner = dottedName.Substring(start, dotIdx);
 
-                if (String.IsNullOrEmpty(owner))
+                if (string.IsNullOrEmpty(owner))
                 {
                     return null;
                 }
@@ -56,7 +56,7 @@ namespace MS.Internal.Xaml.Parser
             string name = (start == 0) ? dottedName : dottedName.Substring(start);
 
             XamlQualifiedName ownerName = null;
-            if (!String.IsNullOrEmpty(owner))
+            if (!string.IsNullOrEmpty(owner))
             {
                 ownerName = new XamlQualifiedName(prefix, owner);
             }
@@ -94,7 +94,7 @@ namespace MS.Internal.Xaml.Parser
 
         public bool IsDotted
         {
-            get { return Owner != null; }
+            get { return Owner is not null; }
         }
     }
 }

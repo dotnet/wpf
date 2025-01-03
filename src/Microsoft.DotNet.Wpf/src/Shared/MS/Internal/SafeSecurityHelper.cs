@@ -144,13 +144,14 @@ namespace System.Xaml
                 byte[] curKeyToken = curAsmName.GetPublicKeyToken();
 
                 if (string.Equals(curAsmName.Name, assemblyName.Name, StringComparison.InvariantCultureIgnoreCase) &&
-                     (reqVersion == null || reqVersion.Equals(curVersion)) &&
-                     (reqCulture == null || reqCulture.Equals(curCulture)) &&
-                     (reqKeyToken == null || IsSameKeyToken(reqKeyToken, curKeyToken)))
+                     (reqVersion is null || reqVersion.Equals(curVersion)) &&
+                     (reqCulture is null || reqCulture.Equals(curCulture)) &&
+                     (reqKeyToken is null || IsSameKeyToken(reqKeyToken, curKeyToken)))
                 {
                     return assemblies[i];
                 }
             }
+
             return null;
         }
 
@@ -160,17 +161,18 @@ namespace System.Xaml
             lock (syncObject)
             {
                 AssemblyName result;
-                if (_assemblies == null)
+                if (_assemblies is null)
                 {
                     _assemblies = new Dictionary<object, AssemblyName>();
                 }
                 else
-	            {
+                {
                     if (_assemblies.TryGetValue(key, out result))
                     {
                         return result;
                     }
-	            }
+                }
+
                 //
                 // We use AssemblyName ctor here because GetName demands FileIOPermission
                 // and does load more than just the required information.
@@ -185,6 +187,7 @@ namespace System.Xaml
                     GCNotificationToken.RegisterCallback(_cleanupCollectedAssemblies, null);
                     _isGCCallbackPending  = true;
                 }
+
                 return result;
             }
         }
@@ -202,6 +205,7 @@ namespace System.Xaml
                     {
                         continue;
                     }
+
                     if (weakRef.IsAlive)
                     {
                         // There is a weak ref that is still alive, register another GC callback for next time
@@ -210,20 +214,23 @@ namespace System.Xaml
                     else
                     {
                         // The target has been collected, add it to our list of keys to remove
-                        if (keysToRemove == null)
+                        if (keysToRemove is null)
                         {
                             keysToRemove = new List<object>();
                         }
+
                         keysToRemove.Add(key);
                     }
                 }
-                if (keysToRemove != null)
+
+                if (keysToRemove is not null)
                 {
                     foreach (object key in keysToRemove)
                     {
                         _assemblies.Remove(key);
                     }
                 }
+
                 if (foundLiveDynamicAssemblies)
                 {
                     GCNotificationToken.RegisterCallback(_cleanupCollectedAssemblies, null);
@@ -250,12 +257,12 @@ namespace System.Xaml
         {
            bool isSame = false;
 
-           if (reqKeyToken == null && curKeyToken == null)
+           if (reqKeyToken is null && curKeyToken is null)
            {
                // Both Key Tokens are not set, treat them as same.
                isSame = true;
            }
-           else if (reqKeyToken != null && curKeyToken != null)
+           else if (reqKeyToken is not null && curKeyToken is not null)
            {
                // Both KeyTokens are set.
                if (reqKeyToken.Length == curKeyToken.Length)
@@ -277,19 +284,6 @@ namespace System.Xaml
         }
 #endif //!REACHFRAMEWORK
 
-#if PRESENTATION_CORE
-
-        /// <summary>
-        ///     This function is a wrapper for CultureInfo.GetCultureInfoByIetfLanguageTag().
-        ///     The wrapper works around a bug in that routine, which causes it to throw
-        ///     a SecurityException in Partial Trust.
-        /// </summary>
-        static internal CultureInfo GetCultureInfoByIetfLanguageTag(string languageTag)
-        {
-            return CultureInfo.GetCultureInfoByIetfLanguageTag(languageTag);
-        }
-#endif //PRESENTATIONCORE
-
         internal const string IMAGE = "image";
     }
 
@@ -301,7 +295,7 @@ namespace System.Xaml
         public WeakRefKey(object target)
             :base(target)
         {
-            Debug.Assert(target != null);
+            Debug.Assert(target is not null);
             _hashCode = target.GetHashCode();
         }
 
@@ -313,16 +307,17 @@ namespace System.Xaml
         public override bool Equals(object o)
         {
             WeakRefKey weakRef = o as WeakRefKey;
-            if (weakRef != null)
+            if (weakRef is not null)
             {
                 object target1 = Target;
                 object target2 = weakRef.Target;
 
-                if (target1 != null && target2 != null)
+                if (target1 is not null && target2 is not null)
                 {
                     return (target1 == target2);
                 }
             }
+
             return base.Equals(o);
         }
 
@@ -332,6 +327,7 @@ namespace System.Xaml
             {
                 return object.ReferenceEquals(right, null);
             }
+
             return left.Equals(right);
         }
 

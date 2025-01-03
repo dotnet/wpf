@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,10 +23,8 @@ namespace MS.Internal.Controls
         internal ConnectionPointCookie(object source, object sink, Type eventInterface)
         {
             Exception ex = null;
-            if (source is UnsafeNativeMethods.IConnectionPointContainer)
+            if (source is UnsafeNativeMethods.IConnectionPointContainer cpc)
             {
-                UnsafeNativeMethods.IConnectionPointContainer cpc = (UnsafeNativeMethods.IConnectionPointContainer)source;
-
                 try
                 {
                     Guid tmp = eventInterface.GUID;
@@ -37,11 +35,11 @@ namespace MS.Internal.Controls
                 }
                 catch (Exception e)
                 {
-                    if(CriticalExceptions.IsCriticalException(e))
+                    if (CriticalExceptions.IsCriticalException(e))
                     {
                         throw;
                     }
-                    
+
                     connectionPoint = null;
                 }
 

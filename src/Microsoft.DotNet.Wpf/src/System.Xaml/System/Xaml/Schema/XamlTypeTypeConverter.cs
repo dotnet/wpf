@@ -18,9 +18,7 @@ namespace System.Xaml.Schema
 
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object value)
         {
-            string typeName = value as string;
-
-            if (context is not null && typeName is not null)
+            if (context is not null && value is string typeName)
             {
                 XamlType result = ConvertStringToXamlType(context, typeName);
                 if (result is not null)

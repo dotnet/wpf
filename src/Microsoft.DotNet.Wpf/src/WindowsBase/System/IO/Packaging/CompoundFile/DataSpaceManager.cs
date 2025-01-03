@@ -58,12 +58,12 @@ namespace System.IO.Packaging
     StorageRoot _associatedStorage;
 
     /// <summary>
-    /// Maps container references to data spaces  
-    /// 
-    /// Keys into this list are CompoundFileReference instances, each 
-    /// representing a subset of the container that is encoded with a 
-    /// particular data space.  
-    /// 
+    /// Maps container references to data spaces
+    ///
+    /// Keys into this list are CompoundFileReference instances, each
+    /// representing a subset of the container that is encoded with a
+    /// particular data space.
+    ///
     /// Values are strings, which are data space labels and can be used
     /// as keys into _dataSpaceDefinitions for more details
     /// </summary>
@@ -77,26 +77,26 @@ namespace System.IO.Packaging
 
     /// <summary>
     /// Maps a data space name to a string array of transform names.
-    /// 
+    ///
     /// Keys into this hash table are strings, each a unique label for
     /// a data space.
-    /// 
+    ///
     /// Values from this hash table are ArrayLists, each an array of
     /// strings.  Each string is a data space label.  This transform
     /// stack is stored in bottom-up order.  The first transform listed
     /// is the first to get the raw bytes from disk.
     /// </summary>
     Hashtable _dataSpaceDefinitions;
- 
+
 
     /// <summary>
     /// Maps a transform name to an instance of transform handle class
-    /// 
+    ///
     /// Keys into this hash table are strings, each a unique label for
     /// a transform object instance.
-    /// 
+    ///
     /// Values from this hash table are references to the TransformInstance
-    /// class defined below, each of which contains information for a 
+    /// class defined below, each of which contains information for a
     /// particular transform instance.
     /// </summary>
     Hashtable _transformDefinitions;
@@ -128,19 +128,19 @@ namespace System.IO.Packaging
 
         // When we also have an actual object in memory and its associated
         //  environment object
-        internal TransformInstance( 
+        internal TransformInstance(
             int classType,
-            string name, 
-            IDataTransform instance, 
+            string name,
+            IDataTransform instance,
             TransformEnvironment environment ) : this(classType, name, instance, environment, null, null ) {;}
 
         // When we know everything to put into a TransformInstance.
-        internal TransformInstance( 
+        internal TransformInstance(
             int classType,
-            string name, 
-            IDataTransform instance, 
-            TransformEnvironment environment, 
-            Stream primaryStream, 
+            string name,
+            IDataTransform instance,
+            TransformEnvironment environment,
+            Stream primaryStream,
             StorageInfo storage )
         {
             typeName = name;
@@ -216,7 +216,7 @@ namespace System.IO.Packaging
     private class DirtyStateTrackingStream:  Stream
     {
         ////////////////////////////////////
-        // Stream section  
+        // Stream section
         /////////////////////////////////
         public override bool CanRead
         {
@@ -257,10 +257,10 @@ namespace System.IO.Packaging
             get
             {
                 CheckDisposed();
-                
+
                 return _baseStream.Position;
             }
-            
+
             set
             {
                 CheckDisposed();
@@ -271,8 +271,8 @@ namespace System.IO.Packaging
 
         public override void SetLength(long newLength)
         {
-            CheckDisposed(); 
-            
+            CheckDisposed();
+
             if (newLength != _baseStream.Length)
             {
                 _dirty = true;
@@ -286,7 +286,7 @@ namespace System.IO.Packaging
             CheckDisposed();
 
             return _baseStream.Seek(offset, origin);
-        }        
+        }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
@@ -312,8 +312,8 @@ namespace System.IO.Packaging
 
         /////////////////////////////
         // Internal Constructor
-        /////////////////////////////        
-        internal  DirtyStateTrackingStream(Stream baseStream) 
+        /////////////////////////////
+        internal  DirtyStateTrackingStream(Stream baseStream)
         {
             Debug.Assert(baseStream != null);
 
@@ -345,7 +345,7 @@ namespace System.IO.Packaging
         /// Dispose(bool)
         /// </summary>
         /// <param name="disposing"></param>
-        /// <remarks>We implement this because we want a consistent experience (essentially Flush our data) if the user chooses to 
+        /// <remarks>We implement this because we want a consistent experience (essentially Flush our data) if the user chooses to
         /// call Dispose() instead of Close().</remarks>
         protected override void Dispose(bool disposing)
         {
@@ -366,13 +366,13 @@ namespace System.IO.Packaging
 
         /////////////////////////////
         // Private Methods
-        /////////////////////////////        
+        /////////////////////////////
 
         private void CheckDisposed()
         {
             if (_baseStream == null)
             {
-                throw new ObjectDisposedException(null, SR.StreamObjectDisposed);            
+                throw new ObjectDisposedException(null, SR.StreamObjectDisposed);
             }
         }
 
@@ -434,7 +434,7 @@ namespace System.IO.Packaging
         _associatedStorage = containerInstance;
 
         // Storage under which all data space information is stored.
-        StorageInfo dataSpaceStorage = 
+        StorageInfo dataSpaceStorage =
             new StorageInfo( _associatedStorage, DataSpaceStorageName );
 
         // Initialize internal data structures.
@@ -452,7 +452,7 @@ namespace System.IO.Packaging
             ReadDataSpaceDefinitions();
             ReadTransformDefinitions();
         }
-        return; 
+        return;
     }
 
     /// <summary>
@@ -473,7 +473,7 @@ namespace System.IO.Packaging
         {
             if (_dirtyFlag)     // It is already dirty don't need to check further
                 return true;
-            
+
             foreach( string transformDef in _transformDefinitions.Keys )
             {
                 TransformInstance transformInstance = GetTransformInstanceOf( transformDef );
@@ -493,7 +493,7 @@ namespace System.IO.Packaging
     public void Dispose()
     {
         CheckDisposedStatus();
-        
+
         // Flush any outstanding data in the transformed streams
         foreach( StreamWithDictionary dataStream in _transformedStreams )
         {
@@ -528,7 +528,7 @@ namespace System.IO.Packaging
         _dataSpaceMap = null;
         _dataSpaceDefinitions = null;
         _transformDefinitions = null;
-            
+
         return;
     }
 
@@ -555,7 +555,7 @@ namespace System.IO.Packaging
         // Check if we've been disposed
         if( null == _dataSpaceMap )
         {
-            Debug.Assert( null == _dataSpaceDefinitions, 
+            Debug.Assert( null == _dataSpaceDefinitions,
                 "Having a null data space map and a non-null data space definitions map is an inconsistent state" );
             Debug.Assert( null == _transformDefinitions,
                 "Having a null data space map and a non-null transform definition map is an inconsistent state" );
@@ -585,7 +585,7 @@ namespace System.IO.Packaging
 
         // Given label must not be a reserved string
         CU.CheckStringAgainstReservedName(newDataSpaceLabel, "newDataSpaceLabel");
-        
+
         // Given label must not already be in use
         if( DataSpaceIsDefined( newDataSpaceLabel ) )
             throw new ArgumentException(
@@ -595,7 +595,7 @@ namespace System.IO.Packaging
         foreach( string transformLabel in transformStack )
         {
             CU.CheckStringAgainstNullAndEmpty( transformLabel, "Transform label" );
-            
+
             if( !TransformLabelIsDefined( transformLabel ) )
                 throw new ArgumentException(
                     SR.TransformLabelUndefined);
@@ -660,7 +660,7 @@ namespace System.IO.Packaging
     }
 
     /// <summary>
-    /// This method returns all the transforms that are applied to a particular stream as an 
+    /// This method returns all the transforms that are applied to a particular stream as an
     /// List of IDataTransform objects.
     /// </summary>
     /// <param name="streamInfo">StreamInfo for the stream whose transforms are requested</param>
@@ -744,12 +744,12 @@ namespace System.IO.Packaging
             return (IDataTransform)transformInstance;
         }
 
-        return null;        
+        return null;
     }
 
     /// <summary>
     /// Private method to check if a transform label is defined.  When we
-    /// start reading transform defintions on-demand, we would probably do it 
+    /// start reading transform defintions on-demand, we would probably do it
     /// here as necessary.
     /// </summary>
     /// <param name="transformLabel">Transform label to check</param>
@@ -758,7 +758,7 @@ namespace System.IO.Packaging
     {
         // Idea: When we start reading transform definitions on-demand,
         //  be able to check this without hitting the disk.
-        
+
         return _transformDefinitions.Contains( transformLabel );
     }
 
@@ -783,13 +783,13 @@ namespace System.IO.Packaging
         // Idea: When we start reading transform definitions on-demand,
         //  here is where we find if it's been read in and if not,
         //  hit the disk.
-        
+
         return _transformDefinitions[ transformLabel ] as TransformInstance;
     }
 
     /// <summary>
     /// Internal method to get a MemoryStream whose contents will be
-    /// stored in the "\x0006Primary" data stream after our type identification 
+    /// stored in the "\x0006Primary" data stream after our type identification
     /// information
     /// </summary>
     /// <param name="transformLabel">Transform Label</param>
@@ -800,13 +800,13 @@ namespace System.IO.Packaging
 
         if( null == targetInstance.transformPrimaryStream )
         {
-            //build memory stream on the byte[0] , and allow writes only if 
+            //build memory stream on the byte[0] , and allow writes only if
             // FileAccess is Write or ReadWrite
             if (_associatedStorage.OpenAccess == FileAccess.Read)
             {
                 targetInstance.transformPrimaryStream =
                     new DirtyStateTrackingStream (new MemoryStream
-                            (Array.Empty<byte>(), 
+                            (Array.Empty<byte>(),
                             writable: false));
             }
             else
@@ -831,7 +831,7 @@ namespace System.IO.Packaging
         if( null == targetInstance.transformStorage )
         {
             //string name = DataSpaceStorageName + '\\' + TransformDefinitions + '\\' + transformLabel;
-            
+
             //targetInstance.transformStorage  = new StorageInfo(_associatedStorage,name);
 
             StorageInfo dataSpaceStorage = new StorageInfo( _associatedStorage, DataSpaceStorageName );
@@ -862,9 +862,7 @@ namespace System.IO.Packaging
     /// </returns>
     internal IDataTransform GetTransformFromName(string transformLabel)
     {
-        TransformInstance transformInstance = _transformDefinitions[transformLabel] as TransformInstance;
-
-        if (transformInstance == null)
+        if (_transformDefinitions[transformLabel] is not TransformInstance transformInstance)
         {
             //
             // There is no transform instance with the specified name.
@@ -911,7 +909,7 @@ namespace System.IO.Packaging
 
         // Given transform name must not be a reserved string
         CU.CheckStringAgainstReservedName( newTransformLabel, "Transform label" );
-        
+
         // Can't re-use an existing transform name
         if( TransformLabelIsDefined( newTransformLabel ) )
             throw new ArgumentException(
@@ -941,12 +939,12 @@ namespace System.IO.Packaging
         //  done for those transforms that need initialization work up-front.
         if( ! transformObject.IsReady )
         {
-            CallTransformInitializers( 
+            CallTransformInitializers(
                 new TransformInitializationEventArgs(
                     transformObject,
                     null,
                     null,
-                    newTransformLabel) 
+                    newTransformLabel)
                 );
         }
 
@@ -982,14 +980,14 @@ namespace System.IO.Packaging
 
     //+----------------------------------------------------------------------
     //  Transform initialization event/delegate/etc.
-    
+
     /// <summary>
     ///     Delegate method for initializing transforms
     /// </summary>
     internal delegate void TransformInitializeEventHandler(
         object sender,
         TransformInitializationEventArgs e );
-    
+
     /// <summary>
     ///     Transform initialization event
     /// </summary>
@@ -1010,11 +1008,11 @@ namespace System.IO.Packaging
     /// is written to the file.
     /// </summary>
     void ReadDataSpaceMap()
-    {    
+    {
         // See if there's even a data spaces storage
-        StorageInfo dataSpaceStorage = 
+        StorageInfo dataSpaceStorage =
             new StorageInfo( _associatedStorage, DataSpaceStorageName );
-        StreamInfo dataSpaceMapStreamInfo = 
+        StreamInfo dataSpaceMapStreamInfo =
             new StreamInfo( dataSpaceStorage, DataSpaceMapTableName );
 
         if( dataSpaceStorage.StreamExists(DataSpaceMapTableName) )
@@ -1022,15 +1020,15 @@ namespace System.IO.Packaging
             // There is an existing data space mapping table to read.
 
             // Read the versioning information
-            ReadDataSpaceVersionInformation(dataSpaceStorage);      
-     
+            ReadDataSpaceVersionInformation(dataSpaceStorage);
+
             // Check if its the correct version for reading
             ThrowIfIncorrectReaderVersion();
 
             // Read the data space mapping table
             using(Stream dataSpaceMapStream = dataSpaceMapStreamInfo.GetStream(FileMode.Open))
             {
-                using(BinaryReader dataSpaceMapReader = 
+                using(BinaryReader dataSpaceMapReader =
                     new BinaryReader( dataSpaceMapStream, System.Text.Encoding.Unicode ))
                 {
                     int headerLength = dataSpaceMapReader.ReadInt32();
@@ -1067,7 +1065,7 @@ namespace System.IO.Packaging
 
                         totalBytesRead = 4; // entryLength
                         // Read the container reference entry
-                        CompoundFileReference entryRef = 
+                        CompoundFileReference entryRef =
                             CompoundFileReference.Load( dataSpaceMapReader, out bytesRead );
                         checked { totalBytesRead += bytesRead; }
 
@@ -1083,7 +1081,7 @@ namespace System.IO.Packaging
                             throw new IOException(SR.DataSpaceMapEntryInvalid);
                         }
                     }
-                }                    
+                }
             }
         }
     }
@@ -1095,9 +1093,9 @@ namespace System.IO.Packaging
     {
         ThrowIfIncorrectUpdaterVersion();
 
-        StorageInfo dataSpaceStorage = 
+        StorageInfo dataSpaceStorage =
             new StorageInfo( _associatedStorage, DataSpaceStorageName );
-        StreamInfo dataSpaceMapStreamInfo = 
+        StreamInfo dataSpaceMapStreamInfo =
             new StreamInfo ( dataSpaceStorage, DataSpaceMapTableName );
 
         if( 0 < _dataSpaceMap.Count )
@@ -1118,10 +1116,10 @@ namespace System.IO.Packaging
                 using(BinaryWriter dataSpaceMapWriter =
                     new BinaryWriter( dataSpaceMapStream, System.Text.Encoding.Unicode ))
                 {
-                    // Write header 
+                    // Write header
 
                     // header length = our known size + preserved array size
-                    dataSpaceMapWriter.Write( 
+                    dataSpaceMapWriter.Write(
                         checked ((Int32) (KnownBytesInMapTableHeader + _mapTableHeaderPreservation.Length)));
                     // number of entries
                     dataSpaceMapWriter.Write(
@@ -1171,7 +1169,7 @@ namespace System.IO.Packaging
     {
         ThrowIfIncorrectReaderVersion();
 
-        StorageInfo dataSpaceStorage = 
+        StorageInfo dataSpaceStorage =
             new StorageInfo( _associatedStorage, DataSpaceStorageName );
         StorageInfo dataSpaceDefinitionsStorage =
             new StorageInfo( dataSpaceStorage, DataSpaceDefinitionsStorageName );
@@ -1226,13 +1224,13 @@ namespace System.IO.Packaging
     /// <summary>
     /// Write all data space definitions to underlying storage in one chunk.
     /// </summary>
-    /// 
+    ///
     // Idea: Optimize and write only those dataspaces that have changed.
     void WriteDataSpaceDefinitions()
     {
         ThrowIfIncorrectUpdaterVersion();
 
-        StorageInfo dataSpaceStorage = 
+        StorageInfo dataSpaceStorage =
             new StorageInfo( _associatedStorage, DataSpaceStorageName );
 
         // BUGBUG: Any data spaces that have been undefined would still stick
@@ -1272,7 +1270,7 @@ namespace System.IO.Packaging
 
                         foreach( object transformLabel in definition.TransformStack)
                         {
-                            CU.WriteByteLengthPrefixedDWordPaddedUnicodeString( 
+                            CU.WriteByteLengthPrefixedDWordPaddedUnicodeString(
                                 definitionWriter, (string)transformLabel);
                         }
                     }
@@ -1290,7 +1288,7 @@ namespace System.IO.Packaging
     {
         ThrowIfIncorrectReaderVersion();
 
-        StorageInfo dataSpaceStorage = 
+        StorageInfo dataSpaceStorage =
             new StorageInfo( _associatedStorage, DataSpaceStorageName );
         StorageInfo transformDefinitionsStorage =
             new StorageInfo( dataSpaceStorage, TransformDefinitions );
@@ -1318,7 +1316,7 @@ namespace System.IO.Packaging
                         TransformInstance transformInstance =
                             new TransformInstance(transformType, CU.ReadByteLengthPrefixedDWordPaddedUnicodeString( definitionReader ) );
 
-                        
+
                         int extraDataSize = checked ((int) (headerLength - transformDefinition.Position));
 
                         if (extraDataSize < 0)
@@ -1345,14 +1343,14 @@ namespace System.IO.Packaging
                             byte[] instanceData = new byte[instanceDataSize];
                             PackagingUtilities.ReliableRead(transformDefinition, instanceData, 0, instanceDataSize);
 
-                            //build memory stream on the byte[] , and allow writes only if 
+                            //build memory stream on the byte[] , and allow writes only if
                             // FileAccess is Write or ReadWrite
                             MemoryStream instanceDataStream;
                             if (_associatedStorage.OpenAccess == FileAccess.Read)
                             {
                                 //  NOTE: Building MemoryStream directly on top of
                                 //  instanceData byte array because we want it to be
-                                //  NOT resizable and NOT writable.                    
+                                //  NOT resizable and NOT writable.
                                 instanceDataStream = new MemoryStream(instanceData, writable: false);
                             }
                             else
@@ -1360,7 +1358,7 @@ namespace System.IO.Packaging
                                 // Copy additional data into a memory stream
                                 //  NOTE: Not building MemoryStream directly on top of
                                 //  instanceData byte array because we want it to be
-                                //  resizable.                    
+                                //  resizable.
                                 instanceDataStream = new MemoryStream();
                                 instanceDataStream.Write( instanceData, 0, instanceDataSize );
                             }
@@ -1382,14 +1380,14 @@ namespace System.IO.Packaging
     /// <summary>
     /// Write out all transform definitions all at once
     /// </summary>
-    /// 
+    ///
     // Idea: Replace with system that writes only "dirty" transform definitions
 
     void WriteTransformDefinitions()
     {
         ThrowIfIncorrectUpdaterVersion();
 
-        StorageInfo dataSpaceStorage = 
+        StorageInfo dataSpaceStorage =
             new StorageInfo( _associatedStorage, DataSpaceStorageName );
         StorageInfo transformDefinitionsStorage =
             new StorageInfo( dataSpaceStorage, TransformDefinitions );
@@ -1407,7 +1405,7 @@ namespace System.IO.Packaging
                 string transformLabel = null;
                 TransformInstance transformInstance = GetTransformInstanceOf( transformDef );
                 Debug.Assert( transformInstance != null, "A transform instance should be available if its name is in the transformDefinitions hashtable");
-                
+
                 if( transformInstance.transformEnvironment != null )
                 {
                     // We have a transform environment object - it has the transform label.
@@ -1443,9 +1441,9 @@ namespace System.IO.Packaging
                         }
 
                         transformWriter.Write(headerLength);
-                        
+
                         transformWriter.Write((int)TransformIdentifierTypes_PredefinedTransformName);
-                        CU.WriteByteLengthPrefixedDWordPaddedUnicodeString( 
+                        CU.WriteByteLengthPrefixedDWordPaddedUnicodeString(
                             transformWriter, transformInstance.typeName);
 
                         // Write out the preserved unknown data if there are some
@@ -1533,7 +1531,7 @@ namespace System.IO.Packaging
             // If transform is not ready, call initializers to make it ready.
             if( ! transformObject.IsReady )
             {
-                CallTransformInitializers( 
+                CallTransformInitializers(
                     new TransformInitializationEventArgs(
                         transformObject,
                         dataSpaceLabel,
@@ -1562,7 +1560,7 @@ namespace System.IO.Packaging
     /// When naming a transform object, the string being passed in can be
     /// interpreted in one of several ways.  This enumerated type is used
     /// to specify the semantics of the identification string.
-    /// 
+    ///
     /// The transform identification string is key into a table of
     ///  well-known transform definitions.
     /// </summary>
@@ -1571,8 +1569,8 @@ namespace System.IO.Packaging
     #region Version Methods
 
     /// <summary>
-    /// Read the version information that specifies the minimum versions of the 
-    /// DataSpaceManager software that can read, write, or update the data space 
+    /// Read the version information that specifies the minimum versions of the
+    /// DataSpaceManager software that can read, write, or update the data space
     /// information in this file.
     /// </summary>
     /// <param name="dataSpaceStorage"></param>
@@ -1580,7 +1578,7 @@ namespace System.IO.Packaging
     /// If the format version information in the stream is corrupt.
     /// </exception>
     private void ReadDataSpaceVersionInformation(StorageInfo dataSpaceStorage)
-    {      
+    {
         if (_fileFormatVersion == null)
         {
             if (dataSpaceStorage.StreamExists( DataSpaceVersionName ))
@@ -1589,7 +1587,7 @@ namespace System.IO.Packaging
                 using (Stream versionStream = versionStreamInfo.GetStream(FileMode.Open))
                 {
                     _fileFormatVersion = FormatVersion.LoadFromStream(versionStream);
-                                        
+
                     // Transform Identifier: we preserve casing, but do case-insensitive comparison
                     //Case-insensitive comparison. As per recommendations, we convert both strings
                     //to Upper case and then compare with StringComparison.Ordinal
@@ -1598,14 +1596,14 @@ namespace System.IO.Packaging
                         throw new FileFormatException(
                                             SR.Format(SR.InvalidTransformFeatureName,
                                             _fileFormatVersion.FeatureIdentifier,
-                                            DataSpaceVersionIdentifier));                       
+                                            DataSpaceVersionIdentifier));
                     }
                     // If we ever write this version number out again, we will want to record
                     // the fact that it was done by the current version of the Dataspace software.
                     _fileFormatVersion.WriterVersion = DataSpaceCurrentWriterVersion;
                 }
             }
-        }        
+        }
     }
 
     /// <summary>
@@ -1625,7 +1623,7 @@ namespace System.IO.Packaging
                                      );
         }
     }
-      
+
     /// <summary>
     /// Verify that the current version of this class can read the DataSpace information in
     /// this file.
@@ -1636,7 +1634,7 @@ namespace System.IO.Packaging
     private void ThrowIfIncorrectReaderVersion()
     {
         EnsureDataSpaceVersionInformation();
-      
+
         if (!_fileFormatVersion.IsReadableBy(DataSpaceCurrentReaderVersion))
         {
             throw new FileFormatException(
@@ -1771,11 +1769,11 @@ internal class TransformInitializationEventArgs : EventArgs
 }
 
 /// <summary>
-/// An instance of this class is given to each transform object as a 
-/// means for the transform object to interact with the environment 
-/// provided by the data space manager.  It is not mandatory for a 
-/// transform object to keep a reference on the given TransformEnvironment 
-/// object  it may choose to discard it if there is no need to interact 
+/// An instance of this class is given to each transform object as a
+/// means for the transform object to interact with the environment
+/// provided by the data space manager.  It is not mandatory for a
+/// transform object to keep a reference on the given TransformEnvironment
+/// object  it may choose to discard it if there is no need to interact
 /// with the transform environment.
 /// </summary>
 internal  class TransformEnvironment
@@ -1883,12 +1881,12 @@ internal  class TransformEnvironment
         transformHost.CheckDisposedStatus();
 
         StorageInfo storageInfo = transformHost.GetInstanceDataStorageOf( transformLabel );
-        
+
         if (! storageInfo.Exists)
         {
             storageInfo.Create();
         }
-        
+
         return storageInfo;
     }
 }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1264,9 +1264,8 @@ namespace System.Windows.Controls
                 mode = (FlowDocumentReaderViewingMode)value;
                 success = true;
             }
-            else if (value is String)
+            else if (value is String str)
             {
-                String str = (String)value;
                 if (str == FlowDocumentReaderViewingMode.Page.ToString())
                 {
                     mode = FlowDocumentReaderViewingMode.Page;

@@ -196,9 +196,8 @@ namespace System.Xaml
                 _mergedSettings.XmlLang = myXmlReader.XmlLang;
             }
 
-            IXmlNamespaceResolver myXmlReaderNS = myXmlReader as IXmlNamespaceResolver;
             Dictionary<string, string> xmlnsDictionary = null;
-            if (myXmlReaderNS is not null)
+            if (myXmlReader is IXmlNamespaceResolver myXmlReaderNS)
             {
                 IDictionary<string, string> rootNamespaces = myXmlReaderNS.GetNamespacesInScope(XmlNamespaceScope.Local);
                 if (rootNamespaces is not null)

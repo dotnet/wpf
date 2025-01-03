@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -154,9 +154,8 @@ namespace System.Windows.Controls
         /// and unit type as oCompare.</returns>
         public override bool Equals(object obj)
         {
-            if (obj is DataGridLength)
+            if (obj is DataGridLength l)
             {
-                DataGridLength l = (DataGridLength)obj;
                 return this == l;
             }
             else

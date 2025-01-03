@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2327,9 +2327,8 @@ namespace System.Windows.Controls
             bool ok;
 
             // Ensure value is double
-            if (value is double)
+            if (value is double checkValue)
             {
-                double checkValue = (double)value;
 
                 // Check if double is within an assumed range
                 if ((double.IsNaN(checkValue)) ||

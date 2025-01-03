@@ -398,9 +398,7 @@ namespace MS.Win32
             param.retVal = IntPtr.Zero;
             if (_bond == Bond.Attached)
             {
-                HwndWrapperHook hook= _hook.Target as HwndWrapperHook;
-
-                if (hook != null)
+                if (_hook.Target is HwndWrapperHook hook)
                 {
                     // make the call
                     param.retVal = hook(param.hwnd, param.msg, param.wParam, param.lParam, ref param.handled);

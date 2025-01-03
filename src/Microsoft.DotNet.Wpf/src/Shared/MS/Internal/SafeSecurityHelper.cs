@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -68,7 +68,7 @@ namespace System.Xaml
         {
             AssemblyName name = new AssemblyName(assembly.FullName);
             string partialName = name.Name;
-            return (partialName != null) ? partialName : string.Empty;
+            return partialName ?? string.Empty;
         }
 #endif
 
@@ -201,8 +201,7 @@ namespace System.Xaml
             {
                 foreach (object key in _assemblies.Keys)
                 {
-                    WeakReference weakRef = key as WeakReference;
-                    if (weakRef is null)
+                    if (key is not WeakReference weakRef)
                     {
                         continue;
                     }

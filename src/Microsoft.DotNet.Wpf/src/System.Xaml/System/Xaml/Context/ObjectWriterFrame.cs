@@ -138,8 +138,7 @@ namespace MS.Internal.Xaml.Context
             {
                 // We use a special KeyHolder in some x:Reference scenarios.
                 // We need to unwrap this when returning.
-                FixupTargetKeyHolder ftkh = _key as FixupTargetKeyHolder;
-                if (ftkh is not null)
+                if (_key is FixupTargetKeyHolder ftkh)
                 {
                     return ftkh.Key;
                 }

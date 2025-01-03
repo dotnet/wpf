@@ -385,10 +385,9 @@ namespace MS.Internal.Xaml.Context
                                 {   // The Ambient Property is either Fully build or not set.
                                     // FIRST: Ask the object (via IQueryAmbient interface) if it has a value for this property.
                                     // This is usefull to prevent needless creation of empty lazy properties.
-                                    var ambientCtrl = inst as XAML3.IQueryAmbient;
 
                                     // If there is no ambientControl or if ambientControl says YES, then get the property value.
-                                    if (ambientCtrl is null || ambientCtrl.IsAmbientPropertyAvailable(prop.Name))
+                                    if (inst is not XAML3.IQueryAmbient ambientCtrl || ambientCtrl.IsAmbientPropertyAvailable(prop.Name))
                                     {
                                         returnAmbientValue = true;
                                         value = _runtime.GetValue(inst, prop);
@@ -892,8 +891,7 @@ namespace MS.Internal.Xaml.Context
 
             if (nameScopeDictionary is null)
             {
-                XAML3.INameScope nameScope = inst as XAML3.INameScope;
-                if (nameScope is not null)
+                if (inst is XAML3.INameScope nameScope)
                 {
                     nameScopeDictionary = new NameScopeDictionary(nameScope);
                 }

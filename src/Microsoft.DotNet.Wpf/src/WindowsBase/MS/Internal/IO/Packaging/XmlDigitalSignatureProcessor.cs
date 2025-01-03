@@ -524,8 +524,7 @@ namespace MS.Internal.IO.Packaging
             // we should attempt to dispose it if it offers IDisposable.
             if (algorithm == null && o != null)
             {
-                IDisposable disposable = o as IDisposable;
-                if (disposable != null)
+                if (o is IDisposable disposable)
                     disposable.Dispose();
             }
 

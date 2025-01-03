@@ -269,9 +269,8 @@ namespace System.Xaml
                 return false;
             }
 
-            if (data is InternalNodeType)
+            if (data is InternalNodeType internalNodeType)
             {
-                InternalNodeType internalNodeType = (InternalNodeType)data;
                 if (internalNodeType == InternalNodeType.EndOfStream)
                 {
                     return true;

@@ -65,14 +65,12 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal static bool NameValidationCallback(object candidateName)
         {
-            string name = candidateName as string;
-
-            if( name != null )
+            if (candidateName is string name)
             {
                 // Non-null string, ask the XAML validation code for blessing.
                 return IsValidIdentifierName(name);
             }
-            else if( candidateName == null )
+            else if (candidateName == null)
             {
                 // Null string is allowed
                 return true;

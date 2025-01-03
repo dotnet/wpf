@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -165,7 +165,7 @@ namespace MS.Internal.Ink
                 // If the current captured device is Stylus, we should activate the LassoSelectionBehavior with
                 // the Stylus. Otherwise, use mouse.
                 EditingCoordinator.ActivateDynamicBehavior(EditingCoordinator.LassoSelectionBehavior,
-                    args.StylusDevice != null ? args.StylusDevice : args.Device);
+                    args.StylusDevice ?? args.Device);
             }
         }
 

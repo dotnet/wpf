@@ -124,8 +124,7 @@ namespace MS.Internal.Xaml.Runtime
             {
                 // We go down this path even if there are no args, because we might match a params array
                 MemberInfo[] members = type.GetMember(methodName, MemberTypes.Method, flags);
-                MethodBase[] methods = members as MethodBase[];
-                if (methods is null)
+                if (members is not MethodBase[] methods)
                 {
                     methods = new MethodBase[members.Length];
                     Array.Copy(members, methods, members.Length);
@@ -382,8 +381,7 @@ namespace MS.Internal.Xaml.Runtime
                 // - an IDictionaryEnumerator,
                 // - an IEnumerator<KeyValuePair<K,V>>, or
                 // - an IEnumerator that returns DictionaryEntrys
-                IDictionaryEnumerator dictionaryEnumerator = enumerator as IDictionaryEnumerator;
-                if (dictionaryEnumerator is not null)
+                if (enumerator is IDictionaryEnumerator dictionaryEnumerator)
                 {
                     return DictionaryEntriesFromIDictionaryEnumerator(dictionaryEnumerator);
                 }
@@ -464,8 +462,7 @@ namespace MS.Internal.Xaml.Runtime
         {
             try
             {
-                XAML3.IComponentConnector connector = root as XAML3.IComponentConnector;
-                if(connector is not null)
+                if (root is XAML3.IComponentConnector connector)
                 {
                     connector.Connect(connectionId, instance);
                 }
@@ -485,10 +482,9 @@ namespace MS.Internal.Xaml.Runtime
         {
             try
             {
-                ISupportInitialize supportInit = obj as ISupportInitialize;
-                if(supportInit is not null)
+                if (obj is ISupportInitialize supportInit)
                 {
-                    if(begin)
+                    if (begin)
                     {
                         supportInit.BeginInit();
                     }
@@ -531,8 +527,7 @@ namespace MS.Internal.Xaml.Runtime
         {
             try
             {
-                XAML3.IUriContext uriContext = obj as XAML3.IUriContext;
-                if(uriContext is not null)
+                if (obj is XAML3.IUriContext uriContext)
                 {
                     uriContext.BaseUri = baseUri;
                 }
@@ -553,14 +548,12 @@ namespace MS.Internal.Xaml.Runtime
         public override void SetXmlInstance(object inst, XamlMember property, XAML3.XData xData)
         {
             object propInstance = GetValue(inst, property, true);
-            IXmlSerializable iXmlSerial = propInstance as IXmlSerializable;
-            if(iXmlSerial is null)
+            if (propInstance is not IXmlSerializable iXmlSerial)
             {
                 throw CreateException((SR.Format(SR.XmlDataNull, property.Name)));
             }
 
-            XmlReader reader = xData.XmlReader as XmlReader;
-            if(reader is null)
+            if (xData.XmlReader is not XmlReader reader)
             {
                 throw new XamlInternalException(SR.Format(SR.XmlValueNotReader, property.Name));
             }
@@ -602,8 +595,7 @@ namespace MS.Internal.Xaml.Runtime
             catch (Exception e)
             {
                 // Reset the reader in case our caller catches and retries
-                IXamlIndexingReader indexingReader = deferredContent as IXamlIndexingReader;
-                if(indexingReader is not null && indexingReader.CurrentIndex >= 0)
+                if (deferredContent is IXamlIndexingReader indexingReader && indexingReader.CurrentIndex >= 0)
                 {
                     indexingReader.CurrentIndex = -1;
                 }

@@ -67,8 +67,7 @@ namespace System.Windows.Markup
             // Get the IXamlTypeResolver from the service provider
             ArgumentNullException.ThrowIfNull(serviceProvider);
 
-            IXamlTypeResolver xamlTypeResolver = serviceProvider.GetService(typeof(IXamlTypeResolver)) as IXamlTypeResolver;
-            if( xamlTypeResolver is null)
+            if (serviceProvider.GetService(typeof(IXamlTypeResolver)) is not IXamlTypeResolver xamlTypeResolver)
             {
                 throw new InvalidOperationException(SR.Format(SR.MarkupExtensionNoContext, GetType().Name, nameof(IXamlTypeResolver)));
             }

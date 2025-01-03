@@ -101,8 +101,7 @@ namespace System.Xaml
             MarkupInfo node = nodes.Pop();
             currentXamlNode = node.XamlNode;
 
-            ObjectMarkupInfo objectNode = node as ObjectMarkupInfo;
-            currentInstance = objectNode is not null ? objectNode.Object : null;
+            currentInstance = node is ObjectMarkupInfo objectNode ? objectNode.Object : null;
 
             var subNodes = node.Decompose();
 
@@ -279,8 +278,7 @@ namespace System.Xaml
                         return false;
                     }
 
-                    ObjectMarkupInfo r = children[0] as ObjectMarkupInfo;
-                    return (r is not null && r.IsAttributableMarkupExtension);
+                    return (children[0] is ObjectMarkupInfo r && r.IsAttributableMarkupExtension);
                 }
             }
 
@@ -309,8 +307,7 @@ namespace System.Xaml
                     // Empty collections and atoms are attributable
                     if (Children.Count == 0 || Children[0] is ValueMarkupInfo) { return true; }
 
-                    ObjectMarkupInfo r = Children[0] as ObjectMarkupInfo;
-                    if (r is null)
+                    if (Children[0] is not ObjectMarkupInfo r)
                     {
                         throw new InvalidOperationException(SR.ExpectedObjectMarkupInfo);
                     }
@@ -674,19 +671,16 @@ namespace System.Xaml
                 {
                     if (memberInfo.Children.Count == 1)
                     {
-                        var objectInfo = memberInfo.Children[0] as ObjectMarkupInfo;
-                        if (objectInfo is not null && objectInfo.Properties.Count == 1 && memberType == objectInfo.XamlNode.XamlType)
+                        if (memberInfo.Children[0] is ObjectMarkupInfo objectInfo && objectInfo.Properties.Count == 1 && memberType == objectInfo.XamlNode.XamlType)
                         {
                             if (objectInfo.Properties[0].XamlNode.Member == XamlLanguage.Items)
                             {
-                                var itemsMemberInfo = objectInfo.Properties[0] as MemberMarkupInfo;
-                                if(itemsMemberInfo is not null && itemsMemberInfo.Children.Count > 0)
+                                if (objectInfo.Properties[0] is MemberMarkupInfo itemsMemberInfo && itemsMemberInfo.Children.Count > 0)
                                 {
                                     // Check if the first element of the collection/dictionary is a ME and replace the SO with GO only if it is not an ME.
                                     // This is to handle cases where the first element is, say, null. If we remove the SO, then there is no way to
                                     // know if the collection is null or the first element is null.
-                                    var itemInfo = itemsMemberInfo.Children[0] as ObjectMarkupInfo;
-                                    if(itemInfo is null || itemInfo.XamlNode.XamlType is null || !itemInfo.XamlNode.XamlType.IsMarkupExtension)
+                                    if (itemsMemberInfo.Children[0] is not ObjectMarkupInfo itemInfo || itemInfo.XamlNode.XamlType is null || !itemInfo.XamlNode.XamlType.IsMarkupExtension)
                                     {
                                         // change the member to GetObject
                                         objectInfo.XamlNode = new XamlNode(XamlNodeType.GetObject);
@@ -1237,14 +1231,12 @@ namespace System.Xaml
                     // default ctor
                     methodParams = Array.Empty<ParameterInfo>();
                 }
-                else if (memberInfo is ConstructorInfo)
+                else if (memberInfo is ConstructorInfo ctor)
                 {
-                    var ctor = (ConstructorInfo)memberInfo;
                     methodParams = ctor.GetParameters();
                 }
-                else if (memberInfo is MethodInfo)
+                else if (memberInfo is MethodInfo mi)
                 {
-                    var mi = (MethodInfo)memberInfo;
                     methodParams = mi.GetParameters();
 
                     var methodName = memberInfo.Name;
@@ -1936,8 +1928,7 @@ namespace System.Xaml
                 //    throw new XamlObjectReaderException(SR.XamlSerializerCannotHaveXDataAtRoot(valueType.Name));
                 // }
 
-                var valueAsArray = value as Array;
-                if (valueAsArray is not null)
+                if (value is Array valueAsArray)
                 {
                     return ForArray(valueAsArray, context);
                 }
@@ -3055,8 +3046,7 @@ namespace System.Xaml
 
                 public override bool Equals(object obj)
                 {
-                    Entry other = obj as Entry;
-                    return other is not null && other.Key.Equals(Key);
+                    return obj is Entry other && other.Key.Equals(Key);
                 }
 
                 public override int GetHashCode()

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1767,7 +1767,7 @@ namespace System.Windows
 
                 DependencyObject parent = LogicalTreeHelper.GetParent(d);
 
-                d = (parent != null) ? parent : Helper.FindMentor(d.InheritanceContext);
+                d = parent ?? Helper.FindMentor(d.InheritanceContext);
             }
 
             scopeOwner = null;
@@ -2501,7 +2501,7 @@ namespace System.Windows
             if (Parent == null)
             {
                 // Invalidate relevant properties for this subtree
-                DependencyObject parent = (newParent != null) ? newParent : oldParent;
+                DependencyObject parent = newParent ?? oldParent;
                 TreeWalkHelper.InvalidateOnTreeChange(this, null, parent, (newParent != null));
             }
 

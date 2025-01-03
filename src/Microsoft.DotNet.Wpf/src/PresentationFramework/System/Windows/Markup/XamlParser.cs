@@ -221,9 +221,8 @@ namespace System.Windows.Markup
                     int linePosition = 0;
                     string newMessage = null;
 
-                    if (e is XmlException)
+                    if (e is XmlException xmlEx)
                     {
-                        XmlException xmlEx = (XmlException)e;
                         lineNumber = xmlEx.LineNumber;
                         linePosition = xmlEx.LinePosition;
                         newMessage = xmlEx.Message;

@@ -667,8 +667,7 @@ namespace System.Xaml
             }
 
             IEnumerable<ConstructorInfo> ctors = GetConstructors();
-            ConstructorInfo[] ctorArray = ctors as ConstructorInfo[];
-            if (ctorArray is null)
+            if (ctors is not ConstructorInfo[] ctorArray)
             {
                 ctorArray = new List<ConstructorInfo>(ctors).ToArray();
             }

@@ -771,8 +771,7 @@ namespace System.Xaml
                 bool shouldSetValue = true;
                 if (value is not null)
                 {
-                    XAML3.MarkupExtension me = value as XAML3.MarkupExtension;
-                    if (me is not null)
+                    if (value is XAML3.MarkupExtension me)
                     {
                         _context.CurrentInstance = me;
                         XamlType valueXamlType = GetXamlType(value.GetType());
@@ -1156,8 +1155,7 @@ namespace System.Xaml
                 object[] args = ctx.CurrentCtorArgs;
                 for (int i = 0; i < args.Length; i++)
                 {
-                    XAML3.MarkupExtension me = args[i] as XAML3.MarkupExtension;
-                    if (me is not null)
+                    if (args[i] is XAML3.MarkupExtension me)
                     {
                         args[i] = Logic_PushAndPopAProvideValueStackFrame(ctx, XamlLanguage.PositionalParameters, me, false);
                     }
@@ -1338,8 +1336,7 @@ namespace System.Xaml
             XamlType propertyType = property.Type;
 
             object value = ctx.CurrentInstance;
-            XamlReader deferredContent = value as XamlReader;
-            if (deferredContent is not null)
+            if (value is XamlReader deferredContent)
             {
                 // property.DeferringLoader looks at the property AND the type of the property.
                 XamlValueConverter<XamlDeferringLoader> deferringLoader = property.DeferringLoader;
@@ -1566,8 +1563,7 @@ namespace System.Xaml
                     // so don't call ProvideValue() now on directives here.
                     // (x:Key and x:Name need their own "saved spot" outside of PreconstructionPropertyValues)
 
-                    XAML3.MarkupExtension me = value as XAML3.MarkupExtension;
-                    if (me is not null && !prop.IsDirective)
+                    if (value is XAML3.MarkupExtension me && !prop.IsDirective)
                     {
                         Logic_PushAndPopAProvideValueStackFrame(ctx, prop, me, true);
                     }
@@ -1808,8 +1804,7 @@ namespace System.Xaml
                 {
                     // If Value is a Markup Extention then check the collection item type
                     // if it can hold the ME then don't call ProvideValue().
-                    XAML3.MarkupExtension me = value as XAML3.MarkupExtension;
-                    if(me is not null && !Logic_WillParentCollectionAdd(ctx, value.GetType(), true))
+                    if (value is XAML3.MarkupExtension me && !Logic_WillParentCollectionAdd(ctx, value.GetType(), true))
                     {
                         // We don't need to call Logic_ProvideValue() with the extra handler
                         // interfaces, because this is collection not a scalar property.
@@ -2046,9 +2041,8 @@ namespace System.Xaml
                     }
 
                     ctx.ParentIsPropertyValueSet = true;
-                    if (value is NameFixupToken)
+                    if (value is NameFixupToken token)
                     {
-                        var token = (NameFixupToken)value;
                         if (parentProperty.IsDirective)
                         {
                             // Only the key directive may be assigned a reference.
@@ -2174,8 +2168,7 @@ namespace System.Xaml
                                 XAML3.INameScope nameScope, XAML3.INameScope parentNameScope, bool isRoot)
         {
             XAML3.INameScope underlyingNameScope = nameScope;
-            NameScopeDictionary nameScopeDict = nameScope as NameScopeDictionary;
-            if (nameScopeDict is not null)
+            if (nameScope is NameScopeDictionary nameScopeDict)
             {
                 underlyingNameScope = nameScopeDict.UnderlyingNameScope;
             }
@@ -2233,8 +2226,7 @@ namespace System.Xaml
                 throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.DirectiveNotAtRoot, XamlLanguage.Class)));
             }
 
-            string className = value as string;
-            if (className is null)
+            if (value is not string className)
             {
                 throw ctx.WithLineInfo(new XamlObjectWriterException(SR.Format(SR.DirectiveMustBeString, XamlLanguage.Class)));
             }
@@ -2593,8 +2585,7 @@ namespace System.Xaml
                 _lastInstance = owc.CurrentInstance;
             }
 
-            NameFixupToken newToken = owc.CurrentInstance as NameFixupToken;
-            if (newToken is not null)
+            if (owc.CurrentInstance is NameFixupToken newToken)
             {
                 // Line Info should be the same as the original token, not wherever we happen to be currently.
                 // Also several properties on Target (IsOnTheStack, EndInstanceLineInfo, and potentially others)

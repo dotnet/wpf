@@ -63,12 +63,11 @@ namespace System.Windows.Converters
         /// </summary>
         public override string ConvertToString(object value, IValueSerializerContext context)
         {
-            if (value is Int32Rect)
+            if (value is Int32Rect instance)
             {
-                Int32Rect instance = (Int32Rect) value;
 
 
-                #pragma warning suppress 6506 // instance is obviously not null
+#pragma warning suppress 6506 // instance is obviously not null
                 return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
             }
 

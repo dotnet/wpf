@@ -1123,14 +1123,13 @@ namespace System.Windows.Markup
         internal void EnsureAssemblyRecord(Assembly asm)
         {
             string fullName = asm.FullName;
-            BamlAssemblyInfoRecord record = ObjectHashTable[fullName] as BamlAssemblyInfoRecord;
 
             // If we don't have an assembly record for this assembly yet it is most likely
             // because it is an assembly that is part of the default namespace and was not defined
             // using a mapping PI.  In that case, add an assembly record to the object cache and
             // populate it with the required data.  Note that it DOES NOT have a valid AssemblyId
             // and this is not written out the the baml stream.
-            if (record == null)
+            if (ObjectHashTable[fullName] is not BamlAssemblyInfoRecord record)
             {
                 record = new BamlAssemblyInfoRecord();
                 record.AssemblyFullName = fullName;
@@ -1846,10 +1845,8 @@ namespace System.Windows.Markup
         /// </summary>
         public override bool Equals(object o)
         {
-            if (o is AssemblyInfoKey)
+            if (o is AssemblyInfoKey key)
             {
-                AssemblyInfoKey key = (AssemblyInfoKey)o;
-
                 return ((key.AssemblyFullName != null) ?
                                       key.AssemblyFullName.Equals(this.AssemblyFullName) :
                                       (this.AssemblyFullName == null));
@@ -1908,10 +1905,8 @@ namespace System.Windows.Markup
         /// </summary>
         public override bool Equals(object o)
         {
-            if (o is TypeInfoKey)
+            if (o is TypeInfoKey key)
             {
-                TypeInfoKey key = (TypeInfoKey)o;
-
                 return ((key.DeclaringAssembly != null) ?
                                       key.DeclaringAssembly.Equals(this.DeclaringAssembly) :
                                       (this.DeclaringAssembly == null)) &&
@@ -1954,6 +1949,6 @@ namespace System.Windows.Markup
         ///     Return string representation of this key
         /// </summary>
         public override string ToString() =>
-            $"TypeInfoKey: Assembly={((DeclaringAssembly != null) ? DeclaringAssembly : "null")} Type={((TypeFullName != null) ? TypeFullName : "null")}";
+            $"TypeInfoKey: Assembly={(DeclaringAssembly ?? "null")} Type={(TypeFullName ?? "null")}";
     }
 }

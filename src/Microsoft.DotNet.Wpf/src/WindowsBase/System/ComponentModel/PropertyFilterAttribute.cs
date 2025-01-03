@@ -47,8 +47,7 @@ namespace System.ComponentModel
         /// </summary>
         public override bool Equals(object value) 
         {
-            PropertyFilterAttribute a = value as PropertyFilterAttribute;
-            if (a != null && a._filter.Equals(_filter)) 
+            if (value is PropertyFilterAttribute a && a._filter.Equals(_filter))
             {
                 return true;
             }
@@ -72,8 +71,8 @@ namespace System.ComponentModel
         /// </summary>
         public override bool Match(object value) 
         {
-            PropertyFilterAttribute a = value as PropertyFilterAttribute;
-            if (a == null) return false;
+            if (value is not PropertyFilterAttribute a)
+                return false;
             return ((_filter & a._filter) == _filter);
         }
 

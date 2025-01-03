@@ -58,8 +58,7 @@ namespace System.Xaml.Schema
         public virtual void AddToCollection(object instance, object item)
         {
             ArgumentNullException.ThrowIfNull(instance);
-            IList list = instance as IList;
-            if (list is not null)
+            if (instance is IList list)
             {
                 list.Add(item);
                 return;
@@ -93,8 +92,7 @@ namespace System.Xaml.Schema
         public virtual void AddToDictionary(object instance, object key, object item)
         {
             ArgumentNullException.ThrowIfNull(instance);
-            IDictionary dictionary = instance as IDictionary;
-            if (dictionary is not null)
+            if (instance is IDictionary dictionary)
             {
                 dictionary.Add(key, item);
                 return;
@@ -213,8 +211,7 @@ namespace System.Xaml.Schema
         public virtual IEnumerator GetItems(object instance)
         {
             ArgumentNullException.ThrowIfNull(instance);
-            IEnumerable enumerable = instance as IEnumerable;
-            if (enumerable is not null)
+            if (instance is IEnumerable enumerable)
             {
                 return enumerable.GetEnumerator();
             }

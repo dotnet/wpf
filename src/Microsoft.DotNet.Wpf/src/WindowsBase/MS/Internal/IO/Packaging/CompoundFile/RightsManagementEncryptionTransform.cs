@@ -1,9 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-// Allow use of presharp warning numbers [6518] unknown to the compiler
-#pragma warning disable 1634, 1691
 
 using System.Collections;
 using System.Collections.ObjectModel;
@@ -423,12 +420,12 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         /// <para>
         /// Returns true when the transform expects no further changes to its state.
         /// The contract is that if FixedSettings is false, an application can change
-        /// any of the transform’s properties with the promise that an exception will
+        /// any of the transformâ€™s properties with the promise that an exception will
         /// not be thrown.
         /// </para>
         /// <para>
         /// For the RightsManagementEncryptionTransform, FixedSettings becomes true the
-        /// first time the compound file code calls the object’s GetTransformedStream method.
+        /// first time the compound file code calls the objectâ€™s GetTransformedStream method.
         /// After that, any attempt to set the CryptoProvider property, or to call
         /// SavePublicLicense, throws InvalidOperationException.
         /// </para>

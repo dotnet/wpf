@@ -1,9 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-// Allow use of presharp warning numbers [6506] and [6518] unknown to the compiler
-#pragma warning disable 1634, 1691
 
 namespace System.Security.RightsManagement
 {

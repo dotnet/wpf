@@ -613,9 +613,9 @@ namespace MS.Internal.Globalization
             IList<BamlTreeNode> newChildrenList          // list of new children
             )
         {
-            BamlStringToken[] tokens = BamlResourceContentUtil.ParseChildPlaceholder(content);
+            ReadOnlySpan<BamlStringToken> tokens = BamlResourceContentUtil.ParseChildPlaceholder(content);
 
-            if (tokens == null)
+            if (tokens.IsEmpty)
             {
                 bamlTreeMap.Resolver.RaiseErrorNotifyEvent(
                     new BamlLocalizerErrorNotifyEventArgs(
@@ -627,19 +627,19 @@ namespace MS.Internal.Globalization
             }
 
             bool succeed = true;
-            for (int i = 0; i < tokens.Length; i++)
+            foreach (BamlStringToken token in tokens)
             {
-                switch (tokens[i].Type)
+                switch (token.Type)
                 {
                     case BamlStringToken.TokenType.Text:
                         {
-                            BamlTreeNode node = new BamlTextNode(tokens[i].Value);
+                            BamlTreeNode node = new BamlTextNode(token.Value);
                             newChildrenList.Add(node);
                             break;
                         }
                     case BamlStringToken.TokenType.ChildPlaceHolder:
                         {
-                            BamlTreeNode node = bamlTreeMap.MapUidToBamlTreeElementNode(tokens[i].Value);
+                            BamlTreeNode node = bamlTreeMap.MapUidToBamlTreeElementNode(token.Value);
 
                             // The value will be null if there is no uid-matching node in the tree.                        
                             if (node != null)
@@ -651,7 +651,7 @@ namespace MS.Internal.Globalization
                                 bamlTreeMap.Resolver.RaiseErrorNotifyEvent(
                                     new BamlLocalizerErrorNotifyEventArgs(
                                         new BamlLocalizableResourceKey(
-                                            tokens[i].Value,
+                                            token.Value,
                                             string.Empty,
                                             string.Empty
                                             ),

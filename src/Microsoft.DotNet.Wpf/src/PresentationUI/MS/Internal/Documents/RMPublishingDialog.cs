@@ -1,8 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-#pragma warning disable 1634, 1691 // Stops compiler from warning about unknown warnings
 
 using Microsoft.Win32;
 using System;
@@ -396,7 +394,6 @@ namespace MS.Internal.Documents
                 // Any exception above represents a failure to load templates.
                 // Failing to load them is not a fatal error, so we can safely
                 // continue with an empty list.
-#pragma warning suppress 56500 // suppress PreSharp Warning 56500: Avoid `swallowing errors by catching non-specific exceptions..
                 catch (Exception e)
                 {
                     // Nothing should be done here, as we purposely catch all exceptions.

@@ -4,9 +4,6 @@
 
 // Description: Handles WinEvent notifications.
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System;
 using System.Collections;
 using System.Windows.Automation;
@@ -220,8 +217,7 @@ namespace MS.Internal.AutomationProxies
                     // Don't use the Misc.GetWindowThreadProcessId() helper since that throws; some events we want even
                     // though the hwnd is no longer valid (e.g. menu item events).
                     uint processId;
-                    // Disabling the PreSharp error since GetWindowThreadProcessId doesn't use SetLastError().
-    #pragma warning suppress 6523
+                    // GetWindowThreadProcessId doesn't use SetLastError().
                     if (UnsafeNativeMethods.GetWindowThreadProcessId(hwnd, out processId) != 0)
                     {
                         // Find the EventHookParams.  

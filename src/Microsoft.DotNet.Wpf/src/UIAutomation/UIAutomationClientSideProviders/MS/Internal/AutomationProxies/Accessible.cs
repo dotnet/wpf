@@ -6,10 +6,6 @@
 //              and default action
 //
 
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System;
 using System.Diagnostics;
 using System.Globalization;
@@ -394,12 +390,9 @@ namespace MS.Internal.AutomationProxies
                     catch (Exception e)
                     {
                         if (HandleIAccessibleException(e))
-                        {
-                            // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                            // We are communicate with the underlying control to get the information.  
+                        { 
                             // The control may not be able to give us the information we need.
                             // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                             throw;
                         }
                         return null;
@@ -494,11 +487,8 @@ namespace MS.Internal.AutomationProxies
                 {
                     if (HandleIAccessibleException(e))
                     {
-                        // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                        // We are communicate with the underlying control to get the information.  
                         // The control may not be able to give us the information we need.
                         // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                         throw;
                     }
                     return AccessibleState.Unavailable;
@@ -513,21 +503,16 @@ namespace MS.Internal.AutomationProxies
                 try
                 {
                     string value = FixBstr(_acc.get_accValue(_idChild));
-                    // PerSharp/PreFast will flag this as warning 6507/56507: Prefer 'string.IsNullOrEmpty(value)' over checks for null and/or emptiness.
                     // Need to convert nulls into an empty string, so need to just test for a null.
                     // Therefore we can not use IsNullOrEmpty() here, suppress the warning.
-#pragma warning suppress 6507
                     return value ?? "";
                 }
                 catch (Exception e)
                 {
                     if (HandleIAccessibleException(e))
                     {
-                        // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                        // We are communicate with the underlying control to get the information.  
                         // The control may not be able to give us the information we need.
                         // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                         throw;
                     }
                     return "";
@@ -726,11 +711,8 @@ namespace MS.Internal.AutomationProxies
                 {
                     if (HandleIAccessibleException(e))
                     {
-                        // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                        // We are communicate with the underlying control to get the information.  
                         // The control may not be able to give us the information we need.
                         // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                         throw;
                     }
                     return "";
@@ -865,12 +847,9 @@ namespace MS.Internal.AutomationProxies
                     catch (Exception e)
                     {
                         if (HandleIAccessibleException(e))
-                        {
-                            // PerSharp/PreFast will flag this as a warning, 6503/56503: Property get methods should not throw exceptions.
-                            // We are communicate with the underlying control to get the information.  
+                        { 
                             // The control may not be able to give us the information we need.
                             // Throw the correct exception to communicate the failure.
-#pragma warning suppress 6503
                             throw;
                         }
 

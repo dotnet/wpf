@@ -4,10 +4,6 @@
 
 // Description: Miscellaneous helper routines
 
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using Microsoft.Win32.SafeHandles;
 using MS.Win32;
 using System;
@@ -158,7 +154,6 @@ namespace MS.Internal.AutomationProxies
             // The return value specifies the value returned by the window procedure.
             // Although its meaning depends on the message being dispatched, the return
             // value generally is ignored.
-#pragma warning suppress 6031, 6523
             return UnsafeNativeMethods.DispatchMessage(ref msg);
         }
 
@@ -389,7 +384,6 @@ namespace MS.Internal.AutomationProxies
             IntPtr peer = hwnd;
 
             // If GetWindow fails we're going to exit, no need to call Marshal.GetLastWin32Error
-#pragma warning suppress 56523
             while ((peer = NativeMethodsSetLastError.GetWindow(peer, NativeMethods.GW_HWNDPREV)) != IntPtr.Zero)
             {
                 //
@@ -410,7 +404,6 @@ namespace MS.Internal.AutomationProxies
                 // Using invisible statics is an easy workaround to add names to controls without changing the visual UI.
                 //
                 // If GetWindowLong fails we're going to exit, no need to call Marshal.GetLastWin32Error
-#pragma warning suppress 56523
                 int error = 0;
                 int style = UnsafeNativeMethods.GetWindowLong(peer, NativeMethods.GWL_STYLE, out error);
                 if ((style & NativeMethods.WS_VISIBLE) != 0)
@@ -703,8 +696,6 @@ namespace MS.Internal.AutomationProxies
         internal static uint GetWindowThreadProcessId(IntPtr hwnd, out uint processId)
         {
             // GetWindowThreadProcessId does use SetLastError().  So a call to GetLastError() would be meanless.
-            // Disabling the PreSharp warning.
-#pragma warning suppress 6523
             uint threadId = UnsafeNativeMethods.GetWindowThreadProcessId(hwnd, out processId);
 
             if (threadId == 0)
@@ -1445,9 +1436,7 @@ namespace MS.Internal.AutomationProxies
 
         internal static int ReleaseDC(IntPtr hwnd, IntPtr hdc)
         {
-            // If ReleaseDC fails we will not do anything with that information so just ignore the
-            // PRESHARP warnings.
-#pragma warning suppress 6031, 6523
+            // If ReleaseDC fails we will not do anything with that information
             return UnsafeNativeMethods.ReleaseDC(hwnd, hdc);
         }
 
@@ -1466,11 +1455,8 @@ namespace MS.Internal.AutomationProxies
 
         internal static IntPtr SelectObject(IntPtr hdc, IntPtr hObject)
         {
-            // There is no indication in the Windows SDK documentation that SelectObject()
-            // will set an error to be retrieved with GetLastError, so set the pragma to ignore
-            // the PRESHARP warning.  Anyway if ReleaseDC() fails here, nothing more can be done
-            // since the code is restoring the orginal object and discarding the temp object.
-#pragma warning suppress 6031, 6523
+            // There is no indication in the Windows SDK documentation that SelectObject() will set an error to be retrieved with GetLastError.
+            // Anyway if ReleaseDC() fails here, nothing more can be done since the code is restoring the orginal object and discarding the temp object.
             return UnsafeNativeMethods.SelectObject(hdc, hObject);
         }
 
@@ -1587,17 +1573,13 @@ namespace MS.Internal.AutomationProxies
                     if (!GetMessage(ref msg, IntPtr.Zero, 0, 0))
                         break;
 
-                    // TranslateMessage() will not set an error to be retrieved with GetLastError,
-                    // so set the pragma to ignore the PERSHARP warning.
-                    // the PERSHARP warning.
-#pragma warning suppress 6031, 6523
+                    // TranslateMessage() will not set an error to be retrieved with GetLastError
                     UnsafeNativeMethods.TranslateMessage(ref msg);
 
                     // From the Windows SDK documentation:
                     // The return value specifies the value returned by the window procedure.
                     // Although its meaning depends on the message being dispatched, the return
                     // value generally is ignored.
-#pragma warning suppress 6031, 6523
                     UnsafeNativeMethods.DispatchMessage(ref msg);
 
                     if (msg.message == NativeMethods.WM_HOTKEY && (short)msg.wParam == atom)
@@ -1635,9 +1617,7 @@ namespace MS.Internal.AutomationProxies
         internal static IntPtr SetWinEventHook(int eventMin, int eventMax, IntPtr hmodWinEventProc, NativeMethods.WinEventProcDef WinEventReentrancyFilter, uint idProcess, uint idThread, int dwFlags)
         {
             // There is no indication in the Windows SDK documentation that SetWinEventHook()
-            // will set an error to be retrieved with GetLastError, so set the pragma to ignore
-            // the PERSHARP warning.
-#pragma warning suppress 6523
+            // will set an error to be retrieved with GetLastError
             return UnsafeNativeMethods.SetWinEventHook(eventMin, eventMax, hmodWinEventProc, WinEventReentrancyFilter, idProcess, idThread, dwFlags);
         }
 
@@ -1730,9 +1710,7 @@ namespace MS.Internal.AutomationProxies
         internal static bool UnhookWinEvent(IntPtr winEventHook)
         {
             // There is no indication in the Windows SDK documentation that UnhookWinEvent()
-            // will set an error to be retrieved with GetLastError, so set the pragma to ignore
-            // the PERSHARP warning.
-#pragma warning suppress 6523
+            // will set an error to be retrieved with GetLastError
             return UnsafeNativeMethods.UnhookWinEvent(winEventHook);
         }
 

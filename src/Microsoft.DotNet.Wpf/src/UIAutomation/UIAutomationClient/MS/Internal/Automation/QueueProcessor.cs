@@ -4,9 +4,6 @@
 
 // Description: Class to create a queue on its own thread.
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System;
 using System.Threading;
 using System.Collections;
@@ -130,7 +127,6 @@ namespace MS.Internal.Automation
                     // The return value specifies the value returned by the window procedure.
                     // Although its meaning depends on the message being dispatched, the return
                     // value generally is ignored.
-#pragma warning suppress 6031, 6523
                     UnsafeNativeMethods.DispatchMessage(ref msg);
                 }
 

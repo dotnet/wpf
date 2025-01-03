@@ -4,9 +4,6 @@
 
 // Description: Manages Win32 proxies
 
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 using System;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
@@ -560,12 +557,10 @@ namespace MS.Internal.Automation
             if (count > 0)
             {
                 // Null and Empty string mean different things here.
-#pragma warning suppress 6507
                 if (imageName == null)
                     imageName = GetImageName(hwnd);
 
                 // Null and Empty string mean different things here.
-#pragma warning suppress 6507
                 if (imageName != null)
                 {
                     object entryOrArrayList;
@@ -646,7 +641,7 @@ namespace MS.Internal.Automation
                 ClientSideProviderDescription pi = (ClientSideProviderDescription)entry;
 
                 // Get the image name if necessary...
-#pragma warning suppress 6507 // Null and Empty string mean different things here.
+                // Null and Empty string mean different things here.
                 if (imageName == null && pi.ImageName != null)
                 {
                     imageName = GetImageName(hwnd);

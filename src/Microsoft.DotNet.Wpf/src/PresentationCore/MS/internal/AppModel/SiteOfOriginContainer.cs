@@ -18,6 +18,9 @@ namespace MS.Internal.AppModel
     {
         private static readonly BooleanSwitch s_traceSwitch = new("SiteOfOrigin", "SiteOfOriginContainer and SiteOfOriginPart trace messages");
 
+        /// <summary>
+        /// Represents the debug trace <see cref="BooleanSwitch"/> for <see cref="SiteOfOriginContainer"/> and <see cref="SiteOfOriginPart"/>.
+        /// </summary>
         internal static bool TraceSwitchEnabled
         {
             get => s_traceSwitch.Enabled;
@@ -55,8 +58,7 @@ namespace MS.Internal.AppModel
         /// <remarks>
         /// If this were to be implemented for http site of origin, it will require a server round trip.
         /// </remarks>
-        /// <param name="uri"></param>
-        /// <returns></returns>
+        /// <returns>Regardless of <paramref name="uri"/> input, always returns <see langword="true"/>.</returns>
         public override bool PartExists(Uri uri)
         {
             return true;

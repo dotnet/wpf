@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,7 +23,7 @@ namespace MS.Internal.Globalization
         /// </summary>
         internal static string EscapeString(string content)
         {
-            if (content == null)
+            if (content is null)
                 return null;
 
             StringBuilder builder = new(content.Length * 2);
@@ -95,36 +95,36 @@ namespace MS.Internal.Globalization
         /// </summary>
         internal static string UnescapeString(ReadOnlySpan<char> contentSpan, bool returnNewInstance = true)
         {
-            //Check whether there's anything to unescape
+            // Check whether there's anything to unescape
             int firstEscapeToken = contentSpan.IndexOfAny(s_escapeTokens);
             if (firstEscapeToken == -1)
                 return returnNewInstance ? new string(contentSpan) : null;
 
-            //Allocate buffer and append the chunk without tokens (unescaped)
+            // Allocate buffer and append the chunk without tokens (unescaped)
             StringBuilder stringBuilder = new(contentSpan.Length);
             stringBuilder.Append(contentSpan.Slice(0, firstEscapeToken));
 
             for (int i = firstEscapeToken; i < contentSpan.Length; i++)
             {
-                if (contentSpan[i] == BamlConst.EscapeChar) //An escape token ('\')
+                if (contentSpan[i] == BamlConst.EscapeChar) // An escape token ('\')
                 {
-                    if (contentSpan.Length > i + 1) //Check whether we're at the end
+                    if (contentSpan.Length > i + 1) // Check whether we're at the end
                     {
                         i++;
                         stringBuilder.Append(contentSpan[i]);
                     }
-                    else //We are, break out of the loop
+                    else // We are, break out of the loop
                         break;
                 }
-                else if (contentSpan[i] == '&') //A known escape sequence shall follow
+                else if (contentSpan[i] == '&') // A known escape sequence shall follow
                 {
                     EvaulateEscapeSequence(stringBuilder, contentSpan, ref i);
                 }
-                else //Nothing interesting, append character
+                else // Nothing interesting, append character
                     stringBuilder.Append(contentSpan[i]);
             }
 
-            //Evaluates whether any of the known escape sequences follows '&' (&quot; - &apos; - &amp; - &lt; - &gt;)
+            // Evaluates whether any of the known escape sequences follows '&' (&quot; - &apos; - &amp; - &lt; - &gt;)
             static void EvaulateEscapeSequence(StringBuilder stringBuilder, ReadOnlySpan<char> contentSpan, ref int i)
             {
                 contentSpan = contentSpan.Slice(i);
@@ -169,7 +169,7 @@ namespace MS.Internal.Globalization
                     }
                 }
 
-                //Default case, no escaped sequence found
+                // Default case, no escaped sequence found
                 stringBuilder.Append('&');
             }
 
@@ -183,7 +183,7 @@ namespace MS.Internal.Globalization
         /// </summary>
         internal static ReadOnlySpan<BamlStringToken> ParseChildPlaceholder(string input)
         {
-            if (input == null)
+            if (input is null)
                 return ReadOnlySpan<BamlStringToken>.Empty;
 
             List<BamlStringToken> tokens = new(8);

@@ -109,7 +109,7 @@ namespace System.Windows
 
             EntryIndex entryIndex = instance.LookupEntry(_globalIndex);
 
-            instance.UnsetEffectiveValue(entryIndex, null /* dp */, null /* metadata */);
+            instance.UnsetEffectiveValue(entryIndex, dp: null, metadata: null);
         }
 
         internal int GlobalIndex

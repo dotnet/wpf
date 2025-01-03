@@ -68,7 +68,7 @@ namespace System.Windows
             Freezable clone = CreateInstance();
 
             clone.CloneCore(this);
-            Debug_VerifyCloneCommon(/* original = */ this, /* clone = */ clone, /* isDeepClone = */ true);
+            Debug_VerifyCloneCommon(original: this, clone: clone, isDeepClone: true);
 
             return clone;
         }
@@ -93,7 +93,7 @@ namespace System.Windows
             // Freezable implementers who override CloneCurrentValueCore must ensure that
             // on creation the copy is not frozen.  Debug_VerifyCloneCommon checks for this,
             // among other things.
-            Debug_VerifyCloneCommon(/* original = */ this, /* clone = */ clone, /* isDeepClone = */ true);
+            Debug_VerifyCloneCommon(original: this, clone: clone, isDeepClone: true);
 
             return clone;
         }
@@ -115,7 +115,7 @@ namespace System.Windows
             Freezable clone = CreateInstance();
 
             clone.GetAsFrozenCore(this);
-            Debug_VerifyCloneCommon(/* original = */ this, /* clone = */ clone, /* isDeepClone = */ false);
+            Debug_VerifyCloneCommon(original: this, clone: clone, isDeepClone: false);
 
             clone.Freeze();
 
@@ -140,7 +140,7 @@ namespace System.Windows
             Freezable clone = CreateInstance();
 
             clone.GetCurrentValueAsFrozenCore(this);
-            Debug_VerifyCloneCommon(/* original = */ this, /* clone = */ clone, /* isDeepClone = */ false);
+            Debug_VerifyCloneCommon(original: this, clone: clone, isDeepClone: false);
 
             clone.Freeze();
 
@@ -154,7 +154,7 @@ namespace System.Windows
         {
             get
             {
-                return IsFrozenInternal || FreezeCore(/* isChecking = */ true);
+                return IsFrozenInternal || FreezeCore(isChecking: true);
             }
         }
 
@@ -173,7 +173,7 @@ namespace System.Windows
                 throw new InvalidOperationException(SR.Freezable_CantFreeze);
             }
 
-            Freeze(/* isChecking = */ false);
+            Freeze(isChecking: false);
         }
 
         #endregion
@@ -348,8 +348,8 @@ namespace System.Windows
         protected virtual void CloneCore(Freezable sourceFreezable)
         {
             CloneCoreCommon(sourceFreezable,
-                /* useCurrentValue = */ false,
-                /* cloneFrozenValues = */ true);
+                useCurrentValue: false,
+                cloneFrozenValues: true);
         }
 
         /// <summary>
@@ -370,8 +370,8 @@ namespace System.Windows
         protected virtual void CloneCurrentValueCore(Freezable sourceFreezable)
         {
             CloneCoreCommon(sourceFreezable,
-                /* useCurrentValue = */ true,
-                /* cloneFrozenValues = */ true);
+                useCurrentValue: true,
+                cloneFrozenValues: true);
         }
 
         /// <summary>
@@ -396,8 +396,8 @@ namespace System.Windows
         protected virtual void GetAsFrozenCore(Freezable sourceFreezable)
         {
             CloneCoreCommon(sourceFreezable,
-                /* useCurrentValue = */ false,
-                /* cloneFrozenValues = */ false);
+                useCurrentValue: false,
+                cloneFrozenValues: false);
         }
 
         /// <summary>
@@ -421,8 +421,8 @@ namespace System.Windows
         protected virtual void GetCurrentValueAsFrozenCore(Freezable sourceFreezable)
         {
             CloneCoreCommon(sourceFreezable,
-                /* useCurrentValue = */ true,
-                /* cloneFrozenValues = */ false);
+                useCurrentValue: true,
+                cloneFrozenValues: false);
         }
 
         /// <summary>
@@ -926,7 +926,7 @@ namespace System.Windows
                         // If the local value has modifiers, ReadLocalValue will return the base
                         // value, which is what we want.  A modified default will return UnsetValue,
                         // which will be ignored at the call to SetValue
-                        sourceValue = sourceFreezable.ReadLocalValueEntry(entryIndex, dp, true /* allowDeferredReferences */);
+                        sourceValue = sourceFreezable.ReadLocalValueEntry(entryIndex, dp, allowDeferredReferences: true);
 
                         // For the useCurrentValue = false case we ignore any UnsetValues.
                         if (sourceValue == DependencyProperty.UnsetValue)
@@ -979,7 +979,7 @@ namespace System.Windows
                             }
 
                             sourceValue = valueAsFreezableClone;
-                            Debug_VerifyCloneCommon(valueAsFreezable, valueAsFreezableClone, /*isDeepClone=*/ true);
+                            Debug_VerifyCloneCommon(valueAsFreezable, valueAsFreezableClone, isDeepClone: true);
                         }
                         else // skip cloning frozen values
                         {
@@ -1001,7 +1001,7 @@ namespace System.Windows
                                 }
 
                                 sourceValue = valueAsFreezableClone;
-                                Debug_VerifyCloneCommon(valueAsFreezable, valueAsFreezableClone, /*isDeepClone=*/ false);
+                                Debug_VerifyCloneCommon(valueAsFreezable, valueAsFreezableClone, isDeepClone: false);
                             }
                         }
                     }

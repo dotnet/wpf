@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2774,13 +2774,9 @@ namespace System.Windows.Navigation
             }
             catch (NotSupportedException)
             {
-                LaunchResult launched = LaunchResult.NotLaunched;
-
                 // Not supported exceptions are thrown for mailto: which we want to support.
                 // So we detect mailto: here.
-                launched = AppSecurityManager.SafeLaunchBrowserOnlyIfPossible(CurrentSource, resolvedDestinationUri, IsTopLevelContainer);
-
-                if (launched == LaunchResult.NotLaunched)
+                if (AppSecurityManager.SafeLaunchBrowserOnlyIfPossible(resolvedDestinationUri, IsTopLevelContainer) is LaunchResult.NotLaunched)
                     throw;
             }
             catch (SecurityException)
@@ -3016,7 +3012,7 @@ namespace System.Windows.Navigation
                         destinationUri.ToString());
                 }
 
-                AppSecurityManager.SafeLaunchBrowserDemandWhenUnsafe(CurrentSource, destinationUri, IsTopLevelContainer);
+                AppSecurityManager.SafeLaunchBrowserDemandWhenUnsafe(destinationUri, IsTopLevelContainer);
             }
             finally
             {

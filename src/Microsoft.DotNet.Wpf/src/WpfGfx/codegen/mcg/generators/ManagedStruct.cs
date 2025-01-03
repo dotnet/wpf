@@ -715,12 +715,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                 );
                     }
 
-                    csFile.Write(
-                        [[inline]]
-                            #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-                        [[/inline]]
-                        );
-
                     // If the resource may not always be serializable as a string, we need to check if this instance can.
                     if (!resource.IsAlwaysSerializableAsString)
                     {
@@ -737,7 +731,6 @@ namespace MS.Internal.MilCodeGen.Generators
 
                                     [[resource.Name]] value = ([[resource.Name]])context.Instance;
 
-                                    #pragma warning suppress 6506 // value is obviously not null
                                     return value.CanSerializeToString();
                                 }
 
@@ -751,7 +744,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                 // When invoked by the serialization engine we can convert to string only for some instances
                                 if (context != null && context.Instance != null)
                                 {
-                                    #pragma warning suppress 6506 // instance is obviously not null
                                     if (!instance.CanSerializeToString())
                                     {
                                         throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
@@ -864,7 +856,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                             {
                                                 [[serializationContextConvertTo]]// Delegate to the formatting/culture-aware ConvertToString method.
 
-                                                #pragma warning suppress 6506 // instance is obviously not null
                                                 return instance.ConvertToString(null, culture);
                                             }
                                         }
@@ -909,12 +900,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                 );
                     }
 
-                    csFile.Write(
-                        [[inline]]
-                            #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-                        [[/inline]]
-                        );
-
                     // If always serializable to string, ensure that it's still the right type.
                     if (resource.IsAlwaysSerializableAsString)
                     {
@@ -947,7 +932,6 @@ namespace MS.Internal.MilCodeGen.Generators
 
                                 [[resource.Name]] instance  = ([[resource.Name]]) value;
 
-                                #pragma warning suppress 6506 // instance is obviously not null
                                 return instance.CanSerializeToString();
 
 
@@ -956,8 +940,8 @@ namespace MS.Internal.MilCodeGen.Generators
 
                         valueSerializerConvertTo =
                             [[inline]]
+							
                                 // When invoked by the serialization engine we can convert to string only for some instances
-                                #pragma warning suppress 6506 // instance is obviously not null
                                 if (!instance.CanSerializeToString())
                                 {
                                     // Let base throw an exception.
@@ -1023,7 +1007,6 @@ namespace MS.Internal.MilCodeGen.Generators
                                             [[resource.Name]] instance = ([[resource.Name]]) value;
                                             [[valueSerializerConvertTo]]
 
-                                            #pragma warning suppress 6506 // instance is obviously not null
                                             return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
                                         }
 

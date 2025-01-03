@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,8 +7,6 @@ using MS.Internal.IO.Packaging.CompoundFile;
 using CU = MS.Internal.IO.Packaging.CompoundFile.ContainerUtilities;
 using MS.Internal;
 using System.Runtime.InteropServices;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.IO.Packaging
 {
@@ -522,7 +520,6 @@ public class StorageInfo
 
         Invariant.Assert(streamArray  != null);
 
-        #pragma warning suppress 6506 // Invariant.Assert(streamArray  != null)
         return (StreamInfo[])streamArray.ToArray(typeof(StreamInfo));
     }
 
@@ -552,7 +549,6 @@ public class StorageInfo
 
         Invariant.Assert(storageArray != null);
 
-        #pragma warning suppress 6506 // Invariant.Assert(streamArray  != null)
         return (StorageInfo[])storageArray.ToArray(typeof(StorageInfo));
     }
 
@@ -650,7 +646,6 @@ public class StorageInfo
                         | SafeNativeCompoundFileConstants.STGM_SHARE_EXCLUSIVE,
                     0,
                     0,
-                #pragma warning suppress 6506 // Invariant.Assert(null != newStorage)
                 out newStorage.safeIStorage );
             if( SafeNativeCompoundFileConstants.S_OK != nativeCallErrorCode )
             {

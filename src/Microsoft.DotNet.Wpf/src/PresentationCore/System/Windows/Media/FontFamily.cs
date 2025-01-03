@@ -10,9 +10,6 @@ using MS.Internal.FontCache;
 using MS.Internal.FontFace;
 using MS.Internal.Shaping;
 
-// Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 namespace System.Windows.Media
 {
     /// <summary>

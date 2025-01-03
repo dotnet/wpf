@@ -9,9 +9,6 @@ using System.Windows.Media.TextFormatting;
 using MS.Internal;
 using MS.Internal.TextFormatting;
 
-#pragma warning disable 1634, 1691
-//Allow suppression of Presharp warnings
-
 namespace System.Windows.Media
 {
     /// <summary>

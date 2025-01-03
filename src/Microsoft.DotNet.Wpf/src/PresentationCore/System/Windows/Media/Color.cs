@@ -7,8 +7,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using MS.Internal;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows.Media
 {
     /// <summary>
@@ -409,12 +407,8 @@ namespace System.Windows.Media
             }
             else if (color1.context == color2.context)
             {
-                Color c1 = new Color
-                {
-                    context = color1.context
-                };
+                Color c1 = new Color { context = color1.context };
 
-#pragma warning suppress 6506 // c1.context is obviously not null - both color1.context AND color2.context are not null
                 c1.nativeColorValue = new float[c1.context.NumChannels];
                 for (int i = 0; i < c1.nativeColorValue.Length; i++)
                 {
@@ -530,12 +524,8 @@ namespace System.Windows.Media
             }
             else if (color1.context == color2.context)
             {
-                Color c1 = new Color
-                {
-                    context = color1.context
-                };
+                Color c1 = new Color { context = color1.context };
 
-#pragma warning suppress 6506 // c1.context is obviously not null - both color1.context AND color2.context are not null
                 c1.nativeColorValue = new float[c1.context.NumChannels];
                 for (int i = 0; i < c1.nativeColorValue.Length; i++)
                 {
@@ -644,7 +634,6 @@ namespace System.Windows.Media
             {
                 c1.context = color.context;
 
-                #pragma warning suppress 6506 // c1.context is obviously not null
                 c1.ComputeNativeValues(c1.context.NumChannels);
             }
 

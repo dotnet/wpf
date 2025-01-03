@@ -23,12 +23,8 @@ using IComDataObject = System.Runtime.InteropServices.ComTypes.IDataObject;
 //
 // See spec at http://avalon/uis/Data%20Transfer%20clipboard%20dragdrop/Avalon%20Data%20Transfer%20Object.htm
 
-
 namespace System.Windows
 {
-    // PreSharp uses message numbers that the C# compiler doesn't know about.
-    // Disable the C# complaints, per the PreSharp documentation.
-#pragma warning disable 1634, 1691
 
     #region DataObject Class
     /// <summary>

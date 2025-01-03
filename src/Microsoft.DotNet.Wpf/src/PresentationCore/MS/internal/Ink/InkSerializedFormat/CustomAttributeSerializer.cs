@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -78,7 +78,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
             // Presharp gives a warning when local IDisposable variables are not closed
             // in this case, we can't call Dispose since it will also close the underlying stream
             // which still needs to be written to
-#pragma warning disable 1634, 1691
 #pragma warning disable 6518
             BinaryWriter bw = new BinaryWriter(stream);
 

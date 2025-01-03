@@ -6,8 +6,6 @@ using System.Windows.Threading;
 using MS.Internal;
 using System.Windows.Automation.Peers;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows.Input
 {
     /// <summary>
@@ -120,7 +118,6 @@ namespace System.Windows.Input
             {
                 if(!InputElement.IsValid(element))
                 {
-                    #pragma warning suppress 6506 // element is obviously not null
                     throw new InvalidOperationException(SR.Format(SR.Invalid_IInputElement, element.GetType()));
                 }
 

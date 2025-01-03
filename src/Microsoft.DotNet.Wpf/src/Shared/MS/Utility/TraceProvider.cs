@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,9 +10,7 @@
 using MS.Win32;
 using MS.Internal;
 using System.Runtime.InteropServices;
-using System.Globalization; //for CultureInfo
-
-#pragma warning disable 1634, 1691  //disable warnings about unknown pragma
+using System.Globalization; // for CultureInfo
 
 #if SYSTEM_XAML
 using System.Xaml;
@@ -484,7 +482,6 @@ namespace MS.Utility
 
         ~ClassicTraceProvider()
         {
-            #pragma warning suppress 6031  //presharp suppression
             ClassicEtw.UnregisterTraceGuids(_registrationHandle);
         }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -25,10 +25,6 @@ using MS.Internal.Interop;
 using MS.Win32;
 
 using CommonDependencyProperty = MS.Internal.PresentationFramework.CommonDependencyPropertyAttribute;
-
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
-
 
 namespace System.Windows.Controls.Primitives
 {

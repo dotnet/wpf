@@ -1,17 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-#pragma warning disable 1634, 1691
-//
-// Description:
-//     ContentLocatorBase contains an ordered set of ContentLocatorParts which each identify
-//     a piece of content within a certain context. Resolving one part
-//     provides the context to resolve the next part.  Locators are used 
-//     to refer to external data in a structured way.
-//
-//     Spec: Simplifying Store Cache Model.doc
-//
 
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
@@ -20,8 +9,6 @@ using System.Xml.Schema;
 using System.Xml.Serialization;
 using MS.Internal;
 using MS.Internal.Annotations;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Annotations
 {
@@ -81,7 +68,6 @@ namespace System.Windows.Annotations
             Invariant.Assert(locator.Parts != null, "Locator has null Parts property.");
 
             // If this locator is shorter than matchList, then this can't contain matchList.            
-            #pragma warning suppress 6506 // Invariant.Assert(locator.Parts != null)
             if (this.Parts.Count < locator.Parts.Count)
             {
                 return false;

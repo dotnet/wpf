@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+ï»¿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,11 +17,6 @@ using System.Runtime.Serialization;
 using MS.Internal.AppModel;
 using MS.Internal;
 using MS.Internal.Utility;
-
-//In order to avoid generating warnings about unknown message numbers and
-//unknown pragmas when compiling your C# source code with the actual C# compiler,
-//you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Navigation
 {
@@ -136,7 +131,7 @@ namespace System.Windows.Navigation
 
         /// <summary>
         /// Reads the attached property JournalEntry.Name from the given element.
-        /// Setting it at the root element of a navigator will update NavWin’s dropdown menu when navigating inside of that navigator.
+        /// Setting it at the root element of a navigator will update NavWinâ€™s dropdown menu when navigating inside of that navigator.
         /// </summary>
         /// <param name="dependencyObject">The element from which to read the attached property.</param>
         /// <returns>The property's value.</returns>
@@ -225,7 +220,7 @@ namespace System.Windows.Navigation
 
         /// <summary>
         /// Attached DependencyProperty for Name property.
-        /// Setting it at the root element of a navigator will update NavWin’s dropdown menu when navigating inside of that navigator.
+        /// Setting it at the root element of a navigator will update NavWinâ€™s dropdown menu when navigating inside of that navigator.
         /// </summary>
         public static readonly DependencyProperty NameProperty =
             DependencyProperty.RegisterAttached("Name", typeof(string), typeof(JournalEntry), new PropertyMetadata(String.Empty));

@@ -1,11 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-
-//
-// Description:
-//      Implements the FixedDocumentSequence element
-//
 
 using MS.Internal.Documents;
 using System.Collections;
@@ -17,8 +12,6 @@ using System.Windows.Threading;     // Dispatcher
 using System.Windows.Media;         // Visual
 using System.Windows.Markup; // IAddChild, ContentProperty
 using System.Windows.Navigation;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Documents
 {
@@ -324,7 +317,6 @@ namespace System.Windows.Documents
             {
                 DocumentSequenceTextPointer dsTextPointer = (DocumentSequenceTextPointer)contentPosition;
 
-                #pragma warning suppress 6506 // dsTextPointer is obviously not null
                 childPaginator = GetPaginator(dsTextPointer.ChildBlock.DocRef);
                 childContentPosition = dsTextPointer.ChildPointer as ContentPosition;
             }

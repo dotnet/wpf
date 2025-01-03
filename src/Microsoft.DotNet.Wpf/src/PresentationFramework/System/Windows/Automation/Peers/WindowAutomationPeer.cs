@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,10 +6,6 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.ComponentModel;
 using MS.Win32;
-
-// Used to support the warnings disabled below
-#pragma warning disable 1634, 1691
-
 
 namespace System.Windows.Automation.Peers
 {

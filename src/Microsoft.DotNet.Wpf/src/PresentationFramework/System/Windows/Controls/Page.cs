@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,11 +14,6 @@ using System.Windows.Markup;
 using System.Windows.Documents;
 using MS.Internal.KnownBoxes;
 using MS.Internal;
-
-//In order to avoid generating warnings about unknown message numbers and 
-//unknown pragmas when compiling your C# source code with the actual C# compiler, 
-//you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Controls
 {
@@ -658,7 +653,7 @@ namespace System.Windows.Controls
             }
 
             // NOTE (Huwang 03/09/2007): The code below walks up the TemplatedParent chain until it finds the first Frame or Window. It does not 
-            // check whether Window.Content or Frame.Content is Page. So it allows the scenario where Page can be in any element�s template and 
+            // check whether Window.Content or Frame.Content is Page. So it allows the scenario where Page can be in any element’s template and 
             // be parented by any element as long as the template is nested inside a Window or Frame, as demoed below
             //
             // <Window>

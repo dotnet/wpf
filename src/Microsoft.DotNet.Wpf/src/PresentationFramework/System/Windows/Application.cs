@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,12 +14,6 @@
 //              events (like startup, shutdown, and navigation events),
 //              to define global properties and maintain state across multiple pages of markup.
 //
-
-
-//In order to avoid generating warnings about unknown message numbers and unknown pragmas
-//when compiling your C# source code with the actual C# compiler, you need to disable
-//warnings 1634 and 1691. (From PreSharp Documentation)
-#pragma warning disable 1634, 1691
 
 using System.Collections;
 using System.Collections.Specialized;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -23,15 +23,8 @@ using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;    // SafeSecurityHelper
 using MS.Utility;
 
-// Disabling 1634 and 1691:
-// In order to avoid generating warnings about unknown message numbers and
-// unknown pragmas when compiling C# source code with the C# compiler,
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
-
 namespace System.Windows
 {
-
     /// <summary>
     /// HorizontalAlignment - The HorizontalAlignment enum is used to describe
     /// how element is positioned or stretched horizontally within a parent's layout slot.

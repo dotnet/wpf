@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,7 +7,6 @@
 // Description: Text line formatter.
 //
 
-
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media.TextFormatting;
@@ -15,9 +14,6 @@ using MS.Internal.Text;
 using MS.Internal.Documents;
 
 using MS.Internal.PtsHost.UnsafeNativeMethods;
-
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-// message numbers and unknown pragmas for PRESharp contol
 
 namespace MS.Internal.PtsHost
 {
@@ -387,6 +383,3 @@ namespace MS.Internal.PtsHost
         #endregion Protected Fields
     }
 }
-
-#pragma warning enable 1634, 1691
-

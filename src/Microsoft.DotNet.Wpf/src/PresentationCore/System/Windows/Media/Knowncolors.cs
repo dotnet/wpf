@@ -7,7 +7,6 @@ using System;
 #if PBTCOMPILER
 namespace MS.Internal.Markup
 #else
-using System.Collections.Generic;
 using MS.Internal;
 
 namespace System.Windows.Media

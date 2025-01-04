@@ -55,6 +55,7 @@
     <Compile Include="$(WpfSharedDir)\MS\Internal\LegacyPriorityQueue.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SequentialUshortCollection.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\SizeLimitedCache.cs" />
+	<Compile Include="$(WpfSharedDir)\MS\Internal\ValueTokenizerHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Commands\CommandLibraryHelper.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Generated\AlignmentXValidation.cs" />
     <Compile Include="$(WpfSharedDir)\MS\Internal\Generated\AlignmentYValidation.cs" />

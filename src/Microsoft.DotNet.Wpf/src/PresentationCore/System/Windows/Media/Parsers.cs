@@ -1,80 +1,86 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-//  Synopsis: Implements class Parsers for internal use of type converters
-
 using System.ComponentModel;
 using System.Windows.Media;
 
 namespace MS.Internal
 {
+    /// <summary>
+    /// Implements class Parsers for internal use of type converters
+    /// </summary>
     internal static partial class Parsers
     {
-        private const int s_zeroChar = (int) '0';
-        private const int s_aLower   = (int) 'a';
-        private const int s_aUpper   = (int) 'A';
+        /// <summary>
+        /// Map from an ASCII char to its hex value, e.g. arr['b'] == 11. 0xFF means it's not a hex digit.
+        /// </summary>
+        private static ReadOnlySpan<byte> CharToHexLookup =>
+        [
+            0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 0-15
+            0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 16-31
+            0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 32-47
+            0x0,  0x1,  0x2,  0x3,  0x4,  0x5,  0x6,  0x7,  0x8,  0x9,  0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 48-63
+            0xFF, 0xA,  0xB,  0xC,  0xD,  0xE,  0xF,  0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 64-79
+            0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, // 80-95
+            0xFF, 0xa,  0xb,  0xc,  0xd,  0xe,  0xf,                                                        // 96-102
+        ];
 
-        private static int ParseHexChar(char c )
+        /// <summary>
+        /// Parses a 0-9 and a-f / A-F character to its respective number.
+        /// </summary>
+        /// <exception cref="FormatException"></exception>
+        private static int ParseHexChar(char hexChar)
         {
-            int intChar = (int) c;
+            int intChar;
 
-            if ((intChar >= s_zeroChar) && (intChar <= (s_zeroChar+9)))
-            {
-                return (intChar-s_zeroChar);
-            }
+            // This also eliminates the bounds check
+            if (hexChar >= CharToHexLookup.Length || (intChar = CharToHexLookup[hexChar]) == 0xFF)
+                throw new FormatException(SR.Parsers_IllegalToken);
 
-            if ((intChar >= s_aLower) && (intChar <= (s_aLower+5)))
-            {
-                return (intChar-s_aLower + 10);
-            }
-
-            if ((intChar >= s_aUpper) && (intChar <= (s_aUpper+5)))
-            {
-                return (intChar-s_aUpper + 10);
-            }
-            throw new FormatException(SR.Parsers_IllegalToken);
+            return intChar;
         }
 
-        static private Color ParseHexColor(ReadOnlySpan<char> trimmedColor)
+        private static Color ParseHexColor(ReadOnlySpan<char> trimmedColor)
         {
-            int a,r,g,b;
-            a = 255;
+            int a, r, g, b;
 
-            if ( trimmedColor.Length > 7 )
+            if (trimmedColor.Length > 7) // #00000000 (ARGB)
             {
-                a = ParseHexChar(trimmedColor[1]) * 16 + ParseHexChar(trimmedColor[2]);
-                r = ParseHexChar(trimmedColor[3]) * 16 + ParseHexChar(trimmedColor[4]);
-                g = ParseHexChar(trimmedColor[5]) * 16 + ParseHexChar(trimmedColor[6]);
-                b = ParseHexChar(trimmedColor[7]) * 16 + ParseHexChar(trimmedColor[8]);
+                a = ParseHexChar(trimmedColor[1]) << 4 + ParseHexChar(trimmedColor[2]);
+                r = ParseHexChar(trimmedColor[3]) << 4 + ParseHexChar(trimmedColor[4]);
+                g = ParseHexChar(trimmedColor[5]) << 4 + ParseHexChar(trimmedColor[6]);
+                b = ParseHexChar(trimmedColor[7]) << 4 + ParseHexChar(trimmedColor[8]);
             }
-            else if ( trimmedColor.Length > 5)
+            else if (trimmedColor.Length > 5) // #000000 (RGB)
             {
-                r = ParseHexChar(trimmedColor[1]) * 16 + ParseHexChar(trimmedColor[2]);
-                g = ParseHexChar(trimmedColor[3]) * 16 + ParseHexChar(trimmedColor[4]);
-                b = ParseHexChar(trimmedColor[5]) * 16 + ParseHexChar(trimmedColor[6]);
+                a = 255;
+                r = ParseHexChar(trimmedColor[1]) << 4 + ParseHexChar(trimmedColor[2]);
+                g = ParseHexChar(trimmedColor[3]) << 4 + ParseHexChar(trimmedColor[4]);
+                b = ParseHexChar(trimmedColor[5]) << 4 + ParseHexChar(trimmedColor[6]);
             }
-            else if (trimmedColor.Length > 4)
+            else if (trimmedColor.Length > 4) // #0000 (single-digit ARGB)
             {
                 a = ParseHexChar(trimmedColor[1]);
-                a = a + a*16;
+                a += a << 4;
                 r = ParseHexChar(trimmedColor[2]);
-                r = r + r*16;
+                r += r << 4;
                 g = ParseHexChar(trimmedColor[3]);
-                g = g + g*16;
+                g += g << 4;
                 b = ParseHexChar(trimmedColor[4]);
-                b = b + b*16;
+                b += b << 4;
             }
-            else
+            else // #000 (single-digit RGB)
             {
+                a = 255;
                 r = ParseHexChar(trimmedColor[1]);
-                r = r + r*16;
+                r += r << 4;
                 g = ParseHexChar(trimmedColor[2]);
-                g = g + g*16;
+                g += g << 4;
                 b = ParseHexChar(trimmedColor[3]);
-                b = b + b*16;
+                b += b << 4;
             }
 
-            return ( Color.FromArgb ((byte)a, (byte)r, (byte)g, (byte)b) );
+            return Color.FromArgb((byte)a, (byte)r, (byte)g, (byte)b);
         }
 
         internal const string ContextColor = "ContextColor ";

@@ -218,7 +218,6 @@
     <Compile Include="System\Windows\Generated\Int32RectConverter.cs" />
     <Compile Include="System\Windows\Generated\Point.cs" />
     <Compile Include="System\Windows\Generated\PointConverter.cs" />
-    <Compile Include="System\Windows\Generated\Rect.cs" />
     <Compile Include="System\Windows\Generated\RectConverter.cs" />
     <Compile Include="System\Windows\Generated\Size.cs" />
     <Compile Include="System\Windows\Generated\SizeConverter.cs" />

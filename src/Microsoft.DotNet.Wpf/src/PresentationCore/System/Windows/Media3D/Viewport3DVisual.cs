@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -577,7 +577,7 @@ namespace System.Windows.Media.Media3D
             Matrix3D viewProjMatrix = camera.GetViewMatrix() * camera.GetProjectionMatrix(aspectRatio);
             Rect projectedBounds2D = MILUtilities.ProjectBounds(ref viewProjMatrix, ref _bboxChildrenSubgraph3D);
             Matrix homoToLocal = M3DUtil.GetHomogeneousToViewportTransform(viewport);
-            MatrixUtil.TransformRect(ref projectedBounds2D, ref homoToLocal);
+            Rect.TransformRect(ref projectedBounds2D, ref homoToLocal);
 
             return projectedBounds2D;
         }

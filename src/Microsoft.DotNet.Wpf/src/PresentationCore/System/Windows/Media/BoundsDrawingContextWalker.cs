@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -565,7 +565,7 @@ namespace System.Windows.Media
             // So, we need to transform the Rect to world to bound it
             if (!_transform.IsIdentity)
             {
-                MatrixUtil.TransformRect(ref bounds, ref _transform);
+                Rect.TransformRect(ref bounds, ref _transform);
             }
 
             AddTransformedBounds(ref bounds);

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2925,12 +2925,7 @@ namespace System.Windows.Navigation
                 _webResponse = response;
                 _asyncObjectConverter = null;
 
-
-                // canUseTopLevelBrowserForHTMLRendering will be true for TopLevel navigation away from browser hosted app. If that is the case
-                // o will be null.
-                // We don't support browser hosting since .NET Core 3.0, so therefore canUseTopLevelBrowserForHTMLRendering = false
-                bool canUseTopLevelBrowserForHTMLRendering = false;
-                Object o = MimeObjectFactory.GetObjectAndCloseStreamCore(bindStream, contentType, destinationUri, canUseTopLevelBrowserForHTMLRendering, sandBoxContent, true /*allowAsync*/, IsJournalNavigation(navigateInfo), out _asyncObjectConverter, IsUnsafe);
+                Object o = MimeObjectFactory.GetObjectAndCloseStreamCore(bindStream, contentType, destinationUri, sandBoxContent, allowAsync: true, IsJournalNavigation(navigateInfo), out _asyncObjectConverter, IsUnsafe);
 
                 if (o != null)
                 {

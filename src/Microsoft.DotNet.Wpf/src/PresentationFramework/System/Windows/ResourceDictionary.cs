@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -216,7 +216,7 @@ namespace System.Windows
                 // It can be a sync/async converter. It's the converter's responsiblity to close the stream.
                 // If it fails to find a convert, this call will return null.
                 System.Windows.Markup.XamlReader asyncObjectConverter;
-                ResourceDictionary loadedRD = MimeObjectFactory.GetObjectAndCloseStreamCore(s, contentType, uri, false, false, false /*allowAsync*/, false /*isJournalNavigation*/, out asyncObjectConverter, IsUnsafe)
+                ResourceDictionary loadedRD = MimeObjectFactory.GetObjectAndCloseStreamCore(s, contentType, uri, false, false /*allowAsync*/, false /*isJournalNavigation*/, out asyncObjectConverter, IsUnsafe)
                                             as ResourceDictionary;
 
                 if (loadedRD == null)

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2003,7 +2003,6 @@ namespace System.Windows
             MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmMime, htmlxappFactoryDelegate);
             MimeObjectFactory.RegisterCore(MimeTypeMapper.HtmlMime, htmlxappFactoryDelegate);
             MimeObjectFactory.RegisterCore(MimeTypeMapper.XbapMime, htmlxappFactoryDelegate);
-
         }
 
         // This function returns the resource stream including resource and content file.

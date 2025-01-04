@@ -77,63 +77,44 @@ namespace MS.Internal
             return ( Color.FromArgb ((byte)a, (byte)r, (byte)g, (byte)b) );
         }
 
-    internal const string s_ContextColor = "ContextColor ";
-    internal const string s_ContextColorNoSpace = "ContextColor";
+        internal const string ContextColor = "ContextColor ";
 
-    private static Color ParseContextColor(string trimmedColor, IFormatProvider formatProvider, ITypeDescriptorContext context)
+        private static Color ParseContextColor(ReadOnlySpan<char> trimmedColor, IFormatProvider formatProvider, ITypeDescriptorContext context)
         {
-            if (!trimmedColor.StartsWith(s_ContextColor, StringComparison.OrdinalIgnoreCase))
-            {
+            if (!trimmedColor.StartsWith(ContextColor, StringComparison.OrdinalIgnoreCase))
                 throw new FormatException(SR.Parsers_IllegalToken);
-            }
 
-            string tokens = trimmedColor.Substring(s_ContextColor.Length);
-            tokens = tokens.Trim();
-            string[] preSplit = tokens.Split(' ');
-            if (preSplit.Length < 2)
-            {
+            // Skip "ContextColor " prefix
+            ReadOnlySpan<char> tokens = trimmedColor.Slice(ContextColor.Length).Trim();
+
+            // Check whether the format is at least e.g. "file://profile.icc 1.0"
+            Span<Range> splitSegments = stackalloc Range[4];
+
+            if (tokens.Split(splitSegments, ' ') < 2)
                 throw new FormatException(SR.Parsers_IllegalToken);
-            }
 
-            tokens = tokens.Substring(preSplit[0].Length);
+            // Retrieve "file://profile.icc" part
+            string profileString = tokens[splitSegments[0]].ToString();
+            // Skip "file://profile.icc" part
+            ReadOnlySpan<char> colorPart = tokens.Slice(profileString.Length);
 
-            TokenizerHelper th = new TokenizerHelper(tokens, formatProvider);
-            string[] split = tokens.Split(new Char[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
-            int numTokens = split.Length;
+            // Retrieve alpha value
+            ValueTokenizerHelper tokenizer = new(colorPart, formatProvider);
+            float alpha = float.Parse(tokenizer.NextTokenRequired(), formatProvider);
 
-            float alpha = Convert.ToSingle(th.NextTokenRequired(), formatProvider);
+            // While we do not support colors with more than 8 channels, the underlying initialization code will take care of it,
+            // so here we just silently count the color values and let it throw NotImplementedException in the color translation code-path.
+            int numTokens = colorPart.Count(',');
+            Span<float> values = stackalloc float[numTokens];
 
-            float[] values = new float[numTokens - 1];
+            for (int i = 0; i < values.Length; i++)
+                values[i] = float.Parse(tokenizer.NextTokenRequired(), formatProvider);
 
-            for (int i = 0; i < numTokens - 1; i++)
-            {
-                values[i] = Convert.ToSingle(th.NextTokenRequired(), formatProvider);
-            }
+            UriHolder uriHolder = TypeConverterHelper.GetUriFromUriContext(context, profileString);
+            Uri profileUri = uriHolder.BaseUri is not null ? new Uri(uriHolder.BaseUri, uriHolder.OriginalUri) : uriHolder.OriginalUri;
 
-            string profileString = preSplit[0];
-
-            UriHolder uriHolder = TypeConverterHelper.GetUriFromUriContext(context,profileString);
-
-            Uri profileUri;
-
-            if (uriHolder.BaseUri != null)
-            {
-                profileUri = new Uri(uriHolder.BaseUri, uriHolder.OriginalUri);
-            }
-            else
-            {
-                profileUri = uriHolder.OriginalUri;
-            }
-
-            Color result = Color.FromAValues(alpha, values, profileUri);
-
-            // If the number of color values found does not match the number of channels in the profile, we must throw
-            if (result.ColorContext.NumChannels != values.Length)
-            {
-                throw new FormatException(SR.Parsers_IllegalToken);
-            }
-
-            return result;
+            // If the number of color values found does not match the number of channels in the profile, FromAValues will throw
+            return Color.FromAValues(alpha, values, profileUri);
         }
 
         private static Color ParseScRgbColor(ReadOnlySpan<char> trimmedColor, IFormatProvider formatProvider)
@@ -194,8 +175,8 @@ namespace MS.Internal
             if (colorKind is ColorKind.NumericColor)
                 return ParseHexColor(trimmedColor);
 
-            if (colorKind is ColorKind.ContextColor) // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
-                return ParseContextColor(trimmedColor.ToString(), formatProvider, context);
+            if (colorKind is ColorKind.ContextColor)
+                return ParseContextColor(trimmedColor, formatProvider, context);
 
             if (colorKind is ColorKind.ScRgbColor)
                 return ParseScRgbColor(trimmedColor, formatProvider);
@@ -231,8 +212,8 @@ namespace MS.Internal
             if (colorKind is ColorKind.NumericColor)
                 return new SolidColorBrush(ParseHexColor(trimmedColor));
 
-            if (colorKind is ColorKind.ContextColor) // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
-                return new SolidColorBrush(ParseContextColor(trimmedColor.ToString(), formatProvider, context));
+            if (colorKind is ColorKind.ContextColor)
+                return new SolidColorBrush(ParseContextColor(trimmedColor, formatProvider, context));
 
             if (colorKind is ColorKind.ScRgbColor)
                 return new SolidColorBrush(ParseScRgbColor(trimmedColor, formatProvider));

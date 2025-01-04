@@ -32,30 +32,23 @@ namespace System.Windows.Media
         ///</summary>
         private static Color FromProfile(Uri profileUri)
         {
-            Color c1 = new Color
-            {
-                context = new ColorContext(profileUri)
-            };
-            c1.scRgbColor.a = 1.0f;
-            c1.scRgbColor.r = 0.0f;
-            c1.scRgbColor.g = 0.0f;
-            c1.scRgbColor.b = 0.0f;
-            c1.sRgbColor.a = 255;
-            c1.sRgbColor.r = 0;
-            c1.sRgbColor.g = 0;
-            c1.sRgbColor.b = 0;
-            if (c1.context != null)
-            {
-                c1.nativeColorValue = new float[c1.context.NumChannels];
-                for (int i = 0; i < c1.nativeColorValue.Length; i++)
-                {
-                    c1.nativeColorValue[i] = 0.0f;
-                }
-            }
+            Color color = new();
 
-            c1.isFromScRgb = false;
+            color.context = new ColorContext(profileUri);
+            color.scRgbColor.a = 1.0f;
+            color.scRgbColor.r = 0.0f;
+            color.scRgbColor.g = 0.0f;
+            color.scRgbColor.b = 0.0f;
+            color.sRgbColor.a = 255;
+            color.sRgbColor.r = 0;
+            color.sRgbColor.g = 0;
+            color.sRgbColor.b = 0;
 
-            return c1;
+            color.nativeColorValue = new float[color.context.NumChannels];
+
+            color.isFromScRgb = false;
+
+            return color;
         }
 
         ///<summary>
@@ -63,39 +56,36 @@ namespace System.Windows.Media
         ///</summary>
         public static Color FromAValues(float a, float[] values, Uri profileUri)
         {
-            Color c1 = Color.FromProfile(profileUri);
+            return FromAValues(a, values, profileUri);
+        }
 
-            if (values == null)
-            {
-                throw new ArgumentException(SR.Format(SR.Color_DimensionMismatch, null));
-            }
+        ///<summary>
+        /// FromAValues - general constructor for multichannel color values with explicit alpha channel and color context, i.e. spectral colors
+        ///</summary>
+        internal static Color FromAValues(float alpha, Span<float> values, Uri profileUri)
+        {
+            Color color = FromProfile(profileUri);
 
-            if (values.Length != c1.nativeColorValue.Length)
-            {
+            if (values.IsEmpty || values.Length != color.nativeColorValue.Length)
                 throw new ArgumentException(SR.Format(SR.Color_DimensionMismatch, null));
-            }
 
             for (int numChannels = 0; numChannels < values.Length; numChannels++)
-            {
-                c1.nativeColorValue[numChannels] = values[numChannels];
-            }
-            c1.ComputeScRgbValues();
-            c1.scRgbColor.a = a;
-            if (a < 0.0f)
-            {
-                a = 0.0f;
-            }
-            else if (a > 1.0f)
-            {
-                a = 1.0f;
-            }
+                color.nativeColorValue[numChannels] = values[numChannels];
 
-            c1.sRgbColor.a = (byte)((a * 255.0f) + 0.5f);
-            c1.sRgbColor.r = ScRgbTosRgb(c1.scRgbColor.r);
-            c1.sRgbColor.g = ScRgbTosRgb(c1.scRgbColor.g);
-            c1.sRgbColor.b = ScRgbTosRgb(c1.scRgbColor.b);
+            color.ComputeScRgbValues();
+            color.scRgbColor.a = alpha;
 
-            return c1;
+            if (alpha < 0.0f)
+                alpha = 0.0f;
+            else if (alpha > 1.0f)
+                alpha = 1.0f;
+
+            color.sRgbColor.a = (byte)((alpha * 255.0f) + 0.5f);
+            color.sRgbColor.r = ScRgbTosRgb(color.scRgbColor.r);
+            color.sRgbColor.g = ScRgbTosRgb(color.scRgbColor.g);
+            color.sRgbColor.b = ScRgbTosRgb(color.scRgbColor.b);
+
+            return color;
         }
 
         ///<summary>
@@ -103,9 +93,7 @@ namespace System.Windows.Media
         ///</summary>
         public static Color FromValues(float[] values, Uri profileUri)
         {
-            Color c1 = Color.FromAValues(1.0f, values, profileUri);
-
-            return c1;
+            return FromAValues(1.0f, values, profileUri);
         }
 
         ///<summary>
@@ -188,8 +176,7 @@ namespace System.Windows.Media
         ///</summary>
         public static Color FromRgb(byte r, byte g, byte b)// legacy sRGB interface, bytes are required to properly round trip
         {
-            Color c1 = Color.FromArgb(0xff, r, g, b);
-            return c1;
+            return FromArgb(0xff, r, g, b);
         }
         #endregion Constructors
 
@@ -293,7 +280,7 @@ namespace System.Windows.Media
                 String uriString = safeUnescapedUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
 
                 var sb = new StringBuilder();
-                sb.AppendFormat(provider, "{0}{1} ", Parsers.s_ContextColor, uriString);
+                sb.AppendFormat(provider, "{0}{1} ", Parsers.ContextColor, uriString);
                 sb.AppendFormat(provider,"{1:" + format + "}{0}",separator,scRgbColor.a);
                 for (int i = 0; i < nativeColorValue.Length; ++i )
                 {

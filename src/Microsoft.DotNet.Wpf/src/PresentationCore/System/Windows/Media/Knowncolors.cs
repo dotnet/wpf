@@ -242,7 +242,7 @@ namespace System.Windows.Media
             if (colorString.StartsWith("sc#", StringComparison.Ordinal))
                 return ColorKind.ScRgbColor;
 
-            if (colorString.StartsWith(Parsers.s_ContextColor, StringComparison.OrdinalIgnoreCase))
+            if (colorString.StartsWith(Parsers.ContextColor, StringComparison.OrdinalIgnoreCase))
                 return ColorKind.ContextColor;
 
             return ColorKind.KnownColor;

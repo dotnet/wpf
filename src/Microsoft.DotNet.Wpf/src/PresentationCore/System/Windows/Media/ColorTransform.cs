@@ -125,11 +125,15 @@ namespace System.Windows.Media
             _colorTransformHelper = new ColorTransformHelper();
         }
 
+        /// <remarks>
+        /// NOTE: If we ever wish to support more than 8 color channels, the color-parsing code path must be adjusted to support it:
+        /// <see cref="MS.Internal.Parsers.ParseContextColor(ReadOnlySpan{char}, IFormatProvider, ComponentModel.ITypeDescriptorContext)"/>.
+        /// </remarks>
         private long ICM2Color(Span<float> srcValue)
         {
             long colorValue;
 
-            if (srcValue.Length < 3 || srcValue.Length > 8)
+            if (srcValue.Length is < 3 or > 8)
             {
                 throw new NotSupportedException(); // Only support color spaces with 3,4,5,6,7,8 channels
             }

@@ -28,7 +28,7 @@ namespace System.Windows.Media
         /// <param name="context">ITypeDescriptorContext</param>
         /// <param name="destinationType">Type to convert to</param>
         /// <returns>true if conversion is possible</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType) 
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             return destinationType == typeof(InstanceDescriptor) || base.CanConvertTo(context, destinationType);
         }
@@ -38,12 +38,7 @@ namespace System.Windows.Media
         ///</summary>
         public static new object ConvertFromString(string value)
         {
-            if ( null == value)
-            {
-                return null;
-            }
-            
-            return Parsers.ParseColor(value, null);
+            return value is not null ? Parsers.ParseColor(value, null) : null;
         }
 
         /// <summary>
@@ -60,8 +55,8 @@ namespace System.Windows.Media
 
             if (value is not string valueString)
                 throw new ArgumentException(SR.Format(SR.General_BadType, nameof(ConvertFrom), nameof(value)));
-            
-            return Parsers.ParseColor(valueString, ci, td);        
+
+            return Parsers.ParseColor(valueString, ci, td);
         }
 
         /// <summary>
@@ -78,18 +73,17 @@ namespace System.Windows.Media
         /// <returns>converted value</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
-            if (destinationType != null && value is Color)
+            if (destinationType != null && value is Color color)
             {
                 if (destinationType == typeof(InstanceDescriptor))
                 {
-                    MethodInfo mi = typeof(Color).GetMethod("FromArgb", new Type[]{typeof(byte), typeof(byte), typeof(byte), typeof(byte)});
-                    Color c = (Color)value;
-                    return new InstanceDescriptor(mi, new object[]{c.A, c.R, c.G, c.B});
+                    MethodInfo mi = typeof(Color).GetMethod("FromArgb", new Type[] { typeof(byte), typeof(byte), typeof(byte), typeof(byte) });
+
+                    return new InstanceDescriptor(mi, new object[] { color.A, color.R, color.G, color.B });
                 }
                 else if (destinationType == typeof(string))
                 {
-                    Color c = (Color)value;
-                    return c.ToString(culture);
+                    return color.ToString(culture);
                 }
             }
 

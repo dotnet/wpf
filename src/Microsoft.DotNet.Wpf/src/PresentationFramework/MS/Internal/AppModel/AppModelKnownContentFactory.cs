@@ -22,14 +22,9 @@ namespace MS.Internal.AppModel
     // delgate to close stream. 
     internal static class AppModelKnownContentFactory
     {
-        // <summary>
-        // Creates an object instance from a Baml stream and it's Uri
-        // </summary>
-        internal static object BamlConverter(Stream stream, Uri baseUri, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter)
-        {
-            return BamlConverterCore(stream, baseUri, sandboxExternalContent, allowAsync, isJournalNavigation, out asyncObjectConverter, false);
-        }
-
+        /// <summary>
+        /// Creates an object instance from a Baml stream and its Uri
+        /// </summary>
         internal static object BamlConverterCore(Stream stream, Uri baseUri, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter, bool isUnsafe)
         {
             asyncObjectConverter = null;
@@ -61,14 +56,9 @@ namespace MS.Internal.AppModel
             return Application.LoadBamlStreamWithSyncInfo(stream, pc);
         }
 
-        // <summary>
-        // Creates an object instance from a Xaml stream and it's Uri
-        // </summary>
-        internal static object XamlConverter(Stream stream, Uri baseUri, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter)
-        {
-            return XamlConverterCore(stream, baseUri, sandboxExternalContent, allowAsync, isJournalNavigation, out asyncObjectConverter, false);
-        }
-
+        /// <summary>
+        /// Creates an object instance from a Xaml stream and its Uri
+        /// </summary>
         internal static object XamlConverterCore(Stream stream, Uri baseUri, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter, bool isUnsafe)
         {
             asyncObjectConverter = null;
@@ -121,11 +111,6 @@ namespace MS.Internal.AppModel
             {
                 throw args.Error;
             }
-        }
-
-        internal static object HtmlXappConverter(Stream stream, Uri baseUri, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter)
-        {
-            return HtmlXappConverterCore(stream, baseUri, sandboxExternalContent, allowAsync, isJournalNavigation, out asyncObjectConverter, false);
         }
 
         internal static object HtmlXappConverterCore(Stream stream, Uri baseUri, bool sandboxExternalContent, bool allowAsync, bool isJournalNavigation, out XamlReader asyncObjectConverter, bool isUnsafe)

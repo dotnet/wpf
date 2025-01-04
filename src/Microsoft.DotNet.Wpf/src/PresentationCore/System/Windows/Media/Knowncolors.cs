@@ -181,8 +181,8 @@ namespace System.Windows.Media
         public static SolidColorBrush ColorStringToKnownBrush(ReadOnlySpan<char> colorString)
         {
             if (!colorString.IsEmpty)
-            {   // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
-                KnownColor result = ColorStringToKnownColor(colorString.ToString());
+            {
+                KnownColor result = ColorStringToKnownColor(colorString);
 
                 // If the result is UnknownColor, that means this string wasn't found
                 if (result != KnownColor.UnknownColor)
@@ -253,9 +253,15 @@ namespace System.Windows.Media
         /// </summary>
         /// <param name="colorString">The color name to parse from.</param>
         /// <returns>The parsed <see cref="KnownColor"/> value or <see cref="KnownColor.UnknownColor"/> if no match.</returns>
+#if !PBTCOMPILER
+        internal static KnownColor ColorStringToKnownColor(ReadOnlySpan<char> colorString)
+        {
+            if (!colorString.IsEmpty)
+#else
         internal static KnownColor ColorStringToKnownColor(string colorString)
         {
             if (!string.IsNullOrEmpty(colorString))
+#endif
             {
                 // In case we're dealing with a lowercase character, we uppercase it
                 char firstChar = colorString[0];

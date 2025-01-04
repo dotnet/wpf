@@ -181,8 +181,7 @@ namespace MS.Internal
             if (colorKind is ColorKind.ScRgbColor)
                 return ParseScRgbColor(trimmedColor, formatProvider);
 
-            // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
-            KnownColor knownColor = KnownColors.ColorStringToKnownColor(trimmedColor.ToString());
+            KnownColor knownColor = KnownColors.ColorStringToKnownColor(trimmedColor);
             if (knownColor == KnownColor.UnknownColor)
                 throw new FormatException(SR.Parsers_IllegalToken);
 

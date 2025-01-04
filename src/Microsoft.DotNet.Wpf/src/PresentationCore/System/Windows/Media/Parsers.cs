@@ -136,40 +136,35 @@ namespace MS.Internal
             return result;
         }
 
-        private static Color ParseScRgbColor(string trimmedColor, IFormatProvider formatProvider)
+        private static Color ParseScRgbColor(ReadOnlySpan<char> trimmedColor, IFormatProvider formatProvider)
         {
             if (!trimmedColor.StartsWith("sc#", StringComparison.Ordinal))
-            {
                 throw new FormatException(SR.Parsers_IllegalToken);
-            }
 
-            string tokens = trimmedColor.Substring(3, trimmedColor.Length - 3);
+            // Skip prefix (sc#)
+            ReadOnlySpan<char> tokens = trimmedColor.Slice(3);
 
             // The tokenizer helper will tokenize a list based on the IFormatProvider.
-            TokenizerHelper th = new TokenizerHelper(tokens, formatProvider);
-            float[] values = new float[4];
+            ValueTokenizerHelper tokenizer = new(tokens, formatProvider);
+            Span<float> values = stackalloc float[4];
 
             for (int i = 0; i < 3; i++)
-            {
-                values[i] = Convert.ToSingle(th.NextTokenRequired(), formatProvider);
-            }
+                values[i] = float.Parse(tokenizer.NextTokenRequired(), formatProvider);
 
-            if (th.NextToken())
+            if (tokenizer.NextToken())
             {
-                values[3] = Convert.ToSingle(th.GetCurrentToken(), formatProvider);
+                values[3] = float.Parse(tokenizer.GetCurrentToken(), formatProvider);
 
                 // We should be out of tokens at this point
-                if (th.NextToken())
+                if (tokenizer.NextToken())
                 {
                     throw new FormatException(SR.Parsers_IllegalToken);
                 }
 
                 return Color.FromScRgb(values[0], values[1], values[2], values[3]);
             }
-            else
-            {
-                return Color.FromScRgb(1.0f, values[0], values[1], values[2]);
-            }
+
+            return Color.FromScRgb(1.0f, values[0], values[1], values[2]);
         }
 
         /// <summary>
@@ -202,8 +197,8 @@ namespace MS.Internal
             if (colorKind is ColorKind.ContextColor) // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
                 return ParseContextColor(trimmedColor.ToString(), formatProvider, context);
 
-            if (colorKind is ColorKind.ScRgbColor) // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
-                return ParseScRgbColor(trimmedColor.ToString(), formatProvider);
+            if (colorKind is ColorKind.ScRgbColor)
+                return ParseScRgbColor(trimmedColor, formatProvider);
 
             // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
             KnownColor knownColor = KnownColors.ColorStringToKnownColor(trimmedColor.ToString());
@@ -239,8 +234,8 @@ namespace MS.Internal
             if (colorKind is ColorKind.ContextColor) // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
                 return new SolidColorBrush(ParseContextColor(trimmedColor.ToString(), formatProvider, context));
 
-            if (colorKind is ColorKind.ScRgbColor) // NOTE: This ToString() is not regression, but it is currently blocked by #9669 and #9364
-                return new SolidColorBrush(ParseScRgbColor(trimmedColor.ToString(), formatProvider));
+            if (colorKind is ColorKind.ScRgbColor)
+                return new SolidColorBrush(ParseScRgbColor(trimmedColor, formatProvider));
 
             // NULL is returned when the color was not valid
             SolidColorBrush solidColorBrush = KnownColors.ColorStringToKnownBrush(trimmedColor);

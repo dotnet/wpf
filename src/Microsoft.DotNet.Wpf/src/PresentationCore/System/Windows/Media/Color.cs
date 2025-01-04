@@ -2,8 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 using MS.Internal;
 
 namespace System.Windows.Media
@@ -252,45 +252,55 @@ namespace System.Windows.Media
         /// </returns>
         internal string ConvertToString(string format, IFormatProvider provider)
         {
-            if (context == null)
+            if (context is null)
             {
-                if (format == null)
-                {
-                    return string.Create(provider, stackalloc char[128], $"#{this.sRgbColor.a:X2}{this.sRgbColor.r:X2}{this.sRgbColor.g:X2}{this.sRgbColor.b:X2}");
-                }
-                else
+                if (format is not null)
                 {
                     // Helper to get the numeric list separator for a given culture.
-                    char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
-                    return string.Format(provider,
-                        $"sc#{{1:{format}}}{{0}} {{2:{format}}}{{0}} {{3:{format}}}{{0}} {{4:{format}}}",
-                        separator, scRgbColor.a, scRgbColor.r, scRgbColor.g, scRgbColor.b);
+                    char separator = TokenizerHelper.GetNumericListSeparator(provider);
+
+                    DefaultInterpolatedStringHandler stringBuilder = new(1, 7, provider, stackalloc char[128]);
+                    stringBuilder.AppendLiteral("sc#");
+                    stringBuilder.AppendFormatted(scRgbColor.a, format: format);
+                    stringBuilder.AppendFormatted(separator);
+                    stringBuilder.AppendFormatted(scRgbColor.r, format: format);
+                    stringBuilder.AppendFormatted(separator);
+                    stringBuilder.AppendFormatted(scRgbColor.g, format: format);
+                    stringBuilder.AppendFormatted(separator);
+                    stringBuilder.AppendFormatted(scRgbColor.b, format: format);
+
+                    return stringBuilder.ToStringAndClear();
                 }
+
+                return string.Create(provider, stackalloc char[128], $"#{sRgbColor.a:X2}{sRgbColor.r:X2}{sRgbColor.g:X2}{sRgbColor.b:X2}");
             }
             else
             {
-                char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
+                char separator = TokenizerHelper.GetNumericListSeparator(provider);
 
-                format = c_scRgbFormat;
-
-                //First Stepmake sure that nothing that should not be escaped is escaped
+                // 1) Make sure that nothing that should not be escaped is escaped
                 Uri safeUnescapedUri = new Uri(context.ProfileUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.SafeUnescaped),
-                                                    context.ProfileUri.IsAbsoluteUri ? UriKind.Absolute : UriKind.Relative);
-                //Second Step make sure that everything that should escaped is escaped
-                String uriString = safeUnescapedUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
+                                               context.ProfileUri.IsAbsoluteUri ? UriKind.Absolute : UriKind.Relative);
 
-                var sb = new StringBuilder();
-                sb.AppendFormat(provider, "{0}{1} ", Parsers.ContextColor, uriString);
-                sb.AppendFormat(provider,"{1:" + format + "}{0}",separator,scRgbColor.a);
-                for (int i = 0; i < nativeColorValue.Length; ++i )
+                // 2) Make sure that everything that should escaped is escaped
+                string uriString = safeUnescapedUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
+
+                DefaultInterpolatedStringHandler stringBuilder = new(3, 7, provider, stackalloc char[256]);
+
+                // Append "ContextColor file://something " format
+                stringBuilder.AppendLiteral(Parsers.ContextColor);
+                stringBuilder.AppendLiteral(uriString);
+                stringBuilder.AppendLiteral(" ");
+
+                stringBuilder.AppendFormatted(scRgbColor.a, format: c_scRgbFormat);
+
+                for (int i = 0; i < nativeColorValue.Length; i++)
                 {
-                    sb.AppendFormat(provider,"{0:" + format + "}",nativeColorValue[i]);
-                    if (i < nativeColorValue.Length - 1)
-                    {
-                        sb.AppendFormat(provider,"{0}",separator);
-                    }
+                    stringBuilder.AppendFormatted(separator);
+                    stringBuilder.AppendFormatted(nativeColorValue[i], format: c_scRgbFormat);
                 }
-                return sb.ToString();
+
+                return stringBuilder.ToStringAndClear();
             }
         }
 

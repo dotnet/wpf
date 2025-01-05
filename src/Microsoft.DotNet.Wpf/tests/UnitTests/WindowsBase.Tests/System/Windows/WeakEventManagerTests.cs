@@ -6141,16 +6141,14 @@ public class WeakEventManagerTests : WeakEventManager
 
         protected override void StopListening(object source)
         {
-            if (StopListeningAction is null)
+            if (StopListeningAction is not null)
             {
-                throw new NotImplementedException();
+                StopListeningAction(source);
             }
-
-            StopListeningAction(source);
         }
     }
 
     protected override void StartListening(object source) => throw new NotImplementedException();
 
-    protected override void StopListening(object source) => throw new NotImplementedException();
+    protected override void StopListening(object source) { }
 }

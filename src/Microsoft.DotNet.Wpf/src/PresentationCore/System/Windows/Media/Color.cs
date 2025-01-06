@@ -3,8 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
-using System.Text;
 using MS.Internal;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
@@ -35,29 +35,23 @@ namespace System.Windows.Media
         ///</summary>
         private static Color FromProfile(Uri profileUri)
         {
-            Color c1 = new Color();
+            Color color = new();
 
-            c1.context = new ColorContext(profileUri);
-            c1.scRgbColor.a = 1.0f;
-            c1.scRgbColor.r = 0.0f;
-            c1.scRgbColor.g = 0.0f;
-            c1.scRgbColor.b = 0.0f;
-            c1.sRgbColor.a = 255;
-            c1.sRgbColor.r = 0;
-            c1.sRgbColor.g = 0;
-            c1.sRgbColor.b = 0;
-            if (c1.context != null)
-            {
-                c1.nativeColorValue = new float[c1.context.NumChannels];
-                for (int i = 0; i < c1.nativeColorValue.Length; i++)
-                {
-                    c1.nativeColorValue[i] = 0.0f;
-                }
-            }
+            color.context = new ColorContext(profileUri);
+            color.scRgbColor.a = 1.0f;
+            color.scRgbColor.r = 0.0f;
+            color.scRgbColor.g = 0.0f;
+            color.scRgbColor.b = 0.0f;
+            color.sRgbColor.a = 255;
+            color.sRgbColor.r = 0;
+            color.sRgbColor.g = 0;
+            color.sRgbColor.b = 0;
 
-            c1.isFromScRgb = false;
+            color.nativeColorValue = new float[color.context.NumChannels];
 
-            return c1;
+            color.isFromScRgb = false;
+
+            return color;
         }
 
         ///<summary>
@@ -65,39 +59,36 @@ namespace System.Windows.Media
         ///</summary>
         public static Color FromAValues(float a, float[] values, Uri profileUri)
         {
-            Color c1 = Color.FromProfile(profileUri);
+            return FromAValues(a, values, profileUri);
+        }
 
-            if (values == null)
-            {
-                throw new ArgumentException(SR.Format(SR.Color_DimensionMismatch, null));
-            }
+        ///<summary>
+        /// FromAValues - general constructor for multichannel color values with explicit alpha channel and color context, i.e. spectral colors
+        ///</summary>
+        internal static Color FromAValues(float alpha, Span<float> values, Uri profileUri)
+        {
+            Color color = FromProfile(profileUri);
 
-            if (values.Length != c1.nativeColorValue.Length)
-            {
+            if (values.IsEmpty || values.Length != color.nativeColorValue.Length)
                 throw new ArgumentException(SR.Format(SR.Color_DimensionMismatch, null));
-            }
 
             for (int numChannels = 0; numChannels < values.Length; numChannels++)
-            {
-                c1.nativeColorValue[numChannels] = values[numChannels];
-            }
-            c1.ComputeScRgbValues();
-            c1.scRgbColor.a = a;
-            if (a < 0.0f)
-            {
-                a = 0.0f;
-            }
-            else if (a > 1.0f)
-            {
-                a = 1.0f;
-            }
+                color.nativeColorValue[numChannels] = values[numChannels];
 
-            c1.sRgbColor.a = (byte)((a * 255.0f) + 0.5f);
-            c1.sRgbColor.r = ScRgbTosRgb(c1.scRgbColor.r);
-            c1.sRgbColor.g = ScRgbTosRgb(c1.scRgbColor.g);
-            c1.sRgbColor.b = ScRgbTosRgb(c1.scRgbColor.b);
+            color.ComputeScRgbValues();
+            color.scRgbColor.a = alpha;
 
-            return c1;
+            if (alpha < 0.0f)
+                alpha = 0.0f;
+            else if (alpha > 1.0f)
+                alpha = 1.0f;
+
+            color.sRgbColor.a = (byte)((alpha * 255.0f) + 0.5f);
+            color.sRgbColor.r = ScRgbTosRgb(color.scRgbColor.r);
+            color.sRgbColor.g = ScRgbTosRgb(color.scRgbColor.g);
+            color.sRgbColor.b = ScRgbTosRgb(color.scRgbColor.b);
+
+            return color;
         }
 
         ///<summary>
@@ -105,9 +96,7 @@ namespace System.Windows.Media
         ///</summary>
         public static Color FromValues(float[] values, Uri profileUri)
         {
-            Color c1 = Color.FromAValues(1.0f, values, profileUri);
-
-            return c1;
+            return FromAValues(1.0f, values, profileUri);
         }
 
         ///<summary>
@@ -190,8 +179,7 @@ namespace System.Windows.Media
         ///</summary>
         public static Color FromRgb(byte r, byte g, byte b)// legacy sRGB interface, bytes are required to properly round trip
         {
-            Color c1 = Color.FromArgb(0xff, r, g, b);
-            return c1;
+            return FromArgb(0xff, r, g, b);
         }
         #endregion Constructors
 
@@ -267,45 +255,55 @@ namespace System.Windows.Media
         /// </returns>
         internal string ConvertToString(string format, IFormatProvider provider)
         {
-            if (context == null)
+            if (context is null)
             {
-                if (format == null)
-                {
-                    return string.Create(provider, stackalloc char[128], $"#{this.sRgbColor.a:X2}{this.sRgbColor.r:X2}{this.sRgbColor.g:X2}{this.sRgbColor.b:X2}");
-                }
-                else
+                if (format is not null)
                 {
                     // Helper to get the numeric list separator for a given culture.
-                    char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
-                    return string.Format(provider,
-                        $"sc#{{1:{format}}}{{0}} {{2:{format}}}{{0}} {{3:{format}}}{{0}} {{4:{format}}}",
-                        separator, scRgbColor.a, scRgbColor.r, scRgbColor.g, scRgbColor.b);
+                    char separator = TokenizerHelper.GetNumericListSeparator(provider);
+
+                    DefaultInterpolatedStringHandler stringBuilder = new(1, 7, provider, stackalloc char[128]);
+                    stringBuilder.AppendLiteral("sc#");
+                    stringBuilder.AppendFormatted(scRgbColor.a, format: format);
+                    stringBuilder.AppendFormatted(separator);
+                    stringBuilder.AppendFormatted(scRgbColor.r, format: format);
+                    stringBuilder.AppendFormatted(separator);
+                    stringBuilder.AppendFormatted(scRgbColor.g, format: format);
+                    stringBuilder.AppendFormatted(separator);
+                    stringBuilder.AppendFormatted(scRgbColor.b, format: format);
+
+                    return stringBuilder.ToStringAndClear();
                 }
+
+                return string.Create(provider, stackalloc char[128], $"#{sRgbColor.a:X2}{sRgbColor.r:X2}{sRgbColor.g:X2}{sRgbColor.b:X2}");
             }
             else
             {
-                char separator = MS.Internal.TokenizerHelper.GetNumericListSeparator(provider);
+                char separator = TokenizerHelper.GetNumericListSeparator(provider);
 
-                format = c_scRgbFormat;
-
-                //First Stepmake sure that nothing that should not be escaped is escaped
+                // 1) Make sure that nothing that should not be escaped is escaped
                 Uri safeUnescapedUri = new Uri(context.ProfileUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.SafeUnescaped),
-                                                    context.ProfileUri.IsAbsoluteUri ? UriKind.Absolute : UriKind.Relative);
-                //Second Step make sure that everything that should escaped is escaped
-                String uriString = safeUnescapedUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
+                                               context.ProfileUri.IsAbsoluteUri ? UriKind.Absolute : UriKind.Relative);
 
-                var sb = new StringBuilder();
-                sb.AppendFormat(provider, "{0}{1} ", Parsers.s_ContextColor, uriString);
-                sb.AppendFormat(provider,"{1:" + format + "}{0}",separator,scRgbColor.a);
-                for (int i = 0; i < nativeColorValue.Length; ++i )
+                // 2) Make sure that everything that should escaped is escaped
+                string uriString = safeUnescapedUri.GetComponents(UriComponents.SerializationInfoString, UriFormat.UriEscaped);
+
+                DefaultInterpolatedStringHandler stringBuilder = new(3, 7, provider, stackalloc char[256]);
+
+                // Append "ContextColor file://something " format
+                stringBuilder.AppendLiteral(Parsers.ContextColor);
+                stringBuilder.AppendLiteral(uriString);
+                stringBuilder.AppendLiteral(" ");
+
+                stringBuilder.AppendFormatted(scRgbColor.a, format: c_scRgbFormat);
+
+                for (int i = 0; i < nativeColorValue.Length; i++)
                 {
-                    sb.AppendFormat(provider,"{0:" + format + "}",nativeColorValue[i]);
-                    if (i < nativeColorValue.Length - 1)
-                    {
-                        sb.AppendFormat(provider,"{0}",separator);
-                    }
+                    stringBuilder.AppendFormatted(separator);
+                    stringBuilder.AppendFormatted(nativeColorValue[i], format: c_scRgbFormat);
                 }
-                return sb.ToString();
+
+                return stringBuilder.ToStringAndClear();
             }
         }
 

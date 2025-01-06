@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -626,8 +626,10 @@ namespace MS.Internal.TextFormatting
 
                 alignment = LsKAlign.lskalRight;
 
-                lschp = new LsChp();
-                lschp.idObj = (ushort)TextStore.ObjectId.Text_chp;
+                lschp = new LsChp
+                {
+                    idObj = (ushort)TextStore.ObjectId.Text_chp
+                };
 
                 SetChpFormat(lsrun.RunProp, ref lschp);
 
@@ -2313,9 +2315,11 @@ namespace MS.Internal.TextFormatting
                 switch (objectId)
                 {
                     case (uint)TextStore.ObjectId.InlineObject:
-                        InlineInit inlineInit = new InlineInit();
-                        inlineInit.pfnFormat = this.InlineFormatDelegate;
-                        inlineInit.pfnDraw = this.InlineDrawDelegate;
+                        InlineInit inlineInit = new InlineInit
+                        {
+                            pfnFormat = this.InlineFormatDelegate,
+                            pfnDraw = this.InlineDrawDelegate
+                        };
                         Marshal.StructureToPtr(inlineInit, (System.IntPtr)objectInfo, false);
                         break;
 
@@ -2379,8 +2383,10 @@ namespace MS.Internal.TextFormatting
                     rightMargin
                     );
 
-                pobjDim = new ObjDim();
-                pobjDim.dur = TextFormatterImp.RealToIdeal(metrics.Width);
+                pobjDim = new ObjDim
+                {
+                    dur = TextFormatterImp.RealToIdeal(metrics.Width)
+                };
                 pobjDim.heightsRef.dvMultiLineHeight = TextFormatterImp.RealToIdeal(metrics.Height);
                 pobjDim.heightsRef.dvAscent = TextFormatterImp.RealToIdeal(metrics.Baseline);
                 pobjDim.heightsRef.dvDescent = pobjDim.heightsRef.dvMultiLineHeight - pobjDim.heightsRef.dvAscent;

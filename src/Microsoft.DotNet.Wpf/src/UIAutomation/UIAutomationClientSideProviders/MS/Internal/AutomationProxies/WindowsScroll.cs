@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -189,9 +189,10 @@ namespace MS.Internal.AutomationProxies
         static private double GetScrollInfo(IntPtr hwnd, int sbFlag)
         {
             // check if there is a scrollbar 
-            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo ();
-
-            si.fMask = NativeMethods.SIF_ALL;
+            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo
+            {
+                fMask = NativeMethods.SIF_ALL
+            };
             si.cbSize = Marshal.SizeOf (si.GetType ());
 
             if (Misc.GetScrollInfo(hwnd, sbFlag, ref si))
@@ -284,8 +285,10 @@ namespace MS.Internal.AutomationProxies
             }
 
             // Get Max & min                    
-            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo ();
-            si.fMask = NativeMethods.SIF_ALL;
+            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo
+            {
+                fMask = NativeMethods.SIF_ALL
+            };
             si.cbSize = Marshal.SizeOf(si.GetType ());
 
             // if no scroll bar return false
@@ -358,8 +361,10 @@ namespace MS.Internal.AutomationProxies
             }
 
             // Get Max & min
-            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo ();
-            si.fMask = NativeMethods.SIF_ALL;
+            NativeMethods.ScrollInfo si = new NativeMethods.ScrollInfo
+            {
+                fMask = NativeMethods.SIF_ALL
+            };
             si.cbSize = Marshal.SizeOf (si.GetType ());
 
             // if no scroll bar return false

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -320,8 +320,10 @@ namespace System.Windows.Documents
                     PackageStore.AddPackage(packageUri, wpfPayload.Package); // Register the package
 
                     // Set this temporary uri as a base uri for xaml parser
-                    ParserContext parserContext = new ParserContext();
-                    parserContext.BaseUri = entryPartUri;
+                    ParserContext parserContext = new ParserContext
+                    {
+                        BaseUri = entryPartUri
+                    };
 
                     // Call xaml parser
                     xamlObject = XamlReader.Load(xamlEntryPart.GetSeekableStream(), parserContext, useRestrictiveXamlReader: true);

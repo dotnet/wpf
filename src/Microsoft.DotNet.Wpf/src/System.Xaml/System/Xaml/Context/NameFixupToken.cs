@@ -107,9 +107,11 @@ namespace MS.Internal.Xaml.Context
         {
             _names = new List<string>();
             _nameScopeDictionaryList = new List<XAML3.INameScopeDictionary>();
-            Target = new FixupTarget();
-            Target.TemporaryCollectionIndex = -1;
-            Target.InstanceIsOnTheStack = true;
+            Target = new FixupTarget
+            {
+                TemporaryCollectionIndex = -1,
+                InstanceIsOnTheStack = true
+            };
         }
 
         public bool CanAssignDirectly { get; set; }

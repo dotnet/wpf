@@ -1429,9 +1429,11 @@ namespace MS.Internal.Documents
                         if (j < firstPage || j > lastPage || _childrenCollection.Count <= _firstPageVisualIndex)
                         {
                             //Create a new page and add it to our temporary visual collection.
-                            DocumentGridPage dp = new DocumentGridPage(Content);
-                            dp.ShowPageBorders = ShowPageBorders;
-                            dp.PageNumber = j;
+                            DocumentGridPage dp = new DocumentGridPage(Content)
+                            {
+                                ShowPageBorders = ShowPageBorders,
+                                PageNumber = j
+                            };
 
                             //Attach the Loaded event handler
                             dp.PageLoaded += new EventHandler(OnPageLoaded);
@@ -1671,8 +1673,10 @@ namespace MS.Internal.Documents
                 //We create a Border with a transparent background so that it can
                 //participate in Hit-Testing (which allows click events like those
                 //for our Context Menu to work).
-                _documentGridBackground = new Border();
-                _documentGridBackground.Background = Brushes.Transparent;
+                _documentGridBackground = new Border
+                {
+                    Background = Brushes.Transparent
+                };
 
                 //Add the background in.
                 _childrenCollection.Add(_documentGridBackground);
@@ -2483,8 +2487,10 @@ namespace MS.Internal.Documents
             _pageCache = new PageCache();
             _childrenCollection = new VisualCollection(this);
 
-            _rowCache = new RowCache();
-            _rowCache.PageCache = _pageCache;
+            _rowCache = new RowCache
+            {
+                PageCache = _pageCache
+            };
             _rowCache.RowCacheChanged += new RowCacheChangedEventHandler(OnRowCacheChanged);
             _rowCache.RowLayoutCompleted += new RowLayoutCompletedEventHandler(OnRowLayoutCompleted);
         }

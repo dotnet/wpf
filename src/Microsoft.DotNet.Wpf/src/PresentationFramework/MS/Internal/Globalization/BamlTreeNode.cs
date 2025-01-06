@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -73,9 +73,11 @@ namespace MS.Internal.Globalization
             // create a new copy of the tree.
             CreateInternalIndex(ref newTreeRoot, ref newNodeList, true);
 
-            BamlTree newTree = new BamlTree();
-            newTree._root = newTreeRoot;
-            newTree._nodeList = newNodeList;
+            BamlTree newTree = new BamlTree
+            {
+                _root = newTreeRoot,
+                _nodeList = newNodeList
+            };
 
             return newTree;
         }
@@ -392,9 +394,11 @@ namespace MS.Internal.Globalization
             get
             {
                 // return the default attribute as it is at the root of the inheritance
-                LocalizabilityAttribute defaultAttribute = new LocalizabilityAttribute(LocalizationCategory.None);
-                defaultAttribute.Readability = Readability.Readable;
-                defaultAttribute.Modifiability = Modifiability.Modifiable;
+                LocalizabilityAttribute defaultAttribute = new LocalizabilityAttribute(LocalizationCategory.None)
+                {
+                    Readability = Readability.Readable,
+                    Modifiability = Modifiability.Modifiable
+                };
                 return defaultAttribute;
             }
             set { }
@@ -472,10 +476,12 @@ namespace MS.Internal.Globalization
 
         internal override BamlTreeNode Copy()
         {
-            BamlStartElementNode node = new BamlStartElementNode(_assemblyName, _typeFullName, _isInjected, _useTypeConverter);
-            node._content = _content;
-            node._uid = _uid;
-            node._inheritableAttribute = _inheritableAttribute;
+            BamlStartElementNode node = new BamlStartElementNode(_assemblyName, _typeFullName, _isInjected, _useTypeConverter)
+            {
+                _content = _content,
+                _uid = _uid,
+                _inheritableAttribute = _inheritableAttribute
+            };
             return node;
         }
 

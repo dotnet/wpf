@@ -84,8 +84,10 @@ namespace System.Xaml
                                     Assembly protoAssembly,
                                     string partialName)
         {
-            AssemblyName name = new AssemblyName(protoAssembly.FullName);
-            name.Name = partialName;
+            AssemblyName name = new AssemblyName(protoAssembly.FullName)
+            {
+                Name = partialName
+            };
             return name.FullName;
         }
 

@@ -855,8 +855,10 @@ namespace System.Windows.Input
                             {
                                 InputReportEventArgs previewInputReport = (InputReportEventArgs) item.Input;
 
-                                InputReportEventArgs inputReport = new InputReportEventArgs(previewInputReport.Device, previewInputReport.Report);
-                                inputReport.RoutedEvent=InputManager.InputReportEvent;
+                                InputReportEventArgs inputReport = new InputReportEventArgs(previewInputReport.Device, previewInputReport.Report)
+                                {
+                                    RoutedEvent = InputManager.InputReportEvent
+                                };
                                 PushInput(inputReport, item);
                             }
                         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -200,9 +200,11 @@ namespace System.Windows.Controls.Primitives
         private Size GetDesiredSizeWithoutMargin(UIElement element)
         {
             Thickness margin = (Thickness)element.GetValue(MarginProperty);
-            Size desiredSizeWithoutMargin = new Size();
-            desiredSizeWithoutMargin.Height = Math.Max(0d, element.DesiredSize.Height - margin.Top - margin.Bottom);
-            desiredSizeWithoutMargin.Width = Math.Max(0d, element.DesiredSize.Width - margin.Left - margin.Right);
+            Size desiredSizeWithoutMargin = new Size
+            {
+                Height = Math.Max(0d, element.DesiredSize.Height - margin.Top - margin.Bottom),
+                Width = Math.Max(0d, element.DesiredSize.Width - margin.Left - margin.Right)
+            };
             return desiredSizeWithoutMargin;
         }
 

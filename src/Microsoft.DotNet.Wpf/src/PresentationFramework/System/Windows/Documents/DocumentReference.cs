@@ -274,9 +274,10 @@ namespace System.Windows.Documents
                     throw new ApplicationException(SR.DocumentReferenceNotFound);
                 }
 
-                ParserContext pc = new ParserContext();
-
-                pc.BaseUri = uriToLoad;
+                ParserContext pc = new ParserContext
+                {
+                    BaseUri = uriToLoad
+                };
 
                 if (BindUriHelper.IsXamlMimeType(mimeType))
                 {

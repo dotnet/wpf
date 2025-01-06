@@ -105,8 +105,10 @@ namespace System.Windows.Controls.Primitives
                 return;
             }
 
-            TextRange range = new TextRange(_textContainer.End, _textContainer.End);
-            range.Text = textData; // Note that in RichTextBox this assignment will convert NewLines into Paragraphs
+            TextRange range = new TextRange(_textContainer.End, _textContainer.End)
+            {
+                Text = textData // Note that in RichTextBox this assignment will convert NewLines into Paragraphs
+            };
         }
 
         /// <summary>

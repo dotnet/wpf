@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -584,8 +584,10 @@ namespace System.Windows.Documents
                     targetUri = FixedPage.GetLinkUri(sourceElement, targetUri);
                 }
 
-                RequestNavigateEventArgs navigateArgs = new RequestNavigateEventArgs(targetUri, targetWindow);
-                navigateArgs.Source = sourceElement;
+                RequestNavigateEventArgs navigateArgs = new RequestNavigateEventArgs(targetUri, targetWindow)
+                {
+                    Source = sourceElement
+                };
                 sourceElement.RaiseEvent(navigateArgs);
 
                 if (navigateArgs.Handled)

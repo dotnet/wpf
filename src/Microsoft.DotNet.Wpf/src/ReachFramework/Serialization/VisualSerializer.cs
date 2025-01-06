@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -673,10 +673,11 @@ namespace System.Windows.Xps.Serialization
         protected StringBuilder BrushToString(Brush brush, Rect bounds)
         {
             StringWriter swriter = new StringWriter(CultureInfo.InvariantCulture);
-            XmlTextWriter xwriter = new XmlTextWriter(swriter);
-
-            xwriter.Formatting  = System.Xml.Formatting.Indented;
-            xwriter.Indentation = 4;
+            XmlTextWriter xwriter = new XmlTextWriter(swriter)
+            {
+                Formatting = System.Xml.Formatting.Indented,
+                Indentation = 4
+            };
 
             XmlWriter oldwriter = _writer;
 

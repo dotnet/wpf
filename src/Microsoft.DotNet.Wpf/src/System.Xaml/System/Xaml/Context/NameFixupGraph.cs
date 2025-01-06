@@ -244,10 +244,12 @@ namespace MS.Internal.Xaml.Context
 
         public void AddEndOfParseDependency(object childThatHasUnresolvedChildren, FixupTarget parentObject)
         {
-            NameFixupToken token = new NameFixupToken();
-            token.Target = parentObject;
-            token.FixupType = FixupType.UnresolvedChildren;
-            token.ReferencedObject = childThatHasUnresolvedChildren;
+            NameFixupToken token = new NameFixupToken
+            {
+                Target = parentObject,
+                FixupType = FixupType.UnresolvedChildren,
+                ReferencedObject = childThatHasUnresolvedChildren
+            };
             AddToMultiDict(_dependenciesByParentObject, parentObject.Instance, token);
             // We don't add to the _dependenciesByChildObject, because at end-of-parse, a single
             // child object can be a dependency of multiple parents

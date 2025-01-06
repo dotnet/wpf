@@ -961,9 +961,10 @@ namespace System.Windows.Controls.Primitives
                 {
                     for (int j = 0; j < COLS; j++)
                     {
-                        CalendarDayButton dayCell = new CalendarDayButton();
-
-                        dayCell.Owner = this.Owner;
+                        CalendarDayButton dayCell = new CalendarDayButton
+                        {
+                            Owner = this.Owner
+                        };
                         dayCell.SetValue(Grid.RowProperty, i);
                         dayCell.SetValue(Grid.ColumnProperty, j);
                         dayCell.SetBinding(CalendarDayButton.StyleProperty, GetOwnerBinding("CalendarDayButtonStyle"));
@@ -987,9 +988,10 @@ namespace System.Windows.Controls.Primitives
                 {
                     for (int j = 0; j < YEAR_COLS; j++)
                     {
-                        monthCell = new CalendarButton();
-
-                        monthCell.Owner = this.Owner;
+                        monthCell = new CalendarButton
+                        {
+                            Owner = this.Owner
+                        };
                         monthCell.SetValue(Grid.RowProperty, i);
                         monthCell.SetValue(Grid.ColumnProperty, j);
                         monthCell.SetBinding(CalendarButton.StyleProperty, GetOwnerBinding("CalendarButtonStyle"));
@@ -1403,8 +1405,10 @@ namespace System.Windows.Controls.Primitives
         /// <returns></returns>
         private BindingBase GetOwnerBinding(string propertyName)
         {
-            Binding result = new Binding(propertyName);
-            result.Source = this.Owner;
+            Binding result = new Binding(propertyName)
+            {
+                Source = this.Owner
+            };
             return result;
         }
 

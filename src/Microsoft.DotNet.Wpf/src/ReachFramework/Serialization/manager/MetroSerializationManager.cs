@@ -580,9 +580,10 @@ namespace System.Windows.Xps.Serialization
                                                                                     propertyCache.SerializerTypeForProperty,
                                                                                     propertyCache.TypeConverterForProperty,
                                                                                     propertyCache.DefaultValueAttr,
-                                                                                    propertyCache.DesignerSerializationOptionsAttr);
-
-                serializablePropertyCache.PropertyValue = propertyCache.PropertyValue;
+                                                                                    propertyCache.DesignerSerializationOptionsAttr)
+                {
+                    PropertyValue = propertyCache.PropertyValue
+                };
 
                 clrSerializableProperties[indexInClrSerializableProperties] = serializablePropertyCache;
             }
@@ -656,9 +657,10 @@ namespace System.Windows.Xps.Serialization
                                                     propertyCache.SerializerTypeForProperty,
                                                     propertyCache.TypeConverterForProperty,
                                                     propertyCache.DefaultValueAttr,
-                                                    propertyCache.DesignerSerializationOptionsAttr);
-
-                    serializablePropertyCache.PropertyValue = propertyCache.PropertyValue;
+                                                    propertyCache.DesignerSerializationOptionsAttr)
+                    {
+                        PropertyValue = propertyCache.PropertyValue
+                    };
 
                     serializableDependencyProperties[indexInSerializableDependencyProperties] = serializablePropertyCache;
                 }

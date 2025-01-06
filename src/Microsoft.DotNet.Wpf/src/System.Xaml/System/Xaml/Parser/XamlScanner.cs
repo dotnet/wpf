@@ -491,8 +491,10 @@ namespace MS.Internal.Xaml.Parser
                 _scannerStack.Pop();
             }
 
-            XamlScannerNode node = new XamlScannerNode(_xmlLineInfo);
-            node.NodeType = ScannerNodeType.ENDTAG;
+            XamlScannerNode node = new XamlScannerNode(_xmlLineInfo)
+            {
+                NodeType = ScannerNodeType.ENDTAG
+            };
             _readNodesQueue.Enqueue(node);
         }
 
@@ -513,8 +515,10 @@ namespace MS.Internal.Xaml.Parser
 
         private void ReadNone()
         {
-            XamlScannerNode node = new XamlScannerNode(_xmlLineInfo);
-            node.NodeType = ScannerNodeType.NONE;
+            XamlScannerNode node = new XamlScannerNode(_xmlLineInfo)
+            {
+                NodeType = ScannerNodeType.NONE
+            };
             _readNodesQueue.Enqueue(node);
         }
 
@@ -843,9 +847,11 @@ namespace MS.Internal.Xaml.Parser
             // Don't send the text if it is Whitespace outside the root tag.
             if (!(_scannerStack.Depth == 0 && AccumulatedText.IsWhiteSpaceOnly))
             {
-                XamlScannerNode node = new XamlScannerNode(_xmlLineInfo);
-                node.NodeType = ScannerNodeType.TEXT;
-                node.TextContent = AccumulatedText;
+                XamlScannerNode node = new XamlScannerNode(_xmlLineInfo)
+                {
+                    NodeType = ScannerNodeType.TEXT,
+                    TextContent = AccumulatedText
+                };
                 _readNodesQueue.Enqueue(node);
             }
         }
@@ -856,10 +862,12 @@ namespace MS.Internal.Xaml.Parser
             string xamlNamespace = attr.XmlNsUriDefined;
             _parserContext.AddNamespacePrefix(prefix, xamlNamespace);
 
-            XamlScannerNode node = new XamlScannerNode(attr);
-            node.NodeType = ScannerNodeType.PREFIXDEFINITION;
-            node.Prefix = prefix;
-            node.TypeNamespace = xamlNamespace;
+            XamlScannerNode node = new XamlScannerNode(attr)
+            {
+                NodeType = ScannerNodeType.PREFIXDEFINITION,
+                Prefix = prefix,
+                TypeNamespace = xamlNamespace
+            };
 
             _readNodesQueue.Enqueue(node);
         }

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -275,9 +275,11 @@ namespace System.Windows.Input
                 // - no need to check "changeFocus" here as it was just previously unconditionally set to true
                 if(askOld && _focus != null)
                 {
-                    KeyboardFocusChangedEventArgs previewLostFocus = new KeyboardFocusChangedEventArgs(this, timeStamp, (IInputElement)_focus, (IInputElement)newFocus);
-                    previewLostFocus.RoutedEvent=Keyboard.PreviewLostKeyboardFocusEvent;
-                    previewLostFocus.Source= _focus;
+                    KeyboardFocusChangedEventArgs previewLostFocus = new KeyboardFocusChangedEventArgs(this, timeStamp, (IInputElement)_focus, (IInputElement)newFocus)
+                    {
+                        RoutedEvent = Keyboard.PreviewLostKeyboardFocusEvent,
+                        Source = _focus
+                    };
                     _inputManager?.ProcessInput(previewLostFocus);
 
                     // is handled the right indication of canceled?
@@ -292,9 +294,11 @@ namespace System.Windows.Input
                 //   above already cancelled it
                 if(askNew && changeFocus && newFocus != null)
                 {
-                    KeyboardFocusChangedEventArgs previewGotFocus = new KeyboardFocusChangedEventArgs(this, timeStamp, (IInputElement)_focus, (IInputElement)newFocus);
-                    previewGotFocus.RoutedEvent=Keyboard.PreviewGotKeyboardFocusEvent;
-                    previewGotFocus.Source= newFocus;
+                    KeyboardFocusChangedEventArgs previewGotFocus = new KeyboardFocusChangedEventArgs(this, timeStamp, (IInputElement)_focus, (IInputElement)newFocus)
+                    {
+                        RoutedEvent = Keyboard.PreviewGotKeyboardFocusEvent,
+                        Source = newFocus
+                    };
                     _inputManager?.ProcessInput(previewGotFocus);
 
                     // is handled the right indication of canceled?
@@ -315,9 +319,11 @@ namespace System.Windows.Input
                         // element receiving focus have all agreed to the
                         // transaction.  This is used by menus to configure the
                         // behavior of focus changes.
-                        KeyboardInputProviderAcquireFocusEventArgs acquireFocus = new KeyboardInputProviderAcquireFocusEventArgs(this, timeStamp, changeFocus);
-                        acquireFocus.RoutedEvent = Keyboard.PreviewKeyboardInputProviderAcquireFocusEvent;
-                        acquireFocus.Source= newFocus;
+                        KeyboardInputProviderAcquireFocusEventArgs acquireFocus = new KeyboardInputProviderAcquireFocusEventArgs(this, timeStamp, changeFocus)
+                        {
+                            RoutedEvent = Keyboard.PreviewKeyboardInputProviderAcquireFocusEvent,
+                            Source = newFocus
+                        };
                         _inputManager?.ProcessInput(acquireFocus);
 
                         // Acquire focus through the input provider.
@@ -325,9 +331,11 @@ namespace System.Windows.Input
 
                         // Tell the element whether or not we were able to
                         // acquire focus through the input provider.
-                        acquireFocus = new KeyboardInputProviderAcquireFocusEventArgs(this, timeStamp, changeFocus);
-                        acquireFocus.RoutedEvent = Keyboard.KeyboardInputProviderAcquireFocusEvent;
-                        acquireFocus.Source= newFocus;
+                        acquireFocus = new KeyboardInputProviderAcquireFocusEventArgs(this, timeStamp, changeFocus)
+                        {
+                            RoutedEvent = Keyboard.KeyboardInputProviderAcquireFocusEvent,
+                            Source = newFocus
+                        };
                         _inputManager?.ProcessInput(acquireFocus);
                     }
                     else
@@ -460,17 +468,21 @@ namespace System.Windows.Input
                 // Send the LostKeyboardFocus and GotKeyboardFocus events.
                 if(oldFocus != null)
                 {
-                    KeyboardFocusChangedEventArgs lostFocus = new KeyboardFocusChangedEventArgs(this, timestamp, (IInputElement) oldFocus, (IInputElement) focus);
-                    lostFocus.RoutedEvent=Keyboard.LostKeyboardFocusEvent;
-                    lostFocus.Source= oldFocus;
+                    KeyboardFocusChangedEventArgs lostFocus = new KeyboardFocusChangedEventArgs(this, timestamp, (IInputElement)oldFocus, (IInputElement)focus)
+                    {
+                        RoutedEvent = Keyboard.LostKeyboardFocusEvent,
+                        Source = oldFocus
+                    };
                     _inputManager?.ProcessInput(lostFocus);
                 }
 
                 if(_focus != null)
                 {
-                    KeyboardFocusChangedEventArgs gotFocus = new KeyboardFocusChangedEventArgs(this, timestamp, (IInputElement) oldFocus, (IInputElement) _focus);
-                    gotFocus.RoutedEvent=Keyboard.GotKeyboardFocusEvent;
-                    gotFocus.Source= _focus;
+                    KeyboardFocusChangedEventArgs gotFocus = new KeyboardFocusChangedEventArgs(this, timestamp, (IInputElement)oldFocus, (IInputElement)_focus)
+                    {
+                        RoutedEvent = Keyboard.GotKeyboardFocusEvent,
+                        Source = _focus
+                    };
                     _inputManager?.ProcessInput(gotFocus);
                 }
 

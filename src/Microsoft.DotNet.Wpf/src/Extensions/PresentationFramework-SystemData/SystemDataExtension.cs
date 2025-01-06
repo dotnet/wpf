@@ -49,16 +49,22 @@ namespace MS.Internal
             {
                 // lazy load the types for the offending PD's.  They're internal, so
                 // we get them indirectly.
-                DataSet dataset = new DataSet();
-                dataset.Locale = System.Globalization.CultureInfo.InvariantCulture;
+                DataSet dataset = new DataSet
+                {
+                    Locale = System.Globalization.CultureInfo.InvariantCulture
+                };
 
-                DataTable table1 = new DataTable("Table1");
-                table1.Locale = System.Globalization.CultureInfo.InvariantCulture;
+                DataTable table1 = new DataTable("Table1")
+                {
+                    Locale = System.Globalization.CultureInfo.InvariantCulture
+                };
                 table1.Columns.Add("ID", typeof(int));
                 dataset.Tables.Add(table1);
 
-                DataTable table2 = new DataTable("Table2");
-                table2.Locale = System.Globalization.CultureInfo.InvariantCulture;
+                DataTable table2 = new DataTable("Table2")
+                {
+                    Locale = System.Globalization.CultureInfo.InvariantCulture
+                };
                 table2.Columns.Add("ID", typeof(int));
                 dataset.Tables.Add(table2);
 

@@ -1034,9 +1034,11 @@ namespace System.Windows.Controls.Primitives
             if (textContainer != null && this.TextEditorRenderScope != null && textContainer.TextSelection == null)
             {
                 _textView = new MultiPageTextView(this, this.TextEditorRenderScope, textContainer);
-                _textEditor = new TextEditor(textContainer, this, false);
-                _textEditor.IsReadOnly = !IsEditingEnabled;
-                _textEditor.TextView = _textView;
+                _textEditor = new TextEditor(textContainer, this, false)
+                {
+                    IsReadOnly = !IsEditingEnabled,
+                    TextView = _textView
+                };
                 textContainer.TextView = _textView;
             }
 

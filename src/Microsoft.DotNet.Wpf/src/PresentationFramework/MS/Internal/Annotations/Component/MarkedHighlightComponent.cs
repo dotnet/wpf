@@ -573,15 +573,21 @@ namespace MS.Internal.Annotations.Component
         /// <returns>The MarkerComponent</returns>
         private Path CreateMarker(Geometry geometry)
         {
-            Path marker = new Path();
-            marker.Data = geometry;
+            Path marker = new Path
+            {
+                Data = geometry
+            };
 
             //set activation binding
-            Binding markerStroke = new Binding("MarkerBrushProperty");
-            markerStroke.Source = this;
+            Binding markerStroke = new Binding("MarkerBrushProperty")
+            {
+                Source = this
+            };
             marker.SetBinding(Path.StrokeProperty, markerStroke);
-            Binding markerStrokeThickness = new Binding("StrokeThicknessProperty");
-            markerStrokeThickness.Source = this;
+            Binding markerStrokeThickness = new Binding("StrokeThicknessProperty")
+            {
+                Source = this
+            };
             marker.SetBinding(Path.StrokeThicknessProperty, markerStrokeThickness);
             marker.StrokeEndLineCap = PenLineCap.Round;
             marker.StrokeStartLineCap = PenLineCap.Round;

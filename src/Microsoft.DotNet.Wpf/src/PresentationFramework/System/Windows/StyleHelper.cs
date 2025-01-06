@@ -521,11 +521,13 @@ namespace System.Windows
 
             int mapIndex = childRecord.ValueLookupListFromProperty.EnsureEntry(propertyValue.Property.GlobalIndex);
 
-            ChildValueLookup valueLookup = new ChildValueLookup();
-            valueLookup.LookupType = (ValueLookupType)propertyValue.ValueType; // Maps directly to ValueLookupType for applicable values
-            valueLookup.Conditions = propertyValue.Conditions;
-            valueLookup.Property = propertyValue.Property;
-            valueLookup.Value = propertyValue.ValueInternal;
+            ChildValueLookup valueLookup = new ChildValueLookup
+            {
+                LookupType = (ValueLookupType)propertyValue.ValueType, // Maps directly to ValueLookupType for applicable values
+                Conditions = propertyValue.Conditions,
+                Property = propertyValue.Property,
+                Value = propertyValue.ValueInternal
+            };
 
             childRecord.ValueLookupListFromProperty.Entries[mapIndex].Value.Add(ref valueLookup);
 
@@ -749,9 +751,11 @@ namespace System.Windows
                 }
             }
 
-            dependent = new ContainerDependent();
-            dependent.Property = dp;
-            dependent.FromVisualTrigger = fromVisualTrigger;
+            dependent = new ContainerDependent
+            {
+                Property = dp,
+                FromVisualTrigger = fromVisualTrigger
+            };
             containerDependents.Add(dependent);
         }
 
@@ -772,9 +776,11 @@ namespace System.Windows
             {
                 Debug.Assert(childIndex >= 0);
 
-                ChildEventDependent dependent = new ChildEventDependent();
-                dependent.ChildIndex = childIndex;
-                dependent.EventHandlersStore = eventHandlersStore;
+                ChildEventDependent dependent = new ChildEventDependent
+                {
+                    ChildIndex = childIndex,
+                    EventHandlersStore = eventHandlersStore
+                };
 
                 eventDependents.Add(ref dependent);
             }
@@ -793,9 +799,11 @@ namespace System.Windows
             DependencyProperty                              dp,
             ref FrugalStructList<ChildPropertyDependent>    propertyDependents)
         {
-            ChildPropertyDependent dependent = new ChildPropertyDependent();
-            dependent.ChildIndex = childIndex;
-            dependent.Property = dp;
+            ChildPropertyDependent dependent = new ChildPropertyDependent
+            {
+                ChildIndex = childIndex,
+                Property = dp
+            };
 
             propertyDependents.Add(dependent);
         }
@@ -831,10 +839,12 @@ namespace System.Windows
             {
                 // Since there isn't a duplicate entry,
                 // create and add a new one
-                ChildPropertyDependent resourceDependent = new ChildPropertyDependent();
-                resourceDependent.ChildIndex = childIndex;
-                resourceDependent.Property = dp;
-                resourceDependent.Name = name;
+                ChildPropertyDependent resourceDependent = new ChildPropertyDependent
+                {
+                    ChildIndex = childIndex,
+                    Property = dp,
+                    Name = name
+                };
 
                 resourceDependents.Add(resourceDependent);
             }
@@ -3687,8 +3697,10 @@ namespace System.Windows
                 DependencyProperty              dp,
                 FrameworkElementFactory         templateRoot)
         {
-            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp);
-            newEntry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             if (GetValueFromTemplatedParent(
                     container,
                     childIndex,
@@ -3833,8 +3845,10 @@ namespace System.Windows
                 FrameworkObject fo,
                 DependencyProperty dp)
         {
-            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp);
-            newEntry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry newEntry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             if (GetValueFromStyleOrTemplate(fo, dp, ref newEntry))
             {
                 DependencyObject target = fo.DO;

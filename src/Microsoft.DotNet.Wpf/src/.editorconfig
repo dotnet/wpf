@@ -185,9 +185,6 @@ dotnet_diagnostic.CA5362.severity = suggestion
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = suggestion
 
-# IDE0017: Simplify object initialization
-dotnet_diagnostic.IDE0017.severity = suggestion
-
 # IDE0030: Null check can be simplified
 dotnet_diagnostic.IDE0030.severity = suggestion
 

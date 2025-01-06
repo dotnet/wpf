@@ -237,14 +237,18 @@ namespace System.Windows.Controls.Primitives
                         pageSize = _documentPaginator.PageSize;
                         if (Double.IsInfinity(availableSize.Width))
                         {
-                            newPageSize = new Size();
-                            newPageSize.Height = availableSize.Height / _pageZoom;
+                            newPageSize = new Size
+                            {
+                                Height = availableSize.Height / _pageZoom
+                            };
                             newPageSize.Width = newPageSize.Height * (pageSize.Width / pageSize.Height); // Keep aspect ratio.
                         }
                         else if (Double.IsInfinity(availableSize.Height))
                         {
-                            newPageSize = new Size();
-                            newPageSize.Width = availableSize.Width / _pageZoom;
+                            newPageSize = new Size
+                            {
+                                Width = availableSize.Width / _pageZoom
+                            };
                             newPageSize.Height = newPageSize.Width * (pageSize.Height / pageSize.Width); // Keep aspect ratio.
                         }
                         else

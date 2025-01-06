@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -2140,10 +2140,12 @@ namespace System.Windows.Controls
             // get it to work anyway.
             if (Parent != null && newParent != null && Parent != newParent)
             {
-                Binding binding = new Binding();
-                binding.Path = new PropertyPath(DefinitionBase.PrivateSharedSizeScopeProperty);
-                binding.Mode = BindingMode.OneWay;
-                binding.Source = newParent;
+                Binding binding = new Binding
+                {
+                    Path = new PropertyPath(DefinitionBase.PrivateSharedSizeScopeProperty),
+                    Mode = BindingMode.OneWay,
+                    Source = newParent
+                };
                 BindingOperations.SetBinding(this, DefinitionBase.PrivateSharedSizeScopeProperty, binding);
             }
 

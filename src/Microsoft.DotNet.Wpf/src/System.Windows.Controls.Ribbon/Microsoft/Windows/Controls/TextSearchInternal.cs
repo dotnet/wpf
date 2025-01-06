@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -673,8 +673,10 @@ namespace Microsoft.Windows.Controls
 
         private static Binding CreateBinding(object item, string primaryTextPath)
         {
-            Binding binding = new Binding();
-            binding.Mode = BindingMode.OneWay;
+            Binding binding = new Binding
+            {
+                Mode = BindingMode.OneWay
+            };
 
             // Use xpath for xmlnodes (See Selector.PrepareItemValueBinding)
             if (AssemblyHelper.IsXmlNode(item))

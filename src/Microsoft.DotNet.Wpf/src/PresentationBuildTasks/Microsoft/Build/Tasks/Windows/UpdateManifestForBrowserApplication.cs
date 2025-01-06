@@ -117,9 +117,11 @@ namespace Microsoft.Build.Tasks.Windows
                 // Update the manifest file.
                 try
                 {
-                    manifestWriter = new XmlTextWriter(appManifestFile, System.Text.Encoding.UTF8);
-                    manifestWriter.Formatting = Formatting.Indented;
-                    manifestWriter.Indentation = 4;
+                    manifestWriter = new XmlTextWriter(appManifestFile, System.Text.Encoding.UTF8)
+                    {
+                        Formatting = Formatting.Indented,
+                        Indentation = 4
+                    };
                     manifestDocument.WriteTo(manifestWriter);
                 }
                 finally

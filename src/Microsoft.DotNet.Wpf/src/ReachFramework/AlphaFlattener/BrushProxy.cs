@@ -246,10 +246,11 @@ namespace Microsoft.Internal.AlphaFlattener
 
         public PenProxy Clone()
         {
-            PenProxy pen = new PenProxy();
-
-            pen._pen   = this._pen;
-            pen._brush = this._brush;
+            PenProxy pen = new PenProxy
+            {
+                _pen = this._pen,
+                _brush = this._brush
+            };
 
             return pen;
         }
@@ -1436,9 +1437,10 @@ namespace Microsoft.Internal.AlphaFlattener
         /// <returns></returns>
         private Brush BuildOpacityBrush()
         {
-            DrawingGroup drawing = new DrawingGroup();
-
-            drawing.Opacity = _opacity;
+            DrawingGroup drawing = new DrawingGroup
+            {
+                Opacity = _opacity
+            };
 
             Rect bounds = GetBrushFillBounds();
 
@@ -2419,9 +2421,10 @@ namespace Microsoft.Internal.AlphaFlattener
                     GradientStop gsA = gcA[i];
                     GradientStop gsB = gcB[i];
 
-                    GradientStop gs = new GradientStop();
-
-                    gs.Offset = gsA.Offset;
+                    GradientStop gs = new GradientStop
+                    {
+                        Offset = gsA.Offset
+                    };
 
                     if (opacityOnlyB)
                     {
@@ -2969,9 +2972,10 @@ namespace Microsoft.Internal.AlphaFlattener
 
                 if (allSame)
                 {
-                    Brush b = new SolidColorBrush(c);
-
-                    b.Opacity = opacity;
+                    Brush b = new SolidColorBrush(c)
+                    {
+                        Opacity = opacity
+                    };
 
                     return b;
                 }
@@ -3108,8 +3112,10 @@ namespace Microsoft.Internal.AlphaFlattener
                     treeWalkProgress.EnterTreeWalk(vb);
                     try 
                     {
-                        VisualTreeFlattener flattener = new VisualTreeFlattener(metroContext, pageSize, treeWalkProgress);
-                        flattener.InheritedTransformHint = visualToWorldTransformHint;
+                        VisualTreeFlattener flattener = new VisualTreeFlattener(metroContext, pageSize, treeWalkProgress)
+                        {
+                            InheritedTransformHint = visualToWorldTransformHint
+                        };
                         flattener.VisualWalk(vb.Visual);
                     }
                     finally 
@@ -4307,8 +4313,10 @@ namespace Microsoft.Internal.AlphaFlattener
                 }
                 else
                 {
-                    geometry = new EllipseGeometry(center, _rx * t, _ry * t);
-                    geometry.Transform = new MatrixTransform(_trans);
+                    geometry = new EllipseGeometry(center, _rx * t, _ry * t)
+                    {
+                        Transform = new MatrixTransform(_trans)
+                    };
                 }
 
                 return geometry;

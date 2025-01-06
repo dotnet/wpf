@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -836,12 +836,14 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
 
 
-            // Create a new drawing attribute
-            DrawingAttributes attributes = new DrawingAttributes();
-            // pull off our defaults onthe drawing attribute as we need to
-            //  respect what the ISF has.
-            attributes.DrawingFlags = 0;
-            cb = DrawingAttributeSerializer.DecodeAsISF(strm, guidList, cbDA, attributes);
+                // Create a new drawing attribute
+                DrawingAttributes attributes = new DrawingAttributes
+                {
+                    // pull off our defaults onthe drawing attribute as we need to
+                    //  respect what the ISF has.
+                    DrawingFlags = 0
+                };
+                cb = DrawingAttributeSerializer.DecodeAsISF(strm, guidList, cbDA, attributes);
 
             // Load the stream into this attribute
             if (cbSize < cbDA)
@@ -1107,9 +1109,10 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 cbTotal -= cb;
 
                 // now create new metric entry
-                MetricEntry entry = new MetricEntry();
-
-                entry.Tag = (KnownTagCache.KnownTagIndex)dw;
+                MetricEntry entry = new MetricEntry
+                {
+                    Tag = (KnownTagCache.KnownTagIndex)dw
+                };
 
                 byte[] data = new byte[size];
 
@@ -1237,8 +1240,10 @@ namespace MS.Internal.Ink.InkSerializedFormat
         /// <returns></returns>
         private uint DecodeTransformBlock(Stream strm, KnownTagCache.KnownTagIndex tag, uint cbSize, bool useDoubles, out TransformDescriptor xform)
         {
-            xform = new TransformDescriptor();
-            xform.Tag = tag;
+            xform = new TransformDescriptor
+            {
+                Tag = tag
+            };
 
             uint cbRead = 0;
             uint cbTotal = cbSize;

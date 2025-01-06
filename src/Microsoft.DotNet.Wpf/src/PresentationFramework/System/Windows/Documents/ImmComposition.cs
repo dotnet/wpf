@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -788,8 +788,10 @@ namespace System.Windows.Documents
                 milPointCaret = compositionTarget.TransformToDevice.Transform(milPointCaret);
 
                 // Build COMPOSITIONFORM. COMPOSITIONFORM is window coodidate.
-                NativeMethods.COMPOSITIONFORM compform = new NativeMethods.COMPOSITIONFORM();
-                compform.dwStyle = NativeMethods.CFS_RECT;
+                NativeMethods.COMPOSITIONFORM compform = new NativeMethods.COMPOSITIONFORM
+                {
+                    dwStyle = NativeMethods.CFS_RECT
+                };
                 compform.rcArea.left = ConvertToInt32(milPointTopLeft.X);
                 compform.rcArea.right = ConvertToInt32(milPointBottomRight.X);
                 compform.rcArea.top = ConvertToInt32(milPointTopLeft.Y);

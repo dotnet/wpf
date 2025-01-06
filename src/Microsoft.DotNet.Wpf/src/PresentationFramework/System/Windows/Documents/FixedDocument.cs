@@ -931,8 +931,10 @@ namespace System.Windows.Documents
             {
                 pageStream = WpfWebRequestHelper.CreateRequestAndGetResponseStream(AbsoluteUriDoc, out mimeType);
 
-                ParserContext pc = new ParserContext();
-                pc.BaseUri = AbsoluteUriDoc;
+                ParserContext pc = new ParserContext
+                {
+                    BaseUri = AbsoluteUriDoc
+                };
 
                 XpsValidatingLoader loader = new XpsValidatingLoader();
                 if (validateOnly)

@@ -276,8 +276,10 @@ namespace System.Windows.Documents
                         backgroundRect.Intersect(clipRect);
                     }
 
-                    Geometry thisGeometry = new RectangleGeometry(backgroundRect);
-                    thisGeometry.Transform = t;
+                    Geometry thisGeometry = new RectangleGeometry(backgroundRect)
+                    {
+                        Transform = t
+                    };
 
                     backgroundRect = transform.TransformBounds(backgroundRect);
 

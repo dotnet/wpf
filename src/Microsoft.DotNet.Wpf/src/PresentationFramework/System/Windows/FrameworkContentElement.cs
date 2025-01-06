@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -670,8 +670,10 @@ namespace System.Windows
         internal Expression GetExpressionCore(DependencyProperty dp, PropertyMetadata metadata)
         {
             this.IsRequestingExpression = true;
-            EffectiveValueEntry entry = new EffectiveValueEntry(dp);
-            entry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry entry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             this.EvaluateBaseValueCore(dp, metadata, ref entry);
             this.IsRequestingExpression = false;
 
@@ -1059,8 +1061,10 @@ namespace System.Windows
         /// </summary>
         public void BringIntoView()
         {
-            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, Rect.Empty);
-            args.RoutedEvent=FrameworkElement.RequestBringIntoViewEvent;
+            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, Rect.Empty)
+            {
+                RoutedEvent = FrameworkElement.RequestBringIntoViewEvent
+            };
             RaiseEvent(args);
         }
 

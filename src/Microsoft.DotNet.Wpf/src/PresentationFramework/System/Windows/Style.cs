@@ -290,10 +290,11 @@ namespace System.Windows
 
                 if( _resources == null )
                 {
-                    _resources = new ResourceDictionary();
-
-                    // A Style ResourceDictionary can be accessed across threads
-                    _resources.CanBeAccessedAcrossThreads = true;
+                    _resources = new ResourceDictionary
+                    {
+                        // A Style ResourceDictionary can be accessed across threads
+                        CanBeAccessedAcrossThreads = true
+                    };
 
                     // If the style has been sealed prior to this the newly
                     // created ResourceDictionary also needs to be sealed
@@ -457,11 +458,13 @@ namespace System.Windows
             else
             {
                 // Store original data
-                PropertyValue propertyValue = new PropertyValue();
-                propertyValue.ValueType = valueType;
-                propertyValue.ChildName = StyleHelper.SelfName;
-                propertyValue.Property = dp;
-                propertyValue.ValueInternal = value;
+                PropertyValue propertyValue = new PropertyValue
+                {
+                    ValueType = valueType,
+                    ChildName = StyleHelper.SelfName,
+                    Property = dp,
+                    ValueInternal = value
+                };
 
                 PropertyValues.Add(propertyValue);
             }

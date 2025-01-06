@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -389,8 +389,10 @@ namespace MS.Internal.AutomationProxies
                         // If there is not an entry for the event for the specified process then create one.
                         if (hookParams == null)
                         {
-                            hookParams = new EventHookParams();
-                            hookParams._process = processId;
+                            hookParams = new EventHookParams
+                            {
+                                _process = processId
+                            };
                             _ahp[evt].Add(processId, hookParams);
                         }
 

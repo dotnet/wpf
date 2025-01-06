@@ -3022,9 +3022,11 @@ Debug.Assert(lineCount == LineCount);
         {
             if (null == _textBlockCache)
             {
-                _textBlockCache = new TextBlockCache();
-                _textBlockCache._lineProperties = GetLineProperties();
-                _textBlockCache._textRunCache = new TextRunCache();
+                _textBlockCache = new TextBlockCache
+                {
+                    _lineProperties = GetLineProperties(),
+                    _textRunCache = new TextRunCache()
+                };
             }
         }
 

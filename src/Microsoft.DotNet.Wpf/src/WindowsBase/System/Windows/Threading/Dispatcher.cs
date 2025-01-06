@@ -1426,8 +1426,10 @@ namespace System.Windows.Threading
             // Turn off processing.
             _disableProcessingCount++;
 
-            DispatcherProcessingDisabled dpd = new DispatcherProcessingDisabled();
-            dpd._dispatcher = this;
+            DispatcherProcessingDisabled dpd = new DispatcherProcessingDisabled
+            {
+                _dispatcher = this
+            };
             return dpd;
         }
 

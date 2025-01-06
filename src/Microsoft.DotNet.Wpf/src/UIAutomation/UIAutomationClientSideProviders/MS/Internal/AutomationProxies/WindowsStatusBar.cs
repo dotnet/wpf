@@ -345,9 +345,10 @@ namespace MS.Internal.AutomationProxies
 
         unsafe static private IntPtr GetChildHwnd(IntPtr hwnd, Rect rc)
         {
-            UnsafeNativeMethods.ENUMCHILDWINDOWFROMRECT info = new UnsafeNativeMethods.ENUMCHILDWINDOWFROMRECT();
-
-            info.hwnd = IntPtr.Zero;
+            UnsafeNativeMethods.ENUMCHILDWINDOWFROMRECT info = new UnsafeNativeMethods.ENUMCHILDWINDOWFROMRECT
+            {
+                hwnd = IntPtr.Zero
+            };
             info.rc.left = (int)rc.Left;
             info.rc.top = (int)rc.Top;
             info.rc.right = (int)rc.Right;

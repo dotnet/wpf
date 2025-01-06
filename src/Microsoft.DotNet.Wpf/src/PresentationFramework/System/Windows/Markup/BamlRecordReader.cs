@@ -2365,9 +2365,11 @@ namespace System.Windows.Markup
                 BamlAttributeInfoRecord attribInfo = MapTable.GetAttributeInfoFromId(memberId);
                 if (attribInfo != null)
                 {
-                    StaticExtension se = new StaticExtension();
-                    se.MemberType = MapTable.GetTypeFromId(attribInfo.OwnerTypeId);
-                    se.Member = attribInfo.Name;
+                    StaticExtension se = new StaticExtension
+                    {
+                        MemberType = MapTable.GetTypeFromId(attribInfo.OwnerTypeId),
+                        Member = attribInfo.Name
+                    };
                     valueObject = se.ProvideValue(null);
                 }
             }
@@ -3133,8 +3135,10 @@ namespace System.Windows.Markup
                 // arrays are a little different than other collections, because we wrap them in an array extension.
                 // Here we create an array extension and assign the element type based on the property.
 
-                ArrayExtension arrayExt = new ArrayExtension();
-                arrayExt.Type = context.ExpectedType.GetElementType();
+                ArrayExtension arrayExt = new ArrayExtension
+                {
+                    Type = context.ExpectedType.GetElementType()
+                };
                 holder.Collection = arrayExt;
             }
             else if (holder.DefaultCollection != null)

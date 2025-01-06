@@ -2335,9 +2335,8 @@ namespace System.Windows.Controls
             bool ok;
 
             // Ensure value is double
-            if (value is double)
+            if (value is double checkValue)
             {
-                double checkValue = (double)value;
 
                 // Check if double is within an assumed range
                 if ((double.IsNaN(checkValue)) ||

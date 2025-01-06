@@ -1032,8 +1032,7 @@ namespace System.Windows.Media
             // NOTE:Disabling this API for now
             
             _currentDrawingGroup.BitmapEffect = effect;
-            _currentDrawingGroup.BitmapEffectInput = (effectInput != null) ?
-                                                        effectInput : new BitmapEffectInput();
+            _currentDrawingGroup.BitmapEffectInput = effectInput ?? new BitmapEffectInput();
 }
 
         /// <summary>

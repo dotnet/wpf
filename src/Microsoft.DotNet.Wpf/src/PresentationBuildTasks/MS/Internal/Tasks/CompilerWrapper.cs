@@ -255,9 +255,7 @@ namespace MS.Internal
             {
                 for (int i = 0; i < _mc.ReferenceAssemblyList.Count; i++)
                 {
-                    ReferenceAssembly asmReference = _mc.ReferenceAssemblyList[i] as ReferenceAssembly;
-
-                    if (asmReference != null)
+                    if (_mc.ReferenceAssemblyList[i] is ReferenceAssembly asmReference)
                     {
                         if (string.Equals(asmReference.AssemblyName, assemblyName, StringComparison.OrdinalIgnoreCase))
                         {

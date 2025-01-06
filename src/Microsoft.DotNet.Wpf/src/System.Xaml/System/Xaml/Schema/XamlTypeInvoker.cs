@@ -14,7 +14,6 @@ namespace System.Xaml.Schema
     public class XamlTypeInvoker
     {
         private static XamlTypeInvoker s_Unknown;
-        private static object[] s_emptyObjectArray = Array.Empty<object>();
 
         private Dictionary<XamlType, MethodInfo> _addMethods;
         internal MethodInfo EnumeratorMethod { get; set; }
@@ -23,10 +22,6 @@ namespace System.Xaml.Schema
         private Action<object> _constructorDelegate;
 
         private ThreeValuedBool _isPublic;
-
-        // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        private ThreeValuedBool _isInSystemXaml;
-        // ^^^^^----- End of unused members.  -----^^^^^
 
         protected XamlTypeInvoker()
         {
@@ -41,29 +36,29 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_Unknown == null)
+                if (s_Unknown is null)
                 {
                     s_Unknown = new XamlTypeInvoker();
                 }
+
                 return s_Unknown;
             }
         }
 
         public EventHandler<XamlSetMarkupExtensionEventArgs> SetMarkupExtensionHandler
         {
-            get { return _xamlType != null ? _xamlType.SetMarkupExtensionHandler : null; }
+            get { return _xamlType is not null ? _xamlType.SetMarkupExtensionHandler : null; }
         }
 
         public EventHandler<XamlSetTypeConverterEventArgs> SetTypeConverterHandler
         {
-            get { return _xamlType != null ? _xamlType.SetTypeConverterHandler : null; }
+            get { return _xamlType is not null ? _xamlType.SetTypeConverterHandler : null; }
         }
 
         public virtual void AddToCollection(object instance, object item)
         {
             ArgumentNullException.ThrowIfNull(instance);
-            IList list = instance as IList;
-            if (list != null)
+            if (instance is IList list)
             {
                 list.Add(item);
                 return;
@@ -74,8 +69,9 @@ namespace System.Xaml.Schema
             {
                 throw new NotSupportedException(SR.OnlySupportedOnCollections);
             }
+
             XamlType itemType;
-            if (item != null)
+            if (item is not null)
             {
                 itemType = _xamlType.SchemaContext.GetXamlType(item.GetType());
             }
@@ -83,19 +79,20 @@ namespace System.Xaml.Schema
             {
                 itemType = _xamlType.ItemType;
             }
+
             MethodInfo addMethod = GetAddMethod(itemType);
-            if (addMethod == null)
+            if (addMethod is null)
             {
                 throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
+
             addMethod.Invoke(instance, new object[] { item });
         }
 
         public virtual void AddToDictionary(object instance, object key, object item)
         {
             ArgumentNullException.ThrowIfNull(instance);
-            IDictionary dictionary = instance as IDictionary;
-            if (dictionary != null)
+            if (instance is IDictionary dictionary)
             {
                 dictionary.Add(key, item);
                 return;
@@ -106,8 +103,9 @@ namespace System.Xaml.Schema
             {
                 throw new NotSupportedException(SR.OnlySupportedOnDictionaries);
             }
+
             XamlType itemType;
-            if (item != null)
+            if (item is not null)
             {
                 itemType = _xamlType.SchemaContext.GetXamlType(item.GetType());
             }
@@ -115,32 +113,35 @@ namespace System.Xaml.Schema
             {
                 itemType = _xamlType.ItemType;
             }
+
             MethodInfo addMethod = GetAddMethod(itemType);
-            if (addMethod == null)
+            if (addMethod is null)
             {
                 throw new XamlSchemaException(SR.Format(SR.NoAddMethodFound, _xamlType, itemType));
             }
+
             addMethod.Invoke(instance, new object[] { key, item });
         }
 
         public virtual object CreateInstance(object[] arguments)
         {
             ThrowIfUnknown();
-            if (!_xamlType.UnderlyingType.IsValueType && (arguments == null || arguments.Length == 0))
+            if (!_xamlType.UnderlyingType.IsValueType && (arguments is null || arguments.Length == 0))
             {
                 object result = DefaultCtorXamlActivator.CreateInstance(this);
-                if (result != null)
+                if (result is not null)
                 {
                     return result;
                 }
             }
+
             return Activator.CreateInstance(_xamlType.UnderlyingType, arguments);
         }
 
         public virtual MethodInfo GetAddMethod(XamlType contentType)
         {
             ArgumentNullException.ThrowIfNull(contentType);
-            if (IsUnknown || _xamlType.ItemType == null)
+            if (IsUnknown || _xamlType.ItemType is null)
             {
                 return null;
             }
@@ -160,7 +161,7 @@ namespace System.Xaml.Schema
 
             // Populate the dictionary of all available Add methods
             MethodInfo addMethod;
-            if (_addMethods == null)
+            if (_addMethods is null)
             {
                 Dictionary<XamlType, MethodInfo> addMethods = new Dictionary<XamlType, MethodInfo>();
                 addMethods.Add(_xamlType.ItemType, _xamlType.AddMethod);
@@ -168,13 +169,14 @@ namespace System.Xaml.Schema
                 {
                     addMethod = CollectionReflector.GetAddMethod(
                         _xamlType.UnderlyingType, type.UnderlyingType);
-                    if (addMethod != null)
+                    if (addMethod is not null)
                     {
                         // Use TryAdd as AllowedContentTypes can contain
                         // duplicate types.
                         addMethods.TryAdd(type, addMethod);
                     }
                 }
+
                 _addMethods = addMethods;
             }
 
@@ -209,35 +211,20 @@ namespace System.Xaml.Schema
         public virtual IEnumerator GetItems(object instance)
         {
             ArgumentNullException.ThrowIfNull(instance);
-            IEnumerable enumerable = instance as IEnumerable;
-            if (enumerable != null)
+            if (instance is IEnumerable enumerable)
             {
                 return enumerable.GetEnumerator();
             }
+
             ThrowIfUnknown();
             if (!_xamlType.IsCollection && !_xamlType.IsDictionary)
             {
                 throw new NotSupportedException(SR.OnlySupportedOnCollectionsAndDictionaries);
             }
-            MethodInfo getEnumMethod = GetEnumeratorMethod();
-            return (IEnumerator)getEnumMethod.Invoke(instance, s_emptyObjectArray);
-        }
 
-        // vvvvv---- Unused members.  Servicing policy is to retain these anyway.  -----vvvvv
-        private bool IsInSystemXaml
-        {
-            get
-            {
-                if (_isInSystemXaml == ThreeValuedBool.NotSet)
-                {
-                    Type type = _xamlType.UnderlyingType.UnderlyingSystemType;
-                    bool result = SafeReflectionInvoker.IsInSystemXaml(type);
-                    _isInSystemXaml = result ? ThreeValuedBool.True : ThreeValuedBool.False;
-                }
-                return _isInSystemXaml == ThreeValuedBool.True;
-            }
+            MethodInfo getEnumMethod = GetEnumeratorMethod();
+            return (IEnumerator)getEnumMethod.Invoke(instance, Array.Empty<object>());
         }
-        // ^^^^^----- End of unused members.  -----^^^^^
 
         private bool IsPublic
         {
@@ -248,13 +235,14 @@ namespace System.Xaml.Schema
                     Type type = _xamlType.UnderlyingType.UnderlyingSystemType;
                     _isPublic = type.IsVisible ? ThreeValuedBool.True : ThreeValuedBool.False;
                 }
+
                 return _isPublic == ThreeValuedBool.True;
             }
         }
 
         private bool IsUnknown
         {
-            get { return _xamlType == null || _xamlType.UnderlyingType == null; }
+            get { return _xamlType is null || _xamlType.UnderlyingType is null; }
         }
 
         private void ThrowIfUnknown()
@@ -269,8 +257,7 @@ namespace System.Xaml.Schema
         {
             private static ThreeValuedBool s_securityFailureWithCtorDelegate;
             private static ConstructorInfo s_actionCtor =
-                typeof(Action<object>).GetConstructor(new Type[] { typeof(Object), typeof(IntPtr) });
-
+                typeof(Action<object>).GetConstructor(new Type[] { typeof(object), typeof(IntPtr) });
 
             public static object CreateInstance(XamlTypeInvoker type)
             {
@@ -278,6 +265,7 @@ namespace System.Xaml.Schema
                 {
                     return null;
                 }
+
                 object inst = CallCtorDelegate(type);
                 return inst;
             }
@@ -297,19 +285,22 @@ namespace System.Xaml.Schema
             // returns true if a delegate is available, false if not
             private static bool EnsureConstructorDelegate(XamlTypeInvoker type)
             {
-                if (type._constructorDelegate != null)
+                if (type._constructorDelegate is not null)
                 {
                     return true;
                 }
+
                 if (!type.IsPublic)
                 {
                     return false;
                 }
+
                 if (s_securityFailureWithCtorDelegate == ThreeValuedBool.NotSet)
                 {
                     s_securityFailureWithCtorDelegate =
                         ThreeValuedBool.False;
                 }
+
                 if (s_securityFailureWithCtorDelegate == ThreeValuedBool.True)
                 {
                     return false;
@@ -318,11 +309,12 @@ namespace System.Xaml.Schema
                 Type underlyingType = type._xamlType.UnderlyingType.UnderlyingSystemType;
                 // Look up public ctors only, for equivalence with Activator.CreateInstance
                 ConstructorInfo tConstInfo = underlyingType.GetConstructor(Type.EmptyTypes);
-                if (tConstInfo == null)
+                if (tConstInfo is null)
                 {
                     // Throwing MissingMethodException for equivalence with Activator.CreateInstance
                     throw new MissingMethodException(SR.Format(SR.NoDefaultConstructor, underlyingType.FullName));
                 }
+
                 if ((tConstInfo.IsSecurityCritical && !tConstInfo.IsSecuritySafeCritical) ||
                     (tConstInfo.Attributes & MethodAttributes.HasSecurity) == MethodAttributes.HasSecurity ||
                     (underlyingType.Attributes & TypeAttributes.HasSecurity) == TypeAttributes.HasSecurity)
@@ -332,6 +324,7 @@ namespace System.Xaml.Schema
                     type._isPublic = ThreeValuedBool.False;
                     return false;
                 }
+
                 IntPtr constPtr = tConstInfo.MethodHandle.GetFunctionPointer();
                 // This requires Reflection Permission
                 Action<object> ctorDelegate = ctorDelegate =

@@ -2249,7 +2249,6 @@ namespace System.Windows.Navigation
         private void HandleNavigated(object navState, bool navigatedToNewContent)
         {
             Debug.Assert(_navStatus == NavigationStatus.Navigated);
-            BrowserInteropHelper.IsInitialViewerNavigation = false;
 
             NavigateInfo navInfo = navState as NavigateInfo;
 
@@ -2961,7 +2960,7 @@ namespace System.Windows.Navigation
                         // to detect XAML, so PresentationHost may get invoked, but our
                         // WpfWebRequestHelper.GetContentType() fails to do the same inference. In particular,
                         // it appears that UrlMon looks at the Content-Disposition HTTP header, but we don't.
-                        if (!IsTopLevelContainer || BrowserInteropHelper.IsInitialViewerNavigation)
+                        if (!IsTopLevelContainer)
                         {
                             throw new InvalidOperationException(SR.FailedToConvertResource);
                         }

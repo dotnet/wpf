@@ -1384,7 +1384,7 @@ namespace Microsoft.Windows.Controls
                     if (activatingEventArgs.KeyTipVisibility == Visibility.Visible)
                     {
                         // Create the keytip and add it as the adorner.
-                        UIElement adornedElement = RibbonHelper.GetContainingUIElement(activatingEventArgs.PlacementTarget == null ? element : activatingEventArgs.PlacementTarget);
+                        UIElement adornedElement = RibbonHelper.GetContainingUIElement(activatingEventArgs.PlacementTarget ?? element);
                         if (adornedElement != null && adornedElement.IsVisible)
                         {
                             bool isScrollAdornerLayer = false;

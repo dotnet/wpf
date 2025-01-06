@@ -35,7 +35,7 @@ namespace System.Windows.Interop
                 //Console.WriteLine("Disposing");
 
                 // Cleanup the mouse tracking.
-                StopTracking(_source.CriticalHandle);
+                StopTracking(_source.Handle);
 
                 // If we have capture, release it.
                 try
@@ -76,7 +76,7 @@ namespace System.Windows.Interop
         {
             if(_active)
             {
-                StopTracking(_source.CriticalHandle);
+                StopTracking(_source.Handle);
 
                 _active = false;
             }
@@ -121,9 +121,9 @@ namespace System.Windows.Interop
 
             try
             {
-                SafeNativeMethods.SetCapture(new HandleRef(this, _source.CriticalHandle));
+                SafeNativeMethods.SetCapture(new HandleRef(this, _source.Handle));
                 IntPtr capture = SafeNativeMethods.GetCapture();
-                if (capture != _source.CriticalHandle)
+                if (capture != _source.Handle)
                 {
                     success = false;
                 }
@@ -151,7 +151,7 @@ namespace System.Windows.Interop
                 {
                     try
                     {
-                        SafeNativeMethods.ScreenToClient(new HandleRef(this, _source.CriticalHandle), ref ptCursor);
+                        SafeNativeMethods.ScreenToClient(new HandleRef(this, _source.Handle), ref ptCursor);
                     }
                     catch(System.ComponentModel.Win32Exception)
                     {
@@ -162,7 +162,7 @@ namespace System.Windows.Interop
 
                     if(success)
                     {
-                        ReportInput(_source.CriticalHandle,
+                        ReportInput(_source.Handle,
                                     InputMode.Foreground,
                                     _msgTime,
                                     RawMouseActions.AbsoluteMove,
@@ -670,7 +670,7 @@ namespace System.Windows.Interop
                     try
                     {
                         IntPtr hwndCapture = SafeNativeMethods.GetCapture();
-                        IntPtr hwndCurrent = _source.CriticalHandle;
+                        IntPtr hwndCurrent = _source.Handle;
                         if (hwndCapture != hwndCurrent)
                         {
                             PossiblyDeactivate(hwndCapture, false);
@@ -724,7 +724,7 @@ namespace System.Windows.Interop
                     // If someone else is taking capture, we may need
                     // to deactivate the mouse input stream too.
 
-                    if(lParam != _source.CriticalHandle) // Ignore odd messages that claim we are losing capture to ourselves.
+                    if(lParam != _source.Handle) // Ignore odd messages that claim we are losing capture to ourselves.
                     {
                         // MITIGATION_SETCURSOR
                         _haveCapture = false;
@@ -935,7 +935,7 @@ namespace System.Windows.Interop
                     System.Diagnostics.Debug.WriteLine("HwndMouseInputProvider: WindowFromPoint failed!");
                 }
 
-                if (!stillActiveIfOverSelf && hwndToCheck == _source.CriticalHandle)
+                if (!stillActiveIfOverSelf && hwndToCheck == _source.Handle)
                 {
                     hwndToCheck = IntPtr.Zero;
                 }
@@ -977,7 +977,7 @@ namespace System.Windows.Interop
             // Only deactivate the mouse input stream if needed.
             if(deactivate)
             {
-                ReportInput(_source.CriticalHandle,
+                ReportInput(_source.Handle,
                             InputMode.Foreground,
                             _msgTime,
                             RawMouseActions.Deactivate,
@@ -1385,8 +1385,8 @@ namespace System.Windows.Interop
                 {
                     try
                     {
-                        //This has a SUC on it and accesses CriticalHandle
-                        int windowStyle = SafeNativeMethods.GetWindowStyle(new HandleRef(this, _source.CriticalHandle), true);
+                        //This has a SUC on it and accesses Handle
+                        int windowStyle = SafeNativeMethods.GetWindowStyle(new HandleRef(this, _source.Handle), true);
 
                         if((windowStyle & NativeMethods.WS_EX_LAYOUTRTL) == NativeMethods.WS_EX_LAYOUTRTL)
                         {

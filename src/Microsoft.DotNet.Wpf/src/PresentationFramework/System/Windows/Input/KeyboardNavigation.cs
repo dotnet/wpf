@@ -1078,7 +1078,7 @@ namespace System.Windows.Input
                 if (!traversed && firstElement != nextTab)
                 {
                     // Navigate to next element in the tree
-                    traversed = Navigate(nextTab, request, modifierKeys, firstElement == null ? nextTab : firstElement);
+                    traversed = Navigate(nextTab, request, modifierKeys, firstElement ?? nextTab);
                 }
 
                 return traversed;
@@ -3099,7 +3099,7 @@ namespace System.Windows.Input
                     }
                 }
             }
-            return result != null ? result : partialResult;
+            return result ?? partialResult;
         }
 
         /// <summary>

@@ -631,9 +631,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             for (int i = 0; i < root.ChildNodes.Count; i++)
             {
-                XmlElement nodeGroup = root.ChildNodes[i] as XmlElement;
-
-                if (nodeGroup != null && string.Equals(nodeGroup.Name, groupName, StringComparison.OrdinalIgnoreCase))
+                if (root.ChildNodes[i] is XmlElement nodeGroup && string.Equals(nodeGroup.Name, groupName, StringComparison.OrdinalIgnoreCase))
                 {
                     //
                     // This is ItemGroup element.
@@ -644,9 +642,7 @@ namespace Microsoft.Build.Tasks.Windows
 
                         for (int j = 0; j < nodeGroup.ChildNodes.Count; j++)
                         {
-                            XmlElement nodeItem = nodeGroup.ChildNodes[j] as XmlElement;
-
-                            if (nodeItem != null && string.Equals(nodeItem.Name, sItemName, StringComparison.OrdinalIgnoreCase))
+                            if (nodeGroup.ChildNodes[j] is XmlElement nodeItem && string.Equals(nodeItem.Name, sItemName, StringComparison.OrdinalIgnoreCase))
                             {
                                 // This is the item that need to remove.
                                 // Add it into the temporary array list.
@@ -663,13 +659,11 @@ namespace Microsoft.Build.Tasks.Windows
                         {
                             foreach (object node in itemToRemove)
                             {
-                                XmlElement item = node as XmlElement;
-
                                 //
                                 // Remove this item from its parent node.
                                 // the parent node should be nodeGroup.
                                 //
-                                if (item != null)
+                                if (node is XmlElement item)
                                 {
                                     nodeGroup.RemoveChild(item);
                                 }

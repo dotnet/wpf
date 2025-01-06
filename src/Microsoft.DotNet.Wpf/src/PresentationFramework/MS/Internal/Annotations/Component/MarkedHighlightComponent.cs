@@ -54,7 +54,7 @@ namespace MS.Internal.Annotations.Component
         {
             ArgumentNullException.ThrowIfNull(type);
 
-            _DPHost = host == null ? this : host;
+            _DPHost = host ?? this;
             ClipToBounds = false;
 
             //create anchor highlight. The second parameter controls

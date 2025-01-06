@@ -398,9 +398,7 @@ namespace System.Windows.Media
                     data.hTransform = hTransform;
                     data.FillRule = FillRule;
 
-                    byte[] pathDataToMarshal = _data == null ?
-                        Geometry.GetEmptyPathGeometryData().SerializedData :
-                        _data;
+                    byte[] pathDataToMarshal = _data ?? GetEmptyPathGeometryData().SerializedData;
 
                     unsafe
                     {

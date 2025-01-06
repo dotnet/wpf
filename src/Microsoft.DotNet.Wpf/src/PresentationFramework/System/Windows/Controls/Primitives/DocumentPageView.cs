@@ -103,7 +103,7 @@ namespace System.Windows.Controls.Primitives
         /// </summary>
         public DocumentPage DocumentPage
         {
-            get { return (_documentPage == null) ? DocumentPage.Missing : _documentPage; }
+            get { return _documentPage ?? DocumentPage.Missing; }
         }
 
         /// <summary>

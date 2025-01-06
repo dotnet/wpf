@@ -635,8 +635,7 @@ namespace System.Windows
         {
             get
             {
-                BaseValueWeakReference wr = _baseValue as BaseValueWeakReference;
-                return (wr != null) ? wr.Target : _baseValue;
+                return (_baseValue is BaseValueWeakReference wr) ? wr.Target : _baseValue;
             }
             set { _baseValue = value; }
         }

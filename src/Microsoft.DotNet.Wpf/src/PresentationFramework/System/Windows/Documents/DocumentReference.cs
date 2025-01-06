@@ -65,7 +65,7 @@ namespace System.Windows.Documents
         /// <returns>The document tree</returns>
         public FixedDocument GetDocument(bool forceReload)
         {
-            DocumentsTrace.FixedDocumentSequence.IDF.Trace($"DocumentReference.GetDocument ({(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}, {forceReload})");
+            DocumentsTrace.FixedDocumentSequence.IDF.Trace($"DocumentReference.GetDocument ({(Source ?? new Uri("", UriKind.RelativeOrAbsolute))}, {forceReload})");
              VerifyAccess();
 
             FixedDocument idp = null;

@@ -3814,9 +3814,8 @@ namespace System.Windows.Markup
 
             // Check if we have a Nullable type.  If so and the object being set is
             // not a Nullable or an expression, then attempt a conversion.
-            if (memberInfo is PropertyInfo)
+            if (memberInfo is PropertyInfo propertyInfo)
             {
-                PropertyInfo propertyInfo = (PropertyInfo)memberInfo;
                 value = OptionallyMakeNullable(propertyInfo.PropertyType, value, propertyInfo.Name);
 
                 propertyInfo.SetValue(parentObject, value, BindingFlags.Default, null, null

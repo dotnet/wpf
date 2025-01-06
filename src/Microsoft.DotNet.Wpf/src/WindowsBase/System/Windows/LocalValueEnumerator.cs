@@ -31,10 +31,8 @@ namespace System.Windows
         /// </summary>
         public override bool Equals(object obj)
         {
-            if(obj is LocalValueEnumerator)
+            if (obj is LocalValueEnumerator other)
             {
-                LocalValueEnumerator other = (LocalValueEnumerator) obj;
-
                 return (_count == other._count &&
                         _index == other._index &&
                         _snapshot == other._snapshot);

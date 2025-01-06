@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -382,9 +382,8 @@ namespace System.Windows.Automation.Peers
                     if (childRow == row && childColumn == column)
                     {
                         object dataContext = (child as FrameworkElement).DataContext;
-                        if (dataContext is DateTime)
+                        if (dataContext is DateTime date)
                         {
-                            DateTime date = (DateTime)dataContext;
                             AutomationPeer peer = GetOrCreateDateTimeAutomationPeer(date, OwningCalendar.DisplayMode);
                             return ProviderFromPeer(peer);
                         }

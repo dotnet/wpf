@@ -1164,9 +1164,8 @@ namespace System.Windows.Controls.Primitives
                     if (child != null)
                     {
                         // Special case UIElements already connected to visual tree.
-                        if (args.TargetObject is UIElement)
+                        if (args.TargetObject is UIElement targetObject)
                         {
-                            UIElement targetObject = (UIElement)args.TargetObject;
                             if (VisualTreeHelper.IsAncestorOf(this, targetObject))
                             {
                                 targetRect = args.TargetRect;

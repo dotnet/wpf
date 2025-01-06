@@ -918,8 +918,7 @@ namespace MS.Internal.Security.RightsManagement
             else
             {
                 object keyValue = key.GetValue(null); // this should get the default value
-                string stringValue = keyValue as string;
-                if (stringValue != null)
+                if (keyValue is string stringValue)
                 {
                     return new Uri(stringValue);
                 }

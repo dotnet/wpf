@@ -1266,9 +1266,8 @@ namespace System.Windows.Controls
                 mode = (FlowDocumentReaderViewingMode)value;
                 success = true;
             }
-            else if (value is String)
+            else if (value is String str)
             {
-                String str = (String)value;
                 if (str == FlowDocumentReaderViewingMode.Page.ToString())
                 {
                     mode = FlowDocumentReaderViewingMode.Page;

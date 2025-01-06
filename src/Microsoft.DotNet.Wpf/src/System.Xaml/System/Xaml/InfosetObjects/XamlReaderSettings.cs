@@ -24,7 +24,7 @@ namespace System.Xaml
 
         public XamlReaderSettings(XamlReaderSettings settings) : this()
         {
-            if (settings != null)
+            if (settings is not null)
             {
                 AllowProtectedMembersOnRoot = settings.AllowProtectedMembersOnRoot;
                 ProvideLineInfo = settings.ProvideLineInfo;
@@ -37,7 +37,7 @@ namespace System.Xaml
 
         private void InitializeProvideLineInfo()
         {
-            //By default, _provideLineInfo is true if the currently executing process is running in debug mode
+            // By default, _provideLineInfo is true if the currently executing process is running in debug mode
             if (Debugger.IsAttached)
             {
                 ProvideLineInfo = true;

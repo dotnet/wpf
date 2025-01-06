@@ -819,7 +819,7 @@ namespace System.Windows.Markup
                 ClrNamespace = string.Empty,
                 AssemblyName = string.Empty,
                 Prefix = "xmlns",
-                LocalName = bamlRecord.Prefix == null ? string.Empty : bamlRecord.Prefix,
+                LocalName = bamlRecord.Prefix ?? string.Empty,
                 Name = string.IsNullOrEmpty(bamlRecord.Prefix) ?
                                           "xmlns" :
                                           $"xmlns:{bamlRecord.Prefix}",
@@ -1043,7 +1043,7 @@ namespace System.Windows.Markup
             {
                 Type declaringType = null;
                 _propertyDP = _bamlRecordReader.GetCustomDependencyPropertyValue(bamlRecord, out declaringType);
-                declaringType = declaringType == null ? _propertyDP.OwnerType : declaringType;
+                declaringType = declaringType ?? _propertyDP.OwnerType;
                 info.Value = $"{declaringType.Name}.{_propertyDP.Name}";
 
                 string xmlns = _parserContext.XamlTypeMapper.GetXmlNamespace(declaringType.Namespace,

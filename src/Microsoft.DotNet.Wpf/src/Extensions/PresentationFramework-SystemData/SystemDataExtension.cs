@@ -196,9 +196,8 @@ namespace MS.Internal
                 {
                     column = table.Columns[columnName];
                 }
-                else if (arg is int)
+                else if (arg is int index)
                 {
-                    int index = (int)arg;
                     if (0 <= index && index < table.Columns.Count)
                     {
                         column = table.Columns[index];

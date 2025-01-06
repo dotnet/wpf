@@ -650,9 +650,9 @@ namespace System.Windows.Input
             // PreProcessedInputEventArgs and cast it to NotifyInputEventArgs
             // or ProcessInputEventArgs because a malicious user could upcast
             // the object and call inappropriate methods.
-            NotifyInputEventArgs notifyInputEventArgs = (_notifyInputEventArgs != null) ? _notifyInputEventArgs : new NotifyInputEventArgs();
-            ProcessInputEventArgs processInputEventArgs = (_processInputEventArgs != null) ? _processInputEventArgs : new ProcessInputEventArgs();
-            PreProcessInputEventArgs preProcessInputEventArgs = (_preProcessInputEventArgs != null) ? _preProcessInputEventArgs : new PreProcessInputEventArgs();
+            NotifyInputEventArgs notifyInputEventArgs = _notifyInputEventArgs ?? new NotifyInputEventArgs();
+            ProcessInputEventArgs processInputEventArgs = _processInputEventArgs ?? new ProcessInputEventArgs();
+            PreProcessInputEventArgs preProcessInputEventArgs = _preProcessInputEventArgs ?? new PreProcessInputEventArgs();
             _notifyInputEventArgs = null;
             _processInputEventArgs = null;
             _preProcessInputEventArgs = null;

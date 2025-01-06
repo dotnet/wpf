@@ -326,7 +326,7 @@ namespace MS.Internal.IO.Packaging
             #region Internal Constructors
 
             internal ValidatedPartUri(string partUriString)
-                : this(partUriString, false /*isNormalized*/, true /*computeIsRelationship*/, false /*dummy value as we will compute it later*/)
+                : this(partUriString, isNormalized: false, computeIsRelationship: true, false /*dummy value as we will compute it later*/)
             {               
             }
                        
@@ -335,7 +335,7 @@ namespace MS.Internal.IO.Packaging
             //This will optimize the code and we will not have to parse the Uri to find out
             //if it is a relationship part uri
             internal ValidatedPartUri(string partUriString, bool isRelationshipUri)
-                : this(partUriString, false /*isNormalized*/, false /*computeIsRelationship*/, isRelationshipUri)
+                : this(partUriString, isNormalized: false, computeIsRelationship: false, isRelationshipUri)
             {                
             }
 
@@ -539,8 +539,8 @@ namespace MS.Internal.IO.Packaging
                     return this;
                 else
                     return new ValidatedPartUri(_normalizedPartUriString, 
-                                                true /*isNormalized*/, 
-                                                false /*computeIsRelationship*/, 
+                                                isNormalized: true, 
+                                                computeIsRelationship: false, 
                                                 IsRelationshipPartUri);
             }
 
@@ -575,9 +575,9 @@ namespace MS.Internal.IO.Packaging
             //need to use the private constructor to initialize this particular partUri as we need this in the 
             //IsRelationshipPartUri, that is called from the constructor.
             private static readonly Uri   _containerRelationshipNormalizedPartUri = new ValidatedPartUri("/_RELS/.RELS", 
-                                                                                                         true /*isnormalized*/, 
-                                                                                                         false /*computeIsRelationship*/,
-                                                                                                         true /*IsRelationship*/);
+                                                                                                         isNormalized: true,
+                                                                                                         computeIsRelationship: false,
+                                                                                                         isRelationshipPartUri: true);
 
             private static ReadOnlySpan<char> ForwardSlashSeparator => ['/'];
 

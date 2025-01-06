@@ -112,10 +112,11 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (s_UnknownReflector == null)
+                if (s_UnknownReflector is null)
                 {
                     s_UnknownReflector = new TypeReflector();
                 }
+
                 return s_UnknownReflector;
             }
         }
@@ -129,11 +130,13 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             if (visibility == TypeVisibility.Internal &&
                 !schemaContext.AreInternalsVisibleTo(type.Assembly, accessingAssembly))
             {
                 return false;
             }
+
             if (type.IsGenericType)
             {
                 foreach (Type typeArg in type.GetGenericArguments())
@@ -148,6 +151,7 @@ namespace System.Xaml.Schema
             {
                 return IsVisibleTo(type.GetElementType(), accessingAssembly, schemaContext);
             }
+
             return true;
         }
 
@@ -171,11 +175,12 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (_attachableMemberCache == null)
+                if (_attachableMemberCache is null)
                 {
                     Interlocked.CompareExchange(ref _attachableMemberCache,
                         new ThreadSafeDictionary<string, XamlMember>(), null);
                 }
+
                 return _attachableMemberCache;
             }
         }
@@ -242,11 +247,12 @@ namespace System.Xaml.Schema
         {
             get
             {
-                if (_nonAttachableMemberCache == null)
+                if (_nonAttachableMemberCache is null)
                 {
                     Interlocked.CompareExchange(ref _nonAttachableMemberCache,
                         new ThreadSafeDictionary<string, XamlMember>(), null);
                 }
+
                 return _nonAttachableMemberCache;
             }
         }
@@ -290,7 +296,7 @@ namespace System.Xaml.Schema
         internal bool TryGetPositionalParameters(int paramCount, out IList<XamlType> result)
         {
             result = null;
-            if (_positionalParameterTypes == null)
+            if (_positionalParameterTypes is null)
             {
                 if (IsUnknown)
                 {
@@ -300,12 +306,13 @@ namespace System.Xaml.Schema
                 Interlocked.CompareExchange(ref _positionalParameterTypes,
                     new ThreadSafeDictionary<int, IList<XamlType>>(), null);
             }
+
             return _positionalParameterTypes.TryGetValue(paramCount, out result);
         }
 
         internal IList<XamlType> TryAddPositionalParameters(int paramCount, IList<XamlType> paramList)
         {
-            Debug.Assert(_positionalParameterTypes != null, "TryGetPositionalParameters should have been called first");
+            Debug.Assert(_positionalParameterTypes is not null, "TryGetPositionalParameters should have been called first");
             return _positionalParameterTypes.TryAdd(paramCount, paramList);
         }
 
@@ -316,6 +323,7 @@ namespace System.Xaml.Schema
             {
                 return true;
             }
+
             bool result = false;
             if (directive == XamlLanguage.Key)
             {
@@ -337,10 +345,11 @@ namespace System.Xaml.Schema
                 result = _xmlLangProperty.IsSet;
                 member = _xmlLangProperty.Value;
             }
-            else if (_aliasedProperties != null)
+            else if (_aliasedProperties is not null)
             {
                 result = _aliasedProperties.TryGetValue(directive, out member);
             }
+
             return result;
         }
 
@@ -365,11 +374,12 @@ namespace System.Xaml.Schema
             }
             else
             {
-                if (_aliasedProperties == null)
+                if (_aliasedProperties is null)
                 {
                     var dict = XamlSchemaContext.CreateDictionary<XamlDirective, XamlMember>();
                     Interlocked.CompareExchange(ref _aliasedProperties, dict, null);
                 }
+
                 _aliasedProperties.TryAdd(directive, member);
             }
         }
@@ -396,20 +406,20 @@ namespace System.Xaml.Schema
         // But we have the lookup logic here so that we don't need to do reflection in ObjectWriter.
         internal static XamlMember LookupNameScopeProperty(XamlType xamlType)
         {
-            if (xamlType.UnderlyingType == null)
+            if (xamlType.UnderlyingType is null)
             {
                 return null;
             }
+
             // We only check this once, at the root of the doc, and only in ObjectWriter.
             // So it's fine to use live reflection here.
             object obj = GetCustomAttribute(typeof(XAML3.NameScopePropertyAttribute), xamlType.UnderlyingType);
-            XAML3.NameScopePropertyAttribute nspAttr = obj as XAML3.NameScopePropertyAttribute;
-            if (nspAttr != null)
+            if (obj is XAML3.NameScopePropertyAttribute nspAttr)
             {
                 Type ownerType = nspAttr.Type;
                 string propertyName = nspAttr.Name;
                 XamlMember prop;
-                if (ownerType != null)
+                if (ownerType is not null)
                 {
                     XamlType ownerXamlType = xamlType.SchemaContext.GetXamlType(ownerType);
                     prop = ownerXamlType.GetAttachableMember(propertyName);
@@ -418,8 +428,10 @@ namespace System.Xaml.Schema
                 {
                     prop = xamlType.GetMember(propertyName);
                 }
+
                 return prop;
             }
+
             return null;
         }
 
@@ -427,32 +439,34 @@ namespace System.Xaml.Schema
 
         internal PropertyInfo LookupProperty(string name)
         {
-            Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType == null");
+            Debug.Assert(UnderlyingType is not null, "Caller should check for UnderlyingType == null");
             PropertyInfo pi = GetNonIndexerProperty(name);
-            if (pi != null && IsPrivate(pi))
+            if (pi is not null && IsPrivate(pi))
             {
                 pi = null;
             }
+
             return pi;
         }
 
         internal EventInfo LookupEvent(string name)
         {
-            Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType == null");
+            Debug.Assert(UnderlyingType is not null, "Caller should check for UnderlyingType == null");
             // In case of shadowing, Type.GetEvent returns the most derived Event
             EventInfo ei = UnderlyingType.GetEvent(name, AllProperties_BF);
-            if (ei != null && IsPrivate(ei))
+            if (ei is not null && IsPrivate(ei))
             {
                 ei = null;
             }
+
             return ei;
         }
 
         internal void LookupAllMembers(out ICollection<PropertyInfo> newProperties,
             out ICollection<EventInfo> newEvents, out List<XamlMember> knownMembers)
         {
-            Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType == null");
-            Debug.Assert(_nonAttachableMemberCache != null, "Members property should have been invoked before this");
+            Debug.Assert(UnderlyingType is not null, "Caller should check for UnderlyingType == null");
+            Debug.Assert(_nonAttachableMemberCache is not null, "Members property should have been invoked before this");
 
             PropertyInfo[] propList = UnderlyingType.GetProperties(AllProperties_BF);
             EventInfo[] eventList = UnderlyingType.GetEvents(AllProperties_BF);
@@ -464,8 +478,8 @@ namespace System.Xaml.Schema
         // Returns properties that don't yet have corresponding XamlMembers
         internal IList<PropertyInfo> LookupRemainingProperties()
         {
-            Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType == null");
-            Debug.Assert(_nonAttachableMemberCache != null, "Members property should have been invoked before this");
+            Debug.Assert(UnderlyingType is not null, "Caller should check for UnderlyingType == null");
+            Debug.Assert(_nonAttachableMemberCache is not null, "Members property should have been invoked before this");
             PropertyInfo[] propList = UnderlyingType.GetProperties(AllProperties_BF);
             return FilterProperties(propList, null, false);
         }
@@ -480,15 +494,17 @@ namespace System.Xaml.Schema
                 {
                     continue;
                 }
+
                 XamlMember knownMember;
                 if (_nonAttachableMemberCache.TryGetValue(currentProp.Name, out knownMember))
                 {
-                    if (knownMember != null)
+                    if (knownMember is not null)
                     {
-                        if (knownMembers != null)
+                        if (knownMembers is not null)
                         {
                             knownMembers.Add(knownMember);
                         }
+
                         continue;
                     }
                     else if (skipKnownNegatives)
@@ -505,6 +521,7 @@ namespace System.Xaml.Schema
                         // replace less-derived with more-derived prop
                         result[currentProp.Name] = currentProp;
                     }
+
                     // else currentProp is the less-derived one; ignore it
                 }
                 else
@@ -520,6 +537,7 @@ namespace System.Xaml.Schema
             {
                 return null;
             }
+
             List<PropertyInfo> filteredResult = new List<PropertyInfo>(result.Count);
             foreach (PropertyInfo property in result.Values)
             {
@@ -528,6 +546,7 @@ namespace System.Xaml.Schema
                     filteredResult.Add(property);
                 }
             }
+
             return filteredResult;
         }
 
@@ -540,10 +559,11 @@ namespace System.Xaml.Schema
                 XamlMember knownMember;
                 if (_nonAttachableMemberCache.TryGetValue(currentEvent.Name, out knownMember))
                 {
-                    if (knownMember != null)
+                    if (knownMember is not null)
                     {
                         knownMembers.Add(knownMember);
                     }
+
                     continue;
                 }
 
@@ -555,6 +575,7 @@ namespace System.Xaml.Schema
                         // replace less-derived with more-derived event
                         result[currentEvent.Name] = currentEvent;
                     }
+
                     // else currentEvent is the less-derived one; ignore it
                 }
                 else
@@ -570,6 +591,7 @@ namespace System.Xaml.Schema
             {
                 return null;
             }
+
             List<EventInfo> filteredResult = new List<EventInfo>(result.Count);
             foreach (EventInfo evt in result.Values)
             {
@@ -578,6 +600,7 @@ namespace System.Xaml.Schema
                     filteredResult.Add(evt);
                 }
             }
+
             return filteredResult;
         }
 
@@ -590,12 +613,13 @@ namespace System.Xaml.Schema
             {
                 if (pi.GetIndexParameters().Length == 0)
                 {
-                    if (mostDerived == null || mostDerived.DeclaringType.IsAssignableFrom(pi.DeclaringType))
+                    if (mostDerived is null || mostDerived.DeclaringType.IsAssignableFrom(pi.DeclaringType))
                     {
                         mostDerived = pi;
                     }
                 }
             }
+
             return mostDerived;
         }
 
@@ -604,6 +628,7 @@ namespace System.Xaml.Schema
             return IsPrivateOrNull(pi.GetGetMethod(true)) &&
                 IsPrivateOrNull(pi.GetSetMethod(true));
         }
+
         private static bool IsPrivate(EventInfo ei)
         {
             return IsPrivateOrNull(ei.GetAddMethod(true));
@@ -611,7 +636,7 @@ namespace System.Xaml.Schema
 
         private static bool IsPrivateOrNull(MethodInfo mi)
         {
-            return mi == null || mi.IsPrivate;
+            return mi is null || mi.IsPrivate;
         }
 
         #endregion
@@ -624,7 +649,7 @@ namespace System.Xaml.Schema
             List<KeyValuePair<MethodInfo, MethodInfo>> candidates =
                 new List<KeyValuePair<MethodInfo, MethodInfo>>();
 
-            if (setters != null && getters != null)
+            if (setters is not null && getters is not null)
             {
                 foreach (MethodInfo curSetter in setters)
                 {
@@ -653,8 +678,8 @@ namespace System.Xaml.Schema
                 getter = candidates[0].Key;
                 setter = candidates[0].Value;
             }
-            else if (setters == null || setters.Count == 0
-                || (getters != null && getters.Count > 0 && UnderlyingType.IsVisible && getters[0].IsPublic && !setters[0].IsPublic))
+            else if (setters is null || setters.Count == 0
+                || (getters is not null && getters.Count > 0 && UnderlyingType.IsVisible && getters[0].IsPublic && !setters[0].IsPublic))
             {
                 getter = getters[0];
                 setter = null;
@@ -668,7 +693,7 @@ namespace System.Xaml.Schema
 
         private MethodInfo PickAttachableEventAdder(IEnumerable<MethodInfo> adders)
         {
-            if (adders != null)
+            if (adders is not null)
             {
                 // See disambiguation note in PickAttachablePropertyAccessors
                 foreach (MethodInfo adder in adders)
@@ -679,16 +704,17 @@ namespace System.Xaml.Schema
                     }
                 }
             }
+
             return null;
         }
 
         internal bool LookupAttachableProperty(string name, out MethodInfo getter, out MethodInfo setter)
         {
-            Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType == null");
+            Debug.Assert(UnderlyingType is not null, "Caller should check for UnderlyingType == null");
             List<MethodInfo> setters = LookupStaticSetters(name);
             List<MethodInfo> getters = LookupStaticGetters(name);
 
-            if ((setters == null || setters.Count == 0) && (getters == null || getters.Count == 0))
+            if ((setters is null || setters.Count == 0) && (getters is null || getters.Count == 0))
             {
                 getter = null;
                 setter = null;
@@ -701,21 +727,22 @@ namespace System.Xaml.Schema
 
         internal MethodInfo LookupAttachableEvent(string name)
         {
-            Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType == null");
+            Debug.Assert(UnderlyingType is not null, "Caller should check for UnderlyingType == null");
             List<MethodInfo> adders = LookupStaticAdders(name);
-            if (adders == null || adders.Count == 0)
+            if (adders is null || adders.Count == 0)
             {
                 return null;
             }
+
             return PickAttachableEventAdder(adders);
         }
 
         private void LookupAllStaticAccessors(out Dictionary<string, List<MethodInfo>> getters,
             out Dictionary<string, List<MethodInfo>> setters, out Dictionary<string, List<MethodInfo>> adders)
         {
-            getters = new Dictionary<string,List<MethodInfo>>();
-            setters = new Dictionary<string,List<MethodInfo>>();
-            adders = new Dictionary<string,List<MethodInfo>>();
+            getters = new Dictionary<string, List<MethodInfo>>();
+            setters = new Dictionary<string, List<MethodInfo>>();
+            adders = new Dictionary<string, List<MethodInfo>>();
 
             MethodInfo[] allMethods = UnderlyingType.GetMethods(AttachableProperties_BF);
 
@@ -729,7 +756,7 @@ namespace System.Xaml.Schema
             }
         }
 
-        private void LookupAllStaticAccessorsHelper(MethodInfo[] allMethods, Dictionary<string,List<MethodInfo>> getters,
+        private void LookupAllStaticAccessorsHelper(MethodInfo[] allMethods, Dictionary<string, List<MethodInfo>> getters,
             Dictionary<string, List<MethodInfo>> setters, Dictionary<string, List<MethodInfo>> adders, bool isUnderlyingTypePublic)
         {
             foreach (MethodInfo method in allMethods)
@@ -758,7 +785,7 @@ namespace System.Xaml.Schema
             string adderName = KnownStrings.Add + name + KnownStrings.Handler;
             MemberInfo[] adders = UnderlyingType.GetMember(adderName, MemberTypes.Method, AttachableProperties_BF);
             List<MethodInfo> preferredAdders, otherAdders;
-            PrioritizeAccessors(adders, true /*isEvent*/, false /*isGetter*/, out preferredAdders, out otherAdders);
+            PrioritizeAccessors(adders, isEvent: true, isGetter: false, out preferredAdders, out otherAdders);
             return preferredAdders ?? otherAdders;
         }
 
@@ -766,7 +793,7 @@ namespace System.Xaml.Schema
         {
             MemberInfo[] getters = UnderlyingType.GetMember(KnownStrings.Get + name, MemberTypes.Method, AttachableProperties_BF);
             List<MethodInfo> preferredGetters, otherGetters;
-            PrioritizeAccessors(getters, false /*isEvent*/, true /*isGetter*/, out preferredGetters, out otherGetters);
+            PrioritizeAccessors(getters, isEvent: false, isGetter: true, out preferredGetters, out otherGetters);
             return preferredGetters ?? otherGetters;
         }
 
@@ -774,7 +801,7 @@ namespace System.Xaml.Schema
         {
             MemberInfo[] setters = UnderlyingType.GetMember(KnownStrings.Set + name, MemberTypes.Method, AttachableProperties_BF);
             List<MethodInfo> preferredSetters, otherSetters;
-            PrioritizeAccessors(setters, false /*isEvent*/, false /*isGetter*/, out preferredSetters, out otherSetters);
+            PrioritizeAccessors(setters, isEvent: false, isGetter: false, out preferredSetters, out otherSetters);
             return preferredSetters ?? otherSetters;
         }
 
@@ -791,18 +818,20 @@ namespace System.Xaml.Schema
                 {
                     if (accessor.IsPublic && IsAttachablePropertyAccessor(isEvent, isGetter, accessor))
                     {
-                        if (preferredAccessors == null)
+                        if (preferredAccessors is null)
                         {
                             preferredAccessors = new List<MethodInfo>();
                         }
+
                         preferredAccessors.Add(accessor);
                     }
                     else if (!accessor.IsPrivate && IsAttachablePropertyAccessor(isEvent, isGetter, accessor))
                     {
-                        if (otherAccessors == null)
+                        if (otherAccessors is null)
                         {
                             otherAccessors = new List<MethodInfo>();
                         }
+
                         otherAccessors.Add(accessor);
                     }
                 }
@@ -813,10 +842,11 @@ namespace System.Xaml.Schema
                 {
                     if (!accessor.IsPrivate && IsAttachablePropertyAccessor(isEvent, isGetter, accessor))
                     {
-                        if (preferredAccessors == null)
+                        if (preferredAccessors is null)
                         {
                             preferredAccessors = new List<MethodInfo>();
                         }
+
                         preferredAccessors.Add(accessor);
                     }
                 }
@@ -857,6 +887,7 @@ namespace System.Xaml.Schema
                             // which we are adding to the list
                             list.Clear();
                         }
+
                         list.Add(value);
                     }
                     else
@@ -887,10 +918,12 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             if (!IsAttachablePropertyGetter(mi))
             {
                 return false;
             }
+
             name = mi.Name.Substring(KnownStrings.Get.Length);
             return true;
         }
@@ -909,10 +942,12 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             if (!IsAttachablePropertySetter(mi))
             {
                 return false;
             }
+
             name = mi.Name.Substring(KnownStrings.Set.Length);
             return true;
         }
@@ -931,10 +966,12 @@ namespace System.Xaml.Schema
             {
                 return false;
             }
+
             if (!IsAttachableEventAdder(mi))
             {
                 return false;
             }
+
             name = mi.Name.Substring(KnownStrings.Add.Length,
                 mi.Name.Length - KnownStrings.Add.Length - KnownStrings.Handler.Length);
             return true;
@@ -951,8 +988,8 @@ namespace System.Xaml.Schema
         // That is the cleanest way to pass back the information we need without JITting or boxing.
         internal IList<XamlMember> LookupAllAttachableMembers(XamlSchemaContext schemaContext)
         {
-            Debug.Assert(UnderlyingType != null, "Caller should check for UnderlyingType == null");
-            Debug.Assert(_attachableMemberCache != null, "AttachableMembers property should have been invoked before this");
+            Debug.Assert(UnderlyingType is not null, "Caller should check for UnderlyingType == null");
+            Debug.Assert(_attachableMemberCache is not null, "AttachableMembers property should have been invoked before this");
 
             List<XamlMember> result = new List<XamlMember>();
 
@@ -989,7 +1026,8 @@ namespace System.Xaml.Schema
                         member = null;
                     }
                 }
-                if (member != null)
+
+                if (member is not null)
                 {
                     result.Add(member);
                 }
@@ -1003,6 +1041,7 @@ namespace System.Xaml.Schema
                 {
                     member = schemaContext.GetAttachableProperty(name, nameAndGetterList.Value[0], null);
                 }
+
                 result.Add(member);
             }
         }
@@ -1019,7 +1058,8 @@ namespace System.Xaml.Schema
                     MethodInfo adder = PickAttachableEventAdder(nameAndAdderList.Value);
                     member = schemaContext.GetAttachableEvent(name, adder);
                 }
-                if (member != null)
+
+                if (member is not null)
                 {
                     result.Add(member);
                 }
@@ -1055,12 +1095,14 @@ namespace System.Xaml.Schema
             {
                 return null;
             }
+
             if (objs.Length > 1)
             {
                 string message = SR.Format(SR.TooManyAttributesOnType,
                                                     reflectedType.Name, attrType.Name);
                 throw new XamlSchemaException(message);
             }
+
             return objs[0];
         }
 
@@ -1079,8 +1121,10 @@ namespace System.Xaml.Schema
                     // Not public or internal
                     return TypeVisibility.NotVisible;
                 }
+
                 type = type.DeclaringType;
             }
+
             bool outerTypeIsInternal = type.IsNotPublic;
             return (outerTypeIsInternal || nestedTypeIsInternal) ? TypeVisibility.Internal : TypeVisibility.Public;
         }
@@ -1092,7 +1136,7 @@ namespace System.Xaml.Schema
             Public
         }
 
-        internal class ThreadSafeDictionary<K,V> : Dictionary<K, V> where V : class
+        internal class ThreadSafeDictionary<K, V> : Dictionary<K, V> where V : class
         {
             bool _isComplete;
 
@@ -1135,8 +1179,10 @@ namespace System.Xaml.Schema
                         {
                             Add(name, member);
                         }
+
                         result = member;
                     }
+
                     return result;
                 }
             }
@@ -1148,22 +1194,25 @@ namespace System.Xaml.Schema
                 List<K> listOfNulls = null;
                 foreach (KeyValuePair<K, V> pair in this)
                 {
-                    if (pair.Value == null)
+                    if (pair.Value is null)
                     {
-                        if (listOfNulls == null)
+                        if (listOfNulls is null)
                         {
                             listOfNulls = new List<K>();
                         }
+
                         listOfNulls.Add(pair.Key);
                     }
                 }
-                if (listOfNulls != null)
+
+                if (listOfNulls is not null)
                 {
                     for (int i = 0; i < listOfNulls.Count; i++)
                     {
                         Remove(listOfNulls[i]);
                     }
                 }
+
                 _isComplete = true;
             }
         }

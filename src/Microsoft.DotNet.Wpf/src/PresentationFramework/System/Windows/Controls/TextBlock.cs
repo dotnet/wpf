@@ -1717,7 +1717,7 @@ Debug.Assert(lineCount == LineCount);
             }
 
             // If nothing has been hit, assume that element itself has been hit.
-            return (ie != null) ? ie : this;
+            return ie ?? this;
         }
 
         /// <summary>
@@ -4092,7 +4092,7 @@ Debug.Assert(lineCount == LineCount);
 
             if (text._complexContent == null)
             {
-                text._contentCache = (newText != null) ? newText : String.Empty;
+                text._contentCache = newText ?? string.Empty;
             }
             else
             {

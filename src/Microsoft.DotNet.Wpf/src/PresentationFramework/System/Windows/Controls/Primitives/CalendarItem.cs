@@ -1163,9 +1163,8 @@ namespace System.Windows.Controls.Primitives
                 for (int childIndex = COLS; childIndex < count; childIndex++)
                 {
                     CalendarDayButton childButton = _monthView.Children[childIndex] as CalendarDayButton;
-                    if (childButton.DataContext is DateTime)
+                    if (childButton.DataContext is DateTime date)
                     {
-                        DateTime date = (DateTime)childButton.DataContext;
                         childButton.SetValue(
                             CalendarDayButton.IsHighlightedPropertyKey,
                             (daysToHighlight != 0) && DateTimeHelper.InRange(date, hStart, hEnd));

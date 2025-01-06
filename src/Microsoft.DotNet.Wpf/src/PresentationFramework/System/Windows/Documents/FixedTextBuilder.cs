@@ -1507,9 +1507,8 @@ namespace System.Windows.Documents
                         _fixedNodes.Add(element.FixedNode);
                     }
                 }
-                else if (element is FixedSOMImage)
+                else if (element is FixedSOMImage image)
                 {
-                    FixedSOMImage image = (FixedSOMImage)element;
                     _FinishTextRun(true);
                     _SetHyperlink(navUri, image.FixedNode, shadowHyperlink);
 

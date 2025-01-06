@@ -498,7 +498,7 @@ namespace System.Windows.Documents
                 fixedTextPointer = new FixedTextPointer(true, LogicalDirection.Forward, flowPosition);
             }
 
-            return (fixedTextPointer != null) ? fixedTextPointer : ContentPosition.Missing;
+            return fixedTextPointer ?? ContentPosition.Missing;
         }
 
 

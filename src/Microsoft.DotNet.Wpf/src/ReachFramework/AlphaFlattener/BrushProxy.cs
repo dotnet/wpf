@@ -3329,9 +3329,8 @@ namespace Microsoft.Internal.AlphaFlattener
             }
 
             // SolidColorBrush * GradientBrush
-            if (brushB.Brush is GradientBrush)
+            if (brushB.Brush is GradientBrush gradientBrush)
             {
-                GradientBrush gradientBrush = (GradientBrush)brushB.Brush;
                 return brushB.BlendGradient(colorA, reverse, gradientBrush.ColorInterpolationMode);
             }
 

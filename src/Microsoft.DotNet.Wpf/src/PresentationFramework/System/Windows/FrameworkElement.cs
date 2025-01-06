@@ -1767,7 +1767,7 @@ namespace System.Windows
 
                 DependencyObject parent = LogicalTreeHelper.GetParent(d);
 
-                d = (parent != null) ? parent : Helper.FindMentor(d.InheritanceContext);
+                d = parent ?? Helper.FindMentor(d.InheritanceContext);
             }
 
             scopeOwner = null;
@@ -2503,7 +2503,7 @@ namespace System.Windows
             if (Parent == null)
             {
                 // Invalidate relevant properties for this subtree
-                DependencyObject parent = (newParent != null) ? newParent : oldParent;
+                DependencyObject parent = newParent ?? oldParent;
                 TreeWalkHelper.InvalidateOnTreeChange(this, null, parent, (newParent != null));
             }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -700,13 +700,11 @@ namespace MS.Internal.Documents
         {
             Invariant.Assert(edge == ElementEdge.BeforeStart || edge == ElementEdge.AfterEnd, "Cannot retrieve CP from the content of embedded object.");
             int cp = -1;
-            if (embeddedObject is FrameworkElement)
+            if (embeddedObject is FrameworkElement fe)
             {
-                FrameworkElement fe = (FrameworkElement)embeddedObject;
                 //likely the embedded element is hosted by some TextElement, like InlineUIContainer or BlockUIContainer
-                if (fe.Parent is TextElement)
+                if (fe.Parent is TextElement uiContainer)
                 {
-                    TextElement uiContainer = (TextElement)fe.Parent;
                     cp = (edge == ElementEdge.BeforeStart) ? uiContainer.ContentStartOffset : uiContainer.ContentEndOffset;
                 }
             }

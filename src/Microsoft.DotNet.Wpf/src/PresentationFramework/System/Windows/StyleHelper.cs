@@ -5777,35 +5777,33 @@ namespace System.Windows
         //  Trading off an object boxing cost in exchange for avoiding reflection cost.
         public override bool Equals( object value )
         {
-            if( value is ChildValueLookup )
+            if (value is ChildValueLookup other)
             {
-                ChildValueLookup other = (ChildValueLookup)value;
-
-                if( LookupType      == other.LookupType &&
-                    Property        == other.Property &&
-                    Value           == other.Value )
+                if (LookupType == other.LookupType &&
+                    Property == other.Property &&
+                    Value == other.Value)
                 {
-                    if( Conditions == null &&
-                        other.Conditions == null )
+                    if (Conditions == null &&
+                        other.Conditions == null)
                     {
                         // Both condition arrays are null
                         return true;
                     }
 
-                    if( Conditions == null ||
-                        other.Conditions == null )
+                    if (Conditions == null ||
+                        other.Conditions == null)
                     {
                         // One condition array is null, but not other
                         return false;
                     }
 
                     // Both condition array non-null, see if they're the same length..
-                    if( Conditions.Length == other.Conditions.Length )
+                    if (Conditions.Length == other.Conditions.Length)
                     {
                         // Same length.  Walk the list and compare.
-                        for( int i = 0; i < Conditions.Length; i++ )
+                        for (int i = 0; i < Conditions.Length; i++)
                         {
-                            if( !Conditions[i].TypeSpecificEquals(other.Conditions[i]) )
+                            if (!Conditions[i].TypeSpecificEquals(other.Conditions[i]))
                             {
                                 return false;
                             }

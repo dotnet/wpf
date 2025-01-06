@@ -236,7 +236,7 @@ namespace MS.Internal.AutomationProxies
                 if (Misc.PtInRect(ref rc, x, y))
                 {
                     ProxySimple grip = StatusBarGrip.Create(_hwnd, this, -1);
-                    return (ProxySimple)(grip != null ? grip : this);
+                    return (ProxySimple)(grip ?? this);
                 }
             }
             return this;

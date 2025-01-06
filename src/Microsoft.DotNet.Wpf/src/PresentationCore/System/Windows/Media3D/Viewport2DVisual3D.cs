@@ -472,36 +472,32 @@ namespace System.Windows.Media.Media3D
             {
                 Material currMaterial = materialStack.Pop();
 
-                if (currMaterial is DiffuseMaterial)
+                if (currMaterial is DiffuseMaterial diffMaterial)
                 {
-                    DiffuseMaterial diffMaterial = (DiffuseMaterial)currMaterial;
                     if ((Boolean)diffMaterial.GetValue(Viewport2DVisual3D.IsVisualHostMaterialProperty))
                     {
                         diffMaterial.Brush = internalBrush;
                         numMaterialsSwapped++;
                     }
                 }
-                else if (currMaterial is EmissiveMaterial)
+                else if (currMaterial is EmissiveMaterial emmMaterial)
                 {
-                    EmissiveMaterial emmMaterial = (EmissiveMaterial)currMaterial;
                     if ((Boolean)emmMaterial.GetValue(Viewport2DVisual3D.IsVisualHostMaterialProperty))
                     {
                         emmMaterial.Brush = internalBrush;
                         numMaterialsSwapped++;
                     }
                 }
-                else if (currMaterial is SpecularMaterial)
+                else if (currMaterial is SpecularMaterial specMaterial)
                 {
-                    SpecularMaterial specMaterial = (SpecularMaterial)currMaterial;
                     if ((Boolean)specMaterial.GetValue(Viewport2DVisual3D.IsVisualHostMaterialProperty))
                     {
                         specMaterial.Brush = internalBrush;
                         numMaterialsSwapped++;
                     }
                 }
-                else if (currMaterial is MaterialGroup)
+                else if (currMaterial is MaterialGroup matGroup)
                 {
-                    MaterialGroup matGroup = (MaterialGroup)currMaterial;
 
                     // the IsVisualHostMaterialProperty should not be set on a MaterialGroup - verify that
                     if ((Boolean)matGroup.GetValue(Viewport2DVisual3D.IsVisualHostMaterialProperty))
@@ -511,10 +507,10 @@ namespace System.Windows.Media.Media3D
 
                     // iterate over the children and put them on the stack of materials to modify
                     MaterialCollection children = matGroup.Children;
-                    
+
                     if (children != null)
                     {
-                        for (int i=0, count = children.Count; i < count; i++)
+                        for (int i = 0, count = children.Count; i < count; i++)
                         {
                             Material m = children[i];
                             materialStack.Push(m);

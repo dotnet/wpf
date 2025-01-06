@@ -502,7 +502,7 @@ namespace System.Windows.Markup
 
         internal static XamlParseException WrapException(Exception e, IXamlLineInfo lineInfo, Uri baseUri)
         {
-            Exception baseException = (e.InnerException == null) ? e : e.InnerException;
+            Exception baseException = e.InnerException ?? e;
             if (baseException is System.Windows.Markup.XamlParseException)
             {
                 var xe = ((System.Windows.Markup.XamlParseException)baseException);
@@ -519,9 +519,8 @@ namespace System.Windows.Markup
                 System.Xaml.XamlException xe = (System.Xaml.XamlException)e;
                 return new XamlParseException(xe.Message, xe.LineNumber, xe.LinePosition, baseUri, baseException);
             }
-            else if (e is XmlException)
+            else if (e is XmlException xe)
             {
-                XmlException xe = (XmlException)e;
                 return new XamlParseException(xe.Message, xe.LineNumber, xe.LinePosition, baseUri, baseException);
             }
             else

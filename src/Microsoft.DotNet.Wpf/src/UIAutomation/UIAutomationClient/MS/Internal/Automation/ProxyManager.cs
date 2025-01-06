@@ -174,15 +174,14 @@ namespace MS.Internal.Automation
                         {
                             proxyDescriptions[count++] = (ClientSideProviderDescription)o;
                         }
-                        else if (o is ClientSideProviderFactoryCallback)
+                        else if (o is ClientSideProviderFactoryCallback pfc)
                         {
-                            ClientSideProviderFactoryCallback pfc = (ClientSideProviderFactoryCallback)o;
                             proxyDescriptions[count++] = new ClientSideProviderDescription(pfc, null);
 
                         }
                         else
                         {
-                            foreach( Object o1 in (ArrayList) o )
+                            foreach (Object o1 in (ArrayList)o)
                             {
                                 proxyDescriptions[count++] = (ClientSideProviderDescription)o1;
                             }

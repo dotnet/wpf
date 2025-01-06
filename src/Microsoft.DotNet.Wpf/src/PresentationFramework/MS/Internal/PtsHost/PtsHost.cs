@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1978,17 +1978,15 @@ namespace MS.Internal.PtsHost
 
                 for(int objectIndex = 0; objectIndex < attachedObjects.Count; objectIndex++)
                 {
-                    if(attachedObjects[objectIndex] is FigureObject)
+                    if (attachedObjects[objectIndex] is FigureObject figureObject)
                     {
-                        FigureObject figureObject = (FigureObject) attachedObjects[objectIndex];
-
                         rgnmpAttachedObject[objectIndex] = figureObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = figureObject.Dcp;
                         rgidobj[objectIndex] = PTS.fsidobjFigure;
                     }
                     else
                     {
-                        FloaterObject floaterObject = (FloaterObject) attachedObjects[objectIndex];
+                        FloaterObject floaterObject = (FloaterObject)attachedObjects[objectIndex];
 
                         rgnmpAttachedObject[objectIndex] = floaterObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = floaterObject.Dcp;
@@ -2095,17 +2093,15 @@ namespace MS.Internal.PtsHost
 
                 for(int objectIndex = 0; objectIndex < attachedObjects.Count; objectIndex++)
                 {
-                    if(attachedObjects[objectIndex] is FigureObject)
+                    if (attachedObjects[objectIndex] is FigureObject figureObject)
                     {
-                        FigureObject figureObject = (FigureObject) attachedObjects[objectIndex];
-
                         rgnmpAttachedObject[objectIndex] = figureObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = figureObject.Dcp;
                         rgidobj[objectIndex] = PTS.fsidobjFigure;
                     }
                     else
                     {
-                        FloaterObject floaterObject = (FloaterObject) attachedObjects[objectIndex];
+                        FloaterObject floaterObject = (FloaterObject)attachedObjects[objectIndex];
 
                         rgnmpAttachedObject[objectIndex] = floaterObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = floaterObject.Dcp;

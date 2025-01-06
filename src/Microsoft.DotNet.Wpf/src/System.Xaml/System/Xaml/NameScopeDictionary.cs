@@ -48,14 +48,14 @@ namespace System.Xaml
                 throw new ArgumentException(SR.Format(SR.NameScopeInvalidIdentifierName, name));
             }
 
-            if (_underlyingNameScope != null)
+            if (_underlyingNameScope is not null)
             {
                 _names.Add(name);
                 _underlyingNameScope.RegisterName(name, scopedElement);
             }
             else
             {
-                if (_nameMap == null)
+                if (_nameMap is null)
                 {
                     _nameMap = new HybridDictionary();
                     _nameMap[name] = scopedElement;
@@ -64,7 +64,7 @@ namespace System.Xaml
                 {
                     object nameContext = _nameMap[name];
 
-                    if (nameContext == null)
+                    if (nameContext is null)
                     {
                         _nameMap[name] = scopedElement;
                     }
@@ -83,14 +83,14 @@ namespace System.Xaml
             if (name.Length == 0)
                 throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
-            if (_underlyingNameScope != null)
+            if (_underlyingNameScope is not null)
             {
                 _underlyingNameScope.UnregisterName(name);
                 _names.Remove(name);
             }
             else
             {
-                if (_nameMap != null && _nameMap[name] != null)
+                if (_nameMap is not null && _nameMap[name] is not null)
                 {
                     _nameMap.Remove(name);
                 }
@@ -108,16 +108,17 @@ namespace System.Xaml
             if (name.Length == 0)
                 throw new ArgumentException(SR.NameScopeNameNotEmptyString);
 
-            if (_underlyingNameScope != null)
+            if (_underlyingNameScope is not null)
             {
                 return _underlyingNameScope.FindName(name);
             }
             else
             {
-                if (_nameMap == null)
+                if (_nameMap is null)
                 {
                     return null;
                 }
+
                 return _nameMap[name];
             }
         }
@@ -138,13 +139,13 @@ namespace System.Xaml
                 _underlyingNameScope = nameScopeDictionary._underlyingNameScope;
                 _names = nameScopeDictionary._names;
 
-                if (_underlyingNameScope != null)
+                if (_underlyingNameScope is not null)
                 {
                     index = -1;
                 }
                 else
                 {
-                    if (_nameMap != null)
+                    if (_nameMap is not null)
                     {
                         dictionaryEnumerator = _nameMap.GetEnumerator();
                     }
@@ -160,14 +161,14 @@ namespace System.Xaml
             {
                 get
                 {
-                    if (_underlyingNameScope != null)
+                    if (_underlyingNameScope is not null)
                     {
                         string name = _names[index];
-                        return new KeyValuePair<string,object>(name, _underlyingNameScope.FindName(name));
+                        return new KeyValuePair<string, object>(name, _underlyingNameScope.FindName(name));
                     }
                     else
                     {
-                        if (_nameMap != null)
+                        if (_nameMap is not null)
                         {
                             return new KeyValuePair<string, object>((string)dictionaryEnumerator.Key, dictionaryEnumerator.Value);
                         }
@@ -179,7 +180,7 @@ namespace System.Xaml
 
             public bool MoveNext()
             {
-                if (_underlyingNameScope != null)
+                if (_underlyingNameScope is not null)
                 {
                     if (index == _names.Count - 1)
                     {
@@ -191,7 +192,7 @@ namespace System.Xaml
                 }
                 else
                 {
-                    if (_nameMap != null)
+                    if (_nameMap is not null)
                     {
                         return dictionaryEnumerator.MoveNext();
                     }
@@ -210,7 +211,7 @@ namespace System.Xaml
 
             void IEnumerator.Reset()
             {
-                if (_underlyingNameScope != null)
+                if (_underlyingNameScope is not null)
                 {
                     index = -1;
                 }

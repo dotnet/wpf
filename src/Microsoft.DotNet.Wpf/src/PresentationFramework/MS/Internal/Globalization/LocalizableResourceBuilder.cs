@@ -569,7 +569,7 @@ namespace MS.Internal.Globalization
         {
             if (first == null || second == null)
             {
-                return (first == null) ? second : first;
+                return first ?? second;
             }
 
             // min of two readability enum. The less the more restrictive.

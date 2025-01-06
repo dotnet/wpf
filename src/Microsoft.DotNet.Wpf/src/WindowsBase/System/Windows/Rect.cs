@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -28,10 +28,10 @@ namespace System.Windows
             }
             else
             {
-                _x = location._x;
-                _y = location._y;
-                _width = size._width;
-                _height = size._height;
+                _x = location.X;
+                _y = location.Y;
+                _width = size.Width;
+                _height = size.Height;
             }
         }
 
@@ -61,12 +61,12 @@ namespace System.Windows
         public Rect(Point point1,
                     Point point2)
         {
-            _x = Math.Min(point1._x, point2._x);
-            _y = Math.Min(point1._y, point2._y);
+            _x = Math.Min(point1.X, point2.X);
+            _y = Math.Min(point1.Y, point2.Y);
 
             //  Max with 0 to prevent double weirdness from causing us to be (-epsilon..0)
-            _width = Math.Max(Math.Max(point1._x, point2._x) - _x, 0);
-            _height = Math.Max(Math.Max(point1._y, point2._y) - _y, 0);
+            _width = Math.Max(Math.Max(point1.X, point2.X) - _x, 0);
+            _height = Math.Max(Math.Max(point1.Y, point2.Y) - _y, 0);
         }
 
         /// <summary>
@@ -149,8 +149,8 @@ namespace System.Windows
                     throw new System.InvalidOperationException(SR.Rect_CannotModifyEmptyRect);
                 }
                 
-                _x = value._x;
-                _y = value._y;
+                _x = value.X;
+                _y = value.Y;
             }
         }
 
@@ -178,8 +178,8 @@ namespace System.Windows
                         throw new System.InvalidOperationException(SR.Rect_CannotModifyEmptyRect);
                     }
 
-                    _width = value._width;
-                    _height = value._height;
+                    _width = value.Width;
+                    _height = value.Height;
                 }
             }
         }
@@ -402,7 +402,7 @@ namespace System.Windows
         /// </returns>
         public bool Contains(Point point)
         {
-            return Contains(point._x, point._y);
+            return Contains(point.X, point.Y);
         }
 
         /// <summary>
@@ -583,8 +583,8 @@ namespace System.Windows
                 throw new System.InvalidOperationException(SR.Rect_CannotCallMethod);
             }
 
-            _x += offsetVector._x;
-            _y += offsetVector._y;
+            _x += offsetVector.X;
+            _y += offsetVector.Y;
         }
 
         /// <summary>
@@ -628,7 +628,7 @@ namespace System.Windows
         /// </summary>
         public void Inflate(Size size)
         {
-            Inflate(size._width, size._height);
+            Inflate(size.Width, size.Height);
         }
 
         /// <summary>
@@ -671,7 +671,7 @@ namespace System.Windows
         /// </summary>
         public static Rect Inflate(Rect rect, Size size)
         {
-            rect.Inflate(size._width, size._height);
+            rect.Inflate(size.Width, size.Height);
             return rect;
         }
 

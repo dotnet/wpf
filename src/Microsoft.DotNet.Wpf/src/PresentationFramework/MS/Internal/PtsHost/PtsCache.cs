@@ -189,16 +189,16 @@ namespace MS.Internal.PtsHost
                 }
             }
 
+#pragma warning disable IDE0017
             // Create new PTS Context, if cannot find free one.
             if (index == _contextPool.Count)
             {
                 _contextPool.Add(new ContextDesc());
                 _contextPool[index].IsOptimalParagraphEnabled = ptsContext.IsOptimalParagraphEnabled;
-                _contextPool[index].PtsHost = new PtsHost
-                {
-                    Context = CreatePTSContext(index, textFormattingMode)
-                };
+                _contextPool[index].PtsHost = new PtsHost();
+                _contextPool[index].PtsHost.Context = CreatePTSContext(index, textFormattingMode);
             }
+#pragma warning restore IDE0017
 
             // Initialize TextFormatter, if optimal paragraph is enabled.
             // Optimal paragraph requires new TextFormatter for every PTS Context.

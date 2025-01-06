@@ -1467,8 +1467,7 @@ namespace System.Windows.Markup
             {
                 get
                 {
-                    DictionaryContextData dcd = _contextData as DictionaryContextData;
-                    if (dcd == null)
+                    if (_contextData is not DictionaryContextData dcd)
                     {
                         return _contextData as Type;
                     }
@@ -2909,7 +2908,7 @@ namespace System.Windows.Markup
                             case AttributeContext.Unknown:
                                 WriteUnknownAttribute(attribNamespaceURI, attribLocalName,
                                                       attribValue, depth, parentTypeNamespace,
-                                                      unknownTagName == null ? parentType.Name : unknownTagName,
+                                                      unknownTagName ?? parentType.Name,
                                                       dynamicObject, resolvedProperties);
                                 break;
 
@@ -3125,8 +3124,7 @@ namespace System.Windows.Markup
                     ThrowException(nameof(SR.ParserNoDictionaryName));
                 }
 
-                DictionaryContextData dictionaryData = ParentContext.ContextData as DictionaryContextData;
-                if (dictionaryData != null)
+                if (ParentContext.ContextData is DictionaryContextData dictionaryData)
                 {
                     object key;
                     // Note that not all keys can be resolved at compile time.  For those that fail,
@@ -3199,9 +3197,8 @@ namespace System.Windows.Markup
                     propertyCanWrite = !((DependencyProperty)dynamicObject).ReadOnly;
                 }
 #endif
-                else if (dynamicObject is MethodInfo)
+                else if (dynamicObject is MethodInfo methodInfo)
                 {
-                    MethodInfo methodInfo = (MethodInfo)dynamicObject;
                     if (methodInfo.GetParameters().Length == 1)
                     {
                         methodInfo = methodInfo.DeclaringType.GetMethod(
@@ -3952,13 +3949,12 @@ namespace System.Windows.Markup
             // BamlRecordReader has secondary protection against nested property
             //  records, but the error message less friendly to users. ("'Property'
             //  record unexpected in BAML stream.")
-            ElementContextStackData parentTag = ElementContextStack.ParentContext as ElementContextStackData;
-            if( parentTag != null )
+            if (ElementContextStack.ParentContext is ElementContextStackData parentTag)
             {
-                if ( parentTag.ContextType == ElementContextType.PropertyComplex ||
+                if (parentTag.ContextType == ElementContextType.PropertyComplex ||
                      parentTag.ContextType == ElementContextType.PropertyArray ||
                      parentTag.ContextType == ElementContextType.PropertyIList ||
-                     parentTag.ContextType == ElementContextType.PropertyIDictionary )
+                     parentTag.ContextType == ElementContextType.PropertyIDictionary)
                 {
                     ThrowException(nameof(SR.ParserNestedComplexProp), complexPropName);
                 }
@@ -5263,21 +5259,18 @@ namespace System.Windows.Markup
         {
             set
             {
-
                 Debug.Assert(null != XmlReader, "XmlReader is not yet set");
                 //check if it's a XmlCompatibilityReader first
-                XmlCompatibilityReader xmlCompatReader = XmlReader as XmlCompatibilityReader;
-                if (null != xmlCompatReader)
+                if (XmlReader is XmlCompatibilityReader xmlCompatReader)
                 {
                     xmlCompatReader.Normalization = true;
                 }
                 else
                 {
                     //now check for XmlTextReader
-                    XmlTextReader xmlTextReader = XmlReader as XmlTextReader;
 
                     // review, what if not the XmlTextReader.
-                    if (null != xmlTextReader)
+                    if (XmlReader is XmlTextReader xmlTextReader)
                     {
                         xmlTextReader.Normalization = true;
                     }

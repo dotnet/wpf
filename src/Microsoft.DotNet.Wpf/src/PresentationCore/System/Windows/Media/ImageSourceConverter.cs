@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -105,10 +105,8 @@ namespace System.Windows.Media
                         null
                         );
                 }
-                else if (value is byte[])
+                else if (value is byte[] bytes)
                 {
-                    byte[] bytes = (byte[])value;
-
                     if (bytes != null)
                     {
                         Stream memStream = null;
@@ -133,10 +131,8 @@ namespace System.Windows.Media
                             );
                     }
                 }
-                else if (value is Stream)
+                else if (value is Stream stream)
                 {
-                    Stream stream = (Stream)value;
-
                     return BitmapFrame.Create(
                         stream,
                         BitmapCreateOptions.None,

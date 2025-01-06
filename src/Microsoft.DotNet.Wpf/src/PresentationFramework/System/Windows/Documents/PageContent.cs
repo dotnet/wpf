@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -69,7 +69,7 @@ namespace System.Windows.Documents
         public FixedPage GetPageRoot(bool forceReload)
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRoot Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRoot Source={(Source ?? new Uri("", UriKind.RelativeOrAbsolute))}");
 #endif
 
 //             VerifyAccess();
@@ -101,7 +101,7 @@ namespace System.Windows.Documents
         public void GetPageRootAsync(bool forceReload)
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsync Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsync Source={(Source ?? new Uri("", UriKind.RelativeOrAbsolute))}");
 #endif
 
 //             VerifyAccess();
@@ -141,7 +141,7 @@ namespace System.Windows.Documents
         public void GetPageRootAsyncCancel()
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsyncCancel Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsyncCancel Source={(Source ?? new Uri("", UriKind.RelativeOrAbsolute))}");
 #endif
 //             VerifyAccess();
             // Important: do not throw if no outstanding GetPageRootAsyncCall

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -1707,9 +1707,8 @@ namespace MS.Internal.Documents
             //Ensure that the UserState passed with this event contains an
             //MakeVisibleData object. If not, we ignore it as this event
             //could have originated from someone else calling GetPageNumberAsync.
-            if (e.UserState is MakeVisibleData)
+            if (e.UserState is MakeVisibleData data)
             {
-                MakeVisibleData data = (MakeVisibleData)e.UserState;
                 MakeVisibleAsync(data, e.PageNumber);
             }
         }

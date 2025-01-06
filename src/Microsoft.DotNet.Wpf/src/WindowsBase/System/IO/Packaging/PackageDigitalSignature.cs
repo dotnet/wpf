@@ -296,8 +296,7 @@ namespace System.IO.Packaging
             }
 
             // convert to Ex variant that has more functionality
-            X509Certificate2 certificate = signingCertificate as X509Certificate2;
-            if (certificate == null)
+            if (signingCertificate is not X509Certificate2 certificate)
                 certificate = new X509Certificate2(signingCertificate.Handle);
 
             // verify

@@ -533,8 +533,7 @@ namespace MS.Internal
             object[] argstrs = new object[args.Length];
             for (int i = 0; i < args.Length; ++i)
             {
-                string s = args[i] as string;
-                argstrs[i] = (s != null) ? s : AvTrace.ToStringHelper(args[i]);
+                argstrs[i] = (args[i] is string s) ? s : AvTrace.ToStringHelper(args[i]);
             }
             _sb.AppendFormat( CultureInfo.InvariantCulture, message, argstrs );
         }

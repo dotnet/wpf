@@ -50,16 +50,14 @@ namespace System.Xaml
                 return;
             }
 
-            IRootObjectProvider? rootObjectService = context.GetService(typeof(IRootObjectProvider)) as IRootObjectProvider;
-            if (rootObjectService is null)
+            if (context.GetService(typeof(IRootObjectProvider)) is not IRootObjectProvider rootObjectService)
             {
                 return;
             }
 
             rootObject = rootObjectService.RootObject;
 
-            IDestinationTypeProvider? targetService = context.GetService(typeof(IDestinationTypeProvider)) as IDestinationTypeProvider;
-            if (targetService is null)
+            if (context.GetService(typeof(IDestinationTypeProvider)) is not IDestinationTypeProvider targetService)
             {
                 return;
             }

@@ -200,8 +200,7 @@ namespace System.Xaml
             if (item == null)
                 return null;
 
-            ICustomTypeProvider ictp = item as ICustomTypeProvider;
-            if (ictp == null)
+            if (item is not ICustomTypeProvider ictp)
                 return item.GetType();
             else
                 return ictp.GetCustomType();
@@ -230,7 +229,7 @@ namespace System.Xaml
         {
             IList<CustomAttributeData> list = CustomAttributeData.GetCustomAttributes(mi);
             string attrValue = GetCustomAttributeData(list, attrType, out typeValue, true, false);
-            return attrValue is null ? string.Empty : attrValue;
+            return attrValue ?? string.Empty;
         }
 
 #if PBTCOMPILER

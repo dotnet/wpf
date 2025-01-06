@@ -406,18 +406,16 @@ namespace System.Windows
                 // deriving from DispatcherObject are allowed - it is up to the user to
                 // make any custom types free-threaded.
 
-                DispatcherObject dispatcherObject = defaultValue as DispatcherObject;
 
-                if (dispatcherObject != null && dispatcherObject.Dispatcher != null)
+                if (defaultValue is DispatcherObject dispatcherObject && dispatcherObject.Dispatcher != null)
                 {
                     // Try to make the DispatcherObject free-threaded if it's an
                     // ISealable.
 
-                    ISealable valueAsISealable = dispatcherObject as ISealable;
 
-                    if (valueAsISealable != null && valueAsISealable.CanSeal)
+                    if (dispatcherObject is ISealable valueAsISealable && valueAsISealable.CanSeal)
                     {
-                        Invariant.Assert (!valueAsISealable.IsSealed,
+                        Invariant.Assert(!valueAsISealable.IsSealed,
                                "A Sealed ISealable must not have dispatcher affinity");
 
                         valueAsISealable.Seal();

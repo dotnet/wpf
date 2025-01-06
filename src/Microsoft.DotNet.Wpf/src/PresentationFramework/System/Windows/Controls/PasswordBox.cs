@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -944,9 +944,8 @@ namespace System.Windows.Controls
 
             // Add renderScope as a child of ContentHostTemplateName
             _renderScope = renderScope;
-            if (_passwordBoxContentHost is ScrollViewer)
+            if (_passwordBoxContentHost is ScrollViewer scrollViewer)
             {
-                ScrollViewer scrollViewer = (ScrollViewer)_passwordBoxContentHost;
                 if (scrollViewer.Content != null)
                 {
                     throw new NotSupportedException(SR.TextBoxScrollViewerMarkedAsTextBoxContentMustHaveNoContent);
@@ -956,9 +955,8 @@ namespace System.Windows.Controls
                     scrollViewer.Content = _renderScope;
                 }
             }
-            else if (_passwordBoxContentHost is Decorator)
+            else if (_passwordBoxContentHost is Decorator decorator)
             {
-                Decorator decorator = (Decorator)_passwordBoxContentHost;
                 if (decorator.Child != null)
                 {
                     throw new NotSupportedException(SR.TextBoxDecoratorMarkedAsTextBoxContentMustHaveNoContent);

@@ -5,7 +5,7 @@
     ==================================================================-->
 
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    <Style x:Key="DefaultGroupItemStyle"
+    <Style x:Key="{x:Type GroupItem}"
            TargetType="{x:Type GroupItem}">
         <Setter Property="Template">
             <Setter.Value>
@@ -18,6 +18,4 @@
             </Setter.Value>
         </Setter>
     </Style>
-
-    <Style BasedOn="{StaticResource DefaultGroupItemStyle}" TargetType="{x:Type GroupItem}" />
 </ResourceDictionary>

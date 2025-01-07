@@ -2647,7 +2647,7 @@
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
   </Style>
-  <Style x:Key="DefaultGroupItemStyle" TargetType="{x:Type GroupItem}">
+  <Style x:Key="{x:Type GroupItem}" TargetType="{x:Type GroupItem}">
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type GroupItem}">
@@ -2659,7 +2659,6 @@
       </Setter.Value>
     </Setter>
   </Style>
-  <Style BasedOn="{StaticResource DefaultGroupItemStyle}" TargetType="{x:Type GroupItem}" />
   <Style x:Key="{x:Type HeaderedContentControl}" TargetType="{x:Type HeaderedContentControl}">
     <Setter Property="Template">
       <Setter.Value>

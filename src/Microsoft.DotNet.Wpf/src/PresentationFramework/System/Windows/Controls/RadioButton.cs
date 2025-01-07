@@ -67,13 +67,13 @@ namespace System.Windows.Controls
 
         private static void Register(string groupName, RadioButton radioButton)
         {
-            _groupNameToElements ??= new Dictionary<string, List<WeakReference>>(1);
+            _groupNameToElements ??= new Dictionary<string, List<WeakReference<RadioButton>>>(1);
 
             lock (_groupNameToElements)
             {
-                if (!_groupNameToElements.TryGetValue(groupName, out List<WeakReference> elements))
+                if (!_groupNameToElements.TryGetValue(groupName, out List<WeakReference<RadioButton>> elements))
                 {
-                    elements = new List<WeakReference>(1);
+                    elements = new List<WeakReference<RadioButton>>(1);
                     _groupNameToElements[groupName] = elements;
                 }
                 else
@@ -82,7 +82,7 @@ namespace System.Windows.Controls
                     PurgeDead(elements, null);
                 }
 
-                elements.Add(new WeakReference(radioButton));
+                elements.Add(new WeakReference<RadioButton>(radioButton));
             }
             _currentlyRegisteredGroupName.SetValue(radioButton, groupName);
         }
@@ -95,7 +95,7 @@ namespace System.Windows.Controls
             lock (_groupNameToElements)
             {
                 // Get all elements bound to this key and remove this element
-                if (_groupNameToElements.TryGetValue(groupName, out List<WeakReference> elements))
+                if (_groupNameToElements.TryGetValue(groupName, out List<WeakReference<RadioButton>> elements))
                 {
                     PurgeDead(elements, radioButton);
                     if (elements.Count == 0)
@@ -107,13 +107,12 @@ namespace System.Windows.Controls
             _currentlyRegisteredGroupName.SetValue(radioButton, null);
         }
 
-        private static void PurgeDead(List<WeakReference> elements, object elementToRemove)
+        private static void PurgeDead(List<WeakReference<RadioButton>> elements, RadioButton elementToRemove)
         {
             for (int i = 0; i < elements.Count; )
             {
-                WeakReference weakReference = elements[i];
-                object element = weakReference.Target;
-                if (element == null || element == elementToRemove)
+                WeakReference<RadioButton> weakReference = elements[i];
+                if (!weakReference.TryGetTarget(out RadioButton element) || element == elementToRemove)
                 {
                     elements.RemoveAt(i);
                 }
@@ -131,18 +130,17 @@ namespace System.Windows.Controls
             {
                 Visual rootScope = KeyboardNavigation.GetVisualRoot(this);
 
-                _groupNameToElements ??= new Dictionary<string, List<WeakReference>>(1);
+                _groupNameToElements ??= new Dictionary<string, List<WeakReference<RadioButton>>>(1);
 
                 lock (_groupNameToElements)
                 {
                     // Get all elements bound to this key and remove this element
-                    List<WeakReference> elements = _groupNameToElements[groupName];
+                    List<WeakReference<RadioButton>> elements = _groupNameToElements[groupName];
                     // Haha, notice the unlikely but possible null-deref here
                     for (int i = 0; i < elements.Count; )
                     {
-                        WeakReference weakReference = elements[i];
-                        RadioButton rb = weakReference.Target as RadioButton;
-                        if (rb == null)
+                        WeakReference<RadioButton> weakReference = elements[i];
+                        if (!weakReference.TryGetTarget(out RadioButton rb))
                         {
                             // Remove dead instances
                             elements.RemoveAt(i);
@@ -281,7 +279,7 @@ namespace System.Windows.Controls
         #region private data
 
         [ThreadStatic]
-        private static Dictionary<string, List<WeakReference>> _groupNameToElements;
+        private static Dictionary<string, List<WeakReference<RadioButton>>> _groupNameToElements;
 
         private static readonly UncommonField<string> _currentlyRegisteredGroupName = new UncommonField<string>();
 

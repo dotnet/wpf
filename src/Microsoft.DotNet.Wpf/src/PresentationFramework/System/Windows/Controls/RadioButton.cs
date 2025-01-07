@@ -71,7 +71,7 @@ namespace System.Windows.Controls
 
             if (!_groupNameToElements.TryGetValue(groupName, out List<WeakReference<RadioButton>> elements))
             {
-                elements = new List<WeakReference<RadioButton>>(1);
+                elements = new List<WeakReference<RadioButton>>(2);
                 _groupNameToElements[groupName] = elements;
             }
             else

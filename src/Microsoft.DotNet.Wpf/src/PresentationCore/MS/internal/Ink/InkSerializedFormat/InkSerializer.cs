@@ -1312,8 +1312,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
 
             return cbRead;
-#pragma warning restore 6518
-#pragma warning restore 1634, 1691
         }
 
         /// <summary>
@@ -2069,8 +2067,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     bw.Write(strkIds[i]);
                     cbWrote += Native.SizeOfInt;
                 }
-#pragma warning restore 6518
-#pragma warning restore 1634, 1691
             }
 
             return cbWrote;
@@ -2425,8 +2421,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
                         cbData += Native.SizeOfFloat;
                     }
                 }
-#pragma warning restore 6518
-#pragma warning restore 1634, 1691
             }
 
             return cbData;

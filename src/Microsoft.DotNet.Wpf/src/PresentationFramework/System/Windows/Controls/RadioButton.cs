@@ -107,16 +107,11 @@ namespace System.Windows.Controls
 
         private static void PurgeDead(List<WeakReference<RadioButton>> elements, RadioButton elementToRemove)
         {
-            for (int i = 0; i < elements.Count; )
+            for (int i = elements.Count - 1; i >= 0; i--)
             {
-                WeakReference<RadioButton> weakReference = elements[i];
-                if (!weakReference.TryGetTarget(out RadioButton element) || element == elementToRemove)
+                if (!elements[i].TryGetTarget(out RadioButton element) || element == elementToRemove)
                 {
                     elements.RemoveAt(i);
-                }
-                else
-                {
-                    i++;
                 }
             }
         }
@@ -133,20 +128,18 @@ namespace System.Windows.Controls
                 // Get all elements bound to this key and remove this element
                 if (_groupNameToElements.TryGetValue(groupName, out List<WeakReference<RadioButton>> elements))
                 {
-                    for (int i = 0; i < elements.Count; )
+                    for (int i = elements.Count - 1; i >= 0; i--)
                     {
-                        WeakReference<RadioButton> weakReference = elements[i];
-                        if (!weakReference.TryGetTarget(out RadioButton rb))
+                        if (elements[i].TryGetTarget(out RadioButton radioButton))
                         {
-                            // Remove dead instances
-                            elements.RemoveAt(i);
+                            // Uncheck all checked RadioButtons different from the current one
+                            if (radioButton != this && radioButton.IsChecked is true && rootScope == KeyboardNavigation.GetVisualRoot(radioButton))
+                                radioButton.UncheckRadioButton();
                         }
                         else
                         {
-                            // Uncheck all checked RadioButtons different from the current one
-                            if (rb != this && (rb.IsChecked == true) && rootScope == KeyboardNavigation.GetVisualRoot(rb))
-                                rb.UncheckRadioButton();
-                            i++;
+                            // Remove dead instances
+                            elements.RemoveAt(i);
                         }
                     }
                 }

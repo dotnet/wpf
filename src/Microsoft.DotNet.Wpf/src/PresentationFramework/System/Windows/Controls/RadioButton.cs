@@ -4,6 +4,7 @@
 
 using System.Collections;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 using System.Windows.Controls.Primitives;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -69,10 +70,11 @@ namespace System.Windows.Controls
         {
             t_groupNameToElements ??= new Dictionary<string, List<WeakReference<RadioButton>>>(1);
 
-            if (!t_groupNameToElements.TryGetValue(groupName, out List<WeakReference<RadioButton>> elements))
+            ref List<WeakReference<RadioButton>> elements = ref CollectionsMarshal.GetValueRefOrAddDefault(t_groupNameToElements, groupName, out bool exists);
+            if (!exists)
             {
+                // Create new collection
                 elements = new List<WeakReference<RadioButton>>(2);
-                t_groupNameToElements[groupName] = elements;
             }
             else
             {

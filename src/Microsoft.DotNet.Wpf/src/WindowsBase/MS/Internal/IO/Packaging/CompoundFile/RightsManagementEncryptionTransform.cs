@@ -108,12 +108,10 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // does -not- close the underlying stream.
             //
 
-// Suppress 6518 Local IDisposable object not disposed: 
-// Reason: The stream is not owned by the BlockManager, therefore we cannot 
-// close the BinaryWriter, as that would Close the stream underneath.
-#pragma warning disable 6518
+            // The stream is not owned by the BlockManager, therefore we cannot 
+            // close the BinaryWriter, as that would Close the stream underneath.
+            // TODO: Use leaveOpen ctor
             BinaryReader utf8Reader = new BinaryReader(_publishLicenseStream, Encoding.UTF8);
-#pragma warning restore 6518
 
             //
             // There follows a variable-length header (not to be confused with the physical
@@ -214,12 +212,11 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             // does -not- close the underlying stream.
             //
 
-// Suppress 6518 Local IDisposable object not disposed: 
-// Reason: The stream is not owned by the BlockManager, therefore we cannot 
-// close the BinaryWriter, as that would Close the stream underneath.
-#pragma warning disable 6518
+
+            // The stream is not owned by the BlockManager, therefore we cannot 
+            // close the BinaryWriter, as that would Close the stream underneath.
+            // TODO: Use leaveOpen ctor
             BinaryWriter utf8Writer = new BinaryWriter(_publishLicenseStream, Encoding.UTF8);
-#pragma warning restore 6518
 
             //
             // There follows a variable-length header (not to be confused with the physical

@@ -1069,12 +1069,10 @@ namespace System.Windows.Media.Imaging
                     }
                     else
                     {
-                        #pragma warning disable 6518
                         // We don't have an absolute URI, so we don't necessarily know
                         // if it is a file, but we'll have to assume it is and try to
                         // create a stream from the original string.
                         bitmapStream = new System.IO.FileStream(uri.OriginalString, FileMode.Open, FileAccess.Read, FileShare.Read);
-                        #pragma warning restore 6518
                     }
 
                     uriStream = bitmapStream;

@@ -965,8 +965,7 @@ namespace MS.Internal.PtsHost
                 }
                 else
                 {
-#pragma warning disable 6518
-                    // Disable PRESharp warning 6518. FigureParagraph is passed to attached objects
+                    // FigureParagraph is passed to attached objects
                     // which will do following:
                     // a) store this object in TextParagraph._floaters collection. Later when
                     //    TextParagraph is disposed, all objects in _floaters collection will be
@@ -976,8 +975,6 @@ namespace MS.Internal.PtsHost
                     // c) call Dipose() on this object during layout pass following removal of floater.
 
                     FloaterParagraph floaterPara = new FloaterParagraph(textElement, StructuralCache);
-
-#pragma warning restore 6518
 
                     if (StructuralCache.CurrentFormatContext.IncrementalUpdate)
                     {

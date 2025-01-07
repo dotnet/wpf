@@ -218,10 +218,9 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     //  - emit the header
                     //  - write out to the _baseStream
 
-                    // Suppress 6518 Local IDisposable object not disposed: 
-                    // Reason: The stream is not owned by us, therefore we cannot 
+                    // The stream is not owned by us, therefore we cannot 
                     // close the BinaryWriter as it will Close the stream underneath.
-#pragma warning disable 6518
+                    // TODO: Use leaveOpen ctor
                     BinaryWriter writer = new BinaryWriter(sink);
                     int bytesRead;
                     while ((bytesRead = PackagingUtilities.ReliableRead(source, sourceBuf, 0, sourceBuf.Length)) > 0)
@@ -274,7 +273,6 @@ namespace MS.Internal.IO.Packaging.CompoundFile
                     if (gcSinkBuf.IsAllocated)
                         gcSinkBuf.Free();
                 }
-#pragma warning restore 6518
             }
             finally
             {

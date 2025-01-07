@@ -1,14 +1,13 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 //#define ENABLE_AUTOMATIONPEER_LOGGING   // uncomment to include logging of various activities
 
-using System.Collections;
-using System.Windows.Threading;
-using System.Windows.Automation.Provider;
 using MS.Internal;
 using MS.Internal.Automation;
+using System.Collections.ObjectModel;
+using System.Windows.Threading;
+using System.Windows.Automation.Provider;
 
 namespace System.Windows.Automation.Peers
 {
@@ -241,7 +240,7 @@ namespace System.Windows.Automation.Peers
 
 
     ///
-    public abstract class AutomationPeer: DispatcherObject
+    public abstract class AutomationPeer : DispatcherObject
     {
         ///
         static AutomationPeer()
@@ -249,7 +248,106 @@ namespace System.Windows.Automation.Peers
             // Disable message processing to avoid re-entrancy (WM_GETOBJECT)
             using (Dispatcher.CurrentDispatcher.DisableProcessing())
             {
-                Initialize();
+                // Initialize patterns
+                Dictionary<int, PatternInfo> patternInfo = new(21)
+                {
+                    [InvokePatternIdentifiers.Pattern.Id] = new PatternInfo(InvokePatternIdentifiers.Pattern.Id, new WrapObject(InvokeProviderWrapper.Wrap), PatternInterface.Invoke),
+                    [SelectionPatternIdentifiers.Pattern.Id] = new PatternInfo(SelectionPatternIdentifiers.Pattern.Id, new WrapObject(SelectionProviderWrapper.Wrap), PatternInterface.Selection),
+                    [ValuePatternIdentifiers.Pattern.Id] = new PatternInfo(ValuePatternIdentifiers.Pattern.Id, new WrapObject(ValueProviderWrapper.Wrap), PatternInterface.Value),
+                    [RangeValuePatternIdentifiers.Pattern.Id] = new PatternInfo(RangeValuePatternIdentifiers.Pattern.Id, new WrapObject(RangeValueProviderWrapper.Wrap), PatternInterface.RangeValue),
+                    [ScrollPatternIdentifiers.Pattern.Id] = new PatternInfo(ScrollPatternIdentifiers.Pattern.Id, new WrapObject(ScrollProviderWrapper.Wrap), PatternInterface.Scroll),
+                    [ScrollItemPatternIdentifiers.Pattern.Id] = new PatternInfo(ScrollItemPatternIdentifiers.Pattern.Id, new WrapObject(ScrollItemProviderWrapper.Wrap), PatternInterface.ScrollItem),
+                    [ExpandCollapsePatternIdentifiers.Pattern.Id] = new PatternInfo(ExpandCollapsePatternIdentifiers.Pattern.Id, new WrapObject(ExpandCollapseProviderWrapper.Wrap), PatternInterface.ExpandCollapse),
+                    [GridPatternIdentifiers.Pattern.Id] = new PatternInfo(GridPatternIdentifiers.Pattern.Id, new WrapObject(GridProviderWrapper.Wrap), PatternInterface.Grid),
+                    [GridItemPatternIdentifiers.Pattern.Id] = new PatternInfo(GridItemPatternIdentifiers.Pattern.Id, new WrapObject(GridItemProviderWrapper.Wrap), PatternInterface.GridItem),
+                    [MultipleViewPatternIdentifiers.Pattern.Id] = new PatternInfo(MultipleViewPatternIdentifiers.Pattern.Id, new WrapObject(MultipleViewProviderWrapper.Wrap), PatternInterface.MultipleView),
+                    [WindowPatternIdentifiers.Pattern.Id] = new PatternInfo(WindowPatternIdentifiers.Pattern.Id, new WrapObject(WindowProviderWrapper.Wrap), PatternInterface.Window),
+                    [SelectionItemPatternIdentifiers.Pattern.Id] = new PatternInfo(SelectionItemPatternIdentifiers.Pattern.Id, new WrapObject(SelectionItemProviderWrapper.Wrap), PatternInterface.SelectionItem),
+                    [DockPatternIdentifiers.Pattern.Id] = new PatternInfo(DockPatternIdentifiers.Pattern.Id, new WrapObject(DockProviderWrapper.Wrap), PatternInterface.Dock),
+                    [TablePatternIdentifiers.Pattern.Id] = new PatternInfo(TablePatternIdentifiers.Pattern.Id, new WrapObject(TableProviderWrapper.Wrap), PatternInterface.Table),
+                    [TableItemPatternIdentifiers.Pattern.Id] = new PatternInfo(TableItemPatternIdentifiers.Pattern.Id, new WrapObject(TableItemProviderWrapper.Wrap), PatternInterface.TableItem),
+                    [TogglePatternIdentifiers.Pattern.Id] = new PatternInfo(TogglePatternIdentifiers.Pattern.Id, new WrapObject(ToggleProviderWrapper.Wrap), PatternInterface.Toggle),
+                    [TransformPatternIdentifiers.Pattern.Id] = new PatternInfo(TransformPatternIdentifiers.Pattern.Id, new WrapObject(TransformProviderWrapper.Wrap), PatternInterface.Transform),
+                    [TextPatternIdentifiers.Pattern.Id] = new PatternInfo(TextPatternIdentifiers.Pattern.Id, new WrapObject(TextProviderWrapper.Wrap), PatternInterface.Text)
+                };
+
+                // To avoid the worst situation on legacy systems which may not have new unmanaged core. with this change with old unmanaged core
+                // this will these patterns will be null and won't be added and hence reponse will be as it is not present at all rather than any crash.
+                if (VirtualizedItemPatternIdentifiers.Pattern != null)
+                {
+                    patternInfo[VirtualizedItemPatternIdentifiers.Pattern.Id] = new PatternInfo(VirtualizedItemPatternIdentifiers.Pattern.Id, new WrapObject(VirtualizedItemProviderWrapper.Wrap), PatternInterface.VirtualizedItem);
+                }
+                if (ItemContainerPatternIdentifiers.Pattern != null)
+                {
+                    patternInfo[ItemContainerPatternIdentifiers.Pattern.Id] = new PatternInfo(ItemContainerPatternIdentifiers.Pattern.Id, new WrapObject(ItemContainerProviderWrapper.Wrap), PatternInterface.ItemContainer);
+                }
+                if (SynchronizedInputPatternIdentifiers.Pattern != null)
+                {
+                    patternInfo[SynchronizedInputPatternIdentifiers.Pattern.Id] = new PatternInfo(SynchronizedInputPatternIdentifiers.Pattern.Id, new WrapObject(SynchronizedInputProviderWrapper.Wrap), PatternInterface.SynchronizedInput);
+                }
+
+                // Wrap these in readonly instance
+                s_patternInfo = new ReadOnlyDictionary<int, PatternInfo>(patternInfo);
+
+                // Initialize properties
+                Dictionary<int, GetProperty> propertyInfo = new(32)
+                {
+                    [AutomationElementIdentifiers.IsControlElementProperty.Id] = new GetProperty(IsControlElement),
+                    [AutomationElementIdentifiers.ControlTypeProperty.Id] = new GetProperty(GetControlType),
+                    [AutomationElementIdentifiers.IsContentElementProperty.Id] = new GetProperty(IsContentElement),
+                    [AutomationElementIdentifiers.LabeledByProperty.Id] = new GetProperty(GetLabeledBy),
+                    [AutomationElementIdentifiers.NativeWindowHandleProperty.Id] = new GetProperty(GetNativeWindowHandle),
+                    [AutomationElementIdentifiers.AutomationIdProperty.Id] = new GetProperty(GetAutomationId),
+                    [AutomationElementIdentifiers.ItemTypeProperty.Id] = new GetProperty(GetItemType),
+                    [AutomationElementIdentifiers.IsPasswordProperty.Id] = new GetProperty(IsPassword),
+                    [AutomationElementIdentifiers.LocalizedControlTypeProperty.Id] = new GetProperty(GetLocalizedControlType),
+                    [AutomationElementIdentifiers.NameProperty.Id] = new GetProperty(GetName),
+                    [AutomationElementIdentifiers.AcceleratorKeyProperty.Id] = new GetProperty(GetAcceleratorKey),
+                    [AutomationElementIdentifiers.AccessKeyProperty.Id] = new GetProperty(GetAccessKey),
+                    [AutomationElementIdentifiers.HasKeyboardFocusProperty.Id] = new GetProperty(HasKeyboardFocus),
+                    [AutomationElementIdentifiers.IsKeyboardFocusableProperty.Id] = new GetProperty(IsKeyboardFocusable),
+                    [AutomationElementIdentifiers.IsEnabledProperty.Id] = new GetProperty(IsEnabled),
+                    [AutomationElementIdentifiers.BoundingRectangleProperty.Id] = new GetProperty(GetBoundingRectangle),
+                    [AutomationElementIdentifiers.ProcessIdProperty.Id] = new GetProperty(GetCurrentProcessId),
+                    [AutomationElementIdentifiers.RuntimeIdProperty.Id] = new GetProperty(GetRuntimeId),
+                    [AutomationElementIdentifiers.ClassNameProperty.Id] = new GetProperty(GetClassName),
+                    [AutomationElementIdentifiers.HelpTextProperty.Id] = new GetProperty(GetHelpText),
+                    [AutomationElementIdentifiers.ClickablePointProperty.Id] = new GetProperty(GetClickablePoint),
+                    [AutomationElementIdentifiers.CultureProperty.Id] = new GetProperty(GetCultureInfo),
+                    [AutomationElementIdentifiers.IsOffscreenProperty.Id] = new GetProperty(IsOffscreen),
+                    [AutomationElementIdentifiers.OrientationProperty.Id] = new GetProperty(GetOrientation),
+                    [AutomationElementIdentifiers.FrameworkIdProperty.Id] = new GetProperty(GetFrameworkId),
+                    [AutomationElementIdentifiers.IsRequiredForFormProperty.Id] = new GetProperty(IsRequiredForForm),
+                    [AutomationElementIdentifiers.ItemStatusProperty.Id] = new GetProperty(GetItemStatus)
+                };
+
+                if (!AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures && AutomationElementIdentifiers.LiveSettingProperty != null)
+                {
+                    propertyInfo[AutomationElementIdentifiers.LiveSettingProperty.Id] = new GetProperty(GetLiveSetting);
+                }
+                if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.ControllerForProperty != null)
+                {
+                    propertyInfo[AutomationElementIdentifiers.ControllerForProperty.Id] = new GetProperty(GetControllerFor);
+                }
+                if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.SizeOfSetProperty != null)
+                {
+                    propertyInfo[AutomationElementIdentifiers.SizeOfSetProperty.Id] = new GetProperty(GetSizeOfSet);
+                }
+                if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.PositionInSetProperty != null)
+                {
+                    propertyInfo[AutomationElementIdentifiers.PositionInSetProperty.Id] = new GetProperty(GetPositionInSet);
+                }
+                if (AutomationElementIdentifiers.HeadingLevelProperty != null)
+                {
+                    propertyInfo[AutomationElementIdentifiers.HeadingLevelProperty.Id] = new GetProperty(GetHeadingLevel);
+                }
+                if (AutomationElementIdentifiers.IsDialogProperty != null)
+                {
+                    propertyInfo[AutomationElementIdentifiers.IsDialogProperty.Id] = new GetProperty(IsDialog);
+                }
+
+                // Wrap these in readonly instance
+                s_propertyInfo = new ReadOnlyDictionary<int, GetProperty>(propertyInfo);
             }
         }
 
@@ -2363,95 +2461,6 @@ namespace System.Windows.Automation.Peers
                 }
 #endif
 
-        private static void Initialize()
-        {
-            //  initializeing patterns
-            s_patternInfo = new Hashtable();
-            s_patternInfo[InvokePatternIdentifiers.Pattern.Id]          = new PatternInfo(InvokePatternIdentifiers.Pattern.Id,          new WrapObject(InvokeProviderWrapper.Wrap),             PatternInterface.Invoke);
-            s_patternInfo[SelectionPatternIdentifiers.Pattern.Id]       = new PatternInfo(SelectionPatternIdentifiers.Pattern.Id,       new WrapObject(SelectionProviderWrapper.Wrap),          PatternInterface.Selection);
-            s_patternInfo[ValuePatternIdentifiers.Pattern.Id]           = new PatternInfo(ValuePatternIdentifiers.Pattern.Id,           new WrapObject(ValueProviderWrapper.Wrap),              PatternInterface.Value);
-            s_patternInfo[RangeValuePatternIdentifiers.Pattern.Id]      = new PatternInfo(RangeValuePatternIdentifiers.Pattern.Id,      new WrapObject(RangeValueProviderWrapper.Wrap),         PatternInterface.RangeValue);
-            s_patternInfo[ScrollPatternIdentifiers.Pattern.Id]          = new PatternInfo(ScrollPatternIdentifiers.Pattern.Id,          new WrapObject(ScrollProviderWrapper.Wrap),             PatternInterface.Scroll);
-            s_patternInfo[ScrollItemPatternIdentifiers.Pattern.Id]      = new PatternInfo(ScrollItemPatternIdentifiers.Pattern.Id,      new WrapObject(ScrollItemProviderWrapper.Wrap),         PatternInterface.ScrollItem);
-            s_patternInfo[ExpandCollapsePatternIdentifiers.Pattern.Id]  = new PatternInfo(ExpandCollapsePatternIdentifiers.Pattern.Id,  new WrapObject(ExpandCollapseProviderWrapper.Wrap),     PatternInterface.ExpandCollapse);
-            s_patternInfo[GridPatternIdentifiers.Pattern.Id]            = new PatternInfo(GridPatternIdentifiers.Pattern.Id,            new WrapObject(GridProviderWrapper.Wrap),               PatternInterface.Grid);
-            s_patternInfo[GridItemPatternIdentifiers.Pattern.Id]        = new PatternInfo(GridItemPatternIdentifiers.Pattern.Id,        new WrapObject(GridItemProviderWrapper.Wrap),           PatternInterface.GridItem);
-            s_patternInfo[MultipleViewPatternIdentifiers.Pattern.Id]    = new PatternInfo(MultipleViewPatternIdentifiers.Pattern.Id,    new WrapObject(MultipleViewProviderWrapper.Wrap),       PatternInterface.MultipleView);
-            s_patternInfo[WindowPatternIdentifiers.Pattern.Id]          = new PatternInfo(WindowPatternIdentifiers.Pattern.Id,          new WrapObject(WindowProviderWrapper.Wrap),             PatternInterface.Window);
-            s_patternInfo[SelectionItemPatternIdentifiers.Pattern.Id]   = new PatternInfo(SelectionItemPatternIdentifiers.Pattern.Id,   new WrapObject(SelectionItemProviderWrapper.Wrap),      PatternInterface.SelectionItem);
-            s_patternInfo[DockPatternIdentifiers.Pattern.Id]            = new PatternInfo(DockPatternIdentifiers.Pattern.Id,            new WrapObject(DockProviderWrapper.Wrap),               PatternInterface.Dock);
-            s_patternInfo[TablePatternIdentifiers.Pattern.Id]           = new PatternInfo(TablePatternIdentifiers.Pattern.Id,           new WrapObject(TableProviderWrapper.Wrap),              PatternInterface.Table);
-            s_patternInfo[TableItemPatternIdentifiers.Pattern.Id]       = new PatternInfo(TableItemPatternIdentifiers.Pattern.Id,       new WrapObject(TableItemProviderWrapper.Wrap),          PatternInterface.TableItem);
-            s_patternInfo[TogglePatternIdentifiers.Pattern.Id]          = new PatternInfo(TogglePatternIdentifiers.Pattern.Id,          new WrapObject(ToggleProviderWrapper.Wrap),             PatternInterface.Toggle);
-            s_patternInfo[TransformPatternIdentifiers.Pattern.Id]       = new PatternInfo(TransformPatternIdentifiers.Pattern.Id,       new WrapObject(TransformProviderWrapper.Wrap),          PatternInterface.Transform);
-            s_patternInfo[TextPatternIdentifiers.Pattern.Id]            = new PatternInfo(TextPatternIdentifiers.Pattern.Id,            new WrapObject(TextProviderWrapper.Wrap),               PatternInterface.Text);
-
-            // To avoid the worst situation on legacy systems which may not have new unmanaged core. with this change with old unmanaged core
-            // this will these patterns will be null and won't be added and hence reponse will be as it is not present at all rather than any crash.
-            if (VirtualizedItemPatternIdentifiers.Pattern != null)
-                s_patternInfo[VirtualizedItemPatternIdentifiers.Pattern.Id] = new PatternInfo(VirtualizedItemPatternIdentifiers.Pattern.Id, new WrapObject(VirtualizedItemProviderWrapper.Wrap), PatternInterface.VirtualizedItem);
-            if (ItemContainerPatternIdentifiers.Pattern != null)
-                s_patternInfo[ItemContainerPatternIdentifiers.Pattern.Id] = new PatternInfo(ItemContainerPatternIdentifiers.Pattern.Id, new WrapObject(ItemContainerProviderWrapper.Wrap), PatternInterface.ItemContainer);
-            if (SynchronizedInputPatternIdentifiers.Pattern != null)
-            {
-                s_patternInfo[SynchronizedInputPatternIdentifiers.Pattern.Id] = new PatternInfo(SynchronizedInputPatternIdentifiers.Pattern.Id, new WrapObject(SynchronizedInputProviderWrapper.Wrap), PatternInterface.SynchronizedInput);
-            }
-
-            //  initializeing properties
-            s_propertyInfo = new Hashtable();
-            s_propertyInfo[AutomationElementIdentifiers.IsControlElementProperty.Id] = new GetProperty(IsControlElement);
-            s_propertyInfo[AutomationElementIdentifiers.ControlTypeProperty.Id] = new GetProperty(GetControlType);
-            s_propertyInfo[AutomationElementIdentifiers.IsContentElementProperty.Id] = new GetProperty(IsContentElement);
-            s_propertyInfo[AutomationElementIdentifiers.LabeledByProperty.Id] = new GetProperty(GetLabeledBy);
-            s_propertyInfo[AutomationElementIdentifiers.NativeWindowHandleProperty.Id] = new GetProperty(GetNativeWindowHandle);
-            s_propertyInfo[AutomationElementIdentifiers.AutomationIdProperty.Id] = new GetProperty(GetAutomationId);
-            s_propertyInfo[AutomationElementIdentifiers.ItemTypeProperty.Id] = new GetProperty(GetItemType);
-            s_propertyInfo[AutomationElementIdentifiers.IsPasswordProperty.Id] = new GetProperty(IsPassword);
-            s_propertyInfo[AutomationElementIdentifiers.LocalizedControlTypeProperty.Id] = new GetProperty(GetLocalizedControlType);
-            s_propertyInfo[AutomationElementIdentifiers.NameProperty.Id] = new GetProperty(GetName);
-            s_propertyInfo[AutomationElementIdentifiers.AcceleratorKeyProperty.Id] = new GetProperty(GetAcceleratorKey);
-            s_propertyInfo[AutomationElementIdentifiers.AccessKeyProperty.Id] = new GetProperty(GetAccessKey);
-            s_propertyInfo[AutomationElementIdentifiers.HasKeyboardFocusProperty.Id] = new GetProperty(HasKeyboardFocus);
-            s_propertyInfo[AutomationElementIdentifiers.IsKeyboardFocusableProperty.Id] = new GetProperty(IsKeyboardFocusable);
-            s_propertyInfo[AutomationElementIdentifiers.IsEnabledProperty.Id] = new GetProperty(IsEnabled);
-            s_propertyInfo[AutomationElementIdentifiers.BoundingRectangleProperty.Id] = new GetProperty(GetBoundingRectangle);
-            s_propertyInfo[AutomationElementIdentifiers.ProcessIdProperty.Id] = new GetProperty(GetCurrentProcessId);
-            s_propertyInfo[AutomationElementIdentifiers.RuntimeIdProperty.Id] = new GetProperty(GetRuntimeId);
-            s_propertyInfo[AutomationElementIdentifiers.ClassNameProperty.Id] = new GetProperty(GetClassName);
-            s_propertyInfo[AutomationElementIdentifiers.HelpTextProperty.Id] = new GetProperty(GetHelpText);
-            s_propertyInfo[AutomationElementIdentifiers.ClickablePointProperty.Id] = new GetProperty(GetClickablePoint);
-            s_propertyInfo[AutomationElementIdentifiers.CultureProperty.Id] = new GetProperty(GetCultureInfo);
-            s_propertyInfo[AutomationElementIdentifiers.IsOffscreenProperty.Id] = new GetProperty(IsOffscreen);
-            s_propertyInfo[AutomationElementIdentifiers.OrientationProperty.Id] = new GetProperty(GetOrientation);
-            s_propertyInfo[AutomationElementIdentifiers.FrameworkIdProperty.Id] = new GetProperty(GetFrameworkId);
-            s_propertyInfo[AutomationElementIdentifiers.IsRequiredForFormProperty.Id] = new GetProperty(IsRequiredForForm);
-            s_propertyInfo[AutomationElementIdentifiers.ItemStatusProperty.Id] = new GetProperty(GetItemStatus);
-            if (!AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures && AutomationElementIdentifiers.LiveSettingProperty != null)
-            {
-                s_propertyInfo[AutomationElementIdentifiers.LiveSettingProperty.Id] = new GetProperty(GetLiveSetting);
-            }
-            if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.ControllerForProperty != null)
-            {
-                s_propertyInfo[AutomationElementIdentifiers.ControllerForProperty.Id] = new GetProperty(GetControllerFor);
-            }
-            if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.SizeOfSetProperty != null)
-            {
-                s_propertyInfo[AutomationElementIdentifiers.SizeOfSetProperty.Id] = new GetProperty(GetSizeOfSet);
-            }
-            if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.PositionInSetProperty != null)
-            {
-                s_propertyInfo[AutomationElementIdentifiers.PositionInSetProperty.Id] = new GetProperty(GetPositionInSet);
-            }
-            if (AutomationElementIdentifiers.HeadingLevelProperty != null)
-            { 
-                s_propertyInfo[AutomationElementIdentifiers.HeadingLevelProperty.Id] = new GetProperty(GetHeadingLevel);
-            }
-            if (AutomationElementIdentifiers.IsDialogProperty != null)
-            {
-                s_propertyInfo[AutomationElementIdentifiers.IsDialogProperty.Id] = new GetProperty(IsDialog);
-            }
-        }
-
         private delegate object WrapObject(AutomationPeer peer, object iface);
 
         private class PatternInfo
@@ -2504,8 +2513,8 @@ namespace System.Windows.Automation.Peers
         private static object GetHeadingLevel(AutomationPeer peer)          {   return peer.GetHeadingLevel(); }
         private static object IsDialog(AutomationPeer peer)                 {   return peer.IsDialog(); }
 
-        private static Hashtable s_patternInfo;
-        private static Hashtable s_propertyInfo;
+        private static readonly ReadOnlyDictionary<int, PatternInfo> s_patternInfo;
+        private static readonly ReadOnlyDictionary<int, GetProperty> s_propertyInfo;
 
         private int _index = -1;
         private IntPtr _hwnd;

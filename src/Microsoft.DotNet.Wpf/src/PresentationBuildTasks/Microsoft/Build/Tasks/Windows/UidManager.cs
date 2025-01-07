@@ -93,7 +93,6 @@ namespace Microsoft.Build.Tasks.Windows
             }
             catch (Exception e)
             {
-                // PreSharp Complaint 6500 - do not handle null-ref or SEH exceptions.
                 if (e is NullReferenceException || e is SEHException)
                 {
                     throw;
@@ -392,7 +391,6 @@ namespace Microsoft.Build.Tasks.Windows
             }
             catch (Exception e)
             {
-                // PreSharp Complaint 6500 - do not handle null-ref or SEH exceptions.
                 if (e is NullReferenceException || e is SEHException)
                 {
                     throw;
@@ -986,7 +984,6 @@ namespace Microsoft.Build.Tasks.Windows
             }
             catch (Exception e)
             {
-                // PreSharp Complaint 6500 - do not handle null-ref or SEH exceptions.
                 if (e is NullReferenceException || e is SEHException)
                 {
                     throw;

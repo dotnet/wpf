@@ -796,7 +796,6 @@ namespace System.Windows
                 // There is no Assembly.Exists API to determine if an Assembly exists.
                 // There is also no way to determine if an Assembly's format is good prior to loading it.
                 // So, the exception must be caught. assembly will continue to be null and returned.
-#pragma warning disable 6502
                 catch (FileNotFoundException)
                 {
                 }
@@ -813,7 +812,6 @@ namespace System.Windows
                         RuntimeHelpers.RunClassConstructor(knownTypeHelper.TypeHandle);
                     }
                 }
-#pragma warning restore 6502
             }
 
             /// <summary>
@@ -912,8 +910,6 @@ namespace System.Windows
                 // There is no ResourceManager.HasManifest in order to detect this case before an exception is thrown.
                 // Likewise, there is no way to know if loading a resource will fail prior to loading it.
                 // So, the exceptions must be caught. stream will continue to be null and handled accordingly later.
-#pragma warning disable 6502
-
                 catch (MissingManifestResourceException)
                 {
                     // No usable resources in the assembly
@@ -928,8 +924,6 @@ namespace System.Windows
                     // Object not stored correctly
                 }
 #endif
-
-#pragma warning restore 6502
 
                 if (stream != null)
                 {

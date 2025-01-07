@@ -69,41 +69,39 @@ namespace System.Windows.Controls
         {
             _groupNameToElements ??= new Dictionary<string, List<WeakReference<RadioButton>>>(1);
 
-            lock (_groupNameToElements)
+            if (!_groupNameToElements.TryGetValue(groupName, out List<WeakReference<RadioButton>> elements))
             {
-                if (!_groupNameToElements.TryGetValue(groupName, out List<WeakReference<RadioButton>> elements))
-                {
-                    elements = new List<WeakReference<RadioButton>>(1);
-                    _groupNameToElements[groupName] = elements;
-                }
-                else
-                {
-                    // There were some elements there, remove dead ones
-                    PurgeDead(elements, null);
-                }
-
-                elements.Add(new WeakReference<RadioButton>(radioButton));
+                elements = new List<WeakReference<RadioButton>>(1);
+                _groupNameToElements[groupName] = elements;
             }
+            else
+            {
+                // There were some elements there, remove dead ones
+                PurgeDead(elements, null);
+            }
+
+            elements.Add(new WeakReference<RadioButton>(radioButton));
+
             _currentlyRegisteredGroupName.SetValue(radioButton, groupName);
         }
 
         private static void Unregister(string groupName, RadioButton radioButton)
         {
+            Debug.Assert(_groupNameToElements is not null, "Unregister was called before Register");
+
             if (_groupNameToElements is null)
                 return;
 
-            lock (_groupNameToElements)
+            // Get all elements bound to this key and remove this element
+            if (_groupNameToElements.TryGetValue(groupName, out List<WeakReference<RadioButton>> elements))
             {
-                // Get all elements bound to this key and remove this element
-                if (_groupNameToElements.TryGetValue(groupName, out List<WeakReference<RadioButton>> elements))
-                {
-                    PurgeDead(elements, radioButton);
-                    if (elements.Count == 0)
-                    {
-                        _groupNameToElements.Remove(groupName);
-                    }
-                }
+                PurgeDead(elements, radioButton);
+
+                // If the group has zero elements, remove it
+                if (elements.Count == 0)
+                    _groupNameToElements.Remove(groupName);
             }
+
             _currentlyRegisteredGroupName.SetValue(radioButton, null);
         }
 
@@ -132,11 +130,9 @@ namespace System.Windows.Controls
 
                 _groupNameToElements ??= new Dictionary<string, List<WeakReference<RadioButton>>>(1);
 
-                lock (_groupNameToElements)
+                // Get all elements bound to this key and remove this element
+                if (_groupNameToElements.TryGetValue(groupName, out List<WeakReference<RadioButton>> elements))
                 {
-                    // Get all elements bound to this key and remove this element
-                    List<WeakReference<RadioButton>> elements = _groupNameToElements[groupName];
-                    // Haha, notice the unlikely but possible null-deref here
                     for (int i = 0; i < elements.Count; )
                     {
                         WeakReference<RadioButton> weakReference = elements[i];

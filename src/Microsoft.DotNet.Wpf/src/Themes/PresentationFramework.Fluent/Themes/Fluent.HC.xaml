@@ -1247,6 +1247,9 @@
     </Setter>
   </Style>
   <Style BasedOn="{StaticResource DefaultCheckBoxStyle}" TargetType="{x:Type CheckBox}" />
+  <DataTemplate DataType="{x:Type CollectionViewGroup}">
+    <ContentPresenter Content="{Binding Path=Name}" ContentStringFormat="{TemplateBinding ContentStringFormat}" />
+  </DataTemplate>
   <Thickness x:Key="ComboBoxPadding">10,8,10,8</Thickness>
   <Thickness x:Key="ComboBoxBorderThemeThickness">1,1,1,1</Thickness>
   <Thickness x:Key="ComboBoxAccentBorderThemeThickness">0,0,0,2</Thickness>
@@ -1483,6 +1486,15 @@
   </Style>
   <Style BasedOn="{StaticResource DefaultComboBoxItemStyle}" TargetType="{x:Type ComboBoxItem}" />
   <Style BasedOn="{StaticResource DefaultComboBoxStyle}" TargetType="{x:Type ComboBox}" />
+  <Style x:Key="{x:Type ContentControl}" TargetType="{x:Type ContentControl}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type ContentControl}">
+          <ContentPresenter />
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
   <Thickness x:Key="ContextMenuBorderThickness">1</Thickness>
   <Style x:Key="DefaultContextMenuStyle" TargetType="{x:Type ContextMenu}">
     <Setter Property="TextElement.Foreground" Value="{DynamicResource ContextMenuForeground}" />
@@ -2618,6 +2630,30 @@
     <Setter Property="Margin" Value="0" />
     <Setter Property="Focusable" Value="False" />
     <Setter Property="SnapsToDevicePixels" Value="True" />
+  </Style>
+  <Style x:Key="{x:Type GroupItem}" TargetType="{x:Type GroupItem}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type GroupItem}">
+          <StackPanel>
+            <ContentPresenter x:Name="PART_Header" />
+            <ItemsPresenter x:Name="ItemsPresenter" Margin="5,0,0,0" />
+          </StackPanel>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  <Style x:Key="{x:Type HeaderedContentControl}" TargetType="{x:Type HeaderedContentControl}">
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="{x:Type HeaderedContentControl}">
+          <StackPanel>
+            <ContentPresenter ContentSource="Header" />
+            <ContentPresenter />
+          </StackPanel>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
   </Style>
   <Style TargetType="{x:Type Label}">
     <Setter Property="Padding" Value="0,0,0,4" />

@@ -67,13 +67,13 @@ namespace System.Windows.Controls
 
         private static void Register(string groupName, RadioButton radioButton)
         {
-            _groupNameToElements ??= new Dictionary<string, ArrayList>(1);
+            _groupNameToElements ??= new Dictionary<string, List<WeakReference>>(1);
 
             lock (_groupNameToElements)
             {
-                if (!_groupNameToElements.TryGetValue(groupName, out ArrayList elements))
+                if (!_groupNameToElements.TryGetValue(groupName, out List<WeakReference> elements))
                 {
-                    elements = new ArrayList(1);
+                    elements = new List<WeakReference>(1);
                     _groupNameToElements[groupName] = elements;
                 }
                 else
@@ -95,7 +95,7 @@ namespace System.Windows.Controls
             lock (_groupNameToElements)
             {
                 // Get all elements bound to this key and remove this element
-                if (_groupNameToElements.TryGetValue(groupName, out ArrayList elements))
+                if (_groupNameToElements.TryGetValue(groupName, out List<WeakReference> elements))
                 {
                     PurgeDead(elements, radioButton);
                     if (elements.Count == 0)
@@ -107,11 +107,11 @@ namespace System.Windows.Controls
             _currentlyRegisteredGroupName.SetValue(radioButton, null);
         }
 
-        private static void PurgeDead(ArrayList elements, object elementToRemove)
+        private static void PurgeDead(List<WeakReference> elements, object elementToRemove)
         {
             for (int i = 0; i < elements.Count; )
             {
-                WeakReference weakReference = (WeakReference)elements[i];
+                WeakReference weakReference = elements[i];
                 object element = weakReference.Target;
                 if (element == null || element == elementToRemove)
                 {
@@ -131,16 +131,16 @@ namespace System.Windows.Controls
             {
                 Visual rootScope = KeyboardNavigation.GetVisualRoot(this);
 
-                _groupNameToElements ??= new Dictionary<string, ArrayList>(1);
+                _groupNameToElements ??= new Dictionary<string, List<WeakReference>>(1);
 
                 lock (_groupNameToElements)
                 {
                     // Get all elements bound to this key and remove this element
-                    ArrayList elements = _groupNameToElements[groupName];
+                    List<WeakReference> elements = _groupNameToElements[groupName];
                     // Haha, notice the unlikely but possible null-deref here
                     for (int i = 0; i < elements.Count; )
                     {
-                        WeakReference weakReference = (WeakReference)elements[i];
+                        WeakReference weakReference = elements[i];
                         RadioButton rb = weakReference.Target as RadioButton;
                         if (rb == null)
                         {
@@ -281,7 +281,7 @@ namespace System.Windows.Controls
         #region private data
 
         [ThreadStatic]
-        private static Dictionary<string, ArrayList> _groupNameToElements;
+        private static Dictionary<string, List<WeakReference>> _groupNameToElements;
 
         private static readonly UncommonField<string> _currentlyRegisteredGroupName = new UncommonField<string>();
 

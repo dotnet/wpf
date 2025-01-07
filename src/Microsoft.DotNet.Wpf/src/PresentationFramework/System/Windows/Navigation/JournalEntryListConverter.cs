@@ -29,9 +29,7 @@ namespace System.Windows.Navigation
         /// </summary>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-#pragma warning disable  6506
             return (value != null) ? ((JournalEntryStack)value).GetLimitedJournalEntryStackEnumerable() : null;
-#pragma warning restore 6506
         }
 
         /// <summary>

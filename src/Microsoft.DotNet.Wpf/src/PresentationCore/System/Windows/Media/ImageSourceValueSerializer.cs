@@ -33,9 +33,7 @@ namespace System.Windows.Media
         public override bool CanConvertToString(object value, IValueSerializerContext context)
         {
             ImageSource imageSource = value as ImageSource;
-            #pragma warning disable 6506
             return imageSource != null && imageSource.CanSerializeToString();
-            #pragma warning restore 6506
         }
 
         /// <summary>

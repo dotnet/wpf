@@ -1689,8 +1689,6 @@ namespace System.Windows.Navigation
             return true;
         }
 
-#pragma warning restore 6506
-
         //
         // bool INavigator.CanGoForward
         //

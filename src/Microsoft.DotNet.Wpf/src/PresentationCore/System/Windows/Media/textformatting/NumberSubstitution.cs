@@ -245,14 +245,10 @@ namespace System.Windows.Media
         {
             NumberSubstitution sub = obj as NumberSubstitution;
 
-            // Suppress PRESharp warning that sub can be null; apparently PRESharp
-            // doesn't understand short circuit evaluation of operator &&.
-            #pragma warning disable 6506
             return sub != null &&
                 _source == sub._source &&
                 _substitution == sub._substitution &&
                 (_cultureOverride == null ? (sub._cultureOverride == null) : (_cultureOverride.Equals(sub._cultureOverride)));
-            #pragma warning restore 6506
         }
 
         private NumberCultureSource _source;

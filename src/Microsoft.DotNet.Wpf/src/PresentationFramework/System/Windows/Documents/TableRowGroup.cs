@@ -332,6 +332,3 @@ namespace System.Windows.Documents
         //------------------------------------------------------
     }
 }
-
-#pragma warning restore 1634, 1691
-

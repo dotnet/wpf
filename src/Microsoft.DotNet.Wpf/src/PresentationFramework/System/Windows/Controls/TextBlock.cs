@@ -4138,9 +4138,3 @@ Debug.Assert(lineCount == LineCount);
         #endregion Dependency Property Helpers
     }
 }
-
-
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning restore 1634, 1691
-
-

@@ -178,10 +178,6 @@ namespace System.Windows.Data
             return (value == null) || SystemXmlHelper.IsXmlNamespaceManager(value);
         }
 
-        #pragma warning restore 7008
-        #pragma warning restore 1634, 1691
-
-
         //------------------------------------------------------
         //
         //  Constructors

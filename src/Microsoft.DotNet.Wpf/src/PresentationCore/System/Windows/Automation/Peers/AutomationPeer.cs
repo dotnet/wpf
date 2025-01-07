@@ -5,8 +5,8 @@
 
 using MS.Internal;
 using MS.Internal.Automation;
-using System.Collections.ObjectModel;
 using System.Windows.Threading;
+using System.Collections.ObjectModel;
 using System.Windows.Automation.Provider;
 
 namespace System.Windows.Automation.Peers
@@ -273,15 +273,15 @@ namespace System.Windows.Automation.Peers
 
                 // To avoid the worst situation on legacy systems which may not have new unmanaged core. with this change with old unmanaged core
                 // this will these patterns will be null and won't be added and hence reponse will be as it is not present at all rather than any crash.
-                if (VirtualizedItemPatternIdentifiers.Pattern != null)
+                if (VirtualizedItemPatternIdentifiers.Pattern is not null)
                 {
                     patternInfo[VirtualizedItemPatternIdentifiers.Pattern.Id] = new PatternInfo(VirtualizedItemPatternIdentifiers.Pattern.Id, new WrapObject(VirtualizedItemProviderWrapper.Wrap), PatternInterface.VirtualizedItem);
                 }
-                if (ItemContainerPatternIdentifiers.Pattern != null)
+                if (ItemContainerPatternIdentifiers.Pattern is not null)
                 {
                     patternInfo[ItemContainerPatternIdentifiers.Pattern.Id] = new PatternInfo(ItemContainerPatternIdentifiers.Pattern.Id, new WrapObject(ItemContainerProviderWrapper.Wrap), PatternInterface.ItemContainer);
                 }
-                if (SynchronizedInputPatternIdentifiers.Pattern != null)
+                if (SynchronizedInputPatternIdentifiers.Pattern is not null)
                 {
                     patternInfo[SynchronizedInputPatternIdentifiers.Pattern.Id] = new PatternInfo(SynchronizedInputPatternIdentifiers.Pattern.Id, new WrapObject(SynchronizedInputProviderWrapper.Wrap), PatternInterface.SynchronizedInput);
                 }
@@ -321,27 +321,27 @@ namespace System.Windows.Automation.Peers
                     [AutomationElementIdentifiers.ItemStatusProperty.Id] = new GetProperty(GetItemStatus)
                 };
 
-                if (!AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures && AutomationElementIdentifiers.LiveSettingProperty != null)
+                if (!AccessibilitySwitches.UseNetFx47CompatibleAccessibilityFeatures && AutomationElementIdentifiers.LiveSettingProperty is not null)
                 {
                     propertyInfo[AutomationElementIdentifiers.LiveSettingProperty.Id] = new GetProperty(GetLiveSetting);
                 }
-                if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.ControllerForProperty != null)
+                if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.ControllerForProperty is not null)
                 {
                     propertyInfo[AutomationElementIdentifiers.ControllerForProperty.Id] = new GetProperty(GetControllerFor);
                 }
-                if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.SizeOfSetProperty != null)
+                if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.SizeOfSetProperty is not null)
                 {
                     propertyInfo[AutomationElementIdentifiers.SizeOfSetProperty.Id] = new GetProperty(GetSizeOfSet);
                 }
-                if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.PositionInSetProperty != null)
+                if (!AccessibilitySwitches.UseNetFx472CompatibleAccessibilityFeatures && AutomationElementIdentifiers.PositionInSetProperty is not null)
                 {
                     propertyInfo[AutomationElementIdentifiers.PositionInSetProperty.Id] = new GetProperty(GetPositionInSet);
                 }
-                if (AutomationElementIdentifiers.HeadingLevelProperty != null)
+                if (AutomationElementIdentifiers.HeadingLevelProperty is not null)
                 {
                     propertyInfo[AutomationElementIdentifiers.HeadingLevelProperty.Id] = new GetProperty(GetHeadingLevel);
                 }
-                if (AutomationElementIdentifiers.IsDialogProperty != null)
+                if (AutomationElementIdentifiers.IsDialogProperty is not null)
                 {
                     propertyInfo[AutomationElementIdentifiers.IsDialogProperty.Id] = new GetProperty(IsDialog);
                 }
@@ -2264,7 +2264,7 @@ namespace System.Windows.Automation.Peers
             if (s_patternInfo.TryGetValue(patternId, out PatternInfo patternInfo))
             {
                 object iface = GetPattern(patternInfo.PatternInterface);
-                if (iface != null)
+                if (iface is not null)
                 {
                     result = patternInfo.WrapObject(this, iface);
                 }
@@ -2281,7 +2281,7 @@ namespace System.Windows.Automation.Peers
             if (s_propertyInfo.TryGetValue(propertyId, out GetProperty getProperty))
             {
                 result = getProperty(this);
-                if (AutomationElementIdentifiers.HeadingLevelProperty != null && propertyId == AutomationElementIdentifiers.HeadingLevelProperty.Id)
+                if (AutomationElementIdentifiers.HeadingLevelProperty is not null && propertyId == AutomationElementIdentifiers.HeadingLevelProperty.Id)
                 {
                     result = ConvertHeadingLevelToId((AutomationHeadingLevel)result);
                 }

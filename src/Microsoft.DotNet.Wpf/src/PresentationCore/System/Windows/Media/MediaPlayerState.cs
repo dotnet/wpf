@@ -999,11 +999,7 @@ namespace System.Windows.Media
             bool                    notifyUceDirectly
             )
         {
-//
-// This is an interrop call, but, it does not set a last error being a COM call. So, suppress the
-// presharp warning about losing last error.
-//
-#pragma warning disable 6523
+            // This is an interrop call, but, it does not set a last error being a COM call. 
 
             //
             // AddRef to ensure the media player stays alive during transport, even if the
@@ -1023,8 +1019,6 @@ namespace System.Windows.Media
                 _nativeMedia,
                 notifyUceDirectly
                 );
-
-#pragma warning restore 6523
         }
 
         #endregion

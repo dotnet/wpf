@@ -1840,10 +1840,6 @@ namespace System.Windows
 
                 currentPtr = (IntPtr)((long)currentPtr + baseStructSize);
 
-                // Win32 CopyMemory return void, so we should disable PreSharp 6523 that
-                // expects the Win32 exception with the last error.
-#pragma warning disable 6523
-
                 // Write out the strings...
                 for (int i = 0; i < files.Length; i++)
                 {
@@ -1860,8 +1856,6 @@ namespace System.Windows
                     // Increase the current pointer by 2 since it is a unicode.
                     currentPtr = (IntPtr)((long)currentPtr + 2);
                 }
-
-#pragma warning restore 6523
 
                 // Terminate the string and add 2bytes since it is a unicode.
                 unsafe
@@ -1908,13 +1902,7 @@ namespace System.Windows
                 {
                     chars = str.ToCharArray(0, str.Length);
 
-                    // Win32 CopyMemory return void, so we should disable PreSharp 6523 that
-                    // expects the Win32 exception with the last error.
-#pragma warning disable 6523
-
                     UnsafeNativeMethods.CopyMemoryW(ptr, chars, chars.Length * 2);
-
-#pragma warning restore 6523
 
                     // Terminate the string becasue of GlobalReAlloc GMEM_ZEROINIT will zero
                     // out only the bytes it adds to the memory object. It doesn't initialize
@@ -1964,13 +1952,7 @@ namespace System.Windows
 
                 try
                 {
-                    // Win32 CopyMemory return void, so we should disable PreSharp 6523 that
-                    // expects the Win32 exception with the last error.
-#pragma warning disable 6523
-
                     UnsafeNativeMethods.CopyMemory(ptr, strBytes, pinvokeSize);
-
-#pragma warning restore 6523
 
                     Marshal.Copy(new byte[] { 0 }, 0, (IntPtr)((long)ptr + pinvokeSize), 1);
                 }
@@ -2018,14 +2000,8 @@ namespace System.Windows
 
             try
             {
-                // Win32 CopyMemory return void, so we should disable PreSharp 6523 that
-                // expects the Win32 exception with the last error.
-#pragma warning disable 6523
-
                 // Copy UTF8 encoding bytes to the memory.
                 UnsafeNativeMethods.CopyMemory(pointerUtf8, utf8Bytes, utf8ByteCount);
-
-#pragma warning restore 6523
 
                 // Copy the null into the last of memory.
                 Marshal.Copy(new byte[] { 0 }, 0, (IntPtr)((long)pointerUtf8 + utf8ByteCount), 1);

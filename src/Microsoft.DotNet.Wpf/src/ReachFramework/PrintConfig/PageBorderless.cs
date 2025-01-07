@@ -251,7 +251,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.PageBorderlessEnumMin ||
                     value > PrintSchema.PageBorderlessEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 this[PrintSchemaTags.Framework.OptionNameProperty] = (int)value;

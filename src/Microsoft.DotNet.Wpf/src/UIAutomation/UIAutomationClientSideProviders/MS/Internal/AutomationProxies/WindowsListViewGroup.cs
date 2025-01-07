@@ -364,12 +364,12 @@ namespace MS.Internal.AutomationProxies
 
             if (row < 0 || row >= maxRow)
             {
-                throw new ArgumentOutOfRangeException("row", row, SR.GridRowOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(row), row, SR.GridRowOutOfRange);
             }
 
             if (column < 0 || column >= maxColumn)
             {
-                throw new ArgumentOutOfRangeException("column", column, SR.GridColumnOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(column), column, SR.GridColumnOutOfRange);
             }
 
             if (WindowsListView.IsDetailMode (_hwnd))

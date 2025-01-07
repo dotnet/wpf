@@ -555,7 +555,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.PageMediaSizeNameEnumMin ||
                     value > PrintSchema.PageMediaSizeNameEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
             }
 

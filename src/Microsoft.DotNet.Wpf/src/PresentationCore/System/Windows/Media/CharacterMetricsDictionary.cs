@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -496,7 +496,7 @@ namespace System.Windows.Media
             {
                 int i = 0;
                 if (!FontFamilyMap.ParseHexNumber(s, ref i, out value) || i < s.Length)
-                    throw new ArgumentException(SR.Format(SR.CannotConvertStringToType, s, "int"), "key");
+                    throw new ArgumentException(SR.Format(SR.CannotConvertStringToType, s, "int"), nameof(key));
             }
             else if (key is int)
             {
@@ -504,11 +504,11 @@ namespace System.Windows.Media
             }
             else
             {
-                throw new ArgumentException(SR.Format(SR.CannotConvertType, key.GetType(), "int"), "key");
+                throw new ArgumentException(SR.Format(SR.CannotConvertType, key.GetType(), "int"), nameof(key));
             }
 
             if (value < 0 || value > FontFamilyMap.LastUnicodeScalar)
-                throw new ArgumentException(SR.Format(SR.CodePointOutOfRange, value), "key");
+                throw new ArgumentException(SR.Format(SR.CodePointOutOfRange, value), nameof(key));
 
             return value;
         }

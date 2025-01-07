@@ -363,7 +363,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.InputBinEnumMin ||
                     value > PrintSchema.InputBinEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 this[PrintSchemaTags.Framework.OptionNameProperty] = (int)value;

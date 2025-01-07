@@ -233,7 +233,7 @@ namespace MS.Internal.Annotations.Component
 
             if (attachedAnnotation != _attachedAnnotation)
             {
-                throw new ArgumentException(SR.InvalidAttachedAnnotation, "attachedAnnotation");
+                throw new ArgumentException(SR.InvalidAttachedAnnotation, nameof(attachedAnnotation));
             }
 
             //fire trace event

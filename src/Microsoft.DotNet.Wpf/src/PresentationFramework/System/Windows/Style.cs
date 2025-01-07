@@ -405,7 +405,7 @@ namespace System.Windows
 
             if (sb == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(SetterBase)), "value");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, value.GetType(), typeof(SetterBase)), nameof(value));
             }
 
             Setters.Add(sb);

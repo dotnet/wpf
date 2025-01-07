@@ -85,7 +85,7 @@ namespace MS.Internal.IO.Packaging
                     }
                 default:
                     {
-                        throw new ArgumentOutOfRangeException("origin", SR.SeekOriginInvalid);
+                        throw new ArgumentOutOfRangeException(nameof(origin), SR.SeekOriginInvalid);
                     }
             }
 

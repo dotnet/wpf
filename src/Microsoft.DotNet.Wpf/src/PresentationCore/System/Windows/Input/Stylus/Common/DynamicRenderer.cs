@@ -247,7 +247,7 @@ namespace System.Windows.Input.StylusPlugIns
             
             if (inAir)
             {
-                throw new ArgumentException(SR.Stylus_MustBeDownToCallReset, "stylusDevice");
+                throw new ArgumentException(SR.Stylus_MustBeDownToCallReset, nameof(stylusDevice));
             }
 
             // Avoid reentrancy due to lock() call.

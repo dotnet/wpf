@@ -350,7 +350,7 @@ namespace MS.Internal.Printing.Configuration
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value",
+                    throw new ArgumentOutOfRangeException(nameof(value),
                                   PTUtility.GetTextFromResource("ArgumentException.PositiveValue"));
                 }
 
@@ -377,7 +377,7 @@ namespace MS.Internal.Printing.Configuration
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentOutOfRangeException("value",
+                    throw new ArgumentOutOfRangeException(nameof(value),
                                   PTUtility.GetTextFromResource("ArgumentException.PositiveValue"));
                 }
 
@@ -405,7 +405,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.PageQualitativeResolutionEnumMin ||
                     value > PrintSchema.PageQualitativeResolutionEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 this[PrintSchemaTags.Keywords.PageResolutionKeys.QualitativeResolution] = (int)value;

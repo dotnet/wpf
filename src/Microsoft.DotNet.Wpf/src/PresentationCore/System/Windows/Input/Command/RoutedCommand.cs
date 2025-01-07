@@ -48,7 +48,7 @@ namespace System.Windows.Input
 
             if (name.Length == 0)
             {
-                throw new ArgumentException(SR.StringEmpty, "name");
+                throw new ArgumentException(SR.StringEmpty, nameof(name));
             }
 
             ArgumentNullException.ThrowIfNull(ownerType);

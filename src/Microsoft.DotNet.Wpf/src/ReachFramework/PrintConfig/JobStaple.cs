@@ -281,7 +281,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.StaplingEnumMin ||
                     value > PrintSchema.StaplingEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 this[PrintSchemaTags.Framework.OptionNameProperty] = (int)value;

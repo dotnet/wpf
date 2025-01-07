@@ -253,12 +253,12 @@ namespace MS.Internal.AutomationProxies
             // NOTE: Status bar has only 1 row
             if (row != 0)
             {
-                throw new ArgumentOutOfRangeException("row", row, SR.GridRowOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(row), row, SR.GridRowOutOfRange);
             }
 
             if (column < 0 || column >= Count)
             {
-                throw new ArgumentOutOfRangeException("column", column, SR.GridColumnOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(column), column, SR.GridColumnOutOfRange);
             }
 
             return CreateStatusBarPane(column);

@@ -377,7 +377,7 @@ namespace System.Windows.Controls
             if (    (_localAdornerDecorator == null)
                 ||  (index != 0))
             {
-                throw new ArgumentOutOfRangeException("index", index, SR.Visual_ArgumentOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(index), index, SR.Visual_ArgumentOutOfRange);
             }
 
             return _localAdornerDecorator;
@@ -1840,7 +1840,7 @@ namespace System.Windows.Controls
                 Double.IsInfinity(point.X)||
                 Double.IsInfinity(point.Y) )
             {
-                    throw new ArgumentException(SR.InvalidPoint, "point");
+                    throw new ArgumentException(SR.InvalidPoint, nameof(point));
             }
 
 

@@ -250,7 +250,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.PageOrderEnumMin ||
                     value > PrintSchema.PageOrderEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 this[PrintSchemaTags.Framework.OptionNameProperty] = (int)value;

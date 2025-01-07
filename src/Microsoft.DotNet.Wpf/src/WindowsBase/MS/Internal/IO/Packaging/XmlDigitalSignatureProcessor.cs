@@ -1078,7 +1078,7 @@ namespace MS.Internal.IO.Packaging
                 if (key is DSA)
                     keyInfo.AddClause(new DSAKeyValue((DSA)key));    // DSA
                 else
-                    throw new ArgumentException(SR.CertificateKeyTypeNotSupported, "signer");
+                    throw new ArgumentException(SR.CertificateKeyTypeNotSupported, nameof(signer));
             }
 
             // the actual X509 cert

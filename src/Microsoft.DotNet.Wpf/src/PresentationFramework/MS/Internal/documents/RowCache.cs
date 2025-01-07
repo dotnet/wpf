@@ -1274,7 +1274,7 @@ namespace MS.Internal.Documents
                             break;
 
                         default:
-                            throw new ArgumentOutOfRangeException("args");
+                            throw new ArgumentOutOfRangeException(nameof(args));
                     }
                 }
 

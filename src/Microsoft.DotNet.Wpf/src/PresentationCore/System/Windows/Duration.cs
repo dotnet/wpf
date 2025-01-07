@@ -27,7 +27,7 @@ namespace System.Windows
         {
             if (timeSpan < TimeSpan.Zero)
             {
-                throw new ArgumentException(SR.Timing_InvalidArgNonNegative, "timeSpan");
+                throw new ArgumentException(SR.Timing_InvalidArgNonNegative, nameof(timeSpan));
             }
             _durationType = DurationType.TimeSpan;
             _timeSpan = timeSpan;
@@ -53,7 +53,7 @@ namespace System.Windows
         {
             if (timeSpan < TimeSpan.Zero)
             {
-                throw new ArgumentException(SR.Timing_InvalidArgNonNegative, "timeSpan");
+                throw new ArgumentException(SR.Timing_InvalidArgNonNegative, nameof(timeSpan));
             }
             return new Duration(timeSpan);
         }

@@ -48,7 +48,7 @@ namespace MS.Internal.Automation
 
             if( hwnd == NativeMethods.HWND.NULL )
             {
-                throw new ArgumentNullException( "hwnd" );
+                throw new ArgumentNullException( nameof(hwnd));
             }
 
             _hwnd = hwnd;
@@ -383,7 +383,7 @@ namespace MS.Internal.Automation
                 default:
                 {
                     Debug.Assert(false,"unexpected switch() case:");
-                    throw new ArgumentException(SR.UnexpectedWindowState,"state");
+                    throw new ArgumentException(SR.UnexpectedWindowState,nameof(state));
                 }
 
             }

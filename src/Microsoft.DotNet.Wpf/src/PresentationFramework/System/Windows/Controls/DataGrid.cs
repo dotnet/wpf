@@ -381,7 +381,7 @@ namespace System.Windows.Controls
         {
             if (displayIndex < 0 || displayIndex >= Columns.Count)
             {
-                throw new ArgumentOutOfRangeException("displayIndex", displayIndex, SR.DataGrid_DisplayIndexOutOfRange);
+                throw new ArgumentOutOfRangeException(nameof(displayIndex), displayIndex, SR.DataGrid_DisplayIndexOutOfRange);
             }
 
             return InternalColumns.ColumnFromDisplayIndex(displayIndex);

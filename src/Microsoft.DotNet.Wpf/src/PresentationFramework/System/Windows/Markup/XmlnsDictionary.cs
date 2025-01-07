@@ -94,7 +94,7 @@ namespace System.Windows.Markup
         {
             if(null == xmlnsDictionary)
             {
-                throw new ArgumentNullException( "xmlnsDictionary" );
+                throw new ArgumentNullException( nameof(xmlnsDictionary));
             }
             
             // Copy the Declarations if they exists 
@@ -335,7 +335,7 @@ namespace System.Windows.Markup
         {
             if (prefix == null)
             {
-                throw new ArgumentNullException( "prefix" ); 
+                throw new ArgumentNullException( nameof(prefix)); 
             }
             
             if (_lastDecl >0)
@@ -366,7 +366,7 @@ namespace System.Windows.Markup
         {
             if (xmlNamespace == null)
             {
-                throw new ArgumentNullException( "xmlNamespace" ); 
+                throw new ArgumentNullException( nameof(xmlNamespace)); 
             }
 
             if (_lastDecl > 0)
@@ -607,10 +607,10 @@ namespace System.Windows.Markup
             CheckSealed();
             
             if (xmlNamespace == null)
-                throw new ArgumentNullException("xmlNamespace");
+                throw new ArgumentNullException(nameof(xmlNamespace));
 
             if (prefix == null)
-                throw new ArgumentNullException("prefix");
+                throw new ArgumentNullException(nameof(prefix));
 
             int lastScopeCount = _nsDeclarations[_lastDecl].ScopeCount;
 
@@ -657,12 +657,12 @@ namespace System.Windows.Markup
             {
                 if (xmlNamespace == null)
                 {
-                    throw new ArgumentNullException("xmlNamespace");
+                    throw new ArgumentNullException(nameof(xmlNamespace));
                 }
 
                 if (prefix == null)
                 {
-                    throw new ArgumentNullException("prefix");
+                    throw new ArgumentNullException(nameof(prefix));
                 }
 
                int lastScopeCount = _nsDeclarations[_lastDecl-1].ScopeCount;

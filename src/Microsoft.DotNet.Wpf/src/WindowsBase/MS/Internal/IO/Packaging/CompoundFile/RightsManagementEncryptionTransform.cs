@@ -332,7 +332,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
             {
                 throw new ArgumentException(
                     SR.OnlyPassportOrWindowsAuthenticatedUsersAreAllowed,
-                    "user"
+                    nameof(user)
                     );
             }
 
@@ -502,7 +502,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
 
                 if (!value.CanEncrypt && !value.CanDecrypt)
                 {
-                    throw new ArgumentException(SR.CryptoProviderIsNotReady, "value");
+                    throw new ArgumentException(SR.CryptoProviderIsNotReady, nameof(value));
                 }
 
                 _cryptoProvider = value;
@@ -756,7 +756,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             if (param is not LoadUseLicenseForUserParams lulfup)
             {
-                throw new ArgumentException(SR.CallbackParameterInvalid, "param");
+                throw new ArgumentException(SR.CallbackParameterInvalid, nameof(param));
             }
 
             ContentUser userDesired = lulfup.User;
@@ -810,7 +810,7 @@ namespace MS.Internal.IO.Packaging.CompoundFile
         {
             if (param is not ContentUser userToDelete)
             {
-                throw new ArgumentException(SR.CallbackParameterInvalid, "param");
+                throw new ArgumentException(SR.CallbackParameterInvalid, nameof(param));
             }
 
             ContentUser userFromStream = null;

@@ -968,7 +968,7 @@ namespace System.Windows.Forms.Integration
 
         private void OnPropertyChangedAutoSize(object sender, System.EventArgs e)
         {
-            OnPropertyChanged("AutoSize", this.AutoSize);
+            OnPropertyChanged(nameof(AutoSize), this.AutoSize);
         }
         private void OnPropertyChangedPadding(object sender, System.EventArgs e)
         {

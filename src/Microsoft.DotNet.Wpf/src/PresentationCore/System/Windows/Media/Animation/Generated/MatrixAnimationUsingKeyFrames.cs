@@ -219,7 +219,7 @@ namespace System.Windows.Media.Animation
             }
             else
             {        
-                throw new ArgumentException(SR.Animation_ChildMustBeKeyFrame, "child");
+                throw new ArgumentException(SR.Animation_ChildMustBeKeyFrame, nameof(child));
             }
         }
 

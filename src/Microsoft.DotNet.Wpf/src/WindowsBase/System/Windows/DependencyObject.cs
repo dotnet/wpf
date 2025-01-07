@@ -2026,7 +2026,7 @@ namespace System.Windows
 
             if( e.Property == null )
             {
-                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "e.Property"), "e");
+                throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "e.Property"), nameof(e));
             }
 
             if (e.IsAValueChange || e.IsASubPropertyChange || e.OperationType == OperationType.ChangeMutableDefaultValue)

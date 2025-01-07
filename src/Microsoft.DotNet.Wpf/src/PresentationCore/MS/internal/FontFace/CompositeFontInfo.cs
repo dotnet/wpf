@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -305,7 +305,7 @@ namespace MS.Internal.FontFace
             get { return _baseline; }
             set 
             {
-                CompositeFontParser.VerifyNonNegativeMultiplierOfEm("Baseline", ref value);
+                CompositeFontParser.VerifyNonNegativeMultiplierOfEm(nameof(Baseline), ref value);
                 _baseline = value;
             }
         }
@@ -319,7 +319,7 @@ namespace MS.Internal.FontFace
             get { return _lineSpacing; }
             set
             {
-                CompositeFontParser.VerifyPositiveMultiplierOfEm("LineSpacing", ref value);
+                CompositeFontParser.VerifyPositiveMultiplierOfEm(nameof(LineSpacing), ref value);
                 _lineSpacing = value;
             }
         }

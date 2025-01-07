@@ -55,7 +55,7 @@ namespace System.Windows.Media
                 {
                     if (!(context.Instance is ImageSource))
                     {
-                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "ImageSource"), "context");
+                        throw new ArgumentException(SR.Format(SR.General_Expected_Type, "ImageSource"), nameof(context));
                     }
 
                     #pragma warning suppress 6506 // context is obviously not null

@@ -575,7 +575,7 @@ namespace System.Windows.Threading
             if( timeout.TotalMilliseconds < 0 &&
                 timeout != TimeSpan.FromMilliseconds(-1))
             {
-                throw new ArgumentOutOfRangeException("timeout");
+                throw new ArgumentOutOfRangeException(nameof(timeout));
             }
 
             // Fast-Path: if on the same thread, and invoking at Send priority,
@@ -717,7 +717,7 @@ namespace System.Windows.Threading
             if( timeout.TotalMilliseconds < 0 &&
                 timeout != TimeSpan.FromMilliseconds(-1))
             {
-                throw new ArgumentOutOfRangeException("timeout");
+                throw new ArgumentOutOfRangeException(nameof(timeout));
             }
 
             // Fast-Path: if on the same thread, and invoking at Send priority,
@@ -1256,7 +1256,7 @@ namespace System.Windows.Threading
             ValidatePriority(priority, "priority");
             if(priority == DispatcherPriority.Inactive)
             {
-                throw new ArgumentException(SR.InvalidPriority, "priority");
+                throw new ArgumentException(SR.InvalidPriority, nameof(priority));
             }
 
             ArgumentNullException.ThrowIfNull(method);
@@ -1276,7 +1276,7 @@ namespace System.Windows.Threading
                 }
                 else
                 {
-                    throw new ArgumentOutOfRangeException("timeout");
+                    throw new ArgumentOutOfRangeException(nameof(timeout));
                 }
             }
 

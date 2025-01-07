@@ -276,7 +276,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.DuplexingEnumMin ||
                     value > PrintSchema.DuplexingEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 this[PrintSchemaTags.Framework.OptionNameProperty] = (int)value;

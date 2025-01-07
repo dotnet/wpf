@@ -252,7 +252,7 @@ namespace MS.Internal.Printing.Configuration
                 if (value < PrintSchema.TrueTypeFontModeEnumMin ||
                     value > PrintSchema.TrueTypeFontModeEnumMax)
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(nameof(value));
                 }
 
                 this[PrintSchemaTags.Framework.OptionNameProperty] = (int)value;

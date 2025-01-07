@@ -334,7 +334,7 @@ namespace System.Windows.Baml2006
         {
             if (assemblyId < 0)
             {
-                throw new ArgumentOutOfRangeException("assemblyId");
+                throw new ArgumentOutOfRangeException(nameof(assemblyId));
             }
 
             ArgumentNullException.ThrowIfNull(assemblyName);
@@ -348,7 +348,7 @@ namespace System.Windows.Baml2006
                 }
                 else if (assemblyId > _bamlAssembly.Count)
                 {
-                    throw new ArgumentOutOfRangeException("assemblyId", SR.Format(SR.AssemblyIdOutOfSequence, assemblyId));
+                    throw new ArgumentOutOfRangeException(nameof(assemblyId), SR.Format(SR.AssemblyIdOutOfSequence, assemblyId));
                 }
             }
             // Duplicate IDs (assemblyId < _bamlAssembly.Count) are ignored
@@ -358,7 +358,7 @@ namespace System.Windows.Baml2006
         {
             if (typeId < 0)
             {
-                throw new ArgumentOutOfRangeException("typeId");
+                throw new ArgumentOutOfRangeException(nameof(typeId));
             }
 
             ArgumentNullException.ThrowIfNull(typeName);
@@ -375,7 +375,7 @@ namespace System.Windows.Baml2006
                 }
                 else if (typeId > _bamlType.Count)
                 {
-                    throw new ArgumentOutOfRangeException("typeId", SR.Format(SR.TypeIdOutOfSequence, typeId));
+                    throw new ArgumentOutOfRangeException(nameof(typeId), SR.Format(SR.TypeIdOutOfSequence, typeId));
                 }
             }
             // Duplicate IDs (typeID < _bamlType.Count) are ignored
@@ -385,7 +385,7 @@ namespace System.Windows.Baml2006
         {
             if (propertyId < 0)
             {
-                throw new ArgumentOutOfRangeException("propertyId");
+                throw new ArgumentOutOfRangeException(nameof(propertyId));
             }
 
             ArgumentNullException.ThrowIfNull(propertyName);
@@ -399,7 +399,7 @@ namespace System.Windows.Baml2006
                 }
                 else if (propertyId > _bamlProperty.Count)
                 {
-                    throw new ArgumentOutOfRangeException("propertyId", SR.Format(SR.PropertyIdOutOfSequence, propertyId));
+                    throw new ArgumentOutOfRangeException(nameof(propertyId), SR.Format(SR.PropertyIdOutOfSequence, propertyId));
                 }
             }
             // Duplicate IDs (propertyId < _bamlProperty.Count) are ignored
@@ -417,7 +417,7 @@ namespace System.Windows.Baml2006
                 }
                 else if (stringId > _bamlString.Count)
                 {
-                    throw new ArgumentOutOfRangeException("stringId", SR.Format(SR.StringIdOutOfSequence, stringId));
+                    throw new ArgumentOutOfRangeException(nameof(stringId), SR.Format(SR.StringIdOutOfSequence, stringId));
                 }
             }
             // Duplicate IDs (stringId < _bamlString.Count) are ignored

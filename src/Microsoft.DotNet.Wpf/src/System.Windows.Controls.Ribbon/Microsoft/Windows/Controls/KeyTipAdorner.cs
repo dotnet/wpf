@@ -51,7 +51,7 @@ namespace Microsoft.Windows.Controls
             if (index != 0 ||
                 _keyTipControl == null)
             {
-                throw new ArgumentOutOfRangeException("index");
+                throw new ArgumentOutOfRangeException(nameof(index));
             }
             return _keyTipControl;
         }

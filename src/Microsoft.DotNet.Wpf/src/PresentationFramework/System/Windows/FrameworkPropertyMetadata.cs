@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -222,7 +222,7 @@ namespace System.Windows
             if (!BindingOperations.IsValidUpdateSourceTrigger(defaultUpdateSourceTrigger))
                 throw new InvalidEnumArgumentException("defaultUpdateSourceTrigger", (int) defaultUpdateSourceTrigger, typeof(UpdateSourceTrigger));
             if (defaultUpdateSourceTrigger == UpdateSourceTrigger.Default)
-                throw new ArgumentException(SR.NoDefaultUpdateSourceTrigger, "defaultUpdateSourceTrigger");
+                throw new ArgumentException(SR.NoDefaultUpdateSourceTrigger, nameof(defaultUpdateSourceTrigger));
 
             TranslateFlags(flags);
             DefaultUpdateSourceTrigger = defaultUpdateSourceTrigger;
@@ -481,7 +481,7 @@ namespace System.Windows
                 if (!BindingOperations.IsValidUpdateSourceTrigger(value))
                     throw new InvalidEnumArgumentException("value", (int) value, typeof(UpdateSourceTrigger));
                 if (value == UpdateSourceTrigger.Default)
-                    throw new ArgumentException(SR.NoDefaultUpdateSourceTrigger, "value");
+                    throw new ArgumentException(SR.NoDefaultUpdateSourceTrigger, nameof(value));
 
                 // FW_DefaultUpdateSourceTriggerEnumBit1        = 0x40000000,
                 // FW_DefaultUpdateSourceTriggerEnumBit2        = 0x80000000,

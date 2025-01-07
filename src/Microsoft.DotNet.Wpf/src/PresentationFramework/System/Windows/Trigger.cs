@@ -179,7 +179,7 @@ namespace System.Windows
 
             if (setter == null)
             {
-                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(Setter)), "o");
+                throw new ArgumentException(SR.Format(SR.UnexpectedParameterType, o.GetType(), typeof(Setter)), nameof(o));
             }
 
             return setter;
@@ -283,7 +283,7 @@ namespace System.Windows
             Trigger trigger = targetObject as Trigger;
             if (trigger == null)
             {
-                throw new ArgumentNullException("targetObject");
+                throw new ArgumentNullException(nameof(targetObject));
             }
             ArgumentNullException.ThrowIfNull(eventArgs);
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -264,7 +264,7 @@ namespace System.Windows.Interop
             // should be invalidated.
             if (dirtyRect.HasValue)
             {
-                dirtyRect.Value.ValidateForDirtyRect("dirtyRect", _pixelWidth, _pixelHeight);
+                dirtyRect.Value.ValidateForDirtyRect(nameof(dirtyRect), _pixelWidth, _pixelHeight);
             
                 if (!dirtyRect.Value.HasArea)
                 {

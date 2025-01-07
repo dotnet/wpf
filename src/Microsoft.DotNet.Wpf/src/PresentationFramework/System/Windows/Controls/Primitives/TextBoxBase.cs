@@ -277,7 +277,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (Double.IsNaN(offset))
             {
-                throw new ArgumentOutOfRangeException("offset");
+                throw new ArgumentOutOfRangeException(nameof(offset));
             }
 
             if (this.ScrollViewer != null)
@@ -294,7 +294,7 @@ namespace System.Windows.Controls.Primitives
         {
             if (Double.IsNaN(offset))
             {
-                throw new ArgumentOutOfRangeException("offset");
+                throw new ArgumentOutOfRangeException(nameof(offset));
             }
 
             if (this.ScrollViewer != null)

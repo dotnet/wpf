@@ -828,7 +828,6 @@ public class StorageInfo
                 {
                     if (CriticalExceptions.IsCriticalException(e))
                     {
-                        // PreSharp Warning 56500
                         throw;
                     }
                     else

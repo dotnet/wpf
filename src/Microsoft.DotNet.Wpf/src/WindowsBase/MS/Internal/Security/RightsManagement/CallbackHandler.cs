@@ -81,16 +81,13 @@ namespace MS.Internal.Security.RightsManagement
                         _callbackData = Marshal.PtrToStringUni(pvParam);
                     }
                 }
-// disabling PreSharp false positive. In this case we are actually re-throwing the same exception 
-// on the application thread inside WaitForCompletion() function
-#pragma warning disable 56500                  
+                // We are actually re-throwing the same exception on the application thread inside WaitForCompletion() function          
                 catch (Exception e)
                 {
                     // We catch all exceptions of the second worker thread (created by the unmanaged RM SDK)
                     // preserve them , and then rethrow later  on the main thread from the WaitForCompletion method
                     _exception = e;
                 }
-#pragma warning restore 56500
                 finally
                 {
                     // After this signal, OnStatus will NOT be invoked until we instigate another "transaction"

@@ -55,15 +55,12 @@ namespace MS.Internal.Security.RightsManagement
                     // to get a platform representation of the unmanaged HR code
                     Marshal.ThrowExceptionForHR(hr);
                 }
-// disabling PreSharp false positive. In this case we are actually re-throwing the same exception
-// wrapped in a more specific message
-#pragma warning disable 56500
+                // We are re-throwing the same exception wrapped in a more specific message
                 catch (Exception e)
                 {
                     // rethrow the exception as an inner exception of the RmExceptionGenericMessage
                     throw new RightsManagementException(SR.RmExceptionGenericMessage, e);
                 }
-#pragma warning restore 56500
             }
         }
 

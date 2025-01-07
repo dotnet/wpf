@@ -104,20 +104,19 @@ namespace System.Windows.Documents
 
             if (matchWholeWord)
             {
-                UInt16[] findPatternStartCharType1 = new UInt16[1];
-                UInt16[] findPatternEndCharType1 = new UInt16[1];
-                char[] charFindPattern = findPattern.ToCharArray();
+                UInt16 startCharType1 = UInt16.MinValue;
+                UInt16 endCharType1 = UInt16.MinValue;
 
                 // Get the character type for the start/end character of the find pattern.
-                SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE1, new char[] { charFindPattern[0] }, 1, findPatternStartCharType1);
-                SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE1, new char[] { charFindPattern[findPattern.Length - 1] }, 1, findPatternEndCharType1);
+                SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE1, [findPattern[0]], new Span<UInt16>(ref startCharType1));
+                SafeNativeMethods.GetStringTypeEx(0 /* ignored */, SafeNativeMethods.CT_CTYPE1, [findPattern[findPattern.Length - 1]], new Span<UInt16>(ref endCharType1));
 
                 // Reset the finding whole word flag if FindPattern includes the space
                 // or blank character at the start or end position.
-                if ((findPatternStartCharType1[0] & SafeNativeMethods.C1_SPACE) != 0 ||
-                    (findPatternStartCharType1[0] & SafeNativeMethods.C1_BLANK) != 0 ||
-                    (findPatternEndCharType1[0] & SafeNativeMethods.C1_SPACE) != 0 ||
-                    (findPatternEndCharType1[0] & SafeNativeMethods.C1_BLANK) != 0)
+                if ((startCharType1 & SafeNativeMethods.C1_SPACE) != 0 ||
+                    (startCharType1 & SafeNativeMethods.C1_BLANK) != 0 ||
+                    (endCharType1 & SafeNativeMethods.C1_SPACE) != 0 ||
+                    (endCharType1 & SafeNativeMethods.C1_BLANK) != 0)
                 {
                     matchWholeWord = false;
                 }

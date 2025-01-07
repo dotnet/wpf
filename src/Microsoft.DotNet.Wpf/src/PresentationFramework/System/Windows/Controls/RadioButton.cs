@@ -67,14 +67,11 @@ namespace System.Windows.Controls
 
         private static void Register(string groupName, RadioButton radioButton)
         {
-            if (_groupNameToElements == null)
-                _groupNameToElements = new Hashtable(1);
+            _groupNameToElements ??= new Dictionary<string, ArrayList>(1);
 
             lock (_groupNameToElements)
             {
-                ArrayList elements = (ArrayList)_groupNameToElements[groupName];
-
-                if (elements == null)
+                if (!_groupNameToElements.TryGetValue(groupName, out ArrayList elements))
                 {
                     elements = new ArrayList(1);
                     _groupNameToElements[groupName] = elements;
@@ -92,15 +89,13 @@ namespace System.Windows.Controls
 
         private static void Unregister(string groupName, RadioButton radioButton)
         {
-            if (_groupNameToElements == null)
+            if (_groupNameToElements is null)
                 return;
 
             lock (_groupNameToElements)
             {
                 // Get all elements bound to this key and remove this element
-                ArrayList elements = (ArrayList)_groupNameToElements[groupName];
-
-                if (elements != null)
+                if (_groupNameToElements.TryGetValue(groupName, out ArrayList elements))
                 {
                     PurgeDead(elements, radioButton);
                     if (elements.Count == 0)
@@ -135,12 +130,14 @@ namespace System.Windows.Controls
             if (!string.IsNullOrEmpty(groupName))
             {
                 Visual rootScope = KeyboardNavigation.GetVisualRoot(this);
-                if (_groupNameToElements == null)
-                    _groupNameToElements = new Hashtable(1);
+
+                _groupNameToElements ??= new Dictionary<string, ArrayList>(1);
+
                 lock (_groupNameToElements)
                 {
                     // Get all elements bound to this key and remove this element
-                    ArrayList elements = (ArrayList)_groupNameToElements[groupName];
+                    ArrayList elements = _groupNameToElements[groupName];
+                    // Haha, notice the unlikely but possible null-deref here
                     for (int i = 0; i < elements.Count; )
                     {
                         WeakReference weakReference = (WeakReference)elements[i];
@@ -283,7 +280,9 @@ namespace System.Windows.Controls
 
         #region private data
 
-        [ThreadStatic] private static Hashtable _groupNameToElements;
+        [ThreadStatic]
+        private static Dictionary<string, ArrayList> _groupNameToElements;
+
         private static readonly UncommonField<string> _currentlyRegisteredGroupName = new UncommonField<string>();
 
         #endregion private data

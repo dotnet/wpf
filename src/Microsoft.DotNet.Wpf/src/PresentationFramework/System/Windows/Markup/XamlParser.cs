@@ -12,15 +12,11 @@
 using System;
 using System.Xml;
 using System.IO;
-using System.Text;
 using System.Collections;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Globalization;
 using MS.Utility;
-using System.Runtime.InteropServices;
-using MS.Internal;
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and
@@ -225,9 +221,8 @@ namespace System.Windows.Markup
                     int linePosition = 0;
                     string newMessage = null;
 
-                    if (e is XmlException)
+                    if (e is XmlException xmlEx)
                     {
-                        XmlException xmlEx = (XmlException)e;
                         lineNumber = xmlEx.LineNumber;
                         linePosition = xmlEx.LinePosition;
                         newMessage = xmlEx.Message;

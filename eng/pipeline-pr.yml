@@ -8,6 +8,7 @@ parameters:
   # Defaults to true
   runAsPublic: true
   repoName: dotnet/wpf
+  TSAEnabled: true
 
 jobs:
 - ${{ if and(ne(variables['System.TeamProject'], 'public'), notin(variables['Build.Reason'], 'PullRequest'), eq(variables['Build.SourceBranch'], 'refs/heads/main')) }}:
@@ -53,6 +54,10 @@ jobs:
       variables:
         - name: Codeql.Enabled
           value: true
+        - name: Codeql.TSAEnabled
+          value: ${{ parameters.TSAEnabled }}
+        - name: Codeql.TSAOptionsPath
+          value: $(Build.SourcesDirectory)/eng/tsaoptions.json
         # needed for signing
         - name: _TeamName
           value: DotNetCore
@@ -81,7 +86,7 @@ jobs:
         - name: _HelixCreator
           value: ${{ parameters.repoName }}
         - name: _programfilesx86
-          value: ${Env:ProgramFiles(x86)}/dotnet          
+          value: ${Env:ProgramFiles(x86)}/dotnet
         - name: _programfiles
           value:  ${Env:ProgramFiles}/dotnet
         - ${{ if ne(variables['System.TeamProject'], 'internal') }}:
@@ -162,7 +167,7 @@ jobs:
 
       # Use utility script to run script command dependent on agent OS.
       - script: eng\scripts\cibuild.cmd
-          -configuration $(_BuildConfig) 
+          -configuration $(_BuildConfig)
           -prepareMachine
           $(_PublishArgs)
           $(_SignArgs)
@@ -178,13 +183,14 @@ jobs:
         condition: or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true')))
 
       - script: eng\scripts\ciunittest.cmd
-          -configuration $(_BuildConfig) 
+          -configuration $(_BuildConfig)
           -prepareMachine
           $(_PublishArgs)
           $(_SignArgs)
           $(_OfficialBuildIdArgs)
           $(_PlatformArgs)
           $(_InternalRuntimeDownloadArgs)
+          /bl:$(Build.SourcesDirectory)\artifacts\log\$(_BuildConfig)\Test.binlog
         displayName: Run xUnit Tests
         condition: and(or(ne(variables['_HelixPipeline'], 'true'), and(eq(variables['_HelixPipeline'], 'true') ,eq(variables['_BuildConfig'], 'Release'), eq(variables['_PublicBuildPipeline'], 'true'), eq(variables['_ContinuousIntegrationTestsEnabled'], 'true'))), ne(variables['_Platform'], 'arm64'))
 
@@ -192,11 +198,11 @@ jobs:
         displayName: Publish XUnit Test Results
         inputs:
           testResultsFormat: 'xUnit'
-          testResultsFiles: '*.xml' 
+          testResultsFiles: '*.xml'
           searchFolder: '$(Build.SourcesDirectory)/artifacts/TestResults/$(_BuildConfig)'
           mergeTestResults: true
         continueOnError: true
-        condition: and(eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))     
+        condition: and(eq(variables['_BuildConfig'], 'Release'), ne(variables['_Platform'], 'arm64'))
 
       # - task: PowerShell@2
       #   displayName: Install .NET Core

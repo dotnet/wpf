@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,17 +6,12 @@
 // Description: Defines BindingGroup object, manages a collection of bindings.
 //
 
-using System;
 using System.Collections;               // IList
-using System.Collections.Generic;       // IList<T>
 using System.Collections.ObjectModel;   // Collection<T>
 using System.Collections.Specialized;   // INotifyCollectionChanged
 using System.ComponentModel;            // IEditableObject
-using System.Diagnostics;               // Debug
 using System.Globalization;             // CultureInfo
 using System.Threading;                 // Thread
-
-using System.Windows;
 using System.Windows.Controls;          // ValidationRule
 using MS.Internal.Controls;             // ValidationRuleCollection
 using MS.Internal;                      // InheritanceContextHelper
@@ -1433,14 +1428,16 @@ namespace System.Windows.Data
                     ProposedValueEntry entry = _proposedValueTable[i];
                     Binding originalBinding = entry.Binding;
 
-                    Binding binding = new Binding();
-                    binding.Source = entry.Item;
-                    binding.Mode = BindingMode.TwoWay;
-                    binding.Path = new PropertyPath(entry.PropertyName, originalBinding.Path.PathParameters);
+                    Binding binding = new Binding
+                    {
+                        Source = entry.Item,
+                        Mode = BindingMode.TwoWay,
+                        Path = new PropertyPath(entry.PropertyName, originalBinding.Path.PathParameters),
 
-                    binding.ValidatesOnDataErrors = originalBinding.ValidatesOnDataErrors;
-                    binding.ValidatesOnNotifyDataErrors = originalBinding.ValidatesOnNotifyDataErrors;
-                    binding.ValidatesOnExceptions = originalBinding.ValidatesOnExceptions;
+                        ValidatesOnDataErrors = originalBinding.ValidatesOnDataErrors,
+                        ValidatesOnNotifyDataErrors = originalBinding.ValidatesOnNotifyDataErrors,
+                        ValidatesOnExceptions = originalBinding.ValidatesOnExceptions
+                    };
 
                     Collection<ValidationRule> rules = originalBinding.ValidationRulesInternal;
                     if (rules != null)

@@ -4,7 +4,6 @@
 
 #nullable disable
 
-using System.Collections.Generic;
 using System.Text;
 
 namespace System.Xaml
@@ -95,7 +94,7 @@ namespace System.Xaml
         {
             string prefix = xamlXmlWriter.LookupPrefix(type.GetXamlNamespaces(), out _);
 
-            if (prefix == null)
+            if (prefix is null)
             {
                 if (!meSettings.ContinueWritingWhenPrefixIsNotFound)
                 {
@@ -112,7 +111,7 @@ namespace System.Xaml
         {
             string prefix = xamlXmlWriter.LookupPrefix(property.GetXamlNamespaces(), out _);
 
-            if (prefix == null)
+            if (prefix is null)
             {
                 if (!meSettings.ContinueWritingWhenPrefixIsNotFound)
                 {
@@ -129,7 +128,7 @@ namespace System.Xaml
         {
             if (!settings.AssumeValidInput)
             {
-                if (objectNode.Members == null)
+                if (objectNode.Members is null)
                 {
                     objectNode.Members = new XamlPropertySet();
                 }
@@ -137,6 +136,7 @@ namespace System.Xaml
                 {
                     throw new InvalidOperationException(SR.Format(SR.XamlMarkupExtensionWriterDuplicateMember, property.Name));
                 }
+
                 objectNode.Members.Add(property);
             }
         }
@@ -173,9 +173,7 @@ namespace System.Xaml
 
         public override void WriteValue(object value)
         {
-            string s = value as string;
-
-            if (s == null)
+            if (value is not string s)
             {
                 throw new ArgumentException(SR.XamlMarkupExtensionWriterCannotWriteNonstringValue);
             }
@@ -190,16 +188,19 @@ namespace System.Xaml
                 get;
                 set;
             }
+
             public XamlPropertySet Members
             {
                 get;
                 set;
             }
+
             public XamlNodeType NodeType
             {
                 get;
                 set;
             }
+
             public XamlType XamlType
             {
                 get;
@@ -209,7 +210,7 @@ namespace System.Xaml
 
         abstract class WriterState
         {
-            //according to the BNF, CharactersToEscape ::= ['",={}\]
+            // according to the BNF, CharactersToEscape ::= ['",={}\]
             static char[] specialChars = new char[] { '\'', '"', ',', '=', '{', '}', '\\', ' ' };
 
             public virtual void WriteStartObject(XamlMarkupExtensionWriter writer, XamlType type)
@@ -264,6 +265,7 @@ namespace System.Xaml
                     {
                         sb.Append('\\');
                     }
+
                     sb.Append(s[i]);
                 }
 
@@ -286,6 +288,7 @@ namespace System.Xaml
                 {
                     value = FormatStringInCorrectSyntax(value);
                 }
+
                 writer.sb.Append(value);
             }
         }
@@ -299,6 +302,7 @@ namespace System.Xaml
             Start()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -412,7 +416,7 @@ namespace System.Xaml
                 {
                     writer.sb.Append(Delimiter);
                     WritePrefix(writer, writer.LookupPrefix(property));
-                    string local = property.DeclaringType.Name + "." + property.Name;
+                    string local = $"{property.DeclaringType.Name}.{property.Name}";
                     writer.sb.Append(local);
                 }
                 else
@@ -433,6 +437,7 @@ namespace System.Xaml
             InObjectBeforeMember()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -463,6 +468,7 @@ namespace System.Xaml
             InObjectAfterMember()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -512,6 +518,7 @@ namespace System.Xaml
             InPositionalParametersBeforeValue()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -529,6 +536,7 @@ namespace System.Xaml
             InPositionalParametersAfterValue()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -547,6 +555,7 @@ namespace System.Xaml
                 {
                     throw new InvalidOperationException(SR.XamlMarkupExtensionWriterInputInvalid);
                 }
+
                 writer.currentState = InObjectAfterMember.State;
             }
         }
@@ -557,6 +566,7 @@ namespace System.Xaml
             InMember()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }
@@ -576,6 +586,7 @@ namespace System.Xaml
                     writer.failed = true;
                     return;
                 }
+
                 string prefix = writer.LookupPrefix(type);
 
                 writer.sb.Append('{');
@@ -593,6 +604,7 @@ namespace System.Xaml
             InMemberAfterValueOrEndObject()
             {
             }
+
             public static WriterState State
             {
                 get { return state; }

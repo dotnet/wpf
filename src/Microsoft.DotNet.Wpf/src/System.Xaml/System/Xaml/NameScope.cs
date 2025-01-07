@@ -8,7 +8,6 @@
 // within the logical tree section.
 
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows.Markup;
 
@@ -40,7 +39,7 @@ namespace System.Xaml
                 throw new ArgumentException(SR.Format(SR.NameScopeInvalidIdentifierName, name));
             }
 
-            if (_nameMap == null)
+            if (_nameMap is null)
             {
                 _nameMap = new HybridDictionary();
                 _nameMap[name] = scopedElement;
@@ -49,7 +48,7 @@ namespace System.Xaml
             {
                 object nameContext = _nameMap[name];
                 // first time adding the Name, set it
-                if (nameContext == null)
+                if (nameContext is null)
                 {
                     _nameMap[name] = scopedElement;
                 }
@@ -73,7 +72,7 @@ namespace System.Xaml
                 throw new ArgumentException(SR.NameScopeNameNotEmptyString);
             }
 
-            if (_nameMap?[name] == null)
+            if (_nameMap?[name] is null)
             {
                 throw new ArgumentException(SR.Format(SR.NameScopeNameNotFound, name));
             }
@@ -88,7 +87,7 @@ namespace System.Xaml
         /// <returns>corresponding Context if found, else null</returns>
         public object FindName(string name)
         {
-            if (_nameMap == null || string.IsNullOrEmpty(name))
+            if (_nameMap is null || string.IsNullOrEmpty(name))
             {
                 return null;
             }
@@ -113,7 +112,7 @@ namespace System.Xaml
 
         public void CopyTo(KeyValuePair<string, object>[] array, int arrayIndex)
         {
-            if (_nameMap == null)
+            if (_nameMap is null)
             {
                 array = null;
                 return;
@@ -136,16 +135,18 @@ namespace System.Xaml
             {
                 return false;
             }
+
             return Remove(item.Key);
         }
 
         public void Add(KeyValuePair<string, object> item)
         {
-            if (item.Key == null)
+            if (item.Key is null)
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), nameof(item));
             }
-            if (item.Value == null)
+
+            if (item.Value is null)
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Value"), nameof(item));
             }
@@ -155,10 +156,11 @@ namespace System.Xaml
 
         public bool Contains(KeyValuePair<string, object> item)
         {
-            if (item.Key == null)
+            if (item.Key is null)
             {
                 throw new ArgumentException(SR.Format(SR.ReferenceIsNull, "item.Key"), nameof(item));
             }
+
             return ContainsKey(item.Key);
         }
 
@@ -190,7 +192,7 @@ namespace System.Xaml
             ArgumentNullException.ThrowIfNull(key);
 
             object value = FindName(key);
-            return value != null;
+            return value is not null;
         }
 
         public bool Remove(string key)
@@ -220,7 +222,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_nameMap == null)
+                if (_nameMap is null)
                 {
                     return null;
                 }
@@ -230,6 +232,7 @@ namespace System.Xaml
                 {
                     list.Add(key);
                 }
+
                 return list;
             }
         }
@@ -238,7 +241,7 @@ namespace System.Xaml
         {
             get
             {
-                if (_nameMap == null)
+                if (_nameMap is null)
                 {
                     return null;
                 }
@@ -248,6 +251,7 @@ namespace System.Xaml
                 {
                     list.Add(value);
                 }
+
                 return list;
             }
         }
@@ -267,7 +271,7 @@ namespace System.Xaml
             {
                 get
                 {
-                    if (_enumerator == null)
+                    if (_enumerator is null)
                     {
                         return default(KeyValuePair<string, object>);
                     }

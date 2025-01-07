@@ -1,6 +1,5 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,7 +7,7 @@ using System.Globalization;
 using Xunit;
 
 namespace System.Windows.Markup.Tests;
- 
+
 public class ValueSerializerTests
 {
     public static IEnumerable<object?[]> CanConvertToString_TestData()
@@ -440,7 +439,7 @@ public class ValueSerializerTests
         public ValueSerializer? SerializerResult { get; set; }
 
         public ValueSerializer? GetValueSerializerFor(Type type) => SerializerResult;
-        
+
         public ValueSerializer? GetValueSerializerFor(PropertyDescriptor type) => SerializerResult;
 
         public IContainer Container => throw new NotImplementedException();
@@ -459,9 +458,9 @@ public class ValueSerializerTests
 
 public class CustomTypeConverter : TypeConverter
 {
-    public override bool CanConvertTo(ITypeDescriptorContext? context, Type? sourceType)
+    public override bool CanConvertTo(ITypeDescriptorContext? context, Type? destinationType)
     {
-        Assert.Equal(typeof(string), sourceType);
+        Assert.Equal(typeof(string), destinationType);
         return true;
     }
 
@@ -484,7 +483,7 @@ public class CustomTypeConverter : TypeConverter
 
 public class CannotConvertToTypeConverter : TypeConverter
 {
-    public override bool CanConvertTo(ITypeDescriptorContext? context, Type? sourceType)
+    public override bool CanConvertTo(ITypeDescriptorContext? context, Type? destinationType)
     {
         return false;
     }
@@ -497,7 +496,7 @@ public class CannotConvertToTypeConverter : TypeConverter
 
 public class CannotConvertFromTypeConverter : TypeConverter
 {
-    public override bool CanConvertTo(ITypeDescriptorContext? context, Type? sourceType)
+    public override bool CanConvertTo(ITypeDescriptorContext? context, Type? destinationType)
     {
         return true;
     }
@@ -519,7 +518,7 @@ internal class InternalClass : TypeConverter
     public class NestedPublicClass { }
 }
 
-class PrivateClass : TypeConverter
+internal class PrivateClass : TypeConverter
 {
     public class NestedPublicClass { }
 }

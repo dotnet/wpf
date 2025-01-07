@@ -7,12 +7,8 @@
 //
 
 
-using System;
-using System.Diagnostics;
-using System.Security;
 using System.Windows;
 using System.Windows.Documents;
-using MS.Internal.PtsHost;
 using MS.Internal.Text;
 using MS.Internal.PtsHost.UnsafeNativeMethods;
 

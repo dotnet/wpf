@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,18 +8,13 @@
 // Specs:       Avalon DataProviders.mht
 //
 
-using System;
 using System.Collections;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Reflection;
 using System.Windows.Threading;
 using System.Threading;
-using System.Windows;
-using System.Windows.Data;
 using MS.Internal;
 using MS.Internal.Data; // ParameterCollection
-using System.Windows.Markup;
 
 //---------------------------------------------------------------------------
 // Design notes:
@@ -147,7 +142,7 @@ namespace System.Windows.Data
         {
             get
             {
-                 return (_instanceProvider != null) ? _instanceProvider : _objectInstance;
+                 return _instanceProvider ?? _objectInstance;
             }
             set
             {

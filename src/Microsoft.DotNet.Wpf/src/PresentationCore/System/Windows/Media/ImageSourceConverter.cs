@@ -1,26 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
 using System.IO;
-using System.Security;
-using System.Collections;
-using System.Collections.Specialized;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 using MS.Internal;
-using System.Diagnostics;
-using System.Windows.Media;
 using System.Globalization;
 using System.Runtime.InteropServices;
 using System.Windows.Markup;
-using MMCF = System.IO.Packaging;
-using SR=MS.Internal.PresentationCore.SR;
 using System.Windows.Media.Imaging;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
@@ -118,10 +105,8 @@ namespace System.Windows.Media
                         null
                         );
                 }
-                else if (value is byte[])
+                else if (value is byte[] bytes)
                 {
-                    byte[] bytes = (byte[])value;
-
                     if (bytes != null)
                     {
                         Stream memStream = null;
@@ -146,10 +131,8 @@ namespace System.Windows.Media
                             );
                     }
                 }
-                else if (value is Stream)
+                else if (value is Stream stream)
                 {
-                    Stream stream = (Stream)value;
-
                     return BitmapFrame.Create(
                         stream,
                         BitmapCreateOptions.None,
@@ -316,5 +299,3 @@ namespace System.Windows.Media
 
     #endregion // ImageSourceConverter
 }
-
-

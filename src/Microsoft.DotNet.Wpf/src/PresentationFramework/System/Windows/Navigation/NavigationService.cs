@@ -7,28 +7,19 @@
 // Description: Implements the Avalon basic Navigation unit class
 //
 
-using System;
-using System.Timers;
 using System.IO;
 using System.IO.Packaging;
-using System.Globalization;
 using System.Windows.Threading;
 using System.Collections;
 using System.ComponentModel;
-using System.Reflection;
-using System.Diagnostics;
 using System.Security;
-using System.Runtime.Serialization.Formatters.Binary;
 using System.Net;
 using System.Net.Cache;
 using MS.Internal;
 using MS.Internal.Navigation;
 using MS.Internal.Utility;
 using MS.Internal.AppModel;
-using MS.Internal.Controls;
 using MS.Utility;
-
-using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -227,9 +218,7 @@ namespace System.Windows.Navigation
 
             if (isSame && withFragment)
             {
-                isSame = isSame &&
-                         (string.Compare(aResolved.Fragment, bResolved.Fragment,
-                                        StringComparison.OrdinalIgnoreCase) == 0);
+                isSame = isSame && string.Equals(aResolved.Fragment, bResolved.Fragment, StringComparison.OrdinalIgnoreCase);
             }
 
             return isSame;
@@ -701,7 +690,7 @@ namespace System.Windows.Navigation
             FrameworkElement fe = INavigatorHost as FrameworkElement;
 
             Debug.Assert(fe != null, "INavigatorHost needs to be FrameworkElement");
-            if (String.Compare(name, fe.Name, StringComparison.OrdinalIgnoreCase) == 0)
+            if (string.Equals(name, fe.Name, StringComparison.OrdinalIgnoreCase))
             {
                 return INavigatorHost;
             }
@@ -2260,7 +2249,6 @@ namespace System.Windows.Navigation
         private void HandleNavigated(object navState, bool navigatedToNewContent)
         {
             Debug.Assert(_navStatus == NavigationStatus.Navigated);
-            BrowserInteropHelper.IsInitialViewerNavigation = false;
 
             NavigateInfo navInfo = navState as NavigateInfo;
 
@@ -2972,7 +2960,7 @@ namespace System.Windows.Navigation
                         // to detect XAML, so PresentationHost may get invoked, but our
                         // WpfWebRequestHelper.GetContentType() fails to do the same inference. In particular,
                         // it appears that UrlMon looks at the Content-Disposition HTTP header, but we don't.
-                        if (!IsTopLevelContainer || BrowserInteropHelper.IsInitialViewerNavigation)
+                        if (!IsTopLevelContainer)
                         {
                             throw new InvalidOperationException(SR.FailedToConvertResource);
                         }

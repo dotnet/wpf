@@ -2,6 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using MS.Internal;
+using MS.Internal.Documents;
+using System.Collections.Specialized;
+using System.Collections.ObjectModel;
+
 //
 // Description:
 //      DocumentSequenceTextContainer is a TextContainer that aggregates
@@ -12,19 +17,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using MS.Internal.Documents;
-    using System;
-    using System.Collections;
-    using System.Collections.Specialized;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Windows;                // DependencyID etc.
-    using System.Text;
-    using System.Windows.Threading;              // Dispatcher
-
     //=====================================================================
     /// <summary>
     /// DocumentSequenceTextContainer is a TextContainer that aggregates

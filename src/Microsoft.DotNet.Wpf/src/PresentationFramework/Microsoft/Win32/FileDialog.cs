@@ -1,6 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using MS.Internal;
+using MS.Internal.AppModel;
+using MS.Internal.Interop;
+using System.ComponentModel;
+using System.IO;
+using System.Windows;
 
 //
 //
@@ -15,17 +22,6 @@
 
 namespace Microsoft.Win32
 {
-    using MS.Internal;
-    using MS.Internal.AppModel;
-    using MS.Internal.Interop;
-
-    using System;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.IO;
-    using System.Text;
-    using System.Windows;
-
     /// <summary>
     ///    Provides a common base class for wrappers around both the
     ///    File Open and File Save common dialog boxes.  Derives from
@@ -266,7 +262,7 @@ namespace Microsoft.Win32
             {
                 // For string properties, it's important to not return null, as an empty
                 // string tends to make more sense to beginning developers.
-                return _defaultExtension == null ? String.Empty : _defaultExtension;
+                return _defaultExtension ?? string.Empty;
             }
 
             set
@@ -311,7 +307,7 @@ namespace Microsoft.Win32
             {
                 // For string properties, it's important to not return null, as an empty
                 // string tends to make more sense to beginning developers.
-                return _filter == null ? String.Empty : _filter;
+                return _filter ?? string.Empty;
             }
 
             set

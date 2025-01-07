@@ -9,16 +9,10 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 using System;
-using System.IO;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Microsoft.Build.Framework;
 using Microsoft.Build.Utilities;
-using Microsoft.Build.Tasks;
 using System.Xml;
-using System.Xml.XPath;
-using Microsoft.Build.Tasks.Windows;
-using System.Collections;
 
 using MS.Utility;
 using MS.Internal.Tasks;
@@ -123,9 +117,11 @@ namespace Microsoft.Build.Tasks.Windows
                 // Update the manifest file.
                 try
                 {
-                    manifestWriter = new XmlTextWriter(appManifestFile, System.Text.Encoding.UTF8);
-                    manifestWriter.Formatting = Formatting.Indented;
-                    manifestWriter.Indentation = 4;
+                    manifestWriter = new XmlTextWriter(appManifestFile, System.Text.Encoding.UTF8)
+                    {
+                        Formatting = Formatting.Indented,
+                        Indentation = 4
+                    };
                     manifestDocument.WriteTo(manifestWriter);
                 }
                 finally

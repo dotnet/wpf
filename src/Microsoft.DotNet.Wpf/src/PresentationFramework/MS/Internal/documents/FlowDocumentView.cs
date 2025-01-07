@@ -7,13 +7,11 @@
 //              bottomless area.
 //
 
-using System;                               // Object
 using System.Windows;                       // Size
 using System.Windows.Controls;              // ScrollViewer
 using System.Windows.Controls.Primitives;   // IScrollInfo
 using System.Windows.Documents;             // FlowDocument
 using System.Windows.Media;                 // Visual
-using System.Windows.Media.Imaging;         // RenderTargetBitmap
 using MS.Internal.PtsHost;                  // FlowDocumentPage
 using MS.Internal.Text;                     // TextDpi
 

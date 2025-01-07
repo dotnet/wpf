@@ -6,18 +6,7 @@
 // Description: TextServicesProperty implementation.
 //
 
-using System.Runtime.InteropServices;
-using System.Windows.Threading;
-using System.Security;
-
-using System.Collections;
-using System.Diagnostics;
-using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows.Documents;
 using MS.Win32;
-
-using System;
 
 namespace System.Windows.Documents
 {

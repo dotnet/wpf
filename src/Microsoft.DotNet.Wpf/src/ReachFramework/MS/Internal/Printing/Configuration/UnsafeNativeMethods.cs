@@ -2,6 +2,15 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.Printing;
+using System.Runtime.InteropServices;
+using System.Runtime.InteropServices.ComTypes;
+using System.Text;
+using MS.Win32;
+using MS.Internal.PrintWin32Thunk;
+
+using DllImport = MS.Internal.ReachFramework.DllImport;
+
 /*++
 All rights reserved.
 
@@ -9,20 +18,6 @@ All rights reserved.
 
 namespace MS.Internal.Printing.Configuration
 {
-    using System;
-    using System.Printing;
-    using System.Runtime.ConstrainedExecution;
-    using System.Runtime.InteropServices;
-    using System.Runtime.InteropServices.ComTypes;
-    using System.Security;
-    using System.Text;
-    using Microsoft.Internal;
-    using MS.Internal.ReachFramework;
-    using MS.Win32;
-    using MS.Internal.PrintWin32Thunk;
-    
-    using DllImport = MS.Internal.ReachFramework.DllImport;
-    
     /// <summary>
     /// Internal proxy class that makes P/Invoke calls into the unmanaged stub provider prntvpt.dll.
     /// </summary>

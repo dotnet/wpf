@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,30 +8,20 @@
 //
 
 using System;
-using System.Xml;
 using System.IO;
-using System.Text;
+using MS.Utility;
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using System.ComponentModel;
 using System.Collections.Specialized;
+using System.Runtime.CompilerServices;
 using System.Diagnostics;
 using System.Reflection;
-using MS.Utility;
 
 #if !PBTCOMPILER
 
-using System.Windows;
-using System.Windows.Markup;
-using System.Windows.Resources;
-using System.Windows.Threading;
-using SecurityHelper=MS.Internal.PresentationFramework.SecurityHelper;
 using MS.Internal;  // CriticalExceptions
-
-#else
-
-using System.Runtime.CompilerServices;
 
 #endif
 
@@ -292,20 +282,21 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal XamlTypeMapper Clone()
         {
-            XamlTypeMapper newMapper = new XamlTypeMapper(_assemblyNames.Clone() as string[]);
+            XamlTypeMapper newMapper = new XamlTypeMapper(_assemblyNames.Clone() as string[])
+            {
+                _mapTable = _mapTable,
+                _referenceAssembliesLoaded = _referenceAssembliesLoaded,
+                _lineNumber = _lineNumber,
+                _linePosition = _linePosition,
 
-            newMapper._mapTable = _mapTable;
-            newMapper._referenceAssembliesLoaded = _referenceAssembliesLoaded;
-            newMapper._lineNumber = _lineNumber;
-            newMapper._linePosition = _linePosition;
-
-            newMapper._namespaceMaps = _namespaceMaps.Clone() as NamespaceMapEntry[];
-            newMapper._typeLookupFromXmlHashtable = _typeLookupFromXmlHashtable.Clone() as Hashtable;
-            newMapper._namespaceMapHashList = _namespaceMapHashList.Clone() as Hashtable;
-            newMapper._typeInformationCache = CloneHybridDictionary(_typeInformationCache);
-            newMapper._piTable = CloneHybridDictionary(_piTable);
-            newMapper._piReverseTable = CloneStringDictionary(_piReverseTable);
-            newMapper._assemblyPathTable = CloneHybridDictionary(_assemblyPathTable);
+                _namespaceMaps = _namespaceMaps.Clone() as NamespaceMapEntry[],
+                _typeLookupFromXmlHashtable = _typeLookupFromXmlHashtable.Clone() as Hashtable,
+                _namespaceMapHashList = _namespaceMapHashList.Clone() as Hashtable,
+                _typeInformationCache = CloneHybridDictionary(_typeInformationCache),
+                _piTable = CloneHybridDictionary(_piTable),
+                _piReverseTable = CloneStringDictionary(_piReverseTable),
+                _assemblyPathTable = CloneHybridDictionary(_assemblyPathTable)
+            };
 
             return newMapper;
         }
@@ -406,24 +397,24 @@ namespace System.Windows.Markup
 
         private void PreLoadDefaultAssemblies(string asmName, string asmPath)
         {
-            if (AssemblyWB == null && string.Compare(asmName, _assemblyNames[0], StringComparison.OrdinalIgnoreCase) == 0)
+            if (AssemblyWB == null && string.Equals(asmName, _assemblyNames[0], StringComparison.OrdinalIgnoreCase))
             {
                 AssemblyWB = ReflectionHelper.LoadAssembly(asmName, asmPath);
             }
-            else if (AssemblyPC == null && string.Compare(asmName, _assemblyNames[1], StringComparison.OrdinalIgnoreCase) == 0)
+            else if (AssemblyPC == null && string.Equals(asmName, _assemblyNames[1], StringComparison.OrdinalIgnoreCase))
             {
                 AssemblyPC = ReflectionHelper.LoadAssembly(asmName, asmPath);
             }
-            else if (AssemblyPF == null && string.Compare(asmName, _assemblyNames[2], StringComparison.OrdinalIgnoreCase) == 0)
+            else if (AssemblyPF == null && string.Equals(asmName, _assemblyNames[2], StringComparison.OrdinalIgnoreCase))
             {
                 AssemblyPF = ReflectionHelper.LoadAssembly(asmName, asmPath);
             }
-            else if (string.Compare(asmName, "SYSTEM.XML", StringComparison.OrdinalIgnoreCase) == 0)
+            else if (string.Equals(asmName, "SYSTEM.XML", StringComparison.OrdinalIgnoreCase))
             {
                 // make sure System.Xml is at least loaded as ReflectionOnly
                 ReflectionHelper.LoadAssembly(asmName, asmPath);
             }
-            else if (string.Compare(asmName, "SYSTEM", StringComparison.OrdinalIgnoreCase) == 0)
+            else if (string.Equals(asmName, "SYSTEM", StringComparison.OrdinalIgnoreCase))
             {
                 // make sure System is at least loaded as ReflectionOnly
                 ReflectionHelper.LoadAssembly(asmName, asmPath);
@@ -2010,7 +2001,7 @@ namespace System.Windows.Markup
             // Force load the Statics by walking up the hierarchy and running class constructors
             while (null != currentType)
             {
-                MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(currentType);
+                RuntimeHelpers.RunClassConstructor(currentType.TypeHandle);
                 currentType = GetCachedBaseType(currentType);
             }
 
@@ -2567,8 +2558,10 @@ namespace System.Windows.Markup
                                 }
                             }
                             // Create new data structure to store information for the current type
-                            typeAndSerializer = new TypeAndSerializer();
-                            typeAndSerializer.ObjectType = objectType;
+                            typeAndSerializer = new TypeAndSerializer
+                            {
+                                ObjectType = objectType
+                            };
 
                             break;
                         }
@@ -2996,8 +2989,10 @@ namespace System.Windows.Markup
             typeInformationCacheData = _typeInformationCache[type] as TypeInformationCacheData;
             if (null == typeInformationCacheData)
             {
-                typeInformationCacheData = new TypeInformationCacheData(type.BaseType);
-                typeInformationCacheData.ClrNamespace = type.Namespace;
+                typeInformationCacheData = new TypeInformationCacheData(type.BaseType)
+                {
+                    ClrNamespace = type.Namespace
+                };
 
                 _typeInformationCache[type] = typeInformationCacheData;
             }
@@ -3901,20 +3896,16 @@ namespace System.Windows.Markup
             _linePosition = 0;
             _isProtectedAttributeAllowed = false;
 
-            NamespaceMapEntry[] defaultNsMaps = _namespaceMapHashList[XamlReaderHelper.DefaultNamespaceURI] as NamespaceMapEntry[];
-            NamespaceMapEntry[] definitionNsMaps = _namespaceMapHashList[XamlReaderHelper.DefinitionNamespaceURI] as NamespaceMapEntry[];
-            NamespaceMapEntry[] definitionMetroNsMaps = _namespaceMapHashList[XamlReaderHelper.DefinitionMetroNamespaceURI] as NamespaceMapEntry[];
-
             _namespaceMapHashList.Clear();
-            if (null != defaultNsMaps)
+            if (_namespaceMapHashList[XamlReaderHelper.DefaultNamespaceURI] is NamespaceMapEntry[] defaultNsMaps)
             {
                 _namespaceMapHashList.Add(XamlReaderHelper.DefaultNamespaceURI, defaultNsMaps);
             }
-            if (null != definitionNsMaps)
+            if (_namespaceMapHashList[XamlReaderHelper.DefinitionNamespaceURI] is NamespaceMapEntry[] definitionNsMaps)
             {
                 _namespaceMapHashList.Add(XamlReaderHelper.DefinitionNamespaceURI, definitionNsMaps);
             }
-            if (null != definitionMetroNsMaps)
+            if (_namespaceMapHashList[XamlReaderHelper.DefinitionMetroNamespaceURI] is NamespaceMapEntry[] definitionMetroNsMaps)
             {
                 _namespaceMapHashList.Add(XamlReaderHelper.DefinitionMetroNamespaceURI, definitionMetroNsMaps);
             }
@@ -4022,8 +4013,7 @@ namespace System.Windows.Markup
                     "GetPropertyAndType must always be called before SetPropertyAndType");
 
                 // add the type taking a lock
-                PropertyAndType pAndT = _dpLookupHashtable[dpName] as PropertyAndType;
-                if (pAndT == null)
+                if (_dpLookupHashtable[dpName] is not PropertyAndType pAndT)
                 {
                     _dpLookupHashtable[dpName] = new PropertyAndType(null, dpInfo, false, true, ownerType, isInternal);
                 }

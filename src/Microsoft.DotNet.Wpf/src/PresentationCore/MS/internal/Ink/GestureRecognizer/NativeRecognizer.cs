@@ -1,37 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //      A wrapper class which interoperates with the unmanaged recognition APIS
 //      in mshwgst.dll
-//
-// Features:
-//
-//  01/14/2005 waynezen:       Created
-//
-//
 
 using Microsoft.Win32;
 using MS.Win32;
-using System;
-using System.Security;
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Windows.Media;
 using System.Windows.Ink;
 using System.Windows.Input;
-using MS.Internal.PresentationCore;
-
-using MS.Utility;
-using SR = MS.Internal.PresentationCore.SR;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -505,7 +486,7 @@ namespace MS.Internal.Ink.GestureRecognition
             Debug.Assert(propertyGuids.Length == StylusPointDescription.RequiredCountOfProperties);
 
             // Get the packet description
-            packetDescription.cbPacketSize = (uint)(propertyGuids.Length * Marshal.SizeOf(typeof(Int32)));
+            packetDescription.cbPacketSize = (uint)(propertyGuids.Length * sizeof(Int32));
             packetDescription.cPacketProperties = (uint)propertyGuids.Length;
 
             //
@@ -527,11 +508,13 @@ namespace MS.Internal.Ink.GestureRecognition
                 packetProperties[i].guid = propertyGuids[i];
                 propertyInfo = infosToUse[i];
 
-                MS.Win32.Recognizer.PROPERTY_METRICS propertyMetrics = new MS.Win32.Recognizer.PROPERTY_METRICS( );
-                propertyMetrics.nLogicalMin = propertyInfo.Minimum;
-                propertyMetrics.nLogicalMax = propertyInfo.Maximum;
-                propertyMetrics.Units = (int)(propertyInfo.Unit);
-                propertyMetrics.fResolution = propertyInfo.Resolution;
+                MS.Win32.Recognizer.PROPERTY_METRICS propertyMetrics = new MS.Win32.Recognizer.PROPERTY_METRICS
+                {
+                    nLogicalMin = propertyInfo.Minimum,
+                    nLogicalMax = propertyInfo.Maximum,
+                    Units = (int)(propertyInfo.Unit),
+                    fResolution = propertyInfo.Resolution
+                };
                 packetProperties[i].PropertyMetrics = propertyMetrics;
             }
 
@@ -554,7 +537,7 @@ namespace MS.Internal.Ink.GestureRecognition
             int packetCount = rawPackets.Length;
             if (packetCount != 0)
             {
-                countOfBytes = packetCount * Marshal.SizeOf(typeof(Int32));
+                countOfBytes = packetCount * sizeof(Int32);
                 packets = Marshal.AllocCoTaskMem(countOfBytes);
                 Marshal.Copy(rawPackets, 0, packets, packetCount);
             }

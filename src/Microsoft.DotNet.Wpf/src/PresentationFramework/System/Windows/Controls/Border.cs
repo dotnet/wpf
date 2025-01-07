@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,10 +11,6 @@
 using MS.Internal;
 using MS.Internal.PresentationFramework;
 using MS.Internal.Telemetry.PresentationFramework;
-using MS.Utility;
-using System;
-using System.Diagnostics;
-using System.Windows.Threading;
 using System.Windows.Media;
 
 namespace System.Windows.Controls
@@ -407,8 +403,10 @@ namespace System.Windows.Controls
                     Pen pen = LeftPenCache;
                     if (pen == null)
                     {
-                        pen = new Pen();
-                        pen.Brush = borderBrush;
+                        pen = new Pen
+                        {
+                            Brush = borderBrush
+                        };
 
                         if (useLayoutRounding)
                         {
@@ -470,8 +468,10 @@ namespace System.Windows.Controls
                             pen = RightPenCache;
                             if (pen == null)
                             {
-                                pen = new Pen();
-                                pen.Brush = borderBrush;
+                                pen = new Pen
+                                {
+                                    Brush = borderBrush
+                                };
 
                                 if (useLayoutRounding)
                                 {
@@ -502,8 +502,10 @@ namespace System.Windows.Controls
                             pen = TopPenCache;
                             if (pen == null)
                             {
-                                pen = new Pen();
-                                pen.Brush = borderBrush;
+                                pen = new Pen
+                                {
+                                    Brush = borderBrush
+                                };
                                 if (useLayoutRounding)
                                 {
                                     pen.Thickness = UIElement.RoundLayoutValue(border.Top, dpi.DpiScaleY);
@@ -533,8 +535,10 @@ namespace System.Windows.Controls
                             pen = BottomPenCache;
                             if (pen == null)
                             {
-                                pen = new Pen();
-                                pen.Brush = borderBrush;
+                                pen = new Pen
+                                {
+                                    Brush = borderBrush
+                                };
                                 if (useLayoutRounding)
                                 {
                                     pen.Thickness = UIElement.RoundLayoutValue(border.Bottom, dpi.DpiScaleY);

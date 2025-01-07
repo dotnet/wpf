@@ -25,16 +25,18 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <Import Project="$(WpfCppProps)" />
   <PropertyGroup>
-    <!-- 
-      Target assembly will be a privatized copy of D3DCompiler, like  
+    <!--
+      Target assembly will be a privatized copy of D3DCompiler, like
       d3dcompiler_47_cor3.dll
     -->
     <TargetName>$(D3DCompilerDllBaseName)$(D3DCompilerVersion)$(WpfVersionSuffix)</TargetName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <PropertyGroup>
-    <!-- ARM64 will use the windows\system32 version --> 
-    <RedistSourcePath>$(Windows10SdkPath)Redist\D3D\$(Architecture)\$(D3DCompilerDllBaseName)$(D3DCompilerVersion).dll</RedistSourcePath>
+    <!-- ARM64 will use the windows\system32 version -->
+    <!-- ISSUE!! https://github.com/dotnet/wpf/issues/9670: An updated D3D Redist is incompatible with Win10, at least when built with the 19041 Windows SDK. This is
+         a temporary workaround for this issue. We pull from netcore native assets instead. -->
+    <RedistSourcePath>$(RepositoryToolsDir)native\bin\windows-sdk-d3d-redist\1.0.0\D3D\$(Architecture)\$(D3DCompilerDllBaseName)$(D3DCompilerVersion).dll</RedistSourcePath>
   </PropertyGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

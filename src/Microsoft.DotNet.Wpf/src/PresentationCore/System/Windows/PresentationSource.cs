@@ -1,24 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Diagnostics;
-using System.ComponentModel;
-using System.Runtime.InteropServices;
 using System.Windows.Threading;
-using System.Security;
 using System.Windows.Media;
-using System.Windows.Media.Media3D;
-using System.Windows.Markup;
 using System.Windows.Input;
-using MS.Win32;
 using MS.Utility;
 using MS.Internal;
-using MS.Internal.PresentationCore;                        // SecurityHelper
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows
 {
@@ -265,7 +254,6 @@ namespace System.Windows
         /// <param name="ce">
         ///     The element whose ancestory may have changed.
         /// </param>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal static void OnAncestorChanged(ContentElement ce)
         {
             ArgumentNullException.ThrowIfNull(ce);
@@ -553,7 +541,6 @@ namespace System.Windows
             }
         }
 
-        [FriendAccessAllowed] // To allow internal code paths to access this function 
         internal static PresentationSource CriticalFromVisual(DependencyObject v)
         {
             return CriticalFromVisual(v, true /* enable2DTo3DTransition */);
@@ -564,7 +551,6 @@ namespace System.Windows
         ///     Determines whether when walking the tree to enable transitioning from a 2D child
         ///     to a 3D parent or to stop once a 3D parent is encountered.
         /// </param>
-        [FriendAccessAllowed] // To allow internal code paths to access this function 
         internal static PresentationSource CriticalFromVisual(DependencyObject v, bool enable2DTo3DTransition)
         {
             ArgumentNullException.ThrowIfNull(v);
@@ -598,7 +584,6 @@ namespace System.Windows
         ///     Helper method which returns true when all the given visuals 
         ///     are in the same presentation source.
         /// </summary>
-        [FriendAccessAllowed] // To allow internal code paths to access this function 
         internal static bool UnderSamePresentationSource(params DependencyObject[] visuals)
         {
             if (visuals == null || visuals.Length == 0)
@@ -713,9 +698,10 @@ namespace System.Windows
             {
                 doTarget.SetValue(CachedSourceProperty, realSource);
 
-                SourceChangedEventArgs args = new SourceChangedEventArgs(cachedSource, realSource);
-
-                args.RoutedEvent=SourceChangedEvent;
+                SourceChangedEventArgs args = new SourceChangedEventArgs(cachedSource, realSource)
+                {
+                    RoutedEvent = SourceChangedEvent
+                };
                 if (doTarget is UIElement uiElement)
                 {
                     uiElement.RaiseEvent(args);

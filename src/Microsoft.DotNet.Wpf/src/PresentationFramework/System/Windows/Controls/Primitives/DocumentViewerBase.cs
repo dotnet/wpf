@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,25 +11,20 @@
 //              and Annotation support.
 //
 #pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-                                    // message numbers and unknown pragmas for PRESharp contol
+// message numbers and unknown pragmas for PRESharp contol
 
 using System.Collections;               // IEnumerator
-using System.Collections.Generic;       // List<T>
 using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
 using System.Windows.Annotations;       // AnnotationService
-using System.Windows.Automation;        // AutomationPattern
 using System.Windows.Automation.Peers;  // AutomationPeer
 using System.Windows.Documents;         // IDocumentPaginatorSource, ...
 using System.Windows.Documents.Serialization;  // WritingCompletedEventArgs
 using System.Windows.Input;             // UICommand
 using System.Windows.Media;             // Visual
 using System.Windows.Markup;            // IAddChild, XamlSerializerUtil, ContentPropertyAttribute
-using System.Windows.Threading;         // DispatcherPriority
 using MS.Internal;                      // Invariant, DoubleUtil
 using MS.Internal.KnownBoxes;           // BooleanBoxes
-using MS.Internal.Annotations;          // TextAnchor
 using MS.Internal.Annotations.Anchoring;// DataIdProcessor, FixedPageProcessor, ...
-using MS.Internal.Automation;           // TextAdaptor
 using MS.Internal.Documents;            // MultiPageTextView
 using MS.Internal.Controls;             // EmptyEnumerator
 using MS.Internal.Commands;             // CommandHelpers
@@ -1039,9 +1034,11 @@ namespace System.Windows.Controls.Primitives
             if (textContainer != null && this.TextEditorRenderScope != null && textContainer.TextSelection == null)
             {
                 _textView = new MultiPageTextView(this, this.TextEditorRenderScope, textContainer);
-                _textEditor = new TextEditor(textContainer, this, false);
-                _textEditor.IsReadOnly = !IsEditingEnabled;
-                _textEditor.TextView = _textView;
+                _textEditor = new TextEditor(textContainer, this, false)
+                {
+                    IsReadOnly = !IsEditingEnabled,
+                    TextView = _textView
+                };
                 textContainer.TextView = _textView;
             }
 
@@ -1167,9 +1164,8 @@ namespace System.Windows.Controls.Primitives
                     if (child != null)
                     {
                         // Special case UIElements already connected to visual tree.
-                        if (args.TargetObject is UIElement)
+                        if (args.TargetObject is UIElement targetObject)
                         {
-                            UIElement targetObject = (UIElement)args.TargetObject;
                             if (VisualTreeHelper.IsAncestorOf(this, targetObject))
                             {
                                 targetRect = args.TargetRect;

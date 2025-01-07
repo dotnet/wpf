@@ -2,10 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Windows.Threading;
-using System.Threading.Tasks;
-
 namespace System.Windows.Threading
 {
     // An internal class used to store the operation that a task is

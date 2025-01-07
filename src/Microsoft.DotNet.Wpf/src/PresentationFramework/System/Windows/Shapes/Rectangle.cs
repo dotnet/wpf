@@ -8,16 +8,8 @@
 //
 
 
-using System.Windows.Shapes;
-using System.Diagnostics;
-using System.Windows.Threading;
-
-using System.Windows;
 using System.Windows.Media;
-using MS.Internal;
 using System.ComponentModel;
-
-using System;
 
 namespace System.Windows.Shapes
 {

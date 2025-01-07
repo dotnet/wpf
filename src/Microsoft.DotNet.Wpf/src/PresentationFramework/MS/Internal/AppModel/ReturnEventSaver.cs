@@ -15,14 +15,9 @@
 //               saved list to the calling pagefunction
 // 
 
-using System;
 using System.Windows.Navigation;
 using System.Windows;
-using System.Diagnostics;
-using System.Collections;
 using System.Reflection;
-using System.IO;
-using System.Security;
 
 namespace MS.Internal.AppModel
 {
@@ -119,7 +114,7 @@ namespace MS.Internal.AppModel
                     // E.g. - if we had a listener to OnFinish from a Button on the calling page.  
                     //  "Return event never fired from PageFunction hosted in its own window"
                     // 
-                    if (string.Compare(_returnList[i]._targetTypeName, caller.GetType().AssemblyQualifiedName, StringComparison.Ordinal) != 0)
+                    if (!string.Equals(_returnList[i]._targetTypeName, caller.GetType().AssemblyQualifiedName, StringComparison.Ordinal))
                     {
                         throw new NotSupportedException(SR.ReturnEventHandlerMustBeOnParentPage);
                     }

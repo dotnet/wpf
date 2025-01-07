@@ -1,21 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-
-using System;
-using System.Security;
 using System.ComponentModel;
-using System.Collections;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Markup;
-
 using MS.Internal.PresentationCore;
-
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input
 {
@@ -330,8 +319,10 @@ namespace System.Windows.Input
             if ((target != null) && !IsBlockedByRM)
             {
                 // Raise the Preview Event, check the Handled value, and raise the regular event.
-                CanExecuteRoutedEventArgs args = new CanExecuteRoutedEventArgs(this, parameter);
-                args.RoutedEvent = CommandManager.PreviewCanExecuteEvent;
+                CanExecuteRoutedEventArgs args = new CanExecuteRoutedEventArgs(this, parameter)
+                {
+                    RoutedEvent = CommandManager.PreviewCanExecuteEvent
+                };
                 CriticalCanExecuteWrapper(parameter, target, trusted, args);
                 if (!args.Handled)
                 {
@@ -389,9 +380,11 @@ namespace System.Windows.Input
 
                 // Raise the Preview Event and check for Handled value, and
                 // Raise the regular ExecuteEvent.
-                ExecutedRoutedEventArgs args = new ExecutedRoutedEventArgs(this, parameter);
-                args.RoutedEvent = CommandManager.PreviewExecutedEvent;
-                
+                ExecutedRoutedEventArgs args = new ExecutedRoutedEventArgs(this, parameter)
+                {
+                    RoutedEvent = CommandManager.PreviewExecutedEvent
+                };
+
                 if (targetUIElement != null)
                 {
                     targetUIElement.RaiseEvent(args, userInitiated);
@@ -444,17 +437,17 @@ namespace System.Windows.Input
         {
             if (value)
             {
-                _flags.Value |= bit;
+                _flags |= bit;
             }
             else
             {
-                _flags.Value &= ~bit;
+                _flags &= ~bit;
             }
         }
 
         private bool ReadPrivateFlag(PrivateFlags bit)
         {
-            return (_flags.Value & bit) != 0;
+            return (_flags & bit) != 0;
         }
 
         #endregion PrivateMethods
@@ -463,7 +456,7 @@ namespace System.Windows.Input
 
         private string _name;
 
-        private MS.Internal.SecurityCriticalDataForSet<PrivateFlags> _flags;
+        private PrivateFlags _flags;
 
         private enum PrivateFlags : byte
         {

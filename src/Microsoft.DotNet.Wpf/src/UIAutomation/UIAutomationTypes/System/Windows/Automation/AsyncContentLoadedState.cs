@@ -4,10 +4,9 @@
 
 // Description: Async content loaded state flags
 
-using System;
 using System.Runtime.InteropServices;
 
-namespace System.Windows.Automation 
+namespace System.Windows.Automation
 {
     /// <summary>
     /// Used to represent state when content is asynchronously loading into an element.

@@ -1,22 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
-using System.Reflection;
-using System.Windows.Threading;
 using System.Threading;
 using System.Windows.Baml2006;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Markup;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Documents;
 using System.Collections;               // For ArrayList
-using System.Collections.Generic;
 using System.Collections.Specialized;   // HybridDictionary
-using System.Diagnostics;               // For Debug.Assert
 using System.Globalization;
 using System.Windows.Media.Media3D;
 using MS.Utility;
@@ -441,11 +433,13 @@ namespace System.Windows
             else
             {
                 // Store original data
-                PropertyValue propertyValue = new PropertyValue();
-                propertyValue.ValueType = valueType;
-                propertyValue.ChildName = null;  // Delayed
-                propertyValue.Property = dp;
-                propertyValue.ValueInternal = value;
+                PropertyValue propertyValue = new PropertyValue
+                {
+                    ValueType = valueType,
+                    ChildName = null,  // Delayed
+                    Property = dp,
+                    ValueInternal = value
+                };
 
                 lock (_synchronized)
                 {

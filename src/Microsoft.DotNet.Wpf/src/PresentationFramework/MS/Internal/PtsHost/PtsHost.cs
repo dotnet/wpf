@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -19,20 +19,15 @@
 // Description: Provides PTS callbacks implementation / forwarding. 
 //
 #pragma warning disable 1634, 1691  // avoid generating warnings about unknown 
-                                    // message numbers and unknown pragmas for PRESharp contol
-                                    
+// message numbers and unknown pragmas for PRESharp contol
+
 #pragma warning disable 6500        // Specifically disable warning about unhandled null reference and SEH exceptions.
 
-using System;                                   // IntPtr
-using System.Threading;                         // Monitor
-using System.Diagnostics;
-using System.Security;                          // SecurityCritical
 using System.Windows;
-using System.Windows.Documents; 
+using System.Windows.Documents;
 using System.Windows.Media.TextFormatting;
 using MS.Internal.Text;
 using MS.Internal.PtsHost.UnsafeNativeMethods;  // PTS
-using System.Collections.Generic;
 
 namespace MS.Internal.PtsHost
 {
@@ -48,7 +43,7 @@ namespace MS.Internal.PtsHost
         /// </summary>
         internal PtsHost()
         {
-            _context = new SecurityCriticalDataForSet<IntPtr>(IntPtr.Zero);
+            _context = IntPtr.Zero;
         }
 
         // ------------------------------------------------------------------
@@ -75,10 +70,10 @@ namespace MS.Internal.PtsHost
         // ------------------------------------------------------------------
         internal IntPtr Context
         {
-            get { Invariant.Assert(_context.Value != IntPtr.Zero); return _context.Value; }
-            set { Invariant.Assert(_context.Value == IntPtr.Zero); _context.Value = value; }
+            get { Invariant.Assert(_context != IntPtr.Zero); return _context; }
+            set { Invariant.Assert(_context == IntPtr.Zero); _context = value; }
         }
-        private SecurityCriticalDataForSet<IntPtr> _context;
+        private IntPtr _context;
 
         // ------------------------------------------------------------------
         //  Container paragraph id.
@@ -1575,7 +1570,7 @@ namespace MS.Internal.PtsHost
                     rgfslinevariant[breakIndex].dvrAscent    = dvrAscent;
                     rgfslinevariant[breakIndex].dvrDescent   = dvrDescent;
                     rgfslinevariant[breakIndex].fReformatNeighborsAsLastLine   = PTS.False;
-                    rgfslinevariant[breakIndex].ptsLinePenaltyInfo = textBreakpoint.GetTextPenaltyResource().Value;
+                    rgfslinevariant[breakIndex].ptsLinePenaltyInfo = textBreakpoint.GetTextPenaltyResource();
                 }
 
                 nLineVariantsActual = textBreakpoints.Count;
@@ -1983,17 +1978,15 @@ namespace MS.Internal.PtsHost
 
                 for(int objectIndex = 0; objectIndex < attachedObjects.Count; objectIndex++)
                 {
-                    if(attachedObjects[objectIndex] is FigureObject)
+                    if (attachedObjects[objectIndex] is FigureObject figureObject)
                     {
-                        FigureObject figureObject = (FigureObject) attachedObjects[objectIndex];
-
                         rgnmpAttachedObject[objectIndex] = figureObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = figureObject.Dcp;
                         rgidobj[objectIndex] = PTS.fsidobjFigure;
                     }
                     else
                     {
-                        FloaterObject floaterObject = (FloaterObject) attachedObjects[objectIndex];
+                        FloaterObject floaterObject = (FloaterObject)attachedObjects[objectIndex];
 
                         rgnmpAttachedObject[objectIndex] = floaterObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = floaterObject.Dcp;
@@ -2100,17 +2093,15 @@ namespace MS.Internal.PtsHost
 
                 for(int objectIndex = 0; objectIndex < attachedObjects.Count; objectIndex++)
                 {
-                    if(attachedObjects[objectIndex] is FigureObject)
+                    if (attachedObjects[objectIndex] is FigureObject figureObject)
                     {
-                        FigureObject figureObject = (FigureObject) attachedObjects[objectIndex];
-
                         rgnmpAttachedObject[objectIndex] = figureObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = figureObject.Dcp;
                         rgidobj[objectIndex] = PTS.fsidobjFigure;
                     }
                     else
                     {
-                        FloaterObject floaterObject = (FloaterObject) attachedObjects[objectIndex];
+                        FloaterObject floaterObject = (FloaterObject)attachedObjects[objectIndex];
 
                         rgnmpAttachedObject[objectIndex] = floaterObject.Para.Handle;
                         rgdcpAnchor[objectIndex] = floaterObject.Dcp;

@@ -1,9 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
@@ -115,15 +114,16 @@ namespace MS.Internal.PresentationCore
 
         internal static Rect InterpolateRect(Rect from, Rect to, Double progress)
         {
-            Rect temp = new Rect();
-
-            // from + ((from - to) * progress)
-            temp.Location = new Point(
+            Rect temp = new Rect
+            {
+                // from + ((from - to) * progress)
+                Location = new Point(
                 from.Location.X + ((to.Location.X - from.Location.X) * progress),
-                from.Location.Y + ((to.Location.Y - from.Location.Y) * progress));
-            temp.Size = new Size(
+                from.Location.Y + ((to.Location.Y - from.Location.Y) * progress)),
+                Size = new Size(
                 from.Size.Width + ((to.Size.Width - from.Size.Width) * progress),
-                from.Size.Height + ((to.Size.Height - from.Size.Height) * progress));
+                from.Size.Height + ((to.Size.Height - from.Size.Height) * progress))
+            };
 
             return temp;
         }
@@ -564,14 +564,15 @@ namespace MS.Internal.PresentationCore
 
         internal static Rect ScaleRect(Rect value, Double factor)
         {
-            Rect temp = new Rect();
-
-            temp.Location = new Point(
+            Rect temp = new Rect
+            {
+                Location = new Point(
                 value.Location.X * factor,
-                value.Location.Y * factor);
-            temp.Size = new Size(
+                value.Location.Y * factor),
+                Size = new Size(
                 value.Size.Width * factor,
-                value.Size.Height * factor);
+                value.Size.Height * factor)
+            };
 
             return temp;
         }

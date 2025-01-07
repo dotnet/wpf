@@ -4,16 +4,12 @@
 
 
 
+using System.Printing;
+using System.Xml;
+using System.Xml.XPath;
+
 namespace MS.Internal.Printing.Configuration
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Printing;
-    using System.Xml;
-    using System.Xml.XPath;
-    using System.Security;
-
     /// <summary>
     /// Encapulates all the logic for marshaling PrintTicket documents to DEVMODE
     /// Based on the XPS Print Schema Specification v1.0

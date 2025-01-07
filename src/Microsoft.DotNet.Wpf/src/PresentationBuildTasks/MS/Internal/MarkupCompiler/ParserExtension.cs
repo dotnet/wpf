@@ -19,8 +19,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Reflection;
 using System.CodeDom;
-using System.CodeDom.Compiler;
-using System.ComponentModel;
 using MS.Utility;   // for SR
 
 namespace MS.Internal
@@ -497,7 +495,7 @@ namespace MS.Internal
                             {
                                 // This direct comparison is ok to do in pass2 as it has already been validated in pass1.
                                 // This is to avoid a costly instantiation of the CodeDomProvider in pass2.
-                                _isInternalRoot = string.Compare("public", xmlReader.Value.Trim(), StringComparison.OrdinalIgnoreCase) != 0;
+                                _isInternalRoot = !string.Equals("public", xmlReader.Value.Trim(), StringComparison.OrdinalIgnoreCase);
                             }
                         }
                     }
@@ -764,9 +762,10 @@ namespace MS.Internal
                 if (addMapping)
                 {
                     ClrNamespaceAssemblyPair namespaceMapping = new ClrNamespaceAssemblyPair(xamlPIMappingNode.ClrNamespace,
-                                                                                             xamlPIMappingNode.AssemblyName);
-
-                    namespaceMapping.LocalAssembly = true;
+                                                                                             xamlPIMappingNode.AssemblyName)
+                    {
+                        LocalAssembly = true
+                    };
                     XamlTypeMapper.PITable[xamlPIMappingNode.XmlNamespace] = namespaceMapping;
                     XamlTypeMapper.InvalidateMappingCache(xamlPIMappingNode.XmlNamespace);
                     if (!_pass2 && BamlRecordWriter != null)

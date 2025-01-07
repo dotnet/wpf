@@ -2,10 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Diagnostics;
-using MS.Internal.WindowsBase;
 
 #pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
@@ -34,10 +31,8 @@ namespace System.Windows
         /// </summary>
         public override bool Equals(object obj)
         {
-            if(obj is LocalValueEnumerator)
+            if (obj is LocalValueEnumerator other)
             {
-                LocalValueEnumerator other = (LocalValueEnumerator) obj;
-
                 return (_count == other._count &&
                         _index == other._index &&
                         _snapshot == other._snapshot);

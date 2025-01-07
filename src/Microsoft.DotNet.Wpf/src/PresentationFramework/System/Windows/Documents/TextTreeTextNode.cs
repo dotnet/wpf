@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,7 +6,6 @@
 // Description: A TextContainer node representing a run of text.
 //
 
-using System;
 using MS.Internal;
 
 namespace System.Windows.Documents
@@ -87,8 +86,10 @@ namespace System.Windows.Documents
 
             if (_symbolCount > 0)
             {
-                clone = new TextTreeTextNode();
-                clone._symbolCount = _symbolCount;
+                clone = new TextTreeTextNode
+                {
+                    _symbolCount = _symbolCount
+                };
             }
 
             return clone;
@@ -221,8 +222,10 @@ namespace System.Windows.Documents
             }
 #endif // DEBUG
 
-            newNode = new TextTreeTextNode();
-            newNode._generation = _generation;
+            newNode = new TextTreeTextNode
+            {
+                _generation = _generation
+            };
 
             // Splay this node to the root so we don't corrupt any LeftSymbolCounts
             // of ancestor nodes when we fixup _symbolCount below.

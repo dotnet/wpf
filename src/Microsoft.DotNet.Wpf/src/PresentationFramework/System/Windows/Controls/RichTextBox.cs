@@ -1,6 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using MS.Internal;
+using MS.Internal.Documents;
+using System.Windows.Input; // KeyboardNavigation
+using System.ComponentModel; // DefaultValue
+using System.Windows.Controls.Primitives; // TextBoxBase
+using System.Windows.Documents; // TextEditor
+using System.Windows.Automation.Peers; // AutomationPattern
+using System.Windows.Markup; // IAddChild
+using System.Collections; // IEnumerator
+using MS.Internal.Controls; // EmptyEnumerator
+using MS.Internal.Telemetry.PresentationFramework;
 
 //
 // Description: The stock rich text editing control.
@@ -8,22 +20,6 @@
 
 namespace System.Windows.Controls
 {
-    using MS.Internal;
-    using MS.Internal.Documents;
-    using System.Windows.Threading;
-    using System.Windows.Input; // KeyboardNavigation
-    using System.ComponentModel; // DefaultValue
-    using System.Windows.Controls.Primitives; // TextBoxBase
-    using System.Windows.Documents; // TextEditor
-    using System.Windows.Automation.Peers; // AutomationPattern
-    using System.Windows.Media; // GlyphRun
-    using System.Windows.Markup; // IAddChild
-    using System.Collections; // IEnumerator
-    using System.Collections.ObjectModel; // ReadOnlyCollection
-    using MS.Internal.Automation;     // For TextAdaptor
-    using MS.Internal.Controls; // EmptyEnumerator
-    using MS.Internal.Telemetry.PresentationFramework;
-
     /// <summary>
     /// RichTextBox control
     /// </summary>
@@ -318,8 +314,10 @@ namespace System.Windows.Controls
         // Allocates the initial render scope for this control.
         internal override FrameworkElement CreateRenderScope()
         {
-            FlowDocumentView renderScope = new FlowDocumentView();
-            renderScope.Document = this.Document;
+            FlowDocumentView renderScope = new FlowDocumentView
+            {
+                Document = this.Document
+            };
 
             // Set a margin so that the BiDi Or Italic caret has room to render at the edges of content.
             // Otherwise, anti-aliasing or italic causes the caret to be partially clipped.

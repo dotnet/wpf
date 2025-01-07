@@ -11,12 +11,6 @@
 //
 //
 
-
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-
-
 namespace System.Windows.Media.TextFormatting
 {
     /// <summary>

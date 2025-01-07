@@ -2,21 +2,16 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Input;
 using System.Windows.Automation.Peers;
 
-using MS.Internal.PresentationCore;
-
 namespace MS.Internal
 {
     internal static class UIElementHelper
     {
-        [FriendAccessAllowed]
         internal static bool IsHitTestVisible(DependencyObject o)
         {
             Debug.Assert(o != null, "UIElementHelper.IsHitTestVisible called with null argument");
@@ -32,7 +27,6 @@ namespace MS.Internal
             }
         }
 
-        [FriendAccessAllowed]
         internal static bool IsVisible(DependencyObject o)
         {
             Debug.Assert(o != null, "UIElementHelper.IsVisible called with null argument");
@@ -48,7 +42,6 @@ namespace MS.Internal
             }
         }
 
-        [FriendAccessAllowed]
         internal static DependencyObject PredictFocus(DependencyObject o, FocusNavigationDirection direction)
         {
             Debug.Assert(o != null, "UIElementHelper.PredictFocus called with null argument");
@@ -73,7 +66,6 @@ namespace MS.Internal
             return null;
         }
 
-        [FriendAccessAllowed]
         internal static UIElement GetContainingUIElement2D(DependencyObject reference)
         {
             UIElement element = null;
@@ -90,7 +82,6 @@ namespace MS.Internal
             return element;
         }
 
-        [FriendAccessAllowed]
         internal static DependencyObject GetUIParent(DependencyObject child)
         {
             DependencyObject parent = GetUIParent(child, false);
@@ -98,7 +89,6 @@ namespace MS.Internal
             return parent;
         }
 
-        [FriendAccessAllowed]
         internal static DependencyObject GetUIParent(DependencyObject child, bool continuePastVisualTree)
         {
             DependencyObject parent = null;
@@ -138,13 +128,11 @@ namespace MS.Internal
             return parent;
         }
 
-        [FriendAccessAllowed]
         internal static bool IsUIElementOrUIElement3D(DependencyObject o)
         {
             return (o is UIElement or UIElement3D);
         }
 
-        [FriendAccessAllowed]
         internal static void InvalidateAutomationAncestors(DependencyObject o)
         {
             UIElement e = null;

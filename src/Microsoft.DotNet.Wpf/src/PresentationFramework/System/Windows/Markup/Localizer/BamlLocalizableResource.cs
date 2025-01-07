@@ -6,11 +6,6 @@
 //  Contents:  BamlLocalizableResource class, part of Baml Localization API
 // 
 
-using System;
-using System.Windows;
-using MS.Internal;
-using System.Diagnostics;
-
 namespace System.Windows.Markup.Localizer
 {
     /// <summary>

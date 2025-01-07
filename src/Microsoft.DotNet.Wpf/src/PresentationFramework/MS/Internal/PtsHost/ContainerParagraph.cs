@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -13,15 +13,10 @@
 //
 
 #pragma warning disable 1634, 1691  // avoid generating warnings about unknown 
-                                    // message numbers and unknown pragmas for PRESharp contol
+// message numbers and unknown pragmas for PRESharp contol
 
-using System;
-using System.Diagnostics;
-using System.Security;              // SecurityCritical
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
-using MS.Internal.Text;
 using MS.Internal.Documents;
 
 using MS.Internal.PtsHost.UnsafeNativeMethods;
@@ -1248,10 +1243,11 @@ namespace MS.Internal.PtsHost
             DirtyTextRange dtr,
             int dcpContent)
         {
-            UpdateRecord ur = new UpdateRecord();
-
-            // (1) Initialize DTR
-            ur.Dtr = dtr;
+            UpdateRecord ur = new UpdateRecord
+            {
+                // (1) Initialize DTR
+                Dtr = dtr
+            };
 
             // (2) Find first paragraph affected by DTR
             BaseParagraph para = _firstChild;

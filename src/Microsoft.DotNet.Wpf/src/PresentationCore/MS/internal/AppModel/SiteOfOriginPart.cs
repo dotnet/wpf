@@ -9,16 +9,9 @@
 //
 
 
-using System;
 using System.Net;
 using System.IO.Packaging;
-using System.Windows;
-using System.Windows.Navigation;
-using System.Windows.Resources;
 using System.IO;
-using System.Resources;
-using System.Globalization;
-using MS.Internal.PresentationCore;
 
 namespace MS.Internal.AppModel
 {
@@ -146,7 +139,7 @@ namespace MS.Internal.AppModel
                 // For performance reasons it is better to open local files directly
                 // rather than make a FileWebRequest.
                 Stream responseStream;
-                if (SecurityHelper.AreStringTypesEqual(_absoluteLocation.Scheme, Uri.UriSchemeFile))
+                if (string.Equals(_absoluteLocation.Scheme, Uri.UriSchemeFile, StringComparison.OrdinalIgnoreCase))
                 {
                     responseStream = HandleFileSource(onlyNeedContentType);
                 }

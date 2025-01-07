@@ -7,8 +7,6 @@
 // Description: A static class that manipulates an array TextTreeTextBlocks.
 //
 
-using System;
-using System.Collections;
 using MS.Internal;
 
 namespace System.Windows.Documents

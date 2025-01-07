@@ -9,17 +9,13 @@
 \***************************************************************************/
 
 using System;
-using System.Xml;
 using System.IO;
-using System.Text;
-using System.Collections.Generic;
 using System.Collections;
 using System.Globalization;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Reflection;
 using System.Collections.Specialized;
-using MS.Internal.IO.Packaging.CompoundFile;
 
 #if !PBTCOMPILER
 using System.Windows;
@@ -29,9 +25,7 @@ using System.Windows.Threading;
 using MS.Internal.PresentationFramework; // SafeSecurityHelper
 #endif
 
-using System.Runtime.InteropServices;
 using MS.Utility;
-using MS.Internal;
 
 // Disabling 1634 and 1691:
 // In order to avoid generating warnings about unknown message numbers and
@@ -4716,8 +4710,7 @@ namespace System.Windows.Markup
             else
             {
                 // Cache a additional MemberInfo for the given attribute
-                object[] arr = PropertyMember as object[];
-                if (arr == null)
+                if (PropertyMember is not object[] arr)
                 {
                     arr = new object[3];
                     arr[0] = PropertyMember;

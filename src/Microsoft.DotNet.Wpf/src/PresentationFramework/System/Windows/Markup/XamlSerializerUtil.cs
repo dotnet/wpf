@@ -8,20 +8,6 @@
 //   and during actual Serialization.
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Reflection;
-using System.Security;
-using System.Windows;
-using System.Globalization;
-using System.Windows.Data;
-using MS.Utility;
-using MS.Internal;
-
 #if PBTCOMPILER
 namespace MS.Internal.Markup
 #else

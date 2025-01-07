@@ -11,21 +11,18 @@
 *
 \***************************************************************************/
 
-using MS.Internal.WindowsBase;  // FriendAccessAllowed
-using System.Collections;       // IDictionary
-using System.Diagnostics;       // Debug.Assert
-
 namespace System.Windows
 {
-    [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
     internal struct EffectiveValueEntry
     {
         #region InternalMethods
 
         internal static EffectiveValueEntry CreateDefaultValueEntry(DependencyProperty dp, object value)
         {
-            EffectiveValueEntry entry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Default);
-            entry.Value = value;
+            EffectiveValueEntry entry = new EffectiveValueEntry(dp, BaseValueSourceInternal.Default)
+            {
+                Value = value
+            };
             return entry;
 }
 
@@ -339,17 +336,21 @@ namespace System.Windows
                 // new value for the expression has not been evaluated yet.
                 // In the intermediate we need to return the default value
                 // for the property. This problem was manifested in DRTDocumentViewer.
-                EffectiveValueEntry unsetEntry = new EffectiveValueEntry();
-                unsetEntry.BaseValueSourceInternal = BaseValueSourceInternal;
-                unsetEntry.PropertyIndex = PropertyIndex;
+                EffectiveValueEntry unsetEntry = new EffectiveValueEntry
+                {
+                    BaseValueSourceInternal = BaseValueSourceInternal,
+                    PropertyIndex = PropertyIndex
+                };
                 return unsetEntry;
             }
 
             // else entry has modifiers
-            EffectiveValueEntry entry = new EffectiveValueEntry();
-            entry.BaseValueSourceInternal = BaseValueSourceInternal;
-            entry.PropertyIndex = PropertyIndex;
-            entry.IsDeferredReference = IsDeferredReference;
+            EffectiveValueEntry entry = new EffectiveValueEntry
+            {
+                BaseValueSourceInternal = BaseValueSourceInternal,
+                PropertyIndex = PropertyIndex,
+                IsDeferredReference = IsDeferredReference
+            };
 
             // If the property has a modifier return the modified value
             Debug.Assert(ModifiedValue != null);
@@ -588,7 +589,6 @@ namespace System.Windows
     }
 
 
-    [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
     internal enum FullValueSource : short
     {
         // Bit used to store BaseValueSourceInternal = 0x01
@@ -603,7 +603,7 @@ namespace System.Windows
         IsCoerced           = 0x0040,
         IsPotentiallyADeferredReference = 0x0080,
         HasExpressionMarker = 0x0100,
-        IsCoercedWithCurrentValue = 0x200,
+        IsCoercedWithCurrentValue = 0x0200,
     }
 
     // Note that these enum values are arranged in the reverse order of
@@ -611,7 +611,6 @@ namespace System.Windows
     // precedence and Default value has the least. Note that we do not
     // store default values in the _effectiveValues cache unless it is
     // being coerced/animated.
-    [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
     internal enum BaseValueSourceInternal : short
     {
         Unknown                 = 0,
@@ -628,7 +627,6 @@ namespace System.Windows
         Local                   = 11,
     }
 
-    [FriendAccessAllowed] // Built into Base, also used by Core & Framework.
     internal class ModifiedValue
     {
         #region InternalProperties
@@ -637,8 +635,7 @@ namespace System.Windows
         {
             get
             {
-                BaseValueWeakReference wr = _baseValue as BaseValueWeakReference;
-                return (wr != null) ? wr.Target : _baseValue;
+                return (_baseValue is BaseValueWeakReference wr) ? wr.Target : _baseValue;
             }
             set { _baseValue = value; }
         }

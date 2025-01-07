@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,13 +7,6 @@
 //      A class which is used as the selection adorner of the InkCanvas selection
 //
 
-using MS.Internal;
-using MS.Internal.Controls;
-using MS.Internal.Ink;
-using System;
-using System.Diagnostics;
-using System.Collections.Generic;
-using System.Collections;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
@@ -67,9 +60,11 @@ namespace MS.Internal.Controls
                     null,
                     new Rect(0.0, 0.0, 1f, 1f));
 
-                Pen squareCapPen = new Pen(Brushes.Black, LineThickness);
-                squareCapPen.StartLineCap = PenLineCap.Square;
-                squareCapPen.EndLineCap = PenLineCap.Square;
+                Pen squareCapPen = new Pen(Brushes.Black, LineThickness)
+                {
+                    StartLineCap = PenLineCap.Square,
+                    EndLineCap = PenLineCap.Square
+                };
 
                 dc.DrawLine(squareCapPen,
                     new Point(1f, 0f), new Point(0f, 1f));
@@ -83,10 +78,12 @@ namespace MS.Internal.Controls
             }
             hatchDG.Freeze();
 
-            DrawingBrush tileBrush = new DrawingBrush(hatchDG);
-            tileBrush.TileMode = TileMode.Tile;
-            tileBrush.Viewport = new Rect(0, 0, HatchBorderMargin, HatchBorderMargin);
-            tileBrush.ViewportUnits = BrushMappingMode.Absolute;
+            DrawingBrush tileBrush = new DrawingBrush(hatchDG)
+            {
+                TileMode = TileMode.Tile,
+                Viewport = new Rect(0, 0, HatchBorderMargin, HatchBorderMargin),
+                ViewportUnits = BrushMappingMode.Absolute
+            };
             tileBrush.Freeze();
 
             _hatchPen = new Pen(tileBrush, HatchBorderMargin);
@@ -258,8 +255,10 @@ namespace MS.Internal.Controls
 
                     if (hatchGeometry == null)
                     {
-                        PathFigure path = new PathFigure();
-                        path.StartPoint = new Point(hatchRect.Left, hatchRect.Top);
+                        PathFigure path = new PathFigure
+                        {
+                            StartPoint = new Point(hatchRect.Left, hatchRect.Top)
+                        };
 
                         PathSegmentCollection segments = new PathSegmentCollection();
 

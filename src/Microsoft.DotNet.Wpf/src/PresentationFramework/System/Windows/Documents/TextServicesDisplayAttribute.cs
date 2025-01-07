@@ -6,18 +6,9 @@
 // Description: TextServicesDisplayAttribute
 //
 
-using System.Runtime.InteropServices;
-using System.Windows.Threading;
-
-using System.Collections;
-using System.Diagnostics;
 using System.Windows.Media;
-using System.Windows.Input;
-using System.Windows.Documents;
 using MS.Win32;
 using MS.Internal;
-
-using System;
 
 namespace System.Windows.Documents
 {

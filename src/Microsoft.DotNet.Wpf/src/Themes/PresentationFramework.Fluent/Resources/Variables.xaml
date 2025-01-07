@@ -29,13 +29,11 @@
 
     <Thickness x:Key="TextControlBorderThemeThickness">1</Thickness>
     <Thickness x:Key="TextControlBorderThemeThicknessFocused">2</Thickness>
-    <Thickness x:Key="TextControlThemePadding">10,8,10,7</Thickness>
+    <Thickness x:Key="TextControlThemePadding">10,5,10,6</Thickness>
 
     <system:Double x:Key="ContentControlFontSize">14</system:Double>
     <system:Double x:Key="TextControlThemeMinHeight">24</system:Double>
     <system:Double x:Key="TextControlThemeMinWidth">0</system:Double>
-    <system:Double x:Key="ListViewItemMinHeight">32</system:Double>
-    <system:Double x:Key="TreeViewItemMinHeight">24</system:Double>
     <system:Double x:Key="TreeViewItemMultiSelectCheckBoxMinHeight">24</system:Double>
     <system:Double x:Key="TreeViewItemPresenterMargin">0</system:Double>
     <system:Double x:Key="TreeViewItemPresenterPadding">0</system:Double>

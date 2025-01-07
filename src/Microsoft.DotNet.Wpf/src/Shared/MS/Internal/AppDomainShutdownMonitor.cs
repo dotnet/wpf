@@ -12,11 +12,6 @@
 //
 //---------------------------------------------------------------------------
 
-using System;
-using System.Diagnostics;           // Assert
-using System.Collections.Generic;   // Dictionary
-using System.Threading;             // [ThreadStatic]
-
 namespace MS.Internal
 {
     internal interface IAppDomainShutdownListener

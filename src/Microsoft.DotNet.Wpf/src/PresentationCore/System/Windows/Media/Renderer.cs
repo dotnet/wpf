@@ -9,19 +9,7 @@
 //      to a BitmapImage' case, and not when rendering to an HwndTarget.
 //
 
-using System;
-using System.Windows;
-using System.Collections.Generic;
-using System.Windows.Threading;
-
-using System.Diagnostics;
-
-using MS.Internal;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-
-using MS.Win32;
-using System.Security;
 
 namespace System.Windows.Media
 {

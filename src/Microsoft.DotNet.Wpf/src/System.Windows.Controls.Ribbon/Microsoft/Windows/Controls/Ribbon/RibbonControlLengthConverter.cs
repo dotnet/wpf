@@ -1,7 +1,14 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
+
+using System.ComponentModel;
+using System.Globalization;
+using MS.Internal;
+using System.Diagnostics;
+using System.ComponentModel.Design.Serialization;
+using System.Reflection;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -9,14 +16,6 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    using System;
-    using System.ComponentModel;
-    using System.Globalization;
-    using MS.Internal;
-    using System.Diagnostics;
-    using System.ComponentModel.Design.Serialization;
-    using System.Reflection;
-
     /// <summary>
     ///   A class used for converting between RibbonControlLengths and strings/numbers.
     /// </summary>

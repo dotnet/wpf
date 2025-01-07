@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,25 +8,16 @@
 // See spec at Data Binding.mht
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.ComponentModel;
 using System.Globalization;
 using System.Windows.Threading;
 using System.Threading;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows.Markup;
-using MS.Utility;
 using MS.Internal;
-using MS.Internal.Controls; // Validation
 using MS.Internal.Data;
-using MS.Internal.KnownBoxes;
-using MS.Internal.Utility;  // TraceLog
 
 namespace System.Windows.Data
 {
@@ -2625,8 +2616,10 @@ namespace System.Windows.Data
         // raise the TargetUpdated event (explicit polymorphism)
         internal static void OnTargetUpdated(DependencyObject d, DependencyProperty dp)
         {
-            DataTransferEventArgs args = new DataTransferEventArgs(d, dp);
-            args.RoutedEvent = Binding.TargetUpdatedEvent;
+            DataTransferEventArgs args = new DataTransferEventArgs(d, dp)
+            {
+                RoutedEvent = Binding.TargetUpdatedEvent
+            };
             FrameworkObject fo = new FrameworkObject(d);
 
             if (!fo.IsValid && d != null)
@@ -2640,8 +2633,10 @@ namespace System.Windows.Data
         // raise the SourceUpdatedEvent event (explicit polymorphism)
         internal static void OnSourceUpdated(DependencyObject d, DependencyProperty dp)
         {
-            DataTransferEventArgs args = new DataTransferEventArgs(d, dp);
-            args.RoutedEvent = Binding.SourceUpdatedEvent;
+            DataTransferEventArgs args = new DataTransferEventArgs(d, dp)
+            {
+                RoutedEvent = Binding.SourceUpdatedEvent
+            };
             FrameworkObject fo = new FrameworkObject(d);
 
             if (!fo.IsValid && d != null)

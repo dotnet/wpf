@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,16 +8,12 @@
 //
 
 using MS.Internal.Documents;
-using MS.Utility;                   // ExceptionStringTable
 using System.Collections;
 using System.Collections.Specialized;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Automation.Peers;    // AutomationPeer
 using System.Windows.Threading;     // Dispatcher
-using System.Windows;               // DependencyID etc.
 using System.Windows.Media;         // Visual
 using System.Windows.Markup; // IAddChild, ContentProperty
 using System.Windows.Navigation;
@@ -324,11 +320,10 @@ namespace System.Windows.Documents
             // Because of that we are expecting one of 2 types here.
             DynamicDocumentPaginator childPaginator = null;
             ContentPosition childContentPosition = null;
-            if (contentPosition is DocumentSequenceTextPointer)
+            if (contentPosition is DocumentSequenceTextPointer dsTextPointer)
             {
-                DocumentSequenceTextPointer dsTextPointer = (DocumentSequenceTextPointer)contentPosition;
 
-                #pragma warning suppress 6506 // dsTextPointer is obviously not null
+#pragma warning suppress 6506 // dsTextPointer is obviously not null
                 childPaginator = GetPaginator(dsTextPointer.ChildBlock.DocRef);
                 childContentPosition = dsTextPointer.ChildPointer as ContentPosition;
             }

@@ -8,22 +8,8 @@
 // Description: Declaration of the GeneralTransform3DTo2DTo3D class.
 //
 
-using MS.Internal;
-using System;
-using System.Collections;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Globalization;
-using System.Reflection;
-using System.Runtime.InteropServices;
 using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Markup;
 using System.Windows.Media.Media3D;
-using MS.Internal.PresentationCore;
 
 namespace MS.Internal.Media3D
 {
@@ -89,7 +75,6 @@ namespace MS.Internal.Media3D
         /// </summary>
         internal override Transform3D AffineTransform
         {
-            [FriendAccessAllowed] // Built into Core, also used by Framework.
             get
             {
                 return null;

@@ -1,30 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Collections;
 using MS.Internal;
-using System.Windows.Threading;
-
-using System.Windows;
 using System.Windows.Data;
-
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Shapes;
 using MS.Internal.KnownBoxes;
-
-using MS.Win32;
 
 
 // For typeconverter
-using System.ComponentModel.Design.Serialization;
-using System.Reflection;
 
 namespace System.Windows.Controls.Primitives
 {
@@ -675,9 +661,11 @@ namespace System.Windows.Controls.Primitives
         {
             if (!HasNonDefaultValue(target))
             {
-                Binding binding = new Binding();
-                binding.RelativeSource = RelativeSource.TemplatedParent;
-                binding.Path = new PropertyPath(source);
+                Binding binding = new Binding
+                {
+                    RelativeSource = RelativeSource.TemplatedParent,
+                    Path = new PropertyPath(source)
+                };
                 SetBinding(target, binding);
             }
         }
@@ -704,8 +692,10 @@ namespace System.Windows.Controls.Primitives
 
                 if (!HasNonDefaultValue(ReservedSpaceProperty) && parent.Track != null)
                 {
-                    Binding binding = new Binding();
-                    binding.Source = parent.Track.Thumb;
+                    Binding binding = new Binding
+                    {
+                        Source = parent.Track.Thumb
+                    };
 
                     if (parent.Orientation == Orientation.Horizontal)
                     {

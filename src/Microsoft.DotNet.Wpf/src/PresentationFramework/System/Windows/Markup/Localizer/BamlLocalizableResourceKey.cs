@@ -6,8 +6,6 @@
 // Description: BamlLocalizableResourceKey class
 //
 
-using System;
-
 namespace System.Windows.Markup.Localizer
 {
     /// <summary>

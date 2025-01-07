@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,29 +17,16 @@
 // Enable presharp pragma warning suppress directives.
 #pragma warning disable 1634, 1691
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Globalization;
-using System.Text;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.Converters;
 using System.Windows.Media.Composition;
 using System.Windows.Media.TextFormatting;
 using System.Windows.Markup;
-using System.Runtime.InteropServices;
 using MS.Internal;
 using MS.Internal.FontCache;
-using MS.Internal.FontFace;
 using MS.Internal.TextFormatting;
 using MS.Internal.Text.TextInterface;
-using MS.Utility;
-using System.Security;
-using System.Windows.Interop;
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Media
 {
@@ -1612,8 +1599,10 @@ namespace System.Windows.Media
 
                 if (accumulatedGeometry == null)
                 {
-                    accumulatedGeometry = new GeometryGroup();
-                    accumulatedGeometry.FillRule = FillRule.Nonzero;
+                    accumulatedGeometry = new GeometryGroup
+                    {
+                        FillRule = FillRule.Nonzero
+                    };
                 }
 
                 accumulatedGeometry.Children.Add(glyphGeometry.GetOutlinedPathGeometry(RelativeFlatteningTolerance, ToleranceType.Relative));

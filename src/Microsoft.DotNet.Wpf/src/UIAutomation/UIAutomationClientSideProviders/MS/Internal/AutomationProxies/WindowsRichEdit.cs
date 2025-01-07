@@ -1,19 +1,15 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: HWND-based RichEdit Proxy
 
 using System;
-using System.Collections;
-using System.ComponentModel;
 using System.Diagnostics;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows;
 using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System.Windows.Automation.Text;
 using Accessibility;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.NativeMethodsSetLastError;
@@ -608,17 +604,21 @@ namespace MS.Internal.AutomationProxies
 
             bool fGotUnicode = true;
 
-            UnsafeNativeMethods.FORMATETC fetc = new UnsafeNativeMethods.FORMATETC();
-            fetc.cfFormat = DataObjectConstants.CF_UNICODETEXT;
-            fetc.ptd = IntPtr.Zero;
-            fetc.dwAspect = DataObjectConstants.DVASPECT_CONTENT;
-            fetc.lindex = -1;
-            fetc.tymed = DataObjectConstants.TYMED_HGLOBAL;
+            UnsafeNativeMethods.FORMATETC fetc = new UnsafeNativeMethods.FORMATETC
+            {
+                cfFormat = DataObjectConstants.CF_UNICODETEXT,
+                ptd = IntPtr.Zero,
+                dwAspect = DataObjectConstants.DVASPECT_CONTENT,
+                lindex = -1,
+                tymed = DataObjectConstants.TYMED_HGLOBAL
+            };
 
-            UnsafeNativeMethods.STGMEDIUM med = new UnsafeNativeMethods.STGMEDIUM();
-            med.tymed = DataObjectConstants.TYMED_HGLOBAL;
-            med.pUnkForRelease = IntPtr.Zero;
-            med.hGlobal = IntPtr.Zero;
+            UnsafeNativeMethods.STGMEDIUM med = new UnsafeNativeMethods.STGMEDIUM
+            {
+                tymed = DataObjectConstants.TYMED_HGLOBAL,
+                pUnkForRelease = IntPtr.Zero,
+                hGlobal = IntPtr.Zero
+            };
 
             hr = dataObject.GetData(ref fetc, ref med);
 

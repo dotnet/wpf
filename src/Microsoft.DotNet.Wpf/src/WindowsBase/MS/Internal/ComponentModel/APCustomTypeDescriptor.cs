@@ -2,20 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System.ComponentModel;
+using System.Windows;
 
-namespace MS.Internal.ComponentModel 
+namespace MS.Internal.ComponentModel
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Reflection;
-    using System.Windows;
-    using System.Windows.Markup;
-    using System.Text;
-
-
     /// <summary>
     ///     This class is a custom type descriptor for attached dependency properties.  We
     ///     could just inherit from the CustomTypeDescriptor class, which does most of the forwarding
@@ -82,8 +73,7 @@ namespace MS.Internal.ComponentModel
             {
                 foreach (Attribute attr in attributes) 
                 {
-                    PropertyFilterAttribute filterAttr = attr as PropertyFilterAttribute;
-                    if (filterAttr != null) 
+                    if (attr is PropertyFilterAttribute filterAttr)
                     {
                         filter = filterAttr.Filter;
                         break;

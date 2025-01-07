@@ -8,12 +8,6 @@
 //      map between annotation id and attached annotations used by the service
 //
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Windows.Annotations;
-
 namespace MS.Internal.Annotations
 {
     /// <summary>

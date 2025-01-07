@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,17 +11,11 @@
 //
 
 #pragma warning disable 1634, 1691  // avoid generating warnings about unknown 
-                                    // message numbers and unknown pragmas for PRESharp contol
+// message numbers and unknown pragmas for PRESharp contol
 
-using System;
-using System.Diagnostics;
-using System.Security;              // SecurityCritical
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Media;
 using MS.Internal.Text;
-using MS.Internal.Documents;
 
 using MS.Internal.PtsHost.UnsafeNativeMethods;
 
@@ -407,9 +401,11 @@ namespace MS.Internal.PtsHost
             }
 
             // Bounding box is equal to actual size of the figure.
-            fsbbox = new PTS.FSBBOX();
-            fsbbox.fDefined = PTS.True;
-            fsbbox.fsrc = fsrcFlow;
+            fsbbox = new PTS.FSBBOX
+            {
+                fDefined = PTS.True,
+                fsrc = fsrcFlow
+            };
         }
         
         #endregion PTS callbacks

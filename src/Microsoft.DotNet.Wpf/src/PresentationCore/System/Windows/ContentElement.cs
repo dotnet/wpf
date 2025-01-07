@@ -7,21 +7,10 @@ using MS.Internal;
 using MS.Internal.Interop;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationCore;
-using MS.Utility;
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.Security;
 using System.Windows.Automation;
 using System.Windows.Automation.Peers;
 using System.Windows.Input;
-using System.Windows.Markup;
 using System.Windows.Media.Animation;
-using System.Windows.Threading;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 namespace System.Windows
 {
@@ -108,7 +97,6 @@ namespace System.Windows
         /// OnContentParentChanged is called when the parent of the content element is changed.
         /// </summary>
         /// <param name="oldParent">Old parent or null if the content element did not have a parent before.</param>
-        [FriendAccessAllowed] // Built into Core, also used by Framework.
         internal virtual void OnContentParentChanged(DependencyObject oldParent)
         {
             SynchronizeReverseInheritPropertyFlags(oldParent, true);
@@ -271,7 +259,6 @@ namespace System.Windows
         /// <summary>
         ///     Asynchronously re-evaluate the reverse-inherited properties.
         /// </summary>
-        [FriendAccessAllowed]
         internal void SynchronizeReverseInheritPropertyFlags(DependencyObject oldParent, bool isCoreParent)
         {
             if(IsKeyboardFocusWithin)

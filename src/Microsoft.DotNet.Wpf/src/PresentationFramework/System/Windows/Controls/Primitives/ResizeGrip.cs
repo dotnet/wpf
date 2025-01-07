@@ -6,13 +6,6 @@
 // Description: Implements the ResizeGrip control
 //
 
-using System;
-using System.Diagnostics;
-
-using System.Windows;
-using System.Windows.Threading;
-using System.Windows.Media;
-using System.Windows.Shapes;
 #if OLD_AUTOMATION
 using System.Windows.Automation.Provider;
 #endif

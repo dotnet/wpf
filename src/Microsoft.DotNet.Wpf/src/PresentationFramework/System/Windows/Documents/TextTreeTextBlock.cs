@@ -7,7 +7,6 @@
 //
 //
 
-using System;
 using MS.Internal;
 
 namespace System.Windows.Documents

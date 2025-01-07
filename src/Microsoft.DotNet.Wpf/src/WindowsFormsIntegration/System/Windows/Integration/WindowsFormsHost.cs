@@ -1,7 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
 using MS.Win32;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -9,7 +9,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Reflection;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows.Interop;
 using System.Windows.Markup;
 using System.Windows.Media;
@@ -22,7 +21,6 @@ using SWC = System.Windows.Controls;
 using SWF = System.Windows.Forms;
 using SWM = System.Windows.Media;
 using SWI = System.Windows.Input;
-using System.Collections.Generic;
 using System.Windows.Input;
 
 namespace System.Windows.Forms.Integration

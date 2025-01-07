@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -24,23 +24,12 @@
 //          ElementStringValueProperty
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Globalization;
 using System.Reflection;
-using System.Security;
-using System.Text;
 
-using System.Windows;
-using System.Windows.Data;
-using System.Windows.Markup;
-using System.Windows.Documents;
-
-namespace System.Windows.Markup.Primitives 
+namespace System.Windows.Markup.Primitives
 {
     /// <summary>
     /// An implementation of MarkupObject for DependencyObjects that works also for CLR only objects
@@ -353,7 +342,7 @@ namespace System.Windows.Markup.Primitives
         {
             // The instance stored in _shouldSerializeCacheLock is used as a sentinal for null
             // The avoids having to perform two lookups in the Hashtable to detect a cached null value.
-            object value = methodInfo == null ? _shouldSerializeCacheLock : methodInfo;
+            object value = methodInfo ?? _shouldSerializeCacheLock;
             lock (_shouldSerializeCacheLock)
             {
                 _shouldSerializeCache[key] = value;

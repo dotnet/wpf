@@ -3,18 +3,15 @@
 // See the LICENSE file in the project root for more information.
 
 
+using System.Reflection;
+using MS.Internal.PresentationFramework; // SecurityHelper
+
 //
 // Description: DocumentsTrace is a tracing utility for Fixed and Flow documents
 //              
 
 namespace MS.Internal.Documents
 {
-    using System;
-    using System.Diagnostics;
-    using System.Reflection;
-    using System.Security;
-    using MS.Internal.PresentationFramework; // SecurityHelper
-
     internal sealed class DocumentsTrace
     {
         internal static class FixedFormat

@@ -12,11 +12,6 @@
 //     Spec: CAF%20Storage%20Spec.doc
 //
 
-
-using System;
-using System.Collections;
-using System.Xml;
-
 namespace System.Windows.Annotations.Storage
 {
     /// <summary>

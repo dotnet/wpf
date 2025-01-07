@@ -1,6 +1,18 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using MS.Internal;
+using MS.Internal.Documents;
+using MS.Internal.Utility;
+using System.Windows.Navigation;
+using System.Windows.Markup;
+using System.Windows.Threading;               // Dispatcher
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.IO;
+
+using MS.Utility;
 
 //
 // Description:
@@ -9,32 +21,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using MS.Internal.AppModel;
-    using MS.Internal.Documents;
-    using MS.Internal.Utility;
-    using MS.Internal.Navigation;
-    using MS.Internal.PresentationFramework; // SecurityHelper
-    using System.Reflection;
-    using System.Windows;                // DependencyID etc.
-    using System.Windows.Controls;
-    using System.Windows.Media;
-    using System.Windows.Navigation;
-    using System.Windows.Markup;
-    using System.Windows.Threading;               // Dispatcher
-    using System;
-    using System.Collections.Specialized;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.IO;
-    using System.IO.Packaging;
-    using System.Net;
-    using System.Security;
-    using System.Globalization;
-
-    using MS.Utility;
-
     //=====================================================================
     /// <summary>
     /// PageContent is the class that references or directly hosts a page stream.
@@ -83,7 +69,7 @@ namespace System.Windows.Documents
         public FixedPage GetPageRoot(bool forceReload)
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRoot Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRoot Source={(Source ?? new Uri("", UriKind.RelativeOrAbsolute))}");
 #endif
 
 //             VerifyAccess();
@@ -115,7 +101,7 @@ namespace System.Windows.Documents
         public void GetPageRootAsync(bool forceReload)
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsync Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsync Source={(Source ?? new Uri("", UriKind.RelativeOrAbsolute))}");
 #endif
 
 //             VerifyAccess();
@@ -155,7 +141,7 @@ namespace System.Windows.Documents
         public void GetPageRootAsyncCancel()
         {
 #if DEBUG
-            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsyncCancel Source={(Source == null ? new Uri("", UriKind.RelativeOrAbsolute) : Source)}");
+            DocumentsTrace.FixedFormat.PageContent.Trace($"PageContent.GetPageRootAsyncCancel Source={(Source ?? new Uri("", UriKind.RelativeOrAbsolute))}");
 #endif
 //             VerifyAccess();
             // Important: do not throw if no outstanding GetPageRootAsyncCall
@@ -604,8 +590,10 @@ namespace System.Windows.Documents
                 throw new ApplicationException(SR.PageContentNotFound);
             }
 
-            ParserContext pc = new ParserContext();
-            pc.BaseUri = uriToLoad;
+            ParserContext pc = new ParserContext
+            {
+                BaseUri = uriToLoad
+            };
 
             if (BindUriHelper.IsXamlMimeType(mimeType))
             {

@@ -9,13 +9,9 @@
 //      A sub-class of SafeMILHandle that can estimate size for bitmap
 //      source objects.
 
-using System;
-using System.Diagnostics;
-using System.Security;
 using MS.Internal;
-using MS.Win32;
 
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media.Imaging
 {

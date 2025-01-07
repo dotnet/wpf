@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,18 +9,11 @@
 //
 
 #pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-                                    // message numbers and unknown pragmas for PRESharp contol
+// message numbers and unknown pragmas for PRESharp contol
 
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using System.Windows.Threading;
 using MS.Internal.Text;
 using MS.Internal.Documents;
 
@@ -540,8 +533,10 @@ namespace MS.Internal.PtsHost
             Line line = new Line(StructuralCache.TextFormatterHost, paraClient, ParagraphStartCharacterPosition);
 #pragma warning restore 6518
 
-            Line.FormattingContext ctx = new Line.FormattingContext(true, fClearOnLeft, fClearOnRight, _textRunCache);
-            ctx.LineFormatLengthTarget = dcpLineIn;
+            Line.FormattingContext ctx = new Line.FormattingContext(true, fClearOnLeft, fClearOnRight, _textRunCache)
+            {
+                LineFormatLengthTarget = dcpLineIn
+            };
             FormatLineCore(line, pbrlineIn, ctx, dcp, durLine, durTrack, fTreatAsFirstInPara, dcp);
 
             // Retrieve line properties

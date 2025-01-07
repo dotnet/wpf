@@ -1,6 +1,6 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
+
 // ------------------------------------------------------------------------------
 // Changes to this file must follow the http://aka.ms/api-review process.
 // ------------------------------------------------------------------------------
@@ -21,9 +21,14 @@ namespace Microsoft.Win32
     public abstract partial class CommonItemDialog : Microsoft.Win32.CommonDialog
     {
         private protected CommonItemDialog() { }
+        public bool AddToRecent { get { throw null; } set { } }
+        public System.Guid? ClientGuid { get; set; }
         public System.Collections.Generic.IList<Microsoft.Win32.FileDialogCustomPlace> CustomPlaces { get { throw null; } set { } }
+        public string DefaultDirectory { get { throw null; } set { } }
         public bool DereferenceLinks { get { throw null; } set { } }
         public string InitialDirectory { get { throw null; } set { } }
+        public string RootDirectory { get { throw null; } set { } }
+        public bool ShowHiddenItems { get; set; }
         public string Title { get { throw null; } set { } }
         public bool ValidateNames { get { throw null; } set { } }
         protected virtual void OnItemOk(System.ComponentModel.CancelEventArgs e) { }
@@ -80,6 +85,7 @@ namespace Microsoft.Win32
     public sealed partial class OpenFileDialog : Microsoft.Win32.FileDialog
     {
         public OpenFileDialog() { }
+        public bool ForcePreviewPane { get; set; }
         public bool Multiselect { get { throw null; } set { } }
         public System.IO.Stream OpenFile() { throw null; }
         public System.IO.Stream[] OpenFiles() { throw null; }
@@ -104,6 +110,7 @@ namespace Microsoft.Win32
     {
         public SaveFileDialog() { }
         public bool CreatePrompt { get { throw null; } set { } }
+        public bool CreateTestFile { get { throw null; } set { } }
         public bool OverwritePrompt { get { throw null; } set { } }
         public System.IO.Stream OpenFile() { throw null; }
         public override void Reset() { }
@@ -132,6 +139,9 @@ namespace System.Windows
         public System.Windows.ResourceDictionary Resources { get { throw null; } set { } }
         public System.Windows.ShutdownMode ShutdownMode { get { throw null; } set { } }
         public System.Uri StartupUri { get { throw null; } set { } }
+        [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.ThemeModeConverter))]
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
+        public System.Windows.ThemeMode ThemeMode { get { throw null; } set { } }
         public System.Windows.WindowCollection Windows { get { throw null; } }
         public event System.EventHandler Activated { add { } remove { } }
         public event System.EventHandler Deactivated { add { } remove { } }
@@ -512,7 +522,7 @@ namespace System.Windows
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.NeverLocalize)]
         public string Name { get { throw null; } set { } }
         public bool OverridesDefaultStyle { get { throw null; } set { } }
-        public new System.Windows.DependencyObject Parent { get { throw null; } }
+        public System.Windows.DependencyObject Parent { get { throw null; } }
         [System.Windows.Markup.AmbientAttribute]
         public System.Windows.ResourceDictionary Resources { get { throw null; } set { } }
         public System.Windows.Style Style { get { throw null; } set { } }
@@ -1807,6 +1817,31 @@ namespace System.Windows
         public System.Windows.ResourceDictionaryLocation GenericDictionaryLocation { get { throw null; } }
         public System.Windows.ResourceDictionaryLocation ThemeDictionaryLocation { get { throw null; } }
     }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
+    public readonly partial struct ThemeMode : System.IEquatable<System.Windows.ThemeMode>
+    {
+        public ThemeMode(string value) { throw null; }
+        public static System.Windows.ThemeMode Dark { get { throw null; } }
+        public static System.Windows.ThemeMode Light { get { throw null; } }
+        public static System.Windows.ThemeMode None { get { throw null; } }
+        public static System.Windows.ThemeMode System { get { throw null; } }
+        public string Value { get { throw null; } }
+        public override bool Equals(object obj) { throw null; }
+        public bool Equals(System.Windows.ThemeMode other) { throw null; }
+        public override int GetHashCode() { throw null; }
+        public static bool operator ==(System.Windows.ThemeMode left, System.Windows.ThemeMode right) { throw null; }
+        public static bool operator !=(System.Windows.ThemeMode left, System.Windows.ThemeMode right) { throw null; }
+        public override string ToString() { throw null; }
+    }
+    [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
+    public partial class ThemeModeConverter : System.ComponentModel.TypeConverter
+    {
+        public ThemeModeConverter() { }
+        public override bool CanConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type sourceType) { throw null; }
+        public override bool CanConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Type destinationType) { throw null; }
+        public override object ConvertFrom(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object source) { throw null; }
+        public override object ConvertTo(System.ComponentModel.ITypeDescriptorContext typeDescriptorContext, System.Globalization.CultureInfo cultureInfo, object value, System.Type destinationType) { throw null; }
+    }
     [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.ThicknessConverter))]
     [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.None, Readability=System.Windows.Readability.Unreadable)]
     public partial struct Thickness : System.IEquatable<System.Windows.Thickness>
@@ -2021,6 +2056,10 @@ namespace System.Windows
         public bool ShowInTaskbar { get { throw null; } set { } }
         public System.Windows.SizeToContent SizeToContent { get { throw null; } set { } }
         public System.Windows.Shell.TaskbarItemInfo TaskbarItemInfo { get { throw null; } set { } }
+        [System.ComponentModel.TypeConverterAttribute(typeof(System.Windows.ThemeModeConverter))]
+        [System.Diagnostics.CodeAnalysis.ExperimentalAttribute("WPF0001")]
+        public System.Windows.ThemeMode ThemeMode { get { throw null; } set { } }
+        
         [System.Windows.LocalizabilityAttribute(System.Windows.LocalizationCategory.Title)]
         public string Title { get { throw null; } set { } }
         [System.ComponentModel.TypeConverterAttribute("System.Windows.LengthConverter, PresentationFramework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, Custom=null")]

@@ -10,15 +10,13 @@
 *
 *
 \***************************************************************************/
-using System.Diagnostics;               // Debug.Assert
-
 namespace System.Windows.Media.Animation
 {
-/// <summary>
-/// SkipStoryboardToFill will call SkipToFill on its Storyboard reference when
-///  it is triggered.
-/// </summary>
-public sealed class SkipStoryboardToFill : ControllableStoryboardAction
+    /// <summary>
+    /// SkipStoryboardToFill will call SkipToFill on its Storyboard reference when
+    ///  it is triggered.
+    /// </summary>
+    public sealed class SkipStoryboardToFill : ControllableStoryboardAction
 {
     /// <summary>
     ///     Called when it's time to execute this storyboard action

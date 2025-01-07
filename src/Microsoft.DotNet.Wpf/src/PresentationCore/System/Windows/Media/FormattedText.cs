@@ -1,29 +1,13 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Implementation of FormattedText class. The FormattedText class is targeted at programmers
-// needing to add some simple text to a MIL visual.
-//
-//
-
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
-using System.Windows;
-using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
-using System.Runtime.InteropServices;
 using MS.Internal;
 using MS.Internal.TextFormatting;
-using MS.Internal.FontFace;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 #pragma warning disable 1634, 1691
 //Allow suppression of Presharp warnings
@@ -1958,8 +1942,10 @@ namespace System.Windows.Media
                         {
                             if (accumulatedGeometry == null)
                             {
-                                accumulatedGeometry = new GeometryGroup();
-                                accumulatedGeometry.FillRule = FillRule.Nonzero;
+                                accumulatedGeometry = new GeometryGroup
+                                {
+                                    FillRule = FillRule.Nonzero
+                                };
                             }
                             accumulatedGeometry.Children.Add(glyphRunGeometry);                        
                         }
@@ -1998,8 +1984,10 @@ namespace System.Windows.Media
                             }
                             if (accumulatedGeometry == null)
                             {
-                                accumulatedGeometry = new GeometryGroup();
-                                accumulatedGeometry.FillRule = FillRule.Nonzero;
+                                accumulatedGeometry = new GeometryGroup
+                                {
+                                    FillRule = FillRule.Nonzero
+                                };
                             }
                             accumulatedGeometry.Children.Add(geometry);
                         }

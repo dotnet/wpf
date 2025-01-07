@@ -1,7 +1,31 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+
+#region Using declarations
+
+using System.Collections;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
+using System.Windows.Automation;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Markup;
+using System.Windows.Markup.Primitives;
+using System.Windows.Media;
+using System.Windows.Threading;
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon.Primitives;
+using Microsoft.Windows.Controls;
+#else
+    using Microsoft.Windows.Controls.Ribbon.Primitives;
+#endif
+using MS.Internal;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -9,35 +33,6 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.Collections;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Globalization;
-    using System.Security;
-    using System.Windows;
-    using System.Windows.Automation;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Data;
-    using System.Windows.Input;
-    using System.Windows.Interop;
-    using System.Windows.Markup;
-    using System.Windows.Markup.Primitives;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon.Primitives;
-    using Microsoft.Windows.Controls;
-#else
-    using Microsoft.Windows.Controls.Ribbon.Primitives;
-#endif
-    using MS.Internal;
-
-
     #endregion
 
     /// <summary>
@@ -70,13 +65,15 @@ namespace Microsoft.Windows.Controls.Ribbon
                     !string.IsNullOrEmpty(toolTipFooterDescription) ||
                     toolTipFooterImageSource != null)
                 {
-                    RibbonToolTip ribbonToolTip = new RibbonToolTip();
-                    ribbonToolTip.Title = toolTipTitle;
-                    ribbonToolTip.Description = toolTipDescription;
-                    ribbonToolTip.ImageSource = toolTipImageSource;
-                    ribbonToolTip.FooterTitle = toolTipFooterTitle;
-                    ribbonToolTip.FooterDescription = toolTipFooterDescription;
-                    ribbonToolTip.FooterImageSource = toolTipFooterImageSource;
+                    RibbonToolTip ribbonToolTip = new RibbonToolTip
+                    {
+                        Title = toolTipTitle,
+                        Description = toolTipDescription,
+                        ImageSource = toolTipImageSource,
+                        FooterTitle = toolTipFooterTitle,
+                        FooterDescription = toolTipFooterDescription,
+                        FooterImageSource = toolTipFooterImageSource
+                    };
                     value = ribbonToolTip;
                 }
             }
@@ -134,8 +131,10 @@ namespace Microsoft.Windows.Controls.Ribbon
                     if (ribbonToolTip == null ||
                         ribbonToolTip.Title != content.ToString())
                     {
-                        ribbonToolTip = new RibbonToolTip();
-                        ribbonToolTip.Title = content.ToString();
+                        ribbonToolTip = new RibbonToolTip
+                        {
+                            Title = content.ToString()
+                        };
                         visualChild.ToolTip = ribbonToolTip;
                     }
                 }
@@ -2410,16 +2409,22 @@ namespace Microsoft.Windows.Controls.Ribbon
             Popup popup = menuItem.Popup;
             if (popup != null)
             {
-                Binding binding = new Binding("SubmenuPlaceholder");
-                binding.Source = parentItemsControl;
+                Binding binding = new Binding("SubmenuPlaceholder")
+                {
+                    Source = parentItemsControl
+                };
                 BindingOperations.SetBinding(popup, Popup.PlacementTargetProperty, binding);
 
-                binding = new Binding("SubmenuPlaceholder.ActualWidth");
-                binding.Source = parentItemsControl;
+                binding = new Binding("SubmenuPlaceholder.ActualWidth")
+                {
+                    Source = parentItemsControl
+                };
                 BindingOperations.SetBinding(popup, Popup.WidthProperty, binding);
 
-                binding = new Binding("SubmenuPlaceholder.ActualHeight");
-                binding.Source = parentItemsControl;
+                binding = new Binding("SubmenuPlaceholder.ActualHeight")
+                {
+                    Source = parentItemsControl
+                };
                 BindingOperations.SetBinding(popup, Popup.HeightProperty, binding);
                 BindingOperations.SetBinding(menuItem, RibbonMenuItem.DropDownHeightProperty, binding);
             }

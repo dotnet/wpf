@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -17,7 +17,6 @@ using System.Globalization;
 using System.Collections;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
-using System.ComponentModel;
 using MS.Win32;
 using NativeMethodsSetLastError = MS.Internal.UIAutomationClient.NativeMethodsSetLastError;
 
@@ -25,7 +24,7 @@ namespace MS.Internal.Automation
 {
     // Disable warning for obsolete types.  These are scheduled to be removed in M8.2 so
     // only need the warning to come out for components outside of APT.
-    #pragma warning disable 0618
+#pragma warning disable 0618
 
     // Base proxy for HWNDs. Provides HWND-based children, HWND properties such as Enabled, Visible etc.
     internal class HwndProxyElementProvider:
@@ -316,12 +315,13 @@ namespace MS.Internal.Automation
                     }
 
                     ClearMenuMode();
-                    UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT();
+                        UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT
+                        {
+                            length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT))
+                        };
 
-                    wp.length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT));
-
-                    // get the WINDOWPLACEMENT information
-                    if (!Misc.GetWindowPlacement(_hwnd, ref wp))
+                        // get the WINDOWPLACEMENT information
+                        if (!Misc.GetWindowPlacement(_hwnd, ref wp))
                     {
                         throw new InvalidOperationException(SR.OperationCannotBePerformed);
                     }
@@ -708,8 +708,10 @@ namespace MS.Internal.Automation
                 throw new InvalidOperationException(SR.OperationCannotBePerformed);
             }
 
-            UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT();
-            wp.length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT));
+            UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT
+            {
+                length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT))
+            };
 
             // get the WINDOWPLACEMENT information.  This includes the coordinates in
             // terms of the workarea.
@@ -820,8 +822,10 @@ namespace MS.Internal.Automation
             if ( heightInt > minMaxInfo.ptMaxTrackSize.y )
                 heightInt = minMaxInfo.ptMaxTrackSize.y;
 
-            UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT();
-            wp.length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT));
+            UnsafeNativeMethods.WINDOWPLACEMENT wp = new UnsafeNativeMethods.WINDOWPLACEMENT
+            {
+                length = Marshal.SizeOf(typeof(UnsafeNativeMethods.WINDOWPLACEMENT))
+            };
 
             // get the WINDOWPLACEMENT information
             if (!Misc.GetWindowPlacement(_hwnd, ref wp))
@@ -980,8 +984,10 @@ namespace MS.Internal.Automation
         // wrapper for GetMenuBarInfo
         unsafe private static bool GetMenuBarInfo(NativeMethods.HWND hwnd, int idObject, uint idItem, out UnsafeNativeMethods.MENUBARINFO mbi)
         {
-            mbi = new UnsafeNativeMethods.MENUBARINFO();
-            mbi.cbSize = sizeof(UnsafeNativeMethods.MENUBARINFO);
+            mbi = new UnsafeNativeMethods.MENUBARINFO
+            {
+                cbSize = sizeof(UnsafeNativeMethods.MENUBARINFO)
+            };
             bool result = Misc.GetMenuBarInfo(hwnd, idObject, idItem, ref mbi);
 
 #if _NEED_DEBUG_OUTPUT

@@ -1,31 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-/* SSS_DROP_BEGIN */
-
-/*************************************************************************
-* NOTICE: Code excluded from Developer Reference Sources.
-*         Don't remove the SSS_DROP_BEGIN directive on top of the file.
-*******************************************************************/
-
-
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows;
 using System.Globalization;
 using System.Windows.Media;
-using System.Windows.Media.Animation;
 using System.Windows.Media.TextFormatting;
-using MS.Internal;
-using MS.Internal.Shaping;
-using MS.Internal.FontCache;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 using MS.Internal.Text.TextInterface;
 
@@ -645,8 +626,10 @@ namespace MS.Internal.TextFormatting
 
                 alignment = LsKAlign.lskalRight;
 
-                lschp = new LsChp();
-                lschp.idObj = (ushort)TextStore.ObjectId.Text_chp;
+                lschp = new LsChp
+                {
+                    idObj = (ushort)TextStore.ObjectId.Text_chp
+                };
 
                 SetChpFormat(lsrun.RunProp, ref lschp);
 
@@ -2332,9 +2315,11 @@ namespace MS.Internal.TextFormatting
                 switch (objectId)
                 {
                     case (uint)TextStore.ObjectId.InlineObject:
-                        InlineInit inlineInit = new InlineInit();
-                        inlineInit.pfnFormat = this.InlineFormatDelegate;
-                        inlineInit.pfnDraw = this.InlineDrawDelegate;
+                        InlineInit inlineInit = new InlineInit
+                        {
+                            pfnFormat = this.InlineFormatDelegate,
+                            pfnDraw = this.InlineDrawDelegate
+                        };
                         Marshal.StructureToPtr(inlineInit, (System.IntPtr)objectInfo, false);
                         break;
 
@@ -2398,8 +2383,10 @@ namespace MS.Internal.TextFormatting
                     rightMargin
                     );
 
-                pobjDim = new ObjDim();
-                pobjDim.dur = TextFormatterImp.RealToIdeal(metrics.Width);
+                pobjDim = new ObjDim
+                {
+                    dur = TextFormatterImp.RealToIdeal(metrics.Width)
+                };
                 pobjDim.heightsRef.dvMultiLineHeight = TextFormatterImp.RealToIdeal(metrics.Height);
                 pobjDim.heightsRef.dvAscent = TextFormatterImp.RealToIdeal(metrics.Baseline);
                 pobjDim.heightsRef.dvDescent = pobjDim.heightsRef.dvMultiLineHeight - pobjDim.heightsRef.dvAscent;

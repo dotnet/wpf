@@ -9,15 +9,6 @@
 //              of structs.  This was written as a stop-gap to address
 //              a 
 
-
-
-
-
-
-using System;
-using System.Collections;
-using System.Collections.Generic;
-
 namespace System.Windows.Media.Media3D
 {
     // Use Generics to port MatrixStack to Matrix3D

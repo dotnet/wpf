@@ -1,13 +1,11 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System.Xaml;
 using System.Xaml.Schema;
 using System.Xaml.Permissions;
-using System.Collections.Generic;
 using System.Windows.Controls;
-using System.Diagnostics;
 using System.Windows.Data;
 using System.Windows.Diagnostics;
 using System.Windows.Markup;
@@ -16,7 +14,6 @@ using MS.Utility;
 using System.ComponentModel;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Security;
 using MS.Internal.Xaml.Context;
 using System.Windows.Baml2006;
 
@@ -249,11 +246,13 @@ namespace System.Windows
             // Items panel templates have special rules
             if (OwnerTemplate is ItemsPanelTemplate)
             {
-                PropertyValue pv = new PropertyValue();
-                pv.ValueType = PropertyValueType.Set;
-                pv.ChildName = TemplateLoadData.RootName;
-                pv.ValueInternal = true;
-                pv.Property = Panel.IsItemsHostProperty;
+                PropertyValue pv = new PropertyValue
+                {
+                    ValueType = PropertyValueType.Set,
+                    ChildName = TemplateLoadData.RootName,
+                    ValueInternal = true,
+                    Property = Panel.IsItemsHostProperty
+                };
 
                 sharedProperties.Add(pv);
             }
@@ -1142,11 +1141,13 @@ namespace System.Windows
             if (isValueShareable)
             {
                 // If we're here, that means the property can be shared
-                PropertyValue propertyValue = new PropertyValue();
-                propertyValue.Property = property;
-                propertyValue.ChildName = parentName;
-                propertyValue.ValueInternal = value;
-                propertyValue.ValueType = PropertyValueType.Set;
+                PropertyValue propertyValue = new PropertyValue
+                {
+                    Property = property,
+                    ChildName = parentName,
+                    ValueInternal = value,
+                    ValueType = PropertyValueType.Set
+                };
 
                 sharedValue = propertyValue;
 
@@ -1246,11 +1247,13 @@ namespace System.Windows
 
                 if (dpContent != null)
                 {
-                    PropertyValue pv = new PropertyValue();
-                    pv.ValueType = PropertyValueType.TemplateBinding;
-                    pv.ChildName = templateChildName;
-                    pv.ValueInternal = new TemplateBindingExtension(dpContent);
-                    pv.Property = ContentPresenter.ContentProperty;
+                    PropertyValue pv = new PropertyValue
+                    {
+                        ValueType = PropertyValueType.TemplateBinding,
+                        ChildName = templateChildName,
+                        ValueInternal = new TemplateBindingExtension(dpContent),
+                        Property = ContentPresenter.ContentProperty
+                    };
 
                     StyleHelper.UpdateTables(ref pv, ref childRecordFromChildIndex,
                         ref triggerSourceRecordFromChildIndex,
@@ -1267,11 +1270,13 @@ namespace System.Windows
                 {
                     if (dpContentTemplate != null)
                     {
-                        PropertyValue pv = new PropertyValue();
-                        pv.ValueType = PropertyValueType.TemplateBinding;
-                        pv.ChildName = templateChildName;
-                        pv.ValueInternal = new TemplateBindingExtension(dpContentTemplate);
-                        pv.Property = ContentPresenter.ContentTemplateProperty;
+                        PropertyValue pv = new PropertyValue
+                        {
+                            ValueType = PropertyValueType.TemplateBinding,
+                            ChildName = templateChildName,
+                            ValueInternal = new TemplateBindingExtension(dpContentTemplate),
+                            Property = ContentPresenter.ContentTemplateProperty
+                        };
 
                         StyleHelper.UpdateTables(ref pv, ref childRecordFromChildIndex,
                                ref triggerSourceRecordFromChildIndex,
@@ -1283,11 +1288,13 @@ namespace System.Windows
 
                     if (dpContentTemplateSelector != null)
                     {
-                        PropertyValue pv = new PropertyValue();
-                        pv.ValueType = PropertyValueType.TemplateBinding;
-                        pv.ChildName = templateChildName;
-                        pv.ValueInternal = new TemplateBindingExtension(dpContentTemplateSelector);
-                        pv.Property = ContentPresenter.ContentTemplateSelectorProperty;
+                        PropertyValue pv = new PropertyValue
+                        {
+                            ValueType = PropertyValueType.TemplateBinding,
+                            ChildName = templateChildName,
+                            ValueInternal = new TemplateBindingExtension(dpContentTemplateSelector),
+                            Property = ContentPresenter.ContentTemplateSelectorProperty
+                        };
 
                         StyleHelper.UpdateTables(ref pv, ref childRecordFromChildIndex,
                                ref triggerSourceRecordFromChildIndex,
@@ -1299,11 +1306,13 @@ namespace System.Windows
 
                     if (dpContentStringFormat != null)
                     {
-                        PropertyValue pv = new PropertyValue();
-                        pv.ValueType = PropertyValueType.TemplateBinding;
-                        pv.ChildName = templateChildName;
-                        pv.ValueInternal = new TemplateBindingExtension(dpContentStringFormat);
-                        pv.Property = ContentPresenter.ContentStringFormatProperty;
+                        PropertyValue pv = new PropertyValue
+                        {
+                            ValueType = PropertyValueType.TemplateBinding,
+                            ChildName = templateChildName,
+                            ValueInternal = new TemplateBindingExtension(dpContentStringFormat),
+                            Property = ContentPresenter.ContentStringFormatProperty
+                        };
 
 
                         StyleHelper.UpdateTables(ref pv, ref childRecordFromChildIndex,
@@ -1339,11 +1348,13 @@ namespace System.Windows
 
                 if (dpContent != null)
                 {
-                    PropertyValue propertyValue = new PropertyValue();
-                    propertyValue.ValueType = PropertyValueType.TemplateBinding;
-                    propertyValue.ChildName = childName;
-                    propertyValue.ValueInternal = new TemplateBindingExtension(dpContent);
-                    propertyValue.Property = GridViewRowPresenter.ContentProperty;
+                    PropertyValue propertyValue = new PropertyValue
+                    {
+                        ValueType = PropertyValueType.TemplateBinding,
+                        ChildName = childName,
+                        ValueInternal = new TemplateBindingExtension(dpContent),
+                        Property = GridViewRowPresenter.ContentProperty
+                    };
 
                     StyleHelper.UpdateTables(ref propertyValue,
                                              ref childRecordFromChildIndex,
@@ -1358,11 +1369,13 @@ namespace System.Windows
             // <GridViewRowPresenter Columns="{TemplateBinding Property=GridView.ColumnCollection}" .../>
             if (!isColumnsPropertyDefined)
             {
-                PropertyValue propertyValue = new PropertyValue();
-                propertyValue.ValueType = PropertyValueType.TemplateBinding;
-                propertyValue.ChildName = childName;
-                propertyValue.ValueInternal = new TemplateBindingExtension(GridView.ColumnCollectionProperty);
-                propertyValue.Property = GridViewRowPresenter.ColumnsProperty;
+                PropertyValue propertyValue = new PropertyValue
+                {
+                    ValueType = PropertyValueType.TemplateBinding,
+                    ChildName = childName,
+                    ValueInternal = new TemplateBindingExtension(GridView.ColumnCollectionProperty),
+                    Property = GridViewRowPresenter.ColumnsProperty
+                };
 
                 StyleHelper.UpdateTables(ref propertyValue,
                                          ref childRecordFromChildIndex,

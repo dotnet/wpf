@@ -1,21 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Buffers;
-using System.Collections.Generic;
 using System.IO;
 using System.Xaml;
-using System.Diagnostics;
 using System.ComponentModel;
 using System.Reflection;
 using System.Windows.Diagnostics;
-using System.Windows.Media.Media3D;
 using System.Windows.Media;
-using MS.Internal;
 using System.Globalization;
 using XamlReaderHelper = System.Windows.Markup.XamlReaderHelper;
+using System.Runtime.CompilerServices;
 
 namespace System.Windows.Baml2006
 {
@@ -763,8 +759,10 @@ namespace System.Windows.Baml2006
             }
             else
             {
-                var xData = new System.Windows.Markup.XData();
-                xData.Text = value;
+                var xData = new System.Windows.Markup.XData
+                {
+                    Text = value
+                };
                 _xamlNodesWriter.WriteValue(xData);
             }
 
@@ -889,8 +887,10 @@ namespace System.Windows.Baml2006
                     string propertyName = GetStaticExtensionValue(keyId, out memberType, out providedValue);
                     if (providedValue == null)
                     {
-                        var staticExtension = new System.Windows.Markup.StaticExtension(propertyName);
-                        staticExtension.MemberType = memberType;
+                        var staticExtension = new System.Windows.Markup.StaticExtension(propertyName)
+                        {
+                            MemberType = memberType
+                        };
                         providedValue = staticExtension.ProvideValue(null);
                     }
                     optimizedStaticResource.KeyValue = providedValue;
@@ -1314,8 +1314,10 @@ namespace System.Windows.Baml2006
 
             // Store a key record that can be accessed later.
             // This is a complex scenario so we need to write to the keyList
-            KeyRecord key = new KeyRecord(isShared, isSharedSet, valuePosition, _context.SchemaContext);
-            key.Flags = flags;
+            KeyRecord key = new KeyRecord(isShared, isSharedSet, valuePosition, _context.SchemaContext)
+            {
+                Flags = flags
+            };
             key.KeyNodeList.Writer.WriteStartObject(type);
 
 
@@ -1377,7 +1379,7 @@ namespace System.Windows.Baml2006
                 // Force load the Statics by walking up the hierarchy and running class constructors
                 while (null != currentType)
                 {
-                    MS.Internal.WindowsBase.SecurityHelper.RunClassConstructor(currentType);
+                    RuntimeHelpers.RunClassConstructor(currentType.TypeHandle);
                     currentType = currentType.BaseType;
                 }
 
@@ -1730,8 +1732,10 @@ namespace System.Windows.Baml2006
                     }
                     else
                     {
-                        System.Windows.Markup.StaticExtension staticExtension = new System.Windows.Markup.StaticExtension((string)param);
-                        staticExtension.MemberType = memberType;
+                        System.Windows.Markup.StaticExtension staticExtension = new System.Windows.Markup.StaticExtension((string)param)
+                        {
+                            MemberType = memberType
+                        };
                         value = staticExtension;
                     }
                     handled = true;

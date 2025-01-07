@@ -1,34 +1,22 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.ComponentModel;
-
-using System.Diagnostics;
-using System.Globalization;
-using System.Windows.Threading;
-using System.Threading;
 
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Diagnostics;
-using System.Windows.Documents;
 
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
-using System.Windows.Media.TextFormatting;
 using System.Windows.Markup;
 
 #if DEBUG
-using System.Reflection;
 #endif
 
-using MS.Internal.Text;
 using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.PresentationFramework;
@@ -682,8 +670,10 @@ namespace System.Windows
         internal Expression GetExpressionCore(DependencyProperty dp, PropertyMetadata metadata)
         {
             this.IsRequestingExpression = true;
-            EffectiveValueEntry entry = new EffectiveValueEntry(dp);
-            entry.Value = DependencyProperty.UnsetValue;
+            EffectiveValueEntry entry = new EffectiveValueEntry(dp)
+            {
+                Value = DependencyProperty.UnsetValue
+            };
             this.EvaluateBaseValueCore(dp, metadata, ref entry);
             this.IsRequestingExpression = false;
 
@@ -1071,8 +1061,10 @@ namespace System.Windows
         /// </summary>
         public void BringIntoView()
         {
-            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, Rect.Empty);
-            args.RoutedEvent=FrameworkElement.RequestBringIntoViewEvent;
+            RequestBringIntoViewEventArgs args = new RequestBringIntoViewEventArgs(this, Rect.Empty)
+            {
+                RoutedEvent = FrameworkElement.RequestBringIntoViewEvent
+            };
             RaiseEvent(args);
         }
 

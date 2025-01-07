@@ -17,11 +17,8 @@ using System.Xml;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
 using System.Runtime.InteropServices;
 
 using MS.Internal.Markup;
@@ -1281,7 +1278,7 @@ namespace Microsoft.Build.Tasks.Windows
 
             public void SetLine(string line)
             {
-                Content = (line == null) ? string.Empty : line;
+                Content = line ?? string.Empty;
                 Index   = 0;
             }
 

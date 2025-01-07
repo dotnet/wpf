@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -10,17 +10,11 @@
 
 namespace System.Windows.Documents
 {
-    using System.Collections.Generic;
-    using System.Windows.Shapes;
-    using System.Windows.Media;
-    using System.Diagnostics;
-    using System.Windows;
-
     //Stores a collection of horizontal and vertical lines sorted by y and x axis respectively
 
     // Needs performance review: It might be better to use a list while creating FixedSOMLineRanges and then convert them to an array
     //when consuming them, i.e. determinining separation etc. We are doing lots of indexed access at this stage
-    
+
     internal sealed class FixedSOMLineCollection
     {
         //--------------------------------------------------------------------
@@ -87,8 +81,10 @@ namespace System.Windows.Documents
             {
                 if (line < ranges[i].Line - maxSeparation)
                 {
-                    range = new FixedSOMLineRanges();
-                    range.Line = line;
+                    range = new FixedSOMLineRanges
+                    {
+                        Line = line
+                    };
                     range.AddRange(start, end);
                     ranges.Insert(i, range);
                     return;
@@ -101,8 +97,10 @@ namespace System.Windows.Documents
             }
 
             // add to end
-            range = new FixedSOMLineRanges();
-            range.Line = line;
+            range = new FixedSOMLineRanges
+            {
+                Line = line
+            };
             range.AddRange(start, end);
             ranges.Add(range);
             return;

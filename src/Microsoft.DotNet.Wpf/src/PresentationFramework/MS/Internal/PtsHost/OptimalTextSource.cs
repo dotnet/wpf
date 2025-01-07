@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,18 +8,11 @@
 //
 
 #pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-                                    // message numbers and unknown pragmas for PRESharp contol
+// message numbers and unknown pragmas for PRESharp contol
 
-using System;
-using System.Diagnostics;
-using System.Collections;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Security;                  // SecurityCritical
 using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Documents;
-using System.Windows.Media;
 using System.Windows.Media.TextFormatting;
 using MS.Internal.Text;
 using MS.Internal.Documents;
@@ -168,7 +161,7 @@ namespace MS.Internal.PtsHost
 
 
                 StaticTextPointer pointer = position.CreateStaticPointer();
-                DependencyObject element = (pointer.Parent != null) ? pointer.Parent : _paraClient.Paragraph.Element;
+                DependencyObject element = pointer.Parent ?? _paraClient.Paragraph.Element;
                 culture = DynamicPropertyReader.GetCultureInfo(element);                
             }
 

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -9,9 +9,7 @@
 //
 //
 
-using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Windows.Markup;
 using MS.Internal;
 
@@ -207,9 +205,10 @@ namespace System.Windows
             _targetObject = d;
             _targetProperty = dp;
 
-            FrameworkObject fo = new FrameworkObject(_targetObject);
-
-            fo.HasResourceReference = true;
+            FrameworkObject fo = new FrameworkObject(_targetObject)
+            {
+                HasResourceReference = true
+            };
 
             if (!fo.IsValid)
             {

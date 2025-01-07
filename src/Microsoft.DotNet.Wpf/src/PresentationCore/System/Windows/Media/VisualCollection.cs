@@ -2,26 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
 // Description:
 //      The VisualCollection implementation is based on the
 //      CLR's Lightning ArrayList implementation.
-//
 
-using MS.Win32;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
-using System.Windows.Media.Composition;
-using System.Windows.Threading;
-
-using System;
-using System.Diagnostics;
 using System.Collections;
 using MS.Internal;
-using System.Runtime.InteropServices;
-
-using SR=MS.Internal.PresentationCore.SR;
 
 //------------------------------------------------------------------------------
 //  - There is an exception thrown inside of ConnectChild which could render

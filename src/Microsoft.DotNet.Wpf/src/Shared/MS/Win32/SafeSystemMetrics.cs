@@ -10,24 +10,13 @@
 //  that were moved here do not rely on caching. If there is a percieved perf. problem
 //  we can work on enabling this.
 
-using System;
-using System.Collections;
-using System.Runtime.InteropServices;
-using System.Windows.Media;
-using Microsoft.Win32;
-using System.Security;
-using MS.Win32;
-using MS.Internal;
 using MS.Internal.Interop;
-
-using MS.Internal.PresentationCore;
 
 namespace MS.Win32
 {
     /// <summary>
     ///     Contains properties that are queries into the system's various settings.
     /// </summary>
-    [FriendAccessAllowed] // Built into Core, also used by Framework.
     internal sealed class SafeSystemMetrics
     {
 

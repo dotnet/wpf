@@ -4,13 +4,10 @@
 
 //
 
-using System;
 using System.ComponentModel;
 using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
 using System.Globalization;
 using System.Reflection;
-using System.Security;
 
 namespace System.Windows.Media.Animation
 {

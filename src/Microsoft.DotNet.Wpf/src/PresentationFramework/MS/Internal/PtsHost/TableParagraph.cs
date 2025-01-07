@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,18 +8,10 @@
 //
 
 #pragma warning disable 1634, 1691  // avoid generating warnings about unknown 
-                                    // message numbers and unknown pragmas for PRESharp contol
+// message numbers and unknown pragmas for PRESharp contol
 
-using MS.Internal.Documents;
-using MS.Internal.PtsTable;
-using MS.Internal.Text;
-using MS.Utility;
-using System;
-using System.Collections;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
-using System.Windows.Media;
 
 using MS.Internal.PtsHost.UnsafeNativeMethods;
 
@@ -157,18 +149,19 @@ namespace MS.Internal.PtsHost
             uint fswdirTrack,                       // IN:  direction of Track
             out PTS.FSTABLEOBJPROPS fstableobjprops)// OUT: properties of the table
         {
-            fstableobjprops = new PTS.FSTABLEOBJPROPS();
-
-            fstableobjprops.fskclear = PTS.FSKCLEAR.fskclearNone;
-            fstableobjprops.ktablealignment = PTS.FSKTABLEOBJALIGNMENT.fsktableobjAlignLeft;
-            fstableobjprops.fFloat = PTS.False;
-            fstableobjprops.fskwr = PTS.FSKWRAP.fskwrBoth;
-            fstableobjprops.fDelayNoProgress = PTS.False;
-            fstableobjprops.dvrCaptionTop = 0;
-            fstableobjprops.dvrCaptionBottom = 0;
-            fstableobjprops.durCaptionLeft = 0;
-            fstableobjprops.durCaptionRight = 0;
-            fstableobjprops.fswdirTable = PTS.FlowDirectionToFswdir((FlowDirection)Element.GetValue(FrameworkElement.FlowDirectionProperty));
+            fstableobjprops = new PTS.FSTABLEOBJPROPS
+            {
+                fskclear = PTS.FSKCLEAR.fskclearNone,
+                ktablealignment = PTS.FSKTABLEOBJALIGNMENT.fsktableobjAlignLeft,
+                fFloat = PTS.False,
+                fskwr = PTS.FSKWRAP.fskwrBoth,
+                fDelayNoProgress = PTS.False,
+                dvrCaptionTop = 0,
+                dvrCaptionBottom = 0,
+                durCaptionLeft = 0,
+                durCaptionRight = 0,
+                fswdirTable = PTS.FlowDirectionToFswdir((FlowDirection)Element.GetValue(FrameworkElement.FlowDirectionProperty))
+            };
         }
 
         /// <summary>
@@ -558,7 +551,7 @@ namespace MS.Internal.PtsHost
             // - to create dirty text range corresponding to the Table content
             // - notify formatter that Table's content is changed.
             //
-            int charCount = Table.SymbolCount - 2;// This is equivalent to (ContentEndOffset � ContentStartOffset) but is more performant.
+            int charCount = Table.SymbolCount - 2;// This is equivalent to (ContentEndOffset – ContentStartOffset) but is more performant.
             if (charCount > 0)
             {
                 DirtyTextRange dtr = new DirtyTextRange(Table.ContentStartOffset, charCount, charCount);

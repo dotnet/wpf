@@ -9,25 +9,15 @@
 //
 //
 
-using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.IO;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security;
 using System.Windows;
 using System.Windows.Markup;    // for XmlLanguage
 using System.Windows.Media;
 
 using MS.Win32;
-using MS.Utility;
-using MS.Internal;
 using MS.Internal.FontFace;
-using MS.Internal.PresentationCore;
 using MS.Internal.Shaping;
 
 // Since we disable PreSharp warnings in this file, we first need to disable warnings about unknown message numbers and unknown pragmas.
@@ -39,7 +29,6 @@ namespace MS.Internal.FontCache
     /// FamilyCollection font cache element class is responsible for
     /// storing the mapping between a folder and font families in it
     /// </summary>
-    [FriendAccessAllowed]
     internal class FamilyCollection
     {
         //------------------------------------------------------
@@ -90,7 +79,7 @@ namespace MS.Internal.FontCache
             {
                 if (_userCompositeFonts == null)
                 {
-                    _userCompositeFonts = GetCompositeFontList(new FontSourceCollection(_folderUri, false, true));
+                    _userCompositeFonts = GetCompositeFontList(new FontSourceCollection(_folderUri, true));
                 }
                 return _userCompositeFonts;
             }
@@ -251,7 +240,6 @@ namespace MS.Internal.FontCache
                         if (_systemCompositeFonts[index] == null)
                         {
                             FontSource fontSource = new FontSource(new Uri(Path.Combine(FamilyCollection.SxSFontsResourcePrefix, _systemCompositeFontsFileNames[index] + Util.CompositeFontExtension), UriKind.RelativeOrAbsolute),
-                                                                   skipDemand:true,
                                                                    isComposite:true,
                                                                    isInternalCompositeFont:true);
 

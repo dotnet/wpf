@@ -1,25 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
 #pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
 
-using System.Windows.Media;
-using System.Security;
-using System;
 using MS.Internal;
 using MS.Win32;
-using System.Buffers;
-using System.Reflection;
-using System.Collections;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using MS.Internal.PresentationCore;
 
-using SR=MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
-
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
 {
@@ -698,16 +687,17 @@ namespace System.Windows.Media
             IntPtr pStream = IntPtr.Zero;
 
             StreamAsIStream sais = new StreamAsIStream(stream);
-            StreamDescriptor sd = new StreamDescriptor();
+            StreamDescriptor sd = new StreamDescriptor
+            {
+                pfnDispose = StaticPtrs.pfnDispose,
 
-            sd.pfnDispose = StaticPtrs.pfnDispose;
-
-            sd.pfnClone = StaticPtrs.pfnClone;
-            sd.pfnCommit = StaticPtrs.pfnCommit;
-            sd.pfnCopyTo = StaticPtrs.pfnCopyTo;
-            sd.pfnLockRegion = StaticPtrs.pfnLockRegion;
-            sd.pfnRead = StaticPtrs.pfnRead;
-            sd.pfnRevert = StaticPtrs.pfnRevert;
+                pfnClone = StaticPtrs.pfnClone,
+                pfnCommit = StaticPtrs.pfnCommit,
+                pfnCopyTo = StaticPtrs.pfnCopyTo,
+                pfnLockRegion = StaticPtrs.pfnLockRegion,
+                pfnRead = StaticPtrs.pfnRead,
+                pfnRevert = StaticPtrs.pfnRevert
+            };
             unsafe
             {
                 sd.pfnSeek = StaticPtrs.pfnSeek;

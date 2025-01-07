@@ -1,18 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 
 using Microsoft.Win32;
 using MS.Win32;
-using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows.Input.StylusWisp;
 using System.Windows.Input.Tracing;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusWisp
 {
@@ -140,8 +134,10 @@ namespace System.Windows.Input.StylusWisp
                     {
                         if (ridl[i].dwType == NativeMethods.RIM_TYPEHID)
                         {
-                            NativeMethods.RID_DEVICE_INFO deviceInfo = new NativeMethods.RID_DEVICE_INFO();
-                            deviceInfo.cbSize = (uint)Marshal.SizeOf(typeof(NativeMethods.RID_DEVICE_INFO));
+                            NativeMethods.RID_DEVICE_INFO deviceInfo = new NativeMethods.RID_DEVICE_INFO
+                            {
+                                cbSize = (uint)Marshal.SizeOf(typeof(NativeMethods.RID_DEVICE_INFO))
+                            };
                             uint cbSize = (uint)deviceInfo.cbSize;
                             int cBytes = (int)MS.Win32.UnsafeNativeMethods.GetRawInputDeviceInfo(ridl[i].hDevice, NativeMethods.RIDI_DEVICEINFO, ref deviceInfo, ref cbSize);
 

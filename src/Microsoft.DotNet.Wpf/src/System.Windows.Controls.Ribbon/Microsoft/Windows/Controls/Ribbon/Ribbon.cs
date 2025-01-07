@@ -1,7 +1,31 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
-        
+
+
+#region Using declarations
+
+using System.Collections;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Runtime.InteropServices;
+using System.Windows.Automation.Peers;
+using System.Windows.Controls.Primitives;
+using System.Windows.Input;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Threading;
+#if RIBBON_IN_FRAMEWORK
+using System.Windows.Controls.Ribbon.Primitives;
+using Microsoft.Windows.Controls;
+#else
+    using Microsoft.Windows.Automation.Peers;
+    using Microsoft.Windows.Controls.Ribbon.Primitives;
+#endif
+using MS.Internal;
 
 #if RIBBON_IN_FRAMEWORK
 namespace System.Windows.Controls.Ribbon
@@ -9,33 +33,6 @@ namespace System.Windows.Controls.Ribbon
 namespace Microsoft.Windows.Controls.Ribbon
 #endif
 {
-    #region Using declarations
-
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Collections.Specialized;
-    using System.ComponentModel;
-    using System.Diagnostics;
-    using System.Runtime.InteropServices;
-    using System.Windows;
-    using System.Windows.Automation.Peers;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Input;
-    using System.Windows.Interop;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-#if RIBBON_IN_FRAMEWORK
-    using System.Windows.Controls.Ribbon.Primitives;
-    using Microsoft.Windows.Controls;
-#else
-    using Microsoft.Windows.Automation.Peers;
-    using Microsoft.Windows.Controls.Ribbon.Primitives;
-#endif
-    using MS.Internal;
-
     #endregion Using declarations
 
     /// <summary>
@@ -1602,11 +1599,13 @@ namespace Microsoft.Windows.Controls.Ribbon
             Point startPoint = popupPlacementTarget.PointToScreen(new Point());
             Point endPoint = popupPlacementTarget.PointToScreen(new Point(popupPlacementTarget.ActualWidth, popupPlacementTarget.ActualHeight));
 
-            NativeMethods.RECT popupPlacementTargetRect = new NativeMethods.RECT();
-            popupPlacementTargetRect.left = (int)startPoint.X;
-            popupPlacementTargetRect.right = (int)endPoint.X;
-            popupPlacementTargetRect.top = (int)startPoint.Y;
-            popupPlacementTargetRect.bottom = (int)endPoint.Y;
+            NativeMethods.RECT popupPlacementTargetRect = new NativeMethods.RECT
+            {
+                left = (int)startPoint.X,
+                right = (int)endPoint.X,
+                top = (int)startPoint.Y,
+                bottom = (int)endPoint.Y
+            };
             IntPtr monitorPtr = NativeMethods.MonitorFromRect(ref popupPlacementTargetRect, NativeMethods.MONITOR_DEFAULTTONEAREST);
             if (monitorPtr != IntPtr.Zero)
             {

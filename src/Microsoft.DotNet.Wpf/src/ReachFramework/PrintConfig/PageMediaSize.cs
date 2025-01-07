@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -14,17 +14,11 @@ Abstract:
 
 --*/
 
-using System;
-using System.IO;
 using System.Xml;
-using System.Collections;
 using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 
 using System.Printing;
-using MS.Internal.Printing.Configuration;
 
 #pragma warning disable 1634, 1691 // Allows suppression of certain PreSharp messages
 
@@ -137,8 +131,10 @@ namespace MS.Internal.Printing.Configuration
 
         internal static PrintCapabilityFeature NewFeatureCallback(InternalPrintCapabilities printCap)
         {
-            PageMediaSizeCapability cap = new PageMediaSizeCapability(printCap);
-            cap._fixedSizes = new Collection<FixedMediaSizeOption>();
+            PageMediaSizeCapability cap = new PageMediaSizeCapability(printCap)
+            {
+                _fixedSizes = new Collection<FixedMediaSizeOption>()
+            };
 
             return cap;
         }

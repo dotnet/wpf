@@ -7,13 +7,10 @@
 //
 
 #pragma warning disable 1634, 1691  // avoid generating warnings about unknown 
-                                    // message numbers and unknown pragmas for PRESharp contol
+// message numbers and unknown pragmas for PRESharp contol
 
-using System;
-using System.Diagnostics;
 using System.Windows;
 using System.Windows.Documents;
-using MS.Internal.Text;
 
 namespace MS.Internal.PtsHost
 {

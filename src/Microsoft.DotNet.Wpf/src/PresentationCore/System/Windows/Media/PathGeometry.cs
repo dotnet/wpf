@@ -1,36 +1,12 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-//
-// Description: Implementation of the class PathGeometry
-//
-
-using System;
 using MS.Internal;
-using MS.Internal.PresentationCore;
-using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Reflection;
-using System.Collections;
-using System.Collections.Generic;
-using System.Text;
-using System.Globalization;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-using System.Windows;
-using System.Text.RegularExpressions;
-using System.Windows.Media.Animation;
 using System.Windows.Markup;
-using System.Windows.Converters;
-using System.Runtime.InteropServices;
-using System.Security;
-using MS.Win32;
 
-using SR=MS.Internal.PresentationCore.SR;
-using UnsafeNativeMethods=MS.Win32.PresentationCore.UnsafeNativeMethods;
+using UnsafeNativeMethods = MS.Win32.PresentationCore.UnsafeNativeMethods;
 
 namespace System.Windows.Media
 {
@@ -453,10 +429,11 @@ namespace System.Windows.Media
             {
                 if (pointCount >=1 && segmentCount >= 1)
                 {
-                    PathFigure figure = new PathFigure();
-
-                    figure.IsFilled = isFilled;
-                    figure.StartPoint = new Point(pPoints->X, pPoints->Y);
+                    PathFigure figure = new PathFigure
+                    {
+                        IsFilled = isFilled,
+                        StartPoint = new Point(pPoints->X, pPoints->Y)
+                    };
 
                     int pointIndex = 1;
                     int sameSegCount = 0;
@@ -973,10 +950,12 @@ namespace System.Windows.Media
         /// </summary>
         internal override PathGeometryData GetPathGeometryData()
         {
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule;
-            data.Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform);
-            
+            PathGeometryData data = new PathGeometryData
+            {
+                FillRule = FillRule,
+                Matrix = CompositionResourceManager.TransformToMilMatrix3x2D(Transform)
+            };
+
             if (IsObviouslyEmpty())
             {
                 return Geometry.GetEmptyPathGeometryData();                

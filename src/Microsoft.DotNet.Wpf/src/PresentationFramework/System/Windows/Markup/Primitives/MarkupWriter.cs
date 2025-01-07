@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,19 +6,12 @@
 //  Contents:  XAML writer
 //
 
-using System;
 using System.ComponentModel;
 using System.Reflection;
 using System.Collections;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.IO;
 using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
-using System.Windows.Markup;
-using MS.Internal;
 
 namespace System.Windows.Markup.Primitives
 {
@@ -39,8 +32,10 @@ namespace System.Windows.Markup.Primitives
         public static MarkupObject GetMarkupObjectFor(object instance)
         {
             ArgumentNullException.ThrowIfNull(instance);
-            XamlDesignerSerializationManager manager = new XamlDesignerSerializationManager(null);
-            manager.XamlWriterMode = XamlWriterMode.Expression;
+            XamlDesignerSerializationManager manager = new XamlDesignerSerializationManager(null)
+            {
+                XamlWriterMode = XamlWriterMode.Expression
+            };
             return new ElementMarkupObject(instance, manager);
         }
 

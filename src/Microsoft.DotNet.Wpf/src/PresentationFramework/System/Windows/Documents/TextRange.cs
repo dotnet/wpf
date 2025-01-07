@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,9 +7,6 @@
 //
 
 using MS.Internal;
-using System.Collections.Generic;
-using System.Windows.Threading;
-using System.Globalization;
 using System.Xml;
 using System.IO;
 using System.Windows.Markup; // Parser
@@ -1595,10 +1592,11 @@ namespace System.Windows.Documents
                     if (Paragraph.HasNoTextContent(paragraph))
                     {
                         // Use BlockUIContainer as a replacement of the current paragraph
-                        BlockUIContainer blockUIContainer = new BlockUIContainer(embeddedElement);
-
-                        // Translate embedded element's horizontal alignment property to the BlockUIContainer's text alignment
-                        blockUIContainer.TextAlignment = TextRangeEdit.GetTextAlignmentFromHorizontalAlignment(embeddedElement.HorizontalAlignment);
+                        BlockUIContainer blockUIContainer = new BlockUIContainer(embeddedElement)
+                        {
+                            // Translate embedded element's horizontal alignment property to the BlockUIContainer's text alignment
+                            TextAlignment = TextRangeEdit.GetTextAlignmentFromHorizontalAlignment(embeddedElement.HorizontalAlignment)
+                        };
 
                         // Replace paragraph with BlockUIContainer
                         paragraph.SiblingBlocks.InsertAfter(paragraph, blockUIContainer);

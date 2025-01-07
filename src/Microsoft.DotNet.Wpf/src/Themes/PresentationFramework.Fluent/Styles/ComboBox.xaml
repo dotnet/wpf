@@ -152,7 +152,6 @@
         <Setter Property="Background" Value="{DynamicResource ComboBoxBackground}" />
         <Setter Property="BorderBrush" Value="{DynamicResource ControlElevationBorderBrush}" />
         <Setter Property="BorderThickness" Value="{StaticResource ComboBoxBorderThemeThickness}" />
-        <Setter Property="FontSize" Value="{DynamicResource ControlContentThemeFontSize}" />
         <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
@@ -173,7 +172,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ComboBox}">
-                    <Grid HorizontalAlignment="{TemplateBinding HorizontalAlignment}" VerticalAlignment="{TemplateBinding VerticalAlignment}">
+                    <Grid>
                         <Border
                             x:Name="ContentBorder"
                             Grid.Row="0"
@@ -205,6 +204,8 @@
                                             Content="{TemplateBinding SelectionBoxItem}"
                                             ContentTemplate="{TemplateBinding SelectionBoxItemTemplate}"
                                             ContentTemplateSelector="{TemplateBinding ItemTemplateSelector}"
+                                            ContentStringFormat="{TemplateBinding SelectionBoxItemStringFormat}"
+                                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
                                             IsHitTestVisible="False"
                                             TextElement.Foreground="{TemplateBinding Foreground}" />
                                     </Grid>
@@ -261,7 +262,6 @@
                                     VerticalOffset="1">
                                     <Border
                                         x:Name="DropDownBorder"
-                                        Margin="12,0,12,18"
                                         Padding="0,4,0,6"
                                         Background="{DynamicResource ComboBoxDropDownBackground}"
                                         BorderBrush="{DynamicResource ComboBoxDropDownBorderBrush}"

@@ -12,18 +12,9 @@
 // the NotSupportedException.
 // 
 
-using System;
 using System.IO.Packaging;
 using System.IO;
-using System.Collections.Generic;
-using System.Windows.Resources;
-using System.Resources;
-using System.Reflection;
-using System.Globalization;
-using System.Windows;
 using System.Windows.Navigation;
-using System.Security;
-using MS.Internal.PresentationCore;
 
 namespace MS.Internal.AppModel
 {
@@ -46,15 +37,10 @@ namespace MS.Internal.AppModel
 
         internal static Uri SiteOfOrigin
         {
-            [FriendAccessAllowed]
             get
             {
-                Uri siteOfOrigin = SiteOfOriginForClickOnceApp;
-                if (siteOfOrigin == null)
-                {
-                    // Calling FixFileUri because BaseDirectory will be a c:\\ style path
-                    siteOfOrigin = BaseUriHelper.FixFileUri(new Uri(System.AppDomain.CurrentDomain.BaseDirectory));
-                }
+                // Calling FixFileUri because BaseDirectory will be a c:\\ style path
+                Uri siteOfOrigin = BaseUriHelper.FixFileUri(new Uri(System.AppDomain.CurrentDomain.BaseDirectory));
 #if DEBUG
             if (_traceSwitch.Enabled)
                 System.Diagnostics.Trace.TraceInformation(
@@ -64,42 +50,6 @@ namespace MS.Internal.AppModel
 #endif
 
                 return siteOfOrigin;
-            }
-        }
-
-        // we separated this from the rest of the code because this code is used for media permission
-        // tests in partial trust but we want to do this without hitting the code path for regular exe's
-        // as in the code above. This will get hit for click once apps, xbaps, xaml and xps
-        internal static Uri SiteOfOriginForClickOnceApp
-        {
-            get
-            {
-                // The ClickOnce API, ApplicationDeployment.IsNetworkDeployed, determines whether the app is network-deployed
-                // by getting the ApplicationDeployment.CurrentDeployment property and catch the exception it can throw.
-                // The exception is a first chance exception and caught, but it often confuses developers,
-                // and can also have a perf impact. So we change to cache the value of SiteofOrigin in Dev10 to avoid the 
-                // exception being thrown too many times.
-                // An alternative is to cache the value of ApplicationDeployment.IsNetworkDeployed.
-                if (_siteOfOriginForClickOnceApp == null)
-                {
-                    _siteOfOriginForClickOnceApp = new SecurityCriticalDataForSet<Uri>(null);
-                }
-
-                Invariant.Assert(_siteOfOriginForClickOnceApp != null);
-
-                return _siteOfOriginForClickOnceApp.Value.Value;
-            }
-        }
-       
-        internal static Uri BrowserSource
-        {
-            get
-            {
-                return _browserSource.Value;
-            }
-            set
-            {    
-               _browserSource.Value = value; 
             }
         }
    
@@ -238,18 +188,6 @@ namespace MS.Internal.AppModel
 
         #endregion
 
-        //------------------------------------------------------
-        //
-        //  Private Fields
-        //
-        //------------------------------------------------------
-
-        #region Private Members
-
-        private static SecurityCriticalDataForSet<Uri> _browserSource;
-        private static SecurityCriticalDataForSet<Uri>? _siteOfOriginForClickOnceApp;
-
-        #endregion Private Members
 
         //------------------------------------------------------
         //

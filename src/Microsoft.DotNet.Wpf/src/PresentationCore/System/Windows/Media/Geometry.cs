@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -8,26 +8,14 @@
 //
 //
 
-using System;
 using MS.Internal;
 using MS.Win32.PresentationCore;
 using System.ComponentModel;
-using System.ComponentModel.Design.Serialization;
-using System.Diagnostics;
-using System.Reflection;
-using System.Collections;
-using System.Globalization;
-using System.Security;
-using System.Windows.Media;
 using System.Windows.Media.Composition;
-using System.Windows;
-using System.Text.RegularExpressions;
 using System.Windows.Media.Animation;
 using System.Runtime.InteropServices;
-using System.Windows.Markup;
-using SR=MS.Internal.PresentationCore.SR;
 
-namespace System.Windows.Media 
+namespace System.Windows.Media
 {
     #region Geometry
     /// <summary>
@@ -1006,9 +994,11 @@ namespace System.Windows.Media
 
         private static PathGeometryData MakeEmptyPathGeometryData()
         {
-            PathGeometryData data = new PathGeometryData();
-            data.FillRule = FillRule.EvenOdd;
-            data.Matrix = CompositionResourceManager.MatrixToMilMatrix3x2D(Matrix.Identity);
+            PathGeometryData data = new PathGeometryData
+            {
+                FillRule = FillRule.EvenOdd,
+                Matrix = CompositionResourceManager.MatrixToMilMatrix3x2D(Matrix.Identity)
+            };
 
             unsafe
             {

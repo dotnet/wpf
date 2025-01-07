@@ -7,7 +7,6 @@
 // Description: Definition for embedded object inside a text paragraph.
 //
 
-using System;
 using System.Windows;
 using MS.Internal.Documents;
 using MS.Internal.PtsHost.UnsafeNativeMethods;

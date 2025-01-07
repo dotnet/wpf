@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -6,15 +6,12 @@
 // Description: Set of layout tree verification utilities. 
 //
 
-using System;
 using System.IO;
 using System.Xml;
 using System.Windows;
 using System.Globalization;
 using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Windows.Media;
 using System.Windows.Documents;
 using System.Windows.Controls;
@@ -45,10 +42,11 @@ namespace MS.Internal
         internal static string DumpLayoutAndVisualTreeToString(string tagName, Visual root)
         {
             StringWriter stringWriter = new StringWriter(CultureInfo.InvariantCulture);
-            XmlTextWriter writer = new XmlTextWriter(stringWriter);
-
-            writer.Formatting = Formatting.Indented;
-            writer.Indentation = 2;
+            XmlTextWriter writer = new XmlTextWriter(stringWriter)
+            {
+                Formatting = Formatting.Indented,
+                Indentation = 2
+            };
 
             DumpLayoutAndVisualTree(writer, tagName, root);
 
@@ -105,10 +103,11 @@ namespace MS.Internal
         internal static string DumpLayoutTreeToString(string tagName, UIElement root)
         {
             StringWriter stringWriter = new StringWriter(CultureInfo.InvariantCulture);
-            XmlTextWriter writer = new XmlTextWriter(stringWriter);
-
-            writer.Formatting = Formatting.Indented;
-            writer.Indentation = 2;
+            XmlTextWriter writer = new XmlTextWriter(stringWriter)
+            {
+                Formatting = Formatting.Indented,
+                Indentation = 2
+            };
 
             DumpLayoutTree(writer, tagName, root);
 

@@ -8,8 +8,6 @@
 // Specs:       Asynchronous Data Model.mht
 //
 
-using System;
-
 namespace MS.Internal.Data
 {
     /// <summary> Type for the work and completion delegates of an AsyncDataRequest </summary>

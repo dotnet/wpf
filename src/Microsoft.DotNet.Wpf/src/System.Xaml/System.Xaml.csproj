@@ -3,11 +3,14 @@
     <ProjectGuid>{9AC36357-34B7-40A1-95CA-FE9F46D089A7}</ProjectGuid>
     <AssemblyName>System.Xaml</AssemblyName>
 
-    <Platforms>AnyCPU;x64;arm64</Platforms>
+    <Platforms>x86;x64;arm64</Platforms>
     <NoWarn>$(NoWarn);0618;NU5125;0618</NoWarn>
     <DefineConstants>$(DefineConstants);OLDRESOURCES;SYSTEM_XAML</DefineConstants>
     <EnableAnalyzers>true</EnableAnalyzers>
     <Nullable>enable</Nullable>
+
+    <!-- Project reference workaround https://github.com/dotnet/sdk/issues/44042 -->
+    <PackageVersion>$(AssemblyVersion)</PackageVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -23,9 +26,6 @@
     </Compile>
     <Compile Include="$(WpfSharedDir)MS\Internal\SafeSecurityHelper.cs">
       <Link>Common\WPF\MS\Internal\SafeSecurityHelper.cs</Link>
-    </Compile>
-    <Compile Include="$(WpfSharedDir)MS\Internal\SecurityCriticalDataForSet.cs">
-      <Link>Common\WPF\MS\Internal\SecurityCriticalDataForSet.cs</Link>
     </Compile>
     <Compile Include="$(WpfSharedDir)MS\Internal\CriticalExceptions.cs">
       <Link>Common\WPF\MS\Internal\CriticalExceptions.cs</Link>
@@ -44,9 +44,6 @@
     </Compile>
     <Compile Include="$(WpfSharedDir)System\Windows\Markup\XmlWrappingReader.cs">
       <Link>Common\WPF\System\Windows\Markup\XmlWrappingReader.cs</Link>
-    </Compile>
-    <Compile Include="$(WpfSharedDir)MS\Internal\FriendAccessAllowedAttribute.cs">
-      <Link>Common\WPF\MS\Internal\FriendAccessAllowedAttribute.cs</Link>
     </Compile>
     <Compile Include="$(WpfSharedDir)MS\Utility\FrugalList.cs">
       <Link>Common\WPF\MS\Utility\FrugalList.cs</Link>
@@ -85,41 +82,6 @@
     <Compile Remove="System\Xaml\MS\Impl\XamlPropertyInfoKey.cs" />
     <!-- Do not include reference assembly files. -->
     <Compile Remove="ref\System.Xaml.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <NetCoreReference Include="netstandard" />
-    <NetCoreReference Include="System" />
-    <NetCoreReference Include="System.Collections" />
-    <NetCoreReference Include="System.Collections.Concurrent" />
-    <NetCoreReference Include="System.Collections.NonGeneric" />
-    <NetCoreReference Include="System.Collections.Specialized" />
-    <NetCoreReference Include="System.ComponentModel" />
-    <NetCoreReference Include="System.ComponentModel.Primitives" />
-    <NetCoreReference Include="System.ComponentModel.TypeConverter" />
-    <NetCoreReference Include="System.Diagnostics.Debug" />
-    <NetCoreReference Include="System.Diagnostics.Tools" />
-    <NetCoreReference Include="System.Globalization" />
-    <NetCoreReference Include="System.IO" />
-    <NetCoreReference Include="System.Memory" />
-    <NetCoreReference Include="System.ObjectModel" />
-    <NetCoreReference Include="System.Reflection.Emit.ILGeneration" />
-    <NetCoreReference Include="System.Reflection.Emit.Lightweight" />
-    <NetCoreReference Include="System.Reflection.Primitives" />
-    <NetCoreReference Include="System.Resources.ResourceManager" />
-    <NetCoreReference Include="System.Runtime" />
-    <NetCoreReference Include="System.Reflection" />
-    <NetCoreReference Include="System.Runtime.Extensions" />
-    <NetCoreReference Include="System.Runtime.InteropServices" />
-    <NetCoreReference Include="System.Runtime.Serialization.Formatters" />
-    <NetCoreReference Include="System.Text.Encoding" />
-    <NetCoreReference Include="System.Text.Encoding.Extensions" />
-    <NetCoreReference Include="System.Threading" />
-    <NetCoreReference Include="System.Threading.Tasks" />
-    <NetCoreReference Include="System.Threading.Thread" />
-    <NetCoreReference Include="System.Threading.ThreadPool" />
-    <NetCoreReference Include="System.Xml" />
-    <NetCoreReference Include="System.Xml.ReaderWriter" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="System.Security.Permissions" Version="$(SystemSecurityPermissionsPackageVersion)" />

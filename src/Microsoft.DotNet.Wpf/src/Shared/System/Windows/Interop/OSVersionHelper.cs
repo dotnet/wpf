@@ -2,23 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#if WINDOWS_BASE
-using MS.Internal.WindowsBase;
-#elif PRESENTATION_CORE
-using MS.Internal.PresentationCore;
-#elif PRESENTATIONFRAMEWORK
-using MS.Internal.PresentationFramework;
-#elif REACHFRAMEWORK
-using MS.Internal.ReachFramework;
-#elif UIAUTOMATIONTYPES
-using MS.Internal.UIAutomationTypes;
-#else
-using MS.Internal;
-#endif
-
 using System;
 using System.Runtime.InteropServices;
-using System.Security;
 
 #if WINDOWS_BASE
 namespace MS.Internal.WindowsBase.Interop

@@ -11,8 +11,6 @@ using System;
 using System.Collections;
 using System.Globalization;
 using System.Text;
-using System.ComponentModel;
-using Accessibility;
 using System.Windows.Automation.Provider;
 using System.Windows.Automation;
 using System.Runtime.InteropServices;
@@ -912,11 +910,10 @@ namespace MS.Internal.AutomationProxies
         }
 
         // detect if hwnd corresponds to the submenu
-        private static bool IsWindowSubMenu (IntPtr hwnd)
+        private static bool IsWindowSubMenu(IntPtr hwnd)
         {
-            return (String.Compare(Misc.ProxyGetClassName(hwnd), WindowsMenu.MenuClassName, StringComparison.OrdinalIgnoreCase) == 0);
+            return string.Equals(Misc.ProxyGetClassName(hwnd), WindowsMenu.MenuClassName, StringComparison.OrdinalIgnoreCase);
         }
-
 
         private static int GetHighlightedMenuItem(IntPtr hmenu)
         {

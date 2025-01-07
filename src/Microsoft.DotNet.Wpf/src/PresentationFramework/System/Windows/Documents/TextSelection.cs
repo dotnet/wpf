@@ -1,6 +1,16 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
+
+using MS.Internal;
+using System.Globalization;
+using System.Windows.Controls.Primitives;  // TextBoxBase
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Threading;
+using System.IO;
+using MS.Win32;
+using System.Windows.Controls;
 
 //
 // Description: Holds and manipulates the text selection state for TextEditor.
@@ -8,19 +18,6 @@
 
 namespace System.Windows.Documents
 {
-    using MS.Internal;
-    using System.Collections.Generic;
-    using System.Globalization;
-    using System.Windows.Controls.Primitives;  // TextBoxBase
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Threading;
-    using System.Threading;
-    using System.Security;
-    using System.IO;
-    using MS.Win32;
-    using System.Windows.Controls;
-
     /// <summary>
     /// The TextSelection class encapsulates selection state for the RichTextBox
     /// control.  It has no public constructor, but is exposed via a public
@@ -2422,8 +2419,10 @@ namespace System.Windows.Documents
             if (_caretElement == null)
             {
                 // Create new caret
-                _caretElement = new CaretElement(_textEditor, isBlinkEnabled);
-                _caretElement.IsSelectionActive = isSelectionActive;
+                _caretElement = new CaretElement(_textEditor, isBlinkEnabled)
+                {
+                    IsSelectionActive = isSelectionActive
+                };
 
                 // Check the current input language to draw the BiDi caret in case of BiDi language
                 // like as Arabic or Hebrew input language.

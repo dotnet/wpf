@@ -1,20 +1,14 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: Main class used by Automation clients, represents a UI element
 
-using System.Windows.Automation;
 using System.Windows.Automation.Provider;
-using System;
-using System.Runtime.Serialization;
 using System.Collections;
-using System.Collections.Specialized;
 using System.Diagnostics;
 using System.ComponentModel;
-using MS.Win32;
 using MS.Internal.Automation;
-using System.Runtime.InteropServices;
 
 #if EVENT_TRACING_PROPERTY
 using Microsoft.Win32.Diagnostics;
@@ -1310,8 +1304,10 @@ namespace System.Windows.Automation
             }
 
             // Set up a find struct...
-            UiaCoreApi.UiaFindParams findParams = new UiaCoreApi.UiaFindParams();
-            findParams.FindFirst = findFirst;
+            UiaCoreApi.UiaFindParams findParams = new UiaCoreApi.UiaFindParams
+            {
+                FindFirst = findFirst
+            };
 
             if ((scope & TreeScope.Descendants) != 0)
                 findParams.MaxDepth = -1;

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -12,32 +12,30 @@
 using System;
 using System.Globalization;
 using System.IO;
-using System.Security;
 using System.Security.AccessControl;
 using System.Windows.TrustUI;
-using MS.Internal.PresentationUI;
 
 namespace MS.Internal.Documents.Application
 {
-/// <summary>
-/// An XpsDocument stream represents the stream data for the document
-/// regardless of implementation of the backing streams.  It has logical
-/// operations that allow elevating from Read to SafeWrite and editing in place.
-/// </summary>
-/// <remarks>
-/// Responsibility:
-/// The class must hide the location and implemenation complexity of
-/// performing simple logical operations needed by the system.
-/// 
-/// Design Comments:
-/// The need for this is primarly driven from two factors:
-/// 
-///  - Package which does not allow use to discard changes
-/// 
-///  - RightsManagement where key changes make it impossible to edit a 
-///    document in place
-/// </remarks>
-internal sealed class DocumentStream : StreamProxy, IDisposable
+    /// <summary>
+    /// An XpsDocument stream represents the stream data for the document
+    /// regardless of implementation of the backing streams.  It has logical
+    /// operations that allow elevating from Read to SafeWrite and editing in place.
+    /// </summary>
+    /// <remarks>
+    /// Responsibility:
+    /// The class must hide the location and implemenation complexity of
+    /// performing simple logical operations needed by the system.
+    /// 
+    /// Design Comments:
+    /// The need for this is primarly driven from two factors:
+    /// 
+    ///  - Package which does not allow use to discard changes
+    /// 
+    ///  - RightsManagement where key changes make it impossible to edit a 
+    ///    document in place
+    /// </remarks>
+    internal sealed class DocumentStream : StreamProxy, IDisposable
 {
     #region Constructors
     //--------------------------------------------------------------------------
@@ -203,13 +201,14 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
             Trace.SafeWrite(Trace.File, "Performed a stream copy from source.");
         }
 
-        //----------------------------------------------------------------------
-        // Create the DocumentStream
-        result = new DocumentStream(copiesToken, target, this);
+            //----------------------------------------------------------------------
+            // Create the DocumentStream
+            result = new DocumentStream(copiesToken, target, this)
+            {
+                DeleteOnClose = false
+            };
 
-        result.DeleteOnClose = false;
-
-        Trace.SafeWrite(Trace.File, "Created copy to file {0}.", copiesToken.Location);
+            Trace.SafeWrite(Trace.File, "Created copy to file {0}.", copiesToken.Location);
 
         return result;
     }
@@ -293,14 +292,15 @@ internal sealed class DocumentStream : StreamProxy, IDisposable
                 }
             }
 
-            //------------------------------------------------------------------
-            // Create the DocumentStream
-            result = new DocumentStream(
-                tempToken, temporary, this);
+                //------------------------------------------------------------------
+                // Create the DocumentStream
+                result = new DocumentStream(
+                    tempToken, temporary, this)
+                {
+                    DeleteOnClose = true
+                };
 
-            result.DeleteOnClose = true;
-
-            Trace.SafeWrite(Trace.File, "Created temporary file {0}.", tempToken.Location);
+                Trace.SafeWrite(Trace.File, "Created temporary file {0}.", tempToken.Location);
         }
         else
         {

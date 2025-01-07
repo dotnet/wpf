@@ -1,26 +1,17 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-using Microsoft.Win32; // for RegistryKey class
 using MS.Internal;
 using MS.Internal.Interop;
-using MS.Internal.PresentationCore; // SecurityHelper
 using MS.Utility;
-using MS.Win32; // for *NativeMethods
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+using MS.Win32;
 using System.Runtime.InteropServices;
-using System.Security;
-using System.Windows;
-using System.Windows.Input;
 using System.Windows.Input.StylusPlugIns;
 using System.Windows.Input.Tracing;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Threading;
-using SR = MS.Internal.PresentationCore.SR;
 
 namespace System.Windows.Input.StylusWisp
 {
@@ -33,10 +24,10 @@ namespace System.Windows.Input.StylusWisp
         {
             Statistics.FeaturesUsed |= StylusTraceLogger.FeatureFlags.WispStackEnabled;
 
-            _inputManager = new SecurityCriticalData<InputManager>(inputManager);
-            _inputManager.Value.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
-            _inputManager.Value.PreNotifyInput += new NotifyInputEventHandler(PreNotifyInput);
-            _inputManager.Value.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
+            _inputManager = inputManager;
+            _inputManager.PreProcessInput += new PreProcessInputEventHandler(PreProcessInput);
+            _inputManager.PreNotifyInput += new NotifyInputEventHandler(PreNotifyInput);
+            _inputManager.PostProcessInput += new ProcessInputEventHandler(PostProcessInput);
 
 #if !MULTICAPTURE
             _overIsEnabledChangedEventHandler = new DependencyPropertyChangedEventHandler(OnOverIsEnabledChanged);
@@ -65,7 +56,7 @@ namespace System.Windows.Input.StylusWisp
         void OnDispatcherShutdown(object sender, EventArgs e)
         {
             if (_shutdownHandler != null)
-                _inputManager.Value.Dispatcher.ShutdownFinished -= _shutdownHandler;
+                _inputManager.Dispatcher.ShutdownFinished -= _shutdownHandler;
 
             if (_tabletDeviceCollection != null)
             {
@@ -223,9 +214,10 @@ namespace System.Windows.Input.StylusWisp
                                 coalescedMove.TabletDeviceId,
                                 coalescedMove.StylusDeviceId,
                                 mergedData
-                                );
-
-                        coalescedMove.StylusDevice = stylusDevice.StylusDevice;
+                                )
+                        {
+                            StylusDevice = stylusDevice.StylusDevice
+                        };
 
                         _coalescedMoves[stylusDevice] = coalescedMove;
                     }
@@ -364,8 +356,10 @@ namespace System.Windows.Input.StylusWisp
                 }
 
                 // build InputReportEventArgs
-                InputReportEventArgs input = new InputReportEventArgs(null, rawStylusInputReport);
-                input.RoutedEvent = InputManager.PreviewInputReportEvent;
+                InputReportEventArgs input = new InputReportEventArgs(null, rawStylusInputReport)
+                {
+                    RoutedEvent = InputManager.PreviewInputReportEvent
+                };
 
                 // Set flag to prevent reentrancy due to wisptis mouse event getting triggered
                 // while processing this stylus event.
@@ -387,7 +381,7 @@ namespace System.Windows.Input.StylusWisp
         /////////////////////////////////////////////////////////////////////
         internal void InputManagerProcessInputEventArgs(InputEventArgs input)
         {
-            _inputManager.Value.ProcessInput(input);
+            _inputManager.ProcessInput(input);
         }
 
 
@@ -448,11 +442,13 @@ namespace System.Windows.Input.StylusWisp
                     !_deferredMouseMove.InputSource.CompositionTarget.IsDisposed)
                 {
                     // Process mouse move now since nothing else from stylus came through...
-                    InputReportEventArgs mouseArgs = new InputReportEventArgs(_inputManager.Value.PrimaryMouseDevice, _deferredMouseMove);
-                    mouseArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                    InputReportEventArgs mouseArgs = new InputReportEventArgs(_inputManager.PrimaryMouseDevice, _deferredMouseMove)
+                    {
+                        RoutedEvent = InputManager.PreviewInputReportEvent
+                    };
                     _deferredMouseMove = null; // Clear this out before sending.
                     // This will cause _lastMoveFromStylus to be set to false.
-                    _inputManager.Value.ProcessInput(mouseArgs);
+                    _inputManager.ProcessInput(mouseArgs);
                 }
             }
 
@@ -473,9 +469,9 @@ namespace System.Windows.Input.StylusWisp
                     {
                         // See if we are in a DragDrop operation.  If so set our internal flag
                         // which stops us from promoting Stylus or Mouse events!
-                        if (_inDragDrop != _inputManager.Value.InDragDrop)
+                        if (_inDragDrop != _inputManager.InDragDrop)
                         {
-                            _inDragDrop = _inputManager.Value.InDragDrop;
+                            _inDragDrop = _inputManager.InDragDrop;
 
                             // If we are going out of DragDrop then we need to re sync the mouse state
                             // if we have a stylus device in range (otherwise we sync on the next
@@ -533,7 +529,7 @@ namespace System.Windows.Input.StylusWisp
                                             else
 #endif
                                             {
-                                                MouseDevice mouseDevice = _inputManager.Value.PrimaryMouseDevice;
+                                                MouseDevice mouseDevice = _inputManager.PrimaryMouseDevice;
 
                                                 if (mouseDevice.CriticalActiveSource == mouseInputReport.InputSource)
                                                 {
@@ -574,10 +570,12 @@ namespace System.Windows.Input.StylusWisp
                                                                                 0,
                                                                                 IntPtr.Zero);
 
-                                            InputReportEventArgs args = new InputReportEventArgs(CurrentStylusDevice.StylusDevice, cancelCaptureInputReport);
-                                            args.RoutedEvent = InputManager.PreviewInputReportEvent;
+                                            InputReportEventArgs args = new InputReportEventArgs(CurrentStylusDevice.StylusDevice, cancelCaptureInputReport)
+                                            {
+                                                RoutedEvent = InputManager.PreviewInputReportEvent
+                                            };
                                             e.Cancel();
-                                            _inputManager.Value.ProcessInput(args);
+                                            _inputManager.ProcessInput(args);
                                         }
                                     }
                                     // Handle the Mouse activation
@@ -603,7 +601,7 @@ namespace System.Windows.Input.StylusWisp
                                         {
                                             // Check to se if we have already Activated the mouse from a stylus event.
                                             // If not then we need to let this one go through marked from us if we are in range!
-                                            if (mouseInputReport.InputSource != _inputManager.Value.PrimaryMouseDevice.CriticalActiveSource)
+                                            if (mouseInputReport.InputSource != _inputManager.PrimaryMouseDevice.CriticalActiveSource)
                                             {
                                                 Point pt;
 
@@ -620,9 +618,11 @@ namespace System.Windows.Input.StylusWisp
                                                                                     mouseInputReport.Wheel,
                                                                                     mouseInputReport.ExtraInformation);
 
-                                                InputReportEventArgs args = new InputReportEventArgs(activateStylusDevice.StylusDevice, activateInputReport);
-                                                args.RoutedEvent = InputManager.PreviewInputReportEvent;
-                                                _inputManager.Value.ProcessInput(args);
+                                                InputReportEventArgs args = new InputReportEventArgs(activateStylusDevice.StylusDevice, activateInputReport)
+                                                {
+                                                    RoutedEvent = InputManager.PreviewInputReportEvent
+                                                };
+                                                _inputManager.ProcessInput(args);
                                             }
 
                                             // If stylus is active then eat this since we'll send the activate.  We just cancel
@@ -645,13 +645,13 @@ namespace System.Windows.Input.StylusWisp
                                             // We can only Activate the window without flashing the tray icon for it when
                                             // we are processing an Input message.  So we defer it till we see the mouse down.
                                             HwndSource hwndSource = mouseInputReport.InputSource as HwndSource;
-                                            IntPtr hwnd = hwndSource != null ? hwndSource.CriticalHandle : IntPtr.Zero;
+                                            IntPtr hwnd = hwndSource != null ? hwndSource.Handle : IntPtr.Zero;
 
                                             // If we see a stylusdown and we are not the foreground window
                                             // and there's no capture then make sure we get activated.
                                             // We only do this for top most windows.
                                             if (hwnd != IntPtr.Zero &&
-                                                 _inputManager.Value.PrimaryMouseDevice.Captured != null &&
+                                                 _inputManager.PrimaryMouseDevice.Captured != null &&
                                                  UnsafeNativeMethods.GetParent(new HandleRef(this, hwnd)) == IntPtr.Zero &&
                                                  hwnd != UnsafeNativeMethods.GetForegroundWindow())
                                             {
@@ -1042,7 +1042,7 @@ namespace System.Windows.Input.StylusWisp
                         }
 
                         // Tell the InputManager that the MostRecentDevice is us.
-                        _inputManager.Value.MostRecentInputDevice = stylusDevice.StylusDevice;
+                        _inputManager.MostRecentInputDevice = stylusDevice.StylusDevice;
 
                         // Verify that we sent the real time stylus events to the proper plugincollection.
                         VerifyStylusPlugInCollectionTarget(rawStylusInputReport);
@@ -1263,7 +1263,7 @@ namespace System.Windows.Input.StylusWisp
                 StylusEventArgs eventArgsOutOfRange = (StylusEventArgs)e.StagingItem.Input;
 
                 // See if we need to set the Mouse Activate flag.
-                PresentationSource mouseSource = _inputManager.Value.PrimaryMouseDevice.CriticalActiveSource;
+                PresentationSource mouseSource = _inputManager.PrimaryMouseDevice.CriticalActiveSource;
 
                 // See if we need to change the stylus over state state and send a mouse deactivate.
                 // We send the cached Deactivate through if we saw mouse deactivate before out of range event
@@ -1298,9 +1298,11 @@ namespace System.Windows.Input.StylusWisp
                                                         0,
                                                         IntPtr.Zero);
 
-                    InputReportEventArgs actionsArgs = new InputReportEventArgs(stylusDevice.StylusDevice, newMouseInputReport);
-                    actionsArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
-                    _inputManager.Value.ProcessInput(actionsArgs);
+                    InputReportEventArgs actionsArgs = new InputReportEventArgs(stylusDevice.StylusDevice, newMouseInputReport)
+                    {
+                        RoutedEvent = InputManager.PreviewInputReportEvent
+                    };
+                    _inputManager.ProcessInput(actionsArgs);
                 }
             }
 
@@ -1757,7 +1759,7 @@ namespace System.Windows.Input.StylusWisp
                                 // of straight touch events.
 
                                 // See if we need to set the Mouse Activate flag.
-                                if (_inputManager.Value.PrimaryMouseDevice.CriticalActiveSource != mouseInputSource)
+                                if (_inputManager.PrimaryMouseDevice.CriticalActiveSource != mouseInputSource)
                                 {
                                     actions |= RawMouseActions.Activate;
                                 }
@@ -1766,9 +1768,11 @@ namespace System.Windows.Input.StylusWisp
                                                                             InputMode.Foreground, stylusArgs.Timestamp, mouseInputSource,
                                                                             actions, (int)pt.X, (int)pt.Y, 0, IntPtr.Zero);
 
-                                InputReportEventArgs inputReportArgs = new InputReportEventArgs(stylusDevice.StylusDevice, mouseInputReport);
-                                inputReportArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
-                                _inputManager.Value.ProcessInput(inputReportArgs);
+                                InputReportEventArgs inputReportArgs = new InputReportEventArgs(stylusDevice.StylusDevice, mouseInputReport)
+                                {
+                                    RoutedEvent = InputManager.PreviewInputReportEvent
+                                };
+                                _inputManager.ProcessInput(inputReportArgs);
                             }
                         }
                     }
@@ -1834,7 +1838,7 @@ namespace System.Windows.Input.StylusWisp
                     if ((mouseInputReport.Actions & RawMouseActions.Deactivate) != RawMouseActions.Deactivate)
                         return;
 
-                    mouseDevice = _inputManager.Value.PrimaryMouseDevice;
+                    mouseDevice = _inputManager.PrimaryMouseDevice;
 
                     // Mouse set directly over to null when truly deactivating.
                     if (mouseDevice == null || mouseDevice.DirectlyOver != null)
@@ -2006,7 +2010,7 @@ namespace System.Windows.Input.StylusWisp
 
         void UpdateMouseState()
         {
-            MouseDevice mouseDevice = _inputManager.Value.PrimaryMouseDevice;
+            MouseDevice mouseDevice = _inputManager.PrimaryMouseDevice;
             _mouseLeftButtonState = mouseDevice.GetButtonStateFromSystem(MouseButton.Left);
             _mouseRightButtonState = mouseDevice.GetButtonStateFromSystem(MouseButton.Right);
         }
@@ -2579,9 +2583,11 @@ namespace System.Windows.Input.StylusWisp
                                          stylusDevice.Id,
                                          rawStylusInputReport.Data);
 
-            InputReportEventArgs input = new InputReportEventArgs(stylusDevice, inputReport);
-            input.RoutedEvent = InputManager.PreviewInputReportEvent;
-            _inputManager.Value.ProcessInput(input);
+            InputReportEventArgs input = new InputReportEventArgs(stylusDevice, inputReport)
+            {
+                RoutedEvent = InputManager.PreviewInputReportEvent
+            };
+            _inputManager.ProcessInput(input);
         }
 
         /// <summary>
@@ -2803,10 +2809,14 @@ namespace System.Windows.Input.StylusWisp
                                                         gesture,
                                                         0, // Gesture X location (only used for flicks)
                                                         0, // Gesture Y location (only used for flicks)
-                                                        0); // ButtonState (only used for flicks)
-            inputReport.StylusDevice = stylusDevice;
-            InputReportEventArgs input = new InputReportEventArgs(stylusDevice, inputReport);
-            input.RoutedEvent = InputManager.PreviewInputReportEvent;
+                                                        0)
+            {
+                StylusDevice = stylusDevice
+            }; // ButtonState (only used for flicks)
+            InputReportEventArgs input = new InputReportEventArgs(stylusDevice, inputReport)
+            {
+                RoutedEvent = InputManager.PreviewInputReportEvent
+            };
             // Process this directly instead of doing a push. We want this event to get
             // to the user before the StylusUp and MouseUp event.
             InputManagerProcessInputEventArgs(input);
@@ -2832,7 +2842,7 @@ namespace System.Windows.Input.StylusWisp
                 // Don't set Activate flag if a synchronize is requested!
                 if (!isSynchronize)
                 {
-                    if (_inputManager.Value.PrimaryMouseDevice.CriticalActiveSource != mouseInputSource)
+                    if (_inputManager.PrimaryMouseDevice.CriticalActiveSource != mouseInputSource)
                     {
                         actions |= RawMouseActions.Activate;
                     }
@@ -2856,8 +2866,10 @@ namespace System.Windows.Input.StylusWisp
                     mouseInputReport._isSynchronize = true;
                 }
 
-                InputReportEventArgs inputReportArgs = new InputReportEventArgs(stylusDevice.StylusDevice, mouseInputReport);
-                inputReportArgs.RoutedEvent = InputManager.PreviewInputReportEvent;
+                InputReportEventArgs inputReportArgs = new InputReportEventArgs(stylusDevice.StylusDevice, mouseInputReport)
+                {
+                    RoutedEvent = InputManager.PreviewInputReportEvent
+                };
 
                 // Process this directly instead of doing a push. We want this event to get
                 // to the user before the StylusUp and MouseUp event.
@@ -2899,8 +2911,10 @@ namespace System.Windows.Input.StylusWisp
                             button.CachedButtonState = currentButtonState;
 
                             // do work to push Button event
-                            StylusButtonEventArgs args = new StylusButtonEventArgs(stylusDevice, report.Timestamp, button);
-                            args.InputReport = report;
+                            StylusButtonEventArgs args = new StylusButtonEventArgs(stylusDevice, report.Timestamp, button)
+                            {
+                                InputReport = report
+                            };
                             if (currentButtonState == StylusButtonState.Down)
                             {
                                 args.RoutedEvent = Stylus.PreviewStylusButtonDownEvent;
@@ -2981,7 +2995,7 @@ namespace System.Windows.Input.StylusWisp
 
                     // We need to know when the dispatcher shuts down in order to clean
                     // up references to PenThreads held in the TabletDeviceCollection.
-                    _inputManager.Value.Dispatcher.ShutdownFinished += _shutdownHandler;
+                    _inputManager.Dispatcher.ShutdownFinished += _shutdownHandler;
                 }
                 return _tabletDeviceCollection;
             }
@@ -3163,7 +3177,7 @@ namespace System.Windows.Input.StylusWisp
                 }
 
                 // Detect if this window is disabled. If so then let the pencontexts know.
-                int style = UnsafeNativeMethods.GetWindowLong(new HandleRef(this, hwndSource.CriticalHandle), NativeMethods.GWL_STYLE);
+                int style = UnsafeNativeMethods.GetWindowLong(new HandleRef(this, hwndSource.Handle), NativeMethods.GWL_STYLE);
                 if ((style & NativeMethods.WS_DISABLED) != 0)
                 {
                     penContexts.IsWindowDisabled = true;
@@ -3201,7 +3215,7 @@ namespace System.Windows.Input.StylusWisp
                     penContexts.Disable(shutdownWorkThread);
 
                     // Make sure we remember the last location of this window for mapping stylus input later.
-                    if (UnsafeNativeMethods.IsWindow(new HandleRef(hwndSource, hwndSource.CriticalHandle)))
+                    if (UnsafeNativeMethods.IsWindow(new HandleRef(hwndSource, hwndSource.Handle)))
                     {
                         penContexts.DestroyedLocation = PointUtil.ClientToScreen(new Point(0, 0), hwndSource);
                     }
@@ -3657,7 +3671,7 @@ namespace System.Windows.Input.StylusWisp
 
         /////////////////////////////////////////////////////////////////////
 
-        private SecurityCriticalData<InputManager> _inputManager;
+        private readonly InputManager _inputManager;
 
         DispatcherOperationCallback _dlgInputManagerProcessInput;
 

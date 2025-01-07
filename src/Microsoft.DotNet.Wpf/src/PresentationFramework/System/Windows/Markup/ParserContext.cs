@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -11,11 +11,8 @@ using System;
 using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Xml;
-using MS.Utility;
-using System.Diagnostics;
 using MS.Internal.Xaml.Parser;
 
 #if PBTCOMPILER
@@ -282,7 +279,7 @@ namespace System.Windows.Markup
             set
             {
                 EndRepeat();
-                _xmlLang = (null == value ? String.Empty : value);
+                _xmlLang = (value ?? string.Empty);
             }
         }
 
@@ -397,9 +394,9 @@ namespace System.Windows.Markup
         // 
         internal Assembly StreamCreatedAssembly 
         {
-            get { return _streamCreatedAssembly.Value; }
+            get { return _streamCreatedAssembly; }
 
-            set { _streamCreatedAssembly.Value = value; }
+            set { _streamCreatedAssembly = value; }
         }
 #endif
 
@@ -640,23 +637,24 @@ namespace System.Windows.Markup
 #if !PBTCOMPILER
         internal ParserContext ScopedCopy(bool copyNameScopeStack)
         {
-            ParserContext context = new ParserContext();
+            ParserContext context = new ParserContext
+            {
+                _baseUri = _baseUri,
+                _skipJournaledProperties = _skipJournaledProperties,
+                _xmlLang = _xmlLang,
+                _xmlSpace = _xmlSpace,
+                _repeat = _repeat,
+                _lineNumber = _lineNumber,
+                _linePosition = _linePosition,
+                _isDebugBamlStream = _isDebugBamlStream,
+                _mapTable = _mapTable,
+                _xamlTypeMapper = _xamlTypeMapper,
+                _targetType = _targetType,
 
-            context._baseUri = _baseUri;
-            context._skipJournaledProperties = _skipJournaledProperties;
-            context._xmlLang = _xmlLang;
-            context._xmlSpace = _xmlSpace;
-            context._repeat = _repeat;
-            context._lineNumber = _lineNumber;
-            context._linePosition = _linePosition;
-            context._isDebugBamlStream = _isDebugBamlStream;
-            context._mapTable = _mapTable;
-            context._xamlTypeMapper = _xamlTypeMapper;
-            context._targetType = _targetType;
-
-            context._streamCreatedAssembly.Value = _streamCreatedAssembly.Value;
-            context._rootElement = _rootElement;
-            context._styleConnector = _styleConnector;
+                _streamCreatedAssembly = _streamCreatedAssembly,
+                _rootElement = _rootElement,
+                _styleConnector = _styleConnector
+            };
 
             // Copy the name scope stack, if necessary.
 
@@ -830,7 +828,7 @@ namespace System.Windows.Markup
 
 #if !PBTCOMPILER
         private bool                    _skipJournaledProperties;
-        private SecurityCriticalDataForSet<Assembly> _streamCreatedAssembly;
+        private Assembly                _streamCreatedAssembly;
         private bool                    _ownsBamlStream;
         private ProvideValueServiceProvider _provideValueServiceProvider;
         private IStyleConnector _styleConnector;

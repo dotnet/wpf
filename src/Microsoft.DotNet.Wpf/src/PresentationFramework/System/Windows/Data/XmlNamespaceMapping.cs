@@ -9,7 +9,6 @@
 //              WCP DataSources.mht
 //
 
-using System;
 using System.ComponentModel;        // ISupportInitialize
 
 namespace System.Windows.Data

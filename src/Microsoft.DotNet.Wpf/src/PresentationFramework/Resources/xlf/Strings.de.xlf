@@ -2413,16 +2413,6 @@ Möchten Sie das Element ersetzen?</target>
         <target state="translated">Typ "{0}" ist kein gültiger PageFunction-Typ.</target>
         <note />
       </trans-unit>
-      <trans-unit id="InvalidPermissionStateValue">
-        <source>PermissionState value '{0}' is not valid for this Permission.</source>
-        <target state="translated">Der PermissionState-Wert "{0}" ist für diese Berechtigung nicht gültig.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="InvalidPermissionType">
-        <source>Permission type is not valid. Expected '{0}'.</source>
-        <target state="translated">Ungültiger Berechtigungstyp. Erwartet wurde "{0}".</target>
-        <note />
-      </trans-unit>
       <trans-unit id="InvalidPoint">
         <source>Invalid Point value.</source>
         <target state="translated">Ungültiger Point-Wert.</target>
@@ -4826,11 +4816,6 @@ Möchten Sie das Element ersetzen?</target>
       <trans-unit id="ScrollViewer_OutOfRange">
         <source>'{0}' parameter has value '{1}', which is not in the valid range of '{2}' to '{3}'.</source>
         <target state="translated">Der Parameter "{0}" besitzt den Wert "{1}", der sich nicht im gültigen Bereich zwischen "{2}" und "{3}" befindet.</target>
-        <note />
-      </trans-unit>
-      <trans-unit id="SecurityExceptionForSettingSandboxExternalToTrue">
-        <source>Cannot set SandboxExternalContent to true in partial trust.</source>
-        <target state="translated">SandboxExternalContent kann bei Verwendung mit teilweiser Vertrauenswürdigkeit nicht auf "true" festgelegt werden.</target>
         <note />
       </trans-unit>
       <trans-unit id="SeekFailed">

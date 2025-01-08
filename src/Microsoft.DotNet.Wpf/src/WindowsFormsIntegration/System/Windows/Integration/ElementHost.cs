@@ -185,10 +185,9 @@ namespace System.Windows.Forms.Integration
             set
             {
                 UIElement oldValue = Child;
-#pragma warning disable 1634, 1691
-#pragma warning disable 56526
+
                 _child = value;
-#pragma warning restore 1634, 1691, 56526
+
                 HostContainerInternal.Children.Clear();
                 if (_child != null)
                 {

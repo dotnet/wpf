@@ -3968,8 +3968,6 @@ namespace System.Windows.Media.Animation
             /// </summary>
             ~SubtreeFinalizer()
             {
-#pragma warning disable 1634, 1691
-#pragma warning suppress 6525
                 _timeManager.ScheduleClockCleanup();
             }
 

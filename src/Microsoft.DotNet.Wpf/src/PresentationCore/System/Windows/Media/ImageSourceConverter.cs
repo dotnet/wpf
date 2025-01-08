@@ -10,8 +10,6 @@ using System.Runtime.InteropServices;
 using System.Windows.Markup;
 using System.Windows.Media.Imaging;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows.Media
 {
     #region ImageSourceConverter
@@ -58,10 +56,8 @@ namespace System.Windows.Media
                         throw new ArgumentException(SR.Format(SR.General_Expected_Type, "ImageSource"), "context");
                     }
 
-                    #pragma warning suppress 6506 // context is obviously not null
                     ImageSource value = (ImageSource)context.Instance;
 
-                    #pragma warning suppress 6506 // value is obviously not null
                     return value.CanSerializeToString();
                 }
 
@@ -197,12 +193,10 @@ namespace System.Windows.Media
                     // When invoked by the serialization engine we can convert to string only for some instances
                     if (context != null && context.Instance != null)
                     {
-                        #pragma warning disable 6506
                         if (!instance.CanSerializeToString())
                         {
                             throw new NotSupportedException(SR.Converter_ConvertToNotSupported);
                         }
-                        #pragma warning restore 6506
                     }
 
                     // Delegate to the formatting/culture-aware ConvertToString method.

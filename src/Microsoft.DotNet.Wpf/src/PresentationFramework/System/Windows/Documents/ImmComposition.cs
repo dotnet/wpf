@@ -2,11 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Description:
-//  This class handles IMM32 IME's composition string and support level 3 input to TextBox and RichTextBox.
-//
-
 using System.Runtime.InteropServices;
 using System.Collections;
 using System.Windows.Media;
@@ -16,9 +11,6 @@ using MS.Win32;
 using MS.Internal.Documents;
 using MS.Internal;
 using MS.Internal.Interop;
-
-// Enable presharp pragma warning suppress directives.
-#pragma warning disable 1634, 1691
 
 namespace System.Windows.Documents
 {
@@ -424,9 +416,6 @@ namespace System.Windows.Documents
                 {
                     result = new char[size / sizeof(short)];
 
-                    // 3rd param is out and contains actual result of this call.
-                    // suppress Presharp 6031.
-#pragma warning suppress 6031
                     UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_RESULTSTR, result, size);
                 }
             }
@@ -440,9 +429,7 @@ namespace System.Windows.Documents
                 if (size > 0)
                 {
                     composition = new char[size / sizeof(short)];
-                    // 3rd param is out and contains actual result of this call.
-                    // suppress Presharp 6031.
-#pragma warning suppress 6031
+
                     UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_COMPSTR, composition, size);
 
                     //
@@ -470,9 +457,7 @@ namespace System.Windows.Documents
                         if (size > 0)
                         {
                             attributes = new byte[size / sizeof(byte)];
-                            // 3rd param is out and contains actual result of this call.
-                            // suppress Presharp 6031.
-#pragma warning suppress 6031
+
                             UnsafeNativeMethods.ImmGetCompositionString(new HandleRef(this, himc), NativeMethods.GCS_COMPATTR, attributes, size);
                         }
                     }
@@ -694,7 +679,7 @@ namespace System.Windows.Documents
                     //  - fail to lock IMC.
                     // Those cases are ignorable for us.
                     // In addition, it does not set win32 last error and we have no clue to handle error.
-#pragma warning suppress 6031
+
                     UnsafeNativeMethods.ImmSetCandidateWindow(new HandleRef(this, himc), ref candform);
                     UnsafeNativeMethods.ImmReleaseContext(new HandleRef(this, hwnd), new HandleRef(this, himc));
                 }

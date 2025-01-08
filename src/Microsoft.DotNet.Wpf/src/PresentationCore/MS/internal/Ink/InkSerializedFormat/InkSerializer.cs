@@ -1251,12 +1251,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             if (0 == cbSize)
                 return 0;
 
-            // samgeo - Presharp issue
-            // Presharp gives a warning when local IDisposable variables are not closed
-            // in this case, we can't call Dispose since it will also close the underlying stream
-            // which still needs to be read from
-#pragma warning disable 1634, 1691
-#pragma warning disable 6518
+            // TODO: Use leaveOpen ctor
             BinaryReader bw = new BinaryReader(strm);
 
             if (KnownTagCache.KnownTagIndex.TransformRotate == tag)
@@ -1317,8 +1312,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
 
             return cbRead;
-#pragma warning restore 6518
-#pragma warning restore 1634, 1691
         }
 
         /// <summary>
@@ -2066,13 +2059,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
                 strm.WriteByte(bCompAlgo);
                 cbWrote++;
 
-                // Now write all the ids in the stream
-                // samgeo - Presharp issue
-                // Presharp gives a warning when local IDisposable variables are not closed
-                // in this case, we can't call Dispose since it will also close the underlying stream
-                // which still needs to be written to
-#pragma warning disable 1634, 1691
-#pragma warning disable 6518
+                // TODO: Use leaveOpen ctor
                 BinaryWriter bw = new BinaryWriter(strm);
 
                 for (int i = 0; i < strkIds.Length; i++)
@@ -2080,8 +2067,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
                     bw.Write(strkIds[i]);
                     cbWrote += Native.SizeOfInt;
                 }
-#pragma warning restore 6518
-#pragma warning restore 1634, 1691
             }
 
             return cbWrote;
@@ -2418,12 +2403,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             }
             else
             {
-                // samgeo - Presharp issue
-                // Presharp gives a warning when local IDisposable variables are not closed
-                // in this case, we can't call Dispose since it will also close the underlying stream
-                // which still needs to be written to
-#pragma warning disable 1634, 1691
-#pragma warning disable 6518
+                // TODO: Use leaveOpen ctor
                 BinaryWriter bw = new BinaryWriter(strm);
 
                 for (int i = 0; i < xform.Size; i++)
@@ -2441,8 +2421,6 @@ namespace MS.Internal.Ink.InkSerializedFormat
                         cbData += Native.SizeOfFloat;
                     }
                 }
-#pragma warning restore 6518
-#pragma warning restore 1634, 1691
             }
 
             return cbData;

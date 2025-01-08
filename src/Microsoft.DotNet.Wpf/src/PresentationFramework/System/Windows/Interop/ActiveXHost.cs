@@ -32,10 +32,6 @@ using MS.Internal;
 using MS.Internal.Controls;
 using MS.Win32;
 
-// Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
-// We first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 namespace System.Windows.Interop
 {
     #region ActiveXHost

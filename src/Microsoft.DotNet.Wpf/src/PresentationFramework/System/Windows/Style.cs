@@ -2,21 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-/***************************************************************************\
-*
-*
-*  Style and templating.
-*
-*
-\***************************************************************************/
 using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Windows.Threading;
 using System.Windows.Markup;
 using MS.Utility;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows
 {
@@ -174,7 +165,6 @@ namespace System.Windows
                     !typeof(FrameworkContentElement).IsAssignableFrom(value) &&
                     !(DefaultTargetType == value))
                 {
-                    #pragma warning suppress 6506 // value is obviously not null
                     throw new ArgumentException(SR.Format(SR.MustBeFrameworkDerived, value.Name));
                 }
 

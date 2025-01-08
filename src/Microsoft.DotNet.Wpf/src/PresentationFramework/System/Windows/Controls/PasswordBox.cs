@@ -2,10 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Description: The stock password control.
-//
-
 using System.ComponentModel;
 using System.Security;
 using System.Windows.Media;
@@ -17,8 +13,6 @@ using MS.Internal;
 using MS.Internal.KnownBoxes;
 using MS.Internal.Telemetry.PresentationFramework;
 using System.Windows.Controls.Primitives;
-
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
 
 namespace System.Windows.Controls
 {
@@ -185,7 +179,6 @@ namespace System.Windows.Controls
 
                 using (SecureString securePassword = new SecureString())
                 {
-                    #pragma warning suppress 6506 // value is set to String.Empty if it was null.
                     for (int i = 0; i < value.Length; i++)
                     {
                         securePassword.AppendChar(value[i]);

@@ -2,9 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-#pragma warning disable 1634, 1691 // Allow suppression of certain presharp messages
-
 using MS.Internal;
 using MS.Win32;
 using System.Runtime.InteropServices;
@@ -77,7 +74,6 @@ namespace System.Windows.Media
 
         public int RaiseEvent(byte[] buffer, uint cb)
         {
-#pragma warning disable 6500
             try
             {
                 ObjectDisposedException.ThrowIf(target == null, typeof(EventProxyWrapper));
@@ -97,7 +93,6 @@ namespace System.Windows.Media
             {
                 return Marshal.GetHRForException(e);
             }
-#pragma warning restore 6500
 
             return NativeMethods.S_OK;
         }

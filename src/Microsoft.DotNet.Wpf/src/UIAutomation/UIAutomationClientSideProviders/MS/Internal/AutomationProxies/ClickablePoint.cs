@@ -1,13 +1,10 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 using System;
 using System.Collections;
 using MS.Win32;
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.AutomationProxies
 {
@@ -266,13 +263,10 @@ namespace MS.Internal.AutomationProxies
                         return true;
                     }
                 }
-// PRESHARP: Warning - Catch statements should not have empty bodies
-#pragma warning disable 6502
                 catch (TimeoutException)
                 {
                     // Ignore this timeout error.  Avalon HwndWrappers have a problem with this WM_NCHITTEST call sometimes.
                 }
-#pragma warning restore 6502
             }
 
             // Copy the output bits

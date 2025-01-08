@@ -11,8 +11,6 @@
 
 using System.Windows.Markup;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows.Media.Converters
 {
     /// <summary>
@@ -42,7 +40,6 @@ namespace System.Windows.Media.Converters
 
             Transform instance  = (Transform) value;
 
-            #pragma warning suppress 6506 // instance is obviously not null
             return instance.CanSerializeToString();
 }
 
@@ -69,15 +66,12 @@ namespace System.Windows.Media.Converters
             if (value is Transform instance)
             {
                 // When invoked by the serialization engine we can convert to string only for some instances
-#pragma warning suppress 6506 // instance is obviously not null
                 if (!instance.CanSerializeToString())
                 {
                     // Let base throw an exception.
                     return base.ConvertToString(value, context);
                 }
 
-
-#pragma warning suppress 6506 // instance is obviously not null
                 return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
             }
 

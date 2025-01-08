@@ -9,9 +9,6 @@ using System.Windows.Media.TextFormatting;
 using MS.Internal;
 using MS.Internal.TextFormatting;
 
-#pragma warning disable 1634, 1691
-//Allow suppression of Presharp warnings
-
 namespace System.Windows.Media
 {
     /// <summary>
@@ -327,7 +324,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -349,7 +345,7 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506
+
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
             }
         }
@@ -401,7 +397,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -424,7 +419,7 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506
+
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
                 InvalidateMetrics();
             }
@@ -456,7 +451,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -479,7 +473,7 @@ namespace System.Windows.Media
                     runProps.NumberSubstitution
                     );
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
-#pragma warning restore 6506
+
                 InvalidateMetrics();
             }
         }
@@ -509,7 +503,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506 
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -531,7 +524,7 @@ namespace System.Windows.Media
                     culture,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506
+
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
                 InvalidateMetrics();
             }
@@ -568,7 +561,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -598,7 +590,7 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     numberSubstitution
                     );
-#pragma warning restore 6506
+
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
                 InvalidateMetrics();
             }
@@ -627,7 +619,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506 
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -650,7 +641,6 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506 
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
                 InvalidateMetrics();
             }
@@ -679,7 +669,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506 
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -702,7 +691,6 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506 
                 
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
                 InvalidateMetrics(); // invalidate cached metrics
@@ -732,7 +720,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506 
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -756,7 +743,6 @@ namespace System.Windows.Media
                     runProps.NumberSubstitution
                     );
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
-#pragma warning restore 6506 
                 
                 InvalidateMetrics();
             }
@@ -785,7 +771,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506 
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -807,7 +792,6 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506 
                 
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
                 InvalidateMetrics();
@@ -837,7 +821,6 @@ namespace System.Windows.Media
                 SpanRider formatRider = new SpanRider(_formatRuns, _latestPosition, i);
                 i = Math.Min(limit, i + formatRider.Length);
 
-#pragma warning disable 6506 
                 // Presharp warns that runProps is not validated, but it can never be null 
                 // because the rider is already checked to be in range
                 GenericTextRunProperties runProps = formatRider.CurrentElement as GenericTextRunProperties;
@@ -859,7 +842,6 @@ namespace System.Windows.Media
                     runProps.CultureInfo,
                     runProps.NumberSubstitution
                     );
-#pragma warning restore 6506 
                 
                 _latestPosition = _formatRuns.SetValue(formatRider.CurrentPosition, i - formatRider.CurrentPosition, newProps, formatRider.SpanPosition);
             }

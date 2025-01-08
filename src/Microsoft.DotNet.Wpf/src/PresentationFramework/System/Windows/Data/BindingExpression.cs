@@ -1627,14 +1627,6 @@ namespace System.Windows.Data
             string stringFormat = EffectiveStringFormat;
             Invariant.Assert(converter != null || stringFormat != null);
 
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
-
             object convertedValue = null;
             try
             {
@@ -1684,9 +1676,6 @@ namespace System.Windows.Data
                 convertedValue = DependencyProperty.UnsetValue;
             }
 
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
-
             return convertedValue;
         }
 
@@ -1697,14 +1686,6 @@ namespace System.Windows.Data
                                          CultureInfo culture)
         {
             Invariant.Assert(converter != null);
-
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
 
             object convertedValue = null;
             try
@@ -1747,9 +1728,6 @@ namespace System.Windows.Data
                 }
                 convertedValue = DependencyProperty.UnsetValue;
             }
-
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
 
             return convertedValue;
         }
@@ -1994,15 +1972,6 @@ namespace System.Windows.Data
                 return value;
             }
 
-
-            // PreSharp uses message numbers that the C# compiler doesn't know about.
-            // Disable the C# complaints, per the PreSharp documentation.
-            #pragma warning disable 1634, 1691
-
-            // PreSharp complains about catching NullReference (and other) exceptions.
-            // It doesn't recognize that IsCritical[Application]Exception() handles these correctly.
-            #pragma warning disable 56500
-
             try
             {
                 BeginSourceUpdate();
@@ -2037,9 +2006,6 @@ namespace System.Windows.Data
             {
                 EndSourceUpdate();
             }
-
-            #pragma warning restore 56500
-            #pragma warning restore 1634, 1691
 
             OnSourceUpdated();
 

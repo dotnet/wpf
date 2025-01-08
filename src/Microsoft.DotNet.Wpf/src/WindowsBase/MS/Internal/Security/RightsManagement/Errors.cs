@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -7,9 +7,6 @@
 
 using System.Runtime.InteropServices;
 using System.Security.RightsManagement;
-
-// Enable presharp pragma warning suppress directives.
-#pragma warning disable 1634, 1691
 
 namespace MS.Internal.Security.RightsManagement
 {
@@ -58,15 +55,12 @@ namespace MS.Internal.Security.RightsManagement
                     // to get a platform representation of the unmanaged HR code
                     Marshal.ThrowExceptionForHR(hr);
                 }
-// disabling PreSharp false positive. In this case we are actually re-throwing the same exception
-// wrapped in a more specific message
-#pragma warning disable 56500
+                // We are re-throwing the same exception wrapped in a more specific message
                 catch (Exception e)
                 {
                     // rethrow the exception as an inner exception of the RmExceptionGenericMessage
                     throw new RightsManagementException(SR.RmExceptionGenericMessage, e);
                 }
-#pragma warning restore 56500
             }
         }
 

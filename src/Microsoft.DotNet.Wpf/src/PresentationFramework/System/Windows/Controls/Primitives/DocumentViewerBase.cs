@@ -2,17 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-//
-// Description: DocumentViewerBase is a minimal base class, providing only
-//              the functionality common across document viewing scenarios.
-//              The base class provides no user interface, very few properties,
-//              and minimal policy. Functionality included in the base class:
-//              BringIntoView support & Print API services
-//              and Annotation support.
-//
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-// message numbers and unknown pragmas for PRESharp contol
-
 using System.Collections;               // IEnumerator
 using System.Collections.ObjectModel;   // ReadOnlyCollection<T>
 using System.Windows.Annotations;       // AnnotationService
@@ -1560,11 +1549,9 @@ namespace System.Windows.Controls.Primitives
                     {
                         pageNumber = Convert.ToInt32(args.Parameter, System.Globalization.CultureInfo.CurrentCulture);
                     }
-#pragma warning disable 56502 // Allow empty catch statements.
                     catch (InvalidCastException) { }
                     catch (OverflowException) { }
                     catch (FormatException) { }
-#pragma warning restore 56502
 
                     if (pageNumber >= 0)
                     {
@@ -1787,5 +1774,3 @@ namespace System.Windows.Controls.Primitives
         #endregion IServiceProvider
     }
 }
-#pragma warning enable 1634, 1691
-

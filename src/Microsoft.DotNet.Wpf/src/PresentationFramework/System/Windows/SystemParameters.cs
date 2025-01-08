@@ -12,9 +12,6 @@ using MS.Win32;
 using MS.Internal;
 using MS.Internal.Interop;
 
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
-
 namespace System.Windows
 {
     /// <summary>
@@ -91,13 +88,6 @@ namespace System.Windows
             OnPropertiesChanged(name);
             return true;
         }
-
-// Disable Warning 6503 Property get methods should not throw exceptions.
-// By design properties below throw Win32Exception if there is an error when calling the native method
-#pragma warning disable 6503
-
-// Win32Exception will get the last Win32 error code in case of errors, so we don't have to.
-#pragma warning disable 6523
 
         #region Accessibility Parameters
 
@@ -5007,11 +4997,6 @@ namespace System.Windows
         }
         #endregion
 
-
-#pragma warning restore 6523
-
-#pragma warning restore 6503
-
         #region Cache and Implementation
 
         internal static void InvalidateCache()
@@ -5773,17 +5758,12 @@ namespace System.Windows
                             HandleRef desktopWnd = new HandleRef(null, IntPtr.Zero);
 
                             // Win32Exception will get the Win32 error code so we don't have to
-#pragma warning disable 6523
                             IntPtr dc = UnsafeNativeMethods.GetDC(desktopWnd);
 
-                            // Detecting error case from unmanaged call, required by PREsharp to throw a Win32Exception
-#pragma warning disable 6503
                             if (dc == IntPtr.Zero)
                             {
                                 throw new Win32Exception();
                             }
-#pragma warning restore 6503
-#pragma warning restore 6523
 
                             try
                             {

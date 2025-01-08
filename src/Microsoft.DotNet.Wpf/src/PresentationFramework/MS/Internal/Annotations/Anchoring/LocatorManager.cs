@@ -2,17 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#pragma warning disable 1634, 1691
-//
-//
-// Description:
-//     The main entry-point to the Anchoring namespace.  LocatorManager is the
-//     controller for the Anchoring algorithms.  Most of the work is delegated
-//     to processors.  LocatorManager maintains a registry of processors.
-//     Spec: Anchoring Namespace Spec.doc
-//
-//
-
 using System.Collections;
 using System.ComponentModel;
 using System.Windows;
@@ -445,7 +434,6 @@ namespace MS.Internal.Annotations.Anchoring
         ///     processed, you should set this property and call LoadAnnotations/
         ///     UnloadAnnotations on the service.
         /// </summary>
-#pragma warning suppress 7009
         public static readonly DependencyProperty SubTreeProcessorIdProperty = DependencyProperty.RegisterAttached(
                 "SubTreeProcessorId",
                 typeof(string),

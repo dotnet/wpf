@@ -7,9 +7,6 @@
 //                ZoomPercentage property of DocumentViewer.
 //
 
-// Used to support the warnings disabled below
-#pragma warning disable 1634, 1691
-
 using System.Globalization;
 using System.Windows.Data;
 
@@ -186,8 +183,7 @@ namespace System.Windows.Documents
                             isValidArg = true;
                         }
                     }
-                    // Allow empty catch statements.
-#pragma warning disable 56502
+
 
                     // Catch only the expected parse exceptions
                     catch (ArgumentOutOfRangeException) { }
@@ -195,9 +191,7 @@ namespace System.Windows.Documents
                     catch (FormatException) { }
                     catch (OverflowException) { }
 
-                    // Disallow empty catch statements.
-#pragma warning restore 56502
-                }
+            }
 
                 // Argument wasn't a valid percent, set error value.
                 if (!isValidArg)

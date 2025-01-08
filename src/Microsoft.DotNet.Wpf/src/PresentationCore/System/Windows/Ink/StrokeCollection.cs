@@ -235,14 +235,10 @@ namespace System.Windows.Ink
             // Apply the transform to each strokes
             foreach ( Stroke stroke in this )
             {
-                // samgeo - Presharp issue
                 // Presharp gives a warning when get methods might deref a null.  It's complaining
                 // here that 'stroke'' could be null, but StrokeCollection never allows nulls to be added
                 // so this is not possible
-#pragma warning disable 1634, 1691
-#pragma warning suppress 6506
                 stroke.Transform(transformMatrix, applyToStylusTip);
-#pragma warning restore 1634, 1691
             }
         }
 
@@ -254,14 +250,10 @@ namespace System.Windows.Ink
             StrokeCollection clone = new StrokeCollection();
             foreach ( Stroke s in this )
             {
-                // samgeo - Presharp issue
                 // Presharp gives a warning when get methods might deref a null.  It's complaining
                 // here that s could be null, but StrokeCollection never allows nulls to be added
                 // so this is not possible
-#pragma warning disable 1634, 1691
-#pragma warning suppress 6506
                 clone.Add(s.Clone());
-#pragma warning restore 1634, 1691
             }
 
             //

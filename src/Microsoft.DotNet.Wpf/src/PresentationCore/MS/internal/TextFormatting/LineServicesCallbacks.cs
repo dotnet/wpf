@@ -10,20 +10,9 @@ using System.Windows.Media.TextFormatting;
 
 using MS.Internal.Text.TextInterface;
 
-// Disabling 1634 and 1691: 
-// In order to avoid generating warnings about unknown message numbers and 
-// unknown pragmas when compiling C# source code with the C# compiler, 
-// you need to disable warnings 1634 and 1691. (Presharp Documentation)
-#pragma warning disable 1634, 1691
-
-// Disabling 6500: 
-// Suppressing PRESHARP:Warning 6500 Fatal exceptions (NULLReferenceException, SEHException) 
-// potentially ignored by this catch.
 // LineServices callbacks are designed to catch all exceptions such than an error code can be 
 // returned to Line Services engine. An exception is eventually re-thrown to the user after line
 // services engine finishes cleaning up and returns the control to line layout code.
-//
-#pragma warning disable 6500
 
 namespace MS.Internal.TextFormatting
 {

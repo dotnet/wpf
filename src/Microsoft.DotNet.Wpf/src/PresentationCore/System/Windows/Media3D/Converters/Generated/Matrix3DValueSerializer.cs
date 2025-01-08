@@ -11,8 +11,6 @@
 
 using System.Windows.Markup;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows.Media.Media3D.Converters
 {
     /// <summary>
@@ -66,8 +64,6 @@ namespace System.Windows.Media.Media3D.Converters
             if (value is Matrix3D instance)
             {
 
-
-#pragma warning suppress 6506 // instance is obviously not null
                 return instance.ConvertToString(null, System.Windows.Markup.TypeConverterHelper.InvariantEnglishUS);
             }
 

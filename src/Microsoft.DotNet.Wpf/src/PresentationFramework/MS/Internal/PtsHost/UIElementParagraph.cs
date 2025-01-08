@@ -2,13 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-// 
-// Description: UIElementParagraph class provides a wrapper for UIElements.
-//
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-// message numbers and unknown pragmas for PRESharp contol
-
 using System.Windows;                           // UIElement
 using System.Windows.Documents;                 // BlockUIContainer
 using MS.Internal.Text;                         // TextDpi
@@ -94,14 +87,12 @@ namespace MS.Internal.PtsHost
         internal override void CreateParaclient(
             out IntPtr paraClientHandle)        // OUT: opaque to PTS paragraph client
         {
-#pragma warning disable 6518
-            // Disable PRESharp warning 6518. FloaterParaClient is an UnmamangedHandle, that adds itself
+            // FloaterParaClient is an UnmamangedHandle, that adds itself
             // to HandleMapper that holds a reference to it. PTS manages lifetime of this object, and 
             // calls DestroyParaclient to get rid of it. DestroyParaclient will call Dispose() on the object
             // and remove it from HandleMapper.
             UIElementParaClient paraClient = new UIElementParaClient(this);
             paraClientHandle = paraClient.Handle;
-#pragma warning restore 6518
         }
 
         //-------------------------------------------------------------------
@@ -586,6 +577,3 @@ namespace MS.Internal.PtsHost
         #endregion Private Fields
     }
 }
-
-#pragma warning enable 1634, 1691
-

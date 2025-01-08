@@ -6,10 +6,6 @@ using System.Runtime.InteropServices;
 using System.Windows;
 using MS.Win32;
 
-// Since we disable PreSharp warnings in this file, PreSharp warning is unknown to C# compiler.
-// We first need to disable warnings about unknown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
-
 namespace MS.Internal.Controls
 {
     internal class ConnectionPointCookie
@@ -89,10 +85,6 @@ namespace MS.Internal.Controls
             }
         }
 
-#pragma warning disable 6500
-
-// The 6500 warning is actually handled in below code, but the PreSharp explicitly checks the presence of NullReferenceException and SEHException, and still treat below code as violation of presharp rule, so suppress it here.
-
         /// <summary>
         /// Disconnect the current connection point.  If the object is not connected,
         /// this method will do nothing.
@@ -135,8 +127,6 @@ namespace MS.Internal.Controls
                 }
             }
         }
-
-#pragma warning restore 6500
 
         ~ConnectionPointCookie()
         {

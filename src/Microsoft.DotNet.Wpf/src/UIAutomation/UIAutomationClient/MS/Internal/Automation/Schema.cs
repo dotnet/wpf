@@ -1,11 +1,8 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description: property/pattern/event information
-
-// PRESHARP: In order to avoid generating warnings about unkown message numbers and unknown pragmas.
-#pragma warning disable 1634, 1691
 
 using System.Windows;
 using System.Windows.Automation;
@@ -13,14 +10,11 @@ using System.Windows.Automation.Text;
 using System.Globalization;
 using System.Diagnostics;
 
-
 namespace MS.Internal.Automation
 {
-    // Disable warning for obsolete types.  These are scheduled to be removed in M8.2 so 
-    // only need the warning to come out for components outside of APT.
-#pragma warning disable 0618
-
-    // Information about automation properties and patterns
+    /// <summary>
+    /// Information about automation properties and patterns
+    /// </summary>
     internal sealed class Schema
     {
         //------------------------------------------------------

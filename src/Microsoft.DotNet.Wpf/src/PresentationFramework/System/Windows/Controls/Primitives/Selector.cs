@@ -17,9 +17,6 @@ using MS.Internal.Controls;
 
 using BuildInfo = MS.Internal.PresentationFramework.BuildInfo;
 
-// Disable CS3001: Warning as Error: not CLS-compliant
-#pragma warning disable 3001
-
 namespace System.Windows.Controls.Primitives
 {
     /// <summary>

@@ -2,14 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-
-//
-// Description: Text line formatter.
-//
-
-#pragma warning disable 1634, 1691  // avoid generating warnings about unknown
-// message numbers and unknown pragmas for PRESharp contol
-
 using System.Globalization;
 using System.Windows;
 using System.Windows.Documents;
@@ -1325,6 +1317,3 @@ namespace MS.Internal.PtsHost
         #endregion FormattingContext Class
     }
 }
-
-#pragma warning enable 1634, 1691
-

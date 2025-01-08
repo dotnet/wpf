@@ -1,12 +1,9 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
 // Description:
 //  This class provides api's to add/remove/verify signatures on an MMCF container.
-
-// Allow use of presharp warning numbers [6506] unknown to the compiler
-#pragma warning disable 1634, 1691
 
 using System.Security.Cryptography.Xml;                 // for SignedXml
 using System.Security.Cryptography.X509Certificates;    // for X509Certificate
@@ -483,11 +480,6 @@ namespace System.IO.Packaging
             if (certificate is not X509Certificate2 exSigner)
                 exSigner = new X509Certificate2(certificate.Handle);
 
-            //PRESHARP: Parameter to this public method must be validated:  A null-dereference can occur here.
-            //      Parameter 'exSigner' to this public method must be validated:  A null-dereference can occur here. 
-            //This is a false positive as the checks above can gurantee no null dereference will occur  
-#pragma warning disable 6506
-
             PackageDigitalSignature signature = null;
             PackagePart newSignaturePart = null;
             try
@@ -555,7 +547,6 @@ namespace System.IO.Packaging
                 newSignaturePart.CreateRelationship(certificatePartName, TargetMode.Internal, CertificatePart.RelationshipType);
                 signature.SetCertificatePart(certPart);
             }
-#pragma warning restore 6506
 
             _container.Flush();
 

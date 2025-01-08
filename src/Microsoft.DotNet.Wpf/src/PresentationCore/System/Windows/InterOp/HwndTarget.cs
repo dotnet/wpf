@@ -20,8 +20,6 @@ using HRESULT = MS.Internal.HRESULT;
 using NativeMethodsSetLastError = MS.Internal.WindowsBase.NativeMethodsSetLastError;
 using PROCESS_DPI_AWARENESS = MS.Win32.NativeMethods.PROCESS_DPI_AWARENESS;
 
-#pragma warning disable 1634, 1691  // suppressing PreSharp warnings
-
 namespace System.Windows.Interop
 {
     // This is the internal, more expressive, enum used by the InvalidateRenderMode method.
@@ -293,7 +291,7 @@ namespace System.Windows.Interop
                 //
                 if(exceptionThrown)
                 {
-                    #pragma warning suppress 6031 // Return value ignored on purpose.
+                    // Return value ignored on purpose.
                     VisualTarget_DetachFromHwnd(hwnd);
                 }
             }
@@ -1459,7 +1457,6 @@ namespace System.Windows.Interop
 
                 return AutomationInteropProvider.ReturnRawElementProvider(handle, wparam, lparam, el);
             }
-#pragma warning disable 56500
             catch (Exception e)
             {
                 if(CriticalExceptions.IsCriticalException(e))
@@ -1469,7 +1466,6 @@ namespace System.Windows.Interop
 
                 return new IntPtr(Marshal.GetHRForException(e));
             }
-#pragma warning restore 56500
         }
 
         /// <summary>

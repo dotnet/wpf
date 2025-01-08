@@ -31,9 +31,6 @@ using System.Windows.Baml2006;
 using System.Xaml.Permissions;
 using System.Runtime.CompilerServices;
 
-// Disable pragma warnings to enable PREsharp pragmas
-#pragma warning disable 1634, 1691
-
 namespace System.Windows
 {
     /// <summary>
@@ -799,7 +796,6 @@ namespace System.Windows
                 // There is no Assembly.Exists API to determine if an Assembly exists.
                 // There is also no way to determine if an Assembly's format is good prior to loading it.
                 // So, the exception must be caught. assembly will continue to be null and returned.
-#pragma warning disable 6502
                 catch (FileNotFoundException)
                 {
                 }
@@ -816,7 +812,6 @@ namespace System.Windows
                         RuntimeHelpers.RunClassConstructor(knownTypeHelper.TypeHandle);
                     }
                 }
-#pragma warning restore 6502
             }
 
             /// <summary>
@@ -915,8 +910,6 @@ namespace System.Windows
                 // There is no ResourceManager.HasManifest in order to detect this case before an exception is thrown.
                 // Likewise, there is no way to know if loading a resource will fail prior to loading it.
                 // So, the exceptions must be caught. stream will continue to be null and handled accordingly later.
-#pragma warning disable 6502
-
                 catch (MissingManifestResourceException)
                 {
                     // No usable resources in the assembly
@@ -931,8 +924,6 @@ namespace System.Windows
                     // Object not stored correctly
                 }
 #endif
-
-#pragma warning restore 6502
 
                 if (stream != null)
                 {
@@ -1009,10 +1000,6 @@ namespace System.Windows
         #endregion
 
         #region Value Changes
-
-        // The hwndNotify is referenced by the _hwndNotify static field, but
-        // PreSharp will think that the hwndNotify is local and should be disposed.
-#pragma warning disable 6518
 
         /// <summary>
         /// Ensures that a a notify-window is created corresponding to <see cref="ProcessDpiAwarenessContextValue"/>
@@ -1186,8 +1173,6 @@ namespace System.Windows
 
             return dpiScale;
         }
-
-#pragma warning restore 6518
 
     private static void OnThemeChanged()
         {

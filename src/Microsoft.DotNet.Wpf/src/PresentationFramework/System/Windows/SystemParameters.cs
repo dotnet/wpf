@@ -66,16 +66,16 @@ namespace System.Windows
     /// </summary>
     public static class SystemParameters
     {
-        public static event System.ComponentModel.PropertyChangedEventHandler StaticPropertyChanged;
+        public static event PropertyChangedEventHandler StaticPropertyChanged;
 
-        private static void OnPropertiesChanged(params string[] propertyNames)
+        private static void OnPropertiesChanged(params ReadOnlySpan<string> propertyNames)
         {
-            System.ComponentModel.PropertyChangedEventHandler handler = StaticPropertyChanged;
-            if (handler != null)
+            PropertyChangedEventHandler handler = StaticPropertyChanged;
+            if (handler is not null)
             {
-                for (int i=0; i<propertyNames.Length; ++i)
+                foreach (string propertyName in propertyNames)
                 {
-                    handler(null, new System.ComponentModel.PropertyChangedEventArgs(propertyNames[i]));
+                    handler.Invoke(null, new PropertyChangedEventArgs(propertyName));
                 }
             }
         }

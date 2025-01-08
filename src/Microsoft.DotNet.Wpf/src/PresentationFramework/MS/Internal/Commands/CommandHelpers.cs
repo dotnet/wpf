@@ -15,7 +15,7 @@ namespace MS.Internal.Commands
 
         internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler)
         {
-            PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, null, null);
+            PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, null);
         }
 
         internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
@@ -39,7 +39,7 @@ namespace MS.Internal.Commands
         internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
                                                     CanExecuteRoutedEventHandler canExecuteRoutedEventHandler)
         {
-            PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, canExecuteRoutedEventHandler, null);
+            PrivateRegisterCommandHandler(controlType, command, executedRoutedEventHandler, canExecuteRoutedEventHandler);
         }
 
         internal static void RegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
@@ -90,7 +90,7 @@ namespace MS.Internal.Commands
 
         // 'params' based method is private.  Call sites that use this bloat unwittingly due to implicit construction of the params array that goes into IL.
         private static void PrivateRegisterCommandHandler(Type controlType, RoutedCommand command, ExecutedRoutedEventHandler executedRoutedEventHandler,
-                                                          CanExecuteRoutedEventHandler canExecuteRoutedEventHandler, params InputGesture[] inputGestures)
+                                                          CanExecuteRoutedEventHandler canExecuteRoutedEventHandler, params ReadOnlySpan<InputGesture> inputGestures)
         {
             // Validate parameters
             Debug.Assert(controlType != null);
@@ -102,12 +102,9 @@ namespace MS.Internal.Commands
             CommandManager.RegisterClassCommandBinding(controlType, new CommandBinding(command, executedRoutedEventHandler, canExecuteRoutedEventHandler));
 
             // Create additional input binding for this command
-            if (inputGestures != null)
+            for (int i = 0; i < inputGestures.Length; i++)
             {
-                for (int i = 0; i < inputGestures.Length; i++)
-                {
-                    CommandManager.RegisterClassInputBinding(controlType, new InputBinding(command, inputGestures[i]));
-                }
+                CommandManager.RegisterClassInputBinding(controlType, new InputBinding(command, inputGestures[i]));
             }
         }
 

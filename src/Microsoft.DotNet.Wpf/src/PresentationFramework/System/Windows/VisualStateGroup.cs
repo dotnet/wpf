@@ -94,40 +94,38 @@ namespace System.Windows
             }
         }
 
-        internal void StartNewThenStopOld(FrameworkElement element, params Storyboard[] newStoryboards)
+        internal void StartNewThenStopOld(FrameworkElement element, params ReadOnlySpan<Storyboard> newStoryboards)
         {
             // Remove the old Storyboards. Remove is delayed until the next TimeManager tick, so the
             // handoff to the new storyboard is unaffected.
-            for (int index = 0; index < CurrentStoryboards.Count; ++index)
+            for (int i = 0; i < CurrentStoryboards.Count; i++)
             {
-                if (CurrentStoryboards[index] == null)
-                {
+                Storyboard currentStoryboard = CurrentStoryboards[i];
+                if (currentStoryboard is null)
                     continue;
-                }
 
-                CurrentStoryboards[index].Remove(element);
+                currentStoryboard.Remove(element);
             }
+
             CurrentStoryboards.Clear();
 
             // Start the new Storyboards
-            for (int index = 0; index < newStoryboards.Length; ++index)
-            {
-                if (newStoryboards[index] == null)
-                {
+            foreach (Storyboard newStoryboard in newStoryboards)
+            { 
+                if (newStoryboard is null)
                     continue;
-                }
 
-                newStoryboards[index].Begin(element, HandoffBehavior.SnapshotAndReplace, true);
+                newStoryboard.Begin(element, HandoffBehavior.SnapshotAndReplace, true);
                 
                 // Hold on to the running Storyboards
-                CurrentStoryboards.Add(newStoryboards[index]);
+                CurrentStoryboards.Add(newStoryboard);
 
                 // Silverlight had an issue where initially, a checked CheckBox would not show the check mark
                 // until the second frame. They chose to do a Seek(0) at this point, which this line
                 // is supposed to mimic. It does not seem to be equivalent, though, and WPF ends up
                 // with some odd animation behavior. I haven't seen the CheckBox issue on WPF, so
                 // commenting this out for now.
-                // newStoryboards[index].SeekAlignedToLastTick(element, TimeSpan.Zero, TimeSeekOrigin.BeginTime);
+                // newStoryboard.SeekAlignedToLastTick(element, TimeSpan.Zero, TimeSeekOrigin.BeginTime);
             }
 
         }

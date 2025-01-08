@@ -584,24 +584,20 @@ namespace System.Windows
         ///     Helper method which returns true when all the given visuals 
         ///     are in the same presentation source.
         /// </summary>
-        internal static bool UnderSamePresentationSource(params DependencyObject[] visuals)
+        internal static bool IsUnderSamePresentationSource(params ReadOnlySpan<DependencyObject> visuals)
         {
-            if (visuals == null || visuals.Length == 0)
-            {
+            if (visuals.IsEmpty)
                 return true;
-            }
 
             PresentationSource baseSource = CriticalFromVisual(visuals[0]);
-
-            int count = visuals.Length;
-            for (int i = 1; i < count; i++)
+            for (int i = 1; i < visuals.Length; i++)
             {
-                PresentationSource currentSource = CriticalFromVisual(visuals[i]);
-                if (currentSource != baseSource)
+                if (baseSource != CriticalFromVisual(visuals[i]))
                 {
                     return false;
                 }
             }
+
             return true;
         }
 

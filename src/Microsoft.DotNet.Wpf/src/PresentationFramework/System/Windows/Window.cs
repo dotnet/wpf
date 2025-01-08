@@ -7038,7 +7038,7 @@ namespace System.Windows
 
             // If the original source is not from the same PresentationSource as of the Window,
             // then do not act on the PanningFeedback.
-            if (!PresentationSource.UnderSamePresentationSource(e.OriginalSource as DependencyObject, this))
+            if (!PresentationSource.IsUnderSamePresentationSource(e.OriginalSource as DependencyObject, this))
             {
                 return;
             }

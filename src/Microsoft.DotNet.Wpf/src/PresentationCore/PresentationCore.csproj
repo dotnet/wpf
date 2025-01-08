@@ -138,7 +138,6 @@
     <Compile Include="MS\Internal\Automation\ElementProxy.cs" />
     <Compile Include="MS\Internal\Automation\ElementUtil.cs" />
     <Compile Include="MS\Internal\Automation\EventMap.cs" />
-    <Compile Include="MS\Internal\Automation\EventPropertyMap.cs" />
     <Compile Include="MS\Internal\Automation\ExpandCollapseProviderWrapper.cs" />
     <Compile Include="MS\Internal\Automation\GridItemProviderWrapper.cs" />
     <Compile Include="MS\Internal\Automation\GridProviderWrapper.cs" />

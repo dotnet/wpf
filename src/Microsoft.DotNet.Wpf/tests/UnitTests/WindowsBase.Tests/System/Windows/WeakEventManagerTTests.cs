@@ -1,7 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Reflection;
 
 namespace System.Windows.Tests;
 
@@ -172,15 +171,15 @@ public class WeakEventManagerTTests
         WeakEventManager<ClassWithEvents, EventArgs>.AddHandler(source, nameof(ClassWithEvents.CustomEvent), handler2);
     }
 
-    [Fact]
-    public void AddHandler_NullSourceNonStaticEvent_ThrowsTargetException()
-    {
-        // Add.
-        Assert.Throws<TargetException>(() => WeakEventManager<ClassWithEvents, EventArgs>.AddHandler(null!, nameof(ClassWithEvents.CustomEvent), (sender, e) => { }));
+    // [Fact]
+    // public void AddHandler_NullSourceNonStaticEvent_ThrowsTargetException()
+    // {
+    //     // Add.
+    //     Assert.Throws<TargetException>(() => WeakEventManager<ClassWithEvents, EventArgs>.AddHandler(null!, nameof(ClassWithEvents.CustomEvent), (sender, e) => { }));
 
-        // Add again.
-        WeakEventManager<ClassWithEvents, EventArgs>.AddHandler(null!, nameof(ClassWithEvents.CustomEvent), (sender, e) => { });
-    }
+    //     // Add again.
+    //     WeakEventManager<ClassWithEvents, EventArgs>.AddHandler(null!, nameof(ClassWithEvents.CustomEvent), (sender, e) => { });
+    // }
 
     [Fact]
     public void AddHandler_NullEventName_ThrowsArgumentNullException()

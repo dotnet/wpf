@@ -1302,6 +1302,8 @@ public class WeakEventManagerTests : WeakEventManager
         Assert.False(list.IsEmpty);
         Assert.Same(listener3, list[0]);
         Assert.Null(manager[null!]);
+        
+        manager.ProtectedRemoveListener(null!, listener4);
     }
 
     [Fact]
@@ -1342,6 +1344,9 @@ public class WeakEventManagerTests : WeakEventManager
         Assert.False(list.IsEmpty);
         Assert.Same(listener1, list[0]);
         Assert.Same(listener2, list[1]);
+
+        manager.ProtectedRemoveListener(null!, listener1);
+        manager.ProtectedRemoveListener(null!, listener2);
     }
 
     [Fact]

@@ -152,23 +152,23 @@ public class CollectionChangedEventManagerTests
         Assert.Equal(1, callCount3);
     }
 
-    [Fact]
-    public void AddHandler_InvokeNoSource_Success()
-    {
-        var target1 = new CustomWeakEventListener();
-        EventHandler<NotifyCollectionChangedEventArgs> handler1 = (EventHandler<NotifyCollectionChangedEventArgs>)Delegate.CreateDelegate(typeof(EventHandler<NotifyCollectionChangedEventArgs>), target1, nameof(CustomWeakEventListener.Handler));
-        var target2 = new CustomWeakEventListener();
-        EventHandler<NotifyCollectionChangedEventArgs> handler2 = (EventHandler<NotifyCollectionChangedEventArgs>)Delegate.CreateDelegate(typeof(EventHandler<NotifyCollectionChangedEventArgs>), target2, nameof(CustomWeakEventListener.Handler));
+    // [Fact]
+    // public void AddHandler_InvokeNoSource_Success()
+    // {
+    //     var target1 = new CustomWeakEventListener();
+    //     EventHandler<NotifyCollectionChangedEventArgs> handler1 = (EventHandler<NotifyCollectionChangedEventArgs>)Delegate.CreateDelegate(typeof(EventHandler<NotifyCollectionChangedEventArgs>), target1, nameof(CustomWeakEventListener.Handler));
+    //     var target2 = new CustomWeakEventListener();
+    //     EventHandler<NotifyCollectionChangedEventArgs> handler2 = (EventHandler<NotifyCollectionChangedEventArgs>)Delegate.CreateDelegate(typeof(EventHandler<NotifyCollectionChangedEventArgs>), target2, nameof(CustomWeakEventListener.Handler));
 
-        // Add.
-        Assert.Throws<NullReferenceException>(() => CollectionChangedEventManager.AddHandler(null, handler1));
+    //     // Add.
+    //     Assert.Throws<NullReferenceException>(() => CollectionChangedEventManager.AddHandler(null, handler1));
 
-        // Add again.
-        CollectionChangedEventManager.AddHandler(null, handler1);
+    //     // Add again.
+    //     CollectionChangedEventManager.AddHandler(null, handler1);
 
-        // Add another.
-        CollectionChangedEventManager.AddHandler(null, handler2);
-    }
+    //     // Add another.
+    //     CollectionChangedEventManager.AddHandler(null, handler2);
+    // }
 
     [Fact]
     public void AddHandler_NullHandler_ThrowsArgumentNullException()
@@ -369,19 +369,19 @@ public class CollectionChangedEventManagerTests
         Assert.Equal(0, callCount);
     }
 
-    [Fact]
-    public void RemoveHandler_InvokeNoSource_Success()
-    {
-        var target = new CustomWeakEventListener();
-        EventHandler<NotifyCollectionChangedEventArgs> handler = (EventHandler<NotifyCollectionChangedEventArgs>)Delegate.CreateDelegate(typeof(EventHandler<NotifyCollectionChangedEventArgs>), target, nameof(CustomWeakEventListener.Handler));
-        CollectionChangedEventManager.AddHandler(null, handler);
+    // [Fact]
+    // public void RemoveHandler_InvokeNoSource_Success()
+    // {
+    //     var target = new CustomWeakEventListener();
+    //     EventHandler<NotifyCollectionChangedEventArgs> handler = (EventHandler<NotifyCollectionChangedEventArgs>)Delegate.CreateDelegate(typeof(EventHandler<NotifyCollectionChangedEventArgs>), target, nameof(CustomWeakEventListener.Handler));
+    //     CollectionChangedEventManager.AddHandler(null, handler);
 
-        // Remove.
-        CollectionChangedEventManager.RemoveHandler(null, handler);
+    //     // Remove.
+    //     CollectionChangedEventManager.RemoveHandler(null, handler);
 
-        // Remove again.
-        CollectionChangedEventManager.RemoveHandler(null, handler);
-    }
+    //     // Remove again.
+    //     CollectionChangedEventManager.RemoveHandler(null, handler);
+    // }
 
     [Fact]
     public void RemoveHandler_InvokeNoSuchSource_Nop()

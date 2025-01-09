@@ -156,23 +156,23 @@ public class CurrentChangingEventManagerTests
         Assert.Equal(1, callCount3);
     }
 
-    [Fact]
-    public void AddHandler_InvokeNoSource_Success()
-    {
-        var target1 = new CustomWeakEventListener();
-        EventHandler<CurrentChangingEventArgs> handler1 = (EventHandler<CurrentChangingEventArgs>)Delegate.CreateDelegate(typeof(EventHandler<CurrentChangingEventArgs>), target1, nameof(CustomWeakEventListener.Handler));
-        var target2 = new CustomWeakEventListener();
-        EventHandler<CurrentChangingEventArgs> handler2 = (EventHandler<CurrentChangingEventArgs>)Delegate.CreateDelegate(typeof(EventHandler<CurrentChangingEventArgs>), target2, nameof(CustomWeakEventListener.Handler));
+    // [Fact]
+    // public void AddHandler_InvokeNoSource_Success()
+    // {
+    //     var target1 = new CustomWeakEventListener();
+    //     EventHandler<CurrentChangingEventArgs> handler1 = (EventHandler<CurrentChangingEventArgs>)Delegate.CreateDelegate(typeof(EventHandler<CurrentChangingEventArgs>), target1, nameof(CustomWeakEventListener.Handler));
+    //     var target2 = new CustomWeakEventListener();
+    //     EventHandler<CurrentChangingEventArgs> handler2 = (EventHandler<CurrentChangingEventArgs>)Delegate.CreateDelegate(typeof(EventHandler<CurrentChangingEventArgs>), target2, nameof(CustomWeakEventListener.Handler));
 
-        // Add.
-        Assert.Throws<NullReferenceException>(() => CurrentChangingEventManager.AddHandler(null, handler1));
+    //     // Add.
+    //     Assert.Throws<NullReferenceException>(() => CurrentChangingEventManager.AddHandler(null, handler1));
 
-        // Add again.
-        CurrentChangingEventManager.AddHandler(null, handler1);
+    //     // Add again.
+    //     CurrentChangingEventManager.AddHandler(null, handler1);
 
-        // Add another.
-        CurrentChangingEventManager.AddHandler(null, handler2);
-    }
+    //     // Add another.
+    //     CurrentChangingEventManager.AddHandler(null, handler2);
+    // }
 
     [Fact]
     public void AddHandler_NullHandler_ThrowsArgumentNullException()

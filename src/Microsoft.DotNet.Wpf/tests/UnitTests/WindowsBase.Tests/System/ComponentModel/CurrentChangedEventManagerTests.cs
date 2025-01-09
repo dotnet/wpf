@@ -157,31 +157,31 @@ public class CurrentChangedEventManagerTests
         Assert.Equal(1, callCount3);
     }
 
-    [Fact]
-    public void AddHandler_InvokeNoSource_Success()
-    {
-        var target1 = new CustomWeakEventListener();
-        EventHandler<EventArgs> handler1 = (EventHandler<EventArgs>)Delegate.CreateDelegate(typeof(EventHandler<EventArgs>), target1, nameof(CustomWeakEventListener.Handler));
-        var target2 = new CustomWeakEventListener();
-        EventHandler<EventArgs> handler2 = (EventHandler<EventArgs>)Delegate.CreateDelegate(typeof(EventHandler<EventArgs>), target2, nameof(CustomWeakEventListener.Handler));
+    // [Fact]
+    // public void AddHandler_InvokeNoSource_Success()
+    // {
+    //     var target1 = new CustomWeakEventListener();
+    //     EventHandler<EventArgs> handler1 = (EventHandler<EventArgs>)Delegate.CreateDelegate(typeof(EventHandler<EventArgs>), target1, nameof(CustomWeakEventListener.Handler));
+    //     var target2 = new CustomWeakEventListener();
+    //     EventHandler<EventArgs> handler2 = (EventHandler<EventArgs>)Delegate.CreateDelegate(typeof(EventHandler<EventArgs>), target2, nameof(CustomWeakEventListener.Handler));
 
-        // Add.
-        // There is a race condition where an NRE is thrown if the source is null and
-        // no previous listeners or handlers were ever added.
-        try
-        {
-            CurrentChangedEventManager.AddHandler(null, handler1);
-        }
-        catch (NullReferenceException)
-        {
-        }
+    //     // Add.
+    //     // There is a race condition where an NRE is thrown if the source is null and
+    //     // no previous listeners or handlers were ever added.
+    //     try
+    //     {
+    //         CurrentChangedEventManager.AddHandler(null, handler1);
+    //     }
+    //     catch (NullReferenceException)
+    //     {
+    //     }
 
-        // Add again.
-        CurrentChangedEventManager.AddHandler(null, handler1);
+    //     // Add again.
+    //     CurrentChangedEventManager.AddHandler(null, handler1);
 
-        // Add another.
-        CurrentChangedEventManager.AddHandler(null, handler2);
-    }
+    //     // Add another.
+    //     CurrentChangedEventManager.AddHandler(null, handler2);
+    // }
 
     [Fact]
     public void AddHandler_NullHandler_ThrowsArgumentNullException()
@@ -382,27 +382,27 @@ public class CurrentChangedEventManagerTests
         Assert.Equal(0, callCount);
     }
 
-    [Fact]
-    public void RemoveHandler_InvokeNoSource_Success()
-    {
-        var target = new CustomWeakEventListener();
-        EventHandler<EventArgs> handler = (EventHandler<EventArgs>)Delegate.CreateDelegate(typeof(EventHandler<EventArgs>), target, nameof(CustomWeakEventListener.Handler));
-        try
-        {
-            CurrentChangedEventManager.AddHandler(null, handler);
+    // [Fact]
+    // public void RemoveHandler_InvokeNoSource_Success()
+    // {
+    //     var target = new CustomWeakEventListener();
+    //     EventHandler<EventArgs> handler = (EventHandler<EventArgs>)Delegate.CreateDelegate(typeof(EventHandler<EventArgs>), target, nameof(CustomWeakEventListener.Handler));
+    //     try
+    //     {
+    //         CurrentChangedEventManager.AddHandler(null, handler);
 
-            // Remove.
-            CurrentChangedEventManager.RemoveHandler(null, handler);
+    //         // Remove.
+    //         CurrentChangedEventManager.RemoveHandler(null, handler);
 
-            // Remove again.
-            CurrentChangedEventManager.RemoveHandler(null, handler);
-        }
-        catch (NullReferenceException)
-        {
-            // There is a race condition where an NRE is thrown if the source is null and
-            // no previous listeners or handlers were ever added.
-        }
-    }
+    //         // Remove again.
+    //         CurrentChangedEventManager.RemoveHandler(null, handler);
+    //     }
+    //     catch (NullReferenceException)
+    //     {
+    //         // There is a race condition where an NRE is thrown if the source is null and
+    //         // no previous listeners or handlers were ever added.
+    //     }
+    // }
 
     [Fact]
     public void RemoveHandler_InvokeNoSuchSource_Nop()

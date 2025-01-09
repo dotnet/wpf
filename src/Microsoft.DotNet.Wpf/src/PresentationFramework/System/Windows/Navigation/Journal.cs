@@ -229,7 +229,7 @@ namespace System.Windows.Navigation
         }
 
         [NonSerialized()]
-        EventHandler _backForwardStateChange;
+        private EventHandler _backForwardStateChange;
         #endregion
 
         //------------------------------------------------------
@@ -625,8 +625,8 @@ namespace System.Windows.Navigation
 
         private JournalEntryFilter  _filter;
 
-        JournalEntryBackStack       _backStack;
-        JournalEntryForwardStack    _forwardStack;
+        private JournalEntryBackStack       _backStack;
+        private JournalEntryForwardStack    _forwardStack;
 
         // This is where we get the id we assign to all JournalEntries.
         // It will be incremented each time.

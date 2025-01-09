@@ -1038,7 +1038,7 @@ namespace System.Windows.Data
             }
         }
 
-        object RestoreUpdateTriggerOperation(object arg)
+        private object RestoreUpdateTriggerOperation(object arg)
         {
             DependencyObject target = TargetElement;
             if (!IsDetached && target != null)
@@ -1242,9 +1242,9 @@ namespace System.Windows.Data
             internal object RawValue { get { return _rawValue; } }
             internal object ConvertedValue { get { return _convertedValue; } }
 
-            BindingExpression   _bindingExpression;
-            object              _rawValue;
-            object              _convertedValue;
+            private BindingExpression   _bindingExpression;
+            private object              _rawValue;
+            private object              _convertedValue;
         }
 
         /// <summary>
@@ -1336,7 +1336,7 @@ namespace System.Windows.Data
             ChangeFlag(PrivateFlags.iInUpdate | PrivateFlags.iNeedsUpdate, false);
         }
 
-        object UpdateTargetCallback(object unused)
+        private object UpdateTargetCallback(object unused)
         {
             ClearValue(Feature.UpdateTargetOperation);
             IsInUpdate = true;      // pretend to be in an update - as when this callback was posted
@@ -1494,12 +1494,12 @@ namespace System.Windows.Data
             }
         }
 
-        void OnTimerTick(object sender, EventArgs e)
+        private void OnTimerTick(object sender, EventArgs e)
         {
             ProcessDirty();
         }
 
-        void OnPreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
+        private void OnPreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
             // if the IME composition we're waiting for completes, update the source.
             if (IsUpdateDeferredForComposition && e.TextComposition.Source == TargetElement && e.TextComposition.Stage == System.Windows.Input.TextCompositionStage.Done)
@@ -1845,7 +1845,7 @@ namespace System.Windows.Data
         }
 
         // mark a binding as non-grouped, so that we avoid doing the discovery again
-        void MarkAsNonGrouped()
+        private void MarkAsNonGrouped()
         {
             // Leaf bindings only get asked once, so there's no need to add a mark
             if (!(this is BindingExpression))
@@ -2168,7 +2168,7 @@ namespace System.Windows.Data
             return result;
         }
 
-        static object ConvertValue(object value, DependencyProperty dp, out Exception e)
+        private static object ConvertValue(object value, DependencyProperty dp, out Exception e)
         {
             object result;
             e = null;
@@ -2691,7 +2691,7 @@ namespace System.Windows.Data
             SetValue(Feature.EffectiveTargetNullValue, targetNullValue, DependencyProperty.UnsetValue);
         }
 
-        void DetermineEffectiveUpdateBehavior()
+        private void DetermineEffectiveUpdateBehavior()
         {
             // only need to honor update behavior when the binding does updates,
             // and isn't governed by a multibinding (which drives the updates)
@@ -2856,7 +2856,7 @@ namespace System.Windows.Data
 
         // change WeakDependencySources to (strong) DependencySources, and notify
         // the property engine about the new sources
-        void ChangeSources(DependencyObject target, DependencyProperty dp, WeakDependencySource[] newSources)
+        private void ChangeSources(DependencyObject target, DependencyProperty dp, WeakDependencySource[] newSources)
         {
             DependencySource[] sources;
 
@@ -2907,16 +2907,15 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        BindingBase         _binding;
-        WeakReference       _targetElement;
-        DependencyProperty  _targetProperty;
-        DataBindEngine      _engine;
-        PrivateFlags        _flags;
-        object              _value = DefaultValueObject;
-        BindingStatusInternal _status;
-        WeakDependencySource[]  _sources;
-
-        object                  _culture = DefaultValueObject;
+        private BindingBase         _binding;
+        private WeakReference       _targetElement;
+        private DependencyProperty  _targetProperty;
+        private DataBindEngine      _engine;
+        private PrivateFlags        _flags;
+        private object              _value = DefaultValueObject;
+        private BindingStatusInternal _status;
+        private WeakDependencySource[]  _sources;
+        private object                  _culture = DefaultValueObject;
 
         /// <summary> Sentinel meaning "field has its default value" </summary>
         internal static readonly object DefaultValueObject = new NamedObject("DefaultValue");
@@ -2926,7 +2925,7 @@ namespace System.Windows.Data
         internal static readonly object DisconnectedItem = new NamedObject("DisconnectedItem");
 
         // sentinel value meaning "no binding group"
-        static readonly WeakReference<BindingGroup> NullBindingGroupReference = new WeakReference<BindingGroup>(null);
+        private static readonly WeakReference<BindingGroup> NullBindingGroupReference = new WeakReference<BindingGroup>(null);
 
         #region Uncommon Values
 
@@ -2963,7 +2962,8 @@ namespace System.Windows.Data
         internal void      SetValue(Feature id, object value) { _values.SetValue((int)id, value); }
         internal void      SetValue(Feature id, object value, object defaultValue) { if (Object.Equals(value, defaultValue)) _values.ClearValue((int)id); else _values.SetValue((int)id, value); }
         internal void      ClearValue(Feature id) { _values.ClearValue((int)id); }
-        UncommonValueTable  _values;
+
+        private UncommonValueTable  _values;
 
         #endregion Uncommon Values
     }

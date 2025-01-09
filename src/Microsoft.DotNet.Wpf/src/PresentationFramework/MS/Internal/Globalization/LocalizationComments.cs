@@ -373,8 +373,8 @@ namespace MS.Internal.Globalization
 
     internal class PropertyComment
     {
-        string _target;
-        object _value;
+        private string _target;
+        private object _value;
 
         internal PropertyComment() { }
 

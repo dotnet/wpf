@@ -450,9 +450,9 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #if DEBUG
 
-        static int vipID; // = 0;
+        private static int vipID; // = 0;
 
-        static void SerializeVisual(Visual visual, double width, double height, String filename)
+        private static void SerializeVisual(Visual visual, double width, double height, String filename)
         {
             FileStream    stream = new FileStream(filename, FileMode.Create, FileAccess.ReadWrite);
             XmlTextWriter writer = new System.Xml.XmlTextWriter(stream, System.Text.Encoding.UTF8)
@@ -955,7 +955,7 @@ namespace Microsoft.Internal.AlphaFlattener
 
 #if DEBUG
 
-        static bool HasUnmanagedCodePermission()
+        private static bool HasUnmanagedCodePermission()
         {
             return true;
         }

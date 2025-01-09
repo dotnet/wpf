@@ -9,7 +9,7 @@ using System.Xaml.Schema;
 
 namespace System.Windows.Baml2006
 {
-    static class Baml6KnownTypes
+    internal static class Baml6KnownTypes
     {
         public const Int16 BooleanConverter = 46;
         public const Int16 DependencyPropertyConverter = 137;
@@ -23,9 +23,9 @@ namespace System.Windows.Baml2006
         public const Int16 XamlVector3DCollectionSerializer = 752;
     }
 
-    partial class WpfSharedBamlSchemaContext: XamlSchemaContext
+    internal partial class WpfSharedBamlSchemaContext: XamlSchemaContext
     {
-        object _syncObject;
+        private object _syncObject;
 
         // Data structures for KNOWN types/members.
         private Baml6Assembly[] _knownBamlAssemblies;

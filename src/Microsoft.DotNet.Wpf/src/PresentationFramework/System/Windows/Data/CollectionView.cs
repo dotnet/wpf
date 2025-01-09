@@ -1614,7 +1614,7 @@ namespace System.Windows.Data
 
         internal class PlaceholderAwareEnumerator : IEnumerator
         {
-            enum Position { BeforePlaceholder, OnPlaceholder, OnNewItem, AfterPlaceholder}
+            private enum Position { BeforePlaceholder, OnPlaceholder, OnNewItem, AfterPlaceholder}
 
             public PlaceholderAwareEnumerator(CollectionView collectionView, IEnumerator baseEnumerator, NewItemPlaceholderPosition placeholderPosition, object newItem)
             {
@@ -1701,12 +1701,12 @@ namespace System.Windows.Data
                 _baseEnumerator.Reset();
             }
 
-            CollectionView _collectionView;
-            IEnumerator _baseEnumerator;
-            NewItemPlaceholderPosition _placeholderPosition;
-            Position _position;
-            object _newItem;
-            int _timestamp;
+            private CollectionView _collectionView;
+            private IEnumerator _baseEnumerator;
+            private NewItemPlaceholderPosition _placeholderPosition;
+            private Position _position;
+            private object _newItem;
+            private int _timestamp;
         }
 
         #endregion Internal Types
@@ -2099,7 +2099,7 @@ namespace System.Windows.Data
 
             public bool Busy { get { return _entered; } }
 
-            bool _entered;
+            private bool _entered;
         }
 
         [Flags]
@@ -2131,31 +2131,30 @@ namespace System.Windows.Data
         private List<NotifyCollectionChangedEventArgs> _changeLog = new();
         private List<NotifyCollectionChangedEventArgs> _tempChangeLog = s_emptyList;
 
-        DataBindOperation       _databindOperation;
-        object                  _vmData;            // view manager's private data
-        IEnumerable             _sourceCollection;  // the underlying collection
-        CultureInfo             _culture;           // culture to use when sorting
-        SimpleMonitor           _currentChangedMonitor = new SimpleMonitor();
-        int                     _deferLevel;
-        IndexedEnumerable       _enumerableWrapper;
-        Predicate<object>       _filter;
-        object                  _currentItem;
-        int                     _currentPosition;
-        CollectionViewFlags     _flags = CollectionViewFlags.ShouldProcessCollectionChanged |
-                                        CollectionViewFlags.NeedsRefresh;
-        bool                    _currentElementWasRemovedOrReplaced;
-        static object           _newItemPlaceholder = new NamedObject("NewItemPlaceholder");
-        object                  _syncObject = new object();
-        DataBindEngine          _engine;
-        int                     _timestamp;
+        private DataBindOperation _databindOperation;
+        private object                  _vmData;            // view manager's private data
+        private IEnumerable             _sourceCollection;  // the underlying collection
+        private CultureInfo             _culture;           // culture to use when sorting
+        private SimpleMonitor           _currentChangedMonitor = new SimpleMonitor();
+        private int                     _deferLevel;
+        private IndexedEnumerable       _enumerableWrapper;
+        private Predicate<object>       _filter;
+        private object                  _currentItem;
+        private int                     _currentPosition;
+        private CollectionViewFlags     _flags = CollectionViewFlags.ShouldProcessCollectionChanged | CollectionViewFlags.NeedsRefresh;
+        private bool _currentElementWasRemovedOrReplaced;
+        private static object           _newItemPlaceholder = new NamedObject("NewItemPlaceholder");
+        private object                  _syncObject = new object();
+        private DataBindEngine          _engine;
+        private int                     _timestamp;
 
         private static readonly List<NotifyCollectionChangedEventArgs> s_emptyList = new();
-        static readonly string IEnumerableT = typeof(IEnumerable<>).Name;
+        private static readonly string IEnumerableT = typeof(IEnumerable<>).Name;
         internal static readonly object NoNewItem = new NamedObject("NoNewItem");
 
         // since there's nothing in the uncancelable event args that is mutable,
         // just create one instance to be used universally.
-        static readonly CurrentChangingEventArgs uncancelableCurrentChangingEventArgs = new CurrentChangingEventArgs(false);
+        private static readonly CurrentChangingEventArgs uncancelableCurrentChangingEventArgs = new CurrentChangingEventArgs(false);
 
         internal const string CountPropertyName = "Count";
         internal const string IsEmptyPropertyName = "IsEmpty";

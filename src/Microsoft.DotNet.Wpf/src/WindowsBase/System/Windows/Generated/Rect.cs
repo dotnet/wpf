@@ -21,7 +21,7 @@ namespace System.Windows
     [Serializable]
     [TypeConverter(typeof(RectConverter))]
     [ValueSerializer(typeof(RectValueSerializer))] // Used by MarkupWriter
-    partial struct Rect : IFormattable
+    public partial struct Rect : IFormattable
     {
         //------------------------------------------------------
         //

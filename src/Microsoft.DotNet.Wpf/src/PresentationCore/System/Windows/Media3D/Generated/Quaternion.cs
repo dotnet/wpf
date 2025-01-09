@@ -27,7 +27,7 @@ namespace System.Windows.Media.Media3D
     [Serializable]
     [TypeConverter(typeof(QuaternionConverter))]
     [ValueSerializer(typeof(QuaternionValueSerializer))] // Used by MarkupWriter
-    partial struct Quaternion : IFormattable
+    public partial struct Quaternion : IFormattable
     {
         //------------------------------------------------------
         //

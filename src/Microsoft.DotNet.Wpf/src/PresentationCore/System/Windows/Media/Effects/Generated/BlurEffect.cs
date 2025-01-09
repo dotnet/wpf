@@ -18,9 +18,7 @@ using System.Windows.Media.Imaging;
 
 namespace System.Windows.Media.Effects
 {
-
-
-    sealed partial class BlurEffect : Effect
+    public sealed partial class BlurEffect : Effect
     {
         //------------------------------------------------------
         //

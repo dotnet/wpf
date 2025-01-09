@@ -173,9 +173,6 @@ dotnet_diagnostic.IDE0034.severity = suggestion
 # IDE0036: Order modifiers
 dotnet_diagnostic.IDE0036.severity = suggestion
 
-# IDE0040: Add accessibility modifiers
-dotnet_diagnostic.IDE0040.severity = suggestion
-
 # IDE0041: Use 'is null' check
 dotnet_diagnostic.IDE0041.severity = suggestion
 

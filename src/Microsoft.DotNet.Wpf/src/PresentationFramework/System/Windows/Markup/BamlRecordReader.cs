@@ -528,12 +528,12 @@ namespace System.Windows.Markup
             }
         }
 
-        void ReadDocumentStartRecord(BamlDocumentStartRecord documentStartRecord)
+        private void ReadDocumentStartRecord(BamlDocumentStartRecord documentStartRecord)
         {
             IsDebugBamlStream = documentStartRecord.DebugBaml;
         }
 
-        void ReadDocumentEndRecord()
+        private void ReadDocumentEndRecord()
         {
             Debug.Assert(0 == ReaderContextStack.Count); // if not zero we missed an EndElement
             SetPropertyValueToParent(false /*fromStartTag*/);
@@ -3874,7 +3874,7 @@ namespace System.Windows.Markup
 
         // Called when we are in the context of a constructor and an object end record is
         // encounted.  Add the newly created object to the parameter list.
-        void SetConstructorParameter(object o)
+        private void SetConstructorParameter(object o)
         {
             Debug.Assert(null != CurrentContext &&
                 ReaderFlags.ConstructorParams == CurrentContext.ContextType);
@@ -4016,7 +4016,7 @@ namespace System.Windows.Markup
 
         // Name is self-explanatory -- this is used to create CLR objects and such that aren't
         // underneath Elements (those are handled by ParseProperty above).
-        object GetObjectFromString(Type type, string s, short converterTypeId)
+        private object GetObjectFromString(Type type, string s, short converterTypeId)
         {
             object o = DependencyProperty.UnsetValue;
             o = ParserContext.XamlTypeMapper.ParseProperty(null, type,string.Empty, null,
@@ -4344,7 +4344,7 @@ namespace System.Windows.Markup
         }
 
         // Get BaseUri for the right elements.
-        Uri GetBaseUri( )
+        private Uri GetBaseUri( )
         {
             Uri baseuri = ParserContext.BaseUri;
 
@@ -5545,7 +5545,7 @@ namespace System.Windows.Markup
             set { _componentConnector = value; }
         }
 
-        ReaderStream XamlReaderStream
+        private ReaderStream XamlReaderStream
         {
             get { return _xamlReaderStream; }
         }
@@ -5580,7 +5580,7 @@ namespace System.Windows.Markup
             get { return _bamlStream.Position; }
         }
 
-        Int64 StreamLength
+        private Int64 StreamLength
         {
             get { return _bamlStream.Length; }
         }
@@ -5604,32 +5604,32 @@ namespace System.Windows.Markup
 #region Data
 
         // state vars
-        IComponentConnector          _componentConnector;
-        object                       _rootElement;
-        bool                         _bamlAsForest;
-        bool                         _isRootAlreadyLoaded;
-        ArrayList                    _rootList;
-        ParserContext                _parserContext;   // XamlTypeMapper, namespace state, lang/space values
-        TypeConvertContext           _typeConvertContext;
-        int                          _persistId;
-        ParserStack                  _contextStack = new ParserStack();
-        XamlParseMode                _parseMode = XamlParseMode.Synchronous;
-        int                          _maxAsyncRecords;
+        private IComponentConnector          _componentConnector;
+        private object                       _rootElement;
+        private bool                         _bamlAsForest;
+        private bool                         _isRootAlreadyLoaded;
+        private ArrayList                    _rootList;
+        private ParserContext                _parserContext;   // XamlTypeMapper, namespace state, lang/space values
+        private TypeConvertContext           _typeConvertContext;
+        private int                          _persistId;
+        private ParserStack                  _contextStack = new ParserStack();
+        private XamlParseMode                _parseMode = XamlParseMode.Synchronous;
+        private int                          _maxAsyncRecords;
         // end of state vars
 
-        Stream                       _bamlStream;
-        ReaderStream                 _xamlReaderStream;
-        BamlBinaryReader             _binaryReader;
-        BamlRecordManager            _bamlRecordManager;
-        BamlRecord                   _preParsedBamlRecordsStart = null;
-        BamlRecord                   _preParsedIndexRecord = null;
-        bool                         _endOfDocument = false;
-        bool                         _buildTopDown = true;
+        private Stream                       _bamlStream;
+        private ReaderStream                 _xamlReaderStream;
+        private BamlBinaryReader             _binaryReader;
+        private BamlRecordManager            _bamlRecordManager;
+        private BamlRecord                   _preParsedBamlRecordsStart = null;
+        private BamlRecord                   _preParsedIndexRecord = null;
+        private bool                         _endOfDocument = false;
+        private bool                         _buildTopDown = true;
 
         // The outer BRR, when this one is nested.
-        BamlRecordReader             _previousBamlRecordReader;
+        private BamlRecordReader             _previousBamlRecordReader;
 
-        static List<ReaderContextStackData> _stackDataFactoryCache = new List<ReaderContextStackData>();
+        private static List<ReaderContextStackData> _stackDataFactoryCache = new List<ReaderContextStackData>();
 
 #endregion Data
     }

@@ -23,9 +23,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
-
-
-    abstract partial class PointLightBase : Light
+    public abstract partial class PointLightBase : Light
     {
         //------------------------------------------------------
         //

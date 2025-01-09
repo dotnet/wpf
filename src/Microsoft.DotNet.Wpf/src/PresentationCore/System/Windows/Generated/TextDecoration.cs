@@ -16,9 +16,7 @@ using MS.Utility;
 
 namespace System.Windows
 {
-
-
-    sealed partial class TextDecoration : Animatable
+    public sealed partial class TextDecoration : Animatable
     {
         //------------------------------------------------------
         //

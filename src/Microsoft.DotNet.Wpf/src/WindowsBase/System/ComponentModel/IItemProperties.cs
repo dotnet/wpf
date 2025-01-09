@@ -52,8 +52,8 @@ public class ItemPropertyInfo
     /// </summary>
     public object  Descriptor { get { return _descriptor; } }
 
-    string _name;
-    Type _type;
-    object _descriptor;
+    private string _name;
+    private Type _type;
+    private object _descriptor;
 }
 }

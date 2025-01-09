@@ -695,7 +695,7 @@ namespace System.Windows.Baml2006
 
         #region Private Types and Enums
 
-        sealed class BamlAssembly
+        private sealed class BamlAssembly
         {
             /// <summary>
             /// </summary>
@@ -723,7 +723,7 @@ namespace System.Windows.Baml2006
             internal Assembly Assembly;
         }
 
-        sealed class BamlType
+        private sealed class BamlType
         {
             public BamlType(Int16 assemblyId, string name)
             {
@@ -742,7 +742,7 @@ namespace System.Windows.Baml2006
             public string ClrNamespace;
         }
 
-        sealed class BamlProperty
+        private sealed class BamlProperty
         {
             public BamlProperty(Int16 declaringTypeId, string name)
             {

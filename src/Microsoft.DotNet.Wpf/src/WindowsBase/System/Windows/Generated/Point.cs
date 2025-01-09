@@ -21,7 +21,7 @@ namespace System.Windows
     [Serializable]
     [TypeConverter(typeof(PointConverter))]
     [ValueSerializer(typeof(PointValueSerializer))] // Used by MarkupWriter
-    partial struct Point : IFormattable
+    public partial struct Point : IFormattable
     {
         //------------------------------------------------------
         //

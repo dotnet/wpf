@@ -25,9 +25,7 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
-
-    sealed partial class CombinedGeometry : Geometry
+    public sealed partial class CombinedGeometry : Geometry
     {
         //------------------------------------------------------
         //

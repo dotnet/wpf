@@ -33,13 +33,13 @@ namespace System.Windows.Markup
     public class XmlnsDictionary : IDictionary, System.Xaml.IXamlNamespaceResolver
 #endif
     {
-#region Public Methods
+        #region Public Methods
         /// <summary>
         /// NamespaceDeclaration class which is similar to NamespaceDeclaration class in
         /// XmlNamespaceManager code in BCL. ScopeCount gets incremented and decremented
         /// at PushScope/PopScope, and acts like a marker between Scoped Declarations.
         /// </summary>
-        struct NamespaceDeclaration
+        private struct NamespaceDeclaration
         {
             /// <summary>
             /// namespace prefix
@@ -61,7 +61,7 @@ namespace System.Windows.Markup
         /// Namespace Scope 
         /// to retrieve all the declarations at current level or from the root node 
         /// </summary>
-        enum NamespaceScope 
+        private enum NamespaceScope 
         {
             /// <summary>
             /// All Namespaces from root to this Node

@@ -4474,7 +4474,7 @@ namespace System.Windows.Media.Animation
         internal int                _childIndex;
         internal int                _depth;
 
-        static Int64                 s_TimeSpanTicksPerSecond = TimeSpan.FromSeconds(1).Ticks;
+        private static Int64        s_TimeSpanTicksPerSecond = TimeSpan.FromSeconds(1).Ticks;
 
         #endregion // Linking data
 

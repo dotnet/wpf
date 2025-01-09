@@ -27,7 +27,7 @@ namespace System.Windows.Media.Media3D
     [Serializable]
     [TypeConverter(typeof(Matrix3DConverter))]
     [ValueSerializer(typeof(Matrix3DValueSerializer))] // Used by MarkupWriter
-    partial struct Matrix3D : IFormattable
+    public partial struct Matrix3D : IFormattable
     {
         //------------------------------------------------------
         //

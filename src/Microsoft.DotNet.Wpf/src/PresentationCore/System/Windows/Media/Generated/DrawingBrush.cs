@@ -25,9 +25,7 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
-
-    sealed partial class DrawingBrush : TileBrush
+    public sealed partial class DrawingBrush : TileBrush
     {
         //------------------------------------------------------
         //

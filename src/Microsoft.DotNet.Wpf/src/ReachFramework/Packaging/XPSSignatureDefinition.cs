@@ -94,9 +94,9 @@ namespace System.Windows.Xps.Packaging
             }
         }
 
-        Uri         _pageUri;
-        double      _startX;
-        double      _startY;
+        private Uri         _pageUri;
+        private double      _startX;
+        private double      _startY;
     }
 
     /// <summary>

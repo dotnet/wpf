@@ -6,9 +6,9 @@ using System.Xaml;
 
 namespace System.Windows.Baml2006
 {
-    partial class WpfSharedBamlSchemaContext: XamlSchemaContext
+    internal partial class WpfSharedBamlSchemaContext: XamlSchemaContext
     {
-        const int KnownPropertyCount = 270;
+        private const int KnownPropertyCount = 270;
 
 
         private WpfKnownMember CreateKnownMember(short bamlNumber)

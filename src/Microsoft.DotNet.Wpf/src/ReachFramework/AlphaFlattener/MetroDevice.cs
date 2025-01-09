@@ -839,7 +839,7 @@ namespace Microsoft.Internal.AlphaFlattener
             return packet;
         }
 
-        class CachePacket
+        private class CachePacket
         {
             // "null" for any field means it hasn't been set yet.
             // This implies that the fields cannot have real values of "null".

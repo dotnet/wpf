@@ -427,7 +427,7 @@ namespace Standard
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
         Guid(IID.ObjectArray),
     ]
-    interface IObjectCollection : IObjectArray
+    internal interface IObjectCollection : IObjectArray
     {
         #region IObjectArray redeclarations
         new uint GetCount();
@@ -609,7 +609,7 @@ namespace Standard
         InterfaceType(ComInterfaceType.InterfaceIsIUnknown),
         Guid(IID.ShellItem2),
     ]
-    interface IShellItem2 : IShellItem
+    internal interface IShellItem2 : IShellItem
     {
         #region IShellItem redeclarations
         [return: MarshalAs(UnmanagedType.Interface)]

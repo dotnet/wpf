@@ -23,9 +23,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Media3D
 {
-
-
-    abstract partial class Transform3D : GeneralTransform3D, DUCE.IResource
+    public abstract partial class Transform3D : GeneralTransform3D, DUCE.IResource
     {
         //------------------------------------------------------
         //

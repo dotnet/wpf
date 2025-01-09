@@ -36,7 +36,7 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        void DisposeHelper()
+        private void DisposeHelper()
         {
             // NOTE: PenThreadWorker deals with already being disposed logic.
             _penThreadWorker?.Dispose();

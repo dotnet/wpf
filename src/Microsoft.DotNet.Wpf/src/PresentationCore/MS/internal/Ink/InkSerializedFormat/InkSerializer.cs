@@ -2655,7 +2655,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
         #region Debugging Methods
 
         [System.Diagnostics.Conditional("DEBUG_ISF")]
-        static void ISFDebugTrace(string message)
+        private static void ISFDebugTrace(string message)
         {
             System.Diagnostics.Debug.WriteLine(message);
         }
@@ -2673,7 +2673,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
 
         #region Private Fields
 
-        StrokeCollection _coreStrokes;
+        private StrokeCollection _coreStrokes;
         private System.Collections.Generic.List<StrokeDescriptor> _strokeDescriptorTable = null;
         private System.Collections.Generic.List<TransformDescriptor> _transformTable = null;
         private System.Collections.Generic.List<DrawingAttributes> _drawingAttributesTable = null;
@@ -2685,8 +2685,7 @@ namespace MS.Internal.Ink.InkSerializedFormat
             //      with the serialization info so that load/save roundtrip the
             //      rectangle
         private Rect _inkSpaceRectangle = new Rect();
-
-        System.Collections.Generic.Dictionary<Stroke, StrokeLookupEntry> _strokeLookupTable = null;
+        private System.Collections.Generic.Dictionary<Stroke, StrokeLookupEntry> _strokeLookupTable = null;
 
         #endregion
     }

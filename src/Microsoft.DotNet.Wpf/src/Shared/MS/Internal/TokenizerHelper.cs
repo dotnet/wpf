@@ -245,7 +245,7 @@ namespace MS.Internal
         }
 
         // helper to move the _charIndex to the next token or to the end of the string
-        void ScanToNextToken(char separator)
+        private void ScanToNextToken(char separator)
         {
             // if already at end of the string don't bother
             if (_charIndex < _strLen)
@@ -331,13 +331,13 @@ namespace MS.Internal
             }
         }
 
-        char _quoteChar;
-        char _argSeparator;
-        string _str;
-        int _strLen;
-        int _charIndex;
+        private char _quoteChar;
+        private char _argSeparator;
+        private string _str;
+        private int _strLen;
+        private int _charIndex;
         internal int _currentTokenIndex;
         internal int _currentTokenLength;
-        bool _foundSeparator;
+        private bool _foundSeparator;
     }
 }

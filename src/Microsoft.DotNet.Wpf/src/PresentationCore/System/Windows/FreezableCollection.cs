@@ -780,7 +780,7 @@ namespace System.Windows
             return new FreezableCollection<T>();
         }
 
-        enum CloneCommonType
+        private enum CloneCommonType
         {
             Clone,
             CloneCurrentValue,
@@ -1107,7 +1107,7 @@ namespace System.Windows
 
             public bool Busy { get { return _busyCount > 0; } }
 
-            int _busyCount;
+            private int _busyCount;
         }
 
         #endregion

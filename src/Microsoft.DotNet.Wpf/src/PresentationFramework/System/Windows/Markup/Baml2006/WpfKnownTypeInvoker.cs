@@ -6,9 +6,9 @@ using System.Xaml.Schema;
 
 namespace System.Windows.Baml2006
 {
-    class WpfKnownTypeInvoker : XamlTypeInvoker
+    internal class WpfKnownTypeInvoker : XamlTypeInvoker
     {
-        WpfKnownType _type;
+        private WpfKnownType _type;
 
         public WpfKnownTypeInvoker(WpfKnownType type)
             : base(type)

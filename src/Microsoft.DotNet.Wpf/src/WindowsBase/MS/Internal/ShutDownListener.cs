@@ -133,7 +133,7 @@ namespace MS.Internal
         }
 
         [Flags]
-        enum PrivateFlags : ushort
+        private enum PrivateFlags : ushort
         {
             DomainUnload        = ShutDownEvents.DomainUnload,
             ProcessExit         = ShutDownEvents.ProcessExit,
@@ -143,8 +143,8 @@ namespace MS.Internal
             Listening           = 0x8000,
         }
 
-        PrivateFlags _flags;
-        WeakReference _dispatcherWR;
-        bool _inShutDown;
+        private PrivateFlags _flags;
+        private WeakReference _dispatcherWR;
+        private bool _inShutDown;
     }
 }

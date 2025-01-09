@@ -1267,7 +1267,7 @@ namespace Standard
     }
 
     [Flags]
-    enum SLGP
+    internal enum SLGP
     {
         SHORTPATH = 0x1,
         UNCPRIORITY = 0x2,

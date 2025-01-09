@@ -376,7 +376,7 @@ namespace System.Windows.Data
 
         // this method is here just to avoid the compiler error
         // error CS0649: Warning as Error: Field '..._traceLog' is never assigned to, and will always have its default value null
-        void InitializeTraceLog()
+        private void InitializeTraceLog()
         {
             _traceLog = new TraceLog(20);
         }

@@ -27,7 +27,7 @@ namespace System.Windows.Media.Media3D
     [Serializable]
     [TypeConverter(typeof(Rect3DConverter))]
     [ValueSerializer(typeof(Rect3DValueSerializer))] // Used by MarkupWriter
-    partial struct Rect3D : IFormattable
+    public partial struct Rect3D : IFormattable
     {
         //------------------------------------------------------
         //

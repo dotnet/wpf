@@ -25,9 +25,7 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
-
-    partial class MediaTimeline : Timeline
+    public partial class MediaTimeline : Timeline
     {
         //------------------------------------------------------
         //

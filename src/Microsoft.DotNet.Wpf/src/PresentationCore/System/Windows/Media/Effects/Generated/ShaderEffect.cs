@@ -18,9 +18,7 @@ using System.Windows.Media.Imaging;
 
 namespace System.Windows.Media.Effects
 {
-
-
-    partial class ShaderEffect : Effect
+    public partial class ShaderEffect : Effect
     {
         //------------------------------------------------------
         //

@@ -234,9 +234,7 @@ namespace System.Windows.Xps.Serialization
             }
         }
 
-        XpsSerializationXpsDriverDocEventArgs
-        OnXpsDriverDocEvent(
-            )
+        private XpsSerializationXpsDriverDocEventArgs OnXpsDriverDocEvent()
         {
             XpsSerializationXpsDriverDocEventArgs e = new XpsSerializationXpsDriverDocEventArgs(_documentEvent,
                                                                                                 _currentCount,

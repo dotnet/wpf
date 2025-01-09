@@ -7,9 +7,9 @@ using System.Xaml.Schema;
 
 namespace System.Windows.Baml2006
 {
-    partial class WpfSharedBamlSchemaContext : XamlSchemaContext
+    internal partial class WpfSharedBamlSchemaContext : XamlSchemaContext
     {
-        const int KnownTypeCount = 759;
+        private const int KnownTypeCount = 759;
 
 
         private WpfKnownType CreateKnownBamlType(short bamlNumber, bool isBamlType, bool useV3Rules)

@@ -1182,6 +1182,7 @@ namespace System.Windows.Interop
 
             private Dispatcher _that;
         }
-        WeakEventDispatcherShutdown _weakEventDispatcherShutdown;
+
+        private WeakEventDispatcherShutdown _weakEventDispatcherShutdown;
     }
 }

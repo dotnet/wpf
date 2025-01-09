@@ -1893,10 +1893,10 @@ namespace System.Windows
                 }
             }
 
-            EventHandler[] _events;         // list of events
-            int _logSize;                   // the logical size of the list
-            int _physSize;                  // the allocated buffer size
-            bool _inUse;
+            private EventHandler[] _events;         // list of events
+            private int _logSize;                   // the logical size of the list
+            private int _physSize;                  // the allocated buffer size
+            private bool _inUse;
         }
 
         //------------------------------------------------------

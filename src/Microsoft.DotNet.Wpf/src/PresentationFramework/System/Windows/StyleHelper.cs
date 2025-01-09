@@ -6124,9 +6124,9 @@ namespace System.Windows
         }
 
         // the origin of the instance value in the container's style:
-        int _childIndex;    // the childIndex of the target element
-        int _dpIndex;       // the global index of the target DP
-        int _index;         // the index in the ItemStructList<ChildValueLookup>
+        private int _childIndex;    // the childIndex of the target element
+        private int _dpIndex;       // the global index of the target DP
+        private int _index;         // the index in the ItemStructList<ChildValueLookup>
     }
 
     #endregion DataStructures

@@ -25,9 +25,7 @@ using System.Windows.Media.Converters;
 
 namespace System.Windows.Media
 {
-
-
-    abstract partial class GradientBrush : Brush
+    public abstract partial class GradientBrush : Brush
     {
         //------------------------------------------------------
         //

@@ -222,7 +222,7 @@ namespace System.Xaml
             }
         }
 
-        IEnumerator<KeyValuePair<string, object>> GetEnumerator()
+        private IEnumerator<KeyValuePair<string, object>> GetEnumerator()
         {
             return new Enumerator(this);
         }

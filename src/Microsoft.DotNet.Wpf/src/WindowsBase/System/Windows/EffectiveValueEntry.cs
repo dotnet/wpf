@@ -674,7 +674,7 @@ namespace System.Windows
         private object _animatedValue;
         private object _coercedValue;
 
-        class BaseValueWeakReference : WeakReference
+        private class BaseValueWeakReference : WeakReference
         {
             public BaseValueWeakReference(object target) : base(target) {}
         }

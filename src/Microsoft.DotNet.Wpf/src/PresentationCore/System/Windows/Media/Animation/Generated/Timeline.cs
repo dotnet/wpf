@@ -15,9 +15,7 @@ using System.Collections;
 
 namespace System.Windows.Media.Animation
 {
-
-
-    abstract partial class Timeline : Animatable
+    public abstract partial class Timeline : Animatable
     {
         //------------------------------------------------------
         //

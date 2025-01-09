@@ -28,7 +28,7 @@ namespace System.Windows.Media
 
     [TypeConverter(typeof(TransformConverter))]
     [ValueSerializer(typeof(TransformValueSerializer))] // Used by MarkupWriter
-    abstract partial class Transform : GeneralTransform, DUCE.IResource
+    public abstract partial class Transform : GeneralTransform, DUCE.IResource
     {
         //------------------------------------------------------
         //

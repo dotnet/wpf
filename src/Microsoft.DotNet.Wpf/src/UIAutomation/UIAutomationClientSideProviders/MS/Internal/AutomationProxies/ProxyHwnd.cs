@@ -29,7 +29,7 @@ namespace MS.Internal.AutomationProxies
 
     // Base Class for all the Windows Control that handle context.
     // Implements the default behavior
-    class ProxyHwnd : ProxyFragment, IRawElementProviderAdviseEvents
+    internal class ProxyHwnd : ProxyFragment, IRawElementProviderAdviseEvents
     {
         // ------------------------------------------------------
         //

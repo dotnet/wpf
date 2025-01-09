@@ -338,7 +338,7 @@ namespace System.Windows.Controls
 
         private static readonly UncommonField<int> BringColumnIntoViewRetryCountField
             = new UncommonField<int>(0);
-        const int MaxBringColumnIntoViewRetries = 4;
+        private const int MaxBringColumnIntoViewRetries = 4;
 
         /// <summary>
         ///     Called from DataGridCellsPanel.BringIndexIntoView to request a

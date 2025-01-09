@@ -947,7 +947,7 @@ namespace System.Windows.Controls
         #endregion Page Class
     }
 
-    class PageHelperObject
+    internal class PageHelperObject
     {
         //----------------------------------------------
         //

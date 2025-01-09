@@ -253,7 +253,7 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
             InvalidateVisual();
         }
 
-        Pen _separatorPen;
+        private Pen _separatorPen;
         private const double _desiredWidthEpsilon = 1e-10;
         #endregion
     }

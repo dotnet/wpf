@@ -2695,9 +2695,8 @@ namespace System.Windows.Controls
 
         private MenuItem _currentSelection;
         private Popup _submenuPopup;
-
-        DispatcherTimer _openHierarchyTimer;
-        DispatcherTimer _closeHierarchyTimer;
+        private DispatcherTimer _openHierarchyTimer;
+        private DispatcherTimer _closeHierarchyTimer;
 
         private bool _userInitiatedPress;
         #endregion

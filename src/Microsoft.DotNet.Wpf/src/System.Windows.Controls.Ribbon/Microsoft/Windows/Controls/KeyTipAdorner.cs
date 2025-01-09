@@ -375,7 +375,7 @@ namespace Microsoft.Windows.Controls
 
         #region Private Data
 
-        KeyTipControl _keyTipControl;
+        private KeyTipControl _keyTipControl;
         private TranslateTransform _keyTipTransform = new TranslateTransform(0, 0);
 
         private const double RibbonGroupKeyTipAxisNudgeSpace = 15;

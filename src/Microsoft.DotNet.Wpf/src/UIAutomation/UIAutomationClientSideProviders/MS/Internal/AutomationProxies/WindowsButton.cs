@@ -12,7 +12,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Windows Button proxy
-    class WindowsButton : ProxyHwnd, IInvokeProvider, IToggleProvider, ISelectionProvider, ISelectionItemProvider
+    internal class WindowsButton : ProxyHwnd, IInvokeProvider, IToggleProvider, ISelectionProvider, ISelectionItemProvider
     {
         // ------------------------------------------------------
         //

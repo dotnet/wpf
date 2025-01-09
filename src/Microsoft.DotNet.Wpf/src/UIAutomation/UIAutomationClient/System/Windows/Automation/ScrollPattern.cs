@@ -204,11 +204,11 @@ namespace System.Windows.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
-        SafePatternHandle _hPattern;
-        bool _cached;
+        private SafePatternHandle _hPattern;
+        private bool _cached;
 
         #endregion Private Fields
 

@@ -16,7 +16,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class ToolbarItemAsMenuItem : ToolbarItem
+    internal class ToolbarItemAsMenuItem : ToolbarItem
     {
         // ------------------------------------------------------
         //
@@ -115,7 +115,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Private Fields
 
-        Accessible _acc;
+        private Accessible _acc;
 
         #endregion
     }

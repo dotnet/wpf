@@ -260,7 +260,7 @@ namespace Microsoft.Windows.Controls.Ribbon
         #region Private Data
         
         private Panel _itemsHost; // ItemsPanel instance for this ItemsControl
-        bool _forceCollapse = false;
+        private bool _forceCollapse = false;
         
         #endregion
     }

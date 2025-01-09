@@ -744,8 +744,7 @@ namespace System.Windows.Input
                 }
             }
 
-
-            GeneralTransform _hostToAdornedElement = Transform.Identity;
+            private GeneralTransform _hostToAdornedElement = Transform.Identity;
             private IContentHost _contentHostParent;
             private ContentElement _adornedContentElement;
             private Style _focusVisualStyle;
@@ -3594,8 +3593,8 @@ namespace System.Windows.Input
                 }
             }
 
-            List<WeakReference> _list = new List<WeakReference>(1);
-            bool _isCleanupRequested;
+            private List<WeakReference> _list = new List<WeakReference>(1);
+            private bool _isCleanupRequested;
         }
 
         #endregion WeakReferenceList

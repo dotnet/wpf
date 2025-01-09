@@ -74,11 +74,11 @@ namespace System.Windows.Controls.Primitives
         //
         //------------------------------------------------------
 
-        NotifyCollectionChangedAction  _action;
-        GeneratorPosition       _position;
-        GeneratorPosition       _oldPosition;
-        int                     _itemCount;
-        int                     _itemUICount;
+        private NotifyCollectionChangedAction  _action;
+        private GeneratorPosition       _position;
+        private GeneratorPosition       _oldPosition;
+        private int                     _itemCount;
+        private int                     _itemUICount;
     }
 
     /// <summary>

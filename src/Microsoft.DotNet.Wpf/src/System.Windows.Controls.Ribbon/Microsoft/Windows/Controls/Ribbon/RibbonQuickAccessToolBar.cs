@@ -553,7 +553,7 @@ namespace Microsoft.Windows.Controls.Ribbon
                 QuickAccessToolBar = quickAccessToolBar;
             }
 
-            RibbonQuickAccessToolBar QuickAccessToolBar
+            private RibbonQuickAccessToolBar QuickAccessToolBar
             {
                 get;
                 set;

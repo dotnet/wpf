@@ -714,7 +714,7 @@ namespace MS.Internal
             }
         }
 
-        static EventHandler<System.Windows.Markup.XamlSetMarkupExtensionEventArgs> LookupSetMarkupExtensionHandler(Type type)
+        private static EventHandler<System.Windows.Markup.XamlSetMarkupExtensionEventArgs> LookupSetMarkupExtensionHandler(Type type)
         {
             if (typeof(Setter).IsAssignableFrom(type))
             {
@@ -1238,8 +1238,8 @@ namespace MS.Internal
                 get { return (_valueSource & FullValueSource.IsCoercedWithCurrentValue) != 0; }
             }
 
-            object _value;
-            FullValueSource _valueSource;
+            private object _value;
+            private FullValueSource _valueSource;
         }
 
         #endregion
@@ -1515,7 +1515,7 @@ namespace MS.Internal
         //
         //------------------------------------------------------
 
-        static readonly Type   NullableType = Type.GetType("System.Nullable`1");
+        private static readonly Type   NullableType = Type.GetType("System.Nullable`1");
         // ItemValueStorage.  For each data item it stores a list of (DP, value) pairs that we want to preserve on the container.
         private static readonly UncommonField<WeakDictionary<object, List<KeyValuePair<int, object>>>> ItemValueStorageField =
                             new UncommonField<WeakDictionary<object, List<KeyValuePair<int, object>>>>();

@@ -121,6 +121,6 @@ namespace System.Windows.Navigation
         private Object _extraData;
         private WebResponse _webResponse;
         private bool _isNavigationInitiator;
-        object _navigator;
+        private object _navigator;
     }
 }

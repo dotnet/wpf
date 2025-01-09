@@ -242,8 +242,8 @@ namespace System.Windows.Documents
         {
             get { return 6; }
         }
-        
-        readonly AdornerLayer _adornerLayer;
+
+        private readonly AdornerLayer _adornerLayer;
 
         #endregion Private Members
     }

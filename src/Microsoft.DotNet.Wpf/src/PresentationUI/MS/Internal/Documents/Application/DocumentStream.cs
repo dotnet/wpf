@@ -985,21 +985,21 @@ namespace MS.Internal.Documents.Application
     internal static readonly string XpsFileExtension =
         SR.FileManagementSaveExt;
 
-    bool _deleteOnClose;
+        private bool _deleteOnClose;
 
-    /// <summary>
-    /// If not null, this file is a temporary file based on this one.
-    /// </summary>
-    /// <remarks>
-    /// Temporary files should be deleted on disposed, the value of this field
-    /// is used for that decision.
-    /// </remarks>
-    DocumentStream _original;
+        /// <summary>
+        /// If not null, this file is a temporary file based on this one.
+        /// </summary>
+        /// <remarks>
+        /// Temporary files should be deleted on disposed, the value of this field
+        /// is used for that decision.
+        /// </remarks>
+        private DocumentStream _original;
 
-    /// <summary>
-    /// The file we are managing.
-    /// </summary>
-    CriticalFileToken _xpsFileToken;
+        /// <summary>
+        /// The file we are managing.
+        /// </summary>
+        private CriticalFileToken _xpsFileToken;
     #endregion
 }
 }

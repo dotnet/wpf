@@ -245,7 +245,7 @@ namespace System.Windows.Automation.Peers
         #endregion
 
         #region Private Variables
-        DataGridColumn _column;
+        private DataGridColumn _column;
         #endregion
     }
 }

@@ -96,10 +96,10 @@ namespace MS.Internal.Automation
         //  Private Fields
         //
         //------------------------------------------------------
- 
+
         #region Private Fields
 
-        static readonly string _wcpClassName = "HwndWrapper";
+        private static readonly string _wcpClassName = "HwndWrapper";
 
         #endregion Private Fields
     }

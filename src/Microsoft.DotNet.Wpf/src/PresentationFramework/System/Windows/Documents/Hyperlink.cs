@@ -822,7 +822,7 @@ namespace System.Windows.Documents
         //
         //---------------------------------------------------------------------
 
-        static bool ShouldPreventUriSpoofing
+        private static bool ShouldPreventUriSpoofing
         {
             get
             {
@@ -833,7 +833,8 @@ namespace System.Windows.Documents
                 return (bool)s_shouldPreventUriSpoofing;
             }
         }
-        static bool? s_shouldPreventUriSpoofing;
+
+        private static bool? s_shouldPreventUriSpoofing;
 
         #endregion Private Properties
 

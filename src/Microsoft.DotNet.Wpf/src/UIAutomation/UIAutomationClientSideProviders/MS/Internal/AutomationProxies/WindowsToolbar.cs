@@ -15,7 +15,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Toolbar proxy
-    class WindowsToolbar: ProxyHwnd
+    internal class WindowsToolbar: ProxyHwnd
     {
         // ------------------------------------------------------
         //
@@ -343,7 +343,7 @@ namespace MS.Internal.AutomationProxies
     #region ToolbarItem
 
     // Proxy for each button in a toolbar
-    class ToolbarItem : ProxySimple, IInvokeProvider, IToggleProvider
+    internal class ToolbarItem : ProxySimple, IInvokeProvider, IToggleProvider
     {
         // ------------------------------------------------------
         //

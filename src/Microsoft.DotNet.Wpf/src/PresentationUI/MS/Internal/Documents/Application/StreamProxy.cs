@@ -263,15 +263,15 @@ namespace MS.Internal.Documents.Application
             }
         }
     }
-    #endregion Internal Properties
+        #endregion Internal Properties
 
-    #region Private Fields
-    //--------------------------------------------------------------------------
-    // Private Fields
-    //--------------------------------------------------------------------------
+        #region Private Fields
+        //--------------------------------------------------------------------------
+        // Private Fields
+        //--------------------------------------------------------------------------
 
-    Stream _proxy;
-    bool _isTargetReadOnly;
+        private Stream _proxy;
+        private bool _isTargetReadOnly;
 
     #endregion Private Fields
 }

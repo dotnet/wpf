@@ -382,7 +382,7 @@ namespace MS.Internal.Data
 
         #endregion Private Methods
 
-        List<PropertyDescriptor> _toRemove = new List<PropertyDescriptor>();
+        private List<PropertyDescriptor> _toRemove = new List<PropertyDescriptor>();
 
         #region ValueChangedRecord
 
@@ -530,11 +530,11 @@ namespace MS.Internal.Data
                 return (target is MS.Internal.Data.ValueTable);
             }
 
-            PropertyDescriptor _pd;
-            ValueChangedEventManager _manager;
-            object _source;
-            ListenerList<ValueChangedEventArgs> _listeners = new ListenerList<ValueChangedEventArgs>();
-            ValueChangedEventArgs _eventArgs;
+            private PropertyDescriptor _pd;
+            private ValueChangedEventManager _manager;
+            private object _source;
+            private ListenerList<ValueChangedEventArgs> _listeners = new ListenerList<ValueChangedEventArgs>();
+            private ValueChangedEventArgs _eventArgs;
         }
 
         #endregion ValueChangedRecord

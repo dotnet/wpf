@@ -467,7 +467,7 @@ namespace System.Windows
             return _enumerator;
         }
 
-        IEnumerator _enumerator;
+            private IEnumerator _enumerator;
 
 
         internal static EnumeratorWrapper Empty
@@ -483,7 +483,7 @@ namespace System.Windows
             }
         }
 
-        static EnumeratorWrapper _emptyInstance;
+            private static EnumeratorWrapper _emptyInstance;
     }
 }
 }

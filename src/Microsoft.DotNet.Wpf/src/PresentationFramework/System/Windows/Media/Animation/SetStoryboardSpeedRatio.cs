@@ -60,6 +60,6 @@ namespace System.Windows.Media.Animation
         }
     }
 
-    double          _speedRatio = 1.0;
+        private double          _speedRatio = 1.0;
 }
 }

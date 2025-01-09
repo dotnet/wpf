@@ -851,15 +851,15 @@ namespace System.Windows.Controls
         // The requested state, we need to know for each one whether it
         // was ever set and for
         //
-        SettableState<TimeSpan>     _position;
-        SettableState<MediaState>   _mediaState;
-        SettableState<Uri>          _source;
-        SettableState<MediaClock>   _clock;
-        SettableState<double>       _speedRatio;
-        SettableState<double>       _volume;
-        SettableState<bool>         _isMuted;
-        SettableState<double>       _balance;
-        SettableState<bool>         _isScrubbingEnabled;
+        private SettableState<TimeSpan>     _position;
+        private SettableState<MediaState>   _mediaState;
+        private SettableState<Uri>          _source;
+        private SettableState<MediaClock>   _clock;
+        private SettableState<double>       _speedRatio;
+        private SettableState<double>       _volume;
+        private SettableState<bool>         _isMuted;
+        private SettableState<double>       _balance;
+        private SettableState<bool>         _isScrubbingEnabled;
 
         #endregion
     }

@@ -67,6 +67,8 @@ namespace MS.Internal.Data
         private enum State { Init, DrillIn, Prop, Done };
         private enum IndexerState { BeginParam, ParenString, ValueString, Done }
 
+        private enum State { Init, DrillIn, Prop, Done };
+
         // Each level of the path consists of
         //      a property or indexer:
         //                  .propname

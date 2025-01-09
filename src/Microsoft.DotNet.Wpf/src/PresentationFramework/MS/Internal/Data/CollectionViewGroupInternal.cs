@@ -652,8 +652,8 @@ namespace MS.Internal.Data
                 return +1;
             }
 
-            int _index;
-            IList _list;
+            private int _index;
+            private IList _list;
         }
 
         #endregion Internal Types
@@ -712,7 +712,7 @@ namespace MS.Internal.Data
             unchecked { ++_version; }     // this invalidates enumerators
         }
 
-        void OnGroupByChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        private void OnGroupByChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             OnGroupByChanged();
         }
@@ -763,7 +763,7 @@ namespace MS.Internal.Data
                 DoReset();
             }
 
-            void DoReset()
+            private void DoReset()
             {
                 _version = _group._version;
                 _index = -1;
@@ -815,11 +815,11 @@ namespace MS.Internal.Data
                 }
             }
 
-            CollectionViewGroupInternal _group; // parent group
-            int _version;   // parent group's version at ctor
-            int _index;     // current index into Items
-            IEnumerator _subEnum;   // enumerator over current subgroup
-            object _current;   // current item
+            private CollectionViewGroupInternal _group; // parent group
+            private int _version;   // parent group's version at ctor
+            private int _index;     // current index into Items
+            private IEnumerator _subEnum;   // enumerator over current subgroup
+            private object _current;   // current item
         }
 
         // When removing a leaf item, ChangeCounts removes groups that become empty.

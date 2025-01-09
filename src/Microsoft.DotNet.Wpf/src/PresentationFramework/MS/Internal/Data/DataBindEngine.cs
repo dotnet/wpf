@@ -439,7 +439,7 @@ namespace MS.Internal.Data
             }
         }
 
-        bool DoCleanup(bool forceCleanup)
+        private bool DoCleanup(bool forceCleanup)
         {
             if (CleanupEnabled || forceCleanup)
             {
@@ -464,7 +464,7 @@ namespace MS.Internal.Data
             }
         }
 
-        bool DoCleanup()
+        private bool DoCleanup()
         {
             bool foundDirt = false;
 
@@ -512,7 +512,7 @@ namespace MS.Internal.Data
             }
         }
 
-        void ProcessCrossThreadRequests()
+        private void ProcessCrossThreadRequests()
         {
             if (IsShutDown)
                 return;
@@ -689,8 +689,8 @@ namespace MS.Internal.Data
         //------------------------------------------------------
 
         private HybridDictionary _mostRecentTask;           // client --> Task
-        Task _head;
-        Task _tail;
+        private Task _head;
+        private Task _tail;
         private UIElement _layoutElement;
         private ViewManager _viewManager = new ViewManager();
         private CommitManager _commitManager = new CommitManager();

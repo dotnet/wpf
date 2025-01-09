@@ -25,7 +25,7 @@ namespace MS.Internal.AutomationProxies
     //------------------------------------------------------
 
     // Proxy for List view Group Subset Link
-    class ListViewGroupSubsetLink: ProxySimple, IInvokeProvider
+    internal class ListViewGroupSubsetLink: ProxySimple, IInvokeProvider
         {
             //------------------------------------------------------
             //

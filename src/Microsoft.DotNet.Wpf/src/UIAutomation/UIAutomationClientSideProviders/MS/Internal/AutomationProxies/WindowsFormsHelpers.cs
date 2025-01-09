@@ -15,7 +15,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Helper static class used by the Win32 proxies to get Winforms information
-    static class WindowsFormsHelper
+    internal static class WindowsFormsHelper
     {
         #region Proxy Create
 

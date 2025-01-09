@@ -229,7 +229,7 @@ namespace Microsoft.Windows.Themes
             return bamlType;
         }
 
-        class ThemesKnownType : WpfKnownType
+        private class ThemesKnownType : WpfKnownType
         {
             public ThemesKnownType(XamlSchemaContext xsc, int bamlNumber, string name, Type type) :
                 base(xsc, bamlNumber, name, type)

@@ -20,7 +20,7 @@ namespace MS.Internal.AutomationProxies
     // NOTE: Since this proxy has its own HWND, it will be always discovered by UIAutomation
     // and placed where it should be
     // we MUST NEVER create a hard connection between us and header (via _parent) ourselves
-    class WindowsSysHeader: ProxyHwnd
+    internal class WindowsSysHeader: ProxyHwnd
     {
         //------------------------------------------------------
         //

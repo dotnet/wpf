@@ -120,12 +120,12 @@ namespace System.Windows.Navigation
             }
         }
 
-        Uri _uri;
-        Object _extraData;
-        Object _navigator;
-        WebRequest _request;
-        WebResponse _response;
-        Exception _exception;
-        bool _handled = false;
+        private Uri _uri;
+        private Object _extraData;
+        private Object _navigator;
+        private WebRequest _request;
+        private WebResponse _response;
+        private Exception _exception;
+        private bool _handled = false;
     }
 }

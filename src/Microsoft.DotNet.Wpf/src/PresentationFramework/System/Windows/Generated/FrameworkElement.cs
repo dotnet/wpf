@@ -865,7 +865,7 @@ namespace System.Windows
         }
 
         // connect to a new mentor
-        void ConnectMentor(DependencyObject mentor)
+        private void ConnectMentor(DependencyObject mentor)
         {
             FrameworkObject foMentor = new FrameworkObject(mentor);
 
@@ -899,7 +899,7 @@ namespace System.Windows
         }
 
         // disconnect from an old mentor
-        void DisconnectMentor(DependencyObject mentor)
+        private void DisconnectMentor(DependencyObject mentor)
         {
             FrameworkObject foMentor = new FrameworkObject(mentor);
 
@@ -949,7 +949,7 @@ namespace System.Windows
         }
 
         // handle the Loaded event from the mentor
-        void OnMentorLoaded(object sender, RoutedEventArgs e)
+        private void OnMentorLoaded(object sender, RoutedEventArgs e)
         {
             FrameworkObject foMentor = new FrameworkObject((DependencyObject)sender);
 
@@ -963,7 +963,7 @@ namespace System.Windows
         }
 
         // handle the Unloaded event from the mentor
-        void OnMentorUnloaded(object sender, RoutedEventArgs e)
+        private void OnMentorUnloaded(object sender, RoutedEventArgs e)
         {
             FrameworkObject foMentor = new FrameworkObject((DependencyObject)sender);
 
@@ -976,7 +976,7 @@ namespace System.Windows
             BroadcastEventHelper.BroadcastUnloadedSynchronously(this, IsLoaded);
         }
 
-        void ConnectLoadedEvents(ref FrameworkObject foMentor, bool isLoaded)
+        private void ConnectLoadedEvents(ref FrameworkObject foMentor, bool isLoaded)
         {
             if (foMentor.IsValid)
             {
@@ -991,7 +991,7 @@ namespace System.Windows
             }
         }
 
-        void DisconnectLoadedEvents(ref FrameworkObject foMentor, bool isLoaded)
+        private void DisconnectLoadedEvents(ref FrameworkObject foMentor, bool isLoaded)
         {
             if (foMentor.IsValid)
             {
@@ -1007,7 +1007,7 @@ namespace System.Windows
         }
 
         // handle the InheritedPropertyChanged event from the mentor
-        void OnMentorInheritedPropertyChanged(object sender, InheritedPropertyChangedEventArgs e)
+        private void OnMentorInheritedPropertyChanged(object sender, InheritedPropertyChangedEventArgs e)
         {
             TreeWalkHelper.InvalidateOnInheritablePropertyChange(
                     this, null,
@@ -1016,7 +1016,7 @@ namespace System.Windows
         }
 
         // handle the ResourcesChanged event from the mentor
-        void OnMentorResourcesChanged(object sender, EventArgs e)
+        private void OnMentorResourcesChanged(object sender, EventArgs e)
         {
             TreeWalkHelper.InvalidateOnResourcesChange(
                     this, null,

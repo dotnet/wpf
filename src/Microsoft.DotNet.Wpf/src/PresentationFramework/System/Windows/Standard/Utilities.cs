@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -192,27 +192,6 @@ namespace Standard
             if (IntPtr.Zero != p)
             {
                 NativeMethods.DeleteObject(p);
-            }
-        }
-    
-        public static void SafeDestroyWindow(ref IntPtr hwnd)
-        {
-            IntPtr p = hwnd;
-            hwnd = IntPtr.Zero;
-            if (NativeMethods.IsWindow(p))
-            {
-                NativeMethods.DestroyWindow(p);
-            }
-        }
-        
-        public static void SafeRelease<T>(ref T comObject) where T : class
-        {
-            T t = comObject;
-            comObject = default(T);
-            if (null != t)
-            {
-                Assert.IsTrue(Marshal.IsComObject(t));
-                Marshal.ReleaseComObject(t);
             }
         }
 

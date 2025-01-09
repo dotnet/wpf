@@ -202,43 +202,6 @@ namespace Standard
         REMOTECONTROL = 0x2001,
     }
 
-    internal enum StockObject : int
-    {
-        WHITE_BRUSH = 0,
-        LTGRAY_BRUSH = 1,
-        GRAY_BRUSH = 2,
-        DKGRAY_BRUSH = 3,
-        BLACK_BRUSH = 4,
-        NULL_BRUSH = 5,
-        HOLLOW_BRUSH = NULL_BRUSH,
-        WHITE_PEN = 6,
-        BLACK_PEN = 7,
-        NULL_PEN = 8,
-        SYSTEM_FONT = 13,
-        DEFAULT_PALETTE = 15,
-    }
-
-    /// <summary>
-    /// CS_*
-    /// </summary>
-    [Flags]
-    internal enum CS : uint
-    {
-        VREDRAW = 0x0001,
-        HREDRAW = 0x0002,
-        DBLCLKS = 0x0008,
-        OWNDC = 0x0020,
-        CLASSDC = 0x0040,
-        PARENTDC = 0x0080,
-        NOCLOSE = 0x0200,
-        SAVEBITS = 0x0800,
-        BYTEALIGNCLIENT = 0x1000,
-        BYTEALIGNWINDOW = 0x2000,
-        GLOBALCLASS = 0x4000,
-        IME = 0x00010000,
-        DROPSHADOW = 0x00020000
-    }
-
     /// <summary>
     /// WindowStyle values, WS_*
     /// </summary>
@@ -433,41 +396,6 @@ namespace Standard
         // It's relatively safe to reuse.
         TRAYMOUSEMESSAGE = 0x800, //WM_USER + 1024
         APP = 0x8000,
-    }
-
-    /// <summary>
-    /// Window style extended values, WS_EX_*
-    /// </summary>
-    [Flags]
-    internal enum WS_EX : uint
-    {
-        None = 0,
-        DLGMODALFRAME = 0x00000001,
-        NOPARENTNOTIFY = 0x00000004,
-        TOPMOST = 0x00000008,
-        ACCEPTFILES = 0x00000010,
-        TRANSPARENT = 0x00000020,
-        MDICHILD = 0x00000040,
-        TOOLWINDOW = 0x00000080,
-        WINDOWEDGE = 0x00000100,
-        CLIENTEDGE = 0x00000200,
-        CONTEXTHELP = 0x00000400,
-        RIGHT = 0x00001000,
-        LEFT = 0x00000000,
-        RTLREADING = 0x00002000,
-        LTRREADING = 0x00000000,
-        LEFTSCROLLBAR = 0x00004000,
-        RIGHTSCROLLBAR = 0x00000000,
-        CONTROLPARENT = 0x00010000,
-        STATICEDGE = 0x00020000,
-        APPWINDOW = 0x00040000,
-        LAYERED = 0x00080000,
-        NOINHERITLAYOUT = 0x00100000, // Disable inheritence of mirroring by children
-        LAYOUTRTL = 0x00400000, // Right to left mirroring
-        COMPOSITED = 0x02000000,
-        NOACTIVATE = 0x08000000,
-        OVERLAPPEDWINDOW = (WINDOWEDGE | CLIENTEDGE),
-        PALETTEWINDOW = (WINDOWEDGE | TOOLWINDOW | TOPMOST),
     }
 
     /// <summary>
@@ -719,25 +647,6 @@ namespace Standard
 
     #region Native Types
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    internal struct CREATESTRUCT
-    {
-        public IntPtr lpCreateParams;
-        public IntPtr hInstance;
-        public IntPtr hMenu;
-        public IntPtr hwndParent;
-        public int cy;
-        public int cx;
-        public int y;
-        public int x;
-        public WS style;
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string lpszName;
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string lpszClass;
-        public WS_EX dwExStyle;
-    }
-
     [StructLayout(LayoutKind.Sequential)]
     internal struct MARGINS
     {
@@ -890,25 +799,6 @@ namespace Standard
         public int flags;
     }
 
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    internal struct WNDCLASSEX
-    {
-        public int cbSize;
-        public CS style;
-        public WndProc lpfnWndProc;
-        public int cbClsExtra;
-        public int cbWndExtra;
-        public IntPtr hInstance;
-        public IntPtr hIcon;
-        public IntPtr hCursor;
-        public IntPtr hbrBackground;
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string lpszMenuName;
-        [MarshalAs(UnmanagedType.LPWStr)]
-        public string lpszClassName;
-        public IntPtr hIconSm;
-    }
-
     #endregion
 
     /// <summary>Delegate declaration that matches native WndProc signatures.</summary>
@@ -965,54 +855,12 @@ namespace Standard
             return ret;
         }
 
-        [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateWindowExW")]
-        private static extern IntPtr _CreateWindowEx(
-            WS_EX dwExStyle,
-            [MarshalAs(UnmanagedType.LPWStr)] string lpClassName,
-            [MarshalAs(UnmanagedType.LPWStr)] string lpWindowName,
-            WS dwStyle,
-            int x,
-            int y,
-            int nWidth,
-            int nHeight,
-            IntPtr hWndParent,
-            IntPtr hMenu,
-            IntPtr hInstance,
-            IntPtr lpParam);
-
-        public static IntPtr CreateWindowEx(
-            WS_EX dwExStyle,
-            string lpClassName,
-            string lpWindowName,
-            WS dwStyle,
-            int x,
-            int y,
-            int nWidth,
-            int nHeight,
-            IntPtr hWndParent,
-            IntPtr hMenu,
-            IntPtr hInstance,
-            IntPtr lpParam)
-        {
-            IntPtr ret = _CreateWindowEx(dwExStyle, lpClassName, lpWindowName, dwStyle, x, y, nWidth, nHeight, hWndParent, hMenu, hInstance, lpParam);
-            if (IntPtr.Zero == ret)
-            {
-                HRESULT.ThrowLastError();
-            }
-
-            return ret;
-        }
-
         [DllImport("user32.dll", CharSet = CharSet.Unicode, EntryPoint = "DefWindowProcW")]
         public static extern IntPtr DefWindowProc(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
 
         [DllImport("gdi32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DeleteObject(IntPtr hObject);
-
-        [DllImport("user32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool DestroyWindow(IntPtr hwnd);
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
@@ -1125,19 +973,6 @@ namespace Standard
         [DllImport("gdi32.dll")]
         public static extern int GetDeviceCaps(SafeDC hdc, DeviceCap nIndex);
 
-        [DllImport("kernel32.dll", EntryPoint = "GetModuleHandleW", CharSet = CharSet.Unicode, SetLastError = true)]
-        private static extern IntPtr _GetModuleHandle([MarshalAs(UnmanagedType.LPWStr)] string lpModuleName);
-
-        public static IntPtr GetModuleHandle(string lpModuleName)
-        {
-            IntPtr retPtr = _GetModuleHandle(lpModuleName);
-            if (retPtr == IntPtr.Zero)
-            {
-                HRESULT.ThrowLastError();
-            }
-            return retPtr;
-        }
-
         [DllImport("user32.dll", EntryPoint = "GetMonitorInfo", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _GetMonitorInfo(IntPtr hMonitor, [In, Out] MONITORINFO lpmi);
@@ -1150,19 +985,6 @@ namespace Standard
                 throw new Win32Exception();
             }
             return mi;
-        }
-
-        [DllImport("gdi32.dll", EntryPoint = "GetStockObject", SetLastError = true)]
-        private static extern IntPtr _GetStockObject(StockObject fnObject);
-
-        public static IntPtr GetStockObject(StockObject fnObject)
-        {
-            IntPtr retPtr = _GetStockObject(fnObject);
-            if (retPtr == IntPtr.Zero)
-            {
-                HRESULT.ThrowLastError();
-            }
-            return retPtr;
         }
 
         [DllImport("user32.dll")]
@@ -1237,23 +1059,6 @@ namespace Standard
             }
         }
 
-        [DllImport("user32.dll", SetLastError = true, EntryPoint = "RegisterClassExW")]
-        private static extern short _RegisterClassEx([In] ref WNDCLASSEX lpwcx);
-
-        // Note that this will throw HRESULT_FROM_WIN32(ERROR_CLASS_ALREADY_EXISTS) on duplicate registration.
-        // If needed, consider adding a Try* version of this function that returns the error code since that
-        // may be ignorable.
-        public static short RegisterClassEx(ref WNDCLASSEX lpwcx)
-        {
-            short ret = _RegisterClassEx(ref lpwcx);
-            if (ret == 0)
-            {
-                HRESULT.ThrowLastError();
-            }
-
-            return ret;
-        }
-
         // This is aliased as a macro in 32bit Windows.
         public static IntPtr SetWindowLongPtr(IntPtr hwnd, GWL nIndex, IntPtr dwNewLong)
         {
@@ -1296,16 +1101,5 @@ namespace Standard
         [DllImport("user32.dll")]
         public static extern uint TrackPopupMenuEx(IntPtr hmenu, uint fuFlags, int x, int y, IntPtr hwnd, IntPtr lptpm);
 
-        [DllImport("user32.dll", EntryPoint = "UnregisterClass", CharSet = CharSet.Unicode, SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _UnregisterClassName(string lpClassName, IntPtr hInstance);
-
-        public static void UnregisterClass(string lpClassName, IntPtr hInstance)
-        {
-            if (!_UnregisterClassName(lpClassName, hInstance))
-            {
-                HRESULT.ThrowLastError();
-            }
-        }
     }
 }

@@ -1307,14 +1307,12 @@
     <Compile Include="System\Windows\SizeChangedEventArgs.cs" />
     <Compile Include="System\Windows\SizeChangedEventHandler.cs" />
     <Compile Include="System\Windows\SourceUriTypeConverterMarkupExtension.cs" />
-    <Compile Include="System\Windows\Standard\ComGuids.cs" />
     <Compile Include="System\Windows\Standard\Debug.cs" />
     <Compile Include="System\Windows\Standard\DoubleUtil.cs" />
     <Compile Include="System\Windows\Standard\DpiHelper.cs" />
     <Compile Include="System\Windows\Standard\ErrorCodes.cs" />
     <Compile Include="System\Windows\Standard\MessageWindow.cs" />
     <Compile Include="System\Windows\Standard\NativeMethods.cs" />
-    <Compile Include="System\Windows\Standard\ShellProvider.cs" />
     <Compile Include="System\Windows\Standard\Utilities.cs" />
     <Compile Include="System\Windows\Standard\Verify.cs" />
     <Compile Include="System\Windows\StartupEventArgs.cs" />

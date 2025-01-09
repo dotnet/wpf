@@ -1,20 +1,13 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
-
-
 
 using System.ComponentModel;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Runtime.InteropServices;
-using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using Microsoft.Win32.SafeHandles;
 
 // Some COM interfaces and Win32 structures are already declared in the framework.
 // Interesting ones to remember in System.Runtime.InteropServices.ComTypes are:
-using IStream = System.Runtime.InteropServices.ComTypes.IStream;
 using NativeMethodsSetLastError = MS.Internal.WindowsBase.NativeMethodsSetLastError;
 
 namespace Standard
@@ -30,29 +23,6 @@ namespace Standard
         public const uint sizeof_WCHAR = 2;
         public const uint sizeof_CHAR = 1;
         public const uint sizeof_BOOL = 4;
-    }
-
-    /// <summary>
-    /// HIGHCONTRAST flags
-    /// </summary>
-    [Flags]
-    internal enum HCF
-    {
-        HIGHCONTRASTON  = 0x00000001,
-        AVAILABLE       = 0x00000002,
-        HOTKEYACTIVE    = 0x00000004,
-        CONFIRMHOTKEY   = 0x00000008,
-        HOTKEYSOUND     = 0x00000010,
-        INDICATOR       = 0x00000020,
-        HOTKEYAVAILABLE = 0x00000040,
-    }
-
-    /// <summary>
-    /// BITMAPINFOHEADER Compression type.  BI_*.
-    /// </summary>
-    internal enum BI
-    {
-        RGB = 0,
     }
 
     /// <summary>
@@ -91,153 +61,6 @@ namespace Standard
     }
 
     /// <summary>
-    /// For IWebBrowser2.  OLECMDEXECOPT_*
-    /// </summary>
-    internal enum OLECMDEXECOPT
-    {
-        DODEFAULT = 0,
-        PROMPTUSER = 1,
-        DONTPROMPTUSER = 2,
-        SHOWHELP = 3
-    }
-
-    /// <summary>
-    /// For IWebBrowser2.  OLECMDF_*
-    /// </summary>
-    internal enum OLECMDF
-    {
-        SUPPORTED = 1,
-        ENABLED = 2,
-        LATCHED = 4,
-        NINCHED = 8,
-        INVISIBLE = 16,
-        DEFHIDEONCTXTMENU = 32
-    }
-
-    /// <summary>
-    /// For IWebBrowser2.  OLECMDID_*
-    /// </summary>
-    internal enum OLECMDID
-    {
-        OPEN = 1,
-        NEW = 2,
-        SAVE = 3,
-        SAVEAS = 4,
-        SAVECOPYAS = 5,
-        PRINT = 6,
-        PRINTPREVIEW = 7,
-        PAGESETUP = 8,
-        SPELL = 9,
-        PROPERTIES = 10,
-        CUT = 11,
-        COPY = 12,
-        PASTE = 13,
-        PASTESPECIAL = 14,
-        UNDO = 15,
-        REDO = 16,
-        SELECTALL = 17,
-        CLEARSELECTION = 18,
-        ZOOM = 19,
-        GETZOOMRANGE = 20,
-        UPDATECOMMANDS = 21,
-        REFRESH = 22,
-        STOP = 23,
-        HIDETOOLBARS = 24,
-        SETPROGRESSMAX = 25,
-        SETPROGRESSPOS = 26,
-        SETPROGRESSTEXT = 27,
-        SETTITLE = 28,
-        SETDOWNLOADSTATE = 29,
-        STOPDOWNLOAD = 30,
-        ONTOOLBARACTIVATED = 31,
-        FIND = 32,
-        DELETE = 33,
-        HTTPEQUIV = 34,
-        HTTPEQUIV_DONE = 35,
-        ENABLE_INTERACTION = 36,
-        ONUNLOAD = 37,
-        PROPERTYBAG2 = 38,
-        PREREFRESH = 39,
-        SHOWSCRIPTERROR = 40,
-        SHOWMESSAGE = 41,
-        SHOWFIND = 42,
-        SHOWPAGESETUP = 43,
-        SHOWPRINT = 44,
-        CLOSE = 45,
-        ALLOWUILESSSAVEAS = 46,
-        DONTDOWNLOADCSS = 47,
-        UPDATEPAGESTATUS = 48,
-        PRINT2 = 49,
-        PRINTPREVIEW2 = 50,
-        SETPRINTTEMPLATE = 51,
-        GETPRINTTEMPLATE = 52,
-        PAGEACTIONBLOCKED = 55,
-        PAGEACTIONUIQUERY = 56,
-        FOCUSVIEWCONTROLS = 57,
-        FOCUSVIEWCONTROLSQUERY = 58,
-        SHOWPAGEACTIONMENU = 59
-    }
-
-    /// <summary>
-    /// For IWebBrowser2.  READYSTATE_*
-    /// </summary>
-    enum READYSTATE
-    {
-        UNINITIALIZED = 0,
-        LOADING = 1,
-        LOADED = 2,
-        INTERACTIVE = 3,
-        COMPLETE = 4
-    }
-
-    /// <summary>
-    /// DATAOBJ_GET_ITEM_FLAGS.  DOGIF_*.
-    /// </summary>
-    internal enum DOGIF
-    {
-        DEFAULT = 0x0000,
-        TRAVERSE_LINK = 0x0001,    // if the item is a link get the target
-        NO_HDROP = 0x0002,    // don't fallback and use CF_HDROP clipboard format
-        NO_URL = 0x0004,    // don't fallback and use URL clipboard format
-        ONLY_IF_ONE = 0x0008,    // only return the item if there is one item in the array
-    }
-
-    internal enum DWM_SIT
-    {
-        None,
-        DISPLAYFRAME = 1,
-    }
-
-    [Flags]
-    internal enum ErrorModes
-    {
-        /// <summary>Use the system default, which is to display all error dialog boxes.</summary>
-        Default = 0x0,
-        /// <summary>
-        /// The system does not display the critical-error-handler message box.
-        /// Instead, the system sends the error to the calling process.
-        /// </summary>
-        FailCriticalErrors = 0x1,
-        /// <summary>
-        /// 64-bit Windows:  The system automatically fixes memory alignment faults and makes them
-        /// invisible to the application. It does this for the calling process and any descendant processes.
-        /// After this value is set for a process, subsequent attempts to clear the value are ignored.
-        /// </summary>
-        NoGpFaultErrorBox = 0x2,
-        /// <summary>
-        /// The system does not display the general-protection-fault message box.
-        /// This flag should only be set by debugging applications that handle general
-        /// protection (GP) faults themselves with an exception handler.
-        /// </summary>
-        NoAlignmentFaultExcept = 0x4,
-        /// <summary>
-        /// The system does not display a message box when it fails to find a file.
-        /// Instead, the error is returned to the calling process.
-        /// </summary>
-        NoOpenFileErrorBox = 0x8000
-    }
-
-    /// <summary>
     /// Non-client hit test values, HT*
     /// </summary>
     internal enum HT
@@ -271,14 +94,6 @@ namespace Standard
         OBJECT = 19,
         CLOSE = 20,
         HELP = 21
-    }
-
-    /// <summary>
-    /// GetClassLongPtr values, GCLP_*
-    /// </summary>
-    internal enum GCLP
-    {
-        HBRBACKGROUND = -10,
     }
 
     /// <summary>
@@ -385,294 +200,6 @@ namespace Standard
         CXPADDEDBORDER = 92,
         REMOTESESSION = 0x1000,
         REMOTECONTROL = 0x2001,
-    }
-
-    /// <summary>
-    /// SystemParameterInfo values, SPI_*
-    /// </summary>
-    internal enum SPI
-    {
-        GETBEEP               = 0x0001,
-        SETBEEP               = 0x0002,
-        GETMOUSE              = 0x0003,
-        SETMOUSE              = 0x0004,
-        GETBORDER             = 0x0005,
-        SETBORDER             = 0x0006,
-        GETKEYBOARDSPEED      = 0x000A,
-        SETKEYBOARDSPEED      = 0x000B,
-        LANGDRIVER            = 0x000C,
-        ICONHORIZONTALSPACING = 0x000D,
-        GETSCREENSAVETIMEOUT  = 0x000E,
-        SETSCREENSAVETIMEOUT  = 0x000F,
-        GETSCREENSAVEACTIVE   = 0x0010,
-        SETSCREENSAVEACTIVE   = 0x0011,
-        GETGRIDGRANULARITY    = 0x0012,
-        SETGRIDGRANULARITY    = 0x0013,
-        SETDESKWALLPAPER      = 0x0014,
-        SETDESKPATTERN        = 0x0015,
-        GETKEYBOARDDELAY      = 0x0016,
-        SETKEYBOARDDELAY      = 0x0017,
-        ICONVERTICALSPACING   = 0x0018,
-        GETICONTITLEWRAP      = 0x0019,
-        SETICONTITLEWRAP      = 0x001A,
-        GETMENUDROPALIGNMENT  = 0x001B,
-        SETMENUDROPALIGNMENT  = 0x001C,
-        SETDOUBLECLKWIDTH     = 0x001D,
-        SETDOUBLECLKHEIGHT    = 0x001E,
-        GETICONTITLELOGFONT   = 0x001F,
-        SETDOUBLECLICKTIME    = 0x0020,
-        SETMOUSEBUTTONSWAP    = 0x0021,
-        SETICONTITLELOGFONT   = 0x0022,
-        GETFASTTASKSWITCH     = 0x0023,
-        SETFASTTASKSWITCH     = 0x0024,
-
-        SETDRAGFULLWINDOWS    = 0x0025,
-        GETDRAGFULLWINDOWS    = 0x0026,
-        GETNONCLIENTMETRICS   = 0x0029,
-        SETNONCLIENTMETRICS   = 0x002A,
-        GETMINIMIZEDMETRICS   = 0x002B,
-        SETMINIMIZEDMETRICS   = 0x002C,
-        GETICONMETRICS        = 0x002D,
-        SETICONMETRICS        = 0x002E,
-        SETWORKAREA           = 0x002F,
-        GETWORKAREA           = 0x0030,
-        SETPENWINDOWS         = 0x0031,
-        GETHIGHCONTRAST       = 0x0042,
-        SETHIGHCONTRAST       = 0x0043,
-        GETKEYBOARDPREF       = 0x0044,
-        SETKEYBOARDPREF       = 0x0045,
-        GETSCREENREADER       = 0x0046,
-        SETSCREENREADER       = 0x0047,
-        GETANIMATION          = 0x0048,
-        SETANIMATION          = 0x0049,
-        GETFONTSMOOTHING      = 0x004A,
-        SETFONTSMOOTHING      = 0x004B,
-        SETDRAGWIDTH          = 0x004C,
-        SETDRAGHEIGHT         = 0x004D,
-        SETHANDHELD           = 0x004E,
-        GETLOWPOWERTIMEOUT    = 0x004F,
-        GETPOWEROFFTIMEOUT    = 0x0050,
-        SETLOWPOWERTIMEOUT    = 0x0051,
-        SETPOWEROFFTIMEOUT    = 0x0052,
-        GETLOWPOWERACTIVE     = 0x0053,
-        GETPOWEROFFACTIVE     = 0x0054,
-        SETLOWPOWERACTIVE     = 0x0055,
-        SETPOWEROFFACTIVE     = 0x0056,
-        SETCURSORS            = 0x0057,
-        SETICONS              = 0x0058,
-        GETDEFAULTINPUTLANG   = 0x0059,
-        SETDEFAULTINPUTLANG   = 0x005A,
-        SETLANGTOGGLE         = 0x005B,
-        GETWINDOWSEXTENSION   = 0x005C,
-        SETMOUSETRAILS        = 0x005D,
-        GETMOUSETRAILS        = 0x005E,
-        SETSCREENSAVERRUNNING = 0x0061,
-        SCREENSAVERRUNNING    = SETSCREENSAVERRUNNING,
-        GETFILTERKEYS        = 0x0032,
-        SETFILTERKEYS        = 0x0033,
-        GETTOGGLEKEYS        = 0x0034,
-        SETTOGGLEKEYS        = 0x0035,
-        GETMOUSEKEYS         = 0x0036,
-        SETMOUSEKEYS         = 0x0037,
-        GETSHOWSOUNDS        = 0x0038,
-        SETSHOWSOUNDS        = 0x0039,
-        GETSTICKYKEYS        = 0x003A,
-        SETSTICKYKEYS        = 0x003B,
-        GETACCESSTIMEOUT     = 0x003C,
-        SETACCESSTIMEOUT     = 0x003D,
-
-        GETSERIALKEYS        = 0x003E,
-        SETSERIALKEYS        = 0x003F,
-        GETSOUNDSENTRY       = 0x0040,
-        SETSOUNDSENTRY       = 0x0041,
-        GETSNAPTODEFBUTTON   = 0x005F,
-        SETSNAPTODEFBUTTON   = 0x0060,
-        GETMOUSEHOVERWIDTH   = 0x0062,
-        SETMOUSEHOVERWIDTH   = 0x0063,
-        GETMOUSEHOVERHEIGHT  = 0x0064,
-        SETMOUSEHOVERHEIGHT  = 0x0065,
-        GETMOUSEHOVERTIME    = 0x0066,
-        SETMOUSEHOVERTIME    = 0x0067,
-        GETWHEELSCROLLLINES  = 0x0068,
-        SETWHEELSCROLLLINES  = 0x0069,
-        GETMENUSHOWDELAY     = 0x006A,
-        SETMENUSHOWDELAY     = 0x006B,
-
-        GETWHEELSCROLLCHARS = 0x006C,
-        SETWHEELSCROLLCHARS = 0x006D,
-
-        GETSHOWIMEUI        = 0x006E,
-        SETSHOWIMEUI        = 0x006F,
-
-        GETMOUSESPEED       = 0x0070,
-        SETMOUSESPEED       = 0x0071,
-        GETSCREENSAVERRUNNING = 0x0072,
-        GETDESKWALLPAPER    = 0x0073,
-
-        GETAUDIODESCRIPTION = 0x0074,
-        SETAUDIODESCRIPTION = 0x0075,
-
-        GETSCREENSAVESECURE = 0x0076,
-        SETSCREENSAVESECURE = 0x0077,
-
-        GETHUNGAPPTIMEOUT         = 0x0078,
-        SETHUNGAPPTIMEOUT         = 0x0079,
-        GETWAITTOKILLTIMEOUT      = 0x007A,
-        SETWAITTOKILLTIMEOUT      = 0x007B,
-        GETWAITTOKILLSERVICETIMEOUT = 0x007C,
-        SETWAITTOKILLSERVICETIMEOUT = 0x007D,
-        GETMOUSEDOCKTHRESHOLD     = 0x007E,
-        SETMOUSEDOCKTHRESHOLD     = 0x007F,
-        GETPENDOCKTHRESHOLD       = 0x0080,
-        SETPENDOCKTHRESHOLD       = 0x0081,
-        GETWINARRANGING           = 0x0082,
-        SETWINARRANGING           = 0x0083,
-        GETMOUSEDRAGOUTTHRESHOLD  = 0x0084,
-        SETMOUSEDRAGOUTTHRESHOLD  = 0x0085,
-        GETPENDRAGOUTTHRESHOLD    = 0x0086,
-        SETPENDRAGOUTTHRESHOLD    = 0x0087,
-        GETMOUSESIDEMOVETHRESHOLD = 0x0088,
-        SETMOUSESIDEMOVETHRESHOLD = 0x0089,
-        GETPENSIDEMOVETHRESHOLD   = 0x008A,
-        SETPENSIDEMOVETHRESHOLD   = 0x008B,
-        GETDRAGFROMMAXIMIZE       = 0x008C,
-        SETDRAGFROMMAXIMIZE       = 0x008D,
-        GETSNAPSIZING             = 0x008E,
-        SETSNAPSIZING             = 0x008F,
-        GETDOCKMOVING             = 0x0090,
-        SETDOCKMOVING             = 0x0091,
-
-        GETACTIVEWINDOWTRACKING       = 0x1000,
-        SETACTIVEWINDOWTRACKING       = 0x1001,
-        GETMENUANIMATION              = 0x1002,
-        SETMENUANIMATION              = 0x1003,
-        GETCOMBOBOXANIMATION          = 0x1004,
-        SETCOMBOBOXANIMATION          = 0x1005,
-        GETLISTBOXSMOOTHSCROLLING     = 0x1006,
-        SETLISTBOXSMOOTHSCROLLING     = 0x1007,
-        GETGRADIENTCAPTIONS           = 0x1008,
-        SETGRADIENTCAPTIONS           = 0x1009,
-        GETKEYBOARDCUES               = 0x100A,
-        SETKEYBOARDCUES               = 0x100B,
-        GETMENUUNDERLINES             = GETKEYBOARDCUES,
-        SETMENUUNDERLINES             = SETKEYBOARDCUES,
-        GETACTIVEWNDTRKZORDER         = 0x100C,
-        SETACTIVEWNDTRKZORDER         = 0x100D,
-        GETHOTTRACKING                = 0x100E,
-        SETHOTTRACKING                = 0x100F,
-        GETMENUFADE                   = 0x1012,
-        SETMENUFADE                   = 0x1013,
-        GETSELECTIONFADE              = 0x1014,
-        SETSELECTIONFADE              = 0x1015,
-        GETTOOLTIPANIMATION           = 0x1016,
-        SETTOOLTIPANIMATION           = 0x1017,
-        GETTOOLTIPFADE                = 0x1018,
-        SETTOOLTIPFADE                = 0x1019,
-        GETCURSORSHADOW               = 0x101A,
-        SETCURSORSHADOW               = 0x101B,
-        GETMOUSESONAR                 = 0x101C,
-        SETMOUSESONAR                 = 0x101D,
-        GETMOUSECLICKLOCK             = 0x101E,
-        SETMOUSECLICKLOCK             = 0x101F,
-        GETMOUSEVANISH                = 0x1020,
-        SETMOUSEVANISH                = 0x1021,
-        GETFLATMENU                   = 0x1022,
-        SETFLATMENU                   = 0x1023,
-        GETDROPSHADOW                 = 0x1024,
-        SETDROPSHADOW                 = 0x1025,
-        GETBLOCKSENDINPUTRESETS       = 0x1026,
-        SETBLOCKSENDINPUTRESETS       = 0x1027,
-
-        GETUIEFFECTS                  = 0x103E,
-        SETUIEFFECTS                  = 0x103F,
-
-        GETDISABLEOVERLAPPEDCONTENT   = 0x1040,
-        SETDISABLEOVERLAPPEDCONTENT   = 0x1041,
-        GETCLIENTAREAANIMATION        = 0x1042,
-        SETCLIENTAREAANIMATION        = 0x1043,
-        GETCLEARTYPE                  = 0x1048,
-        SETCLEARTYPE                  = 0x1049,
-        GETSPEECHRECOGNITION          = 0x104A,
-        SETSPEECHRECOGNITION          = 0x104B,
-
-        GETFOREGROUNDLOCKTIMEOUT      = 0x2000,
-        SETFOREGROUNDLOCKTIMEOUT      = 0x2001,
-        GETACTIVEWNDTRKTIMEOUT        = 0x2002,
-        SETACTIVEWNDTRKTIMEOUT        = 0x2003,
-        GETFOREGROUNDFLASHCOUNT       = 0x2004,
-        SETFOREGROUNDFLASHCOUNT       = 0x2005,
-        GETCARETWIDTH                 = 0x2006,
-        SETCARETWIDTH                 = 0x2007,
-
-        GETMOUSECLICKLOCKTIME         = 0x2008,
-        SETMOUSECLICKLOCKTIME         = 0x2009,
-        GETFONTSMOOTHINGTYPE          = 0x200A,
-        SETFONTSMOOTHINGTYPE          = 0x200B,
-
-        GETFONTSMOOTHINGCONTRAST         = 0x200C,
-        SETFONTSMOOTHINGCONTRAST         = 0x200D,
-
-        GETFOCUSBORDERWIDTH           = 0x200E,
-        SETFOCUSBORDERWIDTH           = 0x200F,
-        GETFOCUSBORDERHEIGHT          = 0x2010,
-        SETFOCUSBORDERHEIGHT          = 0x2011,
-
-        GETFONTSMOOTHINGORIENTATION         = 0x2012,
-        SETFONTSMOOTHINGORIENTATION         = 0x2013,
-
-        GETMINIMUMHITRADIUS           = 0x2014,
-        SETMINIMUMHITRADIUS           = 0x2015,
-        GETMESSAGEDURATION            = 0x2016,
-        SETMESSAGEDURATION            = 0x2017,
-    }
-
-    /// <summary>
-    /// SystemParameterInfo flag values, SPIF_*
-    /// </summary>
-    [Flags]
-    internal enum SPIF
-    {
-        None = 0,
-        UPDATEINIFILE = 0x01,
-        SENDCHANGE = 0x02,
-        SENDWININICHANGE = SENDCHANGE,
-    }
-
-    [Flags]
-    internal enum STATE_SYSTEM
-    {
-        UNAVAILABLE      = 0x00000001, // Disabled
-        SELECTED         = 0x00000002,
-        FOCUSED          = 0x00000004,
-        PRESSED          = 0x00000008,
-        CHECKED          = 0x00000010,
-        MIXED            = 0x00000020,  // 3-state checkbox or toolbar button
-        INDETERMINATE    = MIXED,
-        READONLY         = 0x00000040,
-        HOTTRACKED       = 0x00000080,
-        DEFAULT          = 0x00000100,
-        EXPANDED         = 0x00000200,
-        COLLAPSED        = 0x00000400,
-        BUSY             = 0x00000800,
-        FLOATING         = 0x00001000,  // Children "owned" not "contained" by parent
-        MARQUEED         = 0x00002000,
-        ANIMATED         = 0x00004000,
-        INVISIBLE        = 0x00008000,
-        OFFSCREEN        = 0x00010000,
-        SIZEABLE         = 0x00020000,
-        MOVEABLE         = 0x00040000,
-        SELFVOICING      = 0x00080000,
-        FOCUSABLE        = 0x00100000,
-        SELECTABLE       = 0x00200000,
-        LINKED           = 0x00400000,
-        TRAVERSED        = 0x00800000,
-        MULTISELECTABLE  = 0x01000000,  // Supports multiple selection
-        EXTSELECTABLE    = 0x02000000,  // Supports extended selection
-        ALERT_LOW        = 0x04000000,  // This information is of low priority
-        ALERT_MEDIUM     = 0x08000000,  // This information is of medium priority
-        ALERT_HIGH       = 0x10000000,  // This information is of high priority
-        PROTECTED        = 0x20000000,  // access to this is restricted
-        VALID            = 0x3FFFFFFF,
     }
 
     internal enum StockObject : int
@@ -965,37 +492,6 @@ namespace Standard
         LOGPIXELSY = 90,
     }
 
-    internal enum FO : int
-    {
-        MOVE = 0x0001,
-        COPY = 0x0002,
-        DELETE = 0x0003,
-        RENAME = 0x0004,
-    }
-
-    /// <summary>
-    /// "FILEOP_FLAGS", FOF_*.
-    /// </summary>
-    internal enum FOF : ushort
-    {
-        MULTIDESTFILES = 0x0001,
-        CONFIRMMOUSE = 0x0002,
-        SILENT = 0x0004,
-        RENAMEONCOLLISION = 0x0008,
-        NOCONFIRMATION = 0x0010,
-        WANTMAPPINGHANDLE = 0x0020,
-        ALLOWUNDO = 0x0040,
-        FILESONLY = 0x0080,
-        SIMPLEPROGRESS = 0x0100,
-        NOCONFIRMMKDIR = 0x0200,
-        NOERRORUI = 0x0400,
-        NOCOPYSECURITYATTRIBS = 0x0800,
-        NORECURSION = 0x1000,
-        NO_CONNECTED_ELEMENTS = 0x2000,
-        WANTNUKEWARNING = 0x4000,
-        NORECURSEREPARSE = 0x8000,
-    }
-
     /// <summary>
     /// EnableMenuItem uEnable values, MF_*
     /// </summary>
@@ -1010,35 +506,6 @@ namespace Standard
         BYCOMMAND = 0,
         GRAYED = 1,
         DISABLED = 2,
-    }
-
-    /// <summary>Specifies the type of visual style attribute to set on a window.</summary>
-    internal enum WINDOWTHEMEATTRIBUTETYPE : uint
-    {
-        /// <summary>Non-client area window attributes will be set.</summary>
-        WTA_NONCLIENT = 1,
-    }
-
-    /// <summary>
-    /// DWMFLIP3DWINDOWPOLICY.  DWMFLIP3D_*
-    /// </summary>
-    internal enum DWMFLIP3D
-    {
-        DEFAULT,
-        EXCLUDEBELOW,
-        EXCLUDEABOVE,
-        //LAST
-    }
-
-    /// <summary>
-    /// DWMNCRENDERINGPOLICY. DWMNCRP_*
-    /// </summary>
-    internal enum DWMNCRP
-    {
-        USEWINDOWSTYLE,
-        DISABLED,
-        ENABLED,
-        //LAST
     }
 
     /// <summary>
@@ -1082,24 +549,6 @@ namespace Standard
         DWMSBT_MAINWINDOW = 2,
         DWMSBT_TRANSIENTWINDOW = 3,
         DWMSBT_TABBEDWINDOW = 4
-    }
-
-    /// <summary>
-    /// WindowThemeNonClientAttributes
-    /// </summary>
-    [Flags]
-    internal enum WTNCA : uint
-    {
-        /// <summary>Prevents the window caption from being drawn.</summary>
-        NODRAWCAPTION = 0x00000001,
-        /// <summary>Prevents the system icon from being drawn.</summary>
-        NODRAWICON = 0x00000002,
-        /// <summary>Prevents the system icon menu from appearing.</summary>
-        NOSYSMENU = 0x00000004,
-        /// <summary>Prevents mirroring of the question mark, even in right-to-left (RTL) layout.</summary>
-        NOMIRRORHELP = 0x00000008,
-        /// <summary> A mask that contains all the valid bits.</summary>
-        VALIDBITS = NODRAWCAPTION | NODRAWICON | NOMIRRORHELP | NOSYSMENU,
     }
 
     /// <summary>
@@ -1176,167 +625,6 @@ namespace Standard
         ZOOM = MAXIMIZE,
     }
 
-    /// <summary>
-    /// GDI+ Status codes
-    /// </summary>
-    internal enum Status
-    {
-        Ok = 0,
-        GenericError = 1,
-        InvalidParameter = 2,
-        OutOfMemory = 3,
-        ObjectBusy = 4,
-        InsufficientBuffer = 5,
-        NotImplemented = 6,
-        Win32Error = 7,
-        WrongState = 8,
-        Aborted = 9,
-        FileNotFound = 10,
-        ValueOverflow = 11,
-        AccessDenied = 12,
-        UnknownImageFormat = 13,
-        FontFamilyNotFound = 14,
-        FontStyleNotFound = 15,
-        NotTrueTypeFont = 16,
-        UnsupportedGdiplusVersion = 17,
-        GdiplusNotInitialized = 18,
-        PropertyNotFound = 19,
-        PropertyNotSupported = 20,
-        ProfileNotFound = 21,
-    }
-
-    internal enum MOUSEEVENTF : int
-    {
-        //mouse event constants
-        LEFTDOWN = 2,
-        LEFTUP = 4
-    }
-
-    /// <summary>
-    /// MSGFLT_*.  New in Vista.  Realiased in Windows 7.
-    /// </summary>
-    internal enum MSGFLT
-    {
-        // Win7 versions of this enum:
-        RESET = 0,
-        ALLOW = 1,
-        DISALLOW = 2,
-
-        // Vista versions of this enum:
-        // ADD = 1,
-        // REMOVE = 2,
-    }
-
-    internal enum MSGFLTINFO
-    {
-        NONE = 0,
-        ALREADYALLOWED_FORWND = 1,
-        ALREADYDISALLOWED_FORWND = 2,
-        ALLOWED_HIGHER = 3,
-    }
-
-    internal enum INPUT_TYPE : uint
-    {
-        MOUSE = 0,
-    }
-
-    /// <summary>
-    /// Shell_NotifyIcon messages.  NIM_*
-    /// </summary>
-    internal enum NIM : uint
-    {
-        ADD = 0,
-        MODIFY = 1,
-        DELETE = 2,
-        SETFOCUS = 3,
-        SETVERSION = 4,
-    }
-
-    /// <summary>
-    /// SHAddToRecentDocuments flags.  SHARD_*
-    /// </summary>
-    internal enum SHARD
-    {
-        PIDL = 0x00000001,
-        PATHA = 0x00000002,
-        PATHW = 0x00000003,
-        APPIDINFO = 0x00000004, // indicates the data type is a pointer to a SHARDAPPIDINFO structure
-        APPIDINFOIDLIST = 0x00000005, // indicates the data type is a pointer to a SHARDAPPIDINFOIDLIST structure
-        LINK = 0x00000006, // indicates the data type is a pointer to an IShellLink instance
-        APPIDINFOLINK = 0x00000007, // indicates the data type is a pointer to a SHARDAPPIDINFOLINK structure
-    }
-
-    [Flags]
-    enum SLGP
-    {
-        SHORTPATH = 0x1,
-        UNCPRIORITY = 0x2,
-        RAWPATH = 0x4
-    }
-
-    /// <summary>
-    /// Shell_NotifyIcon flags.  NIF_*
-    /// </summary>
-    [Flags]
-    internal enum NIF : uint
-    {
-        MESSAGE = 0x0001,
-        ICON = 0x0002,
-        TIP = 0x0004,
-        STATE = 0x0008,
-        INFO = 0x0010,
-        GUID = 0x0020,
-
-        /// <summary>
-        /// Vista only.
-        /// </summary>
-        REALTIME = 0x0040,
-        /// <summary>
-        /// Vista only.
-        /// </summary>
-        SHOWTIP = 0x0080,
-
-        XP_MASK = MESSAGE | ICON | STATE | INFO | GUID,
-        VISTA_MASK = XP_MASK | REALTIME | SHOWTIP,
-    }
-
-    /// <summary>
-    /// Shell_NotifyIcon info flags.  NIIF_*
-    /// </summary>
-    internal enum NIIF
-    {
-        NONE = 0x00000000,
-        INFO = 0x00000001,
-        WARNING = 0x00000002,
-        ERROR = 0x00000003,
-        /// <summary>XP SP2 and later.</summary>
-        USER = 0x00000004,
-        /// <summary>XP and later.</summary>
-        NOSOUND = 0x00000010,
-        /// <summary>Vista and later.</summary>
-        LARGE_ICON = 0x00000020,
-        /// <summary>Windows 7 and later</summary>
-        NIIF_RESPECT_QUIET_TIME = 0x00000080,
-        /// <summary>XP and later.  Native version called NIIF_ICON_MASK.</summary>
-        XP_ICON_MASK = 0x0000000F,
-    }
-
-    /// <summary>
-    /// AC_*
-    /// </summary>
-    internal enum AC : byte
-    {
-        SRC_OVER = 0,
-        SRC_ALPHA = 1,
-    }
-
-    internal enum ULW
-    {
-        ALPHA = 2,
-        COLORKEY = 1,
-        OPAQUE = 4,
-    }
-
     internal enum WVR
     {
         ALIGNTOP = 0x0010,
@@ -1353,16 +641,6 @@ namespace Standard
 
     #region SafeHandles
 
-    internal sealed class SafeFindHandle : SafeHandleZeroOrMinusOneIsInvalid
-    {
-        private SafeFindHandle() : base(true) { }
-
-        protected override bool ReleaseHandle()
-        {
-            return NativeMethods.FindClose(handle);
-        }
-    }
-
     internal sealed class SafeDC : SafeHandleZeroOrMinusOneIsInvalid
     {
         private static class NativeMethods
@@ -1372,13 +650,6 @@ namespace Standard
 
             [DllImport("user32.dll")]
             public static extern SafeDC GetDC(IntPtr hwnd);
-
-            // Weird legacy function, documentation is unclear about how to use it...
-            [DllImport("gdi32.dll", CharSet = CharSet.Unicode)]
-            public static extern SafeDC CreateDC([MarshalAs(UnmanagedType.LPWStr)] string lpszDriver, [MarshalAs(UnmanagedType.LPWStr)] string lpszDevice, IntPtr lpszOutput, IntPtr lpInitData);
-
-            [DllImport("gdi32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-            public static extern SafeDC CreateCompatibleDC(IntPtr hdc);
 
             [DllImport("gdi32.dll")]
             [return: MarshalAs(UnmanagedType.Bool)]
@@ -1414,66 +685,6 @@ namespace Standard
             return NativeMethods.ReleaseDC(_hwnd.Value, handle) == 1;
         }
 
-        [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes")]
-        public static SafeDC CreateDC(string deviceName)
-        {
-            SafeDC dc = null;
-            try
-            {
-                // Should this really be on the driver parameter?
-                dc = NativeMethods.CreateDC(deviceName, null, IntPtr.Zero, IntPtr.Zero);
-            }
-            finally
-            {
-                if (dc != null)
-                {
-                    dc._created = true;
-                }
-            }
-
-            if (dc.IsInvalid)
-            {
-                dc.Dispose();
-                throw new SystemException("Unable to create a device context from the specified device information.");
-            }
-
-            return dc;
-        }
-
-        [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes")]
-        public static SafeDC CreateCompatibleDC(SafeDC hdc)
-        {
-            SafeDC dc = null;
-            try
-            {
-                IntPtr hPtr = IntPtr.Zero;
-                if (hdc != null)
-                {
-                    hPtr = hdc.handle;
-                }
-                dc = NativeMethods.CreateCompatibleDC(hPtr);
-                if (dc == null)
-                {
-                    HRESULT.ThrowLastError();
-                }
-            }
-            finally
-            {
-                if (dc != null)
-                {
-                    dc._created = true;
-                }
-            }
-
-            if (dc.IsInvalid)
-            {
-                dc.Dispose();
-                throw new SystemException("Unable to create a device context from the specified device information.");
-            }
-
-            return dc;
-        }
-
         public static SafeDC GetDC(IntPtr hwnd)
         {
             SafeDC dc = null;
@@ -1502,194 +713,11 @@ namespace Standard
         {
             return GetDC(IntPtr.Zero);
         }
-
-        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        public static SafeDC WrapDC(IntPtr hdc)
-        {
-            // This won't actually get released by the class, but it allows an IntPtr to be converted for signatures.
-            return new SafeDC
-            {
-                handle = hdc,
-                _created = false,
-                _hwnd = IntPtr.Zero,
-            };
-        }
-    }
-
-    internal sealed class SafeHBITMAP : SafeHandleZeroOrMinusOneIsInvalid
-    {
-        private SafeHBITMAP() : base(true) { }
-
-        protected override bool ReleaseHandle()
-        {
-            return NativeMethods.DeleteObject(handle);
-        }
-    }
-
-    internal sealed class SafeGdiplusStartupToken : SafeHandleZeroOrMinusOneIsInvalid
-    {
-        private SafeGdiplusStartupToken() : base(true) { }
-
-        protected override bool ReleaseHandle()
-        {
-            Status s = NativeMethods.GdiplusShutdown(this.handle);
-            return s == Status.Ok;
-        }
-
-        [SuppressMessage("Microsoft.Reliability", "CA2000:Dispose objects before losing scope")]
-        [SuppressMessage("Microsoft.Usage", "CA2201:DoNotRaiseReservedExceptionTypes")]
-        public static SafeGdiplusStartupToken Startup()
-        {
-            SafeGdiplusStartupToken safeHandle = new SafeGdiplusStartupToken();
-            IntPtr unsafeHandle;
-            StartupOutput output;
-            Status s = NativeMethods.GdiplusStartup(out unsafeHandle, new StartupInput(), out output);
-            if (s == Status.Ok)
-            {
-                safeHandle.handle = unsafeHandle;
-                return safeHandle;
-            }
-            safeHandle.Dispose();
-            throw new Exception("Unable to initialize GDI+");
-        }
-    }
-
-    internal sealed class SafeConnectionPointCookie : SafeHandleZeroOrMinusOneIsInvalid
-    {
-        private IConnectionPoint _cp;
-        // handle holds the cookie value.
-
-        [SuppressMessage("Microsoft.Naming", "CA2204:Literals should be spelled correctly", MessageId = "IConnectionPoint")]
-        public SafeConnectionPointCookie(IConnectionPointContainer target, object sink, Guid eventId)
-            : base(true)
-        {
-            Verify.IsNotNull(target, "target");
-            Verify.IsNotNull(sink, "sink");
-            Verify.IsNotDefault(eventId, "eventId");
-
-            handle = IntPtr.Zero;
-
-            IConnectionPoint cp = null;
-            try
-            {
-                int dwCookie;
-                target.FindConnectionPoint(ref eventId, out cp);
-                cp.Advise(sink, out dwCookie);
-                if (dwCookie == 0)
-                {
-                    throw new InvalidOperationException("IConnectionPoint::Advise returned an invalid cookie.");
-                }
-                handle = new IntPtr(dwCookie);
-                _cp = cp;
-                cp = null;
-            }
-            finally
-            {
-                Utility.SafeRelease(ref cp);
-            }
-        }
-
-        public void Disconnect()
-        {
-            ReleaseHandle();
-        }
-
-        [SuppressMessage("Microsoft.Design", "CA1031:DoNotCatchGeneralExceptionTypes")]
-
-        protected override bool ReleaseHandle()
-        {
-            try
-            {
-                if (!this.IsInvalid)
-                {
-                    int dwCookie = handle.ToInt32();
-                    handle = IntPtr.Zero;
-
-                    Assert.IsNotNull(_cp);
-                    try
-                    {
-                        _cp.Unadvise(dwCookie);
-                    }
-                    finally
-                    {
-                        Utility.SafeRelease(ref _cp);
-                    }
-                }
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
-        }
     }
 
     #endregion
 
     #region Native Types
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct BLENDFUNCTION
-    {
-        // Must be AC_SRC_OVER
-        public AC BlendOp;
-        // Must be 0.
-        public byte BlendFlags;
-        // Alpha transparency between 0 (transparent) - 255 (opaque)
-        public byte SourceConstantAlpha;
-        // Must be AC_SRC_ALPHA
-        public AC AlphaFormat;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct HIGHCONTRAST
-    {
-        public int cbSize;
-        public HCF dwFlags;
-        //[MarshalAs(UnmanagedType.LPWStr, SizeConst=80)]
-        //public String lpszDefaultScheme;
-        public IntPtr lpszDefaultScheme;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct RGBQUAD
-    {
-        public byte rgbBlue;
-        public byte rgbGreen;
-        public byte rgbRed;
-        public byte rgbReserved;
-    }
-
-    [StructLayout(LayoutKind.Sequential, Pack = 2)]
-    internal struct BITMAPINFOHEADER
-    {
-        public int biSize;
-        public int biWidth;
-        public int biHeight;
-        public short biPlanes;
-        public short biBitCount;
-        public BI biCompression;
-        public int biSizeImage;
-        public int biXPelsPerMeter;
-        public int biYPelsPerMeter;
-        public int biClrUsed;
-        public int biClrImportant;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct BITMAPINFO
-    {
-        public BITMAPINFOHEADER bmiHeader;
-        public RGBQUAD bmiColors;
-    }
-
-    // Win7 only.
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct CHANGEFILTERSTRUCT
-    {
-        public uint cbSize;
-        public MSGFLTINFO ExtStatus;
-    }
 
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
     internal struct CREATESTRUCT
@@ -1708,220 +736,6 @@ namespace Standard
         [MarshalAs(UnmanagedType.LPWStr)]
         public string lpszClass;
         public WS_EX dwExStyle;
-    }
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode, Pack = 1)]
-    internal struct SHFILEOPSTRUCT
-    {
-        public IntPtr hwnd;
-        [MarshalAs(UnmanagedType.U4)]
-        public FO wFunc;
-        // double-null terminated arrays of LPWSTRS
-        public string pFrom;
-        public string pTo;
-        [MarshalAs(UnmanagedType.U2)]
-        public FOF fFlags;
-        [MarshalAs(UnmanagedType.Bool)]
-        public int fAnyOperationsAborted;
-        public IntPtr hNameMappings;
-        public string lpszProgressTitle;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct TITLEBARINFO
-    {
-        public int cbSize;
-        public RECT rcTitleBar;
-        public STATE_SYSTEM rgstate_TitleBar;
-        public STATE_SYSTEM rgstate_Reserved;
-        public STATE_SYSTEM rgstate_MinimizeButton;
-        public STATE_SYSTEM rgstate_MaximizeButton;
-        public STATE_SYSTEM rgstate_HelpButton;
-        public STATE_SYSTEM rgstate_CloseButton;
-    }
-
-    // New to Vista.
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct TITLEBARINFOEX
-    {
-        public int cbSize;
-        public RECT rcTitleBar;
-        public STATE_SYSTEM rgstate_TitleBar;
-        public STATE_SYSTEM rgstate_Reserved;
-        public STATE_SYSTEM rgstate_MinimizeButton;
-        public STATE_SYSTEM rgstate_MaximizeButton;
-        public STATE_SYSTEM rgstate_HelpButton;
-        public STATE_SYSTEM rgstate_CloseButton;
-        public RECT rgrect_TitleBar;
-        public RECT rgrect_Reserved;
-        public RECT rgrect_MinimizeButton;
-        public RECT rgrect_MaximizeButton;
-        public RECT rgrect_HelpButton;
-        public RECT rgrect_CloseButton;
-    }
-
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    [StructLayout(LayoutKind.Sequential)]
-    internal class NOTIFYICONDATA
-    {
-        public int cbSize;
-        public IntPtr hWnd;
-        public int uID;
-        public NIF uFlags;
-        public int uCallbackMessage;
-        public IntPtr hIcon;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 128)]
-        public char[] szTip = new char[128];
-        /// <summary>
-        /// The state of the icon.  There are two flags that can be set independently.
-        /// NIS_HIDDEN = 1.  The icon is hidden.
-        /// NIS_SHAREDICON = 2.  The icon is shared.
-        /// </summary>
-        public uint dwState;
-        public uint dwStateMask;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 256)]
-        public char[] szInfo = new char[256];
-        // Prior to Vista this was a union of uTimeout and uVersion.  As of Vista, uTimeout has been deprecated.
-        public uint uVersion;  // Used with Shell_NotifyIcon flag NIM_SETVERSION.
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
-        public char[] szInfoTitle = new char[64];
-        public uint dwInfoFlags;
-        public Guid guidItem;
-        // Vista only
-        IntPtr hBalloonIcon;
-    }
-
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    internal class SHARDAPPIDINFO
-    {
-        [MarshalAs(UnmanagedType.Interface)]
-        object psi;    // The namespace location of the the item that should be added to the recent docs folder.
-        [MarshalAs(UnmanagedType.LPWStr)]
-        string pszAppID;  // The id of the application that should be associated with this recent doc.
-    }
-
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    internal class SHARDAPPIDINFOIDLIST
-    {
-        /// <summary>The idlist for the shell item that should be added to the recent docs folder.</summary>
-        IntPtr pidl;
-        /// <summary>The id of the application that should be associated with this recent doc.</summary>
-        [MarshalAs(UnmanagedType.LPWStr)]
-        string pszAppID;
-    }
-
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    [StructLayout(LayoutKind.Sequential, Pack = 4)]
-    internal class SHARDAPPIDINFOLINK
-    {
-        IntPtr psl;     // An IShellLink instance that when launched opens a recently used item in the specified
-        // application. This link is not added to the recent docs folder, but will be added to the
-        // specified application's destination list.
-        [MarshalAs(UnmanagedType.LPWStr)]
-        string pszAppID;  // The id of the application that should be associated with this recent doc.
-    }
-
-
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    internal struct LOGFONT
-    {
-        public int lfHeight;
-        public int lfWidth;
-        public int lfEscapement;
-        public int lfOrientation;
-        public int lfWeight;
-        public byte lfItalic;
-        public byte lfUnderline;
-        public byte lfStrikeOut;
-        public byte lfCharSet;
-        public byte lfOutPrecision;
-        public byte lfClipPrecision;
-        public byte lfQuality;
-        public byte lfPitchAndFamily;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 32)]
-        public string lfFaceName;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct MINMAXINFO
-    {
-        public POINT ptReserved;
-        public POINT ptMaxSize;
-        public POINT ptMaxPosition;
-        public POINT ptMinTrackSize;
-        public POINT ptMaxTrackSize;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct NONCLIENTMETRICS
-    {
-        public int cbSize;
-        public int iBorderWidth;
-        public int iScrollWidth;
-        public int iScrollHeight;
-        public int iCaptionWidth;
-        public int iCaptionHeight;
-        public LOGFONT lfCaptionFont;
-        public int iSmCaptionWidth;
-        public int iSmCaptionHeight;
-        public LOGFONT lfSmCaptionFont;
-        public int iMenuWidth;
-        public int iMenuHeight;
-        public LOGFONT lfMenuFont;
-        public LOGFONT lfStatusFont;
-        public LOGFONT lfMessageFont;
-        // Vista only
-        public int iPaddedBorderWidth;
-
-        public static NONCLIENTMETRICS VistaMetricsStruct
-        {
-            get
-            {
-                var ncm = new NONCLIENTMETRICS
-                {
-                    cbSize = Marshal.SizeOf(typeof(NONCLIENTMETRICS))
-                };
-                return ncm;
-            }
-        }
-
-        public static NONCLIENTMETRICS XPMetricsStruct
-        {
-            get
-            {
-                var ncm = new NONCLIENTMETRICS
-                {
-                    // Account for the missing iPaddedBorderWidth
-                    cbSize = Marshal.SizeOf(typeof(NONCLIENTMETRICS)) - sizeof(int)
-                };
-                return ncm;
-            }
-        }
-    }
-
-    /// <summary>Defines options that are used to set window visual style attributes.</summary>
-    [StructLayout(LayoutKind.Explicit)]
-    internal struct WTA_OPTIONS
-    {
-        // public static readonly uint Size = (uint)Marshal.SizeOf(typeof(WTA_OPTIONS));
-        public const uint Size = 8;
-
-        /// <summary>
-        /// A combination of flags that modify window visual style attributes.
-        /// Can be a combination of the WTNCA constants.
-        /// </summary>
-        [FieldOffset(0)]
-        public WTNCA dwFlags;
-
-        /// <summary>
-        /// A bitmask that describes how the values specified in dwFlags should be applied.
-        /// If the bit corresponding to a value in dwFlags is 0, that flag will be removed.
-        /// If the bit is 1, the flag will be added.
-        /// </summary>
-        [FieldOffset(4)]
-        public WTNCA dwMask;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -1948,14 +762,6 @@ namespace Standard
 
     [StructLayout(LayoutKind.Sequential)]
     internal struct POINT
-    {
-        public int x;
-        public int y;
-    }
-
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    [StructLayout(LayoutKind.Sequential)]
-    internal class RefPOINT
     {
         public int x;
         public int y;
@@ -2054,106 +860,11 @@ namespace Standard
         }
     }
 
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    [StructLayout(LayoutKind.Sequential)]
-    internal class RefRECT
-    {
-        private int _left;
-        private int _top;
-        private int _right;
-        private int _bottom;
-
-        public RefRECT(int left, int top, int right, int bottom)
-        {
-            _left = left;
-            _top = top;
-            _right = right;
-            _bottom = bottom;
-        }
-
-        public int Width
-        {
-            get { return _right - _left; }
-        }
-
-        public int Height
-        {
-            get { return _bottom - _top; }
-        }
-
-        public int Left
-        {
-            get { return _left; }
-            set { _left = value; }
-        }
-
-        public int Right
-        {
-            get { return _right; }
-            set { _right = value; }
-        }
-
-        public int Top
-        {
-            get { return _top; }
-            set { _top = value; }
-        }
-
-        public int Bottom
-        {
-            get { return _bottom; }
-            set { _bottom = value; }
-        }
-
-        public void Offset(int dx, int dy)
-        {
-            _left += dx;
-            _top += dy;
-            _right += dx;
-            _bottom += dy;
-        }
-    }
-
     [StructLayout(LayoutKind.Sequential)]
     internal struct SIZE
     {
         public int cx;
         public int cy;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct StartupOutput
-    {
-        public IntPtr hook;
-        public IntPtr unhook;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal class StartupInput
-    {
-        public int GdiplusVersion = 1;
-        public IntPtr DebugEventCallback;
-        public bool SuppressBackgroundThread;
-        public bool SuppressExternalCodecs;
-    }
-
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses")]
-    [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-    [BestFitMapping(false)]
-    internal class WIN32_FIND_DATAW
-    {
-        public FileAttributes dwFileAttributes;
-        public System.Runtime.InteropServices.ComTypes.FILETIME ftCreationTime;
-        public System.Runtime.InteropServices.ComTypes.FILETIME ftLastAccessTime;
-        public System.Runtime.InteropServices.ComTypes.FILETIME ftLastWriteTime;
-        public int nFileSizeHigh;
-        public int nFileSizeLow;
-        public int dwReserved0;
-        public int dwReserved1;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 260)]
-        public string cFileName;
-        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
-        public string cAlternateFileName;
     }
 
     [StructLayout(LayoutKind.Sequential)]
@@ -2198,76 +909,6 @@ namespace Standard
         public IntPtr hIconSm;
     }
 
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct MOUSEINPUT
-    {
-        public int dx;
-        public int dy;
-        public int mouseData;
-        public int dwFlags;
-        public int time;
-        public IntPtr dwExtraInfo;
-    }
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct INPUT
-    {
-        public uint type;
-        public MOUSEINPUT mi;
-    };
-
-    [StructLayout(LayoutKind.Sequential)]
-    internal struct UNSIGNED_RATIO
-    {
-        public uint uiNumerator;
-        public uint uiDenominator;
-    }
-
-    [StructLayout(LayoutKind.Sequential, Pack=1)]
-    internal struct DWM_TIMING_INFO
-    {
-        public int cbSize;
-        public UNSIGNED_RATIO rateRefresh;
-        public ulong qpcRefreshPeriod;
-        public UNSIGNED_RATIO rateCompose;
-        public ulong qpcVBlank;
-        public ulong cRefresh;
-        public uint cDXRefresh;
-        public ulong qpcCompose;
-        public ulong cFrame;
-        public uint cDXPresent;
-        public ulong cRefreshFrame;
-        public ulong cFrameSubmitted;
-        public uint cDXPresentSubmitted;
-        public ulong cFrameConfirmed;
-        public uint cDXPresentConfirmed;
-        public ulong cRefreshConfirmed;
-        public uint cDXRefreshConfirmed;
-        public ulong cFramesLate;
-        public uint cFramesOutstanding;
-        public ulong cFrameDisplayed;
-        public ulong qpcFrameDisplayed;
-        public ulong cRefreshFrameDisplayed;
-        public ulong cFrameComplete;
-        public ulong qpcFrameComplete;
-        public ulong cFramePending;
-        public ulong qpcFramePending;
-        public ulong cFramesDisplayed;
-        public ulong cFramesComplete;
-        public ulong cFramesPending;
-        public ulong cFramesAvailable;
-        public ulong cFramesDropped;
-        public ulong cFramesMissed;
-        public ulong cRefreshNextDisplayed;
-        public ulong cRefreshNextPresented;
-        public ulong cRefreshesDisplayed;
-        public ulong cRefreshesPresented;
-        public ulong cRefreshStarted;
-        public ulong cPixelsReceived;
-        public ulong cPixelsDrawn;
-        public ulong cBuffersEmpty;
-    }
-
     #endregion
 
     /// <summary>Delegate declaration that matches native WndProc signatures.</summary>
@@ -2282,131 +923,8 @@ namespace Standard
     // Some native methods are shimmed through public versions that handle converting failures into thrown exceptions.
     internal static class NativeMethods
     {
-        [DllImport("user32.dll", EntryPoint = "AdjustWindowRectEx", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _AdjustWindowRectEx(ref RECT lpRect, WS dwStyle, [MarshalAs(UnmanagedType.Bool)] bool bMenu, WS_EX dwExStyle);
-
-        public static RECT AdjustWindowRectEx(RECT lpRect, WS dwStyle, bool bMenu, WS_EX dwExStyle)
-        {
-            // Native version modifies the parameter in place.
-            if (!_AdjustWindowRectEx(ref lpRect, dwStyle, bMenu, dwExStyle))
-            {
-                HRESULT.ThrowLastError();
-            }
-
-            return lpRect;
-        }
-
-        [DllImport("user32.dll", EntryPoint = "ChangeWindowMessageFilter", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _ChangeWindowMessageFilter(WM message, MSGFLT dwFlag);
-
-        [DllImport("user32.dll", EntryPoint = "ChangeWindowMessageFilterEx", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _ChangeWindowMessageFilterEx(IntPtr hwnd, WM message, MSGFLT action, [In, Out, Optional] ref CHANGEFILTERSTRUCT pChangeFilterStruct);
-
-        // Note that processes at or below SECURITY_MANDATORY_LOW_RID are not allowed to change the message filter.
-        // If those processes call this function, it will fail and generate the extended error code, ERROR_ACCESS_DENIED.
-        public static HRESULT ChangeWindowMessageFilterEx(IntPtr hwnd, WM message, MSGFLT action, out MSGFLTINFO filterInfo)
-        {
-            filterInfo = MSGFLTINFO.NONE;
-
-            bool ret;
-
-            // This origins of this API were added for Vista.  The Ex version was added for Windows 7.
-            // If we're not on either, then this message filter isolation doesn't exist.
-            if (!Utility.IsOSVistaOrNewer)
-            {
-                return HRESULT.S_FALSE;
-            }
-
-            // If we're on Vista rather than Win7 then we can't use the Ex version of this function.
-            // The Ex version is preferred if possible because this results in process-wide modifications of the filter
-            // and is deprecated as of Win7.
-            if (!Utility.IsOSWindows7OrNewer)
-            {
-                // Note that the Win7 MSGFLT_ALLOW/DISALLOW enum values map to the Vista MSGFLT_ADD/REMOVE
-                ret = _ChangeWindowMessageFilter(message, action);
-                if (!ret)
-                {
-                    return (HRESULT)Win32Error.GetLastError();
-                }
-                return HRESULT.S_OK;
-            }
-
-            var filterstruct = new CHANGEFILTERSTRUCT { cbSize = (uint)Marshal.SizeOf(typeof(CHANGEFILTERSTRUCT)) };
-            ret = _ChangeWindowMessageFilterEx(hwnd, message, action, ref filterstruct);
-            if (!ret)
-            {
-                return (HRESULT)Win32Error.GetLastError();
-            }
-
-            filterInfo = filterstruct.ExtStatus;
-            return HRESULT.S_OK;
-        }
-
         [DllImport("gdi32.dll")]
         public static extern CombineRgnResult CombineRgn(IntPtr hrgnDest, IntPtr hrgnSrc1, IntPtr hrgnSrc2, RGN fnCombineMode);
-
-        [DllImport("shell32.dll", EntryPoint = "CommandLineToArgvW", CharSet = CharSet.Unicode)]
-        private static extern IntPtr _CommandLineToArgvW([MarshalAs(UnmanagedType.LPWStr)] string cmdLine, out int numArgs);
-
-        public static string[] CommandLineToArgvW(string cmdLine)
-        {
-            IntPtr argv = IntPtr.Zero;
-            try
-            {
-                int numArgs = 0;
-
-                argv = _CommandLineToArgvW(cmdLine, out numArgs);
-                if (argv == IntPtr.Zero)
-                {
-                    throw new Win32Exception();
-                }
-                var result = new string[numArgs];
-
-                for (int i = 0; i < numArgs; i++)
-                {
-                    IntPtr currArg = Marshal.ReadIntPtr(argv, i * IntPtr.Size);
-                    result[i] = Marshal.PtrToStringUni(currArg);
-                }
-
-                return result;
-            }
-            finally
-            {
-                IntPtr p = _LocalFree(argv);
-                // Otherwise LocalFree failed.
-                Assert.AreEqual(IntPtr.Zero, p);
-            }
-        }
-
-        [DllImport("gdi32.dll", EntryPoint = "CreateDIBSection", SetLastError = true)]
-        private static extern SafeHBITMAP _CreateDIBSection(SafeDC hdc, [In] ref BITMAPINFO bitmapInfo, int iUsage, [Out] out IntPtr ppvBits, IntPtr hSection, int dwOffset);
-
-        [DllImport("gdi32.dll", EntryPoint = "CreateDIBSection", SetLastError = true)]
-        private static extern SafeHBITMAP _CreateDIBSectionIntPtr(IntPtr hdc, [In] ref BITMAPINFO bitmapInfo, int iUsage, [Out] out IntPtr ppvBits, IntPtr hSection, int dwOffset);
-
-        public static SafeHBITMAP CreateDIBSection(SafeDC hdc, ref BITMAPINFO bitmapInfo, out IntPtr ppvBits, IntPtr hSection, int dwOffset)
-        {
-            const int DIB_RGB_COLORS = 0;
-            SafeHBITMAP hBitmap = null;
-            if (hdc == null)
-            {
-                hBitmap = _CreateDIBSectionIntPtr(IntPtr.Zero, ref bitmapInfo, DIB_RGB_COLORS, out ppvBits, hSection, dwOffset);
-            }
-            else
-            {
-                hBitmap = _CreateDIBSection(hdc, ref bitmapInfo, DIB_RGB_COLORS, out ppvBits, hSection, dwOffset);
-            }
-
-            if (hBitmap.IsInvalid)
-            {
-                HRESULT.ThrowLastError();
-            }
-
-            return hBitmap;
-        }
 
         [DllImport("gdi32.dll", EntryPoint = "CreateRoundRectRgn", SetLastError = true)]
         private static extern IntPtr _CreateRoundRectRgn(int nLeftRect, int nTopRect, int nRightRect, int nBottomRect, int nWidthEllipse, int nHeightEllipse);
@@ -2446,9 +964,6 @@ namespace Standard
             }
             return ret;
         }
-
-        [DllImport("gdi32.dll")]
-        public static extern IntPtr CreateSolidBrush(int crColor);
 
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Unicode, EntryPoint = "CreateWindowExW")]
         private static extern IntPtr _CreateWindowEx(
@@ -2495,10 +1010,6 @@ namespace Standard
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DeleteObject(IntPtr hObject);
 
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool DestroyIcon(IntPtr handle);
-
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool DestroyWindow(IntPtr hwnd);
@@ -2506,9 +1017,6 @@ namespace Standard
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWindow(IntPtr hwnd);
-        
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern int DwmGetWindowAttribute(IntPtr hWnd, DWMWA dwAttributeToGet, ref int pvAttributeValue, int cbAttribute);
 
         [DllImport("dwmapi.dll", PreserveSig = false)]
         public static extern int DwmExtendFrameIntoClientArea(IntPtr hwnd, ref MARGINS pMarInset);
@@ -2573,20 +1081,6 @@ namespace Standard
             return dwmResult == HRESULT.S_OK;
         }
 
-        public static void DwmSetWindowAttributeFlip3DPolicy(IntPtr hwnd, DWMFLIP3D flip3dPolicy)
-        {
-            Assert.IsTrue(Utility.IsOSVistaOrNewer);
-            var dwPolicy = (int)flip3dPolicy;
-            _DwmSetWindowAttribute(hwnd, DWMWA.FLIP3D_POLICY, ref dwPolicy, sizeof(int));
-        }
-
-        public static void DwmSetWindowAttributeDisallowPeek(IntPtr hwnd, bool disallowPeek)
-        {
-            Assert.IsTrue(Utility.IsOSWindows7OrNewer);
-            int dwDisallow = (int)(disallowPeek ? Win32Value.TRUE : Win32Value.FALSE);
-            _DwmSetWindowAttribute(hwnd, DWMWA.DISALLOW_PEEK, ref dwDisallow, sizeof(int));
-        }
-
         [DllImport("user32.dll", EntryPoint = "EnableMenuItem")]
         private static extern int _EnableMenuItem(IntPtr hMenu, SC uIDEnableItem, MF uEnable);
 
@@ -2595,58 +1089,6 @@ namespace Standard
             // Returns the previous state of the menu item, or -1 if the menu item does not exist.
             int iRet = _EnableMenuItem(hMenu, uIDEnableItem, uEnable);
             return (MF)iRet;
-        }
-
-        [DllImport("user32.dll", EntryPoint = "RemoveMenu", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _RemoveMenu(IntPtr hMenu, uint uPosition, uint uFlags);
-
-        public static void RemoveMenu(IntPtr hMenu, SC uPosition, MF uFlags)
-        {
-            if (!_RemoveMenu(hMenu, (uint)uPosition, (uint)uFlags))
-            {
-                throw new Win32Exception();
-            }
-        }
-
-        [DllImport("user32.dll", EntryPoint = "DrawMenuBar", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _DrawMenuBar(IntPtr hWnd);
-
-        public static void DrawMenuBar(IntPtr hWnd)
-        {
-            if (!_DrawMenuBar(hWnd))
-            {
-                throw new Win32Exception();
-            }
-        }
-
-        [DllImport("kernel32.dll")]
-
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool FindClose(IntPtr handle);
-
-        // Not shimming this SetLastError=true function because callers want to evaluate the reason for failure.
-        [DllImport("kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true)]
-        public static extern SafeFindHandle FindFirstFileW(string lpFileName, [In, Out, MarshalAs(UnmanagedType.LPStruct)] WIN32_FIND_DATAW lpFindFileData);
-
-        // Not shimming this SetLastError=true function because callers want to evaluate the reason for failure.
-        [DllImport("kernel32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool FindNextFileW(SafeFindHandle hndFindFile, [In, Out, MarshalAs(UnmanagedType.LPStruct)] WIN32_FIND_DATAW lpFindFileData);
-
-        [DllImport("user32.dll", EntryPoint = "GetClientRect", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _GetClientRect(IntPtr hwnd, [Out] out RECT lpRect);
-
-        public static RECT GetClientRect(IntPtr hwnd)
-        {
-            RECT rc;
-            if (!_GetClientRect(hwnd, out rc))
-            {
-                HRESULT.ThrowLastError();
-            }
-            return rc;
         }
 
         [DllImport("uxtheme.dll", EntryPoint="GetCurrentThemeName", CharSet = CharSet.Unicode)]
@@ -2682,33 +1124,6 @@ namespace Standard
 
         [DllImport("gdi32.dll")]
         public static extern int GetDeviceCaps(SafeDC hdc, DeviceCap nIndex);
-
-        [DllImport("kernel32.dll", EntryPoint = "GetModuleFileName", CharSet = CharSet.Unicode, SetLastError = true)]
-        private static extern int _GetModuleFileName(IntPtr hModule, StringBuilder lpFilename, int nSize);
-
-        public static string GetModuleFileName(IntPtr hModule)
-        {
-            var buffer = new StringBuilder((int)Win32Value.MAX_PATH);
-            while (true)
-            {
-                int size = _GetModuleFileName(hModule, buffer, buffer.Capacity);
-                if (size == 0)
-                {
-                    HRESULT.ThrowLastError();
-                }
-
-                // GetModuleFileName returns nSize when it's truncated but does NOT set the last error.
-                // MSDN documentation says this has changed in Windows 2000+.
-                if (size == buffer.Capacity)
-                {
-                    // Enlarge the buffer and try again.
-                    buffer.EnsureCapacity(buffer.Capacity * 2);
-                    continue;
-                }
-
-                return buffer.ToString();
-            }
-        }
 
         [DllImport("kernel32.dll", EntryPoint = "GetModuleHandleW", CharSet = CharSet.Unicode, SetLastError = true)]
         private static extern IntPtr _GetModuleHandle([MarshalAs(UnmanagedType.LPWStr)] string lpModuleName);
@@ -2775,28 +1190,6 @@ namespace Standard
             return ret;
         }
 
-        /// <summary>
-        /// Sets attributes to control how visual styles are applied to a specified window.
-        /// </summary>
-        /// <param name="hwnd">
-        /// Handle to a window to apply changes to.
-        /// </param>
-        /// <param name="eAttribute">
-        /// Value of type WINDOWTHEMEATTRIBUTETYPE that specifies the type of attribute to set.
-        /// The value of this parameter determines the type of data that should be passed in the pvAttribute parameter.
-        /// Can be the following value:
-        /// <list>WTA_NONCLIENT (Specifies non-client related attributes).</list>
-        /// pvAttribute must be a pointer of type WTA_OPTIONS.
-        /// </param>
-        /// <param name="pvAttribute">
-        /// A pointer that specifies attributes to set. Type is determined by the value of the eAttribute value.
-        /// </param>
-        /// <param name="cbAttribute">
-        /// Specifies the size, in bytes, of the data pointed to by pvAttribute.
-        /// </param>
-        [DllImport("uxtheme.dll", PreserveSig = false)]
-        public static extern void SetWindowThemeAttribute([In] IntPtr hwnd, [In] WINDOWTHEMEATTRIBUTETYPE eAttribute, [In] ref WTA_OPTIONS pvAttribute, [In] uint cbAttribute);
-
         [DllImport("user32.dll", SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool GetWindowPlacement(IntPtr hwnd, WINDOWPLACEMENT lpwndpl);
@@ -2825,33 +1218,9 @@ namespace Standard
             return rc;
         }
 
-        [DllImport("gdiplus.dll")]
-        public static extern Status GdipCreateBitmapFromStream(IStream stream, out IntPtr bitmap);
-
-        [DllImport("gdiplus.dll")]
-        public static extern Status GdipCreateHBITMAPFromBitmap(IntPtr bitmap, out IntPtr hbmReturn, Int32 background);
-
-        [DllImport("gdiplus.dll")]
-        public static extern Status GdipCreateHICONFromBitmap(IntPtr bitmap, out IntPtr hbmReturn);
-
-        [DllImport("gdiplus.dll")]
-        public static extern Status GdipDisposeImage(IntPtr image);
-
-        [DllImport("gdiplus.dll")]
-        public static extern Status GdipImageForceValidation(IntPtr image);
-
-        [DllImport("gdiplus.dll")]
-        public static extern Status GdiplusStartup(out IntPtr token, StartupInput input, out StartupOutput output);
-
-        [DllImport("gdiplus.dll")]
-        public static extern Status GdiplusShutdown(IntPtr token);
-
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool IsWindowVisible(IntPtr hwnd);
-
-        [DllImport("kernel32.dll", EntryPoint = "LocalFree", SetLastError = true)]
-        private static extern IntPtr _LocalFree(IntPtr hMem);
 
         [DllImport("user32.dll")]
         public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
@@ -2883,65 +1252,6 @@ namespace Standard
             }
 
             return ret;
-        }
-
-        [DllImport("user32.dll", EntryPoint = "RegisterWindowMessage", SetLastError = true, CharSet = CharSet.Unicode)]
-        private static extern uint _RegisterWindowMessage([MarshalAs(UnmanagedType.LPWStr)] string lpString);
-
-        public static WM RegisterWindowMessage(string lpString)
-        {
-            uint iRet = _RegisterWindowMessage(lpString);
-            if (iRet == 0)
-            {
-                HRESULT.ThrowLastError();
-            }
-            return (WM)iRet;
-        }
-
-        [DllImport("user32.dll", EntryPoint = "SetActiveWindow", SetLastError = true)]
-        private static extern IntPtr _SetActiveWindow(IntPtr hWnd);
-
-        public static IntPtr SetActiveWindow(IntPtr hwnd)
-        {
-            Verify.IsNotDefault(hwnd, "hwnd");
-            IntPtr ret = _SetActiveWindow(hwnd);
-            if (ret == IntPtr.Zero)
-            {
-                HRESULT.ThrowLastError();
-            }
-
-            return ret;
-        }
-
-        // This is aliased as a macro in 32bit Windows.
-        public static IntPtr SetClassLongPtr(IntPtr hwnd, GCLP nIndex, IntPtr dwNewLong)
-        {
-            if (8 == IntPtr.Size)
-            {
-                return SetClassLongPtr64(hwnd, nIndex, dwNewLong);
-            }
-            return new IntPtr(SetClassLongPtr32(hwnd, nIndex, dwNewLong.ToInt32()));
-        }
-
-        [DllImport("user32.dll", EntryPoint = "SetClassLong", SetLastError = true)]
-        private static extern int SetClassLongPtr32(IntPtr hWnd, GCLP nIndex, int dwNewLong);
-
-        [DllImport("user32.dll", EntryPoint = "SetClassLongPtr", SetLastError = true)]
-        private static extern IntPtr SetClassLongPtr64(IntPtr hWnd, GCLP nIndex, IntPtr dwNewLong);
-
-        [DllImport("kernel32.dll", SetLastError = true)]
-        public static extern ErrorModes SetErrorMode(ErrorModes newMode);
-
-        [DllImport("kernel32.dll", SetLastError = true, EntryPoint = "SetProcessWorkingSetSize")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _SetProcessWorkingSetSize(IntPtr hProcess, IntPtr dwMinimiumWorkingSetSize, IntPtr dwMaximumWorkingSetSize);
-
-        public static void SetProcessWorkingSetSize(IntPtr hProcess, int dwMinimumWorkingSetSize, int dwMaximumWorkingSetSize)
-        {
-            if (!_SetProcessWorkingSetSize(hProcess, new IntPtr(dwMinimumWorkingSetSize), new IntPtr(dwMaximumWorkingSetSize)))
-            {
-                throw new Win32Exception();
-            }
         }
 
         // This is aliased as a macro in 32bit Windows.
@@ -2979,116 +1289,16 @@ namespace Standard
             }
 
             return true;
-        }
-
-        [DllImport("shell32.dll", SetLastError = false)]
-        public static extern Win32Error SHFileOperation(ref SHFILEOPSTRUCT lpFileOp);
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool ShowWindow(IntPtr hwnd, SW nCmdShow);
-
-        [DllImport("user32.dll", EntryPoint = "SystemParametersInfoW", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _SystemParametersInfo_String(SPI uiAction, int uiParam, [MarshalAs(UnmanagedType.LPWStr)] string pvParam, SPIF fWinIni);
-
-        /// <summary>Overload of SystemParametersInfo for getting and setting NONCLIENTMETRICS.</summary>
-        [DllImport("user32.dll", EntryPoint = "SystemParametersInfoW", SetLastError = true, CharSet = CharSet.Unicode)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _SystemParametersInfo_NONCLIENTMETRICS(SPI uiAction, int uiParam, [In, Out] ref NONCLIENTMETRICS pvParam, SPIF fWinIni);
-
-        /// <summary>Overload of SystemParametersInfo for getting and setting HIGHCONTRAST.</summary>
-        [DllImport("user32.dll", EntryPoint = "SystemParametersInfoW", SetLastError = true, CharSet = CharSet.Unicode)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _SystemParametersInfo_HIGHCONTRAST(SPI uiAction, int uiParam, [In, Out] ref HIGHCONTRAST pvParam, SPIF fWinIni);
-
-        public static void SystemParametersInfo(SPI uiAction, int uiParam, string pvParam, SPIF fWinIni)
-        {
-            if (!_SystemParametersInfo_String(uiAction, uiParam, pvParam, fWinIni))
-            {
-                HRESULT.ThrowLastError();
-            }
-        }
-
-        public static NONCLIENTMETRICS SystemParameterInfo_GetNONCLIENTMETRICS()
-        {
-            var metrics = Utility.IsOSVistaOrNewer
-                ? NONCLIENTMETRICS.VistaMetricsStruct
-                : NONCLIENTMETRICS.XPMetricsStruct;
-
-            if (!_SystemParametersInfo_NONCLIENTMETRICS(SPI.GETNONCLIENTMETRICS, metrics.cbSize, ref metrics, SPIF.None))
-            {
-                HRESULT.ThrowLastError();
-            }
-
-            return metrics;
-        }
-
-        public static HIGHCONTRAST SystemParameterInfo_GetHIGHCONTRAST()
-        {
-            var hc = new HIGHCONTRAST { cbSize = Marshal.SizeOf(typeof(HIGHCONTRAST)) };
-
-            if (!_SystemParametersInfo_HIGHCONTRAST(SPI.GETHIGHCONTRAST, hc.cbSize, ref hc, SPIF.None))
-            {
-                HRESULT.ThrowLastError();
-            }
-
-            return hc;
-        }
+        }   
 
         // This function is strange in that it returns a BOOL if TPM_RETURNCMD isn't specified, but otherwise the command Id.
         // Currently it's only used with TPM_RETURNCMD, so making the signature match that.
         [DllImport("user32.dll")]
         public static extern uint TrackPopupMenuEx(IntPtr hmenu, uint fuFlags, int x, int y, IntPtr hwnd, IntPtr lptpm);
 
-        [DllImport("gdi32.dll", EntryPoint = "SelectObject", SetLastError = true)]
-        private static extern IntPtr _SelectObject(SafeDC hdc, IntPtr hgdiobj);
-
-        public static IntPtr SelectObject(SafeDC hdc, IntPtr hgdiobj)
-        {
-            IntPtr ret = _SelectObject(hdc, hgdiobj);
-            if (ret == IntPtr.Zero)
-            {
-                HRESULT.ThrowLastError();
-            }
-            return ret;
-        }
-
-        [DllImport("gdi32.dll", EntryPoint = "SelectObject", SetLastError = true)]
-        private static extern IntPtr _SelectObjectSafeHBITMAP(SafeDC hdc, SafeHBITMAP hgdiobj);
-
-        public static IntPtr SelectObject(SafeDC hdc, SafeHBITMAP hgdiobj)
-        {
-            IntPtr ret = _SelectObjectSafeHBITMAP(hdc, hgdiobj);
-            if (ret == IntPtr.Zero)
-            {
-                HRESULT.ThrowLastError();
-            }
-            return ret;
-        }
-
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern int SendInput(int nInputs, ref INPUT pInputs, int cbSize);
-
-        // Depending on the message, callers may want to call GetLastError based on the return value.
-        [DllImport("user32.dll", SetLastError = true)]
-        public static extern IntPtr SendMessage(IntPtr hWnd, WM Msg, IntPtr wParam, IntPtr lParam);
-
-        [DllImport("user32.dll", EntryPoint = "UnregisterClass", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _UnregisterClassAtom(IntPtr lpClassName, IntPtr hInstance);
-
         [DllImport("user32.dll", EntryPoint = "UnregisterClass", CharSet = CharSet.Unicode, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         private static extern bool _UnregisterClassName(string lpClassName, IntPtr hInstance);
-
-        public static void UnregisterClass(short atom, IntPtr hinstance)
-        {
-            if (!_UnregisterClassAtom(new IntPtr(atom), hinstance))
-            {
-                HRESULT.ThrowLastError();
-            }
-        }
 
         public static void UnregisterClass(string lpClassName, IntPtr hInstance)
         {
@@ -3097,142 +1307,5 @@ namespace Standard
                 HRESULT.ThrowLastError();
             }
         }
-
-        [DllImport("user32.dll", SetLastError = true, EntryPoint = "UpdateLayeredWindow")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _UpdateLayeredWindow(
-            IntPtr hwnd,
-            SafeDC hdcDst,
-            ref POINT pptDst,
-            ref SIZE psize,
-            SafeDC hdcSrc,
-            ref POINT pptSrc,
-            int crKey,
-            ref BLENDFUNCTION pblend,
-            ULW dwFlags);
-
-        [DllImport("user32.dll", SetLastError = true, EntryPoint = "UpdateLayeredWindow")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool _UpdateLayeredWindowIntPtr(
-            IntPtr hwnd,
-            IntPtr hdcDst,
-            IntPtr pptDst,
-            IntPtr psize,
-            IntPtr hdcSrc,
-            IntPtr pptSrc,
-            int crKey,
-            ref BLENDFUNCTION pblend,
-            ULW dwFlags);
-
-        public static void UpdateLayeredWindow(
-            IntPtr hwnd,
-            SafeDC hdcDst,
-            ref POINT pptDst,
-            ref SIZE psize,
-            SafeDC hdcSrc,
-            ref POINT pptSrc,
-            int crKey,
-            ref BLENDFUNCTION pblend,
-            ULW dwFlags)
-        {
-            if (!_UpdateLayeredWindow(hwnd, hdcDst, ref pptDst, ref psize, hdcSrc, ref pptSrc, crKey, ref pblend, dwFlags))
-            {
-                HRESULT.ThrowLastError();
-            }
-        }
-
-        public static void UpdateLayeredWindow(
-            IntPtr hwnd,
-            int crKey,
-            ref BLENDFUNCTION pblend,
-            ULW dwFlags)
-        {
-            if (!_UpdateLayeredWindowIntPtr(hwnd, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, IntPtr.Zero, crKey, ref pblend, dwFlags))
-            {
-                HRESULT.ThrowLastError();
-            }
-        }
-
-        #region Win7 declarations
-
-        [DllImport("shell32.dll", EntryPoint = "SHAddToRecentDocs")]
-        private static extern void _SHAddToRecentDocs_String(SHARD uFlags, [MarshalAs(UnmanagedType.LPWStr)] string pv);
-
-        // This overload is required.  There's a cast in the Shell code that causes the wrong vtbl to be used
-        // if we let the marshaller convert the parameter to an IUnknown.
-        [DllImport("shell32.dll", EntryPoint = "SHAddToRecentDocs")]
-        private static extern void _SHAddToRecentDocs_ShellLink(SHARD uFlags, IShellLinkW pv);
-
-        public static void SHAddToRecentDocs(string path)
-        {
-            _SHAddToRecentDocs_String(SHARD.PATHW, path);
-        }
-
-        // Win7 only.
-        public static void SHAddToRecentDocs(IShellLinkW shellLink)
-        {
-            _SHAddToRecentDocs_ShellLink(SHARD.LINK, shellLink);
-        }
-
-
-        //#define DWM_SIT_DISPLAYFRAME    0x00000001  // Display a window frame around the provided bitmap
-
-        [DllImport("dwmapi.dll", EntryPoint="DwmGetCompositionTimingInfo")]
-        private static extern HRESULT _DwmGetCompositionTimingInfo(IntPtr hwnd, ref DWM_TIMING_INFO pTimingInfo);
-
-        public static DWM_TIMING_INFO? DwmGetCompositionTimingInfo(IntPtr hwnd)
-        {
-            if (!Utility.IsOSVistaOrNewer)
-            {
-                // API was new to Vista.
-                return null;
-            }
-
-            var dti = new DWM_TIMING_INFO { cbSize = Marshal.SizeOf(typeof(DWM_TIMING_INFO)) };
-            HRESULT hr = _DwmGetCompositionTimingInfo(hwnd, ref dti);
-            if (hr == HRESULT.E_PENDING)
-            {
-                // The system isn't yet ready to respond.  Return null rather than throw.
-                return null;
-            }
-            hr.ThrowIfFailed();
-
-            return dti;
-        }
-
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern void DwmInvalidateIconicBitmaps(IntPtr hwnd);
-
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern void DwmSetIconicThumbnail(IntPtr hwnd, IntPtr hbmp, DWM_SIT dwSITFlags);
-
-        [DllImport("dwmapi.dll", PreserveSig = false)]
-        public static extern void DwmSetIconicLivePreviewBitmap(IntPtr hwnd, IntPtr hbmp, RefPOINT pptClient, DWM_SIT dwSITFlags);
-
-        [DllImport("shell32.dll", PreserveSig = false)]
-        public static extern void SHGetItemFromDataObject(IDataObject pdtobj, DOGIF dwFlags, [In] ref Guid riid, [Out, MarshalAs(UnmanagedType.Interface)] out object ppv);
-
-        [DllImport("shell32.dll")]
-        public static extern HRESULT SHCreateItemFromParsingName([MarshalAs(UnmanagedType.LPWStr)] string pszPath, IBindCtx pbc, [In] ref Guid riid, [Out, MarshalAs(UnmanagedType.Interface)] out object ppv);
-
-        [DllImport("shell32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool Shell_NotifyIcon(NIM dwMessage, [In] NOTIFYICONDATA lpdata);
-
-        /// <summary>
-        /// Sets the User Model AppID for the current process, enabling Windows to retrieve this ID
-        /// </summary>
-        /// <param name="AppID"></param>
-        [DllImport("shell32.dll", PreserveSig = false)]
-        public static extern void SetCurrentProcessExplicitAppUserModelID([MarshalAs(UnmanagedType.LPWStr)] string AppID);
-
-        /// <summary>
-        /// Retrieves the User Model AppID that has been explicitly set for the current process via SetCurrentProcessExplicitAppUserModelID
-        /// </summary>
-        /// <param name="AppID"></param>
-        [DllImport("shell32.dll")]
-        public static extern HRESULT GetCurrentProcessExplicitAppUserModelID([Out, MarshalAs(UnmanagedType.LPWStr)] out string AppID);
-
-        #endregion
     }
 }

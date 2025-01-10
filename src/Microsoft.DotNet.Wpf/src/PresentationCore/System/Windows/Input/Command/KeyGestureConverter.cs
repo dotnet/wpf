@@ -42,20 +42,14 @@ namespace System.Windows.Input
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
-            if (destinationType == typeof(string))
-            {
-                // When invoked by the serialization engine we can convert to string only for known type
-                if (context != null && context.Instance != null)
-                {
-                    KeyGesture keyGesture = context.Instance as KeyGesture;
-                    if (keyGesture != null)
-                    {
-                        return (ModifierKeysConverter.IsDefinedModifierKeys(keyGesture.Modifiers)
-                                && IsDefinedKey(keyGesture.Key));
-                    }
-                }
-            }
-            return false;
+            if (destinationType != typeof(string))
+                return false;
+
+            // When invoked by the serialization engine we can convert to string only for known type
+            if (context?.Instance is not KeyGesture keyGesture)
+                return false;
+
+            return ModifierKeysConverter.IsDefinedModifierKeys(keyGesture.Modifiers) && IsDefinedKey(keyGesture.Key);
         }
 
         /// <summary>
@@ -166,10 +160,14 @@ namespace System.Windows.Input
             throw GetConvertToException(value,destinationType);
         }
 
-        // Check for Valid enum, as any int can be casted to the enum.
+        /// <summary>
+        /// Helper function similar to <see cref="Enum.IsDefined{Key}(Key)"/>, just lighter and faster.
+        /// </summary>
+        /// <param name="key">The value to test against.</param>
+        /// <returns><see langword="true"/> if <paramref name="key"/> falls in enumeration range, <see langword="false"/> otherwise.</returns>
         internal static bool IsDefinedKey(Key key)
         {
-            return (key >= Key.None && key <= Key.OemClear);
+            return key >= Key.None && key <= Key.OemClear;
         }
 
         private static KeyConverter keyConverter = new KeyConverter();

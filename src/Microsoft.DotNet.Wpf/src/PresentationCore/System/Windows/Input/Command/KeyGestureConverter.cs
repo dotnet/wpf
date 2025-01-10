@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -30,16 +30,8 @@ namespace System.Windows.Input
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             // We can only handle string.
-            if (sourceType == typeof(string))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return sourceType == typeof(string);
         }
-
 
         ///<summary>
         ///TypeConverter method override.

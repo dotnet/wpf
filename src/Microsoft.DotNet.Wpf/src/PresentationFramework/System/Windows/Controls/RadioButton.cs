@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections;
+using System.Windows.Data;
 using System.Windows.Input;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
@@ -135,12 +136,21 @@ namespace System.Windows.Controls
                             // Uncheck all checked RadioButtons but this one
                             if (radioButton != this && radioButton.IsChecked is true)
                             {
-                                DependencyObject rootScope = KeyboardNavigation.GetVisualRoot(this);
-                                DependencyObject otherRoot = KeyboardNavigation.GetVisualRoot(radioButton);
+                                DependencyObject rootScope = InputElement.GetRootVisual(this);
+                                DependencyObject otherRoot = InputElement.GetRootVisual(radioButton);
 
                                 // If elements have the same group name but the visual roots are different, we still treat them
                                 // as unique since we want to promote reuse of group names to make them easier to work with.
                                 if (rootScope != otherRoot)
+                                    continue;
+
+                                // Allow binding sharing under the same visual root
+                                BindingExpression rootBindingSource = GetBindingExpression(IsCheckedProperty);
+                                BindingExpression otherBindingSource = radioButton.GetBindingExpression(IsCheckedProperty);
+
+                                if (rootBindingSource is not null && otherBindingSource is not null &&
+                                    rootBindingSource.SourceItem == otherBindingSource.SourceItem &&
+                                    rootBindingSource.SourcePropertyName == otherBindingSource.SourcePropertyName)
                                     continue;
 
                                 radioButton.UncheckRadioButton();

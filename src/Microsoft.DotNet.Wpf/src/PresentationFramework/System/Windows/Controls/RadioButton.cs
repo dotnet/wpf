@@ -1,13 +1,12 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Collections;
+using System.Windows.Input;
 using System.ComponentModel;
 using System.Runtime.InteropServices;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls.Primitives;
-using System.Windows.Input;
-using System.Windows.Media;
 using MS.Internal.Telemetry.PresentationFramework;
 
 // Disable CS3001: Warning as Error: not CLS-compliant
@@ -123,20 +122,29 @@ namespace System.Windows.Controls
             string groupName = GroupName;
             if (!string.IsNullOrEmpty(groupName))
             {
-                Visual rootScope = KeyboardNavigation.GetVisualRoot(this);
-
                 t_groupNameToElements ??= new Dictionary<string, List<WeakReference<RadioButton>>>(1);
 
-                // Get all elements bound to this key and remove this element
+                // Get all elements bound to this key
                 if (t_groupNameToElements.TryGetValue(groupName, out List<WeakReference<RadioButton>> elements))
                 {
                     for (int i = elements.Count - 1; i >= 0; i--)
                     {
+                        // Either remove the dead element or uncheck if we're checked
                         if (elements[i].TryGetTarget(out RadioButton radioButton))
                         {
-                            // Uncheck all checked RadioButtons different from the current one
-                            if (radioButton != this && radioButton.IsChecked is true && rootScope == KeyboardNavigation.GetVisualRoot(radioButton))
+                            // Uncheck all checked RadioButtons but this one
+                            if (radioButton != this && radioButton.IsChecked is true)
+                            {
+                                DependencyObject rootScope = KeyboardNavigation.GetVisualRoot(this);
+                                DependencyObject otherRoot = KeyboardNavigation.GetVisualRoot(radioButton);
+
+                                // If elements have the same group name but the visual roots are different, we still treat them
+                                // as unique since we want to promote reuse of group names to make them easier to work with.
+                                if (rootScope != otherRoot)
+                                    continue;
+
                                 radioButton.UncheckRadioButton();
+                            }
                         }
                         else
                         {
@@ -148,17 +156,19 @@ namespace System.Windows.Controls
             }
             else // Logical parent should be the group
             {
-                DependencyObject parent = this.Parent;
-                if (parent != null)
+                DependencyObject parent = Parent;
+                if (parent is not null)
                 {
                     // Traverse logical children
                     IEnumerable children = LogicalTreeHelper.GetChildren(parent);
                     IEnumerator itor = children.GetEnumerator();
                     while (itor.MoveNext())
                     {
-                        RadioButton rb = itor.Current as RadioButton;
-                        if (rb != null && rb != this && string.IsNullOrEmpty(rb.GroupName) && (rb.IsChecked == true))
-                            rb.UncheckRadioButton();
+                        if (itor.Current is RadioButton radioButton && radioButton.IsChecked is true &&
+                            radioButton != this && string.IsNullOrEmpty(radioButton.GroupName))
+                        {
+                            radioButton.UncheckRadioButton();
+                        }
                     }
                 }
             }
@@ -181,7 +191,7 @@ namespace System.Windows.Controls
             "GroupName",
             typeof(string),
             typeof(RadioButton),
-            new FrameworkPropertyMetadata(String.Empty, new PropertyChangedCallback(OnGroupNameChanged)));
+            new FrameworkPropertyMetadata(string.Empty, new PropertyChangedCallback(OnGroupNameChanged)));
 
         /// <summary>
         /// GroupName determine mutually excusive radiobutton groups
@@ -208,9 +218,9 @@ namespace System.Windows.Controls
         /// <summary>
         /// Creates AutomationPeer (<see cref="UIElement.OnCreateAutomationPeer"/>)
         /// </summary>
-        protected override System.Windows.Automation.Peers.AutomationPeer OnCreateAutomationPeer()
+        protected override AutomationPeer OnCreateAutomationPeer()
         {
-            return new System.Windows.Automation.Peers.RadioButtonAutomationPeer(this);
+            return new RadioButtonAutomationPeer(this);
         }
 
         /// <summary>
@@ -250,10 +260,6 @@ namespace System.Windows.Controls
 
         #endregion
 
-        #region Accessibility
-
-        #endregion Accessibility
-
         #region DTypeThemeStyleKey
 
         // Returns the DependencyObjectType for the registered ThemeStyleKey's default
@@ -263,7 +269,7 @@ namespace System.Windows.Controls
             get { return _dType; }
         }
 
-        private static DependencyObjectType _dType;
+        private static readonly DependencyObjectType _dType;
 
         #endregion DTypeThemeStyleKey
 

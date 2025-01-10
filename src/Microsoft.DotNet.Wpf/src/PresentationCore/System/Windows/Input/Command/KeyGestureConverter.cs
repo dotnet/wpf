@@ -123,41 +123,37 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (destinationType == typeof(string))
+            if (destinationType != typeof(string))
+                throw GetConvertToException(value, destinationType);
+
+            // Following checks are here to match the previous behavior
+            if (value is null)
+                return string.Empty;
+
+            if (value is not KeyGesture keyGesture)
+                throw GetConvertToException(value, destinationType);
+
+            // If the key is None, nothing else matters
+            if (keyGesture.Key is Key.None)
+                return string.Empty;
+
+            // You will only get string.Empty from KeyConverter for Key.None and we've checked that above
+            string strKey = (string)keyConverter.ConvertTo(context, culture, keyGesture.Key, destinationType);
+
+            // Prepend modifiers if there are any (TODO: ConvertMultipleModifiers is gonna crumble on no matching mods)
+            ReadOnlySpan<char> modifierSpan = ModifierKeysConverter.ConvertMultipleModifiers(keyGesture.Modifiers, stackalloc char[22]);
+            if (modifierSpan.IsEmpty)
             {
-                if (value != null)
-                {
-                    KeyGesture keyGesture = value as KeyGesture;
-                    if (keyGesture != null)
-                    {
-                        if (keyGesture.Key == Key.None)
-                            return String.Empty;
-
-                        string strBinding = "" ;
-                        string strKey = (string)keyConverter.ConvertTo(context, culture, keyGesture.Key, destinationType) as string;
-                        if (strKey != String.Empty)
-                        {
-                            strBinding += modifierKeysConverter.ConvertTo(context, culture, keyGesture.Modifiers, destinationType) as string;
-                            if (strBinding != String.Empty)
-                            {
-                                strBinding += MODIFIERS_DELIMITER;
-                            }
-                            strBinding += strKey;
-
-                            if (!String.IsNullOrEmpty(keyGesture.DisplayString))
-                            {
-                                strBinding += DISPLAYSTRING_SEPARATOR + keyGesture.DisplayString;
-                            }
-                        }
-                        return strBinding;
-                    }
-                }
-                else
-                {
-                    return String.Empty;
-                }
+                // No modifiers, just binding (possibly with with display string)
+                return string.IsNullOrEmpty(keyGesture.DisplayString) ? strKey : $"{strKey},{keyGesture.DisplayString}";
             }
-            throw GetConvertToException(value,destinationType);
+
+            // Append display string if there's any, like "Ctrl+A,Description"
+            if (!string.IsNullOrEmpty(keyGesture.DisplayString))
+                return string.Create(CultureInfo.InvariantCulture, stackalloc char[168], $"{modifierSpan}+{strKey},{keyGesture.DisplayString}");
+
+            // We just put together modifiers and key, like "Ctrl+A"
+            return string.Create(CultureInfo.InvariantCulture, stackalloc char[50], $"{modifierSpan}+{strKey}");
         }
 
         /// <summary>

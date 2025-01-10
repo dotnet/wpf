@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -123,10 +123,32 @@ namespace System.Windows.Input
             };
         }
 
-        private static string ConvertMultipleModifiers(ModifierKeys modifiers)
+        /// <summary>
+        /// This is a proxy function for <see cref="ConvertMultipleModifiers(ModifierKeys, Span{char})"/>
+        /// so we do not initialize a stack-allocated buffer when we do not need to.
+        /// </summary>
+        /// <param name="modifiers">The modifiers bits to format.</param>
+        /// <returns>Formatted <paramref name="modifiers"/> in [modifier_1]+[modifier_2] format.</returns>
+        [MethodImpl(MethodImplOptions.NoInlining)]
+        internal static string ConvertMultipleModifiers(ModifierKeys modifiers)
+        {
+            return new string(ConvertMultipleModifiers(modifiers, stackalloc char[22]));
+        }
+
+        /// <summary>
+        /// Format multiple <paramref name="modifiers"/> into <paramref name="modifierSpan"/>-provided buffer.
+        /// </summary>
+        /// <param name="modifiers">The modifiers bits to format.</param>
+        /// <param name="modifierSpan">The buffer to write formatted modifiers into.</param>
+        /// <returns>Formatted <paramref name="modifiers"/> in [modifier_1]+[modifier_2] format.</returns>
+        /// <remarks>
+        /// Make sure the <paramref name="modifierSpan"/> is at least 22 chars long, otherwise conversion might fail.
+        /// </remarks>
+        internal static ReadOnlySpan<char> ConvertMultipleModifiers(ModifierKeys modifiers, Span<char> modifierSpan)
         {
             // Ctrl+Alt+Windows+Shift is the maximum char length, though the composition of such value is improbable
-            Span<char> modifierSpan = stackalloc char[22];
+            Debug.Assert(modifierSpan.Length > 21);
+
             int totalLength = 0;
 
             if (modifiers.HasFlag(ModifierKeys.Control))
@@ -141,14 +163,14 @@ namespace System.Windows.Input
             if (modifiers.HasFlag(ModifierKeys.Shift))
                 AppendWithDelimiter("Shift", ref totalLength, ref modifierSpan);
 
-            //Helper function to concatenate modifiers
+            // Helper function to concatenate modifiers
             [MethodImpl(MethodImplOptions.AggressiveInlining)]
             static void AppendWithDelimiter(string literal, ref int totalLength, ref Span<char> modifierSpan)
             {
                 // If this is not the first modifier in the span, we prepend a delimiter (e.g. Ctrl -> Ctrl+Alt)
                 if (totalLength > 0)
                 {
-                    "+".CopyTo(modifierSpan.Slice(totalLength));
+                    modifierSpan[totalLength] = '+';
                     totalLength++;
                 }
 
@@ -156,7 +178,7 @@ namespace System.Windows.Input
                 totalLength += literal.Length;
             }
 
-            return new string(modifierSpan.Slice(0, totalLength));
+            return modifierSpan.Slice(0, totalLength);
         }
 
         /// <summary>

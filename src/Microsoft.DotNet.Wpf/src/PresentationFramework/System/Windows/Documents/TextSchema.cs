@@ -502,7 +502,7 @@ namespace System.Windows.Documents
             }
             else if (typeof(LineBreak).IsAssignableFrom(type))
             {
-                return _emptyPropertyList;
+                return Array.Empty<DependencyProperty>();
             }
             else if (typeof(Floater).IsAssignableFrom(type))
             {
@@ -560,7 +560,7 @@ namespace System.Windows.Documents
             }
 
             Invariant.Assert(false, "We do not expect any unknown elements derived directly from TextElement. Schema must have been checking for that");
-            return _emptyPropertyList; // to make compiler happy
+            return Array.Empty<DependencyProperty>(); // to make compiler happy
         }
 
         // Compares two values for equality
@@ -1201,9 +1201,6 @@ namespace System.Windows.Documents
             { 
                 UIElement.AllowDropProperty,
             };
-
-        // Empty property list
-        private static readonly DependencyProperty[] _emptyPropertyList = new DependencyProperty[] { };
 
         // Structural property list.
         // NB: Existing code depends on these being inheritable properties.

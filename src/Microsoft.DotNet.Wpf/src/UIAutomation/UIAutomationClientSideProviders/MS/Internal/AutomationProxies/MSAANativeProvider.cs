@@ -570,7 +570,7 @@ namespace MS.Internal.AutomationProxies
 
             Accessible[] accessibles = _acc.GetSelection();
             if (accessibles == null)
-                return new IRawElementProviderSimple[] {};
+                return Array.Empty<IRawElementProviderSimple>();
 
             IRawElementProviderSimple [] rawEPS= new IRawElementProviderSimple[accessibles.Length];
             for (int i=0;i<accessibles.Length;i++)

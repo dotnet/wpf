@@ -34,6 +34,26 @@ namespace System.Windows.Input
             return sourceType == typeof(string);
         }
 
+        ///<summary>
+        ///TypeConverter method override. 
+        ///</summary>
+        ///<param name="context">ITypeDescriptorContext</param>
+        ///<param name="destinationType">Type to convert to</param>
+        ///<returns>true if conversion is possible</returns>
+        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
+        {
+            // We can convert to an InstanceDescriptor or to a string.
+            if (destinationType != typeof(string))
+                return false;
+
+            // When invoked by the serialization engine we can convert to string only for known type
+            if (context?.Instance is not MouseGesture mouseGesture)
+                return false;
+
+            return ModifierKeysConverter.IsDefinedModifierKeys(mouseGesture.Modifiers) &&
+                   MouseActionConverter.IsDefinedMouseAction(mouseGesture.MouseAction);
+        }
+
         /// <summary>
         /// ConvertFrom
         /// </summary>
@@ -95,31 +115,6 @@ namespace System.Windows.Input
                 }
             }
             throw GetConvertFromException(source);
-        }
-
-        ///<summary>
-        ///TypeConverter method override. 
-        ///</summary>
-        ///<param name="context">ITypeDescriptorContext</param>
-        ///<param name="destinationType">Type to convert to</param>
-        ///<returns>true if conversion is possible</returns>
-        public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
-        {
-            // We can convert to an InstanceDescriptor or to a string.
-            if (destinationType == typeof(string))
-            {
-                // When invoked by the serialization engine we can convert to string only for known type
-                if (context != null && context.Instance != null)
-                {
-                    MouseGesture mouseGesture = context.Instance as MouseGesture;
-                    if (mouseGesture != null)
-                    {
-                        return (ModifierKeysConverter.IsDefinedModifierKeys(mouseGesture.Modifiers) 
-                               && MouseActionConverter.IsDefinedMouseAction(mouseGesture.MouseAction));
-                    }
-                 }
-            }
-            return false;
         }
 
         /// <summary>

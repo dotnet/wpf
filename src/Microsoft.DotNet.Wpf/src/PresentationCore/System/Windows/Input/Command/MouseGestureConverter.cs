@@ -72,8 +72,8 @@ namespace System.Windows.Input
             int index = trimmedSource.LastIndexOf('+');
             if (index >= 0)
             {
-                ReadOnlySpan<char> mouseActionToken = trimmedSource.Slice(index + 1).TrimStart();
-                ReadOnlySpan<char> modifiersToken = trimmedSource.Slice(0, index).TrimEnd();
+                ReadOnlySpan<char> mouseActionToken = trimmedSource.Slice(index + 1).Trim();
+                ReadOnlySpan<char> modifiersToken = trimmedSource.Slice(0, index).Trim();
 
                 return new MouseGesture(MouseActionConverter.ConvertFromImpl(mouseActionToken), ModifierKeysConverter.ConvertFromImpl(modifiersToken));
             }

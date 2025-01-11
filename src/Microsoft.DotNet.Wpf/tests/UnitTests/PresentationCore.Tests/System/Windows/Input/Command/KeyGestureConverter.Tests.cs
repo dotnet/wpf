@@ -64,6 +64,10 @@ public sealed class KeyGestureConverterTests
             yield return new object?[] { false, true, new KeyGesture(Key.F5, ModifierKeys.Windows), typeof(MouseGesture) };
             yield return new object?[] { false, true, new KeyGesture(Key.A, ModifierKeys.Alt), typeof(Key) };
             yield return new object?[] { false, true, new KeyGesture(Key.F5, ModifierKeys.Windows), typeof(ModifierKeys) };
+            // Unsupported cases (Wrong Context Instance)
+            yield return new object?[] { false, true, new MouseGesture(MouseAction.LeftClick, ModifierKeys.Alt), typeof(string) };
+            yield return new object?[] { false, true, MouseAction.WheelClick, typeof(string) };
+            yield return new object?[] { false, true, Key.F1, typeof(string) };
 
             // We do not test for malformed KeyGesture as KeyGesture has to perform its own validation and shall be enforced via its own unit tests
         }

@@ -505,7 +505,9 @@ namespace Microsoft.Build.Tasks.Windows
                                 collector.RootElementLinePosition = reader.LinePosition;
                             }
 
-                            if (reader.Name.IndexOf('.') >= 0)
+#pragma warning disable CA1847
+                            if (reader.Name.Contains("."))
+#pragma warning restore CA1847
                             {
                                 // the name has a dot, which suggests it is a property tag.
                                 // we will ignore adding uid

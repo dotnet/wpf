@@ -63,58 +63,22 @@ namespace System.Windows.Input
         /// <returns></returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
-            if (source is string && source != null)
+            if (source is not string sourceString)
+                throw GetConvertFromException(source);
+
+            ReadOnlySpan<char> trimmedSource = sourceString.AsSpan().Trim();
+
+            // Break apart MouseAction and ModifierKeys
+            int index = trimmedSource.LastIndexOf('+');
+            if (index >= 0)
             {
-                string fullName = ((string)source).Trim();
-                string mouseActionToken;
-                string modifiersToken;
+                ReadOnlySpan<char> mouseActionToken = trimmedSource.Slice(index + 1).TrimStart();
+                ReadOnlySpan<char> modifiersToken = trimmedSource.Slice(0, index).TrimEnd();
 
-                if (fullName.Length == 0)
-                    return new MouseGesture(MouseAction.None, ModifierKeys.None);
-
-                // break apart LocalName and Prefix
-                int Offset = fullName.LastIndexOf(MODIFIERS_DELIMITER);
-                if (Offset >= 0)
-                {   // modifiers exists
-                    modifiersToken      = fullName.Substring(0,Offset);
-                    mouseActionToken = fullName.Substring(Offset + 1);
-                }
-                else
-                {
-                    modifiersToken       = String.Empty;
-                    mouseActionToken  = fullName;
-                }             
-                
-                TypeConverter mouseActionConverter = TypeDescriptor.GetConverter(typeof(System.Windows.Input.MouseAction));
-                if (null != mouseActionConverter )
-                {
-                    object mouseAction = mouseActionConverter.ConvertFrom(context, culture, mouseActionToken);
-                    // mouseAction Converter will throw Exception, if it fails, 
-                    // so we don't need to check once more for bogus 
-                    // MouseAction values
-                    if (mouseAction != null)
-                    {
-                        if (modifiersToken != String.Empty)
-                        {
-                            TypeConverter modifierKeysConverter = TypeDescriptor.GetConverter(typeof(System.Windows.Input.ModifierKeys));
-                            if (null != modifierKeysConverter)
-                            {
-                                object modifierKeys = modifierKeysConverter.ConvertFrom(context, culture, modifiersToken);
-
-                                if (modifierKeys != null && modifierKeys is ModifierKeys)
-                                {
-                                    return new MouseGesture((MouseAction)mouseAction, (ModifierKeys)modifierKeys);
-                                }
-                            }
-                        }
-                        else
-                        {
-                            return new MouseGesture((MouseAction)mouseAction);
-                        }
-                    }
-                }
+                return new MouseGesture(MouseActionConverter.ConvertFromImpl(mouseActionToken), ModifierKeysConverter.ConvertFromImpl(modifiersToken));
             }
-            throw GetConvertFromException(source);
+
+            return new MouseGesture(MouseActionConverter.ConvertFromImpl(trimmedSource), ModifierKeys.None);
         }
 
         /// <summary>

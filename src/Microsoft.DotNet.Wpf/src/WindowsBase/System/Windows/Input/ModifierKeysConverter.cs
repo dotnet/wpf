@@ -58,6 +58,18 @@ namespace System.Windows.Input
 
             ReadOnlySpan<char> modifiersToken = stringSource.AsSpan().Trim();
 
+            return ConvertFromImpl(modifiersToken);
+        }
+
+        /// <summary>
+        /// Converts <paramref name="modifiersToken"/> to its <see cref="ModifierKeys"/> represensation.
+        /// </summary>
+        /// <remarks>
+        /// <paramref name="modifiersToken"/> is expected to have <see cref="ModifierKeys"/> separated with '+', with any amount of whitespace.
+        /// </remarks>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static ModifierKeys ConvertFromImpl(ReadOnlySpan<char> modifiersToken)
+        {
             // Empty token means there were no modifiers, exit early
             if (modifiersToken.IsEmpty)
                 return ModifierKeys.None;

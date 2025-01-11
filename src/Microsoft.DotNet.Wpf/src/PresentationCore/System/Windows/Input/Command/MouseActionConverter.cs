@@ -1,7 +1,7 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
+using System.Runtime.CompilerServices;
 using System.ComponentModel;
 using System.Globalization;
 
@@ -57,20 +57,27 @@ namespace System.Windows.Input
                 throw GetConvertFromException(source);
 
             ReadOnlySpan<char> mouseActionToken = mouseAction.AsSpan().Trim();
-            return mouseActionToken switch
-            {
-                _ when mouseActionToken.IsEmpty => MouseAction.None, // Special casing as produced by "ConvertTo"
-                _ when mouseActionToken.Equals("None", StringComparison.OrdinalIgnoreCase) => MouseAction.None,
-                _ when mouseActionToken.Equals("LeftClick", StringComparison.OrdinalIgnoreCase) => MouseAction.LeftClick,
-                _ when mouseActionToken.Equals("RightClick", StringComparison.OrdinalIgnoreCase) => MouseAction.RightClick,
-                _ when mouseActionToken.Equals("MiddleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.MiddleClick,
-                _ when mouseActionToken.Equals("WheelClick", StringComparison.OrdinalIgnoreCase) => MouseAction.WheelClick,
-                _ when mouseActionToken.Equals("LeftDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.LeftDoubleClick,
-                _ when mouseActionToken.Equals("RightDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.RightDoubleClick,
-                _ when mouseActionToken.Equals("MiddleDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.MiddleDoubleClick,
-                _ => throw new NotSupportedException(SR.Format(SR.Unsupported_MouseAction, mouseActionToken.ToString()))
-            };
+
+            return ConvertFromImpl(mouseActionToken);
         }
+
+        /// <summary>
+        /// Converts <paramref name="mouseActionToken"/> to its <see cref="MouseAction"/> represensation.
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        internal static MouseAction ConvertFromImpl(ReadOnlySpan<char> mouseActionToken) => mouseActionToken switch
+        {
+            _ when mouseActionToken.IsEmpty => MouseAction.None, // Special casing as produced by "ConvertTo"
+            _ when mouseActionToken.Equals("None", StringComparison.OrdinalIgnoreCase) => MouseAction.None,
+            _ when mouseActionToken.Equals("LeftClick", StringComparison.OrdinalIgnoreCase) => MouseAction.LeftClick,
+            _ when mouseActionToken.Equals("RightClick", StringComparison.OrdinalIgnoreCase) => MouseAction.RightClick,
+            _ when mouseActionToken.Equals("MiddleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.MiddleClick,
+            _ when mouseActionToken.Equals("WheelClick", StringComparison.OrdinalIgnoreCase) => MouseAction.WheelClick,
+            _ when mouseActionToken.Equals("LeftDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.LeftDoubleClick,
+            _ when mouseActionToken.Equals("RightDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.RightDoubleClick,
+            _ when mouseActionToken.Equals("MiddleDoubleClick", StringComparison.OrdinalIgnoreCase) => MouseAction.MiddleDoubleClick,
+            _ => throw new NotSupportedException(SR.Format(SR.Unsupported_MouseAction, mouseActionToken.ToString()))
+        };
 
         /// <summary>
         /// Converts a <paramref name="value"/> of <see cref="MouseAction"/> to its <see langword="string"/> represensation.

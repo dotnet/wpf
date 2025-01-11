@@ -493,7 +493,7 @@ namespace System.Windows.Media.Media3D
         /// </summary>
         protected override GeometryHitTestResult HitTestCore(GeometryHitTestParameters hitTestParameters)
         {
-            throw new NotSupportedException(SR.Format(SR.HitTest_Invalid, typeof(GeometryHitTestParameters).Name, this.GetType().Name));
+            throw new NotSupportedException(SR.Format(SR.HitTest_Invalid, nameof(GeometryHitTestParameters), this.GetType().Name));
         }
 
         internal Point WorldToViewport(Point4D point)

@@ -102,6 +102,7 @@ public sealed class KeyGestureConverterTests
             yield return new object?[] { new KeyGesture(Key.A, ModifierKeys.Alt | ModifierKeys.Windows | ModifierKeys.Control, "Test String"), null, CultureInfo.InvariantCulture, "Ctrl+Alt+Windows+A,Test String" };
 
             // Supported cases (fuzzed)
+            yield return new object?[] { new KeyGesture(Key.A, ModifierKeys.Alt, "Accept+Plus"), null, CultureInfo.InvariantCulture, "Alt+A,Accept+Plus" };
             yield return new object?[] { new KeyGesture(Key.NumLock, ModifierKeys.Control), null, CultureInfo.InvariantCulture, "      Ctrl     +     NumLock     " };
             yield return new object?[] { new KeyGesture(Key.A, ModifierKeys.Alt), null, CultureInfo.InvariantCulture, "Alt+A " };
             yield return new object?[] { new KeyGesture(Key.Back, ModifierKeys.Windows, "Massive Test"), null, CultureInfo.InvariantCulture, "Windows+     Backspace,        Massive Test" };

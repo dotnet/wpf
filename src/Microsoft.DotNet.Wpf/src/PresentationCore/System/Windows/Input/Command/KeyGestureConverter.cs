@@ -11,6 +11,11 @@ namespace System.Windows.Input
     /// </summary>
     public class KeyGestureConverter : TypeConverter
     {
+        /// <summary>
+        /// To aid with conversion from <see cref="Key"/> to <see cref="string"/>. 
+        /// </summary>
+        private static readonly KeyConverter s_keyConverter = new();
+
         ///<summary>
         ///CanConvertFrom()
         ///</summary>
@@ -117,7 +122,7 @@ namespace System.Windows.Input
                 return string.Empty;
 
             // You will only get string.Empty from KeyConverter for Key.None and we've checked that above
-            string strKey = (string)keyConverter.ConvertTo(context, culture, keyGesture.Key, destinationType);
+            string strKey = (string)s_keyConverter.ConvertTo(context, culture, keyGesture.Key, destinationType);
 
             // Prepend modifiers if there are any (TODO: ConvertMultipleModifiers is gonna crumble on no matching mods)
             ReadOnlySpan<char> modifierSpan = ModifierKeysConverter.ConvertMultipleModifiers(keyGesture.Modifiers, stackalloc char[22]);
@@ -144,9 +149,6 @@ namespace System.Windows.Input
         {
             return key >= Key.None && key <= Key.OemClear;
         }
-
-        private static KeyConverter keyConverter = new KeyConverter();
-
     }
 }
 

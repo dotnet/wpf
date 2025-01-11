@@ -227,9 +227,6 @@ dotnet_diagnostic.IDE0077.severity = suggestion
 # IDE0078: Use pattern matching
 dotnet_diagnostic.IDE0078.severity = suggestion
 
-# IDE0082: 'typeof' can be converted  to 'nameof'
-dotnet_diagnostic.IDE0082.severity = suggestion
-
 # IDE0100: Remove redundant equality
 dotnet_diagnostic.IDE0100.severity = suggestion
 

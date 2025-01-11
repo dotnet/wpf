@@ -1,20 +1,13 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-//
-//
-//
-// Description: KeyGestureConverter - Converts a KeyGesture string
-//              to the *Type* that the string represents
-//
 using System.ComponentModel;    // for TypeConverter
 using System.Globalization;     // for CultureInfo
 
 namespace System.Windows.Input
 {
     /// <summary>
-    /// KeyGesture - Converter class for converting between a string and the Type of a KeyGesture
+    /// Converter class for converting between a <see cref="string"/> and <see cref="KeyGesture"/>.
     /// </summary>
     public class KeyGestureConverter : TypeConverter
     {

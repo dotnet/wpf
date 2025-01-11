@@ -101,7 +101,7 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="keyToken">The string to convert from.</param>
         /// <returns>A <see cref="Key"/> value corresponding to the specified string, <see cref="Key.None"/> if <paramref name="keyToken"/> was empty.</returns>
-        private static Key GetKeyFromString(ReadOnlySpan<char> keyToken)
+        internal static Key GetKeyFromString(ReadOnlySpan<char> keyToken)
         {
             // If the token is empty, we presume "None" as our value but it is a success
             if (keyToken.IsEmpty)

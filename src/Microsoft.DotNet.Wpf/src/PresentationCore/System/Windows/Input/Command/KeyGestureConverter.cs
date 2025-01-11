@@ -18,9 +18,6 @@ namespace System.Windows.Input
     /// </summary>
     public class KeyGestureConverter : TypeConverter
     {
-        private const char MODIFIERS_DELIMITER = '+' ;
-        internal const char DISPLAYSTRING_SEPARATOR = ',' ;
-
         ///<summary>
         ///CanConvertFrom()
         ///</summary>
@@ -61,54 +58,43 @@ namespace System.Windows.Input
         /// <returns></returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
-            if (source != null && source is string)
+            if (source is not string sourceString)
+                throw GetConvertFromException(source);
+
+            ReadOnlySpan<char> trimmedSource = sourceString.AsSpan().Trim();
+            if (trimmedSource.IsEmpty)
+                return new KeyGesture(Key.None);
+
+            ReadOnlySpan<char> keyToken;
+            ReadOnlySpan<char> modifiersToken;
+            string displayString;
+
+            // Break apart display string
+            int index = trimmedSource.IndexOf(',');
+            if (index >= 0)
             {
-                string fullName = ((string)source).Trim();
-                if (fullName.Length == 0)
-                    return new KeyGesture(Key.None);
-
-                string keyToken;
-                string modifiersToken;
-                string displayString;
-
-                // break apart display string
-                int index = fullName.IndexOf(DISPLAYSTRING_SEPARATOR);
-                if (index >= 0)
-                {
-                    displayString = fullName.Substring(index + 1).Trim();
-                    fullName      = fullName.Substring(0, index).Trim();
-                }
-                else
-                {
-                    displayString = String.Empty;
-                }
-
-                // break apart key and modifiers
-                index = fullName.LastIndexOf(MODIFIERS_DELIMITER);
-                if (index >= 0)
-                {   // modifiers exists
-                    modifiersToken = fullName.Substring(0, index);
-                    keyToken       = fullName.Substring(index + 1);
-                }
-                else
-                {
-                    modifiersToken = String.Empty;
-                    keyToken       = fullName;
-                }
-
-                ModifierKeys modifiers = ModifierKeys.None;
-                object resultkey = keyConverter.ConvertFrom(context, culture, keyToken);
-                if (resultkey != null)
-                {
-                    object temp = modifierKeysConverter.ConvertFrom(context, culture, modifiersToken);
-                    if (temp != null)
-                    {
-                        modifiers = (ModifierKeys)temp;
-                    }
-                    return new KeyGesture((Key)resultkey, modifiers, displayString);
-                }
+                displayString = trimmedSource.Slice(index + 1).Trim().ToString();
+                trimmedSource = trimmedSource.Slice(0, index).Trim();
             }
-            throw GetConvertFromException(source);
+            else
+            {
+                displayString = string.Empty;
+            }
+
+            // Break apart key and modifiers
+            index = trimmedSource.LastIndexOf('+');
+            if (index >= 0)
+            {
+                modifiersToken = trimmedSource.Slice(0, index);
+                keyToken = trimmedSource.Slice(index + 1).Trim();
+            }
+            else
+            {
+                modifiersToken = ReadOnlySpan<char>.Empty;
+                keyToken = trimmedSource;
+            }
+
+            return new KeyGesture(KeyConverter.GetKeyFromString(keyToken), ModifierKeysConverter.ConvertFromImpl(modifiersToken), displayString);
         }
 
         /// <summary>
@@ -167,7 +153,7 @@ namespace System.Windows.Input
         }
 
         private static KeyConverter keyConverter = new KeyConverter();
-        private static ModifierKeysConverter modifierKeysConverter = new ModifierKeysConverter();
+
     }
 }
 

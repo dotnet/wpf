@@ -138,13 +138,12 @@ namespace System.Windows.Input
             // You will only get string.Empty from KeyConverter for Key.None and we've checked that above
             string strKey = (string)s_keyConverter.ConvertTo(context, culture, keyGesture.Key, destinationType);
 
-            // Prepend modifiers if there are any (TODO: ConvertMultipleModifiers is gonna crumble on no matching mods)
-            ReadOnlySpan<char> modifierSpan = ModifierKeysConverter.ConvertMultipleModifiers(keyGesture.Modifiers, stackalloc char[22]);
-            if (modifierSpan.IsEmpty)
-            {
-                // No modifiers, just binding (possibly with with display string)
+            // No modifiers, just binding (possibly with with display string)
+            if (keyGesture.Modifiers is ModifierKeys.None)
                 return string.IsNullOrEmpty(keyGesture.DisplayString) ? strKey : $"{strKey},{keyGesture.DisplayString}";
-            }
+
+            // Prepend modifiers
+            ReadOnlySpan<char> modifierSpan = ModifierKeysConverter.ConvertMultipleModifiers(keyGesture.Modifiers, stackalloc char[22]);
 
             // Append display string if there's any, like "Ctrl+A,Description"
             if (!string.IsNullOrEmpty(keyGesture.DisplayString))

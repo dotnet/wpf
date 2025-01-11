@@ -20,8 +20,11 @@ namespace System.Windows.Input
     /// </summary>
     public class MouseGestureConverter : TypeConverter
     {
-        private const char MODIFIERS_DELIMITER = '+' ;
-        
+        /// <summary>
+        /// To aid with conversion from <see cref="MouseAction"/> to <see cref="string"/>. 
+        /// </summary>
+        private static readonly MouseActionConverter s_mouseActionConverter = new();
+
         ///<summary>
         /// CanConvertFrom()
         ///</summary>
@@ -93,34 +96,25 @@ namespace System.Windows.Input
         {
             ArgumentNullException.ThrowIfNull(destinationType);
 
-            if (destinationType == typeof(string))
-            {
-                if (value == null)
-                    return String.Empty;
+            if (destinationType != typeof(string))
+                throw GetConvertToException(value, destinationType);
 
-                MouseGesture mouseGesture = value as MouseGesture;
-                if (mouseGesture != null)
-                {
-                    string strGesture = "";
+            // Following checks are here to match the previous behavior
+            if (value is null)
+                return string.Empty;
 
-                    TypeConverter modifierKeysConverter = TypeDescriptor.GetConverter(typeof(System.Windows.Input.ModifierKeys));
-                    if (null != modifierKeysConverter)
-                    {
-                        strGesture += modifierKeysConverter.ConvertTo(context, culture, mouseGesture.Modifiers, destinationType) as string;
-                        if (strGesture != String.Empty)
-                        {
-                            strGesture += MODIFIERS_DELIMITER ;
-                        }
-                    }
-                    TypeConverter mouseActionConverter = TypeDescriptor.GetConverter(typeof(System.Windows.Input.MouseAction));
-                    if (null != mouseActionConverter)
-                    {
-                        strGesture += mouseActionConverter.ConvertTo(context, culture, mouseGesture.MouseAction, destinationType) as string;
-                    }                             
-                    return strGesture;
-                }
-            }
-            throw GetConvertToException(value,destinationType);
+            if (value is not MouseGesture mouseGesture)
+                throw GetConvertToException(value, destinationType);
+
+            string mouseAction = (string)s_mouseActionConverter.ConvertTo(context, culture, mouseGesture.MouseAction, destinationType);
+
+            if (mouseGesture.Modifiers is ModifierKeys.None)
+                return mouseAction;
+
+            ReadOnlySpan<char> modifierSpan = ModifierKeysConverter.ConvertMultipleModifiers(mouseGesture.Modifiers, stackalloc char[22]);
+
+            // This will result in "Ctrl+" in case MouseAction was None but that's fine
+            return string.Create(CultureInfo.InvariantCulture, stackalloc char[42], $"{modifierSpan}+{mouseAction}");
         }
     }
 }

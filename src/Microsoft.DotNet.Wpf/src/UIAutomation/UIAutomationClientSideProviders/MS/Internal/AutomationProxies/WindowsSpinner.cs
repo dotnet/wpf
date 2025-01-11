@@ -13,7 +13,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Proxy for a Windows NumericUpDown control with Windows Edit control, called a Spinner
-    class WindowsSpinner : ProxyHwnd, IRangeValueProvider
+    internal class WindowsSpinner : ProxyHwnd, IRangeValueProvider
     {
         // ------------------------------------------------------
         //

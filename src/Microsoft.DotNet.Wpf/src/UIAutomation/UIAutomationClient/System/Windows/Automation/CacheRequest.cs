@@ -462,7 +462,7 @@ namespace System.Windows.Automation
         // Ensure that this CacheRequest isn't currently in use
         // Must be called within a lock(_instanceLock) to ensure
         // thread consistency
-        void CheckAccess()
+        private void CheckAccess()
         {
             // Make sure this isn't being used by any thread's
             // CacheRequest stacks by using a refcount:
@@ -476,7 +476,7 @@ namespace System.Windows.Automation
 
         // Called when state changes - sets _uiaCacheRequest to null
         // to ensure that a clean one is generated next time Push is called
-        void Invalidate()
+        private void Invalidate()
         {
             _uiaCacheRequest = null;
         }
@@ -495,22 +495,22 @@ namespace System.Windows.Automation
         //--- Instance state ---
 
         // Current mutable state...
-        Condition _viewCondition;
-        TreeScope _scope;
-        ArrayList _properties;
-        ArrayList _patterns;
-        AutomationElementMode _automationElementMode;
+        private Condition _viewCondition;
+        private TreeScope _scope;
+        private ArrayList _properties;
+        private ArrayList _patterns;
+        private AutomationElementMode _automationElementMode;
 
         // When we Push, the current state is bundled into this, which is
         // immutable. This is what the underlying requesting mechanism uses
-        UiaCoreApi.UiaCacheRequest _uiaCacheRequest;
+        private UiaCoreApi.UiaCacheRequest _uiaCacheRequest;
 
         // Used to track whether this instance is in use - inc'd on Push,
         // dec'd on Pop...
-        int _refCount = 0;
+        private int _refCount = 0;
 
         // Used to lock on this instance...
-        readonly object _instanceLock = null;
+        private readonly object _instanceLock = null;
 
         //--- Per-Thread state ---
 

@@ -16,16 +16,16 @@ namespace System.Windows.Markup
         internal class XamlTypeMapperSchemaContext : XamlSchemaContext
         {
             // Initialized in constructor
-            Dictionary<string, FrugalObjectList<string>> _nsDefinitions;
-            XamlTypeMapper _typeMapper;
-            WpfSharedXamlSchemaContext _sharedSchemaContext;
+            private Dictionary<string, FrugalObjectList<string>> _nsDefinitions;
+            private XamlTypeMapper _typeMapper;
+            private WpfSharedXamlSchemaContext _sharedSchemaContext;
 
             // Lock on syncObject
-            readonly object syncObject = new object();
-            Dictionary<string, string> _piNamespaces;
-            IEnumerable<string> _allXamlNamespaces;
-            Dictionary<Type, XamlType> _allowedInternalTypes;
-            HashSet<string> _clrNamespaces;
+            private readonly object syncObject = new object();
+            private Dictionary<string, string> _piNamespaces;
+            private IEnumerable<string> _allXamlNamespaces;
+            private Dictionary<Type, XamlType> _allowedInternalTypes;
+            private HashSet<string> _clrNamespaces;
 
             internal XamlTypeMapperSchemaContext(XamlTypeMapper typeMapper)
                 : base() 

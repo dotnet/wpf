@@ -1124,7 +1124,7 @@ namespace System.Windows.Media
         #region Private Fields
 
         [MarshalAs(UnmanagedType.Interface)]
-        ColorContext context;
+        private ColorContext context;
 
         private struct MILColorF // this structure is the "milrendertypes.h" structure and should be identical for performance
         {

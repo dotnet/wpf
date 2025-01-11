@@ -11,7 +11,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsGrip: ProxyFragment
+    internal class WindowsGrip: ProxyFragment
     {
         // ------------------------------------------------------
         //

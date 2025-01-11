@@ -15,7 +15,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media
 {
-    sealed partial class BitmapCache : CacheMode
+    public sealed partial class BitmapCache : CacheMode
     {
         //------------------------------------------------------
         //

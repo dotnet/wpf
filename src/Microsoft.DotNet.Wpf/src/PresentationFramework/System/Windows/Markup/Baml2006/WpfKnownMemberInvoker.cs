@@ -7,11 +7,11 @@ using System.Reflection;
 
 namespace System.Windows.Baml2006
 {
-    class WpfKnownMemberInvoker : XamlMemberInvoker
+    internal class WpfKnownMemberInvoker : XamlMemberInvoker
     {
-        WpfKnownMember _member;
-        bool _hasShouldSerializeMethodBeenLookedup = false;
-        MethodInfo _shouldSerializeMethod = null;
+        private WpfKnownMember _member;
+        private bool _hasShouldSerializeMethodBeenLookedup = false;
+        private MethodInfo _shouldSerializeMethod = null;
 
         public WpfKnownMemberInvoker(WpfKnownMember member) : base(member)
         {

@@ -14,7 +14,7 @@ using System.Windows.Media.Animation;
 
 namespace System.Windows.Media.Media3D
 {
-    abstract partial class GeneralTransform3D : Animatable, IFormattable
+    public abstract partial class GeneralTransform3D : Animatable, IFormattable
     {
         //------------------------------------------------------
         //

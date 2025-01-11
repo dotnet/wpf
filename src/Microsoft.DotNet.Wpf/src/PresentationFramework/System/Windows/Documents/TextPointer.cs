@@ -3808,7 +3808,7 @@ namespace System.Windows.Documents
 
 #if DEBUG
         // Debug-only unique identifier for this instance.
-        int DebugId
+        private int DebugId
         {
             get
             {

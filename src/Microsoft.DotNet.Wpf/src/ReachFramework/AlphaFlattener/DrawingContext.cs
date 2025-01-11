@@ -201,7 +201,7 @@ namespace Microsoft.Internal.AlphaFlattener
     internal class BrushProxyDecomposer : IProxyDrawingContext
     {
 #if DEBUG
-        static int _seq; // = 0;
+        private static int _seq; // = 0;
         private string         _comment;
 #endif
 

@@ -131,7 +131,7 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
 
-        void ProcessInput(
+        private void ProcessInput(
             RawStylusActions actions,
             PenContext penContext,
             int tabletDeviceId, 
@@ -518,7 +518,7 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
         // NOTE: this is called on pen thread (outside of apps Dispatcher)
-        StylusPlugInCollection HittestPlugInCollection(Point pt)
+        private StylusPlugInCollection HittestPlugInCollection(Point pt)
         {
             // Caller must make call to this routine inside of lock(__rtiLock)!
             
@@ -539,15 +539,15 @@ namespace System.Windows.Input
 
         internal HwndSource _inputSource;
 
-        WispLogic                      _stylusLogic;
+        private WispLogic                      _stylusLogic;
 
-        object                       __rtiLock = new object();
-        List<StylusPlugInCollection> _plugInCollectionList = new List<StylusPlugInCollection>();
+        private object                       __rtiLock = new object();
+        private List<StylusPlugInCollection> _plugInCollectionList = new List<StylusPlugInCollection>();
 
-        PenContext[]        _contexts;
+        private PenContext[]        _contexts;
         
-        bool                _isWindowDisabled;
-        Point               _destroyedLocation = new Point(0,0);
+        private bool                _isWindowDisabled;
+        private Point               _destroyedLocation = new Point(0,0);
     }
 }
 

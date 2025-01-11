@@ -61,7 +61,7 @@ namespace MS.Internal.Utility
                 return string.Create(CultureInfo.InvariantCulture, $"{o.GetType().Name}.{o.GetHashCode()}");
         }
 
-        ArrayList _log;
-        int _size;
+        private ArrayList _log;
+        private int _size;
     }
 }

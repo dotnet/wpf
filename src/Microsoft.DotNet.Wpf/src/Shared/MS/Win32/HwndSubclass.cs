@@ -430,7 +430,7 @@ namespace MS.Win32
         /// <returns>
         ///     The value that is the result of processing the message.
         /// </returns>
-        IntPtr CallOldWindowProc(IntPtr oldWndProc, IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam)
+        private IntPtr CallOldWindowProc(IntPtr oldWndProc, IntPtr hwnd, WindowMessage msg, IntPtr wParam, IntPtr lParam)
         {
             return UnsafeNativeMethods.CallWindowProc(oldWndProc, hwnd, (int)msg, wParam, lParam);
         }

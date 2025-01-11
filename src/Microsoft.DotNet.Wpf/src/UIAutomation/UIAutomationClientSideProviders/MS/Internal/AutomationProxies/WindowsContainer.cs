@@ -12,7 +12,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsContainer : ProxyHwnd, IRawElementProviderHwndOverride
+    internal class WindowsContainer : ProxyHwnd, IRawElementProviderHwndOverride
     {
         // ------------------------------------------------------
         //

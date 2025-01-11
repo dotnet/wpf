@@ -13,8 +13,7 @@ namespace MS.Internal
                 delegate() { return PresentationTraceSources.RoutedEventSource; },
                 delegate() { PresentationTraceSources._RoutedEventSource = null; }
                 );
-
-		static AvTraceDetails _RaiseEvent;
+        private static AvTraceDetails _RaiseEvent;
 		static public AvTraceDetails RaiseEvent
         {
             get
@@ -28,7 +27,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _ReRaiseEventAs;
+        private static AvTraceDetails _ReRaiseEventAs;
 		static public AvTraceDetails ReRaiseEventAs
         {
             get
@@ -42,7 +41,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _HandleEvent;
+        private static AvTraceDetails _HandleEvent;
 		static public AvTraceDetails HandleEvent
         {
             get
@@ -56,7 +55,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _InvokeHandlers;
+        private static AvTraceDetails _InvokeHandlers;
 		static public AvTraceDetails InvokeHandlers
         {
             get
@@ -141,8 +140,7 @@ namespace MS.Internal
                 delegate() { return PresentationTraceSources.AnimationSource; },
                 delegate() { PresentationTraceSources._AnimationSource = null; }
                 );
-
-		static AvTraceDetails _StoryboardBegin;
+        private static AvTraceDetails _StoryboardBegin;
 		static public AvTraceDetails StoryboardBegin
         {
             get
@@ -156,7 +154,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _StoryboardPause;
+        private static AvTraceDetails _StoryboardPause;
 		static public AvTraceDetails StoryboardPause
         {
             get
@@ -170,7 +168,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _StoryboardRemove;
+        private static AvTraceDetails _StoryboardRemove;
 		static public AvTraceDetails StoryboardRemove
         {
             get
@@ -184,7 +182,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _StoryboardResume;
+        private static AvTraceDetails _StoryboardResume;
 		static public AvTraceDetails StoryboardResume
         {
             get
@@ -198,7 +196,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _StoryboardStop;
+        private static AvTraceDetails _StoryboardStop;
 		static public AvTraceDetails StoryboardStop
         {
             get
@@ -212,7 +210,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _StoryboardNotApplied;
+        private static AvTraceDetails _StoryboardNotApplied;
 		static public AvTraceDetails StoryboardNotApplied
         {
             get
@@ -226,7 +224,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _AnimateStorageValidationFailed;
+        private static AvTraceDetails _AnimateStorageValidationFailed;
 		static public AvTraceDetails AnimateStorageValidationFailed
         {
             get
@@ -240,7 +238,7 @@ namespace MS.Internal
             }
         }
 
-		static AvTraceDetails _AnimateStorageValidationNoLongerFailing;
+        private static AvTraceDetails _AnimateStorageValidationNoLongerFailing;
 		static public AvTraceDetails AnimateStorageValidationNoLongerFailing
         {
             get

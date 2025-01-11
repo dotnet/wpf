@@ -365,7 +365,7 @@ namespace MS.Internal.IO.Packaging
     /// Interface for managed implementations of IFilter handlers
     /// </summary>
 
-    interface IManagedFilter
+    internal interface IManagedFilter
     {
         /// <summary>
         /// Init

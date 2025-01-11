@@ -576,7 +576,7 @@ namespace MS.Internal.PtsHost
 
         #region Private Fields 
 
-        BaseParagraph _firstChild;
+        private BaseParagraph _firstChild;
 
         #endregion Private Fields 
 

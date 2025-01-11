@@ -372,10 +372,10 @@ namespace System.Windows.Media
 
         private class Enumerator : IEnumerator<FontFamilyMap>, SC.IEnumerator
         {
-            FontFamilyMap[] _items;
-            int _count;
-            int _index;
-            FontFamilyMap _current;
+            private FontFamilyMap[] _items;
+            private int _count;
+            private int _index;
+            private FontFamilyMap _current;
 
             internal Enumerator(FontFamilyMap[] items, int count)
             {

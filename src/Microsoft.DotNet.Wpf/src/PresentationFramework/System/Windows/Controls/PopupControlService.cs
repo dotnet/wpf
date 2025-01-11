@@ -1294,7 +1294,7 @@ namespace System.Windows.Controls
 
         #region Private Types
 
-        struct WeakRefWrapper<T> where T : class
+        private struct WeakRefWrapper<T> where T : class
         {
             private WeakReference<T> _storage;
 
@@ -1356,7 +1356,7 @@ namespace System.Windows.Controls
         // the top-down scan is still efficient in practice (the rectangles usually arrive in
         // top-down order already), and the majority of edges in the resulting convex hull are
         // axis-aligned.
-        class ConvexHull
+        private class ConvexHull
         {
             internal ConvexHull(PresentationSource source, List<NativeMethods.RECT> rects)
             {
@@ -1703,10 +1703,10 @@ namespace System.Windows.Controls
                 return (b.X - a.X) * (c.Y - a.Y) - (b.Y - a.Y) * (c.X - a.X);
             }
 
-            enum Direction { Skew, Left, Right, Up, Down }
+            private enum Direction { Skew, Left, Right, Up, Down }
 
             [DebuggerDisplay("{X} {Y} {Direction}")]
-            struct Point
+            private struct Point
             {
                 public int X { get; set; }
                 public int Y { get; set; }
@@ -1720,11 +1720,11 @@ namespace System.Windows.Controls
                 }
             }
 
-            class PointList : List<Point>
+            private class PointList : List<Point>
             { }
 
-            Point[] _points;
-            PresentationSource _source;
+            private Point[] _points;
+            private PresentationSource _source;
         }
 
         #endregion

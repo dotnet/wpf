@@ -700,7 +700,7 @@ namespace Microsoft.Win32
             private IFileDialog _dialog;
 
             private OnOkCallback _okCallback;
-            uint _eventCookie;
+            private uint _eventCookie;
 
             public VistaDialogEvents(IFileDialog dialog, OnOkCallback okCallback)
             {

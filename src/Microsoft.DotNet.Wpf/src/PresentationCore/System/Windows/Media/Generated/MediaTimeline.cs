@@ -14,7 +14,7 @@ using System.Windows.Media.Animation;
 
 namespace System.Windows.Media
 {
-    partial class MediaTimeline : Timeline
+    public partial class MediaTimeline : Timeline
     {
         //------------------------------------------------------
         //

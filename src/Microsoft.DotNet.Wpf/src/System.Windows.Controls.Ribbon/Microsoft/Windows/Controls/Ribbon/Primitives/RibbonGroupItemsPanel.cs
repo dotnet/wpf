@@ -465,8 +465,8 @@ namespace Microsoft.Windows.Controls.Ribbon.Primitives
 
         #region Private Data
 
-        List<StarLayoutInfo> _starLayoutCombinations = new List<StarLayoutInfo>();
-        Dictionary<int, int> _childIndexToStarLayoutIndexMap = new Dictionary<int, int>();
+        private List<StarLayoutInfo> _starLayoutCombinations = new List<StarLayoutInfo>();
+        private Dictionary<int, int> _childIndexToStarLayoutIndexMap = new Dictionary<int, int>();
 
         #endregion
     }

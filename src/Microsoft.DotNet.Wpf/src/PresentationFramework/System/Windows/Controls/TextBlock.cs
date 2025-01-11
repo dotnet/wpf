@@ -30,7 +30,7 @@ namespace System.Windows.Controls
     /// reused during Measure, Arrange and Render phase.
     /// </summary>
     ///
-    class TextBlockCache
+    internal class TextBlockCache
     {
         public LineProperties _lineProperties;
         public TextRunCache _textRunCache;

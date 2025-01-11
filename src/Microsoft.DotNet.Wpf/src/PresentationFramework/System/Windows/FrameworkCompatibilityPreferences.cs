@@ -51,7 +51,7 @@ namespace System.Windows
 
         // CLR's BinaryCompatibility class doesn't expose a convenient way to determine
         // if the app targets 4.0 exactly.  We use that a lot, so encapsulate it here
-        static bool _targetsDesktop_V4_0;
+        private static bool _targetsDesktop_V4_0;
 
         internal static bool TargetsDesktop_V4_0
         {
@@ -207,7 +207,7 @@ namespace System.Windows
             return UseSetWindowPosForTopmostWindows;
         }
 
-        static void SetUseSetWindowPosForTopmostWindowsFromAppSettings(NameValueCollection appSettings)
+        private static void SetUseSetWindowPosForTopmostWindowsFromAppSettings(NameValueCollection appSettings)
         {
             // user can use config file to enable this behavior change
             string s = appSettings["UseSetWindowPosForTopmostWindows"];
@@ -257,7 +257,7 @@ namespace System.Windows
             return VSP45Compat;
         }
 
-        static void SetVSP45CompatFromAppSettings(NameValueCollection appSettings)
+        private static void SetVSP45CompatFromAppSettings(NameValueCollection appSettings)
         {
             // user can use config file to opt out of VSP fixes
             string s = appSettings["IsVirtualizingStackPanel_45Compatible"];
@@ -288,7 +288,7 @@ namespace System.Windows
             return _scrollingTraceFile;
         }
 
-        static void SetScrollingTraceFromAppSettings(NameValueCollection appSettings)
+        private static void SetScrollingTraceFromAppSettings(NameValueCollection appSettings)
         {
             // user can use config file to select a control (TreeView, DataGrid, etc.)
             // for in-flight tracing of scrolling behavior:
@@ -390,7 +390,7 @@ namespace System.Windows
             return ShouldThrowOnCopyOrCutFailure;
         }
 
-        static void SetShouldThrowOnCopyOrCutFailuresFromAppSettings(NameValueCollection appSettings)
+        private static void SetShouldThrowOnCopyOrCutFailuresFromAppSettings(NameValueCollection appSettings)
         {
             // user can use config file to enable this behavior change
             string s = appSettings[nameof(ShouldThrowOnCopyOrCutFailure)];
@@ -423,7 +423,7 @@ namespace System.Windows
             return _IMECompositionTraceFile;
         }
 
-        static void SetIMECompositionTraceFromAppSettings(NameValueCollection appSettings)
+        private static void SetIMECompositionTraceFromAppSettings(NameValueCollection appSettings)
         {
             // user can use config file to select a control (TextBox, RichTextBox, etc.)
             // for in-flight tracing of IME composition behavior:

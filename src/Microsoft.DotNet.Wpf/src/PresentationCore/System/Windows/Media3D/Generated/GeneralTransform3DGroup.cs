@@ -14,7 +14,7 @@ using MS.Internal;
 
 namespace System.Windows.Media.Media3D
 {
-    sealed partial class GeneralTransform3DGroup : GeneralTransform3D
+    public sealed partial class GeneralTransform3DGroup : GeneralTransform3D
     {
         //------------------------------------------------------
         //

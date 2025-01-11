@@ -45,15 +45,15 @@ namespace System.Windows.Input.StylusPointer
         /// <summary>
         /// The captured element for the current StylusDevice
         /// </summary>
-        IInputElement _stylusCapture;
+        private IInputElement _stylusCapture;
 
         /// <summary>
         /// The element the current StylusDevice is over
         /// </summary>
-        IInputElement _stylusOver;
+        private IInputElement _stylusOver;
 
-        DeferredElementTreeState _stylusOverTreeState = new DeferredElementTreeState();
-        DeferredElementTreeState _stylusCaptureWithinTreeState = new DeferredElementTreeState();
+        private DeferredElementTreeState _stylusOverTreeState = new DeferredElementTreeState();
+        private DeferredElementTreeState _stylusCaptureWithinTreeState = new DeferredElementTreeState();
 
         // Event handlers/ops for stylus over and capture
         private DependencyPropertyChangedEventHandler _overIsEnabledChangedEventHandler;

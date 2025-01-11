@@ -846,7 +846,7 @@ namespace MS.Internal.Documents
         /// <summary>
         /// Index of this row paragraph in tableparaclient's row array.
         /// </summary>
-        int _index;
+        private int _index;
 
         #endregion Private Fields
     }

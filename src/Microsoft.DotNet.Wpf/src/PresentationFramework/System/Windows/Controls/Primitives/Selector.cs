@@ -1254,7 +1254,7 @@ namespace System.Windows.Controls.Primitives
             base.AdjustItemInfoOverride(e);
         }
 
-        void RemoveFromSelection(NotifyCollectionChangedEventArgs e)
+        private void RemoveFromSelection(NotifyCollectionChangedEventArgs e)
         {
             SelectionChange.Begin();
             try
@@ -1943,7 +1943,7 @@ namespace System.Windows.Controls.Primitives
 
         // use the first item to decide whether items support hashing correctly.
         // Reset the algorithm used by _selectedItems accordingly.
-        void ResetSelectedItemsAlgorithm()
+        private void ResetSelectedItemsAlgorithm()
         {
             if (!Items.IsEmpty)
             {
@@ -2940,8 +2940,8 @@ namespace System.Windows.Controls.Primitives
                     Leave();
                 }
 
-                InternalSelectedItemsStorage _owner;
-                int _level;
+                private InternalSelectedItemsStorage _owner;
+                private int _level;
             }
         }
 
@@ -2968,7 +2968,7 @@ namespace System.Windows.Controls.Primitives
                 return x.GetHashCode();
             }
 
-            bool _matchUnresolved;
+            private bool _matchUnresolved;
         }
 
         private static readonly ItemInfoEqualityComparer MatchExplicitEqualityComparer = new ItemInfoEqualityComparer(false);

@@ -652,9 +652,8 @@ namespace MS.Internal.Annotations.Anchoring
                 }
             }
 
-
-            int _page;
-            IList<PointSegment> _segments = new List<PointSegment>(1);
+            private int _page;
+            private IList<PointSegment> _segments = new List<PointSegment>(1);
         }
 
         /// <summary>

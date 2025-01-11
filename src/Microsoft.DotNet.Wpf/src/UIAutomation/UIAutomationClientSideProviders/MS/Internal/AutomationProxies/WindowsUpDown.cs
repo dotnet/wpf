@@ -13,7 +13,7 @@ using NativeMethodsSetLastError = MS.Internal.UIAutomationClientSideProviders.Na
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsUpDown : ProxyHwnd, IRangeValueProvider
+    internal class WindowsUpDown : ProxyHwnd, IRangeValueProvider
     {
         // ------------------------------------------------------
         //
@@ -410,7 +410,7 @@ namespace MS.Internal.AutomationProxies
 
         #region SpinButtonItem
 
-        class SpinButtonItem: ProxySimple, IInvokeProvider
+        private class SpinButtonItem: ProxySimple, IInvokeProvider
         {
             //------------------------------------------------------
             //

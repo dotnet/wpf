@@ -481,7 +481,7 @@ namespace System.Windows.Input.StylusPointer
         /// </summary>
         /// <param name="tabletPoint">The point to convert</param>
         /// <returns>A physical device point in HiMetric units</returns>
-        Point GetPhysicalCoordinates(Point tabletPoint)
+        private Point GetPhysicalCoordinates(Point tabletPoint)
         {
             // DeviceRect is a HiMetric unit RECT reported directly from WM_POINTER
             double deviceSizeX = _stylusDevice.PointerTabletDevice.DeviceInfo.DeviceRect.right - _stylusDevice.PointerTabletDevice.DeviceInfo.DeviceRect.left;

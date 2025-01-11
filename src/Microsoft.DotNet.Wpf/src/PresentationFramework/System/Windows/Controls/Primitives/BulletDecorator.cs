@@ -439,7 +439,7 @@ namespace System.Windows.Controls.Primitives
         //-------------------------------------------------------------------
 
         #region Private Members
-        UIElement _bullet = null;
+        private UIElement _bullet = null;
         #endregion Private Members
 
     }

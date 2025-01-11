@@ -13,9 +13,9 @@ namespace MS.Internal.Xaml.Parser
 {
     internal class XamlPullParser
     {
-        XamlParserContext _context;
-        XamlScanner _xamlScanner;
-        XamlXmlReaderSettings _settings;
+        private XamlParserContext _context;
+        private XamlScanner _xamlScanner;
+        private XamlXmlReaderSettings _settings;
 
         public XamlPullParser(XamlParserContext context, XamlScanner scanner, XamlXmlReaderSettings settings)
         {
@@ -1246,7 +1246,7 @@ namespace MS.Internal.Xaml.Parser
     }
 
     [Serializable]  // FxCop advised this be Serializable.
-    class XamlUnexpectedParseException : XamlParseException
+    internal class XamlUnexpectedParseException : XamlParseException
     {
         public XamlUnexpectedParseException() { }
 

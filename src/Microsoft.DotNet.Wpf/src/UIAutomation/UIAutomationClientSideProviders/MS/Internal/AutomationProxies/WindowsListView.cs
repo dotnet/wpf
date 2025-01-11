@@ -44,7 +44,7 @@ namespace MS.Internal.AutomationProxies
     //   UIAutomation will discover a header for us and will hook it up
     //   to our navigation chain, nothing needs to be done on our side, it is just a magic
     //   Please do not add ANY SysHeader32 specific navigation code
-    class WindowsListView: ProxyHwnd, ISelectionProvider, IScrollProvider, IGridProvider, IMultipleViewProvider, ITableProvider
+    internal class WindowsListView: ProxyHwnd, ISelectionProvider, IScrollProvider, IGridProvider, IMultipleViewProvider, ITableProvider
     {
 
         // ------------------------------------------------------

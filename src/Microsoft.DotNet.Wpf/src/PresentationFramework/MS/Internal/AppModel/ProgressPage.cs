@@ -19,7 +19,7 @@ namespace MS.Internal.AppModel
 {
     [ComImport, Guid("1f681651-1024-4798-af36-119bbe5e5665")]
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    interface INativeProgressPage
+    internal interface INativeProgressPage
     {
         [PreserveSig]
         HR Show();
@@ -39,12 +39,12 @@ namespace MS.Internal.AppModel
     /// IProgressPage is public. It was introduced for the Media Center integration, which is now considered
     /// deprecated, but we have to support it at least for as long as we keep doing in-place upgrades.
     /// </remarks>
-    interface IProgressPage2 : IProgressPage
+    internal interface IProgressPage2 : IProgressPage
     {
         void ShowProgressMessage(string message);
     };
 
-    class NativeProgressPageProxy : IProgressPage2
+    internal class NativeProgressPageProxy : IProgressPage2
     {
         internal NativeProgressPageProxy(INativeProgressPage npp)
         {
@@ -120,6 +120,6 @@ namespace MS.Internal.AppModel
             HR hr = _npp.OnDownloadProgress((ulong)bytesDownloaded, (ulong)bytesTotal);
         }
 
-        INativeProgressPage _npp;
+        private INativeProgressPage _npp;
     };
 }

@@ -154,7 +154,7 @@ namespace System.Windows.Markup
         }
 
         // Helper to insert line and position numbers into message, if they are present
-        void ThrowException(
+        private void ThrowException(
              string id,
              int  lineNumber,
              int  linePosition,

@@ -140,10 +140,10 @@ namespace System.Windows
             return new Uri(_baseUri,uri);
         }
 
-        string _image;
-        string _sourceProfile;
-        Uri _baseUri;
-        string _destinationProfile;
+        private string _image;
+        private string _sourceProfile;
+        private Uri _baseUri;
+        private string _destinationProfile;
     }
 }
 

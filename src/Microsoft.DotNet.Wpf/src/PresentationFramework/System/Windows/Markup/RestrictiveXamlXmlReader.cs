@@ -211,7 +211,7 @@ namespace System.Windows.Markup
         /// <summary>
         /// Per instance set of allow-listed types, may grow at runtime to encompass implicit allow list.
         /// </summary>
-        HashSet<Type> _safeTypesSet = new HashSet<Type>() { 
+        private HashSet<Type> _safeTypesSet = new HashSet<Type>() { 
             typeof(System.Windows.ResourceDictionary),
             typeof(System.Windows.StaticResourceExtension),
             typeof(System.Windows.Documents.DocumentStructures.FigureStructure),

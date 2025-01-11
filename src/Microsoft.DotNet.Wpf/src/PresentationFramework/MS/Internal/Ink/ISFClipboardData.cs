@@ -129,7 +129,7 @@ namespace MS.Internal.Ink
 
         #region Private Fields
 
-        StrokeCollection    _strokes;
+        private StrokeCollection    _strokes;
 
         #endregion Private Fields
     }

@@ -15,7 +15,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media.Effects
 {
-    abstract partial class Effect : Animatable, DUCE.IResource
+    public abstract partial class Effect : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //

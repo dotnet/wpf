@@ -14,7 +14,7 @@ using MS.Internal;
 
 namespace System.Windows.Media
 {
-    sealed partial class GeneralTransformGroup : GeneralTransform
+    public sealed partial class GeneralTransformGroup : GeneralTransform
     {
         //------------------------------------------------------
         //

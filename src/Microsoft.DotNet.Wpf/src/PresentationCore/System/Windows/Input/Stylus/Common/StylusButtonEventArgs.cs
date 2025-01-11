@@ -64,6 +64,6 @@ namespace System.Windows.Input
 
         /////////////////////////////////////////////////////////////////////
         ///
-        StylusButton _button;
+        private StylusButton _button;
     }
 }

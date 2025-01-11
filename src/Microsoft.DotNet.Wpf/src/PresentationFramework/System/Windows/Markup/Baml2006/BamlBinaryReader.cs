@@ -6,7 +6,7 @@ using System.IO;
 
 namespace System.Windows.Baml2006
 {
-    class BamlBinaryReader : BinaryReader
+    internal class BamlBinaryReader : BinaryReader
     {
         public BamlBinaryReader(Stream stream)
             : base(stream)

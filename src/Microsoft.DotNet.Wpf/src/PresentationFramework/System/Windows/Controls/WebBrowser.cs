@@ -982,8 +982,7 @@ namespace System.Windows.Controls
         // Do not reference this directly. Use the AxIWebBrowser2 property instead since that
         // will cause the object to be instantiated if it is not already created.
         private UnsafeNativeMethods.IWebBrowser2  _axIWebBrowser2;
-
-        WebOCHostingAdaptor                       _hostingAdaptor;
+        private WebOCHostingAdaptor                       _hostingAdaptor;
 
         // To hook up events from the native WebBrowser
         private ConnectionPointCookie             _cookie;

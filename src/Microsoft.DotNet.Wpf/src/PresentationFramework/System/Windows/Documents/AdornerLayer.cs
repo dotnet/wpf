@@ -964,7 +964,7 @@ namespace System.Windows.Documents
             get { return 4; }
         }
 
-        GeneralTransform GetProposedTransform(Adorner adorner, GeneralTransform sourceTransform)
+        private GeneralTransform GetProposedTransform(Adorner adorner, GeneralTransform sourceTransform)
         {
             // Flip horizontally if Right to Left.
             if (adorner.FlowDirection != this.FlowDirection)

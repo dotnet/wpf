@@ -49,8 +49,8 @@ namespace MS.Internal.Threading
             return result;
         }
 
-        InternalRealCallDelegate _internalRealCall;
-        FilterExceptionDelegate _filterException;
-        CatchExceptionDelegate _catchException;
+        private InternalRealCallDelegate _internalRealCall;
+        private FilterExceptionDelegate _filterException;
+        private CatchExceptionDelegate _catchException;
     }
 }

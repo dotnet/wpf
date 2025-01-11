@@ -12,7 +12,7 @@
 // These types are aliased to match the unamanaged names used in interop
 namespace System.Windows.Media.Effects
 {
-    sealed partial class BevelBitmapEffect : BitmapEffect
+    public sealed partial class BevelBitmapEffect : BitmapEffect
     {
         //------------------------------------------------------
         //

@@ -917,12 +917,12 @@ namespace MS.Internal.Documents
         /// <summary>
         /// Async request list
         /// </summary>
-        List<AsyncRequest> _asyncRequests = new List<AsyncRequest>(0);
+        private List<AsyncRequest> _asyncRequests = new List<AsyncRequest>(0);
 
         /// <summary>
         /// Background pagination dispatcher operation.
         /// </summary>
-        DispatcherOperation _backgroundPaginationOperation;
+        private DispatcherOperation _backgroundPaginationOperation;
 
         #endregion Private Fields
 

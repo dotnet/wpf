@@ -14,7 +14,7 @@ using MS.Win32;
 namespace MS.Internal.AutomationProxies
 {
     // Class representing collection of ListView GroupManagers
-    class GroupManagerCollection
+    internal class GroupManagerCollection
     {
         //------------------------------------------------------
         //
@@ -95,7 +95,7 @@ namespace MS.Internal.AutomationProxies
     }
 
     // Class responsible for managing listview groups
-    class GroupManager
+    internal class GroupManager
     {
         // ------------------------------------------------------
         //

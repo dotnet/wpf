@@ -154,10 +154,10 @@ namespace System.Windows.Data
         //
         //------------------------------------------------------
 
-        object                                  _name;
-        ObservableCollection<object>            _itemsRW;
-        ReadOnlyObservableCollection<object>    _itemsRO;
-        int                                     _itemCount;
+        private object                                  _name;
+        private ObservableCollection<object>            _itemsRW;
+        private ReadOnlyObservableCollection<object>    _itemsRO;
+        private int                                     _itemCount;
 
         #endregion Private Fields
     }

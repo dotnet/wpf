@@ -11,7 +11,7 @@ namespace System.Windows.Baml2006
 {
     // XamlMember for Known BAML Members.
     //
-    class WpfKnownMember : WpfXamlMember
+    internal class WpfKnownMember : WpfXamlMember
     {
         [Flags]
         private enum BoolMemberBits
@@ -24,19 +24,19 @@ namespace System.Windows.Baml2006
             WritePrivate                = 0x0020
         }
 
-        Action<object, object> _setDelegate;
-        Func<object, object> _getDelegate;
-        Type _deferringLoader;
-        Type _typeConverterType;
-        Type _type;
-        byte _bitField;
+        private Action<object, object> _setDelegate;
+        private Func<object, object> _getDelegate;
+        private Type _deferringLoader;
+        private Type _typeConverterType;
+        private Type _type;
+        private byte _bitField;
 
-        bool Frozen
+        private bool Frozen
         {
             get { return WpfXamlType.GetFlag(ref _bitField, (byte)BoolMemberBits.Frozen); }
             set { WpfXamlType.SetFlag(ref _bitField, (byte)BoolMemberBits.Frozen, value); }
         }
-        bool ReadOnly
+        private bool ReadOnly
         {
             get { return WpfXamlType.GetFlag(ref _bitField, (byte)BoolMemberBits.ReadOnly); }
             set { CheckFrozen(); WpfXamlType.SetFlag(ref _bitField, (byte)BoolMemberBits.ReadOnly, value); }

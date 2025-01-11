@@ -26,7 +26,7 @@ namespace Microsoft.Internal.AlphaFlattener
         #region Public Methods
 
 #if DEBUG
-        static int overlapcount;
+        private static int overlapcount;
 
         internal static string LeftPad(object obj, int len)
         {
@@ -304,7 +304,7 @@ namespace Microsoft.Internal.AlphaFlattener
             }
         }
 
-        static bool OrderedInsert(List<int> list, int n)
+        private static bool OrderedInsert(List<int> list, int n)
         {
             int pos = list.Count;
 

@@ -16,7 +16,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsListViewGroup : ProxyFragment, IGridProvider, IExpandCollapseProvider
+    internal class WindowsListViewGroup : ProxyFragment, IGridProvider, IExpandCollapseProvider
     {
         // ------------------------------------------------------
         //

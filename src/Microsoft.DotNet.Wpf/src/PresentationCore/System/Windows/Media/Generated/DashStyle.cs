@@ -16,7 +16,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media
 {
-    sealed partial class DashStyle : Animatable, DUCE.IResource
+    public sealed partial class DashStyle : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //

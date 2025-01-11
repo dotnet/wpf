@@ -567,7 +567,7 @@ namespace System.Windows.Markup
             xamlReader.HandleAsyncQueueItem();
         }
 
-        const int AsyncLoopTimeout = (int)200;
+        private const int AsyncLoopTimeout = (int)200;
         /// <summary>
         /// called when in async mode when get a time slice to read and load the Tree
         /// </summary>
@@ -1137,7 +1137,7 @@ namespace System.Windows.Markup
             return (root);
         }
 
-        static Uri GetBaseUri(Uri uri)
+        private static Uri GetBaseUri(Uri uri)
         {
             if (uri == null)
             {

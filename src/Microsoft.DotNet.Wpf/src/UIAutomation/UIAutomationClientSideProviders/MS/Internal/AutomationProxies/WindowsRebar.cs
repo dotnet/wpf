@@ -13,7 +13,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsRebar: ProxyHwnd, IRawElementProviderHwndOverride
+    internal class WindowsRebar: ProxyHwnd, IRawElementProviderHwndOverride
     {
         // ------------------------------------------------------
         //
@@ -23,7 +23,7 @@ namespace MS.Internal.AutomationProxies
 
         #region Constructors
 
-        WindowsRebar (IntPtr hwnd, ProxyFragment parent, int item)
+        private WindowsRebar (IntPtr hwnd, ProxyFragment parent, int item)
             : base( hwnd, parent, item )
         {
             _sType = SR.LocalizedControlTypeRebar;
@@ -244,7 +244,7 @@ namespace MS.Internal.AutomationProxies
 
         #region RebarBandItem
 
-        class RebarBandItem: ProxyFragment, IInvokeProvider
+        private class RebarBandItem: ProxyFragment, IInvokeProvider
         {
             // ------------------------------------------------------
             //
@@ -453,7 +453,7 @@ namespace MS.Internal.AutomationProxies
 
             #region Private Fields
 
-            IntPtr _hwndBand = IntPtr.Zero;
+            private IntPtr _hwndBand = IntPtr.Zero;
 
             #endregion
 
@@ -469,7 +469,7 @@ namespace MS.Internal.AutomationProxies
 
         #region RebarBandChildOverrideProxy
 
-        class RebarBandChildOverrideProxy: ProxyHwnd
+        private class RebarBandChildOverrideProxy: ProxyHwnd
         {
             // ------------------------------------------------------
             //

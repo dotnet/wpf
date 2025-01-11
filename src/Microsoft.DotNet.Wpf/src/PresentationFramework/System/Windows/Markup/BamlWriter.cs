@@ -1352,49 +1352,49 @@ namespace System.Windows.Markup
                 get { return _elementType; }
             }
 
-            bool           _endAttributesReached;
-            BamlRecordType _recordType;
-            Type           _elementType;
+            private bool           _endAttributesReached;
+            private BamlRecordType _recordType;
+            private Type           _elementType;
         }
 
         // Writer that actually writes BamlRecords to a stream.
-        BamlRecordWriter      _bamlRecordWriter;
+        private BamlRecordWriter      _bamlRecordWriter;
     
         // True if the DocumentStart record has been written to the stream.
-        bool                  _startDocumentWritten;
+        private bool                  _startDocumentWritten;
 
         // The depth of the element tree, including complex properties
-        int                   _depth;
+        private int                   _depth;
 
         // True if Close() has been called.
-        bool                  _closed;
+        private bool                  _closed;
 
         // If a custom property is of Type DependencyProperty, this is used to provide
         // info about the Type of value for such a property in order to write it out in
         // an optimized form by its custom serializer.
-        DependencyProperty    _dpProperty;
+        private DependencyProperty    _dpProperty;
 
         // Stack of the type of nodes written to the baml stream.  This is 
         // used for end-tag matching and basic structure checking.  This
         // contains WriteStackNode objects.
-        ParserStack           _nodeTypeStack;
+        private ParserStack           _nodeTypeStack;
 
         // Cache of assemblies that are needed for type resolutions when
         // doingIBamlSerialize
-        Hashtable             _assemblies;
+        private Hashtable             _assemblies;
     
         // XamlTypeMapper used by this writer
-        XamlTypeMapper        _xamlTypeMapper;
+        private XamlTypeMapper        _xamlTypeMapper;
 
         // ParserContext for this writer
-        ParserContext         _parserContext;
+        private ParserContext         _parserContext;
 
         // The helper class that handles parsing of MarkupExtension values.
-        MarkupExtensionParser _extensionParser;
+        private MarkupExtensionParser _extensionParser;
 
         // Buffered XamlNodes that occur when a property with a MarkupExtension value
         // is written and expanded into a complex property subtree.
-        ArrayList             _markupExtensionNodes;
+        private ArrayList             _markupExtensionNodes;
 
 #endregion Data
     }

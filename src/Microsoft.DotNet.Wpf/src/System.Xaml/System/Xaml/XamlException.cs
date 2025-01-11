@@ -180,7 +180,7 @@ namespace System.Xaml
     [Serializable]  // FxCop advised this be Serializable.
     public class XamlInternalException : XamlException
     {
-        const string MessagePrefix = "Internal XAML system error: ";
+        private const string MessagePrefix = "Internal XAML system error: ";
 
         // FxCop required this, default constructor.
         public XamlInternalException()

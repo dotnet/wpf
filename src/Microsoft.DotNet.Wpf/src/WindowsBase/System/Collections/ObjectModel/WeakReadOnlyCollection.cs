@@ -24,7 +24,7 @@ namespace System.Collections.ObjectModel
     internal class WeakReadOnlyCollection<T>: IList<T>, IList
     {
         //IList<T> list;
-        IList<WeakReference> list;
+        private IList<WeakReference> list;
         [NonSerialized]
         private Object _syncRoot;
 
@@ -267,7 +267,7 @@ namespace System.Collections.ObjectModel
             throw new NotSupportedException(SR.NotSupported_ReadOnlyCollection);
         }
 
-        IList<T> CreateDereferencedList()
+        private IList<T> CreateDereferencedList()
         {
             int n = list.Count;
             List<T> newList = new List<T>(n);

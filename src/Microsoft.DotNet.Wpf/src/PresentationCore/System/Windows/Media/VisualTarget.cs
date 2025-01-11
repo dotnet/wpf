@@ -232,7 +232,7 @@ namespace System.Windows.Media
 
         #region Private Fields
 
-        DUCE.Channel _outOfBandChannel;
+        private DUCE.Channel _outOfBandChannel;
         private HostVisual _hostVisual;
 
         // Flag indicating whether VisualTarget-HostVisual connection exists.

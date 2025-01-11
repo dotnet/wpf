@@ -1393,7 +1393,7 @@ namespace System.Windows.Media
         /// <summary>
         /// Called by the Dispatcher to let us know that we are going away.
         /// </summary>
-        void OnDestroyContext(object sender, EventArgs e)
+        private void OnDestroyContext(object sender, EventArgs e)
         {
             Debug.Assert(CheckAccess());
             Dispose();

@@ -14,10 +14,10 @@ namespace System.Xaml
 
     public class XamlNodeList
     {
-        List<XamlNode> _nodeList;
-        bool _readMode;
-        XamlWriter _writer;
-        bool _hasLineInfo;
+        private List<XamlNode> _nodeList;
+        private bool _readMode;
+        private XamlWriter _writer;
+        private bool _hasLineInfo;
 
         public XamlNodeList(XamlSchemaContext schemaContext)
         {

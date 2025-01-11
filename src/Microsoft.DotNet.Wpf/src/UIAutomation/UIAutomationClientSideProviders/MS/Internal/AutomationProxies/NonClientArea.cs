@@ -21,7 +21,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class NonClientArea: ProxyHwnd, IScrollProvider
+    internal class NonClientArea: ProxyHwnd, IScrollProvider
     {
         #region Constructors
 

@@ -493,7 +493,7 @@ namespace System.Windows.Data
         }
 
         // raise CollectionChanged event to any listeners
-        void OnCollectionChanged(NotifyCollectionChangedAction action)
+        private void OnCollectionChanged(NotifyCollectionChangedAction action)
         {
 #if DEBUG
             _hasRepeatedCollectionIsValid = false;
@@ -506,7 +506,7 @@ namespace System.Windows.Data
         }
 
         // raise CollectionChanged event to any listeners
-        void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index)
+        private void OnCollectionChanged(NotifyCollectionChangedAction action, object item, int index)
         {
             if (CollectionChanged != null)
             {
@@ -515,7 +515,7 @@ namespace System.Windows.Data
         }
 
         /// raise CollectionChanged event to any listeners
-        void OnCollectionChanged(NotifyCollectionChangedAction action, object oldItem, object newItem, int index)
+        private void OnCollectionChanged(NotifyCollectionChangedAction action, object oldItem, object newItem, int index)
         {
             if (CollectionChanged != null)
             {

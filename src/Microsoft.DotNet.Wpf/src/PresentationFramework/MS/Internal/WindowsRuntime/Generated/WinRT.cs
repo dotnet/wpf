@@ -93,14 +93,13 @@ namespace WinRT
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public unsafe delegate int DllCanUnloadNow();
 
-        readonly string _fileName;
-        readonly IntPtr _moduleHandle;
-        readonly DllGetActivationFactory _GetActivationFactory;
-        readonly DllCanUnloadNow _CanUnloadNow; // TODO: Eventually periodically call
+        private readonly string _fileName;
+        private readonly IntPtr _moduleHandle;
+        private readonly DllGetActivationFactory _GetActivationFactory;
+        private readonly DllCanUnloadNow _CanUnloadNow; // TODO: Eventually periodically call
 
-        static readonly string _currentModuleDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-
-        static Dictionary<string, DllModule> _cache = new System.Collections.Generic.Dictionary<string, DllModule>();
+        private static readonly string _currentModuleDirectory = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+        private static Dictionary<string, DllModule> _cache = new System.Collections.Generic.Dictionary<string, DllModule>();
 
         public static DllModule Load(string fileName)
         {
@@ -116,7 +115,7 @@ namespace WinRT
             }
         }
 
-        DllModule(string fileName)
+        private DllModule(string fileName)
         {
             _fileName = fileName;
 
@@ -172,7 +171,7 @@ namespace WinRT
 
     internal class WeakLazy<T> where T : class, new()
     {
-        WeakReference<T> _instance = new WeakReference<T>(null);
+        private WeakReference<T> _instance = new WeakReference<T>(null);
         public T Value
         {
             get
@@ -193,8 +192,8 @@ namespace WinRT
 
     internal class WinrtModule
     {
-        readonly IntPtr _mtaCookie;
-        static Lazy<WinrtModule> _instance = new Lazy<WinrtModule>();
+        private readonly IntPtr _mtaCookie;
+        private static Lazy<WinrtModule> _instance = new Lazy<WinrtModule>();
         public static WinrtModule Instance => _instance.Value;
 
         public unsafe WinrtModule()
@@ -272,7 +271,7 @@ namespace WinRT
     {
         public ActivationFactory() : base(typeof(T).Namespace, typeof(T).FullName) { }
 
-        static WeakLazy<ActivationFactory<T>> _factory = new WeakLazy<ActivationFactory<T>>();
+        private static WeakLazy<ActivationFactory<T>> _factory = new WeakLazy<ActivationFactory<T>>();
         public static ObjectReference<I> As<I>() => _factory.Value._As<I>();
         public static ObjectReference<I> ActivateInstance<I>() => _factory.Value._ActivateInstance<I>();
     }

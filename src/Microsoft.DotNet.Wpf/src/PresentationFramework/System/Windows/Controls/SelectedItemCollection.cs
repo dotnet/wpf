@@ -169,11 +169,11 @@ namespace System.Windows.Controls
                 _owner.FinishChange();
             }
 
-            SelectedItemCollection _owner;
+            private SelectedItemCollection _owner;
         }
 
-        int _changeCount;
-        Changer _changer;
+        private int _changeCount;
+        private Changer _changer;
 
         #endregion Reentrant changes
 

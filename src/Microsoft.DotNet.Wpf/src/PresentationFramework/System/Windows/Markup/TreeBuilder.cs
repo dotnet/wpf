@@ -181,9 +181,9 @@ namespace System.Windows.Markup
 
 
         #endregion Methods
- 
+
         #region Properties
-      
+
 #if !PBTCOMPILER
         /// <summary>
         ///  ParserHooks implementation
@@ -310,11 +310,11 @@ namespace System.Windows.Markup
 #endif
 
         #endregion Queuing
-        
+
         #region Data
 
         // Timeout after .2 seconds. 
-        const int AsyncLoopTimeout = (int)200;
+        private const int AsyncLoopTimeout = (int)200;
 
 #if !PBTCOMPILER
         BamlRecordReader _bamlRecordReader;

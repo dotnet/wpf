@@ -742,29 +742,29 @@ namespace MS.Internal.PtsHost.UnsafeNativeMethods
         {
             internal FSKFMTLINE fskfmtline;
             internal IntPtr nmp;
-            int iArea;
-            int dcpStartLine;
-            IntPtr pbrLineIn;
-            int urStartLine;
-            int durLine;
-            int urStartTrack;
-            int durTrack;
-            int urPageLeftMargin;
-            int fAllowHyphenation;
-            int fClearOnleft;
-            int fClearOnRight;
-            int fTreatAsFirstInPara;
-            int fTreatAsLastInPara;
-            int fSuppressTopSpace;
-            int dcpLine; // Only valid if fsklineOptimal
-            int dvrAvailable; // Only valid if fsklineForced
-            int fChain; // Only valid if fsklineWord
-            int vrStartLine; // Only valid if fsklineWord
-            int urStartLr; // Only valid if fsklineWord
-            int durLr; // Only valid if fsklineWord
-            int fHitByPolygon; // Only valid if fsklineWord
-            int fClearLeftLrWord; // Only valid if fsklineWord
-            int fClearRightLrWord; // Only valid if fsklineWord
+            private int iArea;
+            private int dcpStartLine;
+            private IntPtr pbrLineIn;
+            private int urStartLine;
+            private int durLine;
+            private int urStartTrack;
+            private int durTrack;
+            private int urPageLeftMargin;
+            private int fAllowHyphenation;
+            private int fClearOnleft;
+            private int fClearOnRight;
+            private int fTreatAsFirstInPara;
+            private int fTreatAsLastInPara;
+            private int fSuppressTopSpace;
+            private int dcpLine; // Only valid if fsklineOptimal
+            private int dvrAvailable; // Only valid if fsklineForced
+            private int fChain; // Only valid if fsklineWord
+            private int vrStartLine; // Only valid if fsklineWord
+            private int urStartLr; // Only valid if fsklineWord
+            private int durLr; // Only valid if fsklineWord
+            private int fHitByPolygon; // Only valid if fsklineWord
+            private int fClearLeftLrWord; // Only valid if fsklineWord
+            private int fClearRightLrWord; // Only valid if fsklineWord
         }
 
         // ------------------------------------------------------------------

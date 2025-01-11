@@ -13,7 +13,7 @@ using MS.Win32;
 
 namespace MS.Internal.AutomationProxies
 {
-    class WindowsStatusBar : ProxyHwnd, IGridProvider, IRawElementProviderHwndOverride
+    internal class WindowsStatusBar : ProxyHwnd, IGridProvider, IRawElementProviderHwndOverride
     {
         // ------------------------------------------------------
         //
@@ -407,7 +407,7 @@ namespace MS.Internal.AutomationProxies
 
         #region WindowsStatusBarPane 
 
-        class WindowsStatusBarPane : ProxySimple, IGridItemProvider, IValueProvider
+        private class WindowsStatusBarPane : ProxySimple, IGridItemProvider, IValueProvider
         {
 
             // ------------------------------------------------------
@@ -633,7 +633,7 @@ namespace MS.Internal.AutomationProxies
 
         #region WindowsStatusBarPaneChildOverrideProxy
 
-        class WindowsStatusBarPaneChildOverrideProxy : ProxyHwnd, IGridItemProvider
+        private class WindowsStatusBarPaneChildOverrideProxy : ProxyHwnd, IGridItemProvider
         {
             // ------------------------------------------------------
             //
@@ -739,7 +739,7 @@ namespace MS.Internal.AutomationProxies
 
         #region StatusBarGrip
 
-        class StatusBarGrip: ProxyFragment
+        private class StatusBarGrip: ProxyFragment
         {
             // ------------------------------------------------------
             //

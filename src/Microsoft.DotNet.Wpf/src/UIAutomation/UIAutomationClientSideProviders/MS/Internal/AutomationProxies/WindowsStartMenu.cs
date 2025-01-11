@@ -9,8 +9,7 @@ using System.Windows.Automation.Provider;
 
 namespace MS.Internal.AutomationProxies
 {
-
-    class WindowsStartMenu : ProxyHwnd, IRawElementProviderSimple
+    internal class WindowsStartMenu : ProxyHwnd, IRawElementProviderSimple
     {
         //------------------------------------------------------
         //

@@ -90,10 +90,10 @@ namespace System.Windows
         #region Private Fields
 
         // The registered clipboard format name string.
-        readonly string _name;
+        private readonly string _name;
 
         // The registered clipboard format id.
-        readonly int _id;
+        private readonly int _id;
 
         #endregion Private Fields
     }

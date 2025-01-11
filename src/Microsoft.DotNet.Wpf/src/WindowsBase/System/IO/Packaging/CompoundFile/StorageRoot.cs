@@ -15,11 +15,11 @@ namespace System.IO.Packaging
 {
     /***********************************************************************/
     // Default values to use for the StorageRoot.Open shortcuts
-    const FileMode   defaultFileMode   = FileMode.OpenOrCreate;
-    const FileAccess defaultFileAccess = FileAccess.ReadWrite;
-    const FileShare  defaultFileShare  = FileShare.None;
-    const int        defaultSectorSize = 512;
-    const int        stgFormatDocFile  = 5; // STGFMT_DOCFILE
+    private const FileMode   defaultFileMode   = FileMode.OpenOrCreate;
+    private const FileAccess defaultFileAccess = FileAccess.ReadWrite;
+    private const FileShare  defaultFileShare  = FileShare.None;
+    private const int        defaultSectorSize = 512;
+    private const int        stgFormatDocFile  = 5; // STGFMT_DOCFILE
 
     /***********************************************************************/
     // Instance values
@@ -29,17 +29,17 @@ namespace System.IO.Packaging
     /// is initialized at Open and zeroed out at Close.  If this value is
     /// zero, it means the object has been disposed.
     /// </summary>
-    IStorage rootIStorage;
+    private IStorage rootIStorage;
 
     /// <summary>
     /// Cached instance to our data space manager
     /// </summary>
-    DataSpaceManager dataSpaceManager;
+    private DataSpaceManager dataSpaceManager;
 
     /// <summary>
     /// If we know we are in a read-only mode, we know not to do certain things.
     /// </summary>
-    bool containerIsReadOnly;
+    private bool containerIsReadOnly;
 
     /// <summary>
     /// When data space manager is being initialized, sometimes it trips
@@ -47,7 +47,7 @@ namespace System.IO.Packaging
     /// data space manager.  To avoid an infinite loop, we break it by knowing
     /// when data space manager is being initialized.
     /// </summary>
-    bool dataSpaceManagerInitializationInProgress;
+    private bool dataSpaceManagerInitializationInProgress;
 
     /***********************************************************************/
     private StorageRoot(IStorage root, bool readOnly )

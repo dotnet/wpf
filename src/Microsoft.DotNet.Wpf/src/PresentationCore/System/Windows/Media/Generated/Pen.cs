@@ -15,7 +15,7 @@ using System.Windows.Media.Composition;
 
 namespace System.Windows.Media
 {
-    sealed partial class Pen : Animatable, DUCE.IResource
+    public sealed partial class Pen : Animatable, DUCE.IResource
     {
         //------------------------------------------------------
         //

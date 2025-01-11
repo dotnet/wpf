@@ -523,8 +523,8 @@ namespace System.Windows
             public Delegate Handler { get { return (_handler != null) ? (Delegate)_handler.Target : null; } }
             public bool HasHandler { get { return _handler != null; } }
 
-            WeakReference _target;
-            WeakReference _handler;
+            private WeakReference _target;
+            private WeakReference _handler;
         }
 
         /// <summary>
@@ -626,7 +626,7 @@ namespace System.Windows
                 AddHandlerToCWT(target, handler);
             }
 
-            void AddHandlerToCWT(object target, Delegate handler)
+            private void AddHandlerToCWT(object target, Delegate handler)
             {
                 // add the handler to the CWT - this keeps the handler alive throughout
                 // the lifetime of the target, without prolonging the lifetime of

@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -53,13 +53,13 @@ namespace System.Windows.Input
         /// </summary>
         /// <param name="mouseAction">Mouse Action</param>
         /// <param name="modifiers">Modifiers</param>
-        public MouseGesture( MouseAction mouseAction,ModifierKeys modifiers)   // acclerator action
+        public MouseGesture(MouseAction mouseAction, ModifierKeys modifiers)   // acclerator action
         {
-            if (!MouseGesture.IsDefinedMouseAction(mouseAction))
-                throw new InvalidEnumArgumentException("mouseAction", (int)mouseAction, typeof(MouseAction));
+            if (!MouseActionConverter.IsDefinedMouseAction(mouseAction))
+                throw new InvalidEnumArgumentException(nameof(mouseAction), (int)mouseAction, typeof(MouseAction));
 
             if (!ModifierKeysConverter.IsDefinedModifierKeys(modifiers))
-                throw new InvalidEnumArgumentException("modifiers", (int)modifiers, typeof(ModifierKeys));
+                throw new InvalidEnumArgumentException(nameof(modifiers), (int)modifiers, typeof(ModifierKeys));
 
             _modifiers = modifiers;
             _mouseAction = mouseAction;
@@ -86,12 +86,13 @@ namespace System.Windows.Input
             }
             set 
             {
-                if (!MouseGesture.IsDefinedMouseAction((MouseAction)value))
-                    throw new InvalidEnumArgumentException("value", (int)value, typeof(MouseAction));
+                if (!MouseActionConverter.IsDefinedMouseAction(value))
+                    throw new InvalidEnumArgumentException(nameof(value), (int)value, typeof(MouseAction));
+
                 if (_mouseAction != value)
                 {
-                    _mouseAction = (MouseAction)value;
-                    OnPropertyChanged("MouseAction");
+                    _mouseAction = value;
+                    OnPropertyChanged(nameof(MouseAction));
                 }
             }
         }
@@ -107,13 +108,13 @@ namespace System.Windows.Input
             }
             set 
             {
-                if (!ModifierKeysConverter.IsDefinedModifierKeys((ModifierKeys)value))
-                    throw new InvalidEnumArgumentException("value", (int)value, typeof(ModifierKeys));
+                if (!ModifierKeysConverter.IsDefinedModifierKeys(value))
+                    throw new InvalidEnumArgumentException(nameof(value), (int)value, typeof(ModifierKeys));
 
                 if (_modifiers != value)
                 {
-                    _modifiers = (ModifierKeys)value;
-                    OnPropertyChanged("Modifiers");
+                    _modifiers = value;
+                    OnPropertyChanged(nameof(Modifiers));
                 }
             }
         }
@@ -135,12 +136,6 @@ namespace System.Windows.Input
             return false;
         }
 
-
-        // Helper like Enum.IsDefined,  for MouseAction.
-        internal static bool IsDefinedMouseAction(MouseAction mouseAction)
-        {
-            return (mouseAction >= MouseAction.None && mouseAction <= MouseAction.MiddleDoubleClick);
-        }
 #endregion Public Methods
 
         #region Internal NotifyProperty changed

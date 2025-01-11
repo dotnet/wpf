@@ -16,24 +16,28 @@ namespace System.Windows.Input
         /// </summary>
         private static readonly KeyConverter s_keyConverter = new();
 
-        ///<summary>
-        ///CanConvertFrom()
-        ///</summary>
-        ///<param name="context">ITypeDescriptorContext</param>
-        ///<param name="sourceType">type to convert from</param>
-        ///<returns>true if the given type can be converted, false otherwise</returns>
+        /// <summary>
+        /// Returns whether or not this class can convert from a given <paramref name="sourceType"/>.
+        /// </summary>
+        /// <param name="context">The <see cref="ITypeDescriptorContext"/> for this call.</param>
+        /// <param name="sourceType">The <see cref="Type"/> being queried for support.</param>
+        /// <returns>
+        /// <see langword="true"/> if the given <paramref name="sourceType"/> can be converted, <see langword="false"/> otherwise.
+        /// </returns>
         public override bool CanConvertFrom(ITypeDescriptorContext context, Type sourceType)
         {
             // We can only handle string.
             return sourceType == typeof(string);
         }
 
-        ///<summary>
-        ///TypeConverter method override.
-        ///</summary>
-        ///<param name="context">ITypeDescriptorContext</param>
-        ///<param name="destinationType">Type to convert to</param>
-        ///<returns>true if conversion	is possible</returns>
+        /// <summary>
+        /// Returns whether or not this class can convert to a given <paramref name="destinationType"/>.
+        /// </summary>
+        /// <param name="context">The <see cref="ITypeDescriptorContext"/> for this call.</param>
+        /// <param name="destinationType">The <see cref="Type"/> being queried for support.</param>
+        /// <returns>
+        /// <see langword="true"/> if this class can convert to <paramref name="destinationType"/>, <see langword="false"/> otherwise.
+        /// </returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // We can convert to an InstanceDescriptor or to a string.
@@ -48,12 +52,15 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// ConvertFrom()
+        /// Converts <paramref name="source"/> of <see cref="string"/> type to its <see cref="KeyGesture"/> represensation.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="source"></param>
-        /// <returns></returns>
+        /// <param name="context">This parameter is ignored during the call.</param>
+        /// <param name="culture">This parameter is ignored during the call.</param>
+        /// <param name="source">The object to convert to a <see cref="KeyGesture"/>.</param>
+        /// <returns>
+        /// A new instance of <see cref="KeyGesture"/> class representing the data contained in <paramref name="source"/>.
+        /// </returns>
+        /// <exception cref="NotSupportedException">Thrown in case the <paramref name="source"/> was not a <see cref="string"/>.</exception>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
             if (source is not string sourceString)
@@ -96,13 +103,20 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// ConvertTo()
+        /// Attempt to convert a <see cref="KeyGesture"/> class to the <paramref name="destinationType"/>.
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="culture"></param>
-        /// <param name="value"></param>
-        /// <param name="destinationType"></param>
-        /// <returns></returns>
+        /// <param name="context">This parameter is ignored during the call.</param>
+        /// <param name="culture">This parameter is ignored during the call.</param>
+        /// <param name="value">The object to convert to a <paramref name="destinationType"/>.</param>
+        /// <param name="destinationType">The <see cref="Type"/> to convert <paramref name="value"/> to.</param>
+        /// <returns>
+        /// The <paramref name="value"/> formatted to its <see cref="string"/> representation.
+        /// </returns>
+        /// <exception cref="ArgumentNullException">Thrown in case <paramref name="destinationType"/> was <see langword="null"/>.</exception>
+        /// <exception cref="NotSupportedException">
+        /// Thrown in case the <paramref name="destinationType"/> was not a <see cref="string"/>
+        /// or <paramref name="value"/> was not a <see cref="KeyGesture"/>.
+        /// </exception>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);

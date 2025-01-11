@@ -8,12 +8,12 @@ using System.Globalization;     // for CultureInfo
 namespace System.Windows.Input
 {
     /// <summary>
-    /// Converter class for converting between a <see langword="string"/> and <see cref="Key"/>.
+    /// Converter class for converting between a <see cref="string"/> and <see cref="Key"/>.
     /// </summary>
     public class KeyConverter : TypeConverter
     {
         ///<summary>
-        /// Used to check whether we can convert a <see langword="string"/> into a <see cref="Key"/>.
+        /// Used to check whether we can convert a <see cref="string"/> into a <see cref="Key"/>.
         ///</summary>
         ///<param name="context">ITypeDescriptorContext</param>
         ///<param name="sourceType">type to convert from</param>
@@ -25,11 +25,11 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// Used to check whether we can convert specified value to <see langword="string"/>.
+        /// Used to check whether we can convert specified value to <see cref="string"/>.
         /// </summary>
         /// <param name="context">ITypeDescriptorContext</param>
         /// <param name="destinationType">Type to convert to</param>
-        /// <returns><see langword="true"/> if conversion to <see langword="string"/> is possible, <see langword="false"/> otherwise.</returns>
+        /// <returns><see langword="true"/> if conversion to <see cref="string"/> is possible, <see langword="false"/> otherwise.</returns>
         public override bool CanConvertTo(ITypeDescriptorContext context, Type destinationType)
         {
             // We can convert to a string
@@ -44,12 +44,12 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// Converts <paramref name="source"/> of <see langword="string"/> type to its <see cref="Key"/> representation.
+        /// Converts <paramref name="source"/> of <see cref="string"/> type to its <see cref="Key"/> representation.
         /// </summary>
         /// <param name="context">Parser Context</param>
         /// <param name="culture">Culture Info</param>
         /// <param name="source">Key String</param>
-        /// <returns>A <see cref="Key"/> representing the <see langword="string"/> specified by <paramref name="source"/>.</returns>
+        /// <returns>A <see cref="Key"/> representing the <see cref="string"/> specified by <paramref name="source"/>.</returns>
         public override object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, object source)
         {
             if (source is not string stringSource)
@@ -60,13 +60,13 @@ namespace System.Windows.Input
         }
 
         /// <summary>
-        /// Converts a <paramref name="value"/> of <see cref="Key"/> type to its <see langword="string"/> representation.
+        /// Converts a <paramref name="value"/> of <see cref="Key"/> type to its <see cref="string"/> representation.
         /// </summary>
         /// <param name="context">Serialization Context</param>
         /// <param name="culture">Culture Info</param>
         /// <param name="value">Key value </param>
         /// <param name="destinationType">Type to Convert</param>
-        /// <returns>A <see langword="string"/> representing the <see cref="Key"/> specified by <paramref name="value"/>.</returns>
+        /// <returns>A <see cref="string"/> representing the <see cref="Key"/> specified by <paramref name="value"/>.</returns>
         public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
         {
             ArgumentNullException.ThrowIfNull(destinationType);
@@ -100,7 +100,9 @@ namespace System.Windows.Input
         /// Helper function that performs the conversion of <paramref name="keyToken"/> to the <see cref="Key"/> enum.
         /// </summary>
         /// <param name="keyToken">The string to convert from.</param>
-        /// <returns>A <see cref="Key"/> value corresponding to the specified string, <see cref="Key.None"/> if <paramref name="keyToken"/> was empty.</returns>
+        /// <returns>
+        /// A <see cref="Key"/> value corresponding to the specified string, <see cref="Key.None"/> if <paramref name="keyToken"/> was empty.
+        /// </returns>
         internal static Key GetKeyFromString(ReadOnlySpan<char> keyToken)
         {
             // If the token is empty, we presume "None" as our value but it is a success

@@ -2429,7 +2429,7 @@ namespace System.Windows
         // Keep LoadBamlSyncInfo stack so that the Outer LoadBaml and Inner LoadBaml( ) for the same
         // Uri share the related information.
         [ThreadStatic]
-        private static Stack<NestedBamlLoadInfo> s_NestedBamlLoadInfo = null;
+        private static Stack<NestedBamlLoadInfo> s_NestedBamlLoadInfo;
 
         private Uri                         _startupUri;
         private Uri                         _applicationMarkupBaseUri;

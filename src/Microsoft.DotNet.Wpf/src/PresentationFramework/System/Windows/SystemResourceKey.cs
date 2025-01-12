@@ -2280,7 +2280,7 @@ namespace System.Windows
         private SystemResourceKeyID _id;
 
         [ThreadStatic]
-        private static SystemResourceKey _srk = null;
+        private static SystemResourceKey _srk;
 #endif
     }
 }

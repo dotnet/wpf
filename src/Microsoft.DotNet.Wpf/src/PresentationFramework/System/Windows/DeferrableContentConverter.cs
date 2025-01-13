@@ -78,7 +78,7 @@ namespace System.Windows
             T result = provider.GetService(typeof(T)) as T;
             if (result == null)
             {
-                throw new InvalidOperationException(SR.Format(SR.DeferringLoaderNoContext, typeof(DeferrableContentConverter).Name, typeof(T).Name));
+                throw new InvalidOperationException(SR.Format(SR.DeferringLoaderNoContext, nameof(DeferrableContentConverter), typeof(T).Name));
             }
             return result;
         }

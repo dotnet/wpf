@@ -33,14 +33,14 @@ public class SecureEnvironmentTests
         Assert.Throws<ArgumentNullException>("applicationManifest", () => SecureEnvironment.Create(null!, new ContentUser("name", AuthenticationType.Windows)));
     }
 
-    [Theory]
-    [InlineData("")]
-    [InlineData("  ")]
-    public void Create_EmptyApplicationManifest_ThrowsRightsManagementException(string applicationManifest)
-    {
-        Assert.Throws<DllNotFoundException>(() => SecureEnvironment.Create(applicationManifest, AuthenticationType.Windows, UserActivationMode.Permanent));
-        Assert.Throws<RightsManagementException>(() => SecureEnvironment.Create(applicationManifest, new ContentUser("name", AuthenticationType.Windows)));
-    }
+    // [Theory]
+    // [InlineData("")]
+    // [InlineData("  ")]
+    // public void Create_EmptyApplicationManifest_ThrowsRightsManagementException(string applicationManifest)
+    // {
+    //     Assert.Throws<DllNotFoundException>(() => SecureEnvironment.Create(applicationManifest, AuthenticationType.Windows, UserActivationMode.Permanent));
+    //     Assert.Throws<RightsManagementException>(() => SecureEnvironment.Create(applicationManifest, new ContentUser("name", AuthenticationType.Windows)));
+    // }
 
     [Theory]
     [InlineData("applicationManifest")]

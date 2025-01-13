@@ -8,7 +8,7 @@ namespace System.Windows.Threading.Tests;
 
 public class DispatcherTests
 {
-    [Fact]
+    [WpfFact]
     public void CurrentDispatcher_Get_ReturnsExpected()
     {
         Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
@@ -21,13 +21,13 @@ public class DispatcherTests
         Assert.Same(Thread.CurrentThread, dispatcher.Thread);
     }
 
-    [Fact]
+    [WpfFact]
     public void PushFrame_NullFrame_ThrowsArgumentNullException()
     {
         Assert.Throws<ArgumentNullException>("frame", () => Dispatcher.PushFrame(null!));
     }
 
-    [Fact]
+    [WpfFact]
     public void FromThread_CurrentThread_ReturnsExpected()
     {
         Dispatcher dispatcher = Dispatcher.FromThread(Thread.CurrentThread);
@@ -40,20 +40,20 @@ public class DispatcherTests
         Assert.Same(Thread.CurrentThread, dispatcher.Thread);
     }
 
-    [Fact]
+    [WpfFact]
     public void FromThread_NoSuchThread_ReturnsNull()
     {
         var thread = new Thread(() => { });
         Assert.Null(Dispatcher.FromThread(thread));
     }
 
-    [Fact]
+    [WpfFact]
     public void FromThread_NullThread_ReturnsNull()
     {
         Assert.Null(Dispatcher.FromThread(null));
     }
 
-    [Theory]
+    [WpfTheory]
     [InlineData(DispatcherPriority.ApplicationIdle)]
     [InlineData(DispatcherPriority.Background)]
     [InlineData(DispatcherPriority.ContextIdle)]
@@ -72,7 +72,7 @@ public class DispatcherTests
         Dispatcher.ValidatePriority(priority, null);
     }
 
-    [Theory]
+    [WpfTheory]
     [InlineData(DispatcherPriority.Invalid)]
     [InlineData(DispatcherPriority.Invalid - 1)]
     [InlineData(DispatcherPriority.Send + 1)]
@@ -83,7 +83,7 @@ public class DispatcherTests
         Assert.Throws<InvalidEnumArgumentException>(() => Dispatcher.ValidatePriority(priority, null));
     }
 
-    [Theory]
+    [WpfTheory]
     [InlineData(DispatcherPriority.ApplicationIdle)]
     [InlineData(DispatcherPriority.Background)]
     [InlineData(DispatcherPriority.ContextIdle)]
@@ -111,7 +111,7 @@ public class DispatcherTests
         Assert.Equal(awaitable, Dispatcher.Yield(priority));
     }
 
-    [Theory]
+    [WpfTheory]
     [InlineData(DispatcherPriority.Invalid)]
     [InlineData(DispatcherPriority.Invalid - 1)]
     [InlineData(DispatcherPriority.Send + 1)]
@@ -120,7 +120,7 @@ public class DispatcherTests
         Assert.Throws<InvalidEnumArgumentException>("priority", () => Dispatcher.Yield(priority));
     }
 
-    [Fact]
+    [WpfFact]
     public void BeginInvoke_InvokeDelegateObjectArray_Success()
     {
         Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
@@ -134,7 +134,7 @@ public class DispatcherTests
         Assert.NotNull(operation.Task);
     }
 
-    [Theory]
+    [WpfTheory]
     [InlineData(DispatcherPriority.Invalid)]
     [InlineData(DispatcherPriority.Invalid - 1)]
     [InlineData(DispatcherPriority.Send + 1)]
@@ -147,14 +147,14 @@ public class DispatcherTests
         Assert.Throws<InvalidEnumArgumentException>("priority", () => dispatcher.BeginInvoke(priority, (Action<object, object>)((arg1, arg2) => { }), new object[] { new object(), new object() }));
     }
 
-    [Fact]
+    [WpfFact]
     public void CheckAccess_InvokeOnCurrentThread_ReturnsTrue()
     {
         Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
         Assert.True(dispatcher.CheckAccess());
     }
 
-    [Fact]
+    [WpfFact]
     public void CheckAccess_InvokeOnDifferentThread_ReturnsFalse()
     {
         Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
@@ -168,14 +168,14 @@ public class DispatcherTests
         Assert.False(access);
     }
 
-    [Fact]
+    [WpfFact]
     public void VerifyAccess_InvokeOnCurrentThread_Success()
     {
         Dispatcher dispatcher = Dispatcher.CurrentDispatcher;
         dispatcher.VerifyAccess();
     }
 
-    [Fact]
+    [WpfFact]
     public void VerifyAccess_InvokeOnDifferentThread_ThrowsInvalidOperationException()
     {
         Dispatcher dispatcher = Dispatcher.CurrentDispatcher;

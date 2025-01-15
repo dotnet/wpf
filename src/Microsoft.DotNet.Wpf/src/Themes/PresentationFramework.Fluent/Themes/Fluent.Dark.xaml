@@ -2674,6 +2674,23 @@
       </Setter.Value>
     </Setter>
   </Style>
+  <sys:Boolean x:Key="HyperlinkUnderlineVisible">False</sys:Boolean>
+  <Style x:Key="DefaultHyperlinkStyle" TargetType="Hyperlink">
+    <Setter Property="Foreground" Value="Blue" />
+    <Setter Property="TextDecorations" Value="Underline" />
+    <Style.Triggers>
+      <Trigger Property="IsMouseOver" Value="true">
+        <Setter Property="Foreground" Value="Green" />
+      </Trigger>
+      <Trigger Property="IsEnabled" Value="false">
+        <Setter Property="Foreground" Value="Pink" />
+      </Trigger>
+      <Trigger Property="IsEnabled" Value="true">
+        <Setter Property="Cursor" Value="Hand" />
+      </Trigger>
+    </Style.Triggers>
+  </Style>
+  <Style TargetType="Hyperlink" BasedOn="{StaticResource DefaultHyperlinkStyle}" />
   <Style TargetType="{x:Type Label}">
     <Setter Property="Padding" Value="0,0,0,4" />
     <Setter Property="Focusable" Value="False" />

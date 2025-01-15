@@ -1,0 +1,28 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:sys="clr-namespace:System;assembly=mscorlib"
+    >
+
+    <sys:Boolean x:Key="HyperlinkUnderlineVisible">False</sys:Boolean>
+    
+    <Style x:Key="DefaultHyperlinkStyle" TargetType="Hyperlink">
+        <Setter Property="Foreground" Value="Blue" />
+        <Setter Property="TextDecorations" Value="Underline" />
+        
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true">
+                <Setter Property="Foreground" Value="Green" />
+            </Trigger>
+           
+            <Trigger Property="IsEnabled" Value="false">
+                <Setter Property="Foreground" Value="Pink" />
+            </Trigger>
+            <Trigger Property="IsEnabled" Value="true">
+                <Setter Property="Cursor" Value="Hand" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="Hyperlink" BasedOn="{StaticResource DefaultHyperlinkStyle}" />
+</ResourceDictionary>

@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Globalization;
 using XamlReaderHelper = System.Windows.Markup.XamlReaderHelper;
 using System.Runtime.CompilerServices;
+using MS.Internal;
 
 namespace System.Windows.Baml2006
 {

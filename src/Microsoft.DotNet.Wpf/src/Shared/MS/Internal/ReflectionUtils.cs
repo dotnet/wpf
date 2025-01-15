@@ -16,7 +16,6 @@ namespace MS.Internal
     /// </summary>
     internal static class ReflectionUtils
     {
-
 #if !NETFX
         /// <summary>
         ///  Retrieves the full assembly name by combining the <paramref name="partialName"/> passed in

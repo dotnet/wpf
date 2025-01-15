@@ -53,7 +53,7 @@ namespace System.Windows
             }
 
             _resourceName = resourceName.ToLowerInvariant();
-            _hInstance = Marshal.GetHINSTANCE(resourceAssembly.ManifestModule);
+            _hInstance = (HINSTANCE)Marshal.GetHINSTANCE(resourceAssembly.ManifestModule);
             _resourceManager = new ResourceManager($"{ReflectionUtils.GetAssemblyPartialName(resourceAssembly)}.g", resourceAssembly);
         }
 

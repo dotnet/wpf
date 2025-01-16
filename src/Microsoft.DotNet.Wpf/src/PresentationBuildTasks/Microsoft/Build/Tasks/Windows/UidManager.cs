@@ -925,7 +925,7 @@ namespace Microsoft.Build.Tasks.Windows
 
 
     // writing to a file, removing or updating uid
-    internal sealed class UidWriter
+    internal sealed partial class UidWriter
     {
         internal UidWriter(UidCollector collector, Stream source, Stream target)
         {
@@ -1101,7 +1101,7 @@ namespace Microsoft.Build.Tasks.Windows
             // escape all the Xml entities in the value
             string attributeValue = EscapedXmlEntities.Replace(
                 uid.Value,
-                EscapeMatchEvaluator
+                s_escapeMatchEvaluator
                 );
 
             string clause = string.Format(
@@ -1128,11 +1128,6 @@ namespace Microsoft.Build.Tasks.Windows
 
         private void WriteNewAttributeValue(string value)
         {
-            string attributeValue = EscapedXmlEntities.Replace(
-                value,
-                EscapeMatchEvaluator
-                );
-
             _targetWriter.Write(
                 string.Format(
                     TypeConverterHelper.InvariantEnglishUS,
@@ -1308,8 +1303,13 @@ namespace Microsoft.Build.Tasks.Windows
             Skip  = 1,  // skip the content
         }
 
-        private static Regex          EscapedXmlEntities   = new Regex("(<|>|\"|'|&)", RegexOptions.CultureInvariant | RegexOptions.Compiled);
-        private static MatchEvaluator EscapeMatchEvaluator = new MatchEvaluator(EscapeMatch);
+#if !NETFX
+        [GeneratedRegex("(<|>|\"|'|&)", RegexOptions.CultureInvariant)]
+        private static partial Regex EscapedXmlEntities { get; }
+#else
+        private static readonly Regex EscapedXmlEntities = new("(<|>|\"|'|&)", RegexOptions.CultureInvariant | RegexOptions.Compiled);
+#endif
+        private static readonly MatchEvaluator s_escapeMatchEvaluator = new MatchEvaluator(EscapeMatch);
 
         /// <summary>
         /// the delegate to escape the matched pattern
